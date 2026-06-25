@@ -1,7 +1,7 @@
 {
   "tourId": 69060,
   "url": "https://www.nextcaddy.com/tour/69060",
-  "scrapedAt": "2026-06-24T14:54:06.544Z",
+  "scrapedAt": "2026-06-24T19:19:53.167Z",
   "meta": {
     "name": "II LIGUILLA SUB21 DE CASTILLA Y LEÓN - LERMA - 9 hoyos",
     "organizer": null,
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      4,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      4,
+      2,
+      12,
+      6,
+      14,
+      18,
+      10,
+      16,
+      8
+    ],
+    "meters": [
+      454,
+      336,
+      280,
+      245,
+      111,
+      279,
+      231,
+      379,
+      122
+    ]
   },
   "leaderboard": [
     {
@@ -63,7 +91,24 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2282997
+          "inscribedId": 2282997,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                8,
+                7,
+                4,
+                5,
+                5,
+                6,
+                4
+              ],
+              "total": 54
+            }
+          ]
         },
         {
           "pos": 3,
@@ -96,7 +141,24 @@
           "rounds": [],
           "total": 40,
           "toPar": 4,
-          "inscribedId": 2279877
+          "inscribedId": 2279877,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                6,
+                4,
+                7,
+                5,
+                6,
+                5
+              ],
+              "total": 53
+            }
+          ]
         },
         {
           "pos": 6,
@@ -118,7 +180,24 @@
           "rounds": [],
           "total": 49,
           "toPar": 13,
-          "inscribedId": 2284271
+          "inscribedId": 2284271,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                12,
+                9,
+                6,
+                8,
+                9,
+                7,
+                8,
+                7,
+                8
+              ],
+              "total": 74
+            }
+          ]
         },
         {
           "pos": 8,

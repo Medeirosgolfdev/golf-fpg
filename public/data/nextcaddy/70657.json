@@ -1,7 +1,7 @@
 {
   "tourId": 70657,
   "url": "https://www.nextcaddy.com/tour/70657",
-  "scrapedAt": "2026-06-24T14:56:44.411Z",
+  "scrapedAt": "2026-06-24T19:19:54.741Z",
   "meta": {
     "name": "JOVENES PROMESA - ZONAL ALEVINES Y BENJAMINES 9 HOYOS",
     "organizer": null,
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1
+    ],
+    "meters": [
+      272,
+      374,
+      298,
+      158,
+      273,
+      268,
+      361,
+      145,
+      259
+    ]
   },
   "leaderboard": [
     {
@@ -86,7 +114,39 @@
           ],
           "total": 72,
           "toPar": null,
-          "inscribedId": 2327230
+          "inscribedId": 2327230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 52
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 3,
@@ -126,7 +186,39 @@
           ],
           "total": 82,
           "toPar": 10,
-          "inscribedId": 2328285
+          "inscribedId": 2328285,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                7,
+                5,
+                5,
+                8,
+                8,
+                4,
+                5
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                11,
+                8,
+                5,
+                9,
+                7,
+                7,
+                5,
+                5
+              ],
+              "total": 63
+            }
+          ]
         },
         {
           "pos": 5,
@@ -227,7 +319,39 @@
           ],
           "total": 102,
           "toPar": 30,
-          "inscribedId": 2327230
+          "inscribedId": 2327230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 52
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 4,
@@ -247,7 +371,39 @@
           ],
           "total": 109,
           "toPar": 37,
-          "inscribedId": 2327228
+          "inscribedId": 2327228,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                7,
+                8,
+                5,
+                7,
+                3,
+                5
+              ],
+              "total": 53
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                6,
+                6,
+                4,
+                7,
+                9,
+                7,
+                6,
+                5
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 5,
@@ -327,7 +483,39 @@
           ],
           "total": 118,
           "toPar": 46,
-          "inscribedId": 2328285
+          "inscribedId": 2328285,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                7,
+                5,
+                5,
+                8,
+                8,
+                4,
+                5
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                11,
+                8,
+                5,
+                9,
+                7,
+                7,
+                5,
+                5
+              ],
+              "total": 63
+            }
+          ]
         }
       ]
     },
@@ -408,7 +596,39 @@
           ],
           "total": 72,
           "toPar": null,
-          "inscribedId": 2327230
+          "inscribedId": 2327230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 52
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 4,
@@ -448,7 +668,39 @@
           ],
           "total": 77,
           "toPar": 5,
-          "inscribedId": 2327228
+          "inscribedId": 2327228,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                7,
+                8,
+                5,
+                7,
+                3,
+                5
+              ],
+              "total": 53
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                6,
+                6,
+                4,
+                7,
+                9,
+                7,
+                6,
+                5
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 6,
@@ -488,7 +740,39 @@
           ],
           "total": 82,
           "toPar": 10,
-          "inscribedId": 2328285
+          "inscribedId": 2328285,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                7,
+                5,
+                5,
+                8,
+                8,
+                4,
+                5
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                11,
+                8,
+                5,
+                9,
+                7,
+                7,
+                5,
+                5
+              ],
+              "total": 63
+            }
+          ]
         },
         {
           "pos": 8,
@@ -548,7 +832,39 @@
           "rounds": [],
           "total": 52,
           "toPar": 16,
-          "inscribedId": 2327230
+          "inscribedId": 2327230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 52
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 3,
@@ -570,7 +886,39 @@
           "rounds": [],
           "total": 53,
           "toPar": 17,
-          "inscribedId": 2327228
+          "inscribedId": 2327228,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                7,
+                8,
+                5,
+                7,
+                3,
+                5
+              ],
+              "total": 53
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                6,
+                6,
+                4,
+                7,
+                9,
+                7,
+                6,
+                5
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 5,
@@ -614,7 +962,39 @@
           "rounds": [],
           "total": 55,
           "toPar": 19,
-          "inscribedId": 2328285
+          "inscribedId": 2328285,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                7,
+                5,
+                5,
+                8,
+                8,
+                4,
+                5
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                11,
+                8,
+                5,
+                9,
+                7,
+                7,
+                5,
+                5
+              ],
+              "total": 63
+            }
+          ]
         }
       ]
     },
@@ -676,7 +1056,39 @@
           "rounds": [],
           "total": 37,
           "toPar": 1,
-          "inscribedId": 2327230
+          "inscribedId": 2327230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 52
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 5,
@@ -687,7 +1099,39 @@
           "rounds": [],
           "total": 37,
           "toPar": 1,
-          "inscribedId": 2327228
+          "inscribedId": 2327228,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                7,
+                8,
+                5,
+                7,
+                3,
+                5
+              ],
+              "total": 53
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                6,
+                6,
+                4,
+                7,
+                9,
+                7,
+                6,
+                5
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 6,
@@ -698,7 +1142,39 @@
           "rounds": [],
           "total": 37,
           "toPar": 1,
-          "inscribedId": 2328285
+          "inscribedId": 2328285,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                7,
+                5,
+                5,
+                8,
+                8,
+                4,
+                5
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                11,
+                8,
+                5,
+                9,
+                7,
+                7,
+                5,
+                5
+              ],
+              "total": 63
+            }
+          ]
         },
         {
           "pos": 7,

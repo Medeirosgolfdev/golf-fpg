@@ -1,7 +1,7 @@
 {
   "tourId": 68714,
   "url": "https://www.nextcaddy.com/tour/68714",
-  "scrapedAt": "2026-06-24T14:55:01.809Z",
+  "scrapedAt": "2026-06-24T19:20:06.808Z",
   "meta": {
     "name": "XXXVI CAMPEONATO JUVENIL  DE CyL 2026 (9 Hoyos)",
     "organizer": null,
@@ -21,11 +21,39 @@
     ]
   },
   "course": {
-    "parTotal": 35,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4
+    ],
+    "si": [
+      2,
+      12,
+      8,
+      14,
+      15,
+      16,
+      3,
+      17,
+      11
+    ],
+    "meters": [
+      426,
+      225,
+      299,
+      161,
+      259,
+      136,
+      334,
+      276,
+      274
+    ]
   },
   "leaderboard": [
     {
@@ -122,7 +150,24 @@
           "rounds": [],
           "total": 60,
           "toPar": 25,
-          "inscribedId": 2294047
+          "inscribedId": 2294047,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                7,
+                4,
+                5,
+                8,
+                8,
+                8,
+                5
+              ],
+              "total": 60
+            }
+          ]
         },
         {
           "pos": 3,
@@ -184,7 +229,24 @@
           "rounds": [],
           "total": 53,
           "toPar": 18,
-          "inscribedId": 2294047
+          "inscribedId": 2294047,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                7,
+                4,
+                5,
+                8,
+                8,
+                8,
+                5
+              ],
+              "total": 60
+            }
+          ]
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "tourId": 65862,
   "url": "https://www.nextcaddy.com/tour/65862",
-  "scrapedAt": "2026-06-24T14:51:56.868Z",
+  "scrapedAt": "2026-06-24T19:18:37.200Z",
   "meta": {
     "name": "Circuito Benjamín de P&P \"Golf Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -23,7 +23,41 @@
       "Senior"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      5,
+      8,
+      13,
+      15,
+      11,
+      17,
+      4,
+      7,
+      1
+    ],
+    "meters": [
+      68,
+      80,
+      74,
+      53,
+      63,
+      41,
+      76,
+      81,
+      87
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -50,7 +84,24 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2240025
+          "inscribedId": 2240025,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                3,
+                3,
+                7,
+                3,
+                3,
+                3,
+                5
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 2,
@@ -145,7 +196,24 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2240025
+          "inscribedId": 2240025,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                3,
+                3,
+                7,
+                3,
+                3,
+                3,
+                5
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 3,
@@ -273,7 +341,24 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2239355
+          "inscribedId": 2239355,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                7,
+                3,
+                3,
+                5,
+                3
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 7,
@@ -295,7 +380,24 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2239701
+          "inscribedId": 2239701,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                5
+              ],
+              "total": 34
+            }
+          ]
         },
         {
           "pos": 9,
@@ -434,7 +536,24 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2239701
+          "inscribedId": 2239701,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                5
+              ],
+              "total": 34
+            }
+          ]
         },
         {
           "pos": 7,
@@ -456,7 +575,24 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2239355
+          "inscribedId": 2239355,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                7,
+                3,
+                3,
+                5,
+                3
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 9,

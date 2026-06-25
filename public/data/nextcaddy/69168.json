@@ -1,7 +1,7 @@
 {
   "tourId": 69168,
   "url": "https://www.nextcaddy.com/tour/69168",
-  "scrapedAt": "2026-06-24T14:53:45.527Z",
+  "scrapedAt": "2026-06-24T19:19:43.146Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf (grupo privado)",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      321,
+      348,
+      435,
+      138,
+      483,
+      287,
+      127,
+      363,
+      353,
+      303,
+      464,
+      128,
+      365,
+      117,
+      361,
+      230,
+      423,
+      345
+    ]
   },
   "leaderboard": [
     {
@@ -75,7 +130,33 @@
           "rounds": [],
           "total": 40,
           "toPar": -4,
-          "inscribedId": 2281193
+          "inscribedId": 2281193,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 70
+            }
+          ]
         },
         {
           "pos": 4,
@@ -119,7 +200,33 @@
           "rounds": [],
           "total": 32,
           "toPar": 4,
-          "inscribedId": 2281013
+          "inscribedId": 2281013,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                6,
+                4,
+                3,
+                4,
+                6,
+                4,
+                5,
+                4,
+                6,
+                3,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 81
+            }
+          ]
         },
         {
           "pos": 8,
@@ -152,7 +259,33 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2281021
+          "inscribedId": 2281021,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
         }
       ]
     }

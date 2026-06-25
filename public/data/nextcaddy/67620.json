@@ -1,7 +1,7 @@
 {
   "tourId": 67620,
   "url": "https://www.nextcaddy.com/tour/67620",
-  "scrapedAt": "2026-06-24T14:52:06.689Z",
+  "scrapedAt": "2026-06-24T19:19:46.426Z",
   "meta": {
     "name": "ESCUELA INFANTIL",
     "organizer": null,
@@ -23,11 +23,66 @@
     ]
   },
   "course": {
-    "parTotal": 68,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      5,
+      4,
+      4,
+      5,
+      3,
+      4,
+      5,
+      3,
+      4,
+      4
+    ],
+    "si": [
+      14,
+      9,
+      7,
+      16,
+      1,
+      18,
+      5,
+      11,
+      3,
+      12,
+      15,
+      17,
+      8,
+      13,
+      4,
+      10,
+      2,
+      6
+    ],
+    "meters": [
+      307,
+      139,
+      368,
+      322,
+      513,
+      132,
+      370,
+      129,
+      448,
+      326,
+      339,
+      463,
+      144,
+      348,
+      459,
+      179,
+      388,
+      340
+    ]
   },
   "leaderboard": [
     {
@@ -77,7 +132,33 @@
           "rounds": [],
           "total": 45,
           "toPar": -9,
-          "inscribedId": 2248174
+          "inscribedId": 2248174,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                8,
+                8,
+                6,
+                5,
+                9,
+                6,
+                6,
+                6,
+                6,
+                8,
+                3,
+                6,
+                8,
+                6,
+                7,
+                6
+              ],
+              "total": 117
+            }
+          ]
         },
         {
           "pos": 4,

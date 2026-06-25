@@ -1,7 +1,7 @@
 {
   "tourId": 64563,
   "url": "https://www.nextcaddy.com/tour/64563",
-  "scrapedAt": "2026-05-09T18:27:50.980Z",
+  "scrapedAt": "2026-06-24T19:19:29.466Z",
   "meta": {
     "name": "Campeonato Juvenil la Valmuza HANDICAP MAYOR DE 36,0",
     "organizer": null,
@@ -22,12 +22,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-low"
+    "par": [
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      9,
+      17,
+      1,
+      5,
+      13,
+      15,
+      3,
+      7,
+      11
+    ],
+    "meters": [
+      395,
+      93,
+      438,
+      350,
+      123,
+      286,
+      303,
+      423,
+      125
+    ]
   },
   "leaderboard": [
     {
@@ -68,7 +95,23 @@
           "total": 23,
           "toPar": -5,
           "inscribedId": 2166114,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                4,
+                9,
+                7,
+                3,
+                5,
+                6,
+                5,
+                5
+              ],
+              "total": 52
+            }
+          ]
         },
         {
           "pos": 3,
@@ -152,7 +195,23 @@
           "total": 17,
           "toPar": 1,
           "inscribedId": 2166130,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                4,
+                9,
+                7,
+                6,
+                5,
+                5,
+                12,
+                5
+              ],
+              "total": 61
+            }
+          ]
         },
         {
           "pos": 10,

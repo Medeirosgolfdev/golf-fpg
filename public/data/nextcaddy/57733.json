@@ -1,7 +1,7 @@
 {
   "tourId": 57733,
   "url": "https://www.nextcaddy.com/tour/57733",
-  "scrapedAt": "2026-05-09T18:30:15.978Z",
+  "scrapedAt": "2026-06-24T19:20:04.742Z",
   "meta": {
     "name": "II CIRCUITO SUB21 2024",
     "organizer": null,
@@ -20,12 +20,66 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 70,
-    "parInferred": true,
-    "parConfidence": "total-high"
+    "par": [
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      7,
+      17,
+      6,
+      11,
+      12,
+      13,
+      1,
+      14,
+      9,
+      2,
+      4,
+      3,
+      18,
+      10,
+      8,
+      16,
+      5,
+      15
+    ],
+    "meters": [
+      463,
+      246,
+      334,
+      178,
+      301,
+      158,
+      393,
+      328,
+      306,
+      195,
+      383,
+      194,
+      272,
+      291,
+      295,
+      287,
+      463,
+      302
+    ]
   },
   "leaderboard": [
     {
@@ -66,7 +120,32 @@
           "total": 76,
           "toPar": 6,
           "inscribedId": 1940930,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                3,
+                3,
+                4,
+                4,
+                7,
+                3,
+                4,
+                2,
+                7,
+                4,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 76
+            }
+          ]
         },
         {
           "pos": 3,
@@ -156,7 +235,32 @@
           "total": 74,
           "toPar": 4,
           "inscribedId": 1940930,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                3,
+                3,
+                4,
+                4,
+                7,
+                3,
+                4,
+                2,
+                7,
+                4,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 76
+            }
+          ]
         },
         {
           "pos": 4,

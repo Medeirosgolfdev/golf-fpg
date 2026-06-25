@@ -1,7 +1,7 @@
 {
   "tourId": 68405,
   "url": "https://www.nextcaddy.com/tour/68405",
-  "scrapedAt": "2026-06-24T14:52:36.858Z",
+  "scrapedAt": "2026-06-24T19:19:51.688Z",
   "meta": {
     "name": "4ª P. C. INFANTIL B.K. 9P3 HOYOS 14-02-26",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      17,
+      13,
+      3,
+      9,
+      11,
+      7,
+      5,
+      1
+    ],
+    "meters": [
+      120,
+      106,
+      120,
+      60,
+      117,
+      116,
+      118,
+      74,
+      69
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -47,7 +81,24 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2259927
+          "inscribedId": 2259927,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                4,
+                3,
+                6,
+                6,
+                5
+              ],
+              "total": 42
+            }
+          ]
         },
         {
           "pos": 2,
@@ -80,7 +131,24 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2259923
+          "inscribedId": 2259923,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                6,
+                6,
+                6,
+                5,
+                4,
+                4,
+                null
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 5,

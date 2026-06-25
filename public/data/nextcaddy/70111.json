@@ -1,7 +1,7 @@
 {
   "tourId": 70111,
   "url": "https://www.nextcaddy.com/tour/70111",
-  "scrapedAt": "2026-06-24T14:55:06.398Z",
+  "scrapedAt": "2026-06-24T19:20:03.884Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf (grupo privado)",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      269,
+      305,
+      384,
+      114,
+      459,
+      221,
+      111,
+      296,
+      318,
+      242,
+      428,
+      96,
+      328,
+      105,
+      296,
+      200,
+      375,
+      323
+    ]
   },
   "leaderboard": [
     {
@@ -53,7 +108,33 @@
           "rounds": [],
           "total": 43,
           "toPar": -7,
-          "inscribedId": 2301230
+          "inscribedId": 2301230,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                9,
+                7,
+                5,
+                8,
+                6,
+                4,
+                5,
+                4,
+                6,
+                7,
+                4,
+                8,
+                5,
+                6,
+                4,
+                7,
+                6
+              ],
+              "total": 107
+            }
+          ]
         },
         {
           "pos": 2,

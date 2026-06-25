@@ -1,7 +1,7 @@
 {
   "tourId": 61136,
   "url": "https://www.nextcaddy.com/tour/61136",
-  "scrapedAt": "2026-06-24T14:56:04.138Z",
+  "scrapedAt": "2026-06-24T19:18:35.591Z",
   "meta": {
     "name": "Circuito Benjamin Zona W",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -21,11 +21,39 @@
     ]
   },
   "course": {
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      3,
+      4
+    ],
+    "si": [
+      14,
+      4,
+      6,
+      10,
+      16,
+      12,
+      2,
+      18,
+      8
+    ],
+    "meters": [
+      368,
+      294,
+      162,
+      406,
+      259,
+      253,
+      287,
+      108,
+      255
+    ]
   },
   "leaderboard": [
     {
@@ -159,7 +187,24 @@
           "rounds": [],
           "total": 35,
           "toPar": -1,
-          "inscribedId": 2306899
+          "inscribedId": 2306899,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                4,
+                7,
+                5,
+                6,
+                5,
+                3,
+                5
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 5,
@@ -236,7 +281,24 @@
           "rounds": [],
           "total": 39,
           "toPar": 3,
-          "inscribedId": 2309485
+          "inscribedId": 2309485,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                5,
+                5,
+                8,
+                7,
+                6,
+                3,
+                8
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 12,
@@ -269,7 +331,24 @@
           "rounds": [],
           "total": 46,
           "toPar": 10,
-          "inscribedId": 2307878
+          "inscribedId": 2307878,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                4,
+                7,
+                5,
+                5,
+                6,
+                5,
+                7
+              ],
+              "total": 52
+            }
+          ]
         }
       ]
     },
@@ -426,7 +505,24 @@
           "rounds": [],
           "total": 47,
           "toPar": 11,
-          "inscribedId": 2306899
+          "inscribedId": 2306899,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                4,
+                7,
+                5,
+                6,
+                5,
+                3,
+                5
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 7,
@@ -492,7 +588,24 @@
           "rounds": [],
           "total": 52,
           "toPar": 16,
-          "inscribedId": 2307878
+          "inscribedId": 2307878,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                4,
+                7,
+                5,
+                5,
+                6,
+                5,
+                7
+              ],
+              "total": 52
+            }
+          ]
         },
         {
           "pos": 13,
@@ -514,7 +627,24 @@
           "rounds": [],
           "total": 55,
           "toPar": 19,
-          "inscribedId": 2309485
+          "inscribedId": 2309485,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                5,
+                5,
+                8,
+                7,
+                6,
+                3,
+                8
+              ],
+              "total": 55
+            }
+          ]
         }
       ]
     }

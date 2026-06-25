@@ -1,7 +1,7 @@
 {
   "tourId": 65067,
   "url": "https://www.nextcaddy.com/tour/65067",
-  "scrapedAt": "2026-05-09T18:28:18.632Z",
+  "scrapedAt": "2026-06-24T19:19:16.256Z",
   "meta": {
     "name": "II Prueba Pequecircuito (Jugadores/as con Hcp mayor de 36)",
     "organizer": null,
@@ -22,12 +22,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-low"
+    "par": [
+      5,
+      4,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      4,
+      2,
+      12,
+      6,
+      14,
+      18,
+      10,
+      16,
+      8
+    ],
+    "meters": [
+      454,
+      336,
+      280,
+      245,
+      111,
+      279,
+      231,
+      379,
+      122
+    ]
   },
   "leaderboard": [
     {
@@ -200,7 +227,23 @@
           "total": 8,
           "toPar": 10,
           "inscribedId": 2181670,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                8,
+                9,
+                7,
+                6,
+                null,
+                5,
+                8,
+                8
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 14,

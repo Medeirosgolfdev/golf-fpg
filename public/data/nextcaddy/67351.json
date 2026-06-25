@@ -1,7 +1,7 @@
 {
   "tourId": 67351,
   "url": "https://www.nextcaddy.com/tour/67351",
-  "scrapedAt": "2026-06-24T14:51:54.573Z",
+  "scrapedAt": "2026-06-24T19:19:18.574Z",
   "meta": {
     "name": "3ª P. C. INFANTIL B.K. 9 HOYOS 10-01-26",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -91,7 +125,24 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2242923
+          "inscribedId": 2242923,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                7,
+                4,
+                6,
+                6,
+                9,
+                6,
+                12
+              ],
+              "total": 63
+            }
+          ]
         },
         {
           "pos": 6,
@@ -113,7 +164,24 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2242921
+          "inscribedId": 2242921,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                6,
+                8,
+                3,
+                5,
+                8,
+                6,
+                7,
+                8
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 8,
@@ -179,7 +247,24 @@
           "rounds": [],
           "total": 8,
           "toPar": 10,
-          "inscribedId": 2242918
+          "inscribedId": 2242918,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                5,
+                null,
+                null,
+                7,
+                7,
+                7,
+                6,
+                null
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": null,

@@ -1,7 +1,7 @@
 {
   "tourId": 61058,
   "url": "https://www.nextcaddy.com/tour/61058",
-  "scrapedAt": "2026-06-24T14:52:29.513Z",
+  "scrapedAt": "2026-06-24T19:14:40.365Z",
   "meta": {
     "name": "Pequecircuito Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 27,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      13,
+      17,
+      11,
+      15,
+      3,
+      5,
+      9,
+      1,
+      7
+    ],
+    "meters": [
+      78,
+      46,
+      68,
+      56,
+      90,
+      81,
+      59,
+      100,
+      77
+    ]
   },
   "leaderboard": [
     {
@@ -52,7 +80,24 @@
           "rounds": [],
           "total": 70,
           "toPar": 43,
-          "inscribedId": 2254890
+          "inscribedId": 2254890,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                6,
+                8,
+                4,
+                9,
+                9,
+                8,
+                8,
+                9
+              ],
+              "total": 70
+            }
+          ]
         }
       ]
     },
@@ -103,7 +148,24 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2246453
+          "inscribedId": 2246453,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                6,
+                5,
+                3,
+                3,
+                5,
+                5,
+                3
+              ],
+              "total": 40
+            }
+          ]
         },
         {
           "pos": 4,
@@ -187,7 +249,24 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2250143
+          "inscribedId": 2250143,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                5,
+                4,
+                5,
+                3,
+                5,
+                7,
+                4
+              ],
+              "total": 40
+            }
+          ]
         },
         {
           "pos": 3,
@@ -542,7 +621,24 @@
           "rounds": [],
           "total": 48,
           "toPar": 21,
-          "inscribedId": 2249956
+          "inscribedId": 2249956,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                5,
+                8,
+                5,
+                4,
+                7,
+                4
+              ],
+              "total": 48
+            }
+          ]
         },
         {
           "pos": 16,
@@ -681,7 +777,24 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2246380
+          "inscribedId": 2246380,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                4
+              ],
+              "total": 38
+            }
+          ]
         },
         {
           "pos": 10,
@@ -725,7 +838,24 @@
           "rounds": [],
           "total": 49,
           "toPar": 22,
-          "inscribedId": 2248855
+          "inscribedId": 2248855,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                6,
+                3,
+                6,
+                6,
+                4,
+                7,
+                3
+              ],
+              "total": 49
+            }
+          ]
         },
         {
           "pos": 14,

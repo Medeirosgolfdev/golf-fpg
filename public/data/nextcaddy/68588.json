@@ -1,7 +1,7 @@
 {
   "tourId": 68588,
   "url": "https://www.nextcaddy.com/tour/68588",
-  "scrapedAt": "2026-06-24T14:56:06.802Z",
+  "scrapedAt": "2026-06-24T19:19:29.416Z",
   "meta": {
     "name": "IV Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 32,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      18,
+      2,
+      8,
+      14,
+      6,
+      4,
+      10,
+      12,
+      16
+    ],
+    "meters": [
+      40,
+      86,
+      84,
+      70,
+      68,
+      86,
+      50,
+      46,
+      62
+    ]
   },
   "leaderboard": [
     {
@@ -74,7 +102,24 @@
           "rounds": [],
           "total": 20,
           "toPar": -2,
-          "inscribedId": 2311533
+          "inscribedId": 2311533,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                4,
+                4,
+                6,
+                3,
+                4,
+                4
+              ],
+              "total": 36
+            }
+          ]
         },
         {
           "pos": 4,
@@ -107,7 +152,24 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2314945
+          "inscribedId": 2314945,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                5,
+                3,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "total": 39
+            }
+          ]
         },
         {
           "pos": 7,

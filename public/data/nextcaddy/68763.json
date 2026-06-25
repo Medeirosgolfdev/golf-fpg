@@ -1,7 +1,7 @@
 {
   "tourId": 68763,
   "url": "https://www.nextcaddy.com/tour/68763",
-  "scrapedAt": "2026-06-24T14:55:00.144Z",
+  "scrapedAt": "2026-06-24T19:19:52.388Z",
   "meta": {
     "name": "Campeonato de Las Palmas Juvenil 9 Hoyos (Benjamín)",
     "organizer": null,
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 70,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5
+    ],
+    "si": [
+      15,
+      5,
+      7,
+      9,
+      17,
+      1,
+      13,
+      3,
+      11
+    ],
+    "meters": [
+      274,
+      295,
+      130,
+      380,
+      69,
+      333,
+      65,
+      329,
+      362
+    ]
   },
   "leaderboard": [
     {
@@ -127,7 +155,39 @@
           ],
           "total": 88,
           "toPar": 18,
-          "inscribedId": 2293088
+          "inscribedId": 2293088,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                3,
+                6,
+                3,
+                6,
+                3,
+                7,
+                5
+              ],
+              "total": 43
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                3,
+                7,
+                3,
+                5,
+                4,
+                7,
+                7
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 2,
@@ -268,7 +328,39 @@
           ],
           "total": 88,
           "toPar": 18,
-          "inscribedId": 2293088
+          "inscribedId": 2293088,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                3,
+                6,
+                3,
+                6,
+                3,
+                7,
+                5
+              ],
+              "total": 43
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                3,
+                7,
+                3,
+                5,
+                4,
+                7,
+                7
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 2,
@@ -437,7 +529,39 @@
           "rounds": [],
           "total": 43,
           "toPar": 8,
-          "inscribedId": 2293088
+          "inscribedId": 2293088,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                3,
+                6,
+                3,
+                6,
+                3,
+                7,
+                5
+              ],
+              "total": 43
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                3,
+                7,
+                3,
+                5,
+                4,
+                7,
+                7
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 2,

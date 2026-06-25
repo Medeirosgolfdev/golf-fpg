@@ -1,7 +1,7 @@
 {
   "tourId": 67777,
   "url": "https://www.nextcaddy.com/tour/67777",
-  "scrapedAt": "2026-06-24T14:54:04.195Z",
+  "scrapedAt": "2026-06-24T19:18:46.679Z",
   "meta": {
     "name": "Torneo Benjamín Masculino \"JAS\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 27,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      3,
+      7,
+      11,
+      13,
+      5,
+      9,
+      17,
+      1
+    ],
+    "meters": [
+      75,
+      80,
+      90,
+      60,
+      55,
+      70,
+      85,
+      60,
+      75
+    ]
   },
   "leaderboard": [
     {
@@ -96,7 +124,24 @@
           "rounds": [],
           "total": 24,
           "toPar": -3,
-          "inscribedId": 2277536
+          "inscribedId": 2277536,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                2,
+                4,
+                2,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 32
+            }
+          ]
         },
         {
           "pos": 6,
@@ -118,7 +163,24 @@
           "rounds": [],
           "total": 25,
           "toPar": -2,
-          "inscribedId": 2277442
+          "inscribedId": 2277442,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                2,
+                5,
+                4
+              ],
+              "total": 31
+            }
+          ]
         },
         {
           "pos": 8,
@@ -162,7 +224,24 @@
           "rounds": [],
           "total": 27,
           "toPar": null,
-          "inscribedId": 2277106
+          "inscribedId": 2277106,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                4,
+                3,
+                4,
+                3,
+                3,
+                3,
+                4
+              ],
+              "total": 32
+            }
+          ]
         },
         {
           "pos": 12,
@@ -228,7 +307,24 @@
           "rounds": [],
           "total": 30,
           "toPar": 3,
-          "inscribedId": 2277076
+          "inscribedId": 2277076,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 18,
@@ -323,7 +419,24 @@
           "rounds": [],
           "total": 31,
           "toPar": 4,
-          "inscribedId": 2277442
+          "inscribedId": 2277442,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                2,
+                5,
+                4
+              ],
+              "total": 31
+            }
+          ]
         },
         {
           "pos": 7,
@@ -345,7 +458,24 @@
           "rounds": [],
           "total": 32,
           "toPar": 5,
-          "inscribedId": 2277536
+          "inscribedId": 2277536,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                2,
+                4,
+                2,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 32
+            }
+          ]
         },
         {
           "pos": 9,
@@ -367,7 +497,24 @@
           "rounds": [],
           "total": 32,
           "toPar": 5,
-          "inscribedId": 2277106
+          "inscribedId": 2277106,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                4,
+                3,
+                4,
+                3,
+                3,
+                3,
+                4
+              ],
+              "total": 32
+            }
+          ]
         },
         {
           "pos": 11,
@@ -433,7 +580,24 @@
           "rounds": [],
           "total": 35,
           "toPar": 8,
-          "inscribedId": 2277076
+          "inscribedId": 2277076,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 17,

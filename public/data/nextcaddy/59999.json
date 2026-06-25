@@ -1,7 +1,7 @@
 {
   "tourId": 59999,
   "url": "https://www.nextcaddy.com/tour/59999",
-  "scrapedAt": "2026-05-09T16:54:50.757Z",
+  "scrapedAt": "2026-06-24T19:20:04.790Z",
   "meta": {
     "name": "Paralelo II Puntuable Zonal Juvenil (Benjamines)",
     "organizer": null,
@@ -21,12 +21,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 70,
-    "parInferred": true,
-    "parConfidence": "total-low"
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      3,
+      5
+    ],
+    "si": [
+      18,
+      4,
+      15,
+      2,
+      5,
+      9,
+      11,
+      14,
+      7
+    ],
+    "meters": [
+      205,
+      303,
+      110,
+      286,
+      328,
+      278,
+      250,
+      144,
+      411
+    ]
   },
   "leaderboard": [
     {
@@ -109,7 +136,38 @@
           "total": 102,
           "toPar": 32,
           "inscribedId": 2051307,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                4,
+                7,
+                7,
+                6,
+                5,
+                5,
+                8
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                5,
+                3,
+                5,
+                6,
+                7,
+                5,
+                6,
+                5
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 4,
@@ -205,7 +263,38 @@
           "total": 55,
           "toPar": 20,
           "inscribedId": 2051307,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                4,
+                7,
+                7,
+                6,
+                5,
+                5,
+                8
+              ],
+              "total": 55
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                5,
+                3,
+                5,
+                6,
+                7,
+                5,
+                6,
+                5
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 4,

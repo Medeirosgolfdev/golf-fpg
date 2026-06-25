@@ -1,7 +1,7 @@
 {
   "tourId": 68657,
   "url": "https://www.nextcaddy.com/tour/68657",
-  "scrapedAt": "2026-06-24T14:56:32.894Z",
+  "scrapedAt": "2026-06-24T19:18:49.558Z",
   "meta": {
     "name": "5ª PRUEBA VIII LIGUILLA BENJAMÍN Y ALEVÍN DE CASTILLA Y LEÓN 2026",
     "organizer": null,
@@ -27,11 +27,66 @@
     ]
   },
   "course": {
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      4,
+      3,
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      5,
+      3,
+      4,
+      3,
+      3
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2,
+      10,
+      17,
+      12,
+      15,
+      1,
+      14,
+      4,
+      5,
+      7
+    ],
+    "meters": [
+      94,
+      161,
+      261,
+      122,
+      151,
+      261,
+      111,
+      194,
+      285,
+      152,
+      73,
+      132,
+      109,
+      444,
+      86,
+      262,
+      121,
+      166
+    ]
   },
   "leaderboard": [
     {
@@ -169,7 +224,24 @@
           "rounds": [],
           "total": 45,
           "toPar": 15,
-          "inscribedId": 2324496
+          "inscribedId": 2324496,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                6,
+                6,
+                5,
+                4,
+                5,
+                4,
+                5
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 12,
@@ -246,7 +318,33 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2324324
+          "inscribedId": 2324324,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
         }
       ]
     },
@@ -363,7 +461,24 @@
           "rounds": [],
           "total": 27,
           "toPar": -3,
-          "inscribedId": 2324496
+          "inscribedId": 2324496,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                6,
+                6,
+                5,
+                4,
+                5,
+                4,
+                5
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 10,
@@ -462,7 +577,33 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2324324
+          "inscribedId": 2324324,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
         }
       ]
     }

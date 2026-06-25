@@ -1,7 +1,7 @@
 {
   "tourId": 56347,
   "url": "https://www.nextcaddy.com/tour/56347",
-  "scrapedAt": "2026-05-09T16:56:24.484Z",
+  "scrapedAt": "2026-06-24T19:19:20.797Z",
   "meta": {
     "name": "Campeonato de Canarias Juvenil (9 Hoyos) - Real Club de Golf de Tenerife",
     "organizer": null,
@@ -20,12 +20,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 70,
-    "parInferred": true,
-    "parConfidence": "total-low"
+    "par": [
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      4
+    ],
+    "si": [
+      4,
+      6,
+      10,
+      2,
+      14,
+      18,
+      16,
+      12,
+      8
+    ],
+    "meters": [
+      315,
+      172,
+      239,
+      310,
+      392,
+      198,
+      101,
+      286,
+      321
+    ]
   },
   "leaderboard": [
     {
@@ -297,7 +324,53 @@
           "total": 168,
           "toPar": 63,
           "inscribedId": 1879851,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                9,
+                7,
+                10,
+                7,
+                5,
+                9,
+                5
+              ],
+              "total": 61
+            },
+            {
+              "round": 2,
+              "scores": [
+                7,
+                5,
+                6,
+                6,
+                8,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 51
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                6,
+                8,
+                9,
+                6,
+                5,
+                5,
+                7,
+                6
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 11,
@@ -603,7 +676,53 @@
           "total": 112,
           "toPar": 42,
           "inscribedId": 1879851,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                9,
+                7,
+                10,
+                7,
+                5,
+                9,
+                5
+              ],
+              "total": 61
+            },
+            {
+              "round": 2,
+              "scores": [
+                7,
+                5,
+                6,
+                6,
+                8,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 51
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                6,
+                8,
+                9,
+                6,
+                5,
+                5,
+                7,
+                6
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 11,
@@ -816,7 +935,53 @@
           "total": 61,
           "toPar": 26,
           "inscribedId": 1879851,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                9,
+                7,
+                10,
+                7,
+                5,
+                9,
+                5
+              ],
+              "total": 61
+            },
+            {
+              "round": 2,
+              "scores": [
+                7,
+                5,
+                6,
+                6,
+                8,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 51
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                6,
+                8,
+                9,
+                6,
+                5,
+                5,
+                7,
+                6
+              ],
+              "total": 56
+            }
+          ]
         },
         {
           "pos": 12,

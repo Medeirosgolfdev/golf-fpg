@@ -1,7 +1,7 @@
 {
   "tourId": 61129,
   "url": "https://www.nextcaddy.com/tour/61129",
-  "scrapedAt": "2026-06-24T14:55:32.964Z",
+  "scrapedAt": "2026-06-24T19:17:09.042Z",
   "meta": {
     "name": "Gran Premio Benjamín Playa Serena",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      15,
+      17,
+      11,
+      1,
+      9,
+      13,
+      3,
+      5,
+      7
+    ],
+    "meters": [
+      283,
+      165,
+      394,
+      361,
+      327,
+      319,
+      478,
+      149,
+      297
+    ]
   },
   "leaderboard": [
     {
@@ -346,7 +374,39 @@
           ],
           "total": 101,
           "toPar": 29,
-          "inscribedId": 2293755
+          "inscribedId": 2293755,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                6,
+                5,
+                6,
+                6,
+                10,
+                4,
+                5
+              ],
+              "total": 51
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                7,
+                6,
+                5,
+                6,
+                8,
+                3,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 16,
@@ -828,7 +888,39 @@
           ],
           "total": 65,
           "toPar": -7,
-          "inscribedId": 2293755
+          "inscribedId": 2293755,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                6,
+                5,
+                6,
+                6,
+                10,
+                4,
+                5
+              ],
+              "total": 51
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                7,
+                6,
+                5,
+                6,
+                8,
+                3,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 3,

@@ -1,7 +1,7 @@
 {
   "tourId": 68655,
   "url": "https://www.nextcaddy.com/tour/68655",
-  "scrapedAt": "2026-06-24T14:53:26.068Z",
+  "scrapedAt": "2026-06-24T19:19:04.049Z",
   "meta": {
     "name": "3ª PRUEBA VIII LIGUILLA BENJAMÍN Y ALEVÍN DE CASTILLA Y LEÓN 2026",
     "organizer": null,
@@ -26,11 +26,66 @@
     ]
   },
   "course": {
-    "parTotal": 34,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      5,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3
+    ],
+    "si": [
+      3,
+      17,
+      1,
+      15,
+      13,
+      11,
+      5,
+      7,
+      9,
+      16,
+      4,
+      8,
+      14,
+      6,
+      2,
+      12,
+      10,
+      18
+    ],
+    "meters": [
+      449,
+      122,
+      327,
+      268,
+      142,
+      273,
+      133,
+      225,
+      402,
+      119,
+      397,
+      222,
+      295,
+      315,
+      291,
+      119,
+      319,
+      86
+    ]
   },
   "leaderboard": [
     {
@@ -124,7 +179,33 @@
           "rounds": [],
           "total": 50,
           "toPar": 16,
-          "inscribedId": 2270656
+          "inscribedId": 2270656,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                5,
+                7,
+                7,
+                6,
+                8,
+                3,
+                5,
+                4
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 8,
@@ -146,7 +227,33 @@
           "rounds": [],
           "total": 53,
           "toPar": 19,
-          "inscribedId": 2270373
+          "inscribedId": 2270373,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                7,
+                10,
+                6,
+                5,
+                6,
+                5,
+                5,
+                6,
+                3
+              ],
+              "total": 53
+            }
+          ]
         },
         {
           "pos": 10,
@@ -329,7 +436,33 @@
           "rounds": [],
           "total": 38,
           "toPar": 4,
-          "inscribedId": 2270656
+          "inscribedId": 2270656,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                5,
+                7,
+                7,
+                6,
+                8,
+                3,
+                5,
+                4
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 9,
@@ -362,7 +495,33 @@
           "rounds": [],
           "total": 40,
           "toPar": 6,
-          "inscribedId": 2270373
+          "inscribedId": 2270373,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                7,
+                10,
+                6,
+                5,
+                6,
+                5,
+                5,
+                6,
+                3
+              ],
+              "total": 53
+            }
+          ]
         },
         {
           "pos": 12,

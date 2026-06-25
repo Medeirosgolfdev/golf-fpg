@@ -1,7 +1,7 @@
 {
   "tourId": 61089,
   "url": "https://www.nextcaddy.com/tour/61089",
-  "scrapedAt": "2026-06-24T14:53:12.735Z",
+  "scrapedAt": "2026-06-24T19:19:23.106Z",
   "meta": {
     "name": "Circuito Benjamin Zona W",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 37,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      5,
+      4,
+      5,
+      4,
+      3,
+      4,
+      4
+    ],
+    "si": [
+      16,
+      12,
+      7,
+      10,
+      2,
+      15,
+      18,
+      14,
+      11
+    ],
+    "meters": [
+      315,
+      237,
+      401,
+      326,
+      433,
+      290,
+      121,
+      255,
+      275
+    ]
   },
   "leaderboard": [
     {
@@ -54,7 +82,24 @@
           "rounds": [],
           "total": 55,
           "toPar": 18,
-          "inscribedId": 2263291
+          "inscribedId": 2263291,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                7,
+                9,
+                9,
+                4,
+                6,
+                6
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 2,
@@ -204,7 +249,24 @@
           "rounds": [],
           "total": 62,
           "toPar": 25,
-          "inscribedId": 2266498
+          "inscribedId": 2266498,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                9,
+                8,
+                13,
+                6,
+                4,
+                4,
+                5
+              ],
+              "total": 62
+            }
+          ]
         }
       ]
     },
@@ -233,7 +295,24 @@
           "rounds": [],
           "total": 35,
           "toPar": -2,
-          "inscribedId": 2263291
+          "inscribedId": 2263291,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                7,
+                9,
+                9,
+                4,
+                6,
+                6
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 2,
@@ -372,7 +451,24 @@
           "rounds": [],
           "total": 43,
           "toPar": 6,
-          "inscribedId": 2266498
+          "inscribedId": 2266498,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                9,
+                8,
+                13,
+                6,
+                4,
+                4,
+                5
+              ],
+              "total": 62
+            }
+          ]
         },
         {
           "pos": 10,

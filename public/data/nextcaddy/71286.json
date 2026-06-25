@@ -1,7 +1,7 @@
 {
   "tourId": 71286,
   "url": "https://www.nextcaddy.com/tour/71286",
-  "scrapedAt": "2026-06-24T14:56:50.686Z",
+  "scrapedAt": "2026-06-24T19:19:33.355Z",
   "meta": {
     "name": "TORNEO FINAL ESCUELA INFANTIL P&P",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      7,
+      17,
+      13,
+      3,
+      9,
+      1,
+      11,
+      5
+    ],
+    "meters": [
+      77,
+      107,
+      92,
+      104,
+      112,
+      94,
+      117,
+      67,
+      104
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -131,7 +165,24 @@
           "rounds": [],
           "total": 22,
           "toPar": -4,
-          "inscribedId": 2332431
+          "inscribedId": 2332431,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                3,
+                7,
+                2,
+                5,
+                3,
+                4,
+                5
+              ],
+              "total": 38
+            }
+          ]
         },
         {
           "pos": 3,

@@ -1,7 +1,7 @@
 {
   "tourId": 71018,
   "url": "https://www.nextcaddy.com/tour/71018",
-  "scrapedAt": "2026-06-24T14:56:33.820Z",
+  "scrapedAt": "2026-06-24T19:19:44.851Z",
   "meta": {
     "name": "POOL INFANTIL VH ",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 38,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7,
+      10,
+      18,
+      4,
+      12,
+      16,
+      6,
+      2,
+      14,
+      8
+    ],
+    "meters": [
+      440,
+      159,
+      352,
+      125,
+      279,
+      337,
+      327,
+      229,
+      431,
+      440,
+      159,
+      352,
+      125,
+      279,
+      337,
+      327,
+      229,
+      431
+    ]
   },
   "leaderboard": [
     {
@@ -53,7 +108,33 @@
           "rounds": [],
           "total": 46,
           "toPar": -10,
-          "inscribedId": 2325180
+          "inscribedId": 2325180,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                12,
+                5,
+                6,
+                null,
+                8,
+                4,
+                6,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                5,
+                7,
+                7
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 2,
@@ -97,7 +178,33 @@
           "rounds": [],
           "total": 37,
           "toPar": -1,
-          "inscribedId": 2325178
+          "inscribedId": 2325178,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                3,
+                4,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                6,
+                4,
+                5,
+                6,
+                4,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 94
+            }
+          ]
         },
         {
           "pos": 6,

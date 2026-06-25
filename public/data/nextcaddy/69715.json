@@ -1,7 +1,7 @@
 {
   "tourId": 69715,
   "url": "https://www.nextcaddy.com/tour/69715",
-  "scrapedAt": "2026-06-24T14:54:44.748Z",
+  "scrapedAt": "2026-06-24T19:19:58.672Z",
   "meta": {
     "name": "6ª P. C. INFANTIL B.K. 9P3 HOYOS 11-04-26",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      17,
+      13,
+      3,
+      9,
+      11,
+      7,
+      5,
+      1
+    ],
+    "meters": [
+      120,
+      106,
+      120,
+      60,
+      117,
+      116,
+      118,
+      74,
+      69
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -47,7 +81,24 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2295955
+          "inscribedId": 2295955,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                5,
+                5,
+                5,
+                5
+              ],
+              "total": 41
+            }
+          ]
         },
         {
           "pos": 2,
@@ -69,7 +120,24 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2295953
+          "inscribedId": 2295953,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                6,
+                3,
+                6,
+                5,
+                4,
+                6,
+                5
+              ],
+              "total": 51
+            }
+          ]
         },
         {
           "pos": 4,

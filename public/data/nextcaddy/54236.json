@@ -1,7 +1,7 @@
 {
   "tourId": 54236,
   "url": "https://www.nextcaddy.com/tour/54236",
-  "scrapedAt": "2026-05-09T18:30:39.269Z",
+  "scrapedAt": "2026-06-24T19:17:41.261Z",
   "meta": {
     "name": "XXXIV Campeonato Juvenil de C y L",
     "organizer": null,
@@ -26,12 +26,66 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "total-high"
+    "par": [
+      5,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      14,
+      2,
+      18,
+      6,
+      12,
+      4,
+      10,
+      16,
+      8,
+      11,
+      17,
+      5,
+      7,
+      13,
+      1,
+      3,
+      9,
+      15
+    ],
+    "meters": [
+      421,
+      328,
+      267,
+      425,
+      110,
+      355,
+      137,
+      306,
+      320,
+      418,
+      307,
+      129,
+      279,
+      127,
+      323,
+      315,
+      248,
+      389
+    ]
   },
   "leaderboard": [
     {
@@ -312,7 +366,32 @@
           "total": 79,
           "toPar": 7,
           "inscribedId": 1953322,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                3,
+                6,
+                4,
+                5,
+                5,
+                4,
+                6
+              ],
+              "total": 79
+            }
+          ]
         },
         {
           "pos": 3,
@@ -444,7 +523,32 @@
           "total": 74,
           "toPar": 2,
           "inscribedId": 1953322,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                3,
+                6,
+                4,
+                5,
+                5,
+                4,
+                6
+              ],
+              "total": 79
+            }
+          ]
         }
       ]
     },
@@ -540,7 +644,32 @@
           "total": 79,
           "toPar": 7,
           "inscribedId": 1936252,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                3,
+                5,
+                4,
+                6,
+                3,
+                4,
+                5,
+                5,
+                6,
+                3,
+                4,
+                3,
+                5,
+                4,
+                5,
+                6
+              ],
+              "total": 79
+            }
+          ]
         },
         {
           "pos": 2,
@@ -726,7 +855,32 @@
           "total": 112,
           "toPar": 40,
           "inscribedId": 1953390,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                6,
+                7,
+                4,
+                6,
+                4,
+                7,
+                7,
+                8,
+                7,
+                7,
+                6,
+                6,
+                5,
+                9,
+                4,
+                6
+              ],
+              "total": 112
+            }
+          ]
         }
       ]
     },
@@ -828,7 +982,32 @@
           "total": 77,
           "toPar": 5,
           "inscribedId": 1936252,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                3,
+                5,
+                4,
+                6,
+                3,
+                4,
+                5,
+                5,
+                6,
+                3,
+                4,
+                3,
+                5,
+                4,
+                5,
+                6
+              ],
+              "total": 79
+            }
+          ]
         },
         {
           "pos": 8,
@@ -942,7 +1121,32 @@
           "total": 76,
           "toPar": 4,
           "inscribedId": 1953390,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                6,
+                7,
+                4,
+                6,
+                4,
+                7,
+                7,
+                8,
+                7,
+                7,
+                6,
+                6,
+                5,
+                9,
+                4,
+                6
+              ],
+              "total": 112
+            }
+          ]
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "tourId": 68891,
   "url": "https://www.nextcaddy.com/tour/68891",
-  "scrapedAt": "2026-06-24T14:53:18.734Z",
+  "scrapedAt": "2026-06-24T19:20:01.881Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      269,
+      305,
+      384,
+      114,
+      459,
+      221,
+      111,
+      296,
+      318,
+      242,
+      428,
+      96,
+      328,
+      105,
+      296,
+      200,
+      375,
+      323
+    ]
   },
   "leaderboard": [
     {
@@ -53,7 +108,33 @@
           "rounds": [],
           "total": 31,
           "toPar": 5,
-          "inscribedId": 2271719
+          "inscribedId": 2271719,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                5,
+                3,
+                3,
+                5,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 77
+            }
+          ]
         },
         {
           "pos": 2,
@@ -137,7 +218,33 @@
           "rounds": [],
           "total": 36,
           "toPar": null,
-          "inscribedId": 2271719
+          "inscribedId": 2271719,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                5,
+                3,
+                3,
+                5,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 77
+            }
+          ]
         },
         {
           "pos": 2,

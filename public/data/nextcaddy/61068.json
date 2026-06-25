@@ -1,7 +1,7 @@
 {
   "tourId": 61068,
   "url": "https://www.nextcaddy.com/tour/61068",
-  "scrapedAt": "2026-06-24T14:52:33.550Z",
+  "scrapedAt": "2026-06-24T19:19:08.931Z",
   "meta": {
     "name": "Circuito Benjamín Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 34,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3
+    ],
+    "si": [
+      16,
+      17,
+      3,
+      11,
+      15,
+      7,
+      13,
+      1,
+      9
+    ],
+    "meters": [
+      232,
+      96,
+      444,
+      292,
+      103,
+      293,
+      255,
+      364,
+      128
+    ]
   },
   "leaderboard": [
     {
@@ -65,7 +93,24 @@
           "rounds": [],
           "total": 66,
           "toPar": 32,
-          "inscribedId": 2248620
+          "inscribedId": 2248620,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                8,
+                7,
+                6,
+                10,
+                7,
+                9,
+                6
+              ],
+              "total": 66
+            }
+          ]
         }
       ]
     },
@@ -266,7 +311,24 @@
           "rounds": [],
           "total": 46,
           "toPar": 12,
-          "inscribedId": 2248620
+          "inscribedId": 2248620,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                8,
+                7,
+                6,
+                10,
+                7,
+                9,
+                6
+              ],
+              "total": 66
+            }
+          ]
         }
       ]
     },

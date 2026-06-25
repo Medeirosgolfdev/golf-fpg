@@ -1,7 +1,7 @@
 {
   "tourId": 68753,
   "url": "https://www.nextcaddy.com/tour/68753",
-  "scrapedAt": "2026-06-24T14:53:10.880Z",
+  "scrapedAt": "2026-06-24T19:18:41.923Z",
   "meta": {
     "name": "IV Interclub Infantil RCG Vista Hermosa - RC Pineda 9 Hoyos",
     "organizer": null,
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ]
   },
   "leaderboard": [
     {
@@ -52,7 +80,24 @@
           "rounds": [],
           "total": 28,
           "toPar": -8,
-          "inscribedId": 2268743
+          "inscribedId": 2268743,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                5,
+                3,
+                3,
+                7,
+                5,
+                5,
+                7
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 2,
@@ -184,7 +229,24 @@
           "rounds": [],
           "total": 42,
           "toPar": 6,
-          "inscribedId": 2269561
+          "inscribedId": 2269561,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                3,
+                10,
+                5,
+                6,
+                6,
+                6,
+                6,
+                8
+              ],
+              "total": 57
+            }
+          ]
         },
         {
           "pos": 14,

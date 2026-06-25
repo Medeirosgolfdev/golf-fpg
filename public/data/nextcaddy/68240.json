@@ -1,7 +1,7 @@
 {
   "tourId": 68240,
   "url": "https://www.nextcaddy.com/tour/68240",
-  "scrapedAt": "2026-06-24T14:57:31.754Z",
+  "scrapedAt": "2026-06-24T19:17:53.931Z",
   "meta": {
     "name": "Torneo Access Series \"Dehesa Militar\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -22,11 +22,66 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4,
+      3,
+      5,
+      3,
+      3,
+      5,
+      5,
+      4,
+      4,
+      4,
+      3,
+      5
+    ],
+    "si": [
+      13,
+      17,
+      11,
+      3,
+      1,
+      5,
+      15,
+      7,
+      9,
+      16,
+      14,
+      8,
+      18,
+      2,
+      6,
+      4,
+      12,
+      10
+    ],
+    "meters": [
+      314,
+      135,
+      468,
+      419,
+      392,
+      376,
+      271,
+      169,
+      506,
+      141,
+      165,
+      468,
+      434,
+      392,
+      339,
+      378,
+      169,
+      502
+    ]
   },
   "leaderboard": [
     {
@@ -288,7 +343,33 @@
           "rounds": [],
           "total": 26,
           "toPar": 10,
-          "inscribedId": 2338258
+          "inscribedId": 2338258,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                5,
+                2,
+                3,
+                null,
+                4,
+                5,
+                5,
+                5,
+                3,
+                8
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 2,
@@ -526,7 +607,33 @@
           "rounds": [],
           "total": 34,
           "toPar": 2,
-          "inscribedId": 2338258
+          "inscribedId": 2338258,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                5,
+                2,
+                3,
+                null,
+                4,
+                5,
+                5,
+                5,
+                3,
+                8
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 4,

@@ -1,7 +1,7 @@
 {
   "tourId": 70904,
   "url": "https://www.nextcaddy.com/tour/70904",
-  "scrapedAt": "2026-06-24T14:57:33.766Z",
+  "scrapedAt": "2026-06-24T19:18:50.623Z",
   "meta": {
     "name": "VIII Torneo Academia Infantil 2025-2026 - 9 hoyos",
     "organizer": null,
@@ -22,11 +22,39 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      17,
+      15,
+      9,
+      5,
+      7,
+      13,
+      1,
+      3,
+      11
+    ],
+    "meters": [
+      73,
+      73,
+      114,
+      83,
+      104,
+      54,
+      119,
+      111,
+      85
+    ]
   },
   "leaderboard": [
     {
@@ -65,7 +93,24 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2332411
+          "inscribedId": 2332411,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                5,
+                5
+              ],
+              "total": 37
+            }
+          ]
         },
         {
           "pos": 3,
@@ -131,7 +176,24 @@
           "rounds": [],
           "total": 8,
           "toPar": 10,
-          "inscribedId": 2325708
+          "inscribedId": 2325708,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                4,
+                4,
+                6,
+                7,
+                7,
+                7,
+                6
+              ],
+              "total": 51
+            }
+          ]
         },
         {
           "pos": 9,

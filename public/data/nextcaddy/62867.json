@@ -1,7 +1,7 @@
 {
   "tourId": 62867,
   "url": "https://www.nextcaddy.com/tour/62867",
-  "scrapedAt": "2026-05-09T18:26:57.030Z",
+  "scrapedAt": "2026-06-24T19:19:16.216Z",
   "meta": {
     "name": "Prueba Acceso Cto. España Benjamin",
     "organizer": null,
@@ -23,12 +23,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-high"
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2
+    ],
+    "meters": [
+      94,
+      161,
+      261,
+      122,
+      151,
+      61,
+      111,
+      194,
+      71
+    ]
   },
   "leaderboard": [
     {
@@ -93,7 +120,23 @@
           "total": 33,
           "toPar": 5,
           "inscribedId": 2099863,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                3,
+                3,
+                3,
+                5,
+                3
+              ],
+              "total": 33
+            }
+          ]
         },
         {
           "pos": 5,
@@ -117,7 +160,23 @@
           "total": 37,
           "toPar": 9,
           "inscribedId": 2099873,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 37
+            }
+          ]
         },
         {
           "pos": 7,
@@ -153,7 +212,23 @@
           "total": 46,
           "toPar": 18,
           "inscribedId": 2099867,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                7,
+                5,
+                5,
+                4,
+                4,
+                8,
+                3
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 10,
@@ -291,7 +366,23 @@
           "total": 25,
           "toPar": -3,
           "inscribedId": 2099867,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                7,
+                5,
+                5,
+                4,
+                4,
+                8,
+                3
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 6,
@@ -369,7 +460,23 @@
           "total": 25,
           "toPar": -3,
           "inscribedId": 2099863,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                3,
+                3,
+                3,
+                5,
+                3
+              ],
+              "total": 33
+            }
+          ]
         },
         {
           "pos": 3,
@@ -381,7 +488,23 @@
           "total": 26,
           "toPar": -2,
           "inscribedId": 2099873,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 37
+            }
+          ]
         },
         {
           "pos": 4,

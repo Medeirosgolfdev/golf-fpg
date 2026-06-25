@@ -1,7 +1,7 @@
 {
   "tourId": 64562,
   "url": "https://www.nextcaddy.com/tour/64562",
-  "scrapedAt": "2026-05-09T18:27:48.063Z",
+  "scrapedAt": "2026-06-24T19:20:07.236Z",
   "meta": {
     "name": "Campeonato Juvenil la Valmuza Benjamines (Hcp Nacional)",
     "organizer": null,
@@ -21,12 +21,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-high"
+    "par": [
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      9,
+      17,
+      1,
+      5,
+      13,
+      15,
+      3,
+      7,
+      11
+    ],
+    "meters": [
+      385,
+      84,
+      426,
+      340,
+      100,
+      245,
+      291,
+      384,
+      116
+    ]
   },
   "leaderboard": [
     {
@@ -79,7 +106,23 @@
           "total": 48,
           "toPar": 12,
           "inscribedId": 2167022,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                8,
+                6,
+                3,
+                5,
+                5,
+                6,
+                4
+              ],
+              "total": 48
+            }
+          ]
         }
       ]
     },
@@ -133,7 +176,23 @@
           "total": 37,
           "toPar": 1,
           "inscribedId": 2167022,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                8,
+                6,
+                3,
+                5,
+                5,
+                6,
+                4
+              ],
+              "total": 48
+            }
+          ]
         }
       ]
     }

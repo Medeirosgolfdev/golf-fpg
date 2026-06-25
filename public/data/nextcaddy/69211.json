@@ -1,7 +1,7 @@
 {
   "tourId": 69211,
   "url": "https://www.nextcaddy.com/tour/69211",
-  "scrapedAt": "2026-06-24T14:53:46.358Z",
+  "scrapedAt": "2026-06-24T19:19:27.415Z",
   "meta": {
     "name": "I Puntuable Zonal CyL- Extremadura  JOVENES PROMESA 9 HOYOS",
     "organizer": null,
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 34,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      4
+    ],
+    "si": [
+      15,
+      17,
+      13,
+      1,
+      9,
+      5,
+      7,
+      11,
+      3
+    ],
+    "meters": [
+      421,
+      119,
+      329,
+      331,
+      370,
+      295,
+      154,
+      268,
+      338
+    ]
   },
   "leaderboard": [
     {
@@ -52,7 +80,24 @@
           "rounds": [],
           "total": 26,
           "toPar": -8,
-          "inscribedId": 2282032
+          "inscribedId": 2282032,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                7,
+                6,
+                7,
+                6,
+                5,
+                6,
+                5
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 2,
@@ -85,7 +130,24 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2282030
+          "inscribedId": 2282030,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                6,
+                6,
+                8,
+                6,
+                5,
+                4,
+                6
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 5,

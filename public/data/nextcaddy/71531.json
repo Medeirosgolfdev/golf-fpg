@@ -1,7 +1,7 @@
 {
   "tourId": 71531,
   "url": "https://www.nextcaddy.com/tour/71531",
-  "scrapedAt": "2026-06-24T14:57:17.680Z",
+  "scrapedAt": "2026-06-24T19:18:19.728Z",
   "meta": {
     "name": "FINAL C. INFANTIL B.K. 9 HOYOS 13-06-26",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -58,7 +92,24 @@
           "rounds": [],
           "total": 21,
           "toPar": -3,
-          "inscribedId": 2341004
+          "inscribedId": 2341004,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                5,
+                4,
+                6,
+                5,
+                7,
+                4,
+                6
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 3,
@@ -124,7 +175,24 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2340995
+          "inscribedId": 2340995,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                3,
+                6,
+                2,
+                9,
+                6,
+                8,
+                5,
+                9
+              ],
+              "total": 57
+            }
+          ]
         },
         {
           "pos": 9,
@@ -201,7 +269,24 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2341000
+          "inscribedId": 2341000,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                6,
+                5,
+                7,
+                7,
+                9,
+                6,
+                7
+              ],
+              "total": 60
+            }
+          ]
         },
         {
           "pos": 16,
@@ -223,7 +308,24 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2340990
+          "inscribedId": 2340990,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                null,
+                7,
+                7,
+                8,
+                6,
+                8,
+                9
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 18,

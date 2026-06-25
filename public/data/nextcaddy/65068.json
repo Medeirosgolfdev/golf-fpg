@@ -1,7 +1,7 @@
 {
   "tourId": 65068,
   "url": "https://www.nextcaddy.com/tour/65068",
-  "scrapedAt": "2026-05-09T18:28:33.518Z",
+  "scrapedAt": "2026-06-24T19:19:25.310Z",
   "meta": {
     "name": "Final Pequecircuito (Jugadores/as con Hcp mayor de 36)",
     "organizer": null,
@@ -20,9 +20,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1
+    ],
+    "meters": [
+      272,
+      374,
+      298,
+      158,
+      273,
+      268,
+      361,
+      145,
+      259
+    ]
   },
   "leaderboard": [
     {
@@ -87,7 +117,23 @@
           "total": 18,
           "toPar": null,
           "inscribedId": 2197157,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                9,
+                7,
+                4,
+                5,
+                7,
+                7,
+                5,
+                6
+              ],
+              "total": 57
+            }
+          ]
         },
         {
           "pos": 5,
@@ -99,7 +145,23 @@
           "total": 17,
           "toPar": 1,
           "inscribedId": 2197341,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                8,
+                5,
+                6,
+                6,
+                10,
+                3,
+                4
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 6,
@@ -171,7 +233,23 @@
           "total": 7,
           "toPar": 11,
           "inscribedId": 2198028,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                9,
+                7,
+                9,
+                8,
+                9,
+                10,
+                5,
+                8
+              ],
+              "total": 74
+            }
+          ]
         },
         {
           "pos": 12,

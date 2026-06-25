@@ -1,7 +1,7 @@
 {
   "tourId": 61128,
   "url": "https://www.nextcaddy.com/tour/61128",
-  "scrapedAt": "2026-06-24T14:55:15.578Z",
+  "scrapedAt": "2026-06-24T19:15:24.383Z",
   "meta": {
     "name": "Pequecircuito Zona W",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 27,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      3,
+      15,
+      13,
+      1,
+      17,
+      5,
+      11,
+      7,
+      9
+    ],
+    "meters": [
+      42,
+      40,
+      48,
+      42,
+      51,
+      48,
+      43,
+      53,
+      43
+    ]
   },
   "leaderboard": [
     {
@@ -516,7 +544,24 @@
           "rounds": [],
           "total": 35,
           "toPar": 8,
-          "inscribedId": 2291436
+          "inscribedId": 2291436,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                3,
+                3,
+                4,
+                3,
+                3
+              ],
+              "total": 35
+            }
+          ]
         },
         {
           "pos": 13,
@@ -611,7 +656,24 @@
           "rounds": [],
           "total": 61,
           "toPar": 34,
-          "inscribedId": 2302089
+          "inscribedId": 2302089,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                2,
+                6,
+                9,
+                9,
+                6,
+                8,
+                7,
+                5,
+                9
+              ],
+              "total": 61
+            }
+          ]
         },
         {
           "pos": null,

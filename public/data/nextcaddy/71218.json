@@ -1,7 +1,7 @@
 {
   "tourId": 71218,
   "url": "https://www.nextcaddy.com/tour/71218",
-  "scrapedAt": "2026-06-24T14:56:49.062Z",
+  "scrapedAt": "2026-06-24T19:18:58.911Z",
   "meta": {
     "name": "POOL INFANTIL VH",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7,
+      10,
+      18,
+      4,
+      12,
+      16,
+      6,
+      2,
+      14,
+      8
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388,
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ]
   },
   "leaderboard": [
     {
@@ -163,7 +218,33 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2331055
+          "inscribedId": 2331055,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                6,
+                8,
+                6,
+                6,
+                6,
+                7,
+                4,
+                11,
+                8,
+                3,
+                8,
+                5,
+                9,
+                8,
+                7,
+                6,
+                9
+              ],
+              "total": 126
+            }
+          ]
         },
         {
           "pos": 12,

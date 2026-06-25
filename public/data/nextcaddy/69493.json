@@ -1,7 +1,7 @@
 {
   "tourId": 69493,
   "url": "https://www.nextcaddy.com/tour/69493",
-  "scrapedAt": "2026-06-24T14:56:09.384Z",
+  "scrapedAt": "2026-06-24T19:19:57.401Z",
   "meta": {
     "name": "VII Torneo Academia Infantil 2025-2026 - 18 hoyos",
     "organizer": null,
@@ -20,11 +20,66 @@
     ]
   },
   "course": {
-    "parTotal": 38,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      17,
+      15,
+      9,
+      5,
+      7,
+      13,
+      1,
+      3,
+      11,
+      18,
+      16,
+      10,
+      6,
+      8,
+      14,
+      2,
+      4,
+      12
+    ],
+    "meters": [
+      73,
+      73,
+      114,
+      83,
+      104,
+      54,
+      119,
+      111,
+      85,
+      73,
+      73,
+      114,
+      83,
+      104,
+      54,
+      119,
+      111,
+      85
+    ]
   },
   "leaderboard": [
     {
@@ -63,7 +118,33 @@
           "rounds": [],
           "total": 37,
           "toPar": -1,
-          "inscribedId": 2319570
+          "inscribedId": 2319570,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4,
+                3,
+                4,
+                5,
+                6,
+                4,
+                5,
+                5,
+                6,
+                5,
+                3
+              ],
+              "total": 77
+            }
+          ]
         },
         {
           "pos": 3,

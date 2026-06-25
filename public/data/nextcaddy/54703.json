@@ -1,7 +1,7 @@
 {
   "tourId": 54703,
   "url": "https://www.nextcaddy.com/tour/54703",
-  "scrapedAt": "2026-05-09T18:28:54.253Z",
+  "scrapedAt": "2026-06-24T19:18:06.367Z",
   "meta": {
     "name": "1ª Prueba Liguilla Benjamín y Alevín de CyL",
     "organizer": null,
@@ -22,12 +22,39 @@
     ]
   },
   "course": {
-    "par": null,
-    "si": null,
-    "meters": null,
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-high"
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2
+    ],
+    "meters": [
+      94,
+      161,
+      261,
+      122,
+      151,
+      61,
+      111,
+      194,
+      71
+    ]
   },
   "leaderboard": [
     {
@@ -68,7 +95,23 @@
           "total": 30,
           "toPar": 2,
           "inscribedId": 1832028,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                2,
+                4,
+                2,
+                3
+              ],
+              "total": 30
+            }
+          ]
         },
         {
           "pos": 3,
@@ -152,7 +195,23 @@
           "total": 44,
           "toPar": 16,
           "inscribedId": 1827323,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                7,
+                4,
+                6,
+                5,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 44
+            }
+          ]
         },
         {
           "pos": 10,
@@ -200,7 +259,23 @@
           "total": 47,
           "toPar": 19,
           "inscribedId": 1830131,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                7,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 14,
@@ -224,7 +299,23 @@
           "total": 50,
           "toPar": 22,
           "inscribedId": 1830656,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                10,
+                5,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 16,
@@ -308,7 +399,23 @@
           "total": 71,
           "toPar": 43,
           "inscribedId": 1827357,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                14,
+                9,
+                8,
+                7,
+                5,
+                6,
+                6,
+                8,
+                8
+              ],
+              "total": 71
+            }
+          ]
         },
         {
           "pos": 23,
@@ -362,7 +469,23 @@
           "total": 20,
           "toPar": -8,
           "inscribedId": 1830131,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                7,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 2,
@@ -434,7 +557,23 @@
           "total": 44,
           "toPar": 16,
           "inscribedId": 1827357,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                14,
+                9,
+                8,
+                7,
+                5,
+                6,
+                6,
+                8,
+                8
+              ],
+              "total": 71
+            }
+          ]
         },
         {
           "pos": 8,
@@ -512,7 +651,23 @@
           "total": 18,
           "toPar": -10,
           "inscribedId": 1827323,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                7,
+                4,
+                6,
+                5,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 44
+            }
+          ]
         },
         {
           "pos": 4,
@@ -584,7 +739,23 @@
           "total": 28,
           "toPar": null,
           "inscribedId": 1830656,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                10,
+                5,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 50
+            }
+          ]
         }
       ]
     },
@@ -650,7 +821,23 @@
           "total": 18,
           "toPar": -10,
           "inscribedId": 1827323,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                7,
+                4,
+                6,
+                5,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 44
+            }
+          ]
         },
         {
           "pos": 5,
@@ -674,7 +861,23 @@
           "total": 20,
           "toPar": -8,
           "inscribedId": 1830131,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                7,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 7,
@@ -770,7 +973,23 @@
           "total": 25,
           "toPar": -3,
           "inscribedId": 1832028,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                2,
+                4,
+                2,
+                3
+              ],
+              "total": 30
+            }
+          ]
         },
         {
           "pos": 15,
@@ -794,7 +1013,23 @@
           "total": 28,
           "toPar": null,
           "inscribedId": 1830656,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                10,
+                5,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 17,
@@ -866,7 +1101,23 @@
           "total": 44,
           "toPar": 16,
           "inscribedId": 1827357,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                14,
+                9,
+                8,
+                7,
+                5,
+                6,
+                6,
+                8,
+                8
+              ],
+              "total": 71
+            }
+          ]
         },
         {
           "pos": 23,

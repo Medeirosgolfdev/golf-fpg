@@ -1,7 +1,7 @@
 {
   "tourId": 61135,
   "url": "https://www.nextcaddy.com/tour/61135",
-  "scrapedAt": "2026-06-24T14:55:47.075Z",
+  "scrapedAt": "2026-06-24T19:18:26.574Z",
   "meta": {
     "name": "Pequecircuito Zona W",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,11 +20,66 @@
     ]
   },
   "course": {
-    "parTotal": 27,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      7,
+      17,
+      13,
+      3,
+      9,
+      1,
+      11,
+      5,
+      16,
+      8,
+      18,
+      14,
+      4,
+      10,
+      2,
+      12,
+      6
+    ],
+    "meters": [
+      77,
+      107,
+      92,
+      104,
+      112,
+      94,
+      117,
+      67,
+      104,
+      77,
+      107,
+      92,
+      104,
+      112,
+      94,
+      117,
+      67,
+      104
+    ]
   },
   "leaderboard": [
     {
@@ -63,7 +118,24 @@
           "rounds": [],
           "total": 36,
           "toPar": 9,
-          "inscribedId": 2309065
+          "inscribedId": 2309065,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                2,
+                5,
+                3,
+                4,
+                5,
+                5
+              ],
+              "total": 36
+            }
+          ]
         },
         {
           "pos": 3,
@@ -234,7 +306,24 @@
           "rounds": [],
           "total": 44,
           "toPar": 17,
-          "inscribedId": 2309699
+          "inscribedId": 2309699,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                6,
+                5,
+                4,
+                6,
+                3,
+                7
+              ],
+              "total": 44
+            }
+          ]
         },
         {
           "pos": 5,
@@ -336,7 +425,24 @@
           "rounds": [],
           "total": 45,
           "toPar": 18,
-          "inscribedId": 2309012
+          "inscribedId": 2309012,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                6,
+                6,
+                4,
+                7,
+                6,
+                4,
+                6
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 3,
@@ -369,7 +475,33 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2309284
+          "inscribedId": 2309284,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
         }
       ]
     }

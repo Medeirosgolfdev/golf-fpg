@@ -1,7 +1,7 @@
 {
   "tourId": 71285,
   "url": "https://www.nextcaddy.com/tour/71285",
-  "scrapedAt": "2026-06-24T14:56:50.446Z",
+  "scrapedAt": "2026-06-24T19:20:03.820Z",
   "meta": {
     "name": "TORNEO FINAL ESCUELA INFANTIL 31 MAYO NARANJAS",
     "organizer": null,
@@ -20,7 +20,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      5,
+      4,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      3
+    ],
+    "si": [
+      7,
+      5,
+      3,
+      17,
+      9,
+      13,
+      1,
+      15,
+      11
+    ],
+    "meters": [
+      314,
+      219,
+      203,
+      189,
+      297,
+      211,
+      170,
+      182,
+      141
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -69,7 +103,24 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2332417
+          "inscribedId": 2332417,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                7,
+                6,
+                6,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 50
+            }
+          ]
         },
         {
           "pos": 4,

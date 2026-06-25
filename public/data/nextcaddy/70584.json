@@ -1,7 +1,7 @@
 {
   "tourId": 70584,
   "url": "https://www.nextcaddy.com/tour/70584",
-  "scrapedAt": "2026-06-24T14:56:39.746Z",
+  "scrapedAt": "2026-06-24T19:19:50.257Z",
   "meta": {
     "name": "Prueba Infantil y Alevín Ctos de España",
     "organizer": null,
@@ -23,11 +23,66 @@
     ]
   },
   "course": {
-    "parTotal": 70,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      5,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1,
+      18,
+      2,
+      16,
+      12,
+      6,
+      10,
+      14,
+      8,
+      4
+    ],
+    "meters": [
+      324,
+      464,
+      354,
+      175,
+      300,
+      361,
+      474,
+      160,
+      334,
+      127,
+      331,
+      136,
+      309,
+      335,
+      311,
+      180,
+      455,
+      346
+    ]
   },
   "leaderboard": [
     {
@@ -121,7 +176,33 @@
           "rounds": [],
           "total": 83,
           "toPar": 13,
-          "inscribedId": 2313468
+          "inscribedId": 2313468,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                8,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                8,
+                4
+              ],
+              "total": 83
+            }
+          ]
         },
         {
           "pos": 8,
@@ -227,7 +308,33 @@
           "rounds": [],
           "total": 76,
           "toPar": 6,
-          "inscribedId": 2313468
+          "inscribedId": 2313468,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                8,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                8,
+                4
+              ],
+              "total": 83
+            }
+          ]
         },
         {
           "pos": 7,

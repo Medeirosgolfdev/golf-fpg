@@ -1,7 +1,7 @@
 {
   "tourId": 61148,
   "url": "https://www.nextcaddy.com/tour/61148",
-  "scrapedAt": "2026-06-24T14:56:30.716Z",
+  "scrapedAt": "2026-06-24T19:18:23.168Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 27,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      13,
+      5,
+      9,
+      7,
+      17,
+      3,
+      1,
+      11
+    ],
+    "meters": [
+      119,
+      96,
+      135,
+      99,
+      105,
+      157,
+      93,
+      91,
+      109
+    ]
   },
   "leaderboard": [
     {
@@ -96,7 +124,24 @@
           "rounds": [],
           "total": 60,
           "toPar": 33,
-          "inscribedId": 2321293
+          "inscribedId": 2321293,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                5,
+                9,
+                6,
+                9,
+                7,
+                5,
+                6
+              ],
+              "total": 60
+            }
+          ]
         }
       ]
     },
@@ -136,7 +181,24 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2314890
+          "inscribedId": 2314890,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                5,
+                4,
+                3,
+                3,
+                3
+              ],
+              "total": 37
+            }
+          ]
         },
         {
           "pos": 3,
@@ -238,7 +300,24 @@
           "rounds": [],
           "total": 36,
           "toPar": 9,
-          "inscribedId": 2321656
+          "inscribedId": 2321656,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                4,
+                5,
+                2,
+                4,
+                2,
+                4,
+                5
+              ],
+              "total": 36
+            }
+          ]
         },
         {
           "pos": 2,

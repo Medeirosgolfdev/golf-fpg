@@ -1,7 +1,7 @@
 {
   "tourId": 67350,
   "url": "https://www.nextcaddy.com/tour/67350",
-  "scrapedAt": "2026-06-24T14:51:54.299Z",
+  "scrapedAt": "2026-06-24T19:17:49.632Z",
   "meta": {
     "name": "3ª P. C. INFANTIL B.K. 18 HOYOS 10-01-26",
     "organizer": null,
@@ -21,11 +21,66 @@
     ]
   },
   "course": {
-    "parTotal": 30,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7,
+      10,
+      18,
+      4,
+      12,
+      16,
+      6,
+      2,
+      14,
+      8
+    ],
+    "meters": [
+      440,
+      159,
+      352,
+      125,
+      279,
+      337,
+      327,
+      229,
+      431,
+      440,
+      159,
+      352,
+      125,
+      279,
+      337,
+      327,
+      229,
+      431
+    ]
   },
   "leaderboard": [
     {
@@ -64,7 +119,33 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2242900
+          "inscribedId": 2242900,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 75
+            }
+          ]
         },
         {
           "pos": 3,
@@ -229,7 +310,33 @@
           "rounds": [],
           "total": 15,
           "toPar": 21,
-          "inscribedId": 2242914
+          "inscribedId": 2242914,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                9,
+                5,
+                6,
+                5,
+                6,
+                7,
+                5,
+                3,
+                5,
+                3,
+                4,
+                6,
+                5,
+                6,
+                7
+              ],
+              "total": 97
+            }
+          ]
         },
         {
           "pos": 18,
@@ -390,7 +497,33 @@
           "rounds": [],
           "total": 38,
           "toPar": -2,
-          "inscribedId": 2242900
+          "inscribedId": 2242900,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 75
+            }
+          ]
         },
         {
           "pos": 3,
@@ -555,7 +688,33 @@
           "rounds": [],
           "total": 27,
           "toPar": 9,
-          "inscribedId": 2242914
+          "inscribedId": 2242914,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                9,
+                5,
+                6,
+                5,
+                6,
+                7,
+                5,
+                3,
+                5,
+                3,
+                4,
+                6,
+                5,
+                6,
+                7
+              ],
+              "total": 97
+            }
+          ]
         },
         {
           "pos": 18,

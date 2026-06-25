@@ -1,7 +1,7 @@
 {
   "tourId": 69289,
   "url": "https://www.nextcaddy.com/tour/69289",
-  "scrapedAt": "2026-06-24T14:54:00.679Z",
+  "scrapedAt": "2026-06-24T19:19:31.452Z",
   "meta": {
     "name": "5ª P. C. INFANTIL B.K. 9 HOYOS 21-03-26",
     "organizer": null,
@@ -21,11 +21,39 @@
     ]
   },
   "course": {
-    "parTotal": 38,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ]
   },
   "leaderboard": [
     {
@@ -53,7 +81,24 @@
           "rounds": [],
           "total": 28,
           "toPar": -10,
-          "inscribedId": 2284482
+          "inscribedId": 2284482,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                6,
+                5,
+                5,
+                4,
+                6,
+                5,
+                8
+              ],
+              "total": 51
+            }
+          ]
         },
         {
           "pos": 2,
@@ -108,7 +153,24 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2284489
+          "inscribedId": 2284489,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                3,
+                5,
+                6,
+                5,
+                8,
+                7,
+                4,
+                9
+              ],
+              "total": 57
+            }
+          ]
         },
         {
           "pos": 7,

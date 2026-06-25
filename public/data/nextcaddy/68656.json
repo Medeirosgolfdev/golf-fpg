@@ -1,7 +1,7 @@
 {
   "tourId": 68656,
   "url": "https://www.nextcaddy.com/tour/68656",
-  "scrapedAt": "2026-06-24T14:55:21.970Z",
+  "scrapedAt": "2026-06-24T19:18:29.218Z",
   "meta": {
     "name": "4ª PRUEBA VIII LIGUILLA BENJAMÍN Y ALEVÍN DE CASTILLA Y LEÓN 2026",
     "organizer": null,
@@ -27,11 +27,39 @@
     ]
   },
   "course": {
-    "parTotal": 28,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      4,
+      3,
+      3,
+      4
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2
+    ],
+    "meters": [
+      94,
+      161,
+      261,
+      122,
+      151,
+      261,
+      111,
+      194,
+      285
+    ]
   },
   "leaderboard": [
     {
@@ -81,7 +109,24 @@
           "rounds": [],
           "total": 25,
           "toPar": -5,
-          "inscribedId": 2302389
+          "inscribedId": 2302389,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                6,
+                4,
+                6,
+                4,
+                4,
+                5
+              ],
+              "total": 43
+            }
+          ]
         },
         {
           "pos": 4,
@@ -180,7 +225,24 @@
           "rounds": [],
           "total": 34,
           "toPar": 6,
-          "inscribedId": 2304094
+          "inscribedId": 2304094,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                7,
+                6,
+                5,
+                5,
+                5,
+                8,
+                5
+              ],
+              "total": 55
+            }
+          ]
         }
       ]
     },
@@ -209,7 +271,24 @@
           "rounds": [],
           "total": 19,
           "toPar": -9,
-          "inscribedId": 2300479
+          "inscribedId": 2300479,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                6,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3
+              ],
+              "total": 37
+            }
+          ]
         },
         {
           "pos": 2,
@@ -275,7 +354,24 @@
           "rounds": [],
           "total": 24,
           "toPar": -4,
-          "inscribedId": 2303125
+          "inscribedId": 2303125,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                6,
+                8,
+                4,
+                4,
+                3,
+                5,
+                6,
+                6
+              ],
+              "total": 45
+            }
+          ]
         },
         {
           "pos": 8,
