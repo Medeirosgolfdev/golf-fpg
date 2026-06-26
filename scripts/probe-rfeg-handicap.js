@@ -217,45 +217,55 @@ function parseHandicapResult(html) {
   console.log("  UpdatePanel     :", updatePanel);
   summary.contract = { prefix: P, fLic, fNom, fAp1, fAp2, btn, sm, updatePanel };
 
-  async function search({ licencia, apellido1, nombre }, label) {
-    // re-GET para ViewState/EventValidation/REQUESTDIGEST frescos
-    const g = await request("GET", PAGE_URL, null);
-    const ins = parseInputs(g.body);
-    const base = formFields(ins);
-    base["__EVENTTARGET"] = ""; base["__EVENTARGUMENT"] = "";
-    base[fLic] = licencia || ""; base[fNom] = nombre || ""; base[fAp1] = apellido1 || ""; base[fAp2] = "";
+  const empty = (p) => (!p.handicap || p.handicap === "-----") && (!p.gridTables || !p.gridTables.length || !p.gridTables.some(t => t.totalRows > 0));
 
-    // ── tentativa A: FULL postback (image button coords) ──
-    const full = Object.assign({}, base); full[btn + ".x"] = "9"; full[btn + ".y"] = "11";
-    let res = await request("POST", PAGE_URL, encodeBody(full));
+  // A pesquisa resolve numa URL GET limpa: ServicioHandicap.aspx?HLic=… ou ?HAp1=…
+  // (descoberto via pageRedirect/window.location no dump v2). Fazemos GET directo;
+  // se vier vazio, tentamos um async postback e seguimos qualquer pageRedirect.
+  async function fetchResult(params, label) {
+    const qs = Object.entries(params).map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&");
+    const url = PAGE_URL + "?" + qs;
+    let res = await request("GET", url, null);
     let parsed = parseHandicapResult(res.body);
-    let mode = "full";
-    const empty = (p) => (!p.handicap || p.handicap === "-----") && (!p.gridTables || !p.gridTables.length || !p.gridTables.some(t => t.totalRows > 0));
+    let mode = "get";
 
-    // ── tentativa B: ASYNC partial postback (se A não rendeu) ──
     if (empty(parsed)) {
-      const asy = Object.assign({}, base);
-      asy[sm] = updatePanel + "|" + btn; asy["__ASYNCPOST"] = "true";
-      asy[btn + ".x"] = "9"; asy[btn + ".y"] = "11";
-      const res2 = await request("POST", PAGE_URL, encodeBody(asy), { "X-MicrosoftAjax": "Delta=true", "X-Requested-With": "XMLHttpRequest" });
-      res = res2; parsed = parseHandicapResult(res2.body); mode = "async";
+      // fallback: async postback do BTEnviar na própria página de query-string
+      const ins = parseInputs(res.body);
+      const licInp2 = ins.find((i) => i.name && i.name.endsWith("$txt_H_Licencia"));
+      if (licInp2) {
+        const P2 = licInp2.name.replace(/\$txt_H_Licencia$/, ""); const btn2 = P2 + "$BTEnviar";
+        const smM = /PageRequestManager\._initialize\('([^']+)'/.exec(res.body); const sm2 = smM ? smM[1] : "ctl00$ScriptManager1";
+        const upM = new RegExp("'t(" + P2.replace(/[$]/g, "\\$") + "\\$up\\w+)'").exec(res.body); const up2 = upM ? upM[1] : (P2 + "$upInscritos");
+        const base = formFields(ins); base["__EVENTTARGET"] = ""; base["__EVENTARGUMENT"] = "";
+        base[sm2] = up2 + "|" + btn2; base["__ASYNCPOST"] = "true"; base[btn2 + ".x"] = "9"; base[btn2 + ".y"] = "11";
+        const r2 = await request("POST", url, encodeBody(base), { "X-MicrosoftAjax": "Delta=true", "X-Requested-With": "XMLHttpRequest" });
+        const redir = /pageRedirect\|\|([^|]+)\|/.exec(r2.body);
+        if (redir) { const rurl = new URL(decodeURIComponent(redir[1]), PAGE_URL).toString(); res = await request("GET", rurl, null); parsed = parseHandicapResult(res.body); mode = "get→redirect"; }
+        else { res = r2; parsed = parseHandicapResult(r2.body); mode = "async"; }
+      }
     }
-    const fn = "search-" + label + "-" + mode + ".html";
+    const fn = "res-" + label.replace(/[^A-Za-z0-9_-]/g, "_") + "-" + mode.replace(/[^a-z]/g, "") + ".html";
     fs.writeFileSync(path.join(OUT_DIR, fn), res.body);
-    console.log(`\n[${label}] mode=${mode} status=${res.status} bytes=${res.body.length} → ${fn}`);
+    console.log(`\n[${label}] (${url}) mode=${mode} status=${res.status} bytes=${res.body.length} → ${fn}`);
     console.log("  registo único:", JSON.stringify({ nombre: parsed.nombre, handicap: parsed.handicap, handicapMundial: parsed.handicapMundial, estado: parsed.estado, modificacion: parsed.modificacion }));
     console.log("  lblError:", parsed.error);
-    if (parsed.gridTables && parsed.gridTables.length) {
+    if (parsed.gridTables && parsed.gridTables.length && parsed.gridTables.some(t => t.totalRows > 0)) {
       console.log("  GRELHA PanelGridHandicaps:");
-      for (const t of parsed.gridTables) { console.log(`    tabela #${t.id || "?"} (${t.totalRows} linhas):`); for (const r of t.rows.slice(0, 8)) console.log("       ", r.join(" | ")); }
+      for (const t of parsed.gridTables) { if (!t.totalRows) continue; console.log(`    tabela #${t.id || "?"} (${t.totalRows} linhas):`); for (const r of t.rows.slice(0, 10)) console.log("       ", r.join(" | ")); }
     } else {
       console.log("  GRELHA: vazia (gridRaw len=" + ((parsed.gridRaw || "").length) + ")");
     }
-    return { mode, status: res.status, parsed: { ...parsed, gridRaw: (parsed.gridRaw || "").slice(0, 4000) } };
+    return { url, mode, status: res.status, parsed: { ...parsed, gridRaw: (parsed.gridRaw || "").slice(0, 6000) } };
   }
 
-  summary.steps.byLicencia = await search({ licencia: LICENCIA }, "licencia");
-  summary.steps.bySurname = await search({ apellido1: SURNAME }, "apellido");
+  // licenças de teste: seguramente ACTIVAS (juniores vistos hoje), um de cada formato
+  const TEST_LICS = arg("licencia", null)
+    ? [arg("licencia", null)]
+    : ["1106478321", "AM51917193", "CM11939859", LICENCIA];
+  summary.steps.bySurname = await fetchResult({ HAp1: SURNAME }, "apellido-" + SURNAME);
+  summary.steps.byLicencia = [];
+  for (const lic of TEST_LICS) summary.steps.byLicencia.push(await fetchResult({ HLic: lic }, "licencia-" + lic));
 
   fs.writeFileSync(path.join(OUT_DIR, "probe-summary.json"), JSON.stringify(summary, null, 2));
   console.log("\n✓ Probe v2 terminado. Envia a pasta", OUT_DIR, "(search-*.html + probe-summary.json).");
