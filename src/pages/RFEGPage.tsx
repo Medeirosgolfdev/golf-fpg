@@ -2756,22 +2756,45 @@ async function rfegLoadDivisions(
   return [division];
 }
 
-/** Campeonatos de España juvenis INDIVIDUAIS (uma categoria + um sexo): só estes
- *  se combinam num torneio único com tabs de escalão/sexo (como o Nacional FPG).
- *  Estrita de propósito — exclui "Interclubes", "FFAA", "Pitch & Putt", Mixto e
- *  multi-categoria ("Infantil, Alevín y Benjamín ... Memorial ..."). */
-const CEE_INDIVIDUAL_RE = /^Campeonato de España\s+(Benjamín|Benjamin|Alev[ií]n|Infantil|Cadete|Juvenil)\s+(Masculino|Femenino)\s+(\d{4})$/i;
+/** Nome "base" do torneio = nome SEM o escalão e o sexo. Junta as várias
+ *  categorias/sexos do MESMO campeonato (ex: "Campeonato de España Alevín
+ *  Masculino 2026" → "Campeonato de España 2026"). */
+function rfegBaseName(t: RFEGIndexEntry): string {
+  let n = t.name || "";
+  if (t.category) n = n.replace(new RegExp(`\\b${t.category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi"), " ");
+  n = n.replace(/\b(Masculino|Femenino|Masculina|Femenina|Mascul\.?|Femen\.?|Masc\.?|Fem\.?)\b/gi, " ");
+  return n
+    .replace(/\([\s.,íÍ]*\)/g, " ")                 // parênteses que ficaram vazios/lixo
+    .replace(/\s*,\s*/g, " ")
+    .replace(/\s+y\s+(?=\d{4}|$)/gi, " ")           // " y 2026" / " y " órfão
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
 
-/** Ordem dos escalões nas tabs (mais novos primeiro). */
+/** Ordem dos escalões nas tabs (mais novos primeiro); Sub-N pela idade. */
 function ceeEscOrder(cat?: string | null): number {
   const k = (cat || "").toLowerCase();
-  if (k.startsWith("benjam")) return 0;
-  if (k.startsWith("alev")) return 1;
-  if (k.startsWith("infant")) return 2;
-  if (k.startsWith("cadet")) return 3;
-  if (k.startsWith("juven")) return 4;
-  return 9;
+  if (k.startsWith("benjam")) return 10;
+  if (k.startsWith("alev")) return 12;
+  if (k.startsWith("infant")) return 14;
+  if (k.startsWith("cadet")) return 16;
+  if (k.startsWith("juven")) return 18;
+  const m = /sub[\s-]?(\d+)/.exec(k);
+  if (m) return parseInt(m[1], 10);
+  return 99;
 }
+
+/** ms de dateStart (ISO) — para medir a janela temporal de um grupo. */
+function rfegStartMs(t: RFEGIndexEntry): number | null {
+  const m = /(\d{4})-(\d{2})-(\d{2})/.exec(String(t.dateStartIso ?? t.dateStart ?? ""));
+  return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : null;
+}
+
+const slugify = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+/** Janela máxima (dias) para um grupo ser "o mesmo evento" e não uma SÉRIE
+ *  (Puntuável/Circuito espalhado por meses). */
+const RFEG_GROUP_WINDOW_DAYS = 16;
 
 function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup): CircuitEntry[] {
   // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
@@ -2780,19 +2803,6 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
   const visible = index.tournaments.filter(
     (t) => t.category && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0),
   );
-
-  // Separar os CEE individuais (combináveis) do resto, agrupados por ano.
-  const ceeByYear = new Map<number, RFEGIndexEntry[]>();
-  const rest: RFEGIndexEntry[] = [];
-  for (const t of visible) {
-    if (t.year != null && CEE_INDIVIDUAL_RE.test(t.name || "")) {
-      const arr = ceeByYear.get(t.year) ?? [];
-      arr.push(t);
-      ceeByYear.set(t.year, arr);
-    } else {
-      rest.push(t);
-    }
-  }
 
   const single = (t: RFEGIndexEntry): CircuitEntry => ({
     id: `${t.source}:${t.id}`,
@@ -2820,27 +2830,55 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
     loadDivisions: () => rfegLoadDivisions(t, dobLookup, hcpLookup),
   });
 
+  // Agrupar por (fonte | ano | nome-base). Um grupo é UM campeonato dividido por
+  // categoria/sexo (combinável) quando: ≥2 torneios, varia categoria OU sexo, cada
+  // (categoria,sexo) é ÚNICO (senão é circuito/multi-stop — "Circuito Zona C" repete
+  // Juvenil M) e as datas estão dentro de uma janela curta (senão é uma SÉRIE —
+  // "Puntuable Nacional" espalhado por meses). Caso contrário, fica avulso.
+  const byKey = new Map<string, RFEGIndexEntry[]>();
+  for (const t of visible) {
+    const key = `${t.source}|${t.year ?? "?"}|${rfegBaseName(t)}`;
+    const arr = byKey.get(key) ?? [];
+    arr.push(t);
+    byKey.set(key, arr);
+  }
+
   const entries: CircuitEntry[] = [];
 
-  // Combinar os CEE de cada ano (≥2 categorias/sexos) num torneio único com
-  // divisões = tabs "Benjamín M / Benjamín F / Alevín M / …". 1 só → fica avulso.
-  for (const [year, group] of ceeByYear) {
-    if (group.length < 2) { rest.push(...group); continue; }
+  for (const group of byKey.values()) {
+    const catSex = group.map((t) => `${t.category}|${/F/i.test(t.sex || "") ? "F" : "M"}`);
+    const variesCatOrSex = new Set(group.map((t) => t.category)).size > 1
+      || new Set(group.map((t) => (/F/i.test(t.sex || "") ? "F" : "M"))).size > 1;
+    const ms = group.map(rfegStartMs).filter((x): x is number => x != null);
+    const spanDays = ms.length ? (Math.max(...ms) - Math.min(...ms)) / 86400000 : 0;
+    if (group.length < 2 || !variesCatOrSex
+        || new Set(catSex).size !== catSex.length
+        || spanDays > RFEG_GROUP_WINDOW_DAYS) {
+      for (const t of group) entries.push(single(t));
+      continue;
+    }
+
+    // Combinar: divisões = tabs "Benjamín M / Benjamín F / Alevín M / …".
     const sorted = [...group].sort(
       (a, b) => (ceeEscOrder(a.category) - ceeEscOrder(b.category))
         || ((/F/i.test(a.sex || "") ? 1 : 0) - (/F/i.test(b.sex || "") ? 1 : 0)),
     );
+    const baseRaw = rfegBaseName(sorted[0]) || sorted[0].name || "España";
+    const year = sorted[0].year;
+    const name = (year != null && !baseRaw.includes(String(year))) ? `${baseRaw} ${year}` : baseRaw;
+    const sexes = new Set(sorted.map((t) => (/F/i.test(t.sex || "") ? "F" : "M")));
+    const showSex = sexes.size > 1; // só anexa M/F à tab quando há ambos
     const starts = sorted.map((t) => t.dateStartIso ?? t.dateStart).filter(Boolean).sort();
     const ends = sorted.map((t) => t.dateEndIso ?? t.dateEnd).filter(Boolean).sort();
     entries.push({
-      id: `rfegolf:cee-${year}`,
+      id: `${sorted[0].source}:grp-${slugify(name)}`,
       year,
-      name: `Campeonato de España ${year}`,
-      source: "rfegolf",
+      name,
+      source: sorted[0].source,
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
-      sex: "Mixed",
+      sex: showSex ? "Mixed" : (sexes.has("F") ? "F" : "M"),
       hasManuel: sorted.some((t) => t.hasManuel),
       hasPt: sorted.some((t) => t.hasPt),
       playerCount: sorted.reduce((s, t) => s + (t.leaderboardPlayers || t.counts?.admitidos || 0), 0) || undefined,
@@ -2860,8 +2898,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
             key: `${ct.source}:${ct.id}:${i}`,
             escalao: ct.category ?? d.escalao,
             sex: rfegSex(ct.sex),
-            // tab "Benjamín M" / "Benjamín F" (mesma convenção H/M-F que a FPG).
-            tabLabel: `${ct.category ?? d.escalao ?? "—"} ${sexL}`,
+            tabLabel: showSex ? `${ct.category ?? d.escalao ?? "—"} ${sexL}` : (ct.category ?? d.escalao ?? "—"),
             links: [...(d.links ?? []), official],
           }));
         }));
@@ -2870,7 +2907,6 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
     });
   }
 
-  for (const t of rest) entries.push(single(t));
   return entries;
 }
 
