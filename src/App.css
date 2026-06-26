@@ -2521,6 +2521,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Buracos scorecard — sem width fixo (box-sizing:border-box distorce); bS entre todos, bM nos grupos */
 .sc-lb .lb-hole       { min-width: 33px; border-left: 1px solid var(--border-light); }
 .sc-lb .lb-hole-first { border-left: 1px solid var(--border); }
+/* Buraco de saída quando NÃO é o buraco 1 (saída a dois tees: alguns jogadores
+   começam no 10). Realça a célula com uma moldura discreta na cor das linhas
+   (sem cantos arredondados), sem mexer na cor do score nem na ordem. */
+.sc-lb td.lb-hole.sc-start-hole {
+  box-shadow: inset 0 0 0 2px var(--border, #bcc5ad);
+}
 /* Células de buraco em linhas de jogador: padding compacto */
 .sc-lb tbody tr:not(.lb-par-row):not(.lb-si-row) td.lb-hole { padding: 3px 2px; }
 .sc-lb .lb-halftot    { width: 42px; background: var(--bg-hover);

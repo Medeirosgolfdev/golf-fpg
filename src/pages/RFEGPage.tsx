@@ -138,9 +138,17 @@ interface RFEGDetail {
     federationCatId: number | null;
   };
   /** Par real do campo (vem do JSON quando disponível — para NextCaddy é inferido
-   *  a partir dos scores hole-by-hole, para RFEGolf vem como null). */
+   *  a partir dos scores hole-by-hole, para RFEGolf vem como null; para mitarjeta
+   *  vem do cartão do campo). */
   coursePar?: number[] | null;
   parConfidence?: "high" | "medium" | "low";
+  /** mitarjeta.golf (Campeonatos de España juvenis ao vivo): id do torneo +
+   *  SI/metros reais por buraco + draw R1. Quando presente, o conversor usado é
+   *  mitarjetaToFPGTournament (scorecards hole-by-hole + HCP + idade). */
+  mitarjetaTorneo?: number;
+  _rfegCourseSi?: number[] | null;
+  _rfegCourseMeters?: number[] | null;
+  teeTimes?: { round: number; groups: Array<{ tee: number | string; time: string; players: string[] }> };
   inscritos: {
     admitidos: RFEGPlayer[];
     reservas: RFEGPlayer[];
@@ -161,6 +169,11 @@ interface RFEGDetail {
     nRounds: number | null;
     courseRating: number | null;
     slope: number | null;
+    // ── mitarjeta extras (cartão do campo) ──
+    source?: string;
+    parTotal?: number | null;
+    metersTotal?: number | null;
+    perHole?: Array<{ hole: number; par: number; si: number; meters: number }>;
     players: Array<{
       pos: number | null;
       name: string;
@@ -168,6 +181,18 @@ interface RFEGDetail {
       hoy: number;
       rounds: number[];
       total: number;
+      // ── mitarjeta enrichment (opcional) ──
+      hcp?: number | null;
+      dob?: string | null;
+      licencia?: string | null;
+      club?: string | null;
+      catEdad?: string | null;
+      sexo?: string | null;
+      holeScores?: Record<string, number[]>; // round → strokes[18]
+      startHole?: number | null;             // saída R1 (1 ou 10)
+      region?: string | null;
+      sd?: Array<number | null>;
+      bestSd?: number | null;
     }>;
   }>;
 }
@@ -386,6 +411,7 @@ function ageToEscalaoEs(age: number | null): string | null {
   return SUB_TO_ES_TERM[subN] || subN;
 }
 
+<<<<<<< Updated upstream
 /** Variantes de caixa/acento dos termos RFEG → forma canónica (a fonte traz
  *  "Alevín" e "ALEVIN" misturados; sem isto a UI mostrava as duas grafias). */
 const ES_TERM_CANON: Record<string, string> = {
@@ -420,6 +446,18 @@ function escaloEsForPlayer(
   const by = yearOf(dob), ty = yearOf(ref);
   if (by == null || ty == null) return null;
   return ageToEscalaoEs(ty - by);
+=======
+/** Canoniza a categoria ES (o RFEG mistura "Alevín"/"ALEVIN"/"alevin") para a
+ *  forma acentuada Title-Case, para o pill aparecer sempre igual. */
+const ES_CAT_CANON: Record<string, string> = {
+  benjamin: "Benjamín", alevin: "Alevín", infantil: "Infantil",
+  cadete: "Cadete", junior: "Junior", juvenil: "Juvenil",
+};
+function canonEscEs(s: string | null | undefined): string | null {
+  if (!s) return null;
+  const k = s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").trim();
+  return ES_CAT_CANON[k] || (s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+>>>>>>> Stashed changes
 }
 
 /* ── ncToFPGTournament ────────────────────────────────────────
@@ -631,6 +669,111 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
     // mostrar a tab "📋 Scorecards" (grelha vazia contra par-72 falso = parece partido).
     _noHbh: true,
   } as FPGTournament;
+}
+
+/* ── mitarjetaToFPGTournament ───────────────────────────────────
+ * Campeonatos de España juvenis com live scoring no mitarjeta.golf (injectado
+ * por scripts/scrape-mitarjeta.js). Ao contrário do RFEGolf-PDF, traz hole-by-hole
+ * REAL + par/SI/metros REAIS do cartão do campo + HCP/idade (de admitidos). Modelo
+ * = ncToFPGTournament. NUNCA fabrica par 4×18 — sem par, o array fica vazio (a
+ * linha de PAR não aparece). */
+function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGTournament | null {
+  const group = (detail.results || []).find((r) => r.players && r.players.length > 0);
+  if (!group) return null;
+
+  // Par/SI/metros REAIS (9 ou 18 buracos). Vazios → sem placeholder.
+  const valid = (a?: number[] | null) => Array.isArray(a) && (a.length === 18 || a.length === 9);
+  const par = valid(detail.coursePar) ? (detail.coursePar as number[]) : [];
+  const si = valid(detail._rfegCourseSi) ? (detail._rfegCourseSi as number[]) : [];
+  const meters = valid(detail._rfegCourseMeters) ? (detail._rfegCourseMeters as number[]) : [];
+  const nHoles = par.length || (group.perHole ? group.perHole.length : 18);
+  const parTotal = par.reduce((a, b) => a + b, 0); // 0 quando não há par
+
+  // Rondas REALMENTE jogadas (não as declaradas): num torneio a decorrer só há
+  // R1 — usar as declaradas marcaria todos como incompletos (WD) e apagaria o total.
+  const nRounds = Math.max(
+    ...group.players.map((p) => (p.rounds || []).filter((g) => g != null && g > 0).length),
+    1,
+  );
+  const courseRating = group.courseRating ?? undefined;
+  const slope = group.slope ?? undefined;
+
+  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const lookupByName: Record<string, DobLookupEntry> = {};
+  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+
+  const dateRef = detail.meta.dateStart || null;
+
+  const players: FPGPlayer[] = group.players.map((p, idx) => {
+    const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
+    const dob = p.dob || e?.dob || null;
+    const age = ageAt(dob, dateRef);
+    // Termo RFEG (Alevín/Benjamín/Infantil) directo do JSON (casing canonizado);
+    // fallback derivado da idade.
+    const escLabel = canonEscEs(p.catEdad) || ageToEscalaoEs(age) || dobToSubN(dob, dateRef);
+    const startHole = p.startHole ?? undefined;
+    const club = (p.club || e?.club || "").toString();
+    const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
+
+    const roundScores: FPGRoundScore[] = (p.rounds || [])
+      .map((gross, i) => {
+        const rn = i + 1;
+        const sc = (p.holeScores && p.holeScores[String(rn)]) || [];
+        return {
+          round: rn,
+          gross: (gross != null && gross > 0) ? gross : (sc.reduce((a, b) => a + b, 0) || 0),
+          scores: sc.length === nHoles ? sc : [],
+          pars: par,
+          si,
+          meters,
+          courseRating,
+          slope,
+          startHole,
+          teeName: meters.length ? "Camp." : undefined,
+        };
+      })
+      .filter((r) => r.gross > 0);
+
+    return {
+      scoreId: `mitarjeta-${detail.compId}-${idx}`,
+      pos: p.pos ?? idx + 1,
+      name: formatPlayerName(p.name || ""),
+      club: club ? displayName(club) : "—",
+      fed: p.licencia || e?.licencia || undefined,
+      fedCode: p.licencia || e?.licencia || undefined,
+      grossTotal: p.total ?? null,
+      toPar: p.toPar ?? null,
+      hcpExact: p.hcp ?? undefined,
+      escalao: escLabel || undefined,
+      courseRating,
+      slope,
+      startHole,
+      _sex: sex,
+      _age: age,
+      teeName: meters.length ? "Camp." : undefined,
+      nholes: nHoles,
+      parTotal: parTotal || undefined,
+      scores: roundScores[0]?.scores || [],
+      par,
+      si,
+      meters,
+      roundScores,
+      // Torneio AO VIVO: não marcar WD por terem jogado menos rondas que o total
+      // (apagaria o total). WD real virá quando o mitarjeta o indicar.
+      _wd: false,
+      _roundsPlayed: roundScores.length,
+    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
+  });
+
+  return {
+    name: detail.meta.name || `RFEGolf ${detail.compId}`,
+    tcode: String(detail.compId),
+    date: detail.meta.dateStart || "",
+    campo: detail.meta.course || "",
+    rounds: nRounds,
+    playerCount: players.length,
+    players,
+  };
 }
 
 
@@ -1342,7 +1485,9 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
       } as any, dobLookup);
     }
     if (entry.source === "nextcaddy") return ncToFPGTournament(data, dobLookup);
-    if (entry.source === "rfegolf") return rfegolfToFPGTournament(data, dobLookup);
+    if (entry.source === "rfegolf") return data.mitarjetaTorneo
+      ? mitarjetaToFPGTournament(data, dobLookup)
+      : rfegolfToFPGTournament(data, dobLookup);
     if (entry.source === "golfdirecto") {
       const fpg = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dobLookup);
       return fpg as unknown as FPGTournament | null;
@@ -1471,7 +1616,8 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           hasResults ? (
             <IntlTournView
               tournament={fpgTournament!}
-              scOptions={lgsScorecardOptions()}
+              // mitarjeta traz CR+Slope → mostrar a coluna SD (WHS) no scorecard
+              scOptions={{ ...lgsScorecardOptions(), hideSD: !data.mitarjetaTorneo }}
               siLabel={entry.source === "livegolfscoring" ? "m" : "SI"}
               // Para Espanha: ESC visível (Sub-N pill), HCP visível, CLUBE escondido
               accShowCols={{ esc: true, fed: false, tee: false, club: false, hcp: true, age: true, birthYear: false }}
@@ -2434,7 +2580,9 @@ async function rfegLoadDivisions(
       _hcpLookup: hcpLookup,
     } as any, dobLookup); // eslint-disable-line @typescript-eslint/no-explicit-any
   } else if (t.source === "nextcaddy") results = ncToFPGTournament(data, dobLookup);
-  else if (t.source === "rfegolf") results = rfegolfToFPGTournament(data, dobLookup);
+  else if (t.source === "rfegolf") results = data.mitarjetaTorneo
+    ? mitarjetaToFPGTournament(data, dobLookup)
+    : rfegolfToFPGTournament(data, dobLookup);
   else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dobLookup) as unknown as FPGTournament | null;
 
   const lists = (Object.keys(LIST_LABELS) as ListKind[])
@@ -2543,7 +2691,8 @@ async function rfegLoadDivisions(
       ? () => <DrawSaidaView detail={data} entry={t} />
       : undefined,
     links: links.length ? links : undefined,
-    scOptions: lgsScorecardOptions(),
+    // mitarjeta traz CR+Slope → mostrar a coluna SD (WHS) no scorecard
+    scOptions: { ...lgsScorecardOptions(), hideSD: !data.mitarjetaTorneo },
   };
   return [division];
 }

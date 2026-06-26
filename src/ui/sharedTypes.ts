@@ -17,6 +17,8 @@ export interface BaseRoundScore {
   slope?: number;
   teeName?: string;
   teeColorId?: number;
+  /** Buraco de saída desta ronda (1 ou 10 em saídas a dois tees). */
+  startHole?: number;
 }
 
 /** Base player entry for tournaments */
@@ -30,6 +32,8 @@ export interface BasePlayer {
   slope?: number;
   teeName?: string;
   nholes?: number;
+  /** Buraco de saída (1 ou 10 em saídas a dois tees). */
+  startHole?: number;
 }
 
 /** Base tournament entry */

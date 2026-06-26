@@ -42,6 +42,9 @@ export interface ScorecardRow {
   /** Máscara de buracos inferidos (preenchimento posterior de cartão incompleto).
    *  Quando inferredHoles[i] é true, o buraco i é pintado a cinzento. */
   inferredHoles?: boolean[];
+  /** Buraco de saída do jogador (1 ou 10 em saídas a dois tees). A célula desse
+   *  buraco recebe a classe .sc-start-hole (realce). Não altera a ordem. */
+  startHole?: number;
   rowBg?: string;
   stickyBg?: string;
   /** True quando a linha é do Manuel — aplica .row-manuel (highlight verde). */
@@ -378,21 +381,28 @@ export function ScorecardLeaderboard({
                     </>
                   )}
                   {showScorecard && <>
-                    {scores.slice(0, 9).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
+                    {scores.slice(0, 9).map((sc, i) => {
+                      // Só realçar saídas FORA do buraco padrão (1ª coluna): hole 10 etc.
+                      const isStart = row.startHole != null && row.startHole !== startHole && (startHole + i) === row.startHole;
+                      return (
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
+                        title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
                         <span className={"sc-score " + (inf[i] ? "sc-inferred" : scClass(sc, par[i]))}
                           title={inf[i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
-                    ))}
+                    );})}
                     <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
                       {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - parF9)})</span>
                     </td>
-                    {!is9 && scores.slice(9, 18).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
+                    {!is9 && scores.slice(9, 18).map((sc, i) => {
+                      const isStart = row.startHole != null && row.startHole !== startHole && (startHole + 9 + i) === row.startHole;
+                      return (
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
+                        title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
                         <span className={"sc-score " + (inf[9 + i] ? "sc-inferred" : scClass(sc, par[9 + i]))}
                           title={inf[9 + i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
-                    ))}
+                    );})}
                     {!is9 && (
                       <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
                         {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - parB9)})</span>

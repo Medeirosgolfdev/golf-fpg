@@ -320,6 +320,7 @@ export function ScorecardLB({
       toPar: isWDPlayer ? null : gross - parTotal,
       scores,
       inferredHoles: inferred,
+      startHole: (p as { startHole?: number }).startHole,
       rowBg,
       stickyBg,
       isManuel: rowManuel,

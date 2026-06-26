@@ -414,6 +414,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
         toPar: rs.gross - parT,
         scores: rs.scores, par: rs.pars, si: rs.si, meters: rs.meters,
         courseRating: rs.courseRating, slope: rs.slope, teeName: rs.teeName,
+        startHole: rs.startHole,
         roundScores: [rs],
       }));
     }

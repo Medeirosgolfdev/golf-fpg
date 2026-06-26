@@ -134,7 +134,10 @@ for (const file of rfegFiles) {
         noAdmitidos: counts.noAdmitidos || 0,
         provisional: counts.provisional || 0,
       },
-      leaderboardPlayers: 0,
+      // Resultados publicados (PDF parseado ou injectados do mitarjeta).
+      leaderboardPlayers: Array.isArray(j.results)
+        ? j.results.reduce((a, r) => a + ((r && r.players) ? r.players.length : 0), 0)
+        : 0,
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) {
