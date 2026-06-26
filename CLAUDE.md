@@ -605,6 +605,87 @@ Diagnóstico que desempatou: adicionar `[debug-lb-out]` no `scrapeOne` para impr
 
 ---
 
+## RFEG — serviço de hcp + rankings nacionais (2026-06-26)
+
+Duas fontes PÚBLICAS novas em `rfegolf.es` (Node puro, sem secrets, sem Playwright)
+que cobrem **qualquer** federado espanhol, complementando o que já vinha só das
+listas de inscritos dos torneios (`licencia-dob-lookup.json`, ~17k licenças, só
+16% com DOB). Descobertas via os probes `scripts/probe-rfeg-handicap.js` e
+`scripts/probe-rfeg-ranking.js` (corre-os no PC; ver "sandbox" abaixo).
+
+⚠ **O sandbox Cowork NÃO chega ao `rfegolf.es`** (egress policy → 403 no proxy; o
+WebFetch também leva 403 do WAF). Estes scripts correm no PC da utilizadora ou em
+GitHub Actions (IPs não bloqueados — como os outros scrapers de Espanha).
+
+### Serviço de hándicap — `paginasservicios/serviciohandicap.aspx`
+
+Frontend: `rfegolf.es/jugar/handicap`. É SharePoint + UpdatePanel, mas a pesquisa
+**resolve numa URL GET limpa e bookmarkável** (a página faz `window.location`/
+`pageRedirect` para ela — não é preciso postback/ViewState/cookies):
+
+- Por licença: `?HLic=<licença>` → 1 jogador. Funciona para TODOS os formatos
+  (numérico de 10 dígitos, `AM…`, `CM…`, `CP…`, etc.).
+- Por apelido: `?HAp1=<apelido1>` (+ `&HAp2=` `&HNom=`) → LISTA. Match por
+  **prefixo/contém** (ex.: `GARC` ≡ `GARCIA`). Pesquisar **sem acentos** (a própria
+  página avisa que guarda sem acentos).
+
+Resultado: grelha `gvSearchResult` com **só 5 colunas** — `Nombre` ("NOMBRE
+APELLIDO1 APELLIDO2") · `Licencia` · `Hándicap` (exacto; sentinelas `99,9`/`Sin HCP`
+= sem hcp) · `Estado` (Válido/Sin HCP) · `Última Modificación` (dd-mm-yyyy). **NÃO
+tem DOB, clube, sexo, categoria nem nacionalidade.**
+
+⚠ **CAP rígido de 20 resultados por query, sem paginação.** Apelidos raros (a maioria)
+ficam completos; apelidos comuns (GARCIA, LOPEZ…) batem nos 20 e precisam de
+refinamento por `HAp2`/`HNom` (sem garantia de 100% sem dicionário INE completo).
+
+**`scripts/scrape-federados-es.js`** → `public/data/federados-es.json`
+(`byLicencia`, escrita atómica/resume, exit 2 = no-op):
+- `--diagnose` — ~7 queries para validar match/refinamento/cap.
+- `--enrich` — para cada licença conhecida (de `licencia-dob-lookup.json`) → `?HLic=`
+  → **hcp oficial ATUAL + estado + data**. Bounded (~17k), completo para o conjunto
+  conhecido. **Pesado** → manter off do cron semanal (politeness).
+- `--census --surnames F` — enumera apelidos (dicionário INE em `F`, 1/linha),
+  refina os capados com `HAp2` (top comuns por default) e depois `HNom` A-Z. Dedup
+  por licença. Best-effort (limitado pelo cap de 20).
+- `--lic L` / `--ap1 S` — ad-hoc.
+
+### Ranking nacional — `RankingPagina/RankingList.aspx`
+
+Frontend: `rfegolf.es/jugar/ranking`. SharePoint WebForms com 3 dropdowns
+DEPENDENTES via `__doPostBack` (postback COMPLETO, **não** async). EnableEventValidation
+activo → cada valor de dropdown enviado tem de estar registado no `__EVENTVALIDATION`
+corrente. Conduzir a cascata em Node exige: postbacks completos · enviar o **valor da
+opção selecionada** de cada select · **saltar selects disabled** (ddlRanking/ddlFecha
+começam disabled) · encadear `__VIEWSTATE`/`__EVENTVALIDATION` frescos de cada resposta.
+
+Fluxo: `ddlaño`(2009-2026) + `ddlComite` → `__doPostBack(ddlComite)` popula
+`ddlRanking` → `__doPostBack(ddlRanking)` popula `ddlFecha` → `BTEnviar` (image) →
+grelha `GridRankingList`. **Sem paginação** (lista completa).
+
+Comités (`ddlComite`): **15=Masculino 16=Femenino 17=Juvenil 18=Profesionales
+19=Pitch&Putt 20=GolfAdaptado 22=PorHándicap**. Juvenil expõe `RANKING NACIONAL
+CADETE/INFANTIL × FEMENINO/MASCULINO {año}` (o *value* da opção é o próprio nome).
+Grelha: `Puesto · Licencia · Nombre("APELLIDOS, NOMBRE") · Total(pontos)`. **Sem
+clube nem DOB** (como o hcp). É o feed competitivo de juniores com posição+pontos
+nacionais, sem o cap de 20.
+
+**`scripts/scrape-rfeg-ranking.js`** → `public/data/rfeg-rankings/{año}_{comite}_{slug}_{hash}.json`
++ `rfeg-rankings-index.json` (`{year,comite,comiteName,ranking,fecha,players:[{puesto,
+licencia,nombre,total}]}`). `--comites`/`--years`/`--all`/`--skip-existing`. O `hash`
+no nome evita colisões de slug (nomes longos truncados sobrescreviam-se). Exit 2 = no-op.
+
+> Nota: "Por Hándicap" (22) e alguns anos podem ainda não ter ranking publicado —
+> o ddlRanking vem vazio (não é erro).
+
+### Automação
+
+**Workflow `update-rfeg-rankings.yml`** (Terça 05:00 UTC, depois do `update-spain`):
+cron corre só os rankings Juvenil dos últimos anos (leve). O `--enrich` (pesado,
+~17k pedidos) é `workflow_dispatch` com `run_enrich=true` (off por default). Commita
+para `main` com push robusto (retry + rebase). Sem secrets.
+
+---
+
 ## API Signupanytime
 
 Base: `https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op={OP}&…`

@@ -1,0 +1,131 @@
+name: Actualizar RFEG rankings (+ enrich hcp opcional)
+
+# Rankings nacionais públicos da RFEG (RankingList.aspx) — Puesto/Licencia/Nombre/
+# Total(pontos), por comité e ano. Portal público, Node puro, sem secrets.
+#
+# Corre:
+#   - Automaticamente Terça-feira 05:00 UTC (bem depois do update-spain de Segunda,
+#     para evitar colisões de push em main).
+#   - A pedido (botão "Run workflow").
+#
+# Default do cron: rankings Juvenil dos últimos anos (leve, ~dezenas de pedidos).
+# O --enrich (consulta de hcp das ~17k licenças conhecidas, ~17k pedidos) é PESADO
+# e fica OFF por default — liga-se só a pedido (run_enrich=true), por politeness.
+#
+# Doc: CLAUDE.md secção "RFEG — serviço de hcp + rankings".
+on:
+  workflow_dispatch:
+    inputs:
+      ranking_scope:
+        description: 'Âmbito dos rankings'
+        required: false
+        default: 'juvenil-recent'
+        type: choice
+        options: ['juvenil-recent', 'juvenil-all', 'all']
+      run_enrich:
+        description: 'Correr também o --enrich (hcp oficial das ~17k licenças)? PESADO.'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      enrich_skip_existing:
+        description: 'Enrich: saltar licenças já em federados-es.json?'
+        required: false
+        default: 'true'
+        type: choice
+        options: ['true', 'false']
+
+  schedule:
+    # Terça 05:00 UTC — folgado depois do update-spain (Segunda 04:00, até 4h).
+    - cron: '0 5 * * 2'
+
+permissions:
+  contents: write
+
+jobs:
+  update-rfeg-rankings:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Decidir âmbito
+        id: scope
+        run: |
+          SCOPE="${{ github.event.inputs.ranking_scope }}"
+          [ -z "$SCOPE" ] && SCOPE="juvenil-recent"
+          case "$SCOPE" in
+            all)            echo "RANK_ARGS=--all" >> $GITHUB_ENV ;;
+            juvenil-all)    echo "RANK_ARGS=--comites 17 --all" >> $GITHUB_ENV ;;
+            *)              echo "RANK_ARGS=--comites 17 --years 2026,2025,2024" >> $GITHUB_ENV ;;
+          esac
+          echo "âmbito: $SCOPE"
+
+      # ── Rankings (leve) — exit 2 = sem novidades (não é erro) ──
+      - name: Scrape RFEG rankings
+        id: rankings
+        run: |
+          set +e
+          node scripts/scrape-rfeg-ranking.js $RANK_ARGS
+          CODE=$?
+          set -e
+          echo "exit_code=$CODE" >> $GITHUB_OUTPUT
+          if [ "$CODE" = "1" ]; then echo "❌ ranking scraper erro"; exit 1; fi
+          [ "$CODE" = "2" ] && echo "ℹ️  rankings sem novidades"
+          echo "✓ ranking scraper exit=$CODE"
+
+      # ── Enrich hcp (PESADO, opcional) — exit 2 = sem novidades ──
+      - name: Enrich federados-es (hcp por licença)
+        id: enrich
+        if: github.event.inputs.run_enrich == 'true'
+        run: |
+          SKIP=""
+          [ "${{ github.event.inputs.enrich_skip_existing }}" != "false" ] && SKIP="--skip-existing"
+          set +e
+          node scripts/scrape-federados-es.js --enrich $SKIP --concurrency 3 --delay 150
+          CODE=$?
+          set -e
+          if [ "$CODE" = "1" ]; then echo "❌ enrich erro"; exit 1; fi
+          echo "✓ enrich exit=$CODE"
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/rfeg-rankings/ \
+                  public/data/rfeg-rankings-index.json \
+                  public/data/federados-es.json 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update RFEG rankings${{ github.event.inputs.run_enrich == 'true' && ' + hcp enrich' || '' }} ${DATE}"
+          # Push robusto: outro workflow pode ter commitado em main entretanto.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then PUSH_OK=1; break; fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then echo "❌ Push falhou após 5 tentativas"; exit 1; fi
+          echo "✓ Commit feito"
