@@ -471,7 +471,10 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const recentYears = useMemo(() => years.slice(0, YEAR_PILL_LIMIT), [years]);
   const oldCutoff = useMemo(() => (years.length > YEAR_PILL_LIMIT ? years[YEAR_PILL_LIMIT - 1] : null), [years]);
   const escaloes = useMemo(
-    () => [...new Set(entries.flatMap(e => e.divisions ? e.divisions.map(d => d.escalao) : (e.escalao ? [e.escalao] : [])))].sort(),
+    () => [...new Set(entries.flatMap(e =>
+      e.escaloes?.length ? e.escaloes
+      : e.divisions ? e.divisions.map(d => d.escalao)
+      : (e.escalao ? [e.escalao] : [])))].sort(),
     [entries],
   );
   const sources = useMemo(
@@ -499,7 +502,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       if (flt.intl && fIntl && !e.intl) return false;
       if (toggles.has("manuel") && entryManuelState(e) === false) return false;
       if (toggles.has("pt") && entryPtState(e) === false) return false;
-      if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
+      if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.escaloes ?? []).includes(fEsc) || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
       if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {
         const hay = normName(`${e.name} ${e.course ?? ""}`);

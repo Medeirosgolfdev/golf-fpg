@@ -194,6 +194,10 @@ export interface CircuitEntry {
   // ── Metadados leves para a sidebar (quando as divisões são lazy) ──────
   /** Escalão para o EscPill da sidebar (quando divisions ainda não carregadas). */
   escalao?: string;
+  /** Escalões contidos numa entrada COMBINADA multi-escalão (lazy): o `escalao`
+   *  único não chega e `divisions` ainda não carregaram. Alimenta o filtro e o
+   *  dropdown de escalão para a entrada combinada continuar a aparecer. */
+  escaloes?: string[];
   /** Sexo para badge na sidebar. */
   sex?: CircuitSex;
   /** Nº de jogadores (sidebar). Fallback: soma das divisões carregadas. */

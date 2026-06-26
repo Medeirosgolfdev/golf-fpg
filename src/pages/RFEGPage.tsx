@@ -2736,6 +2736,10 @@ async function rfegLoadDivisions(
   // que agora também lê `detail.teeTimes` além dos `_ncHorarios` do NextCaddy.
   const hasMitarjetaDraw = !!(data.teeTimes && data.teeTimes.groups && data.teeTimes.groups.length);
   const hasDrawSection = hasNcDraw || hasMitarjetaDraw;
+  // CR+Slope reais → mostrar a coluna SD (WHS) no scorecard. Antes só o mitarjeta
+  // a mostrava; o livegolfscoring agora também traz CR/Slope (re-scrape), por isso
+  // basta o campo ter courseRating+slope (qualquer fonte).
+  const hasRating = !!results?.players?.some((p) => p.courseRating != null && p.slope != null);
 
   const division: CircuitDivision = {
     key: "main",
@@ -2750,8 +2754,8 @@ async function rfegLoadDivisions(
     // Draw saída — sempre pelo DrawSaidaView → DrawTab partilhado (= FPG).
     renderDrawSection: hasDrawSection ? () => <DrawSaidaView detail={data} entry={t} /> : undefined,
     links: links.length ? links : undefined,
-    // mitarjeta traz CR+Slope → mostrar a coluna SD (WHS) no scorecard
-    scOptions: { ...lgsScorecardOptions(), hideSD: !data.mitarjetaTorneo },
+    // SD (WHS) visível quando o campo tem CR+Slope reais (mitarjeta OU livegolfscoring).
+    scOptions: { ...lgsScorecardOptions(), hideSD: !(data.mitarjetaTorneo || hasRating) },
   };
   return [division];
 }
@@ -2879,6 +2883,9 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
       sex: showSex ? "Mixed" : (sexes.has("F") ? "F" : "M"),
+      // Escalões contidos → o filtro de escalão continua a apanhar a entrada
+      // combinada (lazy) e o dropdown mantém as opções.
+      escaloes: [...new Set(sorted.map((t) => t.category).filter((c): c is string => !!c))],
       hasManuel: sorted.some((t) => t.hasManuel),
       hasPt: sorted.some((t) => t.hasPt),
       playerCount: sorted.reduce((s, t) => s + (t.leaderboardPlayers || t.counts?.admitidos || 0), 0) || undefined,
