@@ -2216,8 +2216,11 @@ function Content() {
             return (
               <>
                 {showTabs && (
-                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
-                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                  // Botões de escalão alinhados à esquerda com o título (sem indent
+                  // extra) e sem linha divisória. `gap` trata o espaçamento entre
+                  // botões (e entre linhas ao quebrar); o padding-bottom dá o mesmo
+                  // espaço acima do título que o que existe abaixo (título → sub).
+                  <div style={{ display: "flex", gap: 6, padding: "0 0 6px", flexWrap: "wrap" }}>
                     {curGroup!.entries.map((e) => {
                       const active = e.ccode === tShow.ccode && e.tcode === tShow.tcode;
                       // Quando as entradas do grupo não têm escalão (ex: "3º Torneio
@@ -2243,8 +2246,7 @@ function Content() {
                               const target = tournamentUrl("FPG", e.ccode, e.tcode);
                               if (target && location.pathname !== target) navigate(target, { replace: true });
                             }
-                          }}
-                          style={{ marginBottom: 6 }}>
+                          }}>
                           {label}
                           {nJog > 0 && (
                             <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>

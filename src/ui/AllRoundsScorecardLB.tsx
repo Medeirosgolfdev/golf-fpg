@@ -136,7 +136,7 @@ export function AllRoundsScorecardLB({
           {playedRounds}R · Par {parTot}
         </span>
         {/* Toggle modo */}
-        <div className="segmented-toggle" style={{ marginLeft: 4 }}>
+        <div className="segmented-toggle seg-sm" style={{ marginLeft: 4 }}>
           {([true, false] as const).map((g) => (
             <button
               key={String(g)}

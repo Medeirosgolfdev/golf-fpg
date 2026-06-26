@@ -28,7 +28,7 @@ import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { isManuelByName as isM } from "../constants/manuel";
-import { displayName, fmtToPar } from "../utils/format";
+import { displayName, fmtToPar, norm } from "../utils/format";
 import { tpColor } from "../ui/tournamentPrimitives";
 import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -1313,9 +1313,25 @@ function ResultsTable({ results, dobLookup, dateRef }: {
 
 type RFEGTab = "scorecards" | "inscritos" | "draw";
 
+/** Converte o draw do mitarjeta (`detail.teeTimes`: Tee/Hora/Jogadores da R1) para
+ *  o MESMO shape `NCHorario[]` que o DrawSaidaView já consome → DrawTab partilhado.
+ *  (O mitarjeta só publica o sorteio da R1; os draws de J2/J3 saem em PDF depois.) */
+function teeTimesToHorarios(tt?: RFEGDetail["teeTimes"]): NCHorario[] | null {
+  if (!tt || !tt.groups || !tt.groups.length) return null;
+  const players: NCHorario["players"] = [];
+  for (const g of tt.groups) {
+    const tee = typeof g.tee === "number" ? g.tee : (parseInt(String(g.tee), 10) || null);
+    for (const name of g.players) {
+      players.push({ time: g.time || null, tee, name, hcp: null });
+    }
+  }
+  return players.length ? [{ round: tt.round || 1, players }] : null;
+}
+
 /* ── DrawSaidaView ──────────────────────────────────────────
  * Tab "Draw saída" do RFEGPage — reusa o componente DrawTab partilhado para
- * coerência visual com FPG. Converte NC horarios → FpgDraw shape. */
+ * coerência visual com FPG. NextCaddy → `_ncHorarios`; mitarjeta → `teeTimes`.
+ * Ambos convertidos para NCHorario[] → FpgDraw shape. */
 function DrawSaidaView({ detail, entry }: {
   detail: RFEGDetail & {
     _ncHorarios?: NCHorario[] | null;
@@ -1326,35 +1342,83 @@ function DrawSaidaView({ detail, entry }: {
 }) {
   const teeByIns = detail._teeMetersByIns || {};
   const drawInfo = detail._drawInfoByIns || {};
-  const horarios = detail._ncHorarios;
+  // NextCaddy traz `_ncHorarios`; mitarjeta (CEE) traz `teeTimes` — convertido ao
+  // mesmo shape para alimentar o MESMO DrawTab (não inventar tabela própria).
+  const horarios = useMemo(
+    () => detail._ncHorarios ?? teeTimesToHorarios(detail.teeTimes),
+    [detail._ncHorarios, detail.teeTimes],
+  );
   const [activeRound, setActiveRound] = useState<number>(1);
+  const isNc = !!detail._ncHorarios;
 
-  // Enriquecer como a FPG: playersDB (escalão via dob) + resultados ±/Tot da ronda,
-  // cruzando o jogador do draw (jid) com o leaderboard via inscribedId (ins).
+  // mitarjeta (CEE): o draw do teeTimes só traz NOMES. Enriquecemos por nome a
+  // partir do leaderboard (detail.results) — fed/dob/clube/HCP + gross/±par da R1 —
+  // para preencher as MESMAS colunas que o DrawTab mostra na FPG.
+  const mitaByName = useMemo(() => {
+    const m = new Map<string, { fed: string | null; dobIso: string | null; club: string | null; hcp: number | null; gross: number; toPar: number | null }>();
+    if (isNc) return m;
+    const grp = (detail.results || []).find((r) => r.players && r.players.length > 0);
+    for (const p of (grp?.players || [])) {
+      const key = norm(p.name);
+      if (!key || m.has(key)) continue;
+      const r1 = Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0;
+      m.set(key, {
+        fed: p.licencia || null,
+        dobIso: esDateToIso(p.dob),
+        club: p.club || null,
+        hcp: typeof p.hcp === "number" ? p.hcp : null,
+        gross: r1,
+        toPar: typeof p.toPar === "number" ? p.toPar : null,
+      });
+    }
+    return m;
+  }, [isNc, detail.results]);
+
+  // Enriquecer como a FPG: playersDB (escalão via dob) + resultados ±/Tot da ronda.
+  // NextCaddy cruza o jogador do draw (jid) com o leaderboard via inscribedId (ins);
+  // mitarjeta cruza por nome (mitaByName).
   const drawPlayersDB = useMemo<PlayersDB>(() => {
     const db: PlayersDB = {};
-    for (const rd of (horarios || [])) {
-      for (const p of rd.players) {
-        if (!p.jid || !p.ins) continue;
-        const info = drawInfo[String(p.ins)];
-        if (!info) continue;
-        const esc = escaloEsForPlayer(null, info.dob, detail.meta.dateStart) || undefined;
-        db[p.jid] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
+    if (isNc) {
+      for (const rd of (horarios || [])) {
+        for (const p of rd.players) {
+          if (!p.jid || !p.ins) continue;
+          const info = drawInfo[String(p.ins)];
+          if (!info) continue;
+          const esc = escaloEsForPlayer(null, info.dob, detail.meta.dateStart) || undefined;
+          db[p.jid] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
+        }
+      }
+    } else {
+      // mitarjeta: dob (ISO) por fed → o DrawTab calcula ESC + Nasc. + bandeira ES.
+      for (const info of mitaByName.values()) {
+        if (info.fed) db[info.fed] = { dob: info.dobIso || undefined, country: "ES" };
       }
     }
     return db;
-  }, [horarios, drawInfo, detail.meta.dateStart]);
+  }, [isNc, horarios, drawInfo, detail.meta.dateStart, mitaByName]);
 
   const drawResults = useMemo<Map<string, { gross: number; toPar: number | null }>>(() => {
     const m = new Map<string, { gross: number; toPar: number | null }>();
-    const rd = (horarios || []).find((x) => x.round === activeRound) || (horarios || [])[0];
-    for (const p of (rd?.players || [])) {
-      if (!p.jid || !p.ins) continue;
-      const rr = drawInfo[String(p.ins)]?.rounds.find((x) => x.round === activeRound);
-      if (rr && rr.gross != null) m.set(p.jid, { gross: rr.gross, toPar: rr.toPar });
+    if (isNc) {
+      const rd = (horarios || []).find((x) => x.round === activeRound) || (horarios || [])[0];
+      for (const p of (rd?.players || [])) {
+        if (!p.jid || !p.ins) continue;
+        const rr = drawInfo[String(p.ins)]?.rounds.find((x) => x.round === activeRound);
+        if (rr && rr.gross != null) m.set(p.jid, { gross: rr.gross, toPar: rr.toPar });
+      }
+    } else {
+      // mitarjeta só tem R1 — indexar por fed (autoritativo) E por nome normalizado.
+      for (const [key, info] of mitaByName) {
+        if (info.gross > 0) {
+          const rec = { gross: info.gross, toPar: info.toPar };
+          if (info.fed) m.set(info.fed, rec);
+          m.set(key, rec);
+        }
+      }
     }
     return m;
-  }, [horarios, drawInfo, activeRound]);
+  }, [isNc, horarios, drawInfo, activeRound, mitaByName]);
 
   // Construir FpgDraw a partir dos NC horarios para a ronda activa
   const drawForRound = useMemo<FpgDraw | null>(() => {
@@ -1377,12 +1441,13 @@ function DrawSaidaView({ detail, entry }: {
         curKey = k;
       }
       const dist = p.ins ? teeByIns[String(p.ins)] : undefined;   // distância do tee (cruzada do cartão)
+      const info = isNc ? undefined : mitaByName.get(norm(p.name)); // mitarjeta: cruzar por nome
       flights[flights.length - 1].players.push({
         nome: formatPlayerName(p.name),
-        clube: null,                    // NC não expõe clube no draw
-        fed: p.jid || null,             // jid NC ≠ fed FPG, mas dá identidade única
-        hcp: p.hcp,
-        tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador
+        clube: info?.club ? displayName(info.club) : null,   // NC não expõe clube; mitarjeta sim
+        fed: isNc ? (p.jid || null) : (info?.fed || null),   // jid NC / licencia mitarjeta
+        hcp: isNc ? p.hcp : (info?.hcp ?? null),
+        tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
       });
     }
     return {
@@ -1422,7 +1487,7 @@ function DrawSaidaView({ detail, entry }: {
       <DrawTab
         draw={drawForRound}
         roundNum={activeRound}
-        tournamentDate={detail.meta.dateStart}
+        tournamentDate={esDateToIso(detail.meta.dateStart) ?? detail.meta.dateStart}
         playersDB={drawPlayersDB}
         results={drawResults}
       />
@@ -2585,7 +2650,11 @@ async function rfegLoadDivisions(
     for (const g of data.results || []) {
       if (g.pdfUrl && !seen.has(g.pdfUrl)) {
         seen.add(g.pdfUrl);
-        links.push({ label: g.label ? `PDF · ${g.label}` : "Resultados PDF", url: g.pdfUrl, icon: "📄", title: "Resultados oficiais em PDF" });
+        // mitarjeta.golf é live scoring (não um PDF) → label/ícone de clasificación.
+        const isMita = g.source === "mitarjeta.golf";
+        links.push(isMita
+          ? { label: g.label ? `Clasificación · ${g.label}` : "Clasificación", url: g.pdfUrl, icon: "🔗", title: "Resultados ao vivo (mitarjeta.golf)" }
+          : { label: g.label ? `PDF · ${g.label}` : "Resultados PDF", url: g.pdfUrl, icon: "📄", title: "Resultados oficiais em PDF" });
       }
     }
   }
@@ -2661,7 +2730,12 @@ async function rfegLoadDivisions(
   };
 
   const horarios = (data as unknown as { _ncHorarios?: unknown[] })._ncHorarios;
-  const hasDraw = t.source === "nextcaddy" && Array.isArray(horarios) && horarios.length > 0;
+  const hasNcDraw = t.source === "nextcaddy" && Array.isArray(horarios) && horarios.length > 0;
+  // mitarjeta (CEE): o draw da R1 vem em `detail.teeTimes` (ver scrape-mitarjeta.js).
+  // É renderizado pelo MESMO `DrawSaidaView` → `DrawTab` partilhado (= FPG/NextCaddy),
+  // que agora também lê `detail.teeTimes` além dos `_ncHorarios` do NextCaddy.
+  const hasMitarjetaDraw = !!(data.teeTimes && data.teeTimes.groups && data.teeTimes.groups.length);
+  const hasDrawSection = hasNcDraw || hasMitarjetaDraw;
 
   const division: CircuitDivision = {
     key: "main",
@@ -2673,10 +2747,8 @@ async function rfegLoadDivisions(
     renderInscritos: lists.length
       ? () => <AdmissionsTab admissions={buildAdmissions()} date={esDateToIso(data.meta.dateStart) ?? data.meta.dateStart} hidePostCols />
       : undefined,
-    draw: hasDraw ? { rounds: {} } : undefined,
-    renderDrawSection: hasDraw
-      ? () => <DrawSaidaView detail={data} entry={t} />
-      : undefined,
+    // Draw saída — sempre pelo DrawSaidaView → DrawTab partilhado (= FPG).
+    renderDrawSection: hasDrawSection ? () => <DrawSaidaView detail={data} entry={t} /> : undefined,
     links: links.length ? links : undefined,
     // mitarjeta traz CR+Slope → mostrar a coluna SD (WHS) no scorecard
     scOptions: { ...lgsScorecardOptions(), hideSD: !data.mitarjetaTorneo },
@@ -2684,37 +2756,122 @@ async function rfegLoadDivisions(
   return [division];
 }
 
+/** Campeonatos de España juvenis INDIVIDUAIS (uma categoria + um sexo): só estes
+ *  se combinam num torneio único com tabs de escalão/sexo (como o Nacional FPG).
+ *  Estrita de propósito — exclui "Interclubes", "FFAA", "Pitch & Putt", Mixto e
+ *  multi-categoria ("Infantil, Alevín y Benjamín ... Memorial ..."). */
+const CEE_INDIVIDUAL_RE = /^Campeonato de España\s+(Benjamín|Benjamin|Alev[ií]n|Infantil|Cadete|Juvenil)\s+(Masculino|Femenino)\s+(\d{4})$/i;
+
+/** Ordem dos escalões nas tabs (mais novos primeiro). */
+function ceeEscOrder(cat?: string | null): number {
+  const k = (cat || "").toLowerCase();
+  if (k.startsWith("benjam")) return 0;
+  if (k.startsWith("alev")) return 1;
+  if (k.startsWith("infant")) return 2;
+  if (k.startsWith("cadet")) return 3;
+  if (k.startsWith("juven")) return 4;
+  return 9;
+}
+
 function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup): CircuitEntry[] {
-  return index.tournaments
-    // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
-    // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
-    // España já com lista de inscritos antes de serem jogados.
-    .filter((t) => t.category && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0))
-    .map((t): CircuitEntry => ({
-      id: `${t.source}:${t.id}`,
-      year: t.year,
-      name: t.name,
-      source: t.source,
-      course: t.course ?? undefined,
-      // Usar sempre os campos ISO (uniformes) — dateStart/dateEnd cru vêm por
-      // extenso nalgumas fontes (LGS: "01 mayo - 03 mayo") e ISO noutras.
-      dateStart: t.dateStartIso ?? t.dateStart ?? undefined,
-      dateEnd: t.dateEndIso ?? t.dateEnd ?? undefined,
-      sourceUrl: rfegSourceUrl(t),
-      hcpLimit: (t.hcpLimitMen != null || t.hcpLimitWomen != null)
-        ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
-        : undefined,
-      escalao: t.category ?? undefined,
-      sex: rfegSex(t.sex),
-      federation: t.federation ?? undefined,
-      hasManuel: t.hasManuel ?? undefined,
-      hasPt: t.hasPt ?? undefined,
-      // Sem resultados ainda → mostrar nº de inscritos na sidebar.
-      playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
-      roundsCount: t.nRounds ?? undefined,
-      divisionCount: 1,
-      loadDivisions: () => rfegLoadDivisions(t, dobLookup, hcpLookup),
-    }));
+  // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
+  // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
+  // España já com lista de inscritos antes de serem jogados.
+  const visible = index.tournaments.filter(
+    (t) => t.category && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0),
+  );
+
+  // Separar os CEE individuais (combináveis) do resto, agrupados por ano.
+  const ceeByYear = new Map<number, RFEGIndexEntry[]>();
+  const rest: RFEGIndexEntry[] = [];
+  for (const t of visible) {
+    if (t.year != null && CEE_INDIVIDUAL_RE.test(t.name || "")) {
+      const arr = ceeByYear.get(t.year) ?? [];
+      arr.push(t);
+      ceeByYear.set(t.year, arr);
+    } else {
+      rest.push(t);
+    }
+  }
+
+  const single = (t: RFEGIndexEntry): CircuitEntry => ({
+    id: `${t.source}:${t.id}`,
+    year: t.year,
+    name: t.name,
+    source: t.source,
+    course: t.course ?? undefined,
+    // Usar sempre os campos ISO (uniformes) — dateStart/dateEnd cru vêm por
+    // extenso nalgumas fontes (LGS: "01 mayo - 03 mayo") e ISO noutras.
+    dateStart: t.dateStartIso ?? t.dateStart ?? undefined,
+    dateEnd: t.dateEndIso ?? t.dateEnd ?? undefined,
+    sourceUrl: rfegSourceUrl(t),
+    hcpLimit: (t.hcpLimitMen != null || t.hcpLimitWomen != null)
+      ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
+      : undefined,
+    escalao: t.category ?? undefined,
+    sex: rfegSex(t.sex),
+    federation: t.federation ?? undefined,
+    hasManuel: t.hasManuel ?? undefined,
+    hasPt: t.hasPt ?? undefined,
+    // Sem resultados ainda → mostrar nº de inscritos na sidebar.
+    playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
+    roundsCount: t.nRounds ?? undefined,
+    divisionCount: 1,
+    loadDivisions: () => rfegLoadDivisions(t, dobLookup, hcpLookup),
+  });
+
+  const entries: CircuitEntry[] = [];
+
+  // Combinar os CEE de cada ano (≥2 categorias/sexos) num torneio único com
+  // divisões = tabs "Benjamín M / Benjamín F / Alevín M / …". 1 só → fica avulso.
+  for (const [year, group] of ceeByYear) {
+    if (group.length < 2) { rest.push(...group); continue; }
+    const sorted = [...group].sort(
+      (a, b) => (ceeEscOrder(a.category) - ceeEscOrder(b.category))
+        || ((/F/i.test(a.sex || "") ? 1 : 0) - (/F/i.test(b.sex || "") ? 1 : 0)),
+    );
+    const starts = sorted.map((t) => t.dateStartIso ?? t.dateStart).filter(Boolean).sort();
+    const ends = sorted.map((t) => t.dateEndIso ?? t.dateEnd).filter(Boolean).sort();
+    entries.push({
+      id: `rfegolf:cee-${year}`,
+      year,
+      name: `Campeonato de España ${year}`,
+      source: "rfegolf",
+      dateStart: starts[0] ?? undefined,
+      dateEnd: ends[ends.length - 1] ?? undefined,
+      federation: sorted.find((t) => t.federation)?.federation ?? undefined,
+      sex: "Mixed",
+      hasManuel: sorted.some((t) => t.hasManuel),
+      hasPt: sorted.some((t) => t.hasPt),
+      playerCount: sorted.reduce((s, t) => s + (t.leaderboardPlayers || t.counts?.admitidos || 0), 0) || undefined,
+      roundsCount: Math.max(0, ...sorted.map((t) => t.nRounds ?? 0)) || undefined,
+      divisionCount: sorted.length,
+      loadDivisions: async () => {
+        const per = await Promise.all(sorted.map(async (ct) => {
+          const divs = await rfegLoadDivisions(ct, dobLookup, hcpLookup);
+          const sexL = /F/i.test(ct.sex || "") ? "F" : "M";
+          // O torneio combinado não tem `sourceUrl` (é multi-escalão), por isso o
+          // link oficial de cada categoria — que numa entry avulsa vinha do
+          // `sourceUrl` — é reposto AQUI como link da divisão (microsite RFEG),
+          // a juntar ao link de clasificación (mitarjeta) já em `d.links`.
+          const official = { label: "Microsite oficial", url: rfegSourceUrl(ct), icon: "🏛️", title: "Microsite RFEG do torneio" };
+          return divs.map((d, i) => ({
+            ...d,
+            key: `${ct.source}:${ct.id}:${i}`,
+            escalao: ct.category ?? d.escalao,
+            sex: rfegSex(ct.sex),
+            // tab "Benjamín M" / "Benjamín F" (mesma convenção H/M-F que a FPG).
+            tabLabel: `${ct.category ?? d.escalao ?? "—"} ${sexL}`,
+            links: [...(d.links ?? []), official],
+          }));
+        }));
+        return per.flat();
+      },
+    });
+  }
+
+  for (const t of rest) entries.push(single(t));
+  return entries;
 }
 
 const RFEG_CONFIG: CircuitConfig = {

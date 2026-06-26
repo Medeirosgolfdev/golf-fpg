@@ -346,6 +346,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .segmented-toggle .seg-btn.active .seg-count {
   background: var(--overlay-white-25);
 }
+/* Variante compacta — toolbars densas (ex: toggle Agrupado/Independente do
+   scorecard, que estava grande demais por o `.seg-btn` impor fs-12 + padding 5/14
+   por cima do fs-10 do componente). */
+.segmented-toggle.seg-sm { padding: 2px; }
+.segmented-toggle.seg-sm .seg-btn { padding: 2px 8px; font-size: var(--fs-10); gap: 4px; }
 
 .chip {
  padding: 3px 10px;

@@ -80,10 +80,18 @@ const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   subiram:     { label: "⬆ Subiram",     title: "Subiu de escalão face à última edição" },
 };
 
+// Labels/ordem alinhados com a barra de tabs da FPGPage (TournamentDetail):
+// Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards. Texto simples, sem ícones
+// de secção (a FPG só usa ícone no "📋 Scorecards", que vem do IntlTournView).
 const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> = {
-  results:   { label: "Resultados",  icon: "📋" },
-  inscritos: { label: "Inscritos",   icon: "👥" },
-  draw:      { label: "Draw saída",  icon: "🕐" },
+  results:   { label: "Resultados",  icon: "" },
+  inscritos: { label: "Inscrições",  icon: "" },
+  draw:      { label: "Draw",        icon: "" },
+};
+/** Label de secção com ícone opcional (sem espaço à frente quando não há ícone). */
+const sectionLabel = (s: CircuitSectionKind): string => {
+  const d = SECTION_DEF[s];
+  return d.icon ? `${d.icon} ${d.label}` : d.label;
 };
 
 /** Secções disponíveis numa divisão (apenas as que têm dados). */
@@ -91,7 +99,9 @@ function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   const out: CircuitSectionKind[] = [];
   if (d.results || d.customResults) out.push("results");
   if (d.inscritos && d.inscritos.lists.some(l => l.players.length > 0)) out.push("inscritos");
-  if (d.draw && Object.keys(d.draw.rounds).length > 0) out.push("draw");
+  // "draw" aparece se a divisão traz um render próprio (DrawSaidaView/DrawTab — RFEG)
+  // OU dados de draw genéricos não-vazios (DrawView do shell).
+  if (d.renderDrawSection || (d.draw && Object.keys(d.draw.rounds).length > 0)) out.push("draw");
   return out;
 }
 
@@ -585,7 +595,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     if (sections.includes("inscritos")) {
       leadingTabs.push({
         key: "inscritos",
-        label: `${SECTION_DEF.inscritos.icon} ${SECTION_DEF.inscritos.label}`,
+        label: sectionLabel("inscritos"),
         content: curDiv.renderInscritos
           ? curDiv.renderInscritos()
           : (curDiv.inscritos ? <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} /> : null),
@@ -594,7 +604,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     if (sections.includes("draw")) {
       leadingTabs.push({
         key: "draw",
-        label: `${SECTION_DEF.draw.icon} ${SECTION_DEF.draw.label}`,
+        label: sectionLabel("draw"),
         content: curDiv.renderDrawSection
           ? curDiv.renderDrawSection()
           : (curDiv.draw ? <DrawView rounds={curDiv.draw.rounds} /> : null),
@@ -760,6 +770,34 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
             ) : curDiv ? (
               <>
+                {/* Tabs de escalão — ACIMA do título (estilo Nacional FPG): mesmos
+                    botões pill `.tourn-tab tourn-tab-sm`, "(N jog)", alinhados à
+                    esquerda com o título e sem linha divisória. */}
+                {curDivisions.length > 1 && (
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 6 }}>
+                    {curDivisions.map(d => {
+                      const active = d.key === curDiv.key;
+                      const nP = d.results?.players.length ?? 0;
+                      const nAces = d.results ? tournamentAces(d.results.players).length : 0;
+                      return (
+                        <button
+                          key={d.key}
+                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
+                          onClick={() => setDivKey(d.key)}
+                        >
+                          {d.tabLabel || d.escalao}
+                          {nP > 0 && (
+                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>({nP} jog)</span>
+                          )}
+                          {d.hasManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
+                          {nAces > 0 && (
+                            <span title={`${nAces} hole-in-one neste escalão`}> 🕳️</span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
                 {(!curDiv.renderFull || curDiv.renderFullKeepHeader) && (
                 <DetailHeader
                   title={cur.name}
@@ -825,31 +863,6 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 />
                 )}
 
-                {/* Tabs de escalão (.tab-under) */}
-                {curDivisions.length > 1 && (
-                  <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
-                    {curDivisions.map(d => {
-                      const active = d.key === curDiv.key;
-                      const nP = d.results?.players.length ?? 0;
-                      const nAces = d.results ? tournamentAces(d.results.players).length : 0;
-                      return (
-                        <button
-                          key={d.key}
-                          className={`tab-under${active ? " active" : ""}`}
-                          onClick={() => setDivKey(d.key)}
-                        >
-                          {d.tabLabel || d.escalao}
-                          {nP > 0 && <span className="fs-10 muted"> {nP}</span>}
-                          {d.hasManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
-                          {nAces > 0 && (
-                            <span title={`${nAces} hole-in-one neste escalão`}> 🕳️</span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-
                 {/* Conteúdo do torneio.
                     • Com resultados de ronda → barra ÚNICA estilo FPG: as tabs
                       Inscritos/Draw entram como `leadingTabs` ANTES de R1, na mesma
@@ -882,7 +895,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                             className={`tab-under${curSection === s ? " active" : ""}`}
                             onClick={() => setSection(s)}
                           >
-                            {SECTION_DEF[s].icon} {SECTION_DEF[s].label}
+                            {sectionLabel(s)}
                           </button>
                         ))}
                       </div>

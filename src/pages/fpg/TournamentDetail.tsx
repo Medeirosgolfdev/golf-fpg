@@ -28,7 +28,6 @@ import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
-import PrintPJAButton from "../../ui/PrintPJAButton";
 
 function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols, hideHeader }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"]; hideHeader?: boolean }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
@@ -191,7 +190,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
           campo + pills por cima deste TournamentDetail). */}
       {!hideHeader && (
       <div className="detail-header">
-        <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "baseline" }}>
+        <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "center" }}>
           {/* Título clicável: link canónico `/FPG/torneio/{ccode}-{tcode}`.
               Preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
               preview de URL. O próprio h2 continua visualmente inalterado. */}
@@ -290,9 +289,6 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
                 {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
               </a>
             ))}
-            {/* PrintPJAButton carrega pja-members.json sozinho — só aparece
-                se houver lista para o ano do torneio. */}
-            <PrintPJAButton year={(tournament.date || "").substring(0, 4)} />
           </div>
         </div>
         <div className="detail-sub">
