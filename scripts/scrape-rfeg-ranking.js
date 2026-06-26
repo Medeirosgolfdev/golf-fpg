@@ -123,14 +123,17 @@ function parseRankingGrid(html) {
   return players;
 }
 
-const slug = (s) => decode(s).toUpperCase().replace(/RANKING NACIONAL\s*/i, "").replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+const slug = (s) => decode(s).toUpperCase().replace(/RANKING NACIONAL\s*/i, "").replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
+// hash determinístico (sem Date/random) do nome COMPLETO do ranking — garante
+// nomes de ficheiro únicos mesmo quando o slug colide (nomes longos truncados).
+function hash4(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h.toString(36).padStart(4, "0").slice(-4); }
 
 /* ─── índice ───────────────────────────────────────────────────── */
 function loadIndex() { try { return JSON.parse(fs.readFileSync(INDEX, "utf8")); } catch (e) { return { generatedAt: null, rankings: [] }; } }
 function writeJsonAtomic(file, data) { const t = file + ".tmp"; fs.writeFileSync(t, JSON.stringify(data)); fs.renameSync(t, file); }
 
 /* ─── exports (testes) ─────────────────────────────────────────── */
-module.exports = { parseRankingGrid, slug, selectOptions, curSelected, decode };
+module.exports = { parseRankingGrid, slug, hash4, selectOptions, curSelected, decode };
 
 /* ─── main ─────────────────────────────────────────────────────── */
 if (require.main !== module) return;
@@ -151,7 +154,7 @@ if (require.main !== module) return;
         const rankings = rankSel.options.filter((o) => o.value && !/seleccione/i.test(o.text) && o.value !== "-1");
         console.log(`\n[${year} ${COMITE_NAMES[comite] || comite}] ${rankings.length} ranking(s): ${rankings.map((r) => r.text).join(" · ") || "(nenhum publicado)"}`);
         for (const r of rankings) {
-          const file = `${year}_${comite}_${slug(r.text)}.json`;
+          const file = `${year}_${comite}_${slug(r.text)}_${hash4(r.text)}.json`;
           const fpath = path.join(OUT_DIR, file);
           if (has("skip-existing") && fs.existsSync(fpath)) { console.log(`   • ${r.text} — skip (existe)`); continue; }
           await sleep(DELAY_MS);
