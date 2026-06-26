@@ -13,12 +13,7 @@
  *
  * Renderizada como item especial ("👥 Jugadores") no menu ⓘ Info da página España.
  */
-<<<<<<< Updated upstream
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-=======
 import { Fragment, useEffect, useMemo, useState } from "react";
->>>>>>> Stashed changes
 import { cachedFetchJson } from "../../data/fetchCache";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
@@ -76,24 +71,6 @@ interface SpainPlayersFile {
   source: string;
   total: number;
   byLicencia: Record<string, SpainPlayer>;
-}
-
-/** Uma participação de um jogador num torneio (de spain-player-results.json). */
-interface SpainResultRow {
-  tid: string;
-  src: string | null;        // rota: /rfeg/{src}/{id}
-  id: string | null;
-  name: string | null;
-  ageGroup: string | null;
-  year: number | null;
-  dateIso: string | null;
-  pos: number | null;
-  total: number | null;
-  toPar: number | null;
-}
-interface SpainPlayerResultsFile {
-  generatedAt: string;
-  byLicencia: Record<string, SpainResultRow[]>;   // chave = licença em MAIÚSCULAS
 }
 
 /** Normaliza o catEdad cru do ficheiro (usado só como fallback quando não há
@@ -226,26 +203,6 @@ export function RFEGPlayersView() {
   const toggleExp = (lic: string) =>
     setExpanded((s) => { const n = new Set(s); n.has(lic) ? n.delete(lic) : n.add(lic); return n; });
 
-  // Expansão por jogador: ao clicar numa linha mostra os torneios + resultado.
-  // O ficheiro de resultados é carregado só na primeira expansão (lazy).
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [results, setResults] = useState<SpainPlayerResultsFile | null>(null);
-  const resultsReq = useRef(false);
-  function ensureResults() {
-    if (results || resultsReq.current) return;
-    resultsReq.current = true;
-    cachedFetchJson<SpainPlayerResultsFile>("/data/spain-player-results.json")
-      .then((d) => setResults(d || { generatedAt: "", byLicencia: {} }))
-      .catch(() => setResults({ generatedAt: "", byLicencia: {} }));
-  }
-  function toggleExpand(lic: string) {
-    setExpanded((cur) => {
-      const next = cur === lic ? null : lic;
-      if (next) ensureResults();
-      return next;
-    });
-  }
-
   useEffect(() => {
     cachedFetchJson<SpainPlayersFile>("/data/spain-players.json")
       .then((d) => {
@@ -306,23 +263,11 @@ export function RFEGPlayersView() {
     hcpDate: all.some((p) => !!p._hcpDate),
   }), [all]);
 
-<<<<<<< Updated upstream
-  // Nº de colunas visíveis (base: Licencia + Nome + HCP) — para o colSpan da
-  // linha de expansão. Mantém-se em sintonia com os <th>/<td> condicionais.
-  const colCount = 3
-    + (has.club ? 1 : 0)
-    + (has.dob ? 2 : 0)
-    + (has.sex ? 1 : 0)
-    + (has.cat ? 1 : 0)
-    + (has.tot ? 2 : 0)
-    + (has.hcpDate ? 1 : 0);
-=======
   // Quantos jogadores têm mais do que uma licença (mudaram de clube/região).
   const dupCount = useMemo(() => all.reduce((n, p) => n + (p.aliases && p.aliases.length ? 1 : 0), 0), [all]);
 
   // Nº de colunas visíveis (para o colSpan da linha de histórico expandida).
   const colCount = 2 + (has.club ? 1 : 0) + (has.dob ? 2 : 0) + 1 + (has.sex ? 1 : 0) + (has.cat ? 1 : 0) + (has.tot ? 2 : 0) + (has.hcpDate ? 1 : 0);
->>>>>>> Stashed changes
 
   const catOptions = useMemo(() => {
     const s = new Set<string>();
@@ -445,39 +390,6 @@ export function RFEGPlayersView() {
               </thead>
               <tbody>
                 {pageRows.map((r) => {
-<<<<<<< Updated upstream
-                  const isOpen = expanded === r.licencia;
-                  return (
-                  <React.Fragment key={r.licencia}>
-                  <tr
-                    className={"player-list-row" + (r._manuel ? " row-manuel" : "") + (isOpen ? " row-selected" : "")}
-                    onClick={() => toggleExpand(r.licencia)}
-                    style={{ cursor: "pointer" }}
-                    title="Clicar para ver os torneios deste jogador"
-                  >
-                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
-                      <span style={{ display: "inline-block", width: 12 }}>{isOpen ? "▾" : "▸"}</span>{r.licencia}
-                    </td>
-                    <td style={{ fontWeight: 600 }}>{r._name || "—"}</td>
-                    {has.club && <td title={r._club}>{r._club || muted}</td>}
-                    {has.dob && <td style={{ whiteSpace: "nowrap" }}>{r.dob || muted}</td>}
-                    {has.dob && <td style={{ textAlign: "right" }}>{r._age != null ? r._age : muted}</td>}
-                    <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? r.hcp.toFixed(1) : muted}</td>
-                    {has.sex && <td>{r.sex === "M" || r.sex === "F" ? <SexBadge sex={r.sex} /> : muted}</td>}
-                    {has.cat && <td>{r._cat ? (r._young ? <EscPill esc={r._cat} /> : <span className="muted fs-11">{r._cat}</span>) : muted}</td>}
-                    {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}
-                    {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
-                    {has.hcpDate && <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>{r.hcpDate ? isoToBr(r.hcpDate) : muted}</td>}
-                  </tr>
-                  {isOpen && (
-                    <tr className="player-list-expand-row">
-                      <td colSpan={colCount} style={{ padding: 0, background: "var(--bg-subtle, rgba(0,0,0,0.025))" }}>
-                        <PlayerTournaments row={r} results={results} />
-                      </td>
-                    </tr>
-                  )}
-                  </React.Fragment>
-=======
                   const nLic = r.aliases ? r.aliases.length + 1 : 1;
                   const isOpen = expanded.has(r.licencia);
                   // Linha principal: vista AGREGADA (deduped) — HCP/torneios actuais.
@@ -542,7 +454,6 @@ export function RFEGPlayersView() {
                     </>
                   )}
                   </Fragment>
->>>>>>> Stashed changes
                   );
                 })}
               </tbody>
@@ -570,84 +481,3 @@ export function RFEGPlayersView() {
   );
 }
 
-/* ── Expansão: torneios + resultado de um jogador ─────────────────────────
- * Lê spain-player-results.json (gerado por build-spain-player-results.js), que
- * inverte os rivals (LGS + NextCaddy + FCG) por licença. Cada linha tem a
- * posição/score do jogador nesse torneio e link para a página do torneio. */
-function fmtTpES(v: number | null): string {
-  if (v == null) return "—";
-  if (v === 0) return "E";
-  return v > 0 ? `+${v}` : `${v}`;
-}
-
-type TSK = "date" | "name" | "age" | "pos" | "total" | "tp";
-
-function PlayerTournaments({ row, results }: { row: Row; results: SpainPlayerResultsFile | null }) {
-  const { sortKey, sortDir, toggleSort } = useSort<TSK>("date", "desc");
-  const list = useMemo<SpainResultRow[]>(() => {
-    const l = results ? (results.byLicencia[row.licencia.trim().toUpperCase()] || []) : [];
-    const INF = Number.MAX_SAFE_INTEGER;
-    const mult = sortDir === "asc" ? 1 : -1;
-    return [...l].sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "date":  v = (a.dateIso || "").localeCompare(b.dateIso || ""); break;
-        case "name":  v = (a.name || "").localeCompare(b.name || "", "es"); break;
-        case "age":   v = (a.ageGroup || "~").localeCompare(b.ageGroup || "~", "es"); break;
-        case "pos":   v = (a.pos ?? INF) - (b.pos ?? INF); break;
-        case "total": v = (a.total ?? INF) - (b.total ?? INF); break;
-        case "tp":    v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
-      }
-      return mult * v;
-    });
-  }, [results, row.licencia, sortKey, sortDir]);
-
-  if (!results) {
-    return <div className="muted fs-12" style={{ padding: "8px 14px" }}>A carregar torneios…</div>;
-  }
-  if (list.length === 0) {
-    return (
-      <div className="muted fs-12" style={{ padding: "8px 14px" }}>
-        Sem resultado detalhado para este jogador. Só há resultado por torneio nas
-        provas juvenis de LiveGolfScoring, NextCaddy e FCG — as provas RFEGolf só em
-        PDF (e os torneios LGS sem licença publicada) não entram aqui.
-      </div>
-    );
-  }
-  return (
-    <div style={{ padding: "8px 14px 12px" }}>
-      <div className="muted fs-11" style={{ marginBottom: 6 }}>
-        {list.length} torneio{list.length === 1 ? "" : "s"} com resultado
-        {row._tot ? ` (de ${row._tot} no total)` : ""}
-      </div>
-      <table className="player-list-table" style={{ width: "auto", fontSize: "var(--fs-12)" }}>
-        <thead>
-          <tr>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Data</SortableHdr>
-            <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
-            <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Escalão</SortableHdr>
-            <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Pos</SortableHdr>
-            <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Total</SortableHdr>
-            <SortableHdr k="tp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">±Par</SortableHdr>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map((t, i) => (
-            <tr key={`${t.tid}-${i}`} className="player-list-row">
-              <td style={{ whiteSpace: "nowrap" }}>{t.dateIso ? isoToBr(t.dateIso) : (t.year ?? "—")}</td>
-              <td>
-                {t.src && t.id
-                  ? <Link to={`/rfeg/${t.src}/${t.id}`} onClick={(e) => e.stopPropagation()}>{t.name || t.tid}</Link>
-                  : (t.name || t.tid)}
-              </td>
-              <td>{t.ageGroup ? <EscPill esc={t.ageGroup} /> : <span className="muted">—</span>}</td>
-              <td style={{ textAlign: "right", fontWeight: 600 }}>{t.pos ?? "—"}</td>
-              <td style={{ textAlign: "right" }}>{t.total ?? "—"}</td>
-              <td style={{ textAlign: "right" }}>{fmtTpES(t.toPar)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}

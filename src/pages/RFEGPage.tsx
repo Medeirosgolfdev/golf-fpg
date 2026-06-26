@@ -411,7 +411,6 @@ function ageToEscalaoEs(age: number | null): string | null {
   return SUB_TO_ES_TERM[subN] || subN;
 }
 
-<<<<<<< Updated upstream
 /** Variantes de caixa/acento dos termos RFEG → forma canónica (a fonte traz
  *  "Alevín" e "ALEVIN" misturados; sem isto a UI mostrava as duas grafias). */
 const ES_TERM_CANON: Record<string, string> = {
@@ -446,18 +445,6 @@ function escaloEsForPlayer(
   const by = yearOf(dob), ty = yearOf(ref);
   if (by == null || ty == null) return null;
   return ageToEscalaoEs(ty - by);
-=======
-/** Canoniza a categoria ES (o RFEG mistura "Alevín"/"ALEVIN"/"alevin") para a
- *  forma acentuada Title-Case, para o pill aparecer sempre igual. */
-const ES_CAT_CANON: Record<string, string> = {
-  benjamin: "Benjamín", alevin: "Alevín", infantil: "Infantil",
-  cadete: "Cadete", junior: "Junior", juvenil: "Juvenil",
-};
-function canonEscEs(s: string | null | undefined): string | null {
-  if (!s) return null;
-  const k = s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").trim();
-  return ES_CAT_CANON[k] || (s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
->>>>>>> Stashed changes
 }
 
 /* ── ncToFPGTournament ────────────────────────────────────────
@@ -708,9 +695,9 @@ function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FP
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
     const age = ageAt(dob, dateRef);
-    // Termo RFEG (Alevín/Benjamín/Infantil) directo do JSON (casing canonizado);
-    // fallback derivado da idade.
-    const escLabel = canonEscEs(p.catEdad) || ageToEscalaoEs(age) || dobToSubN(dob, dateRef);
+    // Termo RFEG (Alevín/Benjamín/Infantil): categoria oficial canonizada +
+    // fallback por cohort de ano (mesma função usada no resto da página).
+    const escLabel = escaloEsForPlayer(p.catEdad, dob, dateRef) || ageToEscalaoEs(age);
     const startHole = p.startHole ?? undefined;
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
