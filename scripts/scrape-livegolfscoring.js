@@ -80,11 +80,18 @@ function parseHoyoAHoyo(html) {
 
   // Classe de nome tolerante: \p{L} apanha QUALQUER letra unicode (à/è/ï/ç/·, além
   // de áéíóúñü) — nomes catalães/estrangeiros deixam de fazer a linha falhar e
-  // desaparecer (ex: PUJOLÀ, GONÇALVES, MÜLLER). Mantemos o parse forte (scorecard
-  // completo) como caminho normal e um fallback que recupera/regista o resto.
-  const NAME = "[\\p{L}\\s,'.\\-·]+?";
+  // desaparecer (ex: PUJOLÀ, GONÇALVES, MÜLLER). Inclui TODAS as variantes de
+  // apóstrofo/aspa que aparecem no site (O´RIORDAN, O'NEILL, D'ARLOT, D´haenens):
+  // recta ' (U+0027), curvas ' ' (U+2018/2019), acento agudo ´ (U+00B4), crase `
+  // (U+0060), modificador ʼ (U+02BC). Mantemos o parse forte (scorecard completo)
+  // como caminho normal e um fallback que recupera/regista o resto.
+  const NAME = "[\\p{L}\\s,.'\\-·\\u00B4\\u2018\\u2019\\u0060\\u02BC]+?";
   const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+((?:\\d+\\s+){19,21}\\d+)\\s+([+\\-]\\d+|E|Par)`, "u");
   const looseRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
+  // Marcadores de "não-jogador" no início da linha: não-comparecências (NP), retiros
+  // (RET), desqualificações (DESC/DSQ), etc. — não têm cartão válido e não entram nas
+  // classificações. Reconhecê-los evita ruído de "unparsed" (eram dezenas por torneio).
+  const statusRe = new RegExp(`^[> ]*(NP|RET|DESC|DSQ|DQ|NC|DNS|WD|AUS|NoCard|RETIRAD[OA]|DESCALIFICAD[OA])\\s+\\p{L}`, "iu");
   const toTp = (raw) => (raw === "E" || raw === "Par") ? 0 : parseInt(raw, 10);
 
   let m;
@@ -114,6 +121,13 @@ function parseHoyoAHoyo(html) {
       continue;
     }
 
+    // ── Não-jogador (NP/RET/DESC/…): sem cartão válido → fora das classificações.
+    //    Conta-se mas não se regista como jogador nem como erro. ──
+    if (statusRe.test(blockText)) {
+      dropped.push({ memberId, reason: "nocard", text: blockText.slice(0, 80) });
+      continue;
+    }
+
     // ── Fallback: o parse forte falhou (nome com carácter inesperado, espaçamento,
     //    scorecard incompleto). Recuperamos o máximo possível em vez de descartar. ──
     const lr = looseRe.exec(blockText);
@@ -136,9 +150,14 @@ function parseHoyoAHoyo(html) {
       continue;
     }
 
-    // ── Nem o fallback apanhou: registar para inspecção (NUNCA descartar calado). ──
-    if (memberId || /[A-Za-z]{3,}/.test(blockText)) {
+    // ── Nem o fallback apanhou. Distinguir "sem dados" (só traços: match-play,
+    //    desistências sem marcador) — esperado e silencioso — de "unparsed" (TEM
+    //    números mas mesmo assim falhou: digno de inspecção). ──
+    const hasScoreDigits = /\b\d{1,3}\b/.test(blockText.replace(/[+\-]\d+/g, ""));
+    if (hasScoreDigits) {
       dropped.push({ memberId, reason: "unparsed", text: blockText.slice(0, 140) });
+    } else if (memberId || /\p{L}{3,}/u.test(blockText)) {
+      dropped.push({ memberId, reason: "nodata", text: blockText.slice(0, 80) });
     }
   }
 
@@ -283,14 +302,19 @@ async function scrapeTorneo(id) {
     // Tornar visível qualquer linha que o parse forte não apanhou — antes
     // desapareciam em silêncio (ex: 2º classificado a sumir de R1/R2 → top-3 errado).
     const dr = parsed.dropped || [];
-    if (dr.length) {
-      const rec = dr.filter(d => d.reason === "recovered").length;
-      const part = dr.filter(d => d.reason === "partial").length;
-      const uns = dr.filter(d => d.reason === "unparsed").length;
+    const rec = dr.filter(d => d.reason === "recovered").length;
+    const part = dr.filter(d => d.reason === "partial").length;
+    const nocard = dr.filter(d => d.reason === "nocard" || d.reason === "nodata").length;
+    const uns = dr.filter(d => d.reason === "unparsed").length;
+    // Só avisar quando há algo digno de nota: recuperações, parciais, ou linhas
+    // genuinamente não parseadas. NP/RET/DESC/match-play (nocard/nodata) são
+    // exclusões esperadas — não poluem o log (no máximo um resumo ao lado).
+    if (rec || part || uns) {
       console.warn(`  ⚠ id=${id} R${r.round}: ${parsed.players.length} jogadores` +
         (rec ? `, +${rec} recuperados via fallback` : "") +
         (part ? `, ${part} parciais (sem scorecard completo)` : "") +
-        (uns ? `, ${uns} linhas NÃO parseadas` : ""));
+        (uns ? `, ${uns} NÃO parseadas` : "") +
+        (nocard ? `, ${nocard} s/ cartão (NP/RET/DESC)` : ""));
       for (const d of dr) {
         if (d.reason === "unparsed") console.warn(`      [unparsed] mid=${d.memberId || "?"} :: ${d.text}`);
       }
