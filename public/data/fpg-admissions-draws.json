@@ -1,32 +1,8 @@
 {
-  "scrapedAt": "2026-06-27T21:24:09.792Z",
+  "scrapedAt": "2026-06-27T22:02:23.455Z",
   "total": 497,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
-    {
-      "ccode": "004",
-      "tcode": "10580",
-      "name": "Torneio Junior 10580",
-      "date": null,
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
-      "ccode": "004",
-      "tcode": "10581",
-      "name": "Torneio Junior 10581",
-      "date": null,
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
     {
       "ccode": "910",
       "tcode": "10109",
@@ -114592,6 +114568,266 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "004",
+      "tcode": "10580",
+      "name": "CAMP. JUVENIL - T.V.P.M. (Escalão A)",
+      "date": "2026-07-06",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "CAMP. JUVENIL - T.V.P.M. (Escalão A)",
+        "date": "2026-07-06",
+        "totalInscritos": 17,
+        "reservas": 0,
+        "status": "",
+        "rounds": 1,
+        "tcode": "10580",
+        "ccode": "004",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "51523",
+            "nome": "Angelina Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 3.7,
+            "vacf": null,
+            "registo": "2026/06/07 12:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51524",
+            "nome": "William Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 6,
+            "vacf": null,
+            "registo": "2026/06/07 12:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "52393",
+            "nome": "Mateus Penucho",
+            "clube": "Santo da Serra",
+            "hcp": 13.7,
+            "vacf": null,
+            "registo": "2026/06/08 11:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "41131",
+            "nome": "Matilde Leal Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 3.2,
+            "vacf": null,
+            "registo": "2026/06/08 11:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "46706",
+            "nome": "Pedro Costa Alemão",
+            "clube": "Estoril",
+            "hcp": 2.6,
+            "vacf": null,
+            "registo": "2026/06/08 12:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "51949",
+            "nome": "David Filip Jr",
+            "clube": "Quinta do Peru",
+            "hcp": 9.2,
+            "vacf": null,
+            "registo": "2026/06/09 15:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "53715",
+            "nome": "João Gomes",
+            "clube": "Lisbon SC",
+            "hcp": 10.2,
+            "vacf": null,
+            "registo": "2026/06/19 16:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "46756",
+            "nome": "Leonardo Becker",
+            "clube": "Estoril",
+            "hcp": 30.8,
+            "vacf": null,
+            "registo": "2026/06/19 21:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "48531",
+            "nome": "Duarte Soares Franco",
+            "clube": "Estoril",
+            "hcp": 6.3,
+            "vacf": null,
+            "registo": "2026/06/22 07:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "49124",
+            "nome": "Nuno Palmares Jr.",
+            "clube": "Estoril",
+            "hcp": 1.8,
+            "vacf": null,
+            "registo": "2026/06/22 08:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 4.8,
+            "vacf": null,
+            "registo": "2026/06/22 12:33",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "49076",
+            "nome": "Ruiqi Li",
+            "clube": "Estoril",
+            "hcp": 3.6,
+            "vacf": null,
+            "registo": "2026/06/24 10:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 4.8,
+            "vacf": null,
+            "registo": "2026/06/24 18:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "59328",
+            "nome": "Asher Scarantino",
+            "clube": "Estoril",
+            "hcp": 10.3,
+            "vacf": null,
+            "registo": "2026/06/25 11:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "45439",
+            "nome": "Ryan Dantas",
+            "clube": "Belas",
+            "hcp": 7.4,
+            "vacf": null,
+            "registo": "2026/06/25 14:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "46591",
+            "nome": "Filipe Pinheiro",
+            "clube": "Belas",
+            "hcp": 3.3,
+            "vacf": null,
+            "registo": "2026/06/25 23:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "57756",
+            "nome": "Miguel Maria Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 18.7,
+            "vacf": null,
+            "registo": "2026/06/26 23:23",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "004",
+      "tcode": "10581",
+      "name": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+      "date": "2026-07-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+        "date": "2026-07-07",
+        "totalInscritos": 5,
+        "reservas": 0,
+        "status": "",
+        "rounds": 1,
+        "tcode": "10581",
+        "ccode": "004",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "44649",
+            "nome": "Artur Santos",
+            "clube": "Exército",
+            "hcp": 36.7,
+            "vacf": null,
+            "registo": "2026/06/01 21:34",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "49085",
+            "nome": "Ricardo Castro Ferreira",
+            "clube": "Estoril",
+            "hcp": 5.7,
+            "vacf": null,
+            "registo": "2026/06/21 21:30",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "46591",
+            "nome": "Filipe Pinheiro",
+            "clube": "Belas",
+            "hcp": 3.3,
+            "vacf": null,
+            "registo": "2026/06/25 14:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "54255",
+            "nome": "Francisco Ivo de Carvalho",
+            "clube": "Belas",
+            "hcp": 28.5,
+            "vacf": null,
+            "registo": "2026/06/26 00:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "57587",
+            "nome": "Maria Madalena Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 27.8,
+            "vacf": null,
+            "registo": "2026/06/26 23:25",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
     }
   ]
 }

@@ -71,6 +71,7 @@ function parseAdmissions(html) {
     totalInscritos: 0,
     reservas: 0,
     status: null,
+    rounds: null,    // nº de rondas detectado dos radio buttons radioNRounds
     tcode: null,
     ccode: null,
     players: [],
@@ -79,6 +80,10 @@ function parseAdmissions(html) {
   // Meta
   const mName = html.match(/<span[^>]*id=["']lblTdesc["'][^>]*>([^<]*)<\/span>/i);
   if (mName) result.name = decodeHTML(mName[1]).trim();
+
+  // Número de rondas — contagem de inputs radioNRounds (cada ronda = 1 radio button)
+  const nRounds = (html.match(/name=["']radioNRounds["']/gi) || []).length;
+  if (nRounds > 0) result.rounds = nRounds;
 
   const mDate = html.match(/<span[^>]*id=["']lbldt["'][^>]*>([^<]*)<\/span>/i);
   if (mDate) {
@@ -110,7 +115,9 @@ function parseAdmissions(html) {
   if (mClub) result.ccode = decodeHTML(mClub[1]).trim();
 
   // Players — cada jogador está num <tbody> separado dentro da tabela
-  // Extrair todos os <tbody>...</tbody> e filtrar os que têm 7 <td>
+  // Suporta dois formatos:
+  //   7 colunas (via linkpage): pos | nfed | nome | clube | hcp | vacf | registo
+  //   6 colunas (via URL directa tournAdmissions.aspx): pos | nfed | nome | clube | hcp | registo
   const bodyRe = /<tbody[^>]*>([\s\S]*?)<\/tbody>/gi;
   let bm;
   while ((bm = bodyRe.exec(html)) !== null) {
@@ -122,9 +129,11 @@ function parseAdmissions(html) {
     while ((tm = tdRe.exec(inner)) !== null) {
       cells.push(stripTags(tm[1]));
     }
-    // Esperamos 7 células: pos, nfed, nome, clube, hcp, vacf, registo
-    if (cells.length !== 7) continue;
-    const [pos, nfed, nome, clube, hcp, vacf, registo] = cells;
+    // Aceitar 6 ou 7 células; ignorar outras contagens (cabeçalhos, totais, etc.)
+    if (cells.length < 6 || cells.length > 8) continue;
+    const [pos, nfed, nome, clube, hcp] = cells;
+    const vacf    = cells.length >= 7 ? cells[5] : null;
+    const registo = cells[cells.length - 1];  // última célula = data de registo
     if (!pos || !nome) continue;
     // Filtrar header row accidentally picked (se algum <tbody> envolver <thead>)
     if (/^#$/.test(pos)) continue;

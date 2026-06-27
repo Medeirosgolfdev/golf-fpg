@@ -1350,6 +1350,56 @@ function Content() {
         } as unknown as Tournament;
         seen.set(key, synthetic);
       }
+      // 3) Injectar outros torneios jovens com apenas admissions (sem resultados ainda em
+      //    pull-torneios) — detectados pelo nome na fpg-admissions-draws.json.
+      //    Permite que torneios Junior/Sub-N de qualquer clube (ex: ccode=004) apareçam
+      //    em /FPG/jovens logo que tenham inscrições scrapadas, sem precisar de pull-torneios.
+      {
+        const ADM_JOVEM_RE = /\b(juniors?|júniors?|juvenil|juvenis|sub[\s\-_]?\d{1,2}|u\d{1,2}|jovens?)\b/i;
+        const stripDia = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
+        const inferEscalao = (name: string): string | null => {
+          const esc = name.match(/\bescal[aã]o\s+([A-Za-z0-9]+)\b/i);
+          if (esc) return `Escalão ${esc[1].toUpperCase()}`;
+          const sub = name.match(/\bsub[\s\-_]?(\d{1,2})\b/i) || name.match(/\bu(\d{1,2})\b/i);
+          return sub ? `Sub ${sub[1]}` : null;
+        };
+        // Remove o sufixo "(Escalão X)" do nome base — o escalão vai para `escalao`.
+        // Necessário para que torneios com o mesmo evento mas datas/sufixos diferentes
+        // (ex: Escalão A num dia, Escalão B noutro) sejam agrupados pelo buildEventGroups
+        // como uma única entrada sidebar com múltiplos tabs.
+        const stripEscalaoSuffix = (name: string): string =>
+          name.replace(/\s*\(\s*escal[aã]o\s+\w+\s*\)/gi, "").replace(/\s+/g, " ").trim();
+
+        for (const [, ad] of admDrawsIdx) {
+          const tournKey = `${ad.ccode}/${ad.tcode}`;
+          if (seen.has(tournKey)) continue;
+          const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
+          if (playerCount === 0) continue;
+          if (!ADM_JOVEM_RE.test(stripDia(ad.name || ""))) continue;
+          const year = ad.date?.substring(0, 4) || String(new Date().getFullYear());
+          const baseName = stripEscalaoSuffix(ad.name || "") || `Torneio ${ad.tcode}`;
+          seen.set(tournKey, {
+            name: baseName,
+            ccode: ad.ccode,
+            tcode: String(ad.tcode),
+            date: ad.date || "",
+            campo: ad.campo || null,
+            clube: ad.ccode,
+            circuit: "tour",
+            series: "jovens",
+            region: null,
+            escalao: inferEscalao(ad.name || ""),
+            num: 1,
+            rounds: (ad.admissions as any)?.rounds ?? 1,
+            playerCount,
+            players: [],
+            _jovensYear: year,
+            _sourceFile: "fpg-admissions-draws.json",
+            _admissions: ad.admissions,
+            _draws: ad.draws,
+          } as unknown as Tournament);
+        }
+      }
       setJovensTournaments([...seen.values()] as Tournament[]);
       setJovensLoaded(true);
       setJovensLoading(false);
@@ -1438,7 +1488,7 @@ function Content() {
     //  - "júnior" (Taça Yeatman Júnior — strip de diacríticos antes do test)
     //  - "subN"   (sub10, sub-14, sub 14, ...)
     //  - "UN"     (U10, U12, U14, U16, U18, U21 — categorias internacionais)
-    const JOVEM_NAME_RE = /\b(juniors?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
+    const JOVEM_NAME_RE = /\b(juniors?|júniors?|juvenil|juvenis|jovens?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
     const stripAcc = (s: string) =>
       s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     for (const t of tournaments) {

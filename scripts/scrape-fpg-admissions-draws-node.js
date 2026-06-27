@@ -112,6 +112,13 @@ const COOKIE = loadCookieHeader({
   file: path.join(REPO, "api", ".fpg-admissions-cookies.json"),
   label: "[adm-draws]",
 });
+// Fallback: scoring.datagolf.pt (para torneios que param-error em scoring.fpg.pt)
+const COOKIE_DG = loadCookieHeader({
+  envVars: ["DATAGOLF_SCORING_COOKIES"],
+  file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
+  label: "[adm-draws/datagolf]",
+  exitOnFail: false,  // opcional — não abortar se não tiver cookies datagolf
+}) || null;
 
 /* ── Scope (construído em main para suportar --auto-extend async) ───────── */
 if (!fs.existsSync(SCOPE_FILE)) {
@@ -135,14 +142,74 @@ const BASE_HEADERS = {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* Warmup único do entry-gate scoring-pt.datagolf.pt — necessário antes de
+ * tentar URLs directas (tournAdmissions.aspx). Feito no máximo uma vez por run. */
+let _dgWarmupDone = false;
+async function ensureDgWarmup() {
+  if (_dgWarmupDone || !COOKIE_DG) return;
+  const warmupUrl = `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`;
+  try {
+    const r = await fetch(warmupUrl, {
+      headers: { ...BASE_HEADERS, "Cookie": COOKIE_DG, "Referer": "https://scoring.datagolf.pt/" },
+      redirect: "follow",
+    });
+    await r.text();
+    console.log(`[adm-draws] datagolf warmup HTTP ${r.status}`);
+    _dgWarmupDone = true;
+  } catch (e) {
+    console.warn(`[adm-draws] datagolf warmup falhou: ${e.message}`);
+  }
+}
+
 async function fetchLinkpage(ccode, tcode, page, round) {
   const ack = page === "admissions" ? ACK_ADMISSIONS : ACK_DRAW;
+  // 1) scoring.fpg.pt/lists/linkpage.aspx (caminho canónico)
   let url = `https://scoring.fpg.pt/lists/linkpage.aspx?page=${page}&club=${ccode}&tourn=${tcode}&ack=${ack}`;
   if (round) url += `&round=${round}`;
   try {
     const res = await fetch(url, { headers: BASE_HEADERS, redirect: "follow" });
     const txt = await res.text();
     const paramErr = /Param_Errors|Err=999|<title>Param Error/.test(txt);
+    if (!paramErr) return { ok: res.ok, status: res.status, html: txt, paramErr, url };
+
+    if (COOKIE_DG) {
+      // 2) scoring.datagolf.pt/pt/linkpage.aspx (domínio gémeo)
+      const urlDg = `https://scoring.datagolf.pt/pt/linkpage.aspx?page=${page}&club=${ccode}&tourn=${tcode}&ack=${ack}${round ? `&round=${round}` : ""}`;
+      try {
+        const resDg = await fetch(urlDg, {
+          headers: { ...BASE_HEADERS, "Cookie": COOKIE_DG, "Referer": "https://scoring.datagolf.pt/" },
+          redirect: "follow",
+        });
+        const txtDg = await resDg.text();
+        const paramErrDg = /Param_Errors|Err=999|<title>Param Error/.test(txtDg);
+        if (!paramErrDg) {
+          console.log(`[adm-draws] fallback linkpage datagolf.pt: ${ccode}/${tcode} ${page}`);
+          return { ok: resDg.ok, status: resDg.status, html: txtDg, paramErr: false, url: urlDg };
+        }
+      } catch { /* continua para tentativa 3 */ }
+
+      // 3) URL directa tournAdmissions.aspx / draw.asp (para ccodes que não suportam linkpage)
+      //    Requer warmup do entry-gate primeiro (seta DG_Lists_URL server-side).
+      await ensureDgWarmup();
+      let urlDirect;
+      if (page === "admissions") {
+        urlDirect = `https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=${ccode}&tcode=${tcode}`;
+      } else {
+        // draws: scoring-pt.datagolf.pt/scripts/draw.asp
+        urlDirect = `https://scoring-pt.datagolf.pt/scripts/draw.asp?club=${ccode}&tourn=${tcode}&round_number=${round || 1}&LANG_TXT=PT&ack=${ACK_TOURNLIST}`;
+      }
+      try {
+        const resDirect = await fetch(urlDirect, {
+          headers: { ...BASE_HEADERS, "Cookie": COOKIE_DG, "Referer": "https://scoring.datagolf.pt/" },
+          redirect: "follow",
+        });
+        const txtDirect = await resDirect.text();
+        const paramErrDirect = /Param_Errors|Err=999|<title>Param Error/.test(txtDirect);
+        if (!paramErrDirect) console.log(`[adm-draws] fallback directo: ${ccode}/${tcode} ${page}`);
+        return { ok: resDirect.ok, status: resDirect.status, html: txtDirect, paramErr: paramErrDirect, url: urlDirect };
+      } catch (e3) { /* todas as tentativas falharam */ }
+    }
+
     return { ok: res.ok, status: res.status, html: txt, paramErr, url };
   } catch (e) {
     return { ok: false, error: e.message, url };
