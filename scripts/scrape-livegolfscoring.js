@@ -74,7 +74,20 @@ function parseHoyoAHoyo(html) {
 
   // Players: cada <tr class="altrow"> ou similar tem 1 jogador
   const players = [];
+  const dropped = [];                 // linhas-jogador que falharam o parse forte — NUNCA descartadas em silêncio
   const trRe = /<tr[^>]*(?:class="(?:altrow|altrow_alt)"|id="jugador-\d+")[^>]*>([\s\S]+?)<\/tr>/gi;
+
+  // Classe de nome tolerante: \p{L} apanha QUALQUER letra unicode (à/è/ï/ç/·,
+  // além de áéíóúñü) — nomes catalães/estrangeiros deixam de fazer a linha falhar
+  // e desaparecer. Mantemos o parse forte (scorecard completo) como caminho normal
+  // e um fallback que recupera/regista as linhas que ele não apanha.
+  const NAME = "[\\p{L}\\s,'.\\-·]+?";
+  // Forte: pos + nome + ±toPar + 19-21 números contíguos (18 buracos + out/in + total) + ±hoy
+  const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+((?:\\d+\\s+){19,21}\\d+)\\s+([+\\-]\\d+|E|Par)`, "u");
+  // Fallback: pos + nome + ±toPar + RESTO (sem exigir o bloco rígido de números).
+  const looseRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
+  const toTp = (raw) => (raw === "E" || raw === "Par") ? 0 : parseInt(raw, 10);
+
   let m;
   while ((m = trRe.exec(html)) !== null) {
     const block = m[1];
@@ -82,31 +95,56 @@ function parseHoyoAHoyo(html) {
     const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(block);
     const memberId = idM ? idM[1] : null;
     const blockText = stripTags(block);
-    // Pattern: > {pos} {NAME} {±toPar} h1 h2 h3 h4 h5 h6 h7 h8 h9 out h10 ... h18 in total ±today
-    // O nome pode ter vírgula e espaços
-    const re = /^[> ]*(T?\d+|\d+|—)?\s+([A-Za-zÁÉÍÓÚÑÜáéíóúñü\s,'\.-]+?)\s+\*?\s*([+\-]\d+|E|Par)\s+((?:\d+\s+){19,21}\d+)\s+([+\-]\d+|E|Par)/;
-    const r = re.exec(blockText);
-    if (!r) continue;
-    const posStr = r[1] ? r[1].replace(/^T/, "") : "";
-    const pos = posStr ? parseInt(posStr, 10) : null;
-    const name = r[2].trim().replace(/\s{2,}/g, " ");
-    const tpRaw = r[3];
-    const numsStr = r[4].trim();
-    const hoyRaw = r[5];
-    const nums = numsStr.split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
-    // Esperado: 21 nums (h1-9, out=36, h10-18, in=36, total) ou 22 com Hdp; pegamos os 18 buracos + out + in + total
-    let scores = null, total = null, halves = null;
-    if (nums.length >= 21) {
-      scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
-      halves = [nums[9], nums[19]];
-      total = nums[20];
+
+    // ── Caminho normal: scorecard completo ──
+    const r = strictRe.exec(blockText);
+    if (r) {
+      const posStr = r[1] ? r[1].replace(/^T/, "") : "";
+      const pos = posStr ? parseInt(posStr, 10) : null;
+      const name = r[2].trim().replace(/\s{2,}/g, " ");
+      const nums = r[4].trim().split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
+      // Esperado: 21 nums (h1-9, out=36, h10-18, in=36, total) ou 22 com Hdp
+      let scores = null, total = null, halves = null;
+      if (nums.length >= 21) {
+        scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
+        halves = [nums[9], nums[19]];
+        total = nums[20];
+      }
+      players.push({ memberId, pos, name, toPar: toTp(r[3]), hoy: toTp(r[5]), scores, halves, total });
+      continue;
     }
-    const toPar = (tpRaw === "E" || tpRaw === "Par") ? 0 : parseInt(tpRaw, 10);
-    const hoy = (hoyRaw === "E" || hoyRaw === "Par") ? 0 : parseInt(hoyRaw, 10);
-    players.push({ memberId, pos, name, toPar, hoy, scores, halves, total });
+
+    // ── Fallback: o parse forte falhou (nome com carácter inesperado, espaçamento,
+    //    scorecard incompleto). Recuperamos o máximo possível em vez de descartar. ──
+    const lr = looseRe.exec(blockText);
+    if (lr) {
+      const posStr = lr[1] ? lr[1].replace(/^T/, "") : "";
+      const pos = posStr ? parseInt(posStr, 10) : null;
+      const name = lr[2].trim().replace(/\s{2,}/g, " ");
+      const tail = lr[4].trim();
+      const tpTokens = tail.match(/[+\-]\d+|E|Par/g) || [];
+      const hoyRaw = tpTokens.length ? tpTokens[tpTokens.length - 1] : null;
+      const nums = tail.split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
+      let scores = null, total = null, halves = null;
+      if (nums.length >= 21) {           // scorecard completo recuperado → jogador válido
+        scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
+        halves = [nums[9], nums[19]];
+        total = nums[20];
+      }
+      // scorecard incompleto → scores/total ficam null (excluído a jusante), mas
+      // pos/nome/toPar são preservados e a linha é registada (não some em silêncio).
+      players.push({ memberId, pos, name, toPar: toTp(lr[3]), hoy: hoyRaw ? toTp(hoyRaw) : 0, scores, halves, total, _partial: scores == null });
+      dropped.push({ memberId, name, reason: scores == null ? "partial" : "recovered", text: blockText.slice(0, 140) });
+      continue;
+    }
+
+    // ── Nem o fallback apanhou: registar para inspecção (NUNCA descartar calado). ──
+    if (memberId || /[A-Za-z]{3,}/.test(blockText)) {
+      dropped.push({ memberId, reason: "unparsed", text: blockText.slice(0, 140) });
+    }
   }
 
-  return { par, players };
+  return { par, players, dropped };
 }
 
 function parseTorneoMeta(html) {
@@ -154,6 +192,21 @@ async function scrapeTorneo(id) {
     const hoy = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${id}/${r.round}`);
     if (hoy.status !== 200) continue;
     const parsed = parseHoyoAHoyo(hoy.body);
+    // Tornar visível qualquer linha que o parse forte não apanhou — antes
+    // desapareciam em silêncio (ex: 2º classificado a sumir de R1/R2 → top-3 errado).
+    const dr = parsed.dropped || [];
+    if (dr.length) {
+      const rec = dr.filter(d => d.reason === "recovered").length;
+      const part = dr.filter(d => d.reason === "partial").length;
+      const uns = dr.filter(d => d.reason === "unparsed").length;
+      console.warn(`  ⚠ id=${id} R${r.round}: ${parsed.players.length} jogadores` +
+        (rec ? `, +${rec} recuperados via fallback` : "") +
+        (part ? `, ${part} parciais (sem scorecard completo)` : "") +
+        (uns ? `, ${uns} linhas NÃO parseadas` : ""));
+      for (const d of dr) {
+        if (d.reason === "unparsed") console.warn(`      [unparsed] mid=${d.memberId || "?"} :: ${d.text}`);
+      }
+    }
     roundsData.push({ round: r.round, label: r.label, par: parsed.par, players: parsed.players });
   }
 
