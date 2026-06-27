@@ -91,8 +91,10 @@ function parseHoyoAHoyo(html) {
   let m;
   while ((m = trRe.exec(html)) !== null) {
     const block = m[1];
-    // Tentar apanhar memberId do id do td: <td><span id="star-XXXX">
-    const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(block);
+    // memberId: pode estar no próprio <tr id="jugador-N"> OU num <span id="star-N">
+    // interno — procurar na linha INTEIRA (m[0]) para apanhar ambos os casos e
+    // garantir a MESMA chave de jogador entre hoyoahoyo e backfill da classificação.
+    const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(m[0]);
     const memberId = idM ? idM[1] : null;
     const blockText = stripTags(block);
 
@@ -145,6 +147,51 @@ function parseHoyoAHoyo(html) {
   }
 
   return { par, players, dropped };
+}
+
+/**
+ * Página de classificação geral (/torneos/clasificacion/{id}). Tem, por jogador,
+ * os TOTAIS de cada ronda (colunas 1,2,3) + total final — incluindo jogadores que
+ * o hoyoahoyo de alguma ronda não listou. Usa-se para PREENCHER rondas em falta.
+ *
+ * Segurança contra leitura errada de colunas: só aceitamos os totais por ronda
+ * quando a sua SOMA bate exactamente com o total final (auto-validação
+ * aritmética). Se não bater, devolvemos roundTotals=null e não preenchemos nada —
+ * nunca inventamos um score.
+ */
+function parseClasificacion(html, nRounds) {
+  const out = [];
+  const trRe = /<tr[^>]*(?:class="(?:altrow|altrow_alt)"|id="jugador-\d+")[^>]*>([\s\S]+?)<\/tr>/gi;
+  const NAME = "[\\p{L}\\s,'.\\-·]+?";
+  // pos + nome + ±AlPar + resto (hoyo, ±hoy, totais por ronda, total)
+  const re = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
+  let m;
+  while ((m = trRe.exec(html)) !== null) {
+    const block = m[1];
+    const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(m[0]);
+    const memberId = idM ? idM[1] : null;
+    const blockText = stripTags(block);
+    const r = re.exec(blockText);
+    if (!r) continue;
+    const posStr = r[1] ? r[1].replace(/^T/, "") : "";
+    const pos = posStr ? parseInt(posStr, 10) : null;
+    const name = r[2].trim().replace(/\s{2,}/g, " ");
+    const toPar = (r[3] === "E" || r[3] === "Par") ? 0 : parseInt(r[3], 10);
+    // Inteiros SEM sinal no resto (ignora os ±toPar/±hoy). Inclui "hoyo" (18) à
+    // cabeça, depois os totais por ronda e o total final.
+    const ints = r[4].split(/\s+/).filter(t => /^\d+$/.test(t)).map(Number);
+    let roundTotals = null, total = null;
+    if (ints.length >= nRounds + 1) {
+      const cand = ints.slice(-(nRounds + 1));        // [r1..rN, total]
+      const t = cand[cand.length - 1];
+      const rts = cand.slice(0, nRounds);
+      if (rts.every(v => v > 0 && v < 999) && rts.reduce((a, b) => a + b, 0) === t) {
+        roundTotals = rts; total = t;
+      }
+    }
+    out.push({ memberId, name, pos, toPar, roundTotals, total });
+  }
+  return out;
 }
 
 function parseTorneoMeta(html) {
@@ -210,7 +257,44 @@ async function scrapeTorneo(id) {
     roundsData.push({ round: r.round, label: r.label, par: parsed.par, players: parsed.players });
   }
 
-  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, rounds: roundsData };
+  // 3. Cruzar com a classificação geral para PREENCHER rondas que o hoyoahoyo não
+  //    listou (ex: o 2º classificado ausente de R1/R2). Aditivo e defensivo: nunca
+  //    sobrescreve uma linha do hoyoahoyo, e se a página falhar o output fica igual.
+  let classification = [];
+  try {
+    const clf = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/clasificacion/${id}`);
+    if (clf.status === 200 && clf.body.length > 500) {
+      classification = parseClasificacion(clf.body, rounds.length);
+      let filled = 0;
+      for (const cp of classification) {
+        if (!cp.roundTotals) continue;                 // só os auto-validados (soma = total)
+        for (let i = 0; i < cp.roundTotals.length; i++) {
+          const rd = roundsData.find(x => x.round === i + 1);
+          if (!rd) continue;
+          const present = rd.players.some(p =>
+            (cp.memberId && p.memberId === cp.memberId) ||
+            (!cp.memberId && normNameLgs(p.name) === normNameLgs(cp.name)));
+          if (present) continue;                        // já temos (hoyoahoyo manda)
+          rd.players.push({
+            memberId: cp.memberId, pos: null, name: cp.name,
+            toPar: null, hoy: 0, scores: null, halves: null,
+            total: cp.roundTotals[i], _fromClassif: true,
+          });
+          filled++;
+        }
+      }
+      if (filled) console.warn(`  ↺ id=${id}: ${filled} ronda(s) preenchida(s) via classificação geral`);
+    }
+  } catch (e) {
+    console.warn(`  ⚠ id=${id}: classificação geral indisponível (${e.message})`);
+  }
+
+  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, rounds: roundsData, classification };
+}
+
+function normNameLgs(s) {
+  return String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "")
+    .replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 const LGS_BASE = "https://rfegolf.livegolfscoring.es";
