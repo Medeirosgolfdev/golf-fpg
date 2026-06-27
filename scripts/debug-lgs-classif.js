@@ -74,4 +74,35 @@ function stripTags(s) {
   const h1 = await httpGet(`${base}/torneos/hoyoahoyo/${id}/1`);
   console.log(`\n=== /torneos/hoyoahoyo/${id}/1 ===`);
   console.log(`status=${h1.status}  bodyLen=${h1.body.length}  contém '${needle}'? ${h1.body.toUpperCase().includes(needle)}`);
+
+  // ── 3. JSON já gravado: o jogador-alvo está nas N rondas? Qual o top-5? ──
+  const fs = require("fs");
+  const jpath = require("path").resolve(__dirname, `../public/data/rfegolf-livegolfscoring/${id}.json`);
+  if (!fs.existsSync(jpath)) { console.log(`\n(${jpath} ainda não existe — corre o scraper primeiro)`); return; }
+  const d = JSON.parse(fs.readFileSync(jpath, "utf8"));
+  const PAR = (d.rounds[0]?.par || []).reduce((a, b) => a + (b || 0), 0);
+  console.log(`\n=== ${id}.json: ${d.meta?.name || "?"} — ${d.rounds.length} rondas, par/ronda=${PAR} ===`);
+  console.log(`classification[] guardado: ${(d.classification || []).length} jogadores` +
+    `, com totais validados: ${(d.classification || []).filter(c => c.roundTotals).length}`);
+
+  // presença do alvo por ronda
+  const pres = d.rounds.map(r => {
+    const p = r.players.find(x => String(x.name || "").toUpperCase().includes(needle));
+    return p ? `R${r.round}=${p.total ?? "?"}${p._fromClassif ? "(classif)" : ""}` : `R${r.round}=AUSENTE`;
+  });
+  console.log(`'${needle}' por ronda: ${pres.join("  ")}`);
+
+  // top-5 acumulado (mesma lógica do adapter: jogadores com TODAS as rondas)
+  const agg = {};
+  for (const r of d.rounds) for (const p of r.players) {
+    const k = p.memberId || p.name; if (!agg[k]) agg[k] = { name: p.name, rounds: [] };
+    if (p.total != null && p.total > 0 && p.total < 999) agg[k].rounds.push(p.total);
+  }
+  const players = Object.values(agg);
+  const nR = Math.max(...players.map(p => p.rounds.length));
+  const top = players.filter(p => p.rounds.length === nR)
+    .map(p => ({ name: p.name, g: p.rounds.reduce((a, b) => a + b, 0) }))
+    .map(p => ({ ...p, tp: p.g - PAR * nR })).sort((a, b) => a.g - b.g).slice(0, 5);
+  console.log(`\n--- Resumo top-5 (acumulado, ${nR} rondas) ---`);
+  top.forEach((p, i) => console.log(`  ${i + 1}. ${p.name.padEnd(34)} ${p.g} (${p.tp >= 0 ? "+" : ""}${p.tp})`));
 })().catch(e => { console.error("ERRO:", e.message); process.exit(1); });
