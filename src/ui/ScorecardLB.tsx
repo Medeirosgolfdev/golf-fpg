@@ -31,6 +31,7 @@ import {
 } from "./tournamentPrimitives";
 import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
+import { getTeeHex, teeBorder } from "../utils/teeColors";
 
 /** Score máximo por buraco (regra do torneio) */
 const MAX_HOLE_SCORE = 10;
@@ -134,6 +135,19 @@ export function ScorecardLB({
     teeName,
     meters,
   }));
+
+  // Colectar CR/Slope distintos por tee (para metaLine multi-tee)
+  const teeCrSlopeMap = new Map<string, { cr: number; slope: number }>();
+  for (const p of rawPlayers) {
+    const prs = p.roundScores?.[0];
+    const tn = p.teeName || prs?.teeName;
+    const cr = p.courseRating ?? prs?.courseRating;
+    const sl = p.slope ?? prs?.slope;
+    if (tn && cr && sl && !teeCrSlopeMap.has(tn)) {
+      teeCrSlopeMap.set(tn, { cr, slope: sl });
+    }
+  }
+  const teeCrSlopes = Array.from(teeCrSlopeMap.entries());
 
   const nonWD = rawPlayers.filter((p) => !p._wd);
   const wdOnly = rawPlayers.filter((p) => p._wd);
@@ -488,8 +502,24 @@ export function ScorecardLB({
             </span>
           )}
           {refP.course && <span>· 📍 {refP.course}</span>}
-          {refP.courseRating && <span>· CR {refP.courseRating}</span>}
-          {refP.slope && <span>· Slope {refP.slope}</span>}
+          {teeCrSlopes.length === 1 && (
+            <span>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}</span>
+          )}
+          {teeCrSlopes.length > 1 && (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              {" · "}
+              {teeCrSlopes.map(([tn, { cr, slope }]) => {
+                const hex = getTeeHex(tn);
+                const bdr = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
+                return (
+                  <span key={tn} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: bdr, flexShrink: 0 }} />
+                    <span>{cr}/{slope}</span>
+                  </span>
+                );
+              })}
+            </span>
+          )}
         </>
       }
       filterBar={
