@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-06-21T21:06:26.359Z",
-  "total": 489,
+  "scrapedAt": "2026-06-27T20:50:40.657Z",
+  "total": 495,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -113975,6 +113975,599 @@
         "players": []
       },
       "draws": {}
+    },
+    {
+      "ccode": "038",
+      "tcode": "10754",
+      "name": "QUINTA DO PERU PJA Masters 2026",
+      "date": "2026-06-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "987",
+      "tcode": "10239",
+      "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 18",
+      "date": "2026-06-27",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 18",
+          "date": "2026-06-27",
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Martim Ferreira",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Taras Zhurbei",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10238",
+      "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 16",
+      "date": "2026-06-27",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 16",
+          "date": "2026-06-27",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rafael Nogueira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Matias Carepa",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gustavo Castro",
+                  "fed": null,
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "António Pereira Mendes",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "João Oliveira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Camila Peres",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Luís Pedro Reis",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10237",
+      "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 14",
+      "date": "2026-06-27",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 14",
+          "date": "2026-06-27",
+          "totalJogadores": 17,
+          "groups": [
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Duarte Matias",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "David Grilo",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Tomás Araújo",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "João Pedro Frade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Manuel Gomes da Silva",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Gabriel Guimarães Mota",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Miguel Silva",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Mariana Costa",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Joao Antonio Frade Marques Santos",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "António O` Mahony",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Marta Andrade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Afonso Morais",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Dinis Soares",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10236",
+      "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 12",
+      "date": "2026-06-27",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 12",
+          "date": "2026-06-27",
+          "totalJogadores": 20,
+          "groups": [
+            {
+              "teeTime": "10:20",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "James Orrison",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "João Couto",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Diogo Gomes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Vasco Abreu",
+                  "fed": null,
+                  "clube": "UCDR Guardizela"
+                },
+                {
+                  "nome": "Carolina Paiva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Julian Pereira",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Marta Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Vicente Poeira",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Valentin Iria",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Martim Silva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:00",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Dinis Henriques",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Carlos Gonçalves Dias",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Elias Bacelar Ferreira",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Duarte Santos",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "António Ribeiro Rebelo",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Anita Santos",
+                  "fed": null,
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Filipe Bacelar Ferreira",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Marta Ferreira",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10235",
+      "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 10",
+      "date": "2026-06-27",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Norte-Paredes GC-Sub 10",
+          "date": "2026-06-27",
+          "totalJogadores": 17,
+          "groups": [
+            {
+              "teeTime": "11:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Dias",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Francisco Lopes",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Rafael Paço",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Henrique Monção",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Francisco Vaz",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Artur Von Hafe",
+                  "fed": null,
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Fabian Aponte",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Preto",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Benjamim Freitas",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Duarte Henriques",
+                  "fed": null,
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Alves de Oliveira",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel de Sá",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   ]
 }
