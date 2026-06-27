@@ -586,8 +586,10 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
         ccode,
         tcode: spec.tcode,
         // Nome/data reais vêm da página FPG no scrape; estes são só placeholders.
+        // NOTA: "date" in (existing||{}) preserva date:null → markSuspect salta a
+        // validação em torneios sem data conhecida (ex: adicionados manualmente ao scope).
         name: existing?.name || `Torneio ${spec.tcode}`,
-        date: existing?.date || today,
+        date: "date" in (existing || {}) ? existing.date : today,
         expectedYear: existing?.expectedYear || Number(today.slice(0, 4)),
         _src: spec.ccode ? "cli" : (existing?._src || "scope"),
       };
