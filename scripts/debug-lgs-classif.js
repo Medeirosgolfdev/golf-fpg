@@ -70,10 +70,36 @@ function stripTags(s) {
     console.log(`Primeiros 600 chars do body:\n${clf.body.slice(0, 600)}`);
   }
 
-  // ── 2. hoyoahoyo R1 — o jogador-alvo está mesmo ausente? ──
+  // ── 2. hoyoahoyo R1 — estrutura do par + cartões (confirmar 9 vs 18 buracos) ──
   const h1 = await httpGet(`${base}/torneos/hoyoahoyo/${id}/1`);
   console.log(`\n=== /torneos/hoyoahoyo/${id}/1 ===`);
   console.log(`status=${h1.status}  bodyLen=${h1.body.length}  contém '${needle}'? ${h1.body.toUpperCase().includes(needle)}`);
+
+  // Linha do par (hoyoahoyopares): raw + stripped → diz-me quantas colunas tem (9 ou 18)
+  const parTr = /<tr[^>]*class="[^"]*hoyoahoyopares[^"]*"[^>]*>([\s\S]+?)<\/tr>/i.exec(h1.body);
+  if (parTr) {
+    console.log(`\n--- linha do PAR (raw, 600 chars) ---\n${parTr[0].slice(0, 600)}`);
+    console.log(`--- par (stripped) ---\n${stripTags(parTr[1])}`);
+  } else console.log("  (sem linha hoyoahoyopares)");
+
+  // Primeiras 2 linhas de jogador: raw + stripped
+  const pRe = /<tr[^>]*(?:class="(?:altrow|altrow_alt)"|id="jugador-\d+")[^>]*>([\s\S]+?)<\/tr>/gi;
+  const prows = []; let pm;
+  while ((pm = pRe.exec(h1.body)) !== null && prows.length < 2) prows.push(pm);
+  prows.forEach((pr, i) => {
+    console.log(`\n--- jogador[${i}] (raw, 700 chars) ---\n${pr[0].slice(0, 700)}`);
+    console.log(`--- jogador[${i}] (stripped) ---\n${stripTags(pr[1])}`);
+  });
+
+  // Correr o parser REAL e mostrar o resultado
+  try {
+    const { parseHoyoAHoyo } = require("./scrape-livegolfscoring.js");
+    const parsed = parseHoyoAHoyo(h1.body);
+    console.log(`\n--- parseHoyoAHoyo: par[${parsed.par?.length}]=${JSON.stringify(parsed.par)} ---`);
+    console.log(`jogadores=${parsed.players.length}, dropped=${JSON.stringify(parsed.dropped.map(d => d.reason))}`);
+    parsed.players.slice(0, 3).forEach(p =>
+      console.log(`  pos=${p.pos} ${String(p.name).padEnd(26)} scores[${p.scores?.length ?? 0}] total=${p.total} toPar=${p.toPar}`));
+  } catch (e) { console.log("  (parseHoyoAHoyo indisponível:", e.message + ")"); }
 
   // ── 3. JSON já gravado: o jogador-alvo está nas N rondas? Qual o top-5? ──
   const fs = require("fs");

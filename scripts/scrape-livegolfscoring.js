@@ -69,9 +69,13 @@ function parseHoyoAHoyo(html) {
   if (parTr) {
     const nums = stripTags(parTr[1]).split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
     if (nums.length >= 21) {
-      par = [...nums.slice(0, 9), ...nums.slice(10, 19)];
+      par = [...nums.slice(0, 9), ...nums.slice(10, 19)];   // 18 buracos: 9 + OUT + 9 + IN + TOT
+    } else if (nums.length >= 9 && nums.length <= 12) {
+      par = nums.slice(0, 9);                                // 9 buracos (Benjamín/Alevín): 9 pars + total
     }
   }
+  // Nº de buracos do campo desta ronda (9 ou 18) — manda no parsing dos cartões.
+  const courseHoles = par && par.length === 9 ? 9 : 18;
 
   // Players: cada <tr class="altrow"> ou similar tem 1 jogador
   const players = [];
@@ -86,13 +90,34 @@ function parseHoyoAHoyo(html) {
   // (U+0060), modificador ʼ (U+02BC). Mantemos o parse forte (scorecard completo)
   // como caminho normal e um fallback que recupera/regista o resto.
   const NAME = "[\\p{L}\\s,.'\\-·\\u00B4\\u2018\\u2019\\u0060\\u02BC]+?";
-  const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+((?:\\d+\\s+){19,21}\\d+)\\s+([+\\-]\\d+|E|Par)`, "u");
+  // Nº de números do bloco do cartão: 18h = 20-22 (9+OUT+9+IN+TOT, +hoy à frente),
+  // 9h = 10-11 (9 buracos + total). O strict ajusta-se ao campo desta ronda.
+  const reps = courseHoles === 9 ? "9,10" : "19,21";
+  const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+((?:\\d+\\s+){${reps}}\\d+)\\s+([+\\-]\\d+|E|Par)`, "u");
   const looseRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
   // Marcadores de "não-jogador" no início da linha: não-comparecências (NP), retiros
   // (RET), desqualificações (DESC/DSQ), etc. — não têm cartão válido e não entram nas
   // classificações. Reconhecê-los evita ruído de "unparsed" (eram dezenas por torneio).
   const statusRe = new RegExp(`^[> ]*(NP|RET|DESC|DSQ|DQ|NC|DNS|WD|AUS|NoCard|RETIRAD[OA]|DESCALIFICAD[OA])\\s+\\p{L}`, "iu");
   const toTp = (raw) => (raw === "E" || raw === "Par") ? 0 : parseInt(raw, 10);
+  // Converte o bloco de números do cartão em {scores, halves, total} conforme o nº de
+  // buracos do campo. 18h: 9 + OUT + 9 + IN + TOTAL. 9h: 9 buracos + TOTAL (a 10ª
+  // coluna). Em 9h validamos que a SOMA dos 9 buracos bate com o total — assim um
+  // cartão incompleto (jogador a meio) é rejeitado em vez de inventar um total errado.
+  const parseNums = (nums) => {
+    if (courseHoles === 9) {
+      if (nums.length >= 10) {
+        const scores = nums.slice(0, 9);
+        const total = nums[9];
+        if (scores.reduce((a, b) => a + b, 0) === total) return { scores, halves: null, total };
+      }
+      return null;
+    }
+    if (nums.length >= 21) {
+      return { scores: [...nums.slice(0, 9), ...nums.slice(10, 19)], halves: [nums[9], nums[19]], total: nums[20] };
+    }
+    return null;
+  };
 
   let m;
   while ((m = trRe.exec(html)) !== null) {
@@ -107,18 +132,16 @@ function parseHoyoAHoyo(html) {
     // ── Caminho normal: scorecard completo ──
     const r = strictRe.exec(blockText);
     if (r) {
-      const posStr = r[1] ? r[1].replace(/^T/, "") : "";
-      const pos = posStr ? parseInt(posStr, 10) : null;
-      const name = r[2].trim().replace(/\s{2,}/g, " ");
       const nums = r[4].trim().split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
-      let scores = null, total = null, halves = null;
-      if (nums.length >= 21) {
-        scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
-        halves = [nums[9], nums[19]];
-        total = nums[20];
+      const sc = parseNums(nums);
+      if (sc) {
+        const posStr = r[1] ? r[1].replace(/^T/, "") : "";
+        const pos = posStr ? parseInt(posStr, 10) : null;
+        const name = r[2].trim().replace(/\s{2,}/g, " ");
+        players.push({ memberId, pos, name, toPar: toTp(r[3]), hoy: toTp(r[5]), scores: sc.scores, halves: sc.halves, total: sc.total });
+        continue;
       }
-      players.push({ memberId, pos, name, toPar: toTp(r[3]), hoy: toTp(r[5]), scores, halves, total });
-      continue;
+      // bloco não casou com o nº de buracos esperado → segue para status/fallback
     }
 
     // ── Não-jogador (NP/RET/DESC/…): sem cartão válido → fora das classificações.
@@ -139,12 +162,10 @@ function parseHoyoAHoyo(html) {
       const tpTokens = tail.match(/[+\-]\d+|E|Par/g) || [];
       const hoyRaw = tpTokens.length ? tpTokens[tpTokens.length - 1] : null;
       const nums = tail.split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
-      let scores = null, total = null, halves = null;
-      if (nums.length >= 21) {           // scorecard completo recuperado → jogador válido
-        scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
-        halves = [nums[9], nums[19]];
-        total = nums[20];
-      }
+      const sc = parseNums(nums);        // scorecard completo recuperado → jogador válido
+      const scores = sc ? sc.scores : null;
+      const halves = sc ? sc.halves : null;
+      const total = sc ? sc.total : null;
       players.push({ memberId, pos, name, toPar: toTp(lr[3]), hoy: hoyRaw ? toTp(hoyRaw) : 0, scores, halves, total, _partial: scores == null });
       dropped.push({ memberId, name, reason: scores == null ? "partial" : "recovered", text: blockText.slice(0, 140) });
       continue;
@@ -451,5 +472,8 @@ async function main() {
 if (require.main === module) {
   main().catch(e => { console.error(e); process.exit(1); });
 }
+
+// Exportados para testes (o main() só corre quando o ficheiro é o entrypoint).
+module.exports = { parseHoyoAHoyo, parseClasificacion, parseEstadisticas, parseCourseValue, parseTorneoMeta };
 
 module.exports = { scrapeTorneo, parseEstadisticas, parseHoyoAHoyo, httpGet };
