@@ -212,45 +212,52 @@ function normNameLgs(s) {
 
 /**
  * Página de classificação geral (/torneos/clasificacion/{id}). Tem, por jogador,
- * os TOTAIS de cada ronda (colunas 1,2,3) + total final de TODOS os jogadores —
- * incluindo os que o hoyoahoyo de alguma ronda não listou. Usa-se para PREENCHER
- * rondas em falta.
+ * os TOTAIS de cada ronda + total final de TODOS os jogadores — incluindo os que o
+ * hoyoahoyo de alguma ronda não listou. Usa-se para PREENCHER rondas em falta.
  *
- * Segurança contra leitura errada de colunas: só aceitamos os totais por ronda
- * quando a sua SOMA bate exactamente com o total final (auto-validação
- * aritmética). Se não bater, roundTotals=null e não se preenche nada — nunca se
- * inventa um score.
+ * Parse pela ESTRUTURA HTML real (não por texto), confirmada no markup do site:
+ *   <tr id="jugador-N">
+ *     <td>…star…</td> <td>…flag…</td> <td><span class="up">1</span></td>   ← movimento
+ *     <td><strong><span title="2">T2</span></strong></td>                  ← posição
+ *     <td class="jugador"><a …>DE WINT SENUSSI, Oliver</a></td>            ← nome
+ *     <td>-2</td> <td>18</td> <td>-2</td>                                  ← AlPar, hoyo, hoy
+ *     <td class="golpesronda">69</td> …×nRondas…                          ← totais por ronda
+ *     <td>205</td>                                                         ← total final
+ *   </tr>
+ *
+ * Os totais por ronda vivem nas células `golpesronda` (sem ambiguidade de coluna).
+ * Mesmo assim guardamos a auto-validação aritmética: só marcamos roundTotals como
+ * válidos quando a SOMA bate com o total final — nunca se inventa um score.
  */
-function parseClasificacion(html, nRounds) {
+function parseClasificacion(html /* , nRounds */) {
   const out = [];
-  const trRe = /<tr[^>]*(?:class="(?:altrow|altrow_alt)"|id="jugador-\d+")[^>]*>([\s\S]+?)<\/tr>/gi;
-  const NAME = "[\\p{L}\\s,'.\\-·]+?";
-  // pos + nome + ±AlPar + resto (hoyo, ±hoy, totais por ronda, total)
-  const re = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
+  const trRe = /<tr[^>]*id="jugador-\d+"[^>]*>([\s\S]+?)<\/tr>/gi;
   let m;
   while ((m = trRe.exec(html)) !== null) {
-    const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(m[0]);
+    const row = m[0];
+    const idM = /id="(?:jugador|star|fichalink)-(\d+)"/.exec(row);
     const memberId = idM ? idM[1] : null;
-    const blockText = stripTags(m[1]);
-    const r = re.exec(blockText);
-    if (!r) continue;
-    const posStr = r[1] ? r[1].replace(/^T/, "") : "";
-    const pos = posStr ? parseInt(posStr, 10) : null;
-    const name = r[2].trim().replace(/\s{2,}/g, " ");
-    const toPar = (r[3] === "E" || r[3] === "Par") ? 0 : parseInt(r[3], 10);
-    // Inteiros SEM sinal no resto (ignora os ±toPar/±hoy). Inclui "hoyo" (18) à
-    // cabeça, depois os totais por ronda e o total final.
-    const ints = r[4].split(/\s+/).filter(t => /^\d+$/.test(t)).map(Number);
-    let roundTotals = null, total = null;
-    if (ints.length >= nRounds + 1) {
-      const cand = ints.slice(-(nRounds + 1));        // [r1..rN, total]
-      const t = cand[cand.length - 1];
-      const rts = cand.slice(0, nRounds);
-      if (rts.every(v => v > 0 && v < 999) && rts.reduce((a, b) => a + b, 0) === t) {
-        roundTotals = rts; total = t;
-      }
+    // Nome: célula <td class="jugador">
+    const nameM = /<td[^>]*class="[^"]*jugador[^"]*"[^>]*>([\s\S]*?)<\/td>/i.exec(row);
+    const name = nameM ? stripTags(nameM[1]).replace(/\s{2,}/g, " ") : null;
+    if (!name) continue;
+    // Totais por ronda: células golpesronda (na ordem R1..Rn)
+    const roundTotals = [...row.matchAll(/<td[^>]*class="[^"]*golpesronda[^"]*"[^>]*>\s*(\d+)\s*<\/td>/gi)].map(x => Number(x[1]));
+    // Posição: <span title="N"> dentro do <strong> da posição
+    const posM = /<strong>[\s\S]*?title="(\d+)"/.exec(row);
+    const pos = posM ? parseInt(posM[1], 10) : null;
+    // Células <td> com número simples (AlPar, hoyo, hoy, …, total). O ÚLTIMO é o total.
+    const simpleTds = [...row.matchAll(/<td[^>]*>\s*([+\-]?\d+)\s*<\/td>/gi)].map(x => x[1]);
+    const total = simpleTds.length ? parseInt(simpleTds[simpleTds.length - 1], 10) : null;
+    const toPar = simpleTds.length ? parseInt(simpleTds[0], 10) : null;   // AlPar (informativo)
+    // Validação: a soma dos totais por ronda tem de bater com o total final.
+    let validated = null;
+    if (roundTotals.length >= 1 && total != null &&
+        roundTotals.every(v => v > 0 && v < 999) &&
+        roundTotals.reduce((a, b) => a + b, 0) === total) {
+      validated = roundTotals;
     }
-    out.push({ memberId, name, pos, toPar, roundTotals, total });
+    out.push({ memberId, name, pos, toPar, roundTotals: validated, total });
   }
   return out;
 }
