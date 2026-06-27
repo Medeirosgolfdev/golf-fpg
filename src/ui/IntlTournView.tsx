@@ -110,10 +110,17 @@ export function IntlTournView({
    *  passar ao R+1, e tambem os que vao ser cortados). */
   const preCutTourn = useMemo(() => {
     if (!cutAfterRound) return null;
+    // Só entram jogadores com score VÁLIDO em TODAS as rondas 1..cutAfterRound
+    // (i.e. tinham total acumulado no momento do cut). Quem falta uma ronda
+    // inicial (dados em falta, ou saltou a ronda) NÃO tem score de cut: incluí-lo
+    // somava menos rondas do que o par descontado (parPerRound × cutAfterRound) →
+    // toPar absurdo (1 ronda de 73 vs par 138 = −65) e ordenava-o em 1º lugar.
+    const wanted = Array.from({ length: cutAfterRound }, (_, i) => i + 1);
     const trimmedPlayers = tournament.players
-      .filter(p => (p.roundScores?.length ?? 0) >= cutAfterRound)
       .map(p => {
         const rs = (p.roundScores || []).filter(r => r.round <= cutAfterRound);
+        const hasAll = wanted.every(rd =>
+          rs.some(r => r.round === rd && (r.gross || 0) > 0 && (r.gross || 0) < 999));
         const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
         const parT = parPerRound * cutAfterRound;
         const gross = rs.reduce((s, r) => s + (r.gross || 0), 0);
@@ -127,8 +134,10 @@ export function IntlTournView({
           _cut: false,
           _incomplete: false,
           _roundsPlayed: cutAfterRound,
+          _hasAll: hasAll,
         };
-      });
+      })
+      .filter(p => p._hasAll);
     // Ordenar por gross (acumulado das primeiras cutAfterRound rondas)
     trimmedPlayers.sort((a, b) => (a.grossTotal ?? 99999) - (b.grossTotal ?? 99999));
     let pos = 1;
@@ -195,10 +204,15 @@ export function IntlTournView({
   const isAcc      = !leadingActive && isMulti && !!(curT as any)?._isTotal;
   const isCombined = !leadingActive && isMulti && roundTabLabels[rtab] === COMBINED_TAB;
 
+  // Na tab Pré-Cut o "torneio" só tem cutAfterRound rondas — o cabeçalho (Par,
+  // pílula de rondas, média) tem de usar cutAfterRound e não nR (total do torneio),
+  // senão mostra "Par 207 · 3R" e médias a −56 numa vista de 2 rondas.
+  const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
+
   // Build the leaderboard elements for render-section callbacks
   const accLB = (
     <AccumulatedLB
-      tournament={curT} nRounds={nR}
+      tournament={curT} nRounds={accNRounds}
       escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
       showCols={accShowCols ?? { esc: false, fed: false, tee: false }}
       extraColumns={evoCols}

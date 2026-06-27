@@ -286,10 +286,16 @@ function lgsToFPGTournament(
     for (const p of r.players) {
       const key = p.memberId || p.name;
       if (!agg[key]) agg[key] = { name: p.name, pos: null, toPar: 0, total: 0, rounds: [] };
-      if (p.scores && p.scores.length === 18 && p.total != null) {
+      // Aceitar a ronda com total válido mesmo SEM scorecard buraco-a-buraco —
+      // rondas preenchidas pela classificação geral (quando o hoyoahoyo não listou
+      // o jogador) só trazem o total. Contam para gross/standings; o scorecard
+      // dessa ronda fica em branco. Sem isto, um 2º/3º classificado ausente de
+      // R1/R2 caía como "incompleto" e o top-3 do Resumo saía errado.
+      const hasCard = !!(p.scores && p.scores.length === 18);
+      if (p.total != null && p.total > 0 && p.total < 999) {
         agg[key].rounds.push({
           round: r.round, gross: p.total,
-          scores: p.scores, pars: r.par || par,
+          scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
           si: lgs.course?.si || [], meters: lgs.course?.meters || [], teeName: undefined,
           courseRating: lgs.course?.courseRating ?? undefined,
           slope: lgs.course?.slope ?? undefined,
@@ -297,6 +303,8 @@ function lgsToFPGTournament(
       }
     }
   }
+  // Rondas de cada jogador por ordem (o backfill da classificação pode chegar fora de ordem)
+  for (const a of Object.values(agg)) a.rounds.sort((x, y) => x.round - y.round);
   // Pos/toPar/total da última ronda
   const lastR = lgs.rounds[lgs.rounds.length - 1];
   if (lastR) {
