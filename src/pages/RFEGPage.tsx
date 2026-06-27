@@ -275,9 +275,15 @@ function lgsToFPGTournament(
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
-  const par = lgs.rounds[0]?.par && lgs.rounds[0].par!.length === 18 ? lgs.rounds[0].par! : new Array(18).fill(4);
+  // Nº de buracos do campo (9 ou 18). Benjamín/Alevín (sub-10/12) jogam 9 buracos;
+  // tudo o resto 18. Detecta-se pelo par[] que o scraper produz. 18 buracos = path
+  // original intocado.
+  const rawPar = lgs.rounds[0]?.par;
+  const courseHoles: number = rawPar && rawPar.length === 9 ? 9 : 18;
+  const par = rawPar && (rawPar.length === 18 || rawPar.length === 9) ? rawPar : new Array(courseHoles).fill(4);
   const parTotal = par.reduce((a, b) => a + b, 0);
   const numRounds = lgs.rounds.length;
+  const sliceH = <T,>(a: T[] | undefined | null): T[] => (a || []).slice(0, courseHoles);
 
   // Agregar por jogador (key = memberId ou nome) com scores hbh por ronda
   type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: FPGRoundScore[] };
@@ -291,12 +297,12 @@ function lgsToFPGTournament(
       // o jogador) só trazem o total. Contam para gross/standings; o scorecard
       // dessa ronda fica em branco. Sem isto, um 2º/3º classificado ausente de
       // R1/R2 caía como "incompleto" e o top-3 do Resumo saía errado.
-      const hasCard = !!(p.scores && p.scores.length === 18);
+      const hasCard = !!(p.scores && p.scores.length === courseHoles);
       if (p.total != null && p.total > 0 && p.total < 999) {
         agg[key].rounds.push({
           round: r.round, gross: p.total,
           scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
-          si: lgs.course?.si || [], meters: lgs.course?.meters || [], teeName: undefined,
+          si: sliceH(lgs.course?.si), meters: sliceH(lgs.course?.meters), teeName: undefined,
           courseRating: lgs.course?.courseRating ?? undefined,
           slope: lgs.course?.slope ?? undefined,
         });
@@ -352,14 +358,14 @@ function lgsToFPGTournament(
       dob: e?.dob || undefined,
       _sex: sex,
       _age: age,
-      nholes: 18,
+      nholes: courseHoles,
       parTotal,
       courseRating: lgs.course?.courseRating ?? undefined,
       slope: lgs.course?.slope ?? undefined,
       scores: a.rounds[0]?.scores || [],
       par,
-      si: lgs.course?.si || [],
-      meters: lgs.course?.meters || [],
+      si: sliceH(lgs.course?.si),
+      meters: sliceH(lgs.course?.meters),
       roundScores: a.rounds,
       _wd: incomplete,
       _roundsPlayed: a.rounds.length,
