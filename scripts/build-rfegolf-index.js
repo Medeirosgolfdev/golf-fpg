@@ -39,6 +39,49 @@ function parseEsDateLong(s) {
   return `${m[3]}-${MONTHS_ES[m[2].toLowerCase()]}-${m[1].padStart(2, "0")}`;
 }
 
+// Mês por extenso (e abreviado) ES → "MM". Cobre o formato do livegolfscoring
+// (`meta.dateRange = "31 mayo - 03 junio"`) e nomes NextCaddy ("21 Junio 2026").
+const MONTHS_ES_FULL = {
+  enero: "01", febrero: "02", marzo: "03", abril: "04", mayo: "05", junio: "06",
+  julio: "07", agosto: "08", septiembre: "09", setiembre: "09", octubre: "10",
+  noviembre: "11", diciembre: "12",
+  ene: "01", feb: "02", mar: "03", abr: "04", may: "05", jun: "06", jul: "07",
+  ago: "08", sep: "09", set: "09", oct: "10", nov: "11", dic: "12",
+};
+function esMonthNum(name) {
+  if (!name) return null;
+  const k = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  return MONTHS_ES_FULL[k] || null;
+}
+// "21 Junio 2026" / "21 jun 2026" (mês por extenso OU abreviado + ano) → ISO.
+// Complementa parseEsDateLong (só abreviado) para apanhar datas em nomes NextCaddy.
+function parseEsDateFull(s) {
+  if (!s) return null;
+  const m = /(\d{1,2})\s+([a-záéíóúñ]+)\.?\s+(\d{4})/i.exec(s);
+  if (!m) return null;
+  const mon = esMonthNum(m[2]);
+  if (!mon) return null;
+  return `${m[3]}-${mon}-${m[1].padStart(2, "0")}`;
+}
+// "31 mayo - 03 junio" (+ ano resolvido) → { start, end } ISO. Sem ano → null.
+// Trata roll-over de Dezembro→Janeiro (end < start ⇒ ano seguinte) — raro mas seguro.
+function parseEsDateRange(range, year) {
+  if (!range || !year) return null;
+  const norm = String(range).toLowerCase()
+    .replace(/\bdel?\b|\bal\b|\bde\b/g, " ")
+    .replace(/\s+/g, " ").trim();
+  const pairs = [...norm.matchAll(/(\d{1,2})\s+([a-záéíóúñ]+)/gi)]
+    .map(m => ({ day: m[1].padStart(2, "0"), mon: esMonthNum(m[2]) }))
+    .filter(p => p.mon);
+  if (!pairs.length) return null;
+  const a = pairs[0], b = pairs[pairs.length - 1];
+  const startIso = `${year}-${a.mon}-${a.day}`;
+  let endYear = year;
+  if (b.mon < a.mon) endYear = year + 1; // ex: "28 diciembre - 02 enero"
+  const endIso = `${endYear}-${b.mon}-${b.day}`;
+  return { start: startIso, end: endIso };
+}
+
 function extractYearFromName(name) {
   const ms = (name || "").match(/\b(20\d{2})\b/g);
   if (!ms) return null;
@@ -164,7 +207,9 @@ for (const file of ncFiles) {
     // Tentativa 1: dateIso já injectado pelo enrich (a partir do discover scope)
     // Tentativa 2: parsear "07 mar 2026" do pageHeaderText, dateStart, etc.
     const pageText = (meta.pageHeaderText || "") + " " + (j.url || "") + " " + name + " " + (meta.format || "") + " " + (meta.dateStart || "");
-    const dateIso = (meta.dateIso || null) || parseEsDateLong(pageText) || null;
+    // dateIso: enrich → "07 mar 2026" (abreviado) → "21 Junio 2026" (extenso, comum
+    // nos nomes NextCaddy "... Domingo 21 Junio 2026"). Tudo offline.
+    const dateIso = (meta.dateIso || null) || parseEsDateLong(pageText) || parseEsDateFull(pageText) || null;
     // Tentativa 2: extractYearFromName procura "20XX" em qualquer string
     let year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
     if (!year) year = extractYearFromName(name);
@@ -241,7 +286,11 @@ for (const file of lgsFiles) {
     // Prioridade: meta.year (vindo do enrich-lgs-dates) → year no nome → scrapedAt
     let year = j.meta.year || extractYearFromName(name);
     if (!year && j.scrapedAt) year = parseInt(j.scrapedAt.slice(0, 4), 10);
-    const dateIso = j.meta.dateIso || null;
+    // ISO derivado: meta.dateIso (enrich, raro) → senão parsear `meta.dateRange`
+    // ("31 mayo - 03 junio") + ano resolvido. Puramente offline.
+    const range = parseEsDateRange(j.meta.dateRange, year);
+    const dateStartIso = j.meta.dateIso || (range && range.start) || null;
+    const dateEndIso = j.meta.dateIso || (range && range.end) || null;
     const category = extractCategoryFromName(name);
     const sex = extractSexFromName(name);
     const totalPlayers = (j.rounds && j.rounds[0]?.players?.length) || 0;
@@ -250,9 +299,9 @@ for (const file of lgsFiles) {
       id, file,
       filePath: `rfegolf-livegolfscoring/${file}`,
       name, year, category, sex,
-      dateStart: j.meta.dateRange || dateIso || null,
-      dateEnd: j.meta.dateRange || dateIso || null,
-      dateStartIso: dateIso, dateEndIso: dateIso,
+      dateStart: j.meta.dateRange || dateStartIso || null,
+      dateEnd: j.meta.dateRange || dateEndIso || null,
+      dateStartIso, dateEndIso,
       course: j.meta.course || null,
       counts: { admitidos: totalPlayers, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
       leaderboardPlayers: totalPlayers,
