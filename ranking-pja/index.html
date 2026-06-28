@@ -83,7 +83,6 @@
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="status">A carregar resultados…</div></div>
 
-  <button class="det-toggle" id="det-btn" style="display:none">📊 Mostrar pontuações detalhadas</button>
   <div id="detail"></div>
 
   <div class="card leg" id="legend" style="display:none">
@@ -204,6 +203,7 @@
   function renderTabs(){
     var el=document.getElementById("tabs");el.innerHTML="";
     state.tabs.forEach(function(tb){var b=document.createElement("button");b.className="tab"+(tb===state.active?" active":"");b.textContent=tb;b.onclick=function(){state.active=tb;renderAll();};el.appendChild(b);});
+    if(DATA.cols.length){var d=document.createElement("button");d.className="tab"+(state.showDetail?" active":"");d.textContent="📊 Pontuações detalhadas";d.style.marginLeft="auto";d.onclick=function(){state.showDetail=!state.showDetail;renderTabs();renderDetail();};el.appendChild(d);}
   }
   function renderSimple(){
     var rows=activeRows().slice();
@@ -224,11 +224,8 @@
   }
   function renderDetail(){
     var cols=DATA.cols,rows=activeRows();
-    var btn=document.getElementById("det-btn"),det=document.getElementById("detail");
-    if(!cols.length){btn.style.display="none";det.innerHTML="";return;}
-    btn.style.display="inline-block";
-    btn.textContent=state.showDetail?"📊 Ocultar pontuações detalhadas":"📊 Mostrar pontuações detalhadas";
-    if(!state.showDetail){det.innerHTML="";return;}
+    var det=document.getElementById("detail");
+    if(!cols.length||!state.showDetail){det.innerHTML="";return;}
     var h='<div class="detail-wrap"><table class="detail"><thead>';
     h+='<tr><th class="sticky0">&nbsp;</th><th class="sticky1">Jogador</th><th>Esc.</th><th class="ge">Clube</th>';
     cols.forEach(function(c){var span=c.rounds.length*2;
@@ -266,7 +263,6 @@
     var present={};DATA.rows.forEach(function(r){present[escBucket(r.escalao)]=true;});
     state.tabs=["Geral"].concat(["Sub-12","Sub-14","Sub-16","Sub-18+"].filter(function(e){return present[e];}));
     renderAll();renderLegend();
-    document.getElementById("det-btn").onclick=function(){state.showDetail=!state.showDetail;renderDetail();};
     document.getElementById("upd").textContent="Última atualização da página: "+new Date().toLocaleString("pt-PT");
   });
 })();
