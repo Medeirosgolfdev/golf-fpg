@@ -203,7 +203,7 @@
   function renderTabs(){
     var el=document.getElementById("tabs");el.innerHTML="";
     state.tabs.forEach(function(tb){var b=document.createElement("button");b.className="tab"+(tb===state.active?" active":"");b.textContent=tb;b.onclick=function(){state.active=tb;renderAll();};el.appendChild(b);});
-    if(DATA.cols.length){var d=document.createElement("button");d.className="tab"+(state.showDetail?" active":"");d.textContent="📊 Pontuações detalhadas";d.style.marginLeft="auto";d.onclick=function(){state.showDetail=!state.showDetail;renderTabs();renderDetail();};el.appendChild(d);}
+    if(DATA.cols.length){var d=document.createElement("button");d.className="tab"+(state.showDetail?" active":"");d.textContent="📊 Pontuações detalhadas";d.style.marginLeft="auto";d.onclick=function(){state.showDetail=!state.showDetail;renderTabs();renderDetail();if(state.showDetail){var dd=document.getElementById("detail");if(dd)setTimeout(function(){dd.scrollIntoView({behavior:"smooth",block:"start"});},30);}};el.appendChild(d);}
   }
   function renderSimple(){
     var rows=activeRows().slice();
