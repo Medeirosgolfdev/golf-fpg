@@ -188,12 +188,12 @@
   function escBucket(e){if(e==="Sub-18"||e==="Sub-21+"||e==="Sénior")return "Sub-18+";return e||"—";}
 
   function loadAll(){
-    var now=new Date(),y=2026,curM=(now.getFullYear()>y)?12:now.getMonth()+1;
+    var now=new Date(),y=2026,curM=(now.getFullYear()>y)?12:now.getMonth()+1,cb="?v="+Date.now();
     var urls=[];
-    for(var i=0;i<=12;i++)urls.push("/data/pull-torneios"+String(i).padStart(3,"0")+".json");
-    for(var m=1;m<=curM;m++){var mm=String(m).padStart(2,"0");urls.push("/data/drive-data-"+y+"-"+mm+".json");urls.push("/data/aquapor-data-"+y+"-"+mm+".json");}
-    urls.push("/data/jovens_2026.json");
-    return Promise.all([Promise.all(urls.map(J)),J("/data/players.json"),J("/data/pja-members.json")]);
+    for(var i=0;i<=12;i++)urls.push("/data/pull-torneios"+String(i).padStart(3,"0")+".json"+cb);
+    for(var m=1;m<=curM;m++){var mm=String(m).padStart(2,"0");urls.push("/data/drive-data-"+y+"-"+mm+".json"+cb);urls.push("/data/aquapor-data-"+y+"-"+mm+".json"+cb);}
+    urls.push("/data/jovens_2026.json"+cb);
+    return Promise.all([Promise.all(urls.map(J)),J("/data/players.json"+cb),J("/data/pja-members.json"+cb)]);
   }
 
   var DATA={cols:[],rows:[]};
