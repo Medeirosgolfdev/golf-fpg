@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ranking PJA Tour 2026</title>
+<style>
+  :root{
+    --bg:#0f1720; --card:#162230; --line:#243243; --txt:#e8eef5; --muted:#8aa0b6;
+    --accent:#3fb950; --accent2:#d29922; --head:#1c2a3a; --rowalt:#16242f;
+    --manuel:#1e3a2a; --pts:#d29922; --link:#58a6ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:12px;margin:0 0 14px}
+  .rules{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--muted);font-size:11.5px;margin:0 0 16px}
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+  .tab{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#04150a;font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0 0 18px}
+  .card h2{font-size:14px;margin:0;padding:10px 14px;background:var(--head);border-bottom:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{background:var(--head);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;user-select:none}
+  th .ar{opacity:.5;font-size:10px}
+  td.c,th.c{text-align:center}
+  td.r,th.r{text-align:right}
+  tbody tr:nth-child(even){background:var(--rowalt)}
+  tr.manuel{background:var(--manuel)!important}
+  .pos{color:var(--muted);width:34px;text-align:center}
+  .pts{color:var(--pts);font-weight:800;text-align:right}
+  .vlt{text-align:center;color:var(--muted)}
+  .esc{font-size:10.5px;color:var(--muted)}
+  .fem{color:#f0a3c0}
+  .leg a{color:var(--link);text-decoration:none}
+  .leg a:hover{text-decoration:underline}
+  .leg .t-name{font-size:12.5px}
+  .leg .t-meta{color:var(--muted);font-size:11px}
+  .leg li{padding:6px 0;border-bottom:1px solid var(--line)}
+  .leg ul{list-style:none;margin:0;padding:0 14px 6px}
+  .x{opacity:.45;text-decoration:line-through}
+  .status{color:var(--muted);font-size:12px;padding:20px 4px}
+  .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
+  footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ranking PJA Tour 2026 <span style="font-size:12px;color:var(--muted)">· Race to Dunas</span></h1>
+  <p class="sub">Atualizado em tempo real a partir dos resultados oficiais. <span id="upd"></span></p>
+  <div class="rules">
+    Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0). Conta o <b>top-14 voltas</b> do ano.
+    Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5.
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="content"><div class="status">A carregar resultados…</div></div>
+
+  <div class="card leg" id="legend" style="display:none">
+    <h2>Torneios que contam para o ranking</h2>
+    <ul id="legend-list"></ul>
+  </div>
+  <footer>Ranking não-oficial gerado automaticamente · clicar num torneio abre a classificação oficial na Federação Portuguesa de Golfe</footer>
+</div>
+
+<script>
+/* ===== Motor de ranking PJA 2026 (port de PJARankingView) ===== */
+(function (global) {
+  "use strict";
+  var YEAR = "2026";
+  var GF_TCODES = new Set(["10005", "10019"]);
+  var TOURN_MULTIPLIER = { "10444": 1.75 };
+  var TOURN_PILLS_PJA = new Set(["10444", "10492", "10036", "10260", "10019"]);
+  function pjaPts(toPar, mult){ return Math.max(0, 25 - toPar) * mult; }
+  function isGF(t){ var tc=String(t.tcode||""); if(GF_TCODES.has(tc))return true; return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name||""); }
+  function getMult(t){ var tc=String(t.tcode||""); if(TOURN_MULTIPLIER[tc]!==undefined)return TOURN_MULTIPLIER[tc]; if(isGF(t))return 1.5; return 1.0; }
+  function classify(t){ var name=t.name||"", tc=String(t.tcode||"");
+    if(/greatgolf/i.test(name)){ if(tc==="10294")return "GG_MAIN"; if(tc==="10295")return "GG_U14"; if(tc==="10296")return "GG_U12"; return "PJA_EXCL"; }
+    if(/Circuito\s+Aquapor/i.test(name))return "AQUAPOR";
+    if(/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name))return "DT";
+    return "PJA_EXCL"; }
+  function isPJA(t){ var name=t.name||"", year=(t.date||"").slice(0,4);
+    if(/PJA/i.test(name))return true;
+    var tcodes=String(t.tcode||"").split("+");
+    if(tcodes.some(function(tc){return TOURN_PILLS_PJA.has(tc);}))return true;
+    if(year>="2026"){ if(/greatgolf.*junior/i.test(name))return true; if(/Drive\s+Tour/i.test(name)&&!/Challenge/i.test(name))return true; if(/Circuito\s+Aquapor/i.test(name))return true; }
+    return false; }
+  function escalaoAtDate(dob, year){ if(!dob)return null; var an=parseInt(String(dob).slice(0,4)); var at=parseInt(String(year).slice(0,4));
+    if(isNaN(an)||isNaN(at))return null; var idade=at-an; if(idade<0)return null;
+    if(idade<=10)return "Sub-10"; if(idade<=12)return "Sub-12"; if(idade<=14)return "Sub-14"; if(idade<=16)return "Sub-16"; if(idade<=18)return "Sub-18"; if(idade<=24)return "Sub-21+"; return "Sénior"; }
+  function clubShort(db){ if(!db)return ""; var c=db.club; if(!c)return ""; return typeof c==="object"?(c.short||c.long||""):String(c); }
+  function buildRanking(all, playersDB, members){
+    var seen=new Set(), list=[];
+    all.forEach(function(t){ if(!isPJA(t))return; if((t.date||"").slice(0,4)!==YEAR)return;
+      var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?"); if(seen.has(k))return; seen.add(k); list.push(t); });
+    list.sort(function(a,b){return (a.date||"").localeCompare(b.date||"");});
+    var aqs=list.filter(function(t){return classify(t)==="AQUAPOR";}).sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).slice(0,2);
+    var aqAllow=new Set(aqs.map(function(t){return t.tcode+"_"+t.date;}));
+    var didDT={}; list.forEach(function(t){ if(classify(t)==="DT")(t.players||[]).forEach(function(p){ didDT[p.fedCode||("name:"+((p.name||"").toLowerCase().trim()))]=true; }); });
+    var map={};
+    function rpar(rs,parTotal,n){ if(rs&&rs.pars&&rs.pars.length){ var s=rs.pars.reduce(function(a,b){return a+(typeof b==="number"?b:0);},0); if(s>0)return s; } return parTotal?parTotal/n:null; }
+    list.forEach(function(t){ var ev=classify(t); if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return; var mult=getMult(t);
+      (t.players||[]).forEach(function(p){ var fed=p.fedCode?String(p.fedCode):null; var key=fed||("name:"+((p.name||"").toLowerCase().trim()));
+        if(!map[key]){ var db=fed?playersDB[fed]:null; var dob=db?db.dob:null; var esc=(dob?escalaoAtDate(dob,YEAR):null)||(db&&db.escalao)||"";
+          map[key]={key:key,fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:esc,sex:(db&&db.sex)||"",rounds:[],total:0,voltas:0}; }
+        var row=map[key]; var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
+        function add(rn,g,par){ if(!par||!g||g>=900)return; var tp=g-par; if((ev==="GG_MAIN"&&rn===1)||aqSkip)return; row.rounds.push(pjaPts(tp,mult)); }
+        var rs=p.roundScores;
+        if(rs&&rs.length>1){ rs.forEach(function(r,i){ add(i+1,r.gross,rpar(r,p.parTotal,rs.length)); }); }
+        else { var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar; var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;
+          if(tp==null||isNaN(tp)||g==null||isNaN(g))return; add(1,g,g-tp); } }); });
+    Object.keys(map).forEach(function(k){ var row=map[k]; var s=row.rounds.slice().sort(function(a,b){return b-a;}); row.total=s.slice(0,14).reduce(function(a,b){return a+b;},0); row.voltas=row.rounds.length; });
+    var memberSet=new Set((members||[]).map(String));
+    memberSet.forEach(function(fed){ if(map[fed])return; var db=playersDB[fed]; if(!db)return; var esc=(db.dob?escalaoAtDate(db.dob,YEAR):null)||db.escalao||"";
+      map[fed]={key:fed,fed:fed,name:db.name||fed,club:clubShort(db),escalao:esc,sex:db.sex||"",rounds:[],total:0,voltas:0}; });
+    var rows=Object.keys(map).map(function(k){return map[k];});
+    rows=rows.filter(function(r){ if(!r.fed||!memberSet.has(r.fed))return false; var db=playersDB[r.fed]; var tags=(db&&db.tags)||[]; return Array.isArray(tags)&&tags.indexOf("PJA")!==-1; });
+    rows.sort(function(a,b){return b.total-a.total||a.name.localeCompare(b.name,"pt");});
+    return rows;
+  }
+  function pjaTournaments(all){ var seen=new Set(), out=[];
+    all.forEach(function(t){ if(!isPJA(t))return; if((t.date||"").slice(0,4)!==YEAR)return; var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?"); if(seen.has(k))return; seen.add(k);
+      out.push({ccode:t.ccode||"",tcode:String(t.tcode||""),name:t.name||"",date:t.date||"",type:classify(t),mult:getMult(t)}); });
+    var aq=out.filter(function(x){return x.type==="AQUAPOR";}).sort(function(a,b){return a.date.localeCompare(b.date);});
+    aq.forEach(function(x,i){x.counts=i<2;}); out.forEach(function(x){if(x.counts===undefined)x.counts=true;});
+    out.sort(function(a,b){return a.date.localeCompare(b.date);}); return out; }
+  global.PJAEngine={buildRanking:buildRanking,pjaTournaments:pjaTournaments,escalaoAtDate:escalaoAtDate,classify:classify,isPJA:isPJA};
+})(window);
+
+/* ===== App: fetch + render ===== */
+(function(){
+  var MANUEL_FED="52884";
+  function fpgUrl(cc,tc){ var t=String(tc||"").split("+")[0]; return "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club="+encodeURIComponent(cc)+"&tourn="+encodeURIComponent(t)+"&ack=8428ACK987"; }
+  function J(url){ return fetch(url).then(function(r){ if(!r.ok)return null; var ct=r.headers.get("content-type")||""; if(!ct.includes("json"))return null; return r.json(); }).catch(function(){return null;}); }
+  function tourns(d){ return d?(d.tournaments||[]):[]; }
+  var MONTHS=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  function shortDate(iso){ if(!iso||iso.length<10)return ""; return iso.slice(8,10)+" "+MONTHS[parseInt(iso.slice(5,7))-1]; }
+  var TYPE_LABEL={DT:"Drive Tour",AQUAPOR:"Aquapor",GG_MAIN:"Greatgolf",GG_U14:"Greatgolf U14",GG_U12:"Greatgolf U12",PJA_EXCL:"PJA"};
+
+  function loadAll(){
+    var now=new Date(), y=2026, curM=(now.getFullYear()>y)?12:now.getMonth()+1;
+    var urls=[];
+    for(var i=0;i<=12;i++) urls.push("/data/pull-torneios"+String(i).padStart(3,"0")+".json");
+    for(var m=1;m<=curM;m++){ var mm=String(m).padStart(2,"0"); urls.push("/data/drive-data-"+y+"-"+mm+".json"); urls.push("/data/aquapor-data-"+y+"-"+mm+".json"); }
+    urls.push("/data/jovens_2026.json");
+    return Promise.all([ Promise.all(urls.map(J)), J("/data/players.json"), J("/data/pja-members.json") ]);
+  }
+
+  var state={rows:[],tabs:[],active:"Geral",sortKey:"total",sortDir:"desc"};
+  function escBucket(esc){ if(esc==="Sub-18"||esc==="Sub-21+"||esc==="Sénior")return "Sub-18+"; return esc||"—"; }
+  function fmt(n){ return n%1===0?String(n):n.toFixed(1); }
+  function escapeHtml(s){ return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];}); }
+
+  function render(){
+    var tabsEl=document.getElementById("tabs"); tabsEl.innerHTML="";
+    state.tabs.forEach(function(tb){ var b=document.createElement("button"); b.className="tab"+(tb===state.active?" active":""); b.textContent=tb; b.onclick=function(){state.active=tb;render();}; tabsEl.appendChild(b); });
+    var rows = state.active==="Geral" ? state.rows : state.rows.filter(function(r){return escBucket(r.escalao)===state.active;});
+    var sk=state.sortKey, dir=state.sortDir==="asc"?1:-1;
+    rows=rows.slice().sort(function(a,b){
+      if(sk==="name")return dir*a.name.localeCompare(b.name,"pt");
+      if(sk==="club")return dir*(a.club||"").localeCompare(b.club||"","pt");
+      if(sk==="escalao")return dir*(a.escalao||"").localeCompare(b.escalao||"","pt");
+      if(sk==="voltas")return dir*(a.voltas-b.voltas);
+      return dir*(a.total-b.total)|| a.name.localeCompare(b.name,"pt");
+    });
+    function arrow(k){ return sk===k?'<span class="ar">'+(state.sortDir==="asc"?"▲":"▼")+'</span>':'<span class="ar">↕</span>'; }
+    function th(k,lbl,cls){ return '<th class="'+(cls||"")+'" data-k="'+k+'">'+lbl+" "+arrow(k)+'</th>'; }
+    var html='<div class="card"><h2>'+(state.active==="Geral"?"Classificação geral":"Escalão "+state.active)+' · '+rows.length+' jogadores</h2>'+
+      '<table><thead><tr><th class="c">#</th>'+th("name","Jogador")+th("escalao","Esc.","c")+th("club","Clube")+th("voltas","Voltas","c")+th("total","Pts","r")+'</tr></thead><tbody>';
+    rows.forEach(function(r,i){
+      html+='<tr'+(r.fed===MANUEL_FED?' class="manuel"':'')+'><td class="pos">'+(i+1)+'</td>'+
+        '<td>'+escapeHtml(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td>'+
+        '<td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td>'+
+        '<td>'+escapeHtml(r.club||"—")+'</td><td class="vlt">'+r.voltas+'</td><td class="pts">'+fmt(r.total)+'</td></tr>';
+    });
+    html+='</tbody></table></div>';
+    document.getElementById("content").innerHTML=html;
+    Array.prototype.forEach.call(document.querySelectorAll("th[data-k]"),function(th){
+      th.onclick=function(){ var k=th.getAttribute("data-k"); if(state.sortKey===k)state.sortDir=state.sortDir==="asc"?"desc":"asc"; else {state.sortKey=k;state.sortDir=(k==="total"||k==="voltas")?"desc":"asc";} render(); };
+    });
+  }
+
+  function renderLegend(ts){
+    var ul=document.getElementById("legend-list"); ul.innerHTML="";
+    ts.forEach(function(t){ var li=document.createElement("li");
+      var meta=shortDate(t.date)+" · "+(TYPE_LABEL[t.type]||t.type)+(t.mult!==1?' <span class="badge">×'+t.mult+'</span>':"")+(t.counts===false?' <span class="x">não conta</span>':"");
+      li.innerHTML='<a href="'+fpgUrl(t.ccode,t.tcode)+'" target="_blank" rel="noopener" class="t-name">'+escapeHtml(t.name)+'</a><div class="t-meta">'+meta+'</div>';
+      ul.appendChild(li); });
+    document.getElementById("legend").style.display="block";
+  }
+
+  loadAll().then(function(res){
+    var files=res[0], players=res[1], membersDoc=res[2];
+    if(!players||!membersDoc){ document.getElementById("content").innerHTML='<div class="status">Não foi possível carregar os dados. Verifica a ligação e recarrega.</div>'; return; }
+    var all=[]; files.forEach(function(d){ if(d) all=all.concat(tourns(d)); });
+    var playersDB={}; Object.keys(players).forEach(function(f){ playersDB[f]=players[f]; });
+    var members=membersDoc["2026"]||[];
+    state.rows=PJAEngine.buildRanking(all,playersDB,members);
+    var present={}; state.rows.forEach(function(r){present[escBucket(r.escalao)]=true;});
+    state.tabs=["Geral"].concat(["Sub-12","Sub-14","Sub-16","Sub-18+"].filter(function(e){return present[e];}));
+    render();
+    renderLegend(PJAEngine.pjaTournaments(all));
+    document.getElementById("upd").textContent="Última atualização da página: "+new Date().toLocaleString("pt-PT");
+  });
+})();
+</script>
+</body>
+</html>

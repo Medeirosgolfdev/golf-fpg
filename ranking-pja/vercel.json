@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/data/:path*", "destination": "https://golf-fpg.vercel.app/data/:path*" }
+  ]
+}
