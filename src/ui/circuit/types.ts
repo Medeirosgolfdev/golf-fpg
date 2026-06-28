@@ -30,6 +30,7 @@ export type CircuitToggle =
   | "pt"          // todos os portugueses, tratados como o Manuel (universal)
   | "top10"       // top 10 classificados (universal, precisa de resultados)
   | "veteranos"   // jogadores presentes em >= veteranoThreshold torneios (universal, cross-entry)
+  | "results"     // só torneios com leaderboard publicado (universal)
   | "regressados" // jogou edição anterior do mesmo torneio (só séries anuais)
   | "subiram";    // subiu de escalão face à última edição (só séries anuais)
 
@@ -222,6 +223,9 @@ export interface CircuitEntry {
   /** True se há ≥1 jogador português (filtro PT da toolbar). Para páginas lazy
    *  deve vir do índice; para páginas eager o shell calcula das divisões. */
   hasPt?: boolean;
+  /** True se há leaderboard publicado (≥1 classificado). Alimenta o toggle
+   *  "Com resultados". `undefined` = desconhecido → nunca escondido pelo filtro. */
+  hasResults?: boolean;
 }
 
 /** Item especial fixo no topo da sidebar (ex: Categorias de idade, Federações). */

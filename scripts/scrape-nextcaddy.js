@@ -411,18 +411,34 @@ function parseInscritos(html) {
     if (!name && !licencia) continue;
     players.push({ orden, name, licencia, hcp, nivel });
   }
-  // Dedup: o getListadoInscritos devolve a lista REPETIDA (a resposta rende-a 2×
-  // — tabelas por género/total ou mobile+desktop). Verificado em 68766: 32 entradas
-  // = 16 jogadores reais, cada um 2×. Mantém a 1ª ocorrência por licencia (fallback nome).
-  const seen = new Set();
-  const deduped = [];
+  // Dedup: o getListadoInscritos devolve a lista 2× e, pior, a 2ª cópia tem COLUNAS
+  // diferentes (inclui "Fecha Inscripción"). Como usamos um header único, a 2ª cópia
+  // fica mal mapeada — a `licencia` vem a ser o TIMESTAMP de inscrição e a licencia
+  // real cai no `nivel`. Por isso o dedup-por-licencia falhava (cada jogador aparecia
+  // 2× com "licencia" diferente) e o cabeçalho "Jugador" entrava como jogador.
+  // Fix: saltar cabeçalhos, deduplicar por NOME (estável nas 2 cópias) e, quando a
+  // licencia parecer um timestamp, recuperar a verdadeira do campo `nivel`.
+  const isTimestamp = (v) => /^\d{2}-\d{2}-\d{2}\b/.test(String(v || "").trim());
+  const looksLicencia = (v) => /^[A-Za-z]{1,4}\d{3,}/.test(String(v || "").trim());
+  const isHeaderish = (p) => /^(jugador|licencia|nivel|fecha)/i.test(String(p.name || "").trim());
+  const byName = new Map();
   for (const p of players) {
-    const key = (p.licencia || "").trim().toLowerCase() || ("name:" + (p.name || "").trim().toLowerCase());
-    if (seen.has(key)) continue;
-    seen.add(key);
-    deduped.push(p);
+    if (!p.name || isHeaderish(p)) continue;                 // salta linhas de cabeçalho
+    // Normalizar: se a licencia é um timestamp, a verdadeira está no nivel (2ª cópia).
+    let { licencia, nivel } = p;
+    if (isTimestamp(licencia)) {
+      if (looksLicencia(nivel)) { licencia = nivel; nivel = null; }
+      else licencia = null;
+    }
+    const clean = { ...p, licencia, nivel: isTimestamp(nivel) ? null : nivel };
+    const key = (clean.name || "").trim().toLowerCase().replace(/\s+/g, " ");
+    const prev = byName.get(key);
+    // Preferir a entrada com licencia válida (1ª cópia limpa) sobre uma sem.
+    if (!prev || (!looksLicencia(prev.licencia) && looksLicencia(clean.licencia))) {
+      byName.set(key, clean);
+    }
   }
-  return deduped;
+  return [...byName.values()];
 }
 
 /* ─── parseEstadisticas — JSON ────────────────────────────────── */

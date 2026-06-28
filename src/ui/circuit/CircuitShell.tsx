@@ -76,6 +76,7 @@ const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   pt:          { label: "🇵🇹 PT",        title: "Só jogadores portugueses" },
   top10:       { label: "🏆 Top 10",      title: "Só os 10 melhores classificados" },
   veteranos:   { label: "✦ Veteranos",   title: "Jogadores presentes em muitos torneios" },
+  results:     { label: "🏁 Com resultados", title: "Só torneios com leaderboard publicado" },
   regressados: { label: "↻ Regressados", title: "Jogou edição anterior do mesmo torneio" },
   subiram:     { label: "⬆ Subiram",     title: "Subiu de escalão face à última edição" },
 };
@@ -502,6 +503,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       if (flt.intl && fIntl && !e.intl) return false;
       if (toggles.has("manuel") && entryManuelState(e) === false) return false;
       if (toggles.has("pt") && entryPtState(e) === false) return false;
+      if (toggles.has("results") && e.hasResults === false) return false;
       if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.escaloes ?? []).includes(fEsc) || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
       if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {

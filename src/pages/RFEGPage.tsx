@@ -1099,7 +1099,28 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
       });
     }
   }
-  const inscPlayers: RFEGPlayer[] = (nc.inscritos || []).map((p) => {
+  // Limpeza dos inscritos NextCaddy: o getListadoInscritos devolve a lista 2× e a
+  // 2ª cópia tem colunas diferentes ("Fecha Inscripción") → a `licencia` vem a ser o
+  // timestamp e a licencia real cai no `nivel`. Sem isto, cada jogador aparecia 2×
+  // (um com timestamp) e o cabeçalho "Jugador" entrava como jogador. Corrigido no
+  // scraper, mas aplicamos aqui também para os dados JÁ scrapados (sem re-scrape).
+  const _isTs = (v?: string | null) => /^\d{2}-\d{2}-\d{2}\b/.test(String(v || "").trim());
+  const _looksLic = (v?: string | null) => /^[A-Za-z]{1,4}\d{3,}/.test(String(v || "").trim());
+  const _ncSeen = new Map<string, number>();
+  const cleanedInscritos: NonNullable<typeof nc.inscritos> = [];
+  for (const p of (nc.inscritos || [])) {
+    if (!p.name || /^(jugador|licencia|nivel|fecha)/i.test(String(p.name).trim())) continue;
+    let licencia = p.licencia ?? null;
+    let nivel = p.nivel ?? null;
+    if (_isTs(licencia)) { if (_looksLic(nivel)) { licencia = nivel; nivel = null; } else licencia = null; }
+    if (_isTs(nivel)) nivel = null;
+    const cp = { ...p, licencia, nivel };
+    const key = p.name.trim().toLowerCase().replace(/\s+/g, " ");
+    const idx = _ncSeen.get(key);
+    if (idx == null) { _ncSeen.set(key, cleanedInscritos.length); cleanedInscritos.push(cp); }
+    else if (!_looksLic(cleanedInscritos[idx].licencia) && _looksLic(licencia)) cleanedInscritos[idx] = cp;
+  }
+  const inscPlayers: RFEGPlayer[] = cleanedInscritos.map((p) => {
     const e = enrich(p.licencia ?? null);
     const lic = (p.licencia || "").trim().toUpperCase();
     return {
@@ -2889,6 +2910,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
     federation: t.federation ?? undefined,
     hasManuel: t.hasManuel ?? undefined,
     hasPt: t.hasPt ?? undefined,
+    hasResults: (t.leaderboardPlayers || 0) > 0,
     // Sem resultados ainda → mostrar nº de inscritos na sidebar.
     playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
     roundsCount: t.nRounds ?? undefined,
@@ -2950,6 +2972,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       escaloes: [...new Set(sorted.map((t) => t.category).filter((c): c is string => !!c))],
       hasManuel: sorted.some((t) => t.hasManuel),
       hasPt: sorted.some((t) => t.hasPt),
+      hasResults: sorted.some((t) => (t.leaderboardPlayers || 0) > 0),
       playerCount: sorted.reduce((s, t) => s + (t.leaderboardPlayers || t.counts?.admitidos || 0), 0) || undefined,
       roundsCount: Math.max(0, ...sorted.map((t) => t.nRounds ?? 0)) || undefined,
       divisionCount: sorted.length,
@@ -2986,7 +3009,7 @@ const RFEG_CONFIG: CircuitConfig = {
   grouping: "year",
   sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "var(--color-rfeg-yellow)" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
-  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
+  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar dados...",
 };
