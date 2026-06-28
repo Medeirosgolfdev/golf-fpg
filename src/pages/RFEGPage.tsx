@@ -41,7 +41,7 @@ import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FP
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink, CircuitDraw, CircuitDrawGroup } from "../ui/circuit/types";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -884,6 +884,13 @@ interface LgsDetail {
   };
   rounds: LgsRound[];
   course?: { meters: (number | null)[]; si: (number | null)[]; par: (number | null)[]; avg?: (number | null)[]; metersTotal?: number | null; holes?: number } | null;
+  horarios?: LgsHorarioRound[];
+}
+
+interface LgsHorarioRound {
+  round: number;
+  subid: string | null;
+  groups: { teeTime: string | null; startHole: number | null; players: string[] }[];
 }
 
 function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
@@ -1003,7 +1010,8 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     /** Rondas hbh com par real — usado pela vista hbh quando expandida */
     _lgsRounds: lgs.rounds,
     _lgsCourse: lgs.course || null,
-  } as RFEGDetail & { _lgsRounds: LgsRound[]; _lgsCourse: LgsDetail["course"] };
+    _lgsHorarios: lgs.horarios || null,
+  } as RFEGDetail & { _lgsRounds: LgsRound[]; _lgsCourse: LgsDetail["course"]; _lgsHorarios: LgsHorarioRound[] | null };
 }
 type DobLookup = Record<string, DobLookupEntry>;
 
@@ -2755,12 +2763,33 @@ async function rfegLoadDivisions(
   // basta o campo ter courseRating+slope (qualquer fonte).
   const hasRating = !!results?.players?.some((p) => p.courseRating != null && p.slope != null);
 
+  // Draw (horários / tee times) do livegolfscoring → CircuitDraw genérico. O
+  // CircuitShell adiciona automaticamente a tab "Draw" (Inscritos → Draw → R1 → …)
+  // e desenha-a com o DrawView (ronda → grupos de saída: hora · buraco · jogadores).
+  let lgsDraw: CircuitDraw | undefined;
+  if (t.source === "livegolfscoring") {
+    const hor = (data as unknown as { _lgsHorarios?: LgsHorarioRound[] | null })._lgsHorarios;
+    if (Array.isArray(hor) && hor.length) {
+      const rounds: Record<string, CircuitDrawGroup[]> = {};
+      for (const rd of hor) {
+        const groups = (rd.groups || []).map((g) => ({
+          teeTime: g.teeTime || undefined,
+          startHole: g.startHole ?? undefined,
+          players: (g.players || []).map((n) => ({ name: formatPlayerName(n) })),
+        }));
+        if (groups.length) rounds[String(rd.round)] = groups;
+      }
+      if (Object.keys(rounds).length) lgsDraw = { rounds };
+    }
+  }
+
   const division: CircuitDivision = {
     key: "main",
     escalao: t.category ?? "—",
     sex: rfegSex(t.sex),
     results: results ?? undefined,
     customResults,
+    draw: lgsDraw,
     inscritos: lists.length ? { lists } : undefined,
     renderInscritos: lists.length
       ? () => <AdmissionsTab admissions={buildAdmissions()} date={esDateToIso(data.meta.dateStart) ?? data.meta.dateStart} hidePostCols />
