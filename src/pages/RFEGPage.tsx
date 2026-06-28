@@ -2525,7 +2525,7 @@ function ncHighlightRows(scoreTypes: NCDetail["scoreTypes"]): NCHighlightRow[] {
   return rows.sort((a, b) => b.pts - a.pts);
 }
 
-function NCHighlights({ rows }: { rows: NCHighlightRow[] }) {
+function NCHighlights({ rows, hasPdf }: { rows: NCHighlightRow[]; hasPdf?: boolean }) {
   const { sortKey, sortDir, toggleSort } = useSort<"name" | "ace" | "eagle" | "birdie">("name");
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -2538,7 +2538,9 @@ function NCHighlights({ rows }: { rows: NCHighlightRow[] }) {
   return (
     <div>
       <p className="muted" style={{ fontSize: "var(--fs-13)", margin: "0 0 8px" }}>
-        ⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:
+        {hasPdf
+          ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
+          : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}
       </p>
       <div className="bjgt-chart-scroll">
         <table className="sc-lb">
@@ -2710,7 +2712,8 @@ async function rfegLoadDivisions(
       customResults = <NCResultsLeaderboard players={admit} />;
     } else {
       const hl = ncHighlightRows((raw as NCDetail).scoreTypes);
-      if (hl.length) customResults = <NCHighlights rows={hl} />;
+      const ncPdfs = (raw as unknown as { pdfs?: unknown[] }).pdfs;
+      if (hl.length) customResults = <NCHighlights rows={hl} hasPdf={Array.isArray(ncPdfs) && ncPdfs.length > 0} />;
     }
   }
 
