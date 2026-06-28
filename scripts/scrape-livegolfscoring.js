@@ -309,6 +309,56 @@ function parseClasificacion(html /* , nRounds */) {
   return out;
 }
 
+/**
+ * Mapa ronda → sub-id dos horários. A página de horários linka as outras rondas:
+ *   <a href="/torneos/horarios/380/1627">Ronda 1</a> … 1628→R2 … 1629→R3
+ * Devolve { [roundNum]: subid }.
+ */
+function parseHorarioRounds(html, id) {
+  const map = {};
+  const re = new RegExp(`<a[^>]*href="/torneos/horarios/${id}/(\\d+)"[^>]*>\\s*Ronda\\s*(\\d+)\\s*</a>`, "gi");
+  let m;
+  while ((m = re.exec(html)) !== null) map[parseInt(m[2], 10)] = m[1];
+  return map;
+}
+
+/**
+ * Página de horários de uma ronda (/torneos/horarios/{id}/{subid}). Tabela:
+ *   <tr class="altrow"><td>10</td><td>08:00</td><td class="jugador">NOME</td></tr>
+ * A 1ª linha de cada grupo traz Tee (buraco de saída) + Hora; as seguintes só o
+ * jogador (mesmo flight). Devolve grupos: { teeTime, startHole, players[] }.
+ */
+function parseHorarios(html) {
+  const groups = [];
+  let cur = null;
+  const trRe = /<tr[^>]*class="[^"]*altrow[^"]*"[^>]*>([\s\S]+?)<\/tr>/gi;
+  let m;
+  while ((m = trRe.exec(html)) !== null) {
+    const tds = [...m[1].matchAll(/<td([^>]*)>([\s\S]*?)<\/td>/gi)];
+    let name = null; const plain = [];
+    for (const td of tds) {
+      // stripTags descodifica &nbsp; DEPOIS do trim → fica espaço à direita ("10 ").
+      // Voltar a colapsar+trim aqui para o tee/hora baterem com /^\d+$/ e /HH:MM/.
+      const val = stripTags(td[2]).replace(/\s+/g, " ").trim();
+      if (/jugador/i.test(td[1])) name = val;
+      else plain.push(val);
+    }
+    if (!name || /^jugador$/i.test(name)) continue;        // cabeçalho/linha vazia
+    const tee = plain.find(v => /^\d+$/.test(v));
+    const hora = plain.find(v => /^\d{1,2}:\d{2}$/.test(v));
+    if (tee != null || hora != null) {
+      cur = { teeTime: hora || null, startHole: tee != null ? parseInt(tee, 10) : null, players: [name] };
+      groups.push(cur);
+    } else if (cur) {
+      cur.players.push(name);
+    } else {
+      cur = { teeTime: null, startHole: null, players: [name] };
+      groups.push(cur);
+    }
+  }
+  return groups;
+}
+
 async function scrapeTorneo(id) {
   // Carrega hoyoahoyo (sem ronda) — tem o select de rondas + título
   const main = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${id}`);
@@ -396,7 +446,35 @@ async function scrapeTorneo(id) {
     }
   } catch (e) { console.warn(`  ⚠ id=${id}: classificação geral indisponível (${e.message})`); }
 
-  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, course, rounds: roundsData, classification };
+  // 4. Horários (draws / tee times). Entry-point /torneos/horarios/{id} traz os
+  //    links Ronda N → sub-id; depois cada ronda é uma página própria. Defensivo:
+  //    se não houver (torneio sem tee times publicados), fica [].
+  let horarios = [];
+  try {
+    const entry = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/horarios/${id}`);
+    if (entry.status === 200) {
+      const roundMap = parseHorarioRounds(entry.body, id);
+      const rnums = Object.keys(roundMap).map(Number).sort((a, b) => a - b);
+      for (const rn of rnums) {
+        const subid = roundMap[rn];
+        const hp = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/horarios/${id}/${subid}`);
+        if (hp.status !== 200) continue;
+        const groups = parseHorarios(hp.body);
+        if (groups.length) horarios.push({ round: rn, subid, groups });
+      }
+      // Sem links de ronda mas a própria entry pode já ser uma tabela de horários.
+      if (!horarios.length) {
+        const groups = parseHorarios(entry.body);
+        if (groups.length) horarios.push({ round: 1, subid: null, groups });
+      }
+      if (horarios.length) {
+        const nG = horarios.reduce((a, h) => a + h.groups.length, 0);
+        console.warn(`  🕒 id=${id}: horários ${horarios.length} ronda(s), ${nG} grupos`);
+      }
+    }
+  } catch (e) { console.warn(`  ⚠ id=${id}: horários indisponíveis (${e.message})`); }
+
+  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, course, rounds: roundsData, classification, horarios };
 }
 
 const LGS_BASE = "https://rfegolf.livegolfscoring.es";
@@ -481,6 +559,8 @@ if (require.main === module) {
 }
 
 // Exportados para testes (o main() só corre quando o ficheiro é o entrypoint).
-module.exports = { parseHoyoAHoyo, parseClasificacion, parseEstadisticas, parseCourseValue, parseTorneoMeta };
-
-module.exports = { scrapeTorneo, parseEstadisticas, parseHoyoAHoyo, httpGet };
+module.exports = {
+  scrapeTorneo, httpGet,
+  parseHoyoAHoyo, parseClasificacion, parseEstadisticas, parseCourseValue,
+  parseTorneoMeta, parseHorarios, parseHorarioRounds,
+};
