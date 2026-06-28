@@ -586,6 +586,18 @@ function parseHorarios(html) {
 
 /* ─── scrapeTour — orquestra todos os endpoints por torneio ─── */
 
+// "13 jun 2026" (data da listagem NextCaddy, mês abreviado ES) → "2026-06-13".
+const ES_ABBR = { ene: "01", feb: "02", mar: "03", abr: "04", may: "05", jun: "06",
+                  jul: "07", ago: "08", sep: "09", set: "09", oct: "10", nov: "11", dic: "12" };
+function parseEsAbbrevDate(s) {
+  if (!s) return null;
+  const m = /(\d{1,2})\s+([a-záéíóúñ]{3,4})\.?\s+(\d{4})/i.exec(String(s));
+  if (!m) return null;
+  const mon = ES_ABBR[m[2].toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").slice(0, 3)];
+  if (!mon) return null;
+  return `${m[3]}-${mon}-${m[1].padStart(2, "0")}`;
+}
+
 async function scrapeTour(tourId, opts) {
   opts = opts || {};
   const fetchScorecards = !!opts.scorecards;
@@ -603,6 +615,17 @@ async function scrapeTour(tourId, opts) {
   const [pageR, clasR, inscR, horaR, estR, roundsR, scoreTypesR] = tasks;
 
   const meta = pageR.status === 200 ? parseTourMeta(pageR.body) : {};
+  // Data da descoberta (scope, "13 jun 2026") → meta.dateIso/dateStart/year quando
+  // a página não a expôs. Torna o ficheiro auto-suficiente (o detalhe NextCaddy
+  // não traz data própria).
+  if (opts.discoveredDate) {
+    const dIso = parseEsAbbrevDate(opts.discoveredDate);
+    if (dIso) {
+      if (!meta.dateIso) meta.dateIso = dIso;
+      if (!meta.dateStart) meta.dateStart = dIso;
+      if (!meta.year) meta.year = parseInt(dIso.slice(0, 4), 10);
+    }
+  }
   // parseClasificaciones agora devolve {tables, pdfOnly, pdfs, names}
   const clasParsed = clasR.status === 200 && clasR.body.length > 1000
     ? parseClasificaciones(clasR.body)
@@ -800,10 +823,18 @@ async function main() {
   }
 
   let tours = [];
+  // Mapa tourId → data da descoberta ("13 jun 2026"). O detalhe NextCaddy não
+  // expõe data; o scope sim. Injectamos no meta para o ficheiro ser auto-suficiente.
+  const scopeDateById = new Map();
   if (tourArg) tours = tourArg.split(",").map((s) => parseInt(s.trim(), 10));
   if (scopeArg) {
     const sc = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), scopeArg), "utf8"));
-    tours = (sc.tours || sc.tournaments || sc).map((t) => t.tourId || t.id || t).filter(Boolean);
+    const list = sc.tours || sc.tournaments || sc;
+    for (const t of list) {
+      const id = t.tourId || t.id;
+      if (id != null && t && t.date) scopeDateById.set(id, t.date);
+    }
+    tours = list.map((t) => t.tourId || t.id || t).filter(Boolean);
   }
   if (!tours.length) {
     console.log("Uso:");
@@ -896,7 +927,7 @@ async function main() {
           console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações" : ""}${statsStr ? ` [${statsStr}]` : ""}, ${elapsed}s)`);
           ok++; continue;
         }
-        r = await scrapeTour(tid, { scorecards: fetchScorecards });
+        r = await scrapeTour(tid, { scorecards: fetchScorecards, discoveredDate: scopeDateById.get(tid) });
         fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
         const allLbPlayers = (r.leaderboard || []).flatMap((t) => t.players || []);
         const uniqueLb = new Set(allLbPlayers.map((p) => p.inscribedId || p.licencia || p.name)).size;

@@ -190,6 +190,32 @@ for (const file of rfegFiles) {
 }
 
 // ── 2) NextCaddy ──────────────────────────────────────────────
+// O NextCaddy não expõe datas nos ficheiros de detalhe (só na página de
+// listagem). Mas os ficheiros de scope da descoberta (`scripts/nextcaddy-scope*.json`)
+// guardam `tours[].date` ("13 jun 2026"). Recupera-se a data OFFLINE cruzando
+// por tourId — sem re-scrape. (O scraper também passou a injectar a data no
+// detalhe a partir do scope, para ficheiros futuros serem auto-suficientes.)
+function loadNextcaddyScopeDates() {
+  const m = new Map();
+  let scopeFiles = [];
+  try {
+    scopeFiles = fs.readdirSync(__dirname).filter(f => /^nextcaddy-scope.*\.json$/.test(f));
+  } catch { /* ignore */ }
+  for (const f of scopeFiles) {
+    let j;
+    try { j = JSON.parse(fs.readFileSync(path.join(__dirname, f), "utf-8")); } catch { continue; }
+    const tours = j.tours || j.tournaments || (Array.isArray(j) ? j : []);
+    for (const t of tours) {
+      const id = t.tourId || t.id;
+      if (id == null || !t.date) continue;
+      const prev = m.get(id);
+      if (!prev || !prev.date) m.set(id, { date: t.date, year: t.year || null });
+    }
+  }
+  return m;
+}
+const ncScopeDates = loadNextcaddyScopeDates();
+
 const ncFiles = fs.existsSync(NC_ROOT)
   ? fs.readdirSync(NC_ROOT).filter(f => /^\d+\.json$/.test(f)).sort()
   : [];
@@ -207,9 +233,13 @@ for (const file of ncFiles) {
     // Tentativa 1: dateIso já injectado pelo enrich (a partir do discover scope)
     // Tentativa 2: parsear "07 mar 2026" do pageHeaderText, dateStart, etc.
     const pageText = (meta.pageHeaderText || "") + " " + (j.url || "") + " " + name + " " + (meta.format || "") + " " + (meta.dateStart || "");
-    // dateIso: enrich → "07 mar 2026" (abreviado) → "21 Junio 2026" (extenso, comum
-    // nos nomes NextCaddy "... Domingo 21 Junio 2026"). Tudo offline.
-    const dateIso = (meta.dateIso || null) || parseEsDateLong(pageText) || parseEsDateFull(pageText) || null;
+    // dateIso, por ordem: meta.dateIso (enrich) → scope da descoberta ("13 jun 2026")
+    // → "07 mar 2026" (abreviado no texto) → "21 Junio 2026" (extenso, comum nos nomes
+    // NextCaddy). Tudo offline.
+    const scopeDate = ncScopeDates.get(tourId);
+    const dateIso = (meta.dateIso || null)
+      || (scopeDate && parseEsDateLong(scopeDate.date))
+      || parseEsDateLong(pageText) || parseEsDateFull(pageText) || null;
     // Tentativa 2: extractYearFromName procura "20XX" em qualquer string
     let year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
     if (!year) year = extractYearFromName(name);
