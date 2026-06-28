@@ -159,7 +159,20 @@ function parseClasificacionesMeta(html) {
 /* ─── parsePdfsAttached — PDFs anexos no response (banderas, results) ── */
 function parsePdfsAttached(html) {
   const out = new Set();
-  for (const m of html.matchAll(/\/uploads\/[^"'\s)<>]+\.pdf/gi)) out.add(m[0]);
+  const add = (u) => {
+    if (!u) return;
+    u = u.replace(/&amp;/g, "&").trim();
+    if (/docs\.google\.com/i.test(u)) return;     // wrapper do viewer ≠ PDF descarregável
+    if (/\/uploads\//i.test(u)) out.add(u);
+  };
+  // 1. URL directo /uploads/….pdf
+  for (const m of html.matchAll(/\/uploads\/[^"'\s)<>]+\.pdf/gi)) add(m[0]);
+  // 2. PDF embebido no visualizador do Google: viewerng/viewer?url=<pdfUrl>
+  for (const m of html.matchAll(/viewerng\/viewer\?url=([^"'\s&<>]+)/gi)) {
+    try { add(decodeURIComponent(m[1])); } catch { add(m[1]); }
+  }
+  // 3. pasta de PDFs de competição mesmo SEM extensão explícita no href
+  for (const m of html.matchAll(/https?:\/\/[^"'\s)<>]*\/uploads\/competiciones\/pdf\/[^"'\s)<>]+/gi)) add(m[0]);
   return [...out];
 }
 
