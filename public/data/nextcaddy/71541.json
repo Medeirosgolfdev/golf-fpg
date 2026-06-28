@@ -1,7 +1,7 @@
 {
   "tourId": 71541,
   "url": "https://www.nextcaddy.com/tour/71541",
-  "scrapedAt": "2026-06-24T14:57:52.079Z",
+  "scrapedAt": "2026-06-28T17:40:32.173Z",
   "meta": {
     "name": "FINAL Torneo Academia Infantil 2025-2026 - 18 hoyos",
     "organizer": null,
@@ -75,6 +75,13 @@
     },
     {
       "orden": 8,
+      "name": "Aimar Jodar Armario",
+      "licencia": "AMI5522443",
+      "hcp": 36,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
       "name": "Hector Gonzalez Ortega",
       "licencia": "AM04983718",
       "hcp": 19.1,
@@ -121,13 +128,6 @@
       "licencia": "20-06-26 17:17",
       "hcp": 20.3,
       "nivel": "AMI5998051"
-    },
-    {
-      "orden": 2,
-      "name": "Victor Sanabria De Borja",
-      "licencia": "20-06-26 17:17",
-      "hcp": 36.1,
-      "nivel": "AMI5991948"
     },
     {
       "orden": 3,
@@ -187,13 +187,134 @@
     },
     {
       "orden": 11,
+      "name": "Aimar Jodar Armario",
+      "licencia": "24-06-26 17:03",
+      "hcp": 36,
+      "nivel": "AMI5522443"
+    },
+    {
+      "orden": 12,
       "name": "Hector Gonzalez Ortega",
       "licencia": "21-06-26 11:20",
       "hcp": 19.1,
       "nivel": "AM04983718"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Hector Gonzalez Ortega",
+          "hcp": 19.1,
+          "ins": "2348365",
+          "jid": "76621",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Juan Jose Rodriguez Lopez",
+          "hcp": 20.3,
+          "ins": "2348176",
+          "jid": "76621",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Luca Aguilera Cordero",
+          "hcp": 26,
+          "ins": "2349223",
+          "jid": "76621",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alan Anderson Tolosa",
+          "hcp": 30.7,
+          "ins": "2349950",
+          "jid": "76621",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Mathis Volant",
+          "hcp": 32.6,
+          "ins": "2348201",
+          "jid": "76621",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Aimar Jodar Armario",
+          "hcp": 36,
+          "ins": "2350583",
+          "jid": "76621",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Victor Sanabria De Borja",
+          "hcp": 36.1,
+          "ins": "2348177",
+          "jid": "76621",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Irene Orejuela Solero",
+          "hcp": 38.2,
+          "ins": "2350140",
+          "jid": "76621",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Eliot Anderson Tolosa",
+          "hcp": 42.2,
+          "ins": "2349951",
+          "jid": "76621",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Carlos Jimenez Pachon",
+          "hcp": 42.4,
+          "ins": "2349098",
+          "jid": "76621",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Marina Orejuela Solero",
+          "hcp": 43.3,
+          "ins": "2350153",
+          "jid": "76621",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Carolina Borrey Wust",
+          "hcp": 54,
+          "ins": "2349067",
+          "jid": "76621",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -501,6 +622,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:01:07.583Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }
