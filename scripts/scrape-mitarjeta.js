@@ -215,9 +215,25 @@ function parseHorarios(html) {
 async function fetchTeeTimes(torneo) {
   try {
     const r = await httpGet("https://mitarjeta.golf/torneos/horarios/" + torneo);
-    if (r.status !== 200 || r.body.length < 1000) return null;
-    return parseHorarios(r.body);
-  } catch (e) { return null; }
+    if (r.status !== 200 || r.body.length < 1000) return { r1: null, all: [] };
+    // A página linka as outras rondas: <a href="/torneos/horarios/{t}/{subid}">Ronda N</a>.
+    // mitarjeta = mesmo backend do livegolfscoring → seguimos os links para apanhar
+    // TODAS as rondas (antes só vinha a R1 da página base; J2/J3 ficavam de fora).
+    const roundMap = {};
+    const re = new RegExp(`<a[^>]*href="/torneos/horarios/${torneo}/(\\d+)"[^>]*>\\s*Ronda\\s*(\\d+)\\s*</a>`, "gi");
+    let m; while ((m = re.exec(r.body)) !== null) roundMap[parseInt(m[2], 10)] = m[1];
+    const all = [];
+    for (const rn of Object.keys(roundMap).map(Number).sort((a, b) => a - b)) {
+      const rr = await httpGet("https://mitarjeta.golf/torneos/horarios/" + torneo + "/" + roundMap[rn]);
+      if (rr.status !== 200) continue;
+      const parsed = parseHorarios(rr.body);
+      if (parsed && parsed.groups.length) all.push({ round: rn, groups: parsed.groups });
+    }
+    // Sem links de ronda (ou só uma) → a própria página base é a tabela (R1).
+    if (!all.length) { const base = parseHorarios(r.body); if (base && base.groups.length) all.push(base); }
+    const r1 = all.find((x) => x.round === 1) || all[0] || null;
+    return { r1, all };
+  } catch (e) { return { r1: null, all: [] }; }
 }
 
 /* ── hole-by-hole (cartões) ──────────────────────────────────────
@@ -282,7 +298,9 @@ async function scrapeTorneo(torneo) {
   }
   const p = parseClasificacion(r.body, torneo);
   const declaredRounds = await fetchDeclaredRounds(torneo);
-  const teeTimes = await fetchTeeTimes(torneo);
+  const tt = await fetchTeeTimes(torneo);
+  const teeTimes = tt.r1;            // R1 (startHole + retro-compat)
+  const teeTimesAll = tt.all;        // todas as rondas (draw multi-ronda)
   const compId = TORNEO_TO_COMP[torneo] || null;
 
   // hole-by-hole por ronda (1..declaredRounds) → { round: { fichaId: scores[] } }
@@ -337,6 +355,7 @@ async function scrapeTorneo(torneo) {
       perHole: p.perHole,
     },
     teeTimes,
+    teeTimesAll,
     players,
   };
 }
@@ -419,7 +438,8 @@ function injectIntoRfeg(rich, pretty) {
   detail.parConfidence = parArr.length ? "high" : undefined;
   detail._rfegCourseSi = siArr.length ? siArr : null;
   detail._rfegCourseMeters = metersArr.length ? metersArr : null;
-  if (rich.teeTimes) detail.teeTimes = rich.teeTimes; // draw R1 (extra; UI /rfeg ainda não o renderiza)
+  if (rich.teeTimes) detail.teeTimes = rich.teeTimes;                         // R1 (startHole + retro-compat)
+  if (rich.teeTimesAll && rich.teeTimesAll.length) detail.teeTimesAll = rich.teeTimesAll; // draw multi-ronda (R1/R2/R3)
   detail.scrapedAt = rich.scrapedAt;
   // nome real do campo + par/metros (corrige o "course" lixo do microsite)
   detail.meta = detail.meta || {};
@@ -461,7 +481,10 @@ async function main() {
       ok++;
       const c = rich.course;
       const withSd = rich.players.filter((p) => p.bestSd != null).length;
-      const ttGroups = rich.teeTimes ? rich.teeTimes.groups.length : 0;
+      const ttRounds = Array.isArray(rich.teeTimesAll) ? rich.teeTimesAll.length : (rich.teeTimes ? 1 : 0);
+      const ttGroups = Array.isArray(rich.teeTimesAll)
+        ? rich.teeTimesAll.reduce((a, r) => a + (r.groups ? r.groups.length : 0), 0)
+        : (rich.teeTimes ? rich.teeTimes.groups.length : 0);
       console.log(
         "  torneo " + t + (rich.compId ? " (CompId " + rich.compId + ")" : "") + ": " + rich.name
       );
@@ -469,7 +492,7 @@ async function main() {
         "     campo=" + (c.name || "?") + " | par=" + c.parTotal + " | metros=" + c.metersTotal +
         " | CR=" + c.courseRating + " | Slope=" + c.slope +
         " | jogadores=" + rich.players.length + " | c/SD=" + withSd +
-        " | tee-times(R" + (rich.teeTimes ? rich.teeTimes.round : "-") + ")=" + ttGroups + " grupos" +
+        " | tee-times=" + ttRounds + " ronda(s)/" + ttGroups + " grupos" +
         (injected ? " | injectado em rfegolf-resultats/" + rich.compId + ".json" : "")
       );
     } catch (e) {

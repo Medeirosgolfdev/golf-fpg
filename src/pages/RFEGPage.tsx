@@ -149,6 +149,9 @@ interface RFEGDetail {
   _rfegCourseSi?: number[] | null;
   _rfegCourseMeters?: number[] | null;
   teeTimes?: { round: number; groups: Array<{ tee: number | string; time: string; players: string[] }> };
+  /** Draw multi-ronda (mitarjeta): todas as rondas. R1 também vem em `teeTimes`
+   *  (retro-compat). Populado por scrape-mitarjeta.js (segue os links de ronda). */
+  teeTimesAll?: Array<{ round: number; groups: Array<{ tee: number | string; time: string; players: string[] }> }>;
   inscritos: {
     admitidos: RFEGPlayer[];
     reservas: RFEGPlayer[];
@@ -1350,6 +1353,18 @@ function teeTimesToHorarios(tt?: RFEGDetail["teeTimes"]): NCHorario[] | null {
   return players.length ? [{ round: tt.round || 1, players }] : null;
 }
 
+/** Versão multi-ronda: converte `teeTimesAll` (todas as rondas) em NCHorario[],
+ *  uma entrada por ronda — alimenta o MESMO DrawTab com tabs R1/R2/R3. */
+function teeTimesAllToHorarios(all?: RFEGDetail["teeTimesAll"]): NCHorario[] | null {
+  if (!Array.isArray(all) || !all.length) return null;
+  const out: NCHorario[] = [];
+  for (const tt of all) {
+    const one = teeTimesToHorarios(tt);
+    if (one && one[0] && one[0].players.length) out.push(one[0]);
+  }
+  return out.length ? out : null;
+}
+
 /* ── DrawSaidaView ──────────────────────────────────────────
  * Tab "Draw saída" do RFEGPage — reusa o componente DrawTab partilhado para
  * coerência visual com FPG. NextCaddy → `_ncHorarios`; mitarjeta → `teeTimes`.
@@ -1367,8 +1382,8 @@ function DrawSaidaView({ detail, entry }: {
   // NextCaddy traz `_ncHorarios`; mitarjeta (CEE) traz `teeTimes` — convertido ao
   // mesmo shape para alimentar o MESMO DrawTab (não inventar tabela própria).
   const horarios = useMemo(
-    () => detail._ncHorarios ?? teeTimesToHorarios(detail.teeTimes),
-    [detail._ncHorarios, detail.teeTimes],
+    () => detail._ncHorarios ?? teeTimesAllToHorarios(detail.teeTimesAll) ?? teeTimesToHorarios(detail.teeTimes),
+    [detail._ncHorarios, detail.teeTimesAll, detail.teeTimes],
   );
   const [activeRound, setActiveRound] = useState<number>(1);
   const isNc = !!detail._ncHorarios;
@@ -2756,7 +2771,8 @@ async function rfegLoadDivisions(
   // mitarjeta (CEE): o draw da R1 vem em `detail.teeTimes` (ver scrape-mitarjeta.js).
   // É renderizado pelo MESMO `DrawSaidaView` → `DrawTab` partilhado (= FPG/NextCaddy),
   // que agora também lê `detail.teeTimes` além dos `_ncHorarios` do NextCaddy.
-  const hasMitarjetaDraw = !!(data.teeTimes && data.teeTimes.groups && data.teeTimes.groups.length);
+  const hasMitarjetaDraw = !!((data.teeTimes && data.teeTimes.groups && data.teeTimes.groups.length)
+    || (data.teeTimesAll && data.teeTimesAll.some((r) => r.groups && r.groups.length)));
   const hasDrawSection = hasNcDraw || hasMitarjetaDraw;
   // CR+Slope reais → mostrar a coluna SD (WHS) no scorecard. Antes só o mitarjeta
   // a mostrava; o livegolfscoring agora também traz CR/Slope (re-scrape), por isso
