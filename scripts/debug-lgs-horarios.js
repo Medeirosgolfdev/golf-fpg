@@ -51,6 +51,19 @@ function stripTags(s) {
   const h = await httpGet(`${base}/torneos/horarios/${id}/${subid}`);
   console.log(`\n=== /torneos/horarios/${id}/${subid} ===`);
   console.log(`status=${h.status}  bodyLen=${h.body.length}`);
+
+  // 2b. Navegação por ronda DENTRO da página de horários — é aqui que provavelmente
+  //     vivem os sub-ids das outras rondas (R2, R3). Mostrar selector + todos os links.
+  const hSel = [...h.body.matchAll(/<option value="\/torneos\/horarios\/\d+\/(\d+)"[^>]*>([^<]*)<\/option>/gi)];
+  if (hSel.length) { console.log("selector de rondas NA página de horários (sub-id → label):"); hSel.forEach(o => console.log(`  ${o[1]} → ${o[2].trim()}`)); }
+  const hLinks = [...new Set([...h.body.matchAll(/\/torneos\/horarios\/(\d+)\/(\d+)/g)].map(m => `${m[1]}/${m[2]}`))];
+  console.log(`links /horarios/X/Y na página de horários: ${JSON.stringify(hLinks)}`);
+  // Qualquer <select> e os <a href> de navegação (para ver o padrão de ronda)
+  const selectBlocks = [...h.body.matchAll(/<select[^>]*>([\s\S]*?)<\/select>/gi)];
+  console.log(`nº de <select> na página: ${selectBlocks.length}`);
+  selectBlocks.slice(0, 3).forEach((s, i) => console.log(`  <select#${i}> (stripped opts): ${stripTags(s[1]).slice(0, 200)}`));
+  const navLinks = [...h.body.matchAll(/<a[^>]*href="([^"]*(?:ronda|round|horario|jornada)[^"]*)"[^>]*>([^<]*)<\/a>/gi)];
+  navLinks.slice(0, 8).forEach(a => console.log(`  <a href="${a[1]}">${a[2].trim()}</a>`));
   // Procurar horas de saída (HH:MM) e nomes
   const times = [...h.body.matchAll(/\b([0-2]?\d:[0-5]\d)\b/g)].map(m => m[1]);
   console.log(`horas (HH:MM) encontradas: ${times.length} — ex: ${[...new Set(times)].slice(0, 6).join(", ")}`);
