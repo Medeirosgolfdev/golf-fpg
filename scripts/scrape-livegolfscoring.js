@@ -90,11 +90,18 @@ function parseHoyoAHoyo(html) {
   // (U+0060), modificador ʼ (U+02BC). Mantemos o parse forte (scorecard completo)
   // como caminho normal e um fallback que recupera/regista o resto.
   const NAME = "[\\p{L}\\s,.'\\-·\\u00B4\\u2018\\u2019\\u0060\\u02BC]+?";
+  // Marcadores opcionais entre o nome e o ±toPar, em qualquer combinação/ordem:
+  //   *  (favorito)   (am)/(pro)  (estatuto amador/pro)   C  (categoria/confirmado)
+  // Ex: "… Juan Manuel (am) +11", "MORATO BREDE, Miguel * C -3", "Ivan (am) C +6".
+  // Sem isto, jogadores (muitos juniores) com cartão completo eram descartados.
+  const MARK = `(?:(?:\\*|\\([A-Za-z]{1,4}\\)|C)\\s+)*`;
+  // To-par / "thru": ±N, E, Par, ou 0 simples (par certo às vezes vem como "0").
+  const TP = `[+\\-]\\d+|E|Par|0`;
   // Nº de números do bloco do cartão: 18h = 20-22 (9+OUT+9+IN+TOT, +hoy à frente),
   // 9h = 10-11 (9 buracos + total). O strict ajusta-se ao campo desta ronda.
   const reps = courseHoles === 9 ? "9,10" : "19,21";
-  const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+((?:\\d+\\s+){${reps}}\\d+)\\s+([+\\-]\\d+|E|Par)`, "u");
-  const looseRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+\\*?\\s*([+\\-]\\d+|E|Par)\\s+(.+)$`, "u");
+  const strictRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+${MARK}(${TP})\\s+((?:\\d+\\s+){${reps}}\\d+)\\s+(${TP})`, "u");
+  const looseRe = new RegExp(`^[> ]*(T?\\d+|\\d+|—)?\\s+(${NAME})\\s+${MARK}(${TP})\\s+(.+)$`, "u");
   // Marcadores de "não-jogador" no início da linha: não-comparecências (NP), retiros
   // (RET), desqualificações (DESC/DSQ), etc. — não têm cartão válido e não entram nas
   // classificações. Reconhecê-los evita ruído de "unparsed" (eram dezenas por torneio).

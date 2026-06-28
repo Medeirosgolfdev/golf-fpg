@@ -113982,11 +113982,125 @@
       "name": "QUINTA DO PERU PJA Masters 2026",
       "date": "2026-06-26",
       "expectedYear": "2026",
+      "_manual": true,
       "admissions": {
         "error": "param-errors",
         "players": []
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "QUINTA DO PERU PJA Masters 2026 - R1",
+          "date": "2026-06-26",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "11:40",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                { "nome": "Angelina Gao", "fed": "51523", "clube": null, "tee": "Azuis" },
+                { "nome": "Clara Trindade", "fed": "45812", "clube": null, "tee": "Azuis" }
+              ]
+            },
+            {
+              "teeTime": "11:49",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                { "nome": "Ziyang Guo", "fed": "57904", "clube": null, "tee": "Vermelhas" },
+                { "nome": "Manuel Medeiros", "fed": "52884", "clube": null, "tee": "Vermelhas" },
+                { "nome": "Ricardo Castro Ferreira", "fed": "49085", "clube": null, "tee": "Vermelhas" }
+              ]
+            },
+            {
+              "teeTime": "11:58",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                { "nome": "João Rocha", "fed": "48297", "clube": null, "tee": "Amarelas" },
+                { "nome": "William Gao", "fed": "51524", "clube": null, "tee": "Amarelas" },
+                { "nome": "Salvador Ivo de Carvalho", "fed": "43968", "clube": null, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "12:07",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                { "nome": "Nuno Palmares", "fed": "49124", "clube": null, "tee": "Amarelas" },
+                { "nome": "David Filip", "fed": "51949", "clube": null, "tee": "Amarelas" },
+                { "nome": "Martim Morais", "fed": "41609", "clube": null, "tee": "Brancas" }
+              ]
+            },
+            {
+              "teeTime": "12:15",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                { "nome": "João Maria Ivo de Carvalho", "fed": "38334", "clube": null, "tee": "Brancas" },
+                { "nome": "Ryan Dantas", "fed": "45439", "clube": null, "tee": "Brancas" },
+                { "nome": "Rodrigo Constantino", "fed": "45278", "clube": null, "tee": "Brancas" },
+                { "nome": "Rafael Benesi", "fed": "54774", "clube": null, "tee": "Brancas" }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "QUINTA DO PERU PJA Masters 2026 - R2",
+          "date": "2026-06-27",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "12:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                { "nome": "Manuel Medeiros", "fed": "52884", "clube": null, "tee": "Vermelhas" },
+                { "nome": "Salvador Ivo de Carvalho", "fed": "43968", "clube": null, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "12:39",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                { "nome": "Clara Trindade", "fed": "45812", "clube": null, "tee": "Azuis" },
+                { "nome": "João Maria Ivo de Carvalho", "fed": "38334", "clube": null, "tee": "Brancas" }
+              ]
+            },
+            {
+              "teeTime": "12:48",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                { "nome": "Angelina Gao", "fed": "51523", "clube": null, "tee": "Azuis" },
+                { "nome": "David Filip", "fed": "51949", "clube": null, "tee": "Amarelas" },
+                { "nome": "Martim Morais", "fed": "41609", "clube": null, "tee": "Brancas" }
+              ]
+            },
+            {
+              "teeTime": "12:57",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                { "nome": "Rodrigo Constantino", "fed": "45278", "clube": null, "tee": "Brancas" },
+                { "nome": "João Rocha", "fed": "48297", "clube": null, "tee": "Amarelas" },
+                { "nome": "Ziyang Guo", "fed": "57904", "clube": null, "tee": "Vermelhas" }
+              ]
+            },
+            {
+              "teeTime": "13:06",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                { "nome": "William Gao", "fed": "51524", "clube": null, "tee": "Amarelas" },
+                { "nome": "Ricardo Castro Ferreira", "fed": "49085", "clube": null, "tee": "Vermelhas" },
+                { "nome": "Nuno Palmares", "fed": "49124", "clube": null, "tee": "Amarelas" }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
