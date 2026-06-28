@@ -9,6 +9,7 @@
     --bg:#ffffff; --card:#ffffff; --line:#e2e8f0; --txt:#1a2230; --muted:#64748b;
     --accent:#16a34a; --accent2:#b45309; --head:#f1f5f9; --rowalt:#f8fafc;
     --manuel:#dcfce7; --pts:#b45309; --link:#2563eb; --under:#dc2626; --over:#2563eb;
+    --line2:#94a3b8;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
@@ -49,12 +50,15 @@
   .detail{border-collapse:collapse;font-size:11.5px;width:max-content;min-width:100%}
   .detail th,.detail td{border:1px solid var(--line);padding:4px 7px;white-space:nowrap}
   .detail thead th{position:sticky;top:0;z-index:2}
-  .detail .grp{text-align:center;font-size:10px}
+  .detail .grp{text-align:center;font-size:9px;white-space:normal;max-width:130px}
   .detail .grp a{color:inherit;text-decoration:none;display:block;line-height:1.25}
   .detail .grp a:hover .c1{text-decoration:underline}
-  .detail .c1{display:block;color:var(--txt);font-weight:700}
-  .detail .c2{display:block;color:var(--muted);font-weight:600}
-  .detail .c3{display:block;color:var(--muted);font-weight:500}
+  .detail .c1{display:block;color:var(--txt);font-weight:700;font-size:9.5px}
+  .detail .c2{display:block;color:var(--muted);font-weight:600;font-size:9px}
+  .detail .c3{display:block;color:var(--muted);font-weight:500;font-size:8.5px}
+  .detail .ge{border-right:2px solid var(--line2)}
+  .det-toggle{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;margin:8px 0 12px}
+  .det-toggle:hover{background:var(--head)}
   .detail td.tp{text-align:center}
   .detail td.pt{text-align:center;color:var(--pts)}
   .detail td.tot{text-align:center;color:var(--pts);font-weight:800}
@@ -79,7 +83,7 @@
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="status">A carregar resultados…</div></div>
 
-  <h2 class="sec" id="det-title" style="display:none">Pontuações detalhadas</h2>
+  <button class="det-toggle" id="det-btn" style="display:none">📊 Mostrar pontuações detalhadas</button>
   <div id="detail"></div>
 
   <div class="card leg" id="legend" style="display:none">
@@ -122,7 +126,7 @@
       var regiao="",local="";if(parts.length>=2){regiao=parts[0];local=parts.slice(1).join(" · ");}else if(parts.length===1){local=parts[0];}
       if(/terceira/i.test(regiao)||/terceira/i.test(rest)){regiao=regiao||"Açores";if(!local)local="Terceira";}
       return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
-    var pja=n.match(/^PJA\s+(.+)$/i);if(pja)return {circuito:"PJA",local:pja[1].trim()};
+    if(/PJA/i.test(n)){var loc=(campo&&campo.trim())?campo.replace(/\s{2,}/g," ").trim():n.replace(/PJA/ig,"").replace(/\bmasters?\b/ig,"").replace(/20\d\d/g,"").replace(/\s{2,}/g," ").trim();return {circuito:"PJA",local:loc};}
     return {circuito:n,local:campo||""};}
   function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);
     if(ev==="DT"){if(/Madeira/i.test(n))return "1_madeira_"+d;if(/\bSul\b|Laguna|Vila Sol|Penina|Quinta do Vale|Pinheiros Altos|Boavista/i.test(n))return "2_sul_"+d;
@@ -194,7 +198,7 @@
   }
 
   var DATA={cols:[],rows:[]};
-  var state={active:"Geral",sortKey:"total",sortDir:"desc",tabs:["Geral"]};
+  var state={active:"Geral",sortKey:"total",sortDir:"desc",tabs:["Geral"],showDetail:false};
   function activeRows(){return state.active==="Geral"?DATA.rows:DATA.rows.filter(function(r){return escBucket(r.escalao)===state.active;});}
 
   function renderTabs(){
@@ -220,25 +224,28 @@
   }
   function renderDetail(){
     var cols=DATA.cols,rows=activeRows();
-    if(!cols.length){document.getElementById("detail").innerHTML="";return;}
-    document.getElementById("det-title").style.display="block";
+    var btn=document.getElementById("det-btn"),det=document.getElementById("detail");
+    if(!cols.length){btn.style.display="none";det.innerHTML="";return;}
+    btn.style.display="inline-block";
+    btn.textContent=state.showDetail?"📊 Ocultar pontuações detalhadas":"📊 Mostrar pontuações detalhadas";
+    if(!state.showDetail){det.innerHTML="";return;}
     var h='<div class="detail-wrap"><table class="detail"><thead>';
-    h+='<tr><th class="sticky0">&nbsp;</th><th class="sticky1">Jogador</th><th>Esc.</th><th>Clube</th>';
+    h+='<tr><th class="sticky0">&nbsp;</th><th class="sticky1">Jogador</th><th>Esc.</th><th class="ge">Clube</th>';
     cols.forEach(function(c){var span=c.rounds.length*2;
       var inner='<span class="c1">'+esc(c.circuito)+(c.mult!==1?' <span class="badge">×'+c.mult+'</span>':'')+'</span><span class="c2">'+esc(c.local||"")+'</span><span class="c3">'+shortDate(c.date)+'</span>';
-      h+='<th class="grp" colspan="'+span+'"><a href="'+fpgUrl(c.ccode,c.tcode)+'" target="_blank" rel="noopener">'+inner+'</a></th>';});
+      h+='<th class="grp ge" colspan="'+span+'"><a href="'+fpgUrl(c.ccode,c.tcode)+'" target="_blank" rel="noopener">'+inner+'</a></th>';});
     h+='<th class="grp" colspan="2">Ranking</th></tr>';
-    h+='<tr><th class="sticky0">#</th><th class="sticky1">&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>';
-    cols.forEach(function(c){c.rounds.forEach(function(rd){h+='<th class="c">'+(rd.label||"±Par")+'</th><th class="c">Pts</th>';});});
+    h+='<tr><th class="sticky0">#</th><th class="sticky1">&nbsp;</th><th>&nbsp;</th><th class="ge">&nbsp;</th>';
+    cols.forEach(function(c){c.rounds.forEach(function(rd,j){var last=j===c.rounds.length-1;h+='<th class="c">'+(rd.label||"±Par")+'</th><th class="c'+(last?' ge':'')+'">Pts</th>';});});
     h+='<th class="c">Vlt</th><th class="c">Total</th></tr></thead><tbody>';
     rows.forEach(function(r,i){
-      h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td>';
-      cols.forEach(function(c){c.rounds.forEach(function(rd){var res=r.results[rd.roundKey];
-        if(!res){h+='<td class="tp"></td><td class="pt"></td>';}
-        else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+'">'+fmt(res.pts)+'</td>';}});});
+      h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td class="ge">'+esc(r.club||"—")+'</td>';
+      cols.forEach(function(c){c.rounds.forEach(function(rd,j){var last=j===c.rounds.length-1;var res=r.results[rd.roundKey];
+        if(!res){h+='<td class="tp"></td><td class="pt'+(last?' ge':'')+'"></td>';}
+        else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'">'+fmt(res.pts)+'</td>';}});});
       h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
     h+='</tbody></table></div>';
-    document.getElementById("detail").innerHTML=h;
+    det.innerHTML=h;
   }
   function renderLegend(){
     var ul=document.getElementById("legend-list");ul.innerHTML="";
@@ -259,6 +266,7 @@
     var present={};DATA.rows.forEach(function(r){present[escBucket(r.escalao)]=true;});
     state.tabs=["Geral"].concat(["Sub-12","Sub-14","Sub-16","Sub-18+"].filter(function(e){return present[e];}));
     renderAll();renderLegend();
+    document.getElementById("det-btn").onclick=function(){state.showDetail=!state.showDetail;renderDetail();};
     document.getElementById("upd").textContent="Última atualização da página: "+new Date().toLocaleString("pt-PT");
   });
 })();
