@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-06-27T20:50:42.159Z",
+  "geradoEm": "2026-06-28T20:53:26.614Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 127,
+  "totalRondas": 129,
   "totalCompanheirosUnicos": 155,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 121,
-      "rondasComDraw": 105,
-      "torneiosJogados": 91,
-      "torneiosComDraw": 86,
+      "rondasJogadas": 122,
+      "rondasComDraw": 107,
+      "torneiosJogados": 92,
+      "torneiosComDraw": 87,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "038-10754",
+          "nome": "QUINTA DO PERU PJA Masters 2026",
+          "data": "2026-06-26",
+          "rondas": 1
+        },
         {
           "torneioId": "007-11034",
           "nome": "Torneio Diário de Notícias da Madeira 2026",
@@ -595,6 +601,68 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "038-10754",
+      "torneioNome": "QUINTA DO PERU PJA Masters 2026",
+      "data": "2026-06-26",
+      "ronda": 1,
+      "teeTime": "11:49",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 75,
+        "toPar": 3
+      },
+      "companheiros": [
+        {
+          "nome": "Guo Ziyang",
+          "fed": "57904",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
+        },
+        {
+          "nome": "Ricardo Castro Ferreira",
+          "fed": "49085",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 70,
+            "toPar": -2
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "038-10754",
+      "torneioNome": "QUINTA DO PERU PJA Masters 2026",
+      "data": "2026-06-26",
+      "ronda": 2,
+      "teeTime": "12:30",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 75,
+        "toPar": 3
+      },
+      "companheiros": [
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "C.G. Vilamoura A",
+          "pais": null,
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "059-10685",
