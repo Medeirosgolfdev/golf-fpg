@@ -8,12 +8,13 @@
   :root{
     --bg:#0f1720; --card:#162230; --line:#243243; --txt:#e8eef5; --muted:#8aa0b6;
     --accent:#3fb950; --accent2:#d29922; --head:#1c2a3a; --rowalt:#16242f;
-    --manuel:#1e3a2a; --pts:#d29922; --link:#58a6ff;
+    --manuel:#1e3a2a; --pts:#d29922; --link:#58a6ff; --under:#f87171; --over:#7fa6c9;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
-  .wrap{max-width:980px;margin:0 auto}
+  .wrap{max-width:1200px;margin:0 auto}
   h1{font-size:21px;margin:0 0 2px}
+  h2.sec{font-size:16px;margin:26px 0 10px}
   .sub{color:var(--muted);font-size:12px;margin:0 0 14px}
   .rules{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--muted);font-size:11.5px;margin:0 0 16px}
   .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
@@ -40,10 +41,30 @@
   .leg .t-meta{color:var(--muted);font-size:11px}
   .leg li{padding:6px 0;border-bottom:1px solid var(--line)}
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
-  .x{opacity:.45;text-decoration:line-through}
+  .x{opacity:.4;text-decoration:line-through}
   .status{color:var(--muted);font-size:12px;padding:20px 4px}
   .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
   footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
+  .detail-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .detail{border-collapse:collapse;font-size:11.5px;width:max-content;min-width:100%}
+  .detail th,.detail td{border:1px solid var(--line);padding:4px 7px;white-space:nowrap}
+  .detail thead th{position:sticky;top:0;z-index:2}
+  .detail .grp{text-align:center;font-size:10px}
+  .detail .grp a{color:inherit;text-decoration:none;display:block;line-height:1.25}
+  .detail .grp a:hover .c1{text-decoration:underline}
+  .detail .c1{display:block;color:var(--txt);font-weight:700}
+  .detail .c2{display:block;color:var(--muted);font-weight:600}
+  .detail .c3{display:block;color:var(--muted);font-weight:500}
+  .detail td.tp{text-align:center}
+  .detail td.pt{text-align:center;color:var(--pts)}
+  .detail td.tot{text-align:center;color:var(--pts);font-weight:800}
+  .detail td.vl{text-align:center;color:var(--muted)}
+  .sticky0{position:sticky;left:0;z-index:3}
+  .sticky1{position:sticky;left:34px;z-index:3}
+  .detail thead .sticky0,.detail thead .sticky1{background:var(--head);z-index:4}
+  .detail tbody .sticky0,.detail tbody .sticky1{background:var(--card)}
+  .detail tbody tr:nth-child(even) .sticky0,.detail tbody tr:nth-child(even) .sticky1{background:var(--rowalt)}
+  .detail tr.manuel .sticky0,.detail tr.manuel .sticky1{background:var(--manuel)}
 </style>
 </head>
 <body>
@@ -58,6 +79,9 @@
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="status">A carregar resultados…</div></div>
 
+  <h2 class="sec" id="det-title" style="display:none">Pontuações detalhadas</h2>
+  <div id="detail"></div>
+
   <div class="card leg" id="legend" style="display:none">
     <h2>Torneios que contam para o ranking</h2>
     <ul id="legend-list"></ul>
@@ -66,142 +90,175 @@
 </div>
 
 <script>
-/* ===== Motor de ranking PJA 2026 (port de PJARankingView) ===== */
+/* ===== Motor PJA 2026 v2 ===== */
 (function (global) {
   "use strict";
-  var YEAR = "2026";
-  var GF_TCODES = new Set(["10005", "10019"]);
-  var TOURN_MULTIPLIER = { "10444": 1.75 };
-  var TOURN_PILLS_PJA = new Set(["10444", "10492", "10036", "10260", "10019"]);
-  function pjaPts(toPar, mult){ return Math.max(0, 25 - toPar) * mult; }
-  function isGF(t){ var tc=String(t.tcode||""); if(GF_TCODES.has(tc))return true; return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name||""); }
-  function getMult(t){ var tc=String(t.tcode||""); if(TOURN_MULTIPLIER[tc]!==undefined)return TOURN_MULTIPLIER[tc]; if(isGF(t))return 1.5; return 1.0; }
-  function classify(t){ var name=t.name||"", tc=String(t.tcode||"");
-    if(/greatgolf/i.test(name)){ if(tc==="10294")return "GG_MAIN"; if(tc==="10295")return "GG_U14"; if(tc==="10296")return "GG_U12"; return "PJA_EXCL"; }
-    if(/Circuito\s+Aquapor/i.test(name))return "AQUAPOR";
-    if(/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name))return "DT";
-    return "PJA_EXCL"; }
-  function isPJA(t){ var name=t.name||"", year=(t.date||"").slice(0,4);
-    if(/PJA/i.test(name))return true;
-    var tcodes=String(t.tcode||"").split("+");
-    if(tcodes.some(function(tc){return TOURN_PILLS_PJA.has(tc);}))return true;
-    if(year>="2026"){ if(/greatgolf.*junior/i.test(name))return true; if(/Drive\s+Tour/i.test(name)&&!/Challenge/i.test(name))return true; if(/Circuito\s+Aquapor/i.test(name))return true; }
-    return false; }
-  function escalaoAtDate(dob, year){ if(!dob)return null; var an=parseInt(String(dob).slice(0,4)); var at=parseInt(String(year).slice(0,4));
-    if(isNaN(an)||isNaN(at))return null; var idade=at-an; if(idade<0)return null;
-    if(idade<=10)return "Sub-10"; if(idade<=12)return "Sub-12"; if(idade<=14)return "Sub-14"; if(idade<=16)return "Sub-16"; if(idade<=18)return "Sub-18"; if(idade<=24)return "Sub-21+"; return "Sénior"; }
-  function clubShort(db){ if(!db)return ""; var c=db.club; if(!c)return ""; return typeof c==="object"?(c.short||c.long||""):String(c); }
-  function buildRanking(all, playersDB, members){
-    var seen=new Set(), list=[];
-    all.forEach(function(t){ if(!isPJA(t))return; if((t.date||"").slice(0,4)!==YEAR)return;
-      var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?"); if(seen.has(k))return; seen.add(k); list.push(t); });
-    list.sort(function(a,b){return (a.date||"").localeCompare(b.date||"");});
+  var YEAR="2026";
+  var GF_TCODES=new Set(["10005","10019"]);
+  var TOURN_MULTIPLIER={"10444":1.75};
+  var TOURN_PILLS_PJA=new Set(["10444","10492","10036","10260","10019"]);
+  function pjaPts(tp,m){return Math.max(0,25-tp)*m;}
+  function isGF(t){var tc=String(t.tcode||"");if(GF_TCODES.has(tc))return true;return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name||"");}
+  function getMult(t){var tc=String(t.tcode||"");if(TOURN_MULTIPLIER[tc]!==undefined)return TOURN_MULTIPLIER[tc];if(isGF(t))return 1.5;return 1.0;}
+  function classify(t){var n=t.name||"",tc=String(t.tcode||"");
+    if(/greatgolf/i.test(n)){if(tc==="10294")return "GG_MAIN";if(tc==="10295")return "GG_U14";if(tc==="10296")return "GG_U12";return "PJA_EXCL";}
+    if(/Circuito\s+Aquapor/i.test(n))return "AQUAPOR";
+    if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return "DT";
+    return "PJA_EXCL";}
+  function isPJA(t){var n=t.name||"",y=(t.date||"").slice(0,4);
+    if(/PJA/i.test(n))return true;
+    if(String(t.tcode||"").split("+").some(function(tc){return TOURN_PILLS_PJA.has(tc);}))return true;
+    if(y>="2026"){if(/greatgolf.*junior/i.test(n))return true;if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return true;if(/Circuito\s+Aquapor/i.test(n))return true;}
+    return false;}
+  function escalaoAtDate(dob){if(!dob)return null;var an=parseInt(String(dob).slice(0,4));if(isNaN(an))return null;var i=2026-an;if(i<0)return null;
+    if(i<=10)return "Sub-10";if(i<=12)return "Sub-12";if(i<=14)return "Sub-14";if(i<=16)return "Sub-16";if(i<=18)return "Sub-18";if(i<=24)return "Sub-21+";return "Sénior";}
+  function clubShort(db){if(!db)return "";var c=db.club;if(!c)return "";return typeof c==="object"?(c.short||c.long||""):String(c);}
+  function shortTournName(name,campo){var n=(name||"").trim();
+    var ggU=n.match(/Greatgolf.*?-?\s*U\s*(\d+)/i);if(ggU)return {circuito:"Greatgolf U"+ggU[1],local:campo||"Laguna"};
+    if(/greatgolf/i.test(n))return {circuito:"Greatgolf",local:campo||"Laguna"};
+    var aq=n.match(/Circuito\s+Aquapor\s*(?:-|–)?\s*(.+)$/i);if(aq)return {circuito:"Aquapor",local:(aq[1]||"").trim()};
+    var dt=n.match(/^(\d+)º\s+Torneio\s+(?:do\s+Circuito\s+)?Drive\s+Tour\s*(.*)$/i);
+    if(dt){var num=dt[1];var rest=dt[2].trim();var parts=rest.split(/\s*[-–]\s*/).map(function(s){return s.trim();}).filter(Boolean);
+      var regiao="",local="";if(parts.length>=2){regiao=parts[0];local=parts.slice(1).join(" · ");}else if(parts.length===1){local=parts[0];}
+      if(/terceira/i.test(regiao)||/terceira/i.test(rest)){regiao=regiao||"Açores";if(!local)local="Terceira";}
+      return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
+    var pja=n.match(/^PJA\s+(.+)$/i);if(pja)return {circuito:"PJA",local:pja[1].trim()};
+    return {circuito:n,local:campo||""};}
+  function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);
+    if(ev==="DT"){if(/Madeira/i.test(n))return "1_madeira_"+d;if(/\bSul\b|Laguna|Vila Sol|Penina|Quinta do Vale|Pinheiros Altos|Boavista/i.test(n))return "2_sul_"+d;
+      if(/\bTejo\b|Montado|Est[eê]v[aã]o|Lisbon|Belas|Jamor/i.test(n))return "3_tejo_"+d;if(/\bNorte\b|Estela|Vale Pis[aã]o|Ponte de Lima|Vidago/i.test(n))return "4_norte_"+d;
+      if(/Terceira|A[çc]ores/i.test(n))return "5_acores_"+d;return "6_dt_"+d;}
+    if(ev==="AQUAPOR")return "7_aq_"+d;if(ev&&ev.indexOf("GG")===0)return "8_gg_"+d;return "9_pja_"+d;}
+  function build(all,playersDB,members){
+    var seen=new Set(),list=[];
+    all.forEach(function(t){if(!isPJA(t))return;if((t.date||"").slice(0,4)!==YEAR)return;
+      var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?");if(seen.has(k))return;seen.add(k);list.push(t);});
+    list.sort(function(a,b){return tournSortKey(a).localeCompare(tournSortKey(b));});
     var aqs=list.filter(function(t){return classify(t)==="AQUAPOR";}).sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).slice(0,2);
     var aqAllow=new Set(aqs.map(function(t){return t.tcode+"_"+t.date;}));
-    var didDT={}; list.forEach(function(t){ if(classify(t)==="DT")(t.players||[]).forEach(function(p){ didDT[p.fedCode||("name:"+((p.name||"").toLowerCase().trim()))]=true; }); });
+    var didDT={};list.forEach(function(t){if(classify(t)==="DT")(t.players||[]).forEach(function(p){didDT[p.fedCode||("name:"+((p.name||"").toLowerCase().trim()))]=true;});});
+    var cols=[];
+    list.forEach(function(t){var ev=classify(t);if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return;
+      var tournKey=t.tcode+"_"+t.date;var nR=1;if(t.rounds&&t.rounds>1)nR=t.rounds;else{(t.players||[]).forEach(function(p){var rs=p.roundScores;if(rs&&rs.length>nR)nR=rs.length;});}
+      var hideR1=(ev==="GG_MAIN"&&nR===3);var rounds=[];
+      if(nR>1){for(var i=0;i<nR;i++){if(hideR1&&i===0)continue;rounds.push({roundKey:tournKey+"_r"+(i+1),label:"R"+(i+1)});}}else rounds=[{roundKey:tournKey+"_r1",label:""}];
+      var sn=shortTournName(t.name,t.campo);
+      cols.push({tournKey:tournKey,ccode:(t.ccode||""),tcode:String(t.tcode||""),circuito:sn.circuito,local:sn.local,date:t.date||"",mult:getMult(t),rounds:rounds,totalRondas:nR,type:ev});});
     var map={};
-    function rpar(rs,parTotal,n){ if(rs&&rs.pars&&rs.pars.length){ var s=rs.pars.reduce(function(a,b){return a+(typeof b==="number"?b:0);},0); if(s>0)return s; } return parTotal?parTotal/n:null; }
-    list.forEach(function(t){ var ev=classify(t); if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return; var mult=getMult(t);
-      (t.players||[]).forEach(function(p){ var fed=p.fedCode?String(p.fedCode):null; var key=fed||("name:"+((p.name||"").toLowerCase().trim()));
-        if(!map[key]){ var db=fed?playersDB[fed]:null; var dob=db?db.dob:null; var esc=(dob?escalaoAtDate(dob,YEAR):null)||(db&&db.escalao)||"";
-          map[key]={key:key,fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:esc,sex:(db&&db.sex)||"",rounds:[],total:0,voltas:0}; }
-        var row=map[key]; var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
-        function add(rn,g,par){ if(!par||!g||g>=900)return; var tp=g-par; if((ev==="GG_MAIN"&&rn===1)||aqSkip)return; row.rounds.push(pjaPts(tp,mult)); }
+    function rpar(rs,parTotal,n){if(rs&&rs.pars&&rs.pars.length){var s=rs.pars.reduce(function(a,b){return a+(typeof b==="number"?b:0);},0);if(s>0)return s;}return parTotal?parTotal/n:null;}
+    list.forEach(function(t){var ev=classify(t);if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return;var mult=getMult(t);var tournKey=t.tcode+"_"+t.date;
+      (t.players||[]).forEach(function(p){var fed=p.fedCode?String(p.fedCode):null;var key=fed||("name:"+((p.name||"").toLowerCase().trim()));
+        if(!map[key]){var db=fed?playersDB[fed]:null;var es=(db&&db.dob?escalaoAtDate(db.dob):null)||(db&&db.escalao)||"";
+          map[key]={fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:es,sex:(db&&db.sex)||"",results:{},rounds:[],total:0,voltas:0};}
+        var row=map[key];var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
+        function add(rn,g,par){if(!par||!g||g>=900)return;var tp=g-par;var rk=tournKey+"_r"+rn;var excl=(ev==="GG_MAIN"&&rn===1)||aqSkip;var pts=pjaPts(tp,mult);
+          row.results[rk]={toPar:tp,pts:pts,excluded:excl};if(!excl)row.rounds.push(pts);}
         var rs=p.roundScores;
-        if(rs&&rs.length>1){ rs.forEach(function(r,i){ add(i+1,r.gross,rpar(r,p.parTotal,rs.length)); }); }
-        else { var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar; var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;
-          if(tp==null||isNaN(tp)||g==null||isNaN(g))return; add(1,g,g-tp); } }); });
-    Object.keys(map).forEach(function(k){ var row=map[k]; var s=row.rounds.slice().sort(function(a,b){return b-a;}); row.total=s.slice(0,14).reduce(function(a,b){return a+b;},0); row.voltas=row.rounds.length; });
+        if(rs&&rs.length>1){rs.forEach(function(r,i){add(i+1,r.gross,rpar(r,p.parTotal,rs.length));});}
+        else{var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar;var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;if(tp==null||isNaN(tp)||g==null||isNaN(g))return;add(1,g,g-tp);}});});
+    Object.keys(map).forEach(function(k){var r=map[k];var s=r.rounds.slice().sort(function(a,b){return b-a;});r.total=s.slice(0,14).reduce(function(a,b){return a+b;},0);r.voltas=r.rounds.length;});
     var memberSet=new Set((members||[]).map(String));
-    memberSet.forEach(function(fed){ if(map[fed])return; var db=playersDB[fed]; if(!db)return; var esc=(db.dob?escalaoAtDate(db.dob,YEAR):null)||db.escalao||"";
-      map[fed]={key:fed,fed:fed,name:db.name||fed,club:clubShort(db),escalao:esc,sex:db.sex||"",rounds:[],total:0,voltas:0}; });
-    var rows=Object.keys(map).map(function(k){return map[k];});
-    rows=rows.filter(function(r){ if(!r.fed||!memberSet.has(r.fed))return false; var db=playersDB[r.fed]; var tags=(db&&db.tags)||[]; return Array.isArray(tags)&&tags.indexOf("PJA")!==-1; });
+    memberSet.forEach(function(fed){if(map[fed])return;var db=playersDB[fed];if(!db)return;var es=(db.dob?escalaoAtDate(db.dob):null)||db.escalao||"";
+      map[fed]={fed:fed,name:db.name||fed,club:clubShort(db),escalao:es,sex:db.sex||"",results:{},rounds:[],total:0,voltas:0};});
+    var rows=Object.keys(map).map(function(k){return map[k];}).filter(function(r){if(!r.fed||!memberSet.has(r.fed))return false;var db=playersDB[r.fed];var tags=(db&&db.tags)||[];return Array.isArray(tags)&&tags.indexOf("PJA")!==-1;});
     rows.sort(function(a,b){return b.total-a.total||a.name.localeCompare(b.name,"pt");});
-    return rows;
+    var used={};rows.forEach(function(r){Object.keys(r.results).forEach(function(rk){used[rk]=true;});});
+    cols=cols.filter(function(c){return c.rounds.some(function(rd){return used[rd.roundKey];});});
+    return {cols:cols,rows:rows};
   }
-  function pjaTournaments(all){ var seen=new Set(), out=[];
-    all.forEach(function(t){ if(!isPJA(t))return; if((t.date||"").slice(0,4)!==YEAR)return; var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?"); if(seen.has(k))return; seen.add(k);
-      out.push({ccode:t.ccode||"",tcode:String(t.tcode||""),name:t.name||"",date:t.date||"",type:classify(t),mult:getMult(t)}); });
-    var aq=out.filter(function(x){return x.type==="AQUAPOR";}).sort(function(a,b){return a.date.localeCompare(b.date);});
-    aq.forEach(function(x,i){x.counts=i<2;}); out.forEach(function(x){if(x.counts===undefined)x.counts=true;});
-    out.sort(function(a,b){return a.date.localeCompare(b.date);}); return out; }
-  global.PJAEngine={buildRanking:buildRanking,pjaTournaments:pjaTournaments,escalaoAtDate:escalaoAtDate,classify:classify,isPJA:isPJA};
+  global.PJAEngine2={build:build};
 })(window);
 
-/* ===== App: fetch + render ===== */
+/* ===== App ===== */
 (function(){
   var MANUEL_FED="52884";
-  function fpgUrl(cc,tc){ var t=String(tc||"").split("+")[0]; return "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club="+encodeURIComponent(cc)+"&tourn="+encodeURIComponent(t)+"&ack=8428ACK987"; }
-  function J(url){ return fetch(url).then(function(r){ if(!r.ok)return null; var ct=r.headers.get("content-type")||""; if(!ct.includes("json"))return null; return r.json(); }).catch(function(){return null;}); }
-  function tourns(d){ return d?(d.tournaments||[]):[]; }
+  function fpgUrl(cc,tc){var t=String(tc||"").split("+")[0];return "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club="+encodeURIComponent(cc)+"&tourn="+encodeURIComponent(t)+"&ack=8428ACK987";}
+  function J(url){return fetch(url).then(function(r){if(!r.ok)return null;var ct=r.headers.get("content-type")||"";if(!ct.includes("json"))return null;return r.json();}).catch(function(){return null;});}
+  function tourns(d){return d?(d.tournaments||[]):[];}
   var MONTHS=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-  function shortDate(iso){ if(!iso||iso.length<10)return ""; return iso.slice(8,10)+" "+MONTHS[parseInt(iso.slice(5,7))-1]; }
+  function shortDate(iso){if(!iso||iso.length<10)return "";return iso.slice(8,10)+" "+MONTHS[parseInt(iso.slice(5,7))-1];}
   var TYPE_LABEL={DT:"Drive Tour",AQUAPOR:"Aquapor",GG_MAIN:"Greatgolf",GG_U14:"Greatgolf U14",GG_U12:"Greatgolf U12",PJA_EXCL:"PJA"};
+  function fmt(n){return n%1===0?String(n):n.toFixed(1);}
+  function fmtTP(tp){return tp===0?"E":(tp>0?"+"+tp:String(tp));}
+  function tpColor(tp){if(tp<0)return "var(--under)";if(tp===0)return "var(--txt)";return "var(--over)";}
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function escBucket(e){if(e==="Sub-18"||e==="Sub-21+"||e==="Sénior")return "Sub-18+";return e||"—";}
 
   function loadAll(){
-    var now=new Date(), y=2026, curM=(now.getFullYear()>y)?12:now.getMonth()+1;
+    var now=new Date(),y=2026,curM=(now.getFullYear()>y)?12:now.getMonth()+1;
     var urls=[];
-    for(var i=0;i<=12;i++) urls.push("/data/pull-torneios"+String(i).padStart(3,"0")+".json");
-    for(var m=1;m<=curM;m++){ var mm=String(m).padStart(2,"0"); urls.push("/data/drive-data-"+y+"-"+mm+".json"); urls.push("/data/aquapor-data-"+y+"-"+mm+".json"); }
+    for(var i=0;i<=12;i++)urls.push("/data/pull-torneios"+String(i).padStart(3,"0")+".json");
+    for(var m=1;m<=curM;m++){var mm=String(m).padStart(2,"0");urls.push("/data/drive-data-"+y+"-"+mm+".json");urls.push("/data/aquapor-data-"+y+"-"+mm+".json");}
     urls.push("/data/jovens_2026.json");
-    return Promise.all([ Promise.all(urls.map(J)), J("/data/players.json"), J("/data/pja-members.json") ]);
+    return Promise.all([Promise.all(urls.map(J)),J("/data/players.json"),J("/data/pja-members.json")]);
   }
 
-  var state={rows:[],tabs:[],active:"Geral",sortKey:"total",sortDir:"desc"};
-  function escBucket(esc){ if(esc==="Sub-18"||esc==="Sub-21+"||esc==="Sénior")return "Sub-18+"; return esc||"—"; }
-  function fmt(n){ return n%1===0?String(n):n.toFixed(1); }
-  function escapeHtml(s){ return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];}); }
+  var DATA={cols:[],rows:[]};
+  var state={active:"Geral",sortKey:"total",sortDir:"desc",tabs:["Geral"]};
+  function activeRows(){return state.active==="Geral"?DATA.rows:DATA.rows.filter(function(r){return escBucket(r.escalao)===state.active;});}
 
-  function render(){
-    var tabsEl=document.getElementById("tabs"); tabsEl.innerHTML="";
-    state.tabs.forEach(function(tb){ var b=document.createElement("button"); b.className="tab"+(tb===state.active?" active":""); b.textContent=tb; b.onclick=function(){state.active=tb;render();}; tabsEl.appendChild(b); });
-    var rows = state.active==="Geral" ? state.rows : state.rows.filter(function(r){return escBucket(r.escalao)===state.active;});
-    var sk=state.sortKey, dir=state.sortDir==="asc"?1:-1;
-    rows=rows.slice().sort(function(a,b){
+  function renderTabs(){
+    var el=document.getElementById("tabs");el.innerHTML="";
+    state.tabs.forEach(function(tb){var b=document.createElement("button");b.className="tab"+(tb===state.active?" active":"");b.textContent=tb;b.onclick=function(){state.active=tb;renderAll();};el.appendChild(b);});
+  }
+  function renderSimple(){
+    var rows=activeRows().slice();
+    var sk=state.sortKey,dir=state.sortDir==="asc"?1:-1;
+    rows.sort(function(a,b){
       if(sk==="name")return dir*a.name.localeCompare(b.name,"pt");
       if(sk==="club")return dir*(a.club||"").localeCompare(b.club||"","pt");
       if(sk==="escalao")return dir*(a.escalao||"").localeCompare(b.escalao||"","pt");
       if(sk==="voltas")return dir*(a.voltas-b.voltas);
-      return dir*(a.total-b.total)|| a.name.localeCompare(b.name,"pt");
-    });
-    function arrow(k){ return sk===k?'<span class="ar">'+(state.sortDir==="asc"?"▲":"▼")+'</span>':'<span class="ar">↕</span>'; }
-    function th(k,lbl,cls){ return '<th class="'+(cls||"")+'" data-k="'+k+'">'+lbl+" "+arrow(k)+'</th>'; }
-    var html='<div class="card"><h2>'+(state.active==="Geral"?"Classificação geral":"Escalão "+state.active)+' · '+rows.length+' jogadores</h2>'+
-      '<table><thead><tr><th class="c">#</th>'+th("name","Jogador")+th("escalao","Esc.","c")+th("club","Clube")+th("voltas","Voltas","c")+th("total","Pts","r")+'</tr></thead><tbody>';
-    rows.forEach(function(r,i){
-      html+='<tr'+(r.fed===MANUEL_FED?' class="manuel"':'')+'><td class="pos">'+(i+1)+'</td>'+
-        '<td>'+escapeHtml(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td>'+
-        '<td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td>'+
-        '<td>'+escapeHtml(r.club||"—")+'</td><td class="vlt">'+r.voltas+'</td><td class="pts">'+fmt(r.total)+'</td></tr>';
-    });
-    html+='</tbody></table></div>';
-    document.getElementById("content").innerHTML=html;
-    Array.prototype.forEach.call(document.querySelectorAll("th[data-k]"),function(th){
-      th.onclick=function(){ var k=th.getAttribute("data-k"); if(state.sortKey===k)state.sortDir=state.sortDir==="asc"?"desc":"asc"; else {state.sortKey=k;state.sortDir=(k==="total"||k==="voltas")?"desc":"asc";} render(); };
-    });
+      return dir*(a.total-b.total)||a.name.localeCompare(b.name,"pt");});
+    function ar(k){return sk===k?'<span class="ar">'+(state.sortDir==="asc"?"▲":"▼")+'</span>':'<span class="ar">↕</span>';}
+    function th(k,l,c){return '<th class="'+(c||"")+'" data-k="'+k+'">'+l+" "+ar(k)+'</th>';}
+    var h='<div class="card"><h2>'+(state.active==="Geral"?"Classificação geral":"Escalão "+state.active)+' · '+rows.length+' jogadores</h2><table><thead><tr><th class="c">#</th>'+th("name","Jogador")+th("escalao","Esc.","c")+th("club","Clube")+th("voltas","Voltas","c")+th("total","Pts","r")+'</tr></thead><tbody>';
+    rows.forEach(function(r,i){h+='<tr'+(r.fed===MANUEL_FED?' class="manuel"':'')+'><td class="pos">'+(i+1)+'</td><td>'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td><td class="vlt">'+r.voltas+'</td><td class="pts">'+fmt(r.total)+'</td></tr>';});
+    h+='</tbody></table></div>';
+    document.getElementById("content").innerHTML=h;
+    Array.prototype.forEach.call(document.querySelectorAll("#content th[data-k]"),function(t){t.onclick=function(){var k=t.getAttribute("data-k");if(state.sortKey===k)state.sortDir=state.sortDir==="asc"?"desc":"asc";else{state.sortKey=k;state.sortDir=(k==="total"||k==="voltas")?"desc":"asc";}renderSimple();};});
   }
-
-  function renderLegend(ts){
-    var ul=document.getElementById("legend-list"); ul.innerHTML="";
-    ts.forEach(function(t){ var li=document.createElement("li");
-      var meta=shortDate(t.date)+" · "+(TYPE_LABEL[t.type]||t.type)+(t.mult!==1?' <span class="badge">×'+t.mult+'</span>':"")+(t.counts===false?' <span class="x">não conta</span>':"");
-      li.innerHTML='<a href="'+fpgUrl(t.ccode,t.tcode)+'" target="_blank" rel="noopener" class="t-name">'+escapeHtml(t.name)+'</a><div class="t-meta">'+meta+'</div>';
-      ul.appendChild(li); });
+  function renderDetail(){
+    var cols=DATA.cols,rows=activeRows();
+    if(!cols.length){document.getElementById("detail").innerHTML="";return;}
+    document.getElementById("det-title").style.display="block";
+    var h='<div class="detail-wrap"><table class="detail"><thead>';
+    h+='<tr><th class="sticky0">&nbsp;</th><th class="sticky1">Jogador</th><th>Esc.</th><th>Clube</th>';
+    cols.forEach(function(c){var span=c.rounds.length*2;
+      var inner='<span class="c1">'+esc(c.circuito)+(c.mult!==1?' <span class="badge">×'+c.mult+'</span>':'')+'</span><span class="c2">'+esc(c.local||"")+'</span><span class="c3">'+shortDate(c.date)+'</span>';
+      h+='<th class="grp" colspan="'+span+'"><a href="'+fpgUrl(c.ccode,c.tcode)+'" target="_blank" rel="noopener">'+inner+'</a></th>';});
+    h+='<th class="grp" colspan="2">Ranking</th></tr>';
+    h+='<tr><th class="sticky0">#</th><th class="sticky1">&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>';
+    cols.forEach(function(c){c.rounds.forEach(function(rd){h+='<th class="c">'+(rd.label||"±Par")+'</th><th class="c">Pts</th>';});});
+    h+='<th class="c">Vlt</th><th class="c">Total</th></tr></thead><tbody>';
+    rows.forEach(function(r,i){var mc=r.fed===MANUEL_FED?"manuel":"";
+      h+='<tr class="'+mc+'"><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td>';
+      cols.forEach(function(c){c.rounds.forEach(function(rd){var res=r.results[rd.roundKey];
+        if(!res){h+='<td class="tp"></td><td class="pt"></td>';}
+        else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+'">'+fmt(res.pts)+'</td>';}});});
+      h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
+    h+='</tbody></table></div>';
+    document.getElementById("detail").innerHTML=h;
+  }
+  function renderLegend(){
+    var ul=document.getElementById("legend-list");ul.innerHTML="";
+    DATA.cols.forEach(function(c){var li=document.createElement("li");
+      var meta=shortDate(c.date)+" · "+(TYPE_LABEL[c.type]||c.type)+(c.mult!==1?' <span class="badge">×'+c.mult+'</span>':"");
+      li.innerHTML='<a href="'+fpgUrl(c.ccode,c.tcode)+'" target="_blank" rel="noopener" class="t-name">'+esc(c.circuito+" — "+(c.local||""))+'</a><div class="t-meta">'+meta+'</div>';
+      ul.appendChild(li);});
     document.getElementById("legend").style.display="block";
   }
+  function renderAll(){renderTabs();renderSimple();renderDetail();}
 
   loadAll().then(function(res){
-    var files=res[0], players=res[1], membersDoc=res[2];
-    if(!players||!membersDoc){ document.getElementById("content").innerHTML='<div class="status">Não foi possível carregar os dados. Verifica a ligação e recarrega.</div>'; return; }
-    var all=[]; files.forEach(function(d){ if(d) all=all.concat(tourns(d)); });
-    var playersDB={}; Object.keys(players).forEach(function(f){ playersDB[f]=players[f]; });
-    var members=membersDoc["2026"]||[];
-    state.rows=PJAEngine.buildRanking(all,playersDB,members);
-    var present={}; state.rows.forEach(function(r){present[escBucket(r.escalao)]=true;});
+    var files=res[0],players=res[1],membersDoc=res[2];
+    if(!players||!membersDoc){document.getElementById("content").innerHTML='<div class="status">Não foi possível carregar os dados. Verifica a ligação e recarrega.</div>';return;}
+    var all=[];files.forEach(function(d){if(d)all=all.concat(tourns(d));});
+    var db={};Object.keys(players).forEach(function(f){db[f]=players[f];});
+    DATA=PJAEngine2.build(all,db,membersDoc["2026"]||[]);
+    var present={};DATA.rows.forEach(function(r){present[escBucket(r.escalao)]=true;});
     state.tabs=["Geral"].concat(["Sub-12","Sub-14","Sub-16","Sub-18+"].filter(function(e){return present[e];}));
-    render();
-    renderLegend(PJAEngine.pjaTournaments(all));
+    renderAll();renderLegend();
     document.getElementById("upd").textContent="Última atualização da página: "+new Date().toLocaleString("pt-PT");
   });
 })();
