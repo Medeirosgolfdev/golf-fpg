@@ -6,9 +6,9 @@
 <title>Ranking PJA Tour 2026</title>
 <style>
   :root{
-    --bg:#0f1720; --card:#162230; --line:#243243; --txt:#e8eef5; --muted:#8aa0b6;
-    --accent:#3fb950; --accent2:#d29922; --head:#1c2a3a; --rowalt:#16242f;
-    --manuel:#1e3a2a; --pts:#d29922; --link:#58a6ff; --under:#f87171; --over:#7fa6c9;
+    --bg:#ffffff; --card:#ffffff; --line:#e2e8f0; --txt:#1a2230; --muted:#64748b;
+    --accent:#16a34a; --accent2:#b45309; --head:#f1f5f9; --rowalt:#f8fafc;
+    --manuel:#dcfce7; --pts:#b45309; --link:#2563eb; --under:#dc2626; --over:#2563eb;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
@@ -34,7 +34,7 @@
   .pts{color:var(--pts);font-weight:800;text-align:right}
   .vlt{text-align:center;color:var(--muted)}
   .esc{font-size:10.5px;color:var(--muted)}
-  .fem{color:#f0a3c0}
+  .fem{color:#db2777}
   .leg a{color:var(--link);text-decoration:none}
   .leg a:hover{text-decoration:underline}
   .leg .t-name{font-size:12.5px}
@@ -213,7 +213,7 @@
     function ar(k){return sk===k?'<span class="ar">'+(state.sortDir==="asc"?"▲":"▼")+'</span>':'<span class="ar">↕</span>';}
     function th(k,l,c){return '<th class="'+(c||"")+'" data-k="'+k+'">'+l+" "+ar(k)+'</th>';}
     var h='<div class="card"><h2>'+(state.active==="Geral"?"Classificação geral":"Escalão "+state.active)+' · '+rows.length+' jogadores</h2><table><thead><tr><th class="c">#</th>'+th("name","Jogador")+th("escalao","Esc.","c")+th("club","Clube")+th("voltas","Voltas","c")+th("total","Pts","r")+'</tr></thead><tbody>';
-    rows.forEach(function(r,i){h+='<tr'+(r.fed===MANUEL_FED?' class="manuel"':'')+'><td class="pos">'+(i+1)+'</td><td>'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td><td class="vlt">'+r.voltas+'</td><td class="pts">'+fmt(r.total)+'</td></tr>';});
+    rows.forEach(function(r,i){h+='<tr><td class="pos">'+(i+1)+'</td><td>'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td><td class="vlt">'+r.voltas+'</td><td class="pts">'+fmt(r.total)+'</td></tr>';});
     h+='</tbody></table></div>';
     document.getElementById("content").innerHTML=h;
     Array.prototype.forEach.call(document.querySelectorAll("#content th[data-k]"),function(t){t.onclick=function(){var k=t.getAttribute("data-k");if(state.sortKey===k)state.sortDir=state.sortDir==="asc"?"desc":"asc";else{state.sortKey=k;state.sortDir=(k==="total"||k==="voltas")?"desc":"asc";}renderSimple();};});
@@ -231,8 +231,8 @@
     h+='<tr><th class="sticky0">#</th><th class="sticky1">&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>';
     cols.forEach(function(c){c.rounds.forEach(function(rd){h+='<th class="c">'+(rd.label||"±Par")+'</th><th class="c">Pts</th>';});});
     h+='<th class="c">Vlt</th><th class="c">Total</th></tr></thead><tbody>';
-    rows.forEach(function(r,i){var mc=r.fed===MANUEL_FED?"manuel":"";
-      h+='<tr class="'+mc+'"><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td>';
+    rows.forEach(function(r,i){
+      h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td>'+esc(r.club||"—")+'</td>';
       cols.forEach(function(c){c.rounds.forEach(function(rd){var res=r.results[rd.roundKey];
         if(!res){h+='<td class="tp"></td><td class="pt"></td>';}
         else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+'">'+fmt(res.pts)+'</td>';}});});
