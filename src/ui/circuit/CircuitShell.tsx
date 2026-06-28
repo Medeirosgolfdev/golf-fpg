@@ -522,6 +522,15 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     return visible.find(e => e.hasManuel) ?? visible[0] ?? null;
   }, [wantId, visible, entries]);
 
+  // Deep-link automático do torneio seleccionado por default. Ao aterrar na página
+  // base (ex: /rfeg sem id), o `cur` cai no default mas o URL ficava em /rfeg — sem
+  // forma de partilhar/bookmark o torneio nem de saber qual está aberto. Reflectimos
+  // o default no URL (/rfeg/{source}/{id}). O guard `selectedId == null` garante que
+  // só dispara uma vez (depois do navigate, selectedId passa a estar definido).
+  useEffect(() => {
+    if (selectedId == null && !infoView && cur && onSelectEntry) onSelectEntry(cur);
+  }, [selectedId, infoView, cur, onSelectEntry]);
+
   const selectEntry = (e: CircuitEntry) => {
     setLocalId(e.id);
     setInfo(null); // sair de qualquer vista informativa ao escolher torneio
