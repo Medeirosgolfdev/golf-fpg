@@ -56,6 +56,14 @@ export interface IntlTournViewProps {
    * Vazio/ausente = comportamento original (só rondas).
    */
   leadingTabs?: { key: string; label: string; content: React.ReactNode }[];
+  /**
+   * Draws POR RONDA, intercalados com as rondas de resultados na MESMA barra:
+   *   Inscritos → Draw R1 → R1 → Draw R2 → R2 → … → Resumo → 📋 Scorecards
+   * Cada "Draw R{n}" é inserido ANTES da ronda n. Pode incluir rondas ainda não
+   * jogadas (sem aba de resultado correspondente — ex: Draw R3 só com pairings).
+   * Ausente = comportamento original. Ignorado em torneios com Pré-Cut.
+   */
+  roundDraws?: { round: number; render: () => React.ReactNode }[];
 }
 
 export function IntlTournView({
@@ -71,10 +79,10 @@ export function IntlTournView({
   renderAccSection,
   accShowCols,
   leadingTabs,
+  roundDraws,
 }: IntlTournViewProps) {
   const nR = tournament.rounds || 1;
   const isMulti = nR > 1;
-  const nLeading = leadingTabs?.length ?? 0;
 
   const nameDecoratorFn: ScorecardOptions["nameDecorator"] = useCallback(
     (name: string, content: React.ReactNode) => (
@@ -175,86 +183,117 @@ export function IntlTournView({
     return baseLabels;
   }, [isMulti, expanded, roundLabels, cutAfterRound, tournament]);
 
-  // Barra única: [leadingTabs…, rondas…]. Estilo FPG (Inscritos → Draw → R1 → …).
-  const combinedLabels = useMemo(
-    () => [...(leadingTabs?.map(t => t.label) ?? []), ...roundTabLabels],
-    [leadingTabs, roundTabLabels],
-  );
-  // Mostrar barra se há >1 tab no total (rondas multi OU leadingTabs presentes).
-  const showTabBar = combinedLabels.length > 1;
+  // ── Barra de abas: descritores ordenados ─────────────────────────────
+  // Default: [leadingTabs…, rondas…] (Inscritos → Draw → R1 → … → Resumo).
+  // Com `roundDraws` (e sem Pré-Cut): intercala "Draw R{n}" ANTES de cada ronda n
+  //   Inscritos → Draw R1 → R1 → Draw R2 → R2 → … → Resumo → 📋 Scorecards
+  // incluindo rondas de draw ainda sem resultado (ex: Draw R3 só com pairings).
+  type TabDesc =
+    | { kind: "leading"; label: string; li: number }
+    | { kind: "draw"; label: string; render: () => React.ReactNode }
+    | { kind: "round"; label: string; rtab: number };
+  const { tabDescs, firstRoundIdx } = useMemo(() => {
+    const descs: TabDesc[] = [];
+    (leadingTabs ?? []).forEach((t, li) => descs.push({ kind: "leading", label: t.label, li }));
+    const draws = roundDraws ?? [];
+    if (draws.length) {
+      // Intercalar "Draw R{n}" ANTES de cada ronda de resultado R{n}, percorrendo
+      // roundTabLabels e identificando o nº de ronda de cada aba (a mesma lógica
+      // de mapeamento que o render usa). Tabs não-ronda (Pré-Cut, Resumo,
+      // Scorecards) passam intactas — o Pré-Cut fica no sítio dele (entre R3 e R4).
+      const drawByRound = new Map(draws.map(d => [d.round, d.render] as const));
+      const used = new Set<number>();
+      for (let rtab = 0; rtab < roundTabLabels.length; rtab++) {
+        const isPreCut = cutAfterRound != null && rtab === cutAfterRound;
+        const expIdx = (cutAfterRound != null && rtab > cutAfterRound) ? rtab - 1 : rtab;
+        const isCombined = roundTabLabels[rtab] === COMBINED_TAB;
+        const isTotal = !!(expanded[expIdx] as { _isTotal?: boolean } | undefined)?._isTotal;
+        if (!isPreCut && !isCombined && !isTotal) {
+          const roundNum = expIdx + 1; // expanded[expIdx] = ronda expIdx+1
+          const dr = drawByRound.get(roundNum);
+          if (dr) { descs.push({ kind: "draw", label: `Draw R${roundNum}`, render: dr }); used.add(roundNum); }
+        }
+        descs.push({ kind: "round", label: roundTabLabels[rtab], rtab });
+      }
+      // Draws de rondas SEM aba de resultado (ex: Draw R3 futura, só pairings) →
+      // inseridos por ordem antes do Resumo, mantendo a sequência de rondas.
+      const extra = draws.filter(d => !used.has(d.round)).sort((a, b) => a.round - b.round);
+      if (extra.length) {
+        let at = descs.findIndex(d => d.kind === "round" && (d.label === "Resumo" || d.label === COMBINED_TAB));
+        if (at < 0) at = descs.length;
+        descs.splice(at, 0, ...extra.map(d => ({ kind: "draw" as const, label: `Draw R${d.round}`, render: d.render })));
+      }
+    } else {
+      roundTabLabels.forEach((lbl, i) => descs.push({ kind: "round", label: lbl, rtab: i }));
+    }
+    const fri = descs.findIndex(d => d.kind === "round");
+    return { tabDescs: descs, firstRoundIdx: fri < 0 ? 0 : fri };
+  }, [leadingTabs, roundDraws, roundTabLabels, isMulti, cutAfterRound, expanded]);
 
-  // Início: primeira tab de ronda (índice nLeading) — abre nos resultados, como a
-  // FPG quando já há resultados; as leadingTabs (Inscritos/Draw) ficam à esquerda.
-  const [tab, setTab] = useState(() => nLeading);
-  const safeTab = Math.min(Math.max(tab, 0), Math.max(0, combinedLabels.length - 1));
+  // Mostrar barra se há >1 tab no total.
+  const showTabBar = tabDescs.length > 1;
 
-  // Tab activa é uma leadingTab?
-  const leadingActive = safeTab < nLeading;
-  // Índice equivalente na lógica de rondas (descontando as leadingTabs).
-  const rtab = Math.max(0, safeTab - nLeading);
+  // Início: primeira aba de RONDA — abre nos resultados, como a FPG.
+  const [tab, setTab] = useState(firstRoundIdx);
+  const safeTab = Math.min(Math.max(tab, 0), Math.max(0, tabDescs.length - 1));
+  const active = tabDescs[safeTab] ?? tabDescs[0];
 
-  // Mapear `rtab` para entry de expanded (considerando tab Pre-Cut inserida).
-  // Se rtab == cutAfterRound (a tab Pre-Cut), curT = preCutTourn.
-  // Se rtab > cutAfterRound, descontar 1 ao indice antes de mapear a expanded.
-  const isPreCutTab = isMulti && cutAfterRound != null && rtab === cutAfterRound;
-  const expIdx = (cutAfterRound != null && rtab > cutAfterRound) ? rtab - 1 : rtab;
-  const curT = isMulti
-    ? (isPreCutTab && preCutTourn ? preCutTourn : expanded[Math.min(expIdx, expanded.length - 1)])
-    : tournament;
-  const isAcc      = !leadingActive && isMulti && !!(curT as any)?._isTotal;
-  const isCombined = !leadingActive && isMulti && roundTabLabels[rtab] === COMBINED_TAB;
-
-  // Na tab Pré-Cut o "torneio" só tem cutAfterRound rondas — o cabeçalho (Par,
-  // pílula de rondas, média) tem de usar cutAfterRound e não nR (total do torneio),
-  // senão mostra "Par 207 · 3R" e médias a −56 numa vista de 2 rondas.
-  const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
-
-  // Build the leaderboard elements for render-section callbacks
-  const accLB = (
-    <AccumulatedLB
-      tournament={curT} nRounds={accNRounds}
-      escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
-      showCols={accShowCols ?? { esc: false, fed: false, tee: false }}
-      extraColumns={evoCols}
-      renderName={renderNameFn}
-    />
-  );
-
-  const roundLB = (
-    <ScorecardLB
-      tournament={curT}
-      escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
-      siLabel={siLabel}
-      options={opts}
-    />
-  );
+  // Conteúdo de uma aba de RONDA (índice rtab em roundTabLabels) — reusa a lógica
+  // de Pré-Cut / Resumo (acumulado) / Scorecards (combinado).
+  const renderRoundContent = (rtab: number): React.ReactNode => {
+    const isPreCutTab = isMulti && cutAfterRound != null && rtab === cutAfterRound;
+    const expIdx = (cutAfterRound != null && rtab > cutAfterRound) ? rtab - 1 : rtab;
+    const curT = isMulti
+      ? (isPreCutTab && preCutTourn ? preCutTourn : expanded[Math.min(expIdx, expanded.length - 1)])
+      : tournament;
+    const isAcc = isMulti && !!(curT as any)?._isTotal;
+    const isCombined = isMulti && roundTabLabels[rtab] === COMBINED_TAB;
+    // Na tab Pré-Cut o "torneio" só tem cutAfterRound rondas — o cabeçalho usa
+    // cutAfterRound e não nR (senão mostra "Par 207 · 3R" numa vista de 2 rondas).
+    const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
+    if (isCombined) {
+      return <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />;
+    }
+    if (isAcc) {
+      const accLB = (
+        <AccumulatedLB
+          tournament={curT} nRounds={accNRounds}
+          escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
+          showCols={accShowCols ?? { esc: false, fed: false, tee: false }}
+          extraColumns={evoCols}
+          renderName={renderNameFn}
+        />
+      );
+      return renderAccSection ? renderAccSection(accLB) : <>{accHeader}{accLB}{accExtra}</>;
+    }
+    const roundLB = (
+      <ScorecardLB
+        tournament={curT}
+        escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
+        siLabel={siLabel}
+        options={opts}
+      />
+    );
+    return renderRoundSection ? renderRoundSection(roundLB, rtab) : <>{roundLB}{roundExtra?.(rtab)}</>;
+  };
 
   return (
     <div>
-      {/* Tab bar única (leadingTabs + rondas) */}
+      {/* Tab bar única (leadingTabs + draws por ronda + rondas) */}
       {showTabBar && (
         <div className="tab-bar">
-          {combinedLabels.map((label, i) => (
-            <button key={i} className={`tab-under${safeTab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
+          {tabDescs.map((d, i) => (
+            <button key={i} className={`tab-under${safeTab === i ? " active" : ""}`} onClick={() => setTab(i)}>{d.label}</button>
           ))}
         </div>
       )}
 
       {/* Content */}
-      {leadingActive
-        ? leadingTabs![safeTab].content
-        : isCombined
-          ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />
-          : isAcc
-            ? (renderAccSection
-                ? renderAccSection(accLB)
-                : <>{accHeader}{accLB}{accExtra}</>
-              )
-            : (renderRoundSection
-                ? renderRoundSection(roundLB, rtab)
-                : <>{roundLB}{roundExtra?.(rtab)}</>
-              )
-      }
+      {active.kind === "leading"
+        ? leadingTabs![active.li].content
+        : active.kind === "draw"
+          ? active.render()
+          : renderRoundContent(active.rtab)}
     </div>
   );
 }

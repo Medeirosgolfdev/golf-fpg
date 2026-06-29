@@ -2175,31 +2175,56 @@ function DriveContent() {
                         <span className="muted fs-10" style={{ marginLeft: 4 }}>({adm.players.length})</span>
                       </button>
                     )}
-                    {drawRounds.map(r => (
-                      <button key={`draw:${r}`}
-                        className={"tab-under" + (specialTab === `draw:${r}` ? " active" : "")}
-                        onClick={() => setSpecialTab(`draw:${r}`)}>
-                        🎯 Draw R{r}
-                      </button>
-                    ))}
-                    {selectedGroup.entries.map((entry, ri) => {
-                      const lbl = selectedGroup.isEvent
-                        ? (entry.escalao || ("E" + (ri + 1)))
-                        : (entry._roundLabel || ("R" + (ri + 1)));
-                      const isResumo = lbl === "Resumo";
-                      const activeCount = entry.players.filter(p => !isDNS(p)).length;
-                      const isActive = specialTab === null && roundIdx === ri;
-                      const nAces = tournamentAces(entry.players).length;
-                      return (
-                        <button key={entry.tcode + "_" + ri}
-                          className={"tab-under" + (isActive ? " active" : "")}
-                          onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}>
-                          {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
-                          <span className="muted fs-10" style={{ marginLeft: 4 }}>({activeCount} jog)</span>
-                          {nAces > 0 && <span title={`${nAces} hole-in-one`}> 🕳️</span>}
-                        </button>
-                      );
-                    })}
+                    {(() => {
+                      // Draw R{n} INTERCALADO antes de cada ronda R{n} (= FPG/RFEG/Major),
+                      // em vez de todos os draws agrupados no início. O DrawTab rico já era
+                      // usado; muda só a ORDEM das abas para ficar igual às outras páginas.
+                      const drawnInline = new Set<number>();
+                      const out: React.ReactNode[] = [];
+                      selectedGroup.entries.forEach((entry, ri) => {
+                        const lbl = selectedGroup.isEvent
+                          ? (entry.escalao || ("E" + (ri + 1)))
+                          : (entry._roundLabel || ("R" + (ri + 1)));
+                        const isResumo = lbl === "Resumo";
+                        const rnMatch = /^R(\d+)$/i.exec(entry._roundLabel || "");
+                        const rn = rnMatch ? parseInt(rnMatch[1], 10) : null;
+                        if (!selectedGroup.isEvent && rn != null && drawRounds.includes(rn)) {
+                          drawnInline.add(rn);
+                          out.push(
+                            <button key={`draw:${rn}`}
+                              className={"tab-under" + (specialTab === `draw:${rn}` ? " active" : "")}
+                              onClick={() => setSpecialTab(`draw:${rn}`)}>
+                              🎯 Draw R{rn}
+                            </button>
+                          );
+                        }
+                        const activeCount = entry.players.filter(p => !isDNS(p)).length;
+                        const isActive = specialTab === null && roundIdx === ri;
+                        const nAces = tournamentAces(entry.players).length;
+                        out.push(
+                          <button key={entry.tcode + "_" + ri}
+                            className={"tab-under" + (isActive ? " active" : "")}
+                            onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}>
+                            {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
+                            <span className="muted fs-10" style={{ marginLeft: 4 }}>({activeCount} jog)</span>
+                            {nAces > 0 && <span title={`${nAces} hole-in-one`}> 🕳️</span>}
+                          </button>
+                        );
+                      });
+                      // Draws sem ronda de resultado correspondente (ex: futura, ou eventos
+                      // por escalão) → à frente das rondas, para não desaparecerem.
+                      const leftover = drawRounds.filter(r => !drawnInline.has(r));
+                      if (leftover.length) {
+                        out.unshift(...leftover.map(r => (
+                          <button key={`draw:${r}`}
+                            className={"tab-under" + (specialTab === `draw:${r}` ? " active" : "")}
+                            onClick={() => setSpecialTab(`draw:${r}`)}>
+                            🎯 Draw R{r}
+                          </button>
+                        )));
+                      }
+                      return out;
+                    })()}
                     {/* Tab Scorecards combinados — só para multi-ronda */}
                     {selectedGroup.isMulti && selectedGroup.entries.some(e => e._roundLabel === "Resumo") && (
                       <button

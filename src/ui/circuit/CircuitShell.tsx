@@ -435,7 +435,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const [fSource, setFSource] = useState("all");
   const [fLiga, setFLiga] = useState("all");
   const [fIntl, setFIntl] = useState(false);
-  const [toggles, setToggles] = useState<Set<CircuitToggle>>(new Set());
+  const [toggles, setToggles] = useState<Set<CircuitToggle>>(
+    () => new Set(config.filters?.defaultToggles ?? []),
+  );
   /** Vista informativa activa (ex: Categorías/Federaciones) — null = detalhe normal.
    *  Controlada por URL quando a página passa `onSelectInfo`; senão estado interno. */
   const [infoViewLocal, setInfoViewLocal] = useState<string | null>(null);
@@ -615,7 +617,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
           : (curDiv.inscritos ? <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} /> : null),
       });
     }
-    if (sections.includes("draw")) {
+    // Aba "Draw" agregada (sub-menu de rondas) — SÓ quando a divisão não fornece
+    // `roundDraws` (draw por ronda intercalado com os resultados na barra principal).
+    if (sections.includes("draw") && !(curDiv.roundDraws && curDiv.roundDraws.length)) {
       leadingTabs.push({
         key: "draw",
         label: sectionLabel("draw"),
@@ -897,6 +901,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     renderAccSection={curDiv.renderAccSection}
                     renderRoundSection={curDiv.renderRoundSection}
                     leadingTabs={leadingTabs.length ? leadingTabs : undefined}
+                    roundDraws={curDiv.roundDraws}
                   />
                 ) : (
                   <>
@@ -971,10 +976,26 @@ function CircuitSidebar({
     } else {
       keys = keys.sort();
     }
+    // Chave de ordenação por data (mais recente primeiro) dentro de cada ano.
+    // Sem isto a sidebar saía na ordem crua de `entries` (ex: as entradas
+    // agrupadas no topo, datas baralhadas). Usa dateEnd → dateStart (ISO ou
+    // DD/MM/YYYY) e desempata pelo nome.
+    const dateKey = (e: CircuitEntry): string => {
+      const s = e.dateEnd ?? e.dateStart ?? "";
+      const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+      if (iso) return `${iso[1]}${iso[2]}${iso[3]}`;
+      const dmy = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
+      if (dmy) return `${dmy[3]}${dmy[2].padStart(2, "0")}${dmy[1].padStart(2, "0")}`;
+      return "00000000";
+    };
+    const byDateDesc = (a: CircuitEntry, b: CircuitEntry): number => {
+      const d = dateKey(b).localeCompare(dateKey(a));
+      return d !== 0 ? d : (a.name || "").localeCompare(b.name || "");
+    };
     return keys.map(k => {
       const items = byL1.get(k)!;
       const years = [...new Set(items.map(e => e.year))].sort((a, b) => (b ?? -1) - (a ?? -1));
-      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y) })) };
+      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y).sort(byDateDesc) })) };
     });
   }, [entries, l1Mode, config.seriesOrder]);
 

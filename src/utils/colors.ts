@@ -206,9 +206,7 @@ export const C = {
     viag_alg_mar:   "#eab308",
     viag_edinb:     "#06b6d4",
     viag_alg_jul_m:  "#fb923c",   /* laranja — Algarve Jul (Manuel+2) — provisório */
-    viag_alg_jul_ma: "#facc15",   /* amarelo — Algarve Jul (Mariana) — provisório */
-    viag_alg_jul_mf: "#84cc16",   /* lima — Algarve Jul/Ago (M. Francisco) — provisório */
-    viag_alg_jul_fam:"#14b8a6",   /* teal — Algarve Jul/Ago (Família) — provisório */
+    viag_alg_jul_mamf:"#facc15",  /* amarelo — Algarve Jul (Mariana + M. Francisco) — provisório */
     viag_vce_ago:    "#f43f5e",   /* rosa — Veneza+Porto Ago — provisório */
     // Aniversários (ramp rosa)
     bday_sub10:     "#f9a8d4",

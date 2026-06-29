@@ -41,7 +41,7 @@ import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FP
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink, CircuitDraw, CircuitDrawGroup } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -286,7 +286,22 @@ function lgsToFPGTournament(
   const par = rawPar && (rawPar.length === 18 || rawPar.length === 9) ? rawPar : new Array(courseHoles).fill(4);
   const parTotal = par.reduce((a, b) => a + b, 0);
   const numRounds = lgs.rounds.length;
+  // Rondas EFECTIVAMENTE jogadas: uma ronda só com SCORES reais conta. Uma ronda
+  // agendada mas ainda por jogar pode (a) vir vazia, OU (b) trazer já a lista de
+  // jogadores como PLACEHOLDERS do draw (tee times) com `scores/total: null`
+  // (`_partial`). Filtrar por `players.length` não chegava — a R3 placeholder do
+  // Campeonato de España juvenil 2026 contava como jogada → toda a gente ficava
+  // incompleta (→ WD) e pos/toPar/total liam-se da ronda sem scores (→ "--").
+  const roundIsPlayed = (r: { players: Array<{ total: number | null }> }) =>
+    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999);
+  const playedRoundsArr = lgs.rounds.filter(roundIsPlayed);
+  const playedRounds = playedRoundsArr.length || numRounds;
   const sliceH = <T,>(a: T[] | undefined | null): T[] => (a || []).slice(0, courseHoles);
+  // teeName com a distância total → o scorecard só desenha a linha de METROS quando
+  // o jogador tem teeName (ScorecardLB agrupa metros por tee). Sem isto, os torneios
+  // livegolfscoring (par/metros reais no `course`) NÃO mostravam a linha de metros.
+  const lgsMetersTotal = sliceH(lgs.course?.meters).reduce((a: number, b) => a + (b || 0), 0);
+  const lgsTeeLabel: string | undefined = lgsMetersTotal > 0 ? `${lgsMetersTotal} m` : undefined;
 
   // Agregar por jogador (key = memberId ou nome) com scores hbh por ronda
   type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: FPGRoundScore[] };
@@ -305,7 +320,7 @@ function lgsToFPGTournament(
         agg[key].rounds.push({
           round: r.round, gross: p.total,
           scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
-          si: sliceH(lgs.course?.si), meters: sliceH(lgs.course?.meters), teeName: undefined,
+          si: sliceH(lgs.course?.si), meters: sliceH(lgs.course?.meters), teeName: lgsTeeLabel,
           courseRating: lgs.course?.courseRating ?? undefined,
           slope: lgs.course?.slope ?? undefined,
         });
@@ -314,8 +329,9 @@ function lgsToFPGTournament(
   }
   // Rondas de cada jogador por ordem (o backfill da classificação pode chegar fora de ordem)
   for (const a of Object.values(agg)) a.rounds.sort((x, y) => x.round - y.round);
-  // Pos/toPar/total da última ronda
-  const lastR = lgs.rounds[lgs.rounds.length - 1];
+  // Pos/toPar/total da última ronda COM jogadores (não a última agendada — que
+  // pode estar vazia num evento em curso e zerava o leaderboard).
+  const lastR = playedRoundsArr[playedRoundsArr.length - 1];
   if (lastR) {
     for (const p of lastR.players) {
       const key = p.memberId || p.name;
@@ -343,7 +359,7 @@ function lgsToFPGTournament(
     const age = e?.dob ? ageAt(e.dob, dateRef) : null;
     const escLabel = escaloEsForPlayer(e?.catEdad, e?.dob, dateRef);
     const sex: "M" | "F" | null = e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null;
-    const incomplete = a.rounds.length < numRounds;
+    const incomplete = a.rounds.length < playedRounds;
     // HCP via lookup global (LGS não tem HCP no JSON)
     const lic = (e?.licencia || "").toUpperCase();
     const hcp = lic && (lgs as any)._hcpLookup?.[lic]?.hcp;
@@ -380,7 +396,10 @@ function lgsToFPGTournament(
     tcode: String(lgs.id),
     date: lgs.meta.dateIso || lgs.meta.dateRange || "",
     campo: lgs.meta.course || "",
-    rounds: numRounds,
+    // Só as rondas JOGADAS geram abas de resultados (uma R3 ainda por jogar não
+    // cria uma aba "R3" vazia a dizer "sem scorecards"). O draw da R3 aparece à
+    // mesma, como aba "Draw R3" intercalada (ver roundDraws em rfegLoadDivisions).
+    rounds: playedRounds,
     playerCount: players.length,
     players,
   };
@@ -494,10 +513,22 @@ function ncToFPGTournament(
         const s = (r as { scores?: number[] }).scores;
         return Array.isArray(s) && s.length === 9;
       })) ? 9 : 18);
-  const par18 = (detail.coursePar && detail.coursePar.length === holeCount) ? detail.coursePar : new Array(holeCount).fill(4);
+  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === holeCount) ? detail._ncCourseMeters : [];
+  // ⚠ Pitch & Putt → TODOS os buracos são PAR 3. O par do NextCaddy é INFERIDO dos
+  // scores (infer-nextcaddy-par.js) e nestes torneios de escola infantil (HCP 54,
+  // muitos 5-7 num par-3) dava par 4/5 — inventava um par 40 e estragava ±/Média.
+  // Detecta-se por nome/formato ("P&P"/"Pitch & Putt") OU por TODOS os buracos
+  // serem curtos (≤150 m = campo par-3). Nesse caso força par 3 em cada buraco.
+  const ncIsPitchAndPutt = (() => {
+    const txt = `${detail.meta?.name ?? ""} ${(detail.meta as { style?: string | null })?.style ?? ""} ${detail.meta?.course ?? ""}`.toLowerCase();
+    if (/p\s*&\s*p\b|p\s*y\s*p\b|pitch\s*&?\s*\s*putt|pitch\s+and\s+putt/.test(txt)) return true;
+    return meters18.length === holeCount && meters18.every((m) => typeof m === "number" && m > 0 && m <= 150);
+  })();
+  const par18 = ncIsPitchAndPutt
+    ? new Array(holeCount).fill(3)
+    : ((detail.coursePar && detail.coursePar.length === holeCount) ? detail.coursePar : new Array(holeCount).fill(4));
   const parTotal = par18.reduce((a, b) => a + b, 0);
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
-  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === holeCount) ? detail._ncCourseMeters : [];
 
   const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
   const lookupByName: Record<string, DobLookupEntry> = {};
@@ -548,6 +579,15 @@ function ncToFPGTournament(
         };
       });
     const incomplete = roundScores.length < nRounds;
+    // Gross/toPar a partir dos CARTÕES reais (soma das rondas), NÃO de `p.total`/
+    // `p.toPar`: em torneios Stableford o NextCaddy põe os PONTOS em `p.total`
+    // (ex: 18 pts), que apareciam como gross e davam um ± absurdo (18−36 = −18)
+    // a contradizer o scorecard. Sem cartões (só inscrito) cai no `p.total` como
+    // antes. A ordem do leaderboard é por `pos` (classificação oficial), logo
+    // continua correcta mesmo em Stableford (o pos não vem do gross).
+    const grossSum = roundScores.reduce((s, r) => s + (r.gross || 0), 0);
+    const grossTotal = grossSum > 0 ? grossSum : (typeof p.total === "number" ? p.total : null);
+    const toPar = grossSum > 0 ? grossSum - parTotal * roundScores.length : (p.toPar ?? null);
     return {
       scoreId: `nc-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
@@ -555,8 +595,8 @@ function ncToFPGTournament(
       club: club ? displayName(club) : "—",
       fed: p.licencia || undefined,
       fedCode: p.licencia || undefined,
-      grossTotal: p.total ?? null,
-      toPar: p.toPar ?? null,
+      grossTotal,
+      toPar,
       hcpExact: p.hcp ?? undefined,
       escalao: escLabel,
       // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
@@ -913,8 +953,14 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     name: string; pos: number | null;
     rounds: number[]; toPar: number; hoy: number; total: number;
   }> = {};
-  const lastR = lgs.rounds[lgs.rounds.length - 1];
-  for (const r of lgs.rounds) {
+  // Só rondas com SCORES reais (a R3 de um evento em curso pode trazer jogadores
+  // placeholder do draw com total=null → não é uma ronda jogada). Sem isto, o
+  // leaderboard agregado zerava pos/toPar/total (→ "--") e somava um 0 fantasma.
+  const lgsRoundIsPlayed = (r: { players: Array<{ total: number | null }> }) =>
+    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999);
+  const lgsPlayedRounds = lgs.rounds.filter(lgsRoundIsPlayed);
+  const lastR = lgsPlayedRounds[lgsPlayedRounds.length - 1];
+  for (const r of lgsPlayedRounds) {
     for (const p of r.players) {
       const key = p.memberId || p.name;
       if (!playerAgg[key]) {
@@ -956,14 +1002,25 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     nRounds,
     courseRating: ((lgs.course as { courseRating?: number | null } | null)?.courseRating ?? null) as number | null,
     slope: ((lgs.course as { slope?: number | null } | null)?.slope ?? null) as number | null,
-    players: aggregated.map(a => ({
-      pos: a.pos,
-      name: a.name,
-      toPar: a.toPar,
-      hoy: a.hoy,
-      rounds: a.rounds,
-      total: a.total,
-    })),
+    players: aggregated.map(a => {
+      // Cruzar nome → licencia/dob/club/hcp (dob+hcp lookups) para o Draw partilhado
+      // mostrar ESC/Nasc./FED/Clube/HCP como na FPG (o draw LGS só traz nomes).
+      const e = lookupByName[norm(a.name)];
+      const lic = (e?.licencia || "").toUpperCase();
+      const hcp = lic && hcpLookup ? (hcpLookup[lic]?.hcp ?? null) : null;
+      return {
+        pos: a.pos,
+        name: a.name,
+        toPar: a.toPar,
+        hoy: a.hoy,
+        rounds: a.rounds,
+        total: a.total,
+        licencia: e?.licencia ?? null,
+        dob: e?.dob ?? null,
+        club: e?.club ?? null,
+        hcp,
+      };
+    }),
   };
 
   return {
@@ -1386,27 +1443,54 @@ function teeTimesAllToHorarios(all?: RFEGDetail["teeTimesAll"]): NCHorario[] | n
   return out.length ? out : null;
 }
 
+/** Converte os horarios do livegolfscoring (`_lgsHorarios`: grupos de saída por
+ *  ronda — hora · buraco · jogadores) para o MESMO shape `NCHorario[]` que o
+ *  DrawSaidaView → DrawTab partilhado consome. Antes o LGS usava um DrawView
+ *  genérico (texto "hora · buraco · nomes"); agora usa a tabela rica da FPG. */
+function lgsHorariosToHorarios(hor?: LgsHorarioRound[] | null): NCHorario[] | null {
+  if (!Array.isArray(hor) || !hor.length) return null;
+  const out: NCHorario[] = [];
+  for (const rd of hor) {
+    const players: NCHorario["players"] = [];
+    for (const g of (rd.groups || [])) {
+      for (const name of (g.players || [])) {
+        players.push({ time: g.teeTime || null, tee: g.startHole ?? null, name, hcp: null });
+      }
+    }
+    if (players.length) out.push({ round: rd.round || (out.length + 1), players });
+  }
+  return out.length ? out : null;
+}
+
 /* ── DrawSaidaView ──────────────────────────────────────────
  * Tab "Draw saída" do RFEGPage — reusa o componente DrawTab partilhado para
  * coerência visual com FPG. NextCaddy → `_ncHorarios`; mitarjeta → `teeTimes`.
  * Ambos convertidos para NCHorario[] → FpgDraw shape. */
-function DrawSaidaView({ detail, entry }: {
+function DrawSaidaView({ detail, entry, onlyRound }: {
   detail: RFEGDetail & {
     _ncHorarios?: NCHorario[] | null;
+    _lgsHorarios?: LgsHorarioRound[] | null;
     _teeMetersByIns?: Record<string, number>;
     _drawInfoByIns?: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }>;
   };
   entry: RFEGIndexEntry;
+  /** Se definido, renderiza SÓ esta ronda (sem os chips R1/R2/R3) — usado quando o
+   *  draw de cada ronda é uma aba própria intercalada na barra principal. */
+  onlyRound?: number;
 }) {
   const teeByIns = detail._teeMetersByIns || {};
   const drawInfo = detail._drawInfoByIns || {};
-  // NextCaddy traz `_ncHorarios`; mitarjeta (CEE) traz `teeTimes` — convertido ao
-  // mesmo shape para alimentar o MESMO DrawTab (não inventar tabela própria).
+  // NextCaddy traz `_ncHorarios`; livegolfscoring traz `_lgsHorarios`; mitarjeta
+  // (CEE) traz `teeTimes` — todos convertidos ao mesmo shape para alimentar o
+  // MESMO DrawTab partilhado (= FPG), em vez de tabelas próprias / texto simples.
   const horarios = useMemo(
-    () => detail._ncHorarios ?? teeTimesAllToHorarios(detail.teeTimesAll) ?? teeTimesToHorarios(detail.teeTimes),
-    [detail._ncHorarios, detail.teeTimesAll, detail.teeTimes],
+    () => detail._ncHorarios ?? lgsHorariosToHorarios(detail._lgsHorarios)
+      ?? teeTimesAllToHorarios(detail.teeTimesAll) ?? teeTimesToHorarios(detail.teeTimes),
+    [detail._ncHorarios, detail._lgsHorarios, detail.teeTimesAll, detail.teeTimes],
   );
-  const [activeRound, setActiveRound] = useState<number>(1);
+  const [activeRoundState, setActiveRound] = useState<number>(1);
+  // Em modo `onlyRound` (aba por ronda na barra principal), a ronda é fixa.
+  const activeRound = onlyRound ?? activeRoundState;
   const isNc = !!detail._ncHorarios;
 
   // mitarjeta (CEE): o draw do teeTimes só traz NOMES. Enriquecemos por nome a
@@ -1518,16 +1602,16 @@ function DrawSaidaView({ detail, entry }: {
 
   if (!horarios || horarios.length === 0) {
     return <EmptyState message={
-      entry.source === "nextcaddy"
-        ? "Sem horarios publicados para este torneio."
-        : "Tee times disponíveis apenas para torneios NextCaddy. Para LGS/RFEGolf, consulta o Microsite oficial."
+      entry.source === "nextcaddy" || entry.source === "livegolfscoring"
+        ? "Sem tee times publicados para este torneio."
+        : "Tee times ainda não disponíveis. Consulta o Microsite oficial."
     } />;
   }
   if (!drawForRound) return <EmptyState message="Sem dados de draw para esta ronda." />;
 
   return (
     <div>
-      {horarios.length > 1 && (
+      {onlyRound == null && horarios.length > 1 && (
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
           {horarios.map(r => (
             <button
@@ -2797,31 +2881,33 @@ async function rfegLoadDivisions(
   // que agora também lê `detail.teeTimes` além dos `_ncHorarios` do NextCaddy.
   const hasMitarjetaDraw = !!((data.teeTimes && data.teeTimes.groups && data.teeTimes.groups.length)
     || (data.teeTimesAll && data.teeTimesAll.some((r) => r.groups && r.groups.length)));
-  const hasDrawSection = hasNcDraw || hasMitarjetaDraw;
+  // livegolfscoring: o draw (`_lgsHorarios`) passa a usar o MESMO DrawSaidaView →
+  // DrawTab partilhado (= FPG), em vez do DrawView genérico de texto do CircuitShell.
+  const hasLgsDraw = t.source === "livegolfscoring"
+    && (() => {
+      const hor = (data as unknown as { _lgsHorarios?: LgsHorarioRound[] | null })._lgsHorarios;
+      return Array.isArray(hor) && hor.some((r) => (r.groups || []).some((g) => (g.players || []).length));
+    })();
+  const hasDrawSection = hasNcDraw || hasMitarjetaDraw || hasLgsDraw;
   // CR+Slope reais → mostrar a coluna SD (WHS) no scorecard. Antes só o mitarjeta
   // a mostrava; o livegolfscoring agora também traz CR/Slope (re-scrape), por isso
   // basta o campo ter courseRating+slope (qualquer fonte).
   const hasRating = !!results?.players?.some((p) => p.courseRating != null && p.slope != null);
 
-  // Draw (horários / tee times) do livegolfscoring → CircuitDraw genérico. O
-  // CircuitShell adiciona automaticamente a tab "Draw" (Inscritos → Draw → R1 → …)
-  // e desenha-a com o DrawView (ronda → grupos de saída: hora · buraco · jogadores).
-  let lgsDraw: CircuitDraw | undefined;
-  if (t.source === "livegolfscoring") {
-    const hor = (data as unknown as { _lgsHorarios?: LgsHorarioRound[] | null })._lgsHorarios;
-    if (Array.isArray(hor) && hor.length) {
-      const rounds: Record<string, CircuitDrawGroup[]> = {};
-      for (const rd of hor) {
-        const groups = (rd.groups || []).map((g) => ({
-          teeTime: g.teeTime || undefined,
-          startHole: g.startHole ?? undefined,
-          players: (g.players || []).map((n) => ({ name: formatPlayerName(n) })),
-        }));
-        if (groups.length) rounds[String(rd.round)] = groups;
-      }
-      if (Object.keys(rounds).length) lgsDraw = { rounds };
-    }
-  }
+  // Draws POR RONDA → abas "Draw R{n}" intercaladas com os resultados na barra
+  // principal (Inscrições · Draw R1 · R1 · Draw R2 · R2 · Draw R3 · Resumo · …),
+  // em vez de uma aba "Draw" única com sub-menu de chips. O MESMO DrawSaidaView →
+  // DrawTab partilhado (= FPG) é reusado por ronda (prop `onlyRound`). Inclui
+  // rondas ainda por jogar (ex: Draw R3 só com os pairings, sem resultados).
+  const drawHorarios = hasDrawSection
+    ? (((data as unknown as { _ncHorarios?: NCHorario[] | null })._ncHorarios)
+        ?? lgsHorariosToHorarios((data as unknown as { _lgsHorarios?: LgsHorarioRound[] | null })._lgsHorarios)
+        ?? teeTimesAllToHorarios(data.teeTimesAll)
+        ?? teeTimesToHorarios(data.teeTimes))
+    : null;
+  const roundDraws = (drawHorarios ?? [])
+    .filter((r) => r.players && r.players.length)
+    .map((r) => ({ round: r.round, render: () => <DrawSaidaView detail={data} entry={t} onlyRound={r.round} /> }));
 
   const division: CircuitDivision = {
     key: "main",
@@ -2829,13 +2915,12 @@ async function rfegLoadDivisions(
     sex: rfegSex(t.sex),
     results: results ?? undefined,
     customResults,
-    draw: lgsDraw,
     inscritos: lists.length ? { lists } : undefined,
     renderInscritos: lists.length
       ? () => <AdmissionsTab admissions={buildAdmissions()} date={esDateToIso(data.meta.dateStart) ?? data.meta.dateStart} hidePostCols />
       : undefined,
-    // Draw saída — sempre pelo DrawSaidaView → DrawTab partilhado (= FPG).
-    renderDrawSection: hasDrawSection ? () => <DrawSaidaView detail={data} entry={t} /> : undefined,
+    // Draw por ronda intercalado (ver roundDraws acima) — sem aba "Draw" agregada.
+    roundDraws: roundDraws.length ? roundDraws : undefined,
     links: links.length ? links : undefined,
     // SD (WHS) visível quando o campo tem CR+Slope reais (mitarjeta OU livegolfscoring).
     scOptions: { ...lgsScorecardOptions(), hideSD: !(data.mitarjetaTorneo || hasRating) },
@@ -2877,18 +2962,47 @@ function rfegStartMs(t: RFEGIndexEntry): number | null {
   return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : null;
 }
 
+/** Sub-agrupa torneios de um balde por PROXIMIDADE de datas: um intervalo > `win`
+ *  dias entre torneios consecutivos inicia um novo cluster. Isola um straggler
+ *  distante (mesmo nome-base noutra altura do ano — ex: "Sub-18 Femenino" em
+ *  Março no mesmo balde que o campeonato juvenil de Junho) sem destruir o
+ *  agrupamento do evento compacto. Torneios sem data ficam cada um no seu cluster. */
+function clusterByDate(group: RFEGIndexEntry[], win: number): RFEGIndexEntry[][] {
+  const dated = group
+    .map((t) => ({ t, ms: rfegStartMs(t) }))
+    .filter((x): x is { t: RFEGIndexEntry; ms: number } => x.ms != null)
+    .sort((a, b) => a.ms - b.ms);
+  const clusters: RFEGIndexEntry[][] = [];
+  let cur: RFEGIndexEntry[] = [];
+  let prevMs = 0;
+  for (const x of dated) {
+    if (cur.length && (x.ms - prevMs) / 86400000 > win) { clusters.push(cur); cur = []; }
+    cur.push(x.t);
+    prevMs = x.ms;
+  }
+  if (cur.length) clusters.push(cur);
+  for (const t of group) if (rfegStartMs(t) == null) clusters.push([t]);
+  return clusters;
+}
+
 const slugify = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 /** Janela máxima (dias) para um grupo ser "o mesmo evento" e não uma SÉRIE
  *  (Puntuável/Circuito espalhado por meses). */
 const RFEG_GROUP_WINDOW_DAYS = 16;
 
-function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup): CircuitEntry[] {
+function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup, twins?: Record<string, number>): CircuitEntry[] {
   // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
   // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
   // España já com lista de inscritos antes de serem jogados.
+  // Dedup gémeos RFEGolf<->LGS ANTES de agrupar: o RFEGolf só-PDF (par falso, sem
+  // scorecards) é suprimido quando há gémeo LGS rico (hbh+metros). Tem de ser aqui
+  // — não no pós-filtro do caller — senão a entrada AGRUPADA (`grp-…`, id sem o
+  // compId) escapava ao dedup e o evento aparecia 2× (versão rfegolf + versão LGS).
   const visible = index.tournaments.filter(
-    (t) => t.category && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0),
+    (t) => t.category
+      && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0)
+      && !(t.source === "rfegolf" && twins?.[String(t.id)] != null),
   );
 
   const single = (t: RFEGIndexEntry): CircuitEntry => ({
@@ -2932,22 +3046,26 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
   }
 
   const entries: CircuitEntry[] = [];
+  const usedGrpIds = new Set<string>();
 
   for (const group of byKey.values()) {
-    const catSex = group.map((t) => `${t.category}|${/F/i.test(t.sex || "") ? "F" : "M"}`);
-    const variesCatOrSex = new Set(group.map((t) => t.category)).size > 1
-      || new Set(group.map((t) => (/F/i.test(t.sex || "") ? "F" : "M"))).size > 1;
-    const ms = group.map(rfegStartMs).filter((x): x is number => x != null);
+   for (const cluster of clusterByDate(group, RFEG_GROUP_WINDOW_DAYS)) {
+    const catSex = cluster.map((t) => `${t.category}|${/F/i.test(t.sex || "") ? "F" : "M"}`);
+    const variesCatOrSex = new Set(cluster.map((t) => t.category)).size > 1
+      || new Set(cluster.map((t) => (/F/i.test(t.sex || "") ? "F" : "M"))).size > 1;
+    const ms = cluster.map(rfegStartMs).filter((x): x is number => x != null);
     const spanDays = ms.length ? (Math.max(...ms) - Math.min(...ms)) / 86400000 : 0;
-    if (group.length < 2 || !variesCatOrSex
+    // O cluster ainda pode ser uma SÉRIE (stops encadeados a < janela cada, mas a
+    // abranger meses) — o guard de span mantém-na como entradas avulsas.
+    if (cluster.length < 2 || !variesCatOrSex
         || new Set(catSex).size !== catSex.length
         || spanDays > RFEG_GROUP_WINDOW_DAYS) {
-      for (const t of group) entries.push(single(t));
+      for (const t of cluster) entries.push(single(t));
       continue;
     }
 
     // Combinar: divisões = tabs "Benjamín M / Benjamín F / Alevín M / …".
-    const sorted = [...group].sort(
+    const sorted = [...cluster].sort(
       (a, b) => (ceeEscOrder(a.category) - ceeEscOrder(b.category))
         || ((/F/i.test(a.sex || "") ? 1 : 0) - (/F/i.test(b.sex || "") ? 1 : 0)),
     );
@@ -2958,8 +3076,19 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
     const showSex = sexes.size > 1; // só anexa M/F à tab quando há ambos
     const starts = sorted.map((t) => t.dateStartIso ?? t.dateStart).filter(Boolean).sort();
     const ends = sorted.map((t) => t.dateEndIso ?? t.dateEnd).filter(Boolean).sort();
+    // Id único: vários clusters/baldes podem reduzir ao mesmo nome-base+ano
+    // (ex: campeonato juvenil de Junho vs Sub-16 P&P de Maio → ambos "Campeonato
+    // de España 2026"). Desambigua por ano-mês de início, depois por contador.
+    let grpId = `${sorted[0].source}:grp-${slugify(name)}`;
+    if (usedGrpIds.has(grpId)) {
+      const ym = (starts[0] ?? "").slice(0, 7).replace(/-/g, "");
+      let cand = ym ? `${grpId}-${ym}` : `${grpId}-2`;
+      for (let k = 2; usedGrpIds.has(cand); k++) cand = `${grpId}-${ym || "x"}-${k}`;
+      grpId = cand;
+    }
+    usedGrpIds.add(grpId);
     entries.push({
-      id: `${sorted[0].source}:grp-${slugify(name)}`,
+      id: grpId,
       year,
       name,
       source: sorted[0].source,
@@ -2997,6 +3126,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
         return per.flat();
       },
     });
+   }
   }
 
   return entries;
@@ -3009,7 +3139,7 @@ const RFEG_CONFIG: CircuitConfig = {
   grouping: "year",
   sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "var(--color-rfeg-yellow)" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
-  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"] },
+  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar dados...",
 };
@@ -3089,13 +3219,9 @@ export default function RFEGPage() {
   const entries = useMemo(
     () => {
       if (!index) return [];
-      const all = buildRfegEntries(index, dobLookup, hcpLookup);
-      // Esconder o duplicado RFEGolf quando existe gémeo LGS (mais rico: hbh+metros).
-      // O LGS é canónico; o RFEGolf só-PDF (par falso, sem scorecards) é suprimido.
-      return all.filter((e) => {
-        const [src, id] = e.id.split(":");
-        return !(src === "rfegolf" && twins[id] != null);
-      });
+      // O dedup de gémeos RFEGolf<->LGS agora corre DENTRO de buildRfegEntries
+      // (antes de agrupar), por isso apanha também as entradas combinadas `grp-…`.
+      return buildRfegEntries(index, dobLookup, hcpLookup, twins);
     },
     [index, dobLookup, hcpLookup, twins],
   );

@@ -149,6 +149,42 @@ for (const file of files) {
     continue;
   }
 
+  // ⚠ Pitch & Putt → TODOS os buracos par 3. Inferir par dos SCORES das crianças
+  // (HCP 54, muitos 5-7 num par-3) dava 4/5 e inventava um par-total errado (ex:
+  // tour 71286 "ESCUELA INFANTIL P&P" → par 40 em vez de 27). Detecta por
+  // nome/formato OU por TODOS os buracos serem curtos (≤150 m = campo par-3) e
+  // força par 3. A distância manda sobre os scores.
+  {
+    const nm = j.course && Array.isArray(j.course.meters) ? j.course.meters : null;
+    const txt = `${(j.meta && j.meta.name) || ""} ${(j.meta && j.meta.format) || ""} ${(j.meta && j.meta.course) || ""}`.toLowerCase();
+    const isPnP = /p\s*&\s*p\b|p\s*y\s*p\b|pitch\s*&?\s*putt|pitch\s+and\s+putt/.test(txt)
+      || (nm && nm.length > 0 && nm.every((m) => typeof m === "number" && m > 0 && m <= 150));
+    let nh = nm && (nm.length === 9 || nm.length === 18) ? nm.length : 0;
+    if (!nh) {
+      for (const cat of j.leaderboard || []) {
+        for (const p of cat.players || []) {
+          for (const rs of p.roundScores || []) {
+            if (Array.isArray(rs.scores) && (rs.scores.length === 9 || rs.scores.length === 18)) { nh = rs.scores.length; break; }
+          }
+          if (nh) break;
+        }
+        if (nh) break;
+      }
+    }
+    if (isPnP && nh) {
+      if (!j.course) j.course = {};
+      j.course.par = new Array(nh).fill(3);
+      j.course.parTotal = nh * 3;
+      j.course.parInferred = true;
+      j.course.parConfidence = "high";
+      if (j.course.si === undefined) j.course.si = null;
+      if (j.course.meters === undefined) j.course.meters = null;
+      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      updated++;
+      continue;
+    }
+  }
+
   const roundsMap = new Map();
   for (const cat of j.leaderboard || []) {
     for (const p of cat.players || []) {

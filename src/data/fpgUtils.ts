@@ -331,19 +331,22 @@ export function computeSD(p: Player): SDResult {
   const hcp = p.hcpExact;
   const gross = numGross(p);
   if (!cr || !slope || gross == null || isNaN(gross)) return { sd: null, source: null };
+  // ⚠ O score differential WHS PODE ser negativo (volta abaixo do Course Rating).
+  // Antes havia `Math.max(0, …)` que achatava tudo o que fosse < CR a 0.0 — um
+  // gross −5 vs CR e um gross =CR davam ambos "0.0", indistinguíveis. Removido.
   if (hcp != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
     const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nh);
     const raw = (113 / slope) * (ags - cr);
     const sd = is9 ? raw + expectedSD9(hcp) : raw;
-    return { sd: Math.max(0, Math.round(sd * 10) / 10), source: "ags" };
+    return { sd: Math.round(sd * 10) / 10, source: "ags" };
   }
   if (!is9) {
-    const sd = Math.max(0, Math.round((113 / slope) * (gross - cr) * 10) / 10);
+    const sd = Math.round((113 / slope) * (gross - cr) * 10) / 10;
     return { sd, source: "raw" };
   }
   if (hcp != null) {
     const raw = (113 / slope) * (gross - cr);
-    const sd = Math.max(0, Math.round((raw + expectedSD9(hcp)) * 10) / 10);
+    const sd = Math.round((raw + expectedSD9(hcp)) * 10) / 10;
     return { sd, source: "raw" };
   }
   return { sd: null, source: null };

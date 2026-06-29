@@ -121,6 +121,15 @@ export interface CircuitDivision {
    * FPGPage, com selector de ronda próprio). A secção aparece com base em `draw`.
    */
   renderDrawSection?: () => React.ReactNode;
+  /**
+   * Draws POR RONDA, para intercalar com os resultados na barra principal
+   * (Inscrições · Draw R1 · R1 · Draw R2 · R2 · …) em vez de uma aba "Draw" única
+   * com sub-menu. Quando presente, o shell NÃO mostra a aba "Draw" agregada e
+   * passa estes a `IntlTournView`, que insere cada "Draw R{n}" antes da ronda n.
+   * `round` é 1-based. Pode incluir rondas ainda não jogadas (ex: Draw R3 com só
+   * os pairings, sem resultados).
+   */
+  roundDraws?: { round: number; render: () => React.ReactNode }[];
 }
 
 /** Lista de inscritos de uma divisão — sub-listas opcionais. */
@@ -286,6 +295,9 @@ export interface CircuitConfig {
     /** Botão INTL — mostra só torneios marcados `intl` (FFG: Internationaux). */
     intl?: boolean;
     toggles?: CircuitToggle[];
+    /** Toggles ligados por defeito ao abrir a página (subconjunto de `toggles`).
+     *  Ex: RFEG liga "results" para esconder futuros só-inscritos à partida. */
+    defaultToggles?: CircuitToggle[];
   };
 
   /** Limiar de "muitos torneios" para o toggle Veteranos (default 3). */
