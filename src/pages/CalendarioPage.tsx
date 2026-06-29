@@ -208,6 +208,8 @@ const EVENTS: CalEvent[] = [
   ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,0,31), "Belas",          "Strokeplay e Medal"),
   ev("drive_tour", "3º Torneio Drive Tour Tejo",  new Date(2026,2,28), "St. Estêvão",    "Strokeplay e Medal", new Date(2026,2,29)),
   ev("drive_tour", "4º Torneio Drive Tour Tejo",  new Date(2026,3,12), "Lisbon SC",      "Strokeplay e Medal"),
+  // Final Nacional
+  ev("drive_tour", "Final Drive Tour",            new Date(2026,10,7), "Oeiras Green Valley (Lisboa)", "Strokeplay e Medal", new Date(2026,10,8)),
 
   /* ══════════════════════════════════════
      DRIVE TOUR MADEIRA — esmeralda

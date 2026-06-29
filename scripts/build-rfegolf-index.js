@@ -181,6 +181,11 @@ for (const file of rfegFiles) {
       leaderboardPlayers: Array.isArray(j.results)
         ? j.results.reduce((a, r) => a + ((r && r.players) ? r.players.length : 0), 0)
         : 0,
+      // Nº de rondas (do mitarjeta/PDF) — alimenta o badge "3R" na sidebar quando
+      // este rfegolf é preferido ao gémeo LGS (ver lgsSuppressed em build-lgs-twins).
+      nRounds: Array.isArray(j.results)
+        ? Math.max(0, ...j.results.map((r) => (r && typeof r.nRounds === "number") ? r.nRounds : 0)) || undefined
+        : undefined,
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) {

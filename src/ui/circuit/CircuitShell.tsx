@@ -22,6 +22,7 @@ import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../Toolbar";
 import DetailHeader from "../DetailHeader";
+import TournamentWeather from "../TournamentWeather";
 import LoadingState from "../LoadingState";
 import Counter from "../Counter";
 import SexBadge from "../SexBadge";
@@ -878,7 +879,14 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                       </span>
                     </>
                   }
-                />
+                >
+                  <TournamentWeather
+                    course={cur.course}
+                    startDate={cur.dateStart}
+                    endDate={cur.dateEnd}
+                    rounds={headerStats.nRounds}
+                  />
+                </DetailHeader>
                 )}
 
                 {/* Conteúdo do torneio.

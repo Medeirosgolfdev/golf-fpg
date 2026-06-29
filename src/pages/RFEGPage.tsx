@@ -2991,18 +2991,22 @@ const slugify = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowe
  *  (Puntuável/Circuito espalhado por meses). */
 const RFEG_GROUP_WINDOW_DAYS = 16;
 
-function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup, twins?: Record<string, number>): CircuitEntry[] {
+function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup, twins?: Record<string, number>, lgsSuppressed?: Record<string, number>): CircuitEntry[] {
   // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
   // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
   // España já com lista de inscritos antes de serem jogados.
-  // Dedup gémeos RFEGolf<->LGS ANTES de agrupar: o RFEGolf só-PDF (par falso, sem
-  // scorecards) é suprimido quando há gémeo LGS rico (hbh+metros). Tem de ser aqui
-  // — não no pós-filtro do caller — senão a entrada AGRUPADA (`grp-…`, id sem o
-  // compId) escapava ao dedup e o evento aparecia 2× (versão rfegolf + versão LGS).
+  // Dedup gémeos RFEGolf<->LGS ANTES de agrupar (id sem compId nas entradas `grp-`,
+  // por isso tem de ser aqui e não no caller):
+  //  • Por defeito o LGS (rico, hbh+metros) é canónico e o RFEGolf só-PDF é suprimido
+  //    (`twins[compId]`).
+  //  • EXCEPÇÃO: quando o RFEGolf tem mitarjeta com ≥ rondas jogadas que o LGS (live
+  //    scoring à frente do scrape LGS — ex: R3 do CEE juvenil só no mitarjeta), é o
+  //    LGS que se suprime (`lgsSuppressed[lgsId]`) e fica o RFEGolf+mitarjeta.
   const visible = index.tournaments.filter(
     (t) => t.category
       && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0)
-      && !(t.source === "rfegolf" && twins?.[String(t.id)] != null),
+      && !(t.source === "rfegolf" && twins?.[String(t.id)] != null)
+      && !(t.source === "livegolfscoring" && lgsSuppressed?.[String(t.id)] != null),
   );
 
   const single = (t: RFEGIndexEntry): CircuitEntry => ({
@@ -3193,6 +3197,7 @@ export default function RFEGPage() {
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
   const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
   const [twins, setTwins] = useState<Record<string, number>>({});
+  const [lgsSuppressed, setLgsSuppressed] = useState<Record<string, number>>({});
   const [vetIndex, setVetIndex] = useState<Map<string, number>>(() => new Map());
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -3205,7 +3210,7 @@ export default function RFEGPage() {
     cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json").then((d) => { if (d && d.lookup) setDobLookup(d.lookup); }).catch(() => {});
     cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json").then((d) => { if (d && d.lookup) setHcpLookup(d.lookup); }).catch(() => {});
     // Gémeos RFEGolf<->LGS: esconder o duplicado RFEGolf (só-PDF) quando há LGS rico.
-    cachedFetchJson<{ twins: Record<string, number> }>("/data/rfegolf-lgs-twins.json").then((d) => { if (d && d.twins) setTwins(d.twins); }).catch(() => {});
+    cachedFetchJson<{ twins: Record<string, number>; lgsSuppressed?: Record<string, number> }>("/data/rfegolf-lgs-twins.json").then((d) => { if (d && d.twins) setTwins(d.twins); if (d && d.lgsSuppressed) setLgsSuppressed(d.lgsSuppressed); }).catch(() => {});
     // Índice de veteranos (presenças por jogador) — agregados de rivais.
     Promise.all([
       cachedFetchJson<RfegRivalsFile>("/data/rfegolf-rivals.json").catch(() => null),
@@ -3221,9 +3226,9 @@ export default function RFEGPage() {
       if (!index) return [];
       // O dedup de gémeos RFEGolf<->LGS agora corre DENTRO de buildRfegEntries
       // (antes de agrupar), por isso apanha também as entradas combinadas `grp-…`.
-      return buildRfegEntries(index, dobLookup, hcpLookup, twins);
+      return buildRfegEntries(index, dobLookup, hcpLookup, twins, lgsSuppressed);
     },
-    [index, dobLookup, hcpLookup, twins],
+    [index, dobLookup, hcpLookup, twins, lgsSuppressed],
   );
 
   // Aterrar num URL RFEGolf com gémeo LGS → redirige para o LGS rico (hbh+metros).

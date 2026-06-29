@@ -1,0 +1,221 @@
+{
+  "_README": "Coordenadas por campo para a strip de meteo (scripts/fetch-weather.js). Chave = nome do campo normalizado (minúsculas, sem acentos, só a-z0-9 e espaços). O script geocodifica campos em falta via Open-Meteo e grava-os aqui — revê e corrige os que ficarem errados. precision: course|city|country. Override manual tem prioridade sobre o geocoding.",
+  "marco simone golf country club": {
+    "lat": 41.9661,
+    "lon": 12.66,
+    "label": "Marco Simone, Guidonia Montecelio, Roma Capitale",
+    "precision": "city",
+    "_auto": true
+  },
+  "talamore golf club": {
+    "lat": 35.2059,
+    "lon": -79.415,
+    "label": "Talamore Golf Club, 48, Talamore Drive",
+    "precision": "course",
+    "_auto": true
+  },
+  "the musselburgh golf club": {
+    "lat": 55.9421,
+    "lon": -3.0539,
+    "label": "Musselburgh, East Lothian, Alba / Scotland",
+    "precision": "city",
+    "_auto": true
+  },
+  "winterfield golf club": {
+    "lat": 37.5075,
+    "lon": -77.6632,
+    "label": "Winterfield, Midlothian, Chesterfield County",
+    "precision": "city",
+    "_auto": true
+  },
+  "las vegas golf club": {
+    "lat": 36.175,
+    "lon": -115.1372,
+    "label": "Las Vegas, Nevada, US",
+    "precision": "city"
+  },
+  "pronghorn golf club": {
+    "lat": 44.1881,
+    "lon": -121.1817,
+    "label": "Pronghorn, Oregon, US",
+    "precision": "city"
+  },
+  "great gorge golf club": {
+    "lat": 41.1912,
+    "lon": -74.5318,
+    "label": "Great Gorge Country Club Incorporated Heliport, New Jersey, US",
+    "precision": "city"
+  },
+  "boulder creek golf club": {
+    "lat": 37.1261,
+    "lon": -122.1222,
+    "label": "Boulder Creek, California, US",
+    "precision": "city"
+  },
+  "old waverly club": {
+    "lat": 33.4706,
+    "lon": -79.1331,
+    "label": "Old Pointe Road, River Club, Waverly Mills",
+    "precision": "course",
+    "_auto": true
+  },
+  "the alto club": {
+    "lat": 31.6504,
+    "lon": -95.0727,
+    "label": "Alto, Texas, US",
+    "precision": "city"
+  },
+  "oak mountain golf course": {
+    "lat": 33.5607,
+    "lon": -85.0208,
+    "label": "Oak Mountain, Georgia, US",
+    "precision": "city"
+  },
+  "swenson park golf club": {
+    "lat": 38.0124,
+    "lon": -121.3416,
+    "label": "Swenson Park, California, US",
+    "precision": "city"
+  },
+  "painted desert golf club": {
+    "lat": 35.3906,
+    "lon": -111.4321,
+    "label": "Painted Desert Vista Picnic Area, Arizona, US",
+    "precision": "city"
+  },
+  "baylands golf links": {
+    "lat": 37.4163,
+    "lon": -122.0072,
+    "label": "Baylands Park, California, US",
+    "precision": "city"
+  },
+  "coyote creek golf club": {
+    "lat": 65.1958,
+    "lon": -166.3583,
+    "label": "Coyote Creek Dome, Alaska, US",
+    "precision": "city"
+  },
+  "angel park golf club": {
+    "lat": 43.1778,
+    "lon": -89.2098,
+    "label": "Angel Park, Wisconsin, US",
+    "precision": "city"
+  },
+  "battle creek golf course": {
+    "lat": 36.0849,
+    "lon": -95.8032,
+    "label": "Battle Creek Golf Course, Oklahoma, US",
+    "precision": "course"
+  },
+  "limestone springs country club": {
+    "lat": 34.307,
+    "lon": -83.8024,
+    "label": "New Holland, Georgia, US",
+    "precision": "city"
+  },
+  "longleaf g fc": {
+    "lat": 33.9335,
+    "lon": -83.9969,
+    "label": "Longleaf Apartment Homes, 775, Lawrenceville",
+    "precision": "city",
+    "_auto": true
+  },
+  "wigwam resort gold course": {
+    "lat": 50.8292,
+    "lon": 14.0441,
+    "label": "Wigwam, Rosenthal-Bielatal, Königstein/Sächs. Schw.",
+    "precision": "city",
+    "_auto": true
+  },
+  "sandestin raven": {
+    "lat": 30.3799,
+    "lon": -86.3302,
+    "label": "Sandestin, Miramar Beach, Walton County",
+    "precision": "city",
+    "_auto": true
+  },
+  "terre dei consoli golf club": {
+    "lat": 42.195,
+    "lon": 12.2901,
+    "label": "Terre dei Consoli Golf Club & Resort, 1, Via Terre dei Consoli",
+    "precision": "course",
+    "_auto": true
+  },
+  "golf club frassanelle": {
+    "lat": 45.3818,
+    "lon": 11.672,
+    "label": "Golf Club Frassanelle, 5a, Via Rialto",
+    "precision": "course",
+    "_auto": true
+  },
+  "golf club della montecchia": {
+    "lat": 45.3871,
+    "lon": 11.7583,
+    "label": "Golf Club della Montecchia, 12, Via Montecchia",
+    "precision": "course",
+    "_auto": true
+  },
+  "pinehurst no 8": {
+    "lat": 30.1072,
+    "lon": -93.7746,
+    "label": "Pinehurst, Orange County, Texas",
+    "precision": "city",
+    "_auto": true
+  },
+  "longleaf": {
+    "lat": 34.1549,
+    "lon": -79.7801,
+    "label": "Longleaf, Florence, Florence County",
+    "precision": "city",
+    "_auto": true
+  },
+  "pinehurst no 1": {
+    "lat": 30.1072,
+    "lon": -93.7746,
+    "label": "Pinehurst, Orange County, Texas",
+    "precision": "city",
+    "_auto": true
+  },
+  "wigwam resort blue course": {
+    "lat": 50.8292,
+    "lon": 14.0441,
+    "label": "Wigwam, Rosenthal-Bielatal, Königstein/Sächs. Schw.",
+    "precision": "city",
+    "_auto": true
+  },
+  "pinehurst no 6": {
+    "lat": 30.1072,
+    "lon": -93.7746,
+    "label": "Pinehurst, Orange County, Texas",
+    "precision": "city",
+    "_auto": true
+  },
+  "pinehurst no 7": {
+    "lat": 30.1072,
+    "lon": -93.7746,
+    "label": "Pinehurst, Orange County, Texas",
+    "precision": "city",
+    "_auto": true
+  },
+  "craigielaw golf club": {
+    "lat": 56.0069,
+    "lon": -2.878,
+    "label": "Craigielaw Golf Club, Longniddry, East Lothian",
+    "precision": "course",
+    "_auto": true
+  },
+  "golf club nazionale": {
+    "lat": 44.9367,
+    "lon": 6.747,
+    "label": "Golf Club Claviere, Via Nazionale, Claviere",
+    "precision": "course",
+    "_auto": true
+  },
+  "royal obidos": {
+    "lat": 39.4056,
+    "lon": -9.2392,
+    "label": "Rotunda Royal Óbidos, Casais do Pinhal Velho, Vau",
+    "precision": "city",
+    "_auto": true
+  }
+}

@@ -35,13 +35,32 @@ for (const f of fs.readdirSync(LGS_DIR).filter((x) => /^\d+\.json$/.test(x))) {
   const yr = d.meta && d.meta.year; const nm = norm(d.meta && d.meta.name);
   if (!nm || !yr) continue;
   const hbh = (d.rounds || []).some((r) => (r.players || []).some((p) => Array.isArray(p.scores) && p.scores.length === 18));
+  // Rondas EFECTIVAMENTE jogadas (≥1 jogador com total real) — não as agendadas.
+  const played = (d.rounds || []).filter((r) => (r.players || []).some((p) => p.total != null && p.total > 0 && p.total < 999)).length;
   const key = nm + "|" + yr;
   // preferir entrada com hbh; senão a primeira
-  if (!lgsByKey[key] || (hbh && !lgsByKey[key].hbh)) lgsByKey[key] = { id: d.id, hbh };
+  if (!lgsByKey[key] || (hbh && !lgsByKey[key].hbh)) lgsByKey[key] = { id: d.id, hbh, played };
+}
+
+// nº de rondas com scores reais num rfegolf-resultats com mitarjeta injectado.
+function rfegMitaPlayedRounds(d) {
+  if (!d.mitarjetaTorneo) return 0;
+  const g = (d.results || [])[0];
+  if (!g || !Array.isArray(g.players)) return 0;
+  let max = 0;
+  for (const p of g.players) {
+    const c = Array.isArray(p.rounds) ? p.rounds.filter((x) => typeof x === "number" && x > 0).length : 0;
+    if (c > max) max = c;
+  }
+  return max;
 }
 
 // 2) Para cada RFEGolf, procurar gémeo
 const twins = {};
+// LGS ids a SUPRIMIR porque o gémeo rfegolf+mitarjeta tem MAIS rondas jogadas
+// (live scoring à frente do scrape LGS — ex: R3 do CEE juvenil ainda só no
+// mitarjeta). Mapeia lgsId → compId rfegolf preferido.
+const lgsSuppressed = {};
 let n = 0;
 for (const f of fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))) {
   let d; try { d = rj(path.join(RFEG_DIR, f)); } catch (e) { continue; }
@@ -51,9 +70,20 @@ for (const f of fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))) {
   if (!yr) continue;
   const key = norm(d.meta && d.meta.name) + "|" + yr;
   const lgs = lgsByKey[key];
-  if (lgs && lgs.id != null) { twins[String(compId)] = lgs.id; n++; }
+  if (lgs && lgs.id != null) {
+    const rfegPlayed = rfegMitaPlayedRounds(d);
+    // Preferir o rfegolf+mitarjeta (fonte canónica live dos CEE juvenis) quando
+    // tem PELO MENOS tantas rondas jogadas quanto o LGS. `>=` (não `>`) mantém as
+    // categorias do MESMO campeonato todas na mesma fonte — senão, se uma categoria
+    // (ex: Benjamín F, com R3 já no LGS) empatasse, o grupo partia-se em 2 fontes.
+    if (d.mitarjetaTorneo && rfegPlayed >= (lgs.played || 0)) {
+      lgsSuppressed[String(lgs.id)] = compId;
+    } else {
+      twins[String(compId)] = lgs.id; n++;
+    }
+  }
 }
 
-const out = { generatedAt: new Date().toISOString(), source: "scripts/build-lgs-twins.js", count: n, twins };
+const out = { generatedAt: new Date().toISOString(), source: "scripts/build-lgs-twins.js", count: n, twins, lgsSuppressed };
 fs.writeFileSync(OUT, JSON.stringify(out, null, 0));
 console.log(`build-lgs-twins: ${n} gémeos RFEGolf<->LGS -> ${path.relative(REPO, OUT)}`);

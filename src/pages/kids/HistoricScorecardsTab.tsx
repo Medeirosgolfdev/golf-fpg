@@ -114,7 +114,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
   const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
   // Sort state — default por posição oficial (pos) ASC. Em modo Agrupado,
-  // agrega por jogador (R1 para buracos; best/min para gross/toPar; total
+  // agrega por jogador (best/min para buracos e para gross/toPar; total
   // para birds/pars/bogeys). Em modo Independente actua sobre a ronda individual.
   const [sortKey, setSortKey] = useState<SortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -127,6 +127,36 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
       if (k.startsWith("h")) { setSortDir("asc"); return; }
       setSortDir(ascByDefault.has(k) ? "asc" : "desc");
     }
+  }
+
+  // Célula clicável de um buraco — usada no nº do buraco (cabeçalho), na
+  // linha Metros e na linha PAR. Clicar em qualquer uma ordena pelo melhor
+  // resultado nesse buraco. A coluna activa fica realçada (sem setas a
+  // desalinhar as colunas estreitas). `as` = "th" no cabeçalho, "td" nas
+  // linhas de Metros/PAR.
+  function HoleCell({ n, first, as = "td", children }: {
+    n: number;
+    first: boolean;
+    as?: "th" | "td";
+    children: number | string;
+  }) {
+    const active = sortKey === `h${n}`;
+    const Tag = as as "td";
+    return (
+      <Tag
+        className={"lb-hole lb-sortable" + (first ? " lb-hole-first" : "") + (as === "th" ? " fs-10" : "")}
+        onClick={() => toggleSort(`h${n}` as SortKey)}
+        title={`Ordenar pelo buraco ${n} (melhor resultado)`}
+        style={{
+          cursor: "pointer",
+          color: active ? "var(--accent)" : undefined,
+          fontWeight: active ? 700 : undefined,
+          background: active ? "var(--accent-light)" : undefined,
+        }}
+      >
+        {children}
+      </Tag>
+    );
   }
 
   const editions: Edition[] | null = useMemo(() => {
@@ -350,19 +380,13 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
               <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
-                <SortableHdr key={h} k={`h${h + 1}` as SortKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
-                  className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
-                  {h + 1}
-                </SortableHdr>
+                <HoleCell key={h} n={h + 1} first={h === 0} as="th">{h + 1}</HoleCell>
               ))}
               <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
               {!is9 && (
                 <>
                   {Array.from({ length: 9 }, (_, h) => (
-                    <SortableHdr key={h + 9} k={`h${h + 10}` as SortKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
-                      className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
-                      {h + 10}
-                    </SortableHdr>
+                    <HoleCell key={h + 9} n={h + 10} first={h === 0} as="th">{h + 10}</HoleCell>
                   ))}
                   <th className="lb-halftot">In</th>
                 </>
@@ -390,11 +414,11 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <td className="lb-topar" />
                   <td className="lb-gross">{total || ""}</td>
                   {m.slice(0, Math.min(9, hpr)).map((v, i) => (
-                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                    <HoleCell key={i} n={i + 1} first={i === 0}>{v || ""}</HoleCell>
                   ))}
                   <td className="lb-halftot">{f9 || ""}</td>
                   {!is9 && m.slice(9, 18).map((v, i) => (
-                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                    <HoleCell key={i} n={i + 10} first={i === 0}>{v || ""}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{b9 || ""}</td>}
                   <td /><td /><td />
@@ -413,11 +437,11 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <td className="lb-topar" />
                   <td className="lb-gross">{ref.parPerRound}</td>
                   {ref.par.slice(0, Math.min(9, hpr)).map((v, i) => (
-                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                    <HoleCell key={i} n={i + 1} first={i === 0}>{v}</HoleCell>
                   ))}
                   <td className="lb-halftot">{ref.parF9}</td>
                   {!is9 && ref.par.slice(9, 18).map((v, i) => (
-                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                    <HoleCell key={i} n={i + 10} first={i === 0}>{v}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{ref.parB9}</td>}
                   <td /><td /><td />
@@ -435,12 +459,14 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                 const playerMetric = (pl: PlayerCard, key: SortKey): number | string => {
                   if (key.startsWith("h")) {
                     const hi = parseInt(key.slice(1), 10) - 1;
-                    // score nesse buraco na primeira ronda com dado disponível
+                    // melhor (menor) resultado nesse buraco entre TODAS as
+                    // rondas do jogador.
+                    let best = 99;
                     for (const r of pl.rounds) {
                       const v = r.strokes[hi];
-                      if (v && v > 0) return v;
+                      if (v && v > 0 && v < best) best = v;
                     }
-                    return 99;
+                    return best;
                   }
                   switch (key) {
                     case "name":    return pl.name;
@@ -557,6 +583,9 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           </tbody>
         </table>
       </div>
+
+      {/* ── Linha ecléctica por jogador ── */}
+      <EcleticTable editions={editions} limit={limit} hpr={hpr} is9={is9} />
     </div>
   );
 }
@@ -734,5 +763,293 @@ function ScorecardCells({ r, ed, hpr, is9 }: {
         </>
       )}
     </>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Linha ecléctica ("ringer score")
+   Para cada jogador, o MELHOR resultado em cada buraco ao longo de todas as
+   voltas dessa edição, somado. Mostra o "teto" do jogador — o que faria se
+   juntasse os seus melhores buracos. Só faz sentido com ≥ 2 voltas, e a
+   comparação justa é entre jogadores com o mesmo nº de voltas (garantido por
+   `completed` na edição).
+   ────────────────────────────────────────────────────────────────────────── */
+
+export interface EcleticLine {
+  /** Melhor resultado em cada buraco (0 = buraco nunca jogado). */
+  best: number[];
+  total: number;
+  toPar: number;
+  out: number;
+  inn: number;
+  /** Melhor volta real (menor gross numa só volta). */
+  bestRound: number;
+  /** Quanto o ecléctico bate a melhor volta real (≥ 0 = pancadas "deixadas na mesa"). */
+  delta: number;
+  birds: number;
+  pars: number;
+}
+
+/** Calcula a linha ecléctica de um jogador numa edição. */
+export function buildEclectic(pl: PlayerCard, ed: Edition): EcleticLine {
+  const hpr = ed.holesPerRound;
+  const best: number[] = new Array(hpr).fill(0);
+  for (let h = 0; h < hpr; h++) {
+    let m = 0;
+    for (const r of pl.rounds) {
+      const v = r.strokes[h];
+      if (v && v > 0 && (m === 0 || v < m)) m = v;
+    }
+    best[h] = m;
+  }
+  const total = best.reduce((a, b) => a + (b || 0), 0);
+  const out = best.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0);
+  const inn = !ed.is9 ? best.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
+  const t = tallyHoles(best, ed.par);
+  const bestRound = Math.min(...pl.rounds.map((r) => r.gross));
+  return {
+    best,
+    total,
+    toPar: ed.parPerRound > 0 ? total - ed.parPerRound : 0,
+    out,
+    inn,
+    bestRound,
+    delta: bestRound - total,
+    birds: t.birds,
+    pars: t.pars,
+  };
+}
+
+type EclSortKey = "pos" | "year" | "name" | "country" | "topar" | "gross" | "best" | "delta" | `h${number}`;
+
+interface EclRow {
+  ed: Edition;
+  pl: PlayerCard;
+  ecl: EcleticLine;
+}
+
+function EcleticTable({ editions, limit, hpr, is9 }: {
+  editions: Edition[];
+  limit: number;
+  hpr: number;
+  is9: boolean;
+}) {
+  const [sortKey, setSortKey] = useState<EclSortKey>("pos");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  function toggleSort(k: EclSortKey) {
+    if (sortKey === k) { setSortDir((d) => (d === "asc" ? "desc" : "asc")); return; }
+    setSortKey(k);
+    // delta DESC (mais potencial por libertar primeiro); ano DESC; resto ASC.
+    if (k === "delta" || k === "year") setSortDir("desc");
+    else setSortDir("asc");
+  }
+
+  const rows: EclRow[] = useMemo(() => {
+    const out: EclRow[] = [];
+    for (const ed of editions) {
+      for (const pl of ed.players.slice(0, limit)) {
+        if (pl.rounds.length < 2) continue; // ecléctico exige ≥ 2 voltas
+        out.push({ ed, pl, ecl: buildEclectic(pl, ed) });
+      }
+    }
+    return out;
+  }, [editions, limit]);
+
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const metric = (row: EclRow): number | string => {
+      if (sortKey.startsWith("h")) {
+        const v = row.ecl.best[parseInt(sortKey.slice(1), 10) - 1];
+        return v && v > 0 ? v : 99;
+      }
+      switch (sortKey) {
+        case "year":    return row.ed.year;
+        case "name":    return row.pl.name;
+        case "country": return row.pl.country || "";
+        case "topar":   return row.ecl.toPar;
+        case "gross":   return row.ecl.total;
+        case "delta":   return row.ecl.delta;
+        case "best":    return row.ecl.bestRound;
+        case "pos":
+        default:        return row.ecl.total;
+      }
+    };
+    return [...rows].sort((a, b) => {
+      // "pos" = ordem natural (ano desc, depois melhor ecléctico).
+      if (sortKey === "pos") {
+        const yr = b.ed.year.localeCompare(a.ed.year);
+        if (yr !== 0) return yr;
+        return a.ecl.total - b.ecl.total;
+      }
+      const va = metric(a), vb = metric(b);
+      let cmp: number;
+      if (typeof va === "string" && typeof vb === "string") cmp = va.localeCompare(vb, "pt");
+      else cmp = (va as number) - (vb as number);
+      if (cmp === 0) cmp = a.ecl.total - b.ecl.total; // tiebreak
+      return cmp * dir;
+    });
+  }, [rows, sortKey, sortDir]);
+
+  if (rows.length === 0) return null;
+
+  const ref = editions[0];
+  const trailing = 2; // colunas Melhor + Δ
+
+  return (
+    <details style={{ marginTop: 22 }}>
+      <summary
+        className="fs-13 fw-600"
+        style={{ color: "var(--text)", cursor: "pointer", userSelect: "none", marginBottom: 4 }}
+      >
+        Linha ecléctica{" "}
+        <span className="c-muted fw-400 fs-11">({rows.length} jogador{rows.length === 1 ? "" : "es"})</span>
+      </summary>
+      <div className="muted fs-11 mb-8" style={{ maxWidth: 720, lineHeight: 1.45, marginTop: 6 }}>
+        O <b>melhor resultado de cada jogador em cada buraco</b>, somado nas voltas
+        da edição — o teto de cada um se juntasse os seus melhores buracos.{" "}
+        <b>Δ</b> = quanto o ecléctico bate a melhor volta real (quanto maior, mais
+        ficou por encaixar). Só jogadores com ≥ 2 voltas.
+      </div>
+
+      <div className="bjgt-chart-scroll">
+        <table className="sc-lb sc-lb-with-sc" data-sc-table="1">
+          <thead>
+            <tr>
+              <th className="lb-pos sticky-col-0">#</th>
+              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600" style={{ minWidth: 38 }}>Ano</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</SortableHdr>
+              <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">País</SortableHdr>
+              <th className="lb-tee fs-10 fw-600 c-muted">Ecl</th>
+              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
+              {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
+                <EclHoleHdr key={h} n={h + 1} first={h === 0} sortKey={sortKey} onSort={toggleSort} />
+              ))}
+              <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
+              {!is9 && (
+                <>
+                  {Array.from({ length: 9 }, (_, h) => (
+                    <EclHoleHdr key={h + 9} n={h + 10} first={h === 0} sortKey={sortKey} onSort={toggleSort} />
+                  ))}
+                  <th className="lb-halftot">In</th>
+                </>
+              )}
+              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Melhor</SortableHdr>
+              <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">Δ</SortableHdr>
+            </tr>
+            {/* Linha PAR — referência (edição mais recente). */}
+            {ref?.par && (
+              <tr className="lb-par-row" title={`Par do tee da edição ${ref.year}`}>
+                <td className="sticky-col-0" />
+                <td className="lb-tee fs-10 c-muted">par</td>
+                <td className="lb-par-lbl sticky-col-1" colSpan={3}>PAR</td>
+                <td className="lb-topar" />
+                <td className="lb-gross">{ref.parPerRound}</td>
+                {ref.par.slice(0, Math.min(9, hpr)).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
+                <td className="lb-halftot">{ref.parF9}</td>
+                {!is9 && ref.par.slice(9, 18).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
+                {!is9 && <td className="lb-halftot">{ref.parB9}</td>}
+                {Array.from({ length: trailing }, (_, i) => <td key={i} />)}
+              </tr>
+            )}
+          </thead>
+          <tbody>
+            {sorted.map((row, idx) => (
+              <EcleticRow key={row.ed.tcode + "_" + row.pl.memberId} row={row} pos={idx + 1} hpr={hpr} is9={is9} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  );
+}
+
+function EclHoleHdr({ n, first, sortKey, onSort }: {
+  n: number;
+  first: boolean;
+  sortKey: EclSortKey;
+  onSort: (k: EclSortKey) => void;
+}) {
+  const active = sortKey === `h${n}`;
+  return (
+    <th
+      className={"lb-hole lb-sortable fs-10" + (first ? " lb-hole-first" : "")}
+      onClick={() => onSort(`h${n}` as EclSortKey)}
+      title={`Ordenar pelo melhor resultado no buraco ${n}`}
+      style={{
+        cursor: "pointer",
+        color: active ? "var(--accent)" : undefined,
+        fontWeight: active ? 700 : undefined,
+        background: active ? "var(--accent-light)" : undefined,
+      }}
+    >
+      {n}
+    </th>
+  );
+}
+
+function EcleticRow({ row, pos, hpr, is9 }: {
+  row: EclRow;
+  pos: number;
+  hpr: number;
+  is9: boolean;
+}) {
+  const { ed, pl, ecl } = row;
+  const bg = pos % 2 === 1 ? undefined : "var(--bg-muted)";
+  const par = ed.par || [];
+  const front = ecl.best.slice(0, Math.min(9, hpr));
+  const back = !is9 ? ecl.best.slice(9, 18) : [];
+  return (
+    <tr style={{ background: bg, borderTop: "1px solid var(--border-light)" }}>
+      <td className="lb-pos sticky-col-0" style={{ background: bg }}>{pos}</td>
+      <td className="lb-tee fs-10 fw-600" style={{ color: "var(--text-2)" }}
+          title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
+        {ed.year}
+      </td>
+      <td className="lb-name sticky-col-1 fw-600"
+          style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <a href={`/kids2#${encodeURIComponent(pl.name)}`}
+           target="_blank" rel="noreferrer"
+           style={{ color: "var(--text)", textDecoration: "none" }}>
+          {pl.name}
+        </a>
+      </td>
+      <td className="lb-club">{fmtCountry(pl.country)}</td>
+      <td className="lb-tee fw-600 fs-10" style={{ color: "var(--accent)" }} title={`Ecléctico de ${pl.rounds.length} voltas`}>Ecl</td>
+      <td className="lb-topar"
+          style={{ color: ecl.toPar < 0 ? "var(--color-good)" : ecl.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
+        {ed.parPerRound > 0 ? fmtToPar(ecl.toPar) : "—"}
+      </td>
+      <td className="lb-gross fw-600">{ecl.total}</td>
+      {front.map((sc, i) => (
+        <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+          <span className={"sc-score " + scClass(sc, par[i] ?? null)}>{sc || ""}</span>
+        </td>
+      ))}
+      <td className="lb-halftot">
+        {ecl.out} <span className="fs-10 c-text-3">({fmtToPar(ecl.out - ed.parF9)})</span>
+      </td>
+      {!is9 && (
+        <>
+          {back.map((sc, i) => (
+            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+              <span className={"sc-score " + scClass(sc, par[9 + i] ?? null)}>{sc || ""}</span>
+            </td>
+          ))}
+          <td className="lb-halftot">
+            {ecl.inn} <span className="fs-10 c-text-3">({fmtToPar(ecl.inn - ed.parB9)})</span>
+          </td>
+        </>
+      )}
+      <td className="lb-gross" style={{ color: "var(--text-muted)" }} title="Melhor volta real">{ecl.bestRound}</td>
+      <td className="lb-topar" style={{ color: ecl.delta > 0 ? "var(--color-good)" : "var(--text-muted)" }}
+          title="Pancadas deixadas na mesa (melhor volta − ecléctico)">
+        {ecl.delta > 0 ? "−" + ecl.delta : "0"}
+      </td>
+    </tr>
   );
 }
