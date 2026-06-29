@@ -17,7 +17,7 @@ import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
 import FilterChip from "./FilterChip";
 import { ESC_STYLE } from "./PillBadge";
-import { getTeeHex } from "../utils/teeColors";
+import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { isManuel, SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import {
@@ -40,7 +40,6 @@ export function AllRoundsScorecardLB({
 }) {
   const hideHCP = options?.hideHCP ?? false;
   const hideSD = options?.hideSD ?? false;
-  const clubLabel = options?.clubLabel ?? "Clube";
   const startHole = options?.startHole ?? 1;
   const nameDecorator = options?.nameDecorator;
 
@@ -75,7 +74,7 @@ export function AllRoundsScorecardLB({
   });
 
   const {
-    par, si, meters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds,
+    par, si, meters, teeMeters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
@@ -84,6 +83,19 @@ export function AllRoundsScorecardLB({
     sortKey, sortDir, toggleSort,
     availClubs, availEsc, availTees, clearFilter,
   } = d;
+
+  /* Marca de tee — só o quadrado colorido (substitui a coluna de clube no scorecard) */
+  function TeeLabel({ tee }: { tee?: string }) {
+    if (!tee) return <span className="muted">–</span>;
+    const hex = getTeeHex(tee);
+    const bdr = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
+    return (
+      <span
+        title={tee}
+        style={{ display: "inline-block", width: 12, height: 12, borderRadius: 2, background: hex, border: bdr }}
+      />
+    );
+  }
 
   /* Renderizar células de score buraco-a-buraco */
   function ScoreCells({ scores, pars }: { scores: number[]; pars: number[] }) {
@@ -241,37 +253,51 @@ export function AllRoundsScorecardLB({
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb" + (showSC ? " sc-lb-with-sc" : "")} data-sc-table="1">
           <thead>
-            {/* Linha Metros — só aparece quando o ficheiro traz distâncias */}
-            {showSC && hasMeters && (
-              <tr className="lb-si-row">
-                <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>
-                  Metros
-                </td>
-                <td className="lb-topar" />
-                <td className="lb-gross">{meters.slice(0, nh).reduce((a, b) => a + (Number(b) || 0), 0) || ""}</td>
-                {meters.slice(0, 9).map((v, i) => (
-                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                    {v || ""}
-                  </td>
-                ))}
-                <td className="lb-halftot">
-                  {meters.slice(0, 9).reduce((a, b) => a + (Number(b) || 0), 0) || ""}
-                </td>
-                {!is9 &&
-                  meters.slice(9, 18).map((v, i) => (
-                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                      {v || ""}
+            {/* Linhas Metros — uma por cada tee distinto jogado (rapazes/raparigas
+                /escalões jogam tees diferentes), com a respectiva distância. Cai
+                para uma única linha "Metros" quando só existe a referência da ronda. */}
+            {showSC && hasMeters &&
+              (teeMeters.length ? teeMeters : [{ teeName: "", meters }]).map((tm) => {
+                const mArr = tm.meters.slice(0, nh);
+                const hex = tm.teeName ? getTeeHex(tm.teeName) : null;
+                const bdr = hex ? teeBorder(hex) || "1px solid rgba(0,0,0,.18)" : undefined;
+                const mTot = mArr.reduce((a, b) => a + (Number(b) || 0), 0);
+                const mF9 = mArr.slice(0, 9).reduce((a, b) => a + (Number(b) || 0), 0);
+                const mB9 = mArr.slice(9).reduce((a, b) => a + (Number(b) || 0), 0);
+                return (
+                  <tr key={tm.teeName || "metros"} className="lb-si-row">
+                    <td className="sticky-col-0" />
+                    <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>
+                      {tm.teeName ? (
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                          <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: hex!, border: bdr, flexShrink: 0 }} />
+                          <span>{tm.teeName}</span>
+                        </span>
+                      ) : (
+                        "Metros"
+                      )}
                     </td>
-                  ))}
-                {!is9 && (
-                  <td className="lb-halftot">{meters.slice(9).reduce((a, b) => a + (Number(b) || 0), 0) || ""}</td>
-                )}
-                {Array.from({ length: postCols }, (_, i) => (
-                  <td key={i} />
-                ))}
-              </tr>
-            )}
+                    <td className="lb-topar" />
+                    <td className="lb-gross">{mTot || ""}</td>
+                    {mArr.slice(0, 9).map((v, i) => (
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                        {v || ""}
+                      </td>
+                    ))}
+                    <td className="lb-halftot">{mF9 || ""}</td>
+                    {!is9 &&
+                      mArr.slice(9, 18).map((v, i) => (
+                        <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                          {v || ""}
+                        </td>
+                      ))}
+                    {!is9 && <td className="lb-halftot">{mB9 || ""}</td>}
+                    {Array.from({ length: postCols }, (_, i) => (
+                      <td key={i} />
+                    ))}
+                  </tr>
+                );
+              })}
             {/* Linha S.I. */}
             {showSC && hasSI && (
               <tr className="lb-si-row">
@@ -332,7 +358,7 @@ export function AllRoundsScorecardLB({
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">{clubLabel}</SortableHdr>
+              <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Tee</SortableHdr>
               {!hideHCP && (
                 <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
               )}
@@ -402,8 +428,8 @@ export function AllRoundsScorecardLB({
                                 <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>
                               )}
                             </td>
-                            <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>
-                              {row.club || "–"}
+                            <td className="lb-club" style={{ borderTop: bTop }}>
+                              {isFirstRd ? <TeeLabel tee={row.teeName} /> : ""}
                             </td>
                             {!hideHCP && (
                               <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>
@@ -451,7 +477,7 @@ export function AllRoundsScorecardLB({
                             )
                           : row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
                       </td>
-                      <td className="lb-club">{row.club || "–"}</td>
+                      <td className="lb-club"><TeeLabel tee={row.teeName} /></td>
                       {!hideHCP && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
                       <td className="lb-tee fw-600 fs-10 c-muted">{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color: rd.toPar < 0 ? "var(--color-good)" : rd.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>

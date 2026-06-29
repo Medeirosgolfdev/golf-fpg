@@ -119,7 +119,7 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
   const availSex   = useMemo(() => { const s = new Set<string>(); for (const r of rows) { const sx = resolveSex(r, playersDB, sexByName); if (sx) s.add(sx); } return [...s] as ("M"|"F")[]; }, [rows, playersDB, sexByName]);
   const availYears = useMemo(() => { const s = new Set<number>(); for (const r of rows) { const y = rowBirthYear(r, playersDB); if (y != null) s.add(y); } return [...s].sort((a, b) => a - b); }, [rows, playersDB]);
   const selYears = filter.birthYears || [];
-  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex || selYears.length;
+  const isActive = !!(filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex || selYears.length);
   const filtered = useMemo(() => filterRows(rows, filter, playersDB, sexByName), [rows, filter, playersDB, sexByName]);
   const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1 || availSex.length === 2 || availYears.length > 1;
   if (total < 8 && !isActive) return null;

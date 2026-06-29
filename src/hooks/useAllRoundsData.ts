@@ -114,6 +114,10 @@ export interface AllRoundsResult {
   par: number[];
   si: number[];
   meters: number[];
+  /** Metros por tee distinto jogado — uma entrada por cada tee usado pelos
+   *  jogadores (rapazes/raparigas/escalões jogam tees diferentes). Permite
+   *  mostrar TODAS as distâncias jogadas e não só a do primeiro jogador. */
+  teeMeters: { teeName: string; meters: number[] }[];
   nh: number;
   is9: boolean;
   parF9: number;
@@ -203,8 +207,44 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   const parB9 = !is9 ? par.slice(9).reduce((a, b) => a + b, 0) : 0;
   const parTot = par.reduce((a, b) => a + b, 0);
   const hasSI = si.length >= nh;
-  // Linha de metros só aparece quando o ficheiro traz distâncias reais (> 0).
-  const hasMeters = meters.slice(0, nh).some((v) => Number(v) > 0);
+
+  // Metros por tee distinto — recolhe de TODOS os jogadores/rondas (não só o
+  // primeiro). Cada tee usado gera uma linha "m" própria no scorecard.
+  const teeMeters = useMemo(() => {
+    const map = new Map<string, number[]>();
+    for (const p of tournament.players) {
+      const rsList = p.roundScores?.length
+        ? p.roundScores
+        : ([{ meters: (p as any).meters, teeName: p.teeName }] as { meters?: number[]; teeName?: string }[]);
+      for (const rs of rsList) {
+        const tn = rs.teeName || p.teeName;
+        const m = rs.meters?.length ? rs.meters : (p as any).meters;
+        if (
+          tn &&
+          Array.isArray(m) &&
+          m.length >= nh &&
+          m.slice(0, nh).some((v) => Number(v) > 0) &&
+          !map.has(tn)
+        ) {
+          map.set(tn, m);
+        }
+      }
+    }
+    return Array.from(map.entries())
+      .map(([teeName, m]) => ({
+        teeName,
+        meters: m,
+        _tot: m.slice(0, nh).reduce((a, b) => a + (Number(b) || 0), 0),
+      }))
+      // Ordenar por distância total — tee mais comprido primeiro (convenção de scorecard).
+      .sort((a, b) => b._tot - a._tot)
+      .map(({ teeName, meters }) => ({ teeName, meters }));
+  }, [tournament, nh]);
+
+  // Linha de metros só aparece quando há distâncias reais (> 0), seja por tee
+  // ou na referência da ronda.
+  const hasMeters =
+    teeMeters.length > 0 || meters.slice(0, nh).some((v) => Number(v) > 0);
 
   // Build round data para um jogador + ronda
   function buildRdData(p: Player, rdNum: number): RdData | null {
@@ -369,6 +409,10 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
         case "club":
           return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
+        case "tee":
+          return sortDir === "asc"
+            ? (a.teeName || "").localeCompare(b.teeName || "", "pt")
+            : (b.teeName || "").localeCompare(a.teeName || "", "pt");
         case "hcp":
           return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
         default:
@@ -421,6 +465,10 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
         case "club":
           return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
+        case "tee":
+          return sortDir === "asc"
+            ? (a.teeName || "").localeCompare(b.teeName || "", "pt")
+            : (b.teeName || "").localeCompare(a.teeName || "", "pt");
         case "hcp":
           return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
         default:
@@ -475,7 +523,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   }, [sortedGrouped]);
 
   return {
-    par, si, meters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds, roundRefs,
+    par, si, meters, teeMeters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds, roundRefs,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
