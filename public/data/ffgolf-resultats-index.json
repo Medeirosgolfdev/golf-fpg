@@ -1,8 +1,188 @@
 {
-  "generatedAt": "2026-06-22T07:30:54.549Z",
+  "generatedAt": "2026-06-29T06:54:19.446Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1628,
+  "total": 1632,
   "tournaments": [
+    {
+      "file": "01-00-2601449842.json",
+      "trnId": "2601449842",
+      "name": "Mini Tour U10 PACA - Etape 1",
+      "formule": "Simple",
+      "date": "27/06/2026",
+      "dateIso": "2026-06-27",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 22,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "Simple Score maximum",
+          "players": 4
+        },
+        {
+          "serieId": "17",
+          "label": "Simple Score maximum",
+          "players": 5
+        },
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 9
+        },
+        {
+          "serieId": "26",
+          "label": "Simple Score maximum",
+          "players": 1
+        },
+        {
+          "serieId": "28",
+          "label": "Simple Score maximum",
+          "players": 1
+        },
+        {
+          "serieId": "210",
+          "label": "Simple Score maximum",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601449860.json",
+      "trnId": "2601449860",
+      "name": "TOUR 5 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "formule": "Simple",
+      "date": "27/06/2026",
+      "dateIso": "2026-06-27",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 10,
+      "divisions": [
+        {
+          "serieId": "16",
+          "label": "Simple Stroke play",
+          "players": 2
+        },
+        {
+          "serieId": "25",
+          "label": "Simple Stroke play",
+          "players": 2
+        },
+        {
+          "serieId": "116",
+          "label": "Simple Stroke play",
+          "players": 4
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Stroke play",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-04-2601442158.json",
+      "trnId": "2601442158",
+      "name": "Grand Prix Jeunes de Barcelonnette Pra-Loup",
+      "formule": "Simple",
+      "date": "27/06/2026",
+      "dateIso": "2026-06-27",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 4,
+      "totalPlayers": 63,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "Simple Stroke play",
+          "players": 5
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Stroke play",
+          "players": 25
+        },
+        {
+          "serieId": "115",
+          "label": "Simple Stroke play",
+          "players": 31
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Stroke play",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601444238.json",
+      "trnId": "2601444238",
+      "name": "CHAMPIONNAT DEPARTEMENTAL 13 - U16,U14,U12,U10",
+      "formule": "Simple",
+      "date": "21/06/2026",
+      "dateIso": "2026-06-21",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 35,
+      "divisions": [
+        {
+          "serieId": "17",
+          "label": "Simple Score maximum",
+          "players": 14
+        },
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 9
+        },
+        {
+          "serieId": "28",
+          "label": "Simple Score maximum",
+          "players": 2
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Score maximum",
+          "players": 5
+        },
+        {
+          "serieId": "210",
+          "label": "Simple Score maximum",
+          "players": 2
+        },
+        {
+          "serieId": "212",
+          "label": "Simple Score maximum",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
     {
       "file": "03-07-2601415658.json",
       "trnId": "2601415658",
