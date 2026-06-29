@@ -1,13 +1,13 @@
 {
   "tourId": 70285,
   "url": "https://www.nextcaddy.com/tour/70285",
-  "scrapedAt": "2026-06-24T14:55:26.756Z",
+  "scrapedAt": "2026-06-29T09:18:04.647Z",
   "meta": {
     "name": "ProAm 2ª Jornada - Campeonato de Madrid de Profesionales PGAE",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": null,
+    "dateStart": "2026-04-28",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Espec",
     "categories": [
@@ -18,7 +18,9 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-04-28",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -331,7 +333,7 @@
     {
       "orden": 22,
       "name": "David Jose Muñoz Sanz",
-      "licencia": "CM52106779",
+      "licencia": "CM07106779",
       "hcp": null,
       "nivel": "Mid"
     },
@@ -1986,18 +1988,18 @@
         {
           "time": "14:30",
           "tee": 9,
-          "name": "Gregorio Querol Mateos",
+          "name": "Hugo Esposito Menard",
           "hcp": 0,
-          "ins": "2305213",
+          "ins": "2305212",
           "jid": "75211",
           "nivel": "P"
         },
         {
           "time": "14:30",
           "tee": 9,
-          "name": "Hugo Esposito Menard",
+          "name": "Gregorio Querol Mateos",
           "hcp": 0,
-          "ins": "2305212",
+          "ins": "2305213",
           "jid": "75211",
           "nivel": "P"
         },
@@ -2499,7 +2501,7 @@
     }
   },
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1701914894_arb_reg_loc_cm2762025.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-24T15:00:53.810Z"
+  ]
 }

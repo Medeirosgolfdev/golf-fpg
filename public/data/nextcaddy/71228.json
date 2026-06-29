@@ -1,13 +1,13 @@
 {
   "tourId": 71228,
   "url": "https://www.nextcaddy.com/tour/71228",
-  "scrapedAt": "2026-06-24T14:56:43.725Z",
+  "scrapedAt": "2026-06-29T09:18:11.536Z",
   "meta": {
     "name": "Torneo Madres e Hijos RFGM",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
+    "dateStart": "2026-05-30",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,7 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-05-30",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -105,13 +107,6 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO 1",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
       "name": "Eugenia Diaz De Bustamante Pereda",
       "licencia": "1101073641",
       "hcp": 7.2,
@@ -137,13 +132,6 @@
       "licencia": "CM00526659",
       "hcp": null,
       "nivel": "B"
-    },
-    {
-      "orden": null,
-      "name": "EQUIPO 1",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
     },
     {
       "orden": null,
@@ -175,13 +163,6 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO 1",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
       "name": "Jaime Rivas Torralvo",
       "licencia": "CM04938240",
       "hcp": 6.9,
@@ -210,13 +191,6 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO 1",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
       "name": "Ines Muñoz Manzano",
       "licencia": "CM04100617",
       "hcp": 6.5,
@@ -242,13 +216,6 @@
       "licencia": "CM02524428",
       "hcp": null,
       "nivel": "B"
-    },
-    {
-      "orden": null,
-      "name": "EQUIPO 1",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
     },
     {
       "orden": null,
@@ -411,18 +378,18 @@
         {
           "time": "10:30",
           "tee": 3,
-          "name": "Guillermo Perez Martinez-Avial",
+          "name": "Ines Porres Asensio",
           "hcp": 54,
-          "ins": "2331310",
+          "ins": "2331308",
           "jid": "76277",
           "nivel": "B"
         },
         {
           "time": "10:30",
           "tee": 3,
-          "name": "Ines Porres Asensio",
+          "name": "Guillermo Perez Martinez-Avial",
           "hcp": 54,
-          "ins": "2331308",
+          "ins": "2331310",
           "jid": "76277",
           "nivel": "B"
         },
@@ -590,7 +557,7 @@
   ],
   "scoreTypes": [],
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/841357604_71228-torneo-madres-e-hijos-rfgm.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-24T15:01:04.266Z"
+  ]
 }

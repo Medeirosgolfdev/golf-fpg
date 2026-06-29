@@ -1,13 +1,13 @@
 {
   "tourId": 61117,
   "url": "https://www.nextcaddy.com/tour/61117",
-  "scrapedAt": "2026-06-24T14:55:29.972Z",
+  "scrapedAt": "2026-06-29T09:18:05.427Z",
   "meta": {
     "name": "Circuito Femenino Jueves",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
-    "dateStart": null,
+    "dateStart": "2026-04-30",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Femeni",
     "categories": [
@@ -16,7 +16,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-04-30",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -79,7 +81,7 @@
     },
     {
       "orden": null,
-      "name": "Ana Fernandez De Valderrama De La Escal",
+      "name": "Ana Fernandez De Valderrama De La Escalera",
       "licencia": "AM75185777",
       "hcp": 14.3,
       "nivel": "S"
@@ -1107,7 +1109,7 @@
         {
           "time": "09:40",
           "tee": 1,
-          "name": "Ana Fernandez De Valderrama De La Escal",
+          "name": "Ana Fernandez De Valderrama De La Escalera",
           "hcp": 14.3,
           "ins": "2277215",
           "jid": "64732",
@@ -1437,8 +1439,8 @@
     }
   },
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
     "/uploads/competiciones/pdf/2939761397_reglas_locales_circuito_femenino_rfga_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-24T14:59:47.994Z"
+  ]
 }

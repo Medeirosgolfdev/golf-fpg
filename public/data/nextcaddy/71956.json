@@ -1,0 +1,618 @@
+{
+  "tourId": 71956,
+  "url": "https://www.nextcaddy.com/tour/71956",
+  "scrapedAt": "2026-06-29T09:18:18.920Z",
+  "meta": {
+    "name": "AMIGOS DE MIRAFLORES 27/06",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-06-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2352052
+        },
+        {
+          "pos": 2,
+          "name": "Raul Jose Lozada Olmedo",
+          "licencia": "AME2930732",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2352059
+        },
+        {
+          "pos": 3,
+          "name": "Rafael Gallego Aguado",
+          "licencia": "AM93902969",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2352060
+        },
+        {
+          "pos": 4,
+          "name": "Guy Bisin",
+          "licencia": "AM76071888",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2352055
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2352044
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2352051
+        },
+        {
+          "pos": 7,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2352053
+        },
+        {
+          "pos": 8,
+          "name": "Luis Angel Jaramillo Morillo",
+          "licencia": "AM72059210",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2352050
+        },
+        {
+          "pos": 9,
+          "name": "Joaquin Alberto Morales Martinez",
+          "licencia": "AM06168882",
+          "hcp": 22.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2352058
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Del Campo Vicente",
+          "licencia": "7724148919",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2352056
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Luis Angel Jaramillo Morillo",
+      "licencia": "AM72059210",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Guy Bisin",
+      "licencia": "AM76071888",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Carlos Del Campo Vicente",
+      "licencia": "7724148919",
+      "hcp": 12,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Joaquin Alberto Morales Martinez",
+      "licencia": "AM06168882",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Raul Jose Lozada Olmedo",
+      "licencia": "AME2930732",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Rafael Gallego Aguado",
+      "licencia": "AM93902969",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 22.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160436,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            40
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            69
+          ],
+          [
+            "Peor",
+            58
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160437,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            2
+          ],
+          [
+            "2",
+            6
+          ],
+          [
+            "3",
+            23
+          ],
+          [
+            "4",
+            19
+          ],
+          [
+            "5",
+            17
+          ],
+          [
+            "6",
+            16
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            6
+          ],
+          [
+            "9",
+            8
+          ],
+          [
+            "10",
+            9
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            15
+          ],
+          [
+            "13",
+            6
+          ],
+          [
+            "14",
+            10
+          ],
+          [
+            "15",
+            9
+          ],
+          [
+            "16",
+            10
+          ],
+          [
+            "17",
+            15
+          ],
+          [
+            "18",
+            13
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160438,
+        "datos": [
+          [
+            "Hoyo",
+            "ALFONSO ROSALES MATA ",
+            "RAUL LOZADA OLMEDO",
+            "RAFAEL GALLEGO AGUADO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            -3,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -4,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -4,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -3,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160439,
+        "datos": [
+          [
+            "Hoyo",
+            "ALFONSO ROSALES MATA ",
+            "RAUL LOZADA OLMEDO",
+            "RAFAEL GALLEGO AGUADO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            2,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77103
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-06-29T09:18:56.365Z"
+}

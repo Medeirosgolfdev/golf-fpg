@@ -1,13 +1,13 @@
 {
   "tourId": 66590,
   "url": "https://www.nextcaddy.com/tour/66590",
-  "scrapedAt": "2026-06-24T14:51:47.750Z",
+  "scrapedAt": "2026-06-29T09:17:55.466Z",
   "meta": {
     "name": "Torneo de Navidad Padres e Hijos Infantil / Cadete  Four ball ·  10:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
+    "dateStart": "2026-01-04",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,7 +18,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-01-04",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -588,20 +590,20 @@
         {
           "time": "10:30",
           "tee": 8,
-          "name": "Hugo Diaz Ramos",
-          "hcp": 36,
-          "ins": "2236551",
-          "jid": "70954",
-          "nivel": "I"
-        },
-        {
-          "time": "10:30",
-          "tee": 8,
           "name": "Victor Rafael Diaz Diaz",
           "hcp": 36,
           "ins": "2236550",
           "jid": "70954",
           "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Hugo Diaz Ramos",
+          "hcp": 36,
+          "ins": "2236551",
+          "jid": "70954",
+          "nivel": "I"
         },
         {
           "time": "10:30",
@@ -997,7 +999,7 @@
     }
   },
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/66590_cartel_413.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-24T14:59:58.176Z"
+  ]
 }

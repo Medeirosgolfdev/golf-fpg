@@ -1,13 +1,13 @@
 {
   "tourId": 61164,
   "url": "https://www.nextcaddy.com/tour/61164",
-  "scrapedAt": "2026-06-24T14:57:23.571Z",
+  "scrapedAt": "2026-06-29T09:18:15.660Z",
   "meta": {
     "name": "Final Circuito Femenino",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Golf el Rompido",
     "courseCode": "AMA9",
-    "dateStart": null,
+    "dateStart": "2026-06-16",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Femeni",
     "categories": [
@@ -16,7 +16,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-16",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -121,7 +123,7 @@
     },
     {
       "orden": null,
-      "name": "Ana Fernandez De Valderrama De La Escal",
+      "name": "Ana Fernandez De Valderrama De La Escalera",
       "licencia": "AM75185777",
       "hcp": 14.4,
       "nivel": "S"
@@ -756,7 +758,7 @@
         {
           "time": "09:00",
           "tee": 3,
-          "name": "Ana Fernandez De Valderrama De La Escal",
+          "name": "Ana Fernandez De Valderrama De La Escalera",
           "hcp": 14.4,
           "ins": "2320302",
           "jid": "64807",
@@ -1535,7 +1537,7 @@
         {
           "time": "09:00",
           "tee": 7,
-          "name": "Ana Fernandez De Valderrama De La Escal",
+          "name": "Ana Fernandez De Valderrama De La Escalera",
           "hcp": 14.4,
           "ins": "2320302",
           "jid": "64808",
@@ -2817,9 +2819,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1046935814_web.pdf",
     "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
     "/uploads/competiciones/pdf/2150759737_web.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-24T14:59:51.132Z"
+  ]
 }

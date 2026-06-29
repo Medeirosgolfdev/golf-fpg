@@ -88,7 +88,49 @@
       "nivel": "CM66150463"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Jose Muñoz Mora",
+          "hcp": 24.7,
+          "ins": "2349275",
+          "jid": "76688",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jose Luis Ortega Herraiz",
+          "hcp": 25.7,
+          "ins": "2350036",
+          "jid": "76688",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Carlos Colombo Flethes",
+          "hcp": 28.5,
+          "ins": "2343780",
+          "jid": "76688",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Javier Olmedo Ruiz",
+          "hcp": 34.3,
+          "ins": "2349252",
+          "jid": "76688",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -117,5 +159,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:01:07.872Z"
+  "horariosScrapedAt": "2026-06-29T09:18:54.760Z"
 }

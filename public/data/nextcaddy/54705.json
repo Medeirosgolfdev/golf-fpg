@@ -24,15 +24,15 @@
   },
   "course": {
     "par": [
-      3,
-      3,
+      4,
+      4,
+      4,
+      4,
       4,
       3,
       3,
-      3,
-      3,
-      3,
-      3
+      4,
+      4
     ],
     "si": [
       16,
@@ -55,7 +55,10 @@
       111,
       194,
       71
-    ]
+    ],
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "low"
   },
   "leaderboard": [
     {

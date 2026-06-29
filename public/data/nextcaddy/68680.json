@@ -1,13 +1,13 @@
 {
   "tourId": 68680,
   "url": "https://www.nextcaddy.com/tour/68680",
-  "scrapedAt": "2026-06-24T14:53:16.924Z",
+  "scrapedAt": "2026-06-29T09:17:58.780Z",
   "meta": {
     "name": "World Pitch & Putt Tour - Domingo",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-03-01",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,7 +18,9 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-03-01",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -300,6 +302,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:34.841Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

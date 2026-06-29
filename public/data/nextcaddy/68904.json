@@ -1,13 +1,13 @@
 {
   "tourId": 68904,
   "url": "https://www.nextcaddy.com/tour/68904",
-  "scrapedAt": "2026-06-24T14:55:44.848Z",
+  "scrapedAt": "2026-06-29T09:18:06.610Z",
   "meta": {
     "name": "II Torneo RKN Dobles Fourball · Turno de Mañana 9:30 · Turno de Tarde 17:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
+    "dateStart": "2026-05-08",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,7 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-05-08",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -1005,20 +1007,20 @@
         {
           "time": "17:00",
           "tee": 4,
-          "name": "David Diaz Hernandez",
-          "hcp": 19.2,
-          "ins": "2305585",
-          "jid": "73604",
-          "nivel": "S"
-        },
-        {
-          "time": "17:00",
-          "tee": 4,
           "name": "Jorge Navio Abad",
           "hcp": 19.2,
           "ins": "2305584",
           "jid": "73604",
           "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 4,
+          "name": "David Diaz Hernandez",
+          "hcp": 19.2,
+          "ins": "2305585",
+          "jid": "73604",
+          "nivel": "S"
         },
         {
           "time": "17:00",
@@ -1364,6 +1366,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:38.877Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }
