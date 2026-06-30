@@ -117,28 +117,23 @@ export interface HolePlan {
   getsStroke: boolean;
   expVsPar: number | null;
   expStrokes: number | null;
+  /** Cenários por buraco: melhor volta recente (já consegue) e teto (pode). */
+  expJa: number | null;
+  expPode: number | null;
   tag: HoleTag;
   note: string;
   /** vsPar médio do field na edição anterior (null se sem dados). */
   fieldVsPar: number | null;
 }
 
-export interface GamePlanOpts { driveM: number; secondM: number; courseHcp: number; fieldVsPar?: (number | null)[] }
+export interface GamePlanOpts { driveM: number; secondM: number; courseHcp: number; fieldVsPar?: (number | null)[]; jaRound?: number | null; podeRound?: number | null }
 
 export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts): HolePlan[] {
-  const { driveM, secondM, courseHcp, fieldVsPar } = opts;
+  const { driveM, secondM, courseHcp, fieldVsPar, jaRound, podeRound } = opts;
   const chRounded = Math.round(courseHcp);
-  // Terciles da dificuldade do field (edição anterior) → atacar/defender.
-  let easyTh: number | null = null, hardTh: number | null = null;
-  if (fieldVsPar) {
-    const vals = fieldVsPar.filter((v): v is number => v != null).sort((a, b) => a - b);
-    if (vals.length >= 6) {
-      easyTh = vals[Math.floor((vals.length - 1) * 0.34)];
-      hardTh = vals[Math.floor((vals.length - 1) * 0.66)];
-    }
-  }
-  const out: HolePlan[] = [];
-  for (const h of tee.holes) {
+
+  // ── Passe 1: base por buraco (par/dist/alcance/expectativa média) ──
+  const base = tee.holes.map(h => {
     const par = h.par;
     const dist = h.distance;
     const si = h.si;
@@ -149,46 +144,77 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     let reach: "reg" | "stretch" | "out" = "reg";
     let remainingAfterDrive: number | null = null;
     let note = "";
-    let tag: HoleTag = "neutral";
 
     if (par === 3) {
-      remainingAfterDrive = null;
       reach = dist == null ? "reg" : dist <= driveM ? "reg" : dist <= driveM * 1.08 ? "stretch" : "out";
-      if (dist != null && dist <= 130) { tag = "attack"; note = "Ferro curto — apontar à bandeira."; }
-      else if (reach === "out" || (dist != null && dist > 175)) { tag = "defend"; note = "Par-3 longo — centro do green, par é bom."; }
-      else { tag = "neutral"; note = "Centro do green."; }
+      note = dist != null && dist <= 130 ? "Ferro curto — apontar à bandeira."
+        : (reach === "out" || (dist != null && dist > 175)) ? "Par-3 longo — centro do green."
+        : "Centro do green.";
     } else if (par === 4) {
       remainingAfterDrive = dist != null ? Math.max(0, dist - driveM) : null;
       const rem = remainingAfterDrive;
       reach = rem == null ? "reg" : rem <= secondM ? "reg" : rem <= secondM * 1.15 ? "stretch" : "out";
-      if (rem != null && rem <= 110) { tag = "attack"; note = "Drive + wedge — buraco de birdie."; }
-      else if (reach === "out") { tag = "defend"; note = "Fora de alcance em 2 — jogar para bogey/par seguro."; }
-      else { tag = "neutral"; note = `Drive + ${rem != null ? Math.round(rem) + "m" : "ferro"} ao green.`; }
+      note = rem != null && rem <= 110 ? "Drive + wedge — buraco de birdie."
+        : reach === "out" ? "Fora de alcance em 2 — jogar seguro."
+        : `Drive + ${rem != null ? Math.round(rem) + "m" : "ferro"} ao green.`;
     } else if (par === 5) {
       const afterDrive = dist != null ? Math.max(0, dist - driveM) : null;
       remainingAfterDrive = afterDrive;
       const reachableIn2 = afterDrive != null && afterDrive <= secondM * 1.05;
       reach = afterDrive == null ? "reg" : reachableIn2 ? "reg" : afterDrive <= secondM * 2 ? "stretch" : "out";
-      if (reachableIn2) { tag = "attack"; note = "Alcançável em 2 — oportunidade de birdie/eagle."; }
-      else { tag = "neutral"; note = "Par-5 de 3 pancadas — lay-up para a distância preferida."; }
-    } else {
-      note = "";
+      note = reachableIn2 ? "Alcançável em 2 — oportunidade de birdie."
+        : "Par-5 de 3 pancadas — lay-up para a distância preferida.";
     }
 
-    // Classificação PREFERE a dificuldade real do field na edição anterior
-    // (atacar = buracos fáceis para o field, defender = difíceis). Sem field,
-    // cai na heurística + desempenho do Manuel.
-    const fv = fieldVsPar?.[h.hole - 1] ?? null;
-    if (fv != null && easyTh != null && hardTh != null) {
-      tag = fv >= hardTh ? "defend" : fv <= easyTh ? "attack" : "neutral";
-    } else if (expVsPar != null) {
-      if (expVsPar <= 0.1 && tag !== "defend") { tag = "attack"; }
-      else if (expVsPar >= 1.0) { tag = "defend"; }
-    }
+    return {
+      hole: h.hole, par, si, dist, remainingAfterDrive, reach, getsStroke,
+      expVsPar, expStrokes, note, fieldVsPar: fieldVsPar?.[h.hole - 1] ?? null,
+    };
+  });
 
-    out.push({ hole: h.hole, par, si, dist, remainingAfterDrive, reach, getsStroke, expVsPar, expStrokes, tag, note, fieldVsPar: fv });
-  }
-  return out;
+  const n = tee.holes.length || 18;
+  const parTotal = base.reduce((a, r) => a + (r.par ?? 0), 0);
+  const profileTotal = base.reduce((a, r) => a + (r.expStrokes ?? (r.par ?? 0)), 0);
+  const overPar = profileTotal - parTotal;
+
+  // Redistribui a volta média do Manuel pela DIFICULDADE REAL de cada buraco
+  // (vsPar do field na edição anterior) — dá spread real por buraco em vez de
+  // um valor quase plano por par. Sem field, mantém o perfil do Manuel.
+  const fieldW = base.map(r => Math.max(0, r.fieldVsPar ?? 0));
+  const sumW = fieldW.reduce((a, b) => a + b, 0);
+  const useField = base.filter(r => r.fieldVsPar != null).length >= 10 && sumW > 0;
+  const media = base.map((r, i) => {
+    if (r.par == null) return r.expStrokes;
+    return useField ? r.par + overPar * (fieldW[i] / sumW) : r.expStrokes;
+  });
+
+  // mediaTotal preserva-se (= profileTotal); Já/Pode descem a curva.
+  const cJa = (jaRound != null) ? (profileTotal - jaRound) / n : null;
+  const cPode = (podeRound != null) ? (profileTotal - podeRound) / n : null;
+
+  // Terciles da dificuldade por buraco (= média vsPar) → atacar/neutro/defender,
+  // sempre com spread e alinhado à coluna Média.
+  const vsParSorted = media
+    .map((mv, i) => (mv != null && base[i].par != null) ? mv - (base[i].par as number) : null)
+    .filter((v): v is number => v != null)
+    .sort((a, b) => a - b);
+  const easyTh = vsParSorted.length >= 6 ? vsParSorted[Math.floor((vsParSorted.length - 1) * 0.34)] : null;
+  const hardTh = vsParSorted.length >= 6 ? vsParSorted[Math.floor((vsParSorted.length - 1) * 0.66)] : null;
+
+  return base.map((r, i) => {
+    const expStrokes = media[i];
+    const expVsPar = (expStrokes != null && r.par != null) ? expStrokes - r.par : r.expVsPar;
+    const expJa = (expStrokes != null && cJa != null) ? expStrokes - cJa : null;
+    const expPode = (expStrokes != null && cPode != null) ? expStrokes - cPode : null;
+    const vsPar = (expStrokes != null && r.par != null) ? expStrokes - r.par : null;
+    let tag: HoleTag = "neutral";
+    if (vsPar != null && easyTh != null && hardTh != null) {
+      tag = vsPar <= easyTh ? "attack" : vsPar >= hardTh ? "defend" : "neutral";
+    } else if (expStrokes == null) {
+      tag = r.reach === "out" ? "defend" : "neutral";
+    }
+    return { ...r, expVsPar, expStrokes, expJa, expPode, tag };
+  });
 }
 
 // ── 3. Estimativa de score do field (edicoes passadas) ───────────────────
@@ -390,4 +416,25 @@ export function topFieldHoleStats(
     }));
   }
   return { year: String(best.year), roundKeys, par, players: top.map(p => p.name), holes };
+}
+
+
+/** Âncoras de Score Differential do jogador para os 3 cenários de previsão:
+ *  melhor volta RECENTE (últimos `months` meses) e melhor de SEMPRE (teto). */
+export function playerSdAnchors(pd: PlayerPageData | null, months = 6): { bestRecentSD: number | null; bestAllSD: number | null } {
+  if (!pd) return { bestRecentSD: null, bestAllSD: null };
+  const cut = Date.now() - months * 30.4 * 24 * 3600 * 1000;
+  let bestAll = Infinity, bestRecent = Infinity;
+  for (const c of pd.DATA || []) {
+    for (const r of c.rounds || []) {
+      if (r.holeCount !== 18 || typeof r.sd !== "number") continue;
+      if (r.sd < bestAll) bestAll = r.sd;
+      const ts = parseRoundDate((r as { date?: string }).date);
+      if (ts != null && ts >= cut && r.sd < bestRecent) bestRecent = r.sd;
+    }
+  }
+  return {
+    bestRecentSD: bestRecent === Infinity ? null : bestRecent,
+    bestAllSD: bestAll === Infinity ? null : bestAll,
+  };
 }

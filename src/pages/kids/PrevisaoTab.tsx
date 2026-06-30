@@ -24,7 +24,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { loadPlayerData } from "../../data/playerDataLoader";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 import { MANUEL_FED } from "../../constants/manuel";
-import { buildHoleProfile, buildGamePlan, estimateField, fieldHoleVsPar, topFieldHoleStats, type HolePlan } from "./previsaoModel";
+import { buildHoleProfile, buildGamePlan, estimateField, fieldHoleVsPar, topFieldHoleStats, playerSdAnchors, type HolePlan } from "./previsaoModel";
 import HoleDiffTable from "../../ui/HoleDiffTable";
 import KpiCard from "../../ui/KpiCard";
 import { scClass } from "../../utils/scoreDisplay";
@@ -123,9 +123,12 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   const profile = useMemo(() => buildHoleProfile(playerData), [playerData]);
   const fieldVsPar = useMemo(() => fieldHoleVsPar(mh as never, torneio as never, escalaoNome), [mh, torneio, escalaoNome]);
   const topField = useMemo(() => topFieldHoleStats(mh as never, torneio as never, escalaoNome, 5), [mh, torneio, escalaoNome]);
+  const sdAnchors = useMemo(() => playerSdAnchors(playerData, 6), [playerData]);
+  const jaGross = useMemo(() => (calc && cr != null && slope != null && sdAnchors.bestRecentSD != null) ? Math.round(calcScore(sdAnchors.bestRecentSD, cr, slope)) : null, [calc, cr, slope, sdAnchors]);
+  const podeGross = useMemo(() => (calc && cr != null && slope != null && sdAnchors.bestAllSD != null) ? Math.round(calcScore(sdAnchors.bestAllSD, cr, slope)) : null, [calc, cr, slope, sdAnchors]);
   const gamePlan = useMemo<HolePlan[]>(
-    () => resolved ? buildGamePlan(resolved.tee, profile, { driveM, secondM, courseHcp: calc?.courseHcp ?? 0, fieldVsPar }) : [],
-    [resolved, profile, driveM, secondM, calc, fieldVsPar],
+    () => resolved ? buildGamePlan(resolved.tee, profile, { driveM, secondM, courseHcp: calc?.courseHcp ?? 0, fieldVsPar, jaRound: jaGross, podeRound: podeGross }) : [],
+    [resolved, profile, driveM, secondM, calc, fieldVsPar, jaGross, podeGross],
   );
   const expPerRound = useMemo(() => {
     if (!gamePlan.length) return null;
@@ -166,6 +169,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   }
 
   const predGross = calc ? Math.round(calc.playsToIndex) : null;
+  const predMedia = expPerRound != null ? Math.round(expPerRound) : null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -254,18 +258,17 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {calc && (
         <>
           {/* Strip de KPIs */}
-          <div className="kpis">
-            <KpiCard label="Course HCP" value={Math.round(calc.courseHcp)} sub={`(${calc.courseHcp.toFixed(1)})`} />
-            <KpiCard label={`Playing HCP${allowance !== 100 ? ` (${allowance}%)` : ""}`} value={Math.round(calc.playingHcp)} sub={`(${calc.playingHcp.toFixed(1)})`} />
-            <KpiCard label="Joga ao índice ≈" value={predGross} color="var(--accent)" sub={fmtToPar(predGross! - (par as number))} />
-            <KpiCard label="Ao par" value={calc.evenGross} sub={`SD ${fmtSD(calc.sdAtPar)}`} />
+          <div className="kpis" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
+            <KpiCard label="A sua média" value={predMedia ?? "–"} sub={predMedia != null ? `${fmtToPar(predMedia - (par as number))} · forma 6m` : undefined} />
+            <KpiCard label="Ao handicap" value={predGross} color="var(--accent)" sub={`${fmtToPar(predGross! - (par as number))} · HCP ${Math.round(calc.courseHcp)}`} />
+            <KpiCard label="O que já consegue" value={jaGross ?? "–"} sub={jaGross != null ? `${fmtToPar(jaGross - (par as number))} · melhor volta 6m` : "sem dados"} />
+            <KpiCard label="O melhor que pode" value={podeGross ?? "–"} color="var(--color-good)" sub={podeGross != null ? `${fmtToPar(podeGross - (par as number))} · teto histórico` : "sem dados"} />
           </div>
 
           <p className="muted fs-12" style={{ margin: 0 }}>
-            Com HI <strong>{(hi as number).toFixed(1)}</strong> neste tee
-            (CR {fmtCR(cr)} · Slope {slope}), um dia ao nível do índice ronda os{" "}
-            <strong>{predGross} pancadas</strong> ({fmtToPar(predGross! - (par as number))}).
-            A régua abaixo traduz cada resultado bruto no Score Differential que geraria.
+            Para competir, o alvo não é a média — é jogar <strong>ao handicap</strong> (+{Math.round(calc.courseHcp)} ≈ <strong>{predGross}</strong>) ou abaixo.
+            A volta <strong>média</strong> (forma 6m) ronda {predMedia}; o melhor que <strong>já fez</strong> neste período dá {jaGross ?? "–"} e o seu <strong>teto</strong> histórico {podeGross ?? "–"}.
+            A régua abaixo traduz cada gross no Score Differential que geraria.
           </p>
 
           {/* Régua gross → SD → vs Par (ordenável) */}
@@ -299,7 +302,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           </table>
 
           <p className="muted fs-11" style={{ margin: 0 }}>
-            Score Differential = (113 / Slope) × (Gross − CR). O índice é a média das 8 melhores de 20 voltas
+            Cenários: "média" = volta típica (forma 6m) · "ao handicap" = jogar ao índice (+HCP) · "já consegue" = melhor volta dos últimos 6 meses · "pode" = melhor differential de sempre (teto). Score Differential = (113 / Slope) × (Gross − CR). O índice é a média das 8 melhores de 20 voltas
             (o potencial num bom dia), por isso joga-se "ao índice" ou melhor só ~1 em cada 4 a 5 voltas (cerca de 20–25% das vezes).
           </p>
         </>
@@ -333,7 +336,9 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                 <SortableHdr k="par" sortKey={pK} sortDir={pD} onSort={pT} className="r">Par</SortableHdr>
                 <SortableHdr k="dist" sortKey={pK} sortDir={pD} onSort={pT} className="r">m</SortableHdr>
                 <th style={{ textAlign: "center" }}>SI</th>
-                <SortableHdr k="exp" sortKey={pK} sortDir={pD} onSort={pT} className="r">Esperado</SortableHdr>
+                <SortableHdr k="exp" sortKey={pK} sortDir={pD} onSort={pT} className="r" title="Volta média (forma 6 meses)">Média</SortableHdr>
+                <th className="r" title="O melhor que JÁ consegue (melhor volta dos últimos 6 meses)">Já</th>
+                <th className="r" title="O melhor que PODE fazer (teto histórico)">Pode</th>
                 <SortableHdr k="tag" sortKey={pK} sortDir={pD} onSort={pT}>Plano</SortableHdr>
                 <th>Estratégia</th>
                 {topField && topField.roundKeys.map(rk => (
@@ -363,7 +368,9 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                         {h.si ?? "–"}
                       </span>
                     </td>
-                    <td className="r" style={{ color: c, fontWeight: 600 }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
+                    <td className="r" style={{ fontWeight: 600, color: vsParColor(h.expStrokes, h.par) }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
+                    <td className="r" style={{ color: vsParColor(h.expJa, h.par) }}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
+                    <td className="r" style={{ color: vsParColor(h.expPode, h.par) }}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
                     <td style={{ color: c, fontWeight: 700, whiteSpace: "nowrap" }} title={h.fieldVsPar != null ? `Field (edição anterior): ${h.fieldVsPar > 0 ? "+" : ""}${h.fieldVsPar.toFixed(1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
                     <td className="muted" style={{ whiteSpace: "nowrap" }}>{h.note}</td>
                     {topField && topField.roundKeys.map((rk, ri) => {
@@ -391,7 +398,9 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                 <td className="r">{gamePlan.reduce((a, h) => a + (h.par ?? 0), 0)}</td>
                 <td className="r">{gamePlan.reduce((a, h) => a + (h.dist ?? 0), 0)}</td>
                 <td />
-                <td className="r" style={{ color: "var(--accent)" }}>{expPerRound != null ? expPerRound.toFixed(1) : "–"}</td>
+                <td className="r">{expPerRound != null ? expPerRound.toFixed(1) : "–"}</td>
+                <td className="r" style={{ color: "var(--accent)" }}>{jaGross ?? "–"}</td>
+                <td className="r" style={{ color: "var(--color-good)" }}>{podeGross ?? "–"}</td>
                 <td colSpan={2 + (topField?.roundKeys.length ?? 0)} className="muted">
                   {expPerRound != null && par != null ? `\u2248 ${Math.round(expPerRound)} pancadas (${fmtToPar(Math.round(expPerRound) - (par as number))})` : ""}
                 </td>
@@ -400,7 +409,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           </table>
           {!playerData && <p className="muted fs-11" style={{ margin: "6px 0 0" }}>A carregar o histórico do Manuel para o "esperado"…</p>}
           <p className="muted fs-11" style={{ margin: "6px 0 0" }}>
-            "Esperado" = média de pancadas do Manuel em buracos do mesmo par e distância ({profile.recent ? "últimos 6 meses — forma actual" : "todas as voltas"}). "Plano" = dificuldade do buraco para o field na edição anterior (atacar = mais fáceis, defender = mais difíceis). "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.
+            "Média/Já/Pode" = pancadas esperadas por buraco em 3 cenários (média da forma 6m · melhor volta recente · teto histórico); cada coluna soma ao total respectivo, e os buracos fáceis passam a birdie no cenário "Pode" (verde = abaixo do par). Base: média do Manuel em buracos do mesmo par e distância ({profile.recent ? "últimos 6 meses" : "todas as voltas"}). "Plano" = dificuldade do buraco para o field na edição anterior (atacar = mais fáceis, defender = mais difíceis). "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.
           </p>
         </details>
       )}
@@ -435,7 +444,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
             🏆 Estimativa de score — {field.editions.length} edi{field.editions.length === 1 ? "ção" : "ções"} anterior{field.editions.length === 1 ? "" : "es"}
           </summary>
-          <div className="kpis" style={{ margin: "8px 0 12px" }}>
+          <div className="kpis" style={{ margin: "8px 0 12px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
             {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parTournament && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parTournament * field.nRoundsTypical) : undefined} />}
             {field.avgTop10 != null && <KpiCard label="Top-10 ≈" value={field.avgTop10} sub={field.parTournament && field.nRoundsTypical ? fmtToPar(field.avgTop10 - field.parTournament * field.nRoundsTypical) : undefined} />}
             {field.avgMedian != null && <KpiCard label="Mediana ≈" value={field.avgMedian} />}
@@ -484,6 +493,11 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       )}
     </div>
   );
+}
+
+function vsParColor(v: number | null, par: number | null): string {
+  if (v == null || par == null) return "var(--text)";
+  return v < par - 0.05 ? "var(--color-good)" : v > par + 0.05 ? "var(--color-danger)" : "var(--text)";
 }
 
 function Dot({ c }: { c: string }) {
