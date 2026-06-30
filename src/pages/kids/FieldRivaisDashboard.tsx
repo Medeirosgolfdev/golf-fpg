@@ -20,6 +20,7 @@ import { fmtToPar } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
+import PrevisaoTab from "./PrevisaoTab";
 import { ScoutEmbed } from "../kids2/ScoutView";
 
 // ─────────────────────────────────────────────────────────────────────
@@ -132,13 +133,13 @@ function escalaoMatches(userEsc: string, candEsc: string): boolean {
 // NOTA: Marco Simone Local Tour 2026 (tcode 21573) ficou fora porque é uma
 // série de eventos locais não-coberta pelo scraper signupanytime. Quando a
 // FPG publicar field também desse torneio, adicionar aqui.
-const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; tcode?: string; date_iso?: string }> = [
+const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; hub?: string; tcode?: string; date_iso?: string }> = [
   // European Championship 2026 (26 Mai — já jogado, Manuel participou)
   { id: "european26", tcode: "21131", date_iso: "2026-05-26", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
   // Irish Open 2026 — 1-2 Jul, K Club (Irlanda)
   { id: "irish26",    tcode: "21455", date_iso: "2026-07-01", name: "Irish Open 2026",            short: "Irish '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521455/irish-open-2026/field" },
   // Paris Invitational 2026 — 4-6 Jul (França)
-  { id: "paris26",    tcode: "21795", date_iso: "2026-07-04", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field" },
+  { id: "paris26",    tcode: "21795", date_iso: "2026-07-04", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field", hub: "https://tournaments.uskidsgolf.com/paris_player_hub" },
   // World Championship 2026 — 30 Jul-1 Ago (Pinehurst, USA)
   { id: "world26",    tcode: "21610", date_iso: "2026-07-30", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
   // Venice Open 2026 — 13-15 Ago (Itália)
@@ -244,7 +245,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [escalaoNome, setEscalaoNome] = useState<string>(defaultEscalao);
   // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
   // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
-  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo" | "scout">("players");
+  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo" | "previsao" | "scout">("players");
 
   // Load field + member history + uskids-results (último é fallback para
   // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
@@ -1215,6 +1216,16 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
             gap: 6,
           }}>
             <span>{torneioSelecionado.date_inicio}</span>
+            {(() => {
+              const hub = UP_TORN.find(u => u.tcode === String(torneioT))?.hub;
+              return hub ? (
+                <a href={hub} target="_blank" rel="noreferrer"
+                   style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}
+                   title="Player Hub oficial USKids">
+                  🔗 Player Hub
+                </a>
+              ) : null;
+            })()}
           </span>
         )}
       </div>
@@ -1244,6 +1255,11 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           className={"tab-under" + (activeTab === "campo" ? " active" : "")}
           onClick={() => setActiveTab("campo")}>
           O Campo
+        </button>
+        <button type="button" role="tab" aria-selected={activeTab === "previsao"}
+          className={"tab-under" + (activeTab === "previsao" ? " active" : "")}
+          onClick={() => setActiveTab("previsao")}>
+          🔮 Previsão
         </button>
       </div>
 
@@ -1280,6 +1296,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       )}
       {activeTab === "campo" && (
         <CourseTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
+      )}
+      {activeTab === "previsao" && (
+        <PrevisaoTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
       )}
       {activeTab === "scout" && (
         <ScoutEmbed

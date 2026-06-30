@@ -1007,8 +1007,12 @@ function parisDist(dist: number[]): { total: number; front9: number; back9: numb
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
+// Nota: os PDFs de distâncias de 2025 e 2026 são IDÊNTICOS em todos os dados
+// (mesmas distâncias por buraco, pares, escalões e tees RED-BLUE/WHITE) — só
+// muda o ano no título. Mantemos os dois links por completude.
 const PARIS_PDF_LINKS = [
   { label: "US Kids Paris Invitational 2025 - Distances (Meters)", url: "/data/paris_invitational_2025_distances_-_meters.pdf" },
+  { label: "US Kids Paris Invitational 2026 - Distances (Meters) — iguais às de 2025", url: "/data/paris_invitational_2026_distances_-_meters.pdf" },
 ];
 
 const golfParisValDEurope: Course = {

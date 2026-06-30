@@ -1,30 +1,18 @@
-﻿/**
+/**
  * pages/kids/CourseTab.tsx
  *
  * Tab "O Campo" do FieldRivaisDashboard.
  *
- * Estratégia (cada ESCALÃO pode jogar percurso diferente — Venice Open 2025
- * Boys 9 joga Della Montecchia Green/White; Boys 12 joga White/Red; Boys 13+
- * jogam Frassanelle; Boys 7-8 jogam Galzignano). Logo NÃO podemos usar um
- * mapping fixo por torneio: temos de tirar a info ESPECÍFICA do escalão.
+ * Estrategia (cada ESCALAO pode jogar percurso diferente). Fontes, por ordem
+ * de preferencia:
+ *   1. member-history-slim.json -> byEscalao[escalao] traz course (nome),
+ *      par[18] e yards[18] do tee jogado por esse escalao. Ground truth.
+ *   2. Edicao anterior do mesmo escalao (quando a actual ainda nao tem course).
+ *   3. Match por nome + tee contra simCourses (away-courses + extraCourses) por
+ *      SOBREPOSICAO DE TOKENS + escolha do TEE do escalao (nome + distancia) ->
+ *      slope/CR/SI reais (ex: Paris Boys 12 -> tee Bleus, CR 67.8 / Slope 119).
  *
- * Fontes, por ordem de preferência:
- *
- *   1. member-history-slim.json — `mh.torneios[tcode].byEscalao[escalao]`
- *      traz course (nome), par[18] e yards[18] específicos do tee jogado por
- *      esse escalão nessa edição. É a fonte autoritativa.
- *
- *   2. Edição anterior do mesmo escalão — se a edição actual ainda não tem
- *      `course` registado (caso de torneios futuros como Venice 2026),
- *      reutiliza-se a informação da edição imediatamente anterior do MESMO
- *      escalão, com badge "provável".
- *
- *   3. Match por nome contra `simCourses` — quando o slim dá um `course`,
- *      tentamos casar com um Course conhecido para enriquecer com
- *      slope/CR (que o slim não traz). Best-effort: se não houver match
- *      exacto, mostramos só o que vem do slim.
- *
- * O par/yards do slim é o "ground truth"; o slope/CR é cosmético.
+ * resolveCourseTee() e exportado para a tab "Previsao" reutilizar.
  */
 import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
@@ -48,12 +36,19 @@ interface MHSlim {
   jogadores: Record<string, unknown>;
 }
 
-/** Procura edição anterior do MESMO baseName que tenha course preenchido
- *  para o escalão dado. Usado quando edição actual ainda não tem (futuro). */
+/** Resultado da resolucao de campo/tee para um torneio+escalao. */
+export interface ResolvedCourse {
+  course: Course;
+  tee: Tee;
+  note?: string;
+  /** true quando o CR/Slope foi estimado por interpolacao (tee sem rating oficial). */
+  ratingApprox?: boolean;
+}
+
+/** Procura edicao anterior do MESMO baseName com course preenchido. */
 function findPrevEdition(mh: MHSlim, torneio: FieldTorneio, escalao: string): MHEscalaoMeta | null {
   const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
   if (!baseName) return null;
-  // Ordenar tcodes por ano desc
   const candidates: Array<{ tcode: string; year: number; meta: MHEscalaoMeta }> = [];
   const currentYear = parseInt((torneio.name.match(/(\d{4})/) || ["", "0"])[1], 10);
   for (const [tc, meta] of Object.entries(mh.torneios)) {
@@ -64,7 +59,7 @@ function findPrevEdition(mh: MHSlim, torneio: FieldTorneio, escalao: string): MH
     const yMatch = meta.name.match(/(\d{4})/);
     if (!yMatch) continue;
     const year = parseInt(yMatch[1], 10);
-    if (year >= currentYear) continue; // só anteriores
+    if (year >= currentYear) continue;
     const escMeta = meta.byEscalao?.[escalao];
     if (!escMeta?.course) continue;
     if (!escMeta?.par || !escMeta?.yards) continue;
@@ -75,81 +70,196 @@ function findPrevEdition(mh: MHSlim, torneio: FieldTorneio, escalao: string): MH
   return candidates[0].meta;
 }
 
-/** Tenta encontrar um Course/Tee em simCourses cujo nome bata com o curso do
- *  slim. Devolve {course, tee} (tee escolhido pelo melhor match) ou null. */
-function matchSimCourse(courseName: string, simCourses: Course[]): { course: Course; tee: Tee } | null {
-  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-  const target = norm(courseName);
-  // Match exacto
-  for (const c of simCourses) {
-    if (norm(c.master.name) === target) {
-      const tee = c.master.tees[0];
-      if (tee) return { course: c, tee };
-    }
-  }
-  // Match parcial: o nome do curso do slim CONTIDO no nome do simCourse,
-  // ou vice-versa. Ex: "Golf Club Della Montecchia - White/Red" do slim
-  // contém "Golf Club Della Montecchia" do simCourse.
-  let best: { course: Course; score: number } | null = null;
-  for (const c of simCourses) {
-    const cname = norm(c.master.name);
-    if (target.includes(cname) || cname.includes(target)) {
-      const score = Math.min(target.length, cname.length);
-      if (!best || score > best.score) best = { course: c, score };
-    }
-  }
-  if (best && best.course.master.tees.length > 0) {
-    return { course: best.course, tee: best.course.master.tees[0] };
-  }
-  return null;
+// -- Matching campo<->campo por sobreposicao de tokens --------------------
+const COURSE_STOPWORDS = new Set([
+  "golf", "club", "course", "country", "the", "de", "do", "da", "of", "and",
+  "g", "gc", "cc", "resort", "links",
+]);
+
+function courseTokens(name: string): Set<string> {
+  return new Set(
+    name
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, " ")
+      .split(" ")
+      .filter(t => t.length >= 2 && !COURSE_STOPWORDS.has(t)),
+  );
 }
 
-/** Constrói um Course/Tee sintético a partir dos dados do slim
- *  (par[], yards[], courseName). slopeRating/courseRating são enriquecidos
- *  do simCourse correspondente quando existe; senão null. */
-function buildSyntheticCourseTee(
+/** Encontra o Course em simCourses que melhor casa por sobreposicao de tokens.
+ *  Ex: "Paris Val d'Europe Golf Course - Red/Blue" <-> "Golf Paris Val
+ *  d'Europe Disneyland - RED/BLUE" partilham {paris,val,europe,red,blue}. */
+function matchSimCourse(courseName: string, simCourses: Course[]): Course | null {
+  const target = courseTokens(courseName);
+  if (target.size === 0) return null;
+  let best: { course: Course; score: number } | null = null;
+  for (const c of simCourses) {
+    const ct = courseTokens(c.master.name);
+    if (ct.size === 0) continue;
+    let inter = 0;
+    for (const t of target) if (ct.has(t)) inter++;
+    if (inter === 0) continue;
+    const score = inter / Math.min(target.size, ct.size);
+    const coverage = inter / target.size;
+    if (coverage < 0.5) continue;
+    if (!best || score > best.score) best = { course: c, score };
+  }
+  return best ? best.course : null;
+}
+
+// -- Seleccao do TEE especifico do escalao --------------------------------
+/** Numeros de idade referidos no nome do tee.
+ *  "Bleus / USKids Boys 12" -> {12}; "USKids Boys 15-18 / 13-14" ->
+ *  {13,14,15,16,17,18}; "Rouges" -> {}. */
+function teeAgeNumbers(teeName: string): Set<number> {
+  const out = new Set<number>();
+  const ranges = teeName.match(/\d+\s*-\s*\d+/g) || [];
+  for (const r of ranges) {
+    const [a, b] = r.split(/\s*-\s*/).map(Number);
+    if (!isNaN(a) && !isNaN(b)) for (let n = Math.min(a, b); n <= Math.max(a, b); n++) out.add(n);
+  }
+  const cleaned = teeName.replace(/\d+\s*-\s*\d+/g, " ");
+  for (const m of cleaned.match(/\d+/g) || []) out.add(parseInt(m, 10));
+  return out;
+}
+
+/** Numeros de idade do escalao. "Boys 12" -> [12]; "Boys 10-11" -> [10,11];
+ *  "U14" -> [14]; "Geral" -> []. */
+function escalaoNumbers(esc: string): number[] {
+  if (!esc) return [];
+  const u = esc.match(/^U(\d+)$/i);
+  if (u) return [parseInt(u[1], 10)];
+  const r = esc.match(/(\d+)\s*[-&]\s*(\d+)/);
+  if (r) {
+    const a = parseInt(r[1], 10), b = parseInt(r[2], 10);
+    const out: number[] = [];
+    for (let n = Math.min(a, b); n <= Math.max(a, b); n++) out.push(n);
+    return out;
+  }
+  const s = esc.match(/(\d+)/);
+  return s ? [parseInt(s[1], 10)] : [];
+}
+
+const SEX_PREF: Record<string, number> = { M: 0, U: 1, F: 2 };
+
+/** Melhor tee de `course` para um escalao (Manuel = rapaz). Criterios:
+ *  (1) escalao nomeado no tee; (2) distancia total mais proxima; (3) M. */
+function pickTeeForEscalao(course: Course, escalaoNome: string, targetMeters: number | null): Tee | null {
+  const tees = course.master.tees || [];
+  if (tees.length === 0) return null;
+  const escNums = escalaoNumbers(escalaoNome);
+
+  const scored = tees.map(tee => {
+    const ageNums = teeAgeNumbers(tee.teeName);
+    const named = escNums.length > 0 && escNums.some(n => ageNums.has(n));
+    const total = tee.distances?.total ?? null;
+    const distDelta = (targetMeters != null && total != null) ? Math.abs(total - targetMeters) : Infinity;
+    return { tee, named, distDelta, sexPref: SEX_PREF[tee.sex] ?? 3 };
+  });
+
+  const named = scored.filter(s => s.named);
+  const pool = named.length > 0 ? named : scored;
+  pool.sort((a, b) => {
+    if (a.distDelta !== b.distDelta) return a.distDelta - b.distDelta;
+    return a.sexPref - b.sexPref;
+  });
+  return pool[0]?.tee ?? null;
+}
+
+/** Interpola CR/Slope por distancia a partir dos tees do campo COM rating
+ *  oficial. Usado quando o tee do escalao nao tem rating publicado (ex: tees
+ *  de torneio USKids intermedios). Prefere tees do mesmo sexo; extrapola se o
+ *  alvo cair fora do intervalo dos tees rated. */
+function interpolateRatings(course: Course, targetMeters: number | null, sex: string): { cr: number; slope: number } | null {
+  if (targetMeters == null || targetMeters <= 0) return null;
+  type Pt = { d: number; cr: number; slope: number };
+  const collect = (filterSex: boolean): Pt[] => {
+    const pts: Pt[] = [];
+    for (const t of course.master.tees) {
+      if (filterSex && t.sex !== sex) continue;
+      const r = t.ratings.holes18;
+      const d = t.distances?.total;
+      if (r?.courseRating != null && r?.slopeRating != null && d != null && d > 0) {
+        pts.push({ d, cr: r.courseRating, slope: r.slopeRating });
+      }
+    }
+    return pts;
+  };
+  let pts = collect(true);
+  if (pts.length < 2) pts = collect(false);
+  if (pts.length < 2) return null;
+  const byD = new Map<number, Pt>();
+  for (const pt of pts) if (!byD.has(pt.d)) byD.set(pt.d, pt);
+  const arr = [...byD.values()].sort((a, b) => a.d - b.d);
+  if (arr.length < 2) return null;
+  let lo = arr[0], hi = arr[1];
+  if (targetMeters >= arr[arr.length - 1].d) { lo = arr[arr.length - 2]; hi = arr[arr.length - 1]; }
+  else if (targetMeters > arr[0].d) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (targetMeters >= arr[i].d && targetMeters <= arr[i + 1].d) { lo = arr[i]; hi = arr[i + 1]; break; }
+    }
+  }
+  const span = hi.d - lo.d;
+  const f = span === 0 ? 0 : (targetMeters - lo.d) / span;
+  const cr = lo.cr + f * (hi.cr - lo.cr);
+  let slope = Math.round(lo.slope + f * (hi.slope - lo.slope));
+  slope = Math.max(55, Math.min(155, slope));
+  return { cr: Math.round(cr * 10) / 10, slope };
+}
+
+/** Constroi Course/Tee a partir do slim (par/yards/courseName), enriquecido
+ *  com slope/CR/SI do tee casado (escolhido pelo escalao) quando existe. O
+ *  par/yards do slim manda; o tee casado fornece ratings + SI + nome/sexo. */
+function buildCourseTee(
   courseName: string,
   par: number[],
   yards: number[],
   hpr: number,
+  escalaoNome: string,
   simCourses: Course[],
-): { course: Course; tee: Tee } {
-  // Enriquecer slope/CR via match com simCourses
-  const matched = matchSimCourse(courseName, simCourses);
-  const slope = matched?.tee.ratings?.holes18?.slopeRating ?? null;
-  const cr = matched?.tee.ratings?.holes18?.courseRating ?? null;
-  const country = matched?.course.master.country;
+): ResolvedCourse {
+  const matchedCourse = matchSimCourse(courseName, simCourses);
 
-  // Construir holes
+  let targetMeters = 0;
+  for (let i = 0; i < hpr; i++) {
+    const y = yards[i] ?? 0;
+    if (y > 0) targetMeters += Math.round(y * 0.9144);
+  }
+  const matchedTee = matchedCourse ? pickTeeForEscalao(matchedCourse, escalaoNome, targetMeters) : null;
+
+  let slope = matchedTee?.ratings?.holes18?.slopeRating ?? null;
+  let cr = matchedTee?.ratings?.holes18?.courseRating ?? null;
+  let ratingApprox = false;
+  if (matchedCourse && (slope == null || cr == null)) {
+    const interp = interpolateRatings(
+      matchedCourse,
+      targetMeters > 0 ? targetMeters : (matchedTee?.distances?.total ?? null),
+      matchedTee?.sex ?? "M",
+    );
+    if (interp) { cr = interp.cr; slope = interp.slope; ratingApprox = true; }
+  }
+  const country = matchedCourse?.master.country;
+  const matchedSI: (number | null)[] = matchedTee ? matchedTee.holes.slice(0, hpr).map(h => h.si ?? null) : [];
+
   const holes = [];
-  let totalDist = 0;
-  let f9Dist = 0;
-  let b9Dist = 0;
+  let totalDist = 0, f9Dist = 0, b9Dist = 0;
   for (let i = 0; i < hpr; i++) {
     const y = yards[i] ?? 0;
     const m = y > 0 ? Math.round(y * 0.9144) : 0;
-    holes.push({
-      hole: i + 1,
-      par: par[i] ?? null,
-      si: null,
-      distance: m > 0 ? m : null,
-    });
+    holes.push({ hole: i + 1, par: par[i] ?? null, si: matchedSI[i] ?? null, distance: m > 0 ? m : null });
     totalDist += m;
     if (i < 9) f9Dist += m; else b9Dist += m;
   }
   const parTotal = par.slice(0, hpr).reduce((a, b) => a + (b || 0), 0);
+  const teeName = matchedTee?.teeName || (courseName.split("-").slice(-1)[0].trim() || courseName);
 
   const tee: Tee = {
-    teeId: "synth-" + (courseName || "tee").replace(/\s+/g, "-").toLowerCase(),
-    sex: "U",
-    teeName: courseName.split("-").slice(-1)[0].trim() || courseName,
-    ratings: {
-      holes18: {
-        par: parTotal || null,
-        slopeRating: slope,
-        courseRating: cr,
-      },
-    },
+    teeId: matchedTee?.teeId || ("synth-" + (courseName || "tee").replace(/\s+/g, "-").toLowerCase()),
+    sex: matchedTee?.sex ?? "U",
+    teeName,
+    scorecardMeta: matchedTee?.scorecardMeta,
+    ratings: { holes18: { par: parTotal || null, slopeRating: slope, courseRating: cr } },
     holes,
     distances: {
       total: totalDist > 0 ? totalDist : null,
@@ -160,16 +270,52 @@ function buildSyntheticCourseTee(
     },
   };
   const course: Course = {
-    courseKey: "synth-" + courseName.replace(/\s+/g, "-").toLowerCase(),
+    courseKey: matchedCourse?.courseKey || ("synth-" + courseName.replace(/\s+/g, "-").toLowerCase()),
     master: {
       courseId: tee.teeId,
-      name: courseName,
+      name: matchedCourse?.master.name || courseName,
       country,
-      links: { fpg: null, scorecards: null },
+      links: matchedCourse?.master.links || { fpg: null, scorecards: null },
       tees: [tee],
     },
   };
-  return { course, tee };
+  return { course, tee, ratingApprox };
+}
+
+/** Resolve {course, tee, note} para um torneio+escalao (cascata de fontes).
+ *  Exportado para a tab "Previsao" reutilizar. */
+export function resolveCourseTee(
+  torneio: FieldTorneio | null,
+  escalaoNome: string,
+  mh: MHSlim | null,
+  simCourses: Course[],
+): ResolvedCourse | null {
+  if (!torneio || !mh) return null;
+  const meta = mh.torneios[String(torneio.t)];
+  const hpr = (meta?.holesPerRound) || 18;
+
+  const escMeta = meta?.byEscalao?.[escalaoNome];
+  if (escMeta?.par && escMeta?.yards && escMeta?.course) {
+    return buildCourseTee(escMeta.course, escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
+  }
+
+  if (escMeta?.par && escMeta?.yards && !escMeta?.course) {
+    const prev = findPrevEdition(mh, torneio, escalaoNome);
+    if (prev?.course) {
+      const r = buildCourseTee(prev.course, escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
+      return { ...r, note: "Campo da edição anterior (a confirmar)" };
+    }
+    const r = buildCourseTee("Campo (a confirmar)", escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
+    return { ...r, note: "Aguarda confirmação oficial do campo" };
+  }
+
+  const prev = findPrevEdition(mh, torneio, escalaoNome);
+  if (prev?.par && prev?.yards && prev?.course) {
+    const r = buildCourseTee(prev.course, prev.par, prev.yards, hpr, escalaoNome, simCourses);
+    return { ...r, note: "Dados da edição anterior" };
+  }
+
+  return null;
 }
 
 export default function CourseTab({ torneio, escalaoNome, mh }: {
@@ -178,46 +324,10 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
   mh: MHSlim | null;
 }) {
   const ctx = useAppContext();
-  const result = useMemo<{
-    course: Course;
-    tee: Tee;
-    note?: string;
-  } | null>(() => {
-    if (!torneio || !mh) return null;
-    const meta = mh.torneios[String(torneio.t)];
-    const hpr = (meta?.holesPerRound) || 18;
-
-    // 1) Slim — escalão actual da edição actual
-    const escMeta = meta?.byEscalao?.[escalaoNome];
-    if (escMeta?.par && escMeta?.yards && escMeta?.course) {
-      const r = buildSyntheticCourseTee(escMeta.course, escMeta.par, escMeta.yards, hpr, ctx.simCourses);
-      return { ...r };
-    }
-
-    // 2) Edição actual sem course mas com par+yards (caso típico de futuros) →
-    //    procurar edição anterior do mesmo escalão para tirar o course-name.
-    if (escMeta?.par && escMeta?.yards && !escMeta?.course) {
-      const prev = findPrevEdition(mh, torneio, escalaoNome);
-      if (prev?.course) {
-        // Usar par/yards da edição ACTUAL (podem ter mudado) com course-name
-        // da anterior como aproximação.
-        const r = buildSyntheticCourseTee(prev.course, escMeta.par, escMeta.yards, hpr, ctx.simCourses);
-        return { ...r, note: "Campo da edição anterior (a confirmar)" };
-      }
-      // Sem prev — mostrar só par/yards (course = "Campo a confirmar")
-      const r = buildSyntheticCourseTee("Campo (a confirmar)", escMeta.par, escMeta.yards, hpr, ctx.simCourses);
-      return { ...r, note: "Aguarda confirmação oficial do campo" };
-    }
-
-    // 3) Edição actual sem nada → tentar edição anterior totalmente
-    const prev = findPrevEdition(mh, torneio, escalaoNome);
-    if (prev?.par && prev?.yards && prev?.course) {
-      const r = buildSyntheticCourseTee(prev.course, prev.par, prev.yards, hpr, ctx.simCourses);
-      return { ...r, note: "Dados da edição anterior" };
-    }
-
-    return null;
-  }, [torneio, escalaoNome, mh, ctx.simCourses]);
+  const result = useMemo<ResolvedCourse | null>(
+    () => resolveCourseTee(torneio, escalaoNome, mh, ctx.simCourses),
+    [torneio, escalaoNome, mh, ctx.simCourses],
+  );
 
   if (!torneio) {
     return <div className="muted p-16">Sem torneio selecionado.</div>;
@@ -244,7 +354,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
           border: "1px solid var(--color-warn-alpha, var(--border))",
           borderRadius: 6,
         }}>
-          ⚠ {result.note}
+          {"⚠"} {result.note}
         </div>
       )}
       <CourseHeroCard course={result.course} tee={result.tee} />
