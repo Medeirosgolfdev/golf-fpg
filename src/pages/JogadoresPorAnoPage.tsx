@@ -29,8 +29,10 @@ import {
   type FederadoRaw, type MergedPlayer,
 } from "../data/federadosLoader";
 import { loadPlayerStats, type PlayerStatsDb, type PlayerStats } from "../data/playerStatsTypes";
+import { loadHcpHistory, type HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
+import HcpEvolution from "../ui/HcpEvolution";
 import { Toolbar } from "../ui/Toolbar";
 import Counter from "../ui/Counter";
 import SexBadge from "../ui/SexBadge";
@@ -109,6 +111,7 @@ export default function JogadoresPorAnoPage() {
   const { players } = useAppContext();
 
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
+  const [hcpHistory, setHcpHistory] = useState<HcpHistoryDb>({});
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
   const [loadingFeds, setLoadingFeds] = useState(false);
   const [fedsError, setFedsError] = useState<string | null>(null);
@@ -131,6 +134,7 @@ export default function JogadoresPorAnoPage() {
   });
 
   useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
+  useEffect(() => { loadHcpHistory().then(setHcpHistory); }, []);
 
   // Lazy-load federados.json só quando o utilizador escolhe TODOS
   useEffect(() => {
@@ -266,6 +270,13 @@ export default function JogadoresPorAnoPage() {
       };
     });
   }, [cohorts]);
+
+  // Jogadores (filtrados) para a secção de evolução de HCP. O componente
+  // ignora internamente os que não têm histórico em hcp-history.json.
+  const evoPlayers = useMemo(
+    () => filtered.map(p => ({ fed: p.fed, name: p.name, sex: p.sex, club: clubName(p.club), escalao: p.escalao })),
+    [filtered]
+  );
 
   const activeFiltersCount =
     (q.trim() ? 1 : 0) + (sexFilter !== "ALL" ? 1 : 0) + (escSet.size > 0 ? 1 : 0) +
@@ -545,6 +556,13 @@ export default function JogadoresPorAnoPage() {
                 strokeWidth={2} connectNulls dot={{ r: 3 }} />
             </ComposedChart>
           </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* Análise de evolução de HCP da coorte/selecção filtrada */}
+      {evoPlayers.length > 0 && (
+        <div style={{ margin: "12px 0" }}>
+          <HcpEvolution players={evoPlayers} history={hcpHistory} />
         </div>
       )}
 

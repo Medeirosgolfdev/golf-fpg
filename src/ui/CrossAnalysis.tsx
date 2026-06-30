@@ -1,135 +1,9 @@
 ﻿import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
-import { numSafe } from "../utils/mathUtils";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
-
-// HCP Evolution SVG Chart
-function HcpEvolutionChart({ players, currentFed, escName }: {
-  players: CrossPlayerData[]; currentFed: string; escName: string;
-}) {
-  const [period, setPeriod] = useState(12);
-  const [hidden, setHidden] = useState<Set<string>>(new Set());
-
-  const chartPlayers = useMemo(() =>
-    players.filter(p => p.hcpHistory && p.hcpHistory.length >= 2),
-    [players]
-  );
-
-  const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
-
-  const togglePlayer = (fed: string) => {
-    setHidden(prev => {
-      const n = new Set(prev);
-      n.has(fed) ? n.delete(fed) : n.add(fed);
-      return n;
-    });
-  };
-
-  if (chartPlayers.length < 1) return null;
-
-  const W = 800, H = 280;
-  const PAD = { top: 20, right: 20, bottom: 30, left: 45 };
-  const visiblePlayers = chartPlayers.filter(p => !hidden.has(p.fed));
-
-  let allPts: { d: number; h: number }[] = [];
-  visiblePlayers.forEach(p => {
-    allPts = allPts.concat((p.hcpHistory || []).filter(pt => pt.d >= cutoff));
-  });
-  if (allPts.length === 0) return null;
-
-  const minD = Math.min(...allPts.map(p => p.d));
-  const maxD = Math.max(...allPts.map(p => p.d));
-  const minH = Math.min(...allPts.map(p => p.h));
-  const maxH = Math.max(...allPts.map(p => p.h));
-  const rangeD = maxD - minD || 1;
-  const rangeH = maxH - minH || 1;
-
-  const scaleX = (d: number) => PAD.left + (d - minD) / rangeD * (W - PAD.left - PAD.right);
-  const scaleY = (h: number) => H - PAD.bottom - (h - minH) / rangeH * (H - PAD.top - PAD.bottom);
-
-  const COLORS = ["#0066cc", "#ff6b6b", "#51cf66", "#ffd43b", "#a78bfa", "#ff922b"];
-
-  return (
-    <div className="card mt-12">
-      <div className="h-xs fs-14 mb-8">📈 Evolução HCP - {escName}</div>
-      <div className="mb-8">
-        <label style={{ marginRight: 12, fontSize: "var(--fs-12)" }}>
-          Período:
-          <select value={period} onChange={e => setPeriod(Number(e.target.value))} style={{ marginLeft: 6, padding: "4px 8px" }}>
-            <option value={3}>Últimos 3 meses</option>
-            <option value={6}>6 meses</option>
-            <option value={12}>12 meses</option>
-            <option value={24}>24 meses</option>
-            <option value={0}>Tudo</option>
-          </select>
-        </label>
-      </div>
-      <div className="scroll-x mb-10">
-        <svg width={W} height={H} style={{ border: "1px solid var(--border)" }}>
-          {/* Grid */}
-          {Array.from({ length: 5 }, (_, i) => {
-            const h = minH + (i / 4) * rangeH;
-            const y = scaleY(h);
-            return <line key={`h${i}`} x1={PAD.left} y1={y} x2={W - PAD.right} y2={y} stroke="var(--border-light)" strokeDasharray="2,2" />;
-          })}
-          {/* Y-axis labels */}
-          {Array.from({ length: 5 }, (_, i) => {
-            const h = minH + (i / 4) * rangeH;
-            const y = scaleY(h);
-            return (
-              <text key={`yl${i}`} x={PAD.left - 8} y={y + 4} textAnchor="end" fontSize={10} fill="var(--text-3)">
-                {h.toFixed(1)}
-              </text>
-            );
-          })}
-          {/* Lines */}
-          {visiblePlayers.map((p, pi) => {
-            const color = COLORS[pi % COLORS.length];
-            const pts = (p.hcpHistory || []).filter(pt => pt.d >= cutoff).sort((a, b) => a.d - b.d);
-            if (pts.length < 2) return null;
-            const path = pts.map((pt, i) => {
-              const x = scaleX(pt.d);
-              const y = scaleY(pt.h);
-              return `${i === 0 ? "M" : "L"} ${x} ${y}`;
-            }).join(" ");
-            return (
-              <g key={p.fed}>
-                <path d={path} stroke={color} strokeWidth={2} fill="none" />
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      {/* Legend */}
-      <div className="flex flex-wrap gap-2">
-        {chartPlayers.map((p, pi) => {
-          const color = COLORS[pi % COLORS.length];
-          const isHidden = hidden.has(p.fed);
-          return (
-            <button
-              key={p.fed}
-              onClick={() => togglePlayer(p.fed)}
-              style={{
-                padding: "4px 8px",
-                fontSize: "var(--fs-11)",
-                background: isHidden ? "var(--bg-muted)" : color + "20",
-                border: `1px solid ${color}`,
-                borderRadius: 4,
-                cursor: "pointer",
-                opacity: isHidden ? 0.5 : 1,
-              }}
-            >
-              {p.name}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 // Common Courses
 function CommonCourses({ players, currentFed, escName }: {
@@ -321,9 +195,6 @@ export function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bar
           </tbody>
         </table>
       </div>
-
-      {/* HCP Evolution Chart */}
-      <HcpEvolutionChart players={players} currentFed={data.CURRENT_FED} escName={activeEsc} />
 
       {/* Common Courses */}
       <CommonCourses players={players} currentFed={data.CURRENT_FED} escName={activeEsc} />

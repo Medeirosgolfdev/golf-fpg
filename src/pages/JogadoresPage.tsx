@@ -307,7 +307,7 @@ function ByDateView({ data, search }: {
       <><TeeDate date={r.date} tee={r.tee || ""} /><div className="muted fs-10">#{r.scoreId}</div></>
     ) },
     { key: "course", label: "Campo", width: "150px", sortable: true, render: r => <CourseLink name={r.course} /> },
-    { key: "event", label: "Prova", sortable: true, render: r => (
+    { key: "event", label: "Prova", sortable: true, cellClassName: "col-prova", render: r => (
       <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
         fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} />
     ) },

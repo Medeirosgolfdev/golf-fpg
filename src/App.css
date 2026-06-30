@@ -1746,10 +1746,33 @@ tr.cross-current { background: var(--bg-success); }
  .detail-title       { font-size: 17px; }
  .detail-actions     { flex-wrap: wrap; gap: 4px; }
 
- .pa-page            { min-height: 0; }
+ /* ── Mobile: scroll natural da página de detalhe do jogador ──────────────
+    No desktop o .pa-page tem altura fixa (overflow:hidden) e é o .pa-content
+    que faz scroll interno. Em mobile o cabeçalho (foto+nome+KPIs+pesquisa)
+    ocupa ~400px, deixando só ~170px de janela de scroll para a tabela de
+    rondas — esmagada e ilegível. Aqui desfazemos esse scroll aninhado: o
+    .pa-page/.pa-content fluem com altura natural e o ANCESTRAL .course-detail
+    (que já tem overflow-y:auto) passa a ser o único scroller — cabeçalho e
+    tabela rolam juntos como uma página normal. */
+ .pa-page            { min-height: 0; overflow: visible; height: auto; flex: 1 0 auto; }
  .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
- .pa-content         { padding: 8px; }
+ .pa-content         { padding: 8px; overflow: visible; height: auto; flex: 0 0 auto; min-height: 0; }
+ /* Tabelas de rondas do detalhe do jogador (vistas Por data / Por campo / Por
+    torneio): em mobile as colunas fixas esmagavam as colunas de NOME (Prova,
+    Torneio, Campo), que quebravam em muitas linhas → linhas com 100-220px de
+    altura, ilegíveis. Solução em duas partes:
+    1) Truncar a 1 linha qualquer célula de dados (nowrap + reticências). O
+       :not([colspan]) preserva as linhas de scorecard expandido (têm colspan),
+       que continuam a mostrar a grelha completa com o seu próprio scroll.
+    2) Dar largura mínima às tabelas LARGAS (10 colunas) para as colunas de nome
+       terem espaço — isoladas pelos hooks .col-prova (Por data) e .dtable-roomy
+       (Por campo). A vista Por torneio (5 colunas) cabe sem scroll forçado. */
+ .pa-content .dtable-lg td:not([colspan]),
+ .pa-content .dtable-lg th:not([colspan]) { white-space: nowrap; }
+ .pa-content .dtable-lg td:not([colspan]) { overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+ .pa-content .dtable-lg:has(.col-prova),
+ .pa-content .dtable-lg.dtable-roomy { min-width: 720px; }
  /* ─── Header do jogador no mobile ─────────────────────────────────────
     JSX intacto. CSS posiciona a fotografia absolutamente à esquerda
     e empurra o nome/links/botão (linha 1) e pills (linha 2) para

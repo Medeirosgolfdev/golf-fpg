@@ -21,6 +21,41 @@ const fedFilter = args.filter(a => /^\d+$/.test(a));
 const playersPath = path.join(__dirname, "..", "players.json");
 const outputRoot = path.join(__dirname, "..", "output");
 const statsOutPath = path.join(__dirname, "..", "public", "player-stats.json");
+const histOutPath = path.join(__dirname, "..", "public", "data", "hcp-history.json");
+
+/* HCP máximo plausível (WHS topo = 54). Acima disto é provisório/lixo
+ * (ex: índices 77/99 que esmagavam a escala do gráfico) → excluído. */
+const HCP_MAX_PLAUSIBLE = 54;
+/* Pontos máximos guardados por jogador no histórico compacto. Quase todos os
+ * juniores têm menos do que isto; só downsample em casos extremos. */
+const HIST_MAX_PTS = 160;
+
+/**
+ * Converte raw.hcpHistory ([{d:ms, h}]) num histórico compacto e robusto:
+ *  - exclui HCP não plausível (> 54) e valores não finitos
+ *  - resolução diária (1 ponto/dia, fica o último), d em dias inteiros
+ *  - downsample uniforme se exceder HIST_MAX_PTS (preservando extremos)
+ * Formato: [[dayInt, h1dp], ...] — dayInt = ms/86400000, h com 1 casa.
+ */
+function compactHcpHistory(hh) {
+  if (!Array.isArray(hh) || hh.length === 0) return null;
+  const byDay = new Map();
+  for (const p of hh) {
+    const d = Number(p.d), h = Number(p.h);
+    if (!isFinite(d) || d <= 0 || !isFinite(h) || h <= 0 || h > HCP_MAX_PLAUSIBLE) continue;
+    byDay.set(Math.round(d / 86400000), Math.round(h * 10) / 10); // último do dia vence
+  }
+  let pts = [...byDay.entries()].sort((a, b) => a[0] - b[0]);
+  if (pts.length < 2) return null;
+  if (pts.length > HIST_MAX_PTS) {
+    const step = (pts.length - 1) / (HIST_MAX_PTS - 1);
+    const keep = [];
+    for (let i = 0; i < HIST_MAX_PTS; i++) keep.push(pts[Math.round(i * step)]);
+    // garantir extremos e remover duplicados consecutivos do arredondamento
+    pts = keep.filter((p, i) => i === 0 || p[0] !== keep[i - 1][0]);
+  }
+  return pts;
+}
 
 /**
  * Lê data.json (fonte canónica que a UI lê) e devolve contagens consistentes
@@ -108,6 +143,17 @@ if (fs.existsSync(statsOutPath)) {
     let t = fs.readFileSync(statsOutPath, "utf-8");
     if (t.charCodeAt(0) === 0xFEFF) t = t.slice(1);
     existing = JSON.parse(t);
+  } catch {}
+}
+
+// Histórico de HCP (merge incremental, igual ao player-stats.json).
+let histExisting = {};
+if (fs.existsSync(histOutPath)) {
+  try {
+    let t = fs.readFileSync(histOutPath, "utf-8");
+    if (t.charCodeAt(0) === 0xFEFF) t = t.slice(1);
+    t = t.replace(/\0+/g, "");
+    histExisting = JSON.parse(t);
   } catch {}
 }
 
@@ -214,6 +260,12 @@ for (const fed of targetFeds) {
     bestGross, avgGross5: r(avgGross5), avgGross20: r(raw.avgGross20),
     aces: canonical?.aces ?? 0,
   };
+
+  // Histórico compacto de HCP (para o gráfico de evolução da /jogadores-por-ano).
+  const compactHist = compactHcpHistory(raw.hcpHistory);
+  if (compactHist) histExisting[fed] = compactHist;
+  else delete histExisting[fed]; // jogador sem histórico plausível → não deixar entrada stale
+
   processed++;
 }
 
@@ -221,8 +273,13 @@ const outDir = path.dirname(statsOutPath);
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 writeJsonAtomic(statsOutPath, existing);
 
+const histDir = path.dirname(histOutPath);
+if (!fs.existsSync(histDir)) fs.mkdirSync(histDir, { recursive: true });
+writeJsonAtomic(histOutPath, histExisting);
+
 console.log(`✅ ${processed} enriched, ${skipped} skipped`);
 console.log(`📄 ${statsOutPath}`);
+console.log(`📄 ${histOutPath} (${Object.keys(histExisting).length} jogadores com histórico)`);
 
 if (corruptedFiles.length > 0) {
   // Dedup por fed (um fed pode ter o output/ E o public/data/ corrompidos).
