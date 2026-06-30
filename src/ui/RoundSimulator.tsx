@@ -108,6 +108,9 @@ export function RoundSimulator({
   const newId = () => `sr_${nextIdRef.current++}`;
   const storageKey = storageKeyProp ?? (urlFedId ? `sim_rounds_v2_${urlFedId}` : null);
   const [savedTs, setSavedTs] = useState<number | null>(null);
+  // Tabela de impacto: por defeito mostra um intervalo focado à volta do par;
+  // o utilizador pode expandir para o intervalo completo.
+  const [impactFull, setImpactFull] = useState(false);
 
   // ── Sexo do jogador (para filtrar tees M/F) ──
   // Vem de CROSS_DATA indexado pelo fed actual. Normalizamos para "M"|"F"|null.
@@ -564,6 +567,17 @@ export function RoundSimulator({
     sorted.slice(0, qty).forEach((x, i) => topRanks.set(x.eid, i + 1));
     return { finalTopIds: topIds, finalTopRanks: topRanks };
   }, [simResults]);
+
+  // ── Top-N ANTES da simulação (para mostrar #antiga → #nova na janela) ──
+  const oldTopRanks = useMemo(() => {
+    const sorted = [...initialPool]
+      .map((e) => ({ eid: e.eid, adjSd: e.sd + e.adj }))
+      .sort((a, b) => a.adjSd - b.adjSd);
+    const qty = whsQtyCalc(initialPool.length);
+    const m = new Map<string, number>();
+    sorted.slice(0, qty).forEach((x, i) => m.set(x.eid, i + 1));
+    return m;
+  }, [initialPool]);
 
   // ── Tabela gross→HCP (última ronda em modo Campo válida) ──
   const grossTable = useMemo(() => {
@@ -1159,6 +1173,7 @@ export function RoundSimulator({
               >
                 {/* Número */}
                 <span
+                  className="rsim-num"
                   style={{
                     background:
                       borderClr === "var(--border)"
@@ -1168,48 +1183,18 @@ export function RoundSimulator({
                       borderClr === "var(--border)"
                         ? "var(--text-2)"
                         : "#fff",
-                    borderRadius: "50%",
-                    width: 22,
-                    height: 22,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "var(--fs-11)",
-                    fontWeight: 800,
-                    flexShrink: 0,
                   }}
                 >
                   {idx + 1}
                 </span>
 
                 {/* Toggle SD / Campo */}
-                <div
-                  style={{
-                    display: "flex",
-                    borderRadius: 6,
-                    overflow: "hidden",
-                    border: "1px solid var(--line)",
-                    fontSize: "var(--fs-11)",
-                  }}
-                >
+                <div className="rsim-seg" title="Origem do resultado">
                   {(["sd", "course"] as const).map((m) => (
                     <button
                       key={m}
+                      className={round.mode === m ? "on" : ""}
                       onClick={() => updateRound(round.id, { mode: m })}
-                      style={{
-                        padding: "3px 10px",
-                        border: "none",
-                        cursor: "pointer",
-                        background:
-                          round.mode === m
-                            ? "var(--chart-2)"
-                            : "transparent",
-                        color:
-                          round.mode === m
-                            ? "#fff"
-                            : "var(--text-2)",
-                        fontWeight: round.mode === m ? 700 : 400,
-                      }}
                     >
                       {m === "sd" ? "📊 SD" : "⛳ Campo"}
                     </button>
@@ -1217,16 +1202,7 @@ export function RoundSimulator({
                 </div>
 
                 {/* Toggle 18 / Front 9 / Back 9 */}
-                <div
-                  style={{
-                    display: "flex",
-                    borderRadius: 6,
-                    overflow: "hidden",
-                    border: "1px solid var(--line)",
-                    fontSize: "var(--fs-11)",
-                  }}
-                  title="Número de buracos jogados"
-                >
+                <div className="rsim-seg" title="Número de buracos jogados">
                   {(["18", "front9", "back9"] as const).map((hm) => {
                     const label =
                       hm === "18" ? "18" : hm === "front9" ? "F9" : "B9";
@@ -1234,17 +1210,10 @@ export function RoundSimulator({
                     return (
                       <button
                         key={hm}
+                        className={active ? "on" : ""}
                         onClick={() =>
                           updateRound(round.id, { holesMode: hm })
                         }
-                        style={{
-                          padding: "3px 9px",
-                          border: "none",
-                          cursor: "pointer",
-                          background: active ? "var(--chart-2)" : "transparent",
-                          color: active ? "#fff" : "var(--text-2)",
-                          fontWeight: active ? 700 : 400,
-                        }}
                       >
                         {label}
                       </button>
@@ -1634,21 +1603,40 @@ export function RoundSimulator({
             borderRadius: "var(--radius-xl)",
             background: "transparent",
             cursor: "pointer",
-            padding: "8px 16px",
-            color: "var(--text-3)",
+            padding: "9px 16px",
+            color: "var(--text-2)",
             fontSize: "var(--fs-13)",
+            fontWeight: 600,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             gap: 6,
+            transition: "background .12s, border-color .12s, color .12s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--bg-hover)";
+            e.currentTarget.style.borderColor = "var(--chart-2)";
+            e.currentTarget.style.color = "var(--chart-2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.borderColor = "var(--line)";
+            e.currentTarget.style.color = "var(--text-2)";
           }}
         >
-          + Adicionar ronda
+          ＋ Adicionar ronda
         </button>
       </div>
 
       {/* ── Timeline ── */}
       {validResults.length > 0 && (
+        <>
+        <div className="rsim-sec">
+          Evolução do Handicap Index
+          <span className="rsim-sec-meta">
+            {validResults.length} ronda{validResults.length !== 1 ? "s" : ""} simulada{validResults.length !== 1 ? "s" : ""}
+          </span>
+        </div>
         <div
           style={{
             display: "flex",
@@ -1658,6 +1646,8 @@ export function RoundSimulator({
             borderRadius: 10,
             overflow: "hidden",
             border: "1px solid var(--border)",
+            width: "fit-content",
+            maxWidth: "100%",
           }}
         >
           {/* HCP actual */}
@@ -1838,32 +1828,66 @@ export function RoundSimulator({
             </>
           )}
         </div>
+        </>
       )}
 
       {/* ── Tabela Gross→HCP ── */}
       {grossTable && (
-        <div className="mb-16">
-          <div className="muted fs-11 mb-6">
+        <details className="rsim-collapse" open>
+          <summary>
             Tabela de impacto — ronda {grossTable.roundIdx + 1}
+            <span className="rsim-sum-meta">
             {grossTable.roundIdx > 0 && (
-              <span>
-                {" "}
-                (após {grossTable.roundIdx} ronda
+              <>
+                {" "}(após {grossTable.roundIdx} ronda
                 {grossTable.roundIdx > 1 ? "s" : ""} já simulada
                 {grossTable.roundIdx > 1 ? "s" : ""})
-              </span>
+              </>
             )}
-            {" — "}CR {grossTable.cr} / Slope {grossTable.slope} / Par{" "}
+            {" · "}CR {grossTable.cr} / Slope {grossTable.slope} / Par{" "}
             {grossTable.par}
+            </span>
+          </summary>
+          <div className="rsim-collapse-body">
+          {(() => {
+            // Intervalo focado: janela compacta centrada no gross introduzido
+            // (ou no par, se ainda não houver gross). Não usamos "entra no top"
+            // como critério — para jogadores muito fortes quase tudo entra no
+            // top e a tabela voltava a ficar gigante.
+            const enteredRow = grossTable.rows.find((r) => r.isEntered);
+            const anchor = enteredRow ? enteredRow.toPar : 0;
+            const loPar = anchor + (grossTable.is9 ? -4 : -5);
+            const hiPar = anchor + (grossTable.is9 ? 4 : 6);
+            const impactRows = impactFull
+              ? grossTable.rows
+              : grossTable.rows.filter(
+                  (row) => row.isEntered || (row.toPar >= loPar && row.toPar <= hiPar)
+                );
+            const hidden = grossTable.rows.length - impactRows.length;
+            return (
+          <>
+          <div className="muted fs-11 mb-6" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             {grossTable.is9 && (
               <span>
-                {" "}· {holesLabel(grossTable.holesMode)} · exp9(HI) ={" "}
+                {holesLabel(grossTable.holesMode)} · exp9(HI) ={" "}
                 <b>{grossTable.exp9?.toFixed(1)}</b> somado a cada SD9 para 18H equivalente
               </span>
             )}
+            {(impactFull || hidden > 0) && (
+              <button
+                onClick={() => setImpactFull((v) => !v)}
+                style={{
+                  marginLeft: "auto", border: "1px solid var(--line)", background: "transparent",
+                  cursor: "pointer", borderRadius: 6, padding: "2px 9px", fontSize: "var(--fs-11)",
+                  color: "var(--text-2)", fontWeight: 600,
+                }}
+              >
+                {impactFull ? "▾ Intervalo focado" : `▸ Ver intervalo completo (+${hidden})`}
+              </button>
+            )}
           </div>
           <div className="scroll-x">
-            <table className="dtable fs-12">
+            <table className="dtable-sm">
               <thead>
                 <tr>
                   <th className="r">Pancadas{grossTable.is9 ? " (9h)" : ""}</th>
@@ -1876,7 +1900,7 @@ export function RoundSimulator({
                 </tr>
               </thead>
               <tbody>
-                {grossTable.rows.map((row) => {
+                {impactRows.map((row) => {
                   const dc =
                     row.delta < -0.05
                       ? "var(--color-good)"
@@ -1889,17 +1913,8 @@ export function RoundSimulator({
                   return (
                     <tr
                       key={row.gross}
-                      style={{
-                        background: row.isEntered
-                          ? "var(--bg-active, rgba(59,130,246,0.10))"
-                          : row.entersTop
-                            ? "var(--bg-success)"
-                            : undefined,
-                        opacity: row.delta > 0.7 ? 0.55 : 1,
-                        outline: row.isEntered
-                          ? "2px solid var(--chart-2)"
-                          : undefined,
-                      }}
+                      className={row.isEntered ? "rsim-entered" : row.entersTop ? "rsim-toprow" : undefined}
+                      style={{ opacity: row.delta > 0.7 ? 0.55 : 1 }}
                     >
                       <td className="r fw-700">
                         {row.gross}
@@ -1926,26 +1941,25 @@ export function RoundSimulator({
                         </td>
                       )}
                       <td className="r">
-                        <span
-                          className={`p p-${sdClassByHcp(
-                            row.sd,
-                            hiRef
-                          )} fs-11`}
-                        >
-                          {row.sd.toFixed(1)}
-                        </span>
-                        {row.exceptionalAdj !== 0 && (
+                        <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
+                          {row.exceptionalAdj !== 0 && (
+                            <span
+                              style={{
+                                fontSize: "var(--fs-9)",
+                                color: "var(--color-warn, #e07b00)",
+                                fontWeight: 700,
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              ⚡{row.exceptionalAdj}
+                            </span>
+                          )}
                           <span
-                            style={{
-                              fontSize: "var(--fs-9)",
-                              marginLeft: 3,
-                              color: "var(--color-warn, #e07b00)",
-                              fontWeight: 700,
-                            }}
+                            className={`p p-${sdClassByHcp(row.sd, hiRef)} fs-11`}
                           >
-                            ⚡{row.exceptionalAdj}
+                            {row.sd.toFixed(1)}
                           </span>
-                        )}
+                        </span>
                       </td>
                       <td className="r fw-700" style={{ color: dc }}>
                         {row.newHI.toFixed(1)}
@@ -1979,21 +1993,25 @@ export function RoundSimulator({
               </tbody>
             </table>
           </div>
-        </div>
+          </>
+            );
+          })()}
+          </div>
+        </details>
       )}
 
       {/* ── Janela WHS final ── */}
       {simResults && validResults.length > 0 && (
-        <div className="scroll-x">
-          <div className="muted fs-11 mb-6">
-            Janela WHS após simulação — ★ = top-
-            {whsQtyCalc(simResults.finalPool.length)} SDs ·{" "}
-            <span style={{ color: "var(--color-good)", fontWeight: 600 }}>
-              Verde
-            </span>{" "}
-            = ronda simulada · SD adj. = valor após redução excepcional
-          </div>
-          <table className="dtable fs-12">
+        <details className="rsim-collapse" open>
+          <summary>
+            Janela WHS após simulação
+            <span className="rsim-sum-meta">
+              {simResults.finalPool.length} rondas · ★ top-{whsQtyCalc(simResults.finalPool.length)} entram no cálculo · verde = ronda simulada
+            </span>
+          </summary>
+          <div className="rsim-collapse-body">
+          <div className="scroll-x">
+          <table className="dtable-sm">
             <thead>
               <tr>
                 <th className="r">WHS#</th>
@@ -2138,36 +2156,42 @@ export function RoundSimulator({
                       )}
                     </td>
                     <td className="r">
-                      {isTop ? (
-                        <>
-                          <span className="c-par-ok">★</span>{" "}
-                          <span className="fw-700">
-                            #{finalTopRanks.get(entry.eid)}
-                          </span>
-                          {entered && (
-                            <span
-                              style={{
-                                color: "var(--color-good)",
-                                marginLeft: 3,
-                                fontWeight: 800,
-                              }}
-                            >
-                              ↑
+                      {(() => {
+                        const nr = finalTopRanks.get(entry.eid);
+                        const or = oldTopRanks.get(entry.eid);
+                        const moved = !entry.isSimulated && or != null && or !== nr;
+                        if (isTop) {
+                          return (
+                            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 3, whiteSpace: "nowrap" }}>
+                              {entered && (
+                                <span style={{ color: "var(--color-good)", fontWeight: 800 }} title="Entrou no top">↑</span>
+                              )}
+                              {moved && (
+                                <>
+                                  <span className="muted" style={{ fontSize: "var(--fs-10)", textDecoration: "line-through" }}>#{or}</span>
+                                  <span
+                                    className="fs-10"
+                                    style={{ color: nr! > or! ? "var(--color-danger)" : "var(--color-good)" }}
+                                  >
+                                    {nr! > or! ? "↓" : "↑"}
+                                  </span>
+                                </>
+                              )}
+                              <span className="c-par-ok">★</span>
+                              <span className="fw-700">#{nr}</span>
                             </span>
-                          )}
-                        </>
-                      ) : exited ? (
-                        <span
-                          style={{
-                            color: "var(--color-danger)",
-                            fontWeight: 800,
-                          }}
-                        >
-                          ✕
-                        </span>
-                      ) : (
-                        <span className="muted">–</span>
-                      )}
+                          );
+                        }
+                        if (exited) {
+                          return (
+                            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 3, whiteSpace: "nowrap" }}>
+                              {or != null && <span className="muted" style={{ fontSize: "var(--fs-10)", textDecoration: "line-through" }}>#{or}</span>}
+                              <span style={{ color: "var(--color-danger)", fontWeight: 800 }}>✕</span>
+                            </span>
+                          );
+                        }
+                        return <span className="muted">–</span>;
+                      })()}
                     </td>
                   </tr>
                 );
@@ -2277,7 +2301,9 @@ export function RoundSimulator({
               )}
             </tbody>
           </table>
-        </div>
+          </div>
+          </div>
+        </details>
       )}
     </div>
   );
