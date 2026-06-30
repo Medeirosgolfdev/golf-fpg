@@ -20,8 +20,9 @@
  */
 import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
-import { fmtToPar, fmtSD } from "../../utils/format";
+import { fmtToPar } from "../../utils/format";
 import SortableHdr from "../../ui/SortableHdr";
+import { SDPill } from "../../ui/tournamentPrimitives";
 import LoadingState from "../../ui/LoadingState";
 import { useAppContext } from "../../context/AppContext";
 import { resolveCourseTee } from "./CourseTab";
@@ -403,7 +404,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
               <SortableHdr k="rnd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600">Rnd</SortableHdr>
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
               <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
-              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross" title="Score Differential = (113/Slope)(gross-CR)">SD</SortableHdr>
               {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
                 <HoleCell key={h} n={h + 1} first={h === 0} as="th">{h + 1}</HoleCell>
               ))}
@@ -416,6 +416,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <th className="lb-halftot">In</th>
                 </>
               )}
+              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-sd" title="Score Differential = (113/Slope)(gross - CR)">SD</SortableHdr>
               <SortableHdr k="birds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bird">🐦</SortableHdr>
               <SortableHdr k="pars" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-par-stat">Par</SortableHdr>
               <SortableHdr k="bogeys" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bog">■</SortableHdr>
@@ -438,7 +439,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <td className="lb-par-lbl sticky-col-1" colSpan={3}>Metros</td>
                   <td className="lb-topar" />
                   <td className="lb-gross">{total || ""}</td>
-                  <td className="lb-gross" />
                   {m.slice(0, Math.min(9, hpr)).map((v, i) => (
                     <HoleCell key={i} n={i + 1} first={i === 0}>{v || ""}</HoleCell>
                   ))}
@@ -447,7 +447,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     <HoleCell key={i} n={i + 10} first={i === 0}>{v || ""}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{b9 || ""}</td>}
-                  <td /><td /><td />
+                  <td className="lb-sd" /><td /><td /><td />
                 </tr>
               );
             })()}
@@ -462,7 +462,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <td className="lb-par-lbl sticky-col-1" colSpan={3}>PAR</td>
                   <td className="lb-topar" />
                   <td className="lb-gross">{ref.parPerRound}</td>
-                  <td className="lb-gross" />
                   {ref.par.slice(0, Math.min(9, hpr)).map((v, i) => (
                     <HoleCell key={i} n={i + 1} first={i === 0}>{v}</HoleCell>
                   ))}
@@ -471,7 +470,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     <HoleCell key={i} n={i + 10} first={i === 0}>{v}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{ref.parB9}</td>}
-                  <td /><td /><td />
+                  <td className="lb-sd" /><td /><td /><td />
                 </tr>
               );
             })()}
@@ -710,8 +709,10 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
               {ed.parPerRound > 0 ? fmtToPar(r.toPar) : "—"}
             </td>
             <td className="lb-gross" style={{ borderTop: bTop }}>{r.gross}</td>
-            <td className="lb-gross" style={{ borderTop: bTop, color: "var(--text-muted)" }} title={ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}${ed.crApprox ? " (estimado)" : ""}` : undefined}>{r.sd != null ? (ed.crApprox ? "≈" : "") + fmtSD(r.sd) : "—"}</td>
             <ScorecardCells r={r} ed={ed} hpr={hpr} is9={is9} />
+            <td className="lb-sd" style={{ borderTop: bTop }} title={ed.crApprox ? "CR/Slope estimados por interpolacao" : (ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}` : undefined)}>
+              {r.sd != null ? <SDPill sd={r.sd} source={null} hcp={null} /> : <span className="muted">–</span>}
+            </td>
             <td className="lb-bird" style={{ borderTop: bTop }}>{r.birds || ""}</td>
             <td className="lb-par-stat" style={{ borderTop: bTop }}>{r.pars || ""}</td>
             <td className="lb-bog" style={{ borderTop: bTop }}>{r.bogeys || ""}</td>
@@ -755,8 +756,10 @@ function IndependentRow({ f, pos, hpr, is9 }: {
         {ed.parPerRound > 0 ? fmtToPar(f.r.toPar) : "—"}
       </td>
       <td className="lb-gross">{f.r.gross}</td>
-      <td className="lb-gross" style={{ color: "var(--text-muted)" }} title={ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}${ed.crApprox ? " (estimado)" : ""}` : undefined}>{f.r.sd != null ? (ed.crApprox ? "≈" : "") + fmtSD(f.r.sd) : "—"}</td>
       <ScorecardCells r={f.r} ed={ed} hpr={hpr} is9={is9} />
+      <td className="lb-sd" title={ed.crApprox ? "CR/Slope estimados por interpolacao" : (ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}` : undefined)}>
+        {f.r.sd != null ? <SDPill sd={f.r.sd} source={null} hcp={null} /> : <span className="muted">–</span>}
+      </td>
       <td className="lb-bird">{f.r.birds || ""}</td>
       <td className="lb-par-stat">{f.r.pars || ""}</td>
       <td className="lb-bog">{f.r.bogeys || ""}</td>

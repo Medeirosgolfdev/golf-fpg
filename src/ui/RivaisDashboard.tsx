@@ -307,17 +307,26 @@ export default function RivaisDashboard({
                   conta tournments até ao próximo boundary. */}
               {fieldMode && (() => {
                 // Compute groups: array de { label, span, start }
-                interface Grp { label: string; span: number }
+                interface Grp { label: string; url?: string; span: number }
                 const groups: Grp[] = [];
                 // Extrai "EU", "WC", "Venice"… do t.short ("EU '22" → "EU")
                 const seriesOf = (short: string): string => {
                   const m = short.match(/^(.+?)\s+['′][\d]/);
                   return m ? m[1] : short;
                 };
+                // Nome completo da série a partir do t.name ("European Championship
+                // 2026" -> "European Championship"); fallback ao short.
+                const fullName = (name: string): string => name.replace(/\s+\d{4}\s*$/, "").trim();
                 T.forEach((t, i) => {
                   const isBoundary = i === 0 || seriesBoundaries?.has(t.id);
-                  if (isBoundary) groups.push({ label: seriesOf(t.short), span: 1 });
-                  else groups[groups.length - 1].span++;
+                  if (isBoundary) {
+                    const label = fullName(t.name) || seriesOf(t.short);
+                    groups.push({ label, url: t.url || undefined, span: 1 });
+                  } else {
+                    const g = groups[groups.length - 1];
+                    g.span++;
+                    if (t.url) g.url = t.url; // edição mais recente da série (ordem asc)
+                  }
                 });
                 return (
                   <tr style={{ background: "var(--surface-2, var(--bg-secondary, #f7f6f1))" }}>
@@ -328,15 +337,18 @@ export default function RivaisDashboard({
                         colSpan={g.span}
                         style={{
                           textAlign: "center",
-                          fontSize: "var(--fs-11)",
-                          fontWeight: 500,
-                          color: "var(--text-3)",
-                          padding: "5px 4px",
+                          fontSize: "var(--fs-12)",
+                          fontWeight: 600,
+                          color: "var(--text-2)",
+                          padding: "6px 8px",
                           borderLeft: gi > 0 ? "1px solid var(--border)" : undefined,
                           borderBottom: "1px solid var(--border)",
+                          whiteSpace: "nowrap",
                         }}
                       >
-                        {g.label}
+                        {g.url ? (
+                          <a href={g.url} target="_blank" rel="noopener noreferrer" className="rivais-link" title={`Página oficial — ${g.label}`}>{g.label}</a>
+                        ) : g.label}
                       </th>
                     ))}
                   </tr>

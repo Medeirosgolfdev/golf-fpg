@@ -2203,7 +2203,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Rivais table */
 
-.rivais-group-header { background: var(--bg-topbar); color: var(--text-inv); }
+.rivais-group-header { background: var(--bg-header); color: var(--text-3); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.03em; }
 .rivais-player-name { padding: 6px 8px; font-size: var(--fs-12); font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
 .rivais-flag { font-size: var(--fs-13); margin-right: 4px; }
 
@@ -2666,7 +2666,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Rivais Dashboard table cells ─── */
 .rivais-th { padding: 8px 5px; text-align: center; font-size: var(--fs-11); font-weight: 700; }
-.rivais-th-name { padding: 8px 8px; font-size: var(--fs-11); font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
+.rivais-th-name { padding: 8px 8px; font-size: var(--fs-11); font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-header); z-index: 2; }
 /* ─── Simulador inputs ─── */
 .sim-input { width: 30px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 0; font: inherit; font-size: var(--fs-12); background: var(--bg-card); }
 .sim-input-sm { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: var(--fs-10); background: var(--bg); color: var(--text-muted); }

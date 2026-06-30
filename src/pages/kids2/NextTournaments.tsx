@@ -58,6 +58,7 @@ function NextTournamentsContent() {
         {!autoRivals && !error && <LoadingState />}
         {autoRivals && (
           <FieldRivaisDashboard
+            syncUrl
             defaultT={21131}
             defaultEscalao="Boys 12"
             autoRivals={autoRivals}

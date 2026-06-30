@@ -31,6 +31,8 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar
 import { norm, fmtToPar } from "../../utils/format";
 import { getTeeHex } from "../../utils/teeColors";
 import SharedTeePill from "../../ui/TeePill";
+import HoleDiffTable from "../../ui/HoleDiffTable";
+import { reachBudget } from "../../utils/reach";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 
@@ -131,11 +133,6 @@ function playingHcpRaw(hi: number, slope: number, cr: number, par: number): numb
 
 interface ReachInfo { hole: number; par: number; dist: number; budget: number; reachable: boolean }
 interface ReachOutcome { reach: number[]; total: number; detail: ReachInfo[] }
-
-/** Orçamento de metros para chegar ao green em regulação. */
-function reachBudget(par: number, driveM: number, secondM: number): number {
-  return par === 3 ? driveM : par === 4 ? driveM + secondM : driveM + secondM * (par - 3);
-}
 
 /** Buracos alcançáveis em regulação dado alcance de drive + 2ª pancada. */
 function reachableHoles(tee: Tee, driveM: number, secondM: number): ReachOutcome {
@@ -586,159 +583,6 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
 
 /* ═══════════════ Tabela de diferenças buraco a buraco (A vs B) ═══════════════ */
 
-interface HoleDiffRow {
-  h: number;
-  parA: number | null;
-  parB: number | null;
-  dA: number | null;
-  dB: number | null;
-  delta: number | null;
-  appA: { m: number; reachable: boolean } | null;
-  appB: { m: number; reachable: boolean } | null;
-  /** Distância que sobra depois da 2ª pancada grande (só par 4/5) */
-  app2A: { m: number; reachable: boolean } | null;
-  app2B: { m: number; reachable: boolean } | null;
-}
-
-function buildDiffRows(a: TeeMetrics, b: TeeMetrics, driveM: number, secondM: number): HoleDiffRow[] {
-  const mapA = new Map(a.tee.holes.map(h => [h.hole, h]));
-  const mapB = new Map(b.tee.holes.map(h => [h.hole, h]));
-  const holes = [...new Set([...mapA.keys(), ...mapB.keys()])].sort((x, y) => x - y);
-  // "Após drive": o que falta para o green depois do drive (par 3 = a própria pancada do tee)
-  const mk = (par: number | null | undefined, d: number | null | undefined) => {
-    if (par == null || d == null || par < 3) return null;
-    // Metros que sobram para o green depois da pancada do tee — vale para todos
-    // os pares: num par 3 a pancada do tee é a pancada para o green, logo se
-    // o alcança sobra 0; se fica curto, sobra a diferença.
-    return {
-      m: Math.max(0, d - driveM),
-      reachable: d <= reachBudget(par, driveM, secondM),
-    };
-  };
-  // "Após 2ª pancada grande": só faz sentido no par 4 e par 5 (drive + madeira).
-  // Num par 4 sobra 0 se chegou ao green em regulação; num par 5 é o approach
-  // que entra no green (a 3ª pancada).
-  const mk2 = (par: number | null | undefined, d: number | null | undefined) => {
-    if (par == null || d == null || par < 4) return null;
-    return {
-      m: Math.max(0, d - driveM - secondM),
-      reachable: d <= reachBudget(par, driveM, secondM),
-    };
-  };
-  return holes.map(h => {
-    const ha = mapA.get(h), hb = mapB.get(h);
-    const dA = ha?.distance ?? null, dB = hb?.distance ?? null;
-    return {
-      h,
-      parA: ha?.par ?? null,
-      parB: hb?.par ?? null,
-      dA, dB,
-      delta: dA != null && dB != null ? dA - dB : null,
-      appA: mk(ha?.par, dA),
-      appB: mk(hb?.par, dB),
-      app2A: mk2(ha?.par, dA),
-      app2B: mk2(hb?.par, dB),
-    };
-  });
-}
-
-function HoleDiffTable({ a, b, driveM, secondM }: {
-  a: TeeMetrics; b: TeeMetrics; driveM: number; secondM: number;
-}) {
-  const rows = useMemo(() => buildDiffRows(a, b, driveM, secondM), [a, b, driveM, secondM]);
-  const totA = rows.reduce((s, r) => s + (r.dA ?? 0), 0);
-  const totB = rows.reduce((s, r) => s + (r.dB ?? 0), 0);
-  const hexA = getTeeHex(a.tee.teeName, a.tee.scorecardMeta?.teeColor);
-  const hexB = getTeeHex(b.tee.teeName, b.tee.scorecardMeta?.teeColor);
-  const tintA = hexA + "1f", tintB = hexB + "1f";
-
-  const lblStyle: React.CSSProperties = {
-    position: "sticky", left: 0, background: "var(--bg-card)", zIndex: "var(--z-base)",
-    fontWeight: 700, fontSize: "var(--fs-12)", whiteSpace: "nowrap",
-  };
-
-  const appCell = (app: HoleDiffRow["appA"]) => app == null ? "–" : (
-    <span
-      style={{ fontFamily: MONO, color: app.reachable ? "var(--color-good-dark)" : "var(--color-warn-dark)", fontWeight: app.reachable ? 400 : 800 }}
-      title={app.reachable
-        ? "Metros que sobram para o green — alcançável em regulação"
-        : "Green NÃO alcançável em regulação com o alcance configurado"}
-    >
-      {app.m.toFixed(0)}{app.reachable ? "" : "✗"}
-    </span>
-  );
-
-  return (
-    <div style={{ overflowX: "auto", paddingBottom: 14 }}>
-      <table className="dtable">
-        <thead>
-          <tr>
-            <th style={lblStyle}>Buraco</th>
-            {rows.map(r => <th key={r.h} className="r" style={{ fontFamily: MONO }}>{r.h}</th>)}
-            <th className="r" style={{ fontFamily: MONO }}>Σ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style={lblStyle}>Par</td>
-            {rows.map(r => (
-              <td key={r.h} className="r" style={{ fontFamily: MONO, color: "var(--text-3)" }}>
-                {r.parA != null && r.parB != null && r.parA !== r.parB ? `${r.parA}/${r.parB}` : (r.parA ?? r.parB ?? "–")}
-              </td>
-            ))}
-            <td className="r" style={{ fontFamily: MONO, color: "var(--text-3)" }}>{a.par || b.par || "–"}</td>
-          </tr>
-          <tr style={{ background: tintA }}>
-            <td style={lblStyle}><TeePill tee={a.tee} /> <span style={{ fontWeight: 600 }}>(m)</span></td>
-            {rows.map(r => <td key={r.h} className="r" style={{ fontFamily: MONO }}>{r.dA ?? "–"}</td>)}
-            <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>{totA || "–"}</td>
-          </tr>
-          <tr style={{ background: tintB }}>
-            <td style={lblStyle}><TeePill tee={b.tee} /> <span style={{ fontWeight: 600 }}>(m)</span></td>
-            {rows.map(r => <td key={r.h} className="r" style={{ fontFamily: MONO }}>{r.dB ?? "–"}</td>)}
-            <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>{totB || "–"}</td>
-          </tr>
-          <tr style={{ borderTop: "2px solid var(--border)" }}>
-            <td style={lblStyle}>Δ (m)</td>
-            {rows.map(r => (
-              <td key={r.h} className="r" style={{ fontFamily: MONO, fontWeight: r.delta != null && Math.abs(r.delta) >= 30 ? 800 : 400 }}>
-                {r.delta != null ? (r.delta > 0 ? "+" : "") + r.delta : "–"}
-              </td>
-            ))}
-            <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>
-              {totA && totB ? (totA - totB > 0 ? "+" : "") + (totA - totB) : "–"}
-            </td>
-          </tr>
-          {/* Bloco do tee A — as duas análises juntas */}
-          <tr style={{ background: tintA, borderTop: "2px solid var(--border)" }}>
-            <td style={lblStyle}><TeePill tee={a.tee} /> <span style={{ fontWeight: 600 }}>· após drive faltam (m)</span></td>
-            {rows.map(r => <td key={r.h} className="r">{appCell(r.appA)}</td>)}
-            <td />
-          </tr>
-          <tr style={{ background: tintA }}>
-            <td style={lblStyle}><TeePill tee={a.tee} /> <span style={{ fontWeight: 600 }}>· após 2ª pancada faltam (m)</span></td>
-            {rows.map(r => <td key={r.h} className="r">{appCell(r.app2A)}</td>)}
-            <td />
-          </tr>
-          {/* Espaço entre as duas análises */}
-          <tr aria-hidden="true"><td colSpan={rows.length + 2} style={{ height: 12, padding: 0, border: "none", background: "transparent" }} /></tr>
-          {/* Bloco do tee B — as duas análises juntas */}
-          <tr style={{ background: tintB }}>
-            <td style={lblStyle}><TeePill tee={b.tee} /> <span style={{ fontWeight: 600 }}>· após drive faltam (m)</span></td>
-            {rows.map(r => <td key={r.h} className="r">{appCell(r.appB)}</td>)}
-            <td />
-          </tr>
-          <tr style={{ background: tintB }}>
-            <td style={lblStyle}><TeePill tee={b.tee} /> <span style={{ fontWeight: 600 }}>· após 2ª pancada faltam (m)</span></td>
-            {rows.map(r => <td key={r.h} className="r">{appCell(r.app2B)}</td>)}
-            <td />
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 /* ═══════════════════ Vista principal ═══════════════════ */
 
 export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] }) {
@@ -1029,7 +873,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
                 <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 8 }}>
                   Linhas "após drive" = metros que faltam para o green depois da pancada do tee (0 = green alcançado; no par 3 a própria pancada do tee é a do green). Linhas "após 2ª pancada" = o que sobra depois da 2ª pancada grande (madeira/híbrido), só nos par 4/5 — num par 5 é o approach que entra no green. · ✗ = green fora de alcance em regulação
                 </div>
-                <HoleDiffTable a={teeA} b={teeB} driveM={driveM} secondM={secondM} />
+                <HoleDiffTable tees={[{ tee: teeA.tee, label: <TeePill tee={teeA.tee} /> }, { tee: teeB.tee, label: <TeePill tee={teeB.tee} /> }]} driveM={driveM} secondM={secondM} />
               </div>
 
               {recommendation && (

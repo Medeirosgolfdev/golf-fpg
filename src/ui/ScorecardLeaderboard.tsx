@@ -250,26 +250,36 @@ export function ScorecardLeaderboard({
               );
             })}
 
-            {/* Linha S.I. — NÃO sticky */}
-            {showScorecard && hasSI && (
+            {/* Linha S.I. — NÃO sticky.
+             *  Quando siLabel === "m" a linha transporta METROS (USKids sem
+             *  TEES_LOOKUP → sem teeName → sem linha teeMeters). Metros SÃO
+             *  somáveis, ao contrário do S.I. real → preencher OUT/IN/TOT. */}
+            {showScorecard && hasSI && (() => {
+              const siIsMeters = siLabel === "m";
+              const siF9  = siIsMeters ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
+              const siB9  = siIsMeters && !is9 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+              const siTot = siIsMeters ? siArr.reduce((a, b) => a + b, 0) : 0;
+              return (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
                 <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>{siLabel}</td>
                 <td className="lb-topar" />
-                {/* S.I. é um índice por buraco (1-18), NÃO somável → TOT/OUT/IN em branco. */}
-                <td className="lb-gross" />
+                {/* S.I. é um índice por buraco (1-18), NÃO somável → TOT em branco.
+                 *  Metros (siLabel="m") são somáveis → mostrar total. */}
+                <td className="lb-gross">{siIsMeters && siTot > 0 ? siTot.toLocaleString("pt") : ""}</td>
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
                 {siArr.slice(0, 9).map((v, i) => (
                   <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
                 ))}
-                <td className="lb-halftot" />
+                <td className="lb-halftot">{siIsMeters && siF9 > 0 ? siF9.toLocaleString("pt") : ""}</td>
                 {!is9 && siArr.slice(9, 18).map((v, i) => (
                   <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
                 ))}
-                {!is9 && <td className="lb-halftot" />}
+                {!is9 && <td className="lb-halftot">{siIsMeters && siB9 > 0 ? siB9.toLocaleString("pt") : ""}</td>}
                 {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
               </tr>
-            )}
+              );
+            })()}
 
             {/* Linha PAR — segundo, NÃO sticky */}
             {showScorecard && (

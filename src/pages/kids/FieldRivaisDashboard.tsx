@@ -9,6 +9,7 @@
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
 import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import LoadingState from "../../ui/LoadingState";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -151,6 +152,13 @@ const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; h
 const _today = new Date().toISOString().slice(0, 10);
 const UP_TORN_FUTURE = UP_TORN.filter(u => !u.date_iso || u.date_iso >= _today);
 
+// Link oficial de RESULTADOS (signupanytime) por tcode USKids — usado nos
+// cabeçalhos de torneio da cross-table (coluna por edição + grupo da série).
+const SIGNUP_AX_INTL = "1129";
+function signupResultsUrl(tcode: string | number): string {
+  return `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${SIGNUP_AX_INTL}&t=${tcode}`;
+}
+
 // Ficheiros FFG Internationaux U14 a integrar (Garçons). O escalão U14
 // abrange Boys 9-14 — qualquer escalão dentro desse range vê estes torneios.
 // Para cada um: caminho do JSON em public/data/ffgolf/, ID negativo único
@@ -228,11 +236,16 @@ interface MHSlim {
 // ─────────────────────────────────────────────────────────────────────
 // Main component
 // ─────────────────────────────────────────────────────────────────────
-export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao = "Boys 12", onSelectPlayer, autoRivals }: {
+type TabKey = "players" | "scores" | "scorecards" | "campo" | "previsao" | "scout";
+const VALID_TABS: readonly TabKey[] = ["players", "scores", "scorecards", "campo", "previsao", "scout"];
+
+export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao = "Boys 12", onSelectPlayer, autoRivals, syncUrl = false }: {
   defaultT?: number;
   defaultEscalao?: string;
   onSelectPlayer?: (name: string) => void;
   autoRivals?: AutoRivalPlayer[];
+  /** Sincroniza torneio/escalão/tab com o URL (links partilháveis). */
+  syncUrl?: boolean;
 }) {
   const [field, setField] = useState<FieldData | null>(null);
   const [mh, setMh] = useState<MHSlim | null>(null);
@@ -241,11 +254,32 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [uskRes, setUskRes] = useState<USKResData | null>(null);
   // Map neg ID → FFG file data (loaded on mount)
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
-  const [torneioT, setTorneioT] = useState<number>(defaultT);
-  const [escalaoNome, setEscalaoNome] = useState<string>(defaultEscalao);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [torneioT, setTorneioT] = useState<number>(() => {
+    if (syncUrl) { const t = searchParams.get("t"); if (t && !Number.isNaN(Number(t))) return Number(t); }
+    return defaultT;
+  });
+  const [escalaoNome, setEscalaoNome] = useState<string>(() =>
+    (syncUrl && searchParams.get("esc")) || defaultEscalao,
+  );
   // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
   // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
-  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo" | "previsao" | "scout">("players");
+  const [activeTab, setActiveTab] = useState<TabKey>(() => {
+    if (syncUrl) { const t = searchParams.get("tab"); if (t && (VALID_TABS as readonly string[]).includes(t)) return t as TabKey; }
+    return "players";
+  });
+
+  // Espelhar torneio/escalão/tab no URL -> cada torneio tem link próprio.
+  useEffect(() => {
+    if (!syncUrl) return;
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set("t", String(torneioT));
+      next.set("esc", escalaoNome);
+      next.set("tab", activeTab);
+      return next;
+    }, { replace: true });
+  }, [syncUrl, torneioT, escalaoNome, activeTab, setSearchParams]);
 
   // Load field + member history + uskids-results (último é fallback para
   // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
@@ -725,7 +759,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         holes,
         field: count,        // proxy: número de jogadores DO ESCALÃO que jogaram
         nations: 0,           // será recalculado abaixo após D estar pronto
-        url: "",
+        url: signupResultsUrl(tcode),
       };
     });
 
@@ -1261,6 +1295,32 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           onClick={() => setActiveTab("previsao")}>
           🔮 Previsão
         </button>
+      </div>
+
+      {/* Faixa de cabeçalho consistente por sub-tab (padrão único). */}
+      <div style={{
+        display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+        margin: "12px 0 10px", paddingBottom: 8, borderBottom: "1px solid var(--border-light)",
+      }}>
+        {(() => {
+          const meta: Record<string, { icon: string; title: string; desc: string }> = {
+            players: { icon: "🏌️", title: "Jogadores", desc: "Rivais inscritos e o histórico deles nos circuitos." },
+            scout: { icon: "🔭", title: "Scout", desc: "Ficha individual de cada rival." },
+            scores: { icon: "📊", title: "Scores", desc: "Totais por ronda nas edições passadas." },
+            scorecards: { icon: "🗂️", title: "Scorecards", desc: "Pancadas buraco-a-buraco dos finishers." },
+            campo: { icon: "⛳", title: "O Campo", desc: "Anatomia do campo e tee do escalão." },
+            previsao: { icon: "🔮", title: "Previsão", desc: "O que o Manuel é capaz de fazer neste campo." },
+          };
+          const m = meta[activeTab];
+          if (!m) return null;
+          return (
+            <>
+              <span style={{ fontSize: "var(--fs-20, 20px)", lineHeight: 1 }}>{m.icon}</span>
+              <span style={{ fontWeight: 800, fontSize: "var(--fs-16, 16px)" }}>{m.title}</span>
+              <span className="muted fs-12">{m.desc}</span>
+            </>
+          );
+        })()}
       </div>
 
       {activeTab === "players" && (
