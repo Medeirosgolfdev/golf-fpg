@@ -38,7 +38,7 @@ import TournExtLinks from "../ui/TournExtLinks";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { Tournament, GrupoEntry } from "../data/fpgTypes";
-import { buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
+import { buildDisplayList, tournamentHasManuel, isHiddenNonManuelDrive } from "../data/fpgUtils";
 import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
@@ -1504,6 +1504,7 @@ function Content() {
     // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
     // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
     const filtered = combined
+      .filter(t => !isHiddenNonManuelDrive(t))
       .filter(t => !filterManuel || tournamentHasManuel(t))
       .filter(t => yearMatchesFilter((t as any)._jovensYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t));
@@ -1564,7 +1565,10 @@ function Content() {
     // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
     // e os deep-links usam /drive/torneio/{ccode}-{tcode} (não /FPG/torneio/...).
     // pjaExtraTournaments só é usado internamente pelo Ranking PJA.
-    return buildDisplayList([...dedupMap.values()]);
+    // Esconder drives sem Manuel: chegam aqui via admissions (fpg-admissions-draws)
+    // mesmo depois de limpos do pull. Vivem na página /drive; os do Manuel ficam.
+    const values = [...dedupMap.values()].filter(t => !isHiddenNonManuelDrive(t));
+    return buildDisplayList(values);
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
 

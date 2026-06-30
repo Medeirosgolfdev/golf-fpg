@@ -12,6 +12,17 @@ const EXCLUDED_FILE = path.join(__dirname, "tracking-excluded.json");
 const TODAY = new Date().toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000);
 
+// Licença FPG do Manuel — usada para a excepção da regra dos Drives (ver main()).
+const MANUEL_FED = "52884";
+// Um torneio é da série "Drive" (Drive Challenge regional ou Drive Tour Final)
+// se o nome contiver "drive". Estes já são cobertos pelo pipeline drive-data
+// (scrape-drive-node.js → drive-data-*.json + página /drive), por isso NÃO
+// devem voltar a ser puxados para os pull-torneios* pelo scraper de classif —
+// excepto as edições em que o Manuel participou.
+const isDriveSeries = name => /drive/i.test(name || "");
+const playerIsManuel = p =>
+  String(p && (p.fedCode || p.fed || p.fedcode || p.federation_code || "")) === MANUEL_FED;
+
 function loadExcluded() {
   if (!fs.existsSync(EXCLUDED_FILE)) return new Map();
   const map = new Map();
@@ -43,6 +54,7 @@ function readAdmissionsDraws() {
     const hasDraws = drawsWithGroups.length > 0;
     const totalPlayersDraws = drawsWithGroups.reduce((s, d) =>
       s + d.groups.reduce((gs, g) => gs + ((g.players && g.players.length) || 0), 0), 0);
+    const manuelInAdm = hasAdm && adm.players.some(playerIsManuel);
     map.set(key, {
       ccode: String(t.ccode).padStart(3, "0"),
       tcode: String(t.tcode),
@@ -53,6 +65,7 @@ function readAdmissionsDraws() {
       has_draws: hasDraws,
       draws_rounds_with_data: drawsWithGroups.length,
       draws_players_total: totalPlayersDraws,
+      has_manuel: manuelInAdm,
     });
   }
   return map;
@@ -90,6 +103,7 @@ function readClassifSources() {
           const filled = rs.filter(isRoundFilled).length;
           return filled >= tournRounds;
         }).length;
+        const manuelInClassif = players.some(playerIsManuel);
         const existing = map.get(key);
         if (!existing || withSc > existing.players_with_scorecards) {
           map.set(key, {
@@ -100,7 +114,12 @@ function readClassifSources() {
             name: t.name || t.description || null,
             date: t.date || t.data || null,
             _source: f,
+            // OR acumulado: basta o Manuel aparecer numa das fontes (pull OU
+            // drive-data OU jovens) para a edição contar como "do Manuel".
+            has_manuel: manuelInClassif || (existing && existing.has_manuel) || false,
           });
+        } else if (manuelInClassif) {
+          existing.has_manuel = true;
         }
       }
     } catch (e) {
@@ -174,9 +193,18 @@ function main() {
     t.full_scorecards_ratio = t.player_count > 0
       ? +(t.players_with_full_scorecards / t.player_count).toFixed(3)
       : 0;
+    const hasManuel = !!(adm.has_manuel || cls.has_manuel);
+    t.has_manuel = hasManuel;
     if (exc) {
       t.status = "excluded";
       t.excluded_reason = exc.reason || null;
+    } else if (isDriveSeries(t.name) && !hasManuel) {
+      // Drive sem Manuel: já vive no drive-data (página /drive). Marcar
+      // "excluded" para o scrape-classif-node.js --auto-from-tracking o ignorar
+      // e não voltar a duplicá-lo nos pull-torneios*. Edições do Manuel passam
+      // por aqui (hasManuel=true) e seguem o fluxo normal.
+      t.status = "excluded";
+      t.excluded_reason = "Drive sem Manuel — coberto pelo pipeline drive-data";
     } else {
       t.status = t.date ? deriveStatus(t) : "unknown";
     }

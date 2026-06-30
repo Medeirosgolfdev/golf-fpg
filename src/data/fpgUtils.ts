@@ -47,6 +47,25 @@ export function tournamentHasManuel(t: Tournament | undefined | null): boolean {
 }
 
 /**
+ * Um torneio é da série "Drive" (Drive Challenge regional ou Drive Tour) se o
+ * nome contiver "drive".
+ */
+export function isDriveSeries(t: Tournament | undefined | null): boolean {
+  return /drive/i.test(t?.name || "");
+}
+
+/**
+ * True para drives onde o Manuel NÃO jogou. Estes vivem na página /drive
+ * (pipeline drive-data) e não devem poluir a lista do /diversos — mesmo quando
+ * só têm dados de admissions. Os admissions ficam intactos no ficheiro; isto é
+ * apenas um filtro de visualização. Drives do Manuel passam (tournamentHasManuel
+ * cobre players + _admissions + _draws).
+ */
+export function isHiddenNonManuelDrive(t: Tournament | undefined | null): boolean {
+  return isDriveSeries(t) && !tournamentHasManuel(t);
+}
+
+/**
  * Sintetiza o draw de uma ronda a partir do leaderboard acumulado das rondas
  * anteriores. Aplicável quando a FPG ainda não publicou (ou não chegou a ser
  * scraped) o draw oficial dessa ronda mas as rondas anteriores já foram jogadas.
