@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais" | "global-junior" | "major" | "galeria" | "draws";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "scotland" | "rfeg" | "nacionais" | "global-junior" | "major" | "galeria" | "draws";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -32,6 +32,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "global-junior", label: "🏌️ GJGL",  path: "/global-junior" },
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
   { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
+  { tab: "scotland",   label: "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland", path: "/scotland"   },
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
   { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
@@ -63,6 +64,7 @@ function tabFromPath(pathname: string): Tab {
     titulos: "nacionais",
     "global-junior": "global-junior",
     england: "england",
+    scotland: "scotland",
     draws: "draws",
   };
   return map[seg] ?? "jogadores";
@@ -84,6 +86,7 @@ const TAB_TITLES: Record<Tab, string> = {
   major:      "Golf Junior – MAJOR (Doral + BJGT)",
   ffg:        "Golf Junior – FFGolf",
   england:    "Golf Junior – England Golf",
+  scotland:   "Golf Junior – Junior Tour Scotland",
   rfeg:       "Golf Junior – RFEGolf",
   nacionais:  "Golf Junior – Títulos",
   "global-junior": "Golf Junior – Global Junior Golf Live",

@@ -63,7 +63,7 @@ const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
 const RFEGPage = lazy(() => import("./pages/RFEGPage"));
-const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
+const ScotlandPage = lazy(() => import("./pages/ScotlandPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
@@ -439,9 +439,13 @@ export default function App() {
                 <Route path="/rfeg" element={<RFEGPage />} />
                 <Route path="/rfeg/:compId" element={<RFEGPage />} />
                 <Route path="/rfeg/:source/:id" element={<RFEGPage />} />
+                <Route path="/scotland" element={<ScotlandPage />} />
+                <Route path="/scotland/:id" element={<ScotlandPage />} />
                 {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
+                {/* Compat: a funcionalidade vive na tab Nacional da TitulosPage */}
+                <Route path="/nacionais-jovens" element={<Navigate to="/titulos/nacional" replace />} />
                 <Route path="/draws" element={<DrawsPage />} />
                 {/* Landing — sem rota explícita, o catch-all entrava em loop com /* → / */}
                 <Route path="/" element={<Navigate to="/jogadores" replace />} />

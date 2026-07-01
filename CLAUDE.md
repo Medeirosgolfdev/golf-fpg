@@ -80,13 +80,14 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/ffg` | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses) |
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
+| `/scotland` (+ `/:id`) | ScotlandPage | scotland-jts-{year}-{events\|results\|oom}.json (Junior Tour Scotland; site só publica PDFs → `customResults`) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 
 > **Páginas legadas mantidas como rotas alternativas** (`/bjgt-legacy`, `/kids-legacy`, `/doral-legacy`): versões antigas das páginas-mãe acima, preservadas durante a migração para o `CircuitShell`.
 >
-> **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. Feature construída e por lançar (decidir: ligar a rota ou remover).
+> **`ScotlandPage.tsx` (Junior Tour Scotland) ligada às rotas em 2026-07-01** — rota `/scotland` (+ `/:id`) e tab 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland na NavBar (entre England e España). Scraper `scrape-junior-tour-scotland.js`, dados `scotland-jts-*.json`.
 >
-> **⚠ `NacionaisJovensPage.tsx` é código morto** — está `lazy`-importada em `App.tsx` mas **sem `<Route>`**; a funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. Remover a página + o import órfão, ou (se se quiser rota dedicada) fazer redirect para `/titulos/nacional`. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido) mas a rota já não existe.
+> **`NacionaisJovensPage.tsx` removida em 2026-07-01** (era código morto: lazy-importada em `App.tsx` sem `<Route>`) — a funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. `/nacionais-jovens` redirecciona agora para `/titulos/nacional`. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido).
 
 ## Comandos
 

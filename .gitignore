@@ -101,9 +101,11 @@ probe6.mts
 
 # Certificados HTTPS dev (self-signed)
 .certs/
-src/pages/.fuse_hidden0000000400000001
-src/ui/.fuse_hidden0000000400000002
+# Artefactos fuse (ficheiros apagados mas ainda abertos no mount) — qualquer pasta
+.fuse_hidden*
 public/data/fpg-admissions-draws.backup-1780784225241.json
+# Backups .restored (cópias de recuperação de ficheiros grandes, ex: App.css.restored)
+*.restored
 
 # Backups / arquivos / temporários de desenvolvimento — não versionar
 # (mantidos em disco localmente; retirados do Git em 2026-06-23 na arrumação)
@@ -117,6 +119,4 @@ outputs/
 # transitórios, regerados a cada corrida do pipeline / backfill manual.
 scripts/nextcaddy-scorecard-batch.json
 scripts/nextcaddy-scorecard-scope.json
-scripts/.fuse_hidden0000000300000001
-src/ui/.fuse_hidden0000000400000003
 data-archive/pull-backups/
