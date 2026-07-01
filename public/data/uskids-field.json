@@ -1,1741 +1,6 @@
 {
-  "gerado_em": "2026-06-30T10:46:32.672Z",
+  "gerado_em": "2026-07-01T10:57:59.266Z",
   "torneios": [
-    {
-      "t": 22088,
-      "name": "2026 Ohio State Invitational",
-      "date_inicio": "6/29/2026",
-      "date_fim": "6/30/2026",
-      "rondas": 2,
-      "campo": "Avalon Lakes Golf Club ",
-      "fee_18": "295.00",
-      "total_inscritos": 135,
-      "total_maximo": 192,
-      "escaloes": [
-        {
-          "age_group": 82,
-          "nome": "Boys 6 & Under",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 286303,
-          "inscritos": 1,
-          "maximo": 6,
-          "vagas": 5,
-          "pct_cheio": 17,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 83,
-          "nome": "Boys 7",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 286304,
-          "inscritos": 6,
-          "maximo": 9,
-          "vagas": 3,
-          "pct_cheio": 67,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 84,
-          "nome": "Boys 8",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 286305,
-          "inscritos": 6,
-          "maximo": 12,
-          "vagas": 6,
-          "pct_cheio": 50,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 85,
-          "nome": "Boys 9",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 286306,
-          "inscritos": 11,
-          "maximo": 18,
-          "vagas": 7,
-          "pct_cheio": 61,
-          "jogadores": [
-            {
-              "nome": "Aaronjeet Grewal",
-              "pais": "US",
-              "cidade": "Twinsburg, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Alex Predebon",
-              "pais": "US",
-              "cidade": "Pittsburgh, PA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Carter Spillman",
-              "pais": "US",
-              "cidade": "Zanesville, OH",
-              "firstSeen": "2026-06-19T11:38:51.496Z"
-            },
-            {
-              "nome": "Jaxon Furrer",
-              "pais": "US",
-              "cidade": "Smock, PA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Nathan Li",
-              "pais": "CA",
-              "cidade": "Richmond Hill, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Oliver Schneider",
-              "pais": "US",
-              "cidade": "Roswell, GA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Owen Russo",
-              "pais": "US",
-              "cidade": "Mcmurray , PA",
-              "firstSeen": "2026-04-05T08:04:45+00:00"
-            },
-            {
-              "nome": "Rory Reece",
-              "pais": "US",
-              "cidade": "Valley City, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Ryan Kai Pozar",
-              "pais": "US",
-              "cidade": "Beavercreek, OH",
-              "firstSeen": "2026-05-01T09:14:41.153Z"
-            },
-            {
-              "nome": "Terence Wu",
-              "pais": "CA",
-              "cidade": "Markham, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 8
-            },
-            {
-              "pais": "CA",
-              "n": 2
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Christopher  Nichols",
-              "removedAt": "2026-06-30T10:46:32.668Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Aaron  Du",
-              "removedAt": "2026-06-09T10:48:23.121Z",
-              "pais": "CA"
-            },
-            {
-              "nome": "Gus Graham",
-              "removedAt": "2026-06-08T12:12:54.332Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Ford Abood",
-              "removedAt": "2026-05-25T11:23:08.777Z",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 86,
-          "nome": "Boys 10",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 286307,
-          "inscritos": 12,
-          "maximo": 24,
-          "vagas": 12,
-          "pct_cheio": 50,
-          "jogadores": [
-            {
-              "nome": "Avi Shingala",
-              "pais": "US",
-              "cidade": "Powell , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Callan Haire",
-              "pais": "US",
-              "cidade": "Fort Wayne, IN",
-              "firstSeen": "2026-06-25T10:29:55.992Z"
-            },
-            {
-              "nome": "Cameron Hill",
-              "pais": "US",
-              "cidade": "Sylvania, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Ezra Heesung Yang",
-              "pais": "US",
-              "cidade": "Powell, OH",
-              "firstSeen": "2026-05-17T09:17:58.067Z"
-            },
-            {
-              "nome": "Gray Bodenmiller",
-              "pais": "US",
-              "cidade": "Jackson Center, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Jackson Slater",
-              "pais": "US",
-              "cidade": "Irwin, PA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "James  Lemenchick",
-              "pais": "US",
-              "cidade": "Ann Arbor, MI",
-              "firstSeen": "2026-04-20T09:18:31.888Z"
-            },
-            {
-              "nome": "Kai Aratari",
-              "pais": "US",
-              "cidade": "Youngstown , OH",
-              "firstSeen": "2026-06-09T10:48:23.121Z"
-            },
-            {
-              "nome": "Ko Imai",
-              "pais": "US",
-              "cidade": "Powell, OH",
-              "firstSeen": "2026-03-23T08:11:23+00:00"
-            },
-            {
-              "nome": "Levi Plowman",
-              "pais": "US",
-              "cidade": "Latrobe, PA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Yien Li",
-              "pais": "CA",
-              "cidade": "Aurora, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 10
-            },
-            {
-              "pais": "CA",
-              "n": 1
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Porter Dover",
-              "removedAt": "2026-06-29T12:15:23.995Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Donnie Zheng",
-              "removedAt": "2026-06-11T11:34:30.983Z",
-              "pais": "CA"
-            },
-            {
-              "nome": "Maxie Williams",
-              "removedAt": "2026-06-04T10:50:49.569Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Andrew Bieniek",
-              "removedAt": "2026-05-14T09:49:56+00:00",
-              "pais": "US"
-            },
-            {
-              "nome": "Nathan Naganidhi",
-              "removedAt": "2026-05-10T09:07:35+00:00",
-              "pais": "TH"
-            }
-          ]
-        },
-        {
-          "age_group": 87,
-          "nome": "Boys 11",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 286308,
-          "inscritos": 19,
-          "maximo": 21,
-          "vagas": 2,
-          "pct_cheio": 90,
-          "jogadores": [
-            {
-              "nome": "Agampratap  Kanwar",
-              "pais": "US",
-              "cidade": "Hudson, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Andrew Mileti",
-              "pais": "US",
-              "cidade": "Shaker Heights, OH",
-              "firstSeen": "2026-05-14T09:49:55.094Z"
-            },
-            {
-              "nome": "Braden Rutherford",
-              "pais": "US",
-              "cidade": "Chagrin Falls, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Brady  Prettyman",
-              "pais": "US",
-              "cidade": "Mount Vernon , OH",
-              "firstSeen": "2026-06-05T11:02:10.799Z"
-            },
-            {
-              "nome": "Bryce  Wang",
-              "pais": "CA",
-              "cidade": "Markham, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Cash Mccauley",
-              "pais": "US",
-              "cidade": "Cambridge , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Channing White",
-              "pais": "US",
-              "cidade": "Geneva, OH",
-              "firstSeen": "2026-06-09T10:48:23.121Z"
-            },
-            {
-              "nome": "Cole Adamczyk",
-              "pais": "US",
-              "cidade": "Strongsville, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Ethan  Li",
-              "pais": "US",
-              "cidade": "Plain City, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Hudson Barker",
-              "pais": "US",
-              "cidade": "Warren, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Jackson Barritt",
-              "pais": "US",
-              "cidade": "Powell , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Keegan  Lydon",
-              "pais": "US",
-              "cidade": "Fort Walton Beach, FL",
-              "firstSeen": "2026-04-29T09:21:11.361Z"
-            },
-            {
-              "nome": "Lewis Jiang",
-              "pais": "CA",
-              "cidade": "Etobicoke , ON",
-              "firstSeen": "2026-05-07T09:43:41.494Z"
-            },
-            {
-              "nome": "Liam  Haire",
-              "pais": "US",
-              "cidade": "Fort Wayne, IN",
-              "firstSeen": "2026-06-25T10:29:55.992Z"
-            },
-            {
-              "nome": "Nathan Khera",
-              "pais": "CA",
-              "cidade": "Oakville, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Ryan  Shang",
-              "pais": "CA",
-              "cidade": "Newmarket, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Sean Wang",
-              "pais": "CA",
-              "cidade": "Markham, ON",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Tristan  Ferguson",
-              "pais": "US",
-              "cidade": "Columbus, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 13
-            },
-            {
-              "pais": "CA",
-              "n": 5
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Angad Kumar",
-              "removedAt": "2026-06-30T10:46:32.668Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Atlas Chou",
-              "removedAt": "2026-06-09T10:48:23.121Z",
-              "pais": "CA"
-            },
-            {
-              "nome": "Sean Inomata",
-              "removedAt": "2026-05-28T11:10:24.056Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Robert Lustgarten",
-              "removedAt": "2026-05-11T10:49:40+00:00",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 88,
-          "nome": "Boys 12",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 286309,
-          "inscritos": 19,
-          "maximo": 21,
-          "vagas": 2,
-          "pct_cheio": 90,
-          "jogadores": [
-            {
-              "nome": "Abram Baldridge",
-              "pais": "US",
-              "cidade": "Virgie , KY",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Barron  Shapiro",
-              "pais": "US",
-              "cidade": "Cincinnati , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Bryce Alberty",
-              "pais": "US",
-              "cidade": "North Royalton, OH",
-              "firstSeen": "2026-05-18T11:18:08.590Z"
-            },
-            {
-              "nome": "Chaz Zitzner",
-              "pais": "US",
-              "cidade": "Springfield, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Cooper Rieman",
-              "pais": "US",
-              "cidade": "Greenville, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "George Moore",
-              "pais": "US",
-              "cidade": "Akron, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Hunter Held",
-              "pais": "US",
-              "cidade": "Cincinnati, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Isaac Costello",
-              "pais": "US",
-              "cidade": "Dublin , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Kengo Imai",
-              "pais": "US",
-              "cidade": "Powell, OH",
-              "firstSeen": "2026-03-23T08:11:23+00:00"
-            },
-            {
-              "nome": "Levi Harmon",
-              "pais": "US",
-              "cidade": "Ottawa, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Matthew Schreibman",
-              "pais": "US",
-              "cidade": "Reston, VA",
-              "firstSeen": "2026-04-22T09:01:12.311Z"
-            },
-            {
-              "nome": "Maxwell Lattavo",
-              "pais": "US",
-              "cidade": "Chillicothe, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Michael  Morris",
-              "pais": "US",
-              "cidade": "Hudson , OH",
-              "firstSeen": "2026-05-27T11:07:18.900Z"
-            },
-            {
-              "nome": "Preston Tolnar",
-              "pais": "US",
-              "cidade": "Canfield, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Samuel Long",
-              "pais": "US",
-              "cidade": "Alden, NY",
-              "firstSeen": "2026-03-17T08:05:06+00:00"
-            },
-            {
-              "nome": "Santhosh Arivarasu",
-              "pais": "US",
-              "cidade": "Cincinnati, OH",
-              "firstSeen": "2026-05-09T08:40:59.905Z"
-            },
-            {
-              "nome": "Victor Lane",
-              "pais": "US",
-              "cidade": "Twinsburg, OH",
-              "firstSeen": "2026-05-09T08:40:59.905Z"
-            },
-            {
-              "nome": "William  Yoder",
-              "pais": "US",
-              "cidade": "Dublin, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 18
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Rocco Eusanio",
-              "removedAt": "2026-06-24T10:35:22.236Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Theo Wittemund",
-              "removedAt": "2026-06-11T11:34:30.983Z",
-              "pais": "CA"
-            },
-            {
-              "nome": "Borum Cooper",
-              "removedAt": "2026-05-30T09:29:22.126Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Cameron Sacramento",
-              "removedAt": "2026-05-15T10:01:55+00:00",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 89,
-          "nome": "Boys 13-14",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 286310,
-          "inscritos": 22,
-          "maximo": 24,
-          "vagas": 2,
-          "pct_cheio": 92,
-          "jogadores": [
-            {
-              "nome": "Anthony Sarmiento",
-              "pais": "US",
-              "cidade": "Westlake, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Calder Mahoney",
-              "pais": "US",
-              "cidade": "Mason, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Camden Gustin",
-              "pais": "US",
-              "cidade": "Stoystown, PA",
-              "firstSeen": "2026-05-06T09:35:52.808Z"
-            },
-            {
-              "nome": "Chase Mccauley",
-              "pais": "US",
-              "cidade": "Cambridge , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Chase Schmidt",
-              "pais": "US",
-              "cidade": "Delaware, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Coleson Paez",
-              "pais": "US",
-              "cidade": "Rocky River, OH",
-              "firstSeen": "2026-03-17T08:05:06+00:00"
-            },
-            {
-              "nome": "Deven Patil",
-              "pais": "US",
-              "cidade": "Upper Arlington, OH",
-              "firstSeen": "2026-04-28T09:32:59.652Z"
-            },
-            {
-              "nome": "Dylan Sturm",
-              "pais": "US",
-              "cidade": "Medina, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Elijah Snyder",
-              "pais": "US",
-              "cidade": "Butler, PA",
-              "firstSeen": "2026-03-17T08:05:06+00:00"
-            },
-            {
-              "nome": "Elliott Eich",
-              "pais": "US",
-              "cidade": "Strongsville, OH",
-              "firstSeen": "2026-05-27T11:07:18.900Z"
-            },
-            {
-              "nome": "Emmet Lattavo",
-              "pais": "US",
-              "cidade": "Chillicothe, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Jackson Blanda",
-              "pais": "US",
-              "cidade": "New Albany, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Jake Hendrick",
-              "pais": "US",
-              "cidade": "Pittsburgh, PA",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Jaxson Trebets",
-              "pais": "US",
-              "cidade": "Chesterland, OH",
-              "firstSeen": "2026-03-21T07:43:22+00:00"
-            },
-            {
-              "nome": "Logan Tedrow",
-              "pais": "US",
-              "cidade": "Glenelg, MD",
-              "firstSeen": "2026-06-12T11:17:18.857Z"
-            },
-            {
-              "nome": "Luke Boeckman",
-              "pais": "US",
-              "cidade": "Broadview Heights , OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Luke Ireland",
-              "pais": "US",
-              "cidade": "New Albany, OH",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
-              "nome": "Max Humphreys",
-              "pais": "US",
-              "cidade": "Columbus, OH",
-              "firstSeen": "2026-04-22T09:01:12.311Z"
-            },
-            {
-              "nome": "Micaiah Lewis",
-              "pais": "US",
-              "cidade": "Delaware, OH",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Peyton Mccune",
-              "pais": "US",
-              "cidade": "Canfield, OH",
-              "firstSeen": "2026-05-19T10:49:13.284Z"
-            },
-            {
-              "nome": "Shep Rigo",
-              "pais": "US",
-              "cidade": "Columbus, OH",
-              "firstSeen": "2026-06-26T10:41:09.660Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 21
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Anson Dover",
-              "removedAt": "2026-06-29T12:15:23.995Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Sam Keating",
-              "removedAt": "2026-06-15T13:28:50.964Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Michael Li",
-              "removedAt": "2026-06-04T10:50:49.569Z",
-              "pais": "CA"
-            },
-            {
-              "nome": "Charlton  Zhuang",
-              "removedAt": "2026-05-28T11:10:24.056Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Cam Abood",
-              "removedAt": "2026-05-25T11:23:08.777Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Elvern  Xiao",
-              "removedAt": "2026-05-13T09:59:07+00:00",
-              "pais": "ID"
-            }
-          ]
-        },
-        {
-          "age_group": 90,
-          "nome": "Girls 8 & Under",
-          "genero": "Girls",
-          "holes": 9,
-          "flight_id": 286311,
-          "inscritos": 4,
-          "maximo": 6,
-          "vagas": 2,
-          "pct_cheio": 67,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 91,
-          "nome": "Girls 9-10",
-          "genero": "Girls",
-          "holes": 9,
-          "flight_id": 286312,
-          "inscritos": 11,
-          "maximo": 15,
-          "vagas": 4,
-          "pct_cheio": 73,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 92,
-          "nome": "Girls 11-12",
-          "genero": "Girls",
-          "holes": 18,
-          "flight_id": 286313,
-          "inscritos": 15,
-          "maximo": 21,
-          "vagas": 6,
-          "pct_cheio": 71,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 93,
-          "nome": "Girls 13-14",
-          "genero": "Girls",
-          "holes": 18,
-          "flight_id": 286314,
-          "inscritos": 9,
-          "maximo": 15,
-          "vagas": 6,
-          "pct_cheio": 60,
-          "jogadores": null,
-          "paises": null
-        }
-      ],
-      "ultima_atualizacao": "2026-06-30T10:44:51.999Z"
-    },
-    {
-      "t": 22235,
-      "name": "2026 Southern California State Invitational",
-      "date_inicio": "6/29/2026",
-      "date_fim": "6/30/2026",
-      "rondas": 2,
-      "campo": "Los Serranos (North), Los Serranos (South)",
-      "fee_18": "315.00",
-      "total_inscritos": 186,
-      "total_maximo": 294,
-      "escaloes": [
-        {
-          "age_group": 82,
-          "nome": "Boys 6 & Under",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 288236,
-          "inscritos": 7,
-          "maximo": 18,
-          "vagas": 11,
-          "pct_cheio": 39,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 83,
-          "nome": "Boys 7",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 288237,
-          "inscritos": 15,
-          "maximo": 18,
-          "vagas": 3,
-          "pct_cheio": 83,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 84,
-          "nome": "Boys 8",
-          "genero": "Boys",
-          "holes": 9,
-          "flight_id": 288238,
-          "inscritos": 12,
-          "maximo": 21,
-          "vagas": 9,
-          "pct_cheio": 57,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 85,
-          "nome": "Boys 9",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 288239,
-          "inscritos": 17,
-          "maximo": 21,
-          "vagas": 4,
-          "pct_cheio": 81,
-          "jogadores": [
-            {
-              "nome": "Alexander Li",
-              "pais": "US",
-              "cidade": "Yorba Linda, CA",
-              "firstSeen": "2026-04-30T09:23:13.999Z"
-            },
-            {
-              "nome": "Asher Park",
-              "pais": "US",
-              "cidade": "Huntington Beach, CA",
-              "firstSeen": "2026-04-08T18:56:46+00:00"
-            },
-            {
-              "nome": "Elvin Wang",
-              "pais": "US",
-              "cidade": "Rancho Cucamonga, CA",
-              "firstSeen": "2026-06-19T11:38:51.496Z"
-            },
-            {
-              "nome": "Ethan  Dou",
-              "pais": "US",
-              "cidade": "South Pasadena, CA",
-              "firstSeen": "2026-06-17T12:00:11.958Z"
-            },
-            {
-              "nome": "Grayson Yokogawa",
-              "pais": "US",
-              "cidade": "GARDEN GROVE, CA",
-              "firstSeen": "2026-06-27T09:43:21.905Z"
-            },
-            {
-              "nome": "Ian Chang",
-              "pais": "US",
-              "cidade": "Carrollton, TX",
-              "firstSeen": "2026-05-27T11:07:18.900Z"
-            },
-            {
-              "nome": "Jess Ahn",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-04-04T08:01:12+00:00"
-            },
-            {
-              "nome": "Kenzo Tan",
-              "pais": "PH",
-              "cidade": "San Juan",
-              "firstSeen": "2026-04-23T09:03:19.888Z"
-            },
-            {
-              "nome": "Landyn Kelly",
-              "pais": "US",
-              "cidade": "Henderson , NV",
-              "firstSeen": "2026-03-31T08:18:30+00:00"
-            },
-            {
-              "nome": "Logan Martin",
-              "pais": "US",
-              "cidade": "Redlands, CA",
-              "firstSeen": "2026-03-30T08:31:35+00:00"
-            },
-            {
-              "nome": "Marcus Hwang",
-              "pais": "US",
-              "cidade": "Yorba Linda, CA",
-              "firstSeen": "2026-03-29T08:01:00+00:00"
-            },
-            {
-              "nome": "Matthew Hwang",
-              "pais": "US",
-              "cidade": "Yorba Linda, CA",
-              "firstSeen": "2026-03-29T08:01:00+00:00"
-            },
-            {
-              "nome": "Noah Lin",
-              "pais": "US",
-              "cidade": "Rancho Cucamonga, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Ryan Swatosh",
-              "pais": "US",
-              "cidade": "Westlake Village, CA",
-              "firstSeen": "2026-03-29T08:01:00+00:00"
-            },
-            {
-              "nome": "Tristan Zhao",
-              "pais": "US",
-              "cidade": "Sacramento, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Vincent Zheng",
-              "pais": "US",
-              "cidade": "Walnut, CA",
-              "firstSeen": "2026-04-17T08:36:46.532Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 15
-            },
-            {
-              "pais": "PH",
-              "n": 1
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Juan Ignacio Fuentes Godoy",
-              "removedAt": "2026-06-30T10:46:32.668Z",
-              "pais": "GT"
-            },
-            {
-              "nome": "Elliott Kim",
-              "removedAt": "2026-05-18T11:18:09+00:00",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 86,
-          "nome": "Boys 10",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 288240,
-          "inscritos": 23,
-          "maximo": 27,
-          "vagas": 4,
-          "pct_cheio": 85,
-          "jogadores": [
-            {
-              "nome": "Albert Phung",
-              "pais": "US",
-              "cidade": "Hermosa Beach, CA",
-              "firstSeen": "2026-05-29T10:56:51.052Z"
-            },
-            {
-              "nome": "Alexander Armbruster",
-              "pais": "US",
-              "cidade": "Oak Park, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Andrew Vaughn",
-              "pais": "US",
-              "cidade": "Wilmington, NC",
-              "firstSeen": "2026-04-05T08:04:45+00:00"
-            },
-            {
-              "nome": "Caiden Rojas",
-              "pais": "US",
-              "cidade": "Westminster, CA",
-              "firstSeen": "2026-04-04T08:01:12+00:00"
-            },
-            {
-              "nome": "Clifton Michael Lumy",
-              "pais": "ID",
-              "cidade": "Jakarta, JK",
-              "firstSeen": "2026-06-20T10:21:35.288Z"
-            },
-            {
-              "nome": "Daniel LEON CANDON",
-              "pais": "US",
-              "cidade": "Miami, FL",
-              "firstSeen": "2026-04-27T09:31:07.983Z"
-            },
-            {
-              "nome": "Ethan Gil",
-              "pais": "US",
-              "cidade": "Chino Hills, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Ethan Jiang",
-              "pais": "CA",
-              "cidade": "Vancouver, BC",
-              "firstSeen": "2026-05-18T11:18:08.590Z"
-            },
-            {
-              "nome": "Francis Besinga",
-              "pais": "US",
-              "cidade": "La Mirada, CA",
-              "firstSeen": "2026-05-14T09:49:55.094Z"
-            },
-            {
-              "nome": "Grayson Cogorno",
-              "pais": "US",
-              "cidade": "Newport Beach, CA",
-              "firstSeen": "2026-03-30T08:31:35+00:00"
-            },
-            {
-              "nome": "Grayson Day",
-              "pais": "US",
-              "cidade": "Thousand Oaks, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Henry Grace",
-              "pais": "US",
-              "cidade": "Gilbert, AZ",
-              "firstSeen": "2026-04-28T09:32:59.652Z"
-            },
-            {
-              "nome": "James Kelly",
-              "pais": "US",
-              "cidade": "San Diego , CA",
-              "firstSeen": "2026-06-09T10:48:23.121Z"
-            },
-            {
-              "nome": "Jasper Hu",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Johnny Tan",
-              "pais": "US",
-              "cidade": "San Marino, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Joseph Dominic Tumaneng",
-              "pais": "US",
-              "cidade": "Monterey Park, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Kaeden Choi",
-              "pais": "US",
-              "cidade": "Hacienda Heights, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Liam Vavra",
-              "pais": "US",
-              "cidade": "Pacific Palisades, CA",
-              "firstSeen": "2026-06-06T09:38:00.712Z"
-            },
-            {
-              "nome": "Niko Cortez",
-              "pais": "US",
-              "cidade": "Downey, CA",
-              "firstSeen": "2026-04-08T08:25:42+00:00"
-            },
-            {
-              "nome": "Ren Ly",
-              "pais": "US",
-              "cidade": "Hacienda Heights , CA",
-              "firstSeen": "2026-05-09T08:40:59.905Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 18
-            },
-            {
-              "pais": "ID",
-              "n": 1
-            },
-            {
-              "pais": "CA",
-              "n": 1
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Jack Bell",
-              "removedAt": "2026-06-30T10:46:32.668Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Owen Torres",
-              "removedAt": "2026-06-29T12:15:23.995Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Max Tran",
-              "removedAt": "2026-06-27T09:43:21.905Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Joseph Jackson",
-              "removedAt": "2026-06-20T10:21:35.288Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Grady Doyle",
-              "removedAt": "2026-06-13T10:09:56.723Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Lincoln Johnson",
-              "removedAt": "2026-06-09T10:48:23.121Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Sebastian Garcia Lara",
-              "removedAt": "2026-06-07T10:20:50.180Z",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 87,
-          "nome": "Boys 11",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 288241,
-          "inscritos": 21,
-          "maximo": 24,
-          "vagas": 3,
-          "pct_cheio": 88,
-          "jogadores": [
-            {
-              "nome": "Adam Wu",
-              "pais": "US",
-              "cidade": "Rowland Heights, CA",
-              "firstSeen": "2026-05-10T09:07:33.971Z"
-            },
-            {
-              "nome": "Braden Graham",
-              "pais": "US",
-              "cidade": "San Antonio, TX",
-              "firstSeen": "2026-05-27T11:07:18.900Z"
-            },
-            {
-              "nome": "Brandon Lee",
-              "pais": "US",
-              "cidade": "EASTVALE, CA",
-              "firstSeen": "2026-06-10T11:08:33.683Z"
-            },
-            {
-              "nome": "Carson Cox",
-              "pais": "US",
-              "cidade": "Seal Beach, CA",
-              "firstSeen": "2026-03-29T08:01:00+00:00"
-            },
-            {
-              "nome": "Christopher Collier",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-04-08T08:25:42+00:00"
-            },
-            {
-              "nome": "Gabriel Colabuono",
-              "pais": "US",
-              "cidade": "Half Moon Bay, CA",
-              "firstSeen": "2026-04-03T08:12:12+00:00"
-            },
-            {
-              "nome": "Harper Tanglao",
-              "pais": "US",
-              "cidade": "Torrance",
-              "firstSeen": "2026-06-11T11:34:30.983Z"
-            },
-            {
-              "nome": "Jack Peng",
-              "pais": "US",
-              "cidade": "Diamond Bar, CA",
-              "firstSeen": "2026-04-08T08:25:42+00:00"
-            },
-            {
-              "nome": "Julian Goldberg",
-              "pais": "US",
-              "cidade": "Woodland Hills, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Kayden  Ancheta",
-              "pais": "US",
-              "cidade": "Torrance, CA",
-              "firstSeen": "2026-04-05T08:04:45+00:00"
-            },
-            {
-              "nome": "Luke Comia",
-              "pais": "US",
-              "cidade": "Anaheim Hills, CA",
-              "firstSeen": "2026-04-06T08:33:02+00:00"
-            },
-            {
-              "nome": "Mason Kim",
-              "pais": "US",
-              "cidade": "Diamond Bar, CA",
-              "firstSeen": "2026-05-20T10:37:02.426Z"
-            },
-            {
-              "nome": "Matthew  Kharatian",
-              "pais": "US",
-              "cidade": "Burbank, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Noah Lee",
-              "pais": "US",
-              "cidade": "Glandale, CA",
-              "firstSeen": "2026-04-04T08:01:12+00:00"
-            },
-            {
-              "nome": "Owen Criner",
-              "pais": "US",
-              "cidade": "Visalia, CA",
-              "firstSeen": "2026-04-24T09:13:38.857Z"
-            },
-            {
-              "nome": "Paramveersinh Gohil",
-              "pais": "US",
-              "cidade": "Union City, CA",
-              "firstSeen": "2026-06-23T10:49:14.694Z"
-            },
-            {
-              "nome": "Shayaan Khan",
-              "pais": "US",
-              "cidade": "Folsom, CA",
-              "firstSeen": "2026-05-12T09:51:04.295Z"
-            },
-            {
-              "nome": "Tianxiang Daniel Zou",
-              "pais": "CA",
-              "cidade": "Richmond, BC",
-              "firstSeen": "2026-05-31T10:02:24.426Z"
-            },
-            {
-              "nome": "Warner Townsend",
-              "pais": "US",
-              "cidade": "North Tustin, CA",
-              "firstSeen": "2026-05-23T09:13:28.441Z"
-            },
-            {
-              "nome": "Welles Leano",
-              "pais": "US",
-              "cidade": "Claremont, CA",
-              "firstSeen": "2026-04-04T08:01:12+00:00"
-            },
-            {
-              "nome": "Zachary Zheng",
-              "pais": "US",
-              "cidade": "Walnut, CA",
-              "firstSeen": "2026-04-17T08:36:46.532Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 20
-            },
-            {
-              "pais": "CA",
-              "n": 1
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Klaus K Murangira",
-              "removedAt": "2026-06-18T11:25:35.850Z",
-              "pais": "UG"
-            },
-            {
-              "nome": "Troy Lisiewski",
-              "removedAt": "2026-06-05T11:02:10.799Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Jason Mu",
-              "removedAt": "2026-05-17T09:17:59+00:00",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 88,
-          "nome": "Boys 12",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 288242,
-          "inscritos": 13,
-          "maximo": 30,
-          "vagas": 17,
-          "pct_cheio": 43,
-          "jogadores": [
-            {
-              "nome": "Carter Meyer",
-              "pais": "US",
-              "cidade": "Ridgecrest, CA",
-              "firstSeen": "2026-05-06T09:35:52.808Z"
-            },
-            {
-              "nome": "Christopher Farias",
-              "pais": "US",
-              "cidade": "Long Beach, CA",
-              "firstSeen": "2026-04-04T08:01:12+00:00"
-            },
-            {
-              "nome": "Elijah Smith",
-              "pais": "US",
-              "cidade": "Laguna Niguel, CA",
-              "firstSeen": "2026-06-16T12:24:22.512Z"
-            },
-            {
-              "nome": "Ezra Lee",
-              "pais": "US",
-              "cidade": "Poway, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "JACOB EAGAN",
-              "pais": "US",
-              "cidade": "Castle Rock, CO",
-              "firstSeen": "2026-06-25T10:29:55.992Z"
-            },
-            {
-              "nome": "Leon  Liu",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-05-07T09:43:41.494Z"
-            },
-            {
-              "nome": "Liam  Jamaldeen",
-              "pais": "US",
-              "cidade": "Ontario, CA",
-              "firstSeen": "2026-06-02T11:30:41.595Z"
-            },
-            {
-              "nome": "London Martin",
-              "pais": "US",
-              "cidade": "Redlands, CA",
-              "firstSeen": "2026-03-30T08:31:35+00:00"
-            },
-            {
-              "nome": "Miles Hong",
-              "pais": "US",
-              "cidade": "Aldie, VA",
-              "firstSeen": "2026-06-18T11:25:35.850Z"
-            },
-            {
-              "nome": "Namaskarn  Thoontakhob",
-              "pais": "US",
-              "cidade": "Canyon Country , CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Nolan Modglin",
-              "pais": "US",
-              "cidade": "Simi Valley, CA",
-              "firstSeen": "2026-06-02T11:30:41.595Z"
-            },
-            {
-              "nome": "Sidney Ambrosini",
-              "pais": "US",
-              "cidade": "Orinda, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Yuzhi (Lance) Lin",
-              "pais": "US",
-              "cidade": "Laguna Niguel , CA",
-              "firstSeen": "2026-04-16T08:36:42.671Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 13
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Navid Barth",
-              "removedAt": "2026-06-10T11:08:33.683Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Aiden Chang",
-              "removedAt": "2026-06-02T11:30:41.595Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Jones Barbanell",
-              "removedAt": "2026-05-15T10:01:55+00:00",
-              "pais": "US"
-            },
-            {
-              "nome": "Quinn  Mcnamara",
-              "removedAt": "2026-05-11T10:49:40+00:00",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 89,
-          "nome": "Boys 13-14",
-          "genero": "Boys",
-          "holes": 18,
-          "flight_id": 288243,
-          "inscritos": 27,
-          "maximo": 30,
-          "vagas": 3,
-          "pct_cheio": 90,
-          "jogadores": [
-            {
-              "nome": "Aaron Forest",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Aayush Bhakta",
-              "pais": "US",
-              "cidade": "Bakersfield, CA",
-              "firstSeen": "2026-03-31T08:18:30+00:00"
-            },
-            {
-              "nome": "Brooxton Williams",
-              "pais": "US",
-              "cidade": "Bakersfield, CA",
-              "firstSeen": "2026-03-30T08:31:35+00:00"
-            },
-            {
-              "nome": "Bryan Xie",
-              "pais": "US",
-              "cidade": "Diamondbar , CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Chase  Hopkins",
-              "pais": "US",
-              "cidade": "Laguna Hills, CA",
-              "firstSeen": "2026-03-31T08:18:30+00:00"
-            },
-            {
-              "nome": "Dragon Vorodriguez",
-              "pais": "US",
-              "cidade": "La Habra, CA",
-              "firstSeen": "2026-05-27T11:07:18.900Z"
-            },
-            {
-              "nome": "Gavin Zuniga",
-              "pais": "US",
-              "cidade": "Huntington Beach, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Graham  Sugg",
-              "pais": "US",
-              "cidade": "Laguna Beach , CA",
-              "firstSeen": "2026-06-05T11:02:10.799Z"
-            },
-            {
-              "nome": "Henry Sirkis",
-              "pais": "US",
-              "cidade": "Alameda, CA",
-              "firstSeen": "2026-05-25T11:23:08.777Z"
-            },
-            {
-              "nome": "Jason Padillo",
-              "pais": "US",
-              "cidade": "Glendale, CA",
-              "firstSeen": "2026-04-09T08:30:46+00:00"
-            },
-            {
-              "nome": "Javier Stefano Bonnevie Bautista",
-              "pais": "PH",
-              "cidade": "Quezon City Metro Manila, QZN",
-              "firstSeen": "2026-06-22T13:02:59.982Z"
-            },
-            {
-              "nome": "Jayden Lee",
-              "pais": "US",
-              "cidade": "Tustin, CA",
-              "firstSeen": "2026-06-01T12:49:22.064Z"
-            },
-            {
-              "nome": "Jefferson Liu",
-              "pais": "US",
-              "cidade": "La Quinta, CA",
-              "firstSeen": "2026-04-05T08:04:45+00:00"
-            },
-            {
-              "nome": "Kaeden Chen",
-              "pais": "US",
-              "cidade": "Chula Vista, CA",
-              "firstSeen": "2026-04-17T08:36:46.532Z"
-            },
-            {
-              "nome": "Keola Earle",
-              "pais": "US",
-              "cidade": "Honolulu, HI",
-              "firstSeen": "2026-04-14T08:38:44.441Z"
-            },
-            {
-              "nome": "Marcus Lin",
-              "pais": "US",
-              "cidade": "San Marino, CA",
-              "firstSeen": "2026-03-30T08:31:35+00:00"
-            },
-            {
-              "nome": "Max Harris",
-              "pais": "US",
-              "cidade": "Las Vegas, NV",
-              "firstSeen": "2026-05-17T09:17:58.067Z"
-            },
-            {
-              "nome": "Namo Thoontakhob",
-              "pais": "US",
-              "cidade": "CANYON COUNTRY, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Preston Townsend",
-              "pais": "US",
-              "cidade": "North Tustin, CA",
-              "firstSeen": "2026-05-23T09:13:28.441Z"
-            },
-            {
-              "nome": "Sahil Doshi",
-              "pais": "US",
-              "cidade": "Scottsdale, AZ",
-              "firstSeen": "2026-05-31T10:02:24.426Z"
-            },
-            {
-              "nome": "Sheldon Zhang",
-              "pais": "US",
-              "cidade": "Fontana, CA",
-              "firstSeen": "2026-04-28T09:32:59.652Z"
-            },
-            {
-              "nome": "Timothy Kim",
-              "pais": "US",
-              "cidade": "Buena Park, CA",
-              "firstSeen": "2026-06-09T10:48:23.121Z"
-            },
-            {
-              "nome": "Tyler Deyoung",
-              "pais": "US",
-              "cidade": "Clovis, CA",
-              "firstSeen": "2026-04-09T08:30:46+00:00"
-            },
-            {
-              "nome": "William Alred",
-              "pais": "US",
-              "cidade": "Lincoln, CA",
-              "firstSeen": "2026-03-28T07:55:40+00:00"
-            },
-            {
-              "nome": "Youngjoo Bahn",
-              "pais": "US",
-              "cidade": "Irvine, CA",
-              "firstSeen": "2026-06-10T11:08:33.683Z"
-            }
-          ],
-          "paises": [
-            {
-              "pais": "US",
-              "n": 24
-            },
-            {
-              "pais": "PH",
-              "n": 1
-            }
-          ],
-          "removed": [
-            {
-              "nome": "Bob Feng",
-              "removedAt": "2026-06-30T10:46:32.668Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Kiaan Bohra",
-              "removedAt": "2026-06-23T10:49:14.694Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Johnson Gao",
-              "removedAt": "2026-06-14T10:37:17.092Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Hiroki Hamano",
-              "removedAt": "2026-06-11T11:34:30.983Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Palmer Jones",
-              "removedAt": "2026-06-10T11:08:33.683Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Leo Piemlarp",
-              "removedAt": "2026-06-09T10:48:23.121Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Jack Ross",
-              "removedAt": "2026-06-07T10:20:50.180Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Colin Macdonald",
-              "removedAt": "2026-06-03T12:10:13.487Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Amar’E  Bautista",
-              "removedAt": "2026-05-31T10:02:24.426Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Nicolas Higueros",
-              "removedAt": "2026-05-22T10:36:44.240Z",
-              "pais": "US"
-            }
-          ]
-        },
-        {
-          "age_group": 90,
-          "nome": "Girls 8 & Under",
-          "genero": "Girls",
-          "holes": 9,
-          "flight_id": 288244,
-          "inscritos": 12,
-          "maximo": 24,
-          "vagas": 12,
-          "pct_cheio": 50,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 91,
-          "nome": "Girls 9-10",
-          "genero": "Girls",
-          "holes": 9,
-          "flight_id": 288245,
-          "inscritos": 14,
-          "maximo": 36,
-          "vagas": 22,
-          "pct_cheio": 39,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 92,
-          "nome": "Girls 11-12",
-          "genero": "Girls",
-          "holes": 18,
-          "flight_id": 288246,
-          "inscritos": 12,
-          "maximo": 24,
-          "vagas": 12,
-          "pct_cheio": 50,
-          "jogadores": null,
-          "paises": null
-        },
-        {
-          "age_group": 93,
-          "nome": "Girls 13-14",
-          "genero": "Girls",
-          "holes": 18,
-          "flight_id": 288247,
-          "inscritos": 13,
-          "maximo": 21,
-          "vagas": 8,
-          "pct_cheio": 62,
-          "jogadores": null,
-          "paises": null
-        }
-      ],
-      "ultima_atualizacao": "2026-06-30T10:44:56.799Z"
-    },
     {
       "t": 21455,
       "name": "Irish Open 2026",
@@ -2519,7 +784,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:44:59.875Z"
+      "ultima_atualizacao": "2026-07-01T10:56:20.365Z"
     },
     {
       "t": 22321,
@@ -2800,7 +1065,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:02.105Z"
+      "ultima_atualizacao": "2026-07-01T10:56:22.566Z"
     },
     {
       "t": 22465,
@@ -3293,7 +1558,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:05.124Z"
+      "ultima_atualizacao": "2026-07-01T10:56:25.713Z"
     },
     {
       "t": 22121,
@@ -3628,12 +1893,6 @@
           "pct_cheio": 100,
           "jogadores": [
             {
-              "nome": "Adam Aboushabana",
-              "pais": "EG",
-              "cidade": "Doha",
-              "firstSeen": "2026-05-28T11:10:24.056Z"
-            },
-            {
               "nome": "Andres Marcelo Peña Elizondo",
               "pais": "US",
               "cidade": "Mercer Island, WA",
@@ -3738,13 +1997,14 @@
             {
               "pais": "CA",
               "n": 3
-            },
-            {
-              "pais": "EG",
-              "n": 1
             }
           ],
           "removed": [
+            {
+              "nome": "Adam Aboushabana",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "EG"
+            },
             {
               "nome": "Weston  Flygare",
               "removedAt": "2026-06-27T09:43:21.905Z",
@@ -3820,7 +2080,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:08.283Z"
+      "ultima_atualizacao": "2026-07-01T10:56:28.942Z"
     },
     {
       "t": 21795,
@@ -3830,8 +2090,8 @@
       "rondas": 3,
       "campo": "Paris Val d’Europe Golf Course - White, Paris Val d’Europe Golf Course - Red/Blue",
       "fee_18": "445.00",
-      "total_inscritos": 145,
-      "total_maximo": 189,
+      "total_inscritos": 148,
+      "total_maximo": 186,
       "escaloes": [
         {
           "age_group": 2099,
@@ -3865,10 +2125,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 282136,
-          "inscritos": 11,
+          "inscritos": 12,
           "maximo": 15,
-          "vagas": 4,
-          "pct_cheio": 73,
+          "vagas": 3,
+          "pct_cheio": 80,
           "jogadores": null,
           "paises": null
         },
@@ -4412,10 +2672,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 282141,
-          "inscritos": 15,
+          "inscritos": 16,
           "maximo": 18,
-          "vagas": 3,
-          "pct_cheio": 83,
+          "vagas": 2,
+          "pct_cheio": 89,
           "jogadores": [
             {
               "nome": "Aiden  Larre-Larrouy",
@@ -4470,6 +2730,12 @@
               "pais": "DE",
               "cidade": "Karlsruhe, BW",
               "firstSeen": "2026-06-06T09:38:00.712Z"
+            },
+            {
+              "nome": "Isaac  Chin",
+              "pais": "GB",
+              "cidade": "Chiang Mai, Chiangmai",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Julius Melzer",
@@ -4534,6 +2800,10 @@
               "n": 1
             },
             {
+              "pais": "GB",
+              "n": 1
+            },
+            {
               "pais": "PF",
               "n": 1
             },
@@ -4555,11 +2825,6 @@
               "nome": "Sinan Dagistan",
               "removedAt": "2026-06-25T10:29:55.992Z",
               "pais": "TR"
-            },
-            {
-              "nome": "Isaac  Chin",
-              "removedAt": "2026-06-04T10:50:49.569Z",
-              "pais": "GB"
             }
           ]
         },
@@ -4634,15 +2899,15 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 282145,
-          "inscritos": 14,
-          "maximo": 18,
-          "vagas": 4,
-          "pct_cheio": 78,
+          "inscritos": 15,
+          "maximo": 15,
+          "vagas": 0,
+          "pct_cheio": 100,
           "jogadores": null,
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:11.387Z"
+      "ultima_atualizacao": "2026-07-01T10:56:32.200Z"
     },
     {
       "t": 22187,
@@ -4652,7 +2917,7 @@
       "rondas": 2,
       "campo": "Longleaf G&FC, Pinehurst No. 1, Pinehurst No. 7, Pinehurst No. 6",
       "fee_18": "425.00",
-      "total_inscritos": 354,
+      "total_inscritos": 359,
       "total_maximo": 366,
       "escaloes": [
         {
@@ -4700,10 +2965,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 287621,
-          "inscritos": 45,
+          "inscritos": 46,
           "maximo": 45,
-          "vagas": 0,
-          "pct_cheio": 100,
+          "vagas": -1,
+          "pct_cheio": 102,
           "jogadores": [
             {
               "nome": "Aaronjeet Grewal",
@@ -4728,6 +2993,12 @@
               "pais": "US",
               "cidade": "Miami Lakes, FL",
               "firstSeen": "2026-03-31T08:18:30+00:00"
+            },
+            {
+              "nome": "Asher Park",
+              "pais": "US",
+              "cidade": "Garden Grove, CA",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Atlas Donohoe",
@@ -4973,7 +3244,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 40
+              "n": 41
             },
             {
               "pais": "BO",
@@ -5338,11 +3609,17 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 287623,
-          "inscritos": 47,
-          "maximo": 48,
+          "inscritos": 50,
+          "maximo": 51,
           "vagas": 1,
           "pct_cheio": 98,
           "jogadores": [
+            {
+              "nome": "Andrew Tomaszewski",
+              "pais": "US",
+              "cidade": "Brookfield, WI",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            },
             {
               "nome": "Bandon Ramsay",
               "pais": "US",
@@ -5434,10 +3711,10 @@
               "firstSeen": "2026-03-31T22:27:28+00:00"
             },
             {
-              "nome": "Gabriel Colabuono",
+              "nome": "Gabriel Epps",
               "pais": "US",
-              "cidade": "Half Moon Bay, CA",
-              "firstSeen": "2026-04-02T08:19:25+00:00"
+              "cidade": "Nolensville, TN",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Graham Schmidt",
@@ -5450,6 +3727,12 @@
               "pais": "US",
               "cidade": "Kiawah Island, SC",
               "firstSeen": "2026-03-25T08:04:07+00:00"
+            },
+            {
+              "nome": "Hank Hopper",
+              "pais": "US",
+              "cidade": "Fayetteville, NC",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Hayes Garner",
@@ -5629,7 +3912,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 45
+              "n": 47
             },
             {
               "pais": "DK",
@@ -5641,6 +3924,11 @@
             }
           ],
           "removed": [
+            {
+              "nome": "Gabriel Colabuono",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "US"
+            },
             {
               "nome": "Lucas Kang",
               "removedAt": "2026-06-25T10:29:55.992Z",
@@ -5994,10 +4282,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 287625,
-          "inscritos": 37,
+          "inscritos": 38,
           "maximo": 39,
-          "vagas": 2,
-          "pct_cheio": 95,
+          "vagas": 1,
+          "pct_cheio": 97,
           "jogadores": [
             {
               "nome": "Allen Huang",
@@ -6144,6 +4432,12 @@
               "firstSeen": "2026-04-01T08:26:19+00:00"
             },
             {
+              "nome": "Michael Sesti",
+              "pais": "US",
+              "cidade": "Pinellas Park, FL",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            },
+            {
               "nome": "Michael Vu",
               "pais": "US",
               "cidade": "Waxhaw, NC",
@@ -6225,7 +4519,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 35
+              "n": 36
             },
             {
               "pais": "HK",
@@ -6371,9 +4665,9 @@
           "holes": 18,
           "flight_id": 287631,
           "inscritos": 18,
-          "maximo": 21,
-          "vagas": 3,
-          "pct_cheio": 86,
+          "maximo": 18,
+          "vagas": 0,
+          "pct_cheio": 100,
           "jogadores": null,
           "paises": null
         },
@@ -6391,7 +4685,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:18.594Z"
+      "ultima_atualizacao": "2026-07-01T10:56:39.662Z"
     },
     {
       "t": 21456,
@@ -6401,7 +4695,7 @@
       "rondas": 2,
       "campo": "Legends on the Niagara - Chippawa Course, Legends on the Niagara - Battlefield, Legends on the Niagara - Ussher Creek",
       "fee_18": "325.00",
-      "total_inscritos": 245,
+      "total_inscritos": 246,
       "total_maximo": 336,
       "escaloes": [
         {
@@ -6622,12 +4916,6 @@
               "firstSeen": "2026-03-14T07:43:46+00:00"
             },
             {
-              "nome": "Edouard Marchand",
-              "pais": "CA",
-              "cidade": "Longueuil",
-              "firstSeen": "2026-03-14T07:43:46+00:00"
-            },
-            {
               "nome": "Ethan Cai",
               "pais": "CA",
               "cidade": "Toronto, ON",
@@ -6715,7 +5003,7 @@
           "paises": [
             {
               "pais": "CA",
-              "n": 13
+              "n": 12
             },
             {
               "pais": "US",
@@ -6732,6 +5020,13 @@
             {
               "pais": "PA",
               "n": 1
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Edouard Marchand",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "CA"
             }
           ]
         },
@@ -7152,10 +5447,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 277642,
-          "inscritos": 44,
+          "inscritos": 45,
           "maximo": 48,
-          "vagas": 4,
-          "pct_cheio": 92,
+          "vagas": 3,
+          "pct_cheio": 94,
           "jogadores": [
             {
               "nome": "Atticus Tagami",
@@ -7204,6 +5499,12 @@
               "pais": "CA",
               "cidade": "Toronto, ON",
               "firstSeen": "2026-03-14T07:43:46+00:00"
+            },
+            {
+              "nome": "Drew  Douglas",
+              "pais": "CA",
+              "cidade": "Dundas , ON",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Dustin Zhao",
@@ -7425,7 +5726,7 @@
           "paises": [
             {
               "pais": "CA",
-              "n": 26
+              "n": 27
             },
             {
               "pais": "US",
@@ -7568,7 +5869,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:24.091Z"
+      "ultima_atualizacao": "2026-07-01T10:56:45.529Z"
     },
     {
       "t": 21666,
@@ -8333,7 +6634,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:28.039Z"
+      "ultima_atualizacao": "2026-07-01T10:56:49.664Z"
     },
     {
       "t": 21610,
@@ -12352,7 +10653,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:45.490Z"
+      "ultima_atualizacao": "2026-07-01T10:57:08.109Z"
     },
     {
       "t": 22394,
@@ -12362,7 +10663,7 @@
       "rondas": 2,
       "campo": "The Fortress Golf Club",
       "fee_18": "275.00",
-      "total_inscritos": 81,
+      "total_inscritos": 82,
       "total_maximo": 171,
       "escaloes": [
         {
@@ -12878,10 +11179,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 290419,
-          "inscritos": 1,
+          "inscritos": 2,
           "maximo": 12,
-          "vagas": 11,
-          "pct_cheio": 8,
+          "vagas": 10,
+          "pct_cheio": 17,
           "jogadores": null,
           "paises": null
         },
@@ -12925,7 +11226,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:48.540Z"
+      "ultima_atualizacao": "2026-07-01T10:57:11.372Z"
     },
     {
       "t": 22524,
@@ -13149,7 +11450,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:50.042Z"
+      "ultima_atualizacao": "2026-07-01T10:57:12.957Z"
     },
     {
       "t": 22396,
@@ -13320,13 +11621,6 @@
               "pais": "US",
               "n": 3
             }
-          ],
-          "removed": [
-            {
-              "nome": "Emanuel Kang",
-              "removedAt": "2026-05-02T08:32:22+00:00",
-              "pais": "US"
-            }
           ]
         },
         {
@@ -13490,7 +11784,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:53.007Z"
+      "ultima_atualizacao": "2026-07-01T10:57:16.075Z"
     },
     {
       "t": 22243,
@@ -14051,11 +12345,6 @@
               "nome": "Rex Pickavance",
               "removedAt": "2026-06-17T12:00:11.958Z",
               "pais": "GB"
-            },
-            {
-              "nome": "Emanuel Kang",
-              "removedAt": "2026-05-02T08:32:22+00:00",
-              "pais": "US"
             }
           ]
         },
@@ -14629,7 +12918,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:45:57.060Z"
+      "ultima_atualizacao": "2026-07-01T10:57:20.345Z"
     },
     {
       "t": 22539,
@@ -14639,7 +12928,7 @@
       "rondas": 2,
       "campo": "The Club at Diamondhead",
       "fee_18": "265.00",
-      "total_inscritos": 40,
+      "total_inscritos": 38,
       "total_maximo": 250,
       "escaloes": [
         {
@@ -14736,10 +13025,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 292407,
-          "inscritos": 6,
+          "inscritos": 5,
           "maximo": 25,
-          "vagas": 19,
-          "pct_cheio": 24,
+          "vagas": 20,
+          "pct_cheio": 20,
           "jogadores": [
             {
               "nome": "Andrew Vaughn",
@@ -14760,12 +13049,6 @@
               "firstSeen": "2026-05-22T10:36:44.240Z"
             },
             {
-              "nome": "Jackson Grooms",
-              "pais": "US",
-              "cidade": "Maumelle, AR",
-              "firstSeen": "2026-05-22T10:36:44.240Z"
-            },
-            {
               "nome": "Jake Mcguire",
               "pais": "US",
               "cidade": "Lilburn, GA",
@@ -14781,7 +13064,14 @@
           "paises": [
             {
               "pais": "US",
-              "n": 6
+              "n": 5
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Jackson Grooms",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "US"
             }
           ]
         },
@@ -14878,10 +13168,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 292410,
-          "inscritos": 7,
+          "inscritos": 6,
           "maximo": 30,
-          "vagas": 23,
-          "pct_cheio": 23,
+          "vagas": 24,
+          "pct_cheio": 20,
           "jogadores": [
             {
               "nome": "Borum Cooper",
@@ -14900,12 +13190,6 @@
               "pais": "US",
               "cidade": "Baton Rouge, LA",
               "firstSeen": "2026-05-30T09:29:22.126Z"
-            },
-            {
-              "nome": "Owen Grooms",
-              "pais": "US",
-              "cidade": "Maumelle, AR",
-              "firstSeen": "2026-05-29T10:56:51.052Z"
             },
             {
               "nome": "Sean Lin",
@@ -14929,7 +13213,14 @@
           "paises": [
             {
               "pais": "US",
-              "n": 7
+              "n": 6
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Owen Grooms",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "US"
             }
           ]
         },
@@ -14986,7 +13277,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:00.010Z"
+      "ultima_atualizacao": "2026-07-01T10:57:23.457Z"
     },
     {
       "t": 22605,
@@ -14996,7 +13287,7 @@
       "rondas": 2,
       "campo": "Seaview Golf Club - Bay Course, Seaview Golf Club - Pines Course",
       "fee_18": "495.00",
-      "total_inscritos": 234,
+      "total_inscritos": 238,
       "total_maximo": 274,
       "escaloes": [
         {
@@ -15236,10 +13527,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 293272,
-          "inscritos": 24,
+          "inscritos": 23,
           "maximo": 24,
-          "vagas": 0,
-          "pct_cheio": 100,
+          "vagas": 1,
+          "pct_cheio": 96,
           "jogadores": [
             {
               "nome": "Aaron Kim",
@@ -15294,12 +13585,6 @@
               "pais": "US",
               "cidade": "Fort Lee, NJ",
               "firstSeen": "2026-06-03T12:10:13.487Z"
-            },
-            {
-              "nome": "Donnie Zheng",
-              "pais": "CA",
-              "cidade": "Markham, ON",
-              "firstSeen": "2026-06-12T11:17:18.857Z"
             },
             {
               "nome": "Edouard Marchand",
@@ -15393,7 +13678,14 @@
             },
             {
               "pais": "CA",
-              "n": 3
+              "n": 2
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Donnie Zheng",
+              "removedAt": "2026-07-01T10:57:59.261Z",
+              "pais": "CA"
             }
           ]
         },
@@ -15403,10 +13695,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 293273,
-          "inscritos": 22,
+          "inscritos": 23,
           "maximo": 42,
-          "vagas": 20,
-          "pct_cheio": 52,
+          "vagas": 19,
+          "pct_cheio": 55,
           "jogadores": [
             {
               "nome": "Agampratap  Kanwar",
@@ -15431,6 +13723,12 @@
               "pais": "US",
               "cidade": "Blue Bell, PA",
               "firstSeen": "2026-06-17T12:00:11.958Z"
+            },
+            {
+              "nome": "Dorian  Critzman",
+              "pais": "US",
+              "cidade": "NEW MILFORD, NJ",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Eduard Tervooren",
@@ -15544,7 +13842,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 21
+              "n": 22
             },
             {
               "pais": "CA",
@@ -15570,10 +13868,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 293274,
-          "inscritos": 37,
+          "inscritos": 38,
           "maximo": 42,
-          "vagas": 5,
-          "pct_cheio": 88,
+          "vagas": 4,
+          "pct_cheio": 90,
           "jogadores": [
             {
               "nome": "Alex Sweet",
@@ -15796,12 +14094,18 @@
               "pais": "US",
               "cidade": "Plainview, NY",
               "firstSeen": "2026-06-03T12:10:13.487Z"
+            },
+            {
+              "nome": "ZICHENG LI",
+              "pais": "US",
+              "cidade": "UPPER SADDLE RIVER, NJ",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             }
           ],
           "paises": [
             {
               "pais": "US",
-              "n": 36
+              "n": 37
             },
             {
               "pais": "CH",
@@ -15815,10 +14119,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 293275,
-          "inscritos": 38,
+          "inscritos": 39,
           "maximo": 39,
-          "vagas": 1,
-          "pct_cheio": 97,
+          "vagas": 0,
+          "pct_cheio": 100,
           "jogadores": [
             {
               "nome": "Alex Mack",
@@ -16031,6 +14335,12 @@
               "firstSeen": "2026-06-03T12:10:13.487Z"
             },
             {
+              "nome": "Sam Lee",
+              "pais": "US",
+              "cidade": "Alpine, NJ",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            },
+            {
               "nome": "Skyler Zhang",
               "pais": "US",
               "cidade": "Millburn, NJ",
@@ -16052,7 +14362,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 37
+              "n": 38
             },
             {
               "pais": "CA",
@@ -16091,10 +14401,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 293277,
-          "inscritos": 7,
+          "inscritos": 8,
           "maximo": 9,
-          "vagas": 2,
-          "pct_cheio": 78,
+          "vagas": 1,
+          "pct_cheio": 89,
           "jogadores": null,
           "paises": null
         },
@@ -16117,10 +14427,10 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 293279,
-          "inscritos": 10,
+          "inscritos": 11,
           "maximo": 15,
-          "vagas": 5,
-          "pct_cheio": 67,
+          "vagas": 4,
+          "pct_cheio": 73,
           "jogadores": null,
           "paises": null
         },
@@ -16164,7 +14474,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:05.456Z"
+      "ultima_atualizacao": "2026-07-01T10:57:29.140Z"
     },
     {
       "t": 22272,
@@ -16390,7 +14700,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:06.466Z"
+      "ultima_atualizacao": "2026-07-01T10:57:30.226Z"
     },
     {
       "t": 22448,
@@ -16998,7 +15308,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:09.494Z"
+      "ultima_atualizacao": "2026-07-01T10:57:33.419Z"
     },
     {
       "t": 22273,
@@ -17224,7 +15534,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:10.506Z"
+      "ultima_atualizacao": "2026-07-01T10:57:34.501Z"
     },
     {
       "t": 22642,
@@ -17234,7 +15544,7 @@
       "rondas": 2,
       "campo": "Westin Rancho Mirage - Dye, Mission Hills North - Player",
       "fee_18": "435.00",
-      "total_inscritos": 222,
+      "total_inscritos": 230,
       "total_maximo": 278,
       "escaloes": [
         {
@@ -17269,10 +15579,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 293778,
-          "inscritos": 8,
+          "inscritos": 10,
           "maximo": 23,
-          "vagas": 15,
-          "pct_cheio": 35,
+          "vagas": 13,
+          "pct_cheio": 43,
           "jogadores": null,
           "paises": null
         },
@@ -17282,10 +15592,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 293779,
-          "inscritos": 23,
+          "inscritos": 24,
           "maximo": 24,
-          "vagas": 1,
-          "pct_cheio": 96,
+          "vagas": 0,
+          "pct_cheio": 100,
           "jogadores": [
             {
               "nome": "Asher Park",
@@ -17328,6 +15638,12 @@
               "pais": "US",
               "cidade": "Rancho Cucamonga, CA",
               "firstSeen": "2026-06-05T11:02:10.799Z"
+            },
+            {
+              "nome": "Ethan  Dou",
+              "pais": "US",
+              "cidade": "South Pasadena, CA",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Evan Ho",
@@ -17429,7 +15745,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 23
+              "n": 24
             }
           ],
           "removed": [
@@ -18234,10 +16550,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 293785,
-          "inscritos": 5,
+          "inscritos": 6,
           "maximo": 15,
-          "vagas": 10,
-          "pct_cheio": 33,
+          "vagas": 9,
+          "pct_cheio": 40,
           "jogadores": null,
           "paises": null
         },
@@ -18247,10 +16563,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 293786,
-          "inscritos": 10,
+          "inscritos": 11,
           "maximo": 15,
-          "vagas": 5,
-          "pct_cheio": 67,
+          "vagas": 4,
+          "pct_cheio": 73,
           "jogadores": null,
           "paises": null
         },
@@ -18273,10 +16589,10 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 293788,
-          "inscritos": 13,
+          "inscritos": 15,
           "maximo": 15,
-          "vagas": 2,
-          "pct_cheio": 87,
+          "vagas": 0,
+          "pct_cheio": 100,
           "jogadores": null,
           "paises": null
         },
@@ -18286,10 +16602,10 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 293789,
-          "inscritos": 8,
+          "inscritos": 9,
           "maximo": 12,
-          "vagas": 4,
-          "pct_cheio": 67,
+          "vagas": 3,
+          "pct_cheio": 75,
           "jogadores": null,
           "paises": null
         },
@@ -18307,7 +16623,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:15.911Z"
+      "ultima_atualizacao": "2026-07-01T10:57:40.156Z"
     },
     {
       "t": 22480,
@@ -18611,7 +16927,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:18.380Z"
+      "ultima_atualizacao": "2026-07-01T10:57:42.765Z"
     },
     {
       "t": 22540,
@@ -18621,7 +16937,7 @@
       "rondas": 2,
       "campo": "Paris Landing State Park GC",
       "fee_18": "265.00",
-      "total_inscritos": 50,
+      "total_inscritos": 53,
       "total_maximo": 150,
       "escaloes": [
         {
@@ -18656,10 +16972,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 292417,
-          "inscritos": 4,
+          "inscritos": 5,
           "maximo": 9,
-          "vagas": 5,
-          "pct_cheio": 44,
+          "vagas": 4,
+          "pct_cheio": 56,
           "jogadores": null,
           "paises": null
         },
@@ -18736,11 +17052,17 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 292419,
-          "inscritos": 7,
+          "inscritos": 9,
           "maximo": 18,
-          "vagas": 11,
-          "pct_cheio": 39,
+          "vagas": 9,
+          "pct_cheio": 50,
           "jogadores": [
+            {
+              "nome": "Brent Landacre",
+              "pais": "US",
+              "cidade": "Georgetown , KY",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            },
             {
               "nome": "Callan Haire",
               "pais": "US",
@@ -18782,12 +17104,18 @@
               "pais": "US",
               "cidade": "Franklin, TN",
               "firstSeen": "2026-05-28T11:10:24.056Z"
+            },
+            {
+              "nome": "Trey Perez",
+              "pais": "US",
+              "cidade": "ELIZABETHTOWN, KY",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             }
           ],
           "paises": [
             {
               "pais": "US",
-              "n": 7
+              "n": 9
             }
           ]
         },
@@ -19021,7 +17349,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:21.340Z"
+      "ultima_atualizacao": "2026-07-01T10:57:45.876Z"
     },
     {
       "t": 22858,
@@ -19031,7 +17359,7 @@
       "rondas": 2,
       "campo": "Golf Valley München",
       "fee_18": "295.00",
-      "total_inscritos": 27,
+      "total_inscritos": 29,
       "total_maximo": 129,
       "escaloes": [
         {
@@ -19155,16 +17483,22 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296611,
-          "inscritos": 3,
+          "inscritos": 4,
           "maximo": 15,
-          "vagas": 12,
-          "pct_cheio": 20,
+          "vagas": 11,
+          "pct_cheio": 27,
           "jogadores": [
             {
               "nome": "Buster Airey",
               "pais": "GB",
               "cidade": "Heswall, WRL",
               "firstSeen": "2026-06-25T10:29:55.992Z"
+            },
+            {
+              "nome": "Lukas Doherty",
+              "pais": "NO",
+              "cidade": "Son, AK",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Ritchie  Riley",
@@ -19183,6 +17517,10 @@
             {
               "pais": "GB",
               "n": 2
+            },
+            {
+              "pais": "NO",
+              "n": 1
             },
             {
               "pais": "TR",
@@ -19346,10 +17684,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 296616,
-          "inscritos": 0,
+          "inscritos": 1,
           "maximo": 12,
-          "vagas": 12,
-          "pct_cheio": 0,
+          "vagas": 11,
+          "pct_cheio": 8,
           "jogadores": null,
           "paises": null
         },
@@ -19367,7 +17705,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:24.365Z"
+      "ultima_atualizacao": "2026-07-01T10:57:48.956Z"
     },
     {
       "t": 22835,
@@ -19377,7 +17715,7 @@
       "rondas": 2,
       "campo": "Tunxis Plantation GC (Red), Tunxis Plantation (Red-Green), Tunxis Plantation (Green)",
       "fee_18": "265.00",
-      "total_inscritos": 101,
+      "total_inscritos": 108,
       "total_maximo": 144,
       "escaloes": [
         {
@@ -19399,10 +17737,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 296289,
-          "inscritos": 3,
+          "inscritos": 5,
           "maximo": 6,
-          "vagas": 3,
-          "pct_cheio": 50,
+          "vagas": 1,
+          "pct_cheio": 83,
           "jogadores": null,
           "paises": null
         },
@@ -19412,10 +17750,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 296290,
-          "inscritos": 3,
+          "inscritos": 4,
           "maximo": 6,
-          "vagas": 3,
-          "pct_cheio": 50,
+          "vagas": 2,
+          "pct_cheio": 67,
           "jogadores": null,
           "paises": null
         },
@@ -19799,10 +18137,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296295,
-          "inscritos": 21,
+          "inscritos": 23,
           "maximo": 33,
-          "vagas": 12,
-          "pct_cheio": 64,
+          "vagas": 10,
+          "pct_cheio": 70,
           "jogadores": [
             {
               "nome": "Adam Schneider",
@@ -19839,6 +18177,18 @@
               "pais": "US",
               "cidade": "Great Falls , VA",
               "firstSeen": "2026-06-29T12:15:23.995Z"
+            },
+            {
+              "nome": "CJ Griffith",
+              "pais": "US",
+              "cidade": "Norwell, MA",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            },
+            {
+              "nome": "Eli Townsend",
+              "pais": "US",
+              "cidade": "Memphis, TN",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Ethan Beaudry",
@@ -19934,7 +18284,7 @@
           "paises": [
             {
               "pais": "US",
-              "n": 21
+              "n": 23
             }
           ]
         },
@@ -19957,10 +18307,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 296297,
-          "inscritos": 10,
+          "inscritos": 11,
           "maximo": 12,
-          "vagas": 2,
-          "pct_cheio": 83,
+          "vagas": 1,
+          "pct_cheio": 92,
           "jogadores": null,
           "paises": null
         },
@@ -19970,10 +18320,10 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 296298,
-          "inscritos": 7,
+          "inscritos": 8,
           "maximo": 15,
-          "vagas": 8,
-          "pct_cheio": 47,
+          "vagas": 7,
+          "pct_cheio": 53,
           "jogadores": null,
           "paises": null
         },
@@ -19991,7 +18341,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:27.798Z"
+      "ultima_atualizacao": "2026-07-01T10:57:52.654Z"
     },
     {
       "t": 22876,
@@ -20001,7 +18351,7 @@
       "rondas": 2,
       "campo": "Terre Dei Consoli Golf Club",
       "fee_18": "325.00",
-      "total_inscritos": 7,
+      "total_inscritos": 11,
       "total_maximo": 117,
       "escaloes": [
         {
@@ -20023,12 +18373,24 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296824,
-          "inscritos": 0,
+          "inscritos": 1,
           "maximo": 6,
-          "vagas": 6,
-          "pct_cheio": 0,
-          "jogadores": null,
-          "paises": null
+          "vagas": 5,
+          "pct_cheio": 17,
+          "jogadores": [
+            {
+              "nome": "Henry Purcell",
+              "pais": "US",
+              "cidade": "Estero, FL",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2103,
@@ -20036,12 +18398,24 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296825,
-          "inscritos": 0,
+          "inscritos": 1,
           "maximo": 12,
-          "vagas": 12,
-          "pct_cheio": 0,
-          "jogadores": null,
-          "paises": null
+          "vagas": 11,
+          "pct_cheio": 8,
+          "jogadores": [
+            {
+              "nome": "Harry Kachel",
+              "pais": "GB",
+              "cidade": "Ascot",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            }
+          ],
+          "paises": [
+            {
+              "pais": "GB",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2104,
@@ -20049,12 +18423,24 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296826,
-          "inscritos": 0,
+          "inscritos": 1,
           "maximo": 15,
-          "vagas": 15,
-          "pct_cheio": 0,
-          "jogadores": null,
-          "paises": null
+          "vagas": 14,
+          "pct_cheio": 7,
+          "jogadores": [
+            {
+              "nome": "Oscar Gruber",
+              "pais": "CH",
+              "cidade": "Wollerau, SZ",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
+            }
+          ],
+          "paises": [
+            {
+              "pais": "CH",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2105,
@@ -20062,16 +18448,22 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 296827,
-          "inscritos": 2,
+          "inscritos": 3,
           "maximo": 12,
-          "vagas": 10,
-          "pct_cheio": 17,
+          "vagas": 9,
+          "pct_cheio": 25,
           "jogadores": [
             {
               "nome": "Emilio Berti",
               "pais": "IT",
               "cidade": "Viareggio, LU",
               "firstSeen": "2026-06-27T09:43:21.905Z"
+            },
+            {
+              "nome": "Leo Egozi",
+              "pais": "US",
+              "cidade": "Miami Beach, FL",
+              "firstSeen": "2026-07-01T10:57:59.261Z"
             },
             {
               "nome": "Matteo Durando",
@@ -20084,6 +18476,10 @@
             {
               "pais": "IT",
               "n": 2
+            },
+            {
+              "pais": "US",
+              "n": 1
             }
           ]
         },
@@ -20192,7 +18588,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:28.812Z"
+      "ultima_atualizacao": "2026-07-01T10:57:55.213Z"
     },
     {
       "t": 22831,
@@ -20494,7 +18890,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:31.706Z"
+      "ultima_atualizacao": "2026-07-01T10:57:58.275Z"
     },
     {
       "t": 22885,
@@ -20677,7 +19073,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-06-30T10:46:32.268Z"
+      "ultima_atualizacao": "2026-07-01T10:57:58.860Z"
     }
   ]
 }
