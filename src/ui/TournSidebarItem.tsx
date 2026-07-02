@@ -73,7 +73,7 @@ export interface TournSidebarItemProps {
   href?: string;
 }
 
-const Sep = () => <div style={{ height: "0.5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />;
+const Sep = () => <div style={{ height: "0.5px", background: "var(--border-light)", margin: "4px 0" }} />;
 
 export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer, href }: TournSidebarItemProps) {
   const nR       = t.rounds || 1;

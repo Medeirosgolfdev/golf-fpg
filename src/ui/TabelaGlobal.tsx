@@ -151,10 +151,10 @@ const TG_TR_I: Record<string, { i: string; c: string }> = {
 };
 const TG_TIER = {
   elite:      { bg: "var(--bg-success-strong)",  c: "var(--color-good-dark)" },
-  strong:     { bg: "var(--bg-current,#e0f7fa)", c: "var(--text-current,#006064)" },
+  strong:     { bg: "var(--bg-current)", c: "var(--text-current)" },
   solid:      { bg: "var(--bg-warn-light)",       c: "var(--color-warn-dark)" },
   developing: { bg: "var(--bg-warn-strong)",      c: "var(--color-warn-dark)" },
-  beginner:   { bg: "var(--bg-danger-subtle,var(--bg-danger-strong))", c: "var(--color-danger-dark)" },
+  beginner:   { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
 };
 
 // Base partilhada (tidAliases.ts) + extras específicos desta vista
@@ -245,7 +245,7 @@ function tgFmtSign(n: number | null | undefined, dec = 0): string {
 
 function tgSc3m(v: number): string {
   if (v < -2) return "var(--color-good)";
-  if (v < 0) return "var(--score-par-seg,var(--color-good))";
+  if (v < 0) return "var(--score-par-seg)";
   if (v === 0) return "var(--text-3)";
   if (v <= 3) return "var(--color-warn)";
   return "var(--color-danger)";
@@ -599,7 +599,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                 {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
               </div>
             }
-            style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}
+            style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle)", borderLeft:"3px solid var(--accent)", minWidth:0 }}
           />
           {TG_T.map(t => {
             const res = manuelRef?.r[t.id];
@@ -707,7 +707,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           : inscribed?.has(norm2(p.n)) ?? false;
                         return (
                           <td key={tid} className="ta-c"
-                            style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
+                            style={{ background: inscrito ? "var(--bg-info-strong)" : undefined }}>
                             {inscrito
                               ? <span style={{ fontSize: "var(--fs-14)" }}>⛳</span>
                               : <span className="fs-10 c-border">—</span>}

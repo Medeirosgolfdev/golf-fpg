@@ -156,7 +156,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
           🏑 Pitch &amp; Putt — {name || hist.name || `#${fed}`}
         </h3>
         {hist.index != null && (
-          <span className="p" style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+          <span className="p" style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
             Index P&amp;P {hist.index}
           </span>
         )}

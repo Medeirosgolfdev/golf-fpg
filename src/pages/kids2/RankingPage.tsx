@@ -63,7 +63,7 @@ function posColor(pos: number | null | undefined): string {
   if (pos === 1) return "var(--medal-gold-fg)";
   if (pos === 2) return "var(--medal-silver-fg)";
   if (pos === 3) return "var(--medal-bronze-fg)";
-  if (pos != null && pos <= 10) return "var(--color-info-dark, #1e3a8a)";
+  if (pos != null && pos <= 10) return "var(--color-info-dark)";
   return "var(--text-3)";
 }
 
@@ -71,7 +71,7 @@ function posBg(pos: number | null | undefined): string {
   if (pos === 1) return "var(--medal-gold-bg)";
   if (pos === 2) return "var(--medal-silver-bg)";
   if (pos === 3) return "var(--medal-bronze-bg)";
-  if (pos != null && pos <= 10) return "var(--bg-info-subtle, #eff6ff)";
+  if (pos != null && pos <= 10) return "var(--bg-info-subtle)";
   return "transparent";
 }
 
@@ -141,7 +141,7 @@ function JourneyChip({ item }: { item: JourneyItem }) {
         background: posBg(item.pos),
         color: posColor(item.pos),
         fontWeight: item.pos != null && item.pos <= 3 ? 700 : 500,
-        border: "1px solid var(--border-subtle, #e5e7eb)",
+        border: "1px solid var(--border-subtle)",
         whiteSpace: "nowrap",
       }}
     >
@@ -176,7 +176,7 @@ function PlayerRow({
   const topItems = journey.filter((i) => i.stars > 3).slice(0, 8);
 
   return (
-    <tr style={{ background: isManuel ? "var(--bg-success-subtle, #f0fdf4)" : undefined }}>
+    <tr style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined }}>
       {/* rank */}
       <td style={{ fontWeight: 800, fontSize: rank <= 3 ? "var(--fs-18)" : "var(--fs-14)", textAlign: "right", paddingRight: 6, whiteSpace: "nowrap" }}>
         {rank <= 3 ? MEDALS[rank - 1] : `#${rank}`}
@@ -205,7 +205,7 @@ function PlayerRow({
           </Link>
           <TierBadge tier={entry.tier} />
           {wins > 0 && (
-            <span style={{ fontSize: "var(--fs-11)", color: "#b45309", fontWeight: 600 }}>{wins}× 🏆</span>
+            <span style={{ fontSize: "var(--fs-11)", color: "var(--medal-bronze)", fontWeight: 600 }}>{wins}× 🏆</span>
           )}
           {top3 > wins && (
             <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>Top3: {top3}</span>

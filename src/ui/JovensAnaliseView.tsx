@@ -137,7 +137,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
       <td style={{
         padding: "8px",
         textAlign: "center", verticalAlign: "middle",
-        background: "var(--bg-muted-subtle, rgba(0,0,0,0.02))",
+        background: "var(--overlay-black-02)",
         ...yearBorder,
       }}>
         {isChampion && (
@@ -843,7 +843,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               borderRadius: 4,
               padding: "3px 6px",
               background: titles.length > 0
-                ? "var(--medal-gold-bg, #fde68a)"  // amber/dourado para anos com título (🏆)
+                ? "var(--medal-gold-bg)"  // amber/dourado para anos com título (🏆)
                 : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
               fontSize: "var(--fs-11)",

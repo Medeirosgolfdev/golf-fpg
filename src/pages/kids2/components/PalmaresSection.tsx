@@ -167,7 +167,7 @@ function WinCard({ win }: { win: WinCard }) {
         {win.manuelToPar != null && (
           <span title="±par do Manuel neste torneio" style={{
             fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-            background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
+            background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
             border: "1px solid var(--color-good-dark)",
           }}>
             M: {win.manuelToPar === 0 ? "E" : win.manuelToPar > 0 ? `+${win.manuelToPar}` : String(win.manuelToPar)}

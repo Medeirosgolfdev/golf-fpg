@@ -266,7 +266,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           <span style={{ background: "var(--medal-bronze-bg)", color: "var(--medal-bronze-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #3</span> bronze
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", border: "1px solid var(--border-success, #97c459)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)" }}>±N</span>
+          <span style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--border-success)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)" }}>±N</span>
           diff vs Manuel
         </span>
         <span style={{ marginLeft: "auto" }}>
@@ -445,7 +445,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
                     onClick={() => onOpenRound(r, rd.round)}
                     style={{
                       background: "none", border: "none", padding: "0 2px", fontSize: "var(--fs-11)",
-                      color: "var(--color-info-dark, #1e3a8a)", cursor: "pointer",
+                      color: "var(--color-info-dark)", cursor: "pointer",
                       textDecoration: "underline", fontWeight: 600, fontVariantNumeric: "tabular-nums",
                     }}
                     title="Ver scorecard buraco-a-buraco"
@@ -463,7 +463,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       </td>
       <td style={{ textAlign: "right" }}>
         {r.vsManuelDiff != null && (
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)", border: "1px solid var(--border-success, #97c459)" }}
+          <span style={{ background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)", border: "1px solid var(--border-success)" }}
             title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
             {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
           </span>
@@ -503,9 +503,9 @@ function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: F
   return (
     <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
       fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, #eff6ff)",
-      color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)",
-      border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)"}`,
+      background: isScratch ? "var(--bg-warn-subtle)" : "var(--bg-info-subtle)",
+      color: isScratch ? "var(--color-warn-dark)" : "var(--color-info-dark)",
+      border: `1px solid ${isScratch ? "var(--color-warn-dark)" : "var(--color-info-dark)"}`,
       lineHeight: 1.4,
     }}>
       {isScratch ? "SCRATCH" : "HCP"}

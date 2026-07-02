@@ -205,9 +205,9 @@ export function ScorecardLeaderboard({
           style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {metaLine}
           {onToggleScorecard && (
-            <button onClick={onToggleScorecard} className="btn ml-auto" >
+            <span onClick={onToggleScorecard} className="btn ml-auto">
               {showScorecard ? "Ocultar scorecard" : "Ver scorecard"}
-            </button>
+            </span>
           )}
         </div>
       )}
@@ -371,7 +371,7 @@ export function ScorecardLeaderboard({
           </thead>
           <tbody>
             {sortedRows.map(row => {
-              const sticky = row.stickyBg || "var(--bg-card,#fff)";
+              const sticky = row.stickyBg || "var(--bg-card)";
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
               const scores = row.scores ?? [];

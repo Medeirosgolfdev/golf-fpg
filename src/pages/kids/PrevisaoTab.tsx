@@ -175,8 +175,8 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       {resolved.note && (
         <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-warn-alpha, var(--bg-muted))",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
+          padding: "6px 10px", background: "var(--color-warn-alpha)",
+          border: "1px solid var(--color-warn-alpha)", borderRadius: 6,
         }}>
           ⚠ {resolved.note}
         </div>
@@ -193,8 +193,8 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
 
       {resolved.ratingApprox && (
         <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-warn-alpha, var(--bg-muted))",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
+          padding: "6px 10px", background: "var(--color-warn-alpha)",
+          border: "1px solid var(--color-warn-alpha)", borderRadius: 6,
         }}>
           ⚠ CR/Slope estimados por interpolação entre os tees com rating oficial — este tee de torneio não tem rating publicado.
         </div>
@@ -290,7 +290,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                 else if (atIndex) nivel = "ao índice";
                 else nivel = "acima do índice";
                 return (
-                  <tr key={row.gross} style={isPred ? { background: "var(--accent-light, var(--bg-muted))", fontWeight: 700 } : undefined}>
+                  <tr key={row.gross} style={isPred ? { background: "var(--accent-light)", fontWeight: 700 } : undefined}>
                     <td className="r">{row.gross}</td>
                     <td className="r">{fmtToPar(row.toPar)}</td>
                     <td className="r">{fmtSD(row.sd)}</td>
@@ -360,7 +360,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                         title={h.getsStroke ? "Recebe pancada de handicap neste buraco" : `Stroke index ${h.si ?? "-"}`}
                         style={{
                           display: "inline-block", minWidth: 22, padding: "1px 8px", borderRadius: 999,
-                          background: h.getsStroke ? "var(--accent)" : "var(--accent-light, var(--bg-muted))",
+                          background: h.getsStroke ? "var(--accent)" : "var(--accent-light)",
                           color: h.getsStroke ? "#fff" : "var(--text-2)",
                           fontWeight: h.getsStroke ? 800 : 600, fontSize: "var(--fs-11)",
                         }}

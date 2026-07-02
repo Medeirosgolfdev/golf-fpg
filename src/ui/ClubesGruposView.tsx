@@ -269,7 +269,7 @@ export default function ClubesGruposView({
 
           return (
             <div key={g.grupo} style={{
-              background: "var(--bg-card,#fff)",
+              background: "var(--bg-card)",
               border: `1px solid ${isMulti ? color + "80" : "var(--border)"}`,
               borderRadius: 8, overflow: "hidden",
               boxShadow: "0 1px 3px rgba(0,0,0,.06)",

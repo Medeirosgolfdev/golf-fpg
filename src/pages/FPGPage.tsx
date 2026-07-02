@@ -192,7 +192,7 @@ interface MatchPlayData {
   dia2?: { date?: string; modalidade?: string; campo?: string; groups: Record<string, MpDrawGroup[]>; };
 }
 
-const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
+const MP_CLUB_COLOR = "var(--color-good-dark)";
 
 function MatchPlayResultsTable({
   results,
@@ -242,7 +242,7 @@ function MatchPlayResultsTable({
   const f9 = Array.from({ length: 9 }, (_, i) => i);
   const b9 = Array.from({ length: 9 }, (_, i) => i + 9);
   const cSc: React.CSSProperties = { padding: "3px 1px", textAlign: "center", fontSize: "var(--fs-11)", width: 26, minWidth: 26 };
-  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card,white)", zIndex: 1 };
+  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card)", zIndex: 1 };
   const cSum: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" };
 
   // Modo scorecard-only: só renderiza a secção de scorecards (para o tab Individual)
@@ -266,8 +266,8 @@ function MatchPlayResultsTable({
                     <div style={{ overflowX: "auto" }}>
                       <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                         <thead>
-                          <tr style={{ background: "var(--bg-2)" }}>
-                            <th style={{ ...cLbl, background: "var(--bg-2)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
+                          <tr style={{ background: "var(--bg-header)" }}>
+                            <th style={{ ...cLbl, background: "var(--bg-header)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
                             {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
                             <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Out</th>
                             {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
@@ -336,7 +336,7 @@ function MatchPlayResultsTable({
             const opps = clubs.filter(c => c.key !== cl.key);
             return (
               <div key={cl.key} style={{
-                background: "var(--bg-card,#fff)", border: "1px solid var(--border)",
+                background: "var(--bg-card)", border: "1px solid var(--border)",
                 borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
               }}>
                 <div style={{ background: MP_CLUB_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
@@ -526,7 +526,7 @@ function MatchPlayResultsTable({
                         <div style={{ overflowX: "auto" }}>
                           <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                             <thead>
-                              <tr style={{ background: "var(--bg-2)", borderBottom: "2px solid var(--border)" }}>
+                              <tr style={{ background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
                                 <th style={{ ...cLbl, fontWeight: 700, color: "var(--text-2)" }}>Match</th>
                                 {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
                                 <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
@@ -2371,7 +2371,7 @@ function Content() {
           <div className="course-detail" ref={md.detailRef}>
             {/* Tabs Individual / Grupos */}
             <div className="tabbar-under" style={{
-              background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
+              background: "var(--bg-card)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
             }}>
               {(["grupos", "individual"] as const).map(v => {
                 const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
@@ -2390,7 +2390,7 @@ function Content() {
               <div className="flex-wrap" style={{
                 display: "flex", alignItems: "center", gap: 8,
                 padding: "8px 16px", borderBottom: "1px solid var(--border)",
-                background: "var(--bg-muted,#f7f7f7)", fontSize: "var(--fs-12)",
+                background: "var(--bg-muted)", fontSize: "var(--fs-12)",
               }}>
                 <span className="fw-600" style={{ color: "var(--text-muted)" }}>FPG:</span>
                 <TournExtLinks
@@ -2529,7 +2529,7 @@ function Content() {
                       <div className="flex-wrap" style={{
                         display: "flex", alignItems: "center", gap: 8,
                         padding: "10px 16px", borderBottom: "1px solid var(--border)",
-                        background: "var(--accent-light, #eef6ef)", fontSize: "var(--fs-12)", color: "var(--text-2)",
+                        background: "var(--accent-light)", fontSize: "var(--fs-12)", color: "var(--text-2)",
                       }}>
                         <span style={{ fontSize: "var(--fs-16)" }}>🆚</span>
                         <span>

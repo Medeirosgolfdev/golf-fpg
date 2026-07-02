@@ -52,7 +52,7 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
   const last = sorted[sorted.length - 1];
   const first = sorted[0];
   const delta = last.hcpExact - first.hcpExact;
-  const trendColor = delta < 0 ? "var(--success, var(--color-good))" : delta > 0 ? "var(--danger, var(--color-danger))" : "var(--text-3, #6b7280)";
+  const trendColor = delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)";
 
   return (
     <>
@@ -122,7 +122,7 @@ function HcpHistoryModal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "var(--bg-default, #fff)",
+          background: "var(--bg-card)",
           borderRadius: 8,
           maxWidth: 600,
           width: "100%",
@@ -140,7 +140,7 @@ function HcpHistoryModal({
             onClick={onClose}
             style={{
               background: "transparent",
-              border: "1px solid var(--border-light, #e5e7eb)",
+              border: "1px solid var(--border-light)",
               borderRadius: 4,
               padding: "4px 10px",
               cursor: "pointer",
@@ -151,7 +151,7 @@ function HcpHistoryModal({
           </button>
         </div>
 
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3, #6b7280)", marginBottom: 10 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 10 }}>
           {desc.length} snapshots · {desc[desc.length - 1]?.date} → {desc[0]?.date}
         </div>
 

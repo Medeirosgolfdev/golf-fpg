@@ -746,7 +746,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             <ExtLink href={data._source} className="tourn-ext-link" style={{ marginLeft: 8 }}>
               🔗 Página oficial
             </ExtLink>
-            <ExtLink href={data._vademecumUrl} className="tourn-ext-link" style={{ marginLeft: 8, color: "var(--accent, #2563eb)" }}>
+            <ExtLink href={data._vademecumUrl} className="tourn-ext-link" style={{ marginLeft: 8, color: "var(--accent)" }}>
               📄 Vademecum FFG (PDF, 388 págs)
             </ExtLink>
           </>
@@ -833,13 +833,13 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             </div>
           </>
         ) : (
-          <div style={{ padding: 16, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, marginTop: 8 }}>
+          <div style={{ padding: 16, background: "var(--bg-muted)", borderRadius: 6, marginTop: 8 }}>
             <p className="fs-12">
               <strong>Distâncias ainda não extraídas.</strong> Para popular esta tabela:
             </p>
             <pre style={{
               padding: 12,
-              background: "var(--bg-card, #fff)",
+              background: "var(--bg-card)",
               border: "1px solid var(--border)",
               borderRadius: 4,
               fontSize: "var(--fs-11)",
@@ -1323,7 +1323,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
       ),
       postScorecardCells: (
         <td style={{ padding: "6px 8px", textAlign: "center" }}>
-          {p.wildCard && <span className="chip" style={{ background: "var(--accent, #2563eb)", color: "#fff", fontSize: "var(--fs-10)" }}>WC</span>}
+          {p.wildCard && <span className="chip" style={{ background: "var(--accent)", color: "#fff", fontSize: "var(--fs-10)" }}>WC</span>}
           {p.scratch && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>SCR</span>}
           {!p.wildCard && !p.scratch && <span className="muted fs-10">—</span>}
         </td>
@@ -2033,7 +2033,7 @@ function FFGContentLegacy() {
 
           {/* ── Barra de filtros FFG (estilo FPGPage) ── */}
           {ffgResAll.length > 0 && (
-            <div className="detail-toolbar" style={{ flexWrap: md.isMobile ? "wrap" : "nowrap", gap: md.isMobile ? 4 : 8, padding: md.isMobile ? "6px 8px" : "8px 12px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted, #fafafa)", overflowX: md.isMobile ? "visible" : "auto", whiteSpace: md.isMobile ? "normal" : "nowrap", alignItems: "center", rowGap: md.isMobile ? 4 : undefined }}>
+            <div className="detail-toolbar" style={{ flexWrap: md.isMobile ? "wrap" : "nowrap", gap: md.isMobile ? 4 : 8, padding: md.isMobile ? "6px 8px" : "8px 12px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted)", overflowX: md.isMobile ? "visible" : "auto", whiteSpace: md.isMobile ? "normal" : "nowrap", alignItems: "center", rowGap: md.isMobile ? 4 : undefined }}>
               <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180, maxWidth: 320 }}>
                 <input
                   className="input"
@@ -2185,7 +2185,7 @@ function FFGContentLegacy() {
                             )}
                             <span className="chip" style={{
                               fontSize: "var(--fs-9)",
-                              background: "var(--bg-muted, #e5e7eb)",
+                              background: "var(--bg-muted)",
                               color: "var(--text-2)",
                               padding: "1px 6px",
                               borderRadius: 8,
@@ -2219,7 +2219,7 @@ function FFGContentLegacy() {
                   <React.Fragment key={`lg-${year}`}>
                     <SidebarSectionTitle
                       dark
-                      color="var(--color-ffg-mid, var(--color-ffg-dark))"
+                      color="var(--color-ffg-mid)"
                       textColor="#ffffff"
                       borderColor="var(--color-ffg-dark)"
                       letterSpacing="0.08em"
@@ -2236,7 +2236,7 @@ function FFGContentLegacy() {
                         color: "#ffffff",
                         textTransform: "uppercase",
                         marginTop: 4,
-                        background: "var(--color-ffg-mid, var(--color-ffg-dark))",
+                        background: "var(--color-ffg-mid)",
                       }}
                     >
                       {year} · PDF

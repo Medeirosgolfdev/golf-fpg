@@ -2016,7 +2016,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: "var(--fs-12)" }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 6, fontSize: "var(--fs-12)" }}>
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
@@ -2096,7 +2096,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         </p>
         <pre style={{
           padding: 12,
-          background: "var(--bg-muted, #f5f5f5)",
+          background: "var(--bg-muted)",
           border: "1px solid var(--border)",
           borderRadius: 4,
           fontSize: "var(--fs-12)",

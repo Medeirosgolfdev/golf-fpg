@@ -913,7 +913,7 @@ export default function USKidsFieldPage() {
             onClick={e => e.stopPropagation()}
             title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
             className="p p-sm td-none"
-            style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
+            style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark)", borderColor:"var(--border-info)" }}>
             🔭 Scout
           </Link>
         </>
@@ -997,7 +997,7 @@ export default function USKidsFieldPage() {
             {tb.label}
             {tb.badge > 0 && (
               <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius:8,
-                background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
+                background: tab === tb.id ? "var(--overlay-white-25)" : "var(--bg-hover)",
                 color: tab === tb.id ? "#fff" : "var(--text-3)",
               }}>{tb.badge}</span>
             )}

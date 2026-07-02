@@ -229,7 +229,7 @@ export default function TopClubesPanel({
       <header
         style={{
           padding: "10px 14px",
-          background: "var(--bg-card-strong, var(--bg-muted))",
+          background: "var(--bg-muted)",
           borderBottom: "1px solid var(--border)",
           display: "flex",
           alignItems: "center",
@@ -294,7 +294,7 @@ export default function TopClubesPanel({
                     key={c.key}
                     style={{
                       cursor: "pointer",
-                      background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined,
+                      background: isOpen ? "var(--bg-info-subtle)" : undefined,
                     }}
                     onClick={() => toggle(c.key)}
                     title={isOpen ? "Fechar detalhes" : "Ver atletas e títulos"}
@@ -345,7 +345,7 @@ export default function TopClubesPanel({
                         colSpan={6}
                         style={{
                           padding: "10px 12px 14px 36px",
-                          background: "var(--bg-info-subtle, rgba(59,130,246,0.02))",
+                          background: "var(--bg-info-subtle)",
                         }}
                       >
                         {/* Atletas (resumo) */}

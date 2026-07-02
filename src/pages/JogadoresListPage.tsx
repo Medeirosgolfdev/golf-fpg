@@ -672,7 +672,7 @@ export default function JogadoresListPage() {
                     <td style={{ textAlign: "right" }}>
                       {r.ppReal ? (
                         <span className="p p-sm" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
-                          style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+                          style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
                           🏑 {hcpDisplay(r.ppHcp!)}
                         </span>
                       ) : <span style={{ color: "var(--text-muted)" }}>—</span>}
@@ -682,7 +682,7 @@ export default function JogadoresListPage() {
                     <td style={{ textAlign: "right", color: r.roundsTotal ? undefined : "var(--text-muted)" }}>
                       {r.roundsTotal ?? "—"}
                     </td>
-                    <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
+                    <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
                       {r.roundsYear ?? "—"}
                     </td>
                     <td className="num">{fmtSD(r.lastSD)}</td>

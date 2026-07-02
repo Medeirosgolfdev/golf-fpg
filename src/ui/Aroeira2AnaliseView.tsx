@@ -31,13 +31,13 @@ const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(
 const fmtDelta = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : (n === 0 ? "0" : (n > 0 ? "+" : "") + n.toFixed(d));
 
 const LABEL_INFO = {
-  birdie: { emoji: "🟢", text: "Oportunidade", bg: "rgba(22, 163, 74, .15)", border: "var(--color-good)" },
+  birdie: { emoji: "🟢", text: "Oportunidade", bg: "var(--color-good-alpha)", border: "var(--color-good)" },
   par:    { emoji: "🟡", text: "Par",          bg: "rgba(234, 179, 8, .12)",  border: "#eab308" },
-  bogey:  { emoji: "🔴", text: "Bogey",         bg: "rgba(220, 38, 38, .12)", border: "var(--color-danger)" },
-  danger: { emoji: "⚫", text: "Perigo",        bg: "rgba(0, 0, 0, .15)",     border: "#000" },
+  bogey:  { emoji: "🔴", text: "Bogey",         bg: "var(--color-danger-alpha)", border: "var(--color-danger)" },
+  danger: { emoji: "⚫", text: "Perigo",        bg: "var(--overlay-black-15)",     border: "var(--grey-900)" },
 } as const;
 
-const TONE_COLOR = { good: "var(--color-good)", warn: "#ea580c", danger: "var(--color-danger)", neutral: "var(--text-muted)" } as const;
+const TONE_COLOR = { good: "var(--color-good)", warn: "var(--color-orange)", danger: "var(--color-danger)", neutral: "var(--text-muted)" } as const;
 
 /* ── KPI card — aspecto consistente ─────────────────── */
 /* Adaptador fino → delega na definição única UiKpiCard (realce por tom). */
@@ -99,9 +99,9 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           </tr>
           <tr>
             <td className="lb-name fw-600" style={{ color: "var(--color-good)" }}>% Birdie+</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "var(--chart-8)" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "var(--chart-8)" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
@@ -115,17 +115,17 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           </tr>
           <tr>
             <td className="lb-name" style={{ color: "var(--color-danger)" }}>% Bogey</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "var(--color-orange)" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "var(--color-orange)" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
           <tr>
             <td className="lb-name fw-700">% Duplo+</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "#000" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "var(--grey-900)" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "#000" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "var(--grey-900)" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
@@ -137,7 +137,7 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot muted fw-600">{holes.slice(9).reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
             <td className="lb-halftot fw-700">{holes.reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
           </tr>
-          <tr style={{ background: "rgba(220, 252, 231, .65)" }}>
+          <tr style={{ background: "var(--bg-success-subtle)" }}>
             <td className="lb-name fw-700" style={{ color: "var(--color-good-dark)" }}>⭐ Manuel</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
             <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
@@ -176,7 +176,7 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
     return (
       <div style={{ flex: 1, textAlign: "center" }}>
         <svg width={SIZE} height={SIZE}>
-          <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#e5e7eb" strokeWidth={STROKE} />
+          <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--bg-muted)" strokeWidth={STROKE} />
           <text x={SIZE / 2} y={SIZE / 2 + 4} fontSize="11" fill="var(--text-muted)" textAnchor="middle">–</text>
         </svg>
         <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginTop: 2 }}>{label}</div>
@@ -187,8 +187,8 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
   const pct = (n: number) => (n / dist.n) * 100;
   const segs = [
     { v: dist.birdiePlus, color: "var(--color-good)", name: "Birdie+" },
-    { v: dist.par,        color: "#d4d4d4", name: "Par" },
-    { v: dist.bogey,      color: "#60a5fa", name: "Bogey" },
+    { v: dist.par,        color: "var(--grey-200)", name: "Par" },
+    { v: dist.bogey,      color: "var(--score-double)", name: "Bogey" },
     { v: dist.doublePlus, color: "var(--color-danger)", name: "Duplo+" },
   ];
   let acc = 0;
@@ -240,8 +240,8 @@ function HoleDial({ d }: { d: HoleDial }) {
       {/* Mini-legenda das cores */}
       <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: "var(--fs-9)" }}>
         <span style={{ color: "var(--color-good)", fontWeight: 700 }}>● Birdie+</span>
-        <span style={{ color: "#525252", fontWeight: 700 }}>● Par</span>
-        <span style={{ color: "#1d4ed8", fontWeight: 700 }}>● Bogey</span>
+        <span style={{ color: "var(--grey-500)", fontWeight: 700 }}>● Par</span>
+        <span style={{ color: "var(--score-quad)", fontWeight: 700 }}>● Bogey</span>
         <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>● Duplo+</span>
       </div>
     </div>
@@ -258,7 +258,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
     <div className="player-card-block" style={{
       border: isManuel ? "2px solid var(--color-good)" : "1px solid var(--border)",
       borderRadius: 8, marginBottom: 8,
-      background: isManuel ? "rgba(220, 252, 231, .55)" : "var(--bg-card)",
+      background: isManuel ? "var(--bg-success-subtle)" : "var(--bg-card)",
     }}>
       <button
         onClick={() => setOpen(o => !o)}
@@ -556,7 +556,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             </table>
           </div>
           <div style={{ border: "2px solid var(--color-good)", borderRadius: 8, padding: 12, background: "rgba(22, 163, 74, .04)" }}>
-            <h4 style={{ margin: "0 0 8px", color: "#15803d" }}>🟢 Mais fáceis (capitalizar)</h4>
+            <h4 style={{ margin: "0 0 8px", color: "var(--color-good-dark)" }}>🟢 Mais fáceis (capitalizar)</h4>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bird+</th><th className="lb-hole">⭐ M</th></tr>
@@ -654,7 +654,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-name fw-600">Pior – Melhor</td>
                   {manuelStats.map(s => {
                     const gap = s.scores.length ? s.worst - s.best : 0;
-                    const color = gap === 0 ? "var(--color-good)" : gap <= 1 ? "#65a30d" : gap <= 2 ? "var(--text)" : "var(--color-danger)";
+                    const color = gap === 0 ? "var(--color-good)" : gap <= 1 ? "var(--chart-8)" : gap <= 2 ? "var(--text)" : "var(--color-danger)";
                     return <td key={s.hole} className="lb-hole fw-700" style={{ color }}>{s.scores.length ? gap : "–"}</td>;
                   })}
                   <td className="lb-halftot fw-700">{manuelStats.filter(s => s.scores.length).reduce((a, s) => a + (s.worst - s.best), 0) || "–"}</td>
@@ -700,7 +700,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             {sortedFieldRanking.map((r, i) => {
               const isManuel = r.fedCode === MANUEL_FED;
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
+                <tr key={i} style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined }}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.name} /> : r.name}{isManuel && " ⭐"}</td>
                   <td className="lb-hcp">{fmtHcp(r.hcpExact)}</td>
@@ -758,9 +758,9 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             {sortedSub12Perf.map((s, i) => {
               const isManuel = s.fedCode === MANUEL_FED;
               const statusLabel = s.status === "top21+inscrito" ? "🏆 jogou + inscrito" : s.status === "top21_so" ? "🏆 só jogou" : s.status === "inscrito_com_historico" ? "📋 inscrito + histórico" : "🆕 estreante";
-              const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "#65a30d" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "#ea580c";
+              const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "var(--chart-8)" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "var(--color-orange)";
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
+                <tr key={i} style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined }}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{s.fedCode ? <PlayerLink fed={s.fedCode} name={s.name} /> : s.name}{isManuel && " ⭐"}</td>
                   <td className="lb-club muted">{s.club || "–"}</td>
@@ -821,7 +821,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                 const rParF9 = rPars.slice(0, 9).reduce((a, b) => a + b, 0);
                 const rParB9 = rPars.slice(9, 18).reduce((a, b) => a + b, 0);
                 return (
-                  <tr key={idx} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
+                  <tr key={idx} style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined }}>
                     <td className="lb-pos muted fs-11">{idx + 1}</td>
                     <td className="lb-name muted fs-11" style={{ whiteSpace: "nowrap" }}>{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.playerName} /> : r.playerName}{isManuel && " ⭐"}</td>
@@ -874,7 +874,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             {sortedEvolution.map((e, i) => {
               const isManuel = e.fedCode === MANUEL_FED;
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
+                <tr key={i} style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined }}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{e.fedCode ? <PlayerLink fed={e.fedCode} name={e.name} /> : e.name}{isManuel && " ⭐"}</td>
                   <td className="lb-hcp">{fmtHcp(e.hcpExact)}</td>

@@ -150,9 +150,9 @@ function numVal(v: number | string | null): number {
 
 function PosBadge({ pos }: { pos: number }) {
   const styles: Record<number, { bg: string; fg: string; label: string }> = {
-    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
-    2: { bg: "var(--medal-silver-bg, #f1f5f9)", fg: "var(--medal-silver-fg, #475569)", label: "🥈 2º" },
-    3: { bg: "var(--medal-bronze-bg, #fdf2e9)", fg: "var(--medal-bronze-fg, #9a3412)", label: "🥉 3º" },
+    1: { bg: "var(--medal-gold-bg)", fg: "var(--medal-gold-fg)", label: "🥇 1º" },
+    2: { bg: "var(--medal-silver-bg)", fg: "var(--medal-silver-fg)", label: "🥈 2º" },
+    3: { bg: "var(--medal-bronze-bg)", fg: "var(--medal-bronze-fg)", label: "🥉 3º" },
   };
   const s =
     styles[pos] || {
@@ -303,7 +303,7 @@ export default function AtletaSearchPanel({
       <div
         style={{
           padding: "12px 16px",
-          background: "var(--bg-card-strong, var(--bg-muted))",
+          background: "var(--bg-muted)",
           border: "1px solid var(--border)",
           borderRadius: 8,
           marginBottom: 12,
@@ -324,7 +324,7 @@ export default function AtletaSearchPanel({
             border: "1px solid var(--border)",
             borderRadius: 6,
             fontSize: "var(--fs-14)",
-            background: "var(--bg-input, var(--bg-card))",
+            background: "var(--bg-card)",
             color: "var(--text-1)",
           }}
           autoFocus
@@ -403,7 +403,7 @@ export default function AtletaSearchPanel({
           <header
             style={{
               padding: "12px 16px",
-              background: "var(--bg-card-strong, var(--bg-muted))",
+              background: "var(--bg-muted)",
               borderBottom: "1px solid var(--border)",
               display: "flex",
               alignItems: "center",

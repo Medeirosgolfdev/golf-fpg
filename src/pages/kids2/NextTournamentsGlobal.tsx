@@ -148,8 +148,8 @@ function Content() {
                       {row.reg.status === "reserva" && (
                         <span style={{
                           marginLeft: 6, fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 3,
-                          background: "var(--bg-warn-orange, #fff7ed)", color: "var(--color-orange-deep, #c2410c)",
-                          border: "1px solid var(--color-amber, #f59e0b)",
+                          background: "var(--bg-warn-orange)", color: "var(--color-orange-deep)",
+                          border: "1px solid var(--color-amber)",
                         }}>RESERVA</span>
                       )}
                     </td>

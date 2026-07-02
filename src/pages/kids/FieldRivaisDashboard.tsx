@@ -1315,8 +1315,8 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           if (!m) return null;
           return (
             <>
-              <span style={{ fontSize: "var(--fs-20, 20px)", lineHeight: 1 }}>{m.icon}</span>
-              <span style={{ fontWeight: 800, fontSize: "var(--fs-16, 16px)" }}>{m.title}</span>
+              <span style={{ fontSize: "var(--fs-20)", lineHeight: 1 }}>{m.icon}</span>
+              <span style={{ fontWeight: 800, fontSize: "var(--fs-16)" }}>{m.title}</span>
               <span className="muted fs-12">{m.desc}</span>
             </>
           );
@@ -1800,7 +1800,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               const totalKey = `${e.year}_T`;
               cells.push(
               <th key={totalKey} onClick={() => onSort(totalKey)}
-                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card, var(--bg))", color: "var(--text-2)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
+                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card)", color: "var(--text-2)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
                   T{arrow(totalKey)}
                 </th>
               );
@@ -1869,7 +1869,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                           </a>
                           {entry.officialPlace == null && (
                             <span title="Sem classificação oficial (IE / DSQ / WD)"
-                                  style={{ fontSize: "var(--fs-8)", padding: "0 4px", borderRadius: 3, background: "var(--bg-danger-subtle, #fecaca)", color: "var(--color-danger-dark, #991b1b)", fontWeight: 700, letterSpacing: 0.3 }}>
+                                  style={{ fontSize: "var(--fs-8)", padding: "0 4px", borderRadius: 3, background: "var(--bg-danger-subtle)", color: "var(--color-danger-dark)", fontWeight: 700, letterSpacing: 0.3 }}>
                               IE
                             </span>
                           )}
@@ -1880,7 +1880,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     </td>
                   );
                   cells.push(
-                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))", color: entry ? "var(--text)" : "var(--text-3)" }}>
+                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card)", color: entry ? "var(--text)" : "var(--text-3)" }}>
                       {entry ? entry.total : "—"}
                     </td>
                   );

@@ -571,10 +571,10 @@ export default function DrawTab({
       {isEstimated && (
         <div className="fs-12 fw-600" style={{
           padding: "8px 14px", margin: "6px 12px",
-          background: "var(--bg-warn-subtle, #fef3c7)",
-          border: "1px solid var(--color-warn, #f59e0b)",
+          background: "var(--bg-warn-subtle)",
+          border: "1px solid var(--color-warn)",
           borderRadius: 6,
-          color: "var(--text-1, #1f2937)", lineHeight: 1.4,
+          color: "var(--text-1)", lineHeight: 1.4,
         }}>
           ⚠️ {draw.note}
         </div>

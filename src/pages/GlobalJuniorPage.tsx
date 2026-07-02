@@ -344,8 +344,8 @@ export function GlobalJuniorPageLegacy() {
                       style={{
                         display: "block", width: "100%", textAlign: "left",
                         padding: "6px 10px", marginBottom: 2, borderRadius: 4,
-                        background: isActive ? "var(--bg-selected, #e5f0ff)" : "transparent",
-                        border: "1px solid var(--border-subtle, #e0e0e0)",
+                        background: isActive ? "var(--bg-active)" : "transparent",
+                        border: "1px solid var(--border-subtle)",
                         cursor: "pointer", fontSize: "var(--fs-12)",
                         opacity: hasData ? 1 : 0.55,
                       }}

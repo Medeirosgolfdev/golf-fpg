@@ -65,7 +65,7 @@ export function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; 
   const borderL = Math.max(28, l - 22);
   return {
     bg: `hsl(${h}deg, ${s}%, ${l}%)`,
-    fg: "#1c2617",
+    fg: "var(--text)",
     border: `hsl(${h}deg, ${sMax}%, ${borderL}%)`,
   };
 }

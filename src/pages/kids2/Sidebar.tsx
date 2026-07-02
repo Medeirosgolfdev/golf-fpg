@@ -312,7 +312,7 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
         border: 0,
         borderLeft: `3px solid ${selected ? "var(--accent)" : "transparent"}`,
         borderBottom: "1px solid var(--border-light)",
-        background: selected ? "var(--bg-active, rgba(0,0,0,0.04))" : "transparent",
+        background: selected ? "var(--bg-active)" : "transparent",
         textAlign: "left",
         cursor: "pointer",
         fontSize: "var(--fs-12)",
@@ -329,7 +329,7 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
       <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
         {club && <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>🏌️ {club}</span>}
         {shared > 0 && (
-          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>
+          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)", fontWeight: 700 }}>
             {shared}× M
           </span>
         )}

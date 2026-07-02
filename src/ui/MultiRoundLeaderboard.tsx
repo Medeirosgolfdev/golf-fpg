@@ -129,7 +129,7 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
       <div className="search-wrap">
         <span className="search-icon-abs">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
-          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
+          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
       {hasOpts && <span style={{ color:"var(--border)", fontSize: "var(--fs-11)" }}>|</span>}
       {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
@@ -140,11 +140,11 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
           </span>
         </FilterChip>
       ); })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {availSex.length === 2 && (
         <>
-          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male, #2563eb)">M</FilterChip>
-          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female, #ec4899)">F</FilterChip>
+          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male)">M</FilterChip>
+          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female)">F</FilterChip>
         </>
       )}
       {availYears.length > 1 && (
@@ -555,7 +555,7 @@ export function MultiRoundLeaderboard({
                 : undefined;
               const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky)"
                 : (isInc || isWD) ? "var(--bg-hover)"
-                : "var(--bg-card,#fff)";
+                : "var(--bg-card)";
 
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const rowCls = row.isHighlighted ? "row-manuel" : (row.isPortuguese ? "row-portuguese" : undefined);
@@ -595,7 +595,7 @@ export function MultiRoundLeaderboard({
                         if (m < 0 || (m === 0 && t.getDate() < d.getDate())) age--;
                         if (age >= 0 && age < 100) {
                           return <span className="p p-sm" title={`${dob} (${age} anos)`}
-                            style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>;
+                            style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>;
                         }
                       }
                     }
@@ -607,7 +607,7 @@ export function MultiRoundLeaderboard({
                     const age = ageAt(dob, tournamentDate);
                     return <td className="lb-esc" title={age != null ? `${age} anos à data do torneio` : undefined}>
                       {yr != null
-                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{yr}</span>
+                        ? <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>{yr}</span>
                         : <span className="muted">–</span>}
                     </td>;
                   })()}
@@ -619,7 +619,7 @@ export function MultiRoundLeaderboard({
                     const age = row.age != null ? row.age : ageAt(dob, tournamentDate);
                     return <td className="lb-esc" title={yr != null ? `Nascido em ${dob}` : undefined}>
                       {age != null
-                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
+                        ? <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
                         : <span className="muted">–</span>}
                     </td>;
                   })()}

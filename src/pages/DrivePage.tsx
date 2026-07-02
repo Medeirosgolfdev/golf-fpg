@@ -2151,7 +2151,7 @@ function DriveContent() {
                         )}
                         {aces.length > 0 && (
                           <span className="p p-sm"
-                            style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                            style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
                             title={aces.map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`).join("\n")}>
                             🕳️ {aces.length} hole-in-one
                           </span>

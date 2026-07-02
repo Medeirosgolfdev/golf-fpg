@@ -132,12 +132,16 @@
   --color-ffg-text:      #ffffff;   /* FFG text (branco sobre azul) */
   --color-rfeg-red:      #aa151b;   /* RFEG/Espanha — rojo de la bandera */
   --color-rfeg-yellow:   #f1bf00;   /* RFEG/Espanha — gualda (amarelo da bandeira) */
+  --color-portugal:      #c41e3a;   /* vermelho da bandeira PT — pills/destaques Portugal */
+  --color-portugal-light:#f5b8c0;   /* borda clara das pills Portugal */
+  --bg-portugal-pale:    #fff5f5;   /* fundo pálido das pills Portugal */
   --color-amber:        #f59e0b;
   --color-green-light:  #4ade80;
   --color-navy:         #1e3a5f;
   --color-loading:      #e67e22;  /* laranja — loading, SD fraco */
   --color-teal:         #00838f;
   --color-purple:       #9c27b0;  /* USKids — categoria especial */
+  --color-orange:       #ea580c;  /* laranja médio — barras/realces (sim, Aroeira II) */
   --color-orange-deep:  #e65100;  /* USKids — não-euro */
   --color-hcp:          #6b5c3e;  /* label da linha de hcp */
   --text-purple:        #5c4a8a;
@@ -162,6 +166,7 @@
   --overlay-white-15:  rgba(255, 255, 255, 0.15);
   --overlay-white-25:  rgba(255, 255, 255, 0.25);
   --overlay-white-30:  rgba(255, 255, 255, 0.30);
+  --overlay-black-02:  rgba(0, 0, 0, 0.02);
   --overlay-black-08:  rgba(0, 0, 0, 0.08);
   --overlay-black-15:  rgba(0, 0, 0, 0.15);
   --overlay-black-25:  rgba(0, 0, 0, 0.25);

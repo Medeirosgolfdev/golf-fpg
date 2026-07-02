@@ -122,9 +122,9 @@ function buildAthletes(tournaments: Tournament[]): AthleteSummary[] {
 
 function PosBadge({ pos }: { pos: number }) {
   const styles: Record<number, { bg: string; fg: string; label: string }> = {
-    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
-    2: { bg: "var(--medal-silver-bg, #f1f5f9)", fg: "var(--medal-silver-fg, #475569)", label: "🥈 2º" },
-    3: { bg: "var(--medal-bronze-bg, #fdf2e9)", fg: "var(--medal-bronze-fg, #9a3412)", label: "🥉 3º" },
+    1: { bg: "var(--medal-gold-bg)", fg: "var(--medal-gold-fg)", label: "🥇 1º" },
+    2: { bg: "var(--medal-silver-bg)", fg: "var(--medal-silver-fg)", label: "🥈 2º" },
+    3: { bg: "var(--medal-bronze-bg)", fg: "var(--medal-bronze-fg)", label: "🥉 3º" },
   };
   const s = styles[pos] || { bg: "var(--bg-muted)", fg: "var(--text-2)", label: pos + "º" };
   return (
@@ -192,7 +192,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   return (
     <section style={{ margin: "16px 12px 28px", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
       <header style={{
-        padding: "10px 14px", background: "var(--bg-card-strong, var(--bg-muted))",
+        padding: "10px 14px", background: "var(--bg-muted)",
         borderBottom: "1px solid var(--border)",
         display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
       }}>
@@ -223,7 +223,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
               return (
                 <>
                   <tr key={key}
-                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined }}
+                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-info-subtle)" : undefined }}
                     onClick={() => toggle(key)}
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
                     <td style={{ verticalAlign: "middle" }}>
@@ -262,7 +262,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                   </tr>
                   {isOpen && (
                     <tr key={key + "-details"}>
-                      <td colSpan={8} style={{ padding: "0 12px 14px 36px", background: "var(--bg-info-subtle, rgba(59,130,246,0.02))" }}>
+                      <td colSpan={8} style={{ padding: "0 12px 14px 36px", background: "var(--bg-info-subtle)" }}>
                         <table className="dtable-sm" style={{ marginTop: 4 }}>
                           <thead>
                             <tr>

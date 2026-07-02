@@ -18,6 +18,7 @@ import { MONTHS_PT } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
+import { C } from "../utils/colors";
 
 export interface EvoPlayer {
   fed: string;
@@ -29,8 +30,8 @@ export interface EvoPlayer {
 
 /** Paleta de séries — cores distintas e legíveis (até 8 destaques em simultâneo). */
 const PALETTE = [
-  "#2563eb", "#dc2626", "#16a34a", "#d97706",
-  "#9333ea", "#0891b2", "#db2777", "#65a30d",
+  C.chartBlue, C.chartRed, C.chartGreen, C.chartAmber,
+  C.chartPurple, C.chartCyan, C.chartRose, C.chartLime,
 ];
 
 const PERIODS: { v: number; label: string }[] = [

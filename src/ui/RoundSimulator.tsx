@@ -1007,7 +1007,7 @@ export function RoundSimulator({
   function roundBorderColor(result?: RoundResult): string {
     if (!result?.valid) return "var(--border)";
     if (result.exceptionalAdj !== 0)
-      return "var(--color-warn, #e07b00)";
+      return "var(--color-warn)";
     if (result.delta < -0.05) return "var(--color-good)";
     if (result.delta > 0.05) return "var(--color-danger)";
     return "var(--border)";
@@ -1242,7 +1242,7 @@ export function RoundSimulator({
                           background:
                             result.exceptionalAdj === -2
                               ? "var(--color-danger)"
-                              : "var(--color-warn, #e07b00)",
+                              : "var(--color-warn)",
                         }}
                       >
                         ⚡{" "}
@@ -1522,7 +1522,7 @@ export function RoundSimulator({
                     {is9 && !has9Hsupport && round.courseKey && (
                       <span
                         className="fs-11"
-                        style={{ color: "var(--color-warn, #e07b00)" }}
+                        style={{ color: "var(--color-warn)" }}
                         title="Este campo não tem ratings oficiais de 9 buracos registados"
                       >
                         ⚠ Este campo não tem CR/Slope 9H. Escolhe outro campo ou modo 18.
@@ -1531,7 +1531,7 @@ export function RoundSimulator({
                     {is9 && has9Hsupport && validTees.length === 0 && (
                       <span
                         className="fs-11"
-                        style={{ color: "var(--color-warn, #e07b00)" }}
+                        style={{ color: "var(--color-warn)" }}
                       >
                         ⚠ Sem tees com CR/Slope para {holesLabel(round.holesMode)} neste campo.
                       </span>
@@ -1574,12 +1574,12 @@ export function RoundSimulator({
                     fontSize: "var(--fs-11)",
                     lineHeight: 1.6,
                     background:
-                      "var(--bg-warn, rgba(224,123,0,0.08))",
-                    border: `1px solid ${result.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)"}`,
+                      "var(--bg-warn)",
+                    border: `1px solid ${result.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn)"}`,
                     color:
                       result.exceptionalAdj === -2
                         ? "var(--color-danger)"
-                        : "var(--color-warn, #e07b00)",
+                        : "var(--color-warn)",
                   }}
                 >
                   ⚡ <b>Exceptional Score:</b> SD{" "}
@@ -1946,7 +1946,7 @@ export function RoundSimulator({
                             <span
                               style={{
                                 fontSize: "var(--fs-9)",
-                                color: "var(--color-warn, #e07b00)",
+                                color: "var(--color-warn)",
                                 fontWeight: 700,
                                 whiteSpace: "nowrap",
                               }}

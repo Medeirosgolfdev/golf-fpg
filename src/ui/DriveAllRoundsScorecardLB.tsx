@@ -111,7 +111,7 @@ function DriveAllRoundsScorecardLB({
           ? playerBg
           : playerBg
             ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)"
-            : "var(--bg-muted-alt,rgba(0,0,0,.02))";
+            : "var(--overlay-black-02)";
         const bTop = isFirstRd && !isFirst ? "2px solid var(--border)" : undefined;
         const posStr = !isFirstRd ? "" : row.isWD ? "WD" : row.pos != null ? medal(row.pos) ?? String(row.pos) : "–";
 

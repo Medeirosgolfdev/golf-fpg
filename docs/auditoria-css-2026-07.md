@@ -1,5 +1,24 @@
 # Auditoria de incongruências CSS — 2026-07-02
 
+> **ESTADO (2026-07-02, mesmo dia): correcções aplicadas** — ver commit "fix(css): ...".
+> - ✅ §1 corrigido na íntegra (tokens inexistentes sem fallback). Grande parte resolveu-se
+>   por remoção de CSS morto: as secções `.njov-*`/`.hoc-*` (NacionaisJovensPage removida)
+>   e `.compare-page`/`.selector-*`/`.scorecard-table*`/`.sim-NN`/`.comparison-legend`
+>   (nenhuma usada em TSX) foram apagadas do App.css (−560 linhas; só `.tab-bar` sobreviveu).
+> - ✅ §2 corrigido (tokens fantasma → tokens reais; +6 tokens novos em tokens.css:
+>   `--color-portugal`, `--color-portugal-light`, `--bg-portugal-pale`, `--color-orange`,
+>   `--overlay-black-02`; `C.orange` e `C.yearPalette` em colors.ts).
+> - ✅ §3 corrigido via codemod (258 fallbacks mortos removidos em 45 ficheiros).
+> - ✅ §4 resolvido (a 2ª `.legend-item` fazia parte do bloco morto removido).
+> - ✅ §5 parcial: Aroeira2AnaliseView, HcpEvolution (→ C.charts), PillBadge YEAR_PALETTE
+>   (→ C.yearPalette), ScoutView, RankingPage, RivalDetail, USKIDSPage, CourseHeroCard,
+>   ComparePage. Bloco `.sim-*` do App.css era morto → removido.
+> - ✅ §6 toggles de scorecard convertidos para `<span>`.
+> - ⏳ Por fazer (decisões de design, não bugs): padrão transversal `#fff` literal,
+>   `sourceColors` das páginas de circuito, extracção de classes partilhadas (§7),
+>   limpeza de tokens mortos (§8), documentação da excepção PDF do RoundSimulator.
+> - Validado: `npm test` (217 passed) + `npm run build` (limpo).
+
 Varrimento completo de `src/pages/**`, `src/ui/**`, `src/App.css` e `src/tokens.css`
 contra as regras do projecto (CLAUDE.md): cores só via tokens, `SexBadge` em vez de ♂/♀,
 `.tab-under` para tabs, toggles de scorecard em `<span>`, `PillBadge` sem inline styles.

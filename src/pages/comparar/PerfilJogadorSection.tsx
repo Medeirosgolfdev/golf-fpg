@@ -155,7 +155,7 @@ function RondaTipica({ rows }: { rows: Row[] }) {
   const bestTotal = totals.length >= 2 ? Math.min(...totals) : null;
 
   return (
-    <div className="card p-12" style={{ background: "var(--bg-1)" }}>
+    <div className="card p-12">
       <div className="h-md">🎯 Numa ronda típica (par 72)</div>
       <div className="muted fs-11 mb-10">
         Projecção de pancadas ganhas/perdidas em 4 Par 3 + 10 Par 4 + 4 Par 5. Lê assim: "Em cada ronda, este jogador perde em média X pancadas nos Par 3, Y nos Par 4, Z nos Par 5."
@@ -571,7 +571,7 @@ export default function PerfilJogadorSection({ slots, allAgg, statsDb, period }:
         <RondaTipica rows={rows} />
 
         {/* 2. Comparações visuais (barras) */}
-        <div className="card p-12" style={{ background: "var(--bg-1)" }}>
+        <div className="card p-12">
           <div className="h-md">📊 Comparação a par a par</div>
           <VisualComparisons rows={rows} />
         </div>

@@ -667,7 +667,7 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
   const rowBg = idx % 2 === 0 ? undefined : "var(--bg-muted)";
   const subBg = rowBg
     ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)"
-    : "var(--bg-muted-alt,rgba(0,0,0,.02))";
+    : "var(--overlay-black-02)";
   const displayPos = player.officialPlace ?? null;
   const posStr = displayPos != null ? String(displayPos) : String(idx + 1);
 

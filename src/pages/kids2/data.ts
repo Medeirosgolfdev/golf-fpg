@@ -395,9 +395,9 @@ const TIER_LABELS: Record<TierKey, string> = {
 //   ao Manuel (badge "Tu", "REF", "Cruzou com Manuel", bg da row vs Manuel).
 //   Para tier badges de outros juniors usar paleta diferenciada.
 const TIER_COLORS: Record<TierKey, { bg: string; fg: string }> = {
-  elite:      { bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))" },
+  elite:      { bg: "var(--bg-warn-subtle)", fg: "var(--color-warn-dark)" },
   strong:     { bg: "var(--medal-bronze-bg)",         fg: "var(--medal-bronze-fg)" },
-  solid:      { bg: "var(--bg-info-subtle, #eff6ff)", fg: "var(--color-info-dark, #1e3a8a)" },
+  solid:      { bg: "var(--bg-info-subtle)", fg: "var(--color-info-dark)" },
   developing: { bg: "var(--bg-muted)",                fg: "var(--text-2)" },
   beginner:   { bg: "var(--bg)",                      fg: "var(--text-3)" },
 };

@@ -417,7 +417,7 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
         return (
           <span title={tooltip} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
             <span>{ev.otherValue}</span>
-            {nEditions > 1 && <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
+            {nEditions > 1 && <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, background: "var(--bg-muted)", color: "var(--text-2)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
           </span>
         );
       },

@@ -81,10 +81,10 @@ function shortReg(name: string): string {
   return n.length > 24 ? n.slice(0, 23) + "…" : n;
 }
 const CIRCUIT_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
-  US: { bg: "var(--bg-info-subtle, var(--bg-info))", fg: "var(--color-info-dark, var(--color-navy))", label: "USKids" },
-  PT: { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", label: "FPG (Portugal)" },
-  ES: { bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", label: "RFEG (Espanha)" },
-  FR: { bg: "var(--bg-pink, var(--bg-pink))", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
+  US: { bg: "var(--bg-info-subtle)", fg: "var(--color-info-dark)", label: "USKids" },
+  PT: { bg: "var(--bg-success-subtle)", fg: "var(--color-good-dark)", label: "FPG (Portugal)" },
+  ES: { bg: "var(--bg-warn-subtle)", fg: "var(--color-warn-dark)", label: "RFEG (Espanha)" },
+  FR: { bg: "var(--bg-pink)", fg: "var(--color-purple)", label: "FFG (França)" },
 };
 
 // ── Séries USKids: tcode → edições [mais recente primeiro] ───────────
@@ -493,9 +493,9 @@ function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string 
   let diffLabel = "Campo Local";
   let diffColor = "var(--text-3)";
   if (counts.elite / total >= 0.10 && knownPct >= 40) {
-    diffLabel = "Campo de Elite"; diffColor = "#dc2626";
+    diffLabel = "Campo de Elite"; diffColor = "var(--color-danger)";
   } else if (eliteStrongPct >= 20 && knownPct >= 35) {
-    diffLabel = "Campo Muito Competitivo"; diffColor = "#f59e0b";
+    diffLabel = "Campo Muito Competitivo"; diffColor = "var(--color-amber)";
   } else if (eliteStrongPct >= 10 && knownPct >= 25) {
     diffLabel = "Campo Competitivo"; diffColor = "var(--color-info)";
   } else if (knownPct >= 25) {
@@ -505,7 +505,7 @@ function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string 
   const TIERS = ["elite", "strong", "solid", "developing", "beginner"] as const;
 
   return (
-    <div style={{ flex: 1, minWidth: 220, padding: "10px 12px", background: "var(--bg-card, var(--bg-muted))",
+    <div style={{ flex: 1, minWidth: 220, padding: "10px 12px", background: "var(--bg-card)",
                   borderRadius: 8, border: "1px solid var(--border-light)" }}>
       {label && <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>{label}</div>}
       <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
@@ -527,7 +527,7 @@ function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string 
             );
           })}
           {counts.unknown > 0 && (
-            <div title={`Sem perfil: ${counts.unknown}`} style={{ background: "#e2e8f0", flex: counts.unknown, minWidth: 2 }} />
+            <div title={`Sem perfil: ${counts.unknown}`} style={{ background: "var(--grey-200)", flex: counts.unknown, minWidth: 2 }} />
           )}
         </div>
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>
@@ -963,7 +963,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
           {tDate && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {fmtDate(tDate)}</span>}
           {tournament.course && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {tournament.course}</span>}
           {isFuture
-            ? <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))" }}>FUTURO</Pill>
+            ? <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-info-subtle)", color: "var(--color-info-dark)" }}>FUTURO</Pill>
             : <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-muted)", color: "var(--text-2)" }}>HISTORICO</Pill>
           }
           {isFieldOnlySource && (
@@ -1006,8 +1006,8 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
       {kpis.manuelInField && manuel && manuelStats && (
         <div style={{
           marginTop: 14, marginBottom: 14, padding: "10px 14px",
-          background: "var(--bg-success-subtle, #ecfdf5)",
-          border: "1px solid var(--border-success, #97c459)",
+          background: "var(--bg-success-subtle)",
+          border: "1px solid var(--border-success)",
           borderRadius: 8, display: "flex", alignItems: "center", gap: 16,
         }}>
           <span style={{ fontSize: "var(--fs-18)", flexShrink: 0 }}>{ICON_SWORDS}</span>
@@ -1031,7 +1031,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
       )}
 
       {isFieldOnlySource && kpis.fieldOnlyCount > 0 && (
-        <div style={{ background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))",
+        <div style={{ background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)",
                       padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: "var(--fs-12)" }}>
           {kpis.fieldOnlyCount} inscritos sem perfil canonico no nosso sistema (apenas nome + pais).
           Os scores historicos, tier, wins e diff vs Manuel nao estao disponiveis para estes.
@@ -1083,10 +1083,10 @@ function KpiBox({ label, value, sub, emphasis }: {
   emphasis?: "good" | "warn";
 }) {
   const color = emphasis === "good" ? "var(--color-good-dark)"
-    : emphasis === "warn" ? "var(--color-warn-dark, var(--color-warn-dark))"
+    : emphasis === "warn" ? "var(--color-warn-dark)"
     : undefined;
   const border = emphasis === "good" ? "var(--color-good)"
-    : emphasis === "warn" ? "var(--color-amber, var(--color-amber))"
+    : emphasis === "warn" ? "var(--color-amber)"
     : undefined;
   return <UiKpiCard label={label} value={value} sub={sub} color={color} accentBorder={border} />;
 }
@@ -1105,7 +1105,7 @@ function FlightHeader({ flight, isManuelFlight, count }: {
         <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {flight.fieldSize} total</span>
       )}
       {isManuelFlight && (
-        <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)" }}>
+        <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-success-subtle)", color: "var(--color-good-dark)" }}>
           {ICON_SWORDS} Manuel
         </Pill>
       )}
@@ -1176,14 +1176,14 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 3, marginTop: 4 }}>
                       {row.sharedTournNames.map((s, i) => (
                         <span key={i} style={{ fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3,
-                                               background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, var(--color-navy))",
+                                               background: "var(--bg-info-subtle)", color: "var(--color-info-dark)",
                                                fontWeight: 700, border: "1px solid var(--color-info)", whiteSpace: "nowrap" }}>
                           {ICON_SWORDS} {s.name}
                           {(s.posRival != null || s.posManuel != null) && (() => {
                             const pr = s.posRival; const pm = s.posManuel;
                             const mColor = pm != null && pr != null
-                              ? pm < pr ? "var(--color-good-dark, #15803d)"
-                              : pm > pr ? "var(--color-danger-dark, #b91c1c)"
+                              ? pm < pr ? "var(--color-good-dark)"
+                              : pm > pr ? "var(--color-danger-dark)"
                               : undefined
                               : undefined;
                             return (
@@ -1274,7 +1274,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                             title={`${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`}
                             style={{
                               fontSize: "var(--fs-9)", fontWeight: 600, padding: "1px 6px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap",
-                              background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", border: "1px solid var(--border-info, var(--border-info))",
+                              background: "var(--bg-info-subtle)", color: "var(--color-info-dark)", border: "1px solid var(--border-info)",
                             }}>
                             {r.circuit === "fpg" ? "🇵🇹 " : ""}{shortReg(r.name)} · {fmtRegDate(r.date)}
                           </a>
@@ -1322,7 +1322,7 @@ function FormDots({ positions }: { positions: Array<number | null> }) {
           : p <= 3
             ? "var(--medal-gold-strong)"
             : p <= 10
-              ? "var(--color-amber, var(--color-amber))"
+              ? "var(--color-amber)"
               : "var(--text-3)";
         return (
           <span key={i}

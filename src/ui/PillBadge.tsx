@@ -325,20 +325,10 @@ export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: str
  * 2013 (11 anos diferentes), onde 2 cores deixam tudo à frente dos
  * olhos a parecer igual.
  *
- * Cores escolhidas para NÃO colidirem com o resto da UI do projecto:
- *   - verde está reservado ao Manuel
- *   - todo o espectro roxo/violeta está reservado aos escalões (Sub-10..Sub-24)
- *
- * Todas pastel com foreground escuro (contraste AA para fs-10/11).
+ * Cores em C.yearPalette (colors.ts) — pastel, sem verde (Manuel) nem
+ * roxo/violeta (escalões).
  * ────────────────────────────────────────────────────────────────── */
-const YEAR_PALETTE: { bg: string; fg: string }[] = [
-  { bg: "#dbeafe", fg: "#1e40af" },   // azul
-  { bg: "#fef3c7", fg: "#78350f" },   // âmbar
-  { bg: "#fce7f3", fg: "#9d174d" },   // rosa
-  { bg: "#fed7aa", fg: "#7c2d12" },   // pêssego
-  { bg: "#cffafe", fg: "#155e75" },   // ciano
-  { bg: "#fecdd3", fg: "#881337" },   // vermelho-rosa
-];
+const YEAR_PALETTE: readonly { bg: string; fg: string }[] = C.yearPalette;
 
 export function YearPill({ year }: { year: number | string | null | undefined }) {
   if (year == null || year === "") return <span className="muted">–</span>;

@@ -669,7 +669,7 @@ function CourseSideBySide({
           const ph = PAR_HSL[par];
           const l = Math.round(84 - t * 42);
           const bg = `hsl(${ph.h}deg, ${ph.s}%, ${l}%)`;
-          const fg = l < 62 ? "#fff" : "#111";
+          const fg = l < 62 ? "#fff" : "var(--grey-900)";
           return { background: bg, color: fg };
         };
         return (

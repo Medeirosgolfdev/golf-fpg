@@ -329,7 +329,7 @@ export default function RivaisDashboard({
                   }
                 });
                 return (
-                  <tr style={{ background: "var(--surface-2, var(--bg-secondary, #f7f6f1))" }}>
+                  <tr style={{ background: "var(--bg)" }}>
                     <th colSpan={2} style={{ borderBottom: "1px solid var(--border)" }} />
                     {groups.map((g, gi) => (
                       <th

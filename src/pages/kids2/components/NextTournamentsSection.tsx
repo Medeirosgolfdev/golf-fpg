@@ -75,8 +75,8 @@ export default function NextTournamentsSection({ data, junior }: Props) {
             {r.status === "reserva" && (
               <span style={{
                 fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 6px", borderRadius: 3,
-                background: "var(--bg-warn-orange, #fff7ed)", color: "var(--color-orange-deep, #c2410c)",
-                border: "1px solid var(--color-amber, #f59e0b)", flexShrink: 0,
+                background: "var(--bg-warn-orange)", color: "var(--color-orange-deep)",
+                border: "1px solid var(--color-amber)", flexShrink: 0,
               }}>RESERVA</span>
             )}
             <span style={{ color: "var(--text-3)", fontSize: "var(--fs-13)", fontWeight: 600, flexShrink: 0 }}>↗</span>

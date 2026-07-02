@@ -271,7 +271,7 @@ function PainelResumo({ torneios, nossosByFed }: {
 
       {/* Jogadores do clube seleccionado */}
       {selData && clubeSel && (
-        <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg-page)",
+        <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg)",
           border: "1px solid var(--border)", borderRadius: 6 }}>
           <div className="fs-11 fw-700" style={{ marginBottom: 5, color: "var(--text-1)" }}>
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}

@@ -184,7 +184,7 @@ function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean
       {has.sex && <td>{v.sex === "M" || v.sex === "F" ? <SexBadge sex={v.sex} /> : MUTED}</td>}
       {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.tot ? undefined : "var(--text-muted)" }}>{v.tot || "—"}</td>}
-      {has.tot && <td style={{ textAlign: "right", color: v.ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: v.ano ? 600 : undefined }}>{v.ano || "—"}</td>}
+      {has.tot && <td style={{ textAlign: "right", color: v.ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: v.ano ? 600 : undefined }}>{v.ano || "—"}</td>}
       {has.hcpDate && <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>{v.hcpDate ? isoToBr(v.hcpDate) : MUTED}</td>}
     </>
   );

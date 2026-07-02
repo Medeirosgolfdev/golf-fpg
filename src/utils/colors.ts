@@ -44,6 +44,7 @@ export const C = {
   sidebarAquapor:   "#185FA5",   // azul AQUAPOR
   sidebarDefault:   "#888780",   // cinza neutro
   purple:       "#9c27b0",  // USKids — categoria especial
+  orange:       "#ea580c",  // laranja médio — barras/realces (= --color-orange)
   orangeDeep:   "#e65100",  // USKids — não-euro
 
   // Neutral/muted (scoreDisplay.ts sc3m, scDark)
@@ -115,6 +116,18 @@ export const C = {
   chartLime:    "#65a30d",
   chartRust:    "#c2410c",
   chartIndigo:  "#6366f1",
+
+  // ── Year pills (YearPill em PillBadge.tsx) ──────────────────────────────────
+  // Paleta cíclica de 6 cores (`year % 6`), pastel + foreground escuro (AA).
+  // Sem verde (reservado ao Manuel) nem roxo/violeta (reservado aos escalões).
+  yearPalette: [
+    { bg: "#dbeafe", fg: "#1e40af" },   // azul (= bg-info-strong / color-info)
+    { bg: "#fef3c7", fg: "#78350f" },   // âmbar (= bg-warn-strong / medal-gold-fg)
+    { bg: "#fce7f3", fg: "#9d174d" },   // rosa
+    { bg: "#fed7aa", fg: "#7c2d12" },   // pêssego
+    { bg: "#cffafe", fg: "#155e75" },   // ciano
+    { bg: "#fecdd3", fg: "#881337" },   // vermelho-rosa
+  ],
 
   // ── Performance tiers ───────────────────────────────────────────────────────
   tiers: {

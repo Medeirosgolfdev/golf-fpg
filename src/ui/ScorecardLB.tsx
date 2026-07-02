@@ -378,9 +378,9 @@ export function ScorecardLB({
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
               style={{
                 fontSize: "var(--fs-9)", lineHeight: 1.4, padding: "1px 6px",
-                borderRadius: 8, background: "var(--bg-warn-subtle, #fef3c7)",
-                color: "var(--color-warn-dark, var(--color-warn-dark))",
-                border: "1px solid var(--color-warn, #f59e0b)",
+                borderRadius: 8, background: "var(--bg-warn-subtle)",
+                color: "var(--color-warn-dark)",
+                border: "1px solid var(--color-warn)",
                 cursor: "help", fontWeight: 700, whiteSpace: "nowrap",
               }}>⚠ Abs</span>
           </span>
@@ -395,7 +395,7 @@ export function ScorecardLB({
                 const age = (p as any)._age as (number | null | undefined);
                 if (age == null || age < 0) return <span className="muted">–</span>;
                 return (
-                  <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
+                  <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
                 );
               })()}
             </td>
@@ -421,7 +421,7 @@ export function ScorecardLB({
                 if (age != null && age >= 0 && age < 100) {
                   return (
                     <span className="p p-sm" title={dob ? `${dob} (${age} anos no torneio)` : ""}
-                      style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>
+                      style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>
                       {age}a
                     </span>
                   );

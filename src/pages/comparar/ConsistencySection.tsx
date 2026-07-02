@@ -10,7 +10,7 @@ import { COLORS, COLORS_LIGHT, periodLabel } from "./types";
 
 const C_EAGLE  = "var(--score-eagle)";  // âmbar
 const C_BIRDIE = SC.good;               // verde
-const C_PAR    = "var(--border-medium)";
+const C_PAR    = "var(--border)";
 const C_BOGEY  = "var(--color-info)";
 const C_DBL    = SC.danger;             // vermelho/laranja forte para double+
 const C_TRIP   = "var(--color-danger)"; // triple+ (se existir)
@@ -247,7 +247,7 @@ function ScoringDonutsPane({ loaded }: { loaded: { s: Slot; agg: AggStats | null
           return (
             <div key={i} style={{
               border: `2px solid ${COLORS[i]}`, borderRadius: "var(--radius)",
-              padding: 12, background: "var(--bg-1)",
+              padding: 12, background: "var(--bg-card)",
             }}>
               <div className="d-flex items-center gap-8 mb-8">
                 <span className="round" style={{ width: 12, height: 12, background: COLORS[i] }} />
@@ -409,7 +409,7 @@ function NinesPane({ loaded }: { loaded: { s: Slot; agg: AggStats | null; i: num
           const bestTp = tpVals.length >= 2 ? Math.min(...tpVals) : null;
 
           return (
-            <div key={nine} className="card p-10" style={{ background:"var(--bg-1)" }}>
+            <div key={nine} className="card p-10">
               <div className="h-md">{nine === "F9" ? "🌅 Front 9 (buracos 1–9)" : "🌇 Back 9 (buracos 10–18)"}</div>
               {visible.map(({ s, agg, i }) => {
                 const v = get(agg!);

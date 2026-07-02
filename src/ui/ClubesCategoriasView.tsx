@@ -217,7 +217,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
         {cards.map(({ g, cats }) => {
           return (
             <div key={g.grupo} style={{
-              background: "var(--bg-card,#fff)", border: "1px solid var(--border)",
+              background: "var(--bg-card)", border: "1px solid var(--border)",
               borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
             }}>
               {/* Header do clube — SEM total combinado (cada escalão é um
@@ -239,7 +239,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                 return (
                   <div key={cfg.key} style={{ marginTop: idx === 0 ? 0 : 10 }}>
                     <div style={{
-                      background: isChamp ? "var(--accent-light, #eef6ef)" : "var(--bg-hover)",
+                      background: isChamp ? "var(--accent-light)" : "var(--bg-hover)",
                       padding: "4px 10px",
                       fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
                       display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -291,7 +291,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                         ))}
                       </tbody>
                       <tfoot>
-                        <tr style={{ background: "var(--accent-light, #eef6ef)" }}>
+                        <tr style={{ background: "var(--accent-light)" }}>
                           <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 700, fontSize: "var(--fs-10)", textTransform: "uppercase", color: "var(--text-2)" }}>
                             {cfg.label} ({rosterMode ? rows.length : cfg.bestN})
                           </td>

@@ -128,6 +128,6 @@ export const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "va
 export const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
 export const BIRDIE_COLOR = SC.good;
-export const PAR_COLOR    = "var(--border-medium)";
+export const PAR_COLOR    = "var(--border)";
 export const BOGEY_COLOR  = "var(--color-info)";
 export const DBL_COLOR    = "var(--color-info)";

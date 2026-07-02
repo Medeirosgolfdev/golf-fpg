@@ -1715,7 +1715,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
                   className="p"
                   onClick={() => setPpView(true)}
                   title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-                  style={{ cursor: "pointer", background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}
+                  style={{ cursor: "pointer", background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}
                 >🏑 P&amp;P {pp.hcp}</span>
               )}
               <SexBadge sex={selected.sex} size="md" />
@@ -1734,7 +1734,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
               {aces.length > 0 && (
                 <span
                   className="p"
-                  style={{ background: "var(--score-eagle, var(--color-amber))", color: "#fff", border: "1px solid var(--score-eagle, var(--color-amber))" }}
+                  style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}
@@ -3495,7 +3495,7 @@ type PlayerSidebarPlayer = {
 
 /** Sep — pequena linha separadora entre blocos do cartão */
 const PlayerSidebarSep = () => (
-  <div style={{ height: "0.5px", background: "var(--border-light, rgba(0,0,0,.08))", margin: "4px 0" }} />
+  <div style={{ height: "0.5px", background: "var(--border-light)", margin: "4px 0" }} />
 );
 
 /** Estatísticas de HCP de um escalão. HCP menor = melhor, logo p25 é o valor
@@ -3661,7 +3661,7 @@ function PlayerSidebarItem({
     escKey === "sub24" ? "var(--esc-sub24-bg)" :
     null;
   const accent =
-    isNacional ? "var(--color-good-dark, var(--color-good-dark))" :
+    isNacional ? "var(--color-good-dark)" :
     isPja      ? SIDEBAR_ACCENT.pja :
     isOrphan   ? "var(--color-warn)" :
     escBg      ??
@@ -3715,7 +3715,7 @@ function PlayerSidebarItem({
         <HcpPill hcp={displayHcp} escHcps={escHcps} />
         {ppHcp != null && (
           <span className="p p-sm" title={`Handicap Pitch & Putt: ${ppHcp}`}
-            style={{ background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}>
+            style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
             🏑 {ppHcp}
           </span>
         )}
@@ -3731,7 +3731,7 @@ function PlayerSidebarItem({
           {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
               Usado para ordenação por defeito. */}
           {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
-            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark, var(--color-good-dark))", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
           )}
           {/* Total — também do data.json. */}
           {(roundsTotal != null && roundsTotal > 0) && (
@@ -4434,7 +4434,7 @@ export default function JogadoresPage() {
               title={onlyPP
                 ? `A mostrar só jogadores com HCP de Pitch & Putt — clicar para limpar`
                 : `Mostrar só os ${ppCount} jogadores com HCP de Pitch & Putt`}
-              style={onlyPP ? { background: "var(--badge-pp, var(--badge-pp))", color: "#fff", borderColor: "var(--badge-pp, var(--badge-pp))" } : undefined}
+              style={onlyPP ? { background: "var(--badge-pp)", color: "#fff", borderColor: "var(--badge-pp)" } : undefined}
             >
               <span className="p-icon-big" aria-hidden="true">🏑</span>
               <span className="p-filter-count">{ppCount}</span>
@@ -4571,7 +4571,7 @@ export default function JogadoresPage() {
             target="_blank"
             rel="noopener noreferrer"
             title="Análise de percurso de juniores"
-            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+            style={{ color: "var(--text-muted)", textDecoration: "none" }}
           >
             ↗ percurso
           </a>
@@ -4581,7 +4581,7 @@ export default function JogadoresPage() {
             target="_blank"
             rel="noopener noreferrer"
             title="Jogadores por ano"
-            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+            style={{ color: "var(--text-muted)", textDecoration: "none" }}
           >
             ↗ por ano
           </a>
@@ -4609,7 +4609,7 @@ export default function JogadoresPage() {
               }
             }
             return (
-              <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle, rgba(59,130,246,0.05))", padding: "6px 8px" }}>
+              <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)", padding: "6px 8px" }}>
                 <div className="muted fs-10" style={{ marginBottom: 4 }}>
                   🧒 {filtered.length.toLocaleString("pt-PT")} jogadores jovens — todos visíveis
                 </div>
@@ -4618,7 +4618,7 @@ export default function JogadoresPage() {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg, white)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
+                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
                         <div className="fw-700">{esc}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                           <b>{s.total}</b>

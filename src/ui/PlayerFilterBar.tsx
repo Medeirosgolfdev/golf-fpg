@@ -155,12 +155,12 @@ export function PlayerFilterBar({
           <FilterChip
             active={filter.sex === "M"}
             onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })}
-            color="var(--badge-male, #2563eb)"
+            color="var(--badge-male)"
           >M</FilterChip>
           <FilterChip
             active={filter.sex === "F"}
             onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })}
-            color="var(--badge-female, #ec4899)"
+            color="var(--badge-female)"
           >F</FilterChip>
         </>
       )}

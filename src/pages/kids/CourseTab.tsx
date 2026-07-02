@@ -350,8 +350,8 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
       {result.note && (
         <div className="muted fs-11 mb-8" style={{
           padding: "6px 10px",
-          background: "var(--bg-warn-alpha, var(--bg-muted))",
-          border: "1px solid var(--color-warn-alpha, var(--border))",
+          background: "var(--color-warn-alpha)",
+          border: "1px solid var(--color-warn-alpha)",
           borderRadius: 6,
         }}>
           {"⚠"} {result.note}

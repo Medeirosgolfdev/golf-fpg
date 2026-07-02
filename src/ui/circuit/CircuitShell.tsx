@@ -859,7 +859,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                         {headerStats.aces.length > 0 && (
                           <span
                             className="p p-sm"
-                            style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                            style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
                             title={headerStats.aces
                               .map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`)
                               .join("\n")}
@@ -1060,7 +1060,7 @@ function CircuitSidebar({
                       </div>
                     )}
 
-                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+                    <div style={{ height: ".5px", background: "var(--border-light)", margin: "4px 0" }} />
 
                     {/* Linha 3: pills */}
                     <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
@@ -1074,7 +1074,7 @@ function CircuitSidebar({
                       {nR > 1 && <RoundPill nR={nR} />}
                     </div>
 
-                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+                    <div style={{ height: ".5px", background: "var(--border-light)", margin: "4px 0" }} />
 
                     {/* Linha 4: data · fonte (ficheiro) · nº jog */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>

@@ -329,10 +329,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       {(tournament as any)._note && (
         <div className="fs-12 fw-600" style={{
           padding: "10px 14px", margin: "8px 12px",
-          background: "var(--bg-warn-subtle, #fef3c7)",
-          border: "1px solid var(--color-warn, #f59e0b)",
+          background: "var(--bg-warn-subtle)",
+          border: "1px solid var(--color-warn)",
           borderRadius: 6,
-          color: "var(--text-1, #1f2937)", lineHeight: 1.45,
+          color: "var(--text-1)", lineHeight: 1.45,
         }}>
           ⚠️ {(tournament as any)._note}
         </div>

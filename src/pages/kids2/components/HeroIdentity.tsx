@@ -400,7 +400,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
     <>
       <div style={{
         fontSize: "var(--fs-11)",
-        color: empty ? "var(--text-3)" : "var(--accent, var(--color-info-dark))",
+        color: empty ? "var(--text-3)" : "var(--accent)",
         fontWeight: 800,
         letterSpacing: 0.6,
         textTransform: "uppercase",
@@ -423,7 +423,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
       }}>
         <span>{value || "sem registo"}</span>
         {isClickable && (
-          <span style={{ fontSize: "var(--fs-10)", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
+          <span style={{ fontSize: "var(--fs-10)", color: "var(--color-info-dark)", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
         )}
       </div>
       {subtitle && (
@@ -451,8 +451,8 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
         rel="noreferrer"
         style={cardStyle}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark, var(--color-navy))";
-          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark, var(--color-navy))";
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark)";
         }}
         onMouseLeave={(e) => {
           (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
@@ -472,7 +472,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   if (accent && strong) {
     return (
       <span style={{
-        background: "var(--color-info-dark, var(--color-navy))",
+        background: "var(--color-info-dark)",
         color: "var(--bg)",
         fontSize: "var(--fs-12)", padding: "3px 11px", borderRadius: "var(--radius-pill)",
         fontWeight: 700,
@@ -482,11 +482,11 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   }
   return (
     <span style={{
-      background: "var(--bg-info-subtle, var(--bg-info))",
-      color: "var(--color-info-dark, var(--color-navy))",
+      background: "var(--bg-info-subtle)",
+      color: "var(--color-info-dark)",
       fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
       fontWeight: 600,
-      border: "1px solid var(--color-info-dark, var(--color-navy))",
+      border: "1px solid var(--color-info-dark)",
     }}>{label}</span>
   );
 }
@@ -498,7 +498,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
   // Para o Manuel: verde (consistente com identidade dele).
   // Para outros: neutro bege/cinzento.
   const known = isManuel ? {
-    background: "var(--bg-success-subtle, #ecfdf5)",
+    background: "var(--bg-success-subtle)",
     color: "var(--color-good-dark)",
     border: "1px solid var(--color-good-dark)",
   } : {
@@ -507,7 +507,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
     border: "1px solid var(--border)",
   };
   const range = isManuel ? {
-    background: "var(--bg-success-subtle, #ecfdf5)",
+    background: "var(--bg-success-subtle)",
     color: "var(--color-good-dark)",
     border: "1px dashed var(--color-good-dark)",
   } : {
@@ -551,11 +551,11 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
 function RankPill({ label, value }: { label: string; value: number | string }) {
   return (
     <span style={{
-      background: "var(--bg-warn-subtle, var(--bg-warn))",
-      color: "var(--color-warn-dark, var(--color-warn-dark))",
+      background: "var(--bg-warn-subtle)",
+      color: "var(--color-warn-dark)",
       fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 6,
       fontWeight: 700,
-      border: "1px solid var(--color-warn-dark, var(--color-warn-dark))",
+      border: "1px solid var(--color-warn-dark)",
     }}>
       🏆 {label} #{value}
     </span>
