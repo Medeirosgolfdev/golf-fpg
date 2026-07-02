@@ -32,7 +32,8 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "global-junior", label: "🏌️ GJGL",  path: "/global-junior" },
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
   { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
-  { tab: "scotland",   label: "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland", path: "/scotland"   },
+  // Scotland (JTS) fica FORA da NavBar de propósito — o site só publica PDFs,
+  // sem dados úteis. A rota /scotland continua acessível por URL directa.
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
   { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },

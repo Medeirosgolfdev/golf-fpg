@@ -80,12 +80,12 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/ffg` | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses) |
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
-| `/scotland` (+ `/:id`) | ScotlandPage | scotland-jts-{year}-{events\|results\|oom}.json (Junior Tour Scotland; site só publica PDFs → `customResults`) |
+| `/scotland` (+ `/:id`) | ScotlandPage | scotland-jts-{year}-{events\|results\|oom}.json (Junior Tour Scotland; **escondida — sem item na NavBar**, só URL directa) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 
 > **Páginas legadas mantidas como rotas alternativas** (`/bjgt-legacy`, `/kids-legacy`, `/doral-legacy`): versões antigas das páginas-mãe acima, preservadas durante a migração para o `CircuitShell`.
 >
-> **`ScotlandPage.tsx` (Junior Tour Scotland) ligada às rotas em 2026-07-01** — rota `/scotland` (+ `/:id`) e tab 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland na NavBar (entre England e España). Scraper `scrape-junior-tour-scotland.js`, dados `scotland-jts-*.json`.
+> **`ScotlandPage.tsx` (Junior Tour Scotland) — rota `/scotland` (+ `/:id`) existe mas SEM item na NavBar (decisão 2026-07-02)** — o site JTS só publica PDFs, sem dados úteis, por isso a página não deve estar visível na navegação; fica acessível apenas por URL directa (padrão `/jogadores-por-ano`). Scraper `scrape-junior-tour-scotland.js`, dados `scotland-jts-*.json`. Se os dados melhorarem, repor o item comentado na `NavBar.tsx`.
 >
 > **`NacionaisJovensPage.tsx` removida em 2026-07-01** (era código morto: lazy-importada em `App.tsx` sem `<Route>`) — a funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. `/nacionais-jovens` redirecciona agora para `/titulos/nacional`. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido).
 
