@@ -129,7 +129,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
         style={{
           background: "var(--bg)",
           border: "1px solid var(--border)",
-          borderRadius: 10,
+          borderRadius: "var(--radius-lg)",
           padding: 18,
           maxWidth: 900,
           width: "100%",
@@ -139,7 +139,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
       >
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14, gap: 12 }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: 17, color: "var(--text)", fontWeight: 700 }}>{playerName}</h3>
+            <h3 style={{ margin: 0, fontSize: "var(--fs-16)", color: "var(--text)", fontWeight: 700 }}>{playerName}</h3>
             <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginTop: 3 }}>
               {tournament.name || tournament.shortName} · {flight.label}
               {roundRows.length > 1 ? ` · ${roundRows.length} rondas` : ` · Ronda ${round}`}
@@ -151,7 +151,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
             style={{
               fontSize: "var(--fs-18)", fontWeight: 700,
               padding: "4px 12px",
-              borderRadius: 6,
+              borderRadius: "var(--radius)",
               border: "1px solid var(--border)",
               background: "var(--bg-muted)",
               color: "var(--text-2)",
@@ -162,7 +162,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
         </div>
 
         {totalGross > 0 && totalPar > 0 && totalToPar !== null && (
-          <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginBottom: 12, padding: "8px 12px", background: "var(--bg-muted)", borderRadius: 6 }}>
+          <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginBottom: 12, padding: "8px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
             <div>
               <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase" }}>Gross total</span>
               <span style={{ fontSize: "var(--fs-24)", fontWeight: 800, marginLeft: 8, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>

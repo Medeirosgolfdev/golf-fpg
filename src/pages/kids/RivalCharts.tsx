@@ -151,7 +151,7 @@ export function TorneiosRecorrentes({
                         </span>
                       )}
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0,
-                        padding: "3px 5px", borderRadius: 4, background: bg, border: `1px solid ${bd}`, flexShrink: 0 }}>
+                        padding: "3px 5px", borderRadius: "var(--radius-sm)", background: bg, border: `1px solid ${bd}`, flexShrink: 0 }}>
                         <span style={{ fontSize: "var(--fs-9)", color: "var(--text-3)", fontWeight: 500 }}>{e.year}</span>
                         <span style={{ fontSize: mdl ? 14 : 11, fontWeight: 900, lineHeight: 1,
                           color: e.pos === 1 ? "var(--color-warn-dark)" : e.pos != null && e.pos <= 3 ? "var(--medal-silver)" : "var(--text-3)" }}>

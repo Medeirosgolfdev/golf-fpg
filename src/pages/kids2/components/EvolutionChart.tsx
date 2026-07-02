@@ -166,7 +166,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
     return (
       <section style={{ marginBottom: 14 }}>
         <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "10px 12px", background: "var(--bg-muted)", borderRadius: 6 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "10px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
           Insuficiência de dados para representar evolução ({visiblePoints.length} {visiblePoints.length === 1 ? "ponto" : "pontos"}{hidden9HCount > 0 ? ` · ${hidden9HCount} de 9H escondidos` : ""}).
         </div>
       </section>
@@ -218,7 +218,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
       </div>
 
-      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px 6px", minWidth: 0 }}>
+      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "var(--radius-md)", padding: "10px 6px 6px", minWidth: 0 }}>
         {/* Evita o erro "width(-1) height(-1)" do Recharts: o ResponsiveContainer
             recebe height numérica fixa (não "100%") + minWidth/minHeight para que
             tenha sempre dimensões válidas mesmo antes do pai ter layout calculado
@@ -347,7 +347,7 @@ function CustomTooltip({ active, payload, yMode }: any) {
   };
   const metricLabel = yMode === "toPar" ? "±par" : yMode === "toParNorm" ? "±par/18H" : "Posição";
   return (
-    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, padding: "6px 10px", fontSize: "var(--fs-11)", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
+    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "6px 10px", fontSize: "var(--fs-11)", boxShadow: "var(--shadow)" }}>
       <div style={{ fontWeight: 700, color: "var(--text)" }}>{p.tName}</div>
       <div style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>
         {p.flight} · {fmtDate(p.date)}{p.nholes === 9 ? " · 9H" : ""}

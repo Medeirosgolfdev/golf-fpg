@@ -374,10 +374,10 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                       <span style={{ fontSize: "var(--fs-11)", width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
                         {firstName(x.s.player.name)}
                       </span>
-                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: 4, height: 18, overflow: "hidden" }}>
+                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: "var(--radius-sm)", height: 18, overflow: "hidden" }}>
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
-                          borderRadius: 4, opacity: 0.75,
+                          borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
                       <span style={{ fontSize: "var(--fs-11)", fontFamily: "var(--font-mono)", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
@@ -558,7 +558,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
-      <div style={{ display: "flex", height: 32, borderRadius: 8, overflow: "hidden", marginBottom: 12, border: "1px solid var(--border-light)" }}>
+      <div style={{ display: "flex", height: 32, borderRadius: "var(--radius-md)", overflow: "hidden", marginBottom: 12, border: "1px solid var(--border-light)" }}>
         {loaded.map((s, i) => {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
@@ -656,7 +656,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg-subtle)", borderRadius: 8, border: "1px solid var(--border-light)" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg-subtle)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-light)" }}>
         {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border)" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text></g>); })}
         {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
       </svg>
@@ -716,7 +716,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
               <span key={label} style={{
-                padding: "4px 12px", borderRadius: 12, background: "var(--bg-subtle)",
+                padding: "4px 12px", borderRadius: "var(--radius-xl)", background: "var(--bg-subtle)",
                 fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)",
               }}>{label}</span>
             ))}

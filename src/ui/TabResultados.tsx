@@ -517,7 +517,7 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
               return (
                 <span key={i} className="fs-13 fw-700" style={{
                   background:"var(--accent)", color:"#fff",
-                  padding:"5px 14px", borderRadius:8,
+                  padding:"5px 14px", borderRadius: "var(--radius-md)",
                   display:"inline-flex", alignItems:"center", gap:6,
                 }}>
                   <span style={{ opacity:.8 }}>★</span>

@@ -230,7 +230,7 @@ export default function HcpEvolution({ players, history }: {
             <button key={r.p.fed} onClick={() => toggleFocus(r.p.fed)}
               title={`${r.m.start.toFixed(1)} → ${r.m.end.toFixed(1)} (Δ ${r.m.delta > 0 ? "+" : ""}${r.m.delta.toFixed(1)})`}
               style={{
-                padding: "3px 8px", fontSize: "var(--fs-11)", borderRadius: 4, cursor: "pointer",
+                padding: "3px 8px", fontSize: "var(--fs-11)", borderRadius: "var(--radius-sm)", cursor: "pointer",
                 background: isOn ? color + "22" : "var(--bg-muted)",
                 border: `1px solid ${isOn ? color : "var(--border)"}`,
                 color: isOn ? "var(--text-1)" : "var(--text-3)",
@@ -269,7 +269,7 @@ export default function HcpEvolution({ players, history }: {
                   className={on ? "cross-current" : ""}>
                   <td className="r" style={{ color: "var(--text-3)" }}>{i + 1}</td>
                   <td style={{ fontWeight: on ? 700 : 500, whiteSpace: "nowrap" }}>
-                    {on && <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, background: colorFor(r.p.fed), marginRight: 6 }} />}
+                    {on && <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "var(--radius-xs)", background: colorFor(r.p.fed), marginRight: 6 }} />}
                     {r.p.name}
                   </td>
                   <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : <span className="muted">—</span>}</td>

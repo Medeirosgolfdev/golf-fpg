@@ -203,7 +203,7 @@ export default function ClubesGruposView({
     const active = sortCol === col;
     return (
       <button onClick={() => toggleSortCol(col)} style={{
-        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
+        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: "var(--radius-sm)",
         border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
         background: active ? "var(--accent)" : "var(--bg-hover)",
         color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
@@ -246,10 +246,10 @@ export default function ClubesGruposView({
             return (
               <span key={clube} style={{
                 fontSize: "var(--fs-10)", display: "inline-flex", alignItems: "center", gap: 5,
-                border: `1px solid ${color}`, borderRadius: 4, padding: "2px 8px",
+                border: `1px solid ${color}`, borderRadius: "var(--radius-sm)", padding: "2px 8px",
                 background: `${color}12`,
               }}>
-                <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: 2, background: color, display: "inline-block" }} />
+                <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: "var(--radius-xs)", background: color, display: "inline-block" }} />
                 <strong style={{ color }}>{teams}</strong>
                 <span style={{ color: "var(--text-muted)" }}>— {clube}</span>
               </span>
@@ -271,13 +271,13 @@ export default function ClubesGruposView({
             <div key={g.grupo} style={{
               background: "var(--bg-card)",
               border: `1px solid ${isMulti ? color + "80" : "var(--border)"}`,
-              borderRadius: 8, overflow: "hidden",
-              boxShadow: "0 1px 3px rgba(0,0,0,.06)",
+              borderRadius: "var(--radius-md)", overflow: "hidden",
+              boxShadow: "var(--shadow-sm)",
             }}>
               {/* Header do card */}
               <div style={{ background: color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
                 {/* Letra do grupo em caixa */}
-                <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-20)", lineHeight: 1 }}>
+                <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-20)", lineHeight: 1 }}>
                   {g.grupo}
                 </div>
 

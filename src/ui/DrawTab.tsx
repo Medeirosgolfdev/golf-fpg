@@ -573,7 +573,7 @@ export default function DrawTab({
           padding: "8px 14px", margin: "6px 12px",
           background: "var(--bg-warn-subtle)",
           border: "1px solid var(--color-warn)",
-          borderRadius: 6,
+          borderRadius: "var(--radius)",
           color: "var(--text-1)", lineHeight: 1.4,
         }}>
           ⚠️ {draw.note}

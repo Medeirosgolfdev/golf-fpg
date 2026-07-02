@@ -90,7 +90,7 @@ function Card({ label, value, subtitle, accent }: {
   return (
     <div style={{
       background: "var(--bg-muted)",
-      borderRadius: 6,
+      borderRadius: "var(--radius)",
       padding: "10px 12px",
     }}>
       <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", fontWeight: 600 }}>{label}</div>

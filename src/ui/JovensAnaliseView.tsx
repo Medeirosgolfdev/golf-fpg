@@ -65,7 +65,7 @@ function YearInEscBadge({ year, escalao }: { year: 1 | 2 | null; escalao?: strin
       className="fs-10 fw-700" style={{
         marginRight: 4,
         padding: "1px 5px",
-        borderRadius: 6,
+        borderRadius: "var(--radius)",
         background: useEscColor ? `var(--esc-${escKey}-bg)` : (is1 ? "var(--bg-info-subtle)" : "var(--bg-success-subtle)"),
         color: useEscColor ? `var(--esc-${escKey}-fg)` : (is1 ? "var(--accent)" : "var(--color-good-dark)"),
         border: `1px solid ${useEscColor ? "transparent" : (is1 ? "var(--accent)" : "var(--color-good)")}`,
@@ -112,7 +112,7 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
         {elevated && (
           <span title={`Foi ${p.pos}º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
             className="fs-10 muted fw-600"
-            style={{ padding: "0 4px", borderRadius: 4, background: "var(--bg-muted)" }}>
+            style={{ padding: "0 4px", borderRadius: "var(--radius-sm)", background: "var(--bg-muted)" }}>
             {p.pos}º
           </span>
         )}
@@ -363,7 +363,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
           padding: "10px 12px 16px",
           background: "var(--bg-card)",
           border: "1px solid var(--border-light)",
-          borderRadius: 8,
+          borderRadius: "var(--radius-md)",
         }}
       >
         <h4
@@ -572,7 +572,7 @@ function RegionChampionsBlock({
           className="fs-13 fw-600"
           style={{
             marginTop: 12, marginBottom: open ? 6 : 0,
-            padding: "5px 10px", borderRadius: 6,
+            padding: "5px 10px", borderRadius: "var(--radius)",
             background: "var(--bg-muted)",
             border: "1px solid var(--border-light)",
             display: "inline-flex", alignItems: "center", gap: 8,
@@ -752,7 +752,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
       {limit < filteredByMode.length && (
         <button className="fs-11" onClick={() => setLimit(limit + 20)}
           style={{
-            marginTop: 8, padding: "4px 10px", borderRadius: 4,
+            marginTop: 8, padding: "4px 10px", borderRadius: "var(--radius-sm)",
             border: "1px solid var(--border)", background: "var(--bg-muted)",
             cursor: "pointer",
           }}>
@@ -840,7 +840,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
           return (
             <div key={y} style={{
               border: "1px solid " + (played ? "var(--border)" : "var(--border-light)"),
-              borderRadius: 4,
+              borderRadius: "var(--radius-sm)",
               padding: "3px 6px",
               background: titles.length > 0
                 ? "var(--medal-gold-bg)"  // amber/dourado para anos com título (🏆)
@@ -929,7 +929,7 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
         📈 Evolução de jogadores (top {withDob.length})
       </h3>
       <div style={{
-        border: "1px solid var(--border)", borderRadius: 6,
+        border: "1px solid var(--border)", borderRadius: "var(--radius)",
         background: "var(--bg-card)",
       }}>
         {withDob.map((p, i) => (
@@ -939,7 +939,7 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
       {limit < filteredByMode.filter(p => p.dob).length && (
         <button className="fs-11" onClick={() => setLimit(limit + 8)}
           style={{
-            marginTop: 8, padding: "4px 10px", borderRadius: 4,
+            marginTop: 8, padding: "4px 10px", borderRadius: "var(--radius-sm)",
             border: "1px solid var(--border)", background: "var(--bg-muted)",
             cursor: "pointer",
           }}>

@@ -1983,14 +1983,14 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
               <button
                 key={bin}
                 onClick={() => onHcpBinDrill(isActive ? null : bin)}
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: 4, padding: 2, cursor: "pointer", minWidth: 0 }}
+                style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: "var(--radius-sm)", padding: 2, cursor: "pointer", minWidth: 0 }}
                 title={`Clica para ver top 15 (HCP ${label})`}
               >
                 <div className="fw-700 fs-12" style={{ marginBottom: 4 }}>
                   {total.toLocaleString("pt-PT")}
                 </div>
                 <div className="muted fs-10" style={{ marginBottom: 4 }}>{((total / stats.withHcp) * 100).toFixed(1)}%</div>
-                <div style={{ width: "85%", minWidth: 20, display: "flex", flexDirection: "column", borderRadius: "4px 4px 0 0", overflow: "hidden", boxShadow: "0 1px 2px rgba(0,0,0,0.08)" }}>
+                <div style={{ width: "85%", minWidth: 20, display: "flex", flexDirection: "column", borderRadius: "4px 4px 0 0", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
                   {f > 0 && <div title={`${f} Feminino`} style={{ height: fHeight, background: COL_F, minHeight: f > 0 ? 2 : 0 }} />}
                   {m > 0 && <div title={`${m} Masculino`} style={{ height: mHeight, background: COL_M, minHeight: m > 0 ? 2 : 0 }} />}
                 </div>
@@ -2121,7 +2121,7 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
                   </span>
                   <span className="fw-700" style={{ minWidth: 40, textAlign: "right" }}>{c.count.toLocaleString("pt-PT")}</span>
                 </div>
-                <div style={{ height: 6, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden", marginTop: 2 }}>
+                <div style={{ height: 6, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden", marginTop: 2 }}>
                   <div style={{ width: pct(c.count, maxCountry), height: "100%", display: "flex" }}>
                     <div style={{ width: `${mPct}%`, background: COL_M }} />
                     <div style={{ width: `${100 - mPct}%`, background: COL_F }} />
@@ -2629,7 +2629,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
         {f.photo && (
           <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
             alt={f.name}
-            style={{ width: 200, maxHeight: 260, borderRadius: 6, objectFit: "cover", flexShrink: 0 }}
+            style={{ width: 200, maxHeight: 260, borderRadius: "var(--radius)", objectFit: "cover", flexShrink: 0 }}
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
         )}
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -3391,7 +3391,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                     <span className="fw-500">{k}</span>
                     <span className="fw-700">{total}</span>
                   </div>
-                  <div style={{ height: 6, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{ height: 6, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
                     <div style={{ width: pct(total, maxEsc), height: "100%", display: "flex" }}>
                       <div style={{ width: `${mPct}%`, background: COL_M }} />
                       <div style={{ width: `${100 - mPct}%`, background: COL_F }} />
@@ -3412,7 +3412,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                   <span className="fw-500">{c.name} <span className="muted fs-10">({code})</span></span>
                   <span className="fw-700">{c.count}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
                   <div style={{ width: pct(c.count, maxClub), height: "100%", background: "var(--color-good)" }} />
                 </div>
               </div>
@@ -3429,7 +3429,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                   <span className="fw-500">{r}</span>
                   <span className="fw-700">{n}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
                   <div style={{ width: pct(n, maxRegion), height: "100%", background: "var(--chart-2)" }} />
                 </div>
               </div>
@@ -4618,7 +4618,7 @@ export default function JogadoresPage() {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
+                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg)", borderRadius: "var(--radius-sm)", fontSize: "var(--fs-11)" }}>
                         <div className="fw-700">{esc}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                           <b>{s.total}</b>

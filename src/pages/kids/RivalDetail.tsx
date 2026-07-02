@@ -799,7 +799,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                   return (
                     <div key={t.id} title={`${t.name} ${yearOf(t.dateExact, t.date)}`}
                       style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 7px",
-                        borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
+                        borderRadius: "var(--radius)", background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
                       <span className="fs-13">{mdl2}</span>
                       <div style={{ lineHeight: 1.2 }}>
                         <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
@@ -813,7 +813,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                 })}
                 {palmares.length > 5 && (
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 3, padding: "3px 8px",
-                    borderRadius: 6, background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
+                    borderRadius: "var(--radius)", background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
                     <span style={{ fontSize: "var(--fs-11)", fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
                     <span className="fs-11">🏆</span>
                   </div>
@@ -833,7 +833,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                   { n: h2hData.draws,  bg: "var(--bg-muted)",          co: "var(--text-2)",          l: "E" },
                   { n: h2hData.losses, bg: "var(--bg-danger-strong)",  co: "var(--color-danger-vivid)", l: "D" },
                 ] as const).map(({ n, bg, co, l }) => (
-                  <div key={l} className="ta-c" style={{ minWidth: 46, padding: "10px 6px", background: bg, borderRadius: 10 }}>
+                  <div key={l} className="ta-c" style={{ minWidth: 46, padding: "10px 6px", background: bg, borderRadius: "var(--radius-lg)" }}>
                     <div className="fw-900" style={{ fontSize: "var(--fs-28)", color: co, lineHeight: 1 }}>{n}</div>
                     <div className="fs-11 fw-700" style={{ color: co, marginTop: 2, opacity: .75 }}>{l}</div>
                   </div>
@@ -889,7 +889,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               const agNum = parseInt((ag?.match(/\d+/)??[])[0]??"0");
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
-                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
+                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold)", borderRadius: "var(--radius-md)", padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
                   <span className="shrink-0" style={{ fontSize: "var(--fs-32)", lineHeight: 1 }}>🥇</span>
                   <div>
                     <div className="fs-13 fw-600">{t.name}</div>
@@ -933,7 +933,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               Distribuição de scoring · {tot} buracos
             </div>
             {/* Barra — par é branco/transparente */}
-            <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", gap: 1, marginBottom: 6, background: "var(--bg)" }}>
+            <div style={{ display: "flex", height: 16, borderRadius: "var(--radius-sm)", overflow: "hidden", gap: 1, marginBottom: 6, background: "var(--bg)" }}>
               {segs.map(s => (
                 <div key={s.key} className={s.key==="par"?"":""+s.cls}
                   style={{ flex: s.n, minWidth: 2, background: s.key==="par"?"#fff":undefined }}
@@ -1039,7 +1039,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         <RoundPill nR={rds.length} />
                         {/* Debug pill (?debug=1): mostra tid do torneio para diagnóstico */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "var(--font-mono)", padding: "1px 5px", borderRadius: 4, background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "var(--font-mono)", padding: "1px 5px", borderRadius: "var(--radius-sm)", background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}
@@ -1049,7 +1049,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                           const linkStyle: React.CSSProperties = {
                             display:"inline-flex", alignItems:"center", gap:2, fontSize: "var(--fs-10)",
                             fontWeight:600, textDecoration:"none", padding:"1px 5px",
-                            borderRadius:4, lineHeight:1.2, flexShrink:0,
+                            borderRadius: "var(--radius-sm)", lineHeight:1.2, flexShrink:0,
                           };
                           return (
                             <>
@@ -1121,7 +1121,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         })()}
                         {manuelEsteve && !isManuel && (
                           <span style={{ background:"var(--bg-success-subtle)", color:"var(--color-good-dark)", border:"1px solid var(--border-success)",
-                            fontSize: "var(--fs-9)", padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
+                            fontSize: "var(--fs-9)", padding:"1px 5px", borderRadius: "var(--radius-sm)", fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
                         )}
                       </div>
                       <div style={{ fontSize: "var(--fs-11)", color:"var(--text-2)", marginTop:1 }}>

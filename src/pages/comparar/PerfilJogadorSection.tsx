@@ -116,7 +116,7 @@ function ComparativeBar({ rows, getValue, dir, format, scaleMin, scaleMax }: {
             <span className="fs-11 fw-700" style={{ minWidth: 72, color: COLORS[r.i] }}>
               {firstName(r.s.player.name)}
             </span>
-            <div style={{ flex: 1, position: "relative", height: 18, background: "var(--border-light)", borderRadius: 4, overflow: "hidden" }}>
+            <div style={{ flex: 1, position: "relative", height: 18, background: "var(--border-light)", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
               <div style={{
                 width: `${Math.max(2, Math.min(100, pct))}%`,
                 height: "100%",
@@ -511,7 +511,7 @@ function ReadingCard({ row, reading }: { row: Row; reading: Reading }) {
         <Bulleted title="🧭 Contexto" color="var(--color-info)" items={reading.context} />
         {reading.conclusion && (
           <div style={{
-            marginTop: 10, padding: 8, borderRadius: 6,
+            marginTop: 10, padding: 8, borderRadius: "var(--radius)",
             background: COLORS_LIGHT[row.i], color: "var(--text-2)",
             fontSize: "var(--fs-12)", lineHeight: 1.5,
           }}

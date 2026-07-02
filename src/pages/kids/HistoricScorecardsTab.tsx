@@ -342,7 +342,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
             style={{
               display: "flex", gap: 2,
               border: "1px solid var(--border)",
-              borderRadius: 8, overflow: "hidden",
+              borderRadius: "var(--radius-md)", overflow: "hidden",
             }}
           >
             {([5, 10, 20, 0] as const).map(n => (
@@ -370,7 +370,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           style={{
             display: "flex", gap: 2, marginLeft: 4,
             border: "1px solid var(--border)",
-            borderRadius: 8, overflow: "hidden",
+            borderRadius: "var(--radius-md)", overflow: "hidden",
           }}
         >
           {([true, false] as const).map(g => (

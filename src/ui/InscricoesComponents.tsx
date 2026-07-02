@@ -258,7 +258,7 @@ function PainelResumo({ torneios, nossosByFed }: {
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
               className="fs-11 fw-600"
               style={{
-                cursor: "pointer", padding: "1px 8px", borderRadius: 10,
+                cursor: "pointer", padding: "1px 8px", borderRadius: "var(--radius-lg)",
                 border: "1px solid var(--border)",
                 background: clubeSel === c ? "var(--accent)" : "var(--bg-muted)",
                 color: clubeSel === c ? "#fff" : "var(--text-1)",
@@ -272,7 +272,7 @@ function PainelResumo({ torneios, nossosByFed }: {
       {/* Jogadores do clube seleccionado */}
       {selData && clubeSel && (
         <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg)",
-          border: "1px solid var(--border)", borderRadius: 6 }}>
+          border: "1px solid var(--border)", borderRadius: "var(--radius)" }}>
           <div className="fs-11 fw-700" style={{ marginBottom: 5, color: "var(--text-1)" }}>
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
           </div>
@@ -280,7 +280,7 @@ function PainelResumo({ torneios, nossosByFed }: {
             {selData.jogadores.map((jj, i) => (
               <span key={i} className="fs-11" style={{
                 display: "inline-flex", alignItems: "center", gap: 4,
-                padding: "2px 8px", borderRadius: 10,
+                padding: "2px 8px", borderRadius: "var(--radius-lg)",
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
@@ -343,14 +343,14 @@ function TorneioCard({ t, active, onClick }: {
         <span className="fs-11 fw-700" style={{
           background: active ? "rgba(255,255,255,0.25)" : "var(--bg-card)",
           border: "1px solid var(--border)",
-          borderRadius: 10, padding: "0px 5px",
+          borderRadius: "var(--radius-lg)", padding: "0px 5px",
           color: active ? "inherit" : "var(--text-1)",
           marginLeft: 2,
         }}>{t.totalInscritos}</span>
       )}
       {estrangeirosTotal > 0 && (
         <span className="fs-10 fw-700" style={{
-          marginLeft: 3, padding: "0 4px", borderRadius: 8,
+          marginLeft: 3, padding: "0 4px", borderRadius: "var(--radius-md)",
           background: active ? "rgba(255,255,255,0.18)" : "var(--bg-card)",
           border: "1px solid var(--border)",
           display: "inline-flex", alignItems: "center", gap: 2,
@@ -423,7 +423,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
         <span className="muted fs-12" >{nossosCount} da BD · {t.totalInscritos} total</span>
         <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
           {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
-            <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10 }}
+            <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: "var(--radius-lg)" }}
               title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
               {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
               {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
@@ -433,7 +433,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           {t.lastFetched && (
             <span className="fs-10 fw-700"
               style={{
-                padding: "2px 7px", borderRadius: 10,
+                padding: "2px 7px", borderRadius: "var(--radius-lg)",
                 background: t.fromCache ? "var(--bg-muted)" : "var(--bg-success-subtle)",
                 color:      t.fromCache ? "var(--text-muted)" : "var(--color-good-dark)",
                 border:     t.fromCache ? "1px solid var(--border)" : "1px solid var(--color-good)",
@@ -444,14 +444,14 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               {t.fromCache ? "💾 cache" : "🟢 live FPG"} · {fmtTime(t.lastFetched)}
             </span>
           )}
-          {t.fetchError && <span className="fs-10 fw-700" style={{ color: "#fff", background: "var(--color-warn)", padding: "2px 7px", borderRadius: 10 }} title={t.fetchError}>⚠️ API falhou — só cache</span>}
+          {t.fetchError && <span className="fs-10 fw-700" style={{ color: "#fff", background: "var(--color-warn)", padding: "2px 7px", borderRadius: "var(--radius-lg)" }} title={t.fetchError}>⚠️ API falhou — só cache</span>}
           {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>scoring.fpg.pt ↗</a>}
         </div>
       </div>
       {/* ── Alerta inscrições/desinscrições últimas 48h ── */}
       {(recentes48h.length > 0 || removidos48h.length > 0) && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px",
-          background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
+          background: "var(--bg-muted)", borderRadius: "var(--radius)", margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
           {recentes48h.length > 0 && (
             <span style={{ color: "var(--color-good)" }}>
               <span className="fw-700">+{recentes48h.length} inscrito{recentes48h.length > 1 ? "s" : ""} (48h):</span>{" "}
@@ -524,7 +524,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                     <span className="muted">{fmtDataInscricao(j.dataInscricao)}</span>
                     {recent && <span className="p p-sm fs-10 fw-700" style={{
                       background: "var(--score-eagle)", color: "#fff",
-                      marginLeft: 4, padding: "1px 5px", borderRadius: 8,
+                      marginLeft: 4, padding: "1px 5px", borderRadius: "var(--radius-md)",
                     }} title="Inscrito nas últimas 48h">NOVO</span>}
                   </td>
                   <td>
@@ -716,7 +716,7 @@ export function InscricoesPanel() {
              className="fs-11 fw-700"
              style={{ color: "var(--color-good-dark)",
                background: "var(--bg-success-subtle)", border: "1px solid var(--color-good)",
-               borderRadius: 6, padding: "2px 8px", textDecoration: "none", whiteSpace: "nowrap" as const }}>
+               borderRadius: "var(--radius)", padding: "2px 8px", textDecoration: "none", whiteSpace: "nowrap" as const }}>
             🏆 página oficial FPG ↗
           </a>
         </div>

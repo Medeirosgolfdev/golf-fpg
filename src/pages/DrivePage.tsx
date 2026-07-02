@@ -399,7 +399,7 @@ function DrivePointsTable() {
 function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup; fedBirthdates?: Map<string, string> }) {
   const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup, fedBirthdates } = props;
   const [showScorecard, setShowScorecard] = React.useState(true);
-  const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd"|"name"|"club"|"gross"|"toPar"|"bird"|"parstat"|"bog">("pos");
 
   const players = tournament.players.filter((p) => !isDNS(p) && ((p.scores && p.scores.length > 0) || (p.roundScores?.[0]?.scores?.length ?? 0) > 0));
   if (!players.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
@@ -475,6 +475,32 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       if (av !== bv) return mult * (av - bv);
       return (a._dp ?? INF) - (b._dp ?? INF);
     }
+    if (sortKey === "name") {
+      const cmp = (a.name || "").localeCompare(b.name || "");
+      if (cmp !== 0) return mult * cmp;
+      return (a._dp ?? INF) - (b._dp ?? INF);
+    }
+    if (sortKey === "club") {
+      const cmp = (a.club || "").localeCompare(b.club || "");
+      if (cmp !== 0) return mult * cmp;
+      return (a._dp ?? INF) - (b._dp ?? INF);
+    }
+    if (sortKey === "gross" || sortKey === "toPar") {
+      const ag = typeof a.grossTotal === "string" ? parseInt(a.grossTotal) : (a.grossTotal as number ?? INF);
+      const bg = typeof b.grossTotal === "string" ? parseInt(b.grossTotal) : (b.grossTotal as number ?? INF);
+      const av = isNaN(ag) ? INF : ag; const bv = isNaN(bg) ? INF : bg;
+      if (av !== bv) return mult * (av - bv);
+      return (a._dp ?? INF) - (b._dp ?? INF);
+    }
+    if (sortKey === "bird" || sortKey === "parstat" || sortKey === "bog") {
+      const statOf = (p: Player) => {
+        const st = computeStats(p, sdLookup);
+        return sortKey === "bird" ? st?.birdies : sortKey === "parstat" ? st?.pars : st?.bogeys;
+      };
+      const av = statOf(a) ?? INF; const bv = statOf(b) ?? INF;
+      if (av !== bv) return mult * (av - bv);
+      return (a._dp ?? INF) - (b._dp ?? INF);
+    }
     return 0;
   });
 
@@ -532,17 +558,21 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       </>}
       prefixHeaderCells={<>
         <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>
-        <th className="lb-club">CLUBE</th>
+        <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">CLUBE</SortableHdr>
         <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
         <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>
       </>}
       postScorecardHeaderCells={<>
         <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
-        <th className="lb-bird">🐦</th>
-        <th className="lb-par-stat">Par</th>
-        <th className="lb-bog">■</th>
+        <SortableHdr k="bird" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-bird">🐦</SortableHdr>
+        <SortableHdr k="parstat" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-par-stat">Par</SortableHdr>
+        <SortableHdr k="bog" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-bog">■</SortableHdr>
       </>}
-      activeSortKey={sortKey === "pos" ? "pos" : ""}
+      onSortPos={() => handleSort("pos")}
+      onSortName={() => handleSort("name")}
+      onSortToPar={() => handleSort("toPar")}
+      onSortGross={() => handleSort("gross")}
+      activeSortKey={sortKey}
       activeSortDir={sortDir}
     />
   );
@@ -1114,7 +1144,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
-            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
+            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: 11 }}
               formatter={(((value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }) as any)} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span className="fs-10">{p?.name||value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />

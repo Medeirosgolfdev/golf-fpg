@@ -36,7 +36,7 @@ interface Props {
   hidePostCols?: boolean;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status" | "tee";
 
 function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
   if (!escalao) return undefined;
@@ -123,6 +123,7 @@ export default function AdmissionsTab({
         case "vac":     v = (a.vac ?? INF) - (b.vac ?? INF); break;
         case "registo": v = (a.dataInscricao || "").localeCompare(b.dataInscricao || ""); break;
         case "status":  v = a.status.localeCompare(b.status); break;
+        case "tee":     v = (a.teeName || "").localeCompare(b.teeName || "", "pt"); break;
       }
       return mult * v;
     });
@@ -184,7 +185,7 @@ export default function AdmissionsTab({
             </td>
             <td style={{ padding: "6px 8px", textAlign: "center" }}>
               {isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>pendente</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
@@ -212,7 +213,7 @@ export default function AdmissionsTab({
       <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
       <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
       <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <th className="lb-tee">TEE</th>
+      <SortableHdr k="tee"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
     </>
   );

@@ -113,7 +113,7 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
         {/* Linha 1: rank + flag + nome + nº torneios */}
         <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
           {rank != null ? (
-            <span style={{ flexShrink: 0, fontSize: "var(--fs-10)", minWidth: 18, height: 18, borderRadius: 4,
+            <span style={{ flexShrink: 0, fontSize: "var(--fs-10)", minWidth: 18, height: 18, borderRadius: "var(--radius-sm)",
               background: rank <= 3 ? "var(--bg-topbar)" : rank <= 10 ? "var(--bg-warn-strong)" : "var(--bg-muted)",
               color: rank <= 3 ? "var(--text-inv)" : rank <= 10 ? "var(--color-warn-dark)" : "var(--text-3)",
               display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
@@ -134,7 +134,7 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
         {/* Linha 2: player type + record + bestTp + mhCnt + upcoming */}
         <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", paddingLeft: 23 }}>
           {playerType && !p.isM && (
-            <span className="fs-10 fw-700" style={{ padding: "1px 5px", borderRadius: 10, background: playerType.bg, color: playerType.fg }}>
+            <span className="fs-10 fw-700" style={{ padding: "1px 5px", borderRadius: "var(--radius-lg)", background: playerType.bg, color: playerType.fg }}>
               {playerType.label}
             </span>
           )}

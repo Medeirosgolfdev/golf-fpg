@@ -104,7 +104,7 @@ export default function HeroIdentity({ data, junior }: Props) {
     <div style={{
       background: "var(--bg)",
       border: "1px solid var(--border)",
-      borderRadius: 10,
+      borderRadius: "var(--radius-lg)",
       padding: "18px 20px",
     }}>
       <div style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
@@ -200,7 +200,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               <span style={{
                 fontSize: "var(--fs-13)",
                 padding: "5px 11px",
-                borderRadius: 6,
+                borderRadius: "var(--radius)",
                 background: "var(--bg-muted)",
                 color: "var(--text)",
                 fontWeight: 600,
@@ -221,7 +221,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               marginTop: 10,
               padding: "6px 10px",
               background: "var(--bg-muted)",
-              borderRadius: 6,
+              borderRadius: "var(--radius)",
               fontSize: "var(--fs-12)",
               color: "var(--text-2)",
             }}>
@@ -386,7 +386,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
   const cardStyle: React.CSSProperties = {
     background: empty ? "var(--bg-muted)" : "var(--bg)",
     border: empty ? "1px dashed var(--border-light)" : "1px solid var(--border)",
-    borderRadius: 8,
+    borderRadius: "var(--radius-md)",
     padding: "10px 12px",
     opacity: empty ? 0.65 : 1,
     transition: isClickable ? "border-color 120ms, box-shadow 120ms" : undefined,
@@ -553,7 +553,7 @@ function RankPill({ label, value }: { label: string; value: number | string }) {
     <span style={{
       background: "var(--bg-warn-subtle)",
       color: "var(--color-warn-dark)",
-      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 6,
+      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
       fontWeight: 700,
       border: "1px solid var(--color-warn-dark)",
     }}>

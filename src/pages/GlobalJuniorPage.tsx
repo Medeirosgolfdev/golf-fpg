@@ -12,7 +12,7 @@
  *
  * O GJGL só expõe escalões U14, U18, U23. Manuel (12y) compete em U14.
  */
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, type ReactNode } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
@@ -22,6 +22,8 @@ import { fmtToPar } from "../utils/format";
 import { tpColor } from "../ui/tournamentPrimitives";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
+import SortableHdr from "../ui/SortableHdr";
+import { useSort } from "../hooks/useSort";
 import { ManuelPill } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
@@ -325,7 +327,7 @@ export function GlobalJuniorPageLegacy() {
             <ToolbarTitle>🌍 Global Junior</ToolbarTitle>
             <ToolbarSep />
             <ToolbarMeta>{sortedTournaments.length} torneios</ToolbarMeta>
-            <button onClick={() => setSidebarOpen(false)} style={{ marginLeft: 8, background: "transparent", border: "1px solid var(--border-subtle)", padding: "2px 8px", borderRadius: 4, cursor: "pointer" }}>‹</button>
+            <button onClick={() => setSidebarOpen(false)} style={{ marginLeft: 8, background: "transparent", border: "1px solid var(--border-subtle)", padding: "2px 8px", borderRadius: "var(--radius-sm)", cursor: "pointer" }}>‹</button>
           </Toolbar>
           <div style={{ padding: "8px 4px", maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}>
             {byYear.map(([year, ts]) => (
@@ -343,7 +345,7 @@ export function GlobalJuniorPageLegacy() {
                       className={`md-sidebar-item ${isActive ? "is-active" : ""}`}
                       style={{
                         display: "block", width: "100%", textAlign: "left",
-                        padding: "6px 10px", marginBottom: 2, borderRadius: 4,
+                        padding: "6px 10px", marginBottom: 2, borderRadius: "var(--radius-sm)",
                         background: isActive ? "var(--bg-active)" : "transparent",
                         border: "1px solid var(--border-subtle)",
                         cursor: "pointer", fontSize: "var(--fs-12)",
@@ -365,7 +367,7 @@ export function GlobalJuniorPageLegacy() {
       {/* Detail */}
       <main className="md-detail" style={{ flex: 1, padding: 16, overflow: "auto" }}>
         {!sidebarOpen && (
-          <button onClick={() => setSidebarOpen(true)} style={{ marginBottom: 12, background: "transparent", border: "1px solid var(--border-subtle)", padding: "4px 10px", borderRadius: 4, cursor: "pointer" }}>
+          <button onClick={() => setSidebarOpen(true)} style={{ marginBottom: 12, background: "transparent", border: "1px solid var(--border-subtle)", padding: "4px 10px", borderRadius: "var(--radius-sm)", cursor: "pointer" }}>
             › Mostrar torneios
           </button>
         )}
@@ -464,24 +466,56 @@ function DivisionTabs({ data }: { data: GjglData }) {
 }
 
 function SimpleLeaderboard({ div }: { div: GjglDivision }) {
+  type K = "pos" | "country" | "name" | "hcp" | "birth" | "r1" | "r2" | "r3" | "total" | "toPar";
+  const { sortKey, sortDir, toggleSort } = useSort<K>("pos");
+  const INF = 999999;
+  const sorted = useMemo(() => {
+    const mult = sortDir === "asc" ? 1 : -1;
+    const num = (v: number | null | undefined) => (v == null || isNaN(v) ? INF : v);
+    const val = (p: GjglDivision["players"][number]): number | string => {
+      switch (sortKey) {
+        case "pos": return num(p.pos);
+        case "country": return p.country || "";
+        case "name": return p.name || "";
+        case "hcp": return num(p.hcp);
+        case "birth": return num(p.birthYearEst);
+        case "r1": return num((p.rounds || [])[0]?.gross);
+        case "r2": return num((p.rounds || [])[1]?.gross);
+        case "r3": return num((p.rounds || [])[2]?.gross);
+        case "total": return num(p.total);
+        case "toPar": return num(p.toPar);
+      }
+    };
+    return [...div.players].sort((a, b) => {
+      const av = val(a), bv = val(b);
+      const cmp = typeof av === "string" || typeof bv === "string"
+        ? String(av).localeCompare(String(bv))
+        : (av as number) - (bv as number);
+      if (cmp !== 0) return mult * cmp;
+      return num(a.pos) - num(b.pos);
+    });
+  }, [div.players, sortKey, sortDir]);
+  const H = ({ k, right, children }: { k: K; right?: boolean; children: ReactNode }) => (
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={right ? "r" : undefined}>{children}</SortableHdr>
+  );
   return (
     <table className="dtable">
       <thead>
         <tr>
-          <th>Pos</th>
-          <th>País</th>
-          <th>Nome</th>
-          <th className="r">HCP</th>
-          <th className="r">Nasc.~</th>
-          <th className="r">R1</th>
-          <th className="r">R2</th>
-          <th className="r">R3</th>
-          <th className="r">Total</th>
-          <th className="r">vs Par</th>
+          <H k="pos">Pos</H>
+          <H k="country">País</H>
+          <H k="name">Nome</H>
+          <H k="hcp" right>HCP</H>
+          <H k="birth" right>Nasc.~</H>
+          <H k="r1" right>R1</H>
+          <H k="r2" right>R2</H>
+          <H k="r3" right>R3</H>
+          <H k="total" right>Total</H>
+          <H k="toPar" right>vs Par</H>
         </tr>
       </thead>
       <tbody>
-        {div.players.map((p, i) => {
+        {sorted.map((p, i) => {
           const isManuel = isM(p.name);
           const pos = p.pos != null ? p.pos : (p.tiedFlag ? "T" : "—");
           return (

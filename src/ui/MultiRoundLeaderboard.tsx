@@ -129,7 +129,7 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
       <div className="search-wrap">
         <span className="search-icon-abs">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
-          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card)", color:"var(--text)", width:140, outline:"none" }} />
+          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius: "var(--radius)", border:"1px solid var(--border)", background:"var(--bg-card)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
       {hasOpts && <span style={{ color:"var(--border)", fontSize: "var(--fs-11)" }}>|</span>}
       {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
@@ -140,7 +140,7 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
           </span>
         </FilterChip>
       ); })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius: "var(--radius)", border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {availSex.length === 2 && (
         <>
           <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male)">M</FilterChip>

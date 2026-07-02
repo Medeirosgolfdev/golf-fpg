@@ -136,7 +136,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`, label:"🏆 Resultados ↗" },
           ].map(l => (
             <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius: "var(--radius)",
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               {l.label}
             </a>
@@ -144,14 +144,14 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
             <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
               target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius: "var(--radius)",
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               USKids ↗
             </a>
           )}
           {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius: "var(--radius)",
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               {l.label}
             </a>
@@ -202,8 +202,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   </div>
                   {/* Barra de preenchimento */}
                   {e.maximo > 0 && (
-                    <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden", marginBottom: e.jogadores?.length ? 8 : 0 }}>
-                      <div style={{ height:"100%", borderRadius:2, background: man ? "var(--accent)" : "var(--color-good)", width:`${Math.min(100, Math.round((e.inscritos/e.maximo)*100))}%`, transition:"width .3s" }} />
+                    <div style={{ height:4, borderRadius: "var(--radius-xs)", background:"var(--border)", overflow:"hidden", marginBottom: e.jogadores?.length ? 8 : 0 }}>
+                      <div style={{ height:"100%", borderRadius: "var(--radius-xs)", background: man ? "var(--accent)" : "var(--color-good)", width:`${Math.min(100, Math.round((e.inscritos/e.maximo)*100))}%`, transition:"width .3s" }} />
                     </div>
                   )}
                   {/* Lista de jogadores */}
@@ -244,7 +244,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 return <span className="fs-10 fw-700" style={{
                                   background: bg, color: fg,
                                   border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
-                                  padding: "0 4px", borderRadius: 6, marginLeft: 3, lineHeight: "14px",
+                                  padding: "0 4px", borderRadius: "var(--radius)", marginLeft: 3, lineHeight: "14px",
                                 }} title={`Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${j.firstSeen?.slice(0,10)})`}>{label}</span>;
                               })()}
                               {!isM && <KidsLink nome={j.nome} />}
@@ -266,7 +266,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               {nTorn > 0 && (
                                 <span className="fs-10 fw-700 c-text-2" style={{
                                   background:"var(--bg-muted)", border:"1px solid var(--border)",
-                                  borderRadius:4, padding:"0 4px", lineHeight:"16px",
+                                  borderRadius: "var(--radius-sm)", padding:"0 4px", lineHeight:"16px",
                                   display:"inline-block",
                                 }}>
                                   {nTorn}T
@@ -328,7 +328,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                 <div key={e.age_group} style={{ marginBottom:8 }}>
                   <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
                   {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
-                    <div key={i} className="fs-13" style={{ display:"flex", justifyContent:"space-between", padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
+                    <div key={i} className="fs-13" style={{ display:"flex", justifyContent:"space-between", padding:"3px 8px", borderRadius: "var(--radius-sm)", background:"rgba(255,255,255,.5)", marginBottom:2 }}>
                       <span className="fw-600" style={{ display:"flex", alignItems:"center", gap:2 }}>
                         {displayName(j.nome)}<KidsLink nome={j.nome} />
                       </span>

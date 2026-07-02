@@ -31,7 +31,6 @@ html, body, #root {
 /* ─── Headings ─── */
 .h-xs { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: 6px; }
 .h-sm { font-size: var(--fs-12); font-weight: 800; color: var(--text-dark); margin: 14px 0 8px; }
-.h-sm-warn { font-size: var(--fs-12); font-weight: 800; color: var(--color-warn-dark); margin-bottom: 4px; }
 .h-md { font-size: var(--fs-14); font-weight: 800; color: var(--text); margin-bottom: 10px; }
 .h-lg { font-size: var(--fs-16); font-weight: 800; color: var(--text); margin: 24px 0 8px; }
 
@@ -127,7 +126,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: var(--fs-12); }
 .notice-info    { background: var(--bg-info);            border: 1px solid var(--score-bogey-border); color: var(--color-info); }
 .notice-warn    { background: var(--bg-warn);            border: 1px solid var(--border-warn);        color: var(--color-warn-dark); }
-.notice-success { background: var(--bg-success-subtle);  border: 1px solid var(--color-good);         color: var(--color-good-dark); }
 /* notice-error funciona standalone (sem .notice) ou combinado — tem o seu próprio espaçamento */
 .notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: var(--fs-12); line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
 /* Variante horizontal (icon + texto lado a lado) */
@@ -136,10 +134,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Texto de aviso inline (sem caixa) */
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 .notice-error.ta-c { text-align: center; }
-.notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: var(--fs-12); }
-
-/* ─── Conclusion Boxes ─── */
-.conclusion-box { margin-top: 10px; padding: 10px 14px; background: var(--bg-warn); border: 1px solid var(--border-warn); border-radius: var(--radius-lg); }
 
 /* ─── Page Layouts ─── */
 .page-full { max-width: 1060px; margin: 0 auto; padding: var(--space-inner); overflow: auto; flex: 1; background: var(--bg-detail); }
@@ -232,12 +226,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
    espremer/desconfigurar os controlos. Comportamento uniforme, igual ao nav
    superior do site. */
 .toolbar > * { flex-shrink: 0; }
-.campos-page .toolbar-left,
-.jogadores-page .toolbar-left,
-.tourn-layout .toolbar-left {
- gap: 8px;
- align-items: center;
-}
 
 /* Compact selects inside jogadores/tourn toolbar */
 .jogadores-page .toolbar .select,
@@ -650,10 +638,8 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  position: sticky;
  top: 0;
  background: var(--bg-header);
- z-index: 1;
+ z-index: var(--z-base);
 }
-/* Hover de linha — consistente com .ratings-table / .sc-table-ec */
-.sc-table .sc-tee-row:hover td { background: var(--bg-hover); }
 .sc-table .sc-tee-row:hover td.sc-sticky { background: var(--bg-hover); }
 
 .sc-h { min-width: 38px; }
@@ -690,26 +676,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .sc-par-row .sc-meta-label { color: var(--text-2); }
 .sc-hcp-row .sc-meta-label { color: var(--text-3); }
-.ratings-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.ratings-table th {
- padding: 6px 10px;
- font-size: var(--fs-11);
- font-weight: 700;
- color: var(--text-3);
- text-transform: uppercase;
- letter-spacing: 0.04em;
- background: var(--bg-header);
- border-bottom: 2px solid var(--border);
- text-align: left;
-}
-.ratings-table td {
- padding: 6px 10px;
- border-bottom: 1px solid var(--border-light);
- vertical-align: middle;
-}
-.ratings-table tbody tr:hover {
- background: var(--bg-hover);
-}
 
 /* ─── Jogadores Page ─── */
 
@@ -769,9 +735,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-sd-excellent { background: var(--color-good); color: #fff; }
 .p-sd-good      { background: var(--sd-badge-good); color: var(--text); }
 .p-sd-poor      { background: var(--color-danger); color: #fff; }
-.sortable-th:hover {
- color: var(--accent);
-}
 .master-detail .jog-detail {
  display: flex;
  flex-direction: column;
@@ -789,16 +752,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  flex: 1;
  min-height: 0;
  overflow: hidden;
-}
-.pa-controls {
- display: flex;
- align-items: center;
- justify-content: space-between;
- gap: 10px;
- padding: 8px 12px;
- background: var(--bg);
- border-bottom: 1px solid var(--border-light);
- flex-shrink: 0;
 }
 .pa-controls-left { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
@@ -820,7 +773,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-right .pa-controls-left { flex-direction: column; align-items: stretch; gap: 6px; width: 190px; }
 .dh-right .pa-controls-left .input,
 .dh-right .pa-controls-left .select { width: 100%; }
-.dh-lastupd { font-size: 9.5px; color: var(--text-3); white-space: nowrap; }
+.dh-lastupd { font-size: var(--fs-10); color: var(--text-3); white-space: nowrap; }
 /* pills + KPI fluem na mesma linha (KPI logo a seguir aos pills, a preencher
    o meio que estava vazio — sem margin-auto, agrupados). */
 .dh-statline { display: flex; align-items: center; gap: 6px 14px; flex-wrap: wrap; }
@@ -862,7 +815,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dt-compact tbody tr:hover { background: var(--bg-hover); }
 
 /* Utility: sticky table header row inside a scrolling container */
-.sticky-head th { position: sticky; top: 0; z-index: 1; }
+.sticky-head th { position: sticky; top: 0; z-index: var(--z-base); }
 /* Utility: clickable rows with cursor + subtle hover */
 tr.clickable { cursor: pointer; }
 /* Utility: "year" separator label shown between rows/sections */
@@ -903,10 +856,8 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .actions { display: flex; gap: 6px; align-items: center; }
 .btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: var(--fs-11); font-weight: 600; }
 .btn:hover { background: var(--bg-hover); }
-.btnGhost { border-color: transparent; color: var(--accent); }
 
 .an-wrap { padding: 12px 0; }
-.an-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 .an-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 
 .kpi-info { font-size: var(--fs-11); cursor: help; margin-left: 4px; }
@@ -917,11 +868,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
-/* .ec-sum → eclectic summary table */
-.ec-sum th { padding: 6px 10px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
-.ec-sum th.r, .ec-sum td.r { text-align: right; }
-.ec-sum td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); }
-.ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
 
 .sc-table-ec { border-collapse: collapse; font-size: var(--fs-12); white-space: nowrap; font-variant-numeric: tabular-nums; }
 /* Sem grelha completa — só linhas horizontais subtis (como na leaderboard .sc-lb),
@@ -945,8 +891,8 @@ tr.cross-current { background: var(--bg-success); }
 /* 1ª coluna (rótulos) fixa ao fazer scroll horizontal — os nomes Buraco/Par/
    Distância/Eclético/data ficam sempre visíveis ao percorrer os 18 buracos.
    Cada tipo de linha fixa o seu próprio fundo opaco para não haver bleed. */
-.sc-table-ec .row-label { position: sticky; left: 0; z-index: 1; }
-.sc-table-ec thead th.row-label { z-index: 3; }
+.sc-table-ec .row-label { position: sticky; left: 0; z-index: var(--z-base); }
+.sc-table-ec thead th.row-label { z-index: var(--z-float); }
 .sc-table-ec thead th.row-label,
 .sc-table-ec .ec-ref-row .row-label,
 .sc-table-ec .ec-round-row .row-label { background: var(--bg-card); }
@@ -1090,14 +1036,11 @@ tr.cross-current { background: var(--bg-success); }
 .haDiagLbl { font-size: var(--fs-10); color: var(--text-3); font-weight: 600; margin-top: 1px; line-height: 1.2; }
 .haParGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
 .haParCard { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 10px 12px; background: var(--bg-card); }
-.haParAlert { font-size: var(--fs-10); font-weight: 700; color: var(--color-danger); margin-bottom: 4px; }
 .haParHead { font-size: var(--fs-13); font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .haParAvg { font-size: var(--fs-18); font-weight: 900; line-height: 1.2; }
 .haParStat { font-size: var(--fs-11); color: var(--text-3); margin-top: 2px; }
 .haParStat span { font-weight: 400; }
 .haParDistBar { display: flex; height: 10px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-.haParDistNums { font-size: var(--fs-10); color: var(--text-muted); margin-top: 2px; }
-.haDistBar { display: flex; height: 20px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 6px; border: 1px solid var(--border); }
 .haDistSeg { min-width: 2px; transition: width 0.3s; }
 .seg-eagle { background: var(--score-eagle); }
 .seg-birdie { background: var(--score-birdie); }
@@ -1106,8 +1049,6 @@ tr.cross-current { background: var(--bg-success); }
 .seg-double { background: var(--score-double); }
 .seg-triple { background: var(--score-triple); }
 .haDistLegend { display: flex; flex-wrap: wrap; gap: 8px; font-size: var(--fs-10); color: var(--text-2); }
-.haLeg { display: flex; align-items: center; gap: 3px; }
-.haLegDot { display: inline-block; width: 10px; height: 10px; border-radius: var(--radius-xs); }
 .haTopWrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 @media (max-width: 700px) { .haTopWrap { grid-template-columns: 1fr; } }
 .haTopCol { background: var(--bg-card); border-radius: var(--radius-lg); padding: 10px 12px; border: 1px solid var(--border); }
@@ -1174,10 +1115,6 @@ tr.cross-current { background: var(--bg-success); }
   .par-type-sl { text-align: left; }
 }
 
-/* ─── Linha temporal das rondas (CoursePerformanceSection) ─── */
-/* O SVG é responsivo via width:100%; o scroll-x do wrapper trata de ecrãs muito estreitos. */
-.course-evolution-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
 /* ─── Score distribution chart (bar chart vertical compacto) ─── */
 .score-dist { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 6px; align-items: end; }
 .score-dist-col { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 0; }
@@ -1193,10 +1130,6 @@ tr.cross-current { background: var(--bg-success); }
 .hs-out { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
 .hs-in { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
 .hs-total { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); font-weight: 800; }
-
-/* ─── FRAG Scorecard (injected HTML fragments) ─── */
-.scHost table { border-collapse: collapse; font-size: var(--fs-11); }
-.scHost td, .scHost th { padding: 2px 4px; text-align: center; border: 1px solid var(--border-light); }
 
 .sc-bar-head { background: var(--bg-header); padding: 8px 12px; font-size: var(--fs-12); font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
 
@@ -1267,7 +1200,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle
    Tamanho unificado: 26×26 / 13px em modern, lb e scHost */
-.sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score {
+.sc-table-modern .sc-score, .sc-table-ec .sc-score {
  font-weight: 700; font-size: var(--fs-12); min-width: 22px; min-height: 22px;
  width: 22px; height: 22px;
  display: inline-flex; align-items: center; justify-content: center;
@@ -1305,7 +1238,7 @@ tr.cross-current { background: var(--bg-success); }
  .sc-header-right { width: 100%; justify-content: space-around; }
  .sc-table-modern { font-size: var(--fs-12); }
  .sc-table-modern th, .sc-table-modern td { padding: 5px 4px; }
- .sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-12); }
+ .sc-table-modern .sc-score, .sc-table-ec .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-12); }
  .sc-title { font-size: var(--fs-16); }
  .sc-subtitle { font-size: var(--fs-11); }
  .sc-stat-label { font-size: var(--fs-10); }
@@ -1314,9 +1247,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 @media (max-width: 900px) {
- .an-grid { grid-template-columns: repeat(2, 1fr); }
  .an-grid3 { grid-template-columns: 1fr; }
- .pa-controls { flex-direction: column; align-items: flex-start; }
 }
 
 .player-embed-error {
@@ -1338,39 +1269,6 @@ tr.cross-current { background: var(--bg-success); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-sm); }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
 
-/* ─── Simulador Page ─── */
-
-.sim-tee-selector {
- display: flex;
- flex-wrap: wrap;
- gap: 8px;
- padding: 12px 0;
- border-bottom: 1px solid var(--border-light);
-}
-
-.sim-tee-btn {
- display: flex;
- align-items: center;
- gap: 8px;
- padding: 6px 12px;
- border: 2px solid var(--border);
- border-radius: var(--radius);
- background: var(--bg-card);
- cursor: pointer;
- transition: border-color 0.15s, box-shadow 0.15s;
- font: inherit;
-}
-
-.sim-tee-btn:hover {
- border-color: var(--accent);
-}
-
-.sim-tee-active {
- border-color: var(--accent);
- box-shadow: 0 0 0 1px var(--accent);
- background: var(--accent-light);
-}
-
 
 /* sim-section-title → .h-xs (unified) */
 
@@ -1387,7 +1285,7 @@ tr.cross-current { background: var(--bg-success); }
  letter-spacing: 0.04em;
  color: var(--text-3);
  border-bottom: 2px solid var(--border);
- z-index: 1;
+ z-index: var(--z-base);
 }
 
 .sim-th:first-child { text-align: center; }
@@ -1425,29 +1323,6 @@ tr.cross-current { background: var(--bg-success); }
 
 .sim-td-sd18 {
  color: var(--accent);
-}
-
-/* ─── HI Banner: prompt to fill Handicap Index ─── */
-
-.sim-hi-banner {
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 10px;
- padding: 10px 16px;
- background: var(--bg-warn);
- border: 1.5px solid var(--border-warn);
- border-radius: var(--radius);
- font-size: var(--fs-13);
- color: var(--color-warn-dark);
- line-height: 1.5;
- margin: 0 0 -1px;
- text-align: center;
-}
-
-.sim-hi-banner-icon {
- font-size: var(--fs-18);
- flex-shrink: 0;
 }
 
 /* ─── HCP Strip: single row with handicaps, ratings, calc ─── */
@@ -1700,11 +1575,6 @@ tr.cross-current { background: var(--bg-success); }
 }
 .sidebar-back-btn:hover { background: var(--bg-hover-subtle); color: var(--text); }
 
-/* Mobile utilities */
-
-/* CompararPage search row */
-.cmp-search-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
 /* ════════════════════════════════════════════════════════════════
    MOBILE — 768 px
    ════════════════════════════════════════════════════════════════ */
@@ -1772,8 +1642,7 @@ tr.cross-current { background: var(--bg-success); }
  .course-detail      { overflow-x: hidden; padding: 8px; flex: 1 1 0; min-height: 0; }
  .detail-header      { flex-direction: column; }
  .detail-header-top  { flex-direction: column; align-items: flex-start; }
- .detail-title       { font-size: 17px; }
- .detail-actions     { flex-wrap: wrap; gap: 4px; }
+ .detail-title       { font-size: var(--fs-16); }
 
  /* ── Mobile: scroll natural da página de detalhe do jogador ──────────────
     No desktop o .pa-page tem altura fixa (overflow:hidden) e é o .pa-content
@@ -1784,7 +1653,6 @@ tr.cross-current { background: var(--bg-success); }
     (que já tem overflow-y:auto) passa a ser o único scroller — cabeçalho e
     tabela rolam juntos como uma página normal. */
  .pa-page            { min-height: 0; overflow: visible; height: auto; flex: 1 0 auto; }
- .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
  .pa-content         { padding: 8px; overflow: visible; height: auto; flex: 0 0 auto; min-height: 0; }
  /* Tabelas de rondas do detalhe do jogador (vistas Por data / Por campo / Por
@@ -1814,11 +1682,11 @@ tr.cross-current { background: var(--bg-success); }
    width: 48px !important; height: 60px !important; margin: 0 !important;
  }
  .jog-pills          { gap: 3px; row-gap: 3px; margin-top: 0; align-items: center; }
- .jog-pills .p       { font-size: 9.5px; padding: 1px 5px; line-height: 1.3; }
+ .jog-pills .p       { font-size: var(--fs-10); padding: 1px 5px; line-height: 1.3; }
  .jog-pills .sex-badge,
  .jog-pills .jog-sex-inline { width: 14px; height: 14px; font-size: var(--fs-9); }
- .jog-pills .sex-badge-pill { font-size: 9.5px; padding: 1px 6px; line-height: 1.3; }
- .jog-pills .muted.fs-11 { font-size: 9.5px; opacity: 0.75; }
+ .jog-pills .sex-badge-pill { font-size: var(--fs-10); padding: 1px 6px; line-height: 1.3; }
+ .jog-pills .muted.fs-11 { font-size: var(--fs-10); opacity: 0.75; }
  .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
 
  .cal-page        { flex-direction: column; }
@@ -1852,33 +1720,22 @@ tr.cross-current { background: var(--bg-success); }
  .sc-table-modern               { font-size: var(--fs-11); }
  .sc-table-modern th,
  .sc-table-modern td            { padding: 4px 3px; }
- .sc-table-modern .sc-score,
- .sc-table-ec .sc-score,
- .scHost .sc-score              { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-10); }
+ .sc-table-modern .sc-score, .sc-table-ec .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-10); }
  .sc-table-modern .row-label    { min-width: 52px; font-size: var(--fs-10); padding-left: 4px; }
  .sc-header                     { flex-direction: column; gap: 6px; padding: 10px 12px; }
  .sc-header-right               { width: 100%; justify-content: space-around; }
  .sc-title                      { font-size: var(--fs-14); }
  .sc-stat-value                 { font-size: var(--fs-16); }
-
- .tourn-scorecard th,
- .tourn-scorecard td  { padding: 4px 4px; font-size: var(--fs-11); }
- .tourn-lb-name-col   { min-width: 110px !important; }
- .tourn-player-row td { font-size: var(--fs-11); }
- .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: var(--fs-10); }
- .tourn-lb-pills .p   { font-size: var(--fs-9); padding: 1px 4px; }
-
- .an-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .an-grid3 { grid-template-columns: repeat(2, 1fr); gap: 8px; }
- .kpis, .tourn-kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
- .kpi, .tourn-kpi       { padding: 8px 6px; }
- .kpi-val, .tourn-kpi-val { font-size: var(--fs-18); }
- .kpi-lbl, .tourn-kpi-lbl { font-size: var(--fs-9); }
+ .kpis { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+ .kpi { padding: 8px 6px; }
+ .kpi-val { font-size: var(--fs-18); }
+ .kpi-lbl { font-size: var(--fs-9); }
  .kpi-card              { padding: 8px 10px; }
  .haDiag                { grid-template-columns: repeat(2, 1fr); }
  .haParGrid             { grid-template-columns: repeat(2, 1fr); }
  .haTopWrap             { grid-template-columns: 1fr; }
- .grid-3, .grid-3-tc    { grid-template-columns: 1fr 1fr; gap: 5px; }
+ .grid-3-tc { grid-template-columns: 1fr 1fr; gap: 5px; }
 
  .card         { padding: 10px; margin: 6px 0; }
  .escalao-pills  { gap: 2px; flex-wrap: wrap; }
@@ -1888,14 +1745,6 @@ tr.cross-current { background: var(--bg-success); }
  .chip           { font-size: var(--fs-10); padding: 2px 6px; }
 
  .page-full         { padding: 8px; }
- .cmp-radar-wrap    { max-width: 100%; }
- .cmp-search-input  { width: 100% !important; font-size: var(--fs-13); }
- .cmp-search-row    { flex-direction: column; align-items: stretch; gap: 6px; }
- .cmp-search-row .cmp-search-wrap { width: 100%; }
- .cmp-chip          { align-self: flex-start; }
-
- .mobile-hide     { display: none; }
- .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: var(--fs-12); }
 
  /* Botões com tap target mais confortável em mobile */
@@ -1915,11 +1764,10 @@ tr.cross-current { background: var(--bg-success); }
  .input        { width: 100px; }
  .select       { min-width: 60px; max-width: 110px; }
  .sidebar      { flex: 0 0 32vh; height: 32vh; max-height: 32vh; }
- .grid-3, .grid-3-tc,
- .jog-record-grid            { grid-template-columns: 1fr; }
- .an-grid, .an-grid3         { grid-template-columns: 1fr; }
+ .grid-3-tc, .jog-record-grid { grid-template-columns: 1fr; }
+ .an-grid3 { grid-template-columns: 1fr; }
  .haDiag, .haParGrid         { grid-template-columns: 1fr; }
- .kpis, .tourn-kpis          { grid-template-columns: repeat(2, 1fr); }
+ .kpis { grid-template-columns: repeat(2, 1fr); }
  .pa-content                 { padding: 6px; }
  .tourn-tab    { font-size: var(--fs-10); padding: 2px 5px; }
  .tourn-tab-sm { font-size: var(--fs-9);  padding: 1px 4px; }
@@ -1948,25 +1796,6 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-meta { font-size: var(--fs-12); color: var(--text-3); margin-bottom: 12px; }
 .tourn-scroll { border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); }
 
-/* ─── DRAW TABLE ─── */
-.tourn-draw th {
- padding: 10px 14px; text-align: left;
- font-size: var(--fs-11); font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
- color: var(--text-2); background: var(--bg-header); border-bottom: 2px solid var(--border);
-}
-.tourn-draw th.r { text-align: right; }
-.tourn-draw td {
- padding: 10px 14px; vertical-align: middle;
- border-bottom: 1px solid var(--bg-hover); font-size: var(--fs-14);
-}
-.tourn-draw .r { text-align: right; }
-
-/* Group visual: first row gets heavy top border */
-.tourn-draw .tourn-group-first td { border-top: 3px solid var(--border); }
-.tourn-draw tbody tr:first-child td { border-top: none; }
-/* Last row in group gets slightly thicker bottom */
-.tourn-draw .tourn-group-last td { border-bottom: none; }
-
 /* Tee badge — prominent colored pill */
 
 /* Time column */
@@ -1991,14 +1820,6 @@ button.tourn-pname {
   -webkit-appearance: none;
 }
 button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline-offset: 2px; border-radius: 2px; }
-
-/* Override .p sizes for tournament draw context */
-.tourn-draw-player .p {
- padding: 2px 10px; font-size: var(--fs-12); font-weight: 600; border-radius: var(--radius); line-height: 1.5;
-}
-.tourn-draw-player .p-tee,
-.tourn-draw-tee .p-tee { font-size: var(--fs-10); padding: 2px 8px; }
-.tourn-lb-pills .p-tee,
 .tourn-meta .p-tee { font-size: var(--fs-10); padding: 1px 7px; vertical-align: middle; }
 
 /* PJA + INTL use their own solid backgrounds */
@@ -2011,54 +1832,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
 
-/* HCP columns */
 
-/* ─── LEADERBOARD / SCORECARD TABLE ─── */
-.tourn-scorecard th, .tourn-scorecard td {
- padding: 6px 5px; text-align: center; border: none;
-}
-.tourn-scorecard th {
- background: var(--bg-header); font-weight: 600; font-size: var(--fs-11); color: var(--text-2); border-bottom: 1px solid var(--border);
-}
-.tourn-scorecard tbody td { border-bottom: 1px solid var(--border-light); }
-.tourn-scorecard th.sortable { cursor: pointer; user-select: none; }
-.tourn-scorecard th.sortable:hover { background: var(--bg-hover-subtle); }
-
-/* Column widths — flexible */
-.tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; white-space: nowrap; }
-.tourn-lb-pills .p { font-size: var(--fs-10); padding: 1px 7px; }
-.tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 6px 5px; }
-
-/* Course info rows */
-.tourn-par-row td { font-size: var(--fs-11); font-weight: 600; color: var(--text-muted); background: var(--bg-hover); border-bottom: 2px solid var(--border); }
-.tourn-dist-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg-detail); }
-.tourn-si-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border-light); }
-.tourn-scorecard .tourn-in-border { border-left: 2px solid var(--border); }
-
-/* Player rows */
-.tourn-player-row td { font-size: var(--fs-12); }
-.tourn-player-row:hover { background: var(--bg-detail); }
-.tourn-scorecard .tourn-sum-under { background: var(--accent-light); }
-.tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: var(--fs-12); white-space: nowrap; }
-.tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--link-color); }
-
-/* Female row — subtle blue tint */
-.tourn-scorecard .tourn-female-row { background: var(--bg-female); }
-.tourn-scorecard .tourn-female-row:hover { background: var(--bg-female-hover); }
-
-/* Female tee pill */
-
-/* ─── Tournament Scorecard Cells ─── */
-.tourn-scorecard .tourn-hole-cell { padding: 3px 2px; text-align: center; vertical-align: middle; min-width: 33px; }
-
-
-/* To-par */
-
-/* Others (ND/NS) */
-
-/* ─── ANALYSIS · KPI card (definição canónica — igual ao .kpi-card) ───
-   ⚠ Antes estes selectores estavam ÓRFÃOS (sem corpo) e fundiam-se por engano
-   na regra .tourn-form-table th, fazendo TODOS os KPI (.kpi do componente
+fazendo TODOS os KPI (.kpi do componente
    KpiCard, usado em KIDS/Drive/BJGT/USKids) herdar estilo de cabeçalho de
    tabela. Corrigido: card com borda, idêntico ao .kpi-card. */
 .kpis {
@@ -2083,21 +1858,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .kpi-delta { font-size: var(--fs-11); font-weight: 700; margin-top: 1px; }
 .kpi-sub { font-size: var(--fs-11); color: var(--text-3); margin-top: 1px; }
 
-/* ─── Form Analysis Table ─── */
-.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: var(--fs-10); color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: none; border-bottom: 2px solid var(--border); text-align: left; }
-.tourn-form-table td { padding: 6px 8px; border: none; border-bottom: 1px solid var(--border-light); font-size: var(--fs-12); vertical-align: middle; }
-.tourn-form-table tbody tr:hover { background: var(--bg-detail); }
-.tourn-form-table .tourn-pname { font-weight: 700; font-size: var(--fs-12); }
-.tourn-form-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
-
 /* Sparkline — mini SD dots */
 
 /* Trend badge */
 .trend-up { background: var(--bg-success-strong); color: var(--color-good-dark); }
 .trend-down { background: var(--bg-danger-subtle); color: var(--color-danger-dark); }
-
-/* Utility classes for tournament */
-.tourn-scorecard .tourn-lbl { text-align: left; padding-left: 8px; font-weight: 800; color: var(--text-2); border-right: 2px solid var(--border); font-size: var(--fs-10); text-transform: uppercase; }
 
 /* ═══════ Overlay Export ═══════ */
 
@@ -2124,10 +1889,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 15px; height: 15px; margin: 0; cursor: pointer; }
 
 @media (max-width: 600px) {
- .ov-fields { gap: 6px; }
  .ov-field .input { font-size: var(--fs-12); padding: 5px 8px; }
- .ov-options { gap: 8px; }
- .ov-toggles { gap: 4px 8px; }
  .ov-gallery { gap: 8px; }
  .ov-section { padding: 8px 10px; }
 }
@@ -2241,7 +2003,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .gap-8  { gap: 8px; }
 .gap-10 { gap: 10px; }
 .gap-12 { gap: 12px; }
-.gap-16 { gap: 16px; }
 
 /* ─── Text ─── */
 .fw-600 { font-weight: var(--fw-600); }
@@ -2266,12 +2027,9 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .c-text-2      { color: var(--text-2); }
 .c-text-3      { color: var(--text-3); }
 .c-muted       { color: var(--text-muted); }
-.c-good        { color: var(--color-good); }
 .c-good-dark   { color: var(--color-good-dark); }
-.c-warn        { color: var(--color-warn); }
 .c-warn-dark   { color: var(--color-warn-dark); }
 .c-danger      { color: var(--color-danger); }
-.c-purple      { color: var(--chart-5); }
 /* ─── Display / Flex ─── */
 .d-flex { display: flex; }
 .inline-flex { display: inline-flex; }
@@ -2313,9 +2071,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cb-blue-800 { color: var(--color-info-alt); font-weight: 800; }
 .cb-amber  { color: var(--color-warn-dark); font-weight: 700; }
 
-/* ─── Diagnosis Icon Backgrounds (tinted) ─── */
-.diag-bg-purple { background: var(--bg-purple); color: var(--text-purple); }
-
 /* ─── Scorecard Cell Patterns (BJGT/analysis tables) ─── */
 
 /* ─── Table Column Widths ─── */
@@ -2328,29 +2083,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .col-w70 { width: 70px; }
 .col-w72 { width: 72px; }
 .col-w100 { width: 100px; }
-.col-mw120 { min-width: 120px; }
-
-/* Percentage widths (JogadoresPage cross-tables) */
-.col-p5 { width: 5%; }
-.col-p6 { width: 6%; }
-.col-p7 { width: 7%; }
-.col-p13 { width: 13%; }
-.col-p16 { width: 16%; }
-.col-p19 { width: 19%; }
-.col-p27 { width: 27%; }
-.col-p30 { width: 30%; }
 .col-p8 { width: 8%; }
 .col-p9 { width: 9%; }
-.col-p10 { width: 10%; }
 .col-p11 { width: 11%; }
 .col-p12 { width: 12%; }
 .col-p14 { width: 14%; }
-.col-p15 { width: 15%; }
 .col-p17 { width: 17%; }
-.col-p18 { width: 18%; }
-.col-p26 { width: 26%; }
-.col-p34 { width: 34%; }
-.col-p46 { width: 46%; }
 
 /* ─── Flex Layout Patterns ─── */
 .flex-center { display: flex; align-items: center; }
@@ -2365,7 +2103,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .mt-3 { margin-top: 3px; }
 .mt-10 { margin-top: 10px; }
 .mt-14 { margin-top: 14px; }
-.mt-20 { margin-top: 20px; }
 .ml-4 { margin-left: 4px; }
 .ml-6 { margin-left: 6px; }
 .ml-auto { margin-left: auto; }
@@ -2416,16 +2153,15 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Table / layout combos (DrivePage) ─── */
 .tbl-compact      { font-size: var(--fs-12); border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
-.sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card); }
-.sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card); box-shadow: var(--shadow-sticky-col); }
+.sticky-col-0     { position: sticky; left: 0; z-index: var(--z-raised); background: var(--bg-card); }
+.sticky-col-1     { position: sticky; left: 26px; z-index: var(--z-raised); background: var(--bg-card); box-shadow: var(--shadow-sticky-col); }
 
 /* Só o header de colunas fica sticky — SI e PAR fazem scroll */
-.sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
-.sc-lb thead tr:last-child .sticky-col-0 { z-index: 6; }
-.sc-lb thead tr:last-child .sticky-col-1 { z-index: 6; }
+.sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: var(--z-float); }
+.sc-lb thead tr:last-child .sticky-col-0 { z-index: var(--z-sticky); }
+.sc-lb thead tr:last-child .sticky-col-1 { z-index: var(--z-sticky); }
 
-/* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
-.tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: var(--fs-11); }
+/* Contexto partilhado para scorecards (Drive, Diversos { min-width: 22px; min-height: 22px; font-size: var(--fs-11); }
 .mt-24            { margin-top: 24px; }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2440,9 +2176,9 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table th.cs-sortable:hover { background: var(--bg-hover-subtle); }
 
 /* Só a última linha do header fica sticky — linha de grupos faz scroll */
-.cs-table thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
-.cs-table thead tr:last-child .sticky-col-0 { z-index: 6; }
-.cs-table thead tr:last-child .sticky-col-1 { z-index: 6; }
+.cs-table thead tr:last-child th { position: sticky; top: 0; z-index: var(--z-float); }
+.cs-table thead tr:last-child .sticky-col-0 { z-index: var(--z-sticky); }
+.cs-table thead tr:last-child .sticky-col-1 { z-index: var(--z-sticky); }
 .cs-table .cs-grp-row td,
 .cs-table .cs-grp-row th { position: static; background: var(--bg-hover); border-bottom: none; }
 .cs-table .cs-grp-spacer { border: none; background: transparent !important; }
@@ -2622,10 +2358,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .row-manuel .sticky-col-1 { background: var(--bg-manuel-sticky) !important; }
 .row-manuel:hover { background: var(--bg-success-subtle) !important; }
 
-/* Jogador português (não-Manuel) destacado subtilmente nas tabelas de inscritos. */
-.row-pt { background: color-mix(in srgb, var(--color-rfeg-red) 7%, transparent); }
-.row-pt:hover { background: color-mix(in srgb, var(--color-rfeg-red) 12%, transparent); }
-
 /* ─── Destaque Português — usado em páginas internacionais (FFG, etc.)
    onde queremos marcar conterrâneos. Cor: verde néon #00FF00 (mesma do
    pill INTL global, ver --pill-intl-bg em tokens.css). ─── */
@@ -2666,7 +2398,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Rivais Dashboard table cells ─── */
 .rivais-th { padding: 8px 5px; text-align: center; font-size: var(--fs-11); font-weight: 700; }
-.rivais-th-name { padding: 8px 8px; font-size: var(--fs-11); font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-header); z-index: 2; }
+.rivais-th-name { padding: 8px 8px; font-size: var(--fs-11); font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-header); z-index: var(--z-raised); }
 /* ─── Simulador inputs ─── */
 .sim-input { width: 30px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 0; font: inherit; font-size: var(--fs-12); background: var(--bg-card); }
 .sim-input-sm { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: var(--fs-10); background: var(--bg); color: var(--text-muted); }
@@ -2684,9 +2416,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .bg-success { background: var(--bg-success); }
 .cross-table { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); font-variant-numeric: tabular-nums; }
 
-/* ─── Comparar dropdown ─── */
-.cmp-dropdown { position: absolute; top: 100%; left: 0; right: 0; z-index: 50; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-height: 280px; overflow-y: auto; }
-
 /* ═══ Phase 4: Deep Migration — remaining static patterns ═══ */
 
 /* ─── BJGT scorecard sub-cells ─── */
@@ -2695,9 +2424,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Text micro-combos ─── */
 .fw-400 { font-weight: 400; }
-
-/* ─── Color + size combos ─── */
-.c-blue-13 { color: var(--color-info-alt); font-size: var(--fs-13); font-weight: 800; }
 .c-amber-underline { color: var(--color-warn-dark); font-weight: 600; text-decoration: underline; }
 .c-blue-2563 { color: var(--chart-2); }
 .c-blue-2563-10 { color: var(--chart-2); font-size: var(--fs-10); font-weight: 600; }
@@ -2718,7 +2444,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cal-day-label { padding: 2px 0; }
 .cal-dot-indicator { position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
 .cal-day-cell { font-size: var(--fs-11); cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; margin: 1px auto; position: relative; transition: background 0.15s; }
-.cal-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
+.cal-overlay { position: fixed; inset: 0; z-index: var(--z-overlay); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
 .cal-no-select { user-select: none; }
 .cal-day-num { font-size: var(--fs-15); width: 22px; text-align: center; }
 
@@ -2810,24 +2536,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .hl-teal  { animation: hlGlowTeal  2s ease-in-out infinite; }
 .hl-red   { animation: hlGlowRed   2s ease-in-out infinite; }
 .hl-gold  { animation: hlGlowGold  1.5s ease-in-out infinite; }
-
-
-/* Comparar */
-.cmp-search-input { width: 100%; font-size: var(--fs-14); padding: 10px 14px; }
-.cmp-search-wrap { position: relative; flex: 1; }
-.cmp-result-list { max-height: 340px; overflow-y: auto; }
-.cmp-radar-wrap { width: 100%; max-width: 420px; display: block; margin: 0 auto; }
-.cmp-radar-wrap-sm { width: 100%; max-height: 280px; background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
-.cmp-radar-sm { width: 100%; max-height: 230px; margin-top: 8px; }
-.cmp-chip { font-size: var(--fs-13); padding: 6px 12px; }
-.cmp-remove-btn { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 0 2px; font-size: var(--fs-15); line-height: 1; }
-.cmp-empty-icon { font-size: 40px; margin-bottom: 12px; }
-.cmp-empty-title { text-align: center; font-size: var(--fs-16); margin-bottom: 6px; }
-.cmp-distrib-bar { display: flex; height: 32px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px; border: 1px solid var(--border); }
 .cmp-distrib-track { flex: 1; background: var(--bg-hover); border-radius: var(--radius-sm); height: 18px; overflow: hidden; }
 .cmp-stat-label { font-size: var(--fs-12); width: 75px; font-weight: 600; color: var(--text-2); }
-.cmp-feature-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
-.cmp-feature-tag { padding: 4px 12px; border-radius: var(--radius-xl); background: var(--bg-hover); font-size: var(--fs-11); font-weight: 600; color: var(--text-2); }
 
 /* Simulador extras */
 .sim-note-block { display: block; margin: 6px 0; padding: 4px 10px; background: var(--bg-note-warn-strong); border-radius: var(--radius); color: var(--color-warn-dark); }
@@ -2848,7 +2558,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Card / container patterns ─── */
 .card-detail { background: var(--bg-detail); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 8px 12px; }
-.card-detail-inner { border: 1px solid var(--border-light); border-top: 0; border-radius: 0 0 8px 8px; padding: 12px; background: var(--bg-card); }
 
 /* ─── Conclusion boxes (caConclusion overrides) ─── */
 
@@ -2866,7 +2575,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Empty / loading states ─── */
 .empty-icon { font-size: var(--fs-32); margin-bottom: 12px; }
-.empty-icon-lg { font-size: 40px; margin-bottom: 8px; }
+.empty-icon-lg { font-size: var(--fs-40); margin-bottom: 8px; }
 .empty-state-lg { text-align: center; padding: 60px; }
 
 /* ─── Table/cell micro-patterns ─── */
@@ -2905,7 +2614,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  color: var(--text-inv);
  flex-shrink: 0;
  position: relative;
- z-index: 100;
+ z-index: var(--z-sidebar);
  overflow: hidden; /* nav faz scroll internamente */
 }
 .brand {
@@ -2921,7 +2630,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  filter: drop-shadow(0 1px 3px var(--overlay-black-25));
 }
 .brand-title {
- font-size: 17px;
+ font-size: var(--fs-16);
  font-weight: 700;
  letter-spacing: -0.02em;
  line-height: 1;
@@ -2997,11 +2706,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 .detail-link:hover {
  text-decoration: underline;
-}
-.detail-actions {
- display: flex;
- gap: 2px;
- flex-shrink: 0;
 }
 /* ── Tab underline (FPGPage, USKIDSPage, etc.) ────────────── */
 .tab-under {
@@ -3213,7 +2917,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  position: sticky;
  left: 0;
  background: var(--bg-card);
- z-index: 2;
+ z-index: var(--z-raised);
  min-width: 120px;
  text-align: left;
  border-right: 1px solid var(--border-light);
@@ -3241,17 +2945,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  font-weight: 700;
  padding-left: 10px;
  text-align: left;
-}
-.ratings-table .r-num {
- text-align: right;
- font-family: var(--font-mono);
- font-size: var(--fs-12);
-}
-.r-sex {
- font-weight: 600;
- text-align: center;
- font-size: var(--fs-12);
- color: var(--text-3);
 }
 .tee-date { display: inline-block; padding: 1px 7px; border-radius: var(--radius); font-size: var(--fs-11); font-weight: 600; white-space: nowrap; }
 .ov-export {
@@ -3317,8 +3010,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .c-border { color: var(--border); }
 .bb-light { border-bottom: 1px solid var(--border-light); }
 .p-14 { padding: 14px; }
-.mb-18 { margin-bottom: 18px; }
-.br-sm { border-radius: var(--radius-sm); }
 .td-none { text-decoration: none; }
 
 /* ═══════════════════════════════════════════
@@ -3377,8 +3068,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Restored: fs combos e utilitários ─── */
 .stats { display: flex; gap: 8px; }
 .underline { text-decoration: underline; }
-.progress-track { flex: 1; height: 14px; background: var(--bg); border-radius: var(--radius-sm); position: relative; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .c-white { color: #fff; }
 
 /* ═══════════════════════════════════════════
@@ -3393,7 +3082,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Torneio / competição ─── */
 .badge-gf      { font-size: var(--fs-10); font-weight: 800; color: var(--color-amber); margin-left: 5px; }
-.badge-warn-sm { font-size: var(--fs-10); color: var(--color-warn); }
 .badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
 
 /* ─── Série de torneios (cor dinâmica via style) ─── */
@@ -3420,20 +3108,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  border-radius: 50%; background: var(--color-good);
  margin-left: 4px; vertical-align: middle; flex-shrink: 0;
 }
-
-/* ─── Badge torneio agrupado (multi-ronda) ─── */
-
-/* ─── Spacing em falta ─── */
-.ml-3  { margin-left: 3px; }
 .mt-2  { margin-top: 2px; }
 .gap-6 { gap: 6px; }
 
 /* ─── Column widths para tabelas ─── */
 .w-40 { width: 40px; }
-
-/* ─── Destaque genérico de linha em tabela (match na BD) ─── */
-.row-match { background: color-mix(in srgb, var(--color-good) 8%, transparent); }
-.row-match:hover { background: color-mix(in srgb, var(--color-good) 14%, transparent); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    UTILITY CLASSES — Substituem inline styles repetidos (auditoria Abril 2026)
@@ -3500,8 +3179,7 @@ table td.lb-col-divider {
   }
 
   /* Layout full-width, sem margens exageradas */
-  .app, .main, .master-detail, .detail, .detail-body,
-  .tournament-detail, .content-scroll, .main-content {
+  .app, .main, .master-detail, .detail {
     display: block !important;
     width: 100% !important;
     max-width: none !important;
@@ -3553,10 +3231,7 @@ table td.lb-col-divider {
   /* Manter as cores semânticas do scorecard (birdie/eagle/bogey) porque é
      precisamente o que o utilizador quer imprimir. force-color-adjust
      garante que o Chrome não descarta as cores de fundo no PDF. */
-  .sc-score, .sc-score-eagle, .sc-score-birdie,
-  .sc-score-bogey, .sc-score-dbogey, .sc-score-par,
-  .lb-acc-bird, .lb-acc-bog, .lb-acc-par,
-  [class*="score-"], [class*="-tp-"] {
+  .sc-score, .lb-acc-bird, .lb-acc-bog, .lb-acc-par, [class*="score-"], [class*="-tp-"] {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -3633,7 +3308,7 @@ table td.lb-col-divider {
   font-size: var(--fs-12);
 }
 .player-list-table thead th {
-  position: sticky; top: 0; z-index: 1;
+  position: sticky; top: 0; z-index: var(--z-base);
   background: var(--bg-header);
   color: var(--text-muted);
   font-weight: 600; text-align: left;

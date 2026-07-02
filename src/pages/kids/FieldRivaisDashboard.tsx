@@ -23,6 +23,7 @@ import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
 import { ScoutEmbed } from "../kids2/ScoutView";
+import SortableHdr from "../../ui/SortableHdr";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -1725,7 +1726,6 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir("asc"); }
   };
-  const arrow = (k: SortKey) => sortKey === k ? (sortDir === "asc" ? " ↑" : " ↓") : "";
 
   if (!data) {
     return (
@@ -1749,10 +1749,10 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "max-content" }}>
         <thead>
           <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderBottom: "1px solid var(--border)" }}>
-            <th rowSpan={2} onClick={() => onSort("rank")}
-                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
-              Pos{arrow("rank")}
-            </th>
+            <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={onSort} rowSpan={2}
+                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", width: 50, minWidth: 50 }}>
+              Pos
+            </SortableHdr>
             {data.editions.map((e, ei) => (
               <th key={e.tcode} colSpan={e.nRounds + 2 + (e.parPerRound ? 1 : 0)}
                   style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)" }}>
@@ -1799,30 +1799,30 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               // T (total) — antes de R1 — sortable, fundo destacado
               const totalKey = `${e.year}_T`;
               cells.push(
-              <th key={totalKey} onClick={() => onSort(totalKey)}
-                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card)", color: "var(--text-2)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
-                  T{arrow(totalKey)}
-                </th>
+              <SortableHdr key={totalKey} k={totalKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card)", color: "var(--text-2)", width: 44, minWidth: 44 }}>
+                  T
+                </SortableHdr>
               );
               // ±par (TP) — diferença para o par total do torneio
               if (e.parPerRound) {
                 const tpKey = `${e.year}_TP`;
                 cells.push(
-                  <th key={tpKey} onClick={() => onSort(tpKey)}
+                  <SortableHdr key={tpKey} k={tpKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
                       title={`Par por ronda: ${e.parPerRound} (total: ${e.parPerRound * e.nRounds})`}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-3)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
-                    ±par{arrow(tpKey)}
-                  </th>
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-3)", width: 44, minWidth: 44 }}>
+                    ±par
+                  </SortableHdr>
                 );
               }
               // R1, R2, R3
               for (let i = 0; i < e.nRounds; i++) {
                 const key = `${e.year}_R${i + 1}`;
                 cells.push(
-                  <th key={key} onClick={() => onSort(key)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
-                    R{i + 1}{arrow(key)}
-                  </th>
+                  <SortableHdr key={key} k={key} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", width: 38, minWidth: 38 }}>
+                    R{i + 1}
+                  </SortableHdr>
                 );
               }
               return cells;

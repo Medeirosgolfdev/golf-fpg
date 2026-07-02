@@ -1266,10 +1266,10 @@ function RivaisIntlContent() {
             : progress
               ? <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>
                   {rivals.length} · {progress.done}/{progress.total}
-                  <span style={{ display: "inline-block", width: 50, height: 4, background: "var(--border)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                  <span style={{ display: "inline-block", width: 50, height: 4, background: "var(--border)", borderRadius: "var(--radius-xs)", overflow: "hidden", position: "relative" }}>
                     <span style={{ position: "absolute", left: 0, top: 0, height: "100%",
                       width: `${Math.round(progress.done / progress.total * 100)}%`,
-                      background: "var(--color-good-dark)", borderRadius: 2, transition: "width .3s" }} />
+                      background: "var(--color-good-dark)", borderRadius: "var(--radius-xs)", transition: "width .3s" }} />
                   </span>
                 </span>
               : <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>⏳ a iniciar…</span>}

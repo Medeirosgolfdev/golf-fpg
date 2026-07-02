@@ -1054,7 +1054,7 @@ export function RoundSimulator({
               style={{
                 fontSize: "var(--fs-11)",
                 padding: "3px 10px",
-                borderRadius: 6,
+                borderRadius: "var(--radius)",
                 border: "1px solid var(--line)",
                 background: "transparent",
                 cursor: "pointer",
@@ -1071,7 +1071,7 @@ export function RoundSimulator({
               style={{
                 fontSize: "var(--fs-11)",
                 padding: "3px 10px",
-                borderRadius: 6,
+                borderRadius: "var(--radius)",
                 border: "1px solid var(--line)",
                 background: "transparent",
                 cursor: "pointer",
@@ -1087,7 +1087,7 @@ export function RoundSimulator({
               style={{
                 fontSize: "var(--fs-11)",
                 padding: "3px 10px",
-                borderRadius: 6,
+                borderRadius: "var(--radius)",
                 border: "1px solid var(--line)",
                 background: "transparent",
                 cursor: "pointer",
@@ -1103,7 +1103,7 @@ export function RoundSimulator({
             style={{
               fontSize: "var(--fs-11)",
               padding: "3px 10px",
-              borderRadius: 6,
+              borderRadius: "var(--radius)",
               border: "1px solid var(--line)",
               background: "transparent",
               cursor: "pointer",
@@ -1237,7 +1237,7 @@ export function RoundSimulator({
                           fontSize: "var(--fs-10)",
                           fontWeight: 700,
                           color: "#fff",
-                          borderRadius: 4,
+                          borderRadius: "var(--radius-sm)",
                           padding: "2px 6px",
                           background:
                             result.exceptionalAdj === -2
@@ -1351,7 +1351,7 @@ export function RoundSimulator({
                         style={{
                           width: 90,
                           padding: "4px 8px",
-                          borderRadius: 6,
+                          borderRadius: "var(--radius)",
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
@@ -1467,7 +1467,7 @@ export function RoundSimulator({
                         style={{
                           width: 80,
                           padding: "4px 8px",
-                          borderRadius: 6,
+                          borderRadius: "var(--radius)",
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
@@ -1547,7 +1547,7 @@ export function RoundSimulator({
                   style={{
                     marginTop: 8,
                     padding: "6px 10px",
-                    borderRadius: 6,
+                    borderRadius: "var(--radius)",
                     fontSize: "var(--fs-11)",
                     lineHeight: 1.55,
                     background: "var(--bg-detail)",
@@ -1570,7 +1570,7 @@ export function RoundSimulator({
                   style={{
                     marginTop: 8,
                     padding: "6px 10px",
-                    borderRadius: 6,
+                    borderRadius: "var(--radius)",
                     fontSize: "var(--fs-11)",
                     lineHeight: 1.6,
                     background:
@@ -1643,7 +1643,7 @@ export function RoundSimulator({
             alignItems: "stretch",
             gap: 0,
             marginBottom: 16,
-            borderRadius: 10,
+            borderRadius: "var(--radius-lg)",
             overflow: "hidden",
             border: "1px solid var(--border)",
             width: "fit-content",
@@ -1878,7 +1878,7 @@ export function RoundSimulator({
                 onClick={() => setImpactFull((v) => !v)}
                 style={{
                   marginLeft: "auto", border: "1px solid var(--line)", background: "transparent",
-                  cursor: "pointer", borderRadius: 6, padding: "2px 9px", fontSize: "var(--fs-11)",
+                  cursor: "pointer", borderRadius: "var(--radius)", padding: "2px 9px", fontSize: "var(--fs-11)",
                   color: "var(--text-2)", fontWeight: 600,
                 }}
               >
@@ -2083,7 +2083,7 @@ export function RoundSimulator({
                                 marginLeft: 6,
                                 background: "#fde68a",
                                 color: "var(--color-warn-dark)",
-                                borderRadius: 4,
+                                borderRadius: "var(--radius-sm)",
                                 padding: "1px 5px",
                                 fontSize: "var(--fs-10)",
                                 fontWeight: 700,

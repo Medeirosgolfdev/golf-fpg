@@ -188,7 +188,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
         <>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 18, marginBottom: 10, flexWrap: "wrap" }}>
             <div className="h-xs" style={{ marginBottom: 0 }}>Vista do campo</div>
-            <div style={{ display: "inline-flex", gap: 2, padding: 2, background: "var(--bg-muted)", borderRadius: 8 }}>
+            <div style={{ display: "inline-flex", gap: 2, padding: 2, background: "var(--bg-muted)", borderRadius: "var(--radius-md)" }}>
               {(["par", "buraco"] as const).map(m => (
                 <button
                   key={m}
@@ -196,7 +196,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   onClick={() => setViewMode(m)}
                   style={{
                     padding: "4px 12px", fontSize: "var(--fs-11)", fontWeight: 700,
-                    border: "none", borderRadius: 6, cursor: "pointer",
+                    border: "none", borderRadius: "var(--radius)", cursor: "pointer",
                     background: viewMode === m ? "var(--bg-card)" : "transparent",
                     color: viewMode === m ? "var(--text)" : "var(--text-3)",
                     boxShadow: viewMode === m ? "var(--shadow-sm)" : "none",
@@ -288,7 +288,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                       title={`Buraco ${h.hole} · Par ${h.par ?? "?"} · ${h.distance ?? "—"}m`}
                       style={{
                         display: "flex", flexDirection: "column", alignItems: "center",
-                        flex: "1 1 0", minWidth: 52, padding: "6px 4px 8px", borderRadius: 8,
+                        flex: "1 1 0", minWidth: 52, padding: "6px 4px 8px", borderRadius: "var(--radius-md)",
                         background: col?.bg ?? "var(--bg-muted)",
                         color: col?.fg ?? "var(--text-3)",
                         border: `1px solid ${col?.border ?? "var(--border)"}`,
@@ -343,7 +343,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   return (
                     <span key={p} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                       <span style={{
-                        width: 16, height: 16, borderRadius: 4,
+                        width: 16, height: 16, borderRadius: "var(--radius-sm)",
                         background: sample.bg,
                         border: `1px solid ${sample.border}`,
                       }} />

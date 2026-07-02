@@ -218,12 +218,12 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
           return (
             <div key={g.grupo} style={{
               background: "var(--bg-card)", border: "1px solid var(--border)",
-              borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
+              borderRadius: "var(--radius-md)", overflow: "hidden", boxShadow: "var(--shadow-sm)",
             }}>
               {/* Header do clube — SEM total combinado (cada escalão é um
                   campeonato à parte; a posição vive em cada sub-grupo). */}
               <div style={{ background: SINGLE_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div className="shrink-0 fw-900" style={{ width: 30, height: 30, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-16)" }}>
+                <div className="shrink-0 fw-900" style={{ width: 30, height: 30, background: "rgba(255,255,255,0.18)", borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-16)" }}>
                   {g.grupo}
                 </div>
                 <div className="flex-1 fw-700 fs-13" style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>

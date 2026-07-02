@@ -227,7 +227,7 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
 
 function HoleDial({ d }: { d: HoleDial }) {
   return (
-    <div style={{ padding: 10, border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg-card)" }}>
+    <div style={{ padding: 10, border: "1px solid var(--border)", borderRadius: "var(--radius-md)", background: "var(--bg-card)" }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
         <span style={{ fontSize: "var(--fs-16)", fontWeight: 800 }}>B{d.hole}</span>
         <span className="muted" style={{ fontSize: "var(--fs-11)" }}>par <b>{d.par}</b></span>
@@ -257,7 +257,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
   return (
     <div className="player-card-block" style={{
       border: isManuel ? "2px solid var(--color-good)" : "1px solid var(--border)",
-      borderRadius: 8, marginBottom: 8,
+      borderRadius: "var(--radius-md)", marginBottom: 8,
       background: isManuel ? "var(--bg-success-subtle)" : "var(--bg-card)",
     }}>
       <button
@@ -279,7 +279,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
           {fmtDelta(card.avgToPar)}
         </span>
         {card.category === "top21" && <span className="muted fs-11" style={{ minWidth: 50 }}>Pos {card.currentPos ?? "–"}</span>}
-        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600" style={{ background: "rgba(59, 130, 246, .15)", padding: "3px 8px", borderRadius: 6, color: "var(--color-info)" }}>Sub-12 inscrito</span>}
+        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600" style={{ background: "rgba(59, 130, 246, .15)", padding: "3px 8px", borderRadius: "var(--radius)", color: "var(--color-info)" }}>Sub-12 inscrito</span>}
       </button>
       {open && card.rounds.length > 0 && (
         <div className="bjgt-chart-scroll" style={{ padding: "0 12px 10px" }}>
@@ -505,7 +505,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* Legenda */}
       <section style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
         {(Object.keys(LABEL_INFO) as Array<keyof typeof LABEL_INFO>).map(k => (
-          <span key={k} className="fs-12 fw-600" style={{ background: LABEL_INFO[k].bg, padding: "5px 12px", borderRadius: 6, border: `1px solid ${LABEL_INFO[k].border}` }}>
+          <span key={k} className="fs-12 fw-600" style={{ background: LABEL_INFO[k].bg, padding: "5px 12px", borderRadius: "var(--radius)", border: `1px solid ${LABEL_INFO[k].border}` }}>
             {LABEL_INFO[k].emoji} {LABEL_INFO[k].text}
           </span>
         ))}
@@ -535,7 +535,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       <section>
         <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-          <div style={{ border: "2px solid var(--color-danger)", borderRadius: 8, padding: 12, background: "rgba(220, 38, 38, .04)" }}>
+          <div style={{ border: "2px solid var(--color-danger)", borderRadius: "var(--radius-md)", padding: 12, background: "rgba(220, 38, 38, .04)" }}>
             <h4 style={{ margin: "0 0 8px", color: "var(--color-danger-dark)" }}>🔴 Mais difíceis (vão preparados)</h4>
             <table className="sc-lb">
               <thead>
@@ -555,7 +555,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </tbody>
             </table>
           </div>
-          <div style={{ border: "2px solid var(--color-good)", borderRadius: 8, padding: 12, background: "rgba(22, 163, 74, .04)" }}>
+          <div style={{ border: "2px solid var(--color-good)", borderRadius: "var(--radius-md)", padding: 12, background: "rgba(22, 163, 74, .04)" }}>
             <h4 style={{ margin: "0 0 8px", color: "var(--color-good-dark)" }}>🟢 Mais fáceis (capitalizar)</h4>
             <table className="sc-lb">
               <thead>
@@ -673,7 +673,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
         <h3>5. Plano táctico buraco-a-buraco</h3>
         <ol style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 8 }}>
           {holeRecs.map(r => (
-            <li key={r.hole} className="fs-13" style={{ padding: 10, borderRadius: 6, border: `1.5px solid ${TONE_COLOR[r.type]}`, background: "var(--bg-card)" }}>
+            <li key={r.hole} className="fs-13" style={{ padding: 10, borderRadius: "var(--radius)", border: `1.5px solid ${TONE_COLOR[r.type]}`, background: "var(--bg-card)" }}>
               <strong style={{ color: TONE_COLOR[r.type] }}>B{r.hole}</strong> — {r.text}
             </li>
           ))}

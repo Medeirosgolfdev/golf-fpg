@@ -230,6 +230,29 @@ Nota: o CLAUDE.md diz `src/tokens/colors.ts`; o ficheiro real é `src/utils/colo
 
 # 2ª RONDA (2026-07-02) — escalas de design, tabelas ordenáveis e App.css profundo
 
+> **ESTADO (2026-07-02): correcções aplicadas** — ver commit "fix(css): 2ª ronda...".
+> - ✅ R2-1 na íntegra: DriveAllRoundsScorecardLB totalmente ordenável (12 chaves,
+>   modo agrupado ordena ao nível do jogador com agregação por soma);
+>   SimpleLeaderboard/GlobalJuniorPage com 10 colunas ordenáveis; colunas custom
+>   adicionadas (CLUBE+🐦/Par/■ DrivePage, Licence/SÉRIE/WC-SCR FFGPage, TEE
+>   AdmissionsTab); FieldRivaisDashboard migrado para SortableHdr (que ganhou
+>   prop `rowSpan`). Tabelas "duvidosas" ficaram por decidir (contextos especiais).
+> - ✅ R2-3: 110 classes órfãs CONFIRMADAS por token-matching (o agente tinha 8
+>   falsos "usados" por substring — ec-sum≠ec-summary, an-grid≠an-grid3, etc.) e
+>   removidas: 138 regras apagadas + 16 listas de selectores podadas (−325 linhas).
+> - ✅ R2-2: 19 z-index do App.css + 1 do FPGPage migrados para a escala --z-*;
+>   os `z-index: 4` fora da escala normalizados para --z-float(3).
+> - ✅ R2-4: novos tokens `--radius-md: 8px`, `--fs-40`, `--shadow-pop`,
+>   `--shadow-modal`; codemod borderRadius (218 substituições em 68 ficheiros,
+>   2/4/6/8/10/12 → tokens); 8 ficheiros de sombras tokenizados; 2× MONO →
+>   var(--font-mono); font-sizes fora da escala normalizados (17→fs-16,
+>   12.5→fs-12, 11.5→fs-11, 9.5px→fs-10, 40px→fs-40).
+> - ⏳ Por decidir (design): tabelas duvidosas de R2-1, cluster !important das
+>   sticky rows (R2-5), pills inline (R2-6), radius 3/5/20 sem token, fontSize
+>   26/30/38/56 (displays grandes) e ticks numéricos do Recharts.
+> - Validado: npm test (217 passed) + npm run build (limpo). O build já não
+>   suja output/player-stats.json (sincronizado no commit a5b2fa9).
+
 Dimensões não cobertas pela 1ª ronda. Verificações por amostragem confirmadas.
 
 ## R2-1. 🔴 REGRA ABSOLUTA violada — tabelas de dados sem ordenação

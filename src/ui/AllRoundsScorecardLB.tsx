@@ -92,7 +92,7 @@ export function AllRoundsScorecardLB({
     return (
       <span
         title={tee}
-        style={{ display: "inline-block", width: 12, height: 12, borderRadius: 2, background: hex, border: bdr }}
+        style={{ display: "inline-block", width: 12, height: 12, borderRadius: "var(--radius-xs)", background: hex, border: bdr }}
       />
     );
   }
@@ -270,7 +270,7 @@ export function AllRoundsScorecardLB({
                     <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>
                       {tm.teeName ? (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                          <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: hex!, border: bdr, flexShrink: 0 }} />
+                          <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: hex!, border: bdr, flexShrink: 0 }} />
                           <span>{tm.teeName}</span>
                         </span>
                       ) : (

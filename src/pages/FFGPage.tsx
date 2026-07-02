@@ -620,7 +620,7 @@ function ffgScorecardOptions(): ScorecardOptions {
 
 /* ── FFGTeeTimesTab — horas de saída a partir do JSON FFG oficial ── */
 function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
-  type SortKey = "tee" | "pos" | "nome" | "club" | "category" | "hcp";
+  type SortKey = "tee" | "pos" | "nome" | "club" | "category" | "hcp" | "licence";
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("tee");
 
   // Flatten — todos os jogadores de todas as séries com teeTime
@@ -646,6 +646,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
         case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
         case "category": v = a._serieId.localeCompare(b._serieId); break;
         case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
+        case "licence":  v = (a.license || "").localeCompare(b.license || ""); break;
       }
       return mult * v;
     });
@@ -702,7 +703,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
   const postScorecardHeaderCells = (
     <>
       <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>HORA</SortableHdr>
-      <th style={{ padding: "7px 8px", textAlign: "center", fontSize: "var(--fs-11)" }}>Licence</th>
+      <SortableHdr k="licence" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center", fontSize: "var(--fs-11)" }}>Licence</SortableHdr>
     </>
   );
 
@@ -833,7 +834,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             </div>
           </>
         ) : (
-          <div style={{ padding: 16, background: "var(--bg-muted)", borderRadius: 6, marginTop: 8 }}>
+          <div style={{ padding: 16, background: "var(--bg-muted)", borderRadius: "var(--radius)", marginTop: 8 }}>
             <p className="fs-12">
               <strong>Distâncias ainda não extraídas.</strong> Para popular esta tabela:
             </p>
@@ -841,7 +842,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
               padding: 12,
               background: "var(--bg-card)",
               border: "1px solid var(--border)",
-              borderRadius: 4,
+              borderRadius: "var(--radius-sm)",
               fontSize: "var(--fs-11)",
               overflow: "auto",
             }}>
@@ -874,7 +875,7 @@ node scripts/parse-vademecum-distances.js`}
 
 /* ── FFGResView (sistema central FFG — todas as ligas) ────────── */
 function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?: LGPIDFTournament | null }) {
-  type SortKey = "pos" | "nome" | "club" | "hcp" | "t1" | "t2" | "t3" | "t4" | "total";
+  type SortKey = "pos" | "nome" | "club" | "hcp" | "serie" | "t1" | "t2" | "t3" | "t4" | "total";
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos");
   const [serieFilter, setSerieFilter] = useState<string>(
     data.details.series[0]?.serieId || "all"
@@ -941,6 +942,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
         case "nome": v = a.name.localeCompare(b.name); break;
         case "club": v = (a.club || "").localeCompare(b.club || ""); break;
         case "hcp":  v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
+        case "serie": v = a._serieId.localeCompare(b._serieId); break;
         case "t1":   v = (a.t1 ?? 999) - (b.t1 ?? 999); break;
         case "t2":   v = (a.t2 ?? 999) - (b.t2 ?? 999); break;
         case "t3":   v = (a.t3 ?? 999) - (b.t3 ?? 999); break;
@@ -997,7 +999,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
     <>
       <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
       <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">Idx</SortableHdr>
-      <th className="lb-tee">SÉRIE</th>
+      <SortableHdr k="serie" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">SÉRIE</SortableHdr>
     </>
   );
 
@@ -1257,7 +1259,7 @@ function LGPIDFView({ data }: { data: LGPIDFTournament }) {
 }
 
 function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
-  type SortKey = "pos" | "nome" | "club" | "category" | "hcp";
+  type SortKey = "pos" | "nome" | "club" | "category" | "hcp" | "wc";
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos");
   const [catFilter, setCatFilter] = useState<string>("all");
 
@@ -1289,6 +1291,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
         case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
         case "category": v = (a.category || "").localeCompare(b.category || ""); break;
         case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
+        case "wc":       v = (b.wildCard ? 2 : b.scratch ? 1 : 0) - (a.wildCard ? 2 : a.scratch ? 1 : 0); break;
       }
       return mult * v;
     });
@@ -1342,7 +1345,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
   );
 
   const postScorecardHeaderCells = (
-    <th style={{ padding: "7px 8px", textAlign: "center" }}>WC/SCR</th>
+    <SortableHdr k="wc" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>WC/SCR</SortableHdr>
   );
 
   const filterBar = (
@@ -2074,7 +2077,7 @@ function FFGContentLegacy() {
                   background: ffgFilterIntl ? "var(--pill-intl-bg)" : "var(--bg-card)",
                   color: ffgFilterIntl ? "var(--pill-regional-bg)" : "var(--text)",
                   border: "1px solid " + (ffgFilterIntl ? "var(--pill-regional-bg)" : "var(--border)"),
-                  borderRadius: 6,
+                  borderRadius: "var(--radius)",
                 }}
               >
                 INTL ({ffgResAll.filter((t) => isIntl(t.name)).length})
@@ -2174,7 +2177,7 @@ function FFGContentLegacy() {
                               background: entry.typeCompetition === "01" ? "var(--color-ffg-dark)" : "var(--color-ffg-mid)",
                               color: "#fff",
                               padding: "1px 6px",
-                              borderRadius: 8,
+                              borderRadius: "var(--radius-md)",
                             }}>
                               {entry.typeCompetition === "01" ? "Federal" : "GP Jeunes"}
                             </span>
@@ -2188,7 +2191,7 @@ function FFGContentLegacy() {
                               background: "var(--bg-muted)",
                               color: "var(--text-2)",
                               padding: "1px 6px",
-                              borderRadius: 8,
+                              borderRadius: "var(--radius-md)",
                             }}>
                               📍 {LIGUE_LABELS[entry.ligue] || entry.ligue}
                             </span>

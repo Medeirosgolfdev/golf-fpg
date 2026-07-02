@@ -214,7 +214,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
               <span title="tclub" className="fs-10 fw-600 mono" style={{
                 background: "var(--bg-hover)", color: "var(--text-muted)",
                 border: "1px solid var(--border)",
-                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
+                borderRadius: "var(--radius-sm)", padding: "1px 6px", letterSpacing: "0.02em",
                 userSelect: "all", cursor: "text",
               }}>
                 {tournament.ccode}
@@ -223,7 +223,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             {tournament.tcode && (
               <span title="tcode" className="fs-10 fw-700 mono" style={{
                 background: "var(--accent)", color: "#fff",
-                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
+                borderRadius: "var(--radius-sm)", padding: "1px 6px", letterSpacing: "0.02em",
                 userSelect: "all", cursor: "text",
               }}>
                 {tournament.tcode}
@@ -331,7 +331,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
           padding: "10px 14px", margin: "8px 12px",
           background: "var(--bg-warn-subtle)",
           border: "1px solid var(--color-warn)",
-          borderRadius: 6,
+          borderRadius: "var(--radius)",
           color: "var(--text-1)", lineHeight: 1.45,
         }}>
           ⚠️ {(tournament as any)._note}

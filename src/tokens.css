@@ -341,6 +341,7 @@
   --radius-xs:   2px;
   --radius-sm:   4px;
   --radius:      6px;
+  --radius-md:   8px;
   --radius-lg:   10px;
   --radius-xl:   12px;
   --radius-pill: 4px;   /* raio de TODAS as pills/chips/filtros. Botão único: muda só aqui. */
@@ -357,6 +358,8 @@
   --shadow-float-hover:  0 4px 12px rgba(0, 0, 0, 0.20);
   --shadow-float-active: 0 1px 4px rgba(0, 0, 0, 0.15);
   --shadow-focus-blue:   0 0 0 2px rgba(59, 130, 246, 0.20);    /* anel de foco azul */
+  --shadow-pop:          0 6px 20px rgba(0, 0, 0, 0.25);         /* popovers/dropdowns flutuantes */
+  --shadow-modal:        0 20px 50px rgba(0, 0, 0, 0.30);        /* modais grandes */
 
 
   /* ── 15. Tipografia ────────────────────────────────────────── */
@@ -382,6 +385,7 @@
   --fs-24:  24px;
   --fs-28:  28px;
   --fs-32:  32px;
+  --fs-40:  40px;
   --fs-64:  64px;
 
   /* Aliases semânticos (preferir em componentes novos). */

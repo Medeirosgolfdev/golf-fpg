@@ -242,7 +242,7 @@ function MatchPlayResultsTable({
   const f9 = Array.from({ length: 9 }, (_, i) => i);
   const b9 = Array.from({ length: 9 }, (_, i) => i + 9);
   const cSc: React.CSSProperties = { padding: "3px 1px", textAlign: "center", fontSize: "var(--fs-11)", width: 26, minWidth: 26 };
-  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card)", zIndex: 1 };
+  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card)", zIndex: "var(--z-base)" };
   const cSum: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" };
 
   // Modo scorecard-only: só renderiza a secção de scorecards (para o tab Individual)
@@ -262,7 +262,7 @@ function MatchPlayResultsTable({
                   <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.4px" }}>
                     Match {m.match} — {c.label}
                   </div>
-                  <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+                  <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
                     <div style={{ overflowX: "auto" }}>
                       <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                         <thead>
@@ -337,11 +337,11 @@ function MatchPlayResultsTable({
             return (
               <div key={cl.key} style={{
                 background: "var(--bg-card)", border: "1px solid var(--border)",
-                borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
+                borderRadius: "var(--radius-md)", overflow: "hidden", boxShadow: "var(--shadow-sm)",
               }}>
                 <div style={{ background: MP_CLUB_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
                   <div style={{
-                    width: 34, height: 34, background: "rgba(255,255,255,0.2)", borderRadius: 6, flexShrink: 0,
+                    width: 34, height: 34, background: "rgba(255,255,255,0.2)", borderRadius: "var(--radius)", flexShrink: 0,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "var(--fs-20)", fontWeight: 900,
                   }}>{rank + 1}</div>
@@ -522,7 +522,7 @@ function MatchPlayResultsTable({
                       </div>
 
                       {/* Match table — one "Match" row per pair */}
-                      <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+                      <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
                         <div style={{ overflowX: "auto" }}>
                           <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                             <thead>
@@ -2715,7 +2715,7 @@ function Content() {
                         <div className="mt-3" style={{ display: "flex", alignItems: "center", gap: 6 }}>
                           {regionLabel && (
                             <span className="fs-10 fw-600" style={{ padding: "1px 6px",
-                              borderRadius: 10, background: "var(--bg-hover)", color: "var(--text-2)",
+                              borderRadius: "var(--radius-lg)", background: "var(--bg-hover)", color: "var(--text-2)",
                               border: "1px solid var(--border)" }}>
                               {regionLabel}
                             </span>

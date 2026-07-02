@@ -54,7 +54,7 @@ export default function NextTournamentsSection({ data, junior }: Props) {
             style={{
               display: "flex", alignItems: "center", gap: 10,
               background: "var(--bg-card)", border: "1px solid var(--border-light)",
-              borderLeft: "3px solid var(--accent)", borderRadius: 6,
+              borderLeft: "3px solid var(--accent)", borderRadius: "var(--radius)",
               padding: "8px 12px", textDecoration: "none", color: "inherit",
             }}
             title={`${r.name}${r.campo ? " · " + r.campo : ""}`}

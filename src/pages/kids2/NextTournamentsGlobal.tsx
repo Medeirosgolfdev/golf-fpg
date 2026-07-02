@@ -109,7 +109,7 @@ function Content() {
               placeholder="🔍 Jogador ou torneio…"
               style={{
                 marginLeft: "auto", padding: "5px 10px", fontSize: "var(--fs-13)",
-                border: "1px solid var(--border-light)", borderRadius: 6,
+                border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
                 background: "var(--bg-card)", color: "var(--text)", minWidth: 200,
               }} />
           </div>

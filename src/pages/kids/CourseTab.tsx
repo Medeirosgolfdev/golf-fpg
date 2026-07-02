@@ -352,7 +352,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
           padding: "6px 10px",
           background: "var(--color-warn-alpha)",
           border: "1px solid var(--color-warn-alpha)",
-          borderRadius: 6,
+          borderRadius: "var(--radius)",
         }}>
           {"⚠"} {result.note}
         </div>

@@ -14,6 +14,8 @@ import { SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { RoundPill, ESC_STYLE } from "./PillBadge";
 import { getTeeHex } from "../utils/teeColors";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
 import type { Tournament, Player, SDLookup } from "./driveTypes";
 import { isDNS } from "./driveUtils";
 import {
@@ -95,11 +97,71 @@ function DriveAllRoundsScorecardLB({
     availClubs, availEsc, availTees, clearFilter,
   } = d;
 
+  /* ── Ordenação (regra do projecto: todas as colunas clicáveis) ──
+     Modo agrupado ordena ao nível do jogador (rondas ficam juntas);
+     stats de ronda (gross/toPar/sd/…) agregam por soma nesse modo. */
+  type SortK = "pos" | "name" | "club" | "hcp" | "rnd" | "gross" | "toPar" | "sd" | "eag" | "bird" | "parstat" | "bog";
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortK>("pos");
+  const INF = 9999;
+  const mult = sortDir === "asc" ? 1 : -1;
+
+  const gSorted = useMemo(() => {
+    const sumRd = (rds: (typeof gDisplayed)[number]["rds"], f: (rd: NonNullable<(typeof gDisplayed)[number]["rds"][number]>) => number | null | undefined) => {
+      let acc: number | null = null;
+      for (const rd of rds) {
+        if (rd == null) continue;
+        const v = f(rd);
+        if (v != null) acc = (acc ?? 0) + v;
+      }
+      return acc;
+    };
+    return [...gDisplayed].sort((a, b) => {
+      const tie = (a.pos ?? INF) - (b.pos ?? INF);
+      if (sortKey === "pos") return mult * tie;
+      if (sortKey === "name") { const c = a.name.localeCompare(b.name); return c !== 0 ? mult * c : tie; }
+      if (sortKey === "club") { const c = (a.club || "").localeCompare(b.club || ""); return c !== 0 ? mult * c : tie; }
+      if (sortKey === "hcp") { const c = (a.hcp ?? INF) - (b.hcp ?? INF); return c !== 0 ? mult * c : tie; }
+      const pick = (r: typeof a) =>
+        sortKey === "gross" ? sumRd(r.rds, rd => rd.gross)
+        : sortKey === "toPar" ? sumRd(r.rds, rd => rd.toPar)
+        : sortKey === "sd" ? sumRd(r.rds, rd => rd.sd)
+        : sortKey === "eag" ? sumRd(r.rds, rd => rd.eags)
+        : sortKey === "bird" ? sumRd(r.rds, rd => rd.birds)
+        : sortKey === "parstat" ? sumRd(r.rds, rd => rd.pars)
+        : sortKey === "bog" ? sumRd(r.rds, rd => rd.bogs)
+        : null;
+      const c = (pick(a) ?? INF) - (pick(b) ?? INF);
+      return c !== 0 ? mult * c : tie;
+    });
+  }, [gDisplayed, sortKey, mult]);
+
+  const flatSorted = useMemo(() => {
+    return [...displayed].sort((a, b) => {
+      const tie = (a.pos ?? INF) - (b.pos ?? INF);
+      if (sortKey === "pos") return mult * tie;
+      if (sortKey === "name") { const c = a.name.localeCompare(b.name); return c !== 0 ? mult * c : tie; }
+      if (sortKey === "club") { const c = (a.club || "").localeCompare(b.club || ""); return c !== 0 ? mult * c : tie; }
+      if (sortKey === "hcp") { const c = (a.hcp ?? INF) - (b.hcp ?? INF); return c !== 0 ? mult * c : tie; }
+      if (sortKey === "rnd") { const c = (a.rdLabel || "").localeCompare(b.rdLabel || ""); return c !== 0 ? mult * c : tie; }
+      const pick = (r: typeof a) =>
+        sortKey === "gross" ? r.rd.gross
+        : sortKey === "toPar" ? r.rd.toPar
+        : sortKey === "sd" ? r.rd.sd
+        : sortKey === "eag" ? r.rd.eags
+        : sortKey === "bird" ? r.rd.birds
+        : sortKey === "parstat" ? r.rd.pars
+        : sortKey === "bog" ? r.rd.bogs
+        : null;
+      const c = ((pick(a) ?? INF) as number) - ((pick(b) ?? INF) as number);
+      return c !== 0 ? mult * c : tie;
+    });
+  }, [displayed, sortKey, mult]);
+
   // Convert grouped rows → ScorecardRow[] for ScorecardLeaderboard
   const groupedScorecardRows: ScorecardRow[] = useMemo(() => {
     const out: ScorecardRow[] = [];
-    for (let playerIdx = 0; playerIdx < gDisplayed.length; playerIdx++) {
-      const row = gDisplayed[playerIdx];
+    for (let playerIdx = 0; playerIdx < gSorted.length; playerIdx++) {
+      const row = gSorted[playerIdx];
       const isFirst = playerIdx === 0;
       for (let ri = 0; ri < row.rds.length; ri++) {
         const rd = row.rds[ri];
@@ -172,11 +234,11 @@ function DriveAllRoundsScorecardLB({
       }
     }
     return out;
-  }, [gDisplayed]);
+  }, [gSorted]);
 
   // Convert flat rows → ScorecardRow[]
   const flatScorecardRows: ScorecardRow[] = useMemo(() => {
-    return displayed.map((row, idx) => {
+    return flatSorted.map((row, idx) => {
       const posStr = row.isWD ? "WD" : row.pos != null ? medal(row.pos) ?? String(row.pos) : "–";
       const bg = idx % 2 === 0 ? undefined : "var(--bg-muted)";
       return {
@@ -216,23 +278,23 @@ function DriveAllRoundsScorecardLB({
         sortPos: row.pos ?? undefined,
       };
     });
-  }, [displayed]);
+  }, [flatSorted]);
 
   const prefixHeaderCells = (
     <>
-      <th className="lb-club">Clube</th>
-      <th className="lb-hcp">HCP</th>
-      <th className="lb-tee" style={{ fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--text-muted)" }}>Rnd</th>
+      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">Clube</SortableHdr>
+      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
+      <SortableHdr k="rnd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">Rnd</SortableHdr>
     </>
   );
 
   const postScorecardHeaderCells = (
     <>
-      <th className="lb-sd">SD</th>
-      <th className="lb-eag">🦅</th>
-      <th className="lb-bird">🐦</th>
-      <th className="lb-par-stat">Par</th>
-      <th className="lb-bog">■</th>
+      <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
+      <SortableHdr k="eag" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-eag">🦅</SortableHdr>
+      <SortableHdr k="bird" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-bird">🐦</SortableHdr>
+      <SortableHdr k="parstat" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-par-stat">Par</SortableHdr>
+      <SortableHdr k="bog" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-bog">■</SortableHdr>
     </>
   );
 
@@ -296,7 +358,7 @@ function DriveAllRoundsScorecardLB({
   );
 
   const modeToggle = (
-    <span style={{ display: "flex", gap: 2, marginLeft: 4, border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+    <span style={{ display: "flex", gap: 2, marginLeft: 4, border: "1px solid var(--border)", borderRadius: "var(--radius-md)", overflow: "hidden" }}>
       {([true, false] as const).map((g) => (
         <button
           key={String(g)}
@@ -336,6 +398,12 @@ function DriveAllRoundsScorecardLB({
         postScorecardColCount={5}
         showScorecard={showSC}
         onToggleScorecard={() => setShowSC((v) => !v)}
+        onSortPos={() => handleSort("pos")}
+        onSortName={() => handleSort("name")}
+        onSortToPar={() => handleSort("toPar")}
+        onSortGross={() => handleSort("gross")}
+        activeSortKey={sortKey}
+        activeSortDir={sortDir}
         filterBar={null}
       />
     </div>

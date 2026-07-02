@@ -86,7 +86,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
     <div style={{
       background: "var(--bg)",
       border: "1px solid var(--border)",
-      borderRadius: 10,
+      borderRadius: "var(--radius-lg)",
       padding: "12px 16px",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
@@ -185,7 +185,7 @@ function PosTrophy({ pos }: { pos: any }) {
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
     const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: 4, fontSize: "var(--fs-11)" }}>🏆 #{pos}</span>;
+    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: "var(--radius-sm)", fontSize: "var(--fs-11)" }}>🏆 #{pos}</span>;
   }
   return <span>#{pos}</span>;
 }

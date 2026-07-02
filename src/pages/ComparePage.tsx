@@ -409,7 +409,7 @@ function TwoTeeSDTable({
                 <span style={{
                   display: "inline-block",
                   background: c.hex, color: textOnColor(c.hex),
-                  borderRadius: 4, padding: "1px 8px",
+                  borderRadius: "var(--radius-sm)", padding: "1px 8px",
                   fontSize: "var(--fs-10)", fontWeight: 700, marginBottom: 3,
                 }}>
                   {c.tee.teeName}{!c.isChosen && " ≈"}
@@ -701,7 +701,7 @@ function CourseSideBySide({
                             {a && psA ? (
                               <span style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
                                 <span style={{ fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)", fontFamily: "var(--font-mono)" }}>B{a.hole}</span>
-                                <span style={{ ...psA, borderRadius: 6, padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{a.distance}m</span>
+                                <span style={{ ...psA, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{a.distance}m</span>
                               </span>
                             ) : (
                               <span className="muted" style={{ fontSize: "var(--fs-12)", padding: "3px 10px" }}>–</span>
@@ -722,7 +722,7 @@ function CourseSideBySide({
                           <div key={`b${i}`} style={{ display: "flex", justifyContent: "flex-start", paddingLeft: 8 }}>
                             {b && psB ? (
                               <span style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
-                                <span style={{ ...psB, borderRadius: 6, padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{b.distance}m</span>
+                                <span style={{ ...psB, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{b.distance}m</span>
                                 <span style={{ fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)", fontFamily: "var(--font-mono)" }}>B{b.hole}</span>
                               </span>
                             ) : (
@@ -748,7 +748,7 @@ function CourseSideBySide({
             onClick={() => setShowHoles(v => !v)}
             style={{
               background: "var(--bg-muted)", border: "1px solid var(--border)",
-              borderRadius: 6, padding: "4px 12px", fontSize: "var(--fs-12)",
+              borderRadius: "var(--radius)", padding: "4px 12px", fontSize: "var(--fs-12)",
               fontWeight: 600, cursor: "pointer", color: "var(--text-2)",
             }}
           >
@@ -765,7 +765,7 @@ function CourseSideBySide({
                       <span style={{
                         display: "inline-block", marginLeft: 6,
                         background: teeHex(teeA), color: textOnColor(teeHex(teeA)),
-                        borderRadius: 4, padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
+                        borderRadius: "var(--radius-sm)", padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
                       }}>{teeA.teeName}</span>
                     </th>
                     <th className="r">Dist A (m)</th>
@@ -774,7 +774,7 @@ function CourseSideBySide({
                       <span style={{
                         display: "inline-block", marginLeft: 6,
                         background: teeHex(teeB), color: textOnColor(teeHex(teeB)),
-                        borderRadius: 4, padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
+                        borderRadius: "var(--radius-sm)", padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
                       }}>{teeB.teeName}</span>
                     </th>
                     <th className="r">Dist B (m)</th>
@@ -986,7 +986,7 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
                   placeholder="ex: 9.5" step="0.1" min="-4" max="54"
                   style={{
                     width: 70, padding: "3px 7px", fontSize: "var(--fs-12)",
-                    borderRadius: 4, border: "1px solid var(--border)",
+                    borderRadius: "var(--radius-sm)", border: "1px solid var(--border)",
                     background: "var(--bg)", color: "var(--text)",
                   }}
                 />

@@ -1083,7 +1083,7 @@ function CircuitSidebar({
                       </span>
                       <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
                         {srcLabel && (
-                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: "var(--radius-md)", background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
                         )}
                         {nP > 0 && <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{nP} jog</span>}
                       </div>

@@ -306,7 +306,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
   const item = (label: string, toPar: number | null, dist: ScoringDist, fieldToPar: number | null) => {
     const pp = distPct(dist);
     return (
-      <div style={{ padding: "12px 16px", border: "1px solid var(--border-light)", borderRadius: 6 }}>
+      <div style={{ padding: "12px 16px", border: "1px solid var(--border-light)", borderRadius: "var(--radius)" }}>
         <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 4 }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
           <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)" }}>
@@ -431,8 +431,8 @@ function HolesPane({ player, field }: {
         </div>
       </div>
       <div style={{ display: "flex", gap: 14, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: 2, marginRight: 4 }} />jogador</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalao)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />jogador</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />field (escalao)</span>
       </div>
     </div>
   );

@@ -940,8 +940,8 @@ export default function USKidsFieldPage() {
                     : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
                 </span>
               </div>
-              <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-                <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+              <div style={{ height:4, borderRadius: "var(--radius-xs)", background:"var(--border)", overflow:"hidden" }}>
+                <div style={{ height:"100%", borderRadius: "var(--radius-xs)", width:`${pct}%`, background:"var(--accent)" }} />
               </div>
             </div>
           )}
@@ -996,7 +996,7 @@ export default function USKidsFieldPage() {
             style={tab === tb.id ? { flexShrink:0 } : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
             {tb.label}
             {tb.badge > 0 && (
-              <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius:8,
+              <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius: "var(--radius-md)",
                 background: tab === tb.id ? "var(--overlay-white-25)" : "var(--bg-hover)",
                 color: tab === tb.id ? "#fff" : "var(--text-3)",
               }}>{tb.badge}</span>

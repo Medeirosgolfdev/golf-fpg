@@ -165,7 +165,7 @@ function PosBadge({ pos }: { pos: number }) {
       style={{
         display: "inline-block",
         padding: "2px 6px",
-        borderRadius: 4,
+        borderRadius: "var(--radius-sm)",
         background: s.bg,
         color: s.fg,
         fontWeight: 700,
@@ -305,7 +305,7 @@ export default function AtletaSearchPanel({
           padding: "12px 16px",
           background: "var(--bg-muted)",
           border: "1px solid var(--border)",
-          borderRadius: 8,
+          borderRadius: "var(--radius-md)",
           marginBottom: 12,
         }}
       >
@@ -322,7 +322,7 @@ export default function AtletaSearchPanel({
             maxWidth: 480,
             padding: "8px 12px",
             border: "1px solid var(--border)",
-            borderRadius: 6,
+            borderRadius: "var(--radius)",
             fontSize: "var(--fs-14)",
             background: "var(--bg-card)",
             color: "var(--text-1)",
@@ -343,7 +343,7 @@ export default function AtletaSearchPanel({
         <div
           style={{
             border: "1px solid var(--border)",
-            borderRadius: 8,
+            borderRadius: "var(--radius-md)",
             overflow: "hidden",
             marginBottom: 12,
           }}
@@ -396,7 +396,7 @@ export default function AtletaSearchPanel({
         <div
           style={{
             border: "1px solid var(--border)",
-            borderRadius: 8,
+            borderRadius: "var(--radius-md)",
             overflow: "hidden",
           }}
         >
@@ -445,7 +445,7 @@ export default function AtletaSearchPanel({
                 fontSize: "var(--fs-12)",
                 background: "var(--bg-card)",
                 border: "1px solid var(--border)",
-                borderRadius: 4,
+                borderRadius: "var(--radius-sm)",
                 cursor: "pointer",
                 color: "var(--text-1)",
               }}

@@ -883,7 +883,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {searchOpen && searchResults.length > 0 && (
                 <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
                   background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                  borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-lg)",
                   maxHeight: 320, overflowY: "auto", zIndex: "var(--z-sidebar)" }}>
                   {searchResults.map(ev => {
                     const cal = CAL_MAP.get(ev.calId);

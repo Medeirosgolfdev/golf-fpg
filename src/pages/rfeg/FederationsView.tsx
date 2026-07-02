@@ -331,7 +331,7 @@ export function RFEGFederationsView() {
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 6, fontSize: "var(--fs-12)" }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "var(--fs-12)" }}>
         <strong>⚠ Estrutura federativa do golfe espanhol.</strong> A nível nacional
         existe a <strong>RFEG</strong> (Madrid, sede do golfe federado). Sob a sua tutela
         coexistem <strong>19 federações territoriais</strong> que organizam circuitos
@@ -341,22 +341,22 @@ export function RFEGFederationsView() {
       </div>
 
       <div style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: 6, border: "1px solid var(--border)" }}>
+        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
           <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{ncFeds.length}</div>
           <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
           <div className="fs-10" style={{ marginTop: 4 }}>{totalScraped} torneios indexados</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: 6, border: "1px solid var(--border)" }}>
+        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
           <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{gdFeds.length}</div>
           <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
           <div className="fs-10" style={{ marginTop: 4 }}>{totalGdScraped} games descobertos</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: 6, border: "1px solid var(--border)" }}>
+        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
           <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-2)" }}>{ownFeds.length}</div>
           <div className="fs-11 muted">com site próprio</div>
           <div className="fs-10" style={{ marginTop: 4 }}>sem dados scrapados</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: 6, border: "1px solid var(--border)" }}>
+        <div style={{ padding: 12, background: "var(--bg-muted)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
           <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-3)" }}>{emptyFeds.length}</div>
           <div className="fs-11 muted">delegações</div>
           <div className="fs-10" style={{ marginTop: 4 }}>Ceuta + Melilla</div>

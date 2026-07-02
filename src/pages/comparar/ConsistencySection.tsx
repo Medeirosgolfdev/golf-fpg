@@ -66,7 +66,7 @@ function MiniDonut({ pct, value, color, label, n, highlight = false }: {
 
 /** Mini barra multi-segmento para distribuição eagle→dbl+ (20px altura). */
 function DistBar({ dist, height = 8 }: { dist: ScoreDistBucket; height?: number }) {
-  if (dist.total === 0) return <div style={{ height, background:"var(--border-light)", borderRadius:4 }} />;
+  if (dist.total === 0) return <div style={{ height, background:"var(--border-light)", borderRadius: "var(--radius-sm)" }} />;
   const segs = [
     { pct: pctVal(dist.eagle,  dist.total), c: C_EAGLE  },
     { pct: pctVal(dist.birdie, dist.total), c: C_BIRDIE },
@@ -76,7 +76,7 @@ function DistBar({ dist, height = 8 }: { dist: ScoreDistBucket; height?: number 
     { pct: pctVal(dist.triple, dist.total), c: C_TRIP   },
   ];
   return (
-    <div style={{ display:"flex", height, borderRadius:4, overflow:"hidden", background:"var(--border-light)" }}>
+    <div style={{ display:"flex", height, borderRadius: "var(--radius-sm)", overflow:"hidden", background:"var(--border-light)" }}>
       {segs.map((s, i) => s.pct >= 0.5 ? (
         <div key={i} style={{ width:`${s.pct}%`, background: s.c }} />
       ) : null)}

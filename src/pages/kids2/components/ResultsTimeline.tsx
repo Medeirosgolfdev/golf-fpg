@@ -149,7 +149,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       </div>
 
       {sourcesAvailable.length > 1 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10, padding: "8px 10px", background: "var(--bg-muted)", borderRadius: 6, alignItems: "center" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10, padding: "8px 10px", background: "var(--bg-muted)", borderRadius: "var(--radius)", alignItems: "center" }}>
           <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 2 }}>
             Fonte
           </span>
@@ -211,7 +211,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                 justifyContent: "space-between",
                 padding: "6px 8px",
                 background: "var(--bg-muted)",
-                borderRadius: 4,
+                borderRadius: "var(--radius-sm)",
                 cursor: "pointer",
                 marginBottom: 4,
               }}
@@ -255,7 +255,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           </div>
         );
       })}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, padding: "8px 10px", fontSize: "var(--fs-10)", color: "var(--text-3)", background: "var(--bg-muted)", borderRadius: 6 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, padding: "8px 10px", fontSize: "var(--fs-10)", color: "var(--text-3)", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
           <span style={{ background: "var(--medal-gold-bg)", color: "var(--medal-gold-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #1</span> ouro
         </span>

@@ -378,7 +378,7 @@ export function ScorecardLB({
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
               style={{
                 fontSize: "var(--fs-9)", lineHeight: 1.4, padding: "1px 6px",
-                borderRadius: 8, background: "var(--bg-warn-subtle)",
+                borderRadius: "var(--radius-md)", background: "var(--bg-warn-subtle)",
                 color: "var(--color-warn-dark)",
                 border: "1px solid var(--color-warn)",
                 cursor: "help", fontWeight: 700, whiteSpace: "nowrap",
@@ -513,7 +513,7 @@ export function ScorecardLB({
                 const bdr = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
                 return (
                   <span key={tn} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
-                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: bdr, flexShrink: 0 }} />
+                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: "var(--radius-xs)", background: hex, border: bdr, flexShrink: 0 }} />
                     <span>{cr}/{slope}</span>
                   </span>
                 );

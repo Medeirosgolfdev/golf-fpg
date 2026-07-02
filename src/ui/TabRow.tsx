@@ -64,7 +64,7 @@ function TabRow<K>({ tabs, active, onChange, children, className, style }: TabRo
             {label}
             {count != null && count > 0 && (
               <span className="fs-10 fw-700" style={{
-                marginLeft: 4, padding: "0 5px", borderRadius: 8,
+                marginLeft: 4, padding: "0 5px", borderRadius: "var(--radius-md)",
                 background: isActive ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
                 color: isActive ? "#fff" : "var(--text-3)",
               }}>{count}</span>

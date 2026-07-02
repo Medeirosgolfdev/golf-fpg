@@ -230,7 +230,7 @@ export function ScorecardLeaderboard({
                   <td className="sticky-col-0" />
                   <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: hex, border: bdr, flexShrink: 0 }} />
+                      <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: hex, border: bdr, flexShrink: 0 }} />
                       <span>m</span>
                     </span>
                   </td>

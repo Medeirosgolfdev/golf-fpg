@@ -129,7 +129,7 @@ function PosBadge({ pos }: { pos: number }) {
   const s = styles[pos] || { bg: "var(--bg-muted)", fg: "var(--text-2)", label: pos + "º" };
   return (
     <span style={{
-      display: "inline-block", padding: "2px 6px", borderRadius: 4,
+      display: "inline-block", padding: "2px 6px", borderRadius: "var(--radius-sm)",
       background: s.bg, color: s.fg, fontWeight: 700, fontSize: "var(--fs-11)",
       whiteSpace: "nowrap", letterSpacing: 0.2,
     }}>
@@ -190,7 +190,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   const totalPodium = athletes.reduce((s, a) => s + a.podiums, 0);
 
   return (
-    <section style={{ margin: "16px 12px 28px", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+    <section style={{ margin: "16px 12px 28px", border: "1px solid var(--border)", borderRadius: "var(--radius-md)", overflow: "hidden" }}>
       <header style={{
         padding: "10px 14px", background: "var(--bg-muted)",
         borderBottom: "1px solid var(--border)",

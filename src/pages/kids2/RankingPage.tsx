@@ -122,7 +122,7 @@ function TierBadge({ tier }: { tier: TierKey }) {
   const c = getTierColors(tier);
   return (
     <span style={{
-      display: "inline-block", padding: "2px 8px", borderRadius: 12,
+      display: "inline-block", padding: "2px 8px", borderRadius: "var(--radius-xl)",
       fontSize: "var(--fs-11)", fontWeight: 700,
       background: c.bg, color: c.fg, whiteSpace: "nowrap",
     }}>
@@ -137,7 +137,7 @@ function JourneyChip({ item }: { item: JourneyItem }) {
       title={`${item.name} | ${item.flightLabel} | ${formatStars(item.stars)}`}
       style={{
         display: "inline-flex", alignItems: "center", gap: 3,
-        padding: "2px 7px", borderRadius: 8, fontSize: "var(--fs-11)",
+        padding: "2px 7px", borderRadius: "var(--radius-md)", fontSize: "var(--fs-11)",
         background: posBg(item.pos),
         color: posColor(item.pos),
         fontWeight: item.pos != null && item.pos <= 3 ? 700 : 500,
@@ -384,7 +384,7 @@ export default function RankingPage() {
             placeholder="🔍 Nome do jogador…"
             style={{
               marginLeft: "auto", padding: "5px 10px", fontSize: "var(--fs-13)",
-              border: "1px solid var(--border-light)", borderRadius: 6,
+              border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
               background: "var(--bg-card)", color: "var(--text)", minWidth: 200,
             }}
           />
@@ -399,7 +399,7 @@ export default function RankingPage() {
               const c = getTierColors(t);
               return (
                 <span key={t} style={{
-                  padding: "1px 8px", borderRadius: 10,
+                  padding: "1px 8px", borderRadius: "var(--radius-lg)",
                   fontSize: "var(--fs-11)", fontWeight: 600,
                   background: c.bg, color: c.fg,
                 }}>

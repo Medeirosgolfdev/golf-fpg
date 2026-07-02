@@ -9,13 +9,14 @@ interface SortableHdrProps<K extends string = string> {
   className?: string;
   style?: React.CSSProperties;
   title?: string;
+  rowSpan?: number;
 }
 
 const ARROW_UP = "▲";
 const ARROW_DOWN = "▼";
 
 export default function SortableHdr<K extends string = string>({
-  k, sortKey, sortDir, onSort, children, className, style, title,
+  k, sortKey, sortDir, onSort, children, className, style, title, rowSpan,
 }: SortableHdrProps<K>) {
   const active = sortKey === k;
   const arrow = sortDir === "asc" ? ARROW_UP : ARROW_DOWN;
@@ -25,6 +26,7 @@ export default function SortableHdr<K extends string = string>({
   return (
     <th
       className={"lb-sortable " + (className || "")}
+      rowSpan={rowSpan}
       style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
       title={title ?? defaultTitle}
       onClick={() => onSort(k)}

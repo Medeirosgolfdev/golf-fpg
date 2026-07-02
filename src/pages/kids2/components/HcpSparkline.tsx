@@ -123,13 +123,13 @@ function HcpHistoryModal({
         onClick={(e) => e.stopPropagation()}
         style={{
           background: "var(--bg-card)",
-          borderRadius: 8,
+          borderRadius: "var(--radius-md)",
           maxWidth: 600,
           width: "100%",
           maxHeight: "85vh",
           overflow: "auto",
           padding: 20,
-          boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+          boxShadow: "var(--shadow-modal)",
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
@@ -141,7 +141,7 @@ function HcpHistoryModal({
             style={{
               background: "transparent",
               border: "1px solid var(--border-light)",
-              borderRadius: 4,
+              borderRadius: "var(--radius-sm)",
               padding: "4px 10px",
               cursor: "pointer",
               fontSize: "var(--fs-13)",

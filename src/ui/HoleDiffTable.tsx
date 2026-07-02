@@ -12,7 +12,7 @@ import type { Tee } from "../data/types";
 import { getTeeHex } from "../utils/teeColors";
 import { buildReach, type HoleReach } from "../utils/reach";
 
-const MONO = "'JetBrains Mono', monospace";
+const MONO = "var(--font-mono)";
 
 export interface ReachTee { tee: Tee; label?: React.ReactNode }
 

@@ -201,7 +201,7 @@ export default function Sidebar({
             width: "100%",
             padding: "6px 10px",
             border: "1px solid var(--border)",
-            borderRadius: 6,
+            borderRadius: "var(--radius)",
             fontSize: "var(--fs-13)",
             background: "var(--bg)",
             color: "var(--text)",
@@ -322,14 +322,14 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
         <span style={{ fontSize: "var(--fs-13)", flexShrink: 0 }}>{flagEmoji}</span>
         <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {junior.canonicalName}
-          {isManuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 4, background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
+          {isManuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: "var(--radius-sm)", background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
         </span>
         <span style={{ flexShrink: 0, fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-3)" }}>{tournCount}</span>
       </div>
       <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
         {club && <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>🏌️ {club}</span>}
         {shared > 0 && (
-          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)", fontWeight: 700 }}>
+          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: "var(--radius-sm)", background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)", fontWeight: 700 }}>
             {shared}× M
           </span>
         )}

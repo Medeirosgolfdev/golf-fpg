@@ -506,7 +506,7 @@ function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string 
 
   return (
     <div style={{ flex: 1, minWidth: 220, padding: "10px 12px", background: "var(--bg-card)",
-                  borderRadius: 8, border: "1px solid var(--border-light)" }}>
+                  borderRadius: "var(--radius-md)", border: "1px solid var(--border-light)" }}>
       {label && <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>{label}</div>}
       <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
       <div style={{ minWidth: 150 }}>
@@ -584,7 +584,7 @@ function PreviousEditionPanel({ prevTcode, resultsData }: {
   return (
     <details style={{ marginBottom: 14 }} open>
       <summary style={{ cursor: "pointer", fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-2)",
-                        padding: "8px 12px", background: "var(--bg-muted)", borderRadius: 6,
+                        padding: "8px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)",
                         listStyle: "none", display: "flex", alignItems: "center", gap: 8 }}>
         <span>📋</span>
         <span>Edição anterior: <strong style={{ color: "var(--text)" }}>{prevEntry.name}</strong></span>
@@ -1008,7 +1008,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
           marginTop: 14, marginBottom: 14, padding: "10px 14px",
           background: "var(--bg-success-subtle)",
           border: "1px solid var(--border-success)",
-          borderRadius: 8, display: "flex", alignItems: "center", gap: 16,
+          borderRadius: "var(--radius-md)", display: "flex", alignItems: "center", gap: 16,
         }}>
           <span style={{ fontSize: "var(--fs-18)", flexShrink: 0 }}>{ICON_SWORDS}</span>
           <div style={{ flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -1022,7 +1022,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
             </span>
           </div>
           <Link to={"/kids2/" + manuel.id}
-                style={{ fontSize: "var(--fs-12)", padding: "5px 10px", borderRadius: 6,
+                style={{ fontSize: "var(--fs-12)", padding: "5px 10px", borderRadius: "var(--radius)",
                          background: "var(--color-good-dark)", color: "var(--bg)",
                          textDecoration: "none", fontWeight: 600 }}>
             Ver perfil do Manuel {ICON_EXTERNAL}
@@ -1032,7 +1032,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
 
       {isFieldOnlySource && kpis.fieldOnlyCount > 0 && (
         <div style={{ background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)",
-                      padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: "var(--fs-12)" }}>
+                      padding: "8px 12px", borderRadius: "var(--radius)", marginBottom: 12, fontSize: "var(--fs-12)" }}>
           {kpis.fieldOnlyCount} inscritos sem perfil canonico no nosso sistema (apenas nome + pais).
           Os scores historicos, tier, wins e diff vs Manuel nao estao disponiveis para estes.
         </div>
@@ -1127,7 +1127,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
     </div>;
   }
   return (
-    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, overflowX: "auto" }}>
+    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "var(--radius-md)", overflowX: "auto" }}>
       <table className="dtable">
         <thead style={{ background: "var(--bg-muted)", borderBottom: "1px solid var(--border)" }}>
           <tr>
@@ -1207,7 +1207,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                 <td style={tdStyle}>
                   {row.tier ? (() => {
                     const c = getTierColors(row.tier);
-                    return <span style={{ background: c.bg, color: c.fg, fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
+                    return <span style={{ background: c.bg, color: c.fg, fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: "var(--radius-lg)", fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
                   })() : <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>{row.fieldOnly ? "sem dados" : "-"}</span>}
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center", color: row.hcp != null ? "var(--text)" : "var(--text-3)", fontWeight: row.hcp != null ? 600 : 400 }}>
@@ -1254,7 +1254,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                         const m = CIRCUIT_CHIP[c];
                         return (
                           <span key={c} title={m?.label || c}
-                            style={{ fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 4, background: m?.bg || "var(--bg-muted)", color: m?.fg || "var(--text-2)" }}>
+                            style={{ fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: "var(--radius-sm)", background: m?.bg || "var(--bg-muted)", color: m?.fg || "var(--text-2)" }}>
                             {c}
                           </span>
                         );
@@ -1273,7 +1273,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                           <a key={r.circuit + ":" + r.tournamentId} href={r.link} target="_blank" rel="noopener noreferrer"
                             title={`${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`}
                             style={{
-                              fontSize: "var(--fs-9)", fontWeight: 600, padding: "1px 6px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap",
+                              fontSize: "var(--fs-9)", fontWeight: 600, padding: "1px 6px", borderRadius: "var(--radius-lg)", textDecoration: "none", whiteSpace: "nowrap",
                               background: "var(--bg-info-subtle)", color: "var(--color-info-dark)", border: "1px solid var(--border-info)",
                             }}>
                             {r.circuit === "fpg" ? "🇵🇹 " : ""}{shortReg(r.name)} · {fmtRegDate(r.date)}
@@ -1305,7 +1305,7 @@ function ThreatChip({ level, reasons }: { level: ThreatLevel; reasons: string[] 
     <span title={tip}
           style={{
             display: "inline-block", background: m.bg, color: m.fg,
-            border: "1px solid " + m.border, borderRadius: 10,
+            border: "1px solid " + m.border, borderRadius: "var(--radius-lg)",
             fontSize: "var(--fs-10)", fontWeight: 700, padding: "2px 8px", whiteSpace: "nowrap",
           }}>
       {m.label}

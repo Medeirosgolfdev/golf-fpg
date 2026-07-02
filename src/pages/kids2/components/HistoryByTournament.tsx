@@ -133,7 +133,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
             fontSize: "var(--fs-12)",
             background: "var(--bg-muted)",
             border: "1px solid var(--border-light)",
-            borderRadius: 6,
+            borderRadius: "var(--radius)",
             color: "var(--text-2)",
             cursor: "pointer",
             fontWeight: 600,
@@ -144,7 +144,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       )}
 
       {oneOffs.length > 0 && (
-        <div style={{ marginTop: 12, padding: "8px 12px", background: "var(--bg-muted)", border: "1px solid var(--border-light)", borderRadius: 6 }}>
+        <div style={{ marginTop: 12, padding: "8px 12px", background: "var(--bg-muted)", border: "1px solid var(--border-light)", borderRadius: "var(--radius)" }}>
           <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.4 }}>
             Edições únicas · {oneOffs.length}
           </div>
@@ -231,7 +231,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
     <div style={{
       background: "var(--bg)",
       border: "1px solid var(--border)",
-      borderRadius: 6,
+      borderRadius: "var(--radius)",
       overflow: "hidden",
     }}>
       <div
@@ -279,7 +279,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
         </div>
         {trend && (
           <span style={{
-            fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: 10, fontWeight: 700,
+            fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: "var(--radius-lg)", fontWeight: 700,
             background: trend.bg, color: trend.fg, border: `1px solid ${trend.fg}`,
             whiteSpace: "nowrap", flexShrink: 0,
           }} title={trend.title}>
@@ -458,7 +458,7 @@ function PosBadge({ pos, small }: { pos: number | null | undefined; small?: bool
         color: fg,
         fontWeight: 700,
         padding: small ? "1px 5px" : "2px 6px",
-        borderRadius: 4,
+        borderRadius: "var(--radius-sm)",
         fontSize: small ? 10 : 11,
       }}>🏆 #{pos}</span>
     );

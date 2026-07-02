@@ -67,7 +67,7 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
           segmento Par (transparente, mostra fundo claro do contentor). */}
       <div style={{
         display: "flex", height: 26,
-        borderRadius: 6, overflow: "hidden",
+        borderRadius: "var(--radius)", overflow: "hidden",
         border: "1px solid var(--border-light)",
         background: "var(--bg)",
       }}>
@@ -143,7 +143,7 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
   return (
     <div style={{
       background: "var(--bg-muted)",
-      borderRadius: 6,
+      borderRadius: "var(--radius)",
       padding: "8px 10px",
     }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>

@@ -2016,7 +2016,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 6, fontSize: "var(--fs-12)" }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "var(--fs-12)" }}>
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
@@ -2098,7 +2098,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
           padding: 12,
           background: "var(--bg-muted)",
           border: "1px solid var(--border)",
-          borderRadius: 4,
+          borderRadius: "var(--radius-sm)",
           fontSize: "var(--fs-12)",
           overflow: "auto",
         }}>
@@ -2447,7 +2447,7 @@ export function RFEGPageLegacy() {
                     >
                       <div className="course-item-name">{entry.name}</div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
-                        <span className="chip" style={{ fontSize: "var(--fs-9)", background: sourceColor, color: sourceFg, padding: "1px 6px", borderRadius: 8 }}>{sourceLabel}</span>
+                        <span className="chip" style={{ fontSize: "var(--fs-9)", background: sourceColor, color: sourceFg, padding: "1px 6px", borderRadius: "var(--radius-md)" }}>{sourceLabel}</span>
                         {entry.category && (() => {
                           const cat = SUB_TO_ES_TERM[entry.category] || entry.category;
                           return <EscPill esc={cat} />;

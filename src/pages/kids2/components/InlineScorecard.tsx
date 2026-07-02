@@ -109,7 +109,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
     <div style={{
       background: "var(--bg-card)",
       border: "1px solid var(--border)",
-      borderRadius: 8,
+      borderRadius: "var(--radius-md)",
       padding: "12px 16px",
       marginTop: 6,
     }}>

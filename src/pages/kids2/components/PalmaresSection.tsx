@@ -93,7 +93,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
           style={{
             marginTop: 10, padding: "6px 14px",
             background: "var(--bg-muted)", border: "1px solid var(--border-light)",
-            borderRadius: 6, fontSize: "var(--fs-12)", fontWeight: 600,
+            borderRadius: "var(--radius)", fontSize: "var(--fs-12)", fontWeight: 600,
             color: "var(--text-2)", cursor: "pointer",
             width: "100%",
           }}
@@ -107,7 +107,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
           style={{
             marginTop: 10, padding: "6px 14px",
             background: "var(--bg)", border: "1px solid var(--border-light)",
-            borderRadius: 6, fontSize: "var(--fs-11)", fontWeight: 600,
+            borderRadius: "var(--radius)", fontSize: "var(--fs-11)", fontWeight: 600,
             color: "var(--text-3)", cursor: "pointer",
             width: "100%",
           }}
@@ -134,7 +134,7 @@ function WinCard({ win }: { win: WinCard }) {
       background: "var(--bg-card)",
       border: "1px solid var(--border-light)",
       borderLeft: "3px solid var(--medal-gold-strong)",
-      borderRadius: 6,
+      borderRadius: "var(--radius)",
       padding: "10px 12px",
       display: "flex", flexDirection: "column", gap: 6,
       minHeight: 90,
