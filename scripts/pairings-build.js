@@ -14,6 +14,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA = path.join(ROOT, "public", "data");
@@ -43,7 +44,7 @@ function normIsoDate(s) {
   const t = String(s).trim();
   if (/^\d{4}-\d{2}-\d{2}/.test(t)) return t.slice(0, 10);
   const dn = t.match(/^\/Date\((\d+)\)\/?$/);
-  if (dn) return new Date(Number(dn[1])).toISOString().slice(0, 10);
+  if (dn) return lisbonCivilDayStr(Number(dn[1])); // meia-noite Lisboa; UTC dava dia -1 no verão
   const m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m) {
     const a = Number(m[1]), b = Number(m[2]), y = m[3];

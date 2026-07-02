@@ -36,6 +36,7 @@
 const fs   = require("fs");
 const path = require("path");
 const { loadCookieHeader } = require("./lib/cookies");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const ROOT = path.resolve(__dirname, "..");
 const COOKIES_PATH   = path.join(ROOT, "api", ".scoring-datagolf-cookies.json");
@@ -76,13 +77,13 @@ function loadCookies() {
   });
 }
 
-// ── .NET /Date(ms)/ → ISO YYYY-MM-DD ──────────────────────────────
+// ── .NET /Date(ms)/ → ISO YYYY-MM-DD (dia civil de Lisboa) ────────
+// Os epochs codificam meia-noite em hora de Lisboa; converter via
+// toISOString() dava o dia -1 no horário de verão (Abril-Outubro).
 function parseNetDate(s) {
   if (!s || typeof s !== "string") return null;
   const m = s.match(/^\/Date\((-?\d+)\)\/$/);
-  if (!m) return null;
-  const d = new Date(parseInt(m[1], 10));
-  return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+  return m ? lisbonCivilDayStr(parseInt(m[1], 10)) : null;
 }
 
 const DATE_FIELDS = new Set(["birthdate", "admission_date", "last_hcp_date", "dt_aniv"]);

@@ -48,6 +48,7 @@ const fs   = require("fs");
 const path = require("path");
 const { loadCookieHeader } = require("./lib/cookies");
 const { writeJsonAtomic }  = require("./lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT_DEFAULT  = path.join(ROOT, "public", "data", "federados-pp.json");
@@ -121,13 +122,12 @@ async function warmup(jar, extraCookie) {
   return -1;
 }
 
-// ── .NET /Date(ms)/ → ISO YYYY-MM-DD ──────────────────────────────
+// ── .NET /Date(ms)/ → ISO YYYY-MM-DD (dia civil de Lisboa) ────────
+// toISOString() dava o dia -1 no horário de verão (Abril-Outubro).
 function netDate(s) {
   if (!s || typeof s !== "string") return null;
   const m = s.match(/\/Date\((-?\d+)\)\//);
-  if (!m) return null;
-  const d = new Date(parseInt(m[1], 10));
-  return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+  return m ? lisbonCivilDayStr(parseInt(m[1], 10)) : null;
 }
 
 function trim(r) {
