@@ -41,7 +41,12 @@ const PLAYERS_PATHS = [
 ].filter((p) => fs.existsSync(p));
 
 const FEDERADOS = path.join(ROOT, "public", "data", "federados.json");
-const FEDERADOS_INATIVOS = path.join(ROOT, "public", "data", "federados-inativos.json");
+// Inactivos: ficheiro pesado movido para data-archive/ em 2026-06-12 — sem este
+// fallback os órfãos sem cadastro activo ficavam com name = nº de federado.
+const FEDERADOS_INATIVOS = [
+  path.join(ROOT, "public", "data", "federados-inativos.json"),
+  path.join(ROOT, "data-archive", "federados-inativos.json"),
+].find((p) => fs.existsSync(p)) || null;
 const OUTPUT = path.join(ROOT, "output");
 
 const useColor = process.stdout.isTTY;
@@ -110,17 +115,23 @@ if (PLAYERS_PATHS.length === 0) {
 const players = readJson(PLAYERS_PATHS[0]);
 const beforeCount = Object.keys(players).length;
 
-// índice de federados (activos + inactivos) por federation_code
-const fedById = new Map();
-for (const file of [FEDERADOS, FEDERADOS_INATIVOS]) {
-  if (!fs.existsSync(file)) continue;
+// índice de federados por federation_code
+// fedById = só ACTIVOS (alimenta o critério de juniores do passo 1);
+// inativosById = fallback usado apenas para resolver órfãos (passo 2) —
+// senão os órfãos sem cadastro activo ficam com name = nº de federado.
+function loadFedIndex(file) {
+  const map = new Map();
+  if (!file || !fs.existsSync(file)) return map;
   const doc = readJson(file);
   const list = Array.isArray(doc) ? doc : doc.players || [];
   for (const f of list) {
     const code = String(f.federation_code);
-    if (code && !fedById.has(code)) fedById.set(code, f);
+    if (code && !map.has(code)) map.set(code, f);
   }
+  return map;
 }
+const fedById = loadFedIndex(FEDERADOS);
+const inativosById = loadFedIndex(FEDERADOS_INATIVOS);
 
 // órfãos: pastas output/<nfed> com data.json mas sem entrada em players.json
 const orphans = new Set();
@@ -152,6 +163,28 @@ for (const [code, p] of Object.entries(players)) {
   }
 }
 
+// 0.5) REPARAÇÃO — entradas nossas que ficaram com nome-placeholder
+//      (name = nº de federado, criadas quando o fed não tinha cadastro nos
+//      activos). Re-resolve contra activos + inactivos, preservando tags e
+//      campos curados (altNames/extra/lastRound).
+const repaired = [];
+for (const [code, p] of Object.entries(players)) {
+  const tags = p.tags || [];
+  const auto = tags.includes("auto-junior") || tags.includes("orfao-readd");
+  if (!auto || p.name !== code) continue;
+  const f = fedById.get(code) || inativosById.get(code);
+  if (!f || !f.name) continue;
+  const entry = entryFromFed(f, tags[0] || "orfao-readd");
+  players[code] = {
+    ...entry,
+    tags,
+    altNames: p.altNames || [],
+    extra: p.extra || {},
+    lastRound: p.lastRound ?? null,
+  };
+  repaired.push({ fed: code, name: entry.name });
+}
+
 // 1) Juniores competitivos da base de federados activos
 for (const [code, f] of fedById.entries()) {
   if (players[code]) continue;
@@ -167,7 +200,7 @@ for (const [code, f] of fedById.entries()) {
 // 2) Órfãos (mantêm-se sempre — já têm histórico scrapado), EXCEPTO Sub-10
 for (const code of orphans) {
   if (players[code]) continue;
-  const f = fedById.get(code);
+  const f = fedById.get(code) || inativosById.get(code);
   if (f && /^SUB10$/i.test(String(f.age_level || ""))) continue; // sem Sub-10
   if (f) {
     const isJ = /^SUB\d+$/i.test(String(f.age_level || ""));
@@ -194,6 +227,8 @@ const afterCount = Object.keys(players).length;
 console.log(`${C}=== REVISÃO DA LISTA DE JOGADORES ===${X}`);
 console.log(`Antes:         ${beforeCount}`);
 console.log(`Sub-10 removidos: ${R}${pruned.length}${X}`);
+console.log(`Nomes-placeholder reparados: ${G}${repaired.length}${X}`);
+for (const r of repaired) console.log(`  ${String(r.fed).padStart(6)} → ${r.name}`);
 console.log(`Acrescentados: ${G}${added.length}${X}`);
 console.log(`Depois:        ${G}${afterCount}${X}`);
 console.log("");
