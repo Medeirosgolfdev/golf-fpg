@@ -224,3 +224,109 @@ Nota: o CLAUDE.md diz `src/tokens/colors.ts`; o ficheiro real é `src/utils/colo
 3. **§2 + §3** — remover/sincronizar fallbacks (a forma mais barata: apagar os fallbacks, os tokens são globais).
 4. **§5** — substituir hex por `var(--...)`/`C.*` (começar por Aroeira2AnaliseView, HcpEvolution, PillBadge YEAR_PALETTE, bloco `.sim-*`).
 5. **§6-§8** — convenções, classes partilhadas e limpeza de tokens mortos.
+
+---
+---
+
+# 2ª RONDA (2026-07-02) — escalas de design, tabelas ordenáveis e App.css profundo
+
+Dimensões não cobertas pela 1ª ronda. Verificações por amostragem confirmadas.
+
+## R2-1. 🔴 REGRA ABSOLUTA violada — tabelas de dados sem ordenação
+
+> CLAUDE.md: "TODAS as tabelas têm de ser ordenáveis por CLIQUE NO CABEÇALHO. Sem excepções."
+
+**Violações claras:**
+- `ui/DriveAllRoundsScorecardLB.tsx:254` — chama `ScorecardLeaderboard` sem `sortable`
+  (default `false`) e sem sort próprio: o leaderboard de rondas Drive fica **100%
+  não-ordenável** (nem pos/nome/gross/toPar, nem as colunas custom Clube/HCP/Rnd/SD/🦅/🐦/Par/■).
+- `pages/GlobalJuniorPage.tsx:468` (`SimpleLeaderboard`) — ranking Pos/País/Nome/HCP/
+  Nasc/R1-R3/Total/vsPar com `<th>` planos, zero sort.
+
+**Violações parciais** (base ordenável, colunas custom `<th>` planas):
+- `pages/DrivePage.tsx:535` — coluna CLUBE (+ 🐦/Par/■ em :541-543).
+- `pages/FFGPage.tsx:705` (Licence), `:1000` (SÉRIE), `:1345` (WC/SCR).
+- `ui/AdmissionsTab.tsx:215` — coluna TEE (as restantes 8 usam SortableHdr).
+
+**Inconsistência de implementação:** `pages/kids/FieldRivaisDashboard.tsx:1752,1802,1811,1822`
+— sort manual com `<th onClick>` em vez de `SortableHdr` (funciona mas perde seta/highlight).
+
+**Duvidosas (decisão da utilizadora):** RivaisDashboard:303 (matriz rivais×torneios),
+CrossSeasonTable:118 (headers por prop), CompararPage:601 (histórico confrontos),
+ConsistencySection:501, HcpSparkline:158 (modal snapshots), RoundSimulator:2014 (janela WHS).
+
+## R2-2. 🟠 Z-index avulsos (19 em App.css + 1 TSX; nenhum usa a escala --z-*)
+
+Lista completa mapeada: linhas 653, 865, 948-949, 1390, 2419-2425, 2443-2445, 2669,
+2688, 2721, 2908, 3216, 3636 + `FPGPage.tsx:245`. Mapeamento directo para
+`--z-base/raised/float/sticky/dropdown/overlay/sidebar`. **Fora da escala:** `z-index: 4`
+em 2423 (.sc-lb thead) e 2443 (.cs-table thead) — a escala salta de 2 para 6; usar
+`--z-float`(3) ou justificar degrau novo.
+
+## R2-3. 🟠 App.css — ~150+ linhas de CSS órfão adicional
+
+Blocos inteiros sem nenhum uso em TSX (confirmado, incl. construção dinâmica):
+- **A. tourn-scorecard/draw** (1952-2110 + medias): `.tourn-draw*`, `.tourn-scorecard`
+  + 10 filhos, `.tourn-form-table`, `.tourn-kpi*`, `.tournament-detail` (print).
+  ⚠ NÃO tocar nas vivas da mesma família: `tourn-layout`, `tourn-tab*`, `tourn-pname*`,
+  `tourn-female-row`, `tourn-ext-link`, `tourn-scroll`.
+- **B. cmp-\* antigos** (redesign do Comparar deixou restos): cmp-search-*, cmp-result-list,
+  cmp-dropdown, cmp-radar-*, cmp-chip, cmp-remove-btn, cmp-empty-*, cmp-distrib-bar,
+  cmp-feature-*. Vivas: `.cmp-distrib-track`, `.cmp-stat-label`.
+- **C. `.scHost`** (1198-1857 dispersas) — código usa `scHostStyle` JS + `.scroll-x`.
+- **D. `.ratings-table`** (693-710, 3245-3250). **E. `.ec-sum`** (920-924, substituída
+  por `.ec-summary`). **F.** `.haDistBar`, `.haLeg(Dot)`, `.haParAlert`, `.haParDistNums`,
+  `.an-grid` (vivas: haParDistBar, haDistSeg, an-grid3). **G.** `.sim-tee-*`,
+  `.sim-hi-banner*` (SimuladorPage usa sim-strip-*).
+- **H. Print quebrado:** `.sc-score-eagle/-birdie/-bogey/-dbogey/-par` (3556-3557) —
+  `scClass()` devolve classes bare (`eagle`, `birdie`…), estes selectores nunca casam.
+- ~40 utilities soltas sem uso (gap-16, grid-3, c-good, col-p5…, btnGhost, etc.) —
+  lista completa no output do agente; risco baixo, valor baixo.
+
+## R2-4. 🟡 Escalas de design — valores avulsos
+
+- **`borderRadius: 8` inline 41× em ~30 ficheiros — não existe token.** Recomendação:
+  criar `--radius-md: 8px` (resolveria também os 2 `z-index`… não relacionado — só o radius).
+  Também 3/5/20 (56×, chips e pills) → considerar `--radius-chip` ou reuso de `--radius-pill`.
+- Valores DENTRO da escala a trocar por token: 2→xs, 4→sm, 6→base, 10→lg, 12→xl (centenas,
+  mecânico, baixa prioridade).
+- **Sombras inline (12):** `0 1px 3px rgba(0,0,0,.06)` ×5 (FPGPage:265,340,525,
+  ClubesGruposView:275, ClubesCategoriasView:221) ≈ `--shadow-sm`; `0 6px 20px rgba(0,0,0,.25)`
+  ×2 (DataSources:243,430) ≈ `--shadow-lg`; restantes 5 pontuais.
+- **font-family:** `TeeAdvisorView.tsx:39` e `HoleDiffTable.tsx:15` redefinem
+  `const MONO = "'JetBrains Mono', monospace"` → usar `var(--font-mono)`.
+- **fontSize fora da escala:** 17 (TeeAdvisorView:803, ScorecardModal:142), 12.5
+  (DrawsPage:468, TeeAdvisorView:1000), 11.5 (TeeAdvisorView:1003); App.css: `9.5px` ×4
+  (823, 1817-1821), `17px` ×2 (1775, 2924). Recharts usa fontSize numérico literal
+  (var() não resolve em props) — extrair constante partilhada se se quiser uniformizar.
+
+## R2-5. 🟡 `!important` fora de print
+
+Cluster problemático: **row-highlight 2620-2655** (`.row-manuel`/`.row-portuguese`/
+`.row-selected`) — 12 `!important` para vencer a especificidade das sticky columns
+(sintoma de arquitectura, não bug pontual). Restantes: overrides mobile 1756-1892
+(aceitáveis), 2011, 2448-2453 (cs-table vs border-collapse), 3116, 3472.
+
+## R2-6. 🟢 Pills inline em src/ui (deviam ser PillBadge/classes)
+
+`Aroeira2AnaliseView.tsx:282,508`, `InscricoesComponents.tsx:261`,
+`CircuitShell.tsx:1086` (chip com override inline).
+
+## R2-7. ✅ Sem problemas encontrados
+
+- Selectores duplicados com conflito: nenhum novo (os 3 candidatos são intencionais).
+- Propriedades duplicadas no mesmo bloco: só o fallback `height:100vh/100dvh` (correcto).
+- Vendor prefixes: todos ainda necessários (excepto `-ms-overflow-style:175`, IE legacy).
+- fontWeight: consistente (tudo numérico 400-900).
+- Tabs em src/ui: conformes.
+- Só 2 ficheiros CSS no projecto; `tokens.css` importado via `@import` no App.css ✔;
+  único `<style>` embutido é o do PDF do RoundSimulator (excepção conhecida).
+
+## Prioridades sugeridas (2ª ronda)
+
+1. **R2-1** — tornar ordenáveis DriveAllRoundsScorecardLB e SimpleLeaderboard (violações
+   da regra absoluta); acrescentar SortableHdr às colunas custom parciais.
+2. **R2-3** — apagar os blocos órfãos A-H (~150+ linhas; mesmo padrão da limpeza da 1ª ronda).
+3. **R2-2** — migrar z-index para a escala `--z-*` (mecânico) e decidir o caso `4`.
+4. **R2-4** — criar `--radius-md: 8px` + tokenizar sombras repetidas + 2× MONO.
+5. **R2-5/6** — arquitectura sticky vs !important e pills inline: avaliar caso a caso.
