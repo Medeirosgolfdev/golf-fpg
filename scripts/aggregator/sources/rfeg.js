@@ -101,21 +101,72 @@ function load(opts) {
     });
   }
 
-  // 4) Torneios — rfegolf-rivals.json
+  // 4) Lookup nome→licença (para resultados sem lic — LGS e blocos nativos do
+  // microsite). As chaves de byName já vêm normalizadas ("first last" e
+  // "last, first"); normalizamos outra vez para garantir. Nomes ambíguos
+  // (2+ licenças distintas com o mesmo nome) ficam fora do lookup.
+  const licByNorm = new Map();
+  for (const [key, p] of Object.entries(spain.byName || {})) {
+    if (!p?.licencia) continue;
+    const nk = normName(splitName(key));
+    if (!nk) continue;
+    const existing = licByNorm.get(nk);
+    if (existing === undefined) licByNorm.set(nk, String(p.licencia));
+    else if (existing !== String(p.licencia)) licByNorm.set(nk, "__AMBIG__");
+  }
+  for (const [k, v] of licByNorm) if (v === "__AMBIG__") licByNorm.delete(k);
+
+  /** Resolve a sourceKey de um resultado: lic explícita → lookup por nome →
+   *  chave anónima (o identity-matcher trata `anon|` como fonte fraca). */
+  function resolvePlayerKey(pl) {
+    if (pl.lic) return String(pl.lic);
+    const nk = normName(splitName(pl.n || pl.name || ""));
+    if (!nk) return null;
+    return licByNorm.get(nk) || `anon|${nk}`;
+  }
+
+  // 5) Torneios — rfegolf-rivals.json
   // Formato: { generatedAt, source, torneios: { [tid]: { name, year, ageGroup, dateIso, par, parTotal, nholes, nRounds, source, players[] } }, total, dedupedPlayers }
-  // Players: { n, p, t, tp, hcp, lic, rd, sc }
+  // Players: { n, p, t, tp, hcp, lic, rd, sc } (+ dob/club/sex/catEdad/region nos rfeg/mitarjeta)
   // Excluir adultos: só interessa juvenis (Sub-18 ou abaixo).
   const ADULT_ESCALAO = /Sub\s*(2[0-9]|3\d|4\d|5\d)|Absoluto|S[eé]nior|Master|Adultos?/i;
   const tournaments = [];
+  // Jogadores vistos em resultados mas ausentes do roster (lic mitarjeta nova
+  // ou anon sem correspondência) — ganham RawPlayer próprio para o matcher
+  // não descartar os resultados deles.
+  const extraPlayers = new Map(); // sourceKey → RawPlayer draft
+  const rosterLics = new Set(players.map((p) => p.sourceKey));
+  for (const p of players) for (const h of p.extra?.historicalLicenses || []) rosterLics.add(h);
+  function collectExtraPlayer(key, pl) {
+    if (!key || rosterLics.has(key)) return;
+    const prev = extraPlayers.get(key);
+    const dob = dobToIso(pl.dob) || prev?.dob || null;
+    if (prev && prev.dob && !dob) return; // manter a variante com dob
+    extraPlayers.set(key, {
+      sourceKey: key,
+      name: displayName(splitName(pl.n || pl.name || "")) || prev?.name || null,
+      dob,
+      sex: pl.sex || prev?.sex || null,
+      country: "ES",
+      club: pl.club || prev?.club || null,
+      ageGroupCurrent: pl.catEdad || prev?.ageGroupCurrent || null,
+      region: pl.region || prev?.region || null,
+      hcp: typeof pl.hcp === "number" ? pl.hcp : (prev?.hcp ?? null),
+      extra: { fromResults: true },
+    });
+  }
   const rivalsTorneios = rivals?.torneios;
   if (rivalsTorneios && typeof rivalsTorneios === "object") {
     for (const [tid, t] of Object.entries(rivalsTorneios)) {
       if (!t) continue;
       const ageGroup = String(t.ageGroup || "");
       if (ADULT_ESCALAO.test(ageGroup)) continue;
-      const tt = normalizeRfegTournament(tid, t);
+      const tt = normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer);
       if (tt) tournaments.push(tt);
     }
+  }
+  for (const p of extraPlayers.values()) {
+    if (p.name) players.push(p);
   }
 
   return {
@@ -133,7 +184,7 @@ function catEdadOrder(cat) {
   return order[s] || 0;
 }
 
-function normalizeRfegTournament(tid, t) {
+function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
   if (!t) return null;
   const flightLabel = t.ageGroup || "Geral";
   const players = Array.isArray(t.players) ? t.players : [];
@@ -149,8 +200,10 @@ function normalizeRfegTournament(tid, t) {
         strokes: Array.isArray(sc[i]) ? sc[i] : undefined,
       });
     }
+    const key = resolvePlayerKey ? resolvePlayerKey(pl) : (pl.lic || null);
+    if (collectExtraPlayer) collectExtraPlayer(key, pl);
     return {
-      playerSourceKey: pl.lic || null,
+      playerSourceKey: key,
       playerName: displayName(splitName(pl.n || pl.name || "")),
       pos: typeof pl.p === "number" ? pl.p : (typeof pl.pos === "number" ? pl.pos : null),
       status: "OK",
@@ -198,7 +251,8 @@ function normalizeRfegTournament(tid, t) {
       label: flightLabel,
       ageMin,
       ageMax,
-      sex: /femenino|female|girls/i.test(tname) ? "F" : (/masculino|male|boys/i.test(tname) ? "M" : null),
+      sex: (t.sex === "F" || t.sex === "M") ? t.sex
+        : /femenino|female|girls/i.test(tname) ? "F" : (/masculino|male|boys/i.test(tname) ? "M" : null),
       par: Array.isArray(t.par) ? t.par : undefined,
       fieldSize: players.length,
       results,
@@ -228,6 +282,13 @@ function buildRfegLinks(tid) {
     return [{
       label: "NextCaddy",
       url: `https://www.nextcaddy.com/tour/${ncMatch[1]}`,
+    }];
+  }
+  const rfegMatch = /^rfeg(\d+)(?:_|$)/i.exec(tid);
+  if (rfegMatch) {
+    return [{
+      label: "RFEG",
+      url: `https://www.rfegolf.es/CompetenciaPaginas/ListaResultados.aspx?CompId=${rfegMatch[1]}`,
     }];
   }
   return [];

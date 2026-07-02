@@ -59,7 +59,8 @@ function run(result) {
     detail: rfegLic ? `active=${rfegLic} · historical=${JSON.stringify(rfegHist)}` : "(sem RFEG)",
   });
 
-  // 6. Confrontos Manuel × Dmitrii — esperado: 5
+  // 6. Confrontos Manuel × Dmitrii — esperado: 6
+  // (USKids EC26 + Venice 25, FPG QDL 25, EOWAGR LTQ 25, WJGC 25 + 26)
   let confrontos = 0;
   if (manuel && dmitrii) {
     const manuelTids = new Set(manuel.tournamentIds);
@@ -69,8 +70,8 @@ function run(result) {
     }
   }
   checks.push({
-    name: "Manuel × Dmitrii confrontos (esperado 5)",
-    pass: confrontos === 5,
+    name: "Manuel × Dmitrii confrontos (esperado 6)",
+    pass: confrontos === 6,
     detail: `${confrontos} confrontos`,
     soft: true, // warning não bloqueia build
   });

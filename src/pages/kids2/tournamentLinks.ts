@@ -13,7 +13,7 @@
 import type { Tournament } from "./data";
 
 export interface CategorizedLink {
-  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "other";
+  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "other";
   label: string;
   url: string;
   /** CSS var-name para cor (já existe em tokens.css). */
@@ -24,7 +24,10 @@ const DOMAIN_MAP: Array<{ test: RegExp; key: CategorizedLink["key"]; label: stri
   { test: /signupanytime\.com/i,    key: "sat",     label: "SAT",     colorVar: "--source-uskids" },
   { test: /tournaments\.uskidsgolf\.com/i, key: "sat", label: "USKids", colorVar: "--source-uskids" },
   { test: /scoring\.fpg\.pt|scoring\.datagolf\.pt|my\.fpg\.pt/i, key: "fpg", label: "FPG", colorVar: "--source-fpg" },
+  { test: /eg-[a-z0-9-]*\.golfgenius\.com/i, key: "england", label: "England Golf", colorVar: "--source-england" },
   { test: /golfgenius\.com/i,       key: "doral",   label: "GolfGenius", colorVar: "--source-doral" },
+  { test: /golfdirecto\.com/i,      key: "fcg",     label: "GolfDirecto", colorVar: "--source-fcg" },
+  { test: /globaljuniorgolflive\.com/i, key: "gjgl", label: "GJGL",    colorVar: "--source-gjgl" },
   { test: /rfegolf\.livegolfscoring\.es|livegolfscoring\.com/i, key: "rfeg", label: "LiveGolfScoring", colorVar: "--source-rfeg" },
   { test: /nextcaddy\.com/i,        key: "rfeg",    label: "NextCaddy", colorVar: "--source-rfeg" },
   { test: /rfegolf\.es|federacionandaluzadegolf|laliga/i, key: "rfeg", label: "RFEG",  colorVar: "--source-rfeg" },
@@ -53,7 +56,7 @@ export function categorizeTournamentLinks(tournament: Tournament): CategorizedLi
   }
   // Ordem fixa preferida (USKids primeiro, FPG ao meio, outros depois)
   const order: Record<CategorizedLink["key"], number> = {
-    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, doral: 4, wjgc: 5, eowagr: 6, other: 99,
+    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, other: 99,
   };
   out.sort((a, b) => order[a.key] - order[b.key]);
   return out;

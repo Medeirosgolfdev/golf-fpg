@@ -33,6 +33,9 @@ const SOURCES = [
   { id: "wjgc", label: "WJGC / BJGT", load: () => require("./sources/wjgc") },
   { id: "doral", label: "First Tee Miami Doral", load: () => require("./sources/doral") },
   { id: "fm", label: "Future Masters Golf (Dothan)", load: () => require("./sources/futuremasters") },
+  { id: "fcg", label: "Federació Catalana de Golf", load: () => require("./sources/fcg") },
+  { id: "england", label: "England Golf", load: () => require("./sources/england") },
+  { id: "gjgl", label: "Global Junior Golf Live", load: () => require("./sources/gjgl") },
 ];
 
 function parseArgs(argv) {

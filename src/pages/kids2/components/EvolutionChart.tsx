@@ -68,11 +68,15 @@ const SOURCE_COLORS: Record<string, string> = {
   wjgc:   "var(--source-wjgc)",
   eowagr: "var(--source-eowagr)",
   doral:  "var(--source-doral)",
+  fcg:    "var(--source-fcg)",
+  england: "var(--source-england)",
+  gjgl:   "var(--source-gjgl)",
 };
 
 const SOURCE_LABELS: Record<string, string> = {
   uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG",
   wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
+  fcg: "FCG", england: "England", gjgl: "GJGL",
 };
 
 export default function EvolutionChart({ data, junior, filterTids }: Props) {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-02T11:45:29.935Z",
+  "generatedAt": "2026-07-02T16:32:06.601Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -511,11 +511,16 @@
         "rfeg-nc71531_infantil_hcp",
         "rfeg-nc71532_infantil_hcp",
         "rfeg-nc71639_infantil_hcp",
-        "rfeg-nc71825_junior"
+        "rfeg-nc71825_junior",
+        "rfeg-rfeg14306_juvenil_m",
+        "rfeg-rfeg14308_cadete_m",
+        "rfeg-rfeg14500_junior_m",
+        "rfeg-rfeg14713_cadete_m",
+        "rfeg-rfeg15361_cadete_m"
       ],
-      "firstDate": "2023-05-07",
+      "firstDate": "2020-10-29",
       "lastDate": "2026-06-21",
-      "editionsCount": 505
+      "editionsCount": 510
     },
     {
       "id": "ffgolf-tour-4-air-moana-polynesian-junior-tour-u12-u18",
@@ -2009,16 +2014,29 @@
         "rfeg-lgs359",
         "rfeg-lgs366",
         "rfeg-lgs367",
-        "rfeg-lgs379",
-        "rfeg-lgs380",
-        "rfeg-lgs381",
-        "rfeg-lgs382",
         "rfeg-nc50113_benjamín_sc",
-        "rfeg-nc50113_benjamín_hcp"
+        "rfeg-nc50113_benjamín_hcp",
+        "rfeg-rfeg13959_junior_f",
+        "rfeg-rfeg14310_cadete_m",
+        "rfeg-rfeg14525_infantil_m",
+        "rfeg-rfeg14526_infantil_f",
+        "rfeg-rfeg14529_benjamin_m",
+        "rfeg-rfeg14530_benjamin_f",
+        "rfeg-rfeg14999_infantil_f",
+        "rfeg-rfeg15000_juvenil_m",
+        "rfeg-rfeg15486_juvenil_f",
+        "rfeg-rfeg15487_cadete_m",
+        "rfeg-rfeg15759_juvenil_f",
+        "rfeg-rfeg16187_infantil_m",
+        "rfeg-rfeg16189_infantil_f",
+        "rfeg-rfeg16192_alevin_m",
+        "rfeg-rfeg16193_alevin_f",
+        "rfeg-rfeg16194_benjamin_m",
+        "rfeg-rfeg16195_benjamin_f"
       ],
-      "firstDate": "2023-06-04",
-      "lastDate": "2023-06-04",
-      "editionsCount": 51
+      "firstDate": "2021-03-18",
+      "lastDate": "2026-06-26",
+      "editionsCount": 64
     },
     {
       "id": "ffgolf-qualification-cfj-1-benjamins-ligue-paris-ile-de-france",
@@ -2571,6 +2589,53 @@
       ],
       "firstDate": "2015-06-21",
       "lastDate": "2026-05-17",
+      "editionsCount": 37
+    },
+    {
+      "id": "fcg",
+      "label": "FCG",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg67604efaac677e17ac049cab_Cadete_049cdf",
+        "fcg-fcg67604efaac677e17ac049cab_Infantil_049ce2",
+        "fcg-fcg67604efaac677e17ac049cab_Alevín_049ce5",
+        "fcg-fcg6787922548269479c6315a32_Cadete_315a67",
+        "fcg-fcg6787922548269479c6315a32_Infantil_315a6a",
+        "fcg-fcg6787922548269479c6315a32_Alevín_315a6d",
+        "fcg-fcg67a20894d61687af2b262b0d_Cadete_262b42",
+        "fcg-fcg67a20894d61687af2b262b0d_Infantil_262b45",
+        "fcg-fcg67a20894d61687af2b262b0d_Alevín_262b48",
+        "fcg-fcg67a2111a67edb43b19085615_Cadete_08564a",
+        "fcg-fcg67a2111a67edb43b19085615_Infantil_08564d",
+        "fcg-fcg67a2111a67edb43b19085615_Alevín_085650",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18400",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18403",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18406",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18409",
+        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f5",
+        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f8",
+        "fcg-fcg681c8efbdfbc8a5102cf1034_Cadete_cf1074",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc41",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc44",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc47",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc4a",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_3cf50b",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Infantil_3cf50e",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Alevín_3cf511",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_ea4471",
+        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_57f1df",
+        "fcg-fcg697dcb926609fc834e57f1a3_Infantil_57f1e2",
+        "fcg-fcg697dcb926609fc834e57f1a3_Alevín_57f1e5",
+        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_10d414",
+        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedc9",
+        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedcc",
+        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedcf",
+        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedd2",
+        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e74",
+        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e77"
+      ],
+      "firstDate": "2025-02-01",
+      "lastDate": "2026-05-16",
       "editionsCount": 37
     },
     {
@@ -18964,8 +19029,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -19254,6 +19319,22 @@
       ],
       "firstDate": "2020-10-24",
       "lastDate": "2026-03-28",
+      "editionsCount": 6
+    },
+    {
+      "id": "uskids-washington-state-invitational",
+      "label": "Washington State Invitational",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-14305",
+        "uskids-10148",
+        "uskids-11938",
+        "uskids-19162",
+        "uskids-16955",
+        "uskids-22121"
+      ],
+      "firstDate": "2021-07-04",
+      "lastDate": "2026-07-03",
       "editionsCount": 6
     },
     {
@@ -22392,21 +22473,6 @@
       ],
       "firstDate": "2020-02-27",
       "lastDate": "2026-04-02",
-      "editionsCount": 5
-    },
-    {
-      "id": "uskids-washington-state-invitational",
-      "label": "Washington State Invitational",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-14305",
-        "uskids-10148",
-        "uskids-11938",
-        "uskids-19162",
-        "uskids-16955"
-      ],
-      "firstDate": "2021-07-04",
-      "lastDate": "2025-06-07",
       "editionsCount": 5
     },
     {
@@ -25647,6 +25713,21 @@
       ],
       "firstDate": "2023-08-24",
       "lastDate": "2023-09-14",
+      "editionsCount": 5
+    },
+    {
+      "id": "england-justin-rose-telegraph-junior-golf",
+      "label": "Justin Rose Telegraph Junior Golf",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_justin-rose-telegraph-2023_div1",
+        "england-england_justin-rose-telegraph-2023_div2",
+        "england-england_justin-rose-telegraph-2023_div3",
+        "england-england_justin-rose-telegraph-2024_div1",
+        "england-england_justin-rose-telegraph-2024_div2"
+      ],
+      "firstDate": "2023-07-01",
+      "lastDate": "2024-12-09",
       "editionsCount": 5
     },
     {
@@ -30673,6 +30754,20 @@
       ],
       "firstDate": "2023-06-10",
       "lastDate": "2023-06-10",
+      "editionsCount": 4
+    },
+    {
+      "id": "england-english-girls-u16-u14-open-stroke-play",
+      "label": "English Girls' U16 & U14 Open Stroke Play",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-u16-u14-2023_div1",
+        "england-england_english-girls-u16-u14-2023_div2",
+        "england-england_english-girls-u16-u14-2024_div1",
+        "england-england_english-girls-u16-u14-2024_div2"
+      ],
+      "firstDate": "2023-07-27",
+      "lastDate": "2024-08-01",
       "editionsCount": 4
     },
     {
@@ -37784,6 +37879,32 @@
       ],
       "firstDate": "2026-03-22",
       "lastDate": "2026-05-03",
+      "editionsCount": 3
+    },
+    {
+      "id": "england-english-u18-amateur-championship",
+      "label": "English U18 Amateur Championship",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-u18-amateur-2023",
+        "england-england_english-u18-amateur-2024",
+        "england-england_english-u18-amateur-2025"
+      ],
+      "firstDate": "2023-06-25",
+      "lastDate": "2025-06-27",
+      "editionsCount": 3
+    },
+    {
+      "id": "england-reid-trophy",
+      "label": "Reid Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_reid-trophy-2023",
+        "england-england_reid-trophy-2024",
+        "england-england_reid-trophy-2025"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2025-08-05",
       "editionsCount": 3
     },
     {
@@ -48524,6 +48645,282 @@
       ],
       "firstDate": "2022-10-08",
       "lastDate": "2022-10-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "england-carris-trophy",
+      "label": "Carris Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_carris-trophy-2023",
+        "england-england_carris-trophy-2025"
+      ],
+      "firstDate": "2023-07-25",
+      "lastDate": "2025-07-22",
+      "editionsCount": 2
+    },
+    {
+      "id": "england-english-girls-u16-u14-stroke-play",
+      "label": "English Girls' U16 & U14 Stroke Play",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-u16-u14-2025_div1",
+        "england-england_english-girls-u16-u14-2025_div2"
+      ],
+      "firstDate": "2025-07-29",
+      "lastDate": "2025-07-29",
+      "editionsCount": 2
+    },
+    {
+      "id": "england-mcgregor-trophy",
+      "label": "McGregor Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_mcgregor-trophy-2024",
+        "england-england_mcgregor-trophy-2025"
+      ],
+      "firstDate": "2024-07-16",
+      "lastDate": "2025-07-15",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-bang-golf-city-juniors-international-cologne",
+      "label": "Bang Golf City Juniors International Cologne",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bang-golf-city-juniors-international-cologne-2025-germany",
+        "gjgl-bang-golf-city-juniors-international-cologne-2026-germany"
+      ],
+      "firstDate": "2025-08-21",
+      "lastDate": "2026-08-20",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-berlin-juniors-international",
+      "label": "Berlin Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-berlin-juniors-international-2025-germany",
+        "gjgl-berlin-juniors-international-2026-germany"
+      ],
+      "firstDate": "2025-08-12",
+      "lastDate": "2026-07-28",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-bogogno-international-junior-open",
+      "label": "Bogogno International Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2025-italy",
+        "gjgl-bogogno-international-junior-open-2026-italy"
+      ],
+      "firstDate": "2025-10-26",
+      "lastDate": "2026-10-25",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-danish-junior-internationals",
+      "label": "Danish Junior Internationals",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-danish-junior-internationals-2025-denmark",
+        "gjgl-danish-junior-internationals-2026-denmark"
+      ],
+      "firstDate": "2025-07-28",
+      "lastDate": "2026-03-29",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-devonvale-boland-international-junior-open",
+      "label": "Devonvale Boland International Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-devonvale-boland-international-junior-open-2025-south-africa",
+        "gjgl-devonvale-boland-international-junior-open-2026-south-africa"
+      ],
+      "firstDate": "2025-10-06",
+      "lastDate": "2026-10-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-german-international-youth-trophy",
+      "label": "German International Youth Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-german-international-youth-trophy-2025-germany",
+        "gjgl-german-international-youth-trophy-2026-germany"
+      ],
+      "firstDate": "2025-08-05",
+      "lastDate": "2026-08-10",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-algarve-juniors-international",
+      "label": "GJG Algarve Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-algarve-juniors-international-2025-portugal",
+        "gjgl-gjg-algarve-juniors-international-2026-portugal"
+      ],
+      "firstDate": "2025-12-27",
+      "lastDate": "2026-12-27",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-french-junior-classics",
+      "label": "GJG French Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-french-junior-classics-2025-france",
+        "gjgl-gjg-french-junior-classics-2026-france"
+      ],
+      "firstDate": "2025-10-02",
+      "lastDate": "2026-09-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-grand-final-qualifier",
+      "label": "GJG Grand Final Qualifier",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-grand-final-qualifier-2025-germany",
+        "gjgl-gjg-grand-final-qualifier-2026-germany"
+      ],
+      "firstDate": "2025-08-21",
+      "lastDate": "2026-04-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-icelandic-juniors-international",
+      "label": "GJG Icelandic Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-icelandic-juniors-international-2025-iceland",
+        "gjgl-gjg-icelandic-juniors-international-2026-iceland"
+      ],
+      "firstDate": "2025-07-15",
+      "lastDate": "2026-06-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-italian-junior-classics",
+      "label": "GJG Italian Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-italian-junior-classics-2025-italy",
+        "gjgl-gjg-italian-junior-classics-2026-italy"
+      ],
+      "firstDate": "2025-10-30",
+      "lastDate": "2026-10-29",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-junior-trophy",
+      "label": "GJG Junior Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-junior-trophy-2025-portugal",
+        "gjgl-gjg-junior-trophy-2026-portugal"
+      ],
+      "firstDate": "2025-11-16",
+      "lastDate": "2026-11-15",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-polish-juniors-international",
+      "label": "GJG Polish Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-polish-juniors-international-2025-poland",
+        "gjgl-gjg-polish-juniors-international-2026-poland"
+      ],
+      "firstDate": "2025-07-28",
+      "lastDate": "2026-08-02",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-portuguese-junior-classics",
+      "label": "GJG Portuguese Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-portuguese-junior-classics-2025-portugal",
+        "gjgl-gjg-portuguese-junior-classics-2026-portugal"
+      ],
+      "firstDate": "2025-11-20",
+      "lastDate": "2026-11-19",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-junior-fream-challenge",
+      "label": "Junior Fream Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-junior-fream-challenge-2025-finland",
+        "gjgl-junior-fream-challenge-2026-finland"
+      ],
+      "firstDate": "2025-07-11",
+      "lastDate": "2026-06-05",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-lubker-junior-open",
+      "label": "Lübker Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-lubker-junior-open-2025-denmark",
+        "gjgl-lubker-junior-open-2026-denmark"
+      ],
+      "firstDate": "2025-10-09",
+      "lastDate": "2026-10-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-lubker-juniors-international",
+      "label": "Lübker Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-lubker-juniors-international-2025-denmark",
+        "gjgl-lubker-juniors-international-2026-denmark"
+      ],
+      "firstDate": "2025-10-12",
+      "lastDate": "2026-10-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-magix-moments-junior-international",
+      "label": "Magix Moments Junior International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-magix-moments-junior-international-2025-germany",
+        "gjgl-magix-moments-junior-international-2026-germany"
+      ],
+      "firstDate": "2025-07-28",
+      "lastDate": "2026-10-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-rb-german-junior",
+      "label": "RB German Junior",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-rb-german-junior-2025-germany",
+        "gjgl-rb-german-junior-2026-germany"
+      ],
+      "firstDate": "2025-09-08",
+      "lastDate": "2026-06-02",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-rhein-main-junior-golf-open",
+      "label": "Rhein Main Junior Golf Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-rhein-main-junior-golf-open-2025-germany",
+        "gjgl-rhein-main-junior-golf-open-2026-germany"
+      ],
+      "firstDate": "2025-07-21",
+      "lastDate": "2026-07-13",
       "editionsCount": 2
     },
     {
@@ -70711,6 +71108,567 @@
       ],
       "firstDate": "2023-07-25",
       "lastDate": "2023-07-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-bronte-law-junior-series-cumberwell-park",
+      "label": "Bronte Law Junior Series  - Cumberwell Park",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-cumberwell-park-2025"
+      ],
+      "firstDate": "2025-08-24",
+      "lastDate": "2025-08-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-bronte-law-junior-series-farnham",
+      "label": "Bronte Law Junior Series  - Farnham",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-farnham-2025"
+      ],
+      "firstDate": "2025-07-01",
+      "lastDate": "2025-07-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-bronte-law-junior-series-luffenham-heath",
+      "label": "Bronte Law Junior Series  - Luffenham Heath",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-luffenham-heath-2025"
+      ],
+      "firstDate": "2025-05-04",
+      "lastDate": "2025-05-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-bronte-law-junior-series-moor-allerton",
+      "label": "Bronte Law Junior Series  - Moor Allerton",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-moor-allerton-2025"
+      ],
+      "firstDate": "2025-08-24",
+      "lastDate": "2025-08-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-atlantic-youth-trophy",
+      "label": "Atlantic Youth Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-atlantic-youth-trophy-2026-portugal"
+      ],
+      "firstDate": "2026-02-05",
+      "lastDate": "2026-02-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-bad-saarow-junior-trophy",
+      "label": "Bad Saarow Junior Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bad-saarow-junior-trophy-2025-germany"
+      ],
+      "firstDate": "2025-10-02",
+      "lastDate": "2025-10-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-bang-golf-city-juniors-international-munich",
+      "label": "Bang Golf City Juniors International Munich",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bang-golf-city-juniors-international-munich-2026-germany"
+      ],
+      "firstDate": "2026-06-04",
+      "lastDate": "2026-06-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-bogogno-junior-games",
+      "label": "Bogogno Junior Games",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bogogno-junior-games-2026-italy"
+      ],
+      "firstDate": "2026-03-29",
+      "lastDate": "2026-03-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-danish-junior-games",
+      "label": "Danish Junior Games",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-danish-junior-games-2026-denmark"
+      ],
+      "firstDate": "2026-04-02",
+      "lastDate": "2026-04-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-desert-springs-junior-championship",
+      "label": "Desert Springs Junior Championship",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-desert-springs-junior-championship-2026-spain"
+      ],
+      "firstDate": "2026-01-22",
+      "lastDate": "2026-01-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-dresden-juniors-international",
+      "label": "Dresden Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-dresden-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-07-08",
+      "lastDate": "2026-07-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-european-juniors-international",
+      "label": "European Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-european-juniors-international-2025-germany"
+      ],
+      "firstDate": "2025-08-08",
+      "lastDate": "2025-08-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-european-spring-junior",
+      "label": "European Spring Junior",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-european-spring-junior-2026-spain"
+      ],
+      "firstDate": "2026-03-01",
+      "lastDate": "2026-03-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-aferini-junior-open",
+      "label": "GJG Aferini Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-aferini-junior-open-2026-spain"
+      ],
+      "firstDate": "2026-11-12",
+      "lastDate": "2026-11-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-blue-carpet-junior-classics",
+      "label": "GJG Blue Carpet Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-blue-carpet-junior-classics-2026-portugal"
+      ],
+      "firstDate": "2026-04-06",
+      "lastDate": "2026-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-dortmund-juniors-international",
+      "label": "GJG Dortmund Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-dortmund-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-08-17",
+      "lastDate": "2026-08-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-edge-mason-championship",
+      "label": "GJG Edge Mason Championship",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-edge-mason-championship-2026-portugal"
+      ],
+      "firstDate": "2026-01-18",
+      "lastDate": "2026-01-18",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-edge-pearce-championship",
+      "label": "GJG Edge Pearce Championship",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-edge-pearce-championship-2026-portugal"
+      ],
+      "firstDate": "2026-03-16",
+      "lastDate": "2026-03-16",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-edge-reed-sanderlin-championship",
+      "label": "GJG Edge Reed Sanderlin Championship",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-edge-reed-sanderlin-championship-2026-portugal"
+      ],
+      "firstDate": "2026-02-16",
+      "lastDate": "2026-02-16",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-francine-saxton-trophy",
+      "label": "GJG Francine Saxton Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-francine-saxton-trophy-2025-netherlands"
+      ],
+      "firstDate": "2025-08-29",
+      "lastDate": "2025-08-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-india-juniors-international",
+      "label": "GJG India Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-india-juniors-international-2026-india"
+      ],
+      "firstDate": "2026-05-05",
+      "lastDate": "2026-05-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-intercollegiate-open-by-ugpm",
+      "label": "GJG Intercollegiate Open by UGPM",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-intercollegiate-open-by-ugpm-2026-spain"
+      ],
+      "firstDate": "2026-01-11",
+      "lastDate": "2026-01-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-italian-juniors-international",
+      "label": "GJG Italian Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-italian-juniors-international-2026"
+      ],
+      "firstDate": "2026-04-02",
+      "lastDate": "2026-04-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-juniors-international",
+      "label": "GJG Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-juniors-international-2026-portugal"
+      ],
+      "firstDate": "2026-04-02",
+      "lastDate": "2026-04-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-mauritius-juniors-internationals",
+      "label": "GJG Mauritius Juniors Internationals",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-mauritius-juniors-internationals-2026-mauritius"
+      ],
+      "firstDate": "2026-03-29",
+      "lastDate": "2026-03-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-mulheim-junior-open",
+      "label": "GJG Mülheim Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-mulheim-junior-open-2026-germany"
+      ],
+      "firstDate": "2026-07-28",
+      "lastDate": "2026-07-28",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-oom-junior-open",
+      "label": "GJG OoM Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-oom-junior-open-2026-portugal"
+      ],
+      "firstDate": "2026-02-17",
+      "lastDate": "2026-02-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-paderborner-land-juniors-international",
+      "label": "GJG Paderborner Land Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-paderborner-land-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-04-09",
+      "lastDate": "2026-04-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-portuguese-juniors-international",
+      "label": "GJG Portuguese Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-portuguese-juniors-international-2026-portugal"
+      ],
+      "firstDate": "2026-02-13",
+      "lastDate": "2026-02-13",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-season-kickoff-number-2",
+      "label": "GJG Season Kickoff  NUMBER 2",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-season-kickoff-2026-number-2-spain"
+      ],
+      "firstDate": "2026-01-02",
+      "lastDate": "2026-01-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-season-kickoff",
+      "label": "GJG Season Kickoff",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-season-kickoff-2026-spain"
+      ],
+      "firstDate": "2026-01-02",
+      "lastDate": "2026-01-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-spanish-junior-classics",
+      "label": "GJG Spanish Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-spanish-junior-classics-2026-spain"
+      ],
+      "firstDate": "2026-01-07",
+      "lastDate": "2026-01-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-spanish-juniors-international",
+      "label": "GJG Spanish Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-spanish-juniors-international-2026-spain"
+      ],
+      "firstDate": "2026-03-05",
+      "lastDate": "2026-03-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-spring-junior-games",
+      "label": "GJG Spring Junior Games",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-spring-junior-games-2026-portugal"
+      ],
+      "firstDate": "2026-03-29",
+      "lastDate": "2026-03-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-uae-junior-championship-by-jaga",
+      "label": "GJG UAE Junior Championship by JAGA",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-uae-junior-championship-by-jaga-uae-2026-uae"
+      ],
+      "firstDate": "2026-02-05",
+      "lastDate": "2026-02-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-golfing-knights-junior-open",
+      "label": "Golfing Knights Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-golfing-knights-junior-open-2026-germany"
+      ],
+      "firstDate": "2026-04-04",
+      "lastDate": "2026-04-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-golflodge-junior-open",
+      "label": "GolfLodge Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-golflodge-junior-open-2025-netherlands"
+      ],
+      "firstDate": "2025-08-12",
+      "lastDate": "2025-08-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-holbox-junior-open",
+      "label": "Holbox Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-holbox-junior-open-2025-netherlands"
+      ],
+      "firstDate": "2025-07-21",
+      "lastDate": "2025-07-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-icelandic-junior-midnight-challenge",
+      "label": "Icelandic Junior Midnight Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-icelandic-junior-midnight-challenge-2025-iceland"
+      ],
+      "firstDate": "2025-07-19",
+      "lastDate": "2025-07-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-junior-golf-challenge-schwabisch-hall",
+      "label": "Junior Golf Challenge Schwäbisch Hall",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-junior-golf-challenge-schwabisch-hall-2026-germany"
+      ],
+      "firstDate": "2026-05-25",
+      "lastDate": "2026-05-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-lake-constance-junior-games",
+      "label": "Lake Constance Junior Games",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-lake-constance-junior-games-2026-germany"
+      ],
+      "firstDate": "2026-04-09",
+      "lastDate": "2026-04-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-ljunghusen-junior-games",
+      "label": "Ljunghusen Junior Games",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-ljunghusen-junior-games-2026-sweden"
+      ],
+      "firstDate": "2026-04-06",
+      "lastDate": "2026-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-loretto-juniors-international",
+      "label": "Loretto Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-loretto-juniors-international-2026-scotland"
+      ],
+      "firstDate": "2026-06-22",
+      "lastDate": "2026-06-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-mid-summer-juniors-international",
+      "label": "Mid Summer Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-mid-summer-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-06-29",
+      "lastDate": "2026-06-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-migros-golfcard-gjg-international",
+      "label": "Migros GolfCard GJG International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-migros-golfcard-gjg-international-2026-switzerland"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-portuguese-intercollegiate-open",
+      "label": "Portuguese Intercollegiate Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-portuguese-intercollegiate-open-2026-portugal"
+      ],
+      "firstDate": "2026-02-01",
+      "lastDate": "2026-02-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-sa-juniors-international",
+      "label": "SA Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-sa-juniors-international-2026-south-africa"
+      ],
+      "firstDate": "2026-03-02",
+      "lastDate": "2026-03-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-tulip-golf-challenge",
+      "label": "Tulip Golf Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-tulip-golf-challenge-2025-netherlands"
+      ],
+      "firstDate": "2025-10-17",
+      "lastDate": "2025-10-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-vaudreuil-junior-challenge",
+      "label": "Vaudreuil Junior Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-vaudreuil-junior-challenge-2026-france"
+      ],
+      "firstDate": "2026-10-22",
+      "lastDate": "2026-10-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-weareglobaljuniorgolf-open",
+      "label": "WeAreGlobalJuniorGolf Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-weareglobaljuniorgolf-open-2026-portugal"
+      ],
+      "firstDate": "2026-02-09",
+      "lastDate": "2026-02-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-wilson-juniors-international",
+      "label": "Wilson Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-wilson-juniors-international-2025-germany"
+      ],
+      "firstDate": "2025-08-12",
+      "lastDate": "2025-08-12",
       "editionsCount": 1
     }
   ]

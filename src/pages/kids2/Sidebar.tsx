@@ -13,7 +13,7 @@ import { flag as flagOf } from "../../utils/flagUtils";
 
 const MAX_VISIBLE = 8000;
 
-type SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm";
+type SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl";
 
 function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string }>): boolean {
   if (src === "uskids") return !!j.sources.uskids?.memberId;

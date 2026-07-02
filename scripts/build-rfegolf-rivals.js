@@ -1,20 +1,28 @@
 /**
  * scripts/build-rfegolf-rivals.js
  *
- * Consolida torneios juvenis espanhois (livegolfscoring + NextCaddy) num único
- * ficheiro compacto que o KIDSdataLoader pode processar com 1 fetch.
+ * Consolida torneios juvenis espanhois (livegolfscoring + NextCaddy + microsite
+ * RFEG/mitarjeta) num único ficheiro compacto que o agregador de juniores
+ * (scripts/aggregator/sources/rfeg.js) pode processar com 1 fetch.
  *
  * Output: public/data/rfegolf-rivals.json
  *
  * Tids:
  *   lgs{id}              — livegolfscoring
  *   nc{id}_{ageKey}      — NextCaddy (uma entrada por categoria juvenil)
+ *   rfeg{compId}_{key}   — microsite rfegolf.es (blocos de results, incl. mitarjeta)
+ *
+ * Dedup de gémeos (rfegolf-lgs-twins.json, gerado por build-lgs-twins.js):
+ *   - compId em `twins`         → versão LGS já cobre o torneio; skip rfegolf
+ *   - lgsId em `lgsSuppressed`  → versão rfegolf/mitarjeta é mais rica; remove lgs{id}
  */
 const fs = require("fs");
 const path = require("path");
 
 const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
 const NC_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
+const RFEG_DIR = path.resolve(__dirname, "../public/data/rfegolf-resultats");
+const TWINS_FILE = path.resolve(__dirname, "../public/data/rfegolf-lgs-twins.json");
 const OUT = path.resolve(__dirname, "../public/data/rfegolf-rivals.json");
 
 // Build dateIso lookup from all scope files (NC discovery has dates that aren't
@@ -300,8 +308,112 @@ for (const f of ncFiles) {
   }
 }
 
+// ─── 3) Microsite RFEG (rfegolf-resultats, incl. blocos mitarjeta) ───
+// Blocos de `results` com players — Campeonatos de España e afins. Os blocos
+// mitarjeta trazem lic + dob + club + holeScores (identidade forte para o
+// agregador); os nativos trazem pos/rounds/total.
+const twinsData = (() => {
+  try { return JSON.parse(fs.readFileSync(TWINS_FILE, "utf-8")); }
+  catch { return { twins: {}, lgsSuppressed: {} }; }
+})();
+const ADULT_CAT = /Sub\s*-?\s*(2[0-9]|3\d|4\d|5\d)|Absoluta?|S[eé]nior|Master|Adultos?|Mid\b/i;
+
+function ddmmyyyyToIso(s) {
+  const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(String(s || "").trim());
+  if (!m) return null;
+  return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+}
+
+let rfKept = 0, rfSkipped = 0, rfTwinned = 0;
+const rfFiles = fs.existsSync(RFEG_DIR)
+  ? fs.readdirSync(RFEG_DIR).filter(f => /^\d+\.json$/.test(f))
+  : [];
+
+for (const f of rfFiles) {
+  try {
+    const d = JSON.parse(fs.readFileSync(path.join(RFEG_DIR, f), "utf-8"));
+    if (!d.ok || !d.compId) { rfSkipped++; continue; }
+    const compId = String(d.compId);
+    // Gémeo com versão LGS já incluída → skip (a página /rfeg faz o mesmo)
+    if (twinsData.twins && twinsData.twins[compId] != null) { rfTwinned++; continue; }
+    const metaName = d.meta?.name || "";
+    const metaCat = d.meta?.category || null;
+    const dateIso = ddmmyyyyToIso(d.meta?.dateStart) || null;
+    const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
+    let anyAdded = false;
+    for (const b of d.results || []) {
+      const players = Array.isArray(b.players) ? b.players : [];
+      if (players.length === 0) continue;
+      const cat = b.categoria || metaCat || extractAgeGroup(metaName);
+      if (!cat || ADULT_CAT.test(cat) || ADULT_CAT.test(metaName)) continue;
+      if (!isJuvenil(cat) && !isJuvenil(metaName)) continue;
+      // Par/SI/metros: blocos mitarjeta têm perHole; sem isso tenta coursePar do doc
+      let par = null, si = null, meters = null;
+      if (Array.isArray(b.perHole) && b.perHole.length) {
+        par = b.perHole.map(h => h.par || 0);
+        si = b.perHole.some(h => h.si != null) ? b.perHole.map(h => h.si ?? null) : null;
+        meters = b.perHole.some(h => h.meters != null) ? b.perHole.map(h => h.meters ?? null) : null;
+      } else if (Array.isArray(d.coursePar) && (d.coursePar.length === 18 || d.coursePar.length === 9)) {
+        par = d.coursePar;
+      }
+      const nholes = par ? par.length : 18;
+      const parTotal = par ? par.reduce((a, x) => a + (x || 0), 0) : (b.parTotal ?? null);
+      const nRounds = b.nRounds || Math.max(1, ...players.map(p => Array.isArray(p.rounds) ? p.rounds.length : 0));
+      const enriched = players.map(p => ({
+        n: p.name,
+        p: p.pos == null ? null : p.pos,
+        t: typeof p.total === "number" ? p.total : null,
+        tp: p.toPar == null ? null : p.toPar,
+        hcp: typeof p.hcp === "number" ? p.hcp : null,
+        lic: p.licencia || null,
+        rd: Array.isArray(p.rounds) ? p.rounds : [],
+        sc: p.holeScores
+          ? Object.keys(p.holeScores).sort((a, x) => (+a) - (+x)).map(k => p.holeScores[k]).filter(Array.isArray)
+          : [],
+        dob: ddmmyyyyToIso(p.dob),
+        club: p.club || null,
+        sex: p.sexo || null,
+        catEdad: p.catEdad || null,
+        region: p.region || null,
+      })).filter(p => p.n && (p.t != null || p.p != null || p.rd.length));
+      if (enriched.length === 0) continue;
+      const sexKey = /F/i.test(b.sexo || "") ? "f" : (/M/i.test(b.sexo || "") ? "m" : "x");
+      const catKey = String(cat).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+      const tid = `rfeg${compId}_${catKey}_${sexKey}`;
+      out.torneios[tid] = {
+        name: metaName || `RFEG ${compId}`,
+        categoryName: b.label || null,
+        year,
+        ageGroup: cat,
+        sex: b.sexo || null,
+        dateIso,
+        par, parTotal,
+        si, meters,
+        courseRating: b.courseRating ?? null,
+        slope: b.slope ?? null,
+        campo: d.meta?.course || null,
+        nholes, nRounds,
+        source: "rfegolf",
+        compId,
+        players: enriched,
+      };
+      anyAdded = true;
+    }
+    if (anyAdded) rfKept++; else rfSkipped++;
+  } catch (e) { rfSkipped++; }
+}
+
+// lgsSuppressed: a versão rfegolf/mitarjeta é preferida — remover a entrada LGS
+let lgsSuppressedRemoved = 0;
+for (const lgsId of Object.keys(twinsData.lgsSuppressed || {})) {
+  if (out.torneios[`lgs${lgsId}`]) {
+    delete out.torneios[`lgs${lgsId}`];
+    lgsSuppressedRemoved++;
+  }
+}
+
 out.total = Object.keys(out.torneios).length;
 out.dedupedPlayers = 0;
 fs.writeFileSync(OUT, JSON.stringify(out));
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
-console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + ", NC " + ncKept + " files (" + ncEntriesAdded + " cats) -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");
+console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " twins skipped) -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");

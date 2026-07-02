@@ -229,14 +229,16 @@ jobs:
       - name: Build spain-players.json
         run: node scripts/build-spain-players-export.js
 
+      # Os gémeos têm de existir ANTES do rivals: build-rfegolf-rivals.js usa
+      # rfegolf-lgs-twins.json para não duplicar torneios RFEGolf↔LGS.
+      - name: Build mapa de gémeos RFEGolf<->LGS
+        run: node scripts/build-lgs-twins.js
+
       - name: Build rfegolf-rivals.json
         run: node scripts/build-rfegolf-rivals.js
 
       - name: Build fcg-rivals.json
         run: node scripts/build-fcg-rivals.js
-
-      - name: Build mapa de gémeos RFEGolf<->LGS
-        run: node scripts/build-lgs-twins.js
 
       - name: Build spain-player-results.json (torneios por jogador)
         run: node scripts/build-spain-player-results.js
