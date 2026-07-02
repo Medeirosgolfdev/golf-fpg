@@ -1,21 +1,28 @@
 /**
  * scripts/lib/atomic-write.js — Escrita atómica de JSON.
  *
- * Escreve para um .tmp e renomeia no fim — um crash a meio da escrita
- * (ou um scrape interrompido) nunca deixa um JSON truncado no destino.
- * (Exactamente o bug que corrompeu drive-data-2026-06.json em 2026-06-12.)
+ * Shim de compatibilidade: delega na versão ENDURECIDA de lib/atomic-write.js
+ * (raiz), que faz write em chunks + fsync no fd + verificação de tamanho +
+ * fsync na directoria após rename. Antes existiam aqui 2 implementações
+ * divergentes — a local não tinha fsync e podia truncar JSONs grandes em
+ * mounts Windows/virtiofs (o bug que corrompeu drive-data-2026-06.json em
+ * 2026-06-12). Unificado em 2026-07-02.
  *
- * Uso:
+ * Uso (assinatura preservada):
  *   const { writeJsonAtomic } = require("./lib/atomic-write");
  *   writeJsonAtomic(outPath, data);
+ *   writeJsonAtomic(outPath, data, { spaces: 0 });
  */
 
-const fs = require("fs");
+const hardened = require("../../lib/atomic-write");
 
 function writeJsonAtomic(filePath, data, { spaces = 2 } = {}) {
-  const tmp = filePath + ".tmp";
-  fs.writeFileSync(tmp, JSON.stringify(data, null, spaces));
-  fs.renameSync(tmp, filePath);
+  hardened.writeJsonAtomic(filePath, data, spaces);
 }
 
-module.exports = { writeJsonAtomic };
+module.exports = {
+  writeJsonAtomic,
+  writeAtomic: hardened.writeAtomic,
+  writeJsonAtomicVerified: hardened.writeJsonAtomicVerified,
+  verifyJsonFile: hardened.verifyJsonFile,
+};

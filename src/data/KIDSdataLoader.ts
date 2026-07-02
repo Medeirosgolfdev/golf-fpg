@@ -197,12 +197,12 @@ export function invalidateAutoRivalsCache(): void {
 /** WJGC/EOWAGR/Doral usavam tids hardcoded por sourceKey de ficheiro. */
 const FILE_TO_LEGACY_TID: Record<string, string> = {
   "wjgc_2025_b89": "wjgc25_b89",
-  "wjgc_2025_contest34": "wjgc25_b1011",
-  "wjgc_2026_b1011_3r": "wjgc26",
-  "wjgc_2026_contest33": "wjgc26_1213",
+  "wjgc_2025_b1011": "wjgc25_b1011",
+  "wjgc_2026_b1011": "wjgc26",
+  "wjgc_2026_b1213": "wjgc26_1213",
   "eowagr25_contest121": "eowagr25_b78",
   "eowagr25_contest13": "eowagr25_b910",
-  "eowagr25_scorecards": "eowagr25",
+  "eowagr25_contest21": "eowagr25",
   "eowagr25_contest77": "eowagr25_b1314",
   "ftm_doral_2018": "doral18",
   "ftm_doral_2019": "doral19",

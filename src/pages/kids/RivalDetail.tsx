@@ -26,6 +26,7 @@ import { MemberHistTable } from "./MemberHistTable";
 import { EvolucaoChart, TorneiosRecorrentes, H2HTable, inferNholes } from "./RivalCharts";
 import { D, T, UP, ageLabel, findCard, getPlayerType, getTournInfo, getTournLinks, getTournUrl, getTournWeight, hiddenTids, manuel, nPlayed, tornCanonK, useMH, useRivals, useRivalsLoaded, useScoringStatsCtx, yearOf, rankMap, totalRanked, AUTO_TOURN_NAMES, AUTO_TOURN_META } from "../KIDSPage";
 import { computeDobInfo, escalaoIntl, T_MAP } from "./dobInference";
+import { AUTO_COVERED_BY } from "../../data/tidAliases";
 import { EOWAGR25_CARDS, EOWAGR25_M, EOWAGR25_PAR, EOWAGR25_SI, WJGC26_1213_CARDS, WJGC26_1213_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_CARDS, WJGC26_M, WJGC26_PAR, WJGC26_SI } from "./courseScorecards";
 import type { MHPlayer, MHTournament, RivalPlayer, TournDef } from "../KIDSPage";
 
@@ -84,29 +85,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
   // Tournament results: T manual (com scorecard) + auto-loaded (sem scorecard)
   const manualTournIds = new Set(T.map(t => t.id));
 
-  // Mapa explícito: auto tid → manual T id que o cobre
-  // Necessário quando o id manual não deriva trivialmente do auto tid
-  const AUTO_COVERED_BY: Record<string,string> = {
-    // brjgt25 (manual) era listado aqui mas ele próprio é skipado em tournResults
-    // (linha ~2193) quando há wjgc25_b1011 — ambos eram skipados → torneio
-    // sumia. Mantemos só wjgc26_b1213 → wjgc26_1213 e os escalões venice/rome/doral.
-    // wjgc26_1213 (manual) é coberto pelo auto tid
-    "wjgc26_b1213":  "wjgc26_1213",
-    // Venice 2025
-    "venice25_b11":  "venice25",
-    "venice25_b12":  "venice25",
-    "venice25_b9":   "venice25",
-    "venice25_b10":  "venice25",
-    // Rome 2025
-    "rome25_b11":    "rome25",
-    "rome25_b12":    "rome25",
-    "rome25_b9":     "rome25",
-    "rome25_b10":    "rome25",
-    // Doral 2025
-    "doral25_b1011": "doral25",
-    "doral25_b89":   "doral25",
-    "doral25_b1213": "doral25",
-  };
+  // AUTO_COVERED_BY (auto tid → manual T id) vem de tidAliases.ts.
   // Mapa inverso: manual T id → lista de auto tids equivalentes (para buscar scorecards)
   const MANUAL_AUTO_TIDS: Record<string,string[]> = {};
   for (const [autoTid, manTid] of Object.entries(AUTO_COVERED_BY)) {

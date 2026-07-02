@@ -68,11 +68,11 @@ export const FILE_AQUAPOR_DATA    = `${BASE}aquapor-data.json`;
 export const FILE_DRIVE_SD_LOOKUP = `${BASE}drive-sd-lookup.json`;
 
 // BJGT / WJGC / EOWAGR (BluGolf scrapeados)
-export const FILE_BJGT_VP_2025      = `${BASE}bjgt_vp_field_2025.json`;
+// (bjgt_vp_field_2025.json foi movido para data-archive/ — fora do deploy)
 export const FILE_WJGC_2025_B89     = `${BASE}wjgc_2025_b89.json`;
-export const FILE_WJGC_2025_B1011   = `${BASE}wjgc_2025_contest34.json`;
-export const FILE_WJGC_2026_B1011   = `${BASE}wjgc_2026_b1011_3r.json`;
-export const FILE_WJGC_2026_B1213   = `${BASE}wjgc_2026_contest33.json`;
+export const FILE_WJGC_2025_B1011   = `${BASE}wjgc_2025_b1011.json`;
+export const FILE_WJGC_2026_B1011   = `${BASE}wjgc_2026_b1011.json`;
+export const FILE_WJGC_2026_B1213   = `${BASE}wjgc_2026_b1213.json`;
 export const FILE_EOWAGR_2025_B78   = `${BASE}eowagr25_contest121.json`;
 export const FILE_EOWAGR_2025_B910  = `${BASE}eowagr25_contest13.json`;
 export const FILE_EOWAGR_2025_B1112 = `${BASE}eowagr25_scorecards.json`;  // tem scores[]
@@ -676,7 +676,6 @@ Treino (Game Book):
     id: "bjgt-wjgc",
     label: "BJGT / WJGC / EOWAGR — Leaderboards BluGolf (todos com scorecard completo)",
     files: [
-      FILE_BJGT_VP_2025,
       FILE_WJGC_2025_B89,
       FILE_WJGC_2025_B1011,
       FILE_WJGC_2026_B1011,
@@ -750,12 +749,10 @@ Treino (Game Book):
 }
 
 Ficheiros e respectivos escalões:
-  bjgt_vp_field_2025.json     — BJGT VP 2025 (field, sem si)
   wjgc_2025_b89.json          — WJGC 2025 Boys 8-9 (18H, SEM si)
-  wjgc_2025_contest28.json    — WJGC 2025 (outro contest, 18H, COM si)
-  wjgc_2026_b1011_3r.json     — WJGC 2026 Boys 10-11 (3R final, COM si)
-  wjgc_2026_contest33.json    — WJGC 2026 Boys 12-13 (18H, COM si)
-  wjgc_2026_resultados.json   — WJGC 2026 Boys 10-11 resultados (18H, COM si)
+  wjgc_2025_b1011.json        — WJGC 2025 Boys 10-11 (18H, COM si)
+  wjgc_2026_b1011.json        — WJGC 2026 Boys 10-11 (3R final, COM si)
+  wjgc_2026_b1213.json        — WJGC 2026 Boys 12-13 (18H, COM si)
   eowagr25_contest121.json    — EOWAGR 2025 Boys 7-8 (9H, COM si)
   eowagr25_contest13.json     — EOWAGR 2025 Boys 9-10 (9H)
   eowagr25_scorecards.json    — EOWAGR 2025 Boys 11-12 (18H, COM si)

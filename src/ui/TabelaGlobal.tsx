@@ -6,6 +6,7 @@ import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
 import { uskTournNames, normName as normNameAuto } from "../data/KIDSdataLoader";
 import type { AutoRivalPlayer, FieldData } from "../data/KIDSdataLoader";
+import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -156,23 +157,15 @@ const TG_TIER = {
   beginner:   { bg: "var(--bg-danger-subtle,var(--bg-danger-strong))", c: "var(--color-danger-dark)" },
 };
 
+// Base partilhada (tidAliases.ts) + extras específicos desta vista
+// (o TG_T cobre mais torneios do que o detalhe de rival).
 const TG_HIDDEN: Array<[string, string]> = [
-  // WJGC25: brjgt25 escondido quando existe o tid USKids
-  ["brjgt25",        "wjgc25_b1011"],
+  ...HIDDEN_WHEN_PRESENT,
   // WJGC26: wjgc26_1213 (Boys 12-13) já não está em TG_T; suprimir auto tids USKids
-  ["wjgc26_b1213",   "wjgc26_1213"],
   ["wjgc26_b1011",   "wjgc26"],
   // EU Open 2025: suprimir tids USKids em favor do TG_T eowagr25
   ["eowagr25_b78",   "eowagr25"], ["eowagr25_b910",  "eowagr25"],
   ["eowagr25_b1011", "eowagr25"], ["eowagr25_b1314", "eowagr25"],
-  // Venice 2025
-  ["venice25_b11","venice25"], ["venice25_b12","venice25"],
-  ["venice25_b9", "venice25"], ["venice25_b10","venice25"],
-  // Rome 2025
-  ["rome25_b11","rome25"], ["rome25_b12","rome25"],
-  ["rome25_b9", "rome25"], ["rome25_b10","rome25"],
-  // Doral 2025
-  ["doral25_b1011","doral25"], ["doral25_b89","doral25"], ["doral25_b1213","doral25"],
   // QDL 2025
   ["qdl25_b11","qdl25"], ["qdl25_b12","qdl25"], ["qdl25_b9","qdl25"],
   // Greatgolf 2026

@@ -59,7 +59,6 @@ function tabFromPath(pathname: string): Tab {
     doral: "major",
     ffg: "ffg",
     rfeg: "rfeg",
-    "nacionais-jovens": "nacionais",
     titulos: "nacionais",
     "global-junior": "global-junior",
     england: "england",

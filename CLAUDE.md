@@ -23,7 +23,7 @@ Erros de tipo, imports em falta, variáveis não usadas, ou testes falhados inva
 - html-to-image (exportação de overlays)
 - Playwright (scraping pipeline)
 - Deploy: Vercel com GitHub integration
-- 5 GitHub Actions para automação de dados
+- 17 GitHub Actions para automação de dados (ver tabela "GitHub Actions — estado")
 
 ## Estrutura
 
@@ -37,7 +37,7 @@ src/
   context/        # AppContext.tsx
   hooks/          # useIsMobile, useMasterDetail, useSort, usePlayerData
 
-scripts/          # ~190 scripts Node.js para pipeline de dados (scrapers, builders, testes)
+scripts/          # ~225 scripts Node.js para pipeline de dados (scrapers, builders, testes)
 scripts/lib/      # lib partilhada dos scrapers (cookies, fpg-http, atomic-write) — ver secção própria
 scripts/aggregator/ # orquestrador do agregador de juniores (sources/ + identity-matcher); workflow build-juniors.yml
 scripts/_archive/ # scripts legados/diagnóstico (browser-console, testes-diagnostico, etc.) — não corridos
@@ -62,15 +62,15 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
 | `/jogadores-por-ano` | JogadoresPorAnoPage | players/federados por coorte de ano de nascimento (utilidade, fora da NavBar) |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
-| `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-22).json, uskids-field.json |
-| `/kids` | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
+| `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-40).json, uskids-field.json |
+| `/kids-legacy` (`/kids` → redirect `/kids2`) | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
 | `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/` |
-| `/diversos` | FPGPage | pull-torneiosNNN.json |
+| `/FPG` (`/diversos` → redirect `/FPG`) | FPGPage | pull-torneiosNNN.json |
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
-| `/bjgt/:fed?` | BJGTPage | bjgt_*.json, wjgc_*.json |
+| — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO de dados (URLS, loadT, bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage — UI standalone removida 2026-07-02 | bjgt_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
 | `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
-| `/doral` | DORALPage | ftm_doral_*.json |
+| — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO de dados (DATA_FILES, normalizeFile, doralMajorDivision) consumido pela MajorPage — UI standalone removida 2026-07-02 | ftm_doral_*.json |
 | `/comparar` | ComparePage (3 tabs: Campos, Vantagem de Tee, Jogadores; tab Jogadores delega em CompararPage) | master-courses, players.json, {MANUEL}/analysis/data.json |
 | `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage | — |
@@ -82,11 +82,11 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 
-> **Páginas legadas mantidas como rotas alternativas** (`/bjgt-legacy`, `/kids-legacy`, `/doral-legacy`): versões antigas das páginas-mãe acima, preservadas durante a migração para o `CircuitShell`.
+> **Páginas legadas** — estado 2026-07-02: `/bjgt-legacy` e `/doral-legacy` foram **removidas** (redirect → `/major`, que tem paridade total via CircuitShell; BJGTPage.tsx/DORALPage.tsx sobrevivem como módulos de dados+componentes ricos consumidos pela MajorPage). `/kids-legacy` (KIDSPage) **mantém-se** — o sunset está BLOQUEADO até o kids2 ganhar paridade em 4 funcionalidades exclusivas do legado: **(1)** tabela H2H detalhada (`kids/H2HSortableTable.tsx` — kids2 só tem o resumo MatchupVsManuel), **(2)** Previsão WHS (`kids/PrevisaoTab.tsx` + `previsaoModel.ts`, simulador de handicap p/ torneios futuros), **(3)** Course Tab (`kids/CourseTab.tsx`, tees+CR/Slope por escalão), **(4)** tab de scorecards históricos (`kids/HistoricScorecardsTab.tsx`). Nota: `kids/FieldRivaisDashboard.tsx` é importado pelo PRÓPRIO kids2 (`kids2/NextTournaments.tsx`) — não é código legado puro.
 >
-> **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. Feature construída e por lançar (decidir: ligar a rota ou remover).
+> **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas deliberadamente NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. **Decisão 2026-07-02: os dados actuais NÃO são úteis/fiáveis — só ligar a rota quando houver uma fonte de dados boa e fiável.** Até lá fica desligada de propósito; não é bug.
 >
-> **⚠ `NacionaisJovensPage.tsx` é código morto** — está `lazy`-importada em `App.tsx` mas **sem `<Route>`**; a funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. Remover a página + o import órfão, ou (se se quiser rota dedicada) fazer redirect para `/titulos/nacional`. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido) mas a rota já não existe.
+> **`NacionaisJovensPage.tsx` foi REMOVIDA em 2026-07-02** (era código morto: lazy-importada sem `<Route>`). A funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido) mas a página/rota já não existem.
 
 ## Comandos
 
@@ -127,7 +127,7 @@ Carrega em paralelo todos estes ficheiros, processando cada um com a função ad
 - `wjgc_*.json`, `eowagr*.json` → `processWjgc(d, tid)`
 - `ftm_doral_*.json` → `processDoral(d)`
 - `uskids-results.json` → `processUskids(d)`
-- `uskids_torneios_completos(1-22).json` → `processUskidsCompleto(d)` (suporta formato v1 e v2)
+- `uskids_torneios_completos(1-40).json` → `processUskidsCompleto(d)` (suporta formato v1 e v2)
 - `uskids-field-sizes.json` → `processFieldSizes(d)` (popula `uskFieldSizes`)
 - `t_de_tournaments_do_uskids.json` → `processTournMeta(d)` (popula `uskTournNames`, 6448 entradas)
 - `processManuelOverrides()` — injeta scores manuais do Manuel (MANUEL_OVERRIDES)
@@ -894,7 +894,7 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | drive-sd-lookup.json | FPG | build-drive-sd-lookup.js | ✗ | DrivePage |
 | {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
-| uskids_torneios_completos(1-22).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
+| uskids_torneios_completos(1-40).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
@@ -2182,7 +2182,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Críticos
 
-**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-22).json`. Este bug voltou várias vezes.
+**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-40).json`. Este bug voltou várias vezes.
 
 **Manuel tem 4 variantes de nome + 2 contas USKids** — "Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros", e "Manuel Francisco Goulartt De Medeiros" (este último era da **conta USKids antiga**, antes da migração para mid `630106`). Usar sempre `autoRivals.filter(d => d.isM)` (não `find()`) e fazer merge de todas as entradas. `isManuelByName()` em `src/constants/manuel.ts` já apanha as 4 variantes. Para mid USKids legacy, ver `MANUEL_PLAYER_IDS` (array) — adicionar lá o mid antigo quando validado via `scripts/verify-manuel-legacy-mid.js`.
 
@@ -2194,6 +2194,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Dados
 
+- **`KIDSPage.D` vs `TabelaGlobal.TG_D` NÃO são cópias** (avaliado 2026-07-02) — os dois arrays manuais de rivais partilham as primeiras ~14 linhas mas foram curados INDEPENDENTEMENTE e divergem de propósito (países, torneios e até homónimos distintos: "Maxime Vervaet" Spain/B12-13 vs Belgium/B10-11, "Nicolas Pape" Thailand/BRJGT vs France/WJGC). **Não tentar fundir sem curadoria manual** — uma fusão automática corrompe dados. A duplicação resolve-se naturalmente quando o /kids-legacy for removido (o `D` desaparece com a KIDSPage).
 - **scrape-drive-aquapor-v6 bug R1=R2** — v6 usava API que ignora `classifround`. v7 usa `classifAgregate.aspx/ScoreCard` — corrigido.
 - **ScorecardLeaderboard par vazio** — se `par[]` chegar vazio, `nh=0`, slice→[], soma=0. Fix: `const nhRef = par.length || (is9 ? 9 : 18)`.
 - **KIDSdataLoader filtro 18H bloqueava 9H** — El Prat 2023 (9H) não aparecia. Fix: usar `expectedHoles = par.length` dinâmico. El Prat também precisou de `USKIDS_PAR["15573-2151"]` manual.

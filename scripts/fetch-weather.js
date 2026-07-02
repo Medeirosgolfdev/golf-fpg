@@ -32,9 +32,7 @@
 
 const fs = require("fs");
 const path = require("path");
-let writeJsonAtomic;
-try { ({ writeJsonAtomic } = require("./lib/atomic-write")); }
-catch { writeJsonAtomic = (p, d) => { const t = p + ".tmp"; fs.writeFileSync(t, JSON.stringify(d, null, 2)); fs.renameSync(t, p); }; }
+const { writeJsonAtomic } = require("./lib/atomic-write");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "public", "data", "weather.json");

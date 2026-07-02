@@ -26,6 +26,7 @@ import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, ncScoringType, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
+import { AUTO_COVERED_BY, HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
 import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
@@ -946,23 +947,7 @@ export let rankMap: Record<string, number> = {};
 export let totalRanked = 0;
 
 // nPlayed e nRounds contam todos os torneios (T manual + auto-loaded)
-// Tids que ficam ocultos no detalhe (deduplicação)
-// Regra simples: contar quantos estão escondidos e subtrair ao total
-const HIDDEN_WHEN_PRESENT: Array<[string, string]> = [
-  // [tid oculto, tid que o substitui]
-  ["brjgt25",       "wjgc25_b1011"],
-  // WJGC 2026 — auto tid vs manual entry
-  ["wjgc26_b1213",  "wjgc26_1213"],
-  // Venice 2025 escalões vs manual entry
-  ["venice25_b11","venice25"], ["venice25_b12","venice25"],
-  ["venice25_b9", "venice25"], ["venice25_b10","venice25"],
-  // Rome 2025
-  ["rome25_b11",  "rome25"],   ["rome25_b12",  "rome25"],
-  ["rome25_b9",   "rome25"],   ["rome25_b10",  "rome25"],
-  // Doral 2025
-  ["doral25_b1011","doral25"], ["doral25_b89", "doral25"], ["doral25_b1213","doral25"],
-];
-
+// Tids que ficam ocultos no detalhe (deduplicação) — pares em tidAliases.ts
 export function hiddenTids(p: RivalPlayer): Set<string> {
   const hidden = new Set<string>();
   for (const [toHide, whenPresent] of HIDDEN_WHEN_PRESENT) {
@@ -972,33 +957,10 @@ export function hiddenTids(p: RivalPlayer): Set<string> {
   return hidden;
 }
 
-/**
- * Mapa explícito auto tid → manual T id que o cobre.
- * Necessário quando o id manual não deriva trivialmente do auto tid.
- * (Movido de dentro do componente para topo — usado por sidebar e detail.)
- */
-const AUTO_COVERED_BY: Record<string, string> = {
-  // brjgt25 (manual) era listado aqui mas conflitava com a regra na linha ~1444
-  // que prefere o auto (`wjgc25_b{N}`). Resultado: ambos eram skipados → torneio
-  // desaparecia. Mantemos apenas a preferência pelo auto na getCanonicalTids.
-  // wjgc26_1213 (manual) cobre o auto
-  // wjgc26_1213 (manual) cobre o auto
-  "wjgc26_b1213":  "wjgc26_1213",
-  // Venice 2025
-  "venice25_b11":  "venice25",
-  "venice25_b12":  "venice25",
-  "venice25_b9":   "venice25",
-  "venice25_b10":  "venice25",
-  // Rome 2025
-  "rome25_b11":    "rome25",
-  "rome25_b12":    "rome25",
-  "rome25_b9":     "rome25",
-  "rome25_b10":    "rome25",
-  // Doral 2025
-  "doral25_b1011": "doral25",
-  "doral25_b89":   "doral25",
-  "doral25_b1213": "doral25",
-};
+// AUTO_COVERED_BY (auto tid → manual T id) importado de tidAliases.ts.
+// brjgt25 (manual) não entra no mapa: conflitava com a regra que prefere o
+// auto (`wjgc25_b{N}`) na getCanonicalTids — ambos eram skipados → torneio
+// desaparecia.
 
 const _MANUAL_TIDS_SET = new Set(T.map(t => t.id));
 

@@ -45,7 +45,6 @@ const CamposPage = lazy(() => import("./pages/CamposPage"));
 const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
 const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
-const BJGTPage = lazy(() => import("./pages/BJGTPage"));
 const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
 const KIDSPage = lazy(() => import("./pages/KIDSPage"));
 const KIDS2Page = lazy(() => import("./pages/KIDS2Page"));
@@ -53,17 +52,15 @@ const KIDS2ScoutView = lazy(() => import("./pages/kids2/ScoutView"));
 const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"));
 const KIDS2NextTournamentsGlobal = lazy(() => import("./pages/kids2/NextTournamentsGlobal"));
 const KIDS2RankingPage = lazy(() => import("./pages/kids2/RankingPage"));
-const CompararPage = lazy(() => import("./pages/ComparePage"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
-const DORALPage = lazy(() => import("./pages/DORALPage"));
 const MajorPage = lazy(() => import("./pages/MajorPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
 const RFEGPage = lazy(() => import("./pages/RFEGPage"));
-const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
@@ -392,7 +389,7 @@ export default function App() {
                 {/* Utilitário (fora da NavBar): jogadores por ano de nascimento */}
                 <Route path="/jogadores-por-ano" element={<JogadoresPorAnoPage />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
-                <Route path="/comparar" element={<CompararPage />} />
+                <Route path="/comparar" element={<ComparePage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
                 <Route path="/drive" element={<DrivePage />} />
                 {/* Deep-link canónico de torneio Drive: /drive/torneio/{ccode}-{tcode} */}
@@ -400,7 +397,7 @@ export default function App() {
                 <Route path="/major" element={<MajorPage />} />
                 <Route path="/major/:source/:year" element={<MajorPage />} />
                 <Route path="/bjgt/:fed?" element={<Navigate to="/major" replace />} />
-                <Route path="/bjgt-legacy/:fed?" element={<BJGTPage />} />
+                <Route path="/bjgt-legacy/:fed?" element={<Navigate to="/major" replace />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 {/* Migração para KIDS2 (2026-05): /kids → /kids2 com hash preservado.
                     A página legacy KIDSPage continua disponível em /kids-legacy para
@@ -431,7 +428,7 @@ export default function App() {
                 <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
                 <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
                 <Route path="/doral" element={<Navigate to="/major" replace />} />
-                <Route path="/doral-legacy" element={<DORALPage />} />
+                <Route path="/doral-legacy" element={<Navigate to="/major" replace />} />
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
                 <Route path="/global-junior" element={<GlobalJuniorPage />} />
