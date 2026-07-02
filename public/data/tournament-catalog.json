@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-30T12:36:37.155Z",
+  "generatedAt": "2026-07-02T11:45:29.935Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -12412,6 +12412,25 @@
       "editionsCount": 9
     },
     {
+      "id": "uskids-australian-open",
+      "label": "Australian Open",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-3242",
+        "uskids-6705",
+        "uskids-4591",
+        "uskids-8243",
+        "uskids-17227",
+        "uskids-19735",
+        "uskids-14825",
+        "uskids-11756",
+        "uskids-22465"
+      ],
+      "firstDate": "2017-01-19",
+      "lastDate": "2026-07-02",
+      "editionsCount": 9
+    },
+    {
       "id": "uskids-charles-t-myers-golf-course",
       "label": "Charles T. Myers Golf Course",
       "sourceId": "uskids",
@@ -14217,24 +14236,6 @@
       ],
       "firstDate": "2015-07-11",
       "lastDate": "2025-07-14",
-      "editionsCount": 8
-    },
-    {
-      "id": "uskids-australian-open",
-      "label": "Australian Open",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-3242",
-        "uskids-6705",
-        "uskids-4591",
-        "uskids-8243",
-        "uskids-17227",
-        "uskids-19735",
-        "uskids-14825",
-        "uskids-11756"
-      ],
-      "firstDate": "2017-01-19",
-      "lastDate": "2025-09-29",
       "editionsCount": 8
     },
     {
@@ -19544,6 +19545,22 @@
       "editionsCount": 6
     },
     {
+      "id": "uskids-irish-open",
+      "label": "Irish Open",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-8660",
+        "uskids-11307",
+        "uskids-18978",
+        "uskids-13470",
+        "uskids-16020",
+        "uskids-21455"
+      ],
+      "firstDate": "2021-07-06",
+      "lastDate": "2026-07-01",
+      "editionsCount": 6
+    },
+    {
       "id": "uskids-donaghadee-golf-club",
       "label": "Donaghadee Golf Club",
       "sourceId": "uskids",
@@ -22555,21 +22572,6 @@
       ],
       "firstDate": "2023-09-23",
       "lastDate": "2025-05-11",
-      "editionsCount": 5
-    },
-    {
-      "id": "uskids-irish-open",
-      "label": "Irish Open",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-8660",
-        "uskids-11307",
-        "uskids-18978",
-        "uskids-13470",
-        "uskids-16020"
-      ],
-      "firstDate": "2021-07-06",
-      "lastDate": "2025-07-09",
       "editionsCount": 5
     },
     {
@@ -28039,6 +28041,34 @@
       ],
       "firstDate": "2023-06-15",
       "lastDate": "2024-09-15",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-park-hills-golf-course",
+      "label": "Park Hills Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18759",
+        "uskids-19770",
+        "uskids-21823",
+        "uskids-22313"
+      ],
+      "firstDate": "2025-05-10",
+      "lastDate": "2026-06-07",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-ingersoll-golf-course-and-learning-links",
+      "label": "Ingersoll Golf Course and Learning Links",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18762",
+        "uskids-21824",
+        "uskids-19775",
+        "uskids-22312"
+      ],
+      "firstDate": "2025-05-31",
+      "lastDate": "2026-06-06",
       "editionsCount": 4
     },
     {
@@ -34075,32 +34105,6 @@
       ],
       "firstDate": "2025-05-03",
       "lastDate": "2026-04-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-park-hills-golf-course",
-      "label": "Park Hills Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18759",
-        "uskids-19770",
-        "uskids-21823"
-      ],
-      "firstDate": "2025-05-10",
-      "lastDate": "2026-05-09",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-ingersoll-golf-course-and-learning-links",
-      "label": "Ingersoll Golf Course and Learning Links",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18762",
-        "uskids-21824",
-        "uskids-19775"
-      ],
-      "firstDate": "2025-05-31",
-      "lastDate": "2026-05-17",
       "editionsCount": 3
     },
     {
@@ -42103,6 +42107,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-lakewood-ranch-golf-and-country-club-the-legacy",
+      "label": "Lakewood Ranch Golf and Country Club - The Legacy",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20265",
+        "uskids-21975"
+      ],
+      "firstDate": "2025-09-14",
+      "lastDate": "2026-06-14",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-ocotillo-golf-resort",
       "label": "Ocotillo Golf Resort",
       "sourceId": "uskids",
@@ -47680,6 +47696,18 @@
       ],
       "firstDate": "2025-05-25",
       "lastDate": "2025-10-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-paris-invitational-parent-child",
+      "label": "Paris Invitational Parent/Child",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19030",
+        "uskids-22321"
+      ],
+      "firstDate": "2025-07-04",
+      "lastDate": "2026-07-02",
       "editionsCount": 2
     },
     {
@@ -55605,17 +55633,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-lakewood-ranch-golf-and-country-club-the-legacy",
-      "label": "Lakewood Ranch Golf and Country Club - The Legacy",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20265"
-      ],
-      "firstDate": "2025-09-14",
-      "lastDate": "2025-09-14",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-vineyards-country-club",
       "label": "Vineyards Country Club",
       "sourceId": "uskids",
@@ -63008,6 +63025,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-lakewood-national-golf-club-piper-tour-championship",
+      "label": "Lakewood National Golf Club - Piper (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21976"
+      ],
+      "firstDate": "2026-06-20",
+      "lastDate": "2026-06-20",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-heritage-park-golf-course-tour-championship",
       "label": "Heritage Park Golf Course (Tour Championship)",
       "sourceId": "uskids",
@@ -67859,17 +67887,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-paris-invitational-parent-child",
-      "label": "Paris Invitational Parent/Child",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19030"
-      ],
-      "firstDate": "2025-07-04",
-      "lastDate": "2025-07-04",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-club-de-golf-valle-imperial-rancho-contento-golf-course",
       "label": "Club de Golf Valle Imperial / Rancho Contento Golf Course",
       "sourceId": "uskids",
@@ -70004,6 +70021,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-pga-west-dunes-course-tour-championship",
+      "label": "PGA West - Dunes Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21611"
+      ],
+      "firstDate": "2026-06-07",
+      "lastDate": "2026-06-07",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-keysborough-golf-club-tour-championship",
       "label": "Keysborough Golf Club (Tour Championship)",
       "sourceId": "uskids",
@@ -70122,6 +70150,17 @@
       ],
       "firstDate": "2026-05-25",
       "lastDate": "2026-05-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-macktown-golf-course",
+      "label": "Macktown Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22314"
+      ],
+      "firstDate": "2026-06-20",
+      "lastDate": "2026-06-20",
       "editionsCount": 1
     },
     {
