@@ -40,13 +40,17 @@
   const log = (...a) => console.log("%c[federados]", "color:#0a84ff;font-weight:700", ...a);
   const warn = (...a) => console.warn("%c[federados]", "color:#f59e0b;font-weight:700", ...a);
 
-  // ── .NET /Date(ms)/ → ISO YYYY-MM-DD ──────────────────────────
+  // ── .NET /Date(ms)/ → ISO YYYY-MM-DD (dia civil de Lisboa) ────
+  // toISOString() dava o dia -1 no horário de verão (Abril-Outubro).
+  const lisbonDayFmt = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Lisbon", year: "numeric", month: "2-digit", day: "2-digit",
+  });
   const parseNetDate = (s) => {
     if (!s || typeof s !== "string") return null;
     const m = s.match(/^\/Date\((-?\d+)\)\/$/);
     if (!m) return null;
     const d = new Date(parseInt(m[1], 10));
-    return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+    return isNaN(d.getTime()) ? null : lisbonDayFmt.format(d);
   };
 
   // ── Fetch de uma página ───────────────────────────────────────

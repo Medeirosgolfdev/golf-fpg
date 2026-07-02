@@ -17,6 +17,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { lisbonCivilDay } = require("../lib/helpers");
 
 const ROOT = path.join(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "public", "data");
@@ -206,7 +207,7 @@ async function fetchTargetsFromFPG() {
       const m = String(t.started_at).match(/\/Date\((\d+)/);
       return {
         ccode: t.club_code, tcode: t.code,
-        date: m ? new Date(parseInt(m[1])).toISOString().slice(0, 10) : null,
+        date: m ? lisbonCivilDay(parseInt(m[1])) : null, // meia-noite Lisboa; UTC dava dia -1 no verão
         name: t.description, campo: t.course_description || "",
         circuit: "FPG-NAC", escalao: "", tipo: categorize(t.description),
       };

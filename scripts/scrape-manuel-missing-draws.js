@@ -31,6 +31,7 @@
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
+const { lisbonCivilDay } = require("../lib/helpers");
 
 const ROOT = path.resolve(__dirname, "..");
 const PAIRINGS = path.join(ROOT, "public", "data", "manuel-pairings.json");
@@ -74,10 +75,7 @@ function normIsoDate(raw) {
   if (!raw) return null;
   if (typeof raw === "string" && /^\d{4}-\d{2}-\d{2}/.test(raw)) return raw.slice(0, 10);
   const m = String(raw).match(/\/Date\((-?\d+)\)\//);
-  if (m) {
-    const d = new Date(Number(m[1]));
-    return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
-  }
+  if (m) return lisbonCivilDay(Number(m[1])); // meia-noite Lisboa; UTC dava dia -1 no verão
   return null;
 }
 

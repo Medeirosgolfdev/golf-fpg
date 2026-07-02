@@ -49,6 +49,7 @@
 const fs = require("fs");
 const path = require("path");
 const { parseAdmissions, parseDraw } = require("./fpg-admissions-draw-parser.js");
+const { lisbonCivilDay } = require("../lib/helpers");
 
 /* ── Paths ──────────────────────────────────────────────────────────────── */
 const REPO = path.resolve(__dirname, "..");
@@ -394,14 +395,15 @@ function matchesExcludes(name) {
   return EXCLUDE_RX.some(rx => rx.test(name || ""));
 }
 
-/* Parsear timestamp .NET "/Date(1772323200000)/" → YYYY-MM-DD */
+/* Parsear timestamp .NET "/Date(1772323200000)/" → YYYY-MM-DD.
+   Meia-noite em hora de Lisboa — toISOString() dava dia -1 no verão. */
 function dotNetToIsoDate(s) {
   if (!s) return null;
   const m = String(s).match(/\d+/);
   if (!m) return null;
   const ms = parseInt(m[0], 10);
   if (!Number.isFinite(ms)) return null;
-  return new Date(ms).toISOString().slice(0, 10);
+  return lisbonCivilDay(ms);
 }
 
 /* Fonte 2: scan de JSONs locais (torneios já descobertos por outros workflows).

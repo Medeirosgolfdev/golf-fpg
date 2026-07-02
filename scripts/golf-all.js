@@ -27,6 +27,7 @@ const path = require("path");
 const https = require("https");
 const { execSync } = require("child_process");
 const { chromium } = require("playwright");
+const { lisbonCivilDay } = require("../lib/helpers");
 
 /** Ler JSON de ficheiro, removendo BOM se existir */
 function readJSON(fpath) {
@@ -647,9 +648,10 @@ function syncPlayersJson(fedList) {
         }
         // lastRound from WHS date
         if (!entry.lastRound && latestHcpDate > 0) {
-          const ld = new Date(latestHcpDate);
-          const lr = String(ld.getDate()).padStart(2, "0") + "-" + String(ld.getMonth() + 1).padStart(2, "0") + "-" + ld.getFullYear();
-          if (lr !== entry.lastRound) {
+          // Epoch = meia-noite em hora de Lisboa; getters locais falham em máquinas UTC
+          const iso = lisbonCivilDay(latestHcpDate);
+          const lr = iso ? `${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)}` : null;
+          if (lr && lr !== entry.lastRound) {
             entry.lastRound = lr;
             changed = true;
           }

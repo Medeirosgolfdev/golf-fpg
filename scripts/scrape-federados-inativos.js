@@ -30,12 +30,17 @@
   const log  = (...a) => console.log("%c[feds-inat]", "color:#f59e0b;font-weight:700", ...a);
   const warn = (...a) => console.warn("%c[feds-inat]", "color:#dc2626;font-weight:700", ...a);
 
+  // Epochs .NET codificam meia-noite em hora de Lisboa; toISOString() dava
+  // o dia -1 no horário de verão. Formatar em Europe/Lisbon (en-CA = ISO).
+  const lisbonDayFmt = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Lisbon", year: "numeric", month: "2-digit", day: "2-digit",
+  });
   const parseNetDate = (s) => {
     if (!s || typeof s !== "string") return null;
     const m = s.match(/^\/Date\((-?\d+)\)\/$/);
     if (!m) return null;
     const d = new Date(parseInt(m[1], 10));
-    return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+    return isNaN(d.getTime()) ? null : lisbonDayFmt.format(d);
   };
   const DATE_FIELDS = new Set(["birthdate", "admission_date", "last_hcp_date", "dt_aniv"]);
   const normalize = (r) => {
