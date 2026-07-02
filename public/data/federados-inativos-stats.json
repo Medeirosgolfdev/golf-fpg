@@ -1,185 +1,185 @@
 {
-  "generated": "2026-04-14T14:51:35.711Z",
+  "generated": "2026-07-02T15:58:21.313Z",
   "source": "federados-inativos.json (FedStat=7)",
-  "total": 43054,
-  "male": 32327,
-  "female": 10727,
+  "total": 42636,
+  "male": 31976,
+  "female": 10660,
   "otherGender": 0,
-  "withHcp": 25587,
-  "avgHcp": 25.72,
-  "avgAge": 55.8,
-  "pros": 111,
+  "withHcp": 25237,
+  "avgHcp": 25.77,
+  "avgAge": 56.1,
+  "pros": 110,
   "byAge": {
     "SuperSenior": {
-      "m": 11415,
-      "f": 4426
+      "m": 11346,
+      "f": 4410
     },
     "MidAmateur": {
-      "m": 7925,
-      "f": 1957
+      "m": 7827,
+      "f": 1949
     },
     "Senior": {
-      "m": 10179,
-      "f": 3212
+      "m": 10035,
+      "f": 3178
     },
     "SUB21": {
-      "m": 766,
-      "f": 338
+      "m": 753,
+      "f": 336
     },
     "SUB24": {
-      "m": 796,
-      "f": 270
+      "m": 787,
+      "f": 269
     },
     "SUB10": {
-      "m": 144,
-      "f": 65
+      "m": 139,
+      "f": 60
     },
     "SUB14": {
-      "m": 246,
-      "f": 92
+      "m": 243,
+      "f": 91
     },
     "SUB18": {
-      "m": 460,
+      "m": 455,
       "f": 200
     },
     "SUB16": {
-      "m": 233,
+      "m": 230,
       "f": 92
     },
     "SUB12": {
-      "m": 163,
+      "m": 161,
       "f": 75
     }
   },
   "hcpBins": {
     "plus": {
-      "m": 58,
-      "f": 13
+      "m": 56,
+      "f": 11
     },
     "0-5": {
-      "m": 389,
+      "m": 377,
       "f": 34
     },
     "5-10": {
-      "m": 1179,
-      "f": 109
+      "m": 1151,
+      "f": 107
     },
     "10-15": {
-      "m": 2116,
-      "f": 271
+      "m": 2075,
+      "f": 269
     },
     "15-20": {
-      "m": 3281,
-      "f": 483
+      "m": 3218,
+      "f": 474
     },
     "20-30": {
-      "m": 7505,
-      "f": 1753
+      "m": 7407,
+      "f": 1738
     },
     "30+": {
-      "m": 5327,
-      "f": 3069
+      "m": 5273,
+      "f": 3047
     }
   },
   "topCountries": [
     {
       "cp": "PT",
-      "count": 29301,
+      "count": 29042,
       "name": "Portugal"
     },
     {
       "cp": "@1",
-      "count": 2800,
+      "count": 2784,
       "name": "England"
     },
     {
       "cp": "GB",
-      "count": 2792,
+      "count": 2762,
       "name": "United Kingdom"
     },
     {
       "cp": "DE",
-      "count": 1305,
+      "count": 1298,
       "name": "Germany"
     },
     {
       "cp": "SE",
-      "count": 962,
+      "count": 953,
       "name": "Sweden"
     },
     {
       "cp": "FR",
-      "count": 933,
+      "count": 915,
       "name": "France"
     },
     {
       "cp": "IE",
-      "count": 821,
+      "count": 808,
       "name": "Ireland"
     },
     {
       "cp": "NL",
-      "count": 703,
+      "count": 696,
       "name": "Netherlands"
     },
     {
       "cp": "ES",
-      "count": 427,
+      "count": 420,
       "name": "Spain"
     },
     {
       "cp": "US",
-      "count": 391,
+      "count": 379,
       "name": "United States"
     },
     {
       "cp": "CH",
-      "count": 367,
+      "count": 365,
       "name": "Switzerland"
     },
     {
       "cp": "BE",
-      "count": 276,
+      "count": 270,
       "name": "Belgium"
     },
     {
       "cp": "IT",
-      "count": 258,
+      "count": 256,
       "name": "Italy"
     },
     {
       "cp": "FI",
-      "count": 198,
+      "count": 197,
       "name": "Finland"
     },
     {
       "cp": "BR",
-      "count": 166,
+      "count": 164,
       "name": "Brazil"
     },
     {
       "cp": "NO",
-      "count": 133,
+      "count": 132,
       "name": "Norway"
     },
     {
       "cp": "CN",
-      "count": 132,
+      "count": 127,
       "name": "China"
     },
     {
       "cp": "CA",
-      "count": 111,
+      "count": 109,
       "name": "Canada"
     },
     {
       "cp": "DK",
-      "count": 102,
+      "count": 100,
       "name": "Denmark"
     },
     {
       "cp": "AT",
-      "count": 80,
+      "count": 78,
       "name": "Austria"
     }
   ],
@@ -187,190 +187,183 @@
     [
       "2000",
       {
-        "m": 1263,
+        "m": 1260,
         "f": 520
       }
     ],
     [
       "2001",
       {
-        "m": 1247,
-        "f": 511
+        "m": 1239,
+        "f": 510
       }
     ],
     [
       "2002",
       {
-        "m": 6298,
-        "f": 2113
+        "m": 6256,
+        "f": 2105
       }
     ],
     [
       "2003",
       {
-        "m": 1605,
-        "f": 480
+        "m": 1595,
+        "f": 479
       }
     ],
     [
       "2004",
       {
-        "m": 1410,
+        "m": 1405,
         "f": 510
       }
     ],
     [
       "2005",
       {
-        "m": 1457,
-        "f": 538
+        "m": 1452,
+        "f": 537
       }
     ],
     [
       "2006",
       {
-        "m": 1194,
-        "f": 393
+        "m": 1189,
+        "f": 391
       }
     ],
     [
       "2007",
       {
-        "m": 1380,
-        "f": 442
+        "m": 1372,
+        "f": 441
       }
     ],
     [
       "2008",
       {
-        "m": 1264,
-        "f": 421
+        "m": 1256,
+        "f": 419
       }
     ],
     [
       "2009",
       {
-        "m": 1071,
-        "f": 274
+        "m": 1063,
+        "f": 273
       }
     ],
     [
       "2010",
       {
-        "m": 1035,
-        "f": 295
+        "m": 1024,
+        "f": 294
       }
     ],
     [
       "2011",
       {
-        "m": 996,
+        "m": 990,
         "f": 293
       }
     ],
     [
       "2012",
       {
-        "m": 897,
-        "f": 279
+        "m": 890,
+        "f": 278
       }
     ],
     [
       "2013",
       {
-        "m": 831,
+        "m": 826,
         "f": 268
       }
     ],
     [
       "2014",
       {
-        "m": 825,
-        "f": 254
+        "m": 816,
+        "f": 252
       }
     ],
     [
       "2015",
       {
-        "m": 783,
+        "m": 778,
         "f": 262
       }
     ],
     [
       "2016",
       {
-        "m": 829,
-        "f": 269
+        "m": 815,
+        "f": 266
       }
     ],
     [
       "2017",
       {
-        "m": 1085,
-        "f": 527
+        "m": 1075,
+        "f": 524
       }
     ],
     [
       "2018",
       {
-        "m": 756,
+        "m": 747,
         "f": 253
       }
     ],
     [
       "2019",
       {
-        "m": 733,
-        "f": 246
+        "m": 721,
+        "f": 244
       }
     ],
     [
       "2020",
       {
-        "m": 721,
-        "f": 228
+        "m": 704,
+        "f": 227
       }
     ],
     [
       "2021",
       {
-        "m": 792,
-        "f": 236
+        "m": 778,
+        "f": 232
       }
     ],
     [
       "2022",
       {
-        "m": 992,
-        "f": 302
+        "m": 972,
+        "f": 294
       }
     ],
     [
       "2023",
       {
-        "m": 1158,
-        "f": 341
+        "m": 1131,
+        "f": 335
       }
     ],
     [
       "2024",
       {
-        "m": 911,
-        "f": 262
+        "m": 871,
+        "f": 255
       }
     ],
     [
       "2025",
       {
-        "m": 775,
-        "f": 205
-      }
-    ],
-    [
-      "2026",
-      {
-        "m": 2,
-        "f": 2
+        "m": 734,
+        "f": 195
       }
     ]
   ],
@@ -378,177 +371,177 @@
     {
       "code": "009",
       "name": "Vilamoura, C. G",
-      "m": 1938,
-      "f": 697,
-      "count": 2635
+      "m": 1925,
+      "f": 693,
+      "count": 2618
     },
     {
       "code": "053",
       "name": "Pine Cliffs",
-      "m": 1057,
-      "f": 595,
-      "count": 1652
+      "m": 1053,
+      "f": 594,
+      "count": 1647
     },
     {
       "code": "103",
       "name": "ACP Golfe",
-      "m": 1344,
-      "f": 271,
-      "count": 1615
-    },
-    {
-      "code": "991",
-      "name": "RIO",
-      "m": 1100,
-      "f": 228,
-      "count": 1328
+      "m": 1301,
+      "f": 265,
+      "count": 1566
     },
     {
       "code": "029",
       "name": "Aroeira",
-      "m": 1023,
-      "f": 301,
-      "count": 1324
+      "m": 1008,
+      "f": 300,
+      "count": 1308
+    },
+    {
+      "code": "991",
+      "name": "RIO",
+      "m": 1082,
+      "f": 225,
+      "count": 1307
     },
     {
       "code": "005",
       "name": "Ilha Terceira",
-      "m": 900,
+      "m": 896,
       "f": 277,
-      "count": 1177
+      "count": 1173
     },
     {
       "code": "086",
       "name": "Boavista",
-      "m": 685,
-      "f": 278,
-      "count": 963
+      "m": 684,
+      "f": 277,
+      "count": 961
     },
     {
       "code": "087",
       "name": "Paço do Lumiar",
-      "m": 723,
-      "f": 188,
-      "count": 911
+      "m": 719,
+      "f": 187,
+      "count": 906
     },
     {
       "code": "012",
       "name": "Clube Qta. Lago",
-      "m": 555,
-      "f": 331,
-      "count": 886
-    },
-    {
-      "code": "057",
-      "name": "Quinta do Fojo",
-      "m": 681,
-      "f": 193,
-      "count": 874
+      "m": 554,
+      "f": 329,
+      "count": 883
     },
     {
       "code": "080",
       "name": "Pinheiros",
-      "m": 587,
-      "f": 282,
-      "count": 869
+      "m": 585,
+      "f": 280,
+      "count": 865
+    },
+    {
+      "code": "057",
+      "name": "Quinta do Fojo",
+      "m": 668,
+      "f": 193,
+      "count": 861
     },
     {
       "code": "069",
       "name": "Vale do Lobo",
-      "m": 464,
-      "f": 310,
-      "count": 774
+      "m": 454,
+      "f": 303,
+      "count": 757
     },
     {
       "code": "073",
       "name": "Palmares",
-      "m": 480,
-      "f": 245,
-      "count": 725
+      "m": 475,
+      "f": 243,
+      "count": 718
     },
     {
       "code": "004",
       "name": "Estoril",
-      "m": 510,
+      "m": 502,
       "f": 206,
-      "count": 716
+      "count": 708
     },
     {
       "code": "076",
       "name": "Tavira",
-      "m": 498,
-      "f": 195,
-      "count": 693
-    },
-    {
-      "code": "003",
-      "name": "Miramar",
-      "m": 507,
-      "f": 177,
-      "count": 684
+      "m": 495,
+      "f": 192,
+      "count": 687
     },
     {
       "code": "035",
       "name": "Lagos",
-      "m": 457,
-      "f": 225,
-      "count": 682
+      "m": 455,
+      "f": 224,
+      "count": 679
+    },
+    {
+      "code": "003",
+      "name": "Miramar",
+      "m": 499,
+      "f": 177,
+      "count": 676
     },
     {
       "code": "034",
       "name": "Braga",
-      "m": 532,
-      "f": 122,
-      "count": 654
+      "m": 526,
+      "f": 121,
+      "count": 647
     },
     {
       "code": "007",
       "name": "Santo da Serra",
-      "m": 425,
-      "f": 177,
-      "count": 602
+      "m": 419,
+      "f": 174,
+      "count": 593
     },
     {
       "code": "095",
       "name": "Vila Sol",
-      "m": 400,
+      "m": 397,
       "f": 189,
-      "count": 589
+      "count": 586
     },
     {
       "code": "002",
       "name": "Lisbon SC",
-      "m": 465,
+      "m": 461,
       "f": 121,
-      "count": 586
+      "count": 582
     },
     {
       "code": "107",
       "name": "Citynorte",
-      "m": 430,
+      "m": 425,
       "f": 149,
-      "count": 579
-    },
-    {
-      "code": "001",
-      "name": "Oporto",
-      "m": 460,
-      "f": 117,
-      "count": 577
+      "count": 574
     },
     {
       "code": "013",
       "name": "Qta. Marinha",
-      "m": 374,
-      "f": 191,
-      "count": 565
+      "m": 369,
+      "f": 186,
+      "count": 555
+    },
+    {
+      "code": "001",
+      "name": "Oporto",
+      "m": 439,
+      "f": 114,
+      "count": 553
     },
     {
       "code": "043",
       "name": "Ponte de Lima",
-      "m": 450,
+      "m": 448,
       "f": 92,
-      "count": 542
+      "count": 540
     },
     {
       "code": "047",
@@ -560,9 +553,9 @@
     {
       "code": "038",
       "name": "Quinta do Peru",
-      "m": 386,
-      "f": 116,
-      "count": 502
+      "m": 376,
+      "f": 112,
+      "count": 488
     },
     {
       "code": "059",
@@ -575,15 +568,15 @@
       "code": "030",
       "name": "Carvoeiro",
       "m": 320,
-      "f": 160,
-      "count": 480
+      "f": 159,
+      "count": 479
     },
     {
       "code": "079",
       "name": "Quinta Lágrimas",
-      "m": 364,
+      "m": 358,
       "f": 83,
-      "count": 447
+      "count": 441
     },
     {
       "code": "040",
@@ -595,30 +588,30 @@
     {
       "code": "068",
       "name": "Belas",
-      "m": 364,
+      "m": 348,
       "f": 59,
-      "count": 423
+      "count": 407
     },
     {
       "code": "051",
       "name": "Verdegolf",
-      "m": 296,
-      "f": 105,
-      "count": 401
-    },
-    {
-      "code": "011",
-      "name": "PINGS",
-      "m": 305,
-      "f": 83,
-      "count": 388
+      "m": 290,
+      "f": 104,
+      "count": 394
     },
     {
       "code": "032",
       "name": "Penha Longa",
-      "m": 309,
+      "m": 308,
       "f": 77,
-      "count": 386
+      "count": 385
+    },
+    {
+      "code": "011",
+      "name": "PINGS",
+      "m": 298,
+      "f": 81,
+      "count": 379
     },
     {
       "code": "177",
@@ -630,44 +623,44 @@
     {
       "code": "165",
       "name": "Beloura - ACGB",
-      "m": 267,
-      "f": 95,
-      "count": 362
+      "m": 266,
+      "f": 94,
+      "count": 360
     },
     {
       "code": "083",
       "name": "Oitavos",
-      "m": 248,
+      "m": 247,
       "f": 113,
-      "count": 361
+      "count": 360
     },
     {
       "code": "118",
       "name": "Viseu",
-      "m": 300,
+      "m": 299,
       "f": 58,
-      "count": 358
+      "count": 357
     },
     {
       "code": "084",
       "name": "Levante",
-      "m": 218,
+      "m": 216,
       "f": 139,
-      "count": 357
+      "count": 355
     },
     {
       "code": "022",
       "name": "Estela",
-      "m": 268,
+      "m": 265,
       "f": 78,
-      "count": 346
+      "count": 343
     },
     {
       "code": "044",
       "name": "Dunas",
-      "m": 247,
+      "m": 245,
       "f": 85,
-      "count": 332
+      "count": 330
     },
     {
       "code": "006",
@@ -679,9 +672,9 @@
     {
       "code": "128",
       "name": "Morgado",
-      "m": 217,
-      "f": 90,
-      "count": 307
+      "m": 216,
+      "f": 89,
+      "count": 305
     },
     {
       "code": "008",
@@ -693,9 +686,9 @@
     {
       "code": "058",
       "name": "Amarante",
-      "m": 236,
+      "m": 233,
       "f": 57,
-      "count": 293
+      "count": 290
     },
     {
       "code": "132",
@@ -708,29 +701,29 @@
       "code": "021",
       "name": "Prof. Ed.Física",
       "m": 217,
-      "f": 58,
-      "count": 275
+      "f": 57,
+      "count": 274
     },
     {
       "code": "149",
       "name": "Orizonte ",
-      "m": 238,
+      "m": 237,
       "f": 33,
-      "count": 271
+      "count": 270
     },
     {
       "code": "113",
       "name": "Golf for Greys",
-      "m": 196,
+      "m": 194,
       "f": 71,
-      "count": 267
+      "count": 265
     },
     {
       "code": "010",
       "name": "Penina, C. G.",
-      "m": 179,
+      "m": 178,
       "f": 85,
-      "count": 264
+      "count": 263
     },
     {
       "code": "123",
@@ -745,13 +738,6 @@
       "m": 164,
       "f": 83,
       "count": 247
-    },
-    {
-      "code": "125",
-      "name": "Vale Pisão",
-      "m": 204,
-      "f": 35,
-      "count": 239
     },
     {
       "code": "067",
@@ -770,9 +756,16 @@
     {
       "code": "179",
       "name": "Amendoeira",
-      "m": 172,
+      "m": 170,
       "f": 65,
-      "count": 237
+      "count": 235
+    },
+    {
+      "code": "125",
+      "name": "Vale Pisão",
+      "m": 199,
+      "f": 35,
+      "count": 234
     },
     {
       "code": "056",
@@ -791,16 +784,16 @@
     {
       "code": "050",
       "name": "Paredes",
-      "m": 170,
+      "m": 169,
       "f": 26,
-      "count": 196
+      "count": 195
     },
     {
       "code": "131",
       "name": "Alto Portimão",
-      "m": 122,
-      "f": 70,
-      "count": 192
+      "m": 121,
+      "f": 69,
+      "count": 190
     },
     {
       "code": "093",
@@ -845,13 +838,6 @@
       "count": 164
     },
     {
-      "code": "184",
-      "name": "Espiche",
-      "m": 114,
-      "f": 49,
-      "count": 163
-    },
-    {
       "code": "016",
       "name": "Médico",
       "m": 131,
@@ -859,11 +845,18 @@
       "count": 163
     },
     {
+      "code": "184",
+      "name": "Espiche",
+      "m": 110,
+      "f": 48,
+      "count": 158
+    },
+    {
       "code": "042",
       "name": "EDP, Clube",
-      "m": 144,
+      "m": 143,
       "f": 12,
-      "count": 156
+      "count": 155
     },
     {
       "code": "025",
@@ -875,16 +868,16 @@
     {
       "code": "159",
       "name": "Silves Internat",
-      "m": 108,
+      "m": 107,
       "f": 43,
-      "count": 151
+      "count": 150
     },
     {
       "code": "085",
       "name": "Millennium BCP",
-      "m": 127,
+      "m": 124,
       "f": 24,
-      "count": 151
+      "count": 148
     },
     {
       "code": "036",
@@ -901,20 +894,6 @@
       "count": 141
     },
     {
-      "code": "152",
-      "name": "Royal Óbidos",
-      "m": 97,
-      "f": 28,
-      "count": 125
-    },
-    {
-      "code": "181",
-      "name": "Guardian",
-      "m": 93,
-      "f": 32,
-      "count": 125
-    },
-    {
       "code": "071",
       "name": "Figueira da Foz",
       "m": 109,
@@ -924,9 +903,9 @@
     {
       "code": "182",
       "name": "Silver Coast",
-      "m": 93,
+      "m": 90,
       "f": 30,
-      "count": 123
+      "count": 120
     },
     {
       "code": "088",
@@ -943,32 +922,18 @@
       "count": 115
     },
     {
+      "code": "181",
+      "name": "Guardian",
+      "m": 85,
+      "f": 30,
+      "count": 115
+    },
+    {
       "code": "033",
       "name": "São Lourenço",
       "m": 69,
       "f": 46,
       "count": 115
-    },
-    {
-      "code": "147",
-      "name": "Castro Marim GC",
-      "m": 79,
-      "f": 35,
-      "count": 114
-    },
-    {
-      "code": "091",
-      "name": "Arquitectos",
-      "m": 84,
-      "f": 30,
-      "count": 114
-    },
-    {
-      "code": "160",
-      "name": "Clube Laranjas",
-      "m": 75,
-      "f": 38,
-      "count": 113
     },
     {
       "code": "130",
@@ -978,11 +943,39 @@
       "count": 112
     },
     {
+      "code": "147",
+      "name": "Castro Marim GC",
+      "m": 77,
+      "f": 35,
+      "count": 112
+    },
+    {
+      "code": "091",
+      "name": "Arquitectos",
+      "m": 83,
+      "f": 29,
+      "count": 112
+    },
+    {
+      "code": "160",
+      "name": "Clube Laranjas",
+      "m": 73,
+      "f": 38,
+      "count": 111
+    },
+    {
+      "code": "152",
+      "name": "Royal Óbidos",
+      "m": 84,
+      "f": 26,
+      "count": 110
+    },
+    {
       "code": "169",
       "name": "Jamor C.G.",
-      "m": 96,
-      "f": 15,
-      "count": 111
+      "m": 94,
+      "f": 14,
+      "count": 108
     },
     {
       "code": "148",
@@ -1006,18 +999,18 @@
       "count": 103
     },
     {
-      "code": "117",
-      "name": "Rilhadas",
-      "m": 86,
-      "f": 16,
-      "count": 102
-    },
-    {
       "code": "017",
       "name": "Tróia",
       "m": 82,
       "f": 20,
       "count": 102
+    },
+    {
+      "code": "117",
+      "name": "Rilhadas",
+      "m": 86,
+      "f": 15,
+      "count": 101
     },
     {
       "code": "134",
@@ -1092,16 +1085,16 @@
     {
       "code": "194",
       "name": "The One",
-      "m": 73,
-      "f": 12,
-      "count": 85
+      "m": 67,
+      "f": 11,
+      "count": 78
     },
     {
       "code": "145",
       "name": "Villa Batalha",
-      "m": 62,
+      "m": 58,
       "f": 17,
-      "count": 79
+      "count": 75
     },
     {
       "code": "174",
@@ -1113,16 +1106,16 @@
     {
       "code": "014",
       "name": "Barmen",
-      "m": 70,
+      "m": 69,
       "f": 4,
-      "count": 74
+      "count": 73
     },
     {
       "code": "098",
       "name": "Seniores",
-      "m": 64,
+      "m": 63,
       "f": 9,
-      "count": 73
+      "count": 72
     },
     {
       "code": "070",
@@ -1160,18 +1153,11 @@
       "count": 66
     },
     {
-      "code": "101",
-      "name": "Atlantico",
-      "m": 57,
-      "f": 7,
-      "count": 64
-    },
-    {
       "code": "189",
       "name": "Montado",
-      "m": 57,
+      "m": 56,
       "f": 7,
-      "count": 64
+      "count": 63
     },
     {
       "code": "028",
@@ -1181,11 +1167,18 @@
       "count": 63
     },
     {
+      "code": "101",
+      "name": "Atlantico",
+      "m": 55,
+      "f": 7,
+      "count": 62
+    },
+    {
       "code": "162",
       "name": "Sporting Golfe",
-      "m": 59,
+      "m": 57,
       "f": 3,
-      "count": 62
+      "count": 60
     },
     {
       "code": "133",
@@ -1237,13 +1230,6 @@
       "count": 53
     },
     {
-      "code": "121",
-      "name": "Iberico",
-      "m": 41,
-      "f": 11,
-      "count": 52
-    },
-    {
       "code": "075",
       "name": "Jerónimos d'Ang",
       "m": 46,
@@ -1251,11 +1237,11 @@
       "count": 52
     },
     {
-      "code": "172",
-      "name": "El Bicho C.G.",
-      "m": 43,
-      "f": 5,
-      "count": 48
+      "code": "121",
+      "name": "Iberico",
+      "m": 40,
+      "f": 11,
+      "count": 51
     },
     {
       "code": "138",
@@ -1269,6 +1255,13 @@
       "name": "AA Univ.Algarve",
       "m": 36,
       "f": 11,
+      "count": 47
+    },
+    {
+      "code": "172",
+      "name": "El Bicho C.G.",
+      "m": 42,
+      "f": 5,
       "count": 47
     },
     {
@@ -1286,13 +1279,6 @@
       "count": 46
     },
     {
-      "code": "183",
-      "name": "PXO Clube",
-      "m": 34,
-      "f": 12,
-      "count": 46
-    },
-    {
       "code": "100",
       "name": "C. G. Azeitão",
       "m": 35,
@@ -1300,11 +1286,11 @@
       "count": 45
     },
     {
-      "code": "055",
-      "name": "Évora",
-      "m": 35,
-      "f": 7,
-      "count": 42
+      "code": "183",
+      "name": "PXO Clube",
+      "m": 33,
+      "f": 12,
+      "count": 45
     },
     {
       "code": "023",
@@ -1319,6 +1305,13 @@
       "m": 31,
       "f": 10,
       "count": 41
+    },
+    {
+      "code": "055",
+      "name": "Évora",
+      "m": 33,
+      "f": 7,
+      "count": 40
     },
     {
       "code": "082",
@@ -1349,20 +1342,6 @@
       "count": 35
     },
     {
-      "code": "170",
-      "name": "Seniores-Norte",
-      "m": 31,
-      "f": 2,
-      "count": 33
-    },
-    {
-      "code": "191",
-      "name": "LPR Golf Club",
-      "m": 29,
-      "f": 4,
-      "count": 33
-    },
-    {
       "code": "092",
       "name": "Bennett Golf",
       "m": 25,
@@ -1377,10 +1356,10 @@
       "count": 33
     },
     {
-      "code": "185",
-      "name": "Buraco 19, C.G.",
-      "m": 31,
-      "f": 1,
+      "code": "170",
+      "name": "Seniores-Norte",
+      "m": 30,
+      "f": 2,
       "count": 32
     },
     {
@@ -1388,6 +1367,20 @@
       "name": "SNQT Bancários",
       "m": 27,
       "f": 3,
+      "count": 30
+    },
+    {
+      "code": "185",
+      "name": "Buraco 19, C.G.",
+      "m": 29,
+      "f": 1,
+      "count": 30
+    },
+    {
+      "code": "191",
+      "name": "LPR Golf Club",
+      "m": 26,
+      "f": 4,
       "count": 30
     },
     {
@@ -1419,17 +1412,17 @@
       "count": 28
     },
     {
-      "code": "190",
-      "name": "Qt V.Sotavento",
-      "m": 17,
-      "f": 11,
-      "count": 28
-    },
-    {
       "code": "150",
       "name": "Porto_Santense",
       "m": 21,
       "f": 6,
+      "count": 27
+    },
+    {
+      "code": "190",
+      "name": "Qt V.Sotavento",
+      "m": 16,
+      "f": 11,
       "count": 27
     },
     {
@@ -1440,18 +1433,18 @@
       "count": 27
     },
     {
-      "code": "155",
-      "name": "VC Golfe",
-      "m": 22,
-      "f": 4,
-      "count": 26
-    },
-    {
       "code": "037",
       "name": "Golden Eagle",
       "m": 18,
       "f": 8,
       "count": 26
+    },
+    {
+      "code": "155",
+      "name": "VC Golfe",
+      "m": 21,
+      "f": 4,
+      "count": 25
     },
     {
       "code": "064",
@@ -1489,13 +1482,6 @@
       "count": 20
     },
     {
-      "code": "066",
-      "name": "IPAM",
-      "m": 18,
-      "f": 2,
-      "count": 20
-    },
-    {
       "code": "116",
       "name": "Costa Estoril",
       "m": 17,
@@ -1510,6 +1496,13 @@
       "count": 19
     },
     {
+      "code": "066",
+      "name": "IPAM",
+      "m": 17,
+      "f": 2,
+      "count": 19
+    },
+    {
       "code": "097",
       "name": "CNOCA",
       "m": 17,
@@ -1517,17 +1510,17 @@
       "count": 19
     },
     {
-      "code": "141",
-      "name": "Economistas",
-      "m": 16,
-      "f": 2,
-      "count": 18
-    },
-    {
       "code": "112",
       "name": "C.G.Parlamentar",
       "m": 13,
       "f": 4,
+      "count": 17
+    },
+    {
+      "code": "141",
+      "name": "Economistas",
+      "m": 15,
+      "f": 2,
       "count": 17
     },
     {
