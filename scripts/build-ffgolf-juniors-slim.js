@@ -87,9 +87,9 @@ for (const t of tournaments) {
   processed++;
 
   // Extrair typeCompetition + ligue do nome do ficheiro: "TT-LL-trnId.json"
-  const fileMatch = t.file.match(/^(\d{2})-(\d{2})-(\d+)\.json$/);
-  const typeCompetition = fileMatch ? fileMatch[1] : (t.typeCompetition || "03");
-  const ligue = fileMatch ? fileMatch[2] : (t.ligue || "00");
+  const fileMatch = t.file.match(/^(\d{1,2})-(\d{1,2})-(\d+)\.json$/);
+  const typeCompetition = fileMatch ? fileMatch[1].padStart(2, "0") : (t.typeCompetition || "03");
+  const ligue = fileMatch ? fileMatch[2].padStart(2, "0") : (t.ligue || "00");
   const partKey = d.partKey || "";
 
   const series = d?.details?.series || [];
