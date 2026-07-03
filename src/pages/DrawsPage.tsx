@@ -28,7 +28,6 @@ import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
-import { tpColor } from "../ui/tournamentPrimitives";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName } from "../utils/format";
@@ -248,14 +247,14 @@ function RondaPill({ n }: { n: number }) {
 const MEDALS: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
 // Resultado do Manuel face ao companheiro numa ronda (cor do ponto)
-function h2hDot(manuel: Score, comp: Score): { color: string; title: string } | null {
+function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; color: string; title: string } | null {
   if (!manuel || !comp) return null;
   const a = manuel.toPar ?? manuel.gross;
   const b = comp.toPar ?? comp.gross;
   if (a == null || b == null) return null;
-  if (a < b) return { color: "var(--color-good)", title: "Manuel melhor nesta ronda" };
-  if (a > b) return { color: "var(--color-danger)", title: "Companheiro melhor nesta ronda" };
-  return { color: "var(--text-muted)", title: "Empate nesta ronda" };
+  if (a < b) return { res: "W", color: "var(--color-good)", title: "Manuel melhor nesta ronda" };
+  if (a > b) return { res: "L", color: "var(--color-danger)", title: "Companheiro melhor nesta ronda" };
+  return { res: "D", color: "var(--text-muted)", title: "Empate nesta ronda" };
 }
 
 // Registo do Manuel face a um companheiro (só rondas com ambos os scores)
@@ -264,8 +263,8 @@ function h2hRecord(rondas: CompanionRow["rondas"]): { w: number; d: number; l: n
   for (const r of rondas) {
     const dot = h2hDot(r.manuelScore, r.companheiroScore);
     if (!dot) continue;
-    if (dot.color === "var(--color-good)") w++;
-    else if (dot.color === "var(--color-danger)") l++;
+    if (dot.res === "W") w++;
+    else if (dot.res === "L") l++;
     else d++;
   }
   return { w, d, l, played: w + d + l };
@@ -963,6 +962,12 @@ export default function DrawsPage() {
                             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                               {row.rondas.map((r, i) => {
                                 const dot = h2hDot(r.manuelScore, r.companheiroScore);
+                                // Só o score do Manuel leva cor (verde ganhou / vermelho
+                                // perdeu); o do companheiro fica neutro — a cor aparece
+                                // sempre na mesma posição, leitura consistente
+                                const manuelCor = dot?.res === "W" ? "var(--color-good)"
+                                  : dot?.res === "L" ? "var(--color-danger)"
+                                  : "var(--text)";
                                 return (
                                   <div
                                     key={i}
@@ -994,11 +999,11 @@ export default function DrawsPage() {
                                       {dot && (
                                         <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
                                       )}
-                                      <span style={{ color: tpColor(r.manuelScore?.toPar), fontWeight: 700, minWidth: 60, textAlign: "right" }}>
+                                      <span style={{ color: manuelCor, fontWeight: 700, minWidth: 60, textAlign: "right" }}>
                                         {fmtScore(r.manuelScore)}
                                       </span>
                                       <span className="muted" style={{ fontSize: "var(--fs-11)" }}>vs</span>
-                                      <span style={{ color: tpColor(r.companheiroScore?.toPar), fontWeight: 700, minWidth: 60 }}>
+                                      <span style={{ color: "var(--text)", fontWeight: 700, minWidth: 60 }}>
                                         {fmtScore(r.companheiroScore)}
                                       </span>
                                     </span>

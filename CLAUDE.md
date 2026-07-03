@@ -173,6 +173,69 @@ Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scra
 
 ---
 
+## Agregador de juniores (kids2) — fontes e regras (2026-07-02)
+
+`scripts/aggregator/index.js` orquestra os adapters de `scripts/aggregator/sources/`
+e escreve `public/data/{juniors,juniors-tournaments*,tournament-catalog}.json`
+(consumidos pelo `KIDS2Page`). Corre no `build-juniors.yml` (push nos paths de
+input + workflow_dispatch). ~14.2k juniores / ~20.5k torneios.
+
+### Fontes (11 adapters)
+
+| Adapter | Lê | Tipo |
+|---|---|---|
+| `uskids` | member-history-slim + results + completos | **forte** (memberId) |
+| `fpg` | players.json + pull-torneios (whitelist: Nacionais/PJA/GG/QDL/Finais Drive; **Drive/Aquapor regionais excluídos por design**) | **forte** (fed) |
+| `rfeg` | spain-players.json (roster) + rfegolf-rivals.json | **forte** (licencia) |
+| `ffgolf` | france-players.json + ffgolf-juniors-slim.json | **forte** (lic) |
+| `eowagr` / `wjgc` / `doral` / `fm` | eowagr*/wjgc_*+bjgt_*/ftm_doral_*/ftm_fm_* | fracas (nome+país) |
+| `fcg` (2026-07-02) | fcg-rivals.json (Catalunha, golfdirecto) | fraca (nome+**dob** ~58%) |
+| `england` (2026-07-02) | england_{slug}*.json | fraca (nome+país; memberIds GG são por-torneio) |
+| `gjgl` (2026-07-02) | gjgl/gjgl_*.json (exclui U23) | fraca (nome+país + dobRange do birthYearEst) |
+
+⚠ **FCG NÃO pode ir dentro do sourceId `rfeg`**: as licenças catalãs (ex:
+`CB35994870`) vivem noutro keyspace — um miúdo com licença RFEG (roster) + FCG
+seria 2 entidades "fortes" da mesma fonte e o identity-matcher RECUSA o merge
+(invariante de 1 chave forte por fonte). Como fonte fraca separada, funde por
+nome+DOB.
+
+### Regras do identity-matcher que os adapters têm de respeitar
+
+- **Resultados só contam se o adapter também declarar o jogador em `players[]`**
+  — `playerSourceKey` sem entidade correspondente é descartado em silêncio.
+- Chaves `anon|{normname}` são tratadas como fracas mesmo em fontes fortes
+  (vão para `sources._secondary` como `{sid}-anon`).
+- Juniores sem nenhum torneio agregado são dropped (`droppedNoTourn`).
+
+### rfegolf-rivals.json — 3 fontes espanholas num só ficheiro
+
+`scripts/build-rfegolf-rivals.js` consolida: **lgs** (LiveGolfScoring),
+**nc{id}_{cat}** (NextCaddy) e **rfeg{compId}_{cat}_{sexo}** (microsite
+rfegolf.es — blocos de `results` dos `rfegolf-resultats/*.json`, incl. blocos
+mitarjeta com lic+dob+club+holeScores). Dedup de gémeos via
+`rfegolf-lgs-twins.json`: compIds em `twins` são saltados (versão LGS ganha) e
+lgsIds em `lgsSuppressed` são removidos (versão mitarjeta, mais rica, ganha).
+⚠ **No `update-spain.yml`, `build-lgs-twins.js` corre ANTES de
+`build-rfegolf-rivals.js`** — inverter a ordem faria o rivals usar twins do run
+anterior.
+
+O adapter `rfeg` resolve resultados **sem licença** (todo o LGS + blocos
+nativos do microsite) por lookup de nome normalizado contra `spain.byName`
+(nomes ambíguos ficam fora), com fallback `anon|`. Sem isto, os torneios LGS
+existiam no kids2 mas não creditavam nenhum jogador. Jogadores vistos em
+resultados mas fora do roster ganham RawPlayer próprio (com dob/club quando o
+mitarjeta os traz).
+
+### UI kids2 — checklist ao adicionar uma fonte
+
+1. `Kids2SourceKey` + `SOURCE_PILLS` em `KIDS2Page.tsx` e `SourceKey` em `kids2/Sidebar.tsx` (o filtro para fontes fracas funciona via `tournament.sourceId`, sem mais código).
+2. Token `--source-{id}` em `tokens.css` + `SOURCE_COLORS`/`SOURCE_LABELS` no `kids2/components/EvolutionChart.tsx`.
+3. Matcher de domínio em `kids2/tournamentLinks.ts` (nota: `eg-*.golfgenius.com` → england tem de vir ANTES do matcher genérico `golfgenius.com` → doral).
+4. Paths de trigger no `build-juniors.yml`.
+5. Sanity: Manuel×Dmitrii = **6 confrontos** (EC26, Venice25, QDL25, EOWAGR LTQ25, WJGC25, WJGC26).
+
+---
+
 ## Scripts — lib partilhada (`scripts/lib/`)
 
 Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos devem usar a lib em vez de copiar funções.**

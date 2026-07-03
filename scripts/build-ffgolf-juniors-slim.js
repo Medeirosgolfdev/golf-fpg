@@ -16,17 +16,15 @@ const INDEX = path.join(ROOT, "ffgolf-resultats-index.json");
 const RESULTATS = path.join(ROOT, "ffgolf-resultats");
 const OUT = path.join(ROOT, "ffgolf-juniors-slim.json");
 
-// Padrões de series labels que indicam juniores Manuel-adjacent
-const JUNIOR_LABEL_RE = /^(U(?:1[0124]|10|12|14)[FGM]?|BENJAMIN[ES]+|B[FG]|MINIME[FGS]*|M[FG]|JEUNES)$/i;
-
-// Mapear label → escalão canónico
+// Mapear label → escalão canónico. Labels reais das séries (repare 2026-07-02,
+// do <select serieCpt> das páginas resultats): "U12F"/"U12G", "H/U12"/"F/U10"
+// (H=Garçons, F=Filles), "BENF"/"BenG" (Benjamins), "MINF"/"MinG" (Minimes),
+// "POUF"/"POUG" (Poussins ≈ U10), além das formas longas "BENJAMIN Garçon" etc.
 function ageGroupOf(label) {
-  const u = (label || "").toUpperCase();
-  if (/U10/.test(u)) return "U10";
-  if (/U12/.test(u)) return "U12";
-  if (/U14/.test(u)) return "U14";
-  if (/BENJAMIN/.test(u) || u === "BG" || u === "BF") return "U12";  // Benjamins ≈ U11-U12
-  if (/MINIME/.test(u) || u === "MG" || u === "MF") return "U14";    // Minimes ≈ U13-U14
+  const u = (label || "").toUpperCase().trim();
+  if (/U\s?10(?!\d)/.test(u) || /POUSSIN/.test(u) || /^POU[FG]?$/.test(u) || /\b10 ANS/.test(u)) return "U10";
+  if (/U\s?1[12](?!\d)/.test(u) || /BENJ|BNJ/.test(u) || /^B[FG]$/.test(u) || /\b12 ANS/.test(u)) return "U12";  // Benjamins ≈ U11-U12
+  if (/U\s?1[34](?!\d)/.test(u) || /MINIM|MININM/.test(u) || /^M[FG]$/.test(u) || /\b14 ANS/.test(u)) return "U14";  // Minimes ≈ U13-U14
   return null;
 }
 

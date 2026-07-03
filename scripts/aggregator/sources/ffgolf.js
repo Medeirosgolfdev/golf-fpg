@@ -109,7 +109,11 @@ function normalizeFfgTournament(t) {
   if (!t || !t.trnId) return null;
   const series = ffgSeries(t);
   const flightLabel = t.serieLabel || t.ageGroup || "Geral";
-  const sex = (t.serieLabel || "").endsWith("F") ? "F" : (t.serieLabel || "").endsWith("G") ? "M" : null;
+  // Sexo a partir do código da série: sufixo F/G ("U12F", "BenG", "MINF")
+  // ou prefixo H//F/ ("H/U12" = Garçons, "F/U12" = Filles).
+  const sl = (t.serieLabel || "").trim().toUpperCase();
+  const sex = sl.endsWith("F") ? "F" : sl.endsWith("G") ? "M"
+    : sl.startsWith("H/") ? "M" : sl.startsWith("F/") ? "F" : null;
 
   const flightPlayers = Array.isArray(t.players) ? t.players : [];
   const results = flightPlayers.map((pl) => ({

@@ -294,7 +294,10 @@ function parseDetailsHtml(html, trnId) {
         }
         out.series.push({
           serieId,
-          label: rawPlayers[0]?.lib_for || null,
+          // Escalão da série: campo `serie` do JSON ("U12F", "BENG", "MINF"…).
+          // NÃO usar `lib_for` — é a fórmula de jogo ("Simple Score maximum"),
+          // igual para todas as séries (bug corrigido 2026-07-02).
+          label: (rawPlayers[0]?.serie || "").trim() || null,
           courseTerrain: lib_ter,
           parString: par_ter,
           parPerHole: par_ter ? par_ter.split("").map((c) => parseInt(c, 10)) : null,

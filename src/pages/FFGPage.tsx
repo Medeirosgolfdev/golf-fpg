@@ -408,6 +408,7 @@ function ffgPlayerName(p: { name?: string; nameNom?: string | null; namePrenom?:
 */
 function divisionLabel(div: string): string {
   if (!div) return "—";
+  const u = div.trim().toUpperCase();
   const map: Record<string, string> = {
     BF: "Benjamin Filles", BG: "Benjamin Garçons",
     MF: "Minime Filles",   MG: "Minime Garçons",
@@ -419,7 +420,28 @@ function divisionLabel(div: string): string {
     "U16F": "Sub-16 Filles", "U16G": "Sub-16 Garçons",
     "U18F": "Sub-18 Filles", "U18G": "Sub-18 Garçons",
   };
-  if (map[div]) return map[div];
+  if (map[u]) return map[u];
+  // Códigos do <select serieCpt> das páginas resultats (2026-07-02):
+  // "BENG"/"BenF" (Benjamins), "MinG"/"MINF" (Minimes), "CADG" (Cadets),
+  // "POUF" (Poussins), "H/U12"·"F/U10" (sexo/idade), "Messieurs"/"Dames".
+  const hf = u.match(/^([HFDM])\s*\/\s*U(\d+)$/);
+  if (hf) return `Sub-${hf[2]} ${hf[1] === "H" || hf[1] === "M" ? "Garçons" : "Filles"}`;
+  const abbr = u.match(/^(POU|BEN|MIN|CAD|JUN)([FG])$/);
+  if (abbr) {
+    const cat = { POU: "Poussin", BEN: "Benjamin", MIN: "Minime", CAD: "Cadet", JUN: "Junior" }[abbr[1]]!;
+    return `${cat} ${abbr[2] === "F" ? "Filles" : "Garçons"}`;
+  }
+  // Plurais franceses: feminino explícito ("BENJAMINES", "CADETTES") → Filles;
+  // plural simples ("BENJAMINS", "MINIMES") pode ser misto → só a categoria.
+  const pluralF = u.match(/^(POUSSIN|BENJAMIN|CADETT)ES$/);
+  if (pluralF) {
+    const cat = { POUSSIN: "Poussin", BENJAMIN: "Benjamin", CADETT: "Cadet" }[pluralF[1]]!;
+    return `${cat} Filles`;
+  }
+  const pluralM = u.match(/^(POUSSINS|BENJAMINS|MINIMES|CADETS)$/);
+  if (pluralM) return pluralM[1].charAt(0) + pluralM[1].slice(1).toLowerCase();
+  const uOnly = u.match(/^U(\d+)$/);
+  if (uOnly) return `Sub-${uOnly[1]}`;
   // Categorias longas vindas de inscritos PDFs ("U12 Fille", "BENJAMIN Garçon")
   return div
     .replace(/U(\d+)\s+Fille/i, "Sub-$1 Filles")
@@ -623,12 +645,13 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
   type SortKey = "tee" | "pos" | "nome" | "club" | "category" | "hcp";
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("tee");
 
-  // Flatten — todos os jogadores de todas as séries com teeTime
+  // Flatten — todos os jogadores de todas as séries com teeTime.
+  // _serieId leva o código do escalão (label "U12F"/"BENG") quando existe.
   const allFlat = useMemo(() => {
     const list: Array<FFGResPlayer & { _serieId: string }> = [];
     for (const s of data.details.series) {
       for (const p of s.players) {
-        if (p.teeTime) list.push({ ...p, _serieId: s.serieId });
+        if (p.teeTime) list.push({ ...p, _serieId: s.label || s.serieId });
       }
     }
     return list;
@@ -926,9 +949,9 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
 
   // Filtrar jogadores pela série seleccionada
   const filtered = useMemo(() => {
-    if (serieFilter === "all") return allSeries.flatMap((s) => s.players.map((p) => ({ ...p, _serieId: s.serieId })));
+    if (serieFilter === "all") return allSeries.flatMap((s) => s.players.map((p) => ({ ...p, _serieId: s.label || s.serieId })));
     const s = allSeries.find((x) => x.serieId === serieFilter);
-    return s ? s.players.map((p) => ({ ...p, _serieId: s.serieId })) : [];
+    return s ? s.players.map((p) => ({ ...p, _serieId: s.label || s.serieId })) : [];
   }, [allSeries, serieFilter]);
 
   const sorted = useMemo(() => {
@@ -1017,7 +1040,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
         <option value="all">Todas ({allSeries.reduce((s, x) => s + x.players.length, 0)})</option>
         {allSeries.map((s) => (
           <option key={s.serieId} value={s.serieId}>
-            {s.serieId} ({s.players.length})
+            {s.label ? divisionLabel(s.label) : s.serieId} ({s.players.length})
           </option>
         ))}
       </select>
@@ -2438,8 +2461,8 @@ async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<CircuitDivis
   }
   return td.details.series.map((s): CircuitDivision => ({
     key: s.serieId,
-    escalao: s.label || divisionLabel(s.serieId),
-    tabLabel: s.label || divisionLabel(s.serieId),
+    escalao: divisionLabel(s.label || s.serieId),
+    tabLabel: divisionLabel(s.label || s.serieId),
     hasManuel: s.players.some((p) => isM(p.name)),
     results: ffgResToFPGTournament(td, s.serieId),
     scOptions: ffgScorecardOptions(),
