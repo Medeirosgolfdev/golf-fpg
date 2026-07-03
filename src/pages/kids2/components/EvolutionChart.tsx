@@ -71,12 +71,19 @@ const SOURCE_COLORS: Record<string, string> = {
   fcg:    "var(--source-fcg)",
   england: "var(--source-england)",
   gjgl:   "var(--source-gjgl)",
+  fsga:   "var(--source-fsga)",
+  uajt:   "var(--source-uajt)",
+  mexnacional: "var(--source-mexnacional)",
+  icopa:  "var(--source-icopa)",
+  interzonas: "var(--source-interzonas)",
 };
 
 const SOURCE_LABELS: Record<string, string> = {
   uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG",
   wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
   fcg: "FCG", england: "England", gjgl: "GJGL",
+  fsga: "FSGA", uajt: "Under Armour", mexnacional: "México",
+  icopa: "Bobby Díaz", interzonas: "Interzonas",
 };
 
 export default function EvolutionChart({ data, junior, filterTids }: Props) {

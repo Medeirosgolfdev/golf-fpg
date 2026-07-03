@@ -23,6 +23,7 @@ const SOURCE_FLAGS: Record<string, string> = {
   FPG: flagOf("Portugal"),
   RFEG: flagOf("Spain"),
   FFG: flagOf("France"),
+  México: flagOf("Mexico"),
 };
 
 /** Conta TODAS as rondas válidas (com gross numérico) do junior em todas as
@@ -305,19 +306,33 @@ export default function HeroIdentity({ data, junior }: Props) {
           historical={junior.sources.rfeg?.historicalLicenses}
           historicalLabel={(h: any) => `antiga ${typeof h === "string" ? h : h.lic}${typeof h === "object" && h.club ? " (" + h.club + ")" : ""}`}
         />
-        <FedCard
-          label="FFG"
-          value={junior.sources.ffgolf?.lic}
-          subtitle={[
-            junior.sources.ffgolf?.club,
-            junior.sources.ffgolf?.region,
-            junior.sources.ffgolf?.glfLic && junior.sources.ffgolf.glfLic !== junior.sources.ffgolf.lic
-              ? `Lic GLF ${junior.sources.ffgolf.glfLic}`
-              : null,
-          ].filter(Boolean).join(" · ")}
-          historical={junior.sources.ffgolf?.historicalLicenses}
-          historicalLabel={(h: any) => `antiga ${typeof h === "string" ? h : h.lic}`}
-        />
+        {/* Jogadores mexicanos: a FMG não expõe fed code/licença (só a ficha GG
+            com DOB/clube), e FFG raramente tem dados p/ um mexicano → mostrar um
+            card "México" (clube + escalão) em vez do FFG vazio. */}
+        {(junior.nationality === "MX" || junior.country === "MX") ? (
+          <FedCard
+            label="México"
+            value={junior.club || "registado"}
+            subtitle={(() => {
+              const nT = (junior.tournamentIds || []).filter((t) => /^mexnacional-/.test(t)).length;
+              return ["FMG", nT ? `${nT} torneio${nT > 1 ? "s" : ""}` : null].filter(Boolean).join(" · ");
+            })()}
+          />
+        ) : (
+          <FedCard
+            label="FFG"
+            value={junior.sources.ffgolf?.lic}
+            subtitle={[
+              junior.sources.ffgolf?.club,
+              junior.sources.ffgolf?.region,
+              junior.sources.ffgolf?.glfLic && junior.sources.ffgolf.glfLic !== junior.sources.ffgolf.lic
+                ? `Lic GLF ${junior.sources.ffgolf.glfLic}`
+                : null,
+            ].filter(Boolean).join(" · ")}
+            historical={junior.sources.ffgolf?.historicalLicenses}
+            historicalLabel={(h: any) => `antiga ${typeof h === "string" ? h : h.lic}`}
+          />
+        )}
       </div>
 
       {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (

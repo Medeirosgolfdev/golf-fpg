@@ -39,6 +39,11 @@ export interface ScorecardRow {
   gross: number;
   toPar: number | null;   // null para jogadores WD/DNS
   scores?: number[];
+  /** Par por buraco DESTE jogador nesta ronda. Usado para colorir os scores
+   *  (birdie/par/bogey) e os subtotais OUT/IN quando o campo da ronda está
+   *  dividido por vários percursos (ex: FSGA joga R1 Roost / R2 Karoo em ondas
+   *  — cada jogador tem o par do SEU campo). Fallback: o `par` partilhado. */
+  holePars?: number[];
   /** Máscara de buracos inferidos (preenchimento posterior de cartão incompleto).
    *  Quando inferredHoles[i] é true, o buraco i é pintado a cinzento. */
   inferredHoles?: boolean[];
@@ -378,6 +383,11 @@ export function ScorecardLeaderboard({
               const inf = row.inferredHoles ?? [];
               const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+              // Par por buraco do jogador (campo que ele jogou nesta ronda) —
+              // cai para o par partilhado quando a linha não traz o seu próprio.
+              const rp = row.holePars && row.holePars.length >= nh ? row.holePars : par;
+              const rpF9 = rp.slice(0, 9).reduce((a, b) => a + b, 0);
+              const rpB9 = !is9 ? rp.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
                 <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
@@ -397,25 +407,25 @@ export function ScorecardLeaderboard({
                       return (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
                         title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
-                        <span className={"sc-score " + (inf[i] ? "sc-inferred" : scClass(sc, par[i]))}
+                        <span className={"sc-score " + (inf[i] ? "sc-inferred" : scClass(sc, rp[i]))}
                           title={inf[i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     );})}
                     <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
-                      {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - parF9)})</span>
+                      {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - rpF9)})</span>
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => {
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + 9 + i) === row.startHole;
                       return (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
                         title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
-                        <span className={"sc-score " + (inf[9 + i] ? "sc-inferred" : scClass(sc, par[9 + i]))}
+                        <span className={"sc-score " + (inf[9 + i] ? "sc-inferred" : scClass(sc, rp[9 + i]))}
                           title={inf[9 + i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     );})}
                     {!is9 && (
                       <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
-                        {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - parB9)})</span>
+                        {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - rpB9)})</span>
                       </td>
                     )}
                   </>}

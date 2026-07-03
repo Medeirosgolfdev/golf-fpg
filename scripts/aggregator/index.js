@@ -36,6 +36,11 @@ const SOURCES = [
   { id: "fcg", label: "Federació Catalana de Golf", load: () => require("./sources/fcg") },
   { id: "england", label: "England Golf", load: () => require("./sources/england") },
   { id: "gjgl", label: "Global Junior Golf Live", load: () => require("./sources/gjgl") },
+  { id: "fsga", label: "Florida State Golf Association", load: () => require("./sources/fsga") },
+  { id: "uajt", label: "The Junior Tour (Under Armour)", load: () => require("./sources/uajt") },
+  { id: "mexnacional", label: "Nacional Infantil Juvenil (México)", load: () => require("./sources/mexnacional") },
+  { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
+  { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
 ];
 
 function parseArgs(argv) {

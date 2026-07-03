@@ -77,6 +77,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
   { id: "profissao_fe",   name: "✝ Profissão de Fé",   color: C.cal.profissao_fe, group: "DESTAQUE" },
+  { id: "irma_bad",       name: "🏸 Badminton (irmã)", color: C.cal.irma_bad, group: "DESTAQUE" },
 
   // ── Aniversários por escalão ──
   { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
@@ -303,6 +304,12 @@ const EVENTS: CalEvent[] = [
   ev("treino", "Volta de treino — VIII Miramar Open U25",     new Date(2026,7,18), "CG Miramar",  ""),
   ev("colonias", "Aranhiços 1 — Colónia",                     new Date(2026,6,17), "",            "", new Date(2026,6,26)),
   ev("colonias", "Mosquitos 2 — Colónia (irmã)",              new Date(2026,7,19), "Tona",        "", new Date(2026,7,26)),
+
+  /* ══════════════════════════════════════
+     🏸 BADMINTON — irmã (Caldas da Rainha)
+     ══════════════════════════════════════ */
+  ev("irma_bad", "4ª Jornada Nacional S11, S15 & S19",   new Date(2026,9,17),  "Caldas da Rainha", "Badminton", new Date(2026,9,18)),
+  ev("irma_bad", "Campeonato Nacional Badminton S11",    new Date(2026,10,14), "Caldas da Rainha", "Badminton", new Date(2026,10,15)),
 
   /* ══════════════════════════════════════
      ✈ VIAGENS — Voos

@@ -358,17 +358,19 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   });
 }
 
-/** FSGA (Florida State Golf Association) — torneios juvenis GolfGenius (ex: 72nd
- *  Boys' Junior Championship). Formato JobFile de UMA divisão ("Boys"), sem
- *  metros/SI (a FSGA não expõe a leagueId → sem course_analytics) e, tipicamente,
- *  sem draws (o portal FSGA é SPA/Cloudflare). O detalhe é IDÊNTICO ao FM:
+/** Builder genérico para eventos GolfGenius em formato JobFile de UMA ou VÁRIAS
+ *  divisões, escrito pelo `scrape-fsga.js`/`scrape-golfgenius-node.js`. Serve a
+ *  FSGA (Boys' Junior Championship), o Under Armour Nat'l Championship e o
+ *  Campeonato Nacional Infantil Juvenil do México. Sem metros/SI (estes eventos
+ *  não expõem a leagueId → sem course_analytics). Detalhe IDÊNTICO ao FM:
  *  TournamentDetail com tabs flat intercaladas (Draw R{n} · R{n} · Resumo ·
- *  Scorecards), mesma apresentação dos restantes MAJORS. */
-function buildFsgaEntries(files: JobFile[]): CircuitEntry[] {
+ *  Scorecards) — mesma apresentação dos restantes MAJORS. A ordem das divisões
+ *  é preservada do ficheiro (não ordenada por idade). */
+function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string }): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
-      const label = dv.division || "Boys";
-      const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || "Boys");
+      const label = dv.division || opts.series;
+      const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
       if (hasEvo) for (const pl of results.players) {
@@ -403,15 +405,15 @@ function buildFsgaEntries(files: JobFile[]): CircuitEntry[] {
           />
         ),
       };
-    }); // ordem das divisões preservada do ficheiro (Overall → 13-15), não por idade
+    });
     const all = f.divisions.flatMap((d) => d.players);
     return {
-      id: `fsga:${f.year}`,
+      id: `${opts.source}:${f.year}`,
       year: f.year,
-      name: f.tournament || `FSGA ${f.year}`,
+      name: f.tournament || `${opts.series} ${f.year}`,
       course: f.course || undefined,
-      series: "FSGA",
-      source: "fsga",
+      series: opts.series,
+      source: opts.source,
       sourceUrl: f.source,
       playerCount: all.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0)).length,
       divisionCount: divisions.length,
@@ -468,8 +470,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -484,6 +486,14 @@ const FM_YEARS = [2019, 2021, 2022, 2023, 2024, 2025, 2026];
 // Anos a tentar para os ficheiros FSGA (fsga_<ano>.json).
 const FSGA_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
 
+// Anos a tentar para o Under Armour (uajt_<ano>.json) e o Campeonato Nacional
+// Infantil Juvenil do México (mexnacional_<ano>.json). Ambos GolfGenius.
+const UAJT_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
+const MEX_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i);  // 2020..2027
+// Copa Bobby Díaz + Interzonas Lorena Ochoa (México, GolfGenius).
+const ICOPA_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
+const INTERZONAS_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
+
 function MajorContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; year?: string }>();
@@ -493,6 +503,10 @@ function MajorContent() {
   const [jobFiles, setJobFiles] = useState<JobFile[]>([]);
   const [fmFiles, setFmFiles] = useState<JobFile[]>([]);
   const [fsgaFiles, setFsgaFiles] = useState<JobFile[]>([]);
+  const [uajtFiles, setUajtFiles] = useState<JobFile[]>([]);
+  const [mexFiles, setMexFiles] = useState<JobFile[]>([]);
+  const [icopaFiles, setIcopaFiles] = useState<JobFile[]>([]);
+  const [interzonasFiles, setInterzonasFiles] = useState<JobFile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -544,6 +558,22 @@ function MajorContent() {
         cachedFetchJson<JobFile>(`/data/fsga_${y}.json`).catch(() => null),
       ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
       if (alive) setFsgaFiles(fsgas);
+
+      // Under Armour Nat'l + México Nacional Infantil Juvenil (GolfGenius).
+      const [uas, mexs] = await Promise.all([
+        Promise.all(UAJT_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/uajt_${y}.json`).catch(() => null))),
+        Promise.all(MEX_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/mexnacional_${y}.json`).catch(() => null))),
+      ]);
+      if (alive) setUajtFiles(uas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
+      if (alive) setMexFiles(mexs.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
+
+      // Copa Bobby Díaz + Interzonas (México, GolfGenius).
+      const [icopas, interzonas] = await Promise.all([
+        Promise.all(ICOPA_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/icopa_${y}.json`).catch(() => null))),
+        Promise.all(INTERZONAS_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/interzonas_${y}.json`).catch(() => null))),
+      ]);
+      if (alive) setIcopaFiles(icopas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
+      if (alive) setInterzonasFiles(interzonas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
     })();
     return () => { alive = false; };
   }, []);
@@ -553,9 +583,13 @@ function MajorContent() {
       ...buildMajorEntries(bjgtDefs, doralEntries, doralNames),
       ...buildJobEntries(jobFiles),
       ...buildFmEntries(fmFiles),
-      ...buildFsgaEntries(fsgaFiles),
+      ...buildGgJobEntries(fsgaFiles, { source: "fsga", series: "FSGA" }),
+      ...buildGgJobEntries(uajtFiles, { source: "uajt", series: "UA" }),
+      ...buildGgJobEntries(mexFiles, { source: "mexnacional", series: "MÉX" }),
+      ...buildGgJobEntries(icopaFiles, { source: "icopa", series: "Bobby Díaz" }),
+      ...buildGgJobEntries(interzonasFiles, { source: "interzonas", series: "Interzonas" }),
     ],
-    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles],
+    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles, uajtFiles, mexFiles, icopaFiles, interzonasFiles],
   );
 
   // Torneio seleccionado via URL (/major/:source/:year → id "source:year").

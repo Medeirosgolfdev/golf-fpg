@@ -78,6 +78,14 @@
         ]
       },
       "reason": "Christian Chepishev (BG) — duas contas USKids: 615246 (11 torneios, jogou o Azata 21931) e 615514 (6 torneios). Mesma pessoa fragmentada por variante do nome (espaço duplo). Funde as duas como uma só carreira."
+    },
+    {
+      "sourceKeys": [
+        "uskids:564372",
+        "fm:fm-11770294036743600536",
+        "mexnacional:mexnacional-2219366972"
+      ],
+      "reason": "Mauricio Mijares (Lugo) — mesmo jogador mexicano em USKids (#564372, MX, Elite), Future Masters (US, sem país no scrape) e Nacional Infantil Juvenil do México (com DOB 2014-10-07, Campestre Torreón). Nomes divergem (com/sem 'Lugo') e o USKids não expõe DOB, por isso o matcher automático deixou 3 entidades separadas. É a mesma pessoa."
     }
   ],
   "forceSplit": [],

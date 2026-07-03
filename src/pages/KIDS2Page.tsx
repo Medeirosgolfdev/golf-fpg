@@ -22,7 +22,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 
-export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl";
+export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "mexnacional" | "icopa" | "interzonas";
 
 const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uskids", label: "USKids" },
@@ -36,6 +36,11 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "fm", label: "Future Masters" },
   { key: "england", label: "England" },
   { key: "gjgl", label: "GJGL" },
+  { key: "fsga", label: "FSGA" },
+  { key: "uajt", label: "Under Armour" },
+  { key: "mexnacional", label: "México" },
+  { key: "icopa", label: "Bobby Díaz" },
+  { key: "interzonas", label: "Interzonas" },
 ];
 
 export default function KIDS2Page() {

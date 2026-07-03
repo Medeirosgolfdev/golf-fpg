@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-03T13:08:45.083Z",
+  "generatedAt": "2026-07-03T17:59:32.849Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -8403,6 +8403,27 @@
       "editionsCount": 11
     },
     {
+      "id": "uskids-red-white-blue-invitational",
+      "label": "Red White & Blue Invitational",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-7170",
+        "uskids-2508",
+        "uskids-3772",
+        "uskids-4967",
+        "uskids-10118",
+        "uskids-8192",
+        "uskids-12093",
+        "uskids-14218",
+        "uskids-16705",
+        "uskids-18719",
+        "uskids-22187"
+      ],
+      "firstDate": "2016-07-02",
+      "lastDate": "2026-07-04",
+      "editionsCount": 11
+    },
+    {
       "id": "uskids-palm-springs-open",
       "label": "Palm Springs Open",
       "sourceId": "uskids",
@@ -9594,26 +9615,6 @@
       ],
       "firstDate": "2015-12-20",
       "lastDate": "2026-03-16",
-      "editionsCount": 10
-    },
-    {
-      "id": "uskids-red-white-blue-invitational",
-      "label": "Red White & Blue Invitational",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-7170",
-        "uskids-2508",
-        "uskids-3772",
-        "uskids-4967",
-        "uskids-10118",
-        "uskids-8192",
-        "uskids-12093",
-        "uskids-14218",
-        "uskids-16705",
-        "uskids-18719"
-      ],
-      "firstDate": "2016-07-02",
-      "lastDate": "2025-07-05",
       "editionsCount": 10
     },
     {
@@ -17665,8 +17666,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -41074,6 +41075,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-paris-invitational",
+      "label": "Paris Invitational",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18975",
+        "uskids-21795"
+      ],
+      "firstDate": "2025-07-06",
+      "lastDate": "2026-07-04",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-ryde-parramatta-golf-club",
       "label": "Ryde Parramatta Golf Club",
       "sourceId": "uskids",
@@ -55312,17 +55325,6 @@
       ],
       "firstDate": "2022-04-09",
       "lastDate": "2022-04-09",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-paris-invitational",
-      "label": "Paris Invitational",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18975"
-      ],
-      "firstDate": "2025-07-06",
-      "lastDate": "2025-07-06",
       "editionsCount": 1
     },
     {
@@ -70536,6 +70538,39 @@
       ],
       "firstDate": "2025-08-12",
       "lastDate": "2025-08-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "fsga-boys-junior",
+      "label": "FSGA Boys' Junior Championship",
+      "sourceId": "fsga",
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "firstDate": "2026-01-01",
+      "lastDate": "2026-01-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "ua-junior-tour",
+      "label": "Under Armour Junior Tour",
+      "sourceId": "uajt",
+      "tournamentIds": [
+        "uajt-uajt_2026"
+      ],
+      "firstDate": "2026-01-01",
+      "lastDate": "2026-01-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "mex-nacional-infantil-juvenil",
+      "label": "Nacional Infantil Juvenil (México)",
+      "sourceId": "mexnacional",
+      "tournamentIds": [
+        "mexnacional-mexnacional_2026"
+      ],
+      "firstDate": "2026-01-01",
+      "lastDate": "2026-01-01",
       "editionsCount": 1
     }
   ]

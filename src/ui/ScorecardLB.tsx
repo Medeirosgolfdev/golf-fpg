@@ -118,6 +118,14 @@ export function ScorecardLB({
   const refRs0 = refP?.roundScores?.[0];
   const par = refP?.par?.length ? refP.par : refRs0?.pars || [];
   const nh = par.length;
+  // Par por buraco do PRÓPRIO jogador (o campo que ele jogou nesta ronda). Em
+  // torneios cujo campo se divide por vários percursos numa mesma ronda (ex:
+  // FSGA joga R1 Roost / R2 Karoo por ondas), cada jogador tem o par do seu
+  // campo — usá-lo para colorir e contar birdies/pares/bogeys. Fallback: `par`.
+  const playerPar = (p: Player): number[] => {
+    const pp = p.par?.length ? p.par : p.roundScores?.[0]?.pars;
+    return pp && pp.length >= nh ? pp : par;
+  };
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si = refP?.si?.length ? refP.si : refRs0?.si || [];
 
@@ -178,10 +186,11 @@ export function ScorecardLB({
     const m = new Map<Player, { eags: number; birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
     for (const p of rawPlayers) {
       const { scores, inferred } = fillBlankHoles(p);
+      const pp = playerPar(p);
       let eags = 0, birds = 0, pars = 0, bogs = 0;
-      for (let i = 0; i < scores.length && i < par.length; i++) {
+      for (let i = 0; i < scores.length && i < pp.length; i++) {
         if (!scores[i]) continue;
-        const d = scores[i] - par[i];
+        const d = scores[i] - pp[i];
         if (d <= -2) eags++;
         else if (d === -1) birds++;
         else if (d === 0) pars++;
@@ -326,13 +335,16 @@ export function ScorecardLB({
     const birds = stats?.birds ?? 0;
     const pars = stats?.pars ?? 0;
     const bogs = stats?.bogs ?? 0;
+    const pp = playerPar(p);
+    const ppTotal = pp === par ? parTotal : pp.reduce((a, b) => a + b, 0);
 
     return {
       key: p.scoreId || idx,
       pos: posDisplay,
       gross,
-      toPar: isWDPlayer ? null : gross - parTotal,
+      toPar: isWDPlayer ? null : gross - ppTotal,
       scores,
+      holePars: pp,
       inferredHoles: inferred,
       startHole: (p as { startHole?: number }).startHole,
       rowBg,

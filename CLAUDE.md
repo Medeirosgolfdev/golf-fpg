@@ -526,20 +526,21 @@ formatos de output e dois caminhos de scrape:
 
 | Torneio | Plataforma | URL | Scraper | Output | Estado |
 |---|---|---|---|---|---|
-| **FSGA — 72nd Boys' Junior Championship** | GolfGenius (v2tid) | `v2tournaments/4708880` + `4739657` | `scrape-fsga.js` | `fsga_2026.json` (JobFile, 2 divisões) | ✅ scraped + ligado a `/major` (source `fsga`) |
-| **Under Armour — Summer National Championship** | GolfGenius (pages) | `pages/12770450567004716088` | `scrape-junior-orange-bowl.js` | `uajt_2026.json` (JobFile) | ⏳ correr em casa (GG 403 a browsers automatizados aqui) |
-| **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (pages) | `pages/5989156` | `scrape-junior-orange-bowl.js` | `mexnacional_2026.json` (JobFile) | ⏳ correr em casa |
+| **FSGA — 72nd Boys' Junior Championship** | GolfGenius (v2tid) | `v2tournaments/4708880` + `4739657` | `scrape-fsga.js` | `fsga_2026.json` (JobFile, 2 divisões) | ✅ ligado a `/major` (source `fsga`) |
+| **Under Armour — Summer National Championship** | GolfGenius (pages) | `pages/12770450567004716088` | **`scrape-golfgenius-node.js`** (Node-puro) | `uajt_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `uajt`) |
+| **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (multi-liga) | `pages/5989156` (hub JS) | **`scrape-golfgenius-node.js --v2tids`** | `mexnacional_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `mexnacional`) |
+| **México — Copa Bobby Díaz (7-15)** | GolfGenius | `pages/5666137` (liga 502696) | `scrape-golfgenius-node.js --v2tids` | `icopa_2025.json` (4 divisões c/ jogadores) | ✅ ligado (source `icopa`) |
+| **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2025.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
 | **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | `scrape-bluegolf.js` | `fcg268_{cat}.json` (formato bluegolf) | ⏳ correr em casa (IP bloqueado pelo BlueGolf) |
 | **Uswing Mojing Junior World (JWGC)** | BlueGolf | `jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/` | `scrape-bluegolf.js` | `jwgc261_{cat}.json` (formato bluegolf) | ⏳ correr em casa |
 
-⚠ **Nada disto é scrapável neste ambiente:** o BlueGolf devolve **403** ao IP
-(FCG + Uswing/JWGC — pedem execução no PC de casa) e o GolfGenius devolve **403
-a browsers automatizados** (Playwright headless) + o Node-puro não resolve as
-divisões multi-escalão (o switch de divisão é client-side, sem v2tid por URL).
-Por isso UA + México correm com o `scrape-junior-orange-bowl.js` (Playwright,
-browser real) em casa. A **ligação ao `/major` fica pendente dos JSONs** — o
-mesmo fluxo scrape→verify→wire usado na FSGA (que precisa de dados reais para
-validar a apresentação).
+⚠ **O GolfGenius devolve 403 a browsers automatizados** (Playwright headless *e*
+o Chrome do utilizador em modo automação) **mas responde a `fetch` puro.** Por
+isso o `scrape-junior-orange-bowl.js` (Playwright) parte-se nestes eventos (UA
+deu "browser closed"; a hub JS do México deu "0 tids"). **A via correcta é
+Node-puro** via `scrape-golfgenius-node.js` (descoberta pela API v2tournaments) —
+corre em qualquer lado, sem browser. Só o **BlueGolf** (FCG + JWGC) continua a
+precisar do PC de casa (IP bloqueado).
 
 ### scrape-fsga.js — GolfGenius Node-puro (v2tid, sem Playwright)
 Já ligado. Deriva o **par por buraco dos marcadores** (birdie=círculo,
@@ -557,16 +558,47 @@ Wiring: `buildFsgaEntries` + source `fsga` em `MajorPage.tsx`; `FSGA_YEARS`
 tenta `fsga_{ano}.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
 ronda (retrocompatível — FM/JOB sem `pars` usam o par da divisão).
 
-### scrape-junior-orange-bowl.js — GolfGenius genérico (pages, Playwright)
-Já servia o JOB/World Junior Girls. Acrescentados ao `EDITIONS`: **Under Armour**
-(`pages/12770450567004716088`) e **México** (`pages/5989156`). `SLUG_OVERRIDES`
-dá slug/nome/ano: UA → `uajt` (ano explícito no título); México → `mexnacional`
-com `ordinalYear=(o)=>1951+o` e **ordinal ROMANO** ("LXXV"=75 → 2026) via
-`romanToInt` (novo) no `parseMeta`. Corre em casa (browser real):
+### scrape-golfgenius-node.js — GolfGenius genérico Node-puro (pages/v2tids) ⭐
+**A via preferida para eventos GolfGenius multi-divisão** (UA, México). Sem
+Playwright — usa a API v2tournaments (mesmo motor que o `scrape-fsga.js`, que
+reexporta `scrapeEdition`/`ggGet`/`courseNamesLabel`). Descoberta:
+`/pages/{id}` → `leagueId` → `/leagues/{lid}/widgets/tournament_results?page_id={id}`
+(o `<select name="round">` lista `(divisão × ronda)`) → escolhe a vista agregada
+("Final Round" = todas as rondas) de cada divisão → `&round={optVal}` devolve o
+**v2tid dessa divisão** (leaderboard multi-ronda). Depois: leaderboard +
+scorecards + par por buraco dos marcadores (como FSGA).
 ```bash
-node scripts/scrape-junior-orange-bowl.js "https://www.golfgenius.com/pages/12770450567004716088"  # UA
-node scripts/scrape-junior-orange-bowl.js "https://www.golfgenius.com/pages/5989156"                # México
-node scripts/scrape-junior-orange-bowl.js   # todas as EDITIONS (JOB + WJG + UA + México)
+node scripts/scrape-golfgenius-node.js "https://www.golfgenius.com/pages/12770450567004716088"  # UA → uajt_2026.json (12 divisões auto)
+node scripts/scrape-golfgenius-node.js <url> --league 528939       # página 100% JS sem leagueId no HTML
+node scripts/scrape-golfgenius-node.js <url> --skip-scorecards     # só leaderboards (rápido)
+```
+**Slug/nome**: `SLUG_OVERRIDES` (UA→`uajt`, "infantil juvenil"→`mexnacional`) ou
+`--slug/--name/--year`. Output `{slug}_{ano}.json` (JobFile).
+
+⚠ **México é multi-LIGA** (uma liga por categoria de idade, cada uma com Varonil
++ Femenil; a hub `pages/5989156` é 100% JS sem leagueId). Não dá para descobrir
+por 1 página → passa-se a lista curada de v2tids com labels (2026, ligas
+528936-528949, excluir Scramble/Nassau/Prueba):
+```bash
+node scripts/scrape-golfgenius-node.js --slug mexnacional --year 2026 --country MX \
+  --name "Campeonato Nacional Infantil Juvenil (México)" \
+  --v2tids "Varonil 18=4582829,Femenil 18=4582833,Varonil 15=4582863,Femenil 15=4582876,Varonil 12-13=4582867,Femenil 12-13=4582880,Varonil 10-11=4582871,Femenil 10-11=4582884,Varonil 8-9=4582898,Femenil 8-9=4582906,Varonil 7=4582894,Femenil 7=4582902"
+```
+`--country MX` corrige o país: o `inferCountry` do motor cai em "US" quando a
+afiliação é só um clube (sem país) → força "MX" nesses. Para reencontrar as
+ligas/v2tids doutro ano: varrer o range de `leagueId` à volta da liga "18 y
+menores" e ficar com os v2 cujo `event.name` bate `/VARONIL|FEMENIL/` (excluir
+Scramble/Nassau/Prueba). O `discoverDivisions` (modo pages, ex: UA) já **exclui
+side events** (`isSideEvent`: Adult/Par 3/Scramble/Nassau/Prueba) e **ordena** as
+divisões Boys→Girls, idade crescente.
+
+### scrape-junior-orange-bowl.js — GolfGenius genérico (pages, Playwright, LEGADO p/ multi-divisão)
+Serve o JOB/World Junior Girls (páginas simples). Tem UA + México no `EDITIONS` +
+`SLUG_OVERRIDES` (incl. `romanToInt` para "LXXV"=75 → 2026) **mas parte-se em
+eventos multi-divisão** (GG 403 ao browser / hub JS) — usar o
+`scrape-golfgenius-node.js` para esses. Mantido para o JOB clássico:
+```bash
+node scripts/scrape-junior-orange-bowl.js   # EDITIONS (JOB + World Junior Girls)
 ```
 
 ### scrape-bluegolf.js — generalizado para microsites `{sub}.bluegolf.com`
@@ -585,6 +617,38 @@ formato **bluegolf** (`{tournament,category,course,year,par,si,yards,parTotal,
 players:[{name,country,pos,result,total,rounds:[{day,scores,f9,b9,gross}]}]}`) —
 o mesmo dos `wjgc_*`/`bjgt_*`. Ligar ao `/major` = registar em `BJGT_URLS`
 (`BJGTPage.tsx`) com série/escalão/ano, como os BJGT/EOWAGR.
+
+### Enriquecimento por DOB (ficha GG `/profiles`) — México
+O `scrape-fsga.js` ganhou `fetchProfile(id)`: o scorecard detail page linka
+`/profiles/{id}` (ficha do jogador), que a FMG-México expõe com **DATE OF BIRTH
++ CLUB + AÑO DE GRADUACIÓN**. `fetchScorecard` devolve `{rounds, profileId}` e,
+com `opts.profiles`, faz um fetch por jogador → grava `dob`/`club`/`gradYear`.
+Auto-ligado quando se passa `--country` no `scrape-golfgenius-node.js`. México
+2026: **136/238 DOBs** (as divisões novas 8-9/7 não têm scorecards→sem perfil).
+Ex: Mauricio Mijares Lugo → `dob 2014-10-07`, Campestre Torreón.
+
+### MAJOR → kids2 (agregador) — 2026-07-03
+Directiva "todos os dados de MAJORpage enriquecem KIDS2". Os ficheiros JobFile
+(FSGA/UA/México) são lidos por 3 adapters novos em `scripts/aggregator/sources/`
+(`fsga.js`, `uajt.js`, `mexnacional.js`) que partilham
+`scripts/aggregator/util/jobfile.js` (`buildJobfileSource` + `parseSexAge`).
+Registados no `SOURCES` do `index.js`. O **México passa `dob`** → matching FORTE
+por nome+DOB (como o fcg catalão); UA/FSGA são fracas (nome+país US). UI kids2
+registada (checklist completo): `Kids2SourceKey`/`SOURCE_PILLS`
+(`KIDS2Page.tsx`), `SourceKey` (`kids2/Sidebar.tsx`), `--source-{fsga,uajt,
+mexnacional}` (`tokens.css`) + `SOURCE_COLORS`/`SOURCE_LABELS`
+(`EvolutionChart.tsx`), paths de trigger no `build-juniors.yml`. Build validado:
+**15878 juniores** (+~1.6k), 9/9 sanity checks (Manuel×Dmitrii=6 mantido).
+⚠ O matcher é conservador: "Mauricio Mijares" (uskids, sem DOB) **não** funde
+automaticamente com "Mauricio Mijares Lugo" (mexnacional, com DOB) — nomes
+diferentes + sem chave forte partilhada. Resolvido por `forceMerge` em
+`juniors-overrides.json` (`uskids:564372` + `fm:fm-…` + `mexnacional:mexnacional-…`)
+→ 1 entidade com 34 torneios. Padrão a repetir para outros casos MX↔US.
+
+**Card México na ficha kids2** (`HeroIdentity.tsx`): jogadores com
+`nationality/country === "MX"` mostram um `FedCard` "México" (clube + `FMG · N
+torneios`) **em vez do FFG** (a FMG não expõe fed code/licença; só a ficha GG
+com DOB/clube). Flag em `SOURCE_FLAGS.México = flagOf("Mexico")`.
 
 > **Nota México — handicaps:** a FMG (`fmg.org.mx/ghin`) publica índices dos
 > jovens mas o GHIN bloqueia consultas fora do México. Não incorporado.

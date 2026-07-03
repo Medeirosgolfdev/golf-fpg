@@ -194,7 +194,25 @@ function dateKey(d) {
 
 async function fetchScorecard(detailId) {
   const html = await ggGet(`${GG}/tournaments2/details/${detailId}?player_stats_for_portal=true`);
-  return parseScorecard(html);
+  // O detail page linka o perfil do jogador (/profiles/{id}) — captura-se aqui
+  // para depois buscar a DOB/clube sem re-fetch (usado no enriquecimento MX).
+  const profileId = (html.match(/profiles\/(\d+)/) || [])[1] || null;
+  return { rounds: parseScorecard(html), profileId };
+}
+
+// Ficha do jogador (/profiles/{id}) — algumas federações (ex: FMG México) expõem
+// DATE OF BIRTH, CLUB e AÑO DE GRADUACIÓN. Devolve {dob:"YYYY-MM-DD", club, gradYear}.
+async function fetchProfile(profileId) {
+  const html = await ggGet(`${GG}/profiles/${profileId}`);
+  const txt = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+  const dobRaw = (txt.match(/DATE OF BIRTH\s*([0-3]?\d\/[0-1]?\d\/\d{4})/i) || txt.match(/(?:FECHA DE NACIMIENTO|NACIMIENTO)\s*([0-3]?\d\/[0-1]?\d\/\d{4})/i) || [])[1] || null;
+  // Formato GG México = DD/MM/YYYY. Converter para ISO YYYY-MM-DD.
+  let dob = null;
+  if (dobRaw) { const [d, m, y] = dobRaw.split('/'); if (y && m && d) dob = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`; }
+  const club = (txt.match(/CLUB\s+([A-Za-zÀ-ÿ0-9'’.\- ]{2,40}?)\s+(?:DATE OF BIRTH|AÑO|AGE|View|Player)/i) || [])[1]?.trim() || null;
+  const gradYear = (txt.match(/(?:AÑO DE GRADUACIÓN|GRADUATION YEAR)\s*(\d{4})/i) || [])[1] || null;
+  return { dob, club, gradYear };
 }
 
 // ─── Leaderboard via v2 JSON ────────────────────────────────────────────────
@@ -245,7 +263,8 @@ async function scrapeDivision(v2tid, label, opts = {}) {
       if (!p.detailId) { p.rounds = []; continue; }
       process.stdout.write(`\r     [${String(i + 1).padStart(3)}/${lb.players.length}] ${p.name.padEnd(26).slice(0, 26)}`);
       try {
-        const parsed = await fetchScorecard(p.detailId);
+        const { rounds: parsed, profileId } = await fetchScorecard(p.detailId);
+        if (profileId) p.profileId = profileId;
         if (parsed.length) {
           parsed.sort((a, b) => dateKey(a.date) - dateKey(b.date));
           p.rounds = parsed.map((r, idx) => ({ day: idx + 1, scores: r.scores, gross: r.gross, date: r.date, course: r.course, pars: r.par, _ck: courseKey(r.course) }));
@@ -256,6 +275,26 @@ async function scrapeDivision(v2tid, label, opts = {}) {
     }
     process.stdout.write('\n');
     console.log(`     ✓ ${done}/${lb.players.length} scorecards`);
+  }
+
+  // Enriquecimento por ficha de jogador (DOB/clube) — só quando pedido e há
+  // profileId (ex: FMG México). Um fetch por jogador; guarda dob/club/gradYear.
+  if (opts.profiles) {
+    let nDob = 0;
+    for (let i = 0; i < lb.players.length; i++) {
+      const p = lb.players[i];
+      if (!p.profileId) continue;
+      process.stdout.write(`\r     [dob ${i + 1}/${lb.players.length}] ${p.name.padEnd(26).slice(0, 26)}`);
+      try {
+        const prof = await fetchProfile(p.profileId);
+        if (prof.dob) { p.dob = prof.dob; nDob++; }
+        if (prof.club) p.club = prof.club;
+        if (prof.gradYear) p.gradYear = prof.gradYear;
+      } catch { /* perfil indisponível */ }
+      await sleep(DELAY_MS);
+    }
+    process.stdout.write('\n');
+    console.log(`     ✓ ${nDob}/${lb.players.length} DOBs`);
   }
 
   // Consenso de par por campo (moda por buraco) a partir de todas as rondas.
@@ -362,4 +401,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e); process.exit(1); });
-module.exports = { parseScorecard, scrapeLeaderboard, scrapeDivision, scrapeEdition, courseKey, dateKey };
+module.exports = { parseScorecard, scrapeLeaderboard, scrapeDivision, scrapeEdition, courseKey, dateKey, ggGet, courseNamesLabel, fetchProfile, GG };
