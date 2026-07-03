@@ -683,23 +683,75 @@ export function computeRanking(
  *
  * Sem `ranking` (ou se o ano não for inferível): limiares absolutos de careerScore.
  */
+const TIER_RANK: Record<TierKey, number> = { beginner: 0, developing: 1, solid: 2, strong: 3, elite: 4 };
+
+/** Nível de SCORE (força real de jogo) em voltas 18B: mistura média + melhor
+ *  volta vs par. Usado para CAPAR o tier de resultados — um jogador que faz
+ *  90s não pode ser "Forte" só por se classificar bem em provas fracas.
+ *  null quando há dados de score insuficientes (não capa). */
+function scoringTier(j: Junior, tournamentById: Map<string, Tournament>): TierKey | null {
+  const toPars: number[] = [];
+  for (const tid of j.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === j.id);
+      if (!r?.rounds) continue;
+      const parArr = f.par || [];
+      const par18 = parArr.length === 18 && parArr.filter((p) => p > 0).length === 18;
+      if (!par18) continue;
+      const parTotal = parArr.reduce((a, b) => a + (b || 0), 0);
+      if (parTotal < 60) continue;
+      for (const rd of r.rounds) {
+        if (typeof rd.gross !== "number" || rd.gross < 50 || rd.gross > 200) continue;
+        // Excluir voltas que NÃO são de 18 buracos. As provas USKids de 9H
+        // partilham um par[18] completo, por isso um gross de 9 buracos (ex: 37)
+        // contra par 72 dá um differential absurdamente negativo (−35) que
+        // inflacionava o tier para "elite". Contamos os buracos realmente
+        // jogados via strokes; sem strokes, rejeitamos differentials impossíveis
+        // para 18H (< −8, típico de uma volta de 9H).
+        if (Array.isArray(rd.strokes)) {
+          const played = rd.strokes.filter((x) => x > 0).length;
+          if (played < 15) continue;
+        } else if (rd.gross - parTotal < -8) {
+          continue;
+        }
+        toPars.push(rd.gross - parTotal);
+      }
+    }
+  }
+  if (toPars.length < 2) return null;
+  const mean = toPars.reduce((a, b) => a + b, 0) / toPars.length;
+  const best = Math.min(...toPars);
+  // 60% consistência (média) + 40% potencial (melhor volta), ambos vs par 18B.
+  const blended = 0.6 * mean + 0.4 * best;
+  return blended <= 2 ? "elite"
+    : blended <= 7 ? "strong"
+    : blended <= 14 ? "solid"
+    : blended <= 22 ? "developing"
+    : "beginner";
+}
+
 export function computeTier(
   j: Junior,
   tournamentById: Map<string, Tournament>,
   ranking?: Map<string, RankingEntry>,
 ): TierKey | null {
+  // Base = tier de RESULTADOS (ranking percentil ou career score por posições).
+  let base: TierKey | null = null;
   if (ranking) {
     const entry = ranking.get(j.id);
-    if (entry) return entry.tier;
-    // Sem entrada (ano não inferível) → fallback a limiares absolutos
+    if (entry) base = entry.tier;
   }
-  const score = computeCareerScore(j, tournamentById);
-  if (score === null) return null;
-  if (score >= 50) return "elite";
-  if (score >= 20) return "strong";
-  if (score >= 10) return "solid";
-  if (score >= 2)  return "developing";
-  return "beginner";
+  if (base == null) {
+    const score = computeCareerScore(j, tournamentById);
+    if (score === null) return null;
+    base = score >= 50 ? "elite" : score >= 20 ? "strong" : score >= 10 ? "solid" : score >= 2 ? "developing" : "beginner";
+  }
+  // Cap pelo NÍVEL DE SCORE real (não pode estar acima do que os scores sustentam).
+  const st = scoringTier(j, tournamentById);
+  if (st != null && TIER_RANK[st] < TIER_RANK[base]) return st;
+  return base;
 }
 
 export function getTierLabel(tier: TierKey): string {

@@ -128,6 +128,26 @@ export interface HolePlan {
 
 export interface GamePlanOpts { driveM: number; secondM: number; courseHcp: number; fieldVsPar?: (number | null)[]; jaRound?: number | null; podeRound?: number | null }
 
+/** Texto de estratégia COERENTE com a tag (atacar/neutro/defender). */
+function strategyNote(tag: HoleTag, par: number | null, remainingAfterDrive: number | null): string {
+  if (par === 3) {
+    return tag === "attack" ? "Ferro curto — atacar a bandeira."
+      : tag === "defend" ? "Par-3 exigente — centro do green, par é ganho."
+      : "Centro do green, 2 putts.";
+  }
+  if (par === 4) {
+    return tag === "attack" ? "Drive + wedge — buraco de birdie."
+      : tag === "defend" ? "Buraco difícil — evitar o duplo, par é excelente."
+      : `Drive + ${remainingAfterDrive != null ? Math.round(remainingAfterDrive) + "m" : "ferro"} ao green — 2 putts.`;
+  }
+  if (par === 5) {
+    return tag === "attack" ? "Par-5 curto — ir ao green, oportunidade de birdie."
+      : tag === "defend" ? "Par-5 longo — 3 pancadas seguras, evitar erros."
+      : "Par-5 de 3 pancadas — lay-up para a distância preferida.";
+  }
+  return "";
+}
+
 export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts): HolePlan[] {
   const { driveM, secondM, courseHcp, fieldVsPar, jaRound, podeRound } = opts;
   const chRounded = Math.round(courseHcp);
@@ -213,7 +233,7 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     } else if (expStrokes == null) {
       tag = r.reach === "out" ? "defend" : "neutral";
     }
-    return { ...r, expVsPar, expStrokes, expJa, expPode, tag };
+    return { ...r, expVsPar, expStrokes, expJa, expPode, tag, note: strategyNote(tag, r.par, r.remainingAfterDrive) };
   });
 }
 

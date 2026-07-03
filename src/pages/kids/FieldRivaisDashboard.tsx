@@ -14,7 +14,7 @@ import RivaisDashboard from "../../ui/RivaisDashboard";
 import LoadingState from "../../ui/LoadingState";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { meanArr } from "../../utils/mathUtils";
-import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
+import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar } from "../../utils/format";
@@ -183,6 +183,43 @@ const HIDDEN_TCODES = new Set<string>(["15573", "21004"]);
 // Qualquer tid em autoRivals.r que comece com um destes prefixos passa a ser
 // considerado uma fonte EXTRA — disponível para o dropdown.
 const EXTRA_TID_PREFIXES = ["wjgc", "doral", "eowagr"] as const;
+
+/** Nome/abreviado/data para um tid EXTRA (wjgc/doral/eowagr) quando os
+ *  metadados do loader não bastam. Deriva ano + escalão do próprio tid.
+ *  `meta` (do canónico) tem prioridade para nome e data. */
+function describeExtraTid(
+  tid: string,
+  meta?: { name: string; short: string; dateISO: string; url: string | null },
+): { name: string; short: string; date: string; url: string } {
+  let year = new Date().getFullYear();
+  const y4 = tid.match(/20(\d{2})/);
+  const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
+  if (y4) year = 2000 + parseInt(y4[1], 10);
+  else if (ys) year = 2000 + parseInt(ys[1], 10);
+  else if (meta?.dateISO) { const m = meta.dateISO.match(/^(\d{4})/); if (m) year = parseInt(m[1], 10); }
+  const yy = String(year).slice(2);
+
+  let esc = "";
+  const bc = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
+  if (bc) {
+    const a = bc[1];
+    esc = a.length === 2 ? `B${a[0]}-${a[1]}` : a.length === 4 ? `B${a.slice(0, 2)}-${a.slice(2)}` : `B${a}`;
+  } else if (/_1213(?:[_\-]|$)/.test(tid)) esc = "B12-13";
+  else if (/_1011(?:[_\-]|$)/.test(tid)) esc = "B10-11";
+  else if (/_89(?:[_\-]|$)/.test(tid)) esc = "B8-9";
+  else if (/_bwagr(?:[_\-]|$)/.test(tid)) esc = "WAGR";
+  else if (/_gwagr(?:[_\-]|$)/.test(tid)) esc = "G-WAGR";
+  else if (/_g1213(?:[_\-]|$)/.test(tid)) esc = "G12-13";
+  else if (/^wjgc\d{2}$/.test(tid)) esc = "B10-11";
+
+  const pfx = tid.startsWith("wjgc") ? "WJGC" : tid.startsWith("doral") ? "Doral" : tid.startsWith("eowagr") ? "EOWAGR" : "";
+  return {
+    name: meta?.name || `${pfx} ${year}${esc ? " " + esc : ""}`,
+    short: `${pfx} '${yy}${esc ? " " + esc : ""}`,
+    date: meta?.dateISO || `${year}-06-15`,
+    url: meta?.url || "",
+  };
+}
 
 interface FFGPlayer { name?: string; country?: string; club?: string; pos?: number; total?: number;
   rounds?: Array<{ round?: number; gross?: number; scores?: number[] }> }
@@ -789,19 +826,24 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     // Contar quantos jogadores do escalão têm dados em cada EXTRA_TID
     const extraCounts = new Map<string, number>();
     const extraData = new Map<string, Map<string, { p: number | string; t: number | null; tp: number | null; rd: number[] }>>(); // tid → playerName → result
+    // SCAN DINÂMICO: qualquer tid wjgc/doral/eowagr que algum jogador do field
+    // tenha jogado vira coluna (substitui a lista EXTRA_TIDS hardcoded e incompleta).
+    const extraRounds = new Map<string, number>(); // tid → nº máx de rondas
     for (const fm of fieldMids) {
       const ar = findAR(fm.p.nome);
       if (!ar) continue;
-      for (const def of EXTRA_TIDS) {
-        const res = ar.r[def.tid];
+      for (const tid of Object.keys(ar.r)) {
+        if (!EXTRA_TID_PREFIXES.some((pre) => tid.startsWith(pre))) continue;
+        const res = ar.r[tid];
         if (!res || res.tp == null) continue;
         const rounds = (res as any).rd as number[] | undefined;
         if (!rounds || rounds.length === 0) continue;
         const total = rounds.reduce((a, b) => a + b, 0);
         const place = (res as any).p as number | undefined;
-        extraCounts.set(def.tid, (extraCounts.get(def.tid) ?? 0) + 1);
-        let m = extraData.get(def.tid);
-        if (!m) { m = new Map(); extraData.set(def.tid, m); }
+        extraCounts.set(tid, (extraCounts.get(tid) ?? 0) + 1);
+        extraRounds.set(tid, Math.max(extraRounds.get(tid) ?? 0, rounds.length));
+        let m = extraData.get(tid);
+        if (!m) { m = new Map(); extraData.set(tid, m); }
         m.set(normName(fm.p.nome), {
           p: place && place > 0 ? place : "WD",
           t: total,
@@ -810,19 +852,33 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         });
       }
     }
-    // Adicionar EXTRA_TIDS com >= 1 participante como colunas (são canónicos no contexto)
-    for (const def of EXTRA_TIDS) {
-      if ((extraCounts.get(def.tid) ?? 0) < 1) continue;
+    // Adicionar cada tid EXTRA com >= 1 participante como coluna (nome + link
+    // oficial vindos do canónico via extraTidMeta; par/rondas inferidos do field).
+    for (const [tid, count] of extraCounts) {
+      if (count < 1) continue;
+      const info = describeExtraTid(tid, extraTidMeta.get(tid));
+      const nrounds = extraRounds.get(tid) ?? 1;
+      // Par por ronda: derivado de (total − toPar) / nº de rondas de um jogador.
+      let parPer = 72;
+      const m = extraData.get(tid);
+      if (m) {
+        for (const v of m.values()) {
+          if (v.tp != null && v.t != null && v.rd && v.rd.length) {
+            parPer = Math.round((v.t - v.tp) / v.rd.length);
+            break;
+          }
+        }
+      }
       T.push({
-        id: def.tid,
-        name: def.name,
-        short: def.short,
-        date: def.sortDate,
-        rounds: def.rounds,
-        par: def.par,
-        field: extraCounts.get(def.tid) ?? 0,
+        id: tid,
+        name: info.name,
+        short: info.short,
+        date: info.date,
+        rounds: nrounds,
+        par: parPer,
+        field: count,
         nations: 0,
-        url: "",
+        url: info.url,
       });
     }
     // ── Ordenar T: agrupar por série, edições antigas → recentes, ─────────
@@ -956,11 +1012,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }
       // Preencher tids "extra" a partir do extraData (vindo de autoRivals)
       const playerKey = normName(fm.p.nome);
-      for (const def of EXTRA_TIDS) {
-        const m = extraData.get(def.tid);
-        if (!m) continue;
+      for (const [tid, m] of extraData) {
         const data = m.get(playerKey);
-        if (data) r[def.tid] = data;
+        if (data) r[tid] = data;
       }
 
       const up: string[] = [];

@@ -120,7 +120,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number }[]; }
+interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
@@ -199,7 +199,12 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       // o `gross` do leaderboard, que pode divergir em ficheiros antigos).
       const sc = r.scores || [];
       const gross = sc.length === holes ? sc.reduce((a, b) => a + b, 0) : r.gross;
-      return { round: ri + 1, gross, scores: sc, pars: parForRound(r.startingHole), si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName };
+      // Par POR RONDA: quando o ficheiro traz `pars` na ronda (ex: FSGA joga em
+      // dois campos com pares hole-by-hole diferentes), usá-lo em vez do par da
+      // divisão — só assim a coloração buraco-a-buraco fica certa em cada ronda.
+      const roundPars = Array.isArray(r.pars) && r.pars.length === holes && r.pars.every((x) => x != null)
+        ? (r.pars as number[]) : parForRound(r.startingHole);
+      return { round: ri + 1, gross, scores: sc, pars: roundPars, si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName };
     });
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
     // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
@@ -353,6 +358,70 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   });
 }
 
+/** FSGA (Florida State Golf Association) — torneios juvenis GolfGenius (ex: 72nd
+ *  Boys' Junior Championship). Formato JobFile de UMA divisão ("Boys"), sem
+ *  metros/SI (a FSGA não expõe a leagueId → sem course_analytics) e, tipicamente,
+ *  sem draws (o portal FSGA é SPA/Cloudflare). O detalhe é IDÊNTICO ao FM:
+ *  TournamentDetail com tabs flat intercaladas (Draw R{n} · R{n} · Resumo ·
+ *  Scorecards), mesma apresentação dos restantes MAJORS. */
+function buildFsgaEntries(files: JobFile[]): CircuitEntry[] {
+  return files.map((f): CircuitEntry => {
+    const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
+      const label = dv.division || "Boys";
+      const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || "Boys");
+      const hasEvo = !!evo && evo.size > 0;
+      const results = jobDivisionToTournament(dv, label);
+      if (hasEvo) for (const pl of results.players) {
+        const ev = evo!.get(pl.name);
+        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
+      }
+      if (dv.draws && Object.keys(dv.draws).length) {
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
+      }
+      (results as unknown as { ccode?: string; tcode?: string }).ccode = undefined;
+      (results as unknown as { ccode?: string; tcode?: string }).tcode = undefined;
+      const evoCols = hasEvo ? makeEvoCols(evo!, evoYear) : undefined;
+      return {
+        key: `d${i}`,
+        escalao: label,
+        tabLabel: label,
+        hasManuel: dv.players.some((p) => isM(p.name)),
+        results,
+        links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
+        renderFullKeepHeader: true,
+        renderFull: () => (
+          <TournamentDetail
+            tournament={results}
+            escLookup={EMPTY_ESC_LOOKUP}
+            playersDB={EMPTY_PLAYERS_DB}
+            options={jobScorecardOptions()}
+            accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
+            accExtraColumns={evoCols}
+            accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+            drawHideCols={FM_DRAW_HIDE_COLS}
+            hideHeader
+          />
+        ),
+      };
+    }); // ordem das divisões preservada do ficheiro (Overall → 13-15), não por idade
+    const all = f.divisions.flatMap((d) => d.players);
+    return {
+      id: `fsga:${f.year}`,
+      year: f.year,
+      name: f.tournament || `FSGA ${f.year}`,
+      course: f.course || undefined,
+      series: "FSGA",
+      source: "fsga",
+      sourceUrl: f.source,
+      playerCount: all.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0)).length,
+      divisionCount: divisions.length,
+      hasManuel: all.some((p) => isM(p.name)),
+      hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),
+      divisions,
+    };
+  });
+}
+
 function buildJobEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
@@ -399,8 +468,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -412,6 +481,9 @@ const JOB_YEARS = Array.from({ length: 16 }, (_, i) => 2012 + i); // 2012..2027
 // Anos disponíveis do Future Masters Golf (ftm_fm_<ano>.json).
 const FM_YEARS = [2019, 2021, 2022, 2023, 2024, 2025, 2026];
 
+// Anos a tentar para os ficheiros FSGA (fsga_<ano>.json).
+const FSGA_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
+
 function MajorContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; year?: string }>();
@@ -420,6 +492,7 @@ function MajorContent() {
   const [doralNames, setDoralNames] = useState<Map<number, string>>(new Map());
   const [jobFiles, setJobFiles] = useState<JobFile[]>([]);
   const [fmFiles, setFmFiles] = useState<JobFile[]>([]);
+  const [fsgaFiles, setFsgaFiles] = useState<JobFile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -465,6 +538,12 @@ function MajorContent() {
         cachedFetchJson<JobFile>(`/data/ftm_fm_${y}.json`).catch(() => null),
       ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
       if (alive) setFmFiles(fms);
+
+      // FSGA (Florida State Golf Association) — tenta cada ano (404 ignorado).
+      const fsgas = (await Promise.all(FSGA_YEARS.map((y) =>
+        cachedFetchJson<JobFile>(`/data/fsga_${y}.json`).catch(() => null),
+      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
+      if (alive) setFsgaFiles(fsgas);
     })();
     return () => { alive = false; };
   }, []);
@@ -474,8 +553,9 @@ function MajorContent() {
       ...buildMajorEntries(bjgtDefs, doralEntries, doralNames),
       ...buildJobEntries(jobFiles),
       ...buildFmEntries(fmFiles),
+      ...buildFsgaEntries(fsgaFiles),
     ],
-    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles],
+    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles],
   );
 
   // Torneio seleccionado via URL (/major/:source/:year → id "source:year").

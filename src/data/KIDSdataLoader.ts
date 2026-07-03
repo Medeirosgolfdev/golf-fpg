@@ -141,6 +141,10 @@ export interface FieldData {
 export const uskTournNames: Map<string, { name: string; short: string; date: string; dateExact: string }> = new Map();
 export const uskFieldSizes: Map<string, number> = new Map();
 export const ncScoringType: Map<string, "SCRATCH" | "HANDICAP"> = new Map();
+/** Metadados (nome, data ISO, link oficial) por tid EXTRA (wjgc/doral/eowagr).
+ *  Consumido pelo FieldRivaisDashboard para dar nome+link às colunas destes
+ *  torneios (que vivem fora do member-history). */
+export const extraTidMeta: Map<string, { name: string; short: string; dateISO: string; url: string | null }> = new Map();
 export const fpgTournNames: Map<string, {
   name: string; short: string; date: string; dateExact: string;
   ageMin?: number; ageMax?: number; sex?: "M" | "F"; escalao?: string;
@@ -222,6 +226,7 @@ interface CanonicalTournament {
   date?: string;
   parTotal?: number;
   holesPerRound?: number;
+  links?: Array<{ label: string; url: string }>;
   flights: CanonicalFlight[];
 }
 
@@ -332,6 +337,7 @@ async function _buildAutoRivalsInternal(
   uskFieldSizes.clear();
   ncScoringType.clear();
   fpgTournNames.clear();
+  extraTidMeta.clear();
   ffgolfTournNames.clear();
   _loadedFiles = [];
 
@@ -420,6 +426,14 @@ async function _buildAutoRivalsInternal(
           ageMax: f.ageMax ?? undefined,
           sex: (f.sex === "M" || f.sex === "F") ? f.sex : undefined,
           escalao: f.label,
+        });
+      }
+      if ((t.sourceId === "wjgc" || t.sourceId === "doral" || t.sourceId === "eowagr") && !extraTidMeta.has(tid)) {
+        extraTidMeta.set(tid, {
+          name: t.name || tid,
+          short: shortNameOf(t.name || tid),
+          dateISO: t.date || "",
+          url: t.links && t.links[0] ? t.links[0].url : null,
         });
       }
       if (t.sourceId === "ffgolf" && t.name) {

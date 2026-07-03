@@ -270,10 +270,12 @@ async function discoverLinksOnPage(page) {
         contests.push({ url: `${base}/leaderboard.htm`, contestId: cm[1], label: label || `contest ${cm[1]}` });
         continue;
       }
-      // Aceitar dois formatos de URL de evento:
+      // Aceitar formatos de URL de evento:
       //   www.bluegolf.com/junior/events/SLUG/...
       //   brjgt.bluegolf.com/bluegolfw/XXX/event/SLUG/...
-      const em = abs.match(/\/(?:junior\/events|bluegolfw\/[^\/]+\/event)\/([^\/?#]+)\/?/i);
+      //   fcg.bluegolf.com/bluegolf/fcg26/event/SLUG/...   (FCG Callaway World)
+      //   jwgc.bluegolf.com/bluegolf/jwgc26/event/SLUG/...  (Uswing Mojing JWGC)
+      const em = abs.match(/\/(?:junior\/events|bluegolfw?\/[^\/]+\/event)\/([^\/?#]+)\/?/i);
       if (em) {
         const slug = em[1].toLowerCase();
         if (seenEvent.has(slug)) continue;
@@ -368,9 +370,19 @@ async function discoverContests(page, eventUrl) {
   }
   console.log(`   📌 slug detectado: ${slug}`);
 
-  const candidates = [1, 9, 13, 17, 33, 37];
+  // Base do evento derivada DIRECTAMENTE da URL fornecida — funciona para
+  // qualquer microsite BlueGolf com a estrutura `.../event/{slug}/…`
+  // (fcg.bluegolf.com/bluegolf/fcg26/event/fcg268, jwgc.bluegolf.com/…).
+  // Fallback: deriveLeaderboardUrl (só brjgt/bjgt via slug) para as URLs
+  // legadas www.bluegolf.com/junior/events que não trazem a base completa.
+  const evBase = /\/event\/[^\/?#]+/.test(eventUrl)
+    ? eventUrl.replace(/\/(?:index|leaderboard|pairings|tee[-_]?times|results?)\.htm.*$/i, "").replace(/[?#].*$/, "").replace(/\/+$/, "")
+    : null;
+  const contestUrlFor = (cid) => (evBase ? `${evBase}/contest/${cid}/leaderboard.htm` : deriveLeaderboardUrl(slug, cid));
+
+  const candidates = [1, 9, 13, 17, 33, 37, 5, 21, 25, 29, 41, 45];
   for (const cid of candidates) {
-    const lbUrl = deriveLeaderboardUrl(slug, cid);
+    const lbUrl = contestUrlFor(cid);
     if (!lbUrl) continue;
     console.log(`   🔎 a tentar ${lbUrl}`);
     try {
@@ -590,7 +602,9 @@ function slugCategory(cat) {
   return (cat || "").toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_\-]/g, "");
 }
 function slugEvent(eventUrl) {
-  const m = eventUrl.match(/\/events\/([^\/]+)/i);
+  // Suporta /events/SLUG (legacy www.bluegolf.com) e /event/SLUG (microsites
+  // fcg./jwgc.bluegolf.com). Ex: fcg268, jwgc261.
+  const m = eventUrl.match(/\/events?\/([^\/?#]+)/i);
   return m ? m[1].toLowerCase() : "event";
 }
 

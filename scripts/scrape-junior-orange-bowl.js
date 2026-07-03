@@ -36,6 +36,8 @@ const EDITIONS = [
   "https://www.golfgenius.com/pages/4561596",                   // JOB 60th → 2024
   "https://2023jrorangebowl.golfgenius.com/pages/3956757",      // JOB 59th → 2023
   "https://www.golfgenius.com/pages/10741823397232167401",      // World Junior Girls 2024
+  "https://www.golfgenius.com/pages/12770450567004716088",      // Under Armour Junior Tour — 2026 Summer National Championship
+  "https://www.golfgenius.com/pages/5989156",                   // LXXV Campeonato Nacional Infantil Juvenil (México) → 2026
   // "https://www.golfgenius.com/pages/11271327908615990299",   // JOB 61st Tee Times (sem leaderboards — salta)
 ];
 
@@ -51,7 +53,26 @@ const v2url = (base, tid) =>
 const SLUG_OVERRIDES = [
   { re: /junior orange bowl/i, slug: "orangebowl", name: "Junior Orange Bowl International Championship", ordinalYear: (o) => 1964 + o, location: "Coral Gables, Florida, USA" }, // 62nd = 2026
   { re: /world junior girls/i, slug: "worldjrgirls", name: "World Junior Girls Golf Championship", location: "" },
+  // The Junior Tour Powered by Under Armour — Summer National Championship (GolfGenius).
+  // O ano vem explícito no título ("2026 Summer National Championship").
+  { re: /under armour|summer national championship/i, slug: "uajt", name: "The Junior Tour Powered by Under Armour — Summer National Championship", location: "" },
+  // Campeonato Nacional Infantil Juvenil (Federación Mexicana de Golf). O título
+  // usa ordinal ROMANO ("LXXV" = 75); a edição LXXV = 2026 → ano = 1951 + ordinal.
+  { re: /campeonato nacional infantil juvenil/i, slug: "mexnacional", name: "Campeonato Nacional Infantil Juvenil (México)", ordinalYear: (o) => 1951 + o, location: "México" },
 ];
+
+// Ordinal romano → inteiro (ex: "LXXV" → 75). Devolve null se inválido.
+function romanToInt(s) {
+  const M = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+  const up = (s || "").toUpperCase();
+  if (!/^[IVXLCDM]+$/.test(up)) return null;
+  let total = 0;
+  for (let i = 0; i < up.length; i++) {
+    const cur = M[up[i]], next = M[up[i + 1]] || 0;
+    total += cur < next ? -cur : cur;
+  }
+  return total || null;
+}
 function slugify(s) {
   return s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "evento";
@@ -60,7 +81,12 @@ function parseMeta(title) {
   const t = (title || "").replace(/\s*Event\s*::.*$/i, "").trim();
   const ym = t.match(/\b(19|20)\d{2}\b/);
   const om = t.match(/(\d+)(st|nd|rd|th)\b/i);
-  const ordinal = om ? parseInt(om[1], 10) : null;
+  // Ordinal árabe ("62nd") ou, em falta, romano no início do título ("LXXV …").
+  let ordinal = om ? parseInt(om[1], 10) : null;
+  if (ordinal == null) {
+    const rm = t.match(/^\s*([IVXLCDM]{2,})\b/i);
+    if (rm) ordinal = romanToInt(rm[1]);
+  }
   let year = ym ? parseInt(ym[0], 10) : null;
   let name = t.replace(/(\d+)(st|nd|rd|th)\b/i, "").replace(/\b(19|20)\d{2}\b/, "").replace(/\bannual\b/i, "").replace(/\s+/g, " ").trim();
   let slug = null, override = null;

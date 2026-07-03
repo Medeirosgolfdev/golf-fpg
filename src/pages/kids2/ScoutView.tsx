@@ -490,16 +490,19 @@ function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string 
   const knownPct = (known / total) * 100;
   const eliteStrongPct = ((counts.elite + counts.strong) / total) * 100;
 
-  let diffLabel = "Campo Local";
-  let diffColor = "var(--text-3)";
-  if (counts.elite / total >= 0.10 && knownPct >= 40) {
+  // Tiers são ABSOLUTOS (nível do jogador), não relativos ao Manuel — por isso
+  // os limiares são conservadores: só "muito competitivo" com Elite real / muitos
+  // Fortes. Um campo de Sólidos com 1-2 Fortes é apenas "Competitivo/Equilibrado".
+  let diffLabel = "Campo Acessível";
+  let diffColor = "var(--color-good-dark)";
+  if (counts.elite / total >= 0.20 && knownPct >= 40) {
     diffLabel = "Campo de Elite"; diffColor = "#dc2626";
-  } else if (eliteStrongPct >= 20 && knownPct >= 35) {
+  } else if (eliteStrongPct >= 45 && knownPct >= 40) {
     diffLabel = "Campo Muito Competitivo"; diffColor = "#f59e0b";
-  } else if (eliteStrongPct >= 10 && knownPct >= 25) {
+  } else if (eliteStrongPct >= 25 && knownPct >= 30) {
     diffLabel = "Campo Competitivo"; diffColor = "var(--color-info)";
-  } else if (knownPct >= 25) {
-    diffLabel = "Campo Misto"; diffColor = "var(--color-good-dark)";
+  } else if (eliteStrongPct >= 10 && knownPct >= 25) {
+    diffLabel = "Campo Equilibrado"; diffColor = "var(--color-good-dark)";
   }
 
   const TIERS = ["elite", "strong", "solid", "developing", "beginner"] as const;

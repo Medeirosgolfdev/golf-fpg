@@ -272,7 +272,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           </p>
 
           {/* Régua gross → SD → vs Par (ordenável) */}
-          <table className="dtable" style={{ width: "auto", minWidth: 320 }}>
+          <table className="dtable" style={{ maxWidth: 420 }}>
             <thead>
               <tr>
                 <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
@@ -377,11 +377,11 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                       const cell = topField.holes[h.hole - 1]?.[ri];
                       const hp = topField.par[h.hole - 1];
                       return (
-                        <td key={rk} style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                        <td key={rk} style={{ textAlign: "center", whiteSpace: "nowrap", padding: "2px 6px" }}>
                           {cell && cell.scores.length ? (
-                            <span style={{ display: "inline-flex", gap: 2, justifyContent: "center" }}>
+                            <span style={{ display: "inline-flex", gap: 1, justifyContent: "center" }}>
                               {cell.scores.map((sc, j) => (
-                                <span key={j} className={"sc-score " + scClass(sc, hp)} title={topField.players[j]} style={{ minWidth: 17, fontSize: "var(--fs-11)" }}>{sc}</span>
+                                <span key={j} className={"sc-score " + scClass(sc, hp)} title={topField.players[j]} style={{ minWidth: 14, fontSize: "var(--fs-10)" }}>{sc}</span>
                               ))}
                             </span>
                           ) : <span className="muted">–</span>}

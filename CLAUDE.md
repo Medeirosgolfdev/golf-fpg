@@ -519,6 +519,78 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 
 ---
 
+## Scripts — MAJOR: campeonatos juvenis internacionais (2026-07-03)
+
+Fonte única `/major` cresceu com campeonatos juvenis mundiais/nacionais. Dois
+formatos de output e dois caminhos de scrape:
+
+| Torneio | Plataforma | URL | Scraper | Output | Estado |
+|---|---|---|---|---|---|
+| **FSGA — 72nd Boys' Junior Championship** | GolfGenius (v2tid) | `v2tournaments/4708880` + `4739657` | `scrape-fsga.js` | `fsga_2026.json` (JobFile, 2 divisões) | ✅ scraped + ligado a `/major` (source `fsga`) |
+| **Under Armour — Summer National Championship** | GolfGenius (pages) | `pages/12770450567004716088` | `scrape-junior-orange-bowl.js` | `uajt_2026.json` (JobFile) | ⏳ correr em casa (GG 403 a browsers automatizados aqui) |
+| **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (pages) | `pages/5989156` | `scrape-junior-orange-bowl.js` | `mexnacional_2026.json` (JobFile) | ⏳ correr em casa |
+| **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | `scrape-bluegolf.js` | `fcg268_{cat}.json` (formato bluegolf) | ⏳ correr em casa (IP bloqueado pelo BlueGolf) |
+| **Uswing Mojing Junior World (JWGC)** | BlueGolf | `jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/` | `scrape-bluegolf.js` | `jwgc261_{cat}.json` (formato bluegolf) | ⏳ correr em casa |
+
+⚠ **Nada disto é scrapável neste ambiente:** o BlueGolf devolve **403** ao IP
+(FCG + Uswing/JWGC — pedem execução no PC de casa) e o GolfGenius devolve **403
+a browsers automatizados** (Playwright headless) + o Node-puro não resolve as
+divisões multi-escalão (o switch de divisão é client-side, sem v2tid por URL).
+Por isso UA + México correm com o `scrape-junior-orange-bowl.js` (Playwright,
+browser real) em casa. A **ligação ao `/major` fica pendente dos JSONs** — o
+mesmo fluxo scrape→verify→wire usado na FSGA (que precisa de dados reais para
+validar a apresentação).
+
+### scrape-fsga.js — GolfGenius Node-puro (v2tid, sem Playwright)
+Já ligado. Deriva o **par por buraco dos marcadores** (birdie=círculo,
+bogey=quadrado…) porque a FSGA não expõe `leagueId` no domínio público (portal
+SPA + fsga.org atrás de Cloudflare) → sem `course_analytics` (metros/SI ficam
+`null`). Multi-campo: **R1 Roost, R2/R3 Karoo** (par hole-by-hole diferente,
+ambos 72) → cada ronda leva o seu `pars[18]` (consenso por campo). Divisões via
+`EDITIONS[].divisions[{label,v2tid}]` (Overall 4708880 + 13-15 4739657); um
+jogador pode aparecer nas duas (cross-divisão, como no England Golf).
+```bash
+node scripts/scrape-fsga.js                 # EDITIONS (72nd Boys' Junior)
+node scripts/scrape-fsga.js 4708880 4739657 # v2tids ad-hoc (uma edição, várias divisões)
+```
+Wiring: `buildFsgaEntries` + source `fsga` em `MajorPage.tsx`; `FSGA_YEARS`
+tenta `fsga_{ano}.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
+ronda (retrocompatível — FM/JOB sem `pars` usam o par da divisão).
+
+### scrape-junior-orange-bowl.js — GolfGenius genérico (pages, Playwright)
+Já servia o JOB/World Junior Girls. Acrescentados ao `EDITIONS`: **Under Armour**
+(`pages/12770450567004716088`) e **México** (`pages/5989156`). `SLUG_OVERRIDES`
+dá slug/nome/ano: UA → `uajt` (ano explícito no título); México → `mexnacional`
+com `ordinalYear=(o)=>1951+o` e **ordinal ROMANO** ("LXXV"=75 → 2026) via
+`romanToInt` (novo) no `parseMeta`. Corre em casa (browser real):
+```bash
+node scripts/scrape-junior-orange-bowl.js "https://www.golfgenius.com/pages/12770450567004716088"  # UA
+node scripts/scrape-junior-orange-bowl.js "https://www.golfgenius.com/pages/5989156"                # México
+node scripts/scrape-junior-orange-bowl.js   # todas as EDITIONS (JOB + WJG + UA + México)
+```
+
+### scrape-bluegolf.js — generalizado para microsites `{sub}.bluegolf.com`
+`discoverContests` passou a derivar a base do contest **directamente da URL do
+evento** (`.../event/{slug}/…`), cobrindo `fcg.bluegolf.com/bluegolf/fcg26/event/…`
+e `jwgc.bluegolf.com/…` além do legado `brjgt`. Regex de sub-evento aceita
+`bluegolfw?` e `slugEvent` captura `/event/` (singular). Browser visível
+(CAPTCHA possível). Corre em casa (IP não bloqueado):
+```bash
+node scrape-bluegolf.js "https://fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/index.htm" public/data
+node scrape-bluegolf.js "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/index.htm" public/data
+node scrape-bluegolf.js "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/index.htm" public/data
+```
+Output: 1 JSON por escalão (`{evSlug}_{cat}.json`, ex: `fcg268_boys_10-11.json`),
+formato **bluegolf** (`{tournament,category,course,year,par,si,yards,parTotal,
+players:[{name,country,pos,result,total,rounds:[{day,scores,f9,b9,gross}]}]}`) —
+o mesmo dos `wjgc_*`/`bjgt_*`. Ligar ao `/major` = registar em `BJGT_URLS`
+(`BJGTPage.tsx`) com série/escalão/ano, como os BJGT/EOWAGR.
+
+> **Nota México — handicaps:** a FMG (`fmg.org.mx/ghin`) publica índices dos
+> jovens mas o GHIN bloqueia consultas fora do México. Não incorporado.
+
+---
+
 ## Scripts — England Golf (GolfGenius)
 
 Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgenius.com`, outros em subdomínios `eg-{slug}{YY}.golfgenius.com`). A página `/england` é uma duplicação minimalista da `/bjgt` (mesmos `TournView`, sub-tabs por ronda, ManuelPill, etc.).

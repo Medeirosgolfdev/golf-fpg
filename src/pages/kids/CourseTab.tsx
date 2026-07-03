@@ -303,7 +303,7 @@ export function resolveCourseTee(
     const prev = findPrevEdition(mh, torneio, escalaoNome);
     if (prev?.course) {
       const r = buildCourseTee(prev.course, escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
-      return { ...r, note: "Campo da edição anterior (a confirmar)" };
+      return r; // mesmo campo/venue — par/yards são da edição actual
     }
     const r = buildCourseTee("Campo (a confirmar)", escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
     return { ...r, note: "Aguarda confirmação oficial do campo" };
