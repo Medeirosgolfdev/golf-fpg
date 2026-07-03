@@ -430,6 +430,7 @@ export default function USKidsFieldPage() {
   const [, startRivalsTransition] = useTransition();
 
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
+  const [showRivaisTabela, setShowRivaisTabela] = useState(false);
 
   // Upsert em vez de append — evita duplicados quando o effect corre duas vezes
   // (React StrictMode em dev) ou quando o mesmo ficheiro é reportado mais que
@@ -574,10 +575,12 @@ export default function USKidsFieldPage() {
 
   const nResultados = resultsData?.resultados?.length ?? 0;
 
+  // ─────────────────────────────────────────────────────────────────
+  // TODOS OS HOOKS useMemo/useCallback — antes de ANY lógica
+  // ─────────────────────────────────────────────────────────────────
+
   const torneiosCampo = useMemo(() => fieldData?.torneios ?? [], [fieldData]);
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
-
-  const [showRivaisTabela, setShowRivaisTabela] = useState(false);
 
   const allTorneios = useMemo(() => {
     const map = new Map<number, TorneioEntry>();
