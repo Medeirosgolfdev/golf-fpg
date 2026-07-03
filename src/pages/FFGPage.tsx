@@ -452,6 +452,41 @@ function divisionLabel(div: string): string {
     .replace(/MINIM(?:E)?\s+Gar[çc]on/i, "Minime Garçons");
 }
 
+/* ── Escalão canónico para o FILTRO da lista (agrupa ~455 labels crus) ──
+   Buckets pela equivalência oficial do Vademecum (ffg-categories-age.json):
+   Poucet=U9-10 · Poussin=U11-12 · Benjamin=U13-14 · Minime=U15-16 ·
+   Cadet=U17-18 · Junior=U19-21. Não substitui divisionLabel (tabs/pills
+   continuam detalhados) — isto só alimenta `entry.escaloes` + dropdown. */
+function ffgEscalaoCanonico(raw: string | null | undefined): string | null {
+  const s = String(raw || "").trim();
+  if (!s) return null;
+  const u = s.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&#\d+;/g, "'");
+  const bucket = (n: number): string =>
+    n <= 8 ? "Sub-8" : n <= 10 ? "Sub-10 (Poucet)" : n <= 12 ? "Sub-12 (Poussin)"
+    : n <= 14 ? "Sub-14 (Benjamin)" : n <= 16 ? "Sub-16 (Minime)"
+    : n <= 18 ? "Sub-18 (Cadet)" : "Sub-21 (Junior)";
+  // U-age explícito: "U12F", "U12 Filles", "H/U14", "U  12", "GARCONS U-12"
+  const um = u.match(/(?:^|[^A-Z0-9])U[\s-]*(\d{1,2})(?![0-9])/);
+  if (um) return bucket(+um[1]);
+  if (/POUCET/.test(u)) return "Sub-10 (Poucet)";
+  if (/\bPOU/.test(u)) return "Sub-12 (Poussin)";
+  if (/\bBEN|BNJ|^B[GF]\b/.test(u)) return "Sub-14 (Benjamin)";
+  if (/\bMIN|\bMI\b|MNIM|^M[GF]\b/.test(u)) return "Sub-16 (Minime)";
+  if (/\bCAD/.test(u)) return "Sub-18 (Cadet)";
+  if (/JUNIOR|\bJUN\b|^J[GF]\b/.test(u)) return "Sub-21 (Junior)";
+  if (/ENFANT/.test(u)) return "Sub-8";
+  // Limites por idade: "Joueurs jusqu'à 14 ans", "MOINS DE 15 ANS", "-13 ans"
+  const am = u.match(/(?:JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
+  if (am) return bucket(+am[1]);
+  if (/MESSIEURS|DAMES|SERIE|SENIOR|ADULTE|HOMMES|FEMMES/.test(u)) return "Adultos";
+  return null;
+}
+
+/** Escalões canónicos (dedup, sem nulls) de uma lista de labels de série. */
+function ffgEscaloesOf(labels: (string | null | undefined)[]): string[] {
+  return [...new Set(labels.map(ffgEscalaoCanonico).filter((x): x is string => !!x))];
+}
+
 /* ── Categoria/título amigável a partir do nome do torneio ────── */
 function shortTitle(t: FFGTournament | CatalogEntry): string {
   const name = "title" in t ? t.title : t.tournament;
@@ -2501,6 +2536,7 @@ function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolea
     federation: "FFG",
     liga: meta.ligue,
     intl: isIntlName(meta.name),
+    escaloes: ffgEscaloesOf((meta.divisions ?? []).map((d) => d.label || d.serieId)),
     links,
     playerCount: meta.totalPlayers,
     divisionCount: meta.seriesCount,
@@ -2526,6 +2562,7 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
     federation: "LGPIDF",
     playerCount: data.players.length || inscritos,
     divisionCount: 1,
+    escaloes: ffgEscaloesOf(meta.divisions ?? []),
     hasManuel,
     divisions: [{
       key: "main",
@@ -2637,7 +2674,7 @@ function FFGShellContent() {
       sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c" },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF" },
       ligaLabels: FFG_LIGUE_LABELS,
-      filters: { search: true, year: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
+      filters: { search: true, year: true, escalao: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
       specialItems,
       loadingMessage: "A carregar FFGolf…",
     };

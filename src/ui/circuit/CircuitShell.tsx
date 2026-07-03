@@ -478,7 +478,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     () => [...new Set(entries.flatMap(e =>
       e.escaloes?.length ? e.escaloes
       : e.divisions ? e.divisions.map(d => d.escalao)
-      : (e.escalao ? [e.escalao] : [])))].sort(),
+      : (e.escalao ? [e.escalao] : [])))]
+      // numeric-aware: Sub-8 < Sub-10 < Sub-12 (sort alfabético punha Sub-8 no fim)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
     [entries],
   );
   const sources = useMemo(
