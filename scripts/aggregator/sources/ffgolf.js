@@ -168,9 +168,14 @@ function normalizeFfgTournament(t) {
       fieldSize: flightPlayers.length,
       results,
     }],
-    // O portal FFG é POST-only (sem URL por torneio) — o deep-link é a nossa
-    // página France, que suporta ?t={trnId} e tem os mesmos resultados.
-    links: [{
+    // Deep-link oficial do portal FFG (rota GET com path params, descoberta
+    // via URLs indexadas pelo Google — a UI do portal só faz POST):
+    //   https://pages.ffgolf.org/resultats/resultats-details/{partKey}/{trnId}
+    // Fallback sem partKey: a nossa página France com ?t={trnId}.
+    links: [t.partKey ? {
+      label: "FFG",
+      url: `https://pages.ffgolf.org/resultats/resultats-details/${t.partKey}/${t.trnId}`,
+    } : {
       label: "France",
       url: `/ffg?t=${t.trnId}`,
     }],
