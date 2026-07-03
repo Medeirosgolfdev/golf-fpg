@@ -21,8 +21,9 @@ import { ManuelPill } from "./PillBadge";
 import type { TorneioResult, EscalaoResult, RondaResult, ResultsData, GreatgolfData,
   UskidsDrawsData, UskidsDrawRonda } from "./uskidsTypes";
 import { sortEscaloes } from "./uskidsTypes";
-import { TEES_LOOKUP, LINKS_EXTRA, isWD, fmtTs, ArMapCtx, type TeeInfo } from "./USKIDSPageHelpers";
+import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx, type TeeInfo } from "./USKIDSPageHelpers";
 import UskidsDrawTab from "./UskidsDrawTab";
+import { TournExternalLinks } from "./TabCampoDetalhe";
 
 // ─────────────────────────────────────────────
 // ADAPTER: escalaoToTournament
@@ -492,20 +493,10 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
         <div className="detail-sub">
           <span className="muted">📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
           <span className="muted fs-11">actualizado {fmtTs(t.ultima_atualizacao)}</span>
-          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
-            target="_blank" rel="noopener noreferrer"
-            className="fs-12 fw-600" style={{ textDecoration:"none", color:"var(--accent-text)",
-              border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
-            📋 Resultados ↗
-          </a>
-          {(LINKS_EXTRA[t.t] ?? []).map((l, i) => (
-            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ textDecoration:"none", color:"var(--accent-text)",
-                border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
-              {l.label}
-            </a>
-          ))}
         </div>
+        {/* Links externos — mesma fila que a tab Torneios (Inscritos, Resultados,
+            USKids, Distâncias, Info jogadores…). */}
+        <TournExternalLinks t={t.t} />
         {/* Resultados do Manuel em destaque */}
         {manuelRows.length > 0 && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>

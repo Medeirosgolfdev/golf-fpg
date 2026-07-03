@@ -55,9 +55,59 @@ function isManuelByName(name) {
 
 // ── Configuração ────────────────────────────────────────────────────────
 const DELAY_MS = 400;
-const DIR        = path.join(__dirname, '..', 'public', 'data');
-const FIELD_PATH = path.join(DIR, 'uskids-field.json');
-const OUTPUT     = path.join(DIR, 'uskids-draws.json');
+const DIR         = path.join(__dirname, '..', 'public', 'data');
+const FIELD_PATH  = path.join(DIR, 'uskids-field.json');
+const SLIM_PATH   = path.join(DIR, 'uskids-member-history-slim.json');
+const RESULTS_PATH= path.join(DIR, 'uskids-results.json');
+const OUTPUT      = path.join(DIR, 'uskids-draws.json');
+
+// IDs USKids do Manuel (actual + legacy) — ver src/constants/manuel.ts
+const MANUEL_IDS = ['630106', '605933'];
+
+/**
+ * Deriva a lista de torneios PASSADOS onde o Manuel jogou, a partir dos dados
+ * já scrapados (member-history-slim + uskids-results). Cada entry:
+ *   { t, idadeManuel, name }
+ * Assim o backfill de draws históricos mantém-se automaticamente actualizado
+ * quando o Manuel joga um torneio novo — sem editar este script à mão.
+ * O escalão ("Boys N") dá a idade; adjacentes ±1 são descobertos via GetMeta.
+ */
+function idadeDeAgeGroup(nome) {
+  const m = String(nome || '').match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : null;
+}
+function historicosManuel() {
+  const out = new Map(); // t → { t, idadeManuel, name }
+  // 1) member-history-slim (fonte autoritativa da carreira)
+  try {
+    const slim = JSON.parse(fs.readFileSync(SLIM_PATH, 'utf8'));
+    for (const mid of MANUEL_IDS) {
+      const j = slim.jogadores?.[mid];
+      if (!j) continue;
+      for (const [tc, tv] of Object.entries(j.torneios || {})) {
+        const idade = idadeDeAgeGroup(tv.ageGroup);
+        if (idade == null) continue;
+        out.set(String(tc), { t: parseInt(tc, 10), idadeManuel: idade, name: slim.torneios?.[tc]?.name || `t=${tc}` });
+      }
+    }
+  } catch { /* slim pode não existir — sem histórico é aceitável */ }
+  // 2) uskids-results (complementa escalões que o slim não cobre)
+  try {
+    const results = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
+    for (const t of results.resultados || []) {
+      if (out.has(String(t.t))) continue;
+      for (const e of t.escaloes || []) {
+        const jogou = (e.rondas || []).some(r =>
+          (r.leaderboard || r.jogadores || []).some(j => isManuelByName(j.nome)));
+        if (!jogou) continue;
+        const idade = idadeDeAgeGroup(e.nome || e.age_group);
+        if (idade != null) out.set(String(t.t), { t: t.t, idadeManuel: idade, name: t.name });
+        break;
+      }
+    }
+  } catch { /* results pode não existir */ }
+  return [...out.values()];
+}
 
 /** Janela em dias antes do torneio para começar a tentar descarregar o draw. */
 const DIAS_ANTES = 3;
@@ -216,9 +266,34 @@ function extrairGrupos(flightPlayers, ronda) {
 }
 
 // ── Descarregar todas as páginas de um flight num round ──────────────────
+/**
+ * Tenta primeiro POST t=1 (final results — o único que devolve pairings para
+ * torneios ENCERRADOS; o GET t=0 devolve `flight_players: {}` silenciosamente
+ * depois de o torneio fechar). Cai para GET t=0 para torneios em curso/futuros
+ * onde o t=1 ainda não está populado. Devolve { players, via }.
+ */
 async function fetchFlightRound(page, fid, ronda, totalEstim) {
-  const players = {};
   const totalPags = Math.max(1, Math.ceil((totalEstim || 60) / 20) + 1);
+
+  // 1) POST t=1 (torneios encerrados)
+  const collected = {};
+  let viaT1 = false;
+  for (let p = 1; p <= totalPags; p++) {
+    try {
+      await sleep(DELAY_MS);
+      const url = `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${ronda}&p=${p}&t=1&pt=undefined&jbgr=${Date.now()}&c=1`;
+      const d = await pageJSON(page, url, 'POST');
+      const fp = d?.flight_players || {};
+      const keys = Object.keys(fp);
+      if (!keys.length) break;
+      viaT1 = true;
+      for (const k of keys) collected[k] = fp[k];
+      if (keys.length < 20) break;
+    } catch { break; }
+  }
+  if (viaT1 && Object.keys(collected).length) return { players: collected, via: 't=1' };
+
+  // 2) Fallback GET t=0 (torneios em curso / futuros)
   for (let p = 1; p <= totalPags; p++) {
     try {
       await sleep(DELAY_MS);
@@ -226,48 +301,84 @@ async function fetchFlightRound(page, fid, ronda, totalEstim) {
       const fp = d?.flight_players || {};
       const keys = Object.keys(fp);
       if (!keys.length) break;
-      for (const k of keys) players[k] = fp[k];
+      for (const k of keys) collected[k] = fp[k];
       if (keys.length < 20) break; // última página
     } catch { break; }
   }
-  return players;
+  return { players: collected, via: 't=0' };
+}
+
+/**
+ * Descobre os escalões alvo (Manuel + adjacentes ±1) a partir do meta do
+ * signupanytime, para torneios PASSADOS que já não estão no field.json.
+ * `idadeManuel` = idade do escalão do Manuel neste torneio (ex: 12 → "Boys 12").
+ */
+function alvosDoMeta(meta, idadeManuel) {
+  const ageGroups = meta.age_groups || {};
+  const flights   = meta.flights    || {};
+  const flightPorNome = {}; // "Boys 11" → { fid, age_group, inscritos }
+  for (const [fid, f] of Object.entries(flights)) {
+    const ag = ageGroups[f.age_group];
+    if (!ag?.name || flightPorNome[ag.name]) continue;
+    flightPorNome[ag.name] = { fid: parseInt(fid, 10), age_group: parseInt(f.age_group, 10), inscritos: f.registered || 60 };
+  }
+  const alvos = [];
+  const nomes = [`Boys ${idadeManuel}`, `Boys ${idadeManuel - 1}`, `Boys ${idadeManuel + 1}`];
+  nomes.forEach((nome, i) => {
+    const f = flightPorNome[nome];
+    if (!f) return;
+    alvos.push({ age_group: f.age_group, nome, flight_id: f.fid, is_manuel: i === 0, adjacent: i > 0, totalEstim: f.inscritos });
+  });
+  return alvos;
 }
 
 // ── Processar um torneio completo ────────────────────────────────────────
-async function processarTorneio(page, torneio, alvos) {
+// `spec` = { torneio, alvos } (via field.json) OU { torneio, idadeManuel } (histórico).
+async function processarTorneio(page, spec) {
+  const { torneio, idadeManuel } = spec;
+  let { alvos } = spec;
+  const ax = torneio.ax || 1129;
   console.log(`\n▶ ${torneio.name} (t=${torneio.t}) — ${diasAte(torneio.date_inicio)}d`);
 
   let meta;
   try {
-    const metaP = esperarGetMeta(page, torneio.t, 12000);
-    await page.goto(IFRAME_URL(torneio.t, 1129), { waitUntil: 'domcontentloaded', timeout: 15000 });
+    const metaP = esperarGetMeta(page, torneio.t, 15000);
+    await page.goto(IFRAME_URL(torneio.t, ax), { waitUntil: 'domcontentloaded', timeout: 18000 });
     meta = await metaP;
   } catch (err) {
     console.warn(`  ⚠️  GetMeta falhou: ${err.message}`);
     return null;
   }
 
-  const tn       = meta.tournament || {};
-  const rondas   = tn.rounds || torneio.rondas || 2;
+  const tn     = meta.tournament || {};
+  const rondas = tn.rounds || torneio.rondas || 2;
+
+  // Histórico: descobrir alvos a partir do meta (o field.json já não os tem)
+  if (!alvos && idadeManuel != null) {
+    alvos = alvosDoMeta(meta, idadeManuel);
+    if (!alvos.length) { console.warn(`  ✗ Escalão "Boys ${idadeManuel}" não encontrado nos flights — saltar.`); return null; }
+    console.log(`  alvos: ${alvos.map(a => (a.is_manuel ? '★' : '·') + a.nome).join(', ')}`);
+  }
+  if (!alvos || !alvos.length) return null;
 
   const escaloes = [];
   for (const alvo of alvos) {
     const tag = alvo.is_manuel ? '★' : '·';
     console.log(`  ${tag} ${alvo.nome} (ag=${alvo.age_group}, f=${alvo.flight_id})`);
 
-    // Obter total estimado de inscritos a partir do field.json (passado via alvo.totalEstim)
+    // Total estimado de inscritos (para paginação)
     const inscrEstim = alvo.totalEstim || 60;
 
     const rondasData = [];
     let temAlgumDraw = false;
     for (let r = 1; r <= rondas; r++) {
-      const flightPlayers = await fetchFlightRound(page, alvo.flight_id, r, inscrEstim);
-      const grupos = extrairGrupos(flightPlayers, r);
+      const { players, via } = await fetchFlightRound(page, alvo.flight_id, r, inscrEstim);
+      const grupos = extrairGrupos(players, r);
       const nJogs  = grupos.reduce((s, g) => s + g.jogadores.length, 0);
       if (grupos.length) temAlgumDraw = true;
       const ptCount = grupos.reduce(
         (s, g) => s + g.jogadores.filter(j => j.pais === 'PT').length, 0);
-      console.log(`    R${r}: ${grupos.length} grupos | ${nJogs} jogadores${ptCount ? `  🇵🇹 ${ptCount}` : ''}`);
+      console.log(`    R${r} (${via}): ${grupos.length} grupos | ${nJogs} jogadores${ptCount ? `  🇵🇹 ${ptCount}` : ''}`);
       rondasData.push({ ronda: r, grupos });
     }
 
@@ -311,42 +422,62 @@ async function main() {
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
 
-  if (!fs.existsSync(FIELD_PATH)) {
-    console.warn(`⚠️  ${FIELD_PATH} não existe — workflow uskids-field tem de correr primeiro.`);
-    return;
+  // Merge com output anterior primeiro — para saber que torneios já têm draw
+  let outputAnterior = { torneios: [] };
+  if (fs.existsSync(OUTPUT)) {
+    try { outputAnterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+  }
+  const jaTemDraw = new Set(
+    (outputAnterior.torneios || [])
+      .filter(t => (t.escaloes || []).some(e => (e.rondas || []).some(r => (r.grupos || []).length)))
+      .map(t => t.t)
+  );
+
+  const aProcessar = [];   // { torneio, alvos? , idadeManuel? }
+  const skipHistorico = process.argv.includes('--skip-historico');
+  const forceHistorico = process.argv.includes('--force-historico');
+
+  // ── Fonte 1: torneios FUTUROS / EM CURSO do field.json (com alvos) ──
+  if (fs.existsSync(FIELD_PATH)) {
+    const field = JSON.parse(fs.readFileSync(FIELD_PATH, 'utf8'));
+    const candidatos = (field.torneios || []).filter(eElegivel);
+    console.log(`\n   Field: ${candidatos.length} torneios elegíveis (≤ ${DIAS_ANTES}d no futuro ou em curso)`);
+    for (const t of candidatos) {
+      const alvos = escaloesAlvoParaTorneio(t);
+      if (!alvos.length) { console.log(`   · t=${t.t} ${t.name} — Manuel não inscrito`); continue; }
+      for (const a of alvos) {
+        const esc = (t.escaloes || []).find(e => e.age_group === a.age_group);
+        a.totalEstim = esc?.inscritos || 60;
+      }
+      aProcessar.push({ torneio: t, alvos });
+      console.log(`   ✓ t=${t.t} ${t.name} → ${alvos.map(a => (a.is_manuel ? '★' : '') + a.nome).join(', ')}`);
+    }
+  } else {
+    console.warn(`   ⚠️  ${FIELD_PATH} não existe — só backfill histórico.`);
   }
 
-  const field = JSON.parse(fs.readFileSync(FIELD_PATH, 'utf8'));
-  const candidatos = (field.torneios || []).filter(eElegivel);
-  console.log(`\n   ${candidatos.length} torneios elegíveis (≤ ${DIAS_ANTES}d no futuro ou em curso)`);
-
-  // Filtrar para apenas torneios onde Manuel está inscrito + calcular alvos
-  const aProcessar = [];
-  for (const t of candidatos) {
-    const alvos = escaloesAlvoParaTorneio(t);
-    if (!alvos.length) {
-      console.log(`   · t=${t.t} ${t.name} — Manuel não inscrito`);
-      continue;
+  // ── Fonte 2: torneios PASSADOS onde o Manuel jogou (backfill via GetMeta) ──
+  // Salta os que já têm draw guardado (não muda) a menos que --force-historico.
+  if (!skipHistorico) {
+    const hist = historicosManuel();
+    const idsField = new Set(aProcessar.map(x => x.torneio.t));
+    let n = 0;
+    for (const h of hist) {
+      if (idsField.has(h.t)) continue;                       // já vai ser processado via field
+      if (jaTemDraw.has(h.t) && !forceHistorico) continue;   // já tem draw → não re-scrapa
+      aProcessar.push({ torneio: { t: h.t, name: h.name, date_inicio: null, date_fim: null }, idadeManuel: h.idadeManuel });
+      console.log(`   ⏳ histórico t=${h.t} ${h.name} (Boys ${h.idadeManuel})`);
+      n++;
     }
-    // Anotar totalEstim em cada alvo (para paginação)
-    for (const a of alvos) {
-      const esc = (t.escaloes || []).find(e => e.age_group === a.age_group);
-      a.totalEstim = esc?.inscritos || 60;
-    }
-    aProcessar.push({ torneio: t, alvos });
-    console.log(`   ✓ t=${t.t} ${t.name} → ${alvos.length} escalões: ${alvos.map(a => (a.is_manuel ? '★' : '') + a.nome).join(', ')}`);
+    console.log(`\n   Histórico: ${hist.length} torneios do Manuel, ${n} por scrapar${forceHistorico ? ' (--force-historico)' : ''}.`);
   }
 
   if (!aProcessar.length) {
     console.log('\n   Nada para descarregar.');
-    // Mesmo assim, escrever ficheiro vazio se não existir (para o git diff funcionar)
     if (!fs.existsSync(OUTPUT)) {
       fs.mkdirSync(DIR, { recursive: true });
       fs.writeFileSync(OUTPUT, JSON.stringify({
-        gerado_em: new Date().toISOString(),
-        manuel_focus: true,
-        janela_dias_antes: DIAS_ANTES,
-        torneios: [],
+        gerado_em: new Date().toISOString(), manuel_focus: true, janela_dias_antes: DIAS_ANTES, torneios: [],
       }, null, 2), 'utf8');
       console.log(`   📝 Escreveu ${OUTPUT} vazio.`);
     }
@@ -361,8 +492,8 @@ async function main() {
 
   const novos = [];
   try {
-    for (const { torneio, alvos } of aProcessar) {
-      const res = await processarTorneio(page, torneio, alvos);
+    for (const spec of aProcessar) {
+      const res = await processarTorneio(page, spec);
       if (res) novos.push(res);
       await sleep(DELAY_MS);
     }
@@ -370,18 +501,16 @@ async function main() {
     await browser.close();
   }
 
-  // Merge com output anterior — preserva torneios fora da janela actual
-  let outputAnterior = { torneios: [] };
-  if (fs.existsSync(OUTPUT)) {
-    try { outputAnterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
-  }
   const mapa = new Map((outputAnterior.torneios || []).map(r => [r.t, r]));
   for (const r of novos) mapa.set(r.t, r);
 
-  // Limpar torneios já terminados há muito (> 14 dias) — não fazem falta no draw
+  // Cull: manter permanentemente qualquer torneio que TENHA draw (os históricos
+  // do Manuel não desaparecem); os futuros/em-curso ainda sem draw ficam se
+  // terminaram há ≤ 14 dias (janela para backfill enquanto o draw não sai).
   const HOJE_LIMITE = -14;
+  const temDraw = t => (t.escaloes || []).some(e => (e.rondas || []).some(r => (r.grupos || []).length));
   const todos = [...mapa.values()]
-    .filter(t => diasAte(t.date_fim || t.date_inicio) >= HOJE_LIMITE)
+    .filter(t => temDraw(t) || diasAte(t.date_fim || t.date_inicio) >= HOJE_LIMITE)
     .sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
 
   fs.mkdirSync(DIR, { recursive: true });

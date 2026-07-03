@@ -413,6 +413,8 @@ export default function USKidsFieldPage() {
   // Ocultar torneios com campo pequeno (< 60 jogadores) na tab Resultados
   const [filterSmallField, setFilterSmallField] = useState(false);
   const MIN_FIELD = 60;
+  // Pesquisa por nome/campo na sidebar (tabs Torneios + Resultados)
+  const [search, setSearch] = useState("");
 
   // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
@@ -713,6 +715,16 @@ export default function USKidsFieldPage() {
     return m;
   }, [autoRivals]);
 
+  // Torneio de resultados mais RECENTE (allTorneios está ordenado por data asc,
+  // logo o último com resultados é o mais recente). Usado como default ao abrir
+  // a tab Resultados.
+  const ultimoResultadoT = useMemo(() => {
+    for (let i = allTorneios.length - 1; i >= 0; i--) {
+      if (allTorneios[i].temResultados) return allTorneios[i].t;
+    }
+    return torneiosResultados.length ? torneiosResultados[0].t : null;
+  }, [allTorneios, torneiosResultados]);
+
   if (erro) return (
     <div style={{ padding: 32 }}>
       <div className="notice-error">
@@ -728,9 +740,10 @@ export default function USKidsFieldPage() {
   const handleTabChange = (newTab: Tab) => {
     setTab(newTab);
     if (newTab !== "rivais") setShowRivaisTabela(false);
-    if (newTab === "resultados" && selectedT) {
-      const exists = torneiosResultados.some(t => t.t === selectedT);
-      if (!exists && torneiosResultados.length) setSelectedT(torneiosResultados[0].t);
+    if (newTab === "resultados") {
+      // Ir para o torneio mais recente, a menos que o seleccionado já tenha resultados.
+      const exists = selectedT != null && torneiosResultados.some(t => t.t === selectedT);
+      if (!exists && ultimoResultadoT != null) setSelectedT(ultimoResultadoT);
     }
   };
 
@@ -829,9 +842,14 @@ export default function USKidsFieldPage() {
     // (= soma de participantes na última ronda de cada escalão).
     const fieldFilter = (t: TorneioEntry) =>
       !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
-    const activeList = tab === "campo"
+    // Pesquisa por nome do torneio ou campo (case/acentos-insensível).
+    const q = normNameAuto(search);
+    const searchFilter = (t: TorneioEntry) =>
+      !q || normNameAuto(t.name).includes(q) || normNameAuto(t.campo ?? "").includes(q);
+    const activeList = (tab === "campo"
       ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-      : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t));
+      : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t))
+    ).filter(searchFilter);
 
     const buildMonthMap = (list: TorneioEntry[]) => {
       const monthMap: Record<string, TorneioEntry[]> = {};
@@ -859,7 +877,11 @@ export default function USKidsFieldPage() {
       return [...futureKeys, ...pastKeys];
     };
 
-    const mainKeys = tab === "resultados" ? sortKeys(monthMap, true) : sortKeys(monthMap);
+    // Torneios: futuros primeiro (asc). Resultados: mais RECENTES primeiro (desc)
+    // — para o "último torneio" ficar no topo, alinhado com o default de selecção.
+    const mainKeys = tab === "resultados"
+      ? Object.keys(monthMap).sort().reverse()
+      : sortKeys(monthMap);
 
     const renderItem = (t: TorneioEntry, dimmed?: boolean) => {
       const active = t.t === selectedT;
@@ -968,13 +990,24 @@ export default function USKidsFieldPage() {
     };
 
     const renderGroup = (gmap: Record<string, TorneioEntry[]>, keys: string[], dimmed?: boolean) =>
-      keys.map(key => (
-        <div key={key}>
-          <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
-          {gmap[key].map(t => renderItem(t, dimmed))}
-        </div>
-      ));
+      keys.map(key => {
+        // Resultados: dentro do mês, mais recente primeiro (gmap está asc por data).
+        const items = tab === "resultados" ? [...gmap[key]].reverse() : gmap[key];
+        return (
+          <div key={key}>
+            <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
+            {items.map(t => renderItem(t, dimmed))}
+          </div>
+        );
+      });
 
+    if (!mainKeys.length) {
+      return (
+        <div className="muted fs-12" style={{ padding:"20px 14px", textAlign:"center" }}>
+          {search ? `Sem torneios para "${search}"` : "Sem torneios"}
+        </div>
+      );
+    }
     return <>{renderGroup(monthMap, mainKeys)}</>;
   };
 
@@ -1038,6 +1071,31 @@ export default function USKidsFieldPage() {
 
         {/* ── SIDEBAR ── */}
         <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
+
+        {/* Pesquisa por nome de torneio (Torneios + Resultados) */}
+        {tab !== "rivais" && (
+          <div style={{ padding:"8px 10px", borderBottom:"1px solid var(--border-light)", position:"relative" }}>
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="🔍 Procurar torneio…"
+              className="fs-13"
+              style={{ width:"100%", padding:"6px 26px 6px 10px", borderRadius:6,
+                border:"1px solid var(--border)", background:"var(--bg-input, var(--bg-card))",
+                color:"var(--text)", outline:"none", boxSizing:"border-box" }}
+            />
+            {search && (
+              <button
+                onClick={() => setSearch("")}
+                title="Limpar"
+                style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)",
+                  background:"transparent", border:0, cursor:"pointer", color:"var(--text-3)", fontSize:"var(--fs-14)", lineHeight:1 }}>
+                ✕
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
