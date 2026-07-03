@@ -16,10 +16,17 @@
  *   generatedAt, total,
  *   tournaments: [{
  *     file, trnId, name, formule, date, dateIso, year,
- *     typeCompetition, ligue, seriesCount, totalPlayers, divisions,
+ *     typeCompetition, ligue, ligues, seriesCount, totalPlayers, divisions,
  *     pagesFfgolfUrl, ffgolfOfficialUrl, ggPage, ffgolfSlug, ffgolfSection
  *   }]
  * }
+ *
+ * Dedup por trnId: o portal FFG lista o mesmo torneio em várias ligas (um GP
+ * Jeunes regional aparece também em 19="Clubs étrangers"; as Qualifications
+ * CFJ nacionais aparecem em todas as ligas) e existem ficheiros com e sem
+ * zero à esquerda ("03-02-X.json" vs "3-02-X.json"). O conteúdo é idêntico —
+ * fica UMA entrada por trnId, na liga de menor número (00=Nacional ganha às
+ * regionais, regionais ganham a 19), com as restantes registadas em `ligues`.
  */
 const fs = require("fs");
 const path = require("path");
@@ -124,7 +131,9 @@ for (const file of files) {
     const j = JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf-8"));
     const m = file.match(/^(\d{1,2})-(\d{1,2})-(\d+)\.json$/);
     if (!m) continue;
-    const [, typeCompetition, ligue, trnId] = m;
+    const typeCompetition = m[1].padStart(2, "0");
+    const ligue = m[2].padStart(2, "0");
+    const trnId = m[3];
     if (!isJuvenil(j.name, typeCompetition)) { skippedNonJuvenil++; continue; }
     const dateIso = dateToIso(j.date);
     const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
@@ -159,21 +168,41 @@ for (const file of files) {
   }
 }
 
-tournaments.sort((a, b) => (b.dateIso || "").localeCompare(a.dateIso || ""));
+// ── Dedup por trnId (ver cabeçalho) ─────────────────────────────
+const byTrnId = new Map();
+for (const t of tournaments) {
+  if (!byTrnId.has(t.trnId)) byTrnId.set(t.trnId, []);
+  byTrnId.get(t.trnId).push(t);
+}
+const deduped = [];
+let droppedDup = 0;
+for (const group of byTrnId.values()) {
+  group.sort((a, b) =>
+    a.ligue.localeCompare(b.ligue) ||
+    a.typeCompetition.localeCompare(b.typeCompetition) ||
+    a.file.localeCompare(b.file)
+  );
+  const keep = group[0];
+  keep.ligues = [...new Set(group.map((t) => t.ligue))].sort();
+  droppedDup += group.length - 1;
+  deduped.push(keep);
+}
+
+deduped.sort((a, b) => (b.dateIso || "").localeCompare(a.dateIso || ""));
 
 const out = {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-ffgolf-resultats-index.js",
-  total: tournaments.length,
-  tournaments,
+  total: deduped.length,
+  tournaments: deduped,
 };
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2), "utf-8");
 console.log(`OK: ${OUT}`);
-console.log(`   ${tournaments.length} torneios juvenis · ${skippedNonJuvenil} não-juvenis filtrados · ${tournaments.reduce((s, t) => s + t.totalPlayers, 0)} jogadores`);
+console.log(`   ${deduped.length} torneios juvenis · ${droppedDup} duplicados de liga removidos · ${skippedNonJuvenil} não-juvenis filtrados · ${deduped.reduce((s, t) => s + t.totalPlayers, 0)} jogadores`);
 const byYear = {};
-tournaments.forEach((t) => { byYear[t.year || "?"] = (byYear[t.year || "?"] || 0) + 1; });
+deduped.forEach((t) => { byYear[t.year || "?"] = (byYear[t.year || "?"] || 0) + 1; });
 console.log("   por ano:", JSON.stringify(byYear));
-const withGG = tournaments.filter(t => t.ggPage).length;
-const withOff = tournaments.filter(t => t.ffgolfOfficialUrl).length;
+const withGG = deduped.filter(t => t.ggPage).length;
+const withOff = deduped.filter(t => t.ffgolfOfficialUrl).length;
 console.log(`   com GolfGenius: ${withGG}, com URL oficial: ${withOff}`);
