@@ -52,12 +52,30 @@ function load(opts) {
     });
   }
 
-  // 2) Torneios — slim tem array .tournaments com flat players[] (sem flights — todos no mesmo array por torneio)
+  // 2) Torneios — o slim tem UMA entrada por (trnId, série/escalão). Agrupar
+  // por trnId num único torneio multi-flight: o id canónico é
+  // `ffgolf-{trnId}` e ids duplicados fariam o tournamentById do kids2
+  // guardar só o último flight (os outros escalões desapareciam do lookup).
   const tournaments = [];
+  const byTrn = new Map(); // trnId → tournament normalizado (flights acumulados)
   const playersByLic = new Map(players.map((p) => [p.sourceKey, p]));
   for (const t of slim.tournaments || []) {
     const tt = normalizeFfgTournament(t);
-    if (tt) tournaments.push(tt);
+    if (tt) {
+      const prev = byTrn.get(tt.sourceKey);
+      if (!prev) {
+        byTrn.set(tt.sourceKey, tt);
+      } else {
+        for (const f of tt.flights) {
+          // O portal lista o mesmo torneio em várias ligas com subsets
+          // diferentes de jogadores — em colisão de flightKey ganha o flight
+          // mais completo (mais resultados).
+          const i = prev.flights.findIndex((x) => x.flightKey === f.flightKey);
+          if (i === -1) prev.flights.push(f);
+          else if (f.results.length > prev.flights[i].results.length) prev.flights[i] = f;
+        }
+      }
+    }
     // 2b) hcpHistory: snapshot por participação (date + hcp)
     if (t && t.dateIso && Array.isArray(t.players)) {
       const date = String(t.dateIso).slice(0, 10);
@@ -83,6 +101,7 @@ function load(opts) {
       }
     }
   }
+  tournaments.push(...byTrn.values());
 
   return {
     sourceId: SOURCE_ID,
@@ -148,6 +167,12 @@ function normalizeFfgTournament(t) {
       par: Array.isArray(t.parPerHole) ? t.parPerHole : undefined,
       fieldSize: flightPlayers.length,
       results,
+    }],
+    // O portal FFG é uma SPA sem deep-link por torneio (ver
+    // scripts/backfill-ffgolf-links.js) — o link é a entrada genérica.
+    links: [{
+      label: "Portal FFG",
+      url: t.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/",
     }],
     extra: {
       typeCompetition: t.typeCompetition || null,
