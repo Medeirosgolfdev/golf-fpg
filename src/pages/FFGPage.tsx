@@ -1764,6 +1764,21 @@ function FFGContentLegacy() {
   const md = useMasterDetail();
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
 
+  // Deep-link ?t={trnId} (usado pelos links de torneio do kids2 — o portal
+  // FFG é POST-only e não tem URL por torneio). Aplica-se uma única vez,
+  // quando os resultats acabam de carregar; cliques posteriores do user
+  // não são sobrepostos.
+  const deepLinkApplied = React.useRef(false);
+  useEffect(() => {
+    if (deepLinkApplied.current) return;
+    const t = new URLSearchParams(window.location.search).get("t");
+    if (!t) { deepLinkApplied.current = true; return; }
+    if (ffgResData.has(t)) {
+      deepLinkApplied.current = true;
+      setSelection({ kind: "ffgres", key: t });
+    }
+  }, [ffgResData]);
+
   useEffect(() => {
     let alive = true;
     (async () => {

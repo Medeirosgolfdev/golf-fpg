@@ -168,11 +168,11 @@ function normalizeFfgTournament(t) {
       fieldSize: flightPlayers.length,
       results,
     }],
-    // O portal FFG é uma SPA sem deep-link por torneio (ver
-    // scripts/backfill-ffgolf-links.js) — o link é a entrada genérica.
+    // O portal FFG é POST-only (sem URL por torneio) — o deep-link é a nossa
+    // página France, que suporta ?t={trnId} e tem os mesmos resultados.
     links: [{
-      label: "Portal FFG",
-      url: t.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/",
+      label: "France",
+      url: `/ffg?t=${t.trnId}`,
     }],
     extra: {
       typeCompetition: t.typeCompetition || null,

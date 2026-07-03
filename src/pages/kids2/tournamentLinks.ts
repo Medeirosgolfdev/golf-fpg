@@ -21,6 +21,8 @@ export interface CategorizedLink {
 }
 
 const DOMAIN_MAP: Array<{ test: RegExp; key: CategorizedLink["key"]; label: string; colorVar: string }> = [
+  // Interno: página France com deep-link ?t={trnId} (portal FFG é POST-only)
+  { test: /^\/ffg(\?|$)/,           key: "ffgolf",  label: "France",  colorVar: "--source-ffgolf" },
   { test: /signupanytime\.com/i,    key: "sat",     label: "SAT",     colorVar: "--source-uskids" },
   { test: /tournaments\.uskidsgolf\.com/i, key: "sat", label: "USKids", colorVar: "--source-uskids" },
   { test: /scoring\.fpg\.pt|scoring\.datagolf\.pt|my\.fpg\.pt/i, key: "fpg", label: "FPG", colorVar: "--source-fpg" },
