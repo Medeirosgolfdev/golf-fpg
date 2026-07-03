@@ -33,6 +33,7 @@ interface CalEvent {
   modalidade: string;
   campo: string;
   calId: string;
+  note?: string;   // alerta destacado no popup do evento (ex: data corrigida)
 }
 
 interface CalendarSource {
@@ -77,7 +78,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
   { id: "profissao_fe",   name: "✝ Profissão de Fé",   color: C.cal.profissao_fe, group: "DESTAQUE" },
-  { id: "irma_bad",       name: "🏸 Badminton (irmã)", color: C.cal.irma_bad, group: "DESTAQUE" },
+  { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", color: C.cal.irma_bad, group: "DESTAQUE" },
 
   // ── Aniversários por escalão ──
   { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
@@ -105,6 +106,17 @@ const CALENDARS: CalendarSource[] = [
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
+
+/* ═══ Correções manuais de datas de nascimento (aniversários) ═══
+   ⚠ TRAVA: estas datas GANHAM sempre ao players.json no calendário.
+   Mesmo que o scraper da FPG volte a reescrever players.json com a data
+   errada, o aniversário mostrado aqui mantém-se correcto e exibe uma nota
+   de alerta no evento. Chave = nfed (número de federado). */
+const DOB_OVERRIDES: Record<string, { dob: string; note: string }> = {
+  // Ricardo Castro Ferreira — a FPG traz "2015-07-02" (dia/mês TROCADOS).
+  // Nasceu a 7 de FEVEREIRO de 2015, não 2 de Julho.
+  "49085": { dob: "2015-02-07", note: "⚠ Data certa: 7 de Fevereiro (não Julho)" },
+};
 
 /* ═══ Events ═══ */
 let _id = 0;
@@ -303,13 +315,13 @@ const EVENTS: CalEvent[] = [
   ev("treino", "Volta de treino — Venice Open 2026",          new Date(2026,7,12), "Venice (IT)", ""),
   ev("treino", "Volta de treino — VIII Miramar Open U25",     new Date(2026,7,18), "CG Miramar",  ""),
   ev("colonias", "Aranhiços 1 — Colónia",                     new Date(2026,6,17), "",            "", new Date(2026,6,26)),
-  ev("colonias", "Mosquitos 2 — Colónia (irmã)",              new Date(2026,7,19), "Tona",        "", new Date(2026,7,26)),
 
   /* ══════════════════════════════════════
-     🏸 BADMINTON — irmã (Caldas da Rainha)
+     🏸 MARIA ANTÓNIA (irmã) — colónia + badminton
      ══════════════════════════════════════ */
-  ev("irma_bad", "4ª Jornada Nacional S11, S15 & S19",   new Date(2026,9,17),  "Caldas da Rainha", "Badminton", new Date(2026,9,18)),
-  ev("irma_bad", "Campeonato Nacional Badminton S11",    new Date(2026,10,14), "Caldas da Rainha", "Badminton", new Date(2026,10,15)),
+  ev("irma_bad", "Mosquitos 2 — Colónia · Maria Antónia", new Date(2026,7,19),  "Tona",             "",          new Date(2026,7,26)),
+  ev("irma_bad", "4ª Jornada Nacional S11, S15 & S19",    new Date(2026,9,17),  "Caldas da Rainha", "Badminton", new Date(2026,9,18)),
+  ev("irma_bad", "Campeonato Nacional Badminton S11",     new Date(2026,10,14), "Caldas da Rainha", "Badminton", new Date(2026,10,15)),
 
   /* ══════════════════════════════════════
      ✈ VIAGENS — Voos
@@ -529,6 +541,13 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}
             {event.campo && <InfoRow icon="⛳" label={event.campo} />}
           </div>
+          {event.note && (
+            <div className="fs-12 fw-600" style={{ marginTop: 12, padding: "8px 10px",
+              borderRadius: "var(--radius)", background: "var(--bg-warn)",
+              border: "1px solid var(--color-warn)", color: "var(--color-warn-dark)" }}>
+              {event.note}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -677,8 +696,10 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     };
 
     for (const [fed, p] of Object.entries(players)) {
-      if (!p.dob || p.tags?.includes("no-priority")) continue;
-      const parts = p.dob.split("-");
+      const ovr = DOB_OVERRIDES[fed];        // correcção manual ganha ao players.json
+      const dobStr = ovr?.dob ?? p.dob;
+      if (!dobStr || p.tags?.includes("no-priority")) continue;
+      const parts = dobStr.split("-");
       if (parts.length < 3) continue;
       const m = parseInt(parts[1], 10) - 1; // 0-indexed month
       const d = parseInt(parts[2], 10);
@@ -695,6 +716,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         date: new Date(2026, m, d),
         campo: "",
         modalidade: `${p.name} · #${fed}`,
+        note: ovr?.note,
       });
     }
     return [...EVENTS, ...bdayEvs];
