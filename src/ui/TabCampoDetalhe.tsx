@@ -30,6 +30,43 @@ export function KidsLink({ nome }: { nome: string }) {
   );
 }
 
+/** Fila de links externos de um torneio USKids (Inscritos + Resultados no
+ *  signupanytime, USKids ↗ e extras de LINKS_EXTRA). Partilhada entre o
+ *  detalhe da tab Torneios e o fallback para torneios já sem field data. */
+export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: string | null }) {
+  const extras = LINKS_EXTRA[t] ?? [];
+  const uskidsUrl = urlUskids
+    ?? extras.find(l => l.label === "USKids ↗")?.url
+    ?? REGIONAL_CHAMPIONSHIPS[t]?.urlUSKids;
+  const linkStyle: React.CSSProperties = { padding:"3px 10px", borderRadius:6,
+    background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" };
+  return (
+    <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:10 }}>
+      {[
+        { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t}`, label:"📋 Inscritos" },
+        { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`, label:"🏆 Resultados ↗" },
+      ].map(l => (
+        <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+          className="fs-12 fw-600" style={linkStyle}>
+          {l.label}
+        </a>
+      ))}
+      {uskidsUrl && (
+        <a href={uskidsUrl} target="_blank" rel="noopener noreferrer"
+          className="fs-12 fw-600" style={linkStyle}>
+          USKids ↗
+        </a>
+      )}
+      {extras.filter(l => l.label !== "USKids ↗").map((l, i) => (
+        <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+          className="fs-12 fw-600" style={linkStyle}>
+          {l.label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────
 // TAB CAMPO
 // ─────────────────────────────────────────────
@@ -130,33 +167,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         )}
 
         {/* Links */}
-        <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:10 }}>
-          {[
-            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t.t}`, label:"📋 Inscritos" },
-            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`, label:"🏆 Resultados ↗" },
-          ].map(l => (
-            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
-                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
-              {l.label}
-            </a>
-          ))}
-          {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
-            <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
-              target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
-                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
-              USKids ↗
-            </a>
-          )}
-          {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
-            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
-                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
-              {l.label}
-            </a>
-          ))}
-        </div>
+        <TournExternalLinks t={t.t} urlUskids={t.url_uskids} />
       </div>
 
       {t.erro || t.sem_flights ? null : (

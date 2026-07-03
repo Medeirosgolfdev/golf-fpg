@@ -321,6 +321,8 @@ interface FFGResTournament {
 interface FFGResIndexEntry {
   file: string;
   trnId: string;
+  /** Chave do deep-link GET do portal: resultats-details/{partKey}/{trnId}. */
+  partKey?: string | null;
   name: string;
   formule: string;
   date: string;
@@ -328,6 +330,8 @@ interface FFGResIndexEntry {
   year: number | null;
   typeCompetition: string;
   ligue: string;
+  /** Todas as ligas onde o torneio aparece no portal (dedup do build). */
+  ligues?: string[];
   seriesCount: number;
   totalPlayers: number;
   divisions: { serieId: string; label: string | null; players: number }[];
@@ -2524,8 +2528,11 @@ async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<CircuitDivis
 function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolean): CircuitEntry {
   const links: CircuitLink[] = [];
   if (meta.ggPage) links.push({ label: "GolfGenius", url: `https://www.golfgenius.com/pages/${meta.ggPage}`, icon: "🏌️", title: "Scorecards hole-by-hole no GolfGenius" });
+  // Deep-link directo aos resultados deste torneio no portal FFG (rota GET
+  // com partKey — a mesma que o kids2 usa via agregador).
+  if (meta.partKey) links.push({ label: "Resultados FFG", url: `https://pages.ffgolf.org/resultats/resultats-details/${meta.partKey}/${meta.trnId}`, icon: "🏁", title: "Resultados oficiais deste torneio no portal FFG" });
   if (meta.ffgolfOfficialUrl) links.push({ label: "Página FFG", url: meta.ffgolfOfficialUrl, icon: "🔗" });
-  else links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
+  if (!meta.partKey && !meta.ffgolfOfficialUrl) links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
   return {
     id: `ffgres:${meta.trnId}`,
     year: meta.year,
@@ -2535,6 +2542,7 @@ function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolea
     dateStart: meta.dateIso ?? undefined,
     federation: "FFG",
     liga: meta.ligue,
+    ligas: meta.ligues?.length ? meta.ligues : undefined,
     intl: isIntlName(meta.name),
     escaloes: ffgEscaloesOf((meta.divisions ?? []).map((d) => d.label || d.serieId)),
     links,

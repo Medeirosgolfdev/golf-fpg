@@ -65,6 +65,33 @@ function entryPtState(e: CircuitEntry): boolean | undefined {
   if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isPt(p)));
   return undefined;
 }
+/** Ligas de um entry (lista multi-liga quando existe, senão a principal). */
+function entryLigas(e: CircuitEntry): string[] {
+  return e.ligas?.length ? e.ligas : e.liga ? [e.liga] : [];
+}
+
+/** Pills 🗺️ de liga com cap — as qualificações nacionais FFG aparecem nas 22
+ *  ligas todas; mostramos `max` + "+N" com as restantes no tooltip. */
+function LigaPills({ entry, config, max, style }: {
+  entry: CircuitEntry; config: CircuitConfig; max: number; style?: React.CSSProperties;
+}) {
+  const names = entryLigas(entry).map(l => config.ligaLabels?.[l] ?? l);
+  if (!names.length) return null;
+  const shown = names.slice(0, max);
+  const rest = names.slice(max);
+  return (
+    <>
+      {shown.map(n => (
+        <span key={n} className="p p-sm p-muted" style={style} title={`Liga: ${n}`}>🗺️ {n}</span>
+      ))}
+      {rest.length > 0 && (
+        <span className="p p-sm p-muted" style={style} title={`Também em: ${rest.join(", ")}`}>
+          +{rest.length}
+        </span>
+      )}
+    </>
+  );
+}
 /** Houve hole-in-one neste torneio? Só calculável com divisões eager carregadas
  *  (páginas lazy só mostram o marcador depois de abrir o torneio, nos tabs). */
 function entryHasAce(e: CircuitEntry): boolean {
@@ -488,7 +515,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     [entries],
   );
   const ligas = useMemo(
-    () => [...new Set(entries.map(e => e.liga).filter((l): l is string => !!l))].sort(),
+    () => [...new Set(entries.flatMap(entryLigas))].sort(),
     [entries],
   );
 
@@ -504,7 +531,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
         }
       }
       if (flt.source && fSource !== "all" && e.source !== fSource) return false;
-      if (flt.liga && fLiga !== "all" && e.liga !== fLiga) return false;
+      if (flt.liga && fLiga !== "all" && !entryLigas(e).includes(fLiga)) return false;
       if (flt.intl && fIntl && !e.intl) return false;
       if (toggles.has("manuel") && entryManuelState(e) === false) return false;
       if (toggles.has("pt") && entryPtState(e) === false) return false;
@@ -846,6 +873,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                       {cur.course && <span className="muted">📍 {cur.course}</span>}
                       {curDateStr && <span className="muted ml-8">{curDateStr}</span>}
                       {cur.federation && <span className="muted ml-8">🏛️ {cur.federation}</span>}
+                      <LigaPills entry={cur} config={config} max={3}
+                        style={{ marginLeft: 8, background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }} />
                       <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
                         {headerStats.nPlayers > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
@@ -1074,6 +1103,7 @@ function CircuitSidebar({
                       {nDiv <= 1 && sex === "Mixed" && <SexBadge sex="F" />}
                       {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
                       {nR > 1 && <RoundPill nR={nR} />}
+                      <LigaPills entry={e} config={config} max={2} />
                     </div>
 
                     <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />

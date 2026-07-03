@@ -164,12 +164,12 @@ function esperarGetMeta(page, t, ms = 12000) {
   });
 }
 
-async function pageJSON(page, url) {
-  return page.evaluate(async (u) => {
-    const r = await fetch(u, { credentials: 'include' });
+async function pageJSON(page, url, method = 'GET') {
+  return page.evaluate(async (args) => {
+    const r = await fetch(args.u, { credentials: 'include', method: args.method });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
-  }, url);
+  }, { u: url, method });
 }
 
 // ── Extrair pairings de flight_players ─────────────────────────────────

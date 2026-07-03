@@ -16,10 +16,31 @@
       "autoPort": false
     },
     {
+      "name": "golf-fpg-http-5301",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--config", "_probe-tmp/vite-http.config.ts", "--port", "5301", "--strictPort"],
+      "port": 5301,
+      "autoPort": false
+    },
+    {
+      "name": "golf-fpg-5299",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5299", "--strictPort"],
+      "port": 5299,
+      "autoPort": false
+    },
+    {
       "name": "verify",
       "runtimeExecutable": "node",
       "runtimeArgs": ["_probe-tmp/static.cjs"],
       "port": 5198,
+      "autoPort": false
+    },
+    {
+      "name": "verify-5297",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["_probe-tmp/static-5297.cjs"],
+      "port": 5297,
       "autoPort": false
     }
   ]

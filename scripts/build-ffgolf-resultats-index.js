@@ -15,7 +15,7 @@
  * {
  *   generatedAt, total,
  *   tournaments: [{
- *     file, trnId, name, formule, date, dateIso, year,
+ *     file, trnId, partKey, name, formule, date, dateIso, year,
  *     typeCompetition, ligue, ligues, seriesCount, totalPlayers, divisions,
  *     pagesFfgolfUrl, ffgolfOfficialUrl, ggPage, ffgolfSlug, ffgolfSection
  *   }]
@@ -147,6 +147,9 @@ for (const file of files) {
     tournaments.push({
       file,
       trnId,
+      // Deep-link GET do portal: resultats-details/{partKey}/{trnId} (a UI do
+      // portal só faz POST; a rota GET existe e é indexada pelo Google).
+      partKey: j.partKey || null,
       name: j.name,
       formule: j.formule || "Simple",
       date: j.date,

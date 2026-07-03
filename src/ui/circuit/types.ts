@@ -182,6 +182,9 @@ export interface CircuitEntry {
   source?: string;
   /** Liga/região (FFG: ligue) — alimenta o filtro `liga` da toolbar. */
   liga?: string;
+  /** TODAS as ligas onde o torneio aparece (dedup multi-liga do portal FFG).
+   *  Quando presente, o filtro e as pills usam esta lista; `liga` é o fallback. */
+  ligas?: string[];
   /** Marca torneio internacional (FFG: Internationaux) — alimenta o filtro INTL. */
   intl?: boolean;
   /** Campo. */
