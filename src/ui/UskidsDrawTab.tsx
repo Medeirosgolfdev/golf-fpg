@@ -214,9 +214,10 @@ export default function UskidsDrawTab({
         <span className="muted fs-12 ml-auto">{totalGrupos} flights · {flat.length} jogadores</span>
       </div>
 
-      {/* Tabela */}
-      <div className="scroll-x">
-        <table className="dtable">
+      {/* Tabela — largura fixa ao conteúdo (não esticar até à janela, como o
+          DrawTab da FPG). `.dtable` é width:100%; forçamos width:auto. */}
+      <div className="scroll-x" style={{ width: "fit-content", maxWidth: "100%" }}>
+        <table className="dtable" style={{ width: "auto" }}>
           <thead>
             <tr>
               <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir}
