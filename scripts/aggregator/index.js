@@ -41,6 +41,7 @@ const SOURCES = [
   { id: "mexnacional", label: "Nacional Infantil Juvenil (México)", load: () => require("./sources/mexnacional") },
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
   { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
+  { id: "avtrophy", label: "Belgian Intl U14 (Albert Vermeiren)", load: () => require("./sources/avtrophy") },
 ];
 
 function parseArgs(argv) {

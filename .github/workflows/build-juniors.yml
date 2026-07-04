@@ -32,6 +32,7 @@ on:
       - 'public/data/mexnacional_*.json'
       - 'public/data/icopa_*.json'
       - 'public/data/interzonas_*.json'
+      - 'public/data/avtrophy_*.json'
       - 'public/data/juniors-overrides.json'
       - 'scripts/aggregator/**'
       - '.github/workflows/build-juniors.yml'

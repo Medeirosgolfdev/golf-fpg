@@ -13,7 +13,7 @@
 import type { Tournament } from "./data";
 
 export interface CategorizedLink {
-  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "other";
+  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "avtrophy" | "other";
   label: string;
   url: string;
   /** CSS var-name para cor (já existe em tokens.css). */
@@ -34,6 +34,7 @@ const DOMAIN_MAP: Array<{ test: RegExp; key: CategorizedLink["key"]; label: stri
   { test: /nextcaddy\.com/i,        key: "rfeg",    label: "NextCaddy", colorVar: "--source-rfeg" },
   { test: /rfegolf\.es|federacionandaluzadegolf|laliga/i, key: "rfeg", label: "RFEG",  colorVar: "--source-rfeg" },
   { test: /ffgolf\.org|pages\.ffgolf/i, key: "ffgolf", label: "FFG",     colorVar: "--source-ffgolf" },
+  { test: /golfbox\.dk/i,           key: "avtrophy", label: "GolfBox", colorVar: "--source-avtrophy" },
   { test: /brjgt\.bluegolf\.com|bluegolf\.com/i, key: "wjgc", label: "BlueGolf", colorVar: "--source-wjgc" },
 ];
 
@@ -58,7 +59,7 @@ export function categorizeTournamentLinks(tournament: Tournament): CategorizedLi
   }
   // Ordem fixa preferida (USKids primeiro, FPG ao meio, outros depois)
   const order: Record<CategorizedLink["key"], number> = {
-    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, other: 99,
+    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, avtrophy: 10, other: 99,
   };
   out.sort((a, b) => order[a.key] - order[b.key]);
   return out;

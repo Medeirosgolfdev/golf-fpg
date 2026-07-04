@@ -86,6 +86,20 @@
         "mexnacional:mexnacional-2219366972"
       ],
       "reason": "Mauricio Mijares (Lugo) — mesmo jogador mexicano em USKids (#564372, MX, Elite), Future Masters (US, sem país no scrape) e Nacional Infantil Juvenil do México (com DOB 2014-10-07, Campestre Torreón). Nomes divergem (com/sem 'Lugo') e o USKids não expõe DOB, por isso o matcher automático deixou 3 entidades separadas. É a mesma pessoa."
+    },
+    {
+      "sourceKeys": [
+        "uskids:527354",
+        "ffgolf:E86126000"
+      ],
+      "reason": "Antonio Strano — mesma criança, dupla nacionalidade IT/FR. USKids regista-o como IT (#527354, Boys 12, 10 torneios incl. Belgian Intl U14/avtrophy, Doral e England) e a FFG tem a licença francesa E86126000 (1 torneio, Internationaux U14). O matcher automático não funde porque os países diferem (IT vs FR) e nenhum lado tem DOB completa. Mesmo padrão do René Billot (uskids MX + ffgolf FR)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:548815",
+        "ffgolf:E79411682"
+      ],
+      "reason": "Marcus Latt — mesma criança. A entidade principal (USKids #548815, nacionalidade EE, 37 torneios) já reúne RFEG (lic AM15933853, Real Guadalhorce), WJGC, England, GJGL, avtrophy e a licença FFG de convidado E86126002 (bloco Internationaux U14). A entidade FR autónoma tem a SEGUNDA licença FFG E79411682 (hcp 2.8, 1 torneio). O matcher não funde porque os países diferem e são duas licenças FFG distintas do mesmo jogador. Mesmo padrão dos restantes casos multi-nacionalidade."
     }
   ],
   "forceSplit": [],

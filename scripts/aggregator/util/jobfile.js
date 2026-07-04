@@ -83,16 +83,23 @@ function buildJobfileSource(opts) {
         if (!cleanName) continue;
         const iso = countryToIso2(pl.country || "") || defaultCountry || null;
         const dob = dobToIso(pl.dob) || null;
+        // ANO de nascimento sem data completa (ex: GolfBox) → dobRange anual, a
+        // mesma evidência média que o USKids/GJGL usam: permite fundir variantes
+        // de nome no MESMO ano e discrimina homónimos de anos diferentes, sem
+        // fabricar uma DOB exacta falsa. Só quando não há dob completa.
+        const birthYear = Number.isInteger(pl.birthYear) && pl.birthYear > 1900 ? pl.birthYear : null;
+        const dobRange = !dob && birthYear ? { lo: `${birthYear}-01-01`, hi: `${birthYear}-12-31` } : null;
         // Chave forte por GolfGenius id (único por jogador×divisão); resultados
         // só contam se o jogador estiver em players[] (invariante do matcher).
         const key = pl.detailId ? `${sourceId}-${pl.detailId}` : `${cleanName.toLowerCase()}|${iso || ""}`;
         const prev = playerMap.get(key);
-        if (!prev || (dob && !prev.dob)) {
+        if (!prev || (dob && !prev.dob) || (dobRange && !prev.dob && !prev.dobRange)) {
           playerMap.set(key, {
             sourceKey: key,
             name: cleanName,
             country: iso,
             dob: dob || prev?.dob || null,
+            dobRange: dobRange || prev?.dobRange || null,
             sex: sex || prev?.sex || null,
             club: pl.club || prev?.club || null,
             extra: {
@@ -100,6 +107,7 @@ function buildJobfileSource(opts) {
               location: cleanLocation(pl.location),
               golfGeniusId: pl.detailId || null,
               gradYear: pl.gradYear || null,
+              birthYear,
             },
           });
         }
@@ -138,7 +146,9 @@ function buildJobfileSource(opts) {
     return {
       sourceKey,
       name: (opts.nameFn ? opts.nameFn(data) : `${data.tournament || seriesLabel} ${year || ""}`).trim(),
-      date: year ? `${year}-01-01` : null,
+      // Data real do evento quando a fonte a expõe (ex: GolfBox → startDate);
+      // as fontes GolfGenius não a trazem → fallback a 1 de Janeiro do ano.
+      date: data.startDate || data.date || (year ? `${year}-01-01` : null),
       seriesId,
       seriesLabel,
       course: data.course || null,

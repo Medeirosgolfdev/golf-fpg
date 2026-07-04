@@ -120,16 +120,20 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
+interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
-interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
+interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
 const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 
-function jobScorecardOptions(): ScorecardOptions {
-  return { hideHCP: true, hideSD: true, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País" };
+// showRatings: fontes que trazem HCP + Course Rating/Slope (ex: GolfBox) mostram
+// as colunas HCP e SD; as GolfGenius (sem esses dados) mantêm-nas escondidas para
+// não exibir colunas vazias.
+function jobScorecardOptions(opts?: { showRatings?: boolean }): ScorecardOptions {
+  const hide = !opts?.showRatings;
+  return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País" };
 }
 
 function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
@@ -204,7 +208,11 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       // divisão — só assim a coloração buraco-a-buraco fica certa em cada ronda.
       const roundPars = Array.isArray(r.pars) && r.pars.length === holes && r.pars.every((x) => x != null)
         ? (r.pars as number[]) : parForRound(r.startingHole);
-      return { round: ri + 1, gross, scores: sc, pars: roundPars, si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName };
+      // CR/Slope da divisão (ex: GolfBox) → SD por ronda no leaderboard. Só em
+      // rondas de 18 buracos (o CR publicado é para a volta completa).
+      const roundCR = !nineHole && div.courseRating != null ? div.courseRating : undefined;
+      const roundSlope = !nineHole && div.slope != null ? div.slope : undefined;
+      return { round: ri + 1, gross, scores: sc, pars: roundPars, si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName, courseRating: roundCR, slope: roundSlope };
     });
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
     // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
@@ -217,6 +225,9 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
       club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+      // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
+      // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
+      hcpExact: p.hcp ?? undefined,
       grossTotal,
       toPar,
       nholes: holes,
@@ -366,7 +377,9 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
  *  TournamentDetail com tabs flat intercaladas (Draw R{n} · R{n} · Resumo ·
  *  Scorecards) — mesma apresentação dos restantes MAJORS. A ordem das divisões
  *  é preservada do ficheiro (não ordenada por idade). */
-function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string }): CircuitEntry[] {
+function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean }): CircuitEntry[] {
+  const linkLabel = opts.linkLabel ?? "Resultados GolfGenius";
+  const scOpts = jobScorecardOptions({ showRatings: opts.showRatings });
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = dv.division || opts.series;
@@ -389,15 +402,15 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
         tabLabel: label,
         hasManuel: dv.players.some((p) => isM(p.name)),
         results,
-        links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
+        links: dv.source ? [{ label: linkLabel, icon: "🔗", url: dv.source }] : undefined,
         renderFullKeepHeader: true,
         renderFull: () => (
           <TournamentDetail
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
             playersDB={EMPTY_PLAYERS_DB}
-            options={jobScorecardOptions()}
-            accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
+            options={scOpts}
+            accShowCols={{ esc: false, fed: false, tee: false, hcp: !!opts.showRatings }}
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
@@ -470,8 +483,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -493,6 +506,8 @@ const MEX_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i);  // 2020..2027
 // Copa Bobby Díaz + Interzonas Lorena Ochoa (México, GolfGenius).
 const ICOPA_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
 const INTERZONAS_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
+// Belgian International U14 — Albert Vermeiren Trophy (GolfBox, avtrophy_<ano>.json).
+const AVTROPHY_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
 
 function MajorContent() {
   const navigate = useNavigate();
@@ -507,6 +522,7 @@ function MajorContent() {
   const [mexFiles, setMexFiles] = useState<JobFile[]>([]);
   const [icopaFiles, setIcopaFiles] = useState<JobFile[]>([]);
   const [interzonasFiles, setInterzonasFiles] = useState<JobFile[]>([]);
+  const [avtrophyFiles, setAvtrophyFiles] = useState<JobFile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -574,6 +590,12 @@ function MajorContent() {
       ]);
       if (alive) setIcopaFiles(icopas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
       if (alive) setInterzonasFiles(interzonas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
+
+      // Belgian International U14 — Albert Vermeiren Trophy (GolfBox).
+      const avts = (await Promise.all(AVTROPHY_YEARS.map((y) =>
+        cachedFetchJson<JobFile>(`/data/avtrophy_${y}.json`).catch(() => null),
+      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
+      if (alive) setAvtrophyFiles(avts);
     })();
     return () => { alive = false; };
   }, []);
@@ -588,8 +610,9 @@ function MajorContent() {
       ...buildGgJobEntries(mexFiles, { source: "mexnacional", series: "MÉX" }),
       ...buildGgJobEntries(icopaFiles, { source: "icopa", series: "Bobby Díaz" }),
       ...buildGgJobEntries(interzonasFiles, { source: "interzonas", series: "Interzonas" }),
+      ...buildGgJobEntries(avtrophyFiles, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }),
     ],
-    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles, uajtFiles, mexFiles, icopaFiles, interzonasFiles],
+    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles, uajtFiles, mexFiles, icopaFiles, interzonasFiles, avtrophyFiles],
   );
 
   // Torneio seleccionado via URL (/major/:source/:year → id "source:year").

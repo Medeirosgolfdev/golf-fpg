@@ -1,0 +1,112 @@
+name: Actualizar GolfBox
+
+# Scraper genérico de torneios GolfBox Livescoring (scores.golfbox.dk).
+# Lê scripts/golfbox-scope.json (lista de competições) e reescreve os JobFiles
+# em public/data/{slug}_{ano}.json. Se algum mudou, regenera de seguida os
+# ficheiros canónicos do kids2 (juniors.json + shards + tournament-catalog).
+#
+# API do GolfBox é PÚBLICA (JSONP) → SEM secrets/cookies.
+#
+# Corre:
+#  - Cron nocturno diário às 21:00 UTC (23:00 na Bélgica/CEST) — apanha o último
+#    dia dos torneios em curso no scope. Quando nada muda, exit 2 → sem commit.
+#  - A pedido (botão "Run workflow"), opcionalmente com um competitionId ad-hoc.
+#
+# Nota: o commit é self-contained (scrape + agregador) porque um push feito com
+# GITHUB_TOKEN não dispara o build-juniors.yml (regra anti-recursão do GitHub).
+on:
+  workflow_dispatch:
+    inputs:
+      competition_id:
+        description: 'competitionId GolfBox ad-hoc (vazio = usar o scope file)'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC) — 21:00 UTC diário.
+    - cron: '0 21 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-golfbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: update-golfbox
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-golfbox.js
+        id: scrape
+        run: |
+          set +e
+          CID="${{ github.event.inputs.competition_id }}"
+          if [ -n "$CID" ]; then
+            node scripts/scrape-golfbox.js "$CID"
+          else
+            node scripts/scrape-golfbox.js --scope scripts/golfbox-scope.json
+          fi
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = houve novidades → regenerar canónico + commit
+          # 2 = sem alterações → no-op (NÃO é erro)
+          # 1 = erro real
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper GolfBox falhou — ver logs acima"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem alterações — a saltar regeneração e commit"
+          fi
+          exit 0
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: GolfBox scrape + rebuild juniors ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ GolfBox + juniores canónicos actualizados"
