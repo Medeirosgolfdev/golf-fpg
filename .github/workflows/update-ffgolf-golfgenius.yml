@@ -85,6 +85,30 @@ jobs:
           echo "Args: $ARGS"
           node scripts/scrape-ffgolf.js $ARGS
 
+      - name: Rota fetch p/ torneios sem leaderboard no iframe
+        # Alguns torneios (Internationaux U14, Grand Prix National U12…) embebem o
+        # widget `next_round` em vez do leaderboard → o scrape-ffgolf.js (Playwright)
+        # devolve 0 jogadores. Esta rota vai directa ao `tournament_results` da league
+        # por `fetch` puro. Só toca nos slugs que ficaram sem ficheiro/vazios.
+        # Exit code 2 = nada novo (não é erro).
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.year }}" ]; then
+            ARGS="--year ${{ github.event.inputs.year }}"
+          else
+            ARGS="--year $(date -u +%Y)"
+          fi
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          echo "Args: $ARGS"
+          set +e
+          node scripts/scrape-ffgolf-gg-fetch.js $ARGS
+          RC=$?
+          set -e
+          if [ "$RC" = "1" ]; then exit 1; fi
+          echo "gg-fetch rc=$RC"
+
       - name: Commit e push (se houver mudanças)
         run: |
           git config user.name  "github-actions[bot]"
