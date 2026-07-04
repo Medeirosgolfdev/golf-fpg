@@ -1,0 +1,131 @@
+name: Actualizar FFGolf — Calendário Jeunes (Node puro)
+
+# Corre:
+#   - Automaticamente Segunda-feira às 01:30 UTC (antes das outras 2 FFG:
+#     resultats 02:00, golfgenius 03:00)
+#   - A pedido (botão "Run workflow" no GitHub)
+#
+# Enumera os torneios juvenis FFG pela API de pesquisa do calendário do
+# www.ffgolf.org (mais completa que o liste-competitions do portal resultats) e
+# ROTEIA cada torneio para o sink de resultados certo — tudo por `fetch` puro,
+# sem browser, sem secrets:
+#   • resultados no portal pages.ffgolf.org  → grava public/data/ffgolf-resultats/*.json
+#   • resultados no GolfGenius               → adiciona ao ffgolf-catalog.json
+#     (merge não-destrutivo). Esses são depois scrapados pela workflow
+#     update-ffgolf-golfgenius.yml (03:00 UTC), já com o catálogo actualizado.
+#
+# Default do cron: --start-month <ano corrente>-01 --skip-existing (só o ano em
+# curso; 6 meses já dão uma boa análise do nível dos jogadores).
+on:
+  workflow_dispatch:
+    inputs:
+      start_month:
+        description: 'Mês inicial da pesquisa (YYYY-MM). Vazio = <ano corrente>-01.'
+        required: false
+        default: ''
+      category:
+        description: 'Categoria da pesquisa FFG (id). Default 87988 = Grands Prix Jeunes.'
+        required: false
+        default: ''
+      force_rebuild:
+        description: 'Re-fetch torneios do portal já em disco? (sem --skip-existing)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # Segunda 01:30 UTC — antes de update-ffgolf-resultats (02:00) e
+    # update-ffgolf-golfgenius (03:00), para o catálogo GG estar pronto a tempo.
+    - cron: '30 1 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-ffgolf-calendar-jeunes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-ffgolf-calendar-jeunes.js
+        id: scrape
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.start_month }}" ]; then
+            ARGS="$ARGS --start-month ${{ github.event.inputs.start_month }}"
+          else
+            ARGS="$ARGS --start-month $(date -u +%Y)-01"
+          fi
+          if [ -n "${{ github.event.inputs.category }}" ]; then
+            ARGS="$ARGS --category ${{ github.event.inputs.category }}"
+          fi
+          if [ "${{ github.event.inputs.force_rebuild }}" != "true" ]; then
+            ARGS="$ARGS --skip-existing"
+          fi
+          echo "Args: $ARGS"
+          set +e
+          node scripts/scrape-ffgolf-calendar-jeunes.js $ARGS
+          RC=$?
+          set -e
+          # Exit code 2 = nada novo (não é erro). 1 = erro real.
+          if [ "$RC" = "1" ]; then exit 1; fi
+          echo "rc=$RC"
+
+      - name: Regenerar índice agregado
+        run: node scripts/build-ffgolf-resultats-index.js
+
+      - name: Regenerar slim juniors (U10/U12/U14)
+        run: node scripts/build-ffgolf-juniors-slim.js
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/ffgolf-resultats/ \
+                  public/data/ffgolf-resultats-index.json \
+                  public/data/ffgolf-juniors-slim.json \
+                  public/data/ffgolf-catalog.json
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update FFGolf calendar jeunes ${DATE}"
+          git fetch origin main
+          # Push robusto: retry com pull --rebase (evita colisão com as outras
+          # workflows FFG que fazem push perto desta hora).
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"

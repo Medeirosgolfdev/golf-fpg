@@ -386,4 +386,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { fetchJsonp, buildDivision, parseGbDate };
+module.exports = { fetchJsonp, buildDivision, parseGbDate, scrapeOne, getCompetition, getLeaderboard };

@@ -68,7 +68,7 @@ async function listSlugsInListing(page, section, year) {
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(1500);
 
-  const slugs = await page.evaluate((sec, yr) => {
+  const slugs = await page.evaluate(({ sec, yr }) => {
     const set = new Set();
     document.querySelectorAll("a").forEach((a) => {
       const h = a.getAttribute("href") || "";
@@ -77,7 +77,7 @@ async function listSlugsInListing(page, section, year) {
       if (m) set.add(m[1]);
     });
     return [...set].sort();
-  }, section, year);
+  }, { sec: section, yr: year });
   return slugs;
 }
 

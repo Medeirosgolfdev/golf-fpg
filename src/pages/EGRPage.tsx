@@ -50,6 +50,9 @@ interface EgrPlayer {
   avgScore: number | null;
   avgToCR: number | null;
   eventsCounting: number | null;
+  /** Ano de nascimento — o EGR não o expõe; vem do GolfBox via scrape-egr-sources.js. */
+  birthYear?: number | null;
+  birthYearSource?: string | null;
 }
 interface EgrRanking {
   generated_at: string;
@@ -107,7 +110,7 @@ export default function EGRPage() {
 }
 
 /* ── Vista LISTA (/egr) ────────────────────────────────────────── */
-type ListKey = "rank" | "name" | "country" | "age" | "points" | "avgScore" | "avgToCR" | "events";
+type ListKey = "rank" | "name" | "country" | "age" | "born" | "points" | "avgScore" | "avgToCR" | "events";
 
 function EGRList({ ranking }: { ranking: EgrRanking }) {
   const navigate = useNavigate();
@@ -148,6 +151,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
         case "name": return norm(p.name);
         case "country": return norm(p.country || "");
         case "age": return p.ageNum ?? 999;
+        case "born": return p.birthYear ?? (sortDir === "asc" ? 9999 : -1);
         case "points": return p.egrPoints ?? -1;
         case "avgScore": return p.avgScore ?? 1e9;
         case "avgToCR": return p.avgToCR ?? 1e9;
@@ -224,6 +228,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
                   <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>
                   <th className="tight">Sexo</th>
                   <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Escalão actual (não é DOB)">Escalão</SortableHdr>
+                  <SortableHdr k="born" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Ano de nascimento (via GolfBox — o EGR não expõe DOB)">Nasc.</SortableHdr>
                   <SortableHdr k="points" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Pontos EGR">Pontos</SortableHdr>
                   <SortableHdr k="avgScore" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Média de score">Méd.</SortableHdr>
                   <SortableHdr k="avgToCR" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Média do score menos o CR do campo (nível normalizado — menor é melhor)">vs CR</SortableHdr>
@@ -246,6 +251,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
                       <td title={p.country || ""}>{flagOf(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
                       <td>{p.sex ? <SexBadge sex={p.sex} /> : ""}</td>
                       <td className="tight">{p.ageGroup || "—"}</td>
+                      <td className="num" title={p.birthYear ? "Ano de nascimento via GolfBox" : ""}>{p.birthYear ?? ""}</td>
                       <td className="num" style={{ fontWeight: 600 }}>{num(p.egrPoints, 0)}</td>
                       <td className="num">{num(p.avgScore)}</td>
                       <td className="num">{num(p.avgToCR)}</td>
@@ -337,6 +343,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16, margin: "8px 0 16px", fontSize: "var(--fs-13)" }}>
         <Stat label="País" value={player.country || "—"} />
+        {player.birthYear && <Stat label="Nascimento" value={String(player.birthYear)} title="Ano de nascimento via GolfBox (o EGR não expõe DOB)" />}
         {club && <Stat label="Clube" value={club} />}
         <Stat label="Ranking EGR" value={player.egrRankSex != null ? `#${player.egrRankSex} ${player.sex === "F" ? "♀" : "♂"}` : "—"} />
         <Stat label="Pontos" value={num(player.egrPoints, 0)} />

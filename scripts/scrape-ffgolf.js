@@ -40,7 +40,10 @@ const path = require("path");
 const GG = "https://www.golfgenius.com";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const isStrokePlay = (name) => /qualif|round\s+\d|stroke/i.test(name || "");
+// "Tour N" é o nome francês de uma ronda de stroke play (Championnats FFG:
+// Tour 1/2/3). Sem isto vinham marcados "match" e eram excluídos da consolidação
+// → 0 jogadores (ver Championnat U18 WAGR). "T N" cobre a abreviatura.
+const isStrokePlay = (name) => /qualif|round\s+\d|tour\s*\d|\bt\s*\d|stroke/i.test(name || "");
 
 /* ─────────────────────────────────────────────────────────────────
    Poll-wait até o dropdown do iframe ter opções (max maxMs)
@@ -1141,9 +1144,23 @@ function parseArgs(argv) {
       if (result) {
         const hasMeters = Array.isArray(result.course && result.course.meters) && result.course.meters.length === 18;
         const hasPlayers = Array.isArray(result.players) && result.players.length > 0;
-        const hasCourses = Array.isArray(result.courses) && result.courses.length > 0;
-        if (!hasMeters && !hasPlayers && !hasCourses) {
-          console.log("   nao grava " + t.slug + ": resultado vazio (sem stats/players/courses)");
+        // Torneios sem jogadores (leaderboard vazio, só match play, ou divisão não
+        // capturada) não têm valor no /ffg — não gravar. E se já existe um ficheiro
+        // vazio destes, limpá-lo; NUNCA apagar um que tenha jogadores (não sobrescrever
+        // dados bons com um re-scrape falhado).
+        if (!hasPlayers) {
+          if (fs.existsSync(outPath)) {
+            let existingN = 0;
+            try { existingN = (JSON.parse(fs.readFileSync(outPath, "utf-8")).players || []).length; } catch { /* inválido */ }
+            if (existingN > 0) {
+              console.log("   skip " + t.slug + ": 0 jogadores no re-scrape — mantido o existente (" + existingN + " jog)");
+            } else {
+              fs.unlinkSync(outPath);
+              console.log("   removido " + t.slug + ": 0 jogadores (ficheiro vazio limpo)");
+            }
+          } else {
+            console.log("   nao grava " + t.slug + ": 0 jogadores");
+          }
           skippedEmpty++;
           continue;
         }
