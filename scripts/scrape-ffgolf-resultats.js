@@ -223,7 +223,24 @@ async function getTournamentDetails(ctx, { trnId, partKey, typeCompetition, ligu
   });
   if (res.status !== 200) throw new Error(`details HTTP ${res.status}`);
   ctx.jar = buildCookieJar(ctx.jar, res.setCookies);
-  return parseDetailsHtml(res.body, trnId);
+  const parsed = parseDetailsHtml(res.body, trnId);
+  // O resultats-details, num torneio A DECORRER, devolve a LISTA de inscritos mas
+  // sem scores (r1/r2/total a 0). Os scores ao vivo estão no gémeo `live-recording`
+  // (GET {partKey}/{trnId}), MESMO formato joueursSerie. Descoberto 2026-07-04 com o
+  // Grand Prix Jeunes d'Ozoir. Só usamos o resultats-details quando já tem scores.
+  const hasScores = (d) => (d.series || []).some((s) =>
+    (s.players || []).some((p) => (p.total > 0) || (p.t1 > 0) || (p.t2 > 0)));
+  if (hasScores(parsed)) return parsed;
+
+  const live = await httpRequest("GET", `https://pages.ffgolf.org/live-recording/${partKey}/${trnId}`, {
+    cookie: jarToHeader(ctx.jar),
+  });
+  if (live.status === 200) {
+    ctx.jar = buildCookieJar(ctx.jar, live.setCookies);
+    const liveParsed = parseDetailsHtml(live.body, trnId);
+    if (hasScores(liveParsed)) { liveParsed.isLive = true; return liveParsed; }
+  }
+  return parsed; // nem published nem live com scores → devolve o que há (start list)
 }
 
 /**
