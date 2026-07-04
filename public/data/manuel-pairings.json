@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-03T20:53:32.482Z",
+  "geradoEm": "2026-07-04T20:44:05.392Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -610,21 +610,30 @@
       "teeTime": "12:10",
       "startHole": 10,
       "campo": "Paris Val d’Europe Golf Course - White, Paris Val d’Europe Golf Course - Red/Blue",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 81,
+        "toPar": 9
+      },
       "companheiros": [
         {
           "nome": "ANDRES MARCOS CANTU",
           "fed": null,
           "clube": null,
           "pais": "MX",
-          "score": null
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
         },
         {
           "nome": "Lorenzo Urset",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
         }
       ]
     },
@@ -634,45 +643,33 @@
       "torneioNome": "Paris Invitational 2026",
       "data": "2026-07-04",
       "ronda": 2,
-      "teeTime": "08:00",
-      "startHole": 1,
+      "teeTime": "12:19",
+      "startHole": 10,
       "campo": "Paris Val d’Europe Golf Course - White, Paris Val d’Europe Golf Course - Red/Blue",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 81,
+        "toPar": 9
+      },
       "companheiros": [
         {
           "nome": "ANDRES MARCOS CANTU",
           "fed": null,
           "clube": null,
           "pais": "MX",
-          "score": null
-        },
-        {
-          "nome": "Bokim SADBERRY",
-          "fed": null,
-          "clube": null,
-          "pais": "FR",
-          "score": null
-        },
-        {
-          "nome": "Lorenzo Urset",
-          "fed": null,
-          "clube": null,
-          "pais": "FR",
-          "score": null
-        },
-        {
-          "nome": "Luka Lefebure",
-          "fed": null,
-          "clube": null,
-          "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
         },
         {
           "nome": "Ni’Al Diwan",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         }
       ]
     },
@@ -685,42 +682,60 @@
       "teeTime": "08:00",
       "startHole": 1,
       "campo": "Paris Val d’Europe Golf Course - White, Paris Val d’Europe Golf Course - Red/Blue",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 81,
+        "toPar": 9
+      },
       "companheiros": [
         {
           "nome": "ANDRES MARCOS CANTU",
           "fed": null,
           "clube": null,
           "pais": "MX",
-          "score": null
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
         },
         {
           "nome": "Bokim SADBERRY",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
         },
         {
           "nome": "Lorenzo Urset",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
         },
         {
           "nome": "Luka Lefebure",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         },
         {
           "nome": "Ni’Al Diwan",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         }
       ]
     },
