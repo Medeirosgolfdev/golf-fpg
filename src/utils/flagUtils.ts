@@ -23,7 +23,7 @@ export const FLAG: Record<string, string> = {
   CL:"🇨🇱",BB:"🇧🇧",BS:"🇧🇸",BO:"🇧🇴",DO:"🇩🇴",DZ:"🇩🇿",EC:"🇪🇨",
   GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
   SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
-  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-SCT":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","GB-WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","GB-NIR":"🇬🇧","ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","NIR":"🇬🇧",
+  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-SCT":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","GB-WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","GB-NIR":"🇬🇧","ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","EN":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","NIR":"🇬🇧",
   // Aliases e variantes (dados USKids)
   UK:"🇬🇧",    // alias de GB
   // Países adicionais encontrados nos torneios completos
@@ -189,7 +189,7 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   kh:"Cambodia", ni:"Nicaragua", pa:"Panama", pe:"Peru", sv:"El Salvador",
   ug:"Uganda", uy:"Uruguay", ve:"Venezuela", gr:"Greece", il:"Israel",
   hr:"Croatia", rs:"Serbia", lu:"Luxembourg", is:"Iceland", my:"Malaysia",
-  sc:"Scotland", "gb-eng":"England", "gb-wls":"Wales", "gb-sct":"Scotland", "gb-nir":"Northern Ireland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
+  sc:"Scotland", "gb-eng":"England", en:"England", "gb-wls":"Wales", "gb-sct":"Scotland", "gb-nir":"Northern Ireland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
   az:"Azerbaijan", al:"Albania", me:"Montenegro", ba:"Bosnia & Herzegovina",
   mz:"Mozambique", ao:"Angola", cv:"Cabo Verde", st:"São Tomé & Príncipe",
   gw:"Guinea-Bissau", tl:"Timor-Leste", tt:"Trinidad & Tobago",

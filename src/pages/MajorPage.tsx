@@ -26,6 +26,17 @@ import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions
 import type { FpgDraw } from "../data/nacional2026Loader";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
+import { KidsLink } from "../ui/KidsLink";
+
+/** Seta ↗ para a página KIDS2 do jogador, injectada nos nomes do detalhe (via
+ *  `nameDecorator`). Resolve pelo KidsLinkCtx que o CircuitShell já fornece — só
+ *  aparece para quem existir no agregado de juniores. Os torneios BJGT/Doral
+ *  (IntlTournView) já a têm; isto dá-a aos que usam TournamentDetail (FM +
+ *  GolfGenius/GolfBox: FSGA, UA, México, Interzonas, avtrophy). */
+const kidsNameDecorator: NonNullable<ScorecardOptions["nameDecorator"]> = (name, content) => (
+  <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
+);
+const withKidsLink = (opts: ScorecardOptions): ScorecardOptions => ({ ...opts, nameDecorator: kidsNameDecorator });
 
 /** id do torneio BJGT/EOWAGR → URL de origem (BlueGolf), para os links do header. */
 const BJGT_SRC = new Map<string, string>(BJGT_URLS.map((m) => [m.id, m.sourceUrl]));
@@ -340,7 +351,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
             playersDB={EMPTY_PLAYERS_DB}
-            options={jobScorecardOptions()}
+            options={withKidsLink(jobScorecardOptions())}
             accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
@@ -379,7 +390,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
  *  é preservada do ficheiro (não ordenada por idade). */
 function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean }): CircuitEntry[] {
   const linkLabel = opts.linkLabel ?? "Resultados GolfGenius";
-  const scOpts = jobScorecardOptions({ showRatings: opts.showRatings });
+  const scOpts = withKidsLink(jobScorecardOptions({ showRatings: opts.showRatings }));
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = dv.division || opts.series;
@@ -509,6 +520,33 @@ const INTERZONAS_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020.
 // Belgian International U14 — Albert Vermeiren Trophy (GolfBox, avtrophy_<ano>.json).
 const AVTROPHY_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
 
+/* ── Doral: carregamento em duas vagas (recente eager + histórico diferido) ──
+ * Os ficheiros do Doral já são anuais (ftm_doral_<ano>.json). Antes eram todos
+ * pedidos num bloco que travava o ecrã inicial (~6 MB, dominado pelos anos
+ * antigos). Agora carregamos primeiro os anos recentes (render imediato) e o
+ * histórico entra depois, em segundo plano, sem bloquear as restantes fontes. */
+const DORAL_RECENT_FROM = 2024;
+const doralYearOf = (u: string) => Number(u.match(/ftm_doral_(\d+)/)?.[1] ?? 0);
+const DORAL_RECENT_FILES = DORAL_FILES.filter((f) => doralYearOf(f.url) >= DORAL_RECENT_FROM);
+const DORAL_HISTORIC_FILES = DORAL_FILES.filter((f) => doralYearOf(f.url) < DORAL_RECENT_FROM);
+
+async function loadDoralFiles(files: typeof DORAL_FILES): Promise<{ entries: Entry[]; names: Map<number, string> }> {
+  const dorals = await Promise.all(files.map(async ({ url, sourceUrl }) => {
+    try {
+      const raw = await cachedFetchJson<Parameters<typeof normalizeFile>[0]>(url);
+      if (!raw) return { entries: [] as Entry[], name: null as string | null, year: null as number | null };
+      const meta = raw as unknown as { tournament?: string; year?: number };
+      return { entries: normalizeFile(raw, sourceUrl), name: meta.tournament ?? null, year: meta.year ?? null };
+    } catch {
+      return { entries: [] as Entry[], name: null as string | null, year: null as number | null };
+    }
+  }));
+  const entries = dorals.flatMap((d) => d.entries);
+  const names = new Map<number, string>();
+  for (const d of dorals) if (d.year != null && d.name) names.set(d.year, d.name);
+  return { entries, names };
+}
+
 function MajorContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; year?: string }>();
@@ -528,34 +566,38 @@ function MajorContent() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      const [defs, dorals] = await Promise.all([
-        Promise.all(BJGT_URLS.map(async (m): Promise<TDef | null> => {
-          try {
-            const raw = await cachedFetchJson<unknown>(m.url);
-            if (raw == null) return null;
-            return {
-              id: m.id, label: m.label, shortLabel: m.shortLabel,
-              data: bjgtLoadT(raw), manuelName: m.manuelName, year: m.year,
-              category: m.category, roundDates: m.roundDates, series: m.series,
-            } as TDef;
-          } catch { return null; }
-        })),
-        Promise.all(DORAL_FILES.map(async ({ url, sourceUrl }): Promise<{ entries: Entry[]; name: string | null; year: number | null }> => {
-          try {
-            const raw = await cachedFetchJson<Parameters<typeof normalizeFile>[0]>(url);
-            if (!raw) return { entries: [], name: null, year: null };
-            const meta = raw as unknown as { tournament?: string; year?: number };
-            return { entries: normalizeFile(raw, sourceUrl), name: meta.tournament ?? null, year: meta.year ?? null };
-          } catch { return { entries: [], name: null, year: null }; }
-        })),
-      ]);
+      // BJGT/EOWAGR bloqueia o ecrã inicial — é leve (~0.6 MB). O Doral (que era
+      // ~6 MB e dominava a espera) saiu deste bloco: carrega a seguir, sem travar.
+      const defs = await Promise.all(BJGT_URLS.map(async (m): Promise<TDef | null> => {
+        try {
+          const raw = await cachedFetchJson<unknown>(m.url);
+          if (raw == null) return null;
+          return {
+            id: m.id, label: m.label, shortLabel: m.shortLabel,
+            data: bjgtLoadT(raw), manuelName: m.manuelName, year: m.year,
+            category: m.category, roundDates: m.roundDates, series: m.series,
+          } as TDef;
+        } catch { return null; }
+      }));
       if (!alive) return;
       setBjgtDefs(defs.filter((d): d is TDef => d != null));
-      setDoralEntries(dorals.flatMap((d) => d.entries));
-      const names = new Map<number, string>();
-      for (const d of dorals) if (d.year != null && d.name) names.set(d.year, d.name);
-      setDoralNames(names);
       setLoading(false);
+
+      // Doral: anos recentes primeiro (render imediato), histórico em segundo
+      // plano (merge sem bloquear as restantes fontes).
+      const recentDoral = await loadDoralFiles(DORAL_RECENT_FILES);
+      if (!alive) return;
+      setDoralEntries(recentDoral.entries);
+      setDoralNames(recentDoral.names);
+      void loadDoralFiles(DORAL_HISTORIC_FILES).then((hist) => {
+        if (!alive) return;
+        setDoralEntries((prev) => [...prev, ...hist.entries]);
+        setDoralNames((prev) => {
+          const m = new Map(prev);
+          for (const [y, n] of hist.names) m.set(y, n);
+          return m;
+        });
+      });
 
       // Junior Orange Bowl — tenta cada ano (404 ignorado).
       const jobs = (await Promise.all(JOB_YEARS.map((y) =>

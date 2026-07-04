@@ -8,10 +8,11 @@ import { normName } from "../data/KIDSdataLoader";
 
 export interface KidsLinkEntry {
   n: string;            // nome display
-  memberId?: string;    // memberId USKids (preferido como hash)
+  memberId?: string;    // memberId USKids (fallback de hash)
+  id?: string;          // juniorId canónico kids2 → link directo /kids2/{id} (sem ambiguidade)
 }
 
-/** Context para partilhar o mapa autoRivals dentro de uma página */
+/** Context para partilhar o mapa de juniores dentro de uma página */
 export const KidsLinkCtx = React.createContext<Map<string, KidsLinkEntry>>(new Map());
 
 /** Componente ↗ — só aparece se o jogador existir no mapa */
@@ -19,11 +20,15 @@ export function KidsLink({ nome }: { nome: string }) {
   const map = React.useContext(KidsLinkCtx);
   const entry = map.get(normName(nome));
   if (!entry) return null;
-  const hash = entry.memberId ?? encodeURIComponent(entry.n);
+  // Preferir o link canónico /kids2/{id} (inequívoco). Sem id, cair no hash
+  // retro-compatível (memberId ou nome), que o KIDS2Page resolve.
+  const to = entry.id
+    ? `/kids2/${entry.id}`
+    : `/kids2#${entry.memberId ?? encodeURIComponent(entry.n)}`;
   return (
     <a
-      href="/kids2"
-      onClick={e => { e.preventDefault(); window.open(`/kids2#${hash}`, "_blank"); }}
+      href={to}
+      onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
       title="Ver em Kids"
       style={{
         fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",

@@ -14,6 +14,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import type { MultiRoundRow } from "../../ui/multiRoundTypes";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl } from "../../utils/format";
@@ -182,6 +183,17 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const nholes = refPlayer?.nholes || refPlayer?.par?.length || refPlayer?.roundScores?.[0]?.pars?.length || 18;
   const parTotal = refPlayer?.parTotal || refPlayer?.par?.reduce((a, b) => a + b, 0) || refPlayer?.roundScores?.[0]?.pars.reduce((a, b) => a + b, 0) || 0;
 
+  // Seta ↗ para KIDS2 no Resumo: o AccumulatedLB não lê `options` (ao contrário
+  // do ScorecardLB/AllRoundsScorecardLB), mas aceita um `renderName`. Quando o
+  // caller injecta um `nameDecorator` (páginas MAJOR — ver MajorPage), aplicá-lo
+  // também aqui. Base = nome a bold, igual ao fallback do MultiRoundLeaderboard
+  // quando não há playersDB (o caso das fontes internacionais).
+  const accRenderName = useMemo(
+    () => (options?.nameDecorator
+      ? (row: MultiRoundRow) => options.nameDecorator!(row.name, <span className="fw-700">{row.name}</span>)
+      : undefined),
+    [options],
+  );
 
   return (
     <div>
@@ -392,7 +404,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
         if (isAcc)
-          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} /></>;
+          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} /></>;
         if (isRoundTab || !isMulti)
           return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />;
         return null;

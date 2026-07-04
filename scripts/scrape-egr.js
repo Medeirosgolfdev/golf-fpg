@@ -407,7 +407,42 @@ async function scrapeEvents(opts) {
   };
   writeJsonAtomic(path.join(EGR_DIR, "egr-events-index.json"), index);
   console.log(`  ✔ ${scraped} eventos escritos, ${skipped} saltados. Índice: public/data/egr/egr-events-index.json`);
+
+  buildPlayerEventsRollup();
   return scraped + skipped;
+}
+
+// Rollup compacto jogador→eventos (só resultados, sem hole scores) a partir de
+// TODOS os egr_{id}.json em disco. Alimenta o detalhe do jogador na página /egr
+// (lazy-load único de ~5MB) sem ter de carregar os 872 ficheiros de evento.
+function buildPlayerEventsRollup() {
+  const files = fs.existsSync(EVENTS_DIR) ? fs.readdirSync(EVENTS_DIR).filter((f) => /^egr_\d+\.json$/.test(f)) : [];
+  const byPlayer = {};
+  for (const f of files) {
+    let d;
+    try { d = JSON.parse(fs.readFileSync(path.join(EVENTS_DIR, f), "utf8")); } catch { continue; }
+    for (const p of d.players || []) {
+      if (!p.id) continue;
+      (byPlayer[p.id] = byPlayer[p.id] || []).push({
+        eventId: d.id, name: d.name, date: d.startDateRaw || null,
+        ageGroup: d.ageGroup, sex: d.sex, country: d.country, club: p.club || null,
+        cr: d.cr, par: d.par,
+        pos: p.posNum != null ? p.posNum : p.pos,
+        total: p.total, rounds: [p.r1, p.r2, p.r3, p.r4].filter((x) => x != null),
+        egrPoints: p.egrPoints,
+      });
+    }
+  }
+  for (const id of Object.keys(byPlayer)) {
+    byPlayer[id].sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  }
+  writeJsonAtomic(path.join(EGR_DIR, "egr-player-events.json"), {
+    generated_at: new Date().toISOString(),
+    note: "Rollup jogador→eventos (só resultados) a partir dos eventos juvenis scraped. Para o detalhe da página /egr.",
+    totalPlayers: Object.keys(byPlayer).length,
+    players: byPlayer,
+  }, { spaces: 0 });
+  console.log(`  ✔ rollup jogador→eventos: ${Object.keys(byPlayer).length} jogadores → public/data/egr/egr-player-events.json`);
 }
 
 // ──────────────────────────────────────────────────── PLAYER profiles ─────
