@@ -89,8 +89,9 @@ const HISTORICOS = [
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20878' },
 ];
 
-const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12'];
-const escalaoApanhar = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
+// Apanhar TODOS os escalões Boys (o Manuel já é Boys 12 e os escalões acima/abaixo
+// são contexto útil; o volume extra é irrelevante). Girls continuam de fora.
+const escalaoApanhar = (nome) => nome.toLowerCase().startsWith('boys');
 
 /**
  * Torneios PREMIUM: descarregar TODOS os escalões (Boys 7+ até Girls 15-18),
