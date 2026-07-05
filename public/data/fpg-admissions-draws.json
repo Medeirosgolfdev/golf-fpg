@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-06-28T20:53:25.097Z",
-  "total": 512,
+  "scrapedAt": "2026-07-05T20:46:49.949Z",
+  "total": 514,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -116136,6 +116136,80 @@
                   "nome": "Aurele Yang",
                   "fed": null,
                   "clube": "Espiche"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "984",
+      "tcode": "10133",
+      "name": "1º Torn. Drive Challenge Açores - Batalha - Sub 14",
+      "date": "2026-07-04",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "1º Torn. Drive Challenge Açores - Batalha - Sub 14",
+          "date": "2026-07-04",
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Matos",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Clara Almeida",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Leonor Rodrigues",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "984",
+      "tcode": "10131",
+      "name": "1º Torn. Drive Challenge Açores - Batalha - Sub 10",
+      "date": "2026-07-04",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "1º Torn. Drive Challenge Açores - Batalha - Sub 10",
+          "date": "2026-07-04",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Miguel Almeida",
+                  "fed": null,
+                  "clube": "Verdegolf"
                 }
               ]
             }
