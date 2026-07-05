@@ -228,6 +228,3 @@ export const C = {
   },
 
 } as const;
-
-// ── Tipo auxiliar ─────────────────────────────────────────────────────────────
-export type EscKey = keyof typeof C.esc;

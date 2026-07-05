@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { isoDate, fmtDate, displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
+import { kidsUrl } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
@@ -17,11 +18,11 @@ export function KidsLink({ nome }: { nome: string }) {
   const arEntry = arMap.get(normNameAuto(nome));
   if (!arEntry) return null;
   const memberId = (arEntry as any).memberId as string | undefined;
-  const hash = memberId ?? encodeURIComponent(arEntry.n);
+  const to = kidsUrl({ memberId, name: arEntry.n });
   return (
     <a
-      href="/kids2"
-      onClick={e => { e.preventDefault(); window.open(`/kids2#${hash}`, "_blank"); }}
+      href={to}
+      onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
       title="Ver em Kids"
       style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",
         cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>

@@ -18,7 +18,7 @@
  */
 import React from "react";
 
-export interface FilterPillItem<K extends string = string> {
+interface FilterPillItem<K extends string = string> {
   key: K;
   label: React.ReactNode;
   count?: number;

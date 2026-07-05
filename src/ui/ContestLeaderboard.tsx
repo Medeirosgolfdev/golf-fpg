@@ -13,7 +13,7 @@ import { RoundPill } from "./PillBadge";
 import { tpColor } from "./tournamentPrimitives";
 import { SC } from "../utils/scoreDisplay";
 
-export interface ContestData {
+interface ContestData {
   label: string;
   parArr: number[];
   par: number;
@@ -32,12 +32,12 @@ export interface ContestPlayer {
   rd: RoundData[]; // rounds
 }
 
-export interface RoundData {
+interface RoundData {
   g: number; // gross
   s?: number[]; // scores (18 holes)
 }
 
-export interface EvoEntry {
+interface EvoEntry {
   n: string; // name
   y25: number; // 2025 score
   y26: number; // 2026 score

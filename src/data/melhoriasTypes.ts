@@ -7,11 +7,11 @@
 
 /* ── Pill types ── */
 
-export type PillValue = "REGIONAL" | "NACIONAL" | "INTL" | "AWAY" | "AWAY INTL";
+type PillValue = "REGIONAL" | "NACIONAL" | "INTL" | "AWAY" | "AWAY INTL";
 
 /* ── Patches WHS (aplica-se ao whs-list.json) ── */
 
-export interface WhsPatch {
+interface WhsPatch {
   tourn_name?: string;
   course_description?: string;
   [key: string]: unknown;    // campos dinâmicos menos comuns
@@ -19,7 +19,7 @@ export interface WhsPatch {
 
 /* ── Patches Scorecard ── */
 
-export interface ScorecardPatch {
+interface ScorecardPatch {
   course_description?: string;
   course_rating?: number;
   slope?: number;
@@ -40,11 +40,11 @@ export interface ScorecardPatch {
 
 /* ── Links ── */
 
-export type MelhoriaLinks = Record<string, string>;
+type MelhoriaLinks = Record<string, string>;
 
 /* ── Score entry (por score_id) ── */
 
-export interface ScoreMelhoria {
+interface ScoreMelhoria {
   notas?: string;
   whs?: WhsPatch;
   scorecard?: ScorecardPatch;
@@ -57,7 +57,7 @@ export interface ScoreMelhoria {
 
 /* ── Extra rounds (rondas não FPG) ── */
 
-export interface ExtraRoundDia {
+interface ExtraRoundDia {
   data: string;
   dia: number;
   holes: number;
@@ -76,7 +76,7 @@ export interface ExtraRoundDia {
   _yards_corrigido?: number | null;
 }
 
-export interface ExtraRound {
+interface ExtraRound {
   _comment?: string;
   torneio: string;
   campo: string;
@@ -92,7 +92,7 @@ export interface ExtraRound {
 
 /* ── Treinos (Game Book) ── */
 
-export interface Treino {
+interface Treino {
   data: string;
   campo: string;
   holes: number;
@@ -109,13 +109,13 @@ export interface Treino {
 
 /* ── Links section (meta-comentários) ── */
 
-export type MetaLinks = MelhoriaLinks & {
+type MetaLinks = MelhoriaLinks & {
   pais?: string;
 };
 
 /* ── Player melhorias (tudo de um jogador) ── */
 
-export interface PlayerMelhorias {
+interface PlayerMelhorias {
   /** Entradas por score_id: patches WHS + scorecard */
   [scoreId: string]: ScoreMelhoria | ExtraRound[] | Treino[] | MetaLinks | string | undefined;
 

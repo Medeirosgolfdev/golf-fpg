@@ -54,7 +54,7 @@ export interface Junior {
   };
 }
 
-export interface JuniorSources {
+interface JuniorSources {
   uskids?: {
     memberId: string;
     ageGroupCurrent?: string;
@@ -135,7 +135,7 @@ export interface Result {
   rounds?: Array<{ round: number; gross?: number | null; strokes?: number[] }>;
 }
 
-export interface TournamentSeries {
+interface TournamentSeries {
   id: string;
   label: string;
   sourceId: string;

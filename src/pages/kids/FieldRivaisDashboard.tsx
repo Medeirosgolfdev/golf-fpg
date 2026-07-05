@@ -23,6 +23,7 @@ import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
 import { ScoutEmbed } from "../kids2/ScoutView";
+import { kidsUrl } from "../../ui/KidsLink";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -1906,7 +1907,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     <td key={e.tcode + "_name"} style={{ padding: "4px 6px", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}>
                       {entry ? (
                         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                          <a href={`/kids2#${encodeURIComponent(entry.name)}`}
+                          <a href={kidsUrl({ name: entry.name })}
                              target="_blank" rel="noreferrer"
                              style={{ color: entry.officialPlace == null ? "var(--text-2)" : "var(--text)", textDecoration: "none", cursor: "pointer", opacity: entry.officialPlace == null ? 0.7 : 1 }}
                              title={entry.officialPlace == null ? `${entry.name} — IE/DSQ/WD (sem classificação oficial)` : `Abrir perfil de ${entry.name} em nova janela`}>

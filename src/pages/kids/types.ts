@@ -1,8 +1,8 @@
 /* Types partilhados entre KIDSPage e sub-componentes */
 
-export interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[]; nholes?: number }
+interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[]; nholes?: number }
 
-export interface RivalPlayer {
+interface RivalPlayer {
   n: string;
   co: string;
   isM?: boolean;
@@ -11,7 +11,7 @@ export interface RivalPlayer {
   up: string[];
 }
 
-export interface TournDef {
+interface TournDef {
   id: string; name: string; short: string; date: string;
   rounds: number; par: number; field: number; nations: number;
   intendedRounds?: number; url: string;

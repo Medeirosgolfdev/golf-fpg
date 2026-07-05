@@ -20,7 +20,7 @@
 import type { Junior, Tournament } from "./data";
 import { MONTHS_PT } from "../../utils/format";
 
-export type DobState = "known" | "range" | "inferred" | "unknown";
+type DobState = "known" | "range" | "inferred" | "unknown";
 
 export interface DobInfo {
   state: DobState;
@@ -318,7 +318,7 @@ export function escalaoIntl(junior: Junior, tournamentById: Map<string, Tourname
 
 /** Categorias oficiais RFEG (Real Federación Española de Golf). Calculadas
  *  pela idade que o jogador faz no ANO CIVIL em curso (regra oficial RFEG). */
-export type CategoriaRFEG = "Benjamín" | "Alevín" | "Infantil" | "Cadete" | "Juvenil" | "Junior";
+type CategoriaRFEG = "Benjamín" | "Alevín" | "Infantil" | "Cadete" | "Juvenil" | "Junior";
 
 const CATEGORIA_RFEG_RANGES: ReadonlyArray<{ ageMax: number; cat: CategoriaRFEG }> = [
   { ageMax: 10, cat: "Benjamín" },
@@ -357,7 +357,7 @@ export function anoNaCategoria(ageThisYear: number, cat: CategoriaRFEG): 1 | 2 {
   return ageThisYear === lo ? 1 : 2;
 }
 
-export interface CategoriaRFEGInfo {
+interface CategoriaRFEGInfo {
   cat: CategoriaRFEG;
   ano: 1 | 2;
   /** "Alevín 2º ano" — pronto para mostrar num pill. */
@@ -507,7 +507,7 @@ export function dobRangeStrict(
 // arePlayersCompatible — auditoria de qualidade do merge
 // ═══════════════════════════════════════════════════════════════════════
 
-export interface CompatibilityResult {
+interface CompatibilityResult {
   /** True se os 2 juniors PODEM ser a mesma pessoa. */
   compatible: boolean;
   /** Razão para incompatibilidade ('memberId-mismatch', 'dob-mismatch',

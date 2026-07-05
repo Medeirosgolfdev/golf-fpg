@@ -14,7 +14,7 @@ import type { MelhoriasJson } from "../data/melhoriasTypes";
 
 // ── Tipos ──────────────────────────────────────────────────────────
 
-export interface AppStats {
+interface AppStats {
   courses: number;
   tees: number;
   players: number;

@@ -6,8 +6,8 @@
  */
 
 // Re-export core types from fpgTypes for Drive domain
-import type { RoundScore, Player, Tournament } from "../data/fpgTypes";
-export type { RoundScore, Player, Tournament };
+import type { Player, Tournament } from "../data/fpgTypes";
+export type {  Player, Tournament };
 
 export interface DriveData {
   lastUpdated: string;
@@ -34,19 +34,6 @@ export interface TStats {
   bogeys: number;
 }
 
-export interface TournGroup {
-  key: string;
-  label: string;
-  campo: string;
-  num: number;
-  date: string;
-  escalao: string | null;
-  isMulti: boolean;
-  isEvent: boolean;
-  totalRounds: number;
-  entries: Tournament[];
-}
-
 export interface Sub12Row {
   fed: string;
   name: string;
@@ -66,7 +53,7 @@ export interface Sub12Row {
   totalPts: number;
 }
 
-export interface TournResult {
+interface TournResult {
   tournKey: string;
   pos: number | string | null;
   gross: number;

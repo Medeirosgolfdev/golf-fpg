@@ -109,7 +109,7 @@ export function parseExactAge(agStr: string): number | null {
   return null; // range like "Boys 10-11" or "Boys 10 & 11" → can't pin exact age
 }
 
-export interface DobConstraint {
+interface DobConstraint {
   dateExact: string;   // tournament date
   ageMin: number;      // minimum age bracket
   ageMax: number;      // maximum age bracket (same as min when exact)

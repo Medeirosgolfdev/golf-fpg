@@ -29,6 +29,7 @@ import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
+import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
@@ -339,9 +340,9 @@ function CompanionNameLink({ row }: { row: CompanionRow }) {
       </Link>
     );
   }
-  // USKids/Intl → link para /kids2#{nome}
+  // USKids/Intl → ficha kids2 (método único: kidsUrl → resolver do KIDS2Page)
   return (
-    <Link to={`/kids2#${encodeURIComponent(row.nome)}`} className="tourn-pname tourn-pname-link">
+    <Link to={kidsUrl({ name: row.nome })} className="tourn-pname tourn-pname-link">
       {row.nome}
     </Link>
   );

@@ -23,8 +23,8 @@ import { buildEvoMap, type EvoEntry, type EvoInput } from "../hooks/useEvoCompar
 import type { CircuitDivision } from "../ui/circuit/types";
 
 /* ── Types ── */
-export interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
-export interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
+interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
+interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 export interface TData { tournament: string; par: number[]; si?: number[]; yards?: number[]; course?: string; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
 export interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
 

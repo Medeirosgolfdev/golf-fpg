@@ -24,7 +24,7 @@ export type DobLookup = Record<string, DobLookupEntry>;
 interface HcpLookupEntry { hcp: number; source: string; tourneyId?: number; dateIso?: string | null }
 export type HcpLookup = Record<string, HcpLookupEntry>;
 
-export interface FCGScorecardGameTee {
+interface FCGScorecardGameTee {
   color: string | null;
   gender: string | null;
   lap: string | null;
@@ -36,12 +36,12 @@ export interface FCGScorecardGameTee {
   meters1_18: (number | null)[];
 }
 
-export interface FCGScorecard {
+interface FCGScorecard {
   gameTee: FCGScorecardGameTee | null;
   gross: (number | null)[];
 }
 
-export interface FCGPlayer {
+interface FCGPlayer {
   _id: string;
   firstName: string;
   surname: string;
@@ -64,7 +64,7 @@ export interface FCGPlayer {
   scorecard: FCGScorecard | null;
 }
 
-export interface FCGCategory {
+interface FCGCategory {
   _id: string;
   name: string;
   gender: "M" | "F" | null;
@@ -78,7 +78,7 @@ export interface FCGCategory {
   scorecardErrors?: { playerId: string; error: string }[];
 }
 
-export interface FCGGame {
+interface FCGGame {
   _id: string;
   name: string;
   status: string;
@@ -266,7 +266,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
  * Limitação: cada game golfdirecto = 1 jornada (1 ronda). Para multi-round
  * o adapter teria que correlacionar múltiplos gameIds via tournament._id.
  */
-export interface FpgRoundScoreShape {
+interface FpgRoundScoreShape {
   round: number;
   gross: number;
   scores: number[];
@@ -276,7 +276,7 @@ export interface FpgRoundScoreShape {
   teeName?: string;
 }
 
-export interface FpgPlayerShape {
+interface FpgPlayerShape {
   scoreId: string;
   pos: number;
   name: string;

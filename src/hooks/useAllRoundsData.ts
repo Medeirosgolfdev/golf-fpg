@@ -28,7 +28,7 @@ function backSum(rd: { scores: number[] }): number {
 
 /* ── Types exportados ── */
 
-export interface RdData {
+interface RdData {
   scores: number[];
   gross: number;
   toPar: number;
@@ -44,7 +44,7 @@ export interface RdData {
   holePars: number[];
 }
 
-export interface PRow {
+interface PRow {
   key: string;
   name: string;
   club: string;
@@ -61,7 +61,7 @@ export interface PRow {
   _fullCount: number;
 }
 
-export interface FlatRow {
+interface FlatRow {
   key: string;
   playerKey: string;
   name: string;

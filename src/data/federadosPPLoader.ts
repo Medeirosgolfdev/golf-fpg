@@ -93,7 +93,7 @@ export function invalidateFederadosPPCache(): void {
 }
 
 /* ── Histórico P&P por jogador (pp-history/{fed}.json) ────────────── */
-export interface PPScorecard {
+interface PPScorecard {
   par: (number | null)[];
   gross: (number | null)[];
   meters: (number | null)[];
@@ -154,8 +154,8 @@ export function loadPPHistory(fed: string | number): Promise<PPHistory | null> {
 }
 
 /* ── Index slim do histórico (pp-history-index.json) ─────────────── */
-export interface PPHistoryIndexEntry { name: string | null; rounds: number; last: string | null; index: number | null; }
-export interface PPHistoryIndexFile { generated: string; source: string; players: Record<string, PPHistoryIndexEntry>; }
+interface PPHistoryIndexEntry { name: string | null; rounds: number; last: string | null; index: number | null; }
+interface PPHistoryIndexFile { generated: string; source: string; players: Record<string, PPHistoryIndexEntry>; }
 
 let _idxCache: Record<string, PPHistoryIndexEntry> | null = null;
 let _idxLoading: Promise<Record<string, PPHistoryIndexEntry>> | null = null;

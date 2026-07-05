@@ -27,6 +27,7 @@ import LoadingState from "../../ui/LoadingState";
 import { useAppContext } from "../../context/AppContext";
 import { resolveCourseTee } from "./CourseTab";
 import { calcSD } from "../../utils/whsCalc";
+import { kidsUrl } from "../../ui/KidsLink";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -689,7 +690,7 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
             <td className="lb-name sticky-col-1"
                 style={{ background: bg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {isFirstRd ? (
-                <a href={`/kids2#${encodeURIComponent(player.name)}`}
+                <a href={kidsUrl({ name: player.name })}
                    target="_blank" rel="noreferrer"
                    style={{ color: "var(--text)", textDecoration: "none" }}
                    title={`Abrir ${player.name} em Kids2`}>
@@ -743,7 +744,7 @@ function IndependentRow({ f, pos, hpr, is9 }: {
       </td>
       <td className="lb-name sticky-col-1 fw-600"
           style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        <a href={`/kids2#${encodeURIComponent(f.pl.name)}`}
+        <a href={kidsUrl({ name: f.pl.name })}
            target="_blank" rel="noreferrer"
            style={{ color: "var(--text)", textDecoration: "none" }}>
           {f.pl.name}
@@ -1049,7 +1050,7 @@ function EcleticRow({ row, pos, hpr, is9 }: {
       </td>
       <td className="lb-name sticky-col-1 fw-600"
           style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        <a href={`/kids2#${encodeURIComponent(pl.name)}`}
+        <a href={kidsUrl({ name: pl.name })}
            target="_blank" rel="noreferrer"
            style={{ color: "var(--text)", textDecoration: "none" }}>
           {pl.name}

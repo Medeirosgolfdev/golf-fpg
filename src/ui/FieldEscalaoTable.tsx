@@ -7,6 +7,7 @@ import { displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { isManuel } from "../constants/manuel";
 import { fmtPosRivais, playerSeriesResult } from "./uskidsHelpers";
+import { kidsUrl } from "./KidsLink";
 
 // ─────────────────────────────────────────────
 // Types
@@ -248,13 +249,11 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                     <span style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
                       <span>{displayName(p.nome)}</span>
                       {kidsName && (
-                        <a href="/kids2"
+                        <a href={kidsUrl({ memberId: arEntry?.memberId, name: kidsName })}
                           onClick={e => {
                             e.preventDefault();
                             // Preferir memberId (ID único USKids) — KIDS2Page resolve via canonicals
-                            const memberId = arEntry?.memberId;
-                            const hash = memberId ?? encodeURIComponent(kidsName);
-                            window.open(`/kids2#${hash}`, "_blank");
+                            window.open(kidsUrl({ memberId: arEntry?.memberId, name: kidsName }), "_blank");
                           }}
                           title="Ver em Kids"
                           style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize: "var(--fs-14)", cursor:"pointer", textDecoration:"none", flexShrink:0 }}>

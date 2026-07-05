@@ -2,7 +2,7 @@
    Tipos para master-courses.json (lean-2)
     */
 
-export type Sex = "M" | "F" | "U";
+type Sex = "M" | "F" | "U";
 
 export type SexFilter = "ALL" | "M" | "F";
 
@@ -19,7 +19,7 @@ export type Hole = {
   distance: number | null;
 };
 
-export type Distances = {
+type Distances = {
   total: number | null;
   front9: number | null;
   back9: number | null;
@@ -27,7 +27,7 @@ export type Distances = {
   complete18: boolean;
 };
 
-export type ScorecardMeta = {
+type ScorecardMeta = {
   teeColor: string | null;
   teeIndex?: number;
   teeOrder?: {
@@ -52,18 +52,18 @@ export type Tee = {
   distances: Distances;
 };
 
-export type ExtraLink = {
+type ExtraLink = {
   label: string;
   url: string;
 };
 
-export type CourseLinks = {
+type CourseLinks = {
   fpg: string | null;
   scorecards: string | null;
   extra?: ExtraLink[];   // links adicionais (ex: página USKIDS, resultados, etc.)
 };
 
-export type CourseMaster = {
+type CourseMaster = {
   courseId: string;
   name: string;
   country?: string;
@@ -94,7 +94,7 @@ export type Course = {
   master: CourseMaster;
 };
 
-export type MasterMeta = {
+type MasterMeta = {
   version: string;
   generatedAt: string;
   stats: {

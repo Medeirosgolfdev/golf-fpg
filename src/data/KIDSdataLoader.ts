@@ -63,7 +63,7 @@ export { normName };
 // Tipos públicos
 // ═════════════════════════════════════════════════════════════════════
 
-export interface AutoTournResult {
+interface AutoTournResult {
   p: number | "WD" | null;
   t: number | null;
   tp: number | null;
@@ -74,7 +74,7 @@ export interface AutoTournResult {
 
 /** Um snapshot de HCP exacto numa data específica, vindo de uma fonte concreta
  *  (tipicamente um torneio). Usado para construir sparklines + timeline. */
-export interface HcpPoint {
+interface HcpPoint {
   date: string;          // "YYYY-MM-DD"
   hcpExact: number;
   source: string;        // "fpg" | "ffg" | "fcg" | ...
@@ -131,7 +131,7 @@ export interface KidsFileMeta {
   group: string;
 }
 
-export interface FieldData {
+interface FieldData {
   tid: string;
   players: AutoRivalPlayer[];
 }

@@ -14,21 +14,21 @@ import { calcSD as _calcSD } from "./whsCalc";
 
 /* ── Core types ── */
 
-export interface HoleInfo {
+interface HoleInfo {
   h: number;
   par: number;
   si: number;
   m: number;
 }
 
-export interface CourseInfo {
+interface CourseInfo {
   par: number;
   cr: number;
   slope: number;
   holes: HoleInfo[];
 }
 
-export interface DrawEntry {
+interface DrawEntry {
   time: string;
   tee: number;
   teeColor: string;
@@ -41,7 +41,7 @@ export interface DrawEntry {
   sex: string;
 }
 
-export interface ResultEntry {
+interface ResultEntry {
   pos: number | null;
   name: string;
   fed: string | null;
@@ -52,7 +52,7 @@ export interface ResultEntry {
   status: string;
 }
 
-export interface PlayerHoles {
+interface PlayerHoles {
   fed: string | null;
   name: string;
   holes: (number | null)[];
@@ -61,7 +61,7 @@ export interface PlayerHoles {
 
 /* ── Category config ── */
 
-export interface TournCategory {
+interface TournCategory {
   key: string;           // "wagr", "sub14", "sub12"
   label: string;         // "WAGR", "Sub-14", "Sub-12"
   days: number;          // quantos dias joga esta categoria
@@ -71,7 +71,7 @@ export interface TournCategory {
 
 /* ── Tee ratings (por combinação tee+sex) ── */
 
-export interface TeeRating {
+interface TeeRating {
   cr: number;
   slope: number;
   par: number;
@@ -179,21 +179,6 @@ function buildCatDates(
 }
 
 /* ── Live result derivation ── */
-
-/**
- * Dados extraídos de um round do jogador para o torneio.
- * Produzido pelo loading loop no TorneioPage.
- */
-export interface LiveRound {
-  fed: string;
-  name: string;
-  club: string;
-  dateDD: string;        // "DD-MM-YYYY"
-  gross: number;
-  par: number;
-  holes: (number | null)[] | null;  // 18 holes, null se não disponível
-  scoreId: string;
-}
 
 /* ══════════════════════════════════════════
    Normalizer — old format → new format
@@ -430,25 +415,3 @@ export function playerCategory(
   return "wagr";
 }
 
-/* ── Accumulated results ── */
-
-export interface AccumulatedRow {
-  name: string;
-  fed: string | null;
-  club: string;
-  teeColor: string;
-  sex: string;
-  /** Per-day data: { d1: { gross, toPar, sd, pos }, d2: ... } */
-  days: Record<string, {
-    gross: number | null;
-    toPar: number | null;
-    sd: number | null;
-    pos: number | null;
-  }>;
-  totalGross: number;
-  totalToPar: number;
-  avgSD: number | null;
-  daysPlayed: number;
-  /** Overall position (computed after sorting) */
-  pos: number;
-}

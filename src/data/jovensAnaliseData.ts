@@ -23,7 +23,7 @@ import type { Tournament, Player } from "./fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { escalaoAtDate } from "../utils/format";
 
-export type ChampionshipType = "Nacional" | "Regional";
+type ChampionshipType = "Nacional" | "Regional";
 export type Sex = "M" | "F" | "?";
 
 /** Entrada de jogador (campeão ou sub-campeão) */
@@ -80,7 +80,7 @@ export type NationalityMap = Record<string, string>;
 
 /** Info detalhada por fed: country, dob, sex, name (ficheiro enriquecido com
  *  federados activos + inactivos para cobrir TODOS os jogadores em Jovens). */
-export interface PlayerInfo {
+interface PlayerInfo {
   country?: string;
   dob?: string;
   sex?: string;
@@ -90,7 +90,7 @@ export type PlayerInfoMap = Record<string, PlayerInfo>;
 
 /** Resultado individual num torneio (uma aparição). Usado para enriquecer
  *  PlayerStats com a posição/total para mostrar nos anos sem título. */
-export interface PlayerAppearance {
+interface PlayerAppearance {
   year: number;
   type: ChampionshipType;          // "Nacional" | "Regional"
   region: string;                  // "Nacional" | "Madeira" | ...

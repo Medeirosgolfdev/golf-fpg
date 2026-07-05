@@ -1,6 +1,6 @@
 /* Types partilhados entre NacionaisPage e sub-componentes */
 
-export interface InscricaoJogador {
+interface InscricaoJogador {
   fed: string | null; nome: string; clube: string;
   hcp: number | null; vac: number | null; dataInscricao: string | null;
 }
@@ -16,7 +16,7 @@ export interface TorneioData {
 
 export type BdPlayer = { name: string; escalao: string; sex: string; fed: string; clube: string; dob: string };
 
-export interface PlayerStats {
+interface PlayerStats {
   avgSD5: number | null; lastSD: number | null; currentHcp: number | null;
   hcpTrend: string | null; hcpDelta3m: number | null;
   roundsLast3m: number | null; formAlert: string | null;
@@ -24,7 +24,7 @@ export interface PlayerStats {
 
 export type StatsDb = Record<string, PlayerStats>;
 
-export interface AggStats {
+interface AggStats {
   nRounds: number; nRoundsWithCard: number;
   avgGross: number | null; bestGross: number | null; grossStdDev: number | null;
   avgSD: number | null; bestSD: number | null; last5AvgSD: number | null; sdStdDev: number | null;
@@ -37,13 +37,13 @@ export interface AggStats {
   };
 }
 
-export type PlayerLoad = {
+type PlayerLoad = {
   fed: string; nome: string; hcp: number | null; vac: number | null;
   status: "idle" | "loading" | "ok" | "nodata" | "error";
   agg: AggStats | null;
 };
 
-export interface ScoutingReport {
+interface ScoutingReport {
   nome: string; fed: string; hcp: number | null; vac: number | null;
   rank: number; fieldSize: number;
   formDelta: number | null;

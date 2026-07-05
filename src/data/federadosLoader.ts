@@ -54,7 +54,7 @@ export interface FederadosFile {
 }
 
 /* ── Tipo unificado para a JogadoresPage ────────────────────── */
-export type MergedSource = "both" | "players" | "feds";
+type MergedSource = "both" | "players" | "feds";
 
 export interface MergedPlayer extends Player {
   _source: MergedSource;
@@ -198,7 +198,7 @@ export function loadInativosStats(): Promise<InativosStats> {
 }
 
 /* ── Jovens inactivos (Sub-10 a Sub-21, ~3 MB) ──────────────── */
-export interface InativosJovensFile {
+interface InativosJovensFile {
   generated: string;
   source: string;
   total: number;

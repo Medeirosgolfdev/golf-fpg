@@ -14,6 +14,7 @@ import PasswordGate from "../../ui/PasswordGate";
 import FieldRivaisDashboard from "../kids/FieldRivaisDashboard";
 import { buildAutoRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import Kids2SubNav from "./Kids2SubNav";
+import { kidsUrl } from "../../ui/KidsLink";
 
 export default function NextTournaments() {
   const { unlocked, unlock } = usePasswordGate();
@@ -62,7 +63,7 @@ function NextTournamentsContent() {
             defaultT={21131}
             defaultEscalao="Boys 12"
             autoRivals={autoRivals}
-            onSelectPlayer={(name) => { navigate("/kids2#" + encodeURIComponent(name)); }}
+            onSelectPlayer={(name) => { navigate(kidsUrl({ name })); }}
           />
         )}
       </div>

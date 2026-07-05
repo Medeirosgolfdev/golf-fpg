@@ -106,7 +106,7 @@ export function buildHoleProfile(pd: PlayerPageData | null): HoleProfile {
 }
 
 // ── 2. Plano de jogo buraco-a-buraco ─────────────────────────────────────
-export type HoleTag = "attack" | "neutral" | "defend";
+type HoleTag = "attack" | "neutral" | "defend";
 export interface HolePlan {
   hole: number;
   par: number | null;
@@ -248,7 +248,7 @@ interface MHSlimLite {
 }
 interface FieldTorneioLite { t: number; name: string }
 
-export interface EditionScore {
+interface EditionScore {
   year: string; tcode: string; nRounds: number; parPerRound: number;
   winner: number; top10: number | null; median: number; field: number;
 }

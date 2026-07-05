@@ -22,7 +22,7 @@ export type CircuitSex = "M" | "F" | "Mixed";
 export type CircuitSectionKind = "results" | "inscritos" | "draw";
 
 /** Modo de agrupamento da sidebar. */
-export type CircuitGrouping = "year" | "series-year" | "source-year";
+type CircuitGrouping = "year" | "series-year" | "source-year";
 
 /** Toggles rápidos da toolbar (subconjunto activado por página via config). */
 export type CircuitToggle =

@@ -78,7 +78,7 @@ export function SortTh({ k, s, d, on, className, colSpan, style, children }: Sor
 
 /* ── Interface ──────────────────────────────────────────────────────────────*/
 
-export interface CSGroup {
+interface CSGroup {
   key: string;
   /** <th> completo do grupo na linha 1 (inclui colSpan, botão expand, etc.) */
   headerTh: React.ReactNode;

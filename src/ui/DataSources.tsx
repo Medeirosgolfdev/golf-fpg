@@ -14,7 +14,7 @@
  */
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
-export type DataSourceStatus = "loaded" | "loading" | "error";
+type DataSourceStatus = "loaded" | "loading" | "error";
 
 export interface DataSource {
   /** Caminho completo relativo (ex: "/data/pull-torneios001.json") */

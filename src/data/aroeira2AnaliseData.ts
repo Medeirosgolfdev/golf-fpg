@@ -61,7 +61,7 @@ export interface PlayerRoundOnCourse {
   si?: number[];
 }
 
-export interface CompareRow {
+interface CompareRow {
   fedCode: string | null;
   name: string;
   club: string;
@@ -80,7 +80,7 @@ export interface CompareRow {
   currentRounds: PlayerRoundOnCourse[];
 }
 
-export interface HoleHotSpot {
+interface HoleHotSpot {
   hole: number;            // 1..18
   par: number;
   /** Média do field (todos os jogadores Top21 + Sub12 com dados) */
@@ -330,7 +330,7 @@ export interface HoleDistribution {
   label: "birdie" | "par" | "bogey" | "danger";
 }
 
-export interface HoleStats {
+interface HoleStats {
   perHole: HoleDistribution[];
   /** Total de rondas usadas no cálculo (todas) */
   totalRounds: number;
@@ -989,7 +989,7 @@ export async function enrichSub12WithEstreantes(
 
 /* ──────── DIAL POR BURACO — best/worst + distribuição ──────── */
 
-export interface ScoreDist {
+interface ScoreDist {
   birdiePlus: number;
   par: number;
   bogey: number;

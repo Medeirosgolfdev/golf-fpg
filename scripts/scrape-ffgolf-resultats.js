@@ -557,17 +557,36 @@ if (require.main === module) (async () => {
   const ligue = getArg("ligue", "01");
   const annee = getArg("year", "2026");
   const trnArg = getArg("trn", null);
+  const partKeyArg = getArg("partkey", null);   // opcional: vem no URL, evita a listagem
+  const forceLive = args.includes("--live");     // força o gémeo live-recording (scores ao vivo do dia em curso)
 
   try {
     const ctx = await bootstrap();
 
     if (trnArg) {
-      // Para 1 torneio precisamos do partKey — temos de listar primeiro
-      console.log(`\n🏌️  Trn único: ${trnArg} (precisamos da listagem para obter partKey)`);
-      const tournaments = await listCompetitions(ctx, { typeCompetition, ligue, annee });
-      const t = tournaments.find((x) => x.trnId === trnArg);
-      if (!t) throw new Error(`trnId ${trnArg} não encontrado na listagem (type=${typeCompetition}, ligue=${ligue}, annee=${annee})`);
-      const details = await getTournamentDetails(ctx, { trnId: t.trnId, partKey: t.partKey, typeCompetition, ligue });
+      // partKey: do URL (--partkey) ou obtido pela listagem
+      let t;
+      if (partKeyArg) {
+        t = { trnId: trnArg, partKey: partKeyArg, name: `trn ${trnArg}` };
+        console.log(`\n🏌️  Trn único: ${trnArg} (partKey do URL)`);
+      } else {
+        console.log(`\n🏌️  Trn único: ${trnArg} (precisamos da listagem para obter partKey)`);
+        const tournaments = await listCompetitions(ctx, { typeCompetition, ligue, annee });
+        t = tournaments.find((x) => x.trnId === trnArg);
+        if (!t) throw new Error(`trnId ${trnArg} não encontrado na listagem (type=${typeCompetition}, ligue=${ligue}, annee=${annee})`);
+      }
+      let details;
+      if (forceLive) {
+        // Fetch directo ao live-recording (contém TODAS as séries + scores ao vivo da volta em curso)
+        console.log(`   📡 live-recording forçado (--live)`);
+        const live = await httpRequest("GET", `https://pages.ffgolf.org/live-recording/${t.partKey}/${t.trnId}`, { cookie: jarToHeader(ctx.jar) });
+        if (live.status !== 200) throw new Error(`live-recording HTTP ${live.status}`);
+        ctx.jar = buildCookieJar(ctx.jar, live.setCookies);
+        details = parseDetailsHtml(live.body, t.trnId);
+        details.isLive = true;
+      } else {
+        details = await getTournamentDetails(ctx, { trnId: t.trnId, partKey: t.partKey, typeCompetition, ligue });
+      }
       const outPath = path.join(OUT_DIR, `${typeCompetition}-${ligue}-${trnArg}.json`);
       fs.writeFileSync(outPath, JSON.stringify(enrichWithLinks({ ...t, details, typeCompetition, ligue }), null, 2), "utf-8");
       console.log(`   💾 ${outPath}`);

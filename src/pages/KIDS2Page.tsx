@@ -8,8 +8,9 @@
  */
 
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useJuniorsCanonical, normName } from "./kids2/data";
+import type { CanonicalData } from "./kids2/data";
 import Sidebar from "./kids2/Sidebar";
 import PlayerProfile from "./kids2/PlayerProfile";
 import Kids2SubNav from "./kids2/Kids2SubNav";
@@ -44,6 +45,25 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "avtrophy", label: "BEL U14" },
 ];
 
+/**
+ * Resolve qualquer chave (id canónico, memberId USKids, fed FPG ou nome) para o
+ * juniorId canónico. Ordem: id directo → memberId → fed → normName+aliases.
+ * É o "back-end" único das ligações /kids2 — o kidsUrl() constrói o link, isto
+ * desfá-lo. Devolve null se não houver ficha correspondente.
+ */
+function resolveToId(data: CanonicalData, raw: string): string | null {
+  const key = (raw || "").trim();
+  if (!key) return null;
+  if (data.juniorById.has(key)) return key;
+  const byMember = data.juniorByUskidsMember.get(key);
+  if (byMember) return byMember.id;
+  const byFed = data.juniorByFpgFed.get(key);
+  if (byFed) return byFed.id;
+  const byName = data.juniorByNormName.get(normName(key));
+  if (byName && byName.length > 0) return byName[0].id;
+  return null;
+}
+
 export default function KIDS2Page() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
@@ -75,29 +95,29 @@ function KIDS2PageContent() {
     setOnlyWins(false);
   };
 
-  // Resolver retro-compat: /kids2#memberId ou /kids2#NomeJogador → /kids2/:juniorId
-  // (5 linkers do site continuam a passar hashes; após resolver, navegamos para a URL canónica)
+  const location = useLocation();
+
+  // Resolver único e robusto de qualquer forma de apontar para uma ficha kids2:
+  //   - hash /kids2#{memberId|fed|nome}   (linkers do site — via kidsUrl())
+  //   - path /kids2/{id canónico}          (forma preferida)
+  //   - path /kids2/{memberId|fed|nome}    (stale/alias ou link directo por chave forte)
+  // O HASH TEM PRECEDÊNCIA: garante que uma navegação same-tab de uma ficha para
+  // outra (#hash) troca mesmo quando params.juniorId antigo continua no path.
+  // Sem isto (o bug antigo era `if (params.juniorId) return`), o hash era ignorado.
   useEffect(() => {
     if (status.kind !== "ready") return;
-    if (params.juniorId) return; // já temos juniorId na URL — nada a fazer
-    if (typeof window === "undefined") return;
-    const raw = window.location.hash.replace(/^#/, "");
-    if (!raw) return;
-    let resolved: string | null = null;
-    // 1) Tentar como USKids memberId (uma string numérica de 5-7 dígitos)
-    const decoded = decodeURIComponent(raw);
-    const byMember = status.data.juniorByUskidsMember.get(decoded);
-    if (byMember) resolved = byMember.id;
-    // 2) Tentar como normName (decoded vs raw)
-    if (!resolved) {
-      const candidates = status.data.juniorByNormName.get(normName(decoded));
-      if (candidates && candidates.length > 0) resolved = candidates[0].id;
+    const data = status.data;
+    const raw = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
+    if (raw) {
+      const rid = resolveToId(data, decodeURIComponent(raw)) ?? resolveToId(data, raw);
+      if (rid) { navigate(`/kids2/${rid}`, { replace: true }); return; }
     }
-    if (resolved) {
-      // Limpa hash e navega para URL canónica
-      navigate(`/kids2/${resolved}`, { replace: true });
+    // Sem hash: validar/reparar o path param (id stale, ou chave forte crua).
+    if (params.juniorId && !data.juniorById.has(params.juniorId)) {
+      const rid = resolveToId(data, params.juniorId);
+      if (rid && rid !== params.juniorId) navigate(`/kids2/${rid}`, { replace: true });
     }
-  }, [status, params.juniorId, navigate]);
+  }, [status, params.juniorId, navigate, location.hash, location.key]);
 
   if (status.kind === "loading") return <LoadingState />;
   if (status.kind === "error") return <EmptyState size="md" message={`Falhou carregar canónicos: ${status.error}`} />;

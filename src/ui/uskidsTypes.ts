@@ -19,25 +19,25 @@ export {
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
 // ─────────────────────────────────────────────
-export interface Jogador {
+interface Jogador {
   nome: string;
   pais: string;
   cidade: string;
   firstSeen?: string;
 }
 
-export interface PaisContagem {
+interface PaisContagem {
   pais: string;
   n: number;
 }
 
-export interface Desinscrito {
+interface Desinscrito {
   nome: string;
   removedAt: string;      // ISO — data em que foi detetado como desinscrito
   pais?: string | null;
 }
 
-export interface Escalao {
+interface Escalao {
   age_group: number;
   nome: string;
   genero: string | null;
@@ -75,7 +75,7 @@ export interface FieldData {
   torneios: Torneio[];
 }
 
-export interface GGEntry {
+interface GGEntry {
   pos: number | null;
   name: string;
   fed: string | null;
@@ -180,13 +180,13 @@ export interface TeeInfo {
 // Gerado por scripts/fetch-uskids-draws.js
 // Foco no Manuel + escalões adjacentes (±1 idade).
 // ─────────────────────────────────────────────
-export interface UskidsDrawJogador {
+interface UskidsDrawJogador {
   nome: string;
   pais: string;
   cidade: string;
 }
 
-export interface UskidsDrawGrupo {
+interface UskidsDrawGrupo {
   group_number: number;
   tee_time: string;
   start_hole: number;
@@ -199,7 +199,7 @@ export interface UskidsDrawRonda {
   grupos: UskidsDrawGrupo[];
 }
 
-export interface UskidsDrawEscalao {
+interface UskidsDrawEscalao {
   age_group: number;
   nome: string;
   flight_id: number;
@@ -208,7 +208,7 @@ export interface UskidsDrawEscalao {
   rondas: UskidsDrawRonda[];
 }
 
-export interface UskidsDrawTorneio {
+interface UskidsDrawTorneio {
   t: number;
   name: string;
   date_inicio: string | null;

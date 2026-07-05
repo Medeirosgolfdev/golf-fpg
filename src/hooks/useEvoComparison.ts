@@ -14,7 +14,7 @@ import { useMemo } from "react";
 
 /* ── Types ── */
 
-export interface EvoPlayer {
+interface EvoPlayer {
   name: string;
   /** Valor comparável (total bruto ou toPar — quem chama decide) */
   value: number | null;
