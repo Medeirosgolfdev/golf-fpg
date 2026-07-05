@@ -173,12 +173,24 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
     2103: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260] },
     2102: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260] },
   },
-  // ── Venice Open 2025 – Golf Della Montecchia ─────────
+  // ── Venice Open 2025 – Golf Della Montecchia (Boys/Girls 9-12) + Frassanelle (13-18) ─
+  // CR/Slope OFICIAIS do PDF USKids "COURSE RATING & SLOPE" (venice_open_2025_
+  // course_rating_slope.pdf). 9H (Boys 8/7&U, Girls 9/8&U) sem SSS → SD "—".
   19418: {
-    2105: { campo: "Golf Della Montecchia", tee: "White+Red", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [401,145,300,310,280,330,128,290,390, 305,150,410,280,283,310,310,145,410] },
-    2104: { campo: "Golf Della Montecchia", tee: "White+Red", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,145,262,266,280,289,128,290,350, 255,122,330,230,265,284,290,115,325] },
-    2103: { campo: "Golf Della Montecchia", tee: "Red+Green", par: [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4], metros: [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,103,244,340,250] },
-    2102: { campo: "Golf Della Montecchia", tee: "Green+White", par: [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5], metros: [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290] },
+    // Frassanelle Golf — escalões 13-18 (par/metros vêm dos results)
+    2114: { campo: "Frassanelle Golf", tee: "Boys 13",     par: [], metros: [], cr: 70.7, slope: 129 },
+    2115: { campo: "Frassanelle Golf", tee: "Boys 14",     par: [], metros: [], cr: 70.7, slope: 129 },
+    2111: { campo: "Frassanelle Golf", tee: "Boys 15-18",  par: [], metros: [], cr: 70.7, slope: 129 },
+    2121: { campo: "Frassanelle Golf", tee: "Girls 13-14", par: [], metros: [], cr: 71.7, slope: 126 },
+    2112: { campo: "Frassanelle Golf", tee: "Girls 15-18", par: [], metros: [], cr: 71.7, slope: 126 },
+    // Golf Della Montecchia — escalões 9-12
+    2105: { campo: "Golf Della Montecchia", tee: "White+Red", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [401,145,300,310,280,330,128,290,390, 305,150,410,280,283,310,310,145,410], cr: 67.6, slope: 118 },
+    2104: { campo: "Golf Della Montecchia", tee: "White+Red", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,145,262,266,280,289,128,290,350, 255,122,330,230,265,284,290,115,325], cr: 64.8, slope: 111 },
+    2103: { campo: "Golf Della Montecchia", tee: "Red+Green", par: [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4], metros: [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,103,244,340,250], cr: 63.3, slope: 106 },
+    2102: { campo: "Golf Della Montecchia", tee: "Green+White", par: [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5], metros: [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290], cr: 60.5, slope: 100 },
+    2120: { campo: "Golf Della Montecchia", tee: "Girls 12", par: [], metros: [], cr: 68.0, slope: 111 },
+    2119: { campo: "Golf Della Montecchia", tee: "Girls 11", par: [], metros: [], cr: 68.0, slope: 112 },
+    2118: { campo: "Golf Della Montecchia", tee: "Girls 10", par: [], metros: [], cr: 64.5, slope: 104 },
   },
   // ── El Prat (9H) ─────────────────────────────────────
   15573: {
