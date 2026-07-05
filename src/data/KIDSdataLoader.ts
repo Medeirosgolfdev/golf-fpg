@@ -131,11 +131,6 @@ export interface KidsFileMeta {
   group: string;
 }
 
-interface FieldData {
-  tid: string;
-  players: AutoRivalPlayer[];
-}
-
 // ═════════════════════════════════════════════════════════════════════
 // Maps globais — populados pelo loader, consumidos por dobInference,
 // USKIDSPage, etc.

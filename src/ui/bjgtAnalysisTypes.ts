@@ -33,21 +33,5 @@ export interface TournDef {
   holes?: number;
 }
 
-/** Shape of a single hole sample for distance-band analysis */
-interface HoleSample {
-  ds: number;
-  par: number;
-  meters: number | null;
-  gross: number;
-}
-
-/** Shape of a distance band definition */
-interface BandDef {
-  par: number;
-  minM: number;
-  maxM: number;
-  label: string;
-}
-
 /** Round average entry */
 export type RoundAvg = { m: number; s: number } | null;
