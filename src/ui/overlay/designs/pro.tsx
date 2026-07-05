@@ -3,8 +3,7 @@
  * V45 PGA Broadcast, V46 College Poster, V47 PGA Tour U,
  * V29 Tour Classic, V38 PGA Americas, V30 Korn Ferry.
  */
-import React from "react";
-import { II, OS, LO, BN, SG, TS, TS_SCORE, hiChStr } from "../shared";
+import { II, OS, LO, BN, SG, TS, hiChStr } from "../shared";
 import { SC, SCL, SCO, SCA, TpBadge, StatsRow } from "../badges";
 import type { P } from "../types";
 
@@ -16,7 +15,7 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
   return (
     <div style={{ display:"inline-block" }}>
       {/* Bloco azul: só envolve buracos + score */}
-      <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"6px 10px", borderRadius:6 }}>
+      <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"6px 10px", borderRadius:6 }}>
         {v.holeScores && (
           <div style={{ display:"flex", alignItems:"center" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
@@ -116,7 +115,7 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
   /* Score fontSize compacto: 18H 80px (~altura 2 filas circles 28+28+gap) vs 9H 56px */
   const scoreFs = is18 ? 80 : 56;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"6px 8px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"6px 8px" }}>
       {v.player&&d.player && (
         <div style={{ fontFamily:LO, fontSize:20, fontWeight:700, fontStyle:"italic", marginBottom:2, letterSpacing:.3 }}>
           {d.player}
@@ -220,7 +219,7 @@ export function V45({ d, v, s, bg, tc="white", tc3 }: P) {
       </div>
       {/* Bloco azul só com os buracos */}
       {v.holeScores && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: bg, padding: "6px 8px", borderRadius: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: bg ?? undefined, padding: "6px 8px", borderRadius: 8 }}>
           {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
             <div key={off}>
               <div style={{ display: "flex", gap: 2 }}>
@@ -247,7 +246,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
   const scoreFs = is18 ? 100 : 78;
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "6px 10px" }}>
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, padding: "6px 10px" }}>
       {v.holeScores && (
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -314,7 +313,7 @@ export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
   const accentBar = "#3b1f7e";
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "4px 6px" }}>
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, padding: "4px 6px" }}>
       {/* Nome — HUGE (last name dominante) */}
       {v.player && d.player && (() => {
         const parts = d.player.split(" ");

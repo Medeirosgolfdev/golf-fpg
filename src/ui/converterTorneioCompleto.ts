@@ -192,6 +192,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       roundsMap: Map<number, RondaJogador[]>;
       parPorRonda: Map<number, number[]>;
     }>();
+    const campoTally: Map<string, number> = new Map();
 
     for (const flight of (raw.flights ?? [])) {
       const fn   = flight.flight_name;
@@ -231,28 +232,66 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
             const par = frPars[rd.flight_round];
             if (par?.length) esc.parPorRonda.set(rn, par);
           }
+          if (rd.course_name) campoTally.set(rd.course_name, (campoTally.get(rd.course_name) ?? 0) + 1);
           if (!esc.roundsMap.has(rn)) esc.roundsMap.set(rn, []);
+          const strokes: number[] = rd.strokes ?? [];
+          const score   = rd.num_strokes ?? strokes.filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0);
+          const buracos = rd.num_holes   ?? strokes.filter((s: number) => s > 0).length;
+          const parArr  = esc.parPorRonda.get(rn);
+          const total_par = parArr && parArr.length === buracos ? parArr.reduce((a, b) => a + b, 0) : null;
           esc.roundsMap.get(rn)!.push({
             nome, pais, cidade, tee,
             pontos:     0,
-            score:      rd.num_strokes ?? (rd.strokes ?? []).filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0),
-            buracos:    rd.num_holes   ?? (rd.strokes ?? []).filter((s: number) => s > 0).length,
+            score,
+            to_par:     total_par != null ? score - total_par : null,
+            buracos,
             start_time: rd.start_time  ?? '',
             grupo:      rd.group_number ?? 0,
-            strokes:    rd.strokes ?? [],
+            strokes,
           });
         }
       }
     }
+
+    // Campo do torneio: curso mais comum entre as rondas (fallback: courses[] do meta).
+    let campo: string | null = null;
+    if (campoTally.size > 0) {
+      campo = [...campoTally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    } else {
+      const firstCourse = Object.values(meta.courses ?? {})[0] as any;
+      campo = firstCourse?.name ?? tourn.course ?? null;
+    }
+
+    const escaloes: EscalaoResult[] = [];
+    for (const esc of escalaoMap.values()) {
+      const rondas: RondaResult[] = [];
+      for (const [rn, leaderboard] of esc.roundsMap) {
+        const par = esc.parPorRonda.get(rn) ?? [];
+        rondas.push({
+          ronda: rn,
+          par,
+          si: [],
+          buracos: esc.holes,
+          total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
+          leaderboard,
+        });
+      }
+      rondas.sort((a, b) => a.ronda - b.ronda);
+      escaloes.push({
+        age_group: esc.age_group, nome: esc.nome,
+        holes: esc.holes, is_manuel: false, rondas,
+      });
+    }
+
+    return {
+      t:            Number(raw.t),
+      name:         tourn.name,
+      date_inicio:  raw.start_date ?? tourn.start_date ?? '',
+      date_fim:     raw.end_date,
+      campo,
+      rondas_total: raw.rounds ?? 1,
+      escaloes,
+      ultima_atualizacao: '',
+    };
   }
-  // converter Maps em objects para output JSON-friendly
-  return Array.from(escaloesMap.values()).map((esc: any) => ({
-    nome: esc.nome,
-    flightId: esc.flightId,
-    rondas: Array.from(esc.roundsMap.entries() as IterableIterator<[number, any[]]>).map(([rn, jogadores]: [number, any[]]) => ({
-      numero: rn,
-      par: esc.parPorRonda.get(rn) ?? [],
-      jogadores,
-    })),
-  }));
 }

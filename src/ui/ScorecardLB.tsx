@@ -11,8 +11,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter } from "../data/fpgTypes";
 import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
-import { scClass } from "../utils/scoreDisplay";
-import { fmtToPar, fmtHcp, abreviarNome, ageAtDate } from "../utils/format";
+import { fmtHcp, ageAtDate } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -20,7 +19,6 @@ import { EscPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
-import PlayerLink from "./PlayerLink";
 import {
   isManuel,
   fmtTP,
@@ -33,19 +31,18 @@ import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 
-/** Score máximo por buraco (regra do torneio) */
-const MAX_HOLE_SCORE = 10;
-
 /* PName — alias local */
 const PName = ({
   name,
   fedCode,
   playersDB,
+  highlight,
 }: {
   name: string;
   fedCode?: string;
   playersDB: PlayersDB;
-}) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} />;
+  highlight?: boolean;
+}) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} highlight={highlight} />;
 
 /* SortKey — usado pelo ScorecardLB */
 type SortKey =

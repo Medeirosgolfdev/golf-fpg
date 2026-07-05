@@ -122,7 +122,6 @@ function tournTcode(tid: string): number | null {
   return null;
 }
 
-const ICON_SCOPE = "\u{1F52D}";
 const ICON_DOT = "·";
 const ICON_SWORDS = "⚔️";
 const ICON_TROPHY = "\u{1F3C6}";
@@ -577,9 +576,9 @@ function PreviousEditionPanel({ prevTcode, resultsData }: {
   // Filtrar escalões Boys 9-13 (relevantes para a análise)
   const boysRe = /boys?\s*(9|10|11|12|13)/i;
   const escaloes = prevEntry.escaloes
-    .filter(e => boysRe.test(e.nome || e.age_group || ""))
+    .filter(e => boysRe.test(String(e.nome || e.age_group || "")))
     .sort((a, b) => {
-      const numOf = (e: typeof a) => parseInt((e.nome || e.age_group || "").match(/\d+/)?.[0] ?? "99", 10);
+      const numOf = (e: typeof a) => parseInt(String(e.nome || e.age_group || "").match(/\d+/)?.[0] ?? "99", 10);
       return numOf(a) - numOf(b);
     });
   const toShow = escaloes.length > 0 ? escaloes : prevEntry.escaloes.slice(0, 4);

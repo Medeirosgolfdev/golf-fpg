@@ -192,8 +192,8 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
     earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
     earliest.setDate(earliest.getDate() + 1);
 
-    const newMin = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
-    const newMax = (!rangeMax || latest < rangeMax) ? latest : rangeMax;
+    const newMin: Date = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
+    const newMax: Date = (!rangeMax || latest < rangeMax) ? latest : rangeMax;
     if (newMin <= newMax) {
       rangeMin = newMin;
       rangeMax = newMax;
@@ -222,24 +222,24 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
       transEarly.setFullYear(transEarly.getFullYear() - transA);
       transEarly.setDate(transEarly.getDate() + 1);
 
-      const tMin = transEarly > rangeMin ? transEarly : rangeMin;
-      const tMax = transLate < rangeMax ? transLate : rangeMax;
+      const tMin: Date = transEarly > rangeMin! ? transEarly : rangeMin!;
+      const tMax: Date = transLate < rangeMax! ? transLate : rangeMax!;
       if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
     }
   }
 
-  const midMs = (rangeMin.getTime() + rangeMax.getTime()) / 2;
+  const midMs = (rangeMin!.getTime() + rangeMax!.getTime()) / 2;
   const mid = new Date(midMs);
   const today = new Date();
   const age = ageAt(mid, today);
   return {
     state: "inferred",
     dobIso: toIso(mid),
-    rangeMin: toIso(rangeMin),
-    rangeMax: toIso(rangeMax),
+    rangeMin: toIso(rangeMin!),
+    rangeMax: toIso(rangeMax!),
     age,
     ageLabel: `~${age} anos`,
-    dobLabel: fmtRange(rangeMin, rangeMax),
+    dobLabel: fmtRange(rangeMin!, rangeMax!),
     nextBdayDays: null, nextAge: null,
   };
 }

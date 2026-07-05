@@ -1,7 +1,7 @@
 /**
  * ContestLeaderboard — Contest results table with round-by-round scorecards
  */
-import React, { useState } from "react";
+import { useState } from "react";
 import { fmtToPar } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import { flag } from "../utils/flagUtils";
@@ -110,7 +110,7 @@ export default function ContestLeaderboard({
   })();
 
   const hasScores = (ri: number) =>
-    players.some(p => p.rd[ri]?.s?.length > 0);
+    players.some(p => (p.rd[ri]?.s?.length ?? 0) > 0);
 
   return (
     <>
@@ -282,10 +282,10 @@ export default function ContestLeaderboard({
                 </thead>
                 <tbody>
                   {sortedForRound
-                    .filter(p => p.rd[roundTab - 1]?.s?.length > 0)
+                    .filter(p => (p.rd[roundTab - 1]?.s?.length ?? 0) > 0)
                     .map((p, idx) => {
                       const rd = p.rd[roundTab - 1];
-                      const s = rd.s;
+                      const s = rd.s ?? [];
                       const f9 = s
                         .slice(0, 9)
                         .reduce((a: number, b: number) => a + b, 0);
@@ -479,7 +479,7 @@ export default function ContestLeaderboard({
                       </td>
                       <td>
                         <EvoBadge
-                          pill={e.pill}
+                          pill={e.pill as "UP" | "EQ" | "NEW"}
                           from={e.from}
                           to={e.to}
                         />

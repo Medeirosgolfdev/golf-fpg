@@ -210,11 +210,6 @@ function resolveCompanion(c: Companion, lk: Lookups): { fed: string | null; nome
   return { fed: null, nome, dob: null };
 }
 
-function companionKey(c: Companion): string {
-  if (c.fed) return `fed:${c.fed}`;
-  return `name:${norm(c.nome)}|${c.pais || ""}`;
-}
-
 // Escalão manual para jogadores sem licença/dob para resolver automaticamente
 // (ex: emigrantes que jogam no verão). Chave = nome normalizado.
 const MANUAL_ESCALAO: Record<string, string> = {

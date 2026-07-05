@@ -4,7 +4,7 @@
  * Usa as classes CSS padrão do projecto (.sc-lb, .lb-*) para consistência
  * visual com o resto da app.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Tournament } from "../data/fpgTypes";
 import {
   loadRichAroeiraIIAnalise,

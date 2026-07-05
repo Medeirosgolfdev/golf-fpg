@@ -5,7 +5,7 @@
  * Drive-specific: SD via calcAGS, SDPill, isDNS filter, per-round CR/slope.
  * Renders via ScorecardLeaderboard (composition pattern).
  */
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtHcp, medal } from "../utils/format";
 import PlayerLink from "./PlayerLink";
@@ -26,8 +26,6 @@ const RD_LABELS = ["R1", "R2", "R3", "R4"];
 
 function DriveAllRoundsScorecardLB({
   totalTournament,
-  playersDB,
-  sdLookup,
 }: {
   totalTournament: Tournament;
   playersDB: PlayersDB;

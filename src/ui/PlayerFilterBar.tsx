@@ -3,7 +3,7 @@
  *
  * Extracted from LeaderboardComponents.tsx
  */
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, PlayerFilter } from "../data/fpgTypes";
 import { resolveEsc, filterPlayers } from "../data/fpgUtils";

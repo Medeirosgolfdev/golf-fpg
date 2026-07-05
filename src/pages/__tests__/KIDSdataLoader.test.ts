@@ -28,8 +28,6 @@ import {
   processUskidsCompleto,
   processMemberHistory,
   processWjgc,
-  processDoral,
-  processPullTorneios,
   processFpgJuniorTourns,
   processManuelOverrides,
   uskTournNames,

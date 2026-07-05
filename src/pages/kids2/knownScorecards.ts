@@ -25,7 +25,7 @@ import {
   VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M,
   LT_FORET_PAR, LT_FORET_SI, LT_FORET_M,
 } from "../../data/rivalData";
-import type { Junior, Tournament, Flight, Result } from "./data";
+import type { Flight, Result } from "./data";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Tipos
@@ -278,27 +278,6 @@ export function getKnownScorecard(
   };
 }
 
-/** Variante simples para chamadas que só têm uma string (ex: ainda sem Junior). */
-export function getKnownScorecardByName(
-  playerName: string,
-  tournamentMatchKey: string,
-): KnownScorecard | null {
-  for (const entry of KNOWN_TOURNAMENTS) {
-    if (!tournamentMatches(tournamentMatchKey, entry)) continue;
-    const rds = entry.cards.get(normName(playerName));
-    if (rds) {
-      return { par: entry.par, si: entry.si, meters: entry.meters, rounds: rds, source: entry.source };
-    }
-  }
-  return null;
-}
-
-/** Verifica se há scorecard hardcoded para o torneio (sem precisar de junior).
- *  Útil para mostrar badge "scorecards públicos disponíveis" nas listas. */
-export function tournamentHasKnownScorecards(tournament: { id?: string; name?: string; shortName?: string; seriesId?: string }): boolean {
-  return findEntryForTournament(tournament) !== null;
-}
-
 // ═══════════════════════════════════════════════════════════════════════
 // Helper de merge — para componentes de scorecard
 // ═══════════════════════════════════════════════════════════════════════
@@ -381,16 +360,4 @@ export function mergeFlightWithKnown(
   }
 
   return { par, yards, si, rounds, fallbackSource };
-}
-
-/** Atalho: dada a tripla canónica + junior, devolve directamente o merged
- *  scorecard. Ideal para chamar nos componentes de display. */
-export function getMergedScorecard(
-  tournament: Tournament,
-  flight: Flight,
-  result: Result,
-  junior: Junior,
-): MergedScorecard {
-  const known = getKnownScorecard(junior, tournament);
-  return mergeFlightWithKnown(flight, result, known);
 }

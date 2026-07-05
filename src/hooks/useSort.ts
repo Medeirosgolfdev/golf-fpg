@@ -18,7 +18,7 @@
  */
 import { useState, useCallback, useRef } from "react";
 
-export function useSort<K extends string>(
+export function useSort<K extends string | number>(
   defaultKey: K,
   defaultDir: "asc" | "desc" = "asc",
   defaultDirMap?: Partial<Record<K, "asc" | "desc">>
@@ -39,5 +39,12 @@ export function useSort<K extends string>(
     }
   }, [defaultDir, defaultDirMap]);
 
-  return { sortKey, sortDir, toggleSort } as const;
+  /** Repõe a ordenação nos valores default (key + direcção iniciais). */
+  const resetSort = useCallback(() => {
+    keyRef.current = defaultKey;
+    setSortKey(defaultKey);
+    setSortDir(defaultDir);
+  }, [defaultKey, defaultDir]);
+
+  return { sortKey, sortDir, toggleSort, resetSort } as const;
 }

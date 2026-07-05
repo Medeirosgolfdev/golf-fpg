@@ -30,7 +30,6 @@ import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderbo
 import { isManuelByName as isM } from "../constants/manuel";
 import { displayName, fmtToPar, norm } from "../utils/format";
 import { tpColor } from "../ui/tournamentPrimitives";
-import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
 import DrawTab from "../ui/DrawTab";
@@ -320,7 +319,7 @@ function lgsToFPGTournament(
         agg[key].rounds.push({
           round: r.round, gross: p.total,
           scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
-          si: sliceH(lgs.course?.si), meters: sliceH(lgs.course?.meters), teeName: lgsTeeLabel,
+          si: sliceH(lgs.course?.si) as number[], meters: sliceH(lgs.course?.meters) as number[], teeName: lgsTeeLabel,
           courseRating: lgs.course?.courseRating ?? undefined,
           slope: lgs.course?.slope ?? undefined,
         });

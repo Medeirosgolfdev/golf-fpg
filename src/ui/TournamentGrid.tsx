@@ -11,7 +11,6 @@ import { useSort } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
-import PlayerLink from "./PlayerLink";
 import EmptyState from "./EmptyState";
 import { escPillCls } from "../utils/playerUtils";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
@@ -62,7 +61,7 @@ function TournamentGrid({
     if (dob && p.results.length > 0) {
       // Ano mais recente dos resultados do jogador
       const mostRecentYear = p.results.reduce((max, r) => {
-        const y = parseInt(String(r.date).slice(0, 4));
+        const y = parseInt(String((r as any).date).slice(0, 4));
         return !isNaN(y) && y > max ? y : max;
       }, 0);
       if (mostRecentYear > 0) {

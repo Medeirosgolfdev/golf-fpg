@@ -161,53 +161,6 @@ export function escKey(esc: string | null | undefined): string {
     .replace(/[\s-]/g, "");
 }
 
-/** Style inline para tabs/botões de escalão.
- *  Regras:
- *   - Default (muted): outline-only — sem preenchimento, border 1.5px da cor do escalão
- *     (ou da cor do sexo quando há distinção M/F no grupo), texto da cor do escalão.
- *   - Activo: fundo preenchido com a cor do escalão, texto da cor --esc-subN-fg.
- *   - Distinção de sexo (apenas quando o grupo tem M e F): border com as cores sóbrias
- *     --badge-male (#6A93A8) / --badge-female (#B87D8B), em vez da cor do escalão.
- */
-export function escTabStyle(
-  esc: string | null | undefined,
-  active: boolean,
-  sex?: "M" | "F" | null
-): CSSProperties {
-  const key = escKey(esc);
-  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(key);
-  const sexBorder = sex === "M" ? "var(--badge-male)" : sex === "F" ? "var(--badge-female)" : null;
-  if (!hasCssClass) {
-    // Escalões não mapeados (Absoluto, etc.) — neutro
-    return active
-      ? { background: "var(--accent)", color: "#fff",
-          border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid var(--accent)",
-          fontWeight: 800 }
-      : { background: "transparent", color: "var(--text-2)",
-          border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid var(--border)",
-          fontWeight: 600 };
-  }
-  const escBg = `var(--esc-${key}-bg)`;
-  const escFg = `var(--esc-${key}-fg)`;
-  if (active) {
-    // Preenchido com a cor do escalão (fg/bg dos tokens); se há distinção de sexo,
-    // o border herda a cor do sexo (mais grosso para se destacar sobre o preenchimento).
-    return {
-      background: escBg,
-      color: escFg,
-      border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid transparent",
-      fontWeight: 800,
-    };
-  }
-  // Muted / outline-only: sem preenchimento, border da cor do escalão (ou do sexo).
-  return {
-    background: "transparent",
-    color: escBg,                    // usa a cor do escalão como cor do texto
-    border: `1.5px solid ${sexBorder ?? escBg}`,
-    fontWeight: 600,
-  };
-}
-
 /** Mapeamento dos termos da federação espanhola (RFEG) → Sub-N CSS class.
  *  Permite que `<EscPill esc="Alevín" />` use a mesma cor que `<EscPill esc="Sub-12" />`. */
 const ES_TERM_TO_SUB: Record<string, string> = {

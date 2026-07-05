@@ -12,7 +12,7 @@
  */
 
 import { useMemo } from "react";
-import type { CSSProperties } from "react";
+import type {} from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";

@@ -87,6 +87,9 @@ export interface AutoRivalPlayer {
   n: string;
   co: string;
   r: Record<string, AutoTournResult>;
+  /** Tids de torneios futuros em que o jogador está inscrito (pode não vir da
+   *  fonte actual — quando ausente, a UI trata como sem inscrições futuras). */
+  up?: string[];
   fpgClub?: string;
   /** HCP exacto FPG do jogador (quando aplicável — só PT players federados). Usado
    *  para cálculo preciso de SD (AGS) em tabelas USKids/internacionais. */
@@ -148,10 +151,14 @@ export const extraTidMeta: Map<string, { name: string; short: string; dateISO: s
 export const fpgTournNames: Map<string, {
   name: string; short: string; date: string; dateExact: string;
   ageMin?: number; ageMax?: number; sex?: "M" | "F"; escalao?: string;
+  ccode?: string;
 }> = new Map();
 export const ffgolfTournNames: Map<string, {
   name: string; short: string; date: string; dateExact: string;
   ageMin?: number; ageMax?: number; sex?: "M" | "F"; ageGroup?: string;
+  // Identificadores directos do portal FFGolf (podem não vir no modelo canónico —
+  // quando ausentes, getFfgolfUrl cai no fallback de pesquisa).
+  trnId?: string; partKey?: string; typeCompetition?: string; ligue?: string;
 }> = new Map();
 
 const _scorecards: Map<string, AutoScorecard[]> = new Map();
@@ -426,6 +433,8 @@ async function _buildAutoRivalsInternal(
           ageMax: f.ageMax ?? undefined,
           sex: (f.sex === "M" || f.sex === "F") ? f.sex : undefined,
           escalao: f.label,
+          // sourceKey fpg = "ccode-tcode-date-escSlug" → ccode é o 1º segmento
+          ccode: t.sourceKey ? t.sourceKey.split("-")[0] : undefined,
         });
       }
       if ((t.sourceId === "wjgc" || t.sourceId === "doral" || t.sourceId === "eowagr") && !extraTidMeta.has(tid)) {

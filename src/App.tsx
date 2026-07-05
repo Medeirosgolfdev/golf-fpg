@@ -13,7 +13,6 @@ import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import { norm } from "./utils/format";
 import { canonicalCourseName } from "./utils/courseAliases";
-import { MANUEL_FED } from "./constants/manuel";
 import { isTournamentCourse } from "./constants/tournamentCourses";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
@@ -204,7 +203,7 @@ export default function App() {
     for (const c of fpg) map.set(c.courseKey, c);
 
     // Guardar _players do pipeline antes de possível sobrescrita por extra
-    const pipelinePlayers = new Map<string, Record<string, string | null>>();
+    const pipelinePlayers = new Map<string, Record<string, any>>();
     for (const c of pipelineAway) {
       if (c.master._players) pipelinePlayers.set(c.courseKey, c.master._players);
       if (!map.has(c.courseKey)) map.set(c.courseKey, c);

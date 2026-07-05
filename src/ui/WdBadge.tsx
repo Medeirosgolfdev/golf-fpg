@@ -9,7 +9,6 @@
  *   <WdBadge label="DNS" />      → <span class="badge-wd">DNS</span>
  *   <WdBadge muted />            → versão muted (texto simples, sem badge)
  */
-import React from "react";
 
 interface WdBadgeProps {
   /** Texto do badge. Default: "WD" */

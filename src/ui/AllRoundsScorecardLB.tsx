@@ -18,13 +18,11 @@ import PlayerLink from "./PlayerLink";
 import FilterChip from "./FilterChip";
 import { ESC_STYLE } from "./PillBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
-import { isManuel, SDPill, type PlayersDB } from "./tournamentPrimitives";
+import { SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import {
   useAllRoundsData,
   type ComputeRoundSD,
-  type PRow,
-  type FlatRow,
 } from "../hooks/useAllRoundsData";
 
 export function AllRoundsScorecardLB({

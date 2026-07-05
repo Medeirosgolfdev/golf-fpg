@@ -2,7 +2,6 @@
  * Designs COLS — verticais (story format) e colunares.
  * V24 Story, V19 PGA Columns, V21 DP World, V33 College Grid.
  */
-import React from "react";
 import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, hiChStr } from "../shared";
 import { SC, TpBadge, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
@@ -15,7 +14,7 @@ export function V19({ d, v, s, bg, tc="white", tc3 }: P) {
   const teeLine = [v.tee && d.tee, v.teeDist && d.teeDist ? `${d.teeDist}m` : ""].filter(Boolean).join(" · ");
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg, overflow:"hidden", borderRadius:8, textShadow:TS, maxWidth: maxW + 40 }}>
+    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg ?? undefined, overflow:"hidden", borderRadius:8, textShadow:TS, maxWidth: maxW + 40 }}>
       {(v.player||v.event||v.round) && (
         <div style={{ padding:"6px 8px 3px", textAlign:"center", maxWidth: maxW + 30, overflow:"hidden" }}>
           {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, lineHeight:1.2, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.player.toUpperCase()}</div>}

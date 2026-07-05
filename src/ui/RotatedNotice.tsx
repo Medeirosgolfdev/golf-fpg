@@ -10,7 +10,6 @@
  *
  * Renderiza nada se a flag estiver ausente / a 0.
  */
-import React from "react";
 
 interface Props {
   /** Número de posições rotacionadas (12 = +6 buracos = "buraco 1 antigo é o 7 actual"). */

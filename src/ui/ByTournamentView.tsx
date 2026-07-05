@@ -205,8 +205,6 @@ function TournamentComparison({ rounds, holesData }: {
   const meters = refData.m;
   const si = refData.si;
   const tee = rounds[0]?.tee || "";
-  const hx = getTeeHex(tee);
-  const _fgT = textOnColor(hx);
   const totalPar = par ? sumArr(par, 0, hc) : null;
   const totalDist = meters ? sumArr(meters, 0, hc) : null;
   const hcpLabel = rounds[0]?.hi ?? "";

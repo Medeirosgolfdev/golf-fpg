@@ -5,7 +5,7 @@ interface SortableHdrProps<K extends string = string> {
   sortKey: K;
   sortDir: "asc" | "desc";
   onSort: (k: K) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   title?: string;

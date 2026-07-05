@@ -1,5 +1,4 @@
-﻿import React from "react";
-import { anoEscalao } from "../utils/format";
+﻿import { anoEscalao } from "../utils/format";
 
 export function AnoEscalaoPill({ dob, escalao }: { dob: string; escalao: string }) {
   if (!dob) return null;

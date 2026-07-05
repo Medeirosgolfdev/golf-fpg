@@ -109,7 +109,7 @@ export function AccumulatedLB({
         isPortuguese: !isManuel(p) && !!(p as any)._isPortuguese,
         rounds: mappedRounds,
       };
-    });
+    }) as MRRow[];
   }, [rawPlayers, escLookup, nRounds, parPerRound, playersDB, tournament.date, tournament.escalao, fedBirthdates]);
 
   // Referência para meta-informação do campo (mesmo que ScorecardLB)

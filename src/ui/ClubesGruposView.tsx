@@ -2,7 +2,7 @@
 import { useSort } from "../hooks/useSort";
 import { C as _C } from "../utils/colors";
 import { abreviarNome, medal } from "../utils/format";
-import type { RoundScore, Player, Tournament, GrupoJogador, GrupoEntry } from "../data/fpgTypes";
+import type { Player, Tournament, GrupoJogador, GrupoEntry } from "../data/fpgTypes";
 
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
@@ -318,14 +318,14 @@ export default function ClubesGruposView({
                 <thead>
                   <tr>
                     {(() => {
-                      function PHdr({ label, col, style }: { label: string; col: "nome" | "hcp" | number; style?: React.CSSProperties }) {
+                      function PHdr({ label, col, style, className }: { label: string; col: "nome" | "hcp" | number; style?: React.CSSProperties; className?: string }) {
                         const active = playerSort === col;
                         const title = active
                           ? (playerSortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente")
                           : "Clique para ordenar";
                         return (
                           <th
-                            className="lb-sortable"
+                            className={"lb-sortable " + (className || "")}
                             onClick={() => togglePlayerSort(col)}
                             title={title}
                             style={{
@@ -376,7 +376,7 @@ export default function ClubesGruposView({
                       return playerSortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
                     });
 
-                    return sortedJRows.map(({ j, p, rds, total }, ji) => {
+                    return sortedJRows.map(({ j, p, rds, total }) => {
                       const counts = viewCols.map((rd) => {
                         const ri = rdCols.indexOf(rd);
                         const allS = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
@@ -402,7 +402,7 @@ export default function ClubesGruposView({
                               : abreviarNome(j.nome)}
                           </td>
                           <td style={{ ...tdC, color: "var(--text-muted)", opacity: hasAnyScore ? 1 : 0.55 }}>
-                            {p?.hcpExact != null ? fmtHcp(p.hcpExact) : j.hcp > 0 ? fmtHcp(j.hcp) : "–"}
+                            {p?.hcpExact != null ? fmtHcp(p.hcpExact) : Number(j.hcp) > 0 ? fmtHcp(j.hcp) : "–"}
                           </td>
                           {viewCols.map((rd, ci) => {
                             const ri = rdCols.indexOf(rd);

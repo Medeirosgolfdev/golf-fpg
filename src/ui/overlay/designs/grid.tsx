@@ -3,7 +3,6 @@
  * V11 Giant Score, V22 Magazine, V10 Score Hero, V12 Tournament,
  * V6 Grint Row, V9 18Birdies, V13 Dashboard, V5 Ticket, V26 Signature.
  */
-import React from "react";
 import { II, OS, LO, BN, SG, TS, TS_SCORE, vpC, metaStr, hiChStr } from "../shared";
 import { SC, SCQ, TpBadge, Grid2, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
@@ -38,7 +37,7 @@ export function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg, padding:"4px 6px", borderRadius:8, textShadow:TS }}>
+    <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 6px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:5, gap:8 }}>
         <div className="u-col-flex2">
           {(v.course||v.date||v.round) && <div style={{ fontSize:10, fontWeight:700, color:tc3, letterSpacing:.5 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}

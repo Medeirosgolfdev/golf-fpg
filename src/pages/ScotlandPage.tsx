@@ -12,7 +12,7 @@
  * Limitação: o site da JTS não publica leaderboards estruturados — só PDFs.
  * Por isso usamos `customResults` em cada divisão (em vez de `results`).
  */
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
 import LoadingState from "../ui/LoadingState";

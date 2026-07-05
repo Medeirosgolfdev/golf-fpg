@@ -3,10 +3,9 @@
  * (extraído de KIDSPage.tsx — 1158 linhas)
  */
 import React, { useMemo, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
-import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal } from "../../utils/format";
-import { normPaisDisplay, flag as flagOf } from "../../utils/flagUtils";
-import { getTrend, getAvgZ } from "../../utils/mathUtils";
+import { fmtToPar, fmtSign, MONTHS_PT_FULL, isoDate, medal } from "../../utils/format";
+import { flag as flagOf } from "../../utils/flagUtils";
+import { getTrend } from "../../utils/mathUtils";
 import { scClass, toParClass, tpColorDark } from "../../utils/scoreDisplay";
 import KpiCard from "../../ui/KpiCard";
 import ExtLink from "../../ui/ExternalLink";
@@ -14,17 +13,14 @@ import DetailHeader from "../../ui/DetailHeader";
 import EmptyState from "../../ui/EmptyState";
 import SexBadge from "../../ui/SexBadge";
 import { RoundPill } from "../../ui/PillBadge";
-import { uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, ncScoringType, getScorecards, normName } from "../../data/KIDSdataLoader";
-import type { AutoRivalPlayer } from "../../data/KIDSdataLoader";
-import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../../data/rivalData";
-import { MANUEL_KNOWN_TIDS } from "../../constants/manuel";
+import { uskTournNames, uskFieldSizes, ncScoringType, getScorecards, normName } from "../../data/KIDSdataLoader";
+import { FIELD_2025, VP_PAR, VP_SI, VP_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../../data/rivalData";
 import { TR_I } from "../../constants/config";
 import TournScorecard from "./TournScorecard";
-import H2HSortableTable from "./H2HSortableTable";
 import AnaliseSection from "./AnaliseSection";
 import { MemberHistTable } from "./MemberHistTable";
 import { EvolucaoChart, TorneiosRecorrentes, H2HTable, inferNholes } from "./RivalCharts";
-import { D, T, UP, ageLabel, findCard, getPlayerType, getTournInfo, getTournLinks, getTournUrl, getTournWeight, hiddenTids, manuel, nPlayed, tornCanonK, useMH, useRivals, useRivalsLoaded, useScoringStatsCtx, yearOf, rankMap, totalRanked, AUTO_TOURN_NAMES, AUTO_TOURN_META } from "../KIDSPage";
+import { T, UP, ageLabel, findCard, getPlayerType, getTournInfo, getTournLinks, getTournUrl, getTournWeight, hiddenTids, manuel, nPlayed, tornCanonK, useMH, useRivals, useRivalsLoaded, useScoringStatsCtx, yearOf, rankMap, totalRanked, AUTO_TOURN_NAMES, AUTO_TOURN_META } from "../KIDSPage";
 import { computeDobInfo, escalaoIntl, T_MAP } from "./dobInference";
 import { AUTO_COVERED_BY } from "../../data/tidAliases";
 import { EOWAGR25_CARDS, EOWAGR25_M, EOWAGR25_PAR, EOWAGR25_SI, WJGC26_1213_CARDS, WJGC26_1213_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_CARDS, WJGC26_M, WJGC26_PAR, WJGC26_SI } from "./courseScorecards";
@@ -362,7 +358,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
     console.warn(`[RivaisIntl] count mismatch for ${rival.n}: nPlayed=${nPlayed(rival)} vs tournResults=${playedDedup}`);
   }
 
-  const allRds = tournResults.flatMap(x => x.res.rd.filter((r): r is number => r != null && r > 0));
+  const allRds = tournResults.flatMap(x => x.res.rd.filter((r: number | null): r is number => r != null && r > 0));
   const completedResults = tournResults.filter(x => x.res.tp != null);
   const bestTp = completedResults.length ? Math.min(...completedResults.map(x => x.res.tp!)) : null;
   const _bestRd = allRds.length ? Math.min(...allRds) : null;
@@ -1183,7 +1179,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                           par={autoCard.par.length===18?autoCard.par as unknown as readonly number[]:VP_PAR as unknown as readonly number[]}
                           si={autoCard.si.length>0?autoCard.si as unknown as readonly number[]:VP_SI as unknown as readonly number[]}
                           meters={autoCard.meters.length>0?autoCard.meters as unknown as readonly number[]:VP_M as unknown as readonly number[]}
-                          rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))} />
+                          rounds={autoCard.rounds.map((sc: number[], i: number)=>({label:`R${i+1}`,scores:sc}))} />
                       )}
                       {t.id==="wjgc26" && wjgcCard && (
                         <TournScorecard par={WJGC26_PAR} si={WJGC26_SI} meters={WJGC26_M}
@@ -1216,7 +1212,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                             par={autoCard.par as unknown as readonly number[]}
                             si={autoCard.si as unknown as readonly number[]}
                             meters={(METERS_FALLBACK[t.id]??autoCard.meters??[]) as unknown as readonly number[]}
-                            rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))}
+                            rounds={autoCard.rounds.map((sc: number[], i: number)=>({label:`R${i+1}`,scores:sc}))}
                           />
                         );
                       })()}

@@ -3,7 +3,6 @@
  * V15 B&W Card, V28 Full Table, V31 To-Par Cumulat., V32 College Red,
  * V34 Clean White, V35 Accent Bar, V14 Compact Table, V16 Light Card, V17 Glass Card.
  */
-import React from "react";
 import { II, OS, BN, SG, TS, vpC, vpCd, metaStr, hiChStr } from "../shared";
 import { SC, SCL, TpBadge, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
@@ -15,7 +14,7 @@ export function V14({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
   /* W tem de ser >= sz (24) para evitar overlap dos badges nos bordos. */
   const is18 = d.scores.length >= 18; const W = 26;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"2px 5px", borderRadius:8, textShadow:TS }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"2px 5px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3, flexWrap:"wrap" }}>
         <span style={{ fontFamily:OS, fontSize:36, fontWeight:700, lineHeight:1 }}>{s.sT}</span>
         <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
@@ -267,7 +266,7 @@ export function V31({ d, v, s, bg, tc="white", tc3 }: P) {
   let cum = 0;
   d.scores.forEach((sc, i) => { cum += sc - d.par[i]; cumToPar.push(cum); });
   return (
-    <div style={{ fontFamily:II, display:"inline-block", background:bgFinal, color:txColor, borderRadius:8, overflow:"hidden", border:isDark?"1px solid #333":"1px solid #e0e0e0" }}>
+    <div style={{ fontFamily:II, display:"inline-block", background:bgFinal ?? undefined, color:txColor, borderRadius:8, overflow:"hidden", border:isDark?"1px solid #333":"1px solid #e0e0e0" }}>
       {(v.player||v.event) && (
         <div style={{ padding:"5px 8px", background:"#1a2744", color:"#fff", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
@@ -372,7 +371,7 @@ export function V34({ d, v, s, bg, tc="white", tc3 }: P) {
   const rowBg = isDark ? "#1e2535" : "#fafafa";
   const cw = 28; const hw = 36;
   return (
-    <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:6, overflow:"hidden", border:isDark?"1px solid #333":"1px solid #ddd" }}>
+    <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:6, overflow:"hidden", border:isDark?"1px solid #333":"1px solid #ddd" }}>
       {(v.player||v.event||v.course) && (
         <div style={{ padding:"6px 10px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:8 }}>
           <div style={{ minWidth:0 }}>
@@ -428,7 +427,7 @@ export function V35({ d, v, s, bg, tc="white", tc3 }: P) {
   const rowBg = isDark ? "#1e2535" : "#f8f8f8";
   const cw = 28;
   return (
-    <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:6, overflow:"hidden" }}>
+    <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:6, overflow:"hidden" }}>
       <div style={{ background:accent, padding:"6px 10px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
         <div>
           {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:20, letterSpacing:1.5, color:"#fff" }}>{d.player.toUpperCase()}</div>}

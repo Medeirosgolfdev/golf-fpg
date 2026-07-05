@@ -7,7 +7,7 @@ import { sortEscaloes, type TorneioResult, type FieldData } from "./uskidsTypes"
 import { TorneioComManuel, seriesBase } from "./USKIDSPageHelpers";
 import { isManuelByName as isManuel } from "../constants/manuel";
 
-function TorneioRivaisDetalhe({ torneio, resultados, fieldData, torneiosComManuel, arMap, kidsMap }: {
+function TorneioRivaisDetalhe({ torneio, resultados, fieldData, arMap, kidsMap }: {
   torneio: TorneioComManuel;
   resultados: TorneioResult[];
   fieldData: FieldData | null;

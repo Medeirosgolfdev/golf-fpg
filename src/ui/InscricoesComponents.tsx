@@ -20,14 +20,13 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import type { Tournament } from "../data/fpgTypes";
-import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb } from "../pages/nacionais/types";
+import type { TorneioData, BdPlayer, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
 import { fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, norm } from "../utils/format";
 import { TORNEIOS_CONFIG } from "../constants/config";
 import SexBadge from "./SexBadge";
-import { EscPill } from "./PillBadge";
 import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import PlayerLink from "./PlayerLink";
 import LoadingState from "./LoadingState";

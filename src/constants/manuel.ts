@@ -23,8 +23,9 @@ export const MANUEL_FAMILY_FEDS = new Set(["52884", "54907"]);
  */
 export const MANUEL_PLAYER_IDS = ["630106", "605933"] as const;
 
-/** TIDs USKids conhecidos onde o Manuel jogou (preenchido conforme descoberto). */
-export const MANUEL_KNOWN_TIDS: string[] = [];
+/** TIDs USKids conhecidos onde o Manuel jogou (preenchido conforme descoberto).
+ *  Set para lookup O(1) via `.has()` — consumido por playerMatchesFilter. */
+export const MANUEL_KNOWN_TIDS = new Set<string>();
 
 /**
  * Data de nascimento.

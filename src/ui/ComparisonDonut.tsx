@@ -7,7 +7,6 @@
  *
  * Intencionalmente sem dependências externas (não usa recharts).
  */
-import React from "react";
 
 interface Props {
   /** 0-100 */

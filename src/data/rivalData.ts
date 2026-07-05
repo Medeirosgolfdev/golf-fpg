@@ -77,40 +77,25 @@ export const LT_FORET_PAR = [5,4,4,4,5,3,4,3,4,4,5,3,4,4,3,5,4,4]; // par 72
 export const LT_FORET_SI  = [9,11,13,5,7,17,3,15,1,12,6,8,2,16,14,10,4,18];
 export const LT_FORET_M   = [382,251,251,336,375,116,295,121,310,281,369,129,285,263,114,378,300,249]; // 4805m
 // Frassanelle Golf Club — Venice Open 2025 tee AMARELAS (away-venice-junior-open-frassanele-golf-club-0)
-export const VENICE_PAR = [4,5,4,4,3,5,4,3,4,5,3,4,4,4,3,4,4,5]; // par 72
-export const VENICE_SI  = [16,4,10,2,6,8,12,14,18,5,15,17,7,9,13,11,3,1];
-export const VENICE_M   = [323,501,311,380,174,493,331,161,286,477,145,258,380,356,125,301,355,522]; // 5879m
 
 // Marco Simone — tees USKids (away-marco-simone-uskids-*)
 // par/si comuns a todos os escalões USKids
-export const MS_USKIDS_PAR = [4,4,4,3,4,4,3,5,5,4,4,5,3,4,4,4,3,5]; // par 72
-export const MS_USKIDS_SI  = [11,1,3,17,13,15,5,9,7,4,16,12,18,6,2,10,14,8];
 export const MS_USKIDS_M_B12   = [274,349,302,113,266,258,152,375,382,307,247,381,103,310,292,255,151,442]; // 4959m
 export const MS_USKIDS_M_B1011 = [274,299,272,103,227,231,132,338,352,267,219,356,91,270,237,225,133,404]; // 4430m
 
 // Golf Paris Val d'Europe Disneyland — USKids Paris Invitational 2025
 // Combinação RED (Rouge) + BLUE (Bleu), par 72
 // Fonte tees: mscorecard.com/mscorecard/showcourse.php?cid=1236598351821 + PDF oficial torneio
-export const PARIS_VDE_PAR   = [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5]; // par 72
-export const PARIS_VDE_SI    = [7,15,3,11,17,1,5,13,9, 14,18,6,10,2,16,12,4,8];
 // Boys 12 → tee Bleus (Longleaf 5), 5029m
-export const PARIS_VDE_B12_M = [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422]; // 5029m
 // Boys 11/10 → tee intermédio (Longleaf 4), 4646m — distâncias oficiais do torneio
-export const PARIS_VDE_B11_M = [383,102,367,263,84,374,253,105,249, 267,224,329,134,466,101,233,306,406]; // 4646m
 // Boys 15-18 / Boys 13-14 → tee Brancos+tee intermédio (Longleaf 6), 5779m
-export const PARIS_VDE_B1518_M = [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450]; // 5779m
-export const MS_USKIDS_M_B9    = [240,262,238,103,200,201,127,298,308,234,219,291,91,236,225,190,133,354]; // 3950m
 
 // Doral Junior Golf Classic (away-doral-*)
 // Doral Golden Palm — Boys 10-11 (away-golden-palm-0)
-export const DORAL_GP_PAR    = [4,5,4,5,4,4,3,4,3,4,5,3,4,4,3,5,3,4]; // par 71
 export const DORAL_GP_M_B1011 = [275,417,324,404,296,326,132,270,127,264,425,104,251,303,113,443,139,273]; // 4886m
-export const DORAL_GP_M_B1415 = [354,475,354,493,356,353,133,361,164,302,494,137,314,367,134,487,159,356]; // 5793m
 // Doral Silver Fox — Boys 12-13 (away-doral-silver-fox-b1213)
-export const DORAL_SF_PAR  = [4,4,5,3,4,4,3,4,4,4,5,4,4,4,3,5,3,4]; // par 71
 export const DORAL_SF_M_B1213 = [321,311,455,130,293,317,123,311,306,314,425,300,281,279,125,428,121,304]; // 5144m
 
-export const MANUEL_POS = 26; // 26º de 35 no torneio real
 
 export const TIER = {
   elite: { bg: "var(--bg-success-strong)", c: "var(--color-good-dark)" },

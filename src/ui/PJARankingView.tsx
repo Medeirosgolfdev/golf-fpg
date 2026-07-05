@@ -1,16 +1,16 @@
 ﻿import React, { useMemo, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useSort } from "../hooks/useSort";
-import { escPillCls, type EscLookup } from "../utils/playerUtils";
-import { ESC_STYLE, PillBadge, RoundPill } from "./PillBadge";
+import { escPillCls } from "../utils/playerUtils";
+import { ESC_STYLE, RoundPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
-import { fmtDate, escalaoAtDate } from "../utils/format";
-import type { RoundScore, Player, Tournament } from "../data/fpgTypes";
+import { escalaoAtDate } from "../utils/format";
+import type { Tournament } from "../data/fpgTypes";
 
 /* ─────────────────────────────────────────────
    RANKING PJA
@@ -227,7 +227,7 @@ export interface PjaPdfEntry {
 }
 
 export function PJARankingView({
-  pjaList, playersDB, loading, pjaMembersByYear, pjaPdfSnapshotByYear, externalFilterName,
+  pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;

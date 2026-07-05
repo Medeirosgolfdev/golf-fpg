@@ -5,7 +5,8 @@ import SortableHdr from "./SortableHdr";
 import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
 import { uskTournNames, normName as normNameAuto } from "../data/KIDSdataLoader";
-import type { AutoRivalPlayer, FieldData } from "../data/KIDSdataLoader";
+import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
+import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
@@ -37,14 +38,6 @@ const TG_T: TGTournDef[] = [
 ];
 
 
-const TG_AUTO_META: Record<string, { field: number; par: number; url?: string }> = {
-  wjgc25_b89:    { field:37, par:71 }, wjgc25_b1011: { field:40, par:71 }, wjgc25_b1213: { field:38, par:71 },
-  wjgc26_b1213:  { field:39, par:73 },
-  marco26_b9:    { field:17, par:72 }, marco26_b10: { field:17, par:72 }, marco26_b11: { field:17, par:72 }, marco26_b12: { field:17, par:72 },
-  doral25_b89:   { field:30, par:71 }, doral25_b1011: { field:35, par:71 }, doral25_b1213: { field:32, par:71 },
-  venice25_b9:   { field:35, par:72 }, venice25_b10: { field:38, par:72 }, venice25_b11: { field:39, par:72 }, venice25_b12: { field:36, par:72 },
-  rome25_b9:     { field:12, par:72 }, rome25_b10: { field:14, par:72 }, rome25_b11: { field:14, par:72 }, rome25_b12: { field:12, par:72 },
-};
 
 const TG_AUTO_NAMES: Record<string, { name: string; short: string; date: string }> = {
   wjgc25_b89:    { name:"WJGC 2025",          short:"WJGC25",   date:"Fev 2025" },
@@ -200,16 +193,6 @@ function tgNRounds(p: TGPlayer) {
   }, 0);
 }
 
-function tgGetVsAvg(p: TGPlayer, manuelRef: TGPlayer | null): number | null {
-  if (p.isM || !manuelRef) return null;
-  const ds: number[] = [];
-  Object.keys(p.r).forEach(tid => {
-    const mr = manuelRef.r[tid];
-    if (mr && p.r[tid].tp != null && mr.tp != null) ds.push(p.r[tid].tp! - mr.tp!);
-  });
-  return ds.length ? Math.round(ds.reduce((a, b) => a + b, 0) / ds.length) : null;
-}
-
 function tgGetTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
   const manual = TG_T.find(t => t.id === tid);
   if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? manual.date };
@@ -241,14 +224,6 @@ function tgFmtSign(n: number | null | undefined, dec = 0): string {
   if (n == null) return "—";
   const s = dec === 0 ? Math.round(n).toString() : n.toFixed(dec);
   return n > 0 ? `+${s}` : s;
-}
-
-function tgSc3m(v: number): string {
-  if (v < -2) return "var(--color-good)";
-  if (v < 0) return "var(--score-par-seg,var(--color-good))";
-  if (v === 0) return "var(--text-3)";
-  if (v <= 3) return "var(--color-warn)";
-  return "var(--color-danger)";
 }
 
 function tgTpColorDark(tp: number | null | undefined): string {
@@ -698,7 +673,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       {!isM && KidsLink && <KidsLink nome={p.n} />}
                     </td>
                     <td className="ta-c fs-12 fw-600 c-text-3">{played || ""}</td>
-                    {allTournCols.map(({ tid, isFixed, isFuture }) => {
+                    {allTournCols.map(({ tid, isFuture }) => {
                       // Coluna futura: mostrar escalão inscrito se player está inscrito
                       if (isFuture) {
                         const inscribed = inscricaoMap.get(tid);

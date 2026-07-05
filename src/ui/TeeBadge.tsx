@@ -1,4 +1,3 @@
-import React from "react";
 import { C } from "../utils/colors";
 import SexBadge from "./SexBadge";
 

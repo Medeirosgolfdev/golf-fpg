@@ -11,7 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";

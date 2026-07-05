@@ -470,9 +470,7 @@ const glenSIblueF = [3,9,13,17,5,11,1,7,15, 4,14,16,18,8,2,12,6,10];
 const glenParWhite  = [4,4,4,3,4,5,4,4,3, 4,4,4,3,4,5,3,4,4]; // 70
 const glenParYellow = glenParWhite;                            // 70
 const glenParRedM   = [4,4,4,3,4,5,4,4,4, 4,4,5,3,4,5,3,5,4]; // 73
-const glenParBlueM  = [4,4,3,3,4,4,4,4,3, 4,4,4,3,4,4,3,4,4]; // 67
 const glenParBlueF  = [4,4,4,3,4,5,4,4,3, 4,4,4,3,4,4,3,4,4]; // 69
-const glenParRedF   = glenParBlueF;                            // 69
 
 // Par USKids (Boys 14, Boys 12, Girls 12) — todos par 72
 // Diferem do par do campo nos buracos destacados a laranja no PDF EUC 2025
@@ -993,8 +991,6 @@ const parisViolets = [365,110,375,270, 75,355,285,115,235, 210,340,230,123,290,2
 
 // Distâncias por tee (metros) — fonte: PDF "Paris Invitational 2025 - Meters" (tees de torneio USKids)
 // Nota: parisBleus = parisB12M (mesmo tee físico Bleus). Os outros são interpolados/específicos do torneio.
-const parisB1518M = [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450]; // 5779m (Boys 15-18, 13-14) — entre Noirs e Jaunes
-const parisB12M   = parisBleus; // 5029m (Boys 12, Girls 13-15) — tee Bleus (idêntico)
 const parisB11M   = [383,102,367,263, 84,374,253,105,249, 267,224,329,134,466,101,233,306,406]; // 4646m (Boys 11, 10) — entre Bleus e Rouges
 const parisB9M    = [337, 90,328,236, 90,311,207,100,218, 226,196,264,117,350,101,216,277,320]; // 3985m (Girls 11-12, Boys 9)
 

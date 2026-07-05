@@ -1,6 +1,6 @@
 ﻿import React, { useState, useMemo } from "react";
-import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
-import { norm, shortDate, fmtToPar } from "../utils/format";
+import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
+import { norm } from "../utils/format";
 import { normKey } from "../utils/teeColors";
 import { fmtStb } from "../utils/scoreDisplay";
 import { GrossCell, SdCell } from "./tableCells";
@@ -49,38 +49,13 @@ function OriginPill({ origin }: { origin?: string }) {
   return <span className={entry.cls}>{entry.label}</span>;
 }
 
-function EventInfo({ name, origin, pill }: {
+function EventInfo({ name, origin }: {
   name?: string; origin?: string; pill?: string;
 }) {
   return (
     <>
       <span className="muted">{name || ""}</span>
       <OriginPill origin={origin} />
-    </>
-  );
-}
-
-function LinkBtns({ links }: { links?: Record<string, string> }) {
-  if (!links || Object.keys(links).length === 0) return null;
-  return (
-    <>
-      {Object.entries(links).map(([label, url]) => (
-        <a
-          key={label}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          title={label.replace(/_/g, " ")}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: "var(--fs-10)", marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
-            verticalAlign: "middle",
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          🔗
-        </a>
-      ))}
     </>
   );
 }
@@ -137,7 +112,6 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }
   }, [last20Table, sortKey, sortDir, best8, whsPosMap]);
 
   const shProps = { sortKey, sortDir, onSort: toggleSort };
-  const _whsMax = whsPosMap.size;
 
   return (
     <div className="card">

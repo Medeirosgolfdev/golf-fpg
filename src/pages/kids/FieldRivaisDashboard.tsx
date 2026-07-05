@@ -8,7 +8,7 @@
  *
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import LoadingState from "../../ui/LoadingState";
@@ -95,14 +95,6 @@ const EXTRA_TID_BY_NEG: Record<number, string> = (() => {
 })();
 
 /** Extrai escalao a partir do nome do EXTRA_TID (ex: "WJGC 2026 B10-11" → "Boys 10-11"). */
-function extraEscalaoFromName(name: string): string {
-  // "WJGC 2026 B10-11" → "Boys 10-11"; "Doral 2024 B10-11" → "Boys 10-11"
-  // "EOWAGR 2025" → "Geral" (sem escalao específico)
-  const m = name.match(/B(\d+(?:-\d+)?)$/);
-  if (m) return `Boys ${m[1]}`;
-  return "Geral";
-}
-
 /** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14" → [0, 14]. */
 function parseEscalaoRange(esc: string): [number, number] | null {
   if (!esc) return null;
@@ -172,7 +164,6 @@ const FFG_FILES: FFGFileDef[] = [
     path: "/data/ffgolf/2025_internationaux-de-france-u14-garcons-challenge-alexis-godillot.json",
     name: "Internationaux U14 Garçons 2025" },
 ];
-const FFG_NEG_IDS = new Set(FFG_FILES.map(f => f.neg));
 
 // Tcodes a esconder do dropdown (torneios irrelevantes/eventos únicos):
 //   • 15573 = Real Club de Golf El Prat 2023 (one-off espanhol)

@@ -15,7 +15,6 @@
 
 import { useState, useMemo } from "react";
 import { useSort } from "./useSort";
-import { fmtToPar, medal } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
 import type { Player, Tournament, RoundScore } from "../data/fpgTypes";
 

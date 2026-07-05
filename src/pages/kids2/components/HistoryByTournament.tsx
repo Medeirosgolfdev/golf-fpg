@@ -373,7 +373,6 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
   );
 }
 
-const tdH: React.CSSProperties = { padding: "4px 6px", textAlign: "left", fontWeight: 600 };
 const tdC: React.CSSProperties = { padding: "5px 6px", textAlign: "left" };
 
 function Sparkline({ editions }: { editions: Edition[] }) {

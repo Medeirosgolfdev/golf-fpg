@@ -33,7 +33,7 @@ export interface MasterDetailApi {
   isMobile: boolean;
   sidebarClass: string;
   /** Ref para o div de detalhe — permite scroll-to-top automático */
-  detailRef: React.RefObject<HTMLDivElement>;
+  detailRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function useMasterDetail(defaultOpen = true): MasterDetailApi {

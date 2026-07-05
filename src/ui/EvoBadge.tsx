@@ -10,7 +10,6 @@
  *   <EvoBadge pill="EQ" from={2} prevPos={2} fieldSize={18} />
  *   <EvoBadge pill="NEW" label="novo" />
  */
-import React from "react";
 
 interface EvoBadgeProps {
   pill: "UP" | "EQ" | "NEW";

@@ -4,7 +4,7 @@ import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../utils/playedDistance";
 import { norm, shortDate, fmtSign, fpgScoringUrl } from "../utils/format";
-import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
+import { getTeeHex, normKey } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
 import { acesFromHoleScores } from "../utils/aces";

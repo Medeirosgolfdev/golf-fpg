@@ -595,7 +595,7 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
   // Club may be string or object {short, long}
   const clubRaw = currentCross?.club;
   const club = typeof clubRaw === "string" ? clubRaw
-    : (clubRaw?.short || clubRaw?.long || "");
+    : ((clubRaw as any)?.short || (clubRaw as any)?.long || "");
 
 
   let totalRounds = 0, roundsCurrentYear = 0;

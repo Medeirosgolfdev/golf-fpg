@@ -44,7 +44,6 @@ import SortableHdr from "../ui/SortableHdr";
 import React, { useState, useMemo } from "react";
 import { getTeeHex } from "../utils/teeColors";
 import {
-  isManuel,
   fmtTP,
   tpColor,
   TeeDot,
@@ -98,7 +97,7 @@ function rowBirthYear(row: MultiRoundRow, playersDB?: PlayersDB): number | null 
   return birthYearOf(dob);
 }
 
-function filterRows(rows: MultiRoundRow[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): MultiRoundRow[] {
+function filterRows<T extends MultiRoundRow>(rows: T[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): T[] {
   let ps = rows;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
   if (f.escs.length) ps = ps.filter(r => r.esc != null && f.escs.includes(r.esc));
@@ -270,7 +269,7 @@ export function MultiRoundLeaderboard({
   // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados.
   // Para ESC, também conta com rows que têm DOB no playersDB (idade computável).
   const hasAnyEsc  = useMemo(
-    () => rows.some(r => (r.esc != null && r.esc !== "") || (r.fed && playersDB[r.fed]?.dob)),
+    () => rows.some(r => (r.esc != null && r.esc !== "") || (r.fed && playersDB?.[r.fed]?.dob)),
     [rows, playersDB]
   );
   const hasAnyFed  = useMemo(() => rows.some(r => r.fed != null && r.fed !== ""), [rows]);
@@ -304,9 +303,6 @@ export function MultiRoundLeaderboard({
 
   // WD = desistiu; incomplete = ainda nao jogou todas as rondas; cut = eliminado no cut
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD && !r.isCut);
-  const cutRows    = rows.filter(r =>  r.isCut && !r.isWD);
-  const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD && !r.isCut);
-  const wdRows     = rows.filter(r =>  r.isWD);
 
   /* Posições — apenas jogadores completos e não-WD */
   const withPos: RowWithPos[] = useMemo(() => {
@@ -585,7 +581,7 @@ export function MultiRoundLeaderboard({
                   {showEsc && <td className="lb-esc">{(() => {
                     if (row.esc) return <EscPill esc={row.esc} />;
                     // Fallback: idade exacta se temos DOB no playersDB
-                    const dob = row.fed && playersDB[row.fed]?.dob;
+                    const dob = row.fed && playersDB?.[row.fed]?.dob;
                     const tDate = roundDates?.[roundDates.length - 1] || roundDates?.[0];
                     if (dob && tDate) {
                       const d = new Date(dob); const t = new Date(tDate);

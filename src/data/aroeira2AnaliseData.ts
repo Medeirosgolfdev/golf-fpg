@@ -19,7 +19,7 @@
  *   `course` ou `campo` normalizado contém "aroeirano2", "aroeira2" ou "aroeiraii".
  */
 
-import type { Tournament, Player, RoundScore } from "./fpgTypes";
+import type { Tournament } from "./fpgTypes";
 import { fmtToPar } from "../utils/format";
 
 const MANUEL_FED = "52884";
@@ -620,7 +620,6 @@ export function buildKPIs(pkg: AnalisePackage, holes: HoleDistribution[]): KPI[]
 
 export function buildParGroupStats(holes: HoleDistribution[]): ParGroupStats[] {
   const groups: ("Par 3" | "Par 4" | "Par 5")[] = ["Par 3", "Par 4", "Par 5"];
-  const map: Record<3 | 4 | 5, "Par 3" | "Par 4" | "Par 5"> = { 3: "Par 3", 4: "Par 4", 5: "Par 5" };
   const out: ParGroupStats[] = [];
   for (const g of groups) {
     const par = g === "Par 3" ? 3 : g === "Par 4" ? 4 : 5;
@@ -687,8 +686,8 @@ export function buildManuelTheoretical(manuelStats: ManuelHoleStats[], manuelRou
 
 /** Inscritos Sub-12 SEM histórico no Aroeira II (estreantes). */
 export function buildSub12SemHistorico(
-  currentTournament: Tournament,
-  pkg: AnalisePackage,
+  _currentTournament: Tournament,
+  _pkg: AnalisePackage,
 ): Array<{ fed: string | null; nome: string; clube: string; hcp: number | null }> {
   // Lê from admissions - mas só temos pkg.sub12Inscritos (com histórico).
   // Para os "sem histórico" precisamos de re-fetch. Simplificação: calculamos no loader rico.
@@ -893,7 +892,6 @@ export function buildSub12Performance(
 ): Sub12Performance[] {
   const out: Sub12Performance[] = [];
   const inTorneio = new Set<string>();
-  const inscritosFromAdmissions: Array<{ fed: string; nome: string; clube: string; hcp: number | null }> = [];
 
   // 1) Top 21: incluir os que estão na lista Sub-12
   for (const p of pkg.tournament.players || []) {

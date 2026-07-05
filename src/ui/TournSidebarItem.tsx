@@ -7,7 +7,7 @@
 import React from "react";
 import { isManuel } from "./tournamentPrimitives";
 import {
-  SIDEBAR_ACCENT, PILL_ROUND,
+  SIDEBAR_ACCENT,
   EscPill, RoundPill, TcodePill, NineHPill, SserraPill, JuniorPill,
   ManuelPill, ClubePill, NacionalPill, PillBadge,
 } from "./PillBadge";

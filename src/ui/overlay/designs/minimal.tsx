@@ -3,7 +3,6 @@
  * V25 Minimal, V1 Sticker, V2 Strip, V3 Front/Back, V4 Neon Ring,
  * V23 TV Broadcast, V27 Score Strip.
  */
-import React from "react";
 import { II, OS, BN, TS, vpC } from "../shared";
 import { SC, TpBadge, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
@@ -79,7 +78,7 @@ export function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 /* V4 · NEON RING */
 export function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   return (
-    <div style={{ fontFamily:II, width:160, color:tc, textAlign:"center", background:bg, padding:"3px 6px", borderRadius:10, textShadow:TS }}>
+    <div style={{ fontFamily:II, width:160, color:tc, textAlign:"center", background:bg ?? undefined, padding:"3px 6px", borderRadius:10, textShadow:TS }}>
       {v.course&&d.course && <div style={{ fontSize:11, fontWeight:700, letterSpacing:1, color:tc3 }}>{d.course}</div>}
       {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700, marginTop:2 }}>{d.player.toUpperCase()}</div>}
       <div style={{ margin:"4px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${vpC(s.vpT)}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>

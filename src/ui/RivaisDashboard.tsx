@@ -5,7 +5,7 @@ import React, { useMemo, useState } from "react";
 import { fmtSign, sortArrow } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
-import { scClass, sc3m, SC } from "../utils/scoreDisplay";
+import { sc3m } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
 import WdBadge from "./WdBadge";
 import { RoundPill } from "./PillBadge";
@@ -574,7 +574,7 @@ export default function RivaisDashboard({
                       const st = (
                         ti ? TIER[ti as keyof typeof TIER] : null
                       ) as { bg: string; c: string } | null;
-                      const tpStr = fmtSign(res.tp);
+                      const tpStr = res.tp != null ? fmtSign(res.tp) : "";
 
                       // vs Manuel delta
                       let vsM: number | null = null;

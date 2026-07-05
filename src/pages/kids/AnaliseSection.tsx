@@ -11,7 +11,7 @@
  * O "field" é o conjunto de scorecards no MESMO tid do torneio seleccionado
  * (que já inclui o escalão no sufixo — `usk{tcode}_b{n}`, `wjgc26`, etc.).
  */
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { AutoScorecard } from "../../data/KIDSdataLoader";
 import { getScorecardsByTid, uskTournNames } from "../../data/KIDSdataLoader";
 import {
@@ -19,7 +19,6 @@ import {
   distPct,
   perRoundDists,
   nineSplit,
-  holeByHoleStats,
   aggregateField,
   type ScoringDist,
 } from "../../utils/analysisStats";

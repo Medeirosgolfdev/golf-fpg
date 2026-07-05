@@ -109,9 +109,9 @@ export interface Treino {
 
 /* ── Links section (meta-comentários) ── */
 
-export interface MetaLinks extends MelhoriaLinks {
+export type MetaLinks = MelhoriaLinks & {
   pais?: string;
-}
+};
 
 /* ── Player melhorias (tudo de um jogador) ── */
 

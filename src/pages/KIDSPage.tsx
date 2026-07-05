@@ -5,36 +5,17 @@
  * em torneios internacionais.
  */
 import React, { useMemo, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal, sortArrow } from "../utils/format";
-/* useSort movido para ./kids/H2HSortableTable.tsx */
 import { normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
-import { getTrend, getAvgZ } from "../utils/mathUtils";
-import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
-import { usePasswordGate } from "../hooks/usePasswordGate";
-import PasswordGate from "../ui/PasswordGate";
+import { getAvgZ } from "../utils/mathUtils";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
-import { RoundPill } from "../ui/PillBadge";
-import SexBadge from "../ui/SexBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import EmptyState from "../ui/EmptyState";
-import DetailHeader from "../ui/DetailHeader";
-import KpiCard from "../ui/KpiCard";
-import ExtLink from "../ui/ExternalLink";
-import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, ncScoringType, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName, uskTournNames, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { AUTO_COVERED_BY, HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
-import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
 import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
-import { TR_I } from "../constants/config";
-import TournScorecard from "./kids/TournScorecard";
-import H2HSortableTable from "./kids/H2HSortableTable";
-import AnaliseSection from "./kids/AnaliseSection";
-import type { H2HConfronto } from "./kids/types";
 
 
 /* ═══════════════════════════════════
@@ -341,8 +322,7 @@ export function getTournInfo(tid: string): { name: string; short: string; date: 
    ═══════════════════════════════════ */
 /** Parse "DD/MM/YYYY" → Date */
 /* dobInference extraído para kids/dobInference.ts */
-import { parseDob, ageAt, computeDobInfo, escalaoIntl, dobRangeStrict, arePlayersCompatible, T_MAP } from "./kids/dobInference";
-import type { DobInfo } from "./kids/dobInference";
+import { parseDob, dobRangeStrict, arePlayersCompatible, T_MAP } from "./kids/dobInference";
 
 
 export const UP = [
@@ -798,20 +778,11 @@ export function yearOf(dateExact?: string, fallback?: string): number {
   return parseInt(fallback?.match(/(\d{4})/)?.[1] ?? "0");
 }
 
-/** ±par color — variante local intencional: retorna sempre cor (nunca undefined), usa dark variants para contraste em cards */
-export function tpColorMH(tp: number | null): string {
-  if (tp == null) return "var(--text-3)";
-  if (tp < 0) return "var(--color-good-dark)";
-  if (tp === 0) return "var(--text-2)";
-  return "var(--color-danger)";
-}
-
 /* ═══════════════════════════════════
    SCORECARD DATA — WJGC 2026 (3 rondas)
    ═══════════════════════════════════ */
 // Villa Padierna Flamingos — tee WJGC 2026 (away-villa-padierna-flamingos-espanha-2)
 /* courseScorecards extraído para kids/courseScorecards.ts */
-import { WJGC26_CARDS, EOWAGR25_CARDS, WJGC26_1213_CARDS, WJGC26_PAR, WJGC26_SI, WJGC26_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_1213_M, EOWAGR25_PAR, EOWAGR25_SI, EOWAGR25_M } from "./kids/courseScorecards";
 
 
 // Compute field averages per round (used for tier coloring in dashboard)
@@ -1100,8 +1071,6 @@ import { RivaisSidebar } from "./kids/RivaisSidebar";
    MEMBER HISTORY TABLE — sortable
    ═══════════════════════════════════ */
 /* MemberHistTable extraído para kids/MemberHistTable.tsx */
-import { MemberHistTable } from "./kids/MemberHistTable";
-import type { MHSortCol } from "./kids/MemberHistTable";
 
 
 /* ═══════════════════════════════════
@@ -1110,7 +1079,6 @@ import type { MHSortCol } from "./kids/MemberHistTable";
 /* ═══════════════════════════════════
    RivalCharts — extraído para kids/RivalCharts.tsx (2026-05-09)
    ═══════════════════════════════════ */
-import { inferNholes, tprNorm, EvolucaoChart, TorneiosRecorrentes, H2HTable } from "./kids/RivalCharts";
 
 
 /* ═══════════════════════════════════
@@ -1380,7 +1348,7 @@ function RivaisIntlContent() {
             <FieldRivaisDashboard
               defaultT={21131}
               defaultEscalao="Boys 12"
-              autoRivals={rivals}
+              autoRivals={rivals as any /* RivalPlayer[] local ≠ AutoRivalPlayer[] */}
               onSelectPlayer={(name) => { setSelectedPlayer(name); navigate("/kids"); }}
             />
           ) : selectedPlayer ? (

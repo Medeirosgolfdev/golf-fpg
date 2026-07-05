@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { isoDate, fmtDate, displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
-import { normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
 import {
-  LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, TEES_LOOKUP, ArMapCtx,
+  LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, ArMapCtx,
   badgeVagas, fmtTs, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
 

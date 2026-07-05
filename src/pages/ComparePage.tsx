@@ -21,12 +21,12 @@ import LoadingState from "../ui/LoadingState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
 import type { Course, Tee, Hole } from "../data/types";
-import CourseHeroCard, { getParTotal, parBreakdown, PAR_HSL } from "../ui/CourseHeroCard";
+import CourseHeroCard, { getParTotal, PAR_HSL } from "../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../ui/ScoreTable";
 import TeePill from "../ui/TeePill";
 import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
-import { fmtSD, fmtCR } from "../utils/format";
+import { fmtSD } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { textOnColor } from "../utils/teeColors";
 
@@ -250,10 +250,6 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
 
 // ═══════════════════ Hero do campo + distribuição de pares ═══════════════════
 // Extraído para src/ui/CourseHeroCard.tsx para reuso (também em /kids2/next-t).
-
-function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
-  return <CourseHeroCard course={course} tee={tee} />;
-}
 
 // ═══════════════════ Comparação lado-a-lado de 2 campos ═══════════════════
 
@@ -580,7 +576,7 @@ function CourseSideBySide({
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                 {deltas.map((d, i) => (
-                  <DeltaCard key={i} label={d.label} a={d.a} b={d.b} dec={d.dec} unit={d.unit} icon={d.icon} iconBg={d.iconBg} />
+                  <DeltaCard key={i} label={d.label} a={d.a} b={d.b} dec={(d as any).dec} unit={(d as any).unit} icon={d.icon} iconBg={d.iconBg} />
                 ))}
               </div>
             </div>

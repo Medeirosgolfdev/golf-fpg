@@ -12,8 +12,8 @@
  * sabe ordenar pos/name/gross/toPar por ele próprio).
  */
 
-import React, { useMemo, useState } from "react";
-import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
+import { useMemo, useState } from "react";
+import type { FpgAdmissions } from "../data/nacional2026Loader";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";

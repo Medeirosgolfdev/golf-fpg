@@ -13,7 +13,7 @@
  * Field = todos os outros jogadores nos mesmos flights (mesmo escalão e ronda).
  */
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight } from "../data";
 import { normName } from "../data";
 import {

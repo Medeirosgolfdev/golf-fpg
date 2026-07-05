@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { RoundData, EclecticEntry, HoleStatsData, HoleScores } from "../data/playerDataLoader";
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
 import { fmtSign, fmtToPar } from "../utils/format";

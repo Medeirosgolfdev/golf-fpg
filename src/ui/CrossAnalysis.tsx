@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useEffect } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
 import { sdClassByHcp } from "../utils/scoreDisplay";
@@ -6,17 +6,19 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 
 // Common Courses
-function CommonCourses({ players, currentFed, escName }: {
+function CommonCourses({ players }: {
   players: CrossPlayerData[]; currentFed: string; escName: string;
 }) {
   const courseMap = useMemo(() => {
     const m: Record<string, { name: string; count: number; players: string[] }> = {};
     players.forEach(p => {
-      if (p.courseCount) {
-        Object.entries(p.courseCount).forEach(([c, cnt]) => {
+      if (p.courseTee) {
+        // Agrega por campo (courseTee é indexado por tee — somar as voltas de todos os tees do mesmo campo).
+        Object.values(p.courseTee).forEach(ct => {
+          const c = ct.course;
           if (!m[c]) m[c] = { name: c, count: 0, players: [] };
-          m[c].count += cnt;
-          m[c].players.push(p.name);
+          m[c].count += ct.count;
+          if (!m[c].players.includes(p.name)) m[c].players.push(p.name);
         });
       }
     });

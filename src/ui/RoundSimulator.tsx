@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
-import type { Course } from "../data/types";
+import type {} from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { norm } from "../utils/format";
 import { meanArr } from "../utils/mathUtils";
@@ -246,9 +246,7 @@ export function RoundSimulator({
   function getValidTees(
     courseKey: string,
     holesMode: HolesMode = "18"
-  ): typeof courses extends Array<infer C>
-    ? C["master"]["tees"]
-    : any[] {
+  ): any[] {
     const c = allRatedCourses.find((x) => x.courseKey === courseKey);
     if (!c) return [];
     // 1) Filtrar por disponibilidade de ratings (18H ou 9H conforme holesMode)
@@ -1125,7 +1123,6 @@ export function RoundSimulator({
           const teeId = getEffectiveTeeId(round);
           const validTees = getValidTees(round.courseKey, round.holesMode);
           const ratings = getTeeRatings(round.courseKey, teeId, round.holesMode);
-          const allTees18 = getValidTees(round.courseKey, "18");
           // Se o campo não tem 9H ratings em nenhum tee, avisar
           const has9Hsupport = round.mode === "course" && round.courseKey
             ? allRatedCourses

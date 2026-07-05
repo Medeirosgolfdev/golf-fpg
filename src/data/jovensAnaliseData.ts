@@ -514,7 +514,6 @@ export function buildJovensAnalise(
       .map((x, i) => ({ p: x.p, pos: i + 1, gross: x.gross as number }));
 
     // Vencedor de facto absoluto = primeiro do leaderboard (pode ser estrangeiro)
-    const defactoWinner = ordered[0] || null;
 
     const buildPodium = (px: { p: Player; pos: number; gross: number } | null): PodiumEntry | null => {
       if (!px) return null;

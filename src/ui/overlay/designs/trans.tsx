@@ -2,7 +2,6 @@
  * Designs TRANS — overlays transparentes para fotos.
  * V39 Outline Branco, V41 Hero Score, V42 Glass Panel, V43 Accent Strip.
  */
-import React from "react";
 import { II, OS, LO, BN, SG, vpC, hiChStr } from "../shared";
 import { SC, SCL, SCO, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
@@ -13,7 +12,7 @@ export function V39({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"4px 4px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 4px" }}>
       {v.holeScores && (
         <div style={{ display:"flex", alignItems:"center" }}>
           <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
@@ -63,7 +62,7 @@ export function V39({ d, v, s, bg, tc="white", tc3 }: P) {
 export function V41({ d, v, s, bg, tc="white", tc3 }: P) {
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"4px 6px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 6px" }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
         <div style={{ fontFamily:BN, fontSize:96, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
         <div style={{ fontFamily:SG, fontSize:18, fontWeight:800, color:vpC(s.vpT), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
@@ -92,7 +91,7 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
   const bgF = bg || (isDark ? "rgba(20,20,30,.88)" : "rgba(255,255,255,.88)");
   const tx = isDark ? "#eee" : "#222";
   return (
-    <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:8, padding:"5px 8px" }}>
+    <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:8, padding:"5px 8px" }}>
       {/* Topo: 2 colunas — score+nome à esquerda, metadata à direita
          (aproveita o espaço vazio em vez de empurrar tudo para baixo). */}
       <div style={{ display:"flex", alignItems:"flex-start", gap:10 }}>
@@ -137,7 +136,7 @@ export function V43({ d, v, s, bg, tc="white", tc3 }: P) {
   const accent = s.vpT < 0 ? "#dc2626" : s.vpT === 0 ? (tc === "#ffffff" || tc === "white" ? "#fff" : "#222") : "#3b82f6";
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"stretch", color:tc, background:bg, padding:"4px 4px" }}>
+    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"stretch", color:tc, background:bg ?? undefined, padding:"4px 4px" }}>
       <div style={{ width:3, background:accent, borderRadius:2, marginRight:6, flexShrink:0 }} />
       <div>
         <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>

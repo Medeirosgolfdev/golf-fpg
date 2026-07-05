@@ -2,7 +2,6 @@
  * Designs HIO — Hole-in-One celebration.
  * V48 · ACE CELEBRATION
  */
-import React from "react";
 import { II, OS, BN, HIO_GREEN, vpC } from "../shared";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";

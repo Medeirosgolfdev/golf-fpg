@@ -27,6 +27,10 @@ export interface Player extends BasePlayer {
   si?: number[];
   meters?: number[];
   roundScores?: RoundScore[];
+  /** Escalão do jogador nesta entrada (torneios multi-escalão trazem-no por linha). */
+  escalao?: string | null;
+  /** Campo jogado (presente em linhas de scorecard/volta individual). */
+  course?: string;
   // flags internas de multi-ronda (não vêm do JSON — atribuídas por expandMultiRound)
   _wd?: boolean;          // desistiu em ≥1 ronda
   _cut?: boolean;         // eliminado no cut (rondas completas mas N < maxR)

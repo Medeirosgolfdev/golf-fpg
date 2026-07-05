@@ -6,7 +6,7 @@ import { fmtToParRivais } from "../utils/scoreDisplay";
 import { displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { isManuel } from "../constants/manuel";
-import { fmtPosRivais, playerSeriesResult, tornCanon } from "./uskidsHelpers";
+import { fmtPosRivais, playerSeriesResult } from "./uskidsHelpers";
 
 // ─────────────────────────────────────────────
 // Types

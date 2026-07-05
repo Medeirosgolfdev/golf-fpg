@@ -29,7 +29,6 @@
 import type { Tournament } from "./data";
 
 // Normalizadores
-const MAX_ROUNDS = 4;
 const MAX_FIELD = 300;
 const MAX_NATIONS = 30;   // WC tem 30+ nações; WJGC ~20; EC ~15
 

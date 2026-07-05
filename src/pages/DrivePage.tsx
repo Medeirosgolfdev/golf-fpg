@@ -59,28 +59,6 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 
-/** Secção de Draw ao estilo FPGPage para o CircuitShell: selector de ronda + DrawTab. */
-function DriveDrawSection({ draws, t, esc, pdb, adm }: { draws: Record<string, any>; t: any; esc?: string | null; pdb: any; adm?: any }) {
-  const rounds = Object.keys(draws).filter(r => (draws[r]?.groups?.length ?? 0) > 0).sort();
-  const [rn, setRn] = useState(rounds[0] || "1");
-  const cur = rounds.includes(rn) ? rn : (rounds[0] || "1");
-  const sex = /\bF\b|\bS\b|Feminino/i.test(t.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(t.name || "") ? "M" : undefined;
-  return (
-    <div>
-      {rounds.length > 1 && (
-        <div className="tab-bar" style={{ marginBottom: 8 }}>
-          {rounds.map(r => (
-            <button key={r} className={"tab-under" + (cur === r ? " active" : "")} onClick={() => setRn(r)}>Draw R{r}</button>
-          ))}
-        </div>
-      )}
-      <DrawTab draw={draws[cur] || { groups: [] }} roundNum={parseInt(cur, 10)} playersDB={pdb}
-        tournamentEscalao={esc || undefined} tournamentSex={sex} tournamentDate={t.date} admissions={adm}
-        results={buildDrawResults(t.players, parseInt(cur, 10))}
-        fpgUrl={t.ccode && t.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${t.ccode}&tourn=${t.tcode}&round=${cur}&ack=8428ACK987` : undefined} />
-    </div>
-  );
-}
 import type {
   Tournament,
   Player,
@@ -106,7 +84,7 @@ const REGIONS = [
   { id: "acores",  label: "Açores",  emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
 ];
 const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
-const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
+const regionOf = (id: string | null | undefined) => REGIONS.find((r) => r.id === id);
 
 /* ── Rankings oficiais FPG (scoring.fpg.pt) ──
    Todos hospedados no "club" universal 988, com ack fixo.
@@ -2061,13 +2039,14 @@ function DriveContent() {
                     {filteredGroups.reduce((a, g) => a + g.entries.filter(e => !e._roundLabel || e._roundLabel === "Resumo").reduce((s, t) => s + t.players.filter(p => !isDNS(p)).length, 0), 0)} presenças
                   </div>
                   {regionFilter && (() => {
+                    if (!regionFilter) return null;
                     // Tour: ranking por região. Challenge: precisa de escalão único seleccionado.
                     const escForLink = series === "challenge" ? (escFilter.length === 1 ? escFilter[0] : null) : null;
                     if (series === "challenge" && !escForLink) return null;
-                    const rankUrl = fpgRankingUrl(series, regionFilter, escForLink, activeYear);
+                    const rankUrl = fpgRankingUrl(series, regionFilter!, escForLink, activeYear);
                     return rankUrl ? (
                       <div className="mb-8">
-                        <a href={rankUrl} target="_blank" rel="noopener noreferrer"
+                        <a href={rankUrl ?? undefined} target="_blank" rel="noopener noreferrer"
                           className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
                           title="Abrir o ranking oficial da FPG (scoring.fpg.pt) em nova aba">
                           🔗 Ranking oficial FPG — {series === "tour" ? "Drive Tour" : "Drive Challenge"} {regionOf(regionFilter)?.label}{escForLink ? " " + escForLink : ""}
@@ -2075,7 +2054,7 @@ function DriveContent() {
                       </div>
                     ) : null;
                   })()}
-                  <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
+                  <ResumoTable tournaments={filteredT as any /* tipo local diferente do playerUtils */} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
                 </div>
 
                 {/* Tabela de pontos */}
@@ -2086,9 +2065,13 @@ function DriveContent() {
             )}
 
             {/* DETALHE DE TORNEIO */}
-            {selectedGroupKey !== null && selectedGroup && (() => {
+            {selectedGroupKey !== null && selectedGroup && curTournament && (() => {
               // Extrair admissions/draws do torneio actual (atachados pelo useEffect)
-              const firstT = selectedGroup.entries[0] as any;
+              if (!selectedGroup) return null;
+              if (!curTournament) return null;
+              const sg = selectedGroup!;
+              const ct = curTournament!;
+              const firstT = sg.entries[0] as any;
               const adm = firstT?._admissions;
               const draws = firstT?._draws || {};
               const hasAdmissions = adm && !adm.error && (adm.players?.length ?? 0) > 0;
@@ -2100,19 +2083,19 @@ function DriveContent() {
               const hasExtraTabs = hasAdmissions || drawRounds.length > 0;
               return (
               <div>
-                {curTournament && (() => {
-                  const nholes = curTournament.players[0]?.nholes || 18;
-                  const nJog = curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length;
-                  const parTotal = curTournament.players[0]?.parTotal
-                    || (curTournament.players[0]?.par?.reduce((a, b) => a + b, 0))
-                    || (curTournament.players[0]?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0))
+                {ct && (() => {
+                  const nholes = ct.players[0]?.nholes || 18;
+                  const nJog = ct.players.filter(p => !isDNS(p) && !p._incomplete).length;
+                  const parTotal = ct.players[0]?.parTotal
+                    || (ct.players[0]?.par?.reduce((a, b) => a + b, 0))
+                    || (ct.players[0]?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0))
                     || 0;
                   // Holes-in-one do torneio inteiro (agrega todas as rondas/escalões do grupo,
                   // dedup por jogador+buraco para não duplicar entre rondas e o Resumo).
                   const aces = (() => {
                     const seen = new Set<string>();
                     const out: { name: string; hole: number; par: number; round?: number }[] = [];
-                    for (const entry of selectedGroup.entries) {
+                    for (const entry of sg.entries) {
                       for (const a of tournamentAces(entry.players)) {
                         const k = (a.name || "").toLowerCase().trim() + "|" + a.hole;
                         if (seen.has(k)) continue;
@@ -2121,8 +2104,8 @@ function DriveContent() {
                     }
                     return out;
                   })();
-                  const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
-                  const titleText = selectedGroup.label || curTournament.campo || curTournament.name || "Torneio";
+                  const canonicalUrl = tournamentUrl("drive", ct.ccode, ct.tcode);
+                  const titleText = sg.label || ct.campo || ct.name || "Torneio";
                   return (
                   <DetailHeader
                     title={canonicalUrl ? (
@@ -2133,16 +2116,16 @@ function DriveContent() {
                       </a>
                     ) : titleText}
                     actions={<>
-                      <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
+                      <TournExtLinks ccode={ct.ccode} tcode={ct.tcode} />
                     </>}
                     sub={<>
-                      {curTournament.campo && <span className="muted">📍 {curTournament.campo}</span>}
-                      <span className="muted ml-8">📅 {fmtDateShort(curTournament.date)}</span>
+                      {ct.campo && <span className="muted">📍 {ct.campo}</span>}
+                      <span className="muted ml-8">📅 {fmtDateShort(ct.date)}</span>
                       <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
                         <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
                           {nJog} jog
                         </span>
-                        {(selectedGroup.isMulti || curTournament._roundLabel === "Resumo") && <RoundPill nR={curTournament._totalRounds || selectedGroup.totalRounds} />}
+                        {(sg.isMulti || ct._roundLabel === "Resumo") && <RoundPill nR={ct._totalRounds || sg.totalRounds} />}
                         {nholes <= 9 && <NineHPill />}
                         {parTotal > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
@@ -2156,8 +2139,8 @@ function DriveContent() {
                             🕳️ {aces.length} hole-in-one
                           </span>
                         )}
-                        {!selectedGroup.isEvent && curTournament.escalao && <EscPill esc={curTournament.escalao} />}
-                        {selectedGroup.isEvent && <span className="muted">{selectedGroup.entries.length} escalões</span>}
+                        {!sg.isEvent && ct.escalao && <EscPill esc={ct.escalao!} />}
+                        {sg.isEvent && <span className="muted">{sg.entries.length} escalões</span>}
                       </span>
                     </>}
                   />
@@ -2165,7 +2148,7 @@ function DriveContent() {
                 })()}
 
                 {/* Tabs: Inscrições / Draws + rondas (isMulti) ou escalões (isEvent) */}
-                {(selectedGroup.isMulti || selectedGroup.isEvent || hasExtraTabs) && (
+                {(sg.isMulti || sg.isEvent || hasExtraTabs) && (
                   <div className="tab-bar" style={{ marginBottom: 8 }}>
                     {hasAdmissions && (
                       <button
@@ -2181,14 +2164,14 @@ function DriveContent() {
                       // usado; muda só a ORDEM das abas para ficar igual às outras páginas.
                       const drawnInline = new Set<number>();
                       const out: React.ReactNode[] = [];
-                      selectedGroup.entries.forEach((entry, ri) => {
-                        const lbl = selectedGroup.isEvent
+                      sg.entries.forEach((entry, ri) => {
+                        const lbl = sg.isEvent
                           ? (entry.escalao || ("E" + (ri + 1)))
                           : (entry._roundLabel || ("R" + (ri + 1)));
                         const isResumo = lbl === "Resumo";
                         const rnMatch = /^R(\d+)$/i.exec(entry._roundLabel || "");
                         const rn = rnMatch ? parseInt(rnMatch[1], 10) : null;
-                        if (!selectedGroup.isEvent && rn != null && drawRounds.includes(rn)) {
+                        if (!sg.isEvent && rn != null && drawRounds.includes(rn)) {
                           drawnInline.add(rn);
                           out.push(
                             <button key={`draw:${rn}`}
@@ -2205,7 +2188,7 @@ function DriveContent() {
                           <button key={entry.tcode + "_" + ri}
                             className={"tab-under" + (isActive ? " active" : "")}
                             onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}>
-                            {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
+                            {isResumo ? "📊" : sg.isEvent ? "⚡" : "🏌️"} {lbl}
                             <span className="muted fs-10" style={{ marginLeft: 4 }}>({activeCount} jog)</span>
                             {nAces > 0 && <span title={`${nAces} hole-in-one`}> 🕳️</span>}
                           </button>
@@ -2226,55 +2209,55 @@ function DriveContent() {
                       return out;
                     })()}
                     {/* Tab Scorecards combinados — só para multi-ronda */}
-                    {selectedGroup.isMulti && selectedGroup.entries.some(e => e._roundLabel === "Resumo") && (
+                    {sg.isMulti && sg.entries.some(e => e._roundLabel === "Resumo") && (
                       <button
-                        className={"tab-under" + (specialTab === null && roundIdx === selectedGroup.entries.length ? " active" : "")}
-                        onClick={() => { setSpecialTab(null); setRoundIdx(selectedGroup.entries.length); }}>
+                        className={"tab-under" + (specialTab === null && roundIdx === sg.entries.length ? " active" : "")}
+                        onClick={() => { setSpecialTab(null); setRoundIdx(sg.entries.length); }}>
                         📋 Scorecards
                       </button>
                     )}
                   </div>
                 )}
-                {curTournament && (
+                {ct && (
                   <div className="overflow-hidden">
                     {specialTab === "admissions" && adm
                       ? <AdmissionsTab
                           admissions={adm}
                           playersDB={pdb}
-                          date={curTournament.date}
-                          fpgUrl={curTournament.ccode && curTournament.tcode ? fpgAdmissionsUrl(curTournament.ccode, curTournament.tcode) : undefined}
-                          tournamentEscalao={curTournament.escalao || undefined}
-                          tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
+                          date={ct.date}
+                          fpgUrl={ct.ccode && ct.tcode ? fpgAdmissionsUrl(ct.ccode!, ct.tcode!) : undefined}
+                          tournamentEscalao={ct.escalao || undefined}
+                          tournamentSex={/\bF\b|\bS\b|Feminino/i.test(ct.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(ct.name || "") ? "M" : undefined}
                         />
-                      : specialTab && specialTab.startsWith("draw:")
+                      : specialTab?.startsWith("draw:")
                         ? (() => {
-                            const dRound = parseInt(specialTab.slice(5), 10);
+                            const dRound = parseInt(specialTab!.slice(5), 10);
                             // Resultados dessa ronda: entrada já-por-ronda do grupo
                             // (R{n}); cada jogador tem grossTotal/toPar da ronda.
-                            const rEntry = selectedGroup.entries.find(e => (e._roundLabel || "").toUpperCase() === "R" + dRound)
-                              || selectedGroup.entries[dRound - 1]
-                              || selectedGroup.entries[0];
+                            const rEntry = sg.entries.find(e => (e._roundLabel || "").toUpperCase() === "R" + dRound)
+                              || sg.entries[dRound - 1]
+                              || sg.entries[0];
                             return <DrawTab
-                              draw={draws[specialTab.slice(5)] || { groups: [] }}
+                              draw={draws[specialTab!.slice(5)] || { groups: [] }}
                               roundNum={dRound}
                               playersDB={pdb}
-                              tournamentEscalao={curTournament.escalao || undefined}
-                              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
-                              tournamentDate={curTournament.date}
+                              tournamentEscalao={ct.escalao || undefined}
+                              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(ct.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(ct.name || "") ? "M" : undefined}
+                              tournamentDate={ct.date}
                               admissions={adm}
                               results={buildDrawResults(rEntry?.players, dRound, { perRoundEntry: true })}
                             />;
                           })()
-                        : roundIdx === selectedGroup.entries.length
+                        : roundIdx === sg.entries.length
                           ? (() => {
-                              const totalT = selectedGroup.entries.find(e => e._roundLabel === "Resumo");
+                              const totalT = sg.entries.find(e => e._roundLabel === "Resumo");
                               return totalT
-                                ? <DriveAllRoundsScorecardLB totalTournament={totalT} playersDB={pdb} sdLookup={sdLookup} />
+                                ? <DriveAllRoundsScorecardLB totalTournament={totalT!} playersDB={pdb} sdLookup={sdLookup} />
                                 : <EmptyState size="sm" message="Dados insuficientes" />;
                             })()
-                          : curTournament._roundLabel === "Resumo"
-                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={curTournament._totalRounds || selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
-                            : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
+                          : ct._roundLabel === "Resumo"
+                            ? <DriveAccumulatedLB tournament={ct} nRounds={ct._totalRounds || sg.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
+                            : <ScorecardLB tournament={ct} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
                   </div>
                 )}
               </div>

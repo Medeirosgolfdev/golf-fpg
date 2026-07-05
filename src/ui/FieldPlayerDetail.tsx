@@ -5,15 +5,13 @@ import React from "react";
 import {
   fmtSign,
   fmtToPar,
-  firstName,
 } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { meanArr } from "../utils/mathUtils";
-import { scClass, toParClass, sc3m, tpColorDark } from "../utils/scoreDisplay";
+import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
 import EmptyState from "./EmptyState";
 import { FIELD_2025, VP_PAR, FIELD_CARDS } from "../data/rivalData";
-import { tpColor } from "./tournamentPrimitives";
 import type { RivalPlayer } from "./bjgtAnalysisTypes";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";

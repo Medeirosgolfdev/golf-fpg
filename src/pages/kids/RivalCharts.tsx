@@ -8,17 +8,9 @@
  */
 import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
-import { fmtToPar, fmtSign, MONTHS_PT, medal } from "../../utils/format";
+import { fmtToPar, medal } from "../../utils/format";
 import H2HSortableTable from "./H2HSortableTable";
 import type { H2HConfronto } from "./types";
-import { tpColorDark } from "../../utils/scoreDisplay";
-import { flag as flagOf } from "../../utils/flagUtils";
-import { uskTournNames, uskFieldSizes } from "../../data/KIDSdataLoader";
-import type { AutoRivalPlayer } from "../../data/KIDSdataLoader";
-
-// Types partilhados — compatíveis com KIDSPage.tsx
-interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[]; nholes?: number }
-interface RivalPlayer { n: string; co: string; isM?: boolean; dob?: string; r: Record<string, TournResult>; up: string[] }
 
 export type EvoMode = "tpr" | "pos";
 

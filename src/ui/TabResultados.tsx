@@ -1,10 +1,8 @@
 import { useState, useMemo } from "react";
 // Components: TabResultados + EscalaoTabs + EscalaoSection (Draw R{n} integrado).
 import React from "react";
-import { displayName, fmtDate, fmtToPar, isoDate } from "../utils/format";
+import { displayName, fmtDate, fmtToPar } from "../utils/format";
 import { flag } from "../utils/flagUtils";
-import { scClass } from "../utils/scoreDisplay";
-import { tpColor } from "./tournamentPrimitives";
 import {
   ScorecardLB,
   AccumulatedLB,
@@ -17,11 +15,10 @@ import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import type { MultiRoundRow } from "./multiRoundTypes";
 import EmptyState from "./EmptyState";
-import { ManuelPill } from "./PillBadge";
-import type { TorneioResult, EscalaoResult, RondaResult, ResultsData, GreatgolfData,
+import type { TorneioResult, EscalaoResult, ResultsData, GreatgolfData,
   UskidsDrawsData, UskidsDrawRonda } from "./uskidsTypes";
 import { sortEscaloes } from "./uskidsTypes";
-import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx, type TeeInfo } from "./USKIDSPageHelpers";
+import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx } from "./USKIDSPageHelpers";
 import UskidsDrawTab from "./UskidsDrawTab";
 import { TournExternalLinks } from "./TabCampoDetalhe";
 

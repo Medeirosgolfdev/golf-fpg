@@ -544,7 +544,7 @@ export default function JogadoresPorAnoPage() {
                 domain={["auto", "auto"]} />
               <Tooltip
                 contentStyle={{ fontSize: 12 }}
-                formatter={(v: number | null, name: string) => [v == null ? "—" : v, name]}
+                formatter={((v: number | null, name: string) => [v == null ? "—" : v, name]) as any}
                 labelFormatter={(l) => {
                   const d = chartData.find(c => c.label === l);
                   return `Nascidos em ${l}${d ? ` · ${d.idade} anos` : ""}`;

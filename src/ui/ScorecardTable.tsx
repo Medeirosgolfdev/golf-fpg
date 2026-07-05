@@ -2,10 +2,9 @@ import React from "react";
 import type { EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { sumArr } from "../utils/mathUtils";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
-import { fmtSign, fmtToPar } from "../utils/format";
-import { scClass, fmtStb, toParClass } from "../utils/scoreDisplay";
+import { fmtSign } from "../utils/format";
+import { scClass, toParClass } from "../utils/scoreDisplay";
 import { PillBadge } from "./PillBadge";
-import ScoreCircle from "./ScoreCircle";
 import { CourseLink } from "./jogadoresHelpers";
 
 /** Props for ScorecardTable component */

@@ -96,7 +96,7 @@ type SortKey = string;
 /* ── Helper Functions ── */
 
 function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
-  if (isDNS(p)) return null;
+  if (isDNS(p as any)) return null;
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (gross == null || isNaN(gross as number)) return null;
   const g = gross as number;
@@ -366,7 +366,7 @@ export function ResumoTable(props: {
         if (p.hcpExact != null) row.hcp = p.hcpExact;
         // Se ainda não temos escalão, tenta novamente com este torneio (pode ter dob visível)
         if (!row.escalao) row.escalao = resolveRowEsc(p, t);
-        if (isDNS(p)) {
+        if (isDNS(p as any)) {
           row.results.set(tKey, "dns");
         } else {
           const st = computeStats(p, sdLookup);
@@ -535,12 +535,12 @@ export function ResumoTable(props: {
       }
       groups={groupHeaders.map((gh) => {
         const t = gh.tournament;
-        const nh = t.players.find((p) => !isDNS(p))?.nholes || 18;
-        const realCount = t.players.filter((p) => !isDNS(p) && !p._incomplete).length;
+        const nh = t.players.find((p) => !isDNS(p as any))?.nholes || 18;
+        const realCount = t.players.filter((p) => !isDNS(p as any) && !p._incomplete).length;
         const parSrc = gh.isMulti
           ? visibleSorted.find((vt) => vt._multiGroup === gh.groupId && vt._roundLabel !== "Resumo")
           : t;
-        const par = (parSrc || t).players.find((p) => !isDNS(p))?.parTotal || "?";
+        const par = (parSrc || t).players.find((p) => !isDNS(p as any))?.parTotal || "?";
         return {
           key: gh.key,
           headerTh: (

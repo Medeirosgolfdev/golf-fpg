@@ -565,7 +565,7 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
 
   // teeName fictício "FFG" para que o ScorecardLB inclua a linha de metros.
   // Sem teeName, o teeMetersMap não é populado e a linha "m" por buraco fica vazia.
-  const ffgTeeName = ggC?.name || "Tees";
+  const ffgTeeName = (ggC as any)?.name || "Tees";
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const rounds: FPGRoundScore[] = [];
     if (p.scoresR1 && p.scoresR1.length === 18 && p.t1 != null) {
@@ -602,7 +602,7 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
       _wd: incomplete,
       _roundsPlayed: rounds.length,
       // Marca conterrâneos para o ScorecardLB/AccumulatedLB aplicar .row-portuguese.
-      _isPortuguese: isPT(p.nationality, p.flag, p.name),
+      _isPortuguese: isPT((p as any).nationality, (p as any).flag, p.name),
     } as FPGPlayer;
   });
 
@@ -723,7 +723,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
-      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
+      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
       sortPos: p.pos,
       sortName: ffgPlayerName(p),
       nameContent: (
@@ -1025,7 +1025,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
       toPar,
       scores: [],
       isManuel: manuel,
-      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
+      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
       sortPos: p.pos,
       sortName: ffgPlayerName(p),
       nameContent: (
@@ -1366,7 +1366,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
-      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
+      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
       sortPos: p.rank,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -1495,7 +1495,7 @@ function LGPIDFTeeTimesTab({ data }: { data: LGPIDFTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
-      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
+      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
       sortPos: p.groupNumber,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -1663,7 +1663,7 @@ function LGPIDFLeaderboardTab({ data }: { data: LGPIDFTournament }) {
       toPar,  // gross - par(72×rondas) — PAR ASSUMIDO, ver nota no filterBar
       scores: [],
       isManuel: manuel,
-      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
+      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
       sortPos: p.pos,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -2085,7 +2085,6 @@ function FFGContentLegacy() {
   const ffgCurMeta = ffgCur ? ffgResIndex?.tournaments.find((t) => t.trnId === ffgCur.trnId) : null;
 
   // Agrupar GG por ano para sidebar
-  // const ggYears = [...new Set(visibleEntries.map((e) => e.year))].sort((a, b) => b - a); // GG section removed
   const lgYears = [...new Set(lgVisible.map((e) => e.year))].sort((a, b) => b - a);
 
   return (

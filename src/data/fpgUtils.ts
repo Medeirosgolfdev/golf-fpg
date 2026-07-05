@@ -10,7 +10,7 @@ import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { FpgDraw } from "./nacional2026Loader";
 import { normalizePlayer } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { norm, escalaoAtDate } from "../utils/format";
+import { escalaoAtDate } from "../utils/format";
 import { isManuel } from "../constants/manuel";
 
 export function numGross(p: Player): number {

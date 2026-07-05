@@ -445,8 +445,8 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             🏆 Estimativa de score — {field.editions.length} edi{field.editions.length === 1 ? "ção" : "ções"} anterior{field.editions.length === 1 ? "" : "es"}
           </summary>
           <div className="kpis" style={{ margin: "8px 0 12px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
-            {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parTournament && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parTournament * field.nRoundsTypical) : undefined} />}
-            {field.avgTop10 != null && <KpiCard label="Top-10 ≈" value={field.avgTop10} sub={field.parTournament && field.nRoundsTypical ? fmtToPar(field.avgTop10 - field.parTournament * field.nRoundsTypical) : undefined} />}
+            {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parPerRound * field.nRoundsTypical) : undefined} />}
+            {field.avgTop10 != null && <KpiCard label="Top-10 ≈" value={field.avgTop10} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgTop10 - field.parPerRound * field.nRoundsTypical) : undefined} />}
             {field.avgMedian != null && <KpiCard label="Mediana ≈" value={field.avgMedian} />}
             {expPerRound != null && field.nRoundsTypical != null && (
               <KpiCard label="Manuel ≈ (torneio)" value={Math.round(expPerRound * field.nRoundsTypical)} color="var(--accent)" sub={`${Math.round(expPerRound)}/volta`} />

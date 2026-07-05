@@ -10,16 +10,10 @@
  */
 import { T } from "./tournDef";
 import { hiddenTids } from "../KIDSPage";
-import type { TournDef } from "./tournDef";
+import type {} from "./tournDef";
 import type { RivalPlayer, MHPlayer } from "../KIDSPage";
 import { uskTournNames, fpgTournNames, ffgolfTournNames } from "../../data/KIDSdataLoader";
 import { isoDate, MONTHS_PT } from "../../utils/format";
-
-interface RivalLike {
-  n: string;
-  dob?: string;
-  r: Record<string, { p?: number | "WD"; t?: number | null; tp?: number | null; rd?: (number|null)[]; ageGroup?: string }>;
-}
 
 export function parseDob(s: string): Date {
   const [d, m, y] = s.split("/").map(Number);

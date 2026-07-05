@@ -332,7 +332,6 @@ function MatchPlayResultsTable({
       <div style={{ padding: "16px 16px 0" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 10 }}>
           {sortedClubs.map((cl, rank) => {
-            const isLeading = hasResults && (grand[cl.key] ?? 0) === maxGrand;
             const opps = clubs.filter(c => c.key !== cl.key);
             return (
               <div key={cl.key} style={{
@@ -559,7 +558,7 @@ function MatchPlayResultsTable({
                                       <span style={{ color: "var(--text-3)", margin: "0 4px" }}>vs</span>
                                       <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>{clB.shortName}</span>
                                     </td>
-                                    {f9.map((i, fi) => {
+                                    {f9.map((i) => {
                                       const s = statuses[i];
                                       return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)" }}>{s?.label || ""}</td>;
                                     })}
@@ -2407,7 +2406,7 @@ function Content() {
                       const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
                       const _mp = _fmt?.matchPlay ? (curClubes as any).matchPlayResults as MatchPlayData | undefined : undefined;
                       const _par = _mp?.course?.par ?? [];
-                      const _meters = _mp?.course?.meters ?? [];
+                      const _meters = (_mp?.course as any)?.meters ?? [];
                       const _tee = _mp?.course?.tee;
                       // Sintetizar jogadores do match play, agrupando todos os dias por jogador
                       // (fedCode como chave → Manuel aparece 1× com R1+R2, não 2×)

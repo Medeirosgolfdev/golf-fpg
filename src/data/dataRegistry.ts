@@ -122,6 +122,7 @@ export type DataFormat =
   | "ftm-doral"
   | "uskids-results"
   | "uskids-completo"
+  | "uskids-field"
   | "fpg-master"
   | "fpg-players"
   | "fpg-player-json"
@@ -137,9 +138,9 @@ export interface DateInfo {
 }
 
 export interface LeaderboardShape {
-  posField:             string;
-  nameField:            string;
-  grossField:           string;
+  posField:             string | null;
+  nameField:            string | null;
+  grossField:           string | null;
   toParField:           string | null;
   roundsField:          string | null;
   extraPlayerFields?:   string[];
@@ -160,7 +161,7 @@ export interface ScorecardShape {
 export interface DataSourceMeta {
   id:           string;
   label:        string;
-  files:        string | string[] | ((n: number) => string);
+  files:        string | string[] | ((id: any) => string);
   origin:       DataOrigin;
   sourceUrl?:   string;
   generatedBy?: string;
