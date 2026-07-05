@@ -1,0 +1,1151 @@
+{
+  "tourId": 72086,
+  "url": "https://www.nextcaddy.com/tour/72086",
+  "scrapedAt": "2026-07-05T21:07:26.227Z",
+  "meta": {
+    "name": "Malaca Julio",
+    "organizer": null,
+    "course": "Escuela de Golf Miguel ángel Jiménez",
+    "courseCode": "AMI5",
+    "dateStart": "2026-07-02",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-02",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ana Maria Ruiz Torres",
+          "licencia": "AMI5948343",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2354044
+        },
+        {
+          "pos": 2,
+          "name": "Genoveva Del Moral Chaneta",
+          "licencia": "AMI5068340",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2354057
+        },
+        {
+          "pos": 3,
+          "name": "Mª Jesus Palazon Roldan",
+          "licencia": "AMI4607664",
+          "hcp": 35,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2354055
+        },
+        {
+          "pos": 4,
+          "name": "Mª Dolores Dominguez Garcia",
+          "licencia": "AMI4699237",
+          "hcp": 40.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354047
+        },
+        {
+          "pos": 5,
+          "name": "Maria Angeles Martin Garcia",
+          "licencia": "AMI5955454",
+          "hcp": 41.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2354046
+        },
+        {
+          "pos": 6,
+          "name": "Flor Menendez Alvarez",
+          "licencia": "AMI5931109",
+          "hcp": 35.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2354056
+        },
+        {
+          "pos": 7,
+          "name": "Carmen Ibañez Dominguez",
+          "licencia": "CM41393569",
+          "hcp": 42.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2354058
+        },
+        {
+          "pos": 8,
+          "name": "Pilar Bellette Jimenez",
+          "licencia": "8820194539",
+          "hcp": 37.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2354045
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 30,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Manuel Méndez Modelo",
+          "licencia": "AMI5998768",
+          "hcp": 31.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2354048
+        },
+        {
+          "pos": 2,
+          "name": "Jose Moreno Navarro",
+          "licencia": "AMI5820029",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2354034
+        },
+        {
+          "pos": 3,
+          "name": "Rafael Almazan Gonzalez",
+          "licencia": "AMI5470012",
+          "hcp": 36.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2354053
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Garcia Higueruelo",
+          "licencia": "AMI5916931",
+          "hcp": 36.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2354043
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Garcia Rodriguez",
+          "licencia": "AMI5909003",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2354028
+        },
+        {
+          "pos": 6,
+          "name": "Giuseppe Russo",
+          "licencia": "AMI5967251",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2354031
+        },
+        {
+          "pos": 7,
+          "name": "Carlos Di Geronimo",
+          "licencia": "AMI5915981",
+          "hcp": 34.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2354051
+        },
+        {
+          "pos": 8,
+          "name": "Alejandro Benitez Melgar",
+          "licencia": "AMI4816929",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2354017
+        },
+        {
+          "pos": 9,
+          "name": "Jose Maria Del Rio Alonso",
+          "licencia": "AMD2618795",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2354030
+        },
+        {
+          "pos": 10,
+          "name": "Luciano Felix Jimenez Romero",
+          "licencia": "AMI5955457",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2354035
+        },
+        {
+          "pos": 11,
+          "name": "Jose Luis Rojo Hernandez",
+          "licencia": "AMI5917597",
+          "hcp": 32.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2354054
+        },
+        {
+          "pos": 12,
+          "name": "Emilio Perez Martinez",
+          "licencia": "AME2262080",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354018
+        },
+        {
+          "pos": 13,
+          "name": "Juan Carlos Carballo Andrade",
+          "licencia": "AMI5922864",
+          "hcp": 22.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354029
+        },
+        {
+          "pos": 14,
+          "name": "Carlos Balbas Soto",
+          "licencia": "AMI5960727",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354040
+        },
+        {
+          "pos": 15,
+          "name": "Raul Hector Marti Gaytan",
+          "licencia": "AMI5488955",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354019
+        },
+        {
+          "pos": 16,
+          "name": "Miguel Ponce Lucena",
+          "licencia": "AMI5988603",
+          "hcp": 31,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354025
+        },
+        {
+          "pos": 17,
+          "name": "Jose Manuel Cruz Viva",
+          "licencia": "AMI5946351",
+          "hcp": 36.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2354049
+        },
+        {
+          "pos": 18,
+          "name": "Juan Jose Martin Muñoz",
+          "licencia": "AMI5917227",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354021
+        },
+        {
+          "pos": 19,
+          "name": "Alfonso Alonso Garrido",
+          "licencia": "AMI5886121",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354022
+        },
+        {
+          "pos": 20,
+          "name": "Juan Tineo Sanchez",
+          "licencia": "AMG1344990",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354023
+        },
+        {
+          "pos": 21,
+          "name": "Antonio Hueso Gonzalez",
+          "licencia": "AMI5820030",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354039
+        },
+        {
+          "pos": 22,
+          "name": "Alberto Salinas Barrionuevo",
+          "licencia": "AM04180782",
+          "hcp": 40,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2354042
+        },
+        {
+          "pos": 23,
+          "name": "Antonio Campano Bravo",
+          "licencia": "AMI5935820",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2354026
+        },
+        {
+          "pos": 24,
+          "name": "Manuel Cortes Jimenez",
+          "licencia": "AMI4903180",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2354038
+        },
+        {
+          "pos": 25,
+          "name": "Jose Felipe De Haro Fernandez",
+          "licencia": "AMI4903184",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2354020
+        },
+        {
+          "pos": 26,
+          "name": "Sebastian Morales Carrasco",
+          "licencia": "AMI4903181",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2354032
+        },
+        {
+          "pos": 27,
+          "name": "Jose Luis Lopez Padilla",
+          "licencia": "AMD2940235",
+          "hcp": 38.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2354050
+        },
+        {
+          "pos": 28,
+          "name": "Manuel Segura Torres",
+          "licencia": "AMD2773828",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2354027
+        },
+        {
+          "pos": null,
+          "name": "Manuel Sanchez Lacasa",
+          "licencia": "AMD2604966",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2354041
+        },
+        {
+          "pos": null,
+          "name": "Antonio Benitez Leiva",
+          "licencia": "AM04075062",
+          "hcp": 39.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2354052
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 30
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alejandro Benitez Melgar",
+      "licencia": "AMI4816929",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Emilio Perez Martinez",
+      "licencia": "AME2262080",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Raul Hector Marti Gaytan",
+      "licencia": "AMI5488955",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Felipe De Haro Fernandez",
+      "licencia": "AMI4903184",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Jose Martin Muñoz",
+      "licencia": "AMI5917227",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Alfonso Alonso Garrido",
+      "licencia": "AMI5886121",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Tineo Sanchez",
+      "licencia": "AMG1344990",
+      "hcp": 26.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Miguel Ponce Lucena",
+      "licencia": "AMI5988603",
+      "hcp": 31,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Antonio Campano Bravo",
+      "licencia": "AMI5935820",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Manuel Segura Torres",
+      "licencia": "AMD2773828",
+      "hcp": 20,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Manuel Garcia Rodriguez",
+      "licencia": "AMI5909003",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Carlos Carballo Andrade",
+      "licencia": "AMI5922864",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Maria Del Rio Alonso",
+      "licencia": "AMD2618795",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Giuseppe Russo",
+      "licencia": "AMI5967251",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Sebastian Morales Carrasco",
+      "licencia": "AMI4903181",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Moreno Navarro",
+      "licencia": "AMI5820029",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Luciano Felix Jimenez Romero",
+      "licencia": "AMI5955457",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Manuel Cortes Jimenez",
+      "licencia": "AMI4903180",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Antonio Hueso Gonzalez",
+      "licencia": "AMI5820030",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Carlos Balbas Soto",
+      "licencia": "AMI5960727",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Manuel Sanchez Lacasa",
+      "licencia": "AMD2604966",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Alberto Salinas Barrionuevo",
+      "licencia": "AM04180782",
+      "hcp": 40,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Francisco Garcia Higueruelo",
+      "licencia": "AMI5916931",
+      "hcp": 36.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Francisco Manuel Méndez Modelo",
+      "licencia": "AMI5998768",
+      "hcp": 31.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Jose Manuel Cruz Viva",
+      "licencia": "AMI5946351",
+      "hcp": 36.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Jose Luis Lopez Padilla",
+      "licencia": "AMD2940235",
+      "hcp": 38.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Carlos Di Geronimo",
+      "licencia": "AMI5915981",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Antonio Benitez Leiva",
+      "licencia": "AM04075062",
+      "hcp": 39.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Rafael Almazan Gonzalez",
+      "licencia": "AMI5470012",
+      "hcp": 36.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Jose Luis Rojo Hernandez",
+      "licencia": "AMI5917597",
+      "hcp": 32.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ana Maria Ruiz Torres",
+      "licencia": "AMI5948343",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Pilar Bellette Jimenez",
+      "licencia": "8820194539",
+      "hcp": 37.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Angeles Martin Garcia",
+      "licencia": "AMI5955454",
+      "hcp": 41.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Mª Dolores Dominguez Garcia",
+      "licencia": "AMI4699237",
+      "hcp": 40.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Mª Jesus Palazon Roldan",
+      "licencia": "AMI4607664",
+      "hcp": 35,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Flor Menendez Alvarez",
+      "licencia": "AMI5931109",
+      "hcp": 35.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Genoveva Del Moral Chaneta",
+      "licencia": "AMI5068340",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Carmen Ibañez Dominguez",
+      "licencia": "CM41393569",
+      "hcp": 42.9,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Alejandro Benitez Melgar",
+          "hcp": 15.7,
+          "ins": "2354017",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Emilio Perez Martinez",
+          "hcp": 15.6,
+          "ins": "2354018",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Raul Hector Marti Gaytan",
+          "hcp": 30.2,
+          "ins": "2354019",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Felipe De Haro Fernandez",
+          "hcp": 25.9,
+          "ins": "2354020",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 2,
+          "name": "Juan Jose Martin Muñoz",
+          "hcp": 21,
+          "ins": "2354021",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 2,
+          "name": "Alfonso Alonso Garrido",
+          "hcp": 22.4,
+          "ins": "2354022",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 2,
+          "name": "Juan Tineo Sanchez",
+          "hcp": 26.6,
+          "ins": "2354023",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 2,
+          "name": "Miguel Ponce Lucena",
+          "hcp": 31,
+          "ins": "2354025",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 3,
+          "name": "Antonio Campano Bravo",
+          "hcp": 16.9,
+          "ins": "2354026",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 3,
+          "name": "Manuel Segura Torres",
+          "hcp": 20,
+          "ins": "2354027",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 3,
+          "name": "Manuel Garcia Rodriguez",
+          "hcp": 18.5,
+          "ins": "2354028",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 3,
+          "name": "Juan Carlos Carballo Andrade",
+          "hcp": 22.6,
+          "ins": "2354029",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 4,
+          "name": "Jose Maria Del Rio Alonso",
+          "hcp": 25.6,
+          "ins": "2354030",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 4,
+          "name": "Giuseppe Russo",
+          "hcp": 21.6,
+          "ins": "2354031",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 4,
+          "name": "Sebastian Morales Carrasco",
+          "hcp": 29.5,
+          "ins": "2354032",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 5,
+          "name": "Jose Moreno Navarro",
+          "hcp": 22.4,
+          "ins": "2354034",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 5,
+          "name": "Luciano Felix Jimenez Romero",
+          "hcp": 25,
+          "ins": "2354035",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 5,
+          "name": "Manuel Cortes Jimenez",
+          "hcp": 28.6,
+          "ins": "2354038",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 5,
+          "name": "Antonio Hueso Gonzalez",
+          "hcp": 30.7,
+          "ins": "2354039",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 6,
+          "name": "Carlos Balbas Soto",
+          "hcp": 26.9,
+          "ins": "2354040",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 6,
+          "name": "Manuel Sanchez Lacasa",
+          "hcp": 27.1,
+          "ins": "2354041",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 6,
+          "name": "Alberto Salinas Barrionuevo",
+          "hcp": 40,
+          "ins": "2354042",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 6,
+          "name": "Francisco Garcia Higueruelo",
+          "hcp": 36.8,
+          "ins": "2354043",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 7,
+          "name": "Ana Maria Ruiz Torres",
+          "hcp": 26.8,
+          "ins": "2354044",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 7,
+          "name": "Pilar Bellette Jimenez",
+          "hcp": 37.1,
+          "ins": "2354045",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 7,
+          "name": "Maria Angeles Martin Garcia",
+          "hcp": 41.6,
+          "ins": "2354046",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 7,
+          "name": "Mª Dolores Dominguez Garcia",
+          "hcp": 40.1,
+          "ins": "2354047",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 8,
+          "name": "Francisco Manuel Méndez Modelo",
+          "hcp": 31.9,
+          "ins": "2354048",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 8,
+          "name": "Jose Manuel Cruz Viva",
+          "hcp": 36.1,
+          "ins": "2354049",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 8,
+          "name": "Jose Luis Lopez Padilla",
+          "hcp": 38.6,
+          "ins": "2354050",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 9,
+          "name": "Flor Menendez Alvarez",
+          "hcp": 35.1,
+          "ins": "2354056",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 9,
+          "name": "Mª Jesus Palazon Roldan",
+          "hcp": 35,
+          "ins": "2354055",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 9,
+          "name": "Genoveva Del Moral Chaneta",
+          "hcp": 36,
+          "ins": "2354057",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 9,
+          "name": "Carmen Ibañez Dominguez",
+          "hcp": 42.9,
+          "ins": "2354058",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 8,
+          "name": "Carlos Di Geronimo",
+          "hcp": 34.4,
+          "ins": "2354051",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 8,
+          "name": "Antonio Benitez Leiva",
+          "hcp": 39.5,
+          "ins": "2354052",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 8,
+          "name": "Rafael Almazan Gonzalez",
+          "hcp": 36.9,
+          "ins": "2354053",
+          "jid": "77237",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 8,
+          "name": "Jose Luis Rojo Hernandez",
+          "hcp": 32.1,
+          "ins": "2354054",
+          "jid": "77237",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77237
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Chaves Balbontin, Carlos",
+          "holeNumber": 1,
+          "createdAt": "17/01/26 08:43:36"
+        },
+        {
+          "playerName": "Chaves Balbontin, Carlos",
+          "holeNumber": 8,
+          "createdAt": "17/01/26 10:08:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3722505501_72086-malaca-julio.pdf"
+  ]
+}

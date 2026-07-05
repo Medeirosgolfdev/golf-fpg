@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-29T09:17:12.897Z",
+  "generatedAt": "2026-07-05T21:06:26.335Z",
   "range": "15500-17200",
   "minYear": 2021,
   "totalProbed": 1701,
-  "totalExisting": 574,
-  "totalJuvenil": 518,
+  "totalExisting": 575,
+  "totalJuvenil": 519,
   "byYear": {
     "2019": 30,
     "2020": 14,
@@ -13,7 +13,7 @@
     "2023": 68,
     "2024": 71,
     "2025": 62,
-    "2026": 57,
+    "2026": 58,
     "2027": 1
   },
   "byCategory": {
@@ -22,7 +22,7 @@
     "Infantil": 62,
     "Sub-16": 50,
     "Junior": 35,
-    "Sub-18": 68,
+    "Sub-18": 69,
     "Alevín": 32,
     "Cadete": 18,
     "Sub-25": 2,
@@ -5619,7 +5619,7 @@
     {
       "compId": 16022,
       "exists": true,
-      "name": "Campeonato de Europa Sub 18 Femenino por Equipos 2026",
+      "name": "Campeonato de Europa Sub-18 Femenino por Equipos 2026",
       "year": 2026,
       "category": "Sub-18",
       "sex": "F",
@@ -5856,7 +5856,7 @@
     {
       "compId": 16073,
       "exists": true,
-      "name": "Campeonato de Europa Sub 18 Masculino por Equipos 2026",
+      "name": "Campeonato de Europa Sub-18 Masculino por Equipos 2026",
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
@@ -6117,6 +6117,15 @@
       "name": "Campeonato de España Sub-16 de Pitch & Putt 2027",
       "year": 2027,
       "category": "Sub-16",
+      "sex": null,
+      "juvenil": true
+    },
+    {
+      "compId": 16224,
+      "exists": true,
+      "name": "Internacional de República Checa Sub 18 2026",
+      "year": 2026,
+      "category": "Sub-18",
       "sex": null,
       "juvenil": true
     }

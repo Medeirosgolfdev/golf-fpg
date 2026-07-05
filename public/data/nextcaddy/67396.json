@@ -1,0 +1,679 @@
+{
+  "tourId": 67396,
+  "url": "https://www.nextcaddy.com/tour/67396",
+  "scrapedAt": "2026-07-05T21:07:25.202Z",
+  "meta": {
+    "name": "Campeonato de junio de Señoras",
+    "organizer": null,
+    "course": "Real Club de la Puerta de Hierro",
+    "courseCode": "CM01",
+    "dateStart": "2026-06-30",
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Señoras Posiciones",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marta Parages Oosterling",
+          "licencia": "CM02023562",
+          "hcp": 7.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 66,
+          "toPar": -6,
+          "inscribedId": 2352295
+        },
+        {
+          "pos": 2,
+          "name": "M Dolores Serra Lopez De Chicheri",
+          "licencia": "CM01026379",
+          "hcp": 3.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 68,
+          "toPar": -4,
+          "inscribedId": 2352329
+        },
+        {
+          "pos": 3,
+          "name": "Marta Barroso Perales",
+          "licencia": "AM03304835",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 69,
+          "toPar": -3,
+          "inscribedId": 2352333
+        },
+        {
+          "pos": 4,
+          "name": "Amelia Alonso Suau",
+          "licencia": "LV06020727",
+          "hcp": 4.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2352330
+        },
+        {
+          "pos": 5,
+          "name": "Catalina Castillejo Oriol",
+          "licencia": "CM01007233",
+          "hcp": 6.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2352337
+        },
+        {
+          "pos": 6,
+          "name": "Maria De Orueta Pemartin",
+          "licencia": "CM02011243",
+          "hcp": 3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2352336
+        },
+        {
+          "pos": 7,
+          "name": "Rocio Ruiz De Velasco Colas",
+          "licencia": "CM01007512",
+          "hcp": 6.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2352335
+        },
+        {
+          "pos": 8,
+          "name": "Beatri Alvarez De Las Asturias Bohorques De Ulloa",
+          "licencia": "CM01929620",
+          "hcp": 11.2,
+          "nivel": "J",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2352339
+        },
+        {
+          "pos": 9,
+          "name": "Maria Perez-Seoane Alvarez De Toledo",
+          "licencia": "CM01083111",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2352328
+        },
+        {
+          "pos": 10,
+          "name": "Lola Fernandez-Castaño Carriles",
+          "licencia": "CM01062100",
+          "hcp": 8.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2352338
+        },
+        {
+          "pos": 11,
+          "name": "Leticia Llado Figuerola Ferretti",
+          "licencia": "CM01294651",
+          "hcp": 16.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2352334
+        },
+        {
+          "pos": 12,
+          "name": "Alejandrina Perez Gonzalez",
+          "licencia": "CM52155509",
+          "hcp": 2.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2349271
+        },
+        {
+          "pos": 13,
+          "name": "Maria Giquel Elvira",
+          "licencia": "CM02742074",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2352331
+        },
+        {
+          "pos": 14,
+          "name": "Soledad Andrada-Vanderwilde Sanz-Briz",
+          "licencia": "AM05516915",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2352589
+        },
+        {
+          "pos": null,
+          "name": "Maria Luisa Olazabal Magdalena",
+          "licencia": "CM01023264",
+          "hcp": 5.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2352332
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "M Dolores Serra Lopez De Chicheri",
+          "licencia": "CM01026379",
+          "hcp": 3.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2352329
+        },
+        {
+          "pos": 2,
+          "name": "Marta Parages Oosterling",
+          "licencia": "CM02023562",
+          "hcp": 7.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2352295
+        },
+        {
+          "pos": 3,
+          "name": "Amelia Alonso Suau",
+          "licencia": "LV06020727",
+          "hcp": 4.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2352330
+        },
+        {
+          "pos": 4,
+          "name": "Maria De Orueta Pemartin",
+          "licencia": "CM02011243",
+          "hcp": 3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2352336
+        },
+        {
+          "pos": 5,
+          "name": "Catalina Castillejo Oriol",
+          "licencia": "CM01007233",
+          "hcp": 6.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2352337
+        },
+        {
+          "pos": 6,
+          "name": "Rocio Ruiz De Velasco Colas",
+          "licencia": "CM01007512",
+          "hcp": 6.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2352335
+        },
+        {
+          "pos": 7,
+          "name": "Alejandrina Perez Gonzalez",
+          "licencia": "CM52155509",
+          "hcp": 2.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2349271
+        },
+        {
+          "pos": 8,
+          "name": "Beatri Alvarez De Las Asturias Bohorques De Ulloa",
+          "licencia": "CM01929620",
+          "hcp": 11.2,
+          "nivel": "J",
+          "rounds": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2352339
+        },
+        {
+          "pos": 9,
+          "name": "Lola Fernandez-Castaño Carriles",
+          "licencia": "CM01062100",
+          "hcp": 8.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2352338
+        },
+        {
+          "pos": 10,
+          "name": "Maria Perez-Seoane Alvarez De Toledo",
+          "licencia": "CM01083111",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2352328
+        },
+        {
+          "pos": 11,
+          "name": "Leticia Llado Figuerola Ferretti",
+          "licencia": "CM01294651",
+          "hcp": 16.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2352334
+        },
+        {
+          "pos": 12,
+          "name": "Marta Barroso Perales",
+          "licencia": "AM03304835",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 99,
+          "toPar": 27,
+          "inscribedId": 2352333
+        },
+        {
+          "pos": 13,
+          "name": "Maria Giquel Elvira",
+          "licencia": "CM02742074",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 117,
+          "toPar": 45,
+          "inscribedId": 2352331
+        },
+        {
+          "pos": 14,
+          "name": "Soledad Andrada-Vanderwilde Sanz-Briz",
+          "licencia": "AM05516915",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 123,
+          "toPar": 51,
+          "inscribedId": 2352589
+        },
+        {
+          "pos": null,
+          "name": "Maria Luisa Olazabal Magdalena",
+          "licencia": "CM01023264",
+          "hcp": 5.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2352332
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alejandrina Perez Gonzalez",
+      "licencia": "CM52155509",
+      "hcp": 2.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Marta Parages Oosterling",
+      "licencia": "CM02023562",
+      "hcp": 7.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Perez-Seoane Alvarez De Toledo",
+      "licencia": "CM01083111",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "M Dolores Serra Lopez De Chicheri",
+      "licencia": "CM01026379",
+      "hcp": 3.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Amelia Alonso Suau",
+      "licencia": "LV06020727",
+      "hcp": 4.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Maria Giquel Elvira",
+      "licencia": "CM02742074",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Maria Luisa Olazabal Magdalena",
+      "licencia": "CM01023264",
+      "hcp": 5.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Marta Barroso Perales",
+      "licencia": "AM03304835",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Leticia Llado Figuerola Ferretti",
+      "licencia": "CM01294651",
+      "hcp": 16.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Rocio Ruiz De Velasco Colas",
+      "licencia": "CM01007512",
+      "hcp": 6.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Maria De Orueta Pemartin",
+      "licencia": "CM02011243",
+      "hcp": 3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Catalina Castillejo Oriol",
+      "licencia": "CM01007233",
+      "hcp": 6.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Lola Fernandez-Castaño Carriles",
+      "licencia": "CM01062100",
+      "hcp": 8.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Beatri Alvarez De Las Asturias Bohorques De Ulloa",
+      "licencia": "CM01929620",
+      "hcp": 11.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 15,
+      "name": "Soledad Andrada-Vanderwilde Sanz-Briz",
+      "licencia": "AM05516915",
+      "hcp": 36,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Maria De Orueta Pemartin",
+          "hcp": 3,
+          "ins": "2352336",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Rocio Ruiz De Velasco Colas",
+          "hcp": 6.2,
+          "ins": "2352335",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Catalina Castillejo Oriol",
+          "hcp": 6.4,
+          "ins": "2352337",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Alejandrina Perez Gonzalez",
+          "hcp": 2.8,
+          "ins": "2349271",
+          "jid": "71849",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "M Dolores Serra Lopez De Chicheri",
+          "hcp": 3.6,
+          "ins": "2352329",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Amelia Alonso Suau",
+          "hcp": 4.2,
+          "ins": "2352330",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Maria Luisa Olazabal Magdalena",
+          "hcp": 5.9,
+          "ins": "2352332",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Marta Parages Oosterling",
+          "hcp": 7.6,
+          "ins": "2352295",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Lola Fernandez-Castaño Carriles",
+          "hcp": 8.4,
+          "ins": "2352338",
+          "jid": "71849",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Beatri Alvarez De Las Asturias Bohorques De Ulloa",
+          "hcp": 11.2,
+          "ins": "2352339",
+          "jid": "71849",
+          "nivel": "J"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Leticia Llado Figuerola Ferretti",
+          "hcp": 16.4,
+          "ins": "2352334",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Maria Perez-Seoane Alvarez De Toledo",
+          "hcp": 21.4,
+          "ins": "2352328",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Marta Barroso Perales",
+          "hcp": 26.9,
+          "ins": "2352333",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Maria Giquel Elvira",
+          "hcp": 27.6,
+          "ins": "2352331",
+          "jid": "71849",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Soledad Andrada-Vanderwilde Sanz-Briz",
+          "hcp": 36,
+          "ins": "2352589",
+          "jid": "71849",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71849
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/656793426_posiciones_de_bandera.pdf",
+    "/uploads/competiciones/pdf/2478963523_reglas_locales.pdf"
+  ]
+}
