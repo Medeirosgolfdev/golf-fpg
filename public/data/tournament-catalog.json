@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-04T22:08:00.868Z",
+  "generatedAt": "2026-07-05T23:02:58.645Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -186,6 +186,12 @@
         "rfeg-nc61146_alevín_sc",
         "rfeg-nc61154_benjamín_sc",
         "rfeg-nc61154_benjamín_hcp",
+        "rfeg-nc61180_alevín_sc",
+        "rfeg-nc61180_alevín_hcp",
+        "rfeg-nc61181_infantil_sc",
+        "rfeg-nc61181_infantil_hcp",
+        "rfeg-nc61182_benjamín_sc",
+        "rfeg-nc61182_benjamín_hcp",
         "rfeg-nc61283_alevín",
         "rfeg-nc61283_infantil",
         "rfeg-nc61283_juvenil",
@@ -519,8 +525,8 @@
         "rfeg-rfeg15361_cadete_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-06-21",
-      "editionsCount": 510
+      "lastDate": "2026-07-04",
+      "editionsCount": 516
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -7554,6 +7560,28 @@
       "editionsCount": 12
     },
     {
+      "id": "uskids-canadian-invitational",
+      "label": "Canadian Invitational",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-347",
+        "uskids-1300",
+        "uskids-7177",
+        "uskids-13527",
+        "uskids-3869",
+        "uskids-5584",
+        "uskids-11416",
+        "uskids-16058",
+        "uskids-8878",
+        "uskids-9869",
+        "uskids-18976",
+        "uskids-21456"
+      ],
+      "firstDate": "2014-07-07",
+      "lastDate": "2026-07-06",
+      "editionsCount": 12
+    },
+    {
       "id": "uskids-royal-st-cloud-golf-links-tour-championship",
       "label": "Royal St. Cloud Golf Links (Tour Championship)",
       "sourceId": "uskids",
@@ -8488,27 +8516,6 @@
       ],
       "firstDate": "2016-04-23",
       "lastDate": "2024-05-18",
-      "editionsCount": 11
-    },
-    {
-      "id": "uskids-canadian-invitational",
-      "label": "Canadian Invitational",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-347",
-        "uskids-1300",
-        "uskids-7177",
-        "uskids-13527",
-        "uskids-3869",
-        "uskids-5584",
-        "uskids-11416",
-        "uskids-16058",
-        "uskids-8878",
-        "uskids-9869",
-        "uskids-18976"
-      ],
-      "firstDate": "2014-07-07",
-      "lastDate": "2025-07-07",
       "editionsCount": 11
     },
     {
