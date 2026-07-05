@@ -166,12 +166,13 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
   // ── Paris Invitational 2026 & 2025 – Golf Paris Val d'Europe (RED/BLUE) ──
   21795: parisTees,
   18975: parisTees,
-  // ── Rome Classic 2025 – Terre Dei Consoli Golf Club ───
+  // ── Rome Classic 2025 – Terre Dei Consoli (Championship Course) ───
+  // CR/Slope OFICIAIS do PDF USKids "COURSE RATING AND S.R." (rome_classic_2025).
   20175: {
-    2105: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [255,442,125,298,293,315,327,380,106, 263,390,239,110,284,301,134,380,333] },
-    2104: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260] },
-    2103: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260] },
-    2102: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260] },
+    2105: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [255,442,125,298,293,315,327,380,106, 263,390,239,110,284,301,134,380,333], cr: 67.1, slope: 115 },
+    2104: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260], cr: 64.4, slope: 107 },
+    2103: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260], cr: 64.4, slope: 107 },
+    2102: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260], cr: 62.5, slope: 105 },
   },
   // ── Venice Open 2025 – Golf Della Montecchia (Boys/Girls 9-12) + Frassanelle (13-18) ─
   // CR/Slope OFICIAIS do PDF USKids "COURSE RATING & SLOPE" (venice_open_2025_

@@ -218,10 +218,24 @@ function parseClasificaciones(html) {
     const cNivel = idx("^Nivel$");
     const cTotal = idx("^Total");
     const roundCols = [];
+    const hjCols = [];
     for (let i = 0; i < header.length; i++) {
       const m2 = /^J(\d+)$/.exec(header[i]);
       if (m2) roundCols.push({ round: parseInt(m2[1], 10), idx: i });
+      // "HcpJuego J1" / "HcpJuego J2" — o hándicap de JUEGO (= de campo) por ronda.
+      // Vem no HTML numa coluna com display:none. Permite derivar CR/Slope (que a
+      // NextCaddy não expõe) por regressão contra o HI → coluna SD.
+      const mHj = /HcpJuego\s*J?(\d+)/i.exec(header[i]);
+      if (mHj) hjCols.push({ round: parseInt(mHj[1], 10), idx: i });
     }
+    // "+N" (hándicap plus) → −N; "E"/"0" → 0; "N" → N.
+    const parseHJ = (v) => {
+      const s = String(v == null ? "" : v).trim();
+      if (!s || s === "-") return null;
+      if (/^\+/.test(s)) { const n = parseInt(s.slice(1), 10); return isNaN(n) ? null : -n; }
+      if (/^E$/i.test(s)) return 0;
+      const n = parseInt(s, 10); return isNaN(n) ? null : n;
+    };
 
     const players = [];
     for (const row of rows) {
@@ -242,8 +256,9 @@ function parseClasificaciones(html) {
         const v = r[rc.idx];
         return { round: rc.round, gross: v && /^\d+$/.test(v) ? parseInt(v, 10) : null };
       });
+      const hcpJuego = hjCols.map((hc) => ({ round: hc.round, ch: parseHJ(r[hc.idx]) }));
       if (!name && !licencia) continue;
-      players.push({ pos, name, licencia, hcp, nivel, rounds, total, toPar, inscribedId: row.inscribedId });
+      players.push({ pos, name, licencia, hcp, nivel, rounds, hcpJuego, total, toPar, inscribedId: row.inscribedId });
     }
     const meta = namesByCat[String(categoryNum)] || {};
     tables.push({ category: categoryNum, categoryName: meta.name || null, expectedJugadores: meta.jugadores || null, header, players });

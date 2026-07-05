@@ -114,6 +114,7 @@ interface RFEGPlayer {
   total?: number | null;
   toPar?: number | null;
   teeMeters?: number | null;   // distância total do tee deste jogador (rapazes/raparigas jogam tees distintos)
+  courseHcp?: number | null;   // hándicap de campo (do "HcpJuego" NextCaddy) — deriva CR/Slope
 }
 
 interface RFEGDetail {
@@ -488,6 +489,47 @@ function escaloEsForPlayer(
  *
  * Requer que o JSON tenha sido scrapado com `--scorecards` (popula roundScores
  * em cada player + course.par[]). Se estiver vazio, devolve null. */
+/** Deriva CR/Slope por sexo a partir da relação linear WHS entre HI e hándicap
+ *  de campo: CH = HI'·(Slope/113) + (CR − Par). O NextCaddy não publica CR/Slope,
+ *  mas expõe o CH (coluna oculta "HcpJuego") → a regressão de CH sobre HI recupera
+ *  o declive `a` e o intercepto `b`: CR = Par + b, Slope = 113·a.
+ *  ⚠ Torneios de 9 buracos usam o índice de 9h = HI/2, logo o CH escala com HI/2
+ *  → o declive é Slope9/(2·113) e Slope9 = 226·a (senão vinha metade e era rejeitado).
+ *  Cada sexo joga o seu tee → CR/Slope próprios. Exige ≥4 pares e ajuste apertado
+ *  (o CH é inteiro → R² alto confirma o modelo); senão devolve null (sem coluna SD). */
+function ncDeriveRatings(
+  players: RFEGPlayer[],
+  parTotal: number,
+  is9: boolean,
+): Record<"M" | "F", { cr: number; slope: number } | null> {
+  const slopeDivisor = is9 ? 226 : 113;  // 9h: CH baseado em HI/2
+  const fit = (sx: "M" | "F"): { cr: number; slope: number } | null => {
+    const pts: [number, number][] = [];
+    for (const p of players) {
+      const s = p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : null;
+      if (s !== sx) continue;
+      const hi = typeof p.hcp === "number" ? p.hcp : null;
+      const ch = p.courseHcp;
+      if (hi == null || ch == null || Number.isNaN(ch)) continue;
+      pts.push([hi, ch]);
+    }
+    if (pts.length < 4) return null;
+    const n = pts.length;
+    const mx = pts.reduce((a, q) => a + q[0], 0) / n;
+    const my = pts.reduce((a, q) => a + q[1], 0) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (const [x, y] of pts) { sxy += (x - mx) * (y - my); sxx += (x - mx) ** 2; syy += (y - my) ** 2; }
+    if (sxx === 0) return null;
+    const a = sxy / sxx, b = my - a * mx;
+    const r2 = syy === 0 ? 1 : (sxy * sxy) / (sxx * syy);
+    const slope = a * slopeDivisor, cr = parTotal + b;
+    // Sanidade WHS: Slope plausível + CR perto do par + ajuste apertado.
+    if (r2 < 0.9 || !(slope > 55 && slope < 165) || Math.abs(cr - parTotal) > 14) return null;
+    return { cr: Math.round(cr * 10) / 10, slope: Math.round(slope * 10) / 10 };
+  };
+  return { M: fit("M"), F: fit("F") };
+}
+
 function ncToFPGTournament(
   detail: RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null },
   dobLookup?: DobLookup,
@@ -539,6 +581,10 @@ function ncToFPGTournament(
   //  - club = clube real (ESCONDIDO via hideClub)
   const dateRef = detail.meta.dateStart || null;
 
+  // CR/Slope por sexo derivados do hándicap de campo (coluna "HcpJuego") — a
+  // NextCaddy não os publica. Alimentam a coluna SD (via computeSD).
+  const ncRatings = ncDeriveRatings(players, parTotal, holeCount <= 9);
+
   const fpgPlayers: FPGPlayer[] = players.map((p, idx) => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
@@ -550,6 +596,7 @@ function ncToFPGTournament(
     const escLabel = escaloEsForPlayer(p.catEdad || e?.catEdad, dob, dateRef);
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
+    const rating = sex ? ncRatings[sex] : null;   // CR/Slope do tee deste sexo (SD)
     // Metros do TEE deste jogador (rapazes jogam das amarelas, raparigas das
     // vermelhas → distâncias diferentes), vindos do cartão dele. Fallback à
     // distância do campo. O teeName mostra a distância total para diferenciar tees.
@@ -563,7 +610,13 @@ function ncToFPGTournament(
     const playerMetersTotal = playerMeters.reduce((a, b) => a + (b || 0), 0);
     const teeLabel = playerMetersTotal > 0 ? `${playerMetersTotal} m` : (meters18.length ? "Tour" : undefined);
     const roundScores: FPGRoundScore[] = (p.rounds || [])
-      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === holeCount)
+      // Exigir pelo menos um buraco com golpes > 0: um inscrito que NÃO jogou (WD/
+      // DNS) traz o cartão a zeros (18×0), que passava o teste de comprimento e dava
+      // gross 0 → ± = 0−72 = −72 na vista de ronda. Rondas a zeros = não jogadas.
+      .filter((r) => {
+        const s = (r as { scores?: number[] }).scores;
+        return Array.isArray(s) && s.length === holeCount && s.some((x) => x > 0);
+      })
       .map((r) => {
         const rm = (r as { meters?: number[] | null }).meters;
         const mm = (Array.isArray(rm) && rm.length === holeCount) ? rm : playerMeters;
@@ -575,6 +628,8 @@ function ncToFPGTournament(
           si: si18,
           meters: mm,
           teeName: teeLabel,
+          courseRating: rating?.cr,
+          slope: rating?.slope,
         };
       });
     const incomplete = roundScores.length < nRounds;
@@ -597,6 +652,8 @@ function ncToFPGTournament(
       grossTotal,
       toPar,
       hcpExact: p.hcp ?? undefined,
+      courseRating: rating?.cr,
+      slope: rating?.slope,
       escalao: escLabel,
       // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
       _sex: sex,
@@ -835,6 +892,8 @@ interface NCPlayer {
   hcp?: number | null;
   nivel?: string | null;
   rounds?: { round: number; gross: number | null }[];
+  /** Hándicap de juego (= de campo) por ronda, da coluna oculta "HcpJuego J{n}". */
+  hcpJuego?: { round: number; ch: number | null }[];
   roundScores?: NCRoundScore[];
   total?: number | null;
   toPar?: number | null;
@@ -884,7 +943,7 @@ interface NCDetail {
     // total-high/total-low: só o par TOTAL foi inferido (sem par por buraco).
     parConfidence?: "high" | "medium" | "low" | "total-high" | "total-low";
   };
-  leaderboard: { category: number; players: NCPlayer[] }[];
+  leaderboard: { category: number; categoryName?: string | null; players: NCPlayer[] }[];
   inscritos: NCInsc[];
   /** Resultados publicados só em PDF (sem tabela HTML parseável). */
   leaderboardPdfOnly?: boolean;
@@ -1074,6 +1133,15 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
 }
 type DobLookup = Record<string, DobLookupEntry>;
 
+/** Sexo a partir do nome da categoria NextCaddy ("Alevín Masculino Scratch",
+ *  "Scratch Señoras", "Caballeros"…). Devolve null quando não é identificável. */
+function ncCatSex(name?: string | null): "M" | "F" | null {
+  const s = (name || "").toLowerCase();
+  if (/femenin|femenal|se[ñn]oras?|damas|girls|chicas|femenina/.test(s)) return "F";
+  if (/masculin|masculina|caballeros?|varonil|boys|chicos/.test(s)) return "M";
+  return null;
+}
+
 function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
   // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome.
@@ -1105,6 +1173,11 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
   const ncParTotal = Array.isArray(nc.course?.par) ? nc.course!.par!.reduce((a, b) => a + (b || 0), 0) : 0;
   const lbPlayers: RFEGPlayer[] = [];
   for (const cat of (nc.leaderboard || [])) {
+    // Sexo derivado do NOME da categoria scrapada ("Alevín Masculino", "Scratch
+    // Señoras", "Caballeros"…). É a fonte fiável — o lookup por licença (e.sex) só
+    // resolve os jogadores no roster e deixava a maioria com sexo null, impedindo
+    // a separação M/F. A categoria manda; o lookup é fallback.
+    const catSex = ncCatSex(cat.categoryName);
     for (const p of (cat.players || [])) {
       const e = enrich(p.licencia ?? null);
       // NextCaddy expõe scores hole-by-hole em p.roundScores[]; o campo p.rounds[] vem sempre vazio.
@@ -1136,6 +1209,9 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
           }),
         };
       }
+      // Hándicap de campo (do "HcpJuego"): 1º valor não-nulo (é constante entre
+      // rondas). Serve para derivar CR/Slope por regressão contra o HI.
+      const courseHcp = (p.hcpJuego || []).map((h) => h.ch).find((c) => c != null) ?? null;
       lbPlayers.push({
         pos: p.pos ?? null,
         name: p.name,
@@ -1144,7 +1220,8 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
         // Fallback ao lookup global se o player não tem HCP no torneio
         hcp: p.hcp ?? hcpFromLookup(p.licencia ?? null),
         catEdad: p.nivel ?? (e ? e.catEdad : null),
-        sexo: e ? e.sex : null,
+        sexo: catSex ?? (e ? e.sex : null),
+        courseHcp,
         club: e ? e.club : null,
         dob: e ? e.dob : null,
         estado: null,
@@ -2924,6 +3001,34 @@ async function rfegLoadDivisions(
     // SD (WHS) visível quando o campo tem CR+Slope reais (mitarjeta OU livegolfscoring).
     scOptions: { ...lgsScorecardOptions(), hideSD: !(data.mitarjetaTorneo || hasRating) },
   };
+
+  // NextCaddy junta rapazes e raparigas no MESMO tour (o leaderboard vem em
+  // categorias "Alevín Masculino"/"Femenino" etc.). Separar em 2 tabs M/F — só
+  // as PANCADAS (gross); a ordenação já é a Scratch do leaderboard. Só divide
+  // quando há resultados com ambos os sexos (senão fica a divisão única).
+  if (t.source === "nextcaddy" && results && (results.players?.length ?? 0) > 0) {
+    const sexOf = (p: FPGPlayer): "M" | "F" | null => {
+      const s = (p as FPGPlayer & { _sex?: "M" | "F" | null })._sex;
+      return s === "M" || s === "F" ? s : null;
+    };
+    const males = results.players.filter((p) => sexOf(p) === "M");
+    const females = results.players.filter((p) => sexOf(p) === "F");
+    const unknown = results.players.filter((p) => sexOf(p) == null);
+    if (males.length > 0 && females.length > 0) {
+      const escLbl = t.category ?? division.escalao;
+      const mkSex = (sx: "M" | "F", plist: FPGPlayer[]): CircuitDivision => ({
+        ...division,
+        key: sx,
+        sex: sx,
+        tabLabel: `${escLbl} ${sx}`,
+        results: { ...results, players: plist, playerCount: plist.length },
+      });
+      // Sexo desconhecido (raro depois de ncCatSex) → fica com os rapazes para
+      // não desaparecer do leaderboard.
+      return [mkSex("M", [...males, ...unknown]), mkSex("F", females)];
+    }
+  }
+
   return [division];
 }
 
@@ -2932,7 +3037,15 @@ async function rfegLoadDivisions(
  *  Masculino 2026" → "Campeonato de España 2026"). */
 function rfegBaseName(t: RFEGIndexEntry): string {
   let n = t.name || "";
-  if (t.category) n = n.replace(new RegExp(`\\b${t.category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi"), " ");
+  const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  if (t.category) {
+    n = n.replace(new RegExp(`\\b${t.category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi"), " ");
+    // Strip adicional SEM acentos: o nome pode trazer o escalão sem acento
+    // ("Campeonato Andalucia Alevin") enquanto a categoria é acentuada ("Alevín")
+    // → o \b…\b acima não casava e a Andaluzia Alevín ficava fora do grupo.
+    const catF = fold(t.category);
+    n = n.replace(/[\p{L}]+/gu, (w) => (fold(w) === catF ? " " : w));
+  }
   n = n.replace(/\b(Masculino|Femenino|Masculina|Femenina|Mascul\.?|Femen\.?|Masc\.?|Fem\.?)\b/gi, " ");
   return n
     .replace(/\([\s.,íÍ]*\)/g, " ")                 // parênteses que ficaram vazios/lixo
@@ -3042,7 +3155,9 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
   // "Puntuable Nacional" espalhado por meses). Caso contrário, fica avulso.
   const byKey = new Map<string, RFEGIndexEntry[]>();
   for (const t of visible) {
-    const key = `${t.source}|${t.year ?? "?"}|${rfegBaseName(t)}`;
+    // slugify no nome-base → chave insensível a acentos ("Andalucia"/"Andalucía"
+    // colapsam) e a maiúsculas, para o mesmo campeonato não partir em baldes.
+    const key = `${t.source}|${t.year ?? "?"}|${slugify(rfegBaseName(t))}`;
     const arr = byKey.get(key) ?? [];
     arr.push(t);
     byKey.set(key, arr);
@@ -3098,7 +3213,9 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
-      sex: showSex ? "Mixed" : (sexes.has("F") ? "F" : "M"),
+      // NextCaddy: cada tour junta M+F (dividido em tabs por categoria) → Mixed,
+      // para o filtro de sexo ao nível do grupo não o esconder ao filtrar F.
+      sex: (showSex || sorted[0].source === "nextcaddy") ? "Mixed" : (sexes.has("F") ? "F" : "M"),
       // Escalões contidos → o filtro de escalão continua a apanhar a entrada
       // combinada (lazy) e o dropdown mantém as opções.
       escaloes: [...new Set(sorted.map((t) => t.category).filter((c): c is string => !!c))],
@@ -3111,20 +3228,28 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       loadDivisions: async () => {
         const per = await Promise.all(sorted.map(async (ct) => {
           const divs = await rfegLoadDivisions(ct, dobLookup, hcpLookup);
-          const sexL = /F/i.test(ct.sex || "") ? "F" : "M";
           // O torneio combinado não tem `sourceUrl` (é multi-escalão), por isso o
           // link oficial de cada categoria — que numa entry avulsa vinha do
           // `sourceUrl` — é reposto AQUI como link da divisão (microsite RFEG),
           // a juntar ao link de clasificación (mitarjeta) já em `d.links`.
           const official = { label: "Microsite oficial", url: rfegSourceUrl(ct), icon: "🏛️", title: "Microsite RFEG do torneio" };
-          return divs.map((d, i) => ({
-            ...d,
-            key: `${ct.source}:${ct.id}:${i}`,
-            escalao: ct.category ?? d.escalao,
-            sex: rfegSex(ct.sex),
-            tabLabel: showSex ? `${ct.category ?? d.escalao ?? "—"} ${sexL}` : (ct.category ?? d.escalao ?? "—"),
-            links: [...(d.links ?? []), official],
-          }));
+          return divs.map((d, i) => {
+            // Sexo: preferir o da PRÓPRIA divisão (NextCaddy dividido por categoria
+            // M/F) sobre o do índice (que para o NextCaddy é null). Anexa M/F à tab
+            // quando o grupo varia de sexo (showSex, ex: RFEGolf España) OU a divisão
+            // já é sexuada (NextCaddy) — evita "Alevín M" redundante em grupos só-M.
+            const dSex = (d.sex === "M" || d.sex === "F") ? d.sex : rfegSex(ct.sex);
+            const escLbl = ct.category ?? d.escalao ?? "—";
+            const withSex = showSex || d.sex === "M" || d.sex === "F";
+            return {
+              ...d,
+              key: `${ct.source}:${ct.id}:${i}`,
+              escalao: ct.category ?? d.escalao,
+              sex: dSex,
+              tabLabel: withSex ? `${escLbl} ${dSex === "F" ? "F" : "M"}` : escLbl,
+              links: [...(d.links ?? []), official],
+            };
+          });
         }));
         return per.flat();
       },
