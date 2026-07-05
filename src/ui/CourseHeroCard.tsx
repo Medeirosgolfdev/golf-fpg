@@ -21,7 +21,7 @@ export interface ParBreakdown {
   holes: HoleEntry[];
 }
 
-export function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
+function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
   if (!tee || !Array.isArray(tee.holes)) return [];
   const out: ParBreakdown[] = [];
   for (const p of [3, 4, 5] as const) {
@@ -70,7 +70,7 @@ export function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; 
   };
 }
 
-export function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
+function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
   const pars = parBreakdown(tee);
   const tByHole = new Map<number, { par: 3|4|5; t: number }>();
   for (const p of pars) {

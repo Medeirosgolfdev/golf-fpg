@@ -15,7 +15,7 @@
  *
  * Manter em sincronia se forem descobertas novas entradas-torneio.
  */
-export const TOURNAMENT_COURSE_KEYS: ReadonlySet<string> = new Set([
+const TOURNAMENT_COURSE_KEYS: ReadonlySet<string> = new Set([
   "away-1-puntuable-zonal-de-galicia-asturias",
   "away-european-boys-team-championship-div-2",
   "away-european-ladies-team-championship",

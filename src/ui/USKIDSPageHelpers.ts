@@ -13,16 +13,16 @@ export {
   REGIONAL_CHAMPIONSHIPS,
   LINKS_EXTRA,
   TEES_LOOKUP,
-  USA_KEYWORDS,
-  EURO_KEYWORDS,
-  NON_USKIDS_KEYWORDS,
+  
+  
+  
 } from "./uskidsData";
 
 // Re-export helpers
 export {
-  shortTornName,
-  tornCanon,
-  hasCanon,
+  
+  
+  
   torneioRegiao,
   isUSKidsTorneio,
   badgeVagas,
@@ -34,5 +34,5 @@ export {
   type TorneioComManuel,
   seriesBase,
   playerSeriesResult,
-  fmtPosRivais,
+  
 } from "./uskidsHelpers";

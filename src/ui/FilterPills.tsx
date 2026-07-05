@@ -103,4 +103,4 @@ export function FilterPills<K extends string>(props: FilterPillsProps<K>) {
   );
 }
 
-export default FilterPills;
+

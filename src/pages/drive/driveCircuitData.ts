@@ -31,17 +31,17 @@ import { isManuelByName } from "../../constants/manuel";
 type DriveRuntime = { _admissions?: FpgAdmissions; _draws?: Record<string, FpgDraw> };
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
-export const DRIVE_ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
+const DRIVE_ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 
 /** Labels legíveis por série (usadas no agrupamento da sidebar). */
-export const DRIVE_SERIES_LABEL: Record<string, string> = {
+const DRIVE_SERIES_LABEL: Record<string, string> = {
   tour: "Drive Tour",
   challenge: "Drive Challenge",
   aquapor: "AQUAPOR",
 };
 
 /** Labels de região (filtro `liga` do CircuitShell). */
-export const DRIVE_REGION_LABEL: Record<string, string> = {
+const DRIVE_REGION_LABEL: Record<string, string> = {
   norte: "Norte",
   tejo: "Tejo",
   sul: "Sul",

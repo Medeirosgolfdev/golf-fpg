@@ -193,4 +193,3 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
   );
 }
 
-export default TournSidebarItem;

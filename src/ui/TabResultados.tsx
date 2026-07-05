@@ -539,4 +539,4 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
 }
 
 export default TabResultados;
-export { EscalaoTabs, EscalaoSection, escalaoToTournament, SecaoGreatgolf };
+;

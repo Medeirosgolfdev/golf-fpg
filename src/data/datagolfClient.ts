@@ -86,30 +86,6 @@ export interface Scorecard {
   [k: string]: unknown;
 }
 
-/* ── Helper: extrair arrays hole-by-hole dos campos par_1..18 ── */
-export function extractHoleArray(sc: Record<string, unknown>, prefix: "par" | "gross" | "stroke_index" | "meters" | "net"): number[] {
-  const holes = Number(sc.nholes || sc.hole_count || 18);
-  const start = Number(sc.starting_hole_index || 1);
-  const arr: number[] = [];
-  // Se starting_hole_index = 10 (back-9), pega par_10..par_18; senão par_1..par_N
-  const from = start === 10 ? 10 : 1;
-  const to = from + holes - 1;
-  for (let i = from; i <= to; i++) {
-    const v = sc[`${prefix}_${i}`];
-    arr.push(typeof v === "number" ? v : Number(v) || 0);
-  }
-  return arr;
-}
-
-/** Converte .NET "/Date(ms)/" para ISO YYYY-MM-DD. */
-export function parseNetDate(s: string | null | undefined): string | null {
-  if (!s) return null;
-  const m = String(s).match(/\/Date\((-?\d+)\)\//);
-  if (!m) return null;
-  const d = new Date(parseInt(m[1], 10));
-  return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
-}
-
 /* ── Cache em memória (session-scoped) ──────────────────────── */
 const _cache = new Map<string, unknown>();
 
@@ -146,11 +122,6 @@ async function call<T>(endpoint: string, cacheKey: string): Promise<T> {
   const data = json.data?.Records ?? json.data;
   _cache.set(cacheKey, data);
   return data as T;
-}
-
-/** Limpa a cache (útil após criar nova ronda, p.ex.). */
-export function clearDatagolfCache(): void {
-  _cache.clear();
 }
 
 /* ── API ────────────────────────────────────────────────────── */
@@ -191,20 +162,4 @@ export async function getScorecard(
     rotateAroeira2ScorecardIfNeeded(sc as unknown as Record<string, unknown>);
   }
   return result;
-}
-
-/** Perfil FPG do jogador (32 campos de cadastro). */
-export async function getProfile(fed: string | number): Promise<Record<string, unknown>[]> {
-  return call<Record<string, unknown>[]>(
-    `/api/datagolf?action=profile&fed=${encodeURIComponent(String(fed))}`,
-    `profile:${fed}`,
-  );
-}
-
-/** Histórico completo de movimentos de handicap. */
-export async function getHandicaps(fed: string | number): Promise<Record<string, unknown>[]> {
-  return call<Record<string, unknown>[]>(
-    `/api/datagolf?action=handicaps&fed=${encodeURIComponent(String(fed))}`,
-    `hcps:${fed}`,
-  );
 }

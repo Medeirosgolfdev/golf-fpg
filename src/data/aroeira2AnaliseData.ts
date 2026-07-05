@@ -33,7 +33,7 @@ function normCourse(s: string | null | undefined): string {
 
 const AROEIRA2_NORMS = ["pgaaroeirano2", "pgaaroeira2", "aroeirano2", "aroeira2", "aroeiraii"];
 
-export function isAroeiraIICourse(courseOrCampo: string | null | undefined): boolean {
+function isAroeiraIICourse(courseOrCampo: string | null | undefined): boolean {
   const n = normCourse(courseOrCampo);
   return AROEIRA2_NORMS.some(k => n.includes(k));
 }
@@ -152,7 +152,7 @@ interface AdmissionsFile {
 
 interface PullFile { tournaments: Tournament[] }
 
-export async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<AnalisePackage> {
+async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<AnalisePackage> {
   // Sources to scan for Aroeira II tournaments
   const sources = [
     "/data/jovens_2026.json",
@@ -343,7 +343,7 @@ interface HoleStats {
  * Inclui todas as rondas de todos os jogadores no Aroeira II — o "field"
  * verdadeiro do campo, não só do torneio actual.
  */
-export function buildHoleStats(
+function buildHoleStats(
   allRounds: PlayerRoundOnCourse[],
   parRef: number[],
   siRef: number[],
@@ -440,7 +440,7 @@ export interface PlayerScorecardBundle {
  * Top 21: ordenados pela posição final no torneio actual.
  * Sub-12 inscritos: ordenados por avgGross (melhor primeiro).
  */
-export function buildPlayerScorecards(
+function buildPlayerScorecards(
   pkg: AnalisePackage,
   allRounds: PlayerRoundOnCourse[],
 ): PlayerScorecardBundle[] {
@@ -682,16 +682,6 @@ export function buildManuelTheoretical(manuelStats: ManuelHoleStats[], manuelRou
     diff: bestReal - theoretical,
     perHoleBest: valid.map(s => s.best),
   };
-}
-
-/** Inscritos Sub-12 SEM histórico no Aroeira II (estreantes). */
-export function buildSub12SemHistorico(
-  _currentTournament: Tournament,
-  _pkg: AnalisePackage,
-): Array<{ fed: string | null; nome: string; clube: string; hcp: number | null }> {
-  // Lê from admissions - mas só temos pkg.sub12Inscritos (com histórico).
-  // Para os "sem histórico" precisamos de re-fetch. Simplificação: calculamos no loader rico.
-  return [];
 }
 
 /** Ranking dos jogadores Top 21 por toPar médio no campo (todas as rondas Aroeira II). */

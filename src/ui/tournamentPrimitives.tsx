@@ -1,4 +1,4 @@
-﻿/**
+/**
  *
  * ═══════════════════════════════════════════════════════════════
  * FAMÍLIA DE TABELAS — MANTER SEMPRE EM SINCRONIA
@@ -32,7 +32,6 @@
 import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { C } from "../utils/colors";
 import { fmtToPar } from "../utils/format";
 import { flag as flagOf } from "../utils/flagUtils";
 
@@ -50,15 +49,6 @@ export function tpColor(v: number | null | undefined): string | undefined {
   if (v > 0) return "var(--color-danger)";
   return undefined;
 }
-
-/* ─── Escalão pill ─── */
-export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
-  "sub10": { bg: C.esc.sub10.bg, color: C.esc.sub10.fg },
-  "sub12": { bg: C.esc.sub12.bg, color: C.esc.sub12.fg },
-  "sub14": { bg: C.esc.sub14.bg, color: C.esc.sub14.fg },
-  "sub16": { bg: C.esc.sub16.bg, color: C.esc.sub16.fg },
-  "sub18": { bg: C.esc.sub18.bg, color: C.esc.sub18.fg },
-};
 
 /* ─── Tee dot ─── */
 export function TeeDot({ teeName }: { teeName?: string }) {

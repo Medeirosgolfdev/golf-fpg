@@ -148,7 +148,7 @@ const CCODE_REGION: Record<string, string> = {
   "003": "Açores",
 };
 
-export function ccodeToRegion(ccode: string | null | undefined): string {
+function ccodeToRegion(ccode: string | null | undefined): string {
   if (!ccode) return "outro";
   return CCODE_REGION[ccode] ?? "outro";
 }
@@ -167,7 +167,7 @@ export function ccodeToRegion(ccode: string | null | undefined): string {
 //   - "Campeonato Regional..." / "Camp Norte Jovens..." → Regional
 //   - "Campeonato Nacional de Clubes" → EXCLUI (competição de equipas, não
 //     individual).
-export function classifyTournament(t: Tournament): ChampionshipType | null {
+function classifyTournament(t: Tournament): ChampionshipType | null {
   const name = t.name || "";
   // Clubes (equipas) — excluir
   if (/Campeonato\s+Nacional\s+(de\s+)?Clubes/i.test(name)) return null;
@@ -187,7 +187,7 @@ export function classifyTournament(t: Tournament): ChampionshipType | null {
 }
 
 // ── Sexo a partir do nome do torneio ───────────────────────────────────
-export function detectSex(t: Tournament): Sex {
+function detectSex(t: Tournament): Sex {
   const name = t.name || "";
   // Sufixos explícitos: "Rapazes" / "Raparigas" / " H" / " S" / " M" / " F"
   if (/Raparigas?/i.test(name)) return "F";
@@ -214,7 +214,7 @@ export function detectSex(t: Tournament): Sex {
 // Normalização: "Sub 25" (formato antigo FPG, 2022-2023) → "Sub 24" (formato
 // canónico actual, usado a partir de 2024 e nas análises). Mantém consistência
 // nas tabelas da análise cross-year.
-export function detectEscalao(t: Tournament): string | null {
+function detectEscalao(t: Tournament): string | null {
   const raw = t.escalao || (t.name || "").match(/Sub\s*[-–]?\s*(\d+)/i)?.[0] || null;
   if (!raw) return null;
   const m = raw.match(/Sub\s*[-–]?\s*(\d+)/i);
@@ -244,8 +244,8 @@ export function escalaoInYear(dob: string | null, year: number): string | null {
 // Uso: identificar escalões designados pelo organizador, mesmo quando
 // jogadores fora do intervalo tenham jogado "para cima" (bug histórico:
 // Teresa Ferreira 13 yo a jogar no Sub25-Sub16 não pode ser campeã Sub 14).
-export const ESC_BRACKETS = [10, 12, 14, 16, 18, 24];
-export function parseEscaloes(s: string): string[] {
+const ESC_BRACKETS = [10, 12, 14, 16, 18, 24];
+function parseEscaloes(s: string): string[] {
   if (!s) return [];
   const asEsc = (n: number) => `Sub ${n === 25 ? 24 : n}`;
 

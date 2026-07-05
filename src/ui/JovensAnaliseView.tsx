@@ -1078,4 +1078,4 @@ export function JovensAnaliseView({
   );
 }
 
-export default JovensAnaliseView;
+

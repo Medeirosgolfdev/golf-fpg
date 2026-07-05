@@ -30,7 +30,7 @@ const _cache = new Map<string, Promise<Response>>();
  * - URLs sem "?" → cached (partilhados entre páginas)
  * - URLs com "?" → sempre fresh (ex: ?v=Date.now() para bust de cache do browser)
  */
-export function cachedFetch(url: string): Promise<Response> {
+function cachedFetch(url: string): Promise<Response> {
   // Não cachear URLs com query string (o chamador quer sempre fresh)
   if (url.includes("?")) return fetch(url);
 
@@ -73,11 +73,4 @@ export async function cachedFetchJson<T = unknown>(url: string): Promise<T | nul
  */
 export function invalidateCache(url: string): void {
   _cache.delete(url);
-}
-
-/**
- * Limpa toda a cache (útil em testes ou hot-reload de desenvolvimento).
- */
-export function clearFetchCache(): void {
-  _cache.clear();
 }

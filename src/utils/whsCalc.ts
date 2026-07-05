@@ -52,7 +52,7 @@ export function calcAGS(
 }
 
 /* ── Expected SD por 9 buracos (tabela WHS oficial com interpolação linear) ── */
-export const EXP9: Record<number, number> = {
+const EXP9: Record<number, number> = {
   0:1.2,1:1.7,2:2.2,3:2.8,4:3.3,5:3.8,6:4.3,7:4.8,8:5.4,9:5.9,
   10:6.4,11:6.9,12:7.4,13:8.0,14:8.5,15:9.0,16:9.5,17:10.0,18:10.6,
   19:11.1,20:11.6,21:12.2,22:12.7,23:13.2,24:13.7,25:14.2,26:14.8,

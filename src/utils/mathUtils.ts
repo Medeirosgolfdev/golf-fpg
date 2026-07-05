@@ -134,9 +134,3 @@ export function getAvgZ(
 export function toggleArr<T>(arr: T[], v: T): T[] {
   return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
 }
-
-/** Formata percentagem: 0.752 → "75%"  ou  count/total → "75%" */
-export function pct(v: number, total?: number): string {
-  const val = total != null ? (v / total) * 100 : v * 100;
-  return val.toFixed(0) + "%";
-}

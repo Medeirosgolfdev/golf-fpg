@@ -7,12 +7,12 @@
 
 // Re-export all constants from uskidsData.ts for backward compatibility
 export {
-  ESCALAO_ORDER,
+  
   ESCALOES_DESTAQUE_USKIDS,
-  REGIONAL_CHAMPIONSHIPS,
-  USA_KEYWORDS,
-  EURO_KEYWORDS,
-  NON_USKIDS_KEYWORDS,
+  
+  
+  
+  
   sortEscaloes,
 } from "./uskidsData";
 

@@ -218,7 +218,3 @@ export function indexFpgAdmissionsDraws(file: FpgAdmissionsDrawsFile): Map<strin
   }
   return m;
 }
-
-export function invalidateFpgAdmissionsDrawsCache(): void {
-  _cache = null;
-}

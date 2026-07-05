@@ -1,4 +1,4 @@
-﻿/**
+/**
  * InscricoesComponents.tsx — Componentes de Inscrições do Campeonato Nacional
  *
  * Extraído de FPGPage.tsx para melhorar organização modular.
@@ -60,7 +60,7 @@ function usePlayerStats() {
  * Resultado: Map<fed, código_ISO_2_em_maiúsculas>. Só inclui não-PT (PT é default).
  */
 let _fedCountryPromise: Promise<Map<string, string>> | null = null;
-export function loadFedCountries(): Promise<Map<string, string>> {
+function loadFedCountries(): Promise<Map<string, string>> {
   if (_fedCountryPromise) return _fedCountryPromise;
   _fedCountryPromise = Promise.all([
     cachedFetchJson<any>("/data/federados.json").catch(() => null),
@@ -106,7 +106,7 @@ export function useFedCountries(): Map<string, string> {
  * combinados como o Campeonato Regional de Jovens (Sub 10+12, Sub 14-24).
  */
 let _fedBirthdatePromise: Promise<Map<string, string>> | null = null;
-export function loadFedBirthdates(): Promise<Map<string, string>> {
+function loadFedBirthdates(): Promise<Map<string, string>> {
   if (_fedBirthdatePromise) return _fedBirthdatePromise;
   _fedBirthdatePromise = cachedFetchJson<any>("/data/federados.json")
     .catch(() => null)
@@ -135,7 +135,7 @@ export function useFedBirthdates(): Map<string, string> {
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira).
  *  Aceita `country` directo (override) — usado para jogadores internacionais sem
  *  fedCode português, onde a info vem de kids-links.json / playersDB entry virtual. */
-export function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCountries: Map<string, string>; country?: string | null }) {
+function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCountries: Map<string, string>; country?: string | null }) {
   const cc = country || (fed ? fedCountries.get(fed) : null);
   if (!cc) return null;
   const emoji = FLAG[cc] ?? "🏳️";
@@ -547,60 +547,6 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
 }
 
 /* ═══════════════════════════════════════════════════════
-   VISTA ANÁLISE — Análise profissional para o Campeonato Nacional
-   ═══════════════════════════════════════════════════════ */
-
-/* ── Termos de Competição ── */
-export const TERMOS_COMPETICAO = `CAMPEONATO NACIONAL DE JOVENS Sub 18, 16, 14, 12 e 10
-PGA Aroeira II · 01 a 03 de Maio de 2026
-
-1. PARTICIPAÇÃO
-Escalões Sub-18, Sub-16, Sub-14, Sub-12 e Sub-10, filiados na FPG.
-Handicap máximo: Sub-18 → 9,0 · Sub-16 → 12,0 · Sub-14 → 16,0 · Sub-12 → 36,0 · Sub-10 → 50,0
-Para Sub-14, 12 e 10: obrigatória participação prévia em ≥3 torneios Drive Challenge / Drive Tour nos últimos 12 meses, ou C.N. de Jovens.
-
-2. INSCRIÇÕES
-Via formulário on-line em www.fpg.pt até às 12h de 27 de Abril (segunda-feira).
-Critério de aceitação: Índice de handicap WHS™ e VAC-F registado no servidor da FPG no momento do encerramento.
-
-3. LIMITE DE INSCRIÇÕES
-30 jogadores por escalão (15 Rapazes + 15 Raparigas).
-Se excedido o limite: exclusão pelos VAC-F mais altos.
-Vagas não preenchidas transferidas primeiro para o mesmo escalão, depois para o field geral, sempre por ordem de VAC-F, sem consideração de género.
-
-4. VALOR DA INSCRIÇÃO
-Gratuita (0€). Cancelamentos após publicação do draw: 10€.
-
-5. MODALIDADE
-Sub-18, 16 e 14: 54 buracos por pancadas (18/dia). Sem cut.
-Sub-12: 54 buracos por pancadas (18/dia), máximo 10 pancadas/buraco. Sem cut.
-Sub-10: 27 buracos por pancadas (9/dia), máximo 10 pancadas/buraco. Sem cut.
-
-6. REGRAS
-Regras R&A · Regras Locais de Aplicação Permanente da FPG · Regras Locais da Comissão Técnica.
-
-7. MARCAS DE SAÍDA
-Sub-18 e Sub-16 → Brancas e Azuis
-Sub-14 → Amarelas e Vermelhas
-Sub-12 → Vermelhas
-Sub-10 → Verdes
-
-8. EMPATES
-Campeão: Sudden Death Play Off.
-Vice-Campeão: melhores últimos 36, 18, 9, 6, 3 buracos e melhor último buraco. Persistindo: sorteio.
-Restantes lugares: sem desempate.
-
-9. PRÉMIOS
-Campeão(ã) Nacional · Vice-Campeão(ã) Nacional
-(Títulos de Campeão Nacional apenas para cidadãos nacionais.)
-
-10. CADDIES
-Não são permitidos.
-
-11. COMISSÃO TÉCNICA E ÁRBITROS
-Designados pela FPG. Dúvidas: campeonatos@fpg.pt`;
-
-/* ═══════════════════════════════════════════════════════
    InscricoesPanel — inscrições do Nacional, integrado no Jovens
    ═══════════════════════════════════════════════════════ */
 export function InscricoesPanel() {
@@ -895,10 +841,10 @@ export interface JovensGroup extends EventGroup {
   isNacional: boolean;
 }
 
-export const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Sub 25"];
+const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Sub 25"];
 
 /** Extrai escalão do nome quando t.escalao é null */
-export function inferEscalao(name: string): string | null {
+function inferEscalao(name: string): string | null {
   const m = name.match(/Sub[\s-]*(\d+)/i);
   return m ? "Sub " + m[1] : null;
 }

@@ -12,7 +12,7 @@
  * cruzado com `players.json`/`federados.json`. Actualizar quando houver um novo
  * Campeonato Nacional de Jovens.
  */
-export const PINNED_TOP_FEDS: string[] = [
+const PINNED_TOP_FEDS: string[] = [
   "52884", // Manuel Goulartt Medeiros
   "59252", // Gastão Thomaz Medeiros
   // ── Campeonato Nacional de Jovens 2026 — top 5 por escalão ──

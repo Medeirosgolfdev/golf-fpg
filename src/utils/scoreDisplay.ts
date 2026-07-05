@@ -91,14 +91,6 @@ const C = {
   medalBronze: "var(--medal-bronze)",
 } as const;
 
-/** 3-level semantic color: good / warn / danger
- *  asc:  val <= lo → good, val <= hi → warn, else danger  (lower is better: SD, avg vs par)
- *  desc: val >= hi → good, val >= lo → warn, else danger  (higher is better: bounce%, GIR) */
-export function sc3(val: number, lo: number, hi: number, dir: "asc" | "desc" = "asc"): string {
-  if (dir === "asc") return val <= lo ? C.good : val <= hi ? C.warn : C.danger;
-  return val >= hi ? C.good : val >= lo ? C.warn : C.danger;
-}
-
 /** 2-level semantic color: good / danger
  *  asc:  val <= threshold → good, else danger  (lower is better)
  *  desc: val >= threshold → good, else danger  (higher is better) */
@@ -107,26 +99,9 @@ export function sc2(val: number, threshold: number, dir: "asc" | "desc" = "asc")
   return val >= threshold ? C.good : C.danger;
 }
 
-/** 2-level with warn instead of danger */
-export function sc2w(val: number, threshold: number, dir: "asc" | "desc" = "asc"): string {
-  if (dir === "asc") return val <= threshold ? C.good : C.warn;
-  return val >= threshold ? C.good : C.warn;
-}
-
 /** 3-level with muted middle (good / neutral / danger) */
 export function sc3m(val: number, lo: number, hi: number): string {
   return val < -lo ? C.good : val > hi ? C.danger : C.muted;
-}
-
-/** Diagnostic level class: returns "diag-good" | "diag-warn" | "diag-danger" */
-export function diagLevel(val: number, lo: number, hi: number, dir: "asc" | "desc" = "asc"): string {
-  if (dir === "asc") return val <= lo ? "diag-good" : val <= hi ? "diag-warn" : "diag-danger";
-  return val >= hi ? "diag-good" : val >= lo ? "diag-warn" : "diag-danger";
-}
-
-/** Dark variants for conclusion text */
-export function scDark(level: "good" | "danger" | "info"): string {
-  return level === "good" ? C.goodDark : level === "danger" ? C.dangerDark : C.infoDark;
 }
 
 /** Export color constants for edge cases */

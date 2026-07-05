@@ -1,16 +1,4 @@
-/**
- * useEvoComparison — Hook unificado para comparação ano-a-ano (evolução)
- *
- * Usado em BJGTPage e DORALPage. Lógica core partilhada:
- *   1. Encontrar jogadores que repetiram (name matching)
- *   2. Calcular delta
- *   3. Classificar como UP/EQ/NEW
- *
- * As diferenças (toPar vs total, prevPos, fieldSize, bidirecional)
- * são parametrizadas via opções.
- */
 
-import { useMemo } from "react";
 
 /* ── Types ── */
 
@@ -118,13 +106,4 @@ export function buildEvoMap(input: EvoInput): EvoResult {
     evoYear: referenceYear,
     manuelEvo,
   };
-}
-
-/* ── Hook (memoiza o resultado) ── */
-
-export function useEvoComparison(input: EvoInput | null): EvoResult {
-  return useMemo(
-    () => (input ? buildEvoMap(input) : { evoMap: undefined, evoYear: undefined, manuelEvo: undefined }),
-    [input],
-  );
 }

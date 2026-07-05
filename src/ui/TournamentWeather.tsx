@@ -31,7 +31,7 @@ interface WeatherFile {
 }
 
 /** Normalização de nome de campo — TEM de espelhar a do scripts/fetch-weather.js. */
-export function normCourseKey(s: string): string {
+function normCourseKey(s: string): string {
   return (s || "")
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()

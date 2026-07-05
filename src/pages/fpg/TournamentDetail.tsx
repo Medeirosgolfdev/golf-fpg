@@ -413,5 +413,5 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   );
 }
 
-export default TournamentDetail;
+
 export { TournamentDetail };

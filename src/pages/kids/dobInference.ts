@@ -21,7 +21,7 @@ export function parseDob(s: string): Date {
 }
 
 /** Age at a given date */
-export function ageAt(dob: Date, at: Date): number {
+function ageAt(dob: Date, at: Date): number {
   let age = at.getFullYear() - dob.getFullYear();
   const m = at.getMonth() - dob.getMonth();
   if (m < 0 || (m === 0 && at.getDate() < dob.getDate())) age--;
@@ -29,7 +29,7 @@ export function ageAt(dob: Date, at: Date): number {
 }
 
 /** Format age string for an ESTIMATED DOB (midpoint) — no countdown */
-export function fmtAgeEstimated(dob: Date): string {
+function fmtAgeEstimated(dob: Date): string {
   return `~${ageAt(dob, new Date())} anos`;
 }
 
@@ -98,7 +98,7 @@ export const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax
 };
 
 /** Parse "Boys 11" / "Boys 10-11" / "Boys 10 & 11" → exact age or null */
-export function parseExactAge(agStr: string): number | null {
+function parseExactAge(agStr: string): number | null {
   if (!agStr) return null;
   // "Boys 11" — single age, no range
   const single = agStr.match(/[Bb]oys\s+(\d+)$/);
@@ -114,34 +114,6 @@ interface DobConstraint {
   ageMin: number;      // minimum age bracket
   ageMax: number;      // maximum age bracket (same as min when exact)
   tid: string;
-}
-
-/** Calcula a categoria RFEG (Benjamín/Alevín/Infantil/Cadete/Juvenil/Junior)
- *  a partir do ano de nascimento, pela regra oficial: idade que o jogador
- *  faz NO ANO CIVIL em curso.
- *
- *  - até 10 anos → Benjamín
- *  - 11-12 anos → Alevín
- *  - 13-14 anos → Infantil
- *  - 15-16 anos → Cadete
- *  - 17-18 anos → Juvenil  (também chamado Boy/Girl em alguns escalões)
- *  - 19-21 anos → Junior
- *
- *  Devolve a forma masculina por convenção da app — o pill de sexo já mostra M/F.
- *  Retorna null se DOB não parseável ou idade fora dos escalões juvenis.
- */
-export function categoriaRFEGFromDob(dobStr?: string | null, today: Date = new Date()): string | null {
-  if (!dobStr) return null;
-  let d: Date;
-  try { d = parseDob(dobStr); } catch { return null; }
-  const ageThisYear = today.getFullYear() - d.getFullYear();
-  if (ageThisYear <= 10) return "Benjamín";
-  if (ageThisYear <= 12) return "Alevín";
-  if (ageThisYear <= 14) return "Infantil";
-  if (ageThisYear <= 16) return "Cadete";
-  if (ageThisYear <= 18) return "Juvenil";
-  if (ageThisYear <= 21) return "Junior";
-  return null;
 }
 
 /** Calcula o escalão internacional Sub-N (Sub-10/12/14/16/18/21) prefirindo

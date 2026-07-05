@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids2/data.ts
  *
  * Camada de dados canónica. Lê os ficheiros produzidos pelo agregador
@@ -288,10 +288,6 @@ let _cache: Promise<CanonicalData> | null = null;
 function getCache(): Promise<CanonicalData> {
   if (!_cache) _cache = loadCanonical();
   return _cache;
-}
-
-export function invalidateCanonicalCache(): void {
-  _cache = null;
 }
 
 export type CanonicalStatus =

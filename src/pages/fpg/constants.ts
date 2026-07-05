@@ -11,9 +11,9 @@ import type { Tournament } from "../../data/fpgTypes";
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
    ───────────────────────────────────────────── */
-export const DATA_BASE_URL = "/data/pull-torneios";   // prefixo dos ficheiros
-export const DATA_EXT      = ".json";                  // extensão
-export const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
+const DATA_BASE_URL = "/data/pull-torneios";   // prefixo dos ficheiros
+const DATA_EXT      = ".json";                  // extensão
+const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
 export const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
 
 export type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";

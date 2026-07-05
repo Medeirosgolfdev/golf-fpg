@@ -20,7 +20,7 @@ export function inferNholes(nholes: number | undefined, _ageGroup?: string | nul
 }
 
 /** ±par por ronda normalizado para equivalente 18 buracos */
-export function tprNorm(tp: number | null, rounds: number, nholes: number): number | null {
+function tprNorm(tp: number | null, rounds: number, nholes: number): number | null {
   if (tp == null || rounds <= 0) return null;
   // Normaliza para equivalente de 18 buracos: tp_18h = tp * (18/nholes) / rounds
   return Math.round(tp * (18 / nholes) / rounds * 10) / 10;

@@ -37,7 +37,7 @@ export const PILL_TCODE: CSSProperties = {
 };
 
 /** 9 buracos — só mostrar se nholes ≤ 9 */
-export const PILL_9H: CSSProperties = {
+const PILL_9H: CSSProperties = {
   background: C.warn, color: "#fff", borderColor: "transparent",
 };
 
@@ -47,12 +47,12 @@ export const PILL_SSERRA: CSSProperties = {
 };
 
 /** Torneios Junior (auto-detectado pelo nome) */
-export const PILL_JUNIOR: CSSProperties = {
+const PILL_JUNIOR: CSSProperties = {
   background: C.pillJuniorBg, color: C.pillJuniorFg, borderColor: "transparent",
 };
 
 /** Jogador especial Manuel */
-export const PILL_MANUEL: CSSProperties = {
+const PILL_MANUEL: CSSProperties = {
   background: C.pillManuelBg, color: C.pillManuelFg, borderColor: C.pillManuelBd,
 };
 
@@ -83,7 +83,7 @@ export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
    DADOS — lookup ccode → nome curto do clube
    No FPG, t.clube = raw.club_code (string numérica, ex: "007")
    ════════════════════════════════════════════════════════════ */
-export const CCODE_SHORT: Record<string, string> = {
+const CCODE_SHORT: Record<string, string> = {
   "003": "Miramar",      "004": "Estoril",     "005": "Oporto",
   "006": "Vidago",       "007": "CGSS",         "008": "Montebelo",
   "009": "Aroeira",      "010": "Troia",        "011": "Quinta do Peru",
@@ -101,13 +101,13 @@ export const CCODE_SHORT: Record<string, string> = {
   "095": "Vila Sol 2",   "096": "Morgado 2",
 };
 
-export function clubeFromCcode(ccode?: string | null): string | null {
+function clubeFromCcode(ccode?: string | null): string | null {
   if (!ccode) return null;
   const key = String(ccode).padStart(3, "0");
   return CCODE_SHORT[key] ?? null;
 }
 
-export function shortClubFromField(clube?: string | null, ccode?: string | null): string | null {
+function shortClubFromField(clube?: string | null, ccode?: string | null): string | null {
   // ccode "000" (FPG/nacional) e ccodes de região — não mostrar
   const normalized = String(ccode || "").padStart(3, "0");
   if (["000","982","983","985","987","988"].includes(normalized)) return null;
@@ -144,21 +144,6 @@ export function Pill({
       {children}
     </span>
   );
-}
-
-/** Chave CSS normalizada para um escalão.
- *   "Sub 12"        → "sub12"
- *   "Sub-14"        → "sub14"
- *   "Sénior"        → "senior"   (acentos removidos)
- *   "Super Sénior"  → "supersenior"
- *   "MidAmateur"    → "midamateur"
- */
-export function escKey(esc: string | null | undefined): string {
-  return (esc || "")
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[\s-]/g, "");
 }
 
 /** Mapeamento dos termos da federação espanhola (RFEG) → Sub-N CSS class.
@@ -309,4 +294,4 @@ export function YearPill({ year }: { year: number | string | null | undefined })
   );
 }
 
-export default PillBadge;
+

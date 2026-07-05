@@ -12,7 +12,7 @@
  */
 import type { GrupoEntry } from "./fpgTypes";
 
-export const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
+const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
   sub14: [
     { grupo: "A", clube: "Club de Golf de Miramar", suplente: "Raul Pazos", capitao: "Sérgio Ribeiro", jogadores: [
       { nome: "Tomás Rente",           fed: "46311", hcp: 6.9 },
@@ -167,7 +167,7 @@ export const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
 };
 
 /* ── Grupos 2025 ─────────────────────────────────────────────────────────── */
-export const CLUBES_GRUPOS_2025: Record<"sub14" | "sub18", GrupoEntry[]> = {
+const CLUBES_GRUPOS_2025: Record<"sub14" | "sub18", GrupoEntry[]> = {
   sub18: [
     { grupo: "A", clube: "CG Vilamoura", jogadores: [
       { nome: "João Crasi Alves",           fed: "39701", hcp: 0 },

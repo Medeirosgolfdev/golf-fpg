@@ -88,10 +88,6 @@ export function ppForFed(fed: string | number | undefined | null): FederadoPP | 
   return (_ppByFed && _ppByFed.get(String(fed))) || null;
 }
 
-export function invalidateFederadosPPCache(): void {
-  _ppCache = null; _ppLoading = null; _ppByFed = null;
-}
-
 /* ── Histórico P&P por jogador (pp-history/{fed}.json) ────────────── */
 interface PPScorecard {
   par: (number | null)[];
@@ -151,27 +147,6 @@ export function loadPPHistory(fed: string | number): Promise<PPHistory | null> {
     .catch(() => { _histLoading.delete(key); _histCache.set(key, null); return null; });
   _histLoading.set(key, p);
   return p;
-}
-
-/* ── Index slim do histórico (pp-history-index.json) ─────────────── */
-interface PPHistoryIndexEntry { name: string | null; rounds: number; last: string | null; index: number | null; }
-interface PPHistoryIndexFile { generated: string; source: string; players: Record<string, PPHistoryIndexEntry>; }
-
-let _idxCache: Record<string, PPHistoryIndexEntry> | null = null;
-let _idxLoading: Promise<Record<string, PPHistoryIndexEntry>> | null = null;
-
-/** Index slim: fed → {rounds,last,index}. Mapa vazio se ausente. */
-export function loadPPHistoryIndex(): Promise<Record<string, PPHistoryIndexEntry>> {
-  if (_idxCache) return Promise.resolve(_idxCache);
-  if (_idxLoading) return _idxLoading;
-  _idxLoading = cachedFetchJson<PPHistoryIndexFile>("/data/pp-history-index.json")
-    .then(data => {
-      _idxLoading = null;
-      _idxCache = (data && data.players) || {};
-      return _idxCache;
-    })
-    .catch(() => { _idxLoading = null; _idxCache = {}; return {}; });
-  return _idxLoading;
 }
 
 /* ── URLs públicas P&P (sempre frescas, sem download) ────────────── */

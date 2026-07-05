@@ -189,9 +189,6 @@ export function getLoadedKidsFiles(): KidsFileMeta[] {
   return _loadedFiles;
 }
 
-export function invalidateAutoRivalsCache(): void {
-  _autoRivalsCache = null;
-}
 
 // ═════════════════════════════════════════════════════════════════════
 // Mapeamento canónico → tid legacy
@@ -573,14 +570,7 @@ async function _buildAutoRivalsInternal(
 
 export function mergeInto(_map: Map<string, AutoRivalPlayer>, _players: AutoRivalPlayer[], _forceTids?: ReadonlySet<string>): void {}
 export function processWjgc(_data: unknown, _tid: string): AutoRivalPlayer[] { return []; }
-export function processDoral(_data: unknown): AutoRivalPlayer[] { return []; }
 export function processManuelOverrides(): AutoRivalPlayer[] { return []; }
-export function processUskids(_data: unknown): AutoRivalPlayer[] { return []; }
 export function processUskidsCompleto(_data: unknown): AutoRivalPlayer[] { return []; }
 export function processMemberHistory(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processPullTorneios(_data: unknown): AutoRivalPlayer[] { return []; }
 export function processFpgJuniorTourns(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processFpgJovensAll(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processFfgolfSlim(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processFfgolfGG(_data: unknown, _meta: unknown): AutoRivalPlayer[] { return []; }
-export function processRfegolfRivals(_data: unknown): AutoRivalPlayer[] { return []; }

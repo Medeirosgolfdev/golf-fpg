@@ -13,15 +13,12 @@ import { normName } from "../utils/normName";
 /** Federação FPG. */
 export const MANUEL_FED = "52884";
 
-/** Federação FPG da Mariana (mãe). Para filtros que excluem família. */
-export const MANUEL_FAMILY_FEDS = new Set(["52884", "54907"]);
-
 /**
  * IDs USKids do Manuel — actual + legacy (conta abandonada após El Prat 2023).
  * Histórico, confrontos H2H e progressão de escalões mergeam os dois como um
  * único jogador.
  */
-export const MANUEL_PLAYER_IDS = ["630106", "605933"] as const;
+const MANUEL_PLAYER_IDS = ["630106", "605933"] as const;
 
 /** TIDs USKids conhecidos onde o Manuel jogou (preenchido conforme descoberto).
  *  Set para lookup O(1) via `.has()` — consumido por playerMatchesFilter. */
@@ -56,7 +53,7 @@ export function escalaoManuelParaData(dataT: Date | string): number {
 /**
  * Detecta se um memberID USKids é do Manuel — actual ou legacy.
  */
-export function isManuelUskidsMid(mid: string | number | null | undefined): boolean {
+function isManuelUskidsMid(mid: string | number | null | undefined): boolean {
   if (mid == null) return false;
   const s = String(mid);
   return MANUEL_PLAYER_IDS.includes(s as any);

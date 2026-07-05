@@ -109,7 +109,7 @@ export function federadoToPlayer(f: FederadoRaw, clubRegionMap?: Map<string, str
 }
 
 /** Constrói o mapa clube→região a partir de players.json (moda por clube). */
-export function buildClubRegionMap(players: PlayersDb): Map<string, string> {
+function buildClubRegionMap(players: PlayersDb): Map<string, string> {
   const counts = new Map<string, Map<string, number>>();
   for (const p of Object.values(players)) {
     if (!p.region) continue;
@@ -155,12 +155,6 @@ export function loadFederados(): Promise<FederadosFile> {
   return _loading;
 }
 
-/** Invalida o cache — usar após update do ficheiro em dev. */
-export function invalidateFederadosCache(): void {
-  _cache = null;
-  _loading = null;
-}
-
 /* ── Estatísticas dos inactivos (ficheiro leve ~25 KB) ──────── */
 export interface InativosStats {
   generated: string;
@@ -195,32 +189,6 @@ export function loadInativosStats(): Promise<InativosStats> {
     })
     .catch(err => { _inatStatsLoading = null; throw err; });
   return _inatStatsLoading;
-}
-
-/* ── Jovens inactivos (Sub-10 a Sub-21, ~3 MB) ──────────────── */
-interface InativosJovensFile {
-  generated: string;
-  source: string;
-  total: number;
-  ageLevels: string[];
-  players: FederadoRaw[];
-}
-
-let _inatJovensCache: InativosJovensFile | null = null;
-let _inatJovensLoading: Promise<InativosJovensFile> | null = null;
-
-export function loadInativosJovens(): Promise<InativosJovensFile> {
-  if (_inatJovensCache) return Promise.resolve(_inatJovensCache);
-  if (_inatJovensLoading) return _inatJovensLoading;
-  _inatJovensLoading = cachedFetchJson<InativosJovensFile>("/data/federados-inativos-jovens.json")
-    .then(data => {
-      if (!data) throw new Error("Falha ao carregar inativos-jovens.json");
-      _inatJovensCache = data;
-      _inatJovensLoading = null;
-      return data;
-    })
-    .catch(err => { _inatJovensLoading = null; throw err; });
-  return _inatJovensLoading;
 }
 
 /* ── Merge: cruza players.json com federados.json ────────────── */

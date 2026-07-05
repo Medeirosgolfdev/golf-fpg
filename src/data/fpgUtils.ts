@@ -50,7 +50,7 @@ export function tournamentHasManuel(t: Tournament | undefined | null): boolean {
  * Um torneio é da série "Drive" (Drive Challenge regional ou Drive Tour) se o
  * nome contiver "drive".
  */
-export function isDriveSeries(t: Tournament | undefined | null): boolean {
+function isDriveSeries(t: Tournament | undefined | null): boolean {
   return /drive/i.test(t?.name || "");
 }
 
@@ -535,7 +535,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
 }
 
 /** Funde N torneios (rondas separadas) num único torneio multi-ronda sintético */
-export function mergeTournamentRounds(rounds: Tournament[]): Tournament {
+function mergeTournamentRounds(rounds: Tournament[]): Tournament {
   const sorted = [...rounds].sort((a, b) => {
     const ra = detectRoundNumber(a.name) ?? 99;
     const rb = detectRoundNumber(b.name) ?? 99;

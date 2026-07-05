@@ -15,13 +15,13 @@ import { V14, V15, V16, V17, V28, V31, V32, V34, V35 } from "./designs/table";
 import { V19, V21, V24, V33 } from "./designs/cols";
 
 /* ═══════ CATEGORIES ═══════ */
-export const CAT_HIO     = "🏌️ Hole-in-One";
-export const CAT_PRO     = "⭐ Pro Tour";
-export const CAT_TRANS   = "📷 Para Fotos";
-export const CAT_MINIMAL = "💬 Compactos";
-export const CAT_GRID    = "🏆 Cards";
-export const CAT_TABLE   = "📊 Tabelas";
-export const CAT_COLS    = "📱 Verticais";
+const CAT_HIO     = "🏌️ Hole-in-One";
+const CAT_PRO     = "⭐ Pro Tour";
+const CAT_TRANS   = "📷 Para Fotos";
+const CAT_MINIMAL = "💬 Compactos";
+const CAT_GRID    = "🏆 Cards";
+const CAT_TABLE   = "📊 Tabelas";
+const CAT_COLS    = "📱 Verticais";
 export const CAT_ORDER = [CAT_HIO, CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS] as const;
 
 /* ═══════ DESIGN DEFINITION ═══════ */

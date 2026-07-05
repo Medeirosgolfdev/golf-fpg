@@ -63,7 +63,7 @@ function countryMatch(jr: Junior, pais?: string): boolean {
 }
 
 /** Constrói o mapa juniorId → inscrições futuras (ordenadas por data). */
-export function buildUpcomingByJunior(
+function buildUpcomingByJunior(
   data: CanonicalData,
   uskids: UskidsFieldFile | null,
   fpg: FpgAdmFile | null,

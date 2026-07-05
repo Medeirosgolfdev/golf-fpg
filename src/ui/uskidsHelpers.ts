@@ -109,17 +109,8 @@ export function fmtPosRivais(p: number, fieldSize: number): string {
   return fieldSize > 0 ? `${p}/${fieldSize}` : `${p}º`;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CANONICAL NAMES & CLASSIFICATION (from uskidsCanonical)
-   ═══════════════════════════════════════════════════════════════ */
-
-/** Shorten tournament year: "Tournament 2025" → "Tournament '25" */
-export function shortTornName(s: string): string {
-  return s.replace(/\s(\d{4})$/, (_, y) => ` '${y.slice(2)}`);
-}
-
 /** Canonical tournament name for matching: "Venice Open 2025" → "venice-25" */
-export function tornCanon(s: string): string {
+function tornCanon(s: string): string {
   const low = s.toLowerCase().replace(/['']/g, "").trim();
   const y2 = low.match(/\b20(\d{2})\b/)?.[1] || low.match(/(?:^|\s)(\d{2})$/)?.[1] || "";
   const pc = /parent.child/i.test(low) ? "pc" : "";
@@ -141,20 +132,6 @@ export function tornCanon(s: string): string {
   if (/south\s*carolina|scstate/i.test(low)) return `scstate${pc}-${y2}`;
   if (/el\s*prat/i.test(low)) return `elprat${pc}-${y2}`;
   return low.replace(/[^a-z0-9]/g, "") + (y2 ? `-${y2}` : "") + pc;
-}
-
-/** Check if a tournament name matches any canonical name in a set */
-export function hasCanon(set: Set<string>, name: string, short?: string): boolean {
-  const cn = tornCanon(name);
-  const cs = short ? tornCanon(short) : "";
-  if (set.has(cn) || (cs && set.has(cs))) return true;
-  const series = cn.split("-")[0];
-  if (cn.endsWith("-") && series) {
-    for (const k of set) {
-      if (k.startsWith(series + "-") && k !== cn) return true;
-    }
-  }
-  return false;
 }
 
 /** Detect tournament region: USA or EURO based on keywords */

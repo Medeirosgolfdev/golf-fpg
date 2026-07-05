@@ -251,7 +251,7 @@ export function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
 }
 
 /* ── Adaptador Entry → FPGTournament para reutilizar AllRoundsScorecardLB ── */
-export function entryToTournament(entry: Entry): FPGTournament {
+function entryToTournament(entry: Entry): FPGTournament {
   const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
   const players: FPGPlayer[] = entry.players
     .filter(p => p.rounds.length > 0)
@@ -302,7 +302,7 @@ export function entryToTournament(entry: Entry): FPGTournament {
 
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto Doral */
-export function doralScorecardOptions(entry: Entry): ScorecardOptions {
+function doralScorecardOptions(entry: Entry): ScorecardOptions {
   // Boys 8-9 (e Girls 7 & Under, etc.) começam no buraco 10 (back-9)
   const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
   // SD só se esconde quando não há CR/slope

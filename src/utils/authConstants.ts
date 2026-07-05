@@ -6,7 +6,7 @@
  */
 
 export const CAL_PASSWORD = "machico";
-export const CAL_STORAGE_KEY = "cal_unlocked";
+const CAL_STORAGE_KEY = "cal_unlocked";
 
 /** Evento custom disparado quando o calendário é desbloqueado.
  *  App.tsx escuta este evento para mostrar os tabs BJGT e GG26. */

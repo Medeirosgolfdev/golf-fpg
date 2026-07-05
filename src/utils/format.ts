@@ -322,7 +322,7 @@ export function displayName(s: string): string {
 /* ═══════ Medals ═══════ */
 
 /** Emojis de medalha por posição (0-indexed: [0]=🥇, [1]=🥈, [2]=🥉) */
-export const MEDALS = ["🥇", "🥈", "🥉"] as const;
+const MEDALS = ["🥇", "🥈", "🥉"] as const;
 
 /** Retorna emoji de medalha para posição 1-3, ou null */
 export function medal(pos: number): string | null {
@@ -340,7 +340,7 @@ export function medal(pos: number): string | null {
  */
 
 /** Gera o `tkey` canónico de um torneio: "{ccode}-{tcode}". */
-export function tournamentKey(ccode: string | null | undefined, tcode: string | null | undefined): string {
+function tournamentKey(ccode: string | null | undefined, tcode: string | null | undefined): string {
   const cc = String(ccode || "").trim();
   const tc = String(tcode || "").trim();
   if (!cc || !tc) return "";
@@ -393,10 +393,4 @@ export function fpgScoringUrl(ccode: string, tcode: string): string {
 export function fpgAdmissionsUrl(ccode: string, tcode: string): string {
   const [cc, tc] = fpgClean(ccode, tcode);
   return `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${cc}&tcode=${tc}`;
-}
-
-/** URL da classificação no scoring.datagolf.pt (legacy, usado no DrivePage) */
-export function fpgDatagolfUrl(ccode: string, tcode: string): string {
-  const [cc, tc] = fpgClean(ccode, tcode);
-  return `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${cc}&tcode=${tc}`;
 }

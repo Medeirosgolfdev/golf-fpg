@@ -14,7 +14,7 @@ import type { TeeInfo } from "./uskidsTypes";
    ESCALÃO ORDERING
    ═══════════════════════════════════════════════════════════════ */
 
-export const ESCALAO_ORDER: Record<string, number> = {
+const ESCALAO_ORDER: Record<string, number> = {
   "Boys 7 & Under": 1,
   "Boys 7": 2,
   "Boys 8": 3,
@@ -139,7 +139,33 @@ export const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
    TEE LOOKUP (par + metres per flight per tournament)
    ═══════════════════════════════════════════════════════════════ */
 
+// ── Paris Val d'Europe — par + metros por tee (RED/BLUE, par 72) ──
+// Espelham os tees de extraCourses.ts (golfParisValDEurope). Reutilizados
+// pelos dois Paris Invitational (2025 t=18975, 2026 t=21795) — setup idêntico.
+const PARIS_PAR = [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5];
+const PARIS_M_NOIRS  = [461,159,442,331,126,473,341,179,329, 326,283,393,198,542,151,294,373,475]; // Boys 13-18
+const PARIS_M_BLEUS  = [408,124,387,282, 84,399,296,123,282, 287,242,351,155,485,118,258,326,422]; // Boys 12 / Girls 13-18
+const PARIS_M_BOYS11 = [383,102,367,263, 84,374,253,105,249, 267,224,329,134,466,101,233,306,406]; // Boys 10-11
+const PARIS_M_BOYS9  = [337, 90,328,236, 90,311,207,100,218, 226,196,264,117,350,101,216,277,320]; // Boys 9
+
+// CR/Slope OFICIAIS do PDF USKids "SSS & SLOPE" — Golf Val d'Europe (Paris
+// Invitational 2026; distâncias e setup idênticos aos de 2025):
+//   Boys 13-18 → 72 / 131 (Noirs) · Boys 12 → 67.8 / 119 (Bleus)
+//   Boys 10-11 → 66 / 115 (tee USKids Boys 11/10) · Girls 13-18 → 72.8 / 132 (Bleus F)
+// Boys 9 e escalões menores não têm SSS publicado (SD fica "—").
+const parisTees: Record<number, TeeInfo> = {
+  2111: { campo: "Golf Paris Val d'Europe", tee: "Boys 15-18", par: PARIS_PAR, metros: PARIS_M_NOIRS,  cr: 72.0, slope: 131 },
+  2106: { campo: "Golf Paris Val d'Europe", tee: "Boys 13-14", par: PARIS_PAR, metros: PARIS_M_NOIRS,  cr: 72.0, slope: 131 },
+  2105: { campo: "Golf Paris Val d'Europe", tee: "Boys 12",    par: PARIS_PAR, metros: PARIS_M_BLEUS,  cr: 67.8, slope: 119 },
+  2104: { campo: "Golf Paris Val d'Europe", tee: "Boys 11",    par: PARIS_PAR, metros: PARIS_M_BOYS11, cr: 66.0, slope: 115 },
+  2103: { campo: "Golf Paris Val d'Europe", tee: "Boys 10",    par: PARIS_PAR, metros: PARIS_M_BOYS11, cr: 66.0, slope: 115 },
+  2102: { campo: "Golf Paris Val d'Europe", tee: "Boys 9",     par: PARIS_PAR, metros: PARIS_M_BOYS9 },
+};
+
 export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
+  // ── Paris Invitational 2026 & 2025 – Golf Paris Val d'Europe (RED/BLUE) ──
+  21795: parisTees,
+  18975: parisTees,
   // ── Rome Classic 2025 – Terre Dei Consoli Golf Club ───
   20175: {
     2105: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [255,442,125,298,293,315,327,380,106, 263,390,239,110,284,301,134,380,333] },

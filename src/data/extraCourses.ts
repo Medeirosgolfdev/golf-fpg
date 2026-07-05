@@ -974,7 +974,9 @@ const villaPadiernaFlamingos2 = vpFlamingosCourse("away-villa-padierna-flamingos
    Campo: 27 buracos (3×9: ROUGE, BLEU, BLANC). Combinação do torneio: RED+BLUE.
    Fonte distâncias: mscorecard.com (cid=1236598351821) + PDF oficial do torneio.
    SI: mscorecard (requer login) — confirmado para Rouge e Bleu nines.
-   CR/Slope: não disponível (bloqueio rate-limit no scrape; atualizar se encontrado).
+   CR/Slope: tees nomeados via des-balles-et-des-birdies.com; tees de torneio
+   USKids via PDF oficial "SSS & SLOPE" Val d'Europe (Boys 13-18 72/131,
+   Boys 12 67.8/119, Boys 10-11 66/115, Girls 13-18 72.8/132).
    ────────────────────────────────────────────────────────────────────── */
 
 // Par e SI para a combinação RED (Rouge) + BLUE (Bleu)
@@ -1111,7 +1113,8 @@ const golfParisValDEurope: Course = {
         sex: "M",
         teeName: "USKids Boys 11 / 10",
         scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 4 — entre Bleus e Rouges
-        ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+        // CR/Slope oficiais USKids (PDF "SSS & SLOPE" Val d'Europe — Boys 10-11).
+        ratings: { holes18: { par: 72, courseRating: 66.0, slopeRating: 115 } },
         holes: parisHoles(parisB11M),
         distances: parisDist(parisB11M),
       },

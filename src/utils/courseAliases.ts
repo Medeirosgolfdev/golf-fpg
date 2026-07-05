@@ -215,7 +215,7 @@ export function resolveSantoDaSerraByPar(name: string, pars: number[] | null | u
  * ordenando os nines alfabeticamente em 18H. Não consegue corrigir nines
  * mal-etiquetados em 9H.
  */
-export function canonicalSantoDaSerraNameOnly(name: string): string {
+function canonicalSantoDaSerraNameOnly(name: string): string {
   if (!isSantoDaSerraName(name)) return name;
   const m = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*[-/]\s*([A-Za-zÀ-ÿ]+)\s*$/);
   if (m) {
@@ -252,31 +252,6 @@ export function canonicalCourseName<T extends string | null | undefined>(name: T
   return (out as unknown as T);
 }
 
-/**
- * Normaliza in-place todos os campos textuais relacionados com o nome do campo
- * num registo de torneio (formato pull-torneios). Mutates input.
- *
- * Aplica a:
- *   - t.campo
- *   - t.players[].course
- *   - t.players[].roundScores[].course
- */
-export function normalizeTournamentCourseNames(t: {
-  campo?: string;
-  players?: Array<{
-    course?: string;
-    roundScores?: Array<{ course?: string }>;
-  }>;
-}): void {
-  if (t.campo) t.campo = canonicalCourseName(t.campo);
-  for (const p of t.players || []) {
-    if (p.course) p.course = canonicalCourseName(p.course);
-    for (const r of p.roundScores || []) {
-      if (r.course) r.course = canonicalCourseName(r.course);
-    }
-  }
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // PGA Aroeira No.2 — renumeração de buracos (15 Fev → ~22 Nov 2025)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -308,39 +283,6 @@ const AROEIRA2_OLD_PAR = [4, 5, 4, 5, 3, 4, 4, 3, 4, 4, 5, 3, 4, 3, 4, 4, 4, 5];
 function rotateLeft<T>(arr: T[], n: number): T[] {
   if (!arr || arr.length !== 18) return arr;
   return arr.slice(n).concat(arr.slice(0, n));
-}
-
-/**
- * Detecta se uma ronda do Aroeira No.2 está na sequência antiga e, se sim,
- * rotaciona +12 todos os arrays paralelos (scores, pars, si, meters) e
- * marca a ronda com `_rotated: 12`.
- *
- * Mutates input. Idempotente: chamar duas vezes não duplica a rotação
- * (porque depois da primeira rotação o pars deixa de bater AROEIRA2_OLD_PAR).
- *
- * Devolve `true` se rotação foi aplicada, `false` caso contrário.
- */
-export function rotateAroeira2RoundIfNeeded(round: {
-  pars?: number[];
-  scores?: number[];
-  si?: number[];
-  meters?: number[];
-  _rotated?: number;
-  course?: string;
-}): boolean {
-  const pars = round?.pars;
-  if (!pars || pars.length !== 18) return false;
-  // Match exacto contra a config antiga
-  for (let i = 0; i < 18; i++) {
-    if (pars[i] !== AROEIRA2_OLD_PAR[i]) return false;
-  }
-  // Rotacionar todos os arrays paralelos
-  round.pars = rotateLeft(round.pars!, 12);
-  if (round.scores && round.scores.length === 18) round.scores = rotateLeft(round.scores, 12);
-  if (round.si && round.si.length === 18) round.si = rotateLeft(round.si, 12);
-  if (round.meters && round.meters.length === 18) round.meters = rotateLeft(round.meters, 12);
-  round._rotated = 12;
-  return true;
 }
 
 /**
@@ -411,39 +353,4 @@ export function rotateAroeira2ScorecardIfNeeded(sc: Record<string, unknown>): bo
   }
   sc._rotated = 12;
   return true;
-}
-
-/**
- * Aplica `rotateAroeira2RoundIfNeeded` a todos os scorecards de um torneio
- * cujo campo seja "PGA Aroeira No.2" (após canonicalCourseName). Mutates input.
- *
- * Devolve o nº de rondas rotacionadas.
- */
-export function rotateAroeira2TournamentIfNeeded(t: {
-  campo?: string;
-  players?: Array<{
-    course?: string;
-    roundScores?: Array<{
-      pars?: number[];
-      scores?: number[];
-      si?: number[];
-      meters?: number[];
-      _rotated?: number;
-      course?: string;
-    }>;
-  }>;
-}): number {
-  let n = 0;
-  const matchesAroeira2 = (s?: string) =>
-    !!s && /^PGA\s+Aroeira\s+No\.?\s*2$/i.test(canonicalCourseName(s) || "");
-  if (!matchesAroeira2(t.campo)) return 0;
-  for (const p of t.players || []) {
-    // Saltar jogadores que noutra fonte foram marcados como No.1 (ex: R2 do
-    // Aroeira Master 2025 com pars de outro layout, marcados via r.course).
-    for (const r of p.roundScores || []) {
-      if (r.course && /no\.?\s*1/i.test(r.course)) continue;
-      if (rotateAroeira2RoundIfNeeded(r)) n++;
-    }
-  }
-  return n;
 }

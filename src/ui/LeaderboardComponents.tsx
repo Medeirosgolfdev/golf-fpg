@@ -14,7 +14,7 @@
 export { ScorecardLB } from "./ScorecardLB";
 export { AccumulatedLB } from "./AccumulatedLB";
 export { AllRoundsScorecardLB } from "./AllRoundsScorecardLB";
-export { PlayerFilterBar } from "./PlayerFilterBar";
+;
 
 // Re-export types if needed
 ;

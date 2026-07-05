@@ -42,7 +42,7 @@ interface RFEGFederation {
   notes?: string;
 }
 
-export const RFEG_FEDERATIONS: RFEGFederation[] = [
+const RFEG_FEDERATIONS: RFEGFederation[] = [
   // 4 federações no NextCaddy (já scrapadas)
   {
     name: "Real Federación Andaluza de Golf",
