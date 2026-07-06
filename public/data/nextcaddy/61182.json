@@ -1,7 +1,7 @@
 {
   "tourId": 61182,
   "url": "https://www.nextcaddy.com/tour/61182",
-  "scrapedAt": "2026-07-05T22:44:25.696Z",
+  "scrapedAt": "2026-07-06T08:37:33.183Z",
   "meta": {
     "name": "Campeonato Andalucía Benjamín",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -53,7 +53,10 @@
       296,
       127,
       387
-    ]
+    ],
+    "parTotal": 27,
+    "parInferred": true,
+    "parConfidence": "low"
   },
   "leaderboard": [
     {
@@ -2233,7 +2236,61 @@
           ],
           "total": 99,
           "toPar": 27,
-          "inscribedId": 2341360
+          "inscribedId": 2341360,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                7,
+                6,
+                6,
+                5,
+                6,
+                4,
+                6
+              ],
+              "total": 50,
+              "meters": [
+                125,
+                405,
+                295,
+                281,
+                339,
+                260,
+                296,
+                127,
+                387
+              ]
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                8,
+                8,
+                5,
+                5,
+                4,
+                5,
+                4,
+                6
+              ],
+              "total": 49,
+              "meters": [
+                125,
+                405,
+                295,
+                281,
+                339,
+                260,
+                296,
+                127,
+                387
+              ]
+            }
+          ]
         },
         {
           "pos": 3,
@@ -4582,7 +4639,61 @@
           ],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2341360
+          "inscribedId": 2341360,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                7,
+                6,
+                6,
+                5,
+                6,
+                4,
+                6
+              ],
+              "total": 50,
+              "meters": [
+                125,
+                405,
+                295,
+                281,
+                339,
+                260,
+                296,
+                127,
+                387
+              ]
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                8,
+                8,
+                5,
+                5,
+                4,
+                5,
+                4,
+                6
+              ],
+              "total": 49,
+              "meters": [
+                125,
+                405,
+                295,
+                281,
+                339,
+                260,
+                296,
+                127,
+                387
+              ]
+            }
+          ]
         },
         {
           "pos": 2,

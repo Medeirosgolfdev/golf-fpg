@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T20:56:43.581Z",
+  "generatedAt": "2026-07-06T08:25:39.262Z",
   "source": "/competiciones-comite",
   "comite": null,
   "year": null,
@@ -7,7 +7,7 @@
   "club": null,
   "provincia": null,
   "filter": null,
-  "total": 1580,
+  "total": 1578,
   "tours": [
     {
       "tourId": 67162,
@@ -62,6 +62,14 @@
       "name": "TORNEO ROSCO DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
+      "clubCode": "ROSC",
+      "year": 2026
+    },
+    {
+      "tourId": 67191,
+      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
+      "date": "03 ene 2026",
+      "rounds": null,
       "clubCode": "REYES",
       "year": 2026
     },
@@ -76,14 +84,6 @@
     {
       "tourId": 67080,
       "name": "TORNEO DE REYES \"PADRES E HIJOS\" 9 HOYOS",
-      "date": "03 ene 2026",
-      "rounds": null,
-      "clubCode": "ROSC",
-      "year": 2026
-    },
-    {
-      "tourId": 67191,
-      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
       "clubCode": "LOS",
@@ -2314,14 +2314,6 @@
       "year": 2026
     },
     {
-      "tourId": 67654,
-      "name": "Prueba Clasificatoria Gran Premio (El Bierzo)",
-      "date": "28 feb 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
       "tourId": 68183,
       "name": "Prueba Clasificatoria Gran Premio (Navaluenga)",
       "date": "28 feb 2026",
@@ -2332,6 +2324,14 @@
     {
       "tourId": 68186,
       "name": "Prueba Clasificatoria del Gran Premio (Escuela de golf de Castillla y León)",
+      "date": "28 feb 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 67654,
+      "name": "Prueba Clasificatoria Gran Premio (El Bierzo)",
       "date": "28 feb 2026",
       "rounds": null,
       "clubCode": null,
@@ -3586,16 +3586,16 @@
       "year": 2026
     },
     {
-      "tourId": 69226,
-      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
+      "tourId": 69356,
+      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": "ZONAL",
       "year": 2026
     },
     {
-      "tourId": 69356,
-      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
+      "tourId": 69226,
+      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": null,
@@ -4966,20 +4966,20 @@
       "name": "CAMPEONATO DE NAVARRA MID AMATEUR 1ª y 2ª CAT.",
       "date": "12 abr 2026",
       "rounds": null,
-      "clubCode": "PIES",
-      "year": 2026
-    },
-    {
-      "tourId": 69442,
-      "name": "TORNEO PIES BLANCOS ( DOMINGO 12 ABRIL)",
-      "date": "12 abr 2026",
-      "rounds": null,
       "clubCode": "JUAN",
       "year": 2026
     },
     {
       "tourId": 67522,
       "name": "XXXVII TROFEO S. JUAN BOSCO",
+      "date": "12 abr 2026",
+      "rounds": null,
+      "clubCode": "PIES",
+      "year": 2026
+    },
+    {
+      "tourId": 69442,
+      "name": "TORNEO PIES BLANCOS ( DOMINGO 12 ABRIL)",
       "date": "12 abr 2026",
       "rounds": null,
       "clubCode": null,
@@ -6418,16 +6418,16 @@
       "year": 2026
     },
     {
-      "tourId": 70668,
-      "name": "torneo privado somontes",
+      "tourId": 67923,
+      "name": "IV Torneo RKN Damas y Caballeros · Turno de Mañana 9:30 · Turno de Tarde 12:30",
       "date": "09 may 2026",
       "rounds": null,
-      "clubCode": "RKN",
+      "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 67923,
-      "name": "IV Torneo RKN Damas y Caballeros · Turno de Mañana 9:30 · Turno de Tarde 12:30",
+      "tourId": 70668,
+      "name": "torneo privado somontes",
       "date": "09 may 2026",
       "rounds": null,
       "clubCode": null,
@@ -7054,20 +7054,20 @@
       "name": "LIGA DE DAMAS 2025/26 V JORNADA",
       "date": "16 may 2026",
       "rounds": null,
-      "clubCode": "HATO",
-      "year": 2026
-    },
-    {
-      "tourId": 70572,
-      "name": "18º Aniversario HATO VERDE",
-      "date": "16 may 2026",
-      "rounds": null,
       "clubCode": "LIGA",
       "year": 2026
     },
     {
       "tourId": 70758,
       "name": "LIGA DE PRINCIPIANTES 25/26, JORNADA 5",
+      "date": "16 may 2026",
+      "rounds": null,
+      "clubCode": "HATO",
+      "year": 2026
+    },
+    {
+      "tourId": 70572,
+      "name": "18º Aniversario HATO VERDE",
       "date": "16 may 2026",
       "rounds": null,
       "clubCode": null,
@@ -8438,20 +8438,20 @@
       "name": "Premio Social de Señores (Cat. C)",
       "date": "07 jun 2026",
       "rounds": null,
-      "clubCode": "CASER",
-      "year": 2026
-    },
-    {
-      "tourId": 70646,
-      "name": "CIRCUITO CASER 2026 (MAÑANA 9:00)",
-      "date": "07 jun 2026",
-      "rounds": null,
       "clubCode": "FLEX",
       "year": 2026
     },
     {
       "tourId": 71123,
       "name": "TROFEO FLEX POZOBLANCO 2026 DOMINGO",
+      "date": "07 jun 2026",
+      "rounds": null,
+      "clubCode": "CASER",
+      "year": 2026
+    },
+    {
+      "tourId": 70646,
+      "name": "CIRCUITO CASER 2026 (MAÑANA 9:00)",
       "date": "07 jun 2026",
       "rounds": null,
       "clubCode": null,
@@ -10594,35 +10594,19 @@
       "year": 2026
     },
     {
-      "tourId": 68053,
-      "name": "IX Copa Castilla y León Competición Match-Play Femenina (WAGR)",
+      "tourId": 68573,
+      "name": "IX Copa Castilla y León Masculina (SACE - WAGR)",
       "date": "01 ago 2026",
-      "rounds": null,
+      "rounds": 2,
       "clubCode": "WAGR",
       "year": 2026
     },
     {
-      "tourId": 68054,
-      "name": "IX Copa Castilla y León Competición Match-Play Masculina (WAGR)",
-      "date": "01 ago 2026",
-      "rounds": null,
-      "clubCode": "SACE",
-      "year": 2026
-    },
-    {
-      "tourId": 68055,
-      "name": "IX Copa Castilla y León Competición Femenina (SACE - WAGR)",
+      "tourId": 72147,
+      "name": "IX Copa Castilla y León Femenina (SACE - WAGR)",
       "date": "01 ago 2026",
       "rounds": 2,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 68573,
-      "name": "IX Copa Castilla y León Competición Masculina (SACE - WAGR)",
-      "date": "01 ago 2026",
-      "rounds": 2,
-      "clubCode": "RACE",
+      "clubCode": "WAGR",
       "year": 2026
     },
     {
@@ -10926,20 +10910,20 @@
       "name": "7ª Prueba Ranking y Series Roll Up Sherry Golf 2026",
       "date": "30 ago 2026",
       "rounds": null,
-      "clubCode": "MAJ",
-      "year": 2026
-    },
-    {
-      "tourId": 68248,
-      "name": "Torneo Juvenil Circuito MAJ \"La Dehesa\"",
-      "date": "31 ago 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
     {
       "tourId": 68152,
       "name": "Torneo Senior Masculino \"Aranjuez\"",
+      "date": "31 ago 2026",
+      "rounds": null,
+      "clubCode": "MAJ",
+      "year": 2026
+    },
+    {
+      "tourId": 68248,
+      "name": "Torneo Juvenil Circuito MAJ \"La Dehesa\"",
       "date": "31 ago 2026",
       "rounds": null,
       "clubCode": null,
