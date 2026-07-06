@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-07-05T20:46:49.949Z",
+  "scrapedAt": "2026-07-06T10:33:50.954Z",
   "total": 514,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -116226,7 +116226,7 @@
       "admissions": {
         "name": "CAMP. JUVENIL - T.V.P.M. (Escalão A)",
         "date": "2026-07-06",
-        "totalInscritos": 17,
+        "totalInscritos": 19,
         "reservas": 0,
         "status": "",
         "rounds": 1,
@@ -116402,10 +116402,214 @@
             "vacf": null,
             "registo": "2026/06/26 23:23",
             "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "42985",
+            "nome": "Martim Moreira",
+            "clube": "Belas",
+            "hcp": 10.9,
+            "vacf": null,
+            "registo": "2026/06/28 11:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "49770",
+            "nome": "Paul Devillers",
+            "clube": "Estoril",
+            "hcp": 5.5,
+            "vacf": null,
+            "registo": "2026/06/29 19:25",
+            "status": "confirmed"
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-07-06",
+          "totalJogadores": 24,
+          "groups": [
+            {
+              "teeTime": "08:48",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "PALMARES JR.,Nuno",
+                  "fed": "49124",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "PINHEIRO,Filipe",
+                  "fed": "46591",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "BENESI,Rafael Gonçales",
+                  "fed": "54774",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:56",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "THAPA,Reuben",
+                  "fed": "47552",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "GAO,William",
+                  "fed": "51524",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "DANTAS,Ryan",
+                  "fed": "45439",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:04",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "COSTA ALEMÃO,Pedro",
+                  "fed": "46706",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "IVO DE CARVALHO,Salvador",
+                  "fed": "43968",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "GOMES,João",
+                  "fed": "53715",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "ROCHA,João",
+                  "fed": "48297",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "DEVILLERS,Paul",
+                  "fed": "49770",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "SCARANTINO,Asher",
+                  "fed": "59328",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "LI,Ruiqi",
+                  "fed": "49076",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "GAO,Angelina",
+                  "fed": "51523",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "LEAL GOUVEIA,Matilde",
+                  "fed": "41131",
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:28",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FRANCO,Duarte Soares",
+                  "fed": "48531",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "FILIP JR,David",
+                  "fed": "51949",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "FERREIRA,Miguel Maria Neves",
+                  "fed": "57756",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:36",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "MOREIRA,Martim",
+                  "fed": "42985",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "GUEDES,Nuno",
+                  "fed": "54508",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "FREITAS DE ALMEIDA,Maria Luiza",
+                  "fed": "50426",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:44",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "PENUCHO,Mateus",
+                  "fed": "52393",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "EKINCI,Bulut Hikmet",
+                  "fed": "60198",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "BECKER,Leonardo",
+                  "fed": "46756",
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "004",
