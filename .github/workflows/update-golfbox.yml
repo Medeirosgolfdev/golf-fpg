@@ -80,6 +80,12 @@ jobs:
         if: steps.scrape.outputs.exit_code == '0'
         run: node scripts/aggregator/index.js
 
+      # Push com GITHUB_TOKEN não dispara build-major-catalog.yml (anti-recursão)
+      # → regenerar o catálogo MAJOR aqui para as fontes GolfBox (avtrophy/EGA).
+      - name: Regenerar catálogo MAJOR
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/build-major-catalog.js
+
       - name: Commit e push (se houve alterações)
         if: steps.scrape.outputs.exit_code == '0'
         run: |

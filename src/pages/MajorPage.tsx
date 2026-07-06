@@ -494,41 +494,14 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
 };
 
-// Anos a tentar para os ficheiros Junior Orange Bowl (orangebowl_<ano>.json).
-const JOB_YEARS = Array.from({ length: 16 }, (_, i) => 2012 + i); // 2012..2027
-
-// Anos disponíveis do Future Masters Golf (ftm_fm_<ano>.json).
-const FM_YEARS = [2019, 2021, 2022, 2023, 2024, 2025, 2026];
-
-// Anos a tentar para os ficheiros FSGA (fsga_<ano>.json).
-const FSGA_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
-
-// Anos a tentar para o Under Armour (uajt_<ano>.json) e o Campeonato Nacional
-// Infantil Juvenil do México (mexnacional_<ano>.json). Ambos GolfGenius.
-const UAJT_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
-const MEX_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i);  // 2020..2027
-// Copa Bobby Díaz + Interzonas Lorena Ochoa (México, GolfGenius).
-const ICOPA_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
-const INTERZONAS_YEARS = Array.from({ length: 8 }, (_, i) => 2020 + i); // 2020..2027
-// Belgian International U14 — Albert Vermeiren Trophy (GolfBox, avtrophy_<ano>.json).
-const AVTROPHY_YEARS = Array.from({ length: 6 }, (_, i) => 2022 + i); // 2022..2027
-
-/* ── Doral: carregamento em duas vagas (recente eager + histórico diferido) ──
- * Os ficheiros do Doral já são anuais (ftm_doral_<ano>.json). Antes eram todos
- * pedidos num bloco que travava o ecrã inicial (~6 MB, dominado pelos anos
- * antigos). Agora carregamos primeiro os anos recentes (render imediato) e o
- * histórico entra depois, em segundo plano, sem bloquear as restantes fontes. */
-const DORAL_RECENT_FROM = 2024;
 const doralYearOf = (u: string) => Number(u.match(/ftm_doral_(\d+)/)?.[1] ?? 0);
-const DORAL_RECENT_FILES = DORAL_FILES.filter((f) => doralYearOf(f.url) >= DORAL_RECENT_FROM);
-const DORAL_HISTORIC_FILES = DORAL_FILES.filter((f) => doralYearOf(f.url) < DORAL_RECENT_FROM);
 
 async function loadDoralFiles(files: typeof DORAL_FILES): Promise<{ entries: Entry[]; names: Map<number, string> }> {
   const dorals = await Promise.all(files.map(async ({ url, sourceUrl }) => {
@@ -547,115 +520,139 @@ async function loadDoralFiles(files: typeof DORAL_FILES): Promise<{ entries: Ent
   return { entries, names };
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   Catálogo + carregamento LAZY (2026-07-06)
+
+   Antes, a página pedia ~127 ficheiros (~14.6 MB, incl. ~48 pedidos 404 por
+   adivinhar anos) no arranque, só para desenhar a lista lateral. Agora pede só
+   `major-catalog.json` (~50 KB, gerado por scripts/build-major-catalog.js): a
+   lista sai desse índice e o detalhe de cada torneio (scorecards) só carrega ao
+   clicar, via `loadDivisions` (o CircuitShell já suporta e cacheia isto — mesmo
+   padrão do FFG/England). Sem adivinhar anos → zero 404s. */
+
+interface MajorCatalogEntry {
+  id: string; source: string; series: string; year: number; name: string;
+  course?: string; dateStart?: string; dateEnd?: string; sourceUrl?: string;
+  escalao?: string; playerCount?: number; roundsCount?: number; divisionCount?: number;
+  hasManuel?: boolean; hasPt?: boolean;
+}
+interface MajorCatalog {
+  generatedAt: string; total: number;
+  veteranIndex: Record<string, number>;
+  entries: MajorCatalogEntry[];
+}
+
+/** Carrega (lazy) as divisões de um torneio bjgt/eowagr reusando o builder
+ *  eager. Traz também o ano-irmão (2025↔2026) para a evolução ano-a-ano do
+ *  `bjgtEvoFor` (só compara esses dois anos). */
+async function loadBjgtDivisions(source: "bjgt" | "eowagr", year: number): Promise<CircuitDivision[]> {
+  const sibling = year === 2025 ? 2026 : year === 2026 ? 2025 : 0;
+  const wantYears = new Set([year, sibling].filter(Boolean));
+  const urls = BJGT_URLS.filter((m) => m.series === source && wantYears.has(m.year));
+  const defs = (await Promise.all(urls.map(async (m): Promise<TDef | null> => {
+    try {
+      const raw = await cachedFetchJson<unknown>(m.url);
+      if (raw == null) return null;
+      return {
+        id: m.id, label: m.label, shortLabel: m.shortLabel,
+        data: bjgtLoadT(raw), manuelName: m.manuelName, year: m.year,
+        category: m.category, roundDates: m.roundDates, series: m.series,
+      } as TDef;
+    } catch { return null; }
+  }))).filter((d): d is TDef => d != null);
+  return buildMajorEntries(defs, [], new Map()).find((e) => e.id === `${source}:${year}`)?.divisions ?? [];
+}
+
+/** Doral (lazy). A evolução do Doral (`doralEvoFor`) olha para TODOS os anos
+ *  anteriores → carregamos os ficheiros com ano ≤ ao seleccionado (cacheados). */
+async function loadDoralDivisions(year: number): Promise<CircuitDivision[]> {
+  const files = DORAL_FILES.filter((f) => doralYearOf(f.url) <= year);
+  const { entries, names } = await loadDoralFiles(files);
+  return buildMajorEntries([], entries, names).find((e) => e.id === `doral:${year}`)?.divisions ?? [];
+}
+
+/** Fontes GolfGenius/JobFile (1 ficheiro por ano). Cada uma reusa o seu builder.
+ *  A evolução (`jobEvoFor`) só precisa do ano anterior → carregamos [ano-1, ano]. */
+const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (files: JobFile[]) => CircuitEntry[] }> = {
+  job: { file: (y) => `/data/orangebowl_${y}.json`, build: buildJobEntries },
+  fm: { file: (y) => `/data/ftm_fm_${y}.json`, build: buildFmEntries },
+  fsga: { file: (y) => `/data/fsga_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "fsga", series: "FSGA" }) },
+  uajt: { file: (y) => `/data/uajt_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "uajt", series: "UA" }) },
+  mexnacional: { file: (y) => `/data/mexnacional_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "mexnacional", series: "MÉX" }) },
+  icopa: { file: (y) => `/data/icopa_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "icopa", series: "Bobby Díaz" }) },
+  interzonas: { file: (y) => `/data/interzonas_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "interzonas", series: "Interzonas" }) },
+  avtrophy: { file: (y) => `/data/avtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  // EGA European Team Championships (GolfBox) — mesmo formato do avtrophy.
+  ebtc2: { file: (y) => `/data/ebtc2_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "ebtc2", series: "ETC Boys", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  egtc: { file: (y) => `/data/egtc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "egtc", series: "ETC Girls", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+};
+
+/** Devolve o `loadDivisions` adequado à fonte do torneio do catálogo. */
+function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision[]> {
+  return async () => {
+    if (cat.source === "bjgt" || cat.source === "eowagr") return loadBjgtDivisions(cat.source, cat.year);
+    if (cat.source === "doral") return loadDoralDivisions(cat.year);
+    const gg = GG_JOB_LOADERS[cat.source];
+    if (gg) {
+      const files = (await Promise.all([cat.year - 1, cat.year].map((y) =>
+        cachedFetchJson<JobFile>(gg.file(y)).catch(() => null),
+      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
+      return gg.build(files).find((e) => e.id === cat.id)?.divisions ?? [];
+    }
+    return [];
+  };
+}
+
+/** Entry LEVE (só metadata do catálogo) — o detalhe carrega lazy no shell. */
+function catalogToEntry(cat: MajorCatalogEntry): CircuitEntry {
+  return {
+    id: cat.id,
+    year: cat.year,
+    name: cat.name,
+    series: cat.series,
+    source: cat.source,
+    course: cat.course,
+    dateStart: cat.dateStart,
+    dateEnd: cat.dateEnd,
+    sourceUrl: cat.sourceUrl,
+    escalao: cat.escalao,
+    playerCount: cat.playerCount,
+    roundsCount: cat.roundsCount,
+    divisionCount: cat.divisionCount,
+    hasManuel: cat.hasManuel,
+    hasPt: cat.hasPt,
+    loadDivisions: loadDivisionsFor(cat),
+  };
+}
+
 function MajorContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; year?: string }>();
-  const [bjgtDefs, setBjgtDefs] = useState<TDef[]>([]);
-  const [doralEntries, setDoralEntries] = useState<Entry[]>([]);
-  const [doralNames, setDoralNames] = useState<Map<number, string>>(new Map());
-  const [jobFiles, setJobFiles] = useState<JobFile[]>([]);
-  const [fmFiles, setFmFiles] = useState<JobFile[]>([]);
-  const [fsgaFiles, setFsgaFiles] = useState<JobFile[]>([]);
-  const [uajtFiles, setUajtFiles] = useState<JobFile[]>([]);
-  const [mexFiles, setMexFiles] = useState<JobFile[]>([]);
-  const [icopaFiles, setIcopaFiles] = useState<JobFile[]>([]);
-  const [interzonasFiles, setInterzonasFiles] = useState<JobFile[]>([]);
-  const [avtrophyFiles, setAvtrophyFiles] = useState<JobFile[]>([]);
+  const [catalog, setCatalog] = useState<MajorCatalog | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      // BJGT/EOWAGR bloqueia o ecrã inicial — é leve (~0.6 MB). O Doral (que era
-      // ~6 MB e dominava a espera) saiu deste bloco: carrega a seguir, sem travar.
-      const defs = await Promise.all(BJGT_URLS.map(async (m): Promise<TDef | null> => {
-        try {
-          const raw = await cachedFetchJson<unknown>(m.url);
-          if (raw == null) return null;
-          return {
-            id: m.id, label: m.label, shortLabel: m.shortLabel,
-            data: bjgtLoadT(raw), manuelName: m.manuelName, year: m.year,
-            category: m.category, roundDates: m.roundDates, series: m.series,
-          } as TDef;
-        } catch { return null; }
-      }));
+      const cat = await cachedFetchJson<MajorCatalog>("/data/major-catalog.json").catch(() => null);
       if (!alive) return;
-      setBjgtDefs(defs.filter((d): d is TDef => d != null));
+      setCatalog(cat);
       setLoading(false);
-
-      // Doral: anos recentes primeiro (render imediato), histórico em segundo
-      // plano (merge sem bloquear as restantes fontes).
-      const recentDoral = await loadDoralFiles(DORAL_RECENT_FILES);
-      if (!alive) return;
-      setDoralEntries(recentDoral.entries);
-      setDoralNames(recentDoral.names);
-      void loadDoralFiles(DORAL_HISTORIC_FILES).then((hist) => {
-        if (!alive) return;
-        setDoralEntries((prev) => [...prev, ...hist.entries]);
-        setDoralNames((prev) => {
-          const m = new Map(prev);
-          for (const [y, n] of hist.names) m.set(y, n);
-          return m;
-        });
-      });
-
-      // Junior Orange Bowl — tenta cada ano (404 ignorado).
-      const jobs = (await Promise.all(JOB_YEARS.map((y) =>
-        cachedFetchJson<JobFile>(`/data/orangebowl_${y}.json`).catch(() => null),
-      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
-      if (alive) setJobFiles(jobs);
-
-      // Future Masters Golf — tenta cada ano (404 ignorado).
-      const fms = (await Promise.all(FM_YEARS.map((y) =>
-        cachedFetchJson<JobFile>(`/data/ftm_fm_${y}.json`).catch(() => null),
-      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
-      if (alive) setFmFiles(fms);
-
-      // FSGA (Florida State Golf Association) — tenta cada ano (404 ignorado).
-      const fsgas = (await Promise.all(FSGA_YEARS.map((y) =>
-        cachedFetchJson<JobFile>(`/data/fsga_${y}.json`).catch(() => null),
-      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
-      if (alive) setFsgaFiles(fsgas);
-
-      // Under Armour Nat'l + México Nacional Infantil Juvenil (GolfGenius).
-      const [uas, mexs] = await Promise.all([
-        Promise.all(UAJT_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/uajt_${y}.json`).catch(() => null))),
-        Promise.all(MEX_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/mexnacional_${y}.json`).catch(() => null))),
-      ]);
-      if (alive) setUajtFiles(uas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
-      if (alive) setMexFiles(mexs.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
-
-      // Copa Bobby Díaz + Interzonas (México, GolfGenius).
-      const [icopas, interzonas] = await Promise.all([
-        Promise.all(ICOPA_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/icopa_${y}.json`).catch(() => null))),
-        Promise.all(INTERZONAS_YEARS.map((y) => cachedFetchJson<JobFile>(`/data/interzonas_${y}.json`).catch(() => null))),
-      ]);
-      if (alive) setIcopaFiles(icopas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
-      if (alive) setInterzonasFiles(interzonas.filter((f): f is JobFile => !!f && Array.isArray(f.divisions)));
-
-      // Belgian International U14 — Albert Vermeiren Trophy (GolfBox).
-      const avts = (await Promise.all(AVTROPHY_YEARS.map((y) =>
-        cachedFetchJson<JobFile>(`/data/avtrophy_${y}.json`).catch(() => null),
-      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
-      if (alive) setAvtrophyFiles(avts);
     })();
     return () => { alive = false; };
   }, []);
 
-  const entries = useMemo(
-    () => [
-      ...buildMajorEntries(bjgtDefs, doralEntries, doralNames),
-      ...buildJobEntries(jobFiles),
-      ...buildFmEntries(fmFiles),
-      ...buildGgJobEntries(fsgaFiles, { source: "fsga", series: "FSGA" }),
-      ...buildGgJobEntries(uajtFiles, { source: "uajt", series: "UA" }),
-      ...buildGgJobEntries(mexFiles, { source: "mexnacional", series: "MÉX" }),
-      ...buildGgJobEntries(icopaFiles, { source: "icopa", series: "Bobby Díaz" }),
-      ...buildGgJobEntries(interzonasFiles, { source: "interzonas", series: "Interzonas" }),
-      ...buildGgJobEntries(avtrophyFiles, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }),
-    ],
-    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles, fsgaFiles, uajtFiles, mexFiles, icopaFiles, interzonasFiles, avtrophyFiles],
-  );
+  const entries = useMemo(() => (catalog?.entries ?? []).map(catalogToEntry), [catalog]);
+
+  // Índice de veteranos pré-calculado (o shell não tem os jogadores em memória
+  // no modo lazy) — alimenta o toggle ✦ Veteranos.
+  const veteranIndex = useMemo(() => {
+    const m = new Map<string, number>();
+    if (catalog?.veteranIndex) for (const [k, n] of Object.entries(catalog.veteranIndex)) m.set(k, n);
+    return m;
+  }, [catalog]);
+
+  const config = useMemo<CircuitConfig>(() => ({ ...MAJOR_CONFIG, veteranIndex }), [veteranIndex]);
 
   // Torneio seleccionado via URL (/major/:source/:year → id "source:year").
   const selectedId = params.source && params.year ? `${params.source}:${params.year}` : undefined;
@@ -664,7 +661,7 @@ function MajorContent() {
   return (
     <CircuitShell
       entries={entries}
-      config={MAJOR_CONFIG}
+      config={config}
       selectedId={selectedId}
       onSelectEntry={(e) => {
         const [src, yr] = e.id.split(":");

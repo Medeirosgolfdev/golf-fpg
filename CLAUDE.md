@@ -521,6 +521,27 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 
 ## Scripts — MAJOR: campeonatos juvenis internacionais (2026-07-03)
 
+> **⚡ Catálogo + lazy load (2026-07-06)** — a `/major` deixou de pedir ~127
+> ficheiros (~14.6 MB, incl. ~48 pedidos 404 por adivinhar anos) no arranque.
+> Agora pede SÓ `public/data/major-catalog.json` (~50 KB, gerado por
+> `scripts/build-major-catalog.js`): a lista lateral sai desse índice (name,
+> campo, datas, nº jog/esc/rondas, hasManuel/hasPt) e o detalhe de cada torneio
+> (scorecards) carrega **lazy** ao clicar, via `loadDivisions` no `CircuitShell`
+> (que já suportava + cacheia — mesmo padrão do FFG/England). Os builders eager
+> (`buildMajorEntries`/`buildJobEntries`/`buildFmEntries`/`buildGgJobEntries`)
+> **mantêm-se** — o `loadDivisions` reusa-os por-fonte, dando-lhes só a fatia
+> mínima: bjgt/eowagr → ano + irmão 2025↔2026 (evo `bjgtEvoFor`); doral → todos
+> os anos ≤ seleccionado (evo multi-ano `doralEvoFor`); gg-job → [ano-1, ano]
+> (evo `jobEvoFor`). O `veteranIndex` (toggle ✦ Veteranos) vem pré-calculado no
+> catálogo (o shell não tem os jogadores em memória no modo lazy).
+>
+> ⚠ Correr `node scripts/build-major-catalog.js` sempre que um ficheiro de dados
+> MAJOR muda. Automatizado em `build-major-catalog.yml` (push nos paths
+> brjgt/eowagr/ftm_doral/orangebowl/ftm_fm/fsga/uajt/mexnacional/icopa/interzonas/
+> avtrophy + o próprio script). As regras de metadata do script **espelham** os
+> builders da `MajorPage.tsx` — se um builder mudar name/playerCount/etc., alinhar
+> o script.
+
 Fonte única `/major` cresceu com campeonatos juvenis mundiais/nacionais. Dois
 formatos de output e dois caminhos de scrape:
 
@@ -531,8 +552,30 @@ formatos de output e dois caminhos de scrape:
 | **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (multi-liga) | `pages/5989156` (hub JS) | **`scrape-golfgenius-node.js --v2tids`** | `mexnacional_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `mexnacional`) |
 | **México — Copa Bobby Díaz (7-15)** | GolfGenius | `pages/5666137` (liga 502696) | `scrape-golfgenius-node.js --v2tids` | `icopa_2025.json` (4 divisões c/ jogadores) | ✅ ligado (source `icopa`) |
 | **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2025.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
+| **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
+| **EGA — European Boys' Team Championship, Div. 2** | GolfBox | `ega-golf.ch/…#/competition/5731554/leaderboard` | `scrape-golfbox.js` | `ebtc2_2026.json` (JobFile) | ✅ ligado (source `ebtc2`) — começa 7 Jul 2026 |
+| **EGA — European Girls' Team Championship (U18)** | GolfBox | `ega-golf.ch/…#/competition/5478100/` | `scrape-golfbox.js` | `egtc_2026.json` (JobFile) | ✅ ligado (source `egtc`) — U18, GCC Zürich; começa 7 Jul 2026 |
 | **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | `scrape-bluegolf.js` | `fcg268_{cat}.json` (formato bluegolf) | ⏳ correr em casa (IP bloqueado pelo BlueGolf) |
 | **Uswing Mojing Junior World (JWGC)** | BlueGolf | `jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/` | `scrape-bluegolf.js` | `jwgc261_{cat}.json` (formato bluegolf) | ⏳ correr em casa |
+
+### GolfBox (`scores.golfbox.dk`) — EGA European Team Championships + avtrophy
+
+Sites tipo `ega-golf.ch` (Drupal) embutem o leaderboard GolfBox
+(`scores.golfbox.dk/api/js/leaderboard/competitionid/{id}/template/ega`). O
+`scrape-golfbox.js` (Node-puro, JSONP público, **sem cookies**) lê a competição
+pelo `competitionId` e escreve um JobFile `{slug}_{ano}.json` — mesmo formato dos
+GolfGenius, com CR/Slope + HCP + ano de nascimento (`showRatings: true` na
+`MajorPage`). Usa a `PlayerClass` "Individual" (ignora a `TeamClass`) → leaderboard
+individual, com o `team` de cada jogador guardado.
+
+**Automação:** as competições vivem em `scripts/golfbox-scope.json`; o
+`update-golfbox.yml` (cron diário 21:00 UTC + `workflow_dispatch`) scrapa TODO o
+scope, regenera juniores + **`major-catalog.json`** e committa. Adicionar um evento
+= 1 entrada no scope (`competitionId`/`slug`/`name`) + ligar a fonte na `MajorPage`
+(`sourceColors`/`sourceLabels`/`GG_JOB_LOADERS`), no `build-major-catalog.js`
+(`GG_SOURCES`) e nos paths do `build-major-catalog.yml`. Eventos futuros (sem campo/
+scores ainda) são **saltados** pelo catálogo até terem jogadores — aparecem sozinhos
+quando o cron os apanha.
 
 ⚠ **O GolfGenius devolve 403 a browsers automatizados** (Playwright headless *e*
 o Chrome do utilizador em modo automação) **mas responde a `fetch` puro.** Por
