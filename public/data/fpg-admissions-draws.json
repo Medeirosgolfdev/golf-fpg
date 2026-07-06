@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-07-06T10:33:50.954Z",
+  "scrapedAt": "2026-07-06T10:50:30.471Z",
   "total": 514,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -116620,7 +116620,7 @@
       "admissions": {
         "name": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
         "date": "2026-07-07",
-        "totalInscritos": 5,
+        "totalInscritos": 6,
         "reservas": 0,
         "status": "",
         "rounds": 1,
@@ -116676,10 +116676,72 @@
             "vacf": null,
             "registo": "2026/06/26 23:25",
             "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "57904",
+            "nome": "Guo Ziyang",
+            "clube": "Estoril",
+            "hcp": 10.5,
+            "vacf": null,
+            "registo": "2026/06/30 14:00",
+            "status": "confirmed"
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-07-07",
+          "totalJogadores": 6,
+          "groups": [
+            {
+              "teeTime": "09:52",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "CASTRO FERREIRA,Ricardo",
+                  "fed": "49085",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "ZIYANG,Guo",
+                  "fed": "57904",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "KHONTULEV,Mikhail",
+                  "fed": "58864",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "IVO DE CARVALHO,Francisco",
+                  "fed": "54255",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "SANTOS,Artur",
+                  "fed": "44649",
+                  "clube": "Exército"
+                },
+                {
+                  "nome": "FERREIRA,Maria Madalena Neves",
+                  "fed": "57587",
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   ]
 }
