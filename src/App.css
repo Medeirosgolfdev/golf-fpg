@@ -1026,13 +1026,36 @@ tr.cross-current { background: var(--bg-success); }
   background: transparent;
   border-bottom: 2px solid var(--border);
 }
-/* Detalhe da análise mais compacto (padding reduzido para caber mais dados). */
-.pa-content .dtable-lg th { padding: 5px 10px; }
-.pa-content .dtable-lg td { padding: 3px 10px; }
+/* Densidade das tabelas de rondas — linhas mais arejadas (2026-07-06). Mantém-se
+   a leitura tabular mas com respiração vertical, ao nível dos KPI cards. */
+.pa-content .dtable-lg th { padding: 7px 10px; }
+.pa-content .dtable-lg td { padding: 7px 10px; }
 /* by_course tem 1 linha por célula → linhas mais altas p/ igualar by_date/federado */
-.pa-content .dtable-lg.dtable-roomy td { padding-top: 9px; padding-bottom: 9px; }
+.pa-content .dtable-lg.dtable-roomy td { padding-top: 10px; padding-bottom: 10px; }
 .pa-content .dtable, .pa-content .dt-compact, .pa-content .sc-table-modern { font-size: var(--fs-12); }
-.pa-content .dt-compact th, .pa-content .dt-compact td { padding: 6px 8px; }
+.pa-content .dt-compact th, .pa-content .dt-compact td { padding: 8px 10px; }
+
+/* ─── Enquadramento do detalhe de cada campo/torneio (2026-07-06) ──────────────
+   O painel expandido ganha respiração e a tabela de rondas passa a ler-se como um
+   cartão discreto (fundo próprio + borda subtil) sobre o fundo do detalhe, em vez
+   de flutuar solta. Mantém-se toda a cor dos pills. */
+.pa-content .details.open .innerWrap { padding: 14px 16px; }
+.pa-content .details.open .dt-compact {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+/* `> thead > tr > th` para NÃO vazar para o scorecard aninhado (que vive dentro
+   de uma linha expandida deste mesmo .dt-compact). */
+.pa-content .details.open .dt-compact > thead > tr > th {
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+}
+.pa-content .details.open .dt-compact tbody tr.roundRow { transition: background 0.12s; }
+.pa-content .details.open .dt-compact tbody tr.roundRow:hover > td { background: var(--bg-hover); }
+/* última linha de dados encosta ao rebordo do cartão sem borda dupla */
+.pa-content .details.open .dt-compact tbody > tr:last-child > td { border-bottom: none; }
 
 /* Scorecards hole-by-hole: o .sc-table-modern passa a ter o MESMO aspecto limpo do
    .sc-table-ec — sem bandas de cor nos Out/In/Total, só divisores, densidade igual. */
@@ -1043,6 +1066,13 @@ tr.cross-current { background: var(--bg-success); }
 .pa-content .sc-table-modern .hole-header { border-bottom: 1px solid var(--border-light); }
 .pa-content .sc-table-modern .sep-row td,
 .pa-content .sc-table-ec .sep-row td { border-bottom: 1px solid var(--border-light); }
+/* Grelha do scorecard com UMA linha só: TODAS as linhas horizontais a 1px e na
+   MESMA cor (--border, o verde do cabeçalho). Uniformiza espessura e cor — o verde
+   do "Buraco" fica visível e igual às restantes. Última linha (Δ) sem borda: a
+   linha de topo da legenda fecha a grelha (evita traço duplo). */
+.pa-content .sc-modern .sc-table-modern thead th { border-bottom: 1px solid var(--border); }
+.pa-content .sc-modern .sc-table-modern tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+.pa-content .sc-modern .sc-table-modern tbody tr:last-child td { border-bottom: none; }
 .pa-content .sc-table-modern .hole-header { background: transparent; color: var(--text-3); font-weight: 500; }
 .pa-content .sc-table-modern .col-out,
 .pa-content .sc-table-modern .col-in { background: transparent; border-left: 1px solid var(--border-light); font-weight: 600; }
@@ -1299,6 +1329,22 @@ tr.cross-current { background: var(--bg-success); }
 /* Buraco não terminado — valor inferido (Net Double Bogey). Pintado a cinzento
    para distinguir de scores reais (como nos resultados de torneios sociais). */
 .sc-score.sc-inferred { background: var(--score-inferred-bg); color: var(--score-inferred-fg); border-radius: 0; font-style: italic; }
+
+/* ─── Legenda de cores do scorecard (2026-07-06) ──────────────────────────────
+   Rodapé discreto do cartão hole-by-hole que explica a semântica de cor já usada
+   em toda a app: círculo = abaixo do par, quadrado = acima. Tokens de --score-*. */
+.sc-legend {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  padding: 8px 16px 10px; border-top: 1px solid var(--border-light);
+  background: var(--bg-card); font-size: var(--fs-10); color: var(--text-3);
+}
+.sc-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+.sc-legend .scl { width: 13px; height: 13px; display: inline-block; flex: none; }
+.scl-eagle  { background: var(--score-eagle); border-radius: 50%; }
+.scl-birdie { background: var(--score-birdie); border-radius: 50%; }
+.scl-par    { background: transparent; border: 1px solid var(--border); }
+.scl-bogey  { background: var(--score-bogey); border: 1px solid var(--score-bogey-border); }
+.scl-double { background: var(--score-double); }
 
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }

@@ -338,6 +338,18 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           )}
         </tbody>
       </table>
+
+      {/* Legenda de cores — semântica partilhada por toda a app (círculo = abaixo
+          do par, quadrado = acima). Omitida em modo bare (contexto já denso). */}
+      {!bare && (
+        <div className="sc-legend">
+          <span className="sc-legend-item"><i className="scl scl-eagle" />Eagle</span>
+          <span className="sc-legend-item"><i className="scl scl-birdie" />Birdie</span>
+          <span className="sc-legend-item"><i className="scl scl-par" />Par</span>
+          <span className="sc-legend-item"><i className="scl scl-bogey" />Bogey</span>
+          <span className="sc-legend-item"><i className="scl scl-double" />Duplo+</span>
+        </div>
+      )}
     </div>
   );
 }

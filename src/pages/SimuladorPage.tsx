@@ -1305,6 +1305,7 @@ export default function SimuladorPage() {
                   playerData={playerData}
                   bare
                   storageKey={`sim_rounds_simpage_${playerFed}`}
+                  manualDefaults={{ "18": manual18, front9: manualF9, back9: manualB9 }}
                 />
               </div>
             </details>

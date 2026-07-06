@@ -784,12 +784,14 @@ function partitionByJaccard(entries: Tournament[], threshold: number): Tournamen
 /** Nome simplificado do grupo: retira sufixos de escalão/género/dia. */
 function cleanGroupName(raw: string): string {
   return (raw || "")
+    .replace(/\s*\(?\s*escal[aã]o\s+[A-Za-z0-9]+\s*\)?/gi, " ")
     .replace(/\s*-?\s*(Rapazes?|Raparigas?|Masculin[oa]s?|Femininos?|Masc|Fem)\s*$/i, "")
     .replace(/\s*Sub[\s-]*\d+\s*[HMSFR]?\s*$/i, "")
     .replace(/\s*-?\s*\d+\s*buracos?\s*$/i, "")
     .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
     .replace(/\s*\bR\d+\s*$/i, "")
     .replace(/\s+[HMF]$/, "")
+    .replace(/\s+/g, " ")
     .replace(/[\s\-–]+$/, "").trim();
 }
 
@@ -825,6 +827,10 @@ export function buildEventGroups(
   // partilham `date` (data de início do evento).
   const normDia = (name: string) => (name || "")
     .replace(/\s*\bDia\b\s*\d+/gi, "")
+    // "(Escalão A)"/"Escalão B" — o mesmo campeonato dividido por nível.
+    // Strip para que os escalões (que podem ter datas diferentes) caiam no
+    // mesmo bucket Phase 2 e agrupem numa só entrada sidebar com tabs.
+    .replace(/\s*\(?\s*escal[aã]o\s+[A-Za-z0-9]+\s*\)?/gi, " ")
     .replace(/\s*\b20\d{2}\b\s*/g, " ")
     .replace(/\s+/g, " ").trim().toLowerCase();
 
@@ -884,7 +890,9 @@ const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Su
 /** Extrai escalão do nome quando t.escalao é null */
 function inferEscalao(name: string): string | null {
   const m = name.match(/Sub[\s-]*(\d+)/i);
-  return m ? "Sub " + m[1] : null;
+  if (m) return "Sub " + m[1];
+  const esc = name.match(/escal[aã]o\s+([A-Za-z0-9]+)/i);
+  return esc ? "Escalão " + esc[1].toUpperCase() : null;
 }
 
 /** Wrapper sobre buildEventGroups que adiciona campos year/isRegional/isNacional

@@ -558,13 +558,13 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 )}
                 <table className="dt-compact">
                   <colgroup>
-                    <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
-                    <col className="col-p17" /><col className="col-p11" /><col className="col-p14" />
-                    <col className="col-p12" /><col className="col-p12" />
+                    <col className="col-p12" /><col className="col-p19" /><col className="col-p7" /><col className="col-p8" />
+                    <col className="col-p15" /><col className="col-p10" /><col className="col-p12" />
+                    <col className="col-p9" /><col className="col-p8" />
                   </colgroup>
                   <thead>
                     <tr>
-                      <th>Data</th><th className="r">Bur.</th><th className="r">HCP</th>
+                      <th>Data</th><th>Prova</th><th className="r">Bur.</th><th className="r">HCP</th>
                       <th>Tee</th><th className="r">Dist.</th><th className="r">Gross</th>
                       <th className="r">Stb</th><th className="r">SD</th>
                     </tr>
@@ -607,16 +607,17 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
           {r.hasCard
             ? <a href="#" onClick={e => { e.preventDefault(); onToggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
             : <TeeDate date={r.date} tee={r.tee || ""} />}
-          <OriginPill origin={r.scoreOrigin} />
-          <PillBadge pill={effectivePill(r, courseName)} />
-          <LinkBtns links={r._links} />
           <div className="muted fs-10">#{r.scoreId}</div>
+        </td>
+        <td className="col-prova" onClick={e => e.stopPropagation()}>
+          <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r, courseName)} links={r._links}
+            fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={courseName} />
         </td>
         <RoundNumericCells r={r} />
       </tr>
       {isOpen && holes && (
         <tr>
-          <td colSpan={8} className="bg-page p-0">
+          <td colSpan={9} className="bg-page p-0">
             <div className="scroll-x" style={scHostStyle}>
               <ScorecardTable
                 holes={holes}

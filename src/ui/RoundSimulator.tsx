@@ -30,6 +30,16 @@ function whsQtyCalc(nSds: number): number {
   return 8;
 }
 
+/** CR/Slope/Par introduzidos à mão (strings — vêm dos inputs).
+ *  Usado para pré-preencher o modo "Manual" do simulador a partir de outra
+ *  parte da página (ex: os inputs de Modo Manual no topo do /simulador). */
+export type ManualTee = { cr: string; slope: string; par: string };
+export interface ManualDefaults {
+  "18"?: ManualTee;
+  front9?: ManualTee;
+  back9?: ManualTee;
+}
+
 export interface RoundSimulatorProps {
   hcp: HcpInfo;
   whs20: (RoundData & { course: string })[];
@@ -39,6 +49,10 @@ export interface RoundSimulatorProps {
   /** Override do localStorage key. Usado em páginas sem `:fedId` no URL
    *  (ex: /simulador) para que as rondas simuladas persistam na mesma. */
   storageKey?: string;
+  /** CR/Slope/Par a pré-preencher no modo "Manual" (por nº de buracos).
+   *  No /simulador liga aos inputs de Modo Manual do topo — preencher em cima
+   *  preenche automaticamente a ronda em baixo. */
+  manualDefaults?: ManualDefaults;
 }
 
 export function RoundSimulator({
@@ -48,16 +62,22 @@ export function RoundSimulator({
   bare,
   courseLookupFn: _courseLookupFn,
   storageKey: storageKeyProp,
+  manualDefaults,
 }: RoundSimulatorProps) {
   type HolesMode = "18" | "front9" | "back9";
   type SimRound = {
     id: string;
-    mode: "sd" | "course";
+    mode: "sd" | "course" | "manual";
     holesMode: HolesMode;
     sdInput: string;
     courseKey: string;
     teeId: string;
     grossInput: string;
+    /** Modo "manual": CR/Slope/Par introduzidos na própria ronda (vazio = usa
+     *  o manualDefaults do holesMode actual). */
+    crInput?: string;
+    slopeInput?: string;
+    parInput?: string;
   };
   const is9hMode = (hm: HolesMode): hm is "front9" | "back9" =>
     hm === "front9" || hm === "back9";
@@ -158,13 +178,17 @@ export function RoundSimulator({
       const rr = r as Partial<SimRound> & { holesMode?: unknown };
       out.push({
         id: String(rr.id ?? `sr_${Math.random().toString(36).slice(2, 8)}`),
-        mode: rr.mode === "course" ? "course" : "sd",
+        mode:
+          rr.mode === "course" ? "course" : rr.mode === "manual" ? "manual" : "sd",
         holesMode:
           rr.holesMode === "front9" || rr.holesMode === "back9" ? rr.holesMode : "18",
         sdInput: typeof rr.sdInput === "string" ? rr.sdInput : "",
         courseKey: typeof rr.courseKey === "string" ? rr.courseKey : "",
         teeId: typeof rr.teeId === "string" ? rr.teeId : "",
         grossInput: typeof rr.grossInput === "string" ? rr.grossInput : "",
+        crInput: typeof rr.crInput === "string" ? rr.crInput : "",
+        slopeInput: typeof rr.slopeInput === "string" ? rr.slopeInput : "",
+        parInput: typeof rr.parInput === "string" ? rr.parInput : "",
       });
     }
     return out.length > 0 ? out : null;
@@ -304,6 +328,36 @@ export function RoundSimulator({
     };
   }
 
+  // ── Modo manual: valor efectivo de cada campo (input da ronda OU o
+  //    manualDefaults do holesMode actual). Assim, preencher o CR/Slope no
+  //    topo do /simulador preenche automaticamente a ronda em baixo. ──
+  function manualFieldValue(r: SimRound, field: "cr" | "slope" | "par"): string {
+    const own =
+      field === "cr" ? r.crInput : field === "slope" ? r.slopeInput : r.parInput;
+    if (own && own.trim() !== "") return own;
+    return manualDefaults?.[r.holesMode]?.[field] ?? "";
+  }
+
+  function getManualRatings(r: SimRound): {
+    cr: number | null;
+    slope: number | null;
+    par: number;
+    teeName: string;
+    courseName: string;
+  } {
+    const cr = parseFloat(manualFieldValue(r, "cr").replace(",", "."));
+    const slope = parseFloat(manualFieldValue(r, "slope").replace(",", "."));
+    const parN = parseInt(manualFieldValue(r, "par"), 10);
+    const is9 = is9hMode(r.holesMode);
+    return {
+      cr: isNaN(cr) ? null : cr,
+      slope: isNaN(slope) || slope <= 0 ? null : slope,
+      par: isNaN(parN) ? (is9 ? 36 : 72) : parN,
+      teeName: "",
+      courseName: "Campo manual",
+    };
+  }
+
   // ── Mutações de rondas ──
   function addRound() {
     const last = rounds[rounds.length - 1];
@@ -337,6 +391,13 @@ export function RoundSimulator({
           (patch.holesMode !== undefined && patch.holesMode !== r.holesMode)
         ) {
           merged.teeId = "";
+        }
+        // Modo manual: ao mudar o nº de buracos, limpar os overrides de
+        // CR/Slope/Par para que cada modo puxe o seu próprio manualDefaults.
+        if (patch.holesMode !== undefined && patch.holesMode !== r.holesMode) {
+          merged.crInput = "";
+          merged.slopeInput = "";
+          merged.parInput = "";
         }
         return merged;
       })
@@ -428,8 +489,12 @@ export function RoundSimulator({
         }
         courseName = "Ronda simulada";
       } else {
-        const teeId = getEffectiveTeeId(round);
-        const rat = getTeeRatings(round.courseKey, teeId, round.holesMode);
+        // Modo "course" (tee de campo real) OU "manual" (CR/Slope à mão) —
+        // ambos derivam um CR/Slope/Par e convertem o gross em SD.
+        const rat =
+          round.mode === "manual"
+            ? getManualRatings(round)
+            : getTeeRatings(round.courseKey, getEffectiveTeeId(round), round.holesMode);
         cr = rat.cr;
         slope = rat.slope;
         par = rat.par;
@@ -656,11 +721,16 @@ export function RoundSimulator({
   }, [simResults, totalAdjustment]);
 
   // ── Rondas deslocadas ──
+  // Cada ronda simulada expulsa a mais antiga da janela; a 1ª simulada expulsa
+  // a mais velha e a última simulada expulsa a mais recente das que saem.
+  // Invertemos para mostrar primeiro "a última que saiu" (mais recente).
   const displacedEntries = useMemo(
     () =>
-      simResults?.results
+      (simResults?.results
         .filter((r) => r.valid && r.displaced)
-        .map((r) => r.displaced!) ?? [],
+        .map((r) => r.displaced!) ?? [])
+        .slice()
+        .reverse(),
     [simResults]
   );
 
@@ -1024,7 +1094,7 @@ export function RoundSimulator({
         }}
       >
         <span className="muted fs-11">
-          Simula rondas sequencialmente — SD directo ou Campo+Tee+Gross · 18 · F9 · B9 suportados
+          Simula rondas sequencialmente — SD directo, Campo+Tee+Gross ou CR/Slope manual+Gross · 18 · F9 · B9 suportados
           {playerSex && ` · tees filtrados por ${playerSex === "M" ? "Masculino" : "Feminino"}`}.
         </span>
         <div
@@ -1122,8 +1192,12 @@ export function RoundSimulator({
           const is9 = is9hMode(round.holesMode);
           const teeId = getEffectiveTeeId(round);
           const validTees = getValidTees(round.courseKey, round.holesMode);
-          const ratings = getTeeRatings(round.courseKey, teeId, round.holesMode);
-          // Se o campo não tem 9H ratings em nenhum tee, avisar
+          const ratings =
+            round.mode === "manual"
+              ? getManualRatings(round)
+              : getTeeRatings(round.courseKey, teeId, round.holesMode);
+          // Se o campo não tem 9H ratings em nenhum tee, avisar (modo manual: o
+          // utilizador introduz o seu próprio CR/Slope 9H → sempre "suportado").
           const has9Hsupport = round.mode === "course" && round.courseKey
             ? allRatedCourses
                 .find((c) => c.courseKey === round.courseKey)
@@ -1132,7 +1206,7 @@ export function RoundSimulator({
           const grossNum = parseInt(round.grossInput);
           // SD "cru" calculado a partir do gross com os ratings actuais (9H ou 18H)
           const computedSdRaw =
-            round.mode === "course" &&
+            (round.mode === "course" || round.mode === "manual") &&
             !isNaN(grossNum) &&
             ratings.cr != null &&
             ratings.slope != null
@@ -1185,15 +1259,15 @@ export function RoundSimulator({
                   {idx + 1}
                 </span>
 
-                {/* Toggle SD / Campo */}
+                {/* Toggle SD / Campo / Manual */}
                 <div className="rsim-seg" title="Origem do resultado">
-                  {(["sd", "course"] as const).map((m) => (
+                  {(["sd", "course", "manual"] as const).map((m) => (
                     <button
                       key={m}
                       className={round.mode === m ? "on" : ""}
                       onClick={() => updateRound(round.id, { mode: m })}
                     >
-                      {m === "sd" ? "📊 SD" : "⛳ Campo"}
+                      {m === "sd" ? "📊 SD" : m === "course" ? "⛳ Campo" : "✏️ Manual"}
                     </button>
                   ))}
                 </div>
@@ -1352,8 +1426,10 @@ export function RoundSimulator({
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
+                          fontFamily: "inherit",
                           fontSize: "var(--fs-14)",
                           fontWeight: 700,
+                          fontVariantNumeric: "tabular-nums",
                         }}
                       />
                     </label>
@@ -1373,6 +1449,102 @@ export function RoundSimulator({
                         </span>
                       );
                     })()}
+                  </>
+                ) : round.mode === "manual" ? (
+                  <>
+                    {(["cr", "slope", "par"] as const).map((f) => (
+                      <label
+                        key={f}
+                        className="fs-13 fw-600"
+                        style={{ display: "flex", alignItems: "center", gap: 6 }}
+                      >
+                        {f === "cr" ? "CR:" : f === "slope" ? "Slope:" : "Par:"}
+                        <input
+                          type="number"
+                          step={f === "cr" ? "0.1" : "1"}
+                          placeholder={
+                            f === "cr" ? "ex: 67.8" : f === "slope" ? "ex: 120" : is9 ? "36" : "72"
+                          }
+                          value={manualFieldValue(round, f)}
+                          onChange={(e) =>
+                            updateRound(round.id, {
+                              [f === "cr" ? "crInput" : f === "slope" ? "slopeInput" : "parInput"]:
+                                e.target.value,
+                            })
+                          }
+                          style={{
+                            width: f === "par" ? 56 : 74,
+                            padding: "4px 8px",
+                            borderRadius: 6,
+                            border: "1px solid var(--line)",
+                            background: "var(--bg-card)",
+                            color: "var(--text-1)",
+                            fontFamily: "inherit",
+                            fontSize: "var(--fs-14)",
+                            fontWeight: 700,
+                            fontVariantNumeric: "tabular-nums",
+                          }}
+                        />
+                      </label>
+                    ))}
+                    <label
+                      className="fs-13 fw-600"
+                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                    >
+                      {is9 ? "Gross (9h):" : "Gross:"}
+                      <input
+                        type="number"
+                        step="1"
+                        placeholder={is9 ? "ex: 42" : "ex: 85"}
+                        value={round.grossInput}
+                        onChange={(e) =>
+                          updateRound(round.id, { grossInput: e.target.value })
+                        }
+                        style={{
+                          width: 80,
+                          padding: "4px 8px",
+                          borderRadius: 6,
+                          border: "1px solid var(--line)",
+                          background: "var(--bg-card)",
+                          color: "var(--text-1)",
+                          fontFamily: "inherit",
+                          fontSize: "var(--fs-14)",
+                          fontWeight: 700,
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      />
+                    </label>
+                    {computedSdRaw != null && !is9 && (
+                      <span
+                        className={`p p-${sdClassByHcp(computedSdRaw, hiRef)} fs-13 fw-800`}
+                      >
+                        SD {computedSdRaw.toFixed(1)}
+                      </span>
+                    )}
+                    {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                        <span
+                          className={`p p-${sdClassByHcp(computedSd18, hiRef)} fs-12 fw-700`}
+                          title="SD de 9 buracos antes da conversão para 18H"
+                        >
+                          SD9 {computedSdRaw.toFixed(1)}
+                        </span>
+                        <span className="muted fs-11">
+                          + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
+                        </span>
+                        <span
+                          className={`p p-${sdClassByHcp(computedSd18, hiRef)} fs-13 fw-800`}
+                          title="SD equivalente a 18H — é este que entra no pool WHS"
+                        >
+                          SD18 {computedSd18.toFixed(1)}
+                        </span>
+                      </span>
+                    )}
+                    {(ratings.cr == null || ratings.slope == null) && (
+                      <span className="muted fs-11">
+                        Preenche CR e Slope{is9 ? ` de ${holesLabel(round.holesMode)}` : ""} para ver o SD.
+                      </span>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1468,8 +1640,10 @@ export function RoundSimulator({
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
+                          fontFamily: "inherit",
                           fontSize: "var(--fs-14)",
                           fontWeight: 700,
+                          fontVariantNumeric: "tabular-nums",
                         }}
                       />
                     </label>
