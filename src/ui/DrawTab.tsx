@@ -17,7 +17,7 @@ import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
-import { useFedBirthdates } from "./InscricoesComponents";
+import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -150,6 +150,7 @@ export default function DrawTab({
   const hc = hideCols || {};
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
+  const fedHcp = useFedHcp();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
 
@@ -226,6 +227,7 @@ export default function DrawTab({
       clube: string;
       fed: string | null;
       hcp: number | null;
+      hcpCurrent: boolean;
       dob?: string;
       dobYear: number | null;
       escHist: string | null;
@@ -339,18 +341,23 @@ export default function DrawTab({
           ? (typeof bd.club === "string" ? bd.club : (bd.club.short || bd.club.name || ""))
           : "";
         const clube = clubeFromDB || clubeRaw || "";
-        // HCP — apenas se disponível como snapshot temporal do evento:
+        // HCP — preferir o snapshot temporal do evento; cair no HCP actual só como
+        // último recurso:
         //   1. `p.hcp` do draw (PDF oficial / scrape da folha do draw)
         //   2. Admissions HCP (por fed ou nome normalizado) — capturado na inscrição
-        // NÃO cair em `playersDB.hcpExact` (HCP actual): um jogador pode ter um HCP
-        // muito diferente agora vs. na altura do evento e levar a conclusões erradas.
-        // Quando não há snapshot, mostra-se "–" (honesto) em vez de HCP potencialmente
-        // deslocado no tempo.
+        //   3. HCP ACTUAL do federado (`federados.json` por fed) — fallback para
+        //      jogadores no draw mas ausentes das admissões (draw > inscritos
+        //      capturados). É o HCP de hoje, não o do evento → marcado `hcpCurrent`
+        //      para o render sinalizar (title) que não é o snapshot temporal.
+        // Sem NENHUMA fonte, mostra-se "–".
         const pHcp = (p as any).hcp as number | null | undefined;
         const drawHcp = typeof pHcp === "number" ? pHcp : null;
         const admHcp = fed ? admHcpByFed.get(fed) : undefined;
         const admHcpByN = admHcpByName.get(norm(p.nome)) ?? admHcpByName.get(norm(nomeFormatted));
-        const hcp: number | null = drawHcp ?? admHcp ?? admHcpByN ?? null;
+        const snapshotHcp = drawHcp ?? admHcp ?? admHcpByN ?? null;
+        const currentHcp = snapshotHcp == null && fed ? (fedHcp.get(fed) ?? null) : null;
+        const hcp: number | null = snapshotHcp ?? currentHcp;
+        const hcpCurrent = snapshotHcp == null && currentHcp != null;
         // Dob: playersDB (curado) → federados.json (base FPG) → undefined
         const dob: string | undefined = bd?.dob || (fed ? fedBirthdates.get(fed) : undefined);
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
@@ -377,6 +384,7 @@ export default function DrawTab({
           clube,
           fed,
           hcp,
+          hcpCurrent,
           dob,
           dobYear,
           escHist,
@@ -386,7 +394,7 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results]);
+  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, fedHcp, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
@@ -477,7 +485,12 @@ export default function DrawTab({
             )}
             {!hc.fed && <td className="lb-fed" style={bStyle}>{p.fed || "–"}</td>}
             {!hc.clube && <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>}
-            {!hc.hcp && <td className="lb-hcp" style={bStyle}>{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>}
+            {!hc.hcp && (
+              <td className="lb-hcp" style={bStyle}
+                title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : undefined}>
+                {p.hcpCurrent ? <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>*</span> : null}{p.hcp != null ? fmtHcp(p.hcp) : "–"}
+              </td>
+            )}
             {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
             {!hc.nasc && (
               <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>

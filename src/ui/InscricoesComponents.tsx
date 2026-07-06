@@ -132,6 +132,44 @@ export function useFedBirthdates(): Map<string, string> {
   return m;
 }
 
+/* ── fed → HCP actual (lazy-load, partilhado entre instâncias) ──
+ *
+ * Fonte: `/data/federados.json` (campo `hcp_index`, com fallback a `hcp_exact`).
+ *
+ * Usado como ÚLTIMO fallback para a coluna HCP quando o snapshot temporal do
+ * evento (draw/admissions) não existe — tipicamente jogadores que estão no draw
+ * mas não na lista de inscritos capturada (draw > admissions). É o HCP ACTUAL,
+ * não o do evento; quem consome deve sinalizá-lo como tal (ver DrawTab).
+ * Sentinela FPG "sem handicap" (99) e valores acima do cap WHS (54) são
+ * descartados. Reutiliza o mesmo `cachedFetchJson` do birthdates — sem fetch extra.
+ */
+let _fedHcpPromise: Promise<Map<string, number>> | null = null;
+function loadFedHcp(): Promise<Map<string, number>> {
+  if (_fedHcpPromise) return _fedHcpPromise;
+  _fedHcpPromise = cachedFetchJson<any>("/data/federados.json")
+    .catch(() => null)
+    .then(feds => {
+      const m = new Map<string, number>();
+      if (!feds) return m;
+      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
+      for (const p of items) {
+        const fed = String(p.federation_code || p.fed || "");
+        if (!fed) continue;
+        const raw = p.hcp_index ?? p.hcp_exact;
+        const v = typeof raw === "number" ? raw : parseFloat(raw);
+        if (Number.isFinite(v) && v <= 54) m.set(fed, v);
+      }
+      return m;
+    });
+  return _fedHcpPromise;
+}
+
+export function useFedHcp(): Map<string, number> {
+  const [m, setM] = useState<Map<string, number>>(new Map());
+  useEffect(() => { loadFedHcp().then(setM); }, []);
+  return m;
+}
+
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira).
  *  Aceita `country` directo (override) — usado para jogadores internacionais sem
  *  fedCode português, onde a info vem de kids-links.json / playersDB entry virtual. */
