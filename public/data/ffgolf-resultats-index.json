@@ -1,8 +1,145 @@
 {
-  "generatedAt": "2026-07-06T06:01:57.061Z",
+  "generatedAt": "2026-07-06T06:42:11.324Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1237,
+  "total": 1241,
   "tournaments": [
+    {
+      "file": "03-04-2601451094.json",
+      "trnId": "2601451094",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Grand Prix Jeunes de Valgarde",
+      "formule": "Simple",
+      "date": "04/07/2026",
+      "dateIso": "2026-07-04",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 6,
+      "totalPlayers": 50,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 6
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 15
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 23
+        },
+        {
+          "serieId": "119",
+          "label": "MG",
+          "players": 4
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 1
+        },
+        {
+          "serieId": "217",
+          "label": "MF",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "04"
+      ]
+    },
+    {
+      "file": "03-06-2601405356.json",
+      "trnId": "2601405356",
+      "partKey": "957878e8bcc901290b115790945ff6ed",
+      "name": "Grand Prix Jeunes spécifique U12 Occitanie Golf de Castres",
+      "formule": "Simple",
+      "date": "04/07/2026",
+      "dateIso": "2026-07-04",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "06",
+      "seriesCount": 2,
+      "totalPlayers": 40,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 35
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 5
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "06"
+      ]
+    },
+    {
+      "file": "03-11-2601448904.json",
+      "trnId": "2601448904",
+      "partKey": "4ec9909eef55b805e5e30bbe7487d757",
+      "name": "Grand Prix Jeunes de l&#039;Odet",
+      "formule": "Simple",
+      "date": "04/07/2026",
+      "dateIso": "2026-07-04",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "11",
+      "seriesCount": 5,
+      "totalPlayers": 67,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 28
+        },
+        {
+          "serieId": "113",
+          "label": "BG",
+          "players": 13
+        },
+        {
+          "serieId": "117",
+          "label": "MG",
+          "players": 12
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 10
+        },
+        {
+          "serieId": "215",
+          "label": "BF",
+          "players": 4
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "11"
+      ]
+    },
     {
       "file": "01-00-2601449842.json",
       "trnId": "2601449842",
@@ -46,6 +183,70 @@
           "serieId": "210",
           "label": "U10F",
           "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601449859.json",
+      "trnId": "2601449859",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 5 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "formule": "Simple",
+      "date": "27/06/2026",
+      "dateIso": "2026-06-27",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 8,
+      "totalPlayers": 29,
+      "divisions": [
+        {
+          "serieId": "18",
+          "label": "H/U12",
+          "players": 8
+        },
+        {
+          "serieId": "27",
+          "label": "F/U12",
+          "players": 2
+        },
+        {
+          "serieId": "29",
+          "label": "F/U14",
+          "players": 3
+        },
+        {
+          "serieId": "110",
+          "label": "H/U14",
+          "players": 9
+        },
+        {
+          "serieId": "112",
+          "label": "H/U16",
+          "players": 3
+        },
+        {
+          "serieId": "114",
+          "label": "H/U18",
+          "players": 2
+        },
+        {
+          "serieId": "211",
+          "label": "F/U16",
+          "players": 1
+        },
+        {
+          "serieId": "213",
+          "label": "F/U18",
+          "players": 1
         }
       ],
       "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
