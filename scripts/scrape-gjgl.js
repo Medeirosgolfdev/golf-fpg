@@ -86,6 +86,7 @@ function parseArgs(argv) {
     else if (a === "--aks") { args.aks = next.split(",").map(n => parseInt(n, 10)); i++; }
     else if (a === "--skip-existing") { args.skipExisting = true; }
     else if (a === "--discovery-only") { args.discoveryOnly = true; }
+    else if (a === "--allow-future") { args.allowFuture = true; }
     else if (a === "--concurrency") { args.concurrency = parseInt(next, 10); i++; }
     else if (a === "--out-dir") { args.outDir = next; i++; }
     else if (a === "--help" || a === "-h") {
@@ -577,6 +578,19 @@ async function processTournament(t, args) {
 
   if (args.discoveryOnly) {
     return { slug: t.slug, status: "discovered", tid, startDate, endDate, ageClasses };
+  }
+
+  // Guard: eventos futuros não têm resultados reais. A página do evento futuro
+  // na GJGL reaponta o link de live-scoring para o `tournamentid` da edição do
+  // ano anterior — se scrapássemos, gravaríamos os resultados do ano passado com
+  // uma data futura (torneios-fantasma). Só scrapamos resultados quando o evento
+  // já começou. Override explícito via `--allow-future` (ex: re-scrape manual).
+  if (!args.allowFuture && startDate) {
+    const todayISO = new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD, hora local
+    if (startDate > todayISO) {
+      console.log(`  ⏭ futuro (${startDate}): ${t.slug} — sem resultados reais ainda, saltado`);
+      return { slug: t.slug, status: "future", tid, startDate, endDate };
+    }
   }
 
   // Scrape each age group
