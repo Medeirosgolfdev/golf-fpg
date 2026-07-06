@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-06T17:22:51.249Z",
+  "generatedAt": "2026-07-06T22:17:11.069Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -17004,6 +17004,23 @@
       "editionsCount": 7
     },
     {
+      "id": "uskids-ugolf-mionnay-tour-championship",
+      "label": "UGolf Mionnay (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10479",
+        "uskids-14933",
+        "uskids-12871",
+        "uskids-13810",
+        "uskids-16065",
+        "uskids-18712",
+        "uskids-21389"
+      ],
+      "firstDate": "2021-10-17",
+      "lastDate": "2026-06-28",
+      "editionsCount": 7
+    },
+    {
       "id": "uskids-san-antonio-local-parent-child",
       "label": "San Antonio Local Parent/Child",
       "sourceId": "uskids",
@@ -20065,22 +20082,6 @@
       ],
       "firstDate": "2020-10-03",
       "lastDate": "2026-03-15",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-ugolf-mionnay-tour-championship",
-      "label": "UGolf Mionnay (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10479",
-        "uskids-14933",
-        "uskids-12871",
-        "uskids-13810",
-        "uskids-16065",
-        "uskids-18712"
-      ],
-      "firstDate": "2021-10-17",
-      "lastDate": "2025-06-29",
       "editionsCount": 6
     },
     {
