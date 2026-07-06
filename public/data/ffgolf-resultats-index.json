@@ -1,62 +1,8 @@
 {
-  "generatedAt": "2026-07-04T12:45:12.445Z",
+  "generatedAt": "2026-07-06T06:01:57.061Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
   "total": 1237,
   "tournaments": [
-    {
-      "file": "03-01-2601405024.json",
-      "trnId": "2601405024",
-      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
-      "name": "Grand Prix Jeunes de la Ligue Paris Ile-de-France 3",
-      "formule": "Simple",
-      "date": "04/07/2026",
-      "dateIso": "2026-07-04",
-      "year": 2026,
-      "typeCompetition": "03",
-      "ligue": "01",
-      "seriesCount": 6,
-      "totalPlayers": 131,
-      "divisions": [
-        {
-          "serieId": "29",
-          "label": "U12F",
-          "players": 18
-        },
-        {
-          "serieId": "111",
-          "label": "U12G",
-          "players": 44
-        },
-        {
-          "serieId": "115",
-          "label": "BENG",
-          "players": 42
-        },
-        {
-          "serieId": "119",
-          "label": "MING",
-          "players": 9
-        },
-        {
-          "serieId": "213",
-          "label": "BENF",
-          "players": 12
-        },
-        {
-          "serieId": "217",
-          "label": "MINF",
-          "players": 6
-        }
-      ],
-      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
-      "ffgolfOfficialUrl": null,
-      "ggPage": null,
-      "ffgolfSlug": null,
-      "ffgolfSection": null,
-      "ligues": [
-        "01"
-      ]
-    },
     {
       "file": "01-00-2601449842.json",
       "trnId": "2601449842",
@@ -53098,6 +53044,59 @@
       "ffgolfSection": null,
       "ligues": [
         "04"
+      ]
+    },
+    {
+      "file": "03-01-2601405024.json",
+      "trnId": "2601405024",
+      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
+      "name": "trn 2601405024",
+      "formule": "Simple",
+      "dateIso": null,
+      "year": null,
+      "typeCompetition": "03",
+      "ligue": "01",
+      "seriesCount": 6,
+      "totalPlayers": 131,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 18
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 44
+        },
+        {
+          "serieId": "115",
+          "label": "BENG",
+          "players": 42
+        },
+        {
+          "serieId": "119",
+          "label": "MING",
+          "players": 9
+        },
+        {
+          "serieId": "213",
+          "label": "BENF",
+          "players": 12
+        },
+        {
+          "serieId": "217",
+          "label": "MINF",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "01"
       ]
     }
   ]
