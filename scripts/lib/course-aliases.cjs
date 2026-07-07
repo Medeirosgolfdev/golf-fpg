@@ -81,13 +81,17 @@ const COURSE_NAME_ALIASES = {
   // ── NOVO 2026-07-07 — Paris Invitational (Golf Val d'Europe Disneyland) ──
   // Apenas para variantes de "GOLF VAL D'EUROPE" — NÃO fazer alias para "INTERNACIONAL"
   // porque esse é genérico para TODOS os torneios internacionais
-  "golf val d'europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
-  "golf val d´europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
-  "golf val deurope": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
-  // Nome curto usado nas listagens (melhorias.json) — liga ao mesmo campo
-  "val d'europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
-  "val d´europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
-  "val deurope": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  // Canónico = nome CURTO "Val d'Europe" (decisão 2026-07-07: o nome completo
+  // "Golf Paris Val d'Europe Disneyland - RED/BLUE" é demasiado extenso nas
+  // listagens; o pipeline canonicaliza course_description em process-data.js,
+  // por isso o canónico TEM de ser o curto). Espelha src/utils/courseAliases.ts.
+  "golf val d'europe": "Val d'Europe",
+  "golf val d´europe": "Val d'Europe",
+  "golf val deurope": "Val d'Europe",
+  "val d'europe": "Val d'Europe",
+  "val d´europe": "Val d'Europe",
+  "val deurope": "Val d'Europe",
+  "golf paris val d'europe disneyland - red/blue": "Val d'Europe",
 };
 
 function canonicalCourseName(name) {

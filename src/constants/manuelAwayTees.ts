@@ -28,7 +28,7 @@ export const MANUEL_AWAY_TEE: Record<string, string> = {
   // (tee físico Bleus, 5029m, CR 67.8/119). O melhorias.json regista o tee como
   // "Boys 12" mas o tee do campo chama-se "Bleus / USKids Boys 12" → sem este
   // override o match exacto por nome falha e a ronda fica sem metros.
-  // ⚠ Chave gerada por courseKeyName(): o norm() remove apóstrofos ANTES de
-  // converter pontuação em espaços → "d'Europe" vira "deurope" (não "d europe").
-  "golf paris val deurope disneyland red blue": "Bleus / USKids Boys 12",
+  // ⚠ Chave = courseKeyName() do nome CANÓNICO, que é o CURTO "Val d'Europe"
+  // (ver courseAliases.ts); o norm() remove o apóstrofo → "val deurope".
+  "val deurope": "Bleus / USKids Boys 12",
 };
