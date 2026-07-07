@@ -16,6 +16,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeAtomic } = require("../lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 // Optional proxy support — used when running inside sandboxes that only
 // allow outbound traffic via HTTPS proxy (ex: Cowork sandbox).
@@ -232,7 +233,7 @@ async function processTarget(t, label) {
   let nameFromApi = null;
   if (probMeta) {
     const ms = parseInt((probMeta.started_at || "").match(/\d+/)?.[0] || "0");
-    if (ms > 0) date = new Date(ms).toISOString().split("T")[0];
+    if (ms > 0) date = lisbonCivilDayStr(ms); // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
     if (probMeta.course_description) campo = probMeta.course_description;
     rounds = probMeta.rounds || 1;
     nameFromApi = probMeta.description;

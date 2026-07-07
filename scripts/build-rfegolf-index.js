@@ -123,6 +123,26 @@ function rfegHasPt(j) {
   return false;
 }
 
+// ── Roster fingerprint ────────────────────────────────────────
+// Permite ao buildRfegEntries (RFEGPage) confirmar "é o mesmo evento?" por
+// JOGADORES no momento em que constrói a sidebar, sem carregar as divisões.
+// Chave = nome normalizado (todas as fontes têm nome; a comparação no cliente é
+// sempre DENTRO do mesmo balde fonte|ano|nome-base, por isso o formato do nome é
+// consistente entre os dois lados). Guardado ordenado + único por torneio.
+function normNameKey(s) {
+  return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+function rosterFrom(players) {
+  const set = new Set();
+  for (const p of (players || [])) {
+    const nm = p.name || [p.firstName, p.surname].filter(Boolean).join(" ");
+    const k = normNameKey(nm);
+    if (k) set.add(k);
+  }
+  return [...set].sort();
+}
+
 // ── 1) RFEGolf ────────────────────────────────────────────────
 const rfegFiles = fs.existsSync(ROOT)
   ? fs.readdirSync(ROOT).filter(f => /^\d+\.json$/.test(f)).sort()
@@ -186,6 +206,7 @@ for (const file of rfegFiles) {
       nRounds: Array.isArray(j.results)
         ? Math.max(0, ...j.results.map((r) => (r && typeof r.nRounds === "number") ? r.nRounds : 0)) || undefined
         : undefined,
+      roster: rosterFrom(Array.isArray(j.results) ? j.results.flatMap((r) => (r && r.players) || []) : []),
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) {
@@ -297,6 +318,7 @@ for (const file of ncFiles) {
         reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0,
       },
       leaderboardPlayers: lbCount,
+      roster: rosterFrom((j.leaderboard || []).flatMap((t) => (t && t.players) || [])),
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) {
@@ -341,6 +363,7 @@ for (const file of lgsFiles) {
       counts: { admitidos: totalPlayers, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
       leaderboardPlayers: totalPlayers,
       nRounds: (j.rounds || []).length,
+      roster: rosterFrom((j.rounds && j.rounds[0] && j.rounds[0].players) || []),
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) { console.warn("skip lgs " + file + ": " + e.message); skipped++; }
@@ -407,6 +430,7 @@ for (const file of fcgFiles) {
         reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0,
       },
       leaderboardPlayers: totalPlayers,
+      roster: rosterFrom(cats.flatMap((c) => (c && c.players) || [])),
       nRounds: 1, // 1 game golfdirecto = 1 jornada
       tournamentId: game.tournament && game.tournament._id || null,
       tournamentName: game.tournament && game.tournament.name || null,

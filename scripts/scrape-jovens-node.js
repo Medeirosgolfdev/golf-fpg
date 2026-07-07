@@ -50,6 +50,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeAtomic } = require("../lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 // ═══════════════════════════════════════════════════════════
 // CONFIGURAÇÃO
@@ -169,7 +170,7 @@ const regionMap = { "982": "madeira", "983": "acores", "985": "tejo", "987": "no
 
 const getMs = r => parseInt((r.started_at || "").match(/\d+/)?.[0] || "0");
 const getYear = r => new Date(getMs(r)).getFullYear();
-const getDateStr = r => new Date(getMs(r)).toISOString().split("T")[0];
+const getDateStr = r => lisbonCivilDayStr(getMs(r)); // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
 
 async function tournSearchPage(term, startIndex, pageSize) {
   // Formato ISO "YYYY-MM-DD" é o único que funciona em AMBOS dtIni e dtFim.

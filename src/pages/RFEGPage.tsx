@@ -85,6 +85,10 @@ interface RFEGIndexEntry {
   /** Pré-computados pelo build do índice (páginas lazy): há Manuel / portugueses? */
   hasManuel?: boolean;
   hasPt?: boolean;
+  /** Fingerprint de roster (nomes normalizados, ordenados+únicos) gerado pelo
+   *  build do índice. Permite confirmar "é o mesmo evento?" por JOGADORES no
+   *  buildRfegEntries sem carregar as divisões. Vazio p/ torneios só-inscritos. */
+  roster?: string[];
   scrapedAt: string | null;
 }
 
@@ -3103,6 +3107,99 @@ const slugify = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowe
  *  (Puntuável/Circuito espalhado por meses). */
 const RFEG_GROUP_WINDOW_DAYS = 16;
 
+/** Sobreposição de rosters = |A∩B| / min(|A|,|B|) (coef. de sobreposição, não
+ *  Jaccard: robusto a tamanhos muito diferentes). 0 se algum estiver vazio. */
+function rosterOverlap(a?: string[], b?: string[]): number {
+  if (!a?.length || !b?.length) return 0;
+  const small = a.length <= b.length ? a : b;
+  const big = new Set(a.length <= b.length ? b : a);
+  let hit = 0;
+  for (const k of small) if (big.has(k)) hit++;
+  return hit / small.length;
+}
+
+/** Sobreposição a partir da qual dois eventos com o mesmo nome+ano se consideram
+ *  o MESMO evento (duplicado a deduplicar), e não dois eventos distintos. */
+const RFEG_ROSTER_SAME_MIN = 0.85;
+
+const MESES_ES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+/** Mês (label ES) de uma data ISO ("2026-05-…") ou string espanhola ("07 mayo",
+ *  "31 mayo - 03 junio"). "" se não der para extrair. */
+function esMonthLabel(dateStr?: string): string {
+  if (!dateStr) return "";
+  const iso = /^\d{4}-(\d{2})/.exec(dateStr);
+  if (iso) { const i = +iso[1] - 1; return (i >= 0 && i < 12) ? MESES_ES[i] : ""; }
+  const norm = dateStr.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const m = /\b(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\b/.exec(norm);
+  if (!m) return "";
+  const w = m[1] === "setiembre" ? "septiembre" : m[1];
+  return MESES_ES[["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"].indexOf(w)] || "";
+}
+
+/** Resolve colisões de nome+ano dentro de um balde, confirmadas por JOGADORES:
+ *  - se dois têm o mesmo nome E os MESMOS jogadores (roster ≥ 0.85) → é o mesmo
+ *    evento duplicado: fica só o mais rico (mais jogadores/rondas), os outros caem;
+ *  - se têm o mesmo nome mas jogadores DIFERENTES (eventos distintos) → anexa o mês
+ *    para a sidebar não mostrar texto idêntico 2×.
+ *  Devolve a lista já filtrada (pode ter menos entradas que a de entrada). */
+/** "Dia Mês" (ES) da data de início — desambigua stops de SÉRIE no mesmo mês
+ *  (ex: "3 Junio" vs "10 Junio"). Cai no mês só se não conseguir extrair o dia. */
+function esDayMonthLabel(dateStr?: string): string {
+  const mes = esMonthLabel(dateStr);
+  if (!mes || !dateStr) return mes;
+  const iso = /^\d{4}-\d{2}-(\d{2})/.exec(dateStr);
+  const day = iso ? String(+iso[1]) : (/\b(\d{1,2})\b/.exec(dateStr)?.[1] ?? "");
+  return day ? `${day} ${mes}` : mes;
+}
+
+function resolveEntryNameCollisions(
+  list: CircuitEntry[],
+  rosterOf: (e: CircuitEntry) => string[] | undefined,
+): CircuitEntry[] {
+  const richness = (e: CircuitEntry) => (e.playerCount ?? 0) * 1000 + (e.roundsCount ?? 0);
+  const byName = new Map<string, CircuitEntry[]>();
+  for (const e of list) {
+    const arr = byName.get(e.name) ?? [];
+    arr.push(e);
+    byName.set(e.name, arr);
+  }
+  const dropped = new Set<CircuitEntry>();
+  for (const arr of byName.values()) {
+    if (arr.length < 2) continue;
+    // 1) Dedup só da MESMA INSTÂNCIA: mesmos jogadores (roster ≥ 0.85) E mesma data
+    //    de início. O guard da data é crítico — uma SÉRIE recorrente (ex: "VOBS
+    //    Competition" semanal) tem os mesmos habituais a jogar → rosters muito
+    //    sobrepostos entre stops DIFERENTES; sem o guard, apagaríamos stops reais.
+    const survivors: CircuitEntry[] = [];
+    for (const e of arr) {
+      const twin = survivors.find((s) =>
+        !!e.dateStart && s.dateStart === e.dateStart
+        && rosterOverlap(rosterOf(s), rosterOf(e)) >= RFEG_ROSTER_SAME_MIN);
+      if (!twin) { survivors.push(e); continue; }
+      // Mesma instância duplicada: fica a mais rica, a outra é descartada.
+      if (richness(e) > richness(twin)) {
+        dropped.add(twin);
+        survivors[survivors.indexOf(twin)] = e;
+      } else {
+        dropped.add(e);
+      }
+    }
+    // 2) Os que sobrevivem são eventos/stops DISTINTOS com o mesmo nome → data no
+    //    label. Mês se todos forem de meses diferentes (mais limpo); senão dia+mês
+    //    (para stops de série no mesmo mês ficarem distinguíveis).
+    if (survivors.length > 1) {
+      const months = survivors.map((e) => esMonthLabel(e.dateStart));
+      const monthsUnique = months.every(Boolean) && new Set(months).size === months.length;
+      for (const e of survivors) {
+        const lbl = monthsUnique ? esMonthLabel(e.dateStart) : esDayMonthLabel(e.dateStart);
+        if (lbl) e.name = `${e.name} · ${lbl}`;
+      }
+    }
+  }
+  return list.filter((e) => !dropped.has(e));
+}
+
 function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup, twins?: Record<string, number>, lgsSuppressed?: Record<string, number>): CircuitEntry[] {
   // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
   // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
@@ -3167,6 +3264,16 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
   const usedGrpIds = new Set<string>();
 
   for (const group of byKey.values()) {
+   // Cada balde produz as suas entradas num array local para podermos desambiguar
+   // os labels em colisão (mesmo nome+ano) só entre si, antes de juntar ao total.
+   const localEntries: CircuitEntry[] = [];
+   // Roster por entrada (union dos torneios que a compõem) → alimenta a
+   // resolução de colisões por JOGADORES no fim do balde.
+   const rosterByEntry = new Map<CircuitEntry, string[]>();
+   const pushLocal = (e: CircuitEntry, roster: string[]) => {
+     localEntries.push(e);
+     if (roster.length) rosterByEntry.set(e, roster);
+   };
    for (const cluster of clusterByDate(group, RFEG_GROUP_WINDOW_DAYS)) {
     const catSex = cluster.map((t) => `${t.category}|${/F/i.test(t.sex || "") ? "F" : "M"}`);
     const variesCatOrSex = new Set(cluster.map((t) => t.category)).size > 1
@@ -3178,7 +3285,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
     if (cluster.length < 2 || !variesCatOrSex
         || new Set(catSex).size !== catSex.length
         || spanDays > RFEG_GROUP_WINDOW_DAYS) {
-      for (const t of cluster) entries.push(single(t));
+      for (const t of cluster) pushLocal(single(t), t.roster ?? []);
       continue;
     }
 
@@ -3205,7 +3312,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       grpId = cand;
     }
     usedGrpIds.add(grpId);
-    entries.push({
+    const grpEntry: CircuitEntry = {
       id: grpId,
       year,
       name,
@@ -3253,8 +3360,13 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
         }));
         return per.flat();
       },
-    });
+    };
+    pushLocal(grpEntry, [...new Set(sorted.flatMap((t) => t.roster ?? []))]);
    }
+   // Colisões de nome+ano dentro deste balde: dedup se forem o MESMO evento
+   // (mesmos jogadores) ou mês no label se forem eventos DIFERENTES.
+   const resolved = resolveEntryNameCollisions(localEntries, (e) => rosterByEntry.get(e));
+   for (const e of resolved) entries.push(e);
   }
 
   return entries;

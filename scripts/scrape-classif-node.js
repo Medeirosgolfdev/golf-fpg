@@ -60,6 +60,7 @@ const PAGE_SIZE = parseInt(argVal("--page-size", "150"), 10);
 
 /* ── Cookies (scoring.datagolf.pt) ──────────────────────────────────────── */
 const { loadCookieHeader } = require("./lib/cookies");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 const COOKIE = loadCookieHeader({
   envVars: ["DATAGOLF_SCORING_COOKIES", "DATAGOLF_COOKIES"],
   file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
@@ -261,7 +262,7 @@ function detectCircuit(raw) {
 function parseTournament(raw, circuit) {
   const desc = raw.description || "";
   const dateMs = parseInt((raw.started_at || "").match(/\d+/)?.[0] || "0");
-  const dateStr = dateMs ? new Date(dateMs).toISOString().split("T")[0] : "";
+  const dateStr = dateMs ? lisbonCivilDayStr(dateMs) : ""; // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
   let series = circuit === "aquapor" ? "aquapor" : "tour";
   if (/challenge/i.test(desc)) series = "challenge";
   const escMatch = desc.match(/Sub\s*(\d+)/i);

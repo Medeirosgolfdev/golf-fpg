@@ -31,6 +31,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeAtomic } = require("../lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 // ═══════════════════════════════════════════════════════════
 // CONFIGURAÇÃO
@@ -241,7 +242,7 @@ function parseTournament(raw, circuit) {
   const cc = raw.club_code || "";
   const tc = raw.code || "";
   const dateMs = parseInt((raw.started_at || "").match(/\d+/)?.[0] || "0");
-  const dateStr = new Date(dateMs).toISOString().split("T")[0];
+  const dateStr = lisbonCivilDayStr(dateMs); // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
 
   let series = circuit === "aquapor" ? "aquapor" : "tour";
   if (/challenge/i.test(desc)) series = "challenge";
