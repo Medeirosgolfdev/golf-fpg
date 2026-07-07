@@ -24,4 +24,11 @@ export const MANUEL_AWAY_TEE: Record<string, string> = {
   "le touquet golf club la foret": "Vermelho",
   // Doral Golden Palm, Dec 2025 — Boys 10-11 (já costuma vir com metros).
   "trump doral golden palm": "Boys 10-11",
+  // Golf Paris Val d'Europe, Paris Invitational 2026 — tinha 12 anos → Boys 12
+  // (tee físico Bleus, 5029m, CR 67.8/119). O melhorias.json regista o tee como
+  // "Boys 12" mas o tee do campo chama-se "Bleus / USKids Boys 12" → sem este
+  // override o match exacto por nome falha e a ronda fica sem metros.
+  // ⚠ Chave gerada por courseKeyName(): o norm() remove apóstrofos ANTES de
+  // converter pontuação em espaços → "d'Europe" vira "deurope" (não "d europe").
+  "golf paris val deurope disneyland red blue": "Bleus / USKids Boys 12",
 };

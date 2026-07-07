@@ -120,6 +120,10 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "golf val d'europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
   "golf val d´europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
   "golf val deurope": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  // Nome curto usado nas listagens (melhorias.json) — liga ao mesmo campo
+  "val d'europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  "val d´europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  "val deurope": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
 };
 
 /* ── Resolução por par[] para nomes ambíguos ──────────────────────────── */

@@ -12,11 +12,16 @@ export function fmtCR(n: number | null | undefined): string {
   return n.toFixed(1).replace(".", ",");
 }
 
-/** Normaliza texto para comparação */
+/** Normaliza texto para comparação.
+ *  ⚠ Tem de ESPELHAR o norm() de lib/helpers.js (pipeline) — as chaves de
+ *  EC/ECDET/HOLE_STATS em data.json são geradas lá. Em particular, ambos
+ *  removem apóstrofos ('/'): sem isso, campos como "Golf Paris Val d'Europe"
+ *  falham o lookup e o bloco Eclético desaparece. */
 export function norm(s: string): string {
   return (s ?? "")
     .normalize("NFKD")
     .replace(/[̀-ͯ]/g, "")
+    .replace(/['’]/g, "")
     .toLowerCase()
     .replace(/\s+/g, " ")
     .trim();
