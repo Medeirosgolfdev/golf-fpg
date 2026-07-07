@@ -78,6 +78,12 @@ const COURSE_NAME_ALIASES = {
   "porto santo": "Porto Santo Golfe",
   "santo estevão": "Santo Estevão Golf",
   "santo estevao": "Santo Estevão Golf",
+  // ── NOVO 2026-07-07 — Paris Invitational (Golf Val d'Europe Disneyland) ──
+  // Apenas para variantes de "GOLF VAL D'EUROPE" — NÃO fazer alias para "INTERNACIONAL"
+  // porque esse é genérico para TODOS os torneios internacionais
+  "golf val d'europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  "golf val d´europe": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+  "golf val deurope": "Golf Paris Val d'Europe Disneyland - RED/BLUE",
 };
 
 function canonicalCourseName(name) {

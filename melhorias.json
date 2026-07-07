@@ -1139,7 +1139,7 @@
       }
     },
     "4161327": {
-      "notas": "D2 – Campo OK. CR/Slope FPG (69.9/133) diferem do oficial (68.6/128, tee Boys 10-11).",
+      "notas": "D2 – Campo OK. CR/Slope FPG (69.9/133) diferem do oficial (68.6/128, tee Boys 10-11). Tee Boys 10-11.",
       "whs": {},
       "scorecard": {
         "course_description": "Golden Palm",
@@ -1600,16 +1600,62 @@
       "scorecard": {}
     },
     "_comment_wjgc2026": "WJGC 2026 Villa Padierna Flamingos — R1 adicionado manualmente (25 Fev 2026). Par 72 (H10 par 5). Aguarda R2+R3.",
+    "_comment_paris_2026": "===== USKids Paris Invitational 2026 – Golf Paris Val d'Europe Disneyland RED/BLUE =====",
+    "4333835": {
+      "whs": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE" },
+      "scorecard": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE", "tee_name": "Boys 12" },
+      "pill": "PARIS D3 INTL",
+      "notas": "D3 (2026-07-06) – Normalizar de 'GOLF VAL D´EUROPE' + tee VERMELHAS→Boys 12"
+    },
+    "4333833": {
+      "whs": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE" },
+      "scorecard": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE", "tee_name": "Boys 12" },
+      "pill": "PARIS D2 INTL",
+      "notas": "D2 (2026-07-05) – Normalizar de 'GOLF VAL D´EUROPE' + tee VERMELHAS→Boys 12"
+    },
+    "4333809": {
+      "whs": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE" },
+      "scorecard": { "course_description": "Golf Paris Val d'Europe Disneyland - RED/BLUE", "tee_name": "Boys 12" },
+      "pill": "PARIS D1 INTL",
+      "notas": "D1 (2026-07-04) – Normalizar de 'INTERNACIONAL' + tee VERMELHAS→Boys 12"
+    },
+    "_comment_villa_padierna_2026": "===== Daily Mail World Junior Golf Championship 2026 – Villa Padierna Flamingos, Espanha =====",
+    "4212426": {
+      "notas": "D1 (25-02-2026) – Tee Boys 10-11",
+      "scorecard": { "tee_name": "Boys 10-11" }
+    },
+    "4212437": {
+      "notas": "D2 (26-02-2026) – Tee Boys 10-11",
+      "scorecard": { "tee_name": "Boys 10-11" }
+    },
+    "4123116": {
+      "notas": "D3 (27-02-2026) – Tee Boys 10-11",
+      "scorecard": { "tee_name": "Boys 10-11" }
+    },
+    "_comment_glen_2026": "===== European Championship 2026 R1/R2/R3 – Glen Golf Club =====",
+    "4293820": {
+      "notas": "R3 (28-06-2026) – Tee Boys 12",
+      "scorecard": { "tee_name": "Boys 12" }
+    },
+    "4292716": {
+      "notas": "R2 (27-06-2026) – Tee Boys 12",
+      "scorecard": { "tee_name": "Boys 12" }
+    },
+    "4292714": {
+      "notas": "R1 (26-06-2026) – Tee Boys 12",
+      "scorecard": { "tee_name": "Boys 12" }
+    },
     "_comment_marco_simone_2026": "===== Marco Simone Invitational 2026 (US Kids) – Marco Simone GCC, Roma, Itália – 2 rondas =====",
     "4225919": {
-      "notas": "D1 – FPG registou como 'Away Internacional / INTERNACIONAL'. Nome e campo corrigidos. Agrupado com D2 (4225920) como torneio de 2 dias.",
+      "notas": "D1 – FPG registou como 'Away Internacional / INTERNACIONAL'. Nome e campo corrigidos. Agrupado com D2 (4225920) como torneio de 2 dias. Tee Boys 11.",
       "whs": {
         "tourn_name": "Marco Simone Invitational 2026 (US Kids) D1",
         "course_description": "Marco Simone Golf & Country Club"
       },
       "scorecard": {
         "tournament_description": "Marco Simone Invitational 2026 (US Kids) D1",
-        "course_description": "Marco Simone Golf & Country Club"
+        "course_description": "Marco Simone Golf & Country Club",
+        "tee_name": "Boys 11"
       },
       "_group": "Marco Simone Invitational 2026",
       "pill": "INTL",
@@ -1618,14 +1664,15 @@
       }
     },
     "4225920": {
-      "notas": "D2 – FPG registou como 'Away Internacional / Marco Simone GCC' (campo usado como nome do torneio). Nome corrigido. Agrupado com D1 (4225919) como torneio de 2 dias.",
+      "notas": "D2 – FPG registou como 'Away Internacional / Marco Simone GCC' (campo usado como nome do torneio). Nome corrigido. Agrupado com D1 (4225919) como torneio de 2 dias. Tee Boys 11.",
       "whs": {
         "tourn_name": "Marco Simone Invitational 2026 (US Kids) D2",
         "course_description": "Marco Simone Golf & Country Club"
       },
       "scorecard": {
         "tournament_description": "Marco Simone Invitational 2026 (US Kids) D2",
-        "course_description": "Marco Simone Golf & Country Club"
+        "course_description": "Marco Simone Golf & Country Club",
+        "tee_name": "Boys 11"
       },
       "_group": "Marco Simone Invitational 2026",
       "pill": "INTL",
