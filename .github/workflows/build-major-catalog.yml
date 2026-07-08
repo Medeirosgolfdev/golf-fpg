@@ -25,6 +25,7 @@ on:
       - 'public/data/avtrophy_*.json'
       - 'public/data/ebtc2_*.json'
       - 'public/data/egtc_*.json'
+      - 'public/data/elg_*.json'
       - 'scripts/build-major-catalog.js'
       - '.github/workflows/build-major-catalog.yml'
   workflow_dispatch:

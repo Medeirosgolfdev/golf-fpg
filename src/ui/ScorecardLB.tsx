@@ -154,6 +154,26 @@ export function ScorecardLB({
   }
   const teeCrSlopes = Array.from(teeCrSlopeMap.entries());
 
+  // SD desta ronda: o CR/Slope/SI podem viver na ronda (ex: GolfBox — ebtc2/egtc/
+  // elg/avtrophy — trazem-nos na divisão → roundScores[]) e não no topo do jogador.
+  // Sem CR/Slope o computeSD devolve "–" (mesmo com a metaLine a mostrar CR·Slope);
+  // sem SI cai no ramo raw ("≈") em vez do AGS ("~") quando há HCP. Overlay dos
+  // campos da 1ª ronda (a mostrada) → SD idêntico ao AllRoundsScorecardLB/AccumulatedLB.
+  const sdOf = (p: Player) => {
+    const rs0 = p.roundScores?.[0];
+    if (rs0 && (p.courseRating == null || p.slope == null || !p.si?.length)) {
+      return computeSD({
+        ...p,
+        par: p.par?.length ? p.par : rs0.pars,
+        si: p.si?.length ? p.si : rs0.si,
+        courseRating: p.courseRating ?? rs0.courseRating,
+        slope: p.slope ?? rs0.slope,
+        nholes: p.nholes ?? rs0.pars?.length,
+      });
+    }
+    return computeSD(p);
+  };
+
   const nonWD = rawPlayers.filter((p) => !p._wd);
   const wdOnly = rawPlayers.filter((p) => p._wd);
   const byGross = [...nonWD].sort((a, b) => numGross(a) - numGross(b));
@@ -269,8 +289,8 @@ export function ScorecardLB({
           bv = b.teeName || "";
           break;
         case "sd":
-          av = computeSD(a).sd ?? 999;
-          bv = computeSD(b).sd ?? 999;
+          av = sdOf(a).sd ?? 999;
+          bv = sdOf(b).sd ?? 999;
           break;
         case "eag":
           // Mais eagles primeiro quando asc.
@@ -313,7 +333,7 @@ export function ScorecardLB({
     const posDisplay =
       isWDPlayer ? "WD" : sortKey === "pos" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
     const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
-    const { sd, source } = computeSD(p);
+    const { sd, source } = sdOf(p);
     const rowManuel = isManuel(p);
     // Conterrâneo (FFG, etc.) — adaptador de página marca via _isPortuguese.
     const rowPortuguese = !rowManuel && !!(p as any)._isPortuguese;

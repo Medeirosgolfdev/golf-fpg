@@ -64,6 +64,49 @@ const ROUND_DATES = {
   // bjgt:2025 não tem datas de ronda (roundDates undefined nas URLS).
 };
 
+/* ── Fallback de datas ISO para torneios sem datas nos dados nem em round.date
+   (curadas à mão; datas oficiais dos eventos). Só usadas quando nada mais dá. ── */
+const FALLBACK_DATES = {
+  // Junior Orange Bowl — Biltmore GC, Coral Gables. Slot FIXO 3–6 de JANEIRO do
+  // ano da edição (NÃO Dezembro): 59ª=3-6 Jan 2023, 61ª terminou 6 Jan 2025,
+  // 62ª=3-6 Jan 2026 (amateurgolf). O ficheiro orangebowl_YYYY é a edição de
+  // Janeiro desse ano (já com resultados). Fontes não trazem round.date → hardcode.
+  "job:2023": { dateStart: "2023-01-03", dateEnd: "2023-01-06" },
+  "job:2024": { dateStart: "2024-01-03", dateEnd: "2024-01-06" },
+  "job:2025": { dateStart: "2025-01-03", dateEnd: "2025-01-06" },
+  "job:2026": { dateStart: "2026-01-03", dateEnd: "2026-01-06" },
+  // Daily Mail WJGC 2025 (BJGT) — sem datas de ronda nos ficheiros bluegolf.
+  "bjgt:2025": { dateStart: "2025-04-05", dateEnd: "2025-04-06" },
+};
+
+/* ── Meses em inglês (round.date dos JobFiles/doral: "Fri, December 19") ── */
+const MONTHS_EN = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+};
+/** "Fri, December 19" (+ ano do ficheiro) → "2025-12-19". */
+function parseRoundDateISO(s, year) {
+  if (!s || !year) return null;
+  const m = /([A-Za-z]+)\s+(\d{1,2})/.exec(String(s).replace(/^[A-Za-z]+,\s*/, ""));
+  if (!m) return null;
+  const mon = MONTHS_EN[m[1].toLowerCase()];
+  if (!mon) return null;
+  return `${year}-${String(mon).padStart(2, "0")}-${String(+m[2]).padStart(2, "0")}`;
+}
+/** Deriva {dateStart,dateEnd} ISO do campo round.date de uma lista de jogadores. */
+function deriveDatesFromRounds(players, year) {
+  const iso = [];
+  for (const p of players || []) for (const r of (p.rounds || [])) {
+    const d = parseRoundDateISO(r.date, year);
+    if (d) iso.push(d);
+  }
+  if (!iso.length) return {};
+  iso.sort();
+  const dateStart = iso[0];
+  const dateEnd = iso[iso.length - 1] !== dateStart ? iso[iso.length - 1] : undefined;
+  return { dateStart, dateEnd };
+}
+
 /* ── Acumuladores ── */
 const entries = [];
 const vet = new Map(); // normName -> nº de torneios em que aparece (para o toggle Veteranos)
@@ -148,6 +191,7 @@ function buildDoral() {
       // buildMajorEntries: várias divisões = vários campos → "USA" (o Doral é
       // sempre multi-campo Red Tiger/Golden Palm/…).
       course: d.divisions.length > 1 ? "USA" : undefined,
+      ...deriveDatesFromRounds(players, year),
       roundsCount: maxRounds(valid) || undefined,
       playerCount: valid.length,
       divisionCount: d.divisions.length,
@@ -175,6 +219,7 @@ const GG_SOURCES = [
   // EGA European Team Championships (GolfBox, mesmo JobFile do avtrophy).
   { prefix: "ebtc2_", source: "ebtc2", series: "ETC Boys", name: (f, y) => f.tournament || `ETC Boys ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "egtc_", source: "egtc", series: "ETC Girls", name: (f, y) => f.tournament || `ETC Girls ${y}`, course: (f) => f.course || undefined, union: true },
+  { prefix: "elg_", source: "elg", series: "ETC Ladies", name: (f, y) => f.tournament || `ETC Ladies ${y}`, course: (f) => f.course || undefined, union: true },
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);
@@ -200,6 +245,11 @@ function buildGgJob() {
         year,
         name: src.name(f, year),
         course: src.course(f),
+        // Datas: GolfBox (ebtc2/egtc/avtrophy) traz startDate/endDate ISO no topo;
+        // os GolfGenius não, mas têm round.date por ronda ("Fri, June 30") → derivar.
+        ...(f.startDate
+          ? { dateStart: f.startDate, dateEnd: f.endDate || undefined }
+          : deriveDatesFromRounds(players, year)),
         sourceUrl: f.source || undefined,
         roundsCount: maxRounds(valid) || undefined,
         playerCount: valid.length,
@@ -217,6 +267,14 @@ function buildGgJob() {
 buildBluegolf();
 buildDoral();
 buildGgJob();
+
+// Fallback final: torneios sem datas nos dados nem em round.date (JOB, WJGC 2025)
+// recebem as datas oficiais curadas — só quando ainda não têm nenhuma.
+for (const e of entries) {
+  if ((e.dateStart || e.dateEnd) || !FALLBACK_DATES[e.id]) continue;
+  e.dateStart = FALLBACK_DATES[e.id].dateStart;
+  e.dateEnd = FALLBACK_DATES[e.id].dateEnd;
+}
 
 // Ordenar por ano desc, depois nome — só por estética do ficheiro (o shell reordena).
 entries.sort((a, b) => (b.year - a.year) || String(a.name).localeCompare(String(b.name)));

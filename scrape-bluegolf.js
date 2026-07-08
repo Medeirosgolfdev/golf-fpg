@@ -142,44 +142,66 @@ async function extractScorecard(page) {
       if (label.includes("tacada") || label.includes("stroke")) result.total = parseInt(val, 10) || null;
     }
 
-    const desktopBlock = document.querySelector(".row.d-none.d-md-block");
-    if (desktopBlock) {
-      const table = desktopBlock.querySelector("table.bg-tbl-scorecard");
-      if (table) {
-        for (const inp of table.querySelectorAll('input[type="hidden"][data-par]')) {
-          result.par.push(parseInt(inp.getAttribute("data-par"), 10));
-        }
-        // Distâncias (yards) — mesmo padrão de input hidden mas com
-        // data-distance. Captura por ordem dos buracos.
-        for (const inp of table.querySelectorAll('input[type="hidden"][data-distance]')) {
-          const v = parseInt(inp.getAttribute("data-distance"), 10);
-          if (!isNaN(v) && v > 0) result.yards.push(v);
-        }
-        for (const tr of table.querySelectorAll("tr")) {
-          const firstTd = tr.querySelector("td");
-          if (!firstTd) continue;
-          const label = firstTd.textContent.trim().toLowerCase();
-          if (label.includes("handicap") || label === "hcp") {
-            for (const td of Array.from(tr.querySelectorAll("td")).slice(1)) {
-              const n = parseInt(td.textContent.trim(), 10);
-              if (!isNaN(n) && n >= 1 && n <= 18) result.si.push(n);
-            }
-            break;
-          }
-        }
-        for (const tr of table.querySelectorAll("tr.scores")) {
-          const allTds = Array.from(tr.querySelectorAll("td"));
-          const labelTd = allTds[0];
-          const label = labelTd ? labelTd.textContent.trim() : "";
-          const tds = allTds.slice(1);
-          const scores = [];
-          for (const td of tds) {
+    // Bloco desktop "Resultado". Há DOIS layouts:
+    //   • brjgt/WJGC: UM `.row.d-none.d-md-block` com UMA tabela e VÁRIAS
+    //     linhas `tr.scores` (uma por ronda, campo único).
+    //   • fcg./jwgc. (microsites): VÁRIOS `.row.d-none.d-md-block`, um por
+    //     ronda (`<h5>Volta N</h5>`), cada um com a SUA tabela + 1 `tr.scores`
+    //     e o SEU par/SI/yards (campos podem diferir por ronda).
+    // Iteramos TODOS os blocos; cada `tr.scores` vira uma ronda com o par/SI/
+    // yards do seu próprio bloco. O top-level fica com o 1º bloco (compat).
+    const desktopBlocks = document.querySelectorAll(".row.d-none.d-md-block");
+    for (const block of desktopBlocks) {
+      const table = block.querySelector("table.bg-tbl-scorecard");
+      if (!table) continue;
+      const bPar = [];
+      for (const inp of table.querySelectorAll('input[type="hidden"][data-par]')) {
+        bPar.push(parseInt(inp.getAttribute("data-par"), 10));
+      }
+      // Distâncias (yards) — input hidden com data-distance, por ordem dos buracos.
+      const bYards = [];
+      for (const inp of table.querySelectorAll('input[type="hidden"][data-distance]')) {
+        const v = parseInt(inp.getAttribute("data-distance"), 10);
+        if (!isNaN(v) && v > 0) bYards.push(v);
+      }
+      const bSi = [];
+      for (const tr of table.querySelectorAll("tr")) {
+        const firstTd = tr.querySelector("td");
+        if (!firstTd) continue;
+        const label = firstTd.textContent.trim().toLowerCase();
+        if (label.includes("handicap") || label === "hcp") {
+          for (const td of Array.from(tr.querySelectorAll("td")).slice(1)) {
             const n = parseInt(td.textContent.trim(), 10);
-            if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
+            if (!isNaN(n) && n >= 1 && n <= 18) bSi.push(n);
           }
-          if (scores.length >= 9) result.rounds.push({ scores, label });
+          break;
         }
       }
+      const h5 = block.querySelector("h5");
+      const h5txt = h5 ? h5.textContent.replace(/\s+/g, " ").trim() : "";
+      for (const tr of table.querySelectorAll("tr.scores")) {
+        const allTds = Array.from(tr.querySelectorAll("td"));
+        const labelTd = allTds[0];
+        const label = (labelTd ? labelTd.textContent.trim() : "") || h5txt;
+        const scores = [];
+        for (const td of allTds.slice(1)) {
+          const n = parseInt(td.textContent.trim(), 10);
+          if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
+        }
+        if (scores.length >= 9) {
+          result.rounds.push({
+            scores, label,
+            ...(bPar.length >= 9 ? { pars: bPar.slice(0, 18) } : {}),
+            ...(bSi.length >= 9 ? { si: bSi.slice(0, 18) } : {}),
+            ...(bYards.length >= 9 ? { yards: bYards.slice(0, 18) } : {}),
+          });
+        }
+      }
+      // Top-level = primeiro bloco com dados (campo do evento; para multi-campo
+      // é indicativo — o par correcto por ronda vive em rounds[].pars).
+      if (result.par.length === 0 && bPar.length >= 9) result.par = bPar.slice(0, 18);
+      if (result.si.length === 0 && bSi.length >= 9) result.si = bSi.slice(0, 18);
+      if (result.yards.length === 0 && bYards.length >= 9) result.yards = bYards.slice(0, 18);
     }
 
     if (result.rounds.length === 0) {
@@ -544,6 +566,7 @@ async function scrapeContest(page, leaderboardUrl) {
       const name = sc.name || c.name;
       const enrichedRounds = sc.rounds.map((rd, idx) => ({
         scores: rd.scores, label: rd.label || "", origIdx: idx,
+        pars: rd.pars, si: rd.si, yards: rd.yards,
         roundNum: extractRoundNum(rd.label) || (idx + 1),
       }));
       enrichedRounds.sort((a, b) => a.roundNum - b.roundNum);
@@ -552,11 +575,30 @@ async function scrapeContest(page, leaderboardUrl) {
         const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
         const b9 = scores.length > 9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
         const gross = scores.reduce((a, b) => a + b, 0);
-        return { day: idx + 1, scores, f9, ...(scores.length > 9 ? { b9 } : {}), gross, label: rd.label || undefined };
+        return {
+          day: idx + 1, scores, f9, ...(scores.length > 9 ? { b9 } : {}), gross,
+          label: rd.label || undefined,
+          // Par/SI/yards por ronda — fiel a eventos multi-campo (ex: FCG roda
+          // Desert Falls / Desert Willow). Só emitido quando difere/existe.
+          ...(rd.pars && rd.pars.length >= 9 ? { pars: rd.pars } : {}),
+          ...(rd.si && rd.si.length >= 9 ? { si: rd.si } : {}),
+          ...(rd.yards && rd.yards.length >= 9 ? { yards: rd.yards } : {}),
+        };
       });
       const total = rounds.length > 0 ? rounds.reduce((a, r) => a + r.gross, 0) : sc.total;
       const parTotal = par ? par.reduce((a, b) => a + b, 0) : 0;
-      const result = parTotal > 0 && rounds.length > 0 ? total - parTotal * rounds.length : null;
+      // To-par: soma o par REAL de cada ronda (multi-campo) quando disponível;
+      // caindo no par top-level × nº de rondas para eventos de campo único.
+      let result = null;
+      if (rounds.length > 0) {
+        const allHavePars = rounds.every(r => r.pars && r.pars.length >= 9);
+        if (allHavePars) {
+          const parSum = rounds.reduce((a, r) => a + r.pars.reduce((x, y) => x + y, 0), 0);
+          result = total - parSum;
+        } else if (parTotal > 0) {
+          result = total - parTotal * rounds.length;
+        }
+      }
       players.push({ name, country: sc.country || "", pos: sc.pos, result, total, rounds });
       const nRounds = rounds.length;
       const nHoles = nRounds > 0 ? rounds[0].scores.length : 0;
@@ -572,12 +614,25 @@ async function scrapeContest(page, leaderboardUrl) {
   const parF9 = par ? par.slice(0, 9).reduce((a, b) => a + b, 0) : null;
   const parB9 = par && par.length > 9 ? par.slice(9).reduce((a, b) => a + b, 0) : null;
   const pTotal = par ? par.reduce((a, b) => a + b, 0) : null;
-  // Ano: tentar pelo título do torneio, depois pela data capturada do
-  // leaderboard (meta.dateText), e por último o ano corrente.
-  let outYear = new Date().getFullYear();
+  // Ano — por ordem de fiabilidade:
+  //  1. ano explícito no título do torneio;
+  //  2. segmento da SÉRIE na URL (`/bluegolf/fcg25/event/…` → 2025,
+  //     `/bluegolfw/brjgt24/…` → 2024) — fiável para os microsites, cujo
+  //     título/data muitas vezes não trazem o ano;
+  //  3. data capturada do leaderboard (meta.dateText);
+  //  4. ano corrente (último recurso).
+  let outYear = null;
   let yrMatch = /\b(20\d{2})\b/.exec(tournamentTitle);
-  if (!yrMatch && meta.dateText) yrMatch = /\b(20\d{2})\b/.exec(meta.dateText);
   if (yrMatch) outYear = +yrMatch[1];
+  if (!outYear) {
+    const us = /\/bluegolfw?\/[a-z]+(\d{2})\d*\/event\//i.exec(leaderboardUrl);
+    if (us) outYear = 2000 + parseInt(us[1], 10);
+  }
+  if (!outYear && meta.dateText) {
+    const m = /\b(20\d{2})\b/.exec(meta.dateText);
+    if (m) outYear = +m[1];
+  }
+  if (!outYear) outYear = new Date().getFullYear();
 
   // Curso final: preferimos o detectado no scorecard (específico do contest),
   // caindo no meta capturado da página de leaderboard.
