@@ -10,12 +10,16 @@ const SUFFIX_TOKENS = new Set(["jr", "jr.", "sr", "sr.", "ii", "iii", "iv", "jun
  * normName — lowercase + sem diacríticos + espaços condensados.
  * Hifenes, slashes e pontos viram espaços (para apanhar variantes como
  * "Castro-Ferreira" ↔ "Castro Ferreira").
+ * Anotações entre parênteses são removidas por inteiro (2026-07-09) —
+ * alcunhas ("Andrew James (AJ) Phillips"), países ("Harris (IRE) Fleming")
+ * e sufixos ("Raul Pazos (jr)") não devem impedir o matching cross-source.
  * Sufixos honoríficos (Jr/Sr/II/III/Junior/Senior) são removidos.
  * Usado para matching cross-source.
  */
 function normName(s) {
   if (!s) return "";
   const base = String(s)
+    .replace(/\([^)]*\)/g, " ")
     .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/[.,\-\/'`]/g, " ")
@@ -27,6 +31,35 @@ function normName(s) {
     tokens.pop();
   }
   return tokens.join(" ");
+}
+
+/**
+ * stripDupAbbrev — conserta nomes corrompidos por células de leaderboard que
+ * colam o nome completo com a forma abreviada (EGR e BlueGolf/WJGC):
+ *   "Jessica WangJ. Wang"      → "Jessica Wang"
+ *   "Chase HopkinsC. Hopkins"  → "Chase Hopkins"
+ *   "Jiří MusilJ. Musil"       → "Jiří Musil"
+ * Só corta quando a cauda "X. Apelido(s)" é REDUNDANTE: a inicial tem de ser
+ * a 1ª letra do nome e o(s) apelido(s) têm de ser o fim do nome — nomes
+ * legítimos nunca satisfazem ambas as condições.
+ */
+function stripDupAbbrev(s) {
+  if (!s) return s;
+  const str = String(s);
+  const m = str.match(/^(.*\S)\s*([A-ZÀ-Ž])\.\s*(\S.*)$/);
+  if (!m) return str;
+  const [, head, initial, tail] = m;
+  const h = head.trim();
+  const t = tail.trim();
+  const fold = (x) => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  if (
+    h.length > t.length &&
+    fold(h).endsWith(fold(t)) &&
+    fold(h)[0] === fold(initial)
+  ) {
+    return h;
+  }
+  return str;
 }
 
 /**
@@ -163,6 +196,7 @@ function usDateToIso(s) {
 
 module.exports = {
   normName,
+  stripDupAbbrev,
   displayName,
   splitName,
   countryToIso2,

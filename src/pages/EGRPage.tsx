@@ -1,15 +1,21 @@
 /**
  * EGRPage.tsx — European Golf Rankings (europeangolfrankings.com).
  *
- * Meta-agregador de rankings juvenis europeus. Ao contrário das outras páginas
- * de circuito (centradas no torneio), esta é CENTRADA NO RANKING — é a única
- * vista tipo "ranking cross-circuito" do projecto.
+ * Meta-agregador de eventos juvenis europeus, assente no CircuitShell partilhado
+ * (como RFEG/England/GJGL): os EVENTOS EGR são as entries da sidebar (leaderboard
+ * de totais via `customResults` + ScorecardLeaderboard, sem scorecards) e o
+ * ranking cross-circuito vive como vista "info" (specialItem "jogadores"), igual
+ * ao /rfeg/info/jugadores. Filtra-se por escalão (U14…), sexo, ano e INTL.
  *
  * Rotas:
- *   /egr        → tabela de ranking (filtros país/escalão/sexo + pesquisa)
- *   /egr/:id    → detalhe de um jogador (stats EGR + histórico de eventos)
+ *   /egr                 → CircuitShell (eventos; auto-selecciona o mais recente)
+ *   /egr/evt/:id         → leaderboard de um evento
+ *   /egr/info/jogadores  → ranking de jogadores (vista info)
+ *   /egr/jogador/:id     → detalhe de um jogador (stats EGR + histórico)
  *
  * Dados:
+ *   /data/egr/egr-events-list.json    (índice dos eventos p/ a sidebar — build-egr-events-list.js)
+ *   /data/egr/events/egr_{id}.json    (leaderboard de cada evento, lazy ao clicar)
  *   /data/egr-ranking.json            (todos os ~17.900 jogadores M+F)
  *   /data/egr/egr-player-events.json  (rollup jogador→eventos, lazy no 1º detalhe)
  *
@@ -29,6 +35,11 @@ import SexBadge from "../ui/SexBadge";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitConfig, CircuitEntry } from "../ui/circuit/types";
+import { buildEgrEntries, type EgrEventsList } from "./egr/egrCircuit";
+
+const EVENTS_LIST_URL = "/data/egr/egr-events-list.json";
 
 const EGR_SITE = "https://www.europeangolfrankings.com";
 const RANKING_URL = "/data/egr-ranking.json";
@@ -89,10 +100,18 @@ const fmtToPar = (tp: number | null) => (tp == null ? "" : tp === 0 ? "E" : tp >
 
 /* ═══════════════════════════════════════════════════════════════ */
 export default function EGRPage() {
-  const { id } = useParams<{ id?: string }>();
+  const params = useParams<{ source?: string; id?: string }>();
+  // Detalhe do jogador (drill-down do ranking), página inteira: /egr/jogador/:id
+  if (params.source === "jogador" && params.id) return <EGRRankingRoot playerId={params.id} />;
+  // Circuito de EVENTOS no CircuitShell (ranking vive como vista "info").
+  return <EGREventsCircuit params={params} />;
+}
+
+/** Carrega o ranking (egr-ranking.json) e mostra a tabela de jogadores (vista
+ *  "info") ou o detalhe de um jogador. Lazy — só quando se abre o Ranking. */
+function EGRRankingRoot({ playerId }: { playerId?: string }) {
   const [ranking, setRanking] = useState<EgrRanking | null>(null);
   const [err, setErr] = useState<string | null>(null);
-
   useEffect(() => {
     let alive = true;
     cachedFetchJson<EgrRanking>(RANKING_URL)
@@ -100,13 +119,61 @@ export default function EGRPage() {
       .catch((e) => { if (alive) setErr(String(e?.message || e)); });
     return () => { alive = false; };
   }, []);
+  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar o ranking EGR: ${err}`} />;
+  if (!ranking) return <LoadingState message="A carregar o ranking EGR…" />;
+  return playerId ? <EGRDetail ranking={ranking} id={playerId} /> : <EGRList ranking={ranking} />;
+}
 
-  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar o EGR: ${err}`} />;
-  if (!ranking) return <LoadingState message="A carregar European Golf Rankings…" />;
+/** EGRPage assente no CircuitShell partilhado: os EVENTOS EGR são as entries
+ *  (leaderboard de totais via customResults) e o ranking é um specialItem
+ *  (vista "info"), igual ao /rfeg/info/jugadores. */
+function EGREventsCircuit({ params }: { params: { source?: string; id?: string } }) {
+  const navigate = useNavigate();
+  const [entries, setEntries] = useState<CircuitEntry[] | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
-  return id
-    ? <EGRDetail ranking={ranking} id={id} />
-    : <EGRList ranking={ranking} />;
+  useEffect(() => {
+    let alive = true;
+    cachedFetchJson<EgrEventsList>(EVENTS_LIST_URL)
+      .then((d) => { if (alive) setEntries(buildEgrEntries(d?.events || [])); })
+      .catch((e) => { if (alive) setErr(String(e?.message || e)); });
+    return () => { alive = false; };
+  }, []);
+
+  // Vista informativa via URL: /egr/info/{key} (deep-linkável). "info" não colide
+  // com "evt" (evento) nem "jogador" (detalhe).
+  const onInfo = params.source === "info";
+  const selectedInfo = onInfo ? (params.id ?? null) : null;
+  const selectedId = !onInfo && params.source === "evt" && params.id ? `evt:${params.id}` : undefined;
+
+  const config = useMemo<CircuitConfig>(() => ({
+    routeBase: "/egr",
+    title: "🇪🇺 European Golf Rankings",
+    color: "#1e3a8a",
+    textColor: "#fff",
+    grouping: "year",
+    sourceColors: { egr: "#1e40af" },
+    sourceLabels: { egr: "EGR" },
+    filters: { search: true, year: true, escalao: true, sex: true, intl: true, toggles: ["pt", "top10", "veteranos"] },
+    specialItems: [
+      { key: "jogadores", label: "🏅 Ranking de jogadores", render: () => <EGRRankingRoot /> },
+    ],
+    loadingMessage: "A carregar eventos EGR…",
+  }), []);
+
+  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar os eventos EGR: ${err}`} />;
+
+  return (
+    <CircuitShell
+      entries={entries || []}
+      config={config}
+      loading={!entries}
+      selectedId={selectedId}
+      onSelectEntry={(e) => navigate(`/egr/evt/${e.id.split(":")[1]}`)}
+      selectedInfo={selectedInfo}
+      onSelectInfo={(key) => navigate(key ? `/egr/info/${key}` : "/egr")}
+    />
+  );
 }
 
 /* ── Vista LISTA (/egr) ────────────────────────────────────────── */
@@ -241,7 +308,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
                   return (
                     <tr
                       key={p.id}
-                      onClick={() => navigate(`/egr/${p.id}`)}
+                      onClick={() => navigate(`/egr/jogador/${p.id}`)}
                       style={{ cursor: "pointer", background: isPt ? "var(--accent-light, rgba(0,120,0,.06))" : undefined }}
                       className="player-list-row"
                       title="Ver histórico e stats deste jogador"
@@ -322,7 +389,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
   if (!player) {
     return (
       <div style={{ padding: "8px 12px 24px" }}>
-        <button className="btn-link" onClick={() => navigate("/egr")}>← Voltar ao ranking</button>
+        <button className="btn-link" onClick={() => navigate("/egr/info/jogadores")}>← Voltar ao ranking</button>
         <EmptyState icon="🔍" message={`Jogador não encontrado — sem entrada para o id ${id} no ranking EGR.`} />
       </div>
     );
@@ -330,7 +397,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
 
   return (
     <div style={{ padding: "8px 12px 24px" }}>
-      <button className="btn-link" onClick={() => navigate("/egr")} style={{ marginBottom: 8 }}>← Voltar ao ranking</button>
+      <button className="btn-link" onClick={() => navigate("/egr/info/jogadores")} style={{ marginBottom: 8 }}>← Voltar ao ranking</button>
 
       {/* Cabeçalho do jogador */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>

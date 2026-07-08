@@ -13,7 +13,7 @@
  *   5. Resolve playerSourceKey → juniorId em todos os tournaments
  */
 
-const { normName, displayName } = require("../util/names");
+const { normName, stripDupAbbrev, displayName } = require("../util/names");
 const { juniorId } = require("../util/id");
 const { sub, warn } = require("../util/log");
 
@@ -34,6 +34,10 @@ function resolve(rawSources, overrides) {
         sourceKey: p.sourceKey,
         raw: p,
       };
+      // Consertar nomes corrompidos "Jessica WangJ. Wang" (EGR/BlueGolf
+      // colam nome completo + abreviatura) ANTES de tudo — corrige o
+      // display (canonicalName vem de raw.name) e o matching.
+      if (p.name) p.name = stripDupAbbrev(p.name);
       // Normalizar PRIMEIRO, depois tokenizar — assim "Castro-Ferreira"
       // (1 token raw) vira "castro ferreira" (2 tokens normalizados) e o
       // lastNameNorm fica "ferreira" igual ao "Ricardo Castro Ferreira"
