@@ -26,6 +26,8 @@ on:
       - 'public/data/ebtc2_*.json'
       - 'public/data/egtc_*.json'
       - 'public/data/elg_*.json'
+      - 'public/data/fcg*.json'
+      - 'public/data/jwgc*.json'
       - 'scripts/build-major-catalog.js'
       - '.github/workflows/build-major-catalog.yml'
   workflow_dispatch:

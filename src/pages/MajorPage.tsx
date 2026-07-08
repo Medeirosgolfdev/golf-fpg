@@ -68,14 +68,14 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
   for (const [k, defs] of groups) {
     const [series, yearStr] = k.split("|");
     const year = Number(yearStr);
-    const seriesLabel = series === "eowagr" ? "EU" : "BJGT";
+    const seriesLabel = series === "eowagr" ? "EU" : series === "fcg" ? "FCG" : series === "jwgc" ? "JWGC" : "BJGT";
     const divisions: CircuitDivision[] = defs
       .map((d) => {
         const { evo, evoYear } = bjgtEvoFor(d, bjgtDefs);
         return bjgtMajorDivision(d, evo, evoYear, BJGT_SRC.get(d.id));
       })
       .sort(majorDivCompare);
-    const country = series === "eowagr" ? "França" : "Espanha";
+    const country = series === "eowagr" ? "França" : series === "fcg" || series === "jwgc" ? "USA" : "Espanha";
     const courses = [...new Set(divisions.map((dv) => dv.results?.campo).filter((c): c is string => !!c))];
     // Nome real do evento (do JSON), sem o sufixo do escalão (" - Boys 10-11").
     const evName = (defs[0]?.data.tournament || "").replace(/\s*[-–]\s*(boys|girls|u\d|sub).*$/i, "").trim();
@@ -494,8 +494,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", fcg: "#1d4ed8", jwgc: "#9333ea" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", fcg: "FCG", jwgc: "JWGC" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -545,7 +545,7 @@ interface MajorCatalog {
 /** Carrega (lazy) as divisões de um torneio bjgt/eowagr reusando o builder
  *  eager. Traz também o ano-irmão (2025↔2026) para a evolução ano-a-ano do
  *  `bjgtEvoFor` (só compara esses dois anos). */
-async function loadBjgtDivisions(source: "bjgt" | "eowagr", year: number): Promise<CircuitDivision[]> {
+async function loadBjgtDivisions(source: "bjgt" | "eowagr" | "fcg" | "jwgc", year: number): Promise<CircuitDivision[]> {
   const sibling = year === 2025 ? 2026 : year === 2026 ? 2025 : 0;
   const wantYears = new Set([year, sibling].filter(Boolean));
   const urls = BJGT_URLS.filter((m) => m.series === source && wantYears.has(m.year));
@@ -591,7 +591,7 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
 /** Devolve o `loadDivisions` adequado à fonte do torneio do catálogo. */
 function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision[]> {
   return async () => {
-    if (cat.source === "bjgt" || cat.source === "eowagr") return loadBjgtDivisions(cat.source, cat.year);
+    if (cat.source === "bjgt" || cat.source === "eowagr" || cat.source === "fcg" || cat.source === "jwgc") return loadBjgtDivisions(cat.source, cat.year);
     if (cat.source === "doral") return loadDoralDivisions(cat.year);
     const gg = GG_JOB_LOADERS[cat.source];
     if (gg) {

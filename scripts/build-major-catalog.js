@@ -61,6 +61,7 @@ const ROUND_DATES = {
   "bjgt:2024": ["20 Fev", "21 Fev", "22 Fev"],
   "bjgt:2026": ["25 Fev", "26 Fev", "27 Fev"],
   "eowagr:2025": ["11 Ago", "12 Ago", "13 Ago"],
+  "fcg:2025": ["14 Jul", "15 Jul", "16 Jul"],
   // bjgt:2025 não tem datas de ronda (roundDates undefined nas URLS).
 };
 
@@ -133,6 +134,8 @@ function buildBluegolf() {
   const files = [
     ...listFiles(/^brjgt.*\.json$/).map((f) => ({ file: f, series: "bjgt" })),
     ...listFiles(/^eowagr25_contest\d+\.json$/).map((f) => ({ file: f, series: "eowagr" })),
+    ...listFiles(/^fcg\d+_.*\.json$/).map((f) => ({ file: f, series: "fcg" })),
+    ...listFiles(/^jwgc\d+_.*\.json$/).map((f) => ({ file: f, series: "jwgc" })),
   ];
   const byKey = new Map(); // `${series}:${year}` -> { series, year, datas[] }
   for (const { file, series } of files) {
@@ -150,7 +153,7 @@ function buildBluegolf() {
     const allValid = divs.flatMap(validOf);
     const allPlayers = divs.flatMap((d) => d.players);
     const rawName = (divs.find((d) => d.tournament)?.tournament || "").replace(/\s*[-–]\s*(boys|girls|u\d|sub).*$/i, "").trim();
-    const seriesLabel = series === "eowagr" ? "EU" : "BJGT";
+    const seriesLabel = series === "eowagr" ? "EU" : series === "fcg" ? "FCG" : series === "jwgc" ? "JWGC" : "BJGT";
     const rd = ROUND_DATES[key];
     entries.push({
       id: key,
@@ -158,7 +161,7 @@ function buildBluegolf() {
       series: seriesLabel,
       year,
       name: rawName || `${seriesLabel} ${year}`,
-      course: series === "eowagr" ? "França" : "Espanha",
+      course: series === "eowagr" ? "França" : series === "fcg" || series === "jwgc" ? "USA" : "Espanha",
       dateStart: rd ? `${rd[0]} ${year}` : undefined,
       dateEnd: rd && rd.length > 1 ? `${rd[rd.length - 1]} ${year}` : undefined,
       roundsCount: (rd && rd.length) || maxRounds(allValid) || undefined,
