@@ -108,6 +108,11 @@ const DATA = {
   eowagrPattern: /^eowagr\d+.*\.json$/,
   wjgcPattern: /^wjgc_\d+.*\.json$/,
   bjgtPattern: /^bjgt_.*\.json$/,
+  // FCG Callaway World Championship + Uswing Mojing Junior World (BlueGolf,
+  // formato bluegolf — ingeridos pelo adapter wjgc como o BJGT). ⚠ fcgWorld
+  // (fcg{N}_*) ≠ fonte `fcg` catalã, que lê fcg-rivals.json.
+  fcgWorldPattern: /^fcg\d+_.*\.json$/,
+  jwgcPattern: /^jwgc\d+_.*\.json$/,
   doralPattern: /^ftm_doral_\d+\.json$/,
   outJuniors: path.join(DATA_DIR, "juniors.json"),
   outTournaments: path.join(DATA_DIR, "juniors-tournaments.json"),

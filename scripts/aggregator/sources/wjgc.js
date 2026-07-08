@@ -17,13 +17,16 @@ const SOURCE_LABEL = "WJGC / BJGT";
 function load(opts) {
   const wjgcFiles = listFiles(DATA_DIR, DATA.wjgcPattern);
   const bjgtFiles = listFiles(DATA_DIR, DATA.bjgtPattern);
+  // FCG Callaway World + Uswing Mojing JWGC — mesmo formato bluegolf.
+  const fcgWorldFiles = listFiles(DATA_DIR, DATA.fcgWorldPattern);
+  const jwgcFiles = listFiles(DATA_DIR, DATA.jwgcPattern);
 
   const players = [];
   const tournaments = [];
   // Players nesta fonte: cada jogador único por (nome+país). sourceKey gerado.
   const playerMap = new Map();
 
-  for (const file of [...wjgcFiles, ...bjgtFiles]) {
+  for (const file of [...wjgcFiles, ...bjgtFiles, ...fcgWorldFiles, ...jwgcFiles]) {
     const data = readJsonSafe(file, null);
     if (!data) continue;
     const tt = normalize(data, path.basename(file), playerMap);
@@ -185,6 +188,10 @@ function extractCategoryFromName(name) {
  *  quando estiver disponível no ficheiro. */
 function inferDateFromName(name, year) {
   if (!name || !year) return null;
+  // FCG Callaway World Championship — Palm Springs, meados de Julho
+  if (/FCG|Callaway/i.test(name)) return `${year}-07-15`;
+  // Uswing Mojing Junior World (JWGC) — meados de Julho
+  if (/Uswing|Mojing|JWGC|Junior\s+World/i.test(name)) return `${year}-07-15`;
   // Daily Mail WJGC — Villa Padierna, final de Fevereiro
   if (/Daily\s*Mail|WJGC|World\s+Junior/i.test(name)) return `${year}-02-26`;
   // European Open WAGR — início de Agosto
@@ -196,6 +203,8 @@ function inferDateFromName(name, year) {
 }
 
 function wjgcSeries(name) {
+  if (/FCG|Callaway/i.test(name)) return { id: "fcgworld", label: "FCG Callaway World" };
+  if (/Uswing|Mojing|JWGC/i.test(name)) return { id: "jwgc", label: "Uswing Mojing JWGC" };
   if (/EOWAGR|European Open WAGR/i.test(name)) return { id: "eowagr", label: "European Open WAGR" };
   if (/WJGC|World Junior Golf Championship|Daily Mail/i.test(name)) return { id: "wjgc", label: "WJGC · BJGT" };
   if (/BJGT/i.test(name)) return { id: "bjgt", label: "BJGT" };

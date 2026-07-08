@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-07T22:14:11.335Z",
+  "generatedAt": "2026-07-08T00:53:42.107Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -10972,6 +10972,26 @@
       "editionsCount": 10
     },
     {
+      "id": "fcgworld",
+      "label": "FCG Callaway World",
+      "sourceId": "wjgc",
+      "tournamentIds": [
+        "wjgc-fcg251_boys_11-12",
+        "wjgc-fcg251_boys_13-14",
+        "wjgc-fcg251_boys_15-18",
+        "wjgc-fcg251_boys_7-8",
+        "wjgc-fcg251_boys_9-10",
+        "wjgc-fcg251_girls_11-12",
+        "wjgc-fcg251_girls_13-14",
+        "wjgc-fcg251_girls_15-18",
+        "wjgc-fcg251_girls_7-8",
+        "wjgc-fcg251_girls_9-10"
+      ],
+      "firstDate": "2025-07-15",
+      "lastDate": "2025-07-15",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-arzaga-golf-club-tour-championship",
       "label": "Arzaga Golf Club (Tour Championship)",
       "sourceId": "uskids",
@@ -17697,8 +17717,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -69754,6 +69774,17 @@
       ],
       "firstDate": "2022-10-08",
       "lastDate": "2022-10-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "jwgc",
+      "label": "Uswing Mojing JWGC",
+      "sourceId": "wjgc",
+      "tournamentIds": [
+        "wjgc-jwgc261_boys_13-14"
+      ],
+      "firstDate": "2026-07-15",
+      "lastDate": "2026-07-15",
       "editionsCount": 1
     },
     {
