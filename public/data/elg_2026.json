@@ -77,6 +77,78 @@
       "players": [
         {
           "pos": "1",
+          "name": "Marie Eline Madsen",
+          "country": "DK",
+          "club": "Viborg Golfklub",
+          "birthYear": 2004,
+          "hcp": -7.4,
+          "team": "DENMARK",
+          "detailId": "gb48768075",
+          "toPar": -8,
+          "total": 136,
+          "roundGross": [
+            67,
+            69
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 34,
+              "b9": 33,
+              "gross": 67,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                3,
+                5,
+                2,
+                3,
+                4,
+                4,
+                3,
+                3,
+                5,
+                4,
+                4,
+                2,
+                5,
+                4
+              ],
+              "f9": 35,
+              "b9": 34,
+              "gross": 69,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T2",
           "name": "Vairana Heck",
           "country": "FR",
           "club": null,
@@ -84,11 +156,11 @@
           "hcp": -7,
           "team": "FRANCE",
           "detailId": "gb48768034",
-          "toPar": null,
-          "total": null,
+          "toPar": -6,
+          "total": 138,
           "roundGross": [
             70,
-            41
+            68
           ],
           "rounds": [
             {
@@ -132,29 +204,35 @@
                 3,
                 3,
                 3,
-                4
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                6
               ],
               "f9": 31,
-              "b9": 10,
-              "gross": 41,
+              "b9": 37,
+              "gross": 68,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "2",
-          "name": "Marie Eline Madsen",
-          "country": "DK",
-          "club": "Viborg Golfklub",
-          "birthYear": 2004,
-          "hcp": -7.4,
-          "team": "DENMARK",
-          "detailId": "gb48768075",
-          "toPar": null,
-          "total": null,
+          "pos": "T2",
+          "name": "Kate Dillon",
+          "country": "IG",
+          "club": "Oughterard Golf Club",
+          "birthYear": 2007,
+          "hcp": -4.4,
+          "team": "IRELAND",
+          "detailId": "gb48768021",
+          "toPar": -6,
+          "total": 138,
           "roundGross": [
-            67,
-            35
+            68,
+            70
           ],
           "rounds": [
             {
@@ -167,12 +245,12 @@
                 4,
                 4,
                 3,
-                4,
-                4,
-                4,
+                3,
+                5,
+                3,
                 3,
                 4,
-                3,
+                5,
                 4,
                 4,
                 3,
@@ -180,31 +258,257 @@
                 4
               ],
               "f9": 34,
-              "b9": 33,
-              "gross": 67,
+              "b9": 34,
+              "gross": 68,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
                 4,
-                5,
-                5,
+                4,
+                4,
+                2,
+                4,
                 4,
                 3,
                 5,
-                2,
+                5,
+                5,
                 3,
-                4
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
               ],
               "f9": 35,
-              "gross": 35,
+              "b9": 35,
+              "gross": 70,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T3",
+          "pos": "T4",
+          "name": "Balma Davalos Guaita",
+          "country": "ES",
+          "club": null,
+          "birthYear": 2006,
+          "hcp": -7.1,
+          "team": "SPAIN",
+          "detailId": "gb48768030",
+          "toPar": -5,
+          "total": 139,
+          "roundGross": [
+            71,
+            68
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 35,
+              "b9": 36,
+              "gross": 71,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                4,
+                7,
+                2,
+                4,
+                6,
+                4,
+                3,
+                3,
+                3,
+                4
+              ],
+              "f9": 32,
+              "b9": 36,
+              "gross": 68,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T4",
+          "name": "Valentine Delon",
+          "country": "FR",
+          "club": null,
+          "birthYear": 2005,
+          "hcp": -5.9,
+          "team": "FRANCE",
+          "detailId": "gb48768032",
+          "toPar": -5,
+          "total": 139,
+          "roundGross": [
+            69,
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                2,
+                4,
+                4,
+                4,
+                3,
+                6,
+                4,
+                5,
+                3,
+                3,
+                4,
+                5
+              ],
+              "f9": 32,
+              "b9": 37,
+              "gross": 69,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                6,
+                4,
+                2,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T4",
+          "name": "Sarah Uebelhart",
+          "country": "CH",
+          "club": "Golfclub Ennetsee",
+          "birthYear": 2006,
+          "hcp": -5,
+          "team": "SWITZERLAND",
+          "detailId": "gb48768080",
+          "toPar": -5,
+          "total": 139,
+          "roundGross": [
+            69,
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                5,
+                5,
+                2,
+                4,
+                5,
+                3,
+                2,
+                3,
+                5,
+                5,
+                4,
+                3,
+                3,
+                4
+              ],
+              "f9": 37,
+              "b9": 32,
+              "gross": 69,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                2,
+                4,
+                5,
+                3,
+                5,
+                3,
+                3,
+                4
+              ],
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T7",
           "name": "Anne-Sterre den Dunnen",
           "country": "NL",
           "club": "Golfclub Houtrak",
@@ -276,19 +580,19 @@
           ]
         },
         {
-          "pos": "T3",
-          "name": "Kate Dillon",
-          "country": "IG",
-          "club": "Oughterard Golf Club",
-          "birthYear": 2007,
-          "hcp": -4.4,
-          "team": "IRELAND",
-          "detailId": "gb48768021",
-          "toPar": null,
-          "total": null,
+          "pos": "T7",
+          "name": "Meja Örtengren",
+          "country": "SE",
+          "club": "Landeryds Golfklubb",
+          "birthYear": 2005,
+          "hcp": -6.7,
+          "team": "SWEDEN",
+          "detailId": "gb48768043",
+          "toPar": -4,
+          "total": 140,
           "roundGross": [
-            68,
-            60
+            69,
+            71
           ],
           "rounds": [
             {
@@ -299,12 +603,39 @@
                 4,
                 3,
                 4,
+                6,
+                3,
+                3,
+                4,
                 4,
                 3,
                 3,
                 5,
+                4,
+                4,
                 3,
-                3,
+                4,
+                4
+              ],
+              "f9": 35,
+              "b9": 34,
+              "gross": 69,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                5,
+                2,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                2,
                 4,
                 5,
                 4,
@@ -313,9 +644,54 @@
                 4,
                 4
               ],
-              "f9": 34,
+              "f9": 37,
               "b9": 34,
-              "gross": 68,
+              "gross": 71,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T9",
+          "name": "Audrey LAM",
+          "country": "BE",
+          "club": "ROYAL WATERLOO G. C. ",
+          "birthYear": 2007,
+          "hcp": -5.2,
+          "team": "BELGIUM",
+          "detailId": "gb48768071",
+          "toPar": -3,
+          "total": 141,
+          "roundGross": [
+            71,
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                2,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 35,
+              "b9": 36,
+              "gross": 71,
               "startingHole": 1
             },
             {
@@ -323,29 +699,104 @@
               "scores": [
                 4,
                 4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
                 4,
                 2,
                 4,
-                4,
-                3,
-                5,
-                5,
-                5,
-                3,
-                4,
-                5,
-                4,
-                4
+                5
               ],
-              "f9": 35,
-              "b9": 25,
-              "gross": 60,
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T5",
+          "pos": "T9",
+          "name": "Ebba Nordstedt",
+          "country": "SE",
+          "club": "Rya Golfklubb",
+          "birthYear": 2004,
+          "hcp": -4.8,
+          "team": "SWEDEN",
+          "detailId": "gb48768045",
+          "toPar": -3,
+          "total": 141,
+          "roundGross": [
+            71,
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                2,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 34,
+              "b9": 37,
+              "gross": 71,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T9",
           "name": "Paula Martin Sampedro",
           "country": "ES",
           "club": null,
@@ -417,7 +868,7 @@
           ]
         },
         {
-          "pos": "T5",
+          "pos": "T9",
           "name": "Francesca Fiorellini",
           "country": "IT",
           "club": null,
@@ -489,214 +940,7 @@
           ]
         },
         {
-          "pos": "T5",
-          "name": "Balma Davalos Guaita",
-          "country": "ES",
-          "club": null,
-          "birthYear": 2006,
-          "hcp": -7.1,
-          "team": "SPAIN",
-          "detailId": "gb48768030",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            71,
-            58
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                4,
-                4,
-                3,
-                4,
-                3,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                3,
-                4,
-                5
-              ],
-              "f9": 35,
-              "b9": 36,
-              "gross": 71,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                4,
-                3,
-                3,
-                4,
-                4,
-                3,
-                3,
-                4,
-                7,
-                2,
-                4,
-                6,
-                4,
-                3
-              ],
-              "f9": 32,
-              "b9": 26,
-              "gross": 58,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T5",
-          "name": "Valentine Delon",
-          "country": "FR",
-          "club": null,
-          "birthYear": 2005,
-          "hcp": -5.9,
-          "team": "FRANCE",
-          "detailId": "gb48768032",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            69,
-            60
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                3,
-                4,
-                3,
-                4,
-                4,
-                2,
-                4,
-                4,
-                4,
-                3,
-                6,
-                4,
-                5,
-                3,
-                3,
-                4,
-                5
-              ],
-              "f9": 32,
-              "b9": 37,
-              "gross": 69,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                3,
-                5,
-                3,
-                4,
-                4,
-                3,
-                4,
-                6,
-                4,
-                2,
-                5,
-                5,
-                3,
-                4
-              ],
-              "f9": 37,
-              "b9": 23,
-              "gross": 60,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T5",
-          "name": "Meja Örtengren",
-          "country": "SE",
-          "club": "Landeryds Golfklubb",
-          "birthYear": 2005,
-          "hcp": -6.7,
-          "team": "SWEDEN",
-          "detailId": "gb48768043",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            69,
-            60
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                4,
-                6,
-                3,
-                3,
-                4,
-                4,
-                3,
-                3,
-                5,
-                4,
-                4,
-                3,
-                4,
-                4
-              ],
-              "f9": 35,
-              "b9": 34,
-              "gross": 69,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                5,
-                2,
-                4,
-                4,
-                4,
-                4,
-                5,
-                4,
-                2,
-                4,
-                5,
-                4,
-                4
-              ],
-              "f9": 37,
-              "b9": 23,
-              "gross": 60,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T10",
+          "pos": "13",
           "name": "Sophia Fullbrook",
           "country": "EN",
           "club": "Brocket Hall",
@@ -704,11 +948,11 @@
           "hcp": 999,
           "team": "ENGLAND",
           "detailId": "gb48768049",
-          "toPar": null,
-          "total": null,
+          "toPar": -2,
+          "total": 142,
           "roundGross": [
             69,
-            48
+            73
           ],
           "rounds": [
             {
@@ -752,79 +996,23 @@
                 5,
                 4,
                 3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
                 4
               ],
               "f9": 37,
-              "b9": 11,
-              "gross": 48,
+              "b9": 36,
+              "gross": 73,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T10",
-          "name": "Sarah Uebelhart",
-          "country": "CH",
-          "club": "Golfclub Ennetsee",
-          "birthYear": 2006,
-          "hcp": -5,
-          "team": "SWITZERLAND",
-          "detailId": "gb48768080",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            69,
-            37
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                5,
-                3,
-                5,
-                5,
-                2,
-                4,
-                5,
-                3,
-                2,
-                3,
-                5,
-                5,
-                4,
-                3,
-                3,
-                4
-              ],
-              "f9": 37,
-              "b9": 32,
-              "gross": 69,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                4,
-                5,
-                3,
-                4,
-                5
-              ],
-              "f9": 37,
-              "gross": 37,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T12",
+          "pos": "T14",
           "name": "Anna Ludvová",
           "country": "CZ",
           "club": null,
@@ -896,7 +1084,7 @@
           ]
         },
         {
-          "pos": "T12",
+          "pos": "T14",
           "name": "Camille Min-Gaultier",
           "country": "FR",
           "club": null,
@@ -968,73 +1156,7 @@
           ]
         },
         {
-          "pos": "T12",
-          "name": "Ebba Nordstedt",
-          "country": "SE",
-          "club": "Rya Golfklubb",
-          "birthYear": 2004,
-          "hcp": -4.8,
-          "team": "SWEDEN",
-          "detailId": "gb48768045",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            71,
-            47
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                4,
-                5,
-                2,
-                3,
-                4,
-                4,
-                3,
-                4,
-                5,
-                5,
-                4,
-                3,
-                4,
-                5
-              ],
-              "f9": 34,
-              "b9": 37,
-              "gross": 71,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                6,
-                5,
-                2,
-                4,
-                4,
-                3,
-                4,
-                4,
-                4,
-                3,
-                3
-              ],
-              "f9": 37,
-              "b9": 10,
-              "gross": 47,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T15",
+          "pos": "T16",
           "name": "Emma Defleur",
           "country": "BE",
           "club": "GOLF DE RIGENÉE ",
@@ -1106,7 +1228,79 @@
           ]
         },
         {
-          "pos": "T15",
+          "pos": "T16",
+          "name": "Benedicte Brent-Petersen",
+          "country": "DK",
+          "club": "Københavns Golf Klub",
+          "birthYear": 2007,
+          "hcp": -5.4,
+          "team": "DENMARK",
+          "detailId": "gb48768073",
+          "toPar": 0,
+          "total": 144,
+          "roundGross": [
+            74,
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                3,
+                3,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 40,
+              "b9": 34,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                3,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                3,
+                4,
+                5
+              ],
+              "f9": 34,
+              "b9": 36,
+              "gross": 70,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T16",
           "name": "Rosanne Boere",
           "country": "NL",
           "club": "Golfclub Kleiburg",
@@ -1178,7 +1372,7 @@
           ]
         },
         {
-          "pos": "T15",
+          "pos": "T16",
           "name": "Fanni Grönlund",
           "country": "FI",
           "club": "Pickala Golf Club",
@@ -1250,19 +1444,19 @@
           ]
         },
         {
-          "pos": "T15",
-          "name": "Audrey LAM",
-          "country": "BE",
-          "club": "ROYAL WATERLOO G. C. ",
-          "birthYear": 2007,
-          "hcp": -5.2,
-          "team": "BELGIUM",
-          "detailId": "gb48768071",
-          "toPar": null,
-          "total": null,
+          "pos": "T20",
+          "name": "Katie Poots",
+          "country": "IG",
+          "club": "Knock Golf Club",
+          "birthYear": 2005,
+          "hcp": -4.8,
+          "team": "IRELAND",
+          "detailId": "gb48768024",
+          "toPar": 1,
+          "total": 145,
           "roundGross": [
-            71,
-            37
+            70,
+            75
           ],
           "rounds": [
             {
@@ -1271,48 +1465,58 @@
                 4,
                 4,
                 4,
-                2,
-                4,
-                5,
-                3,
-                4,
-                5,
                 3,
                 3,
-                4,
                 5,
-                4,
+                3,
+                5,
                 5,
                 4,
                 3,
-                5
+                4,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4
               ],
-              "f9": 35,
-              "b9": 36,
-              "gross": 71,
+              "f9": 36,
+              "b9": 34,
+              "gross": 70,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
+                5,
+                5,
                 4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
                 4,
                 5,
                 3,
                 4,
-                5,
-                4,
                 3,
+                5,
                 5
               ],
-              "f9": 37,
-              "gross": 37,
+              "f9": 39,
+              "b9": 36,
+              "gross": 75,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T19",
+          "pos": "T20",
           "name": "Mira Berglund",
           "country": "SE",
           "club": "Crownwood Golf",
@@ -1384,7 +1588,7 @@
           ]
         },
         {
-          "pos": "T19",
+          "pos": "T20",
           "name": "Patience Rhodes",
           "country": "EN",
           "club": "Burnham & Berrow Golf Club",
@@ -1451,138 +1655,6 @@
               "f9": 37,
               "b9": 38,
               "gross": 75,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T19",
-          "name": "Benedicte Brent-Petersen",
-          "country": "DK",
-          "club": "Københavns Golf Klub",
-          "birthYear": 2007,
-          "hcp": -5.4,
-          "team": "DENMARK",
-          "detailId": "gb48768073",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            46
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                5,
-                4,
-                3,
-                4,
-                5,
-                3,
-                5,
-                5,
-                3,
-                3,
-                3,
-                5,
-                3,
-                4,
-                4,
-                4,
-                5
-              ],
-              "f9": 40,
-              "b9": 34,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                3,
-                4,
-                3,
-                4,
-                5,
-                3,
-                3,
-                5,
-                4,
-                3,
-                5
-              ],
-              "f9": 34,
-              "b9": 12,
-              "gross": 46,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T19",
-          "name": "Katie Poots",
-          "country": "IG",
-          "club": "Knock Golf Club",
-          "birthYear": 2005,
-          "hcp": -4.8,
-          "team": "IRELAND",
-          "detailId": "gb48768024",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            70,
-            50
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                3,
-                5,
-                3,
-                5,
-                5,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                3,
-                3,
-                4
-              ],
-              "f9": 36,
-              "b9": 34,
-              "gross": 70,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                5,
-                4,
-                4,
-                4,
-                5,
-                4,
-                4,
-                4,
-                4,
-                3,
-                4
-              ],
-              "f9": 39,
-              "b9": 11,
-              "gross": 50,
               "startingHole": 1
             }
           ]
@@ -1948,7 +2020,151 @@
           ]
         },
         {
-          "pos": "T28",
+          "pos": "T23",
+          "name": "Beth Coulter",
+          "country": "IG",
+          "club": "Kirkistown Castle Golf Club",
+          "birthYear": 2004,
+          "hcp": -5.7,
+          "team": "IRELAND",
+          "detailId": "gb48768019",
+          "toPar": 2,
+          "total": 146,
+          "roundGross": [
+            70,
+            76
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4
+              ],
+              "f9": 33,
+              "b9": 37,
+              "gross": 70,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                4,
+                5
+              ],
+              "f9": 39,
+              "b9": 37,
+              "gross": 76,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T29",
+          "name": "Sara Brentcheneff",
+          "country": "FR",
+          "club": null,
+          "birthYear": 2007,
+          "hcp": -5.8,
+          "team": "FRANCE",
+          "detailId": "gb48768031",
+          "toPar": 3,
+          "total": 147,
+          "roundGross": [
+            74,
+            73
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                3,
+                6,
+                5,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 38,
+              "b9": 36,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                6,
+                2,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 38,
+              "b9": 35,
+              "gross": 73,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T29",
           "name": "Constance Fouillet",
           "country": "FR",
           "club": null,
@@ -2020,7 +2236,7 @@
           ]
         },
         {
-          "pos": "T28",
+          "pos": "T29",
           "name": "Ebba Liljeberg",
           "country": "SE",
           "club": "Vasatorps Golfklubb",
@@ -2092,7 +2308,7 @@
           ]
         },
         {
-          "pos": "T28",
+          "pos": "T29",
           "name": "Carlotta Locatelli",
           "country": "CH",
           "club": "ASGI",
@@ -2164,7 +2380,7 @@
           ]
         },
         {
-          "pos": "T28",
+          "pos": "T29",
           "name": "Barbara Car",
           "country": "SI",
           "club": null,
@@ -2236,7 +2452,7 @@
           ]
         },
         {
-          "pos": "T28",
+          "pos": "T29",
           "name": "Kinga Kusmierska",
           "country": "PL",
           "club": null,
@@ -2308,69 +2524,7 @@
           ]
         },
         {
-          "pos": "T28",
-          "name": "Matilda Björkman",
-          "country": "SE",
-          "club": "Kumla Golfklubb",
-          "birthYear": 2005,
-          "hcp": -5.3,
-          "team": "SWEDEN",
-          "detailId": "gb48768048",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            37
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                5,
-                5,
-                4,
-                4,
-                5,
-                4,
-                2,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5
-              ],
-              "f9": 39,
-              "b9": 35,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                3,
-                5,
-                3,
-                4,
-                4,
-                4,
-                4,
-                5
-              ],
-              "f9": 37,
-              "gross": 37,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T34",
+          "pos": "T35",
           "name": "Ada Huhtala",
           "country": "FI",
           "club": "Viipurin Golf ry",
@@ -2442,7 +2596,7 @@
           ]
         },
         {
-          "pos": "T34",
+          "pos": "T35",
           "name": "Sheridan Clancy",
           "country": "SQ",
           "club": null,
@@ -2514,7 +2668,7 @@
           ]
         },
         {
-          "pos": "T34",
+          "pos": "T35",
           "name": "Cayetana Fernandez Garcia-Poggio",
           "country": "ES",
           "club": null,
@@ -2586,7 +2740,223 @@
           ]
         },
         {
-          "pos": "T34",
+          "pos": "T35",
+          "name": "Kristella Sikk",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2010,
+          "hcp": -4.8,
+          "team": "ESTONIA",
+          "detailId": "gb48768148",
+          "toPar": 4,
+          "total": 148,
+          "roundGross": [
+            75,
+            73
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 37,
+              "b9": 38,
+              "gross": 75,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                4,
+                6,
+                2,
+                5,
+                4,
+                4,
+                4,
+                5,
+                5,
+                2,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 38,
+              "b9": 35,
+              "gross": 73,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T35",
+          "name": "Matilda Björkman",
+          "country": "SE",
+          "club": "Kumla Golfklubb",
+          "birthYear": 2005,
+          "hcp": -5.3,
+          "team": "SWEDEN",
+          "detailId": "gb48768048",
+          "toPar": 4,
+          "total": 148,
+          "roundGross": [
+            74,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                2,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 39,
+              "b9": 35,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 37,
+              "gross": 74,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T35",
+          "name": "Victoria Levy",
+          "country": "CH",
+          "club": "Golf Club de Lausanne",
+          "birthYear": 2003,
+          "hcp": -4.2,
+          "team": "SWITZERLAND",
+          "detailId": "gb48768079",
+          "toPar": 4,
+          "total": 148,
+          "roundGross": [
+            74,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                6,
+                6,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 37,
+              "b9": 37,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                3,
+                5,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 37,
+              "gross": 74,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T35",
           "name": "Nellie Ong",
           "country": "EN",
           "club": "Eaton Golf Club - Norwich",
@@ -2653,262 +3023,6 @@
               "f9": 40,
               "b9": 37,
               "gross": 77,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T34",
-          "name": "Victoria Levy",
-          "country": "CH",
-          "club": "Golf Club de Lausanne",
-          "birthYear": 2003,
-          "hcp": -4.2,
-          "team": "SWITZERLAND",
-          "detailId": "gb48768079",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            49
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                5,
-                3,
-                4,
-                5,
-                3,
-                4,
-                5,
-                3,
-                3,
-                4,
-                6,
-                6,
-                4,
-                3,
-                4,
-                4
-              ],
-              "f9": 37,
-              "b9": 37,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                5,
-                5,
-                3,
-                3,
-                5,
-                5,
-                3,
-                4
-              ],
-              "f9": 37,
-              "b9": 12,
-              "gross": 49,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T34",
-          "name": "Beth Coulter",
-          "country": "IG",
-          "club": "Kirkistown Castle Golf Club",
-          "birthYear": 2004,
-          "hcp": -5.7,
-          "team": "IRELAND",
-          "detailId": "gb48768019",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            70,
-            53
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                3,
-                4,
-                4,
-                3,
-                4,
-                4,
-                3,
-                4,
-                4,
-                4,
-                3,
-                4,
-                5,
-                5,
-                5,
-                3,
-                4,
-                4
-              ],
-              "f9": 33,
-              "b9": 37,
-              "gross": 70,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                6,
-                4,
-                4,
-                4,
-                4,
-                3,
-                4,
-                5,
-                5,
-                5,
-                4
-              ],
-              "f9": 39,
-              "b9": 14,
-              "gross": 53,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T34",
-          "name": "Susanna Brenske",
-          "country": "DE",
-          "club": null,
-          "birthYear": 2004,
-          "hcp": -4.4,
-          "team": "GERMANY",
-          "detailId": "gb48768037",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            77,
-            35
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                4,
-                5,
-                3,
-                5,
-                5,
-                4,
-                3,
-                5,
-                6,
-                6,
-                4,
-                3,
-                4,
-                5
-              ],
-              "f9": 37,
-              "b9": 40,
-              "gross": 77,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                5,
-                5,
-                3,
-                4,
-                4,
-                2,
-                4,
-                4
-              ],
-              "f9": 35,
-              "gross": 35,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T34",
-          "name": "Sara Brentcheneff",
-          "country": "FR",
-          "club": null,
-          "birthYear": 2007,
-          "hcp": -5.8,
-          "team": "FRANCE",
-          "detailId": "gb48768031",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            38
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                5,
-                4,
-                3,
-                3,
-                6,
-                5,
-                4,
-                3,
-                4,
-                4
-              ],
-              "f9": 38,
-              "b9": 36,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                5,
-                6,
-                2,
-                4,
-                5,
-                3,
-                5,
-                4
-              ],
-              "f9": 38,
-              "gross": 38,
               "startingHole": 1
             }
           ]
@@ -3354,11 +3468,11 @@
           "hcp": -5.2,
           "team": "ITALY",
           "detailId": "gb48768060",
-          "toPar": null,
-          "total": null,
+          "toPar": 5,
+          "total": 149,
           "roundGross": [
             72,
-            52
+            77
           ],
           "rounds": [
             {
@@ -3402,17 +3516,95 @@
                 6,
                 4,
                 3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
                 4
               ],
               "f9": 41,
-              "b9": 11,
-              "gross": 52,
+              "b9": 36,
+              "gross": 77,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T42",
+          "pos": "T49",
+          "name": "Anna Hjerrild Behnsen",
+          "country": "DK",
+          "club": "Great Northern Golf Club",
+          "birthYear": 2004,
+          "hcp": -5.3,
+          "team": "DENMARK",
+          "detailId": "gb48768077",
+          "toPar": 6,
+          "total": 150,
+          "roundGross": [
+            76,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                6,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 38,
+              "b9": 38,
+              "gross": 76,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                6,
+                3,
+                3,
+                7,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5
+              ],
+              "f9": 38,
+              "b9": 36,
+              "gross": 74,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T49",
           "name": "Lily Hirst",
           "country": "EN",
           "club": "Huddersfield Golf Club",
@@ -3420,11 +3612,11 @@
           "hcp": 999,
           "team": "ENGLAND",
           "detailId": "gb48768050",
-          "toPar": null,
-          "total": null,
+          "toPar": 6,
+          "total": 150,
           "roundGross": [
             76,
-            37
+            74
           ],
           "rounds": [
             {
@@ -3465,16 +3657,26 @@
                 6,
                 3,
                 4,
-                4
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                5,
+                2,
+                4,
+                6
               ],
               "f9": 37,
-              "gross": 37,
+              "b9": 37,
+              "gross": 74,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T50",
+          "pos": "T49",
           "name": "Eva Kristinsdóttir",
           "country": "IS",
           "club": "Golfklúbbur Mosfellsbæjar",
@@ -3546,7 +3748,7 @@
           ]
         },
         {
-          "pos": "T50",
+          "pos": "T49",
           "name": "Lotte Schuhr",
           "country": "DE",
           "club": null,
@@ -3618,7 +3820,7 @@
           ]
         },
         {
-          "pos": "T50",
+          "pos": "T49",
           "name": "Hanna Hänninen",
           "country": "FI",
           "club": "Laukaan Peurunkagolf",
@@ -3690,7 +3892,7 @@
           ]
         },
         {
-          "pos": "T50",
+          "pos": "T49",
           "name": "Emily James",
           "country": "WL",
           "club": null,
@@ -3762,7 +3964,79 @@
           ]
         },
         {
-          "pos": "T50",
+          "pos": "T49",
+          "name": "Charlotte Naughton",
+          "country": "EN",
+          "club": "Longhirst Hall Golf Club",
+          "birthYear": 2008,
+          "hcp": 999,
+          "team": "ENGLAND",
+          "detailId": "gb48768051",
+          "toPar": 6,
+          "total": 150,
+          "roundGross": [
+            74,
+            76
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                5,
+                3,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 37,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                5,
+                6,
+                3,
+                4,
+                6,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 40,
+              "b9": 36,
+              "gross": 76,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T49",
           "name": "Eva Mooslechner",
           "country": "AT",
           "club": null,
@@ -3834,277 +4108,7 @@
           ]
         },
         {
-          "pos": "T50",
-          "name": "Kristella Sikk",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2010,
-          "hcp": -4.8,
-          "team": "ESTONIA",
-          "detailId": "gb48768148",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            75,
-            63
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                5,
-                4,
-                3,
-                5,
-                5,
-                4,
-                4,
-                3,
-                5,
-                5
-              ],
-              "f9": 37,
-              "b9": 38,
-              "gross": 75,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                4,
-                6,
-                2,
-                5,
-                4,
-                4,
-                4,
-                5,
-                5,
-                2,
-                5,
-                5,
-                4,
-                4
-              ],
-              "f9": 38,
-              "b9": 25,
-              "gross": 63,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T50",
-          "name": "Charlotte Naughton",
-          "country": "EN",
-          "club": "Longhirst Hall Golf Club",
-          "birthYear": 2008,
-          "hcp": 999,
-          "team": "ENGLAND",
-          "detailId": "gb48768051",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            64
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                5,
-                5,
-                3,
-                4,
-                5,
-                4,
-                3,
-                4,
-                5,
-                4,
-                5,
-                3,
-                4,
-                5
-              ],
-              "f9": 37,
-              "b9": 37,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                5,
-                6,
-                3,
-                4,
-                6,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4
-              ],
-              "f9": 40,
-              "b9": 24,
-              "gross": 64,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T50",
-          "name": "Elsie Verhoeven",
-          "country": "BE",
-          "club": "GOLF CLUB 7 FONTAINES",
-          "birthYear": 2001,
-          "hcp": -0.7,
-          "team": "BELGIUM",
-          "detailId": "gb48768070",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            77,
-            48
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                3,
-                4,
-                4,
-                3,
-                5,
-                8,
-                3,
-                4,
-                6,
-                4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                3,
-                5,
-                5
-              ],
-              "f9": 40,
-              "b9": 37,
-              "gross": 77,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                4,
-                4,
-                4,
-                4,
-                3,
-                4,
-                5,
-                4,
-                3,
-                4
-              ],
-              "f9": 37,
-              "b9": 11,
-              "gross": 48,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T50",
-          "name": "Anna Hjerrild Behnsen",
-          "country": "DK",
-          "club": "Great Northern Golf Club",
-          "birthYear": 2004,
-          "hcp": -5.3,
-          "team": "DENMARK",
-          "detailId": "gb48768077",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            76,
-            49
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                5,
-                3,
-                4,
-                5,
-                3,
-                5,
-                5,
-                6,
-                3,
-                5,
-                5,
-                4,
-                4,
-                3,
-                4,
-                4
-              ],
-              "f9": 38,
-              "b9": 38,
-              "gross": 76,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                4,
-                6,
-                3,
-                3,
-                7,
-                4,
-                3,
-                4
-              ],
-              "f9": 38,
-              "b9": 11,
-              "gross": 49,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T59",
+          "pos": "T57",
           "name": "Emilia Väistö",
           "country": "FI",
           "club": "Etelä-Pohjanmaan Golf Seinäjoki",
@@ -4176,7 +4180,7 @@
           ]
         },
         {
-          "pos": "T59",
+          "pos": "T57",
           "name": "Leonie Sinnhuber",
           "country": "AT",
           "club": null,
@@ -4248,7 +4252,7 @@
           ]
         },
         {
-          "pos": "T59",
+          "pos": "T57",
           "name": "Victoria Bauer",
           "country": "AT",
           "club": null,
@@ -4320,7 +4324,151 @@
           ]
         },
         {
-          "pos": "T59",
+          "pos": "T57",
+          "name": "Elsie Verhoeven",
+          "country": "BE",
+          "club": "GOLF CLUB 7 FONTAINES",
+          "birthYear": 2001,
+          "hcp": -0.7,
+          "team": "BELGIUM",
+          "detailId": "gb48768070",
+          "toPar": 7,
+          "total": 151,
+          "roundGross": [
+            77,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                3,
+                5,
+                8,
+                3,
+                4,
+                6,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 40,
+              "b9": 37,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 37,
+              "gross": 74,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T57",
+          "name": "Susanna Brenske",
+          "country": "DE",
+          "club": null,
+          "birthYear": 2004,
+          "hcp": -4.4,
+          "team": "GERMANY",
+          "detailId": "gb48768037",
+          "toPar": 7,
+          "total": 151,
+          "roundGross": [
+            77,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                4,
+                3,
+                5,
+                6,
+                6,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 40,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                4,
+                4,
+                2,
+                4,
+                4,
+                4,
+                3,
+                4,
+                8,
+                4,
+                5,
+                3,
+                4,
+                4
+              ],
+              "f9": 35,
+              "b9": 39,
+              "gross": 74,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T57",
           "name": "Rebekah Gardner",
           "country": "IG",
           "club": "Clandeboye Golf Club",
@@ -4392,7 +4540,7 @@
           ]
         },
         {
-          "pos": "T59",
+          "pos": "T57",
           "name": "Elsa Maren Steinarsdóttir",
           "country": "IS",
           "club": "Golfklúbburinn Leynir",
@@ -4464,7 +4612,7 @@
           ]
         },
         {
-          "pos": "T59",
+          "pos": "T57",
           "name": "Francesca Pompa",
           "country": "IT",
           "club": null,
@@ -4536,139 +4684,7 @@
           ]
         },
         {
-          "pos": "T59",
-          "name": "Bethan Morris",
-          "country": "WL",
-          "club": "Tenby Golf Club",
-          "birthYear": 1997,
-          "hcp": -3.1,
-          "team": "WALES",
-          "detailId": "gb48768066",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            77,
-            49
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                6,
-                3,
-                4,
-                4,
-                3,
-                4,
-                5,
-                4,
-                3,
-                5,
-                6,
-                4,
-                4,
-                3,
-                4,
-                6
-              ],
-              "f9": 38,
-              "b9": 39,
-              "gross": 77,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                5,
-                3,
-                3,
-                4,
-                4,
-                3,
-                4,
-                6,
-                4,
-                3,
-                6
-              ],
-              "f9": 36,
-              "b9": 13,
-              "gross": 49,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T59",
-          "name": "Paula Balanzategui Garcia",
-          "country": "ES",
-          "club": null,
-          "birthYear": 2004,
-          "hcp": -4.9,
-          "team": "SPAIN",
-          "detailId": "gb48768029",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            76,
-            50
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                6,
-                4,
-                2,
-                4,
-                4,
-                5,
-                3,
-                5,
-                5,
-                5,
-                4,
-                3,
-                5,
-                4
-              ],
-              "f9": 37,
-              "b9": 39,
-              "gross": 76,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                5,
-                6,
-                3,
-                4,
-                5,
-                4,
-                4,
-                4,
-                4,
-                3,
-                4
-              ],
-              "f9": 39,
-              "b9": 11,
-              "gross": 50,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T67",
+          "pos": "T65",
           "name": "Karen Lind Stefánsdóttir",
           "country": "IS",
           "club": "Golfklúbbur Kópavogs og Garðabæjar",
@@ -4740,7 +4756,7 @@
           ]
         },
         {
-          "pos": "T67",
+          "pos": "T65",
           "name": "Anastasia Hekkonen",
           "country": "FI",
           "club": "Helsingin Golfklubi",
@@ -4812,7 +4828,7 @@
           ]
         },
         {
-          "pos": "T67",
+          "pos": "T65",
           "name": "Kajsalotta Svarvar",
           "country": "SE",
           "club": "Halmstad Golfklubb",
@@ -4884,7 +4900,7 @@
           ]
         },
         {
-          "pos": "T67",
+          "pos": "T65",
           "name": "Tereza Zavrelová",
           "country": "CZ",
           "club": null,
@@ -4956,7 +4972,151 @@
           ]
         },
         {
-          "pos": "T67",
+          "pos": "T65",
+          "name": "Mia Lavrih",
+          "country": "SI",
+          "club": null,
+          "birthYear": 2009,
+          "hcp": -1.6,
+          "team": "SLOVENIA",
+          "detailId": "gb48768137",
+          "toPar": 8,
+          "total": 152,
+          "roundGross": [
+            77,
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                3,
+                6,
+                5,
+                3,
+                5,
+                6,
+                4,
+                6,
+                3,
+                3,
+                5
+              ],
+              "f9": 37,
+              "b9": 40,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5,
+                3,
+                4,
+                4
+              ],
+              "f9": 38,
+              "b9": 37,
+              "gross": 75,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T65",
+          "name": "Bethan Morris",
+          "country": "WL",
+          "club": "Tenby Golf Club",
+          "birthYear": 1997,
+          "hcp": -3.1,
+          "team": "WALES",
+          "detailId": "gb48768066",
+          "toPar": 8,
+          "total": 152,
+          "roundGross": [
+            77,
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                6,
+                4,
+                4,
+                3,
+                4,
+                6
+              ],
+              "f9": 38,
+              "b9": 39,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                3,
+                3,
+                4,
+                4,
+                3,
+                4,
+                6,
+                4,
+                3,
+                6,
+                5,
+                4,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 36,
+              "b9": 39,
+              "gross": 75,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T65",
           "name": "Nicole Sardinha",
           "country": "PT",
           "club": null,
@@ -5028,70 +5188,73 @@
           ]
         },
         {
-          "pos": "T67",
-          "name": "Mia Lavrih",
-          "country": "SI",
+          "pos": "T65",
+          "name": "Antonia Steiner",
+          "country": "DE",
           "club": null,
-          "birthYear": 2009,
-          "hcp": -1.6,
-          "team": "SLOVENIA",
-          "detailId": "gb48768137",
-          "toPar": null,
-          "total": null,
+          "birthYear": 2007,
+          "hcp": -2.4,
+          "team": "GERMANY",
+          "detailId": "gb48768042",
+          "toPar": 8,
+          "total": 152,
           "roundGross": [
-            77,
-            63
+            73,
+            79
           ],
           "rounds": [
             {
               "day": 1,
               "scores": [
+                4,
+                5,
+                5,
+                2,
+                4,
+                4,
+                2,
+                4,
                 5,
                 4,
-                4,
-                4,
-                4,
-                4,
                 3,
-                3,
-                6,
-                5,
-                3,
+                4,
                 5,
                 6,
                 4,
-                6,
-                3,
-                3,
-                5
+                4,
+                4,
+                4
               ],
-              "f9": 37,
-              "b9": 40,
-              "gross": 77,
+              "f9": 35,
+              "b9": 38,
+              "gross": 73,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
-                5,
+                4,
+                6,
                 4,
                 4,
-                3,
-                4,
-                5,
-                4,
-                4,
-                5,
+                7,
                 4,
                 3,
                 5,
                 5,
                 4,
+                2,
+                4,
+                5,
+                7,
+                5,
+                3,
+                3,
                 4
               ],
-              "f9": 38,
-              "b9": 25,
-              "gross": 63,
+              "f9": 42,
+              "b9": 37,
+              "gross": 79,
               "startingHole": 1
             }
           ]
@@ -5164,6 +5327,78 @@
               "f9": 39,
               "b9": 34,
               "gross": 73,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T73",
+          "name": "Andrea Revuelta Goicoechea",
+          "country": "ES",
+          "club": null,
+          "birthYear": 2006,
+          "hcp": -7.9,
+          "team": "SPAIN",
+          "detailId": "gb48768026",
+          "toPar": 9,
+          "total": 153,
+          "roundGross": [
+            79,
+            74
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                5,
+                3,
+                4,
+                6,
+                4,
+                4,
+                3,
+                4,
+                5
+              ],
+              "f9": 41,
+              "b9": 38,
+              "gross": 79,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 39,
+              "b9": 35,
+              "gross": 74,
               "startingHole": 1
             }
           ]
@@ -5386,6 +5621,78 @@
         },
         {
           "pos": "T73",
+          "name": "Paula Balanzategui Garcia",
+          "country": "ES",
+          "club": null,
+          "birthYear": 2004,
+          "hcp": -4.9,
+          "team": "SPAIN",
+          "detailId": "gb48768029",
+          "toPar": 9,
+          "total": 153,
+          "roundGross": [
+            76,
+            77
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                6,
+                4,
+                2,
+                4,
+                4,
+                5,
+                3,
+                5,
+                5,
+                5,
+                4,
+                3,
+                5,
+                4
+              ],
+              "f9": 37,
+              "b9": 39,
+              "gross": 76,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                6,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                5
+              ],
+              "f9": 39,
+              "b9": 38,
+              "gross": 77,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T73",
           "name": "Katharina Schroll",
           "country": "AT",
           "club": null,
@@ -5465,11 +5772,11 @@
           "hcp": -2,
           "team": "ITALY",
           "detailId": "gb48768058",
-          "toPar": null,
-          "total": null,
+          "toPar": 9,
+          "total": 153,
           "roundGross": [
             75,
-            66
+            78
           ],
           "rounds": [
             {
@@ -5516,83 +5823,20 @@
                 5,
                 5,
                 5,
-                4
-              ],
-              "f9": 40,
-              "b9": 26,
-              "gross": 66,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T73",
-          "name": "Yana Beeli",
-          "country": "CH",
-          "club": "Golf Sempachersee",
-          "birthYear": 2005,
-          "hcp": -4.2,
-          "team": "SWITZERLAND",
-          "detailId": "gb48768084",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            78,
-            50
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                3,
-                4,
                 4,
                 3,
-                5,
-                5,
-                3,
                 4,
-                4,
-                5,
-                3,
-                5,
-                7,
-                5,
-                4,
-                3,
-                5,
-                6
-              ],
-              "f9": 35,
-              "b9": 43,
-              "gross": 78,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                7,
-                5,
-                4,
-                2,
-                4,
-                5,
-                3,
-                3,
-                5,
-                4,
-                3,
                 5
               ],
-              "f9": 38,
-              "b9": 12,
-              "gross": 50,
+              "f9": 40,
+              "b9": 38,
+              "gross": 78,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T80",
+          "pos": "T81",
           "name": "Maria Moczarska",
           "country": "PL",
           "club": null,
@@ -5664,7 +5908,7 @@
           ]
         },
         {
-          "pos": "T80",
+          "pos": "T81",
           "name": "Noa van Beek",
           "country": "NL",
           "club": null,
@@ -5736,7 +5980,7 @@
           ]
         },
         {
-          "pos": "T80",
+          "pos": "T81",
           "name": "Olivia Costello",
           "country": "IG",
           "club": "Roscommon Golf Club",
@@ -5808,7 +6052,7 @@
           ]
         },
         {
-          "pos": "T80",
+          "pos": "T81",
           "name": "Iiris Mätas",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -5880,7 +6124,7 @@
           ]
         },
         {
-          "pos": "T80",
+          "pos": "T81",
           "name": "Sofia Barroso Sá",
           "country": "PT",
           "club": null,
@@ -5952,204 +6196,7 @@
           ]
         },
         {
-          "pos": "T80",
-          "name": "Antonia Steiner",
-          "country": "DE",
-          "club": null,
-          "birthYear": 2007,
-          "hcp": -2.4,
-          "team": "GERMANY",
-          "detailId": "gb48768042",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            73,
-            69
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                5,
-                5,
-                2,
-                4,
-                4,
-                2,
-                4,
-                5,
-                4,
-                3,
-                4,
-                5,
-                6,
-                4,
-                4,
-                4,
-                4
-              ],
-              "f9": 35,
-              "b9": 38,
-              "gross": 73,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                6,
-                4,
-                4,
-                7,
-                4,
-                3,
-                5,
-                5,
-                4,
-                2,
-                4,
-                5,
-                7,
-                5
-              ],
-              "f9": 42,
-              "b9": 27,
-              "gross": 69,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T80",
-          "name": "Sophie Renner",
-          "country": "DE",
-          "club": null,
-          "birthYear": 2007,
-          "hcp": -3.8,
-          "team": "GERMANY",
-          "detailId": "gb48768039",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            78,
-            51
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                4,
-                6,
-                3,
-                6,
-                5,
-                3,
-                4,
-                4,
-                5,
-                3,
-                4,
-                5,
-                4,
-                5,
-                3,
-                5,
-                5
-              ],
-              "f9": 39,
-              "b9": 39,
-              "gross": 78,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                6,
-                4,
-                3,
-                6,
-                5,
-                3,
-                4,
-                5,
-                4,
-                3,
-                4
-              ],
-              "f9": 40,
-              "b9": 11,
-              "gross": 51,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T80",
-          "name": "Luce Ravizza",
-          "country": "IT",
-          "club": null,
-          "birthYear": 2008,
-          "hcp": -3,
-          "team": "ITALY",
-          "detailId": "gb48768059",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            78,
-            40
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                4,
-                5,
-                3,
-                4,
-                5,
-                5,
-                3,
-                5,
-                5,
-                5,
-                4,
-                4,
-                4,
-                5
-              ],
-              "f9": 38,
-              "b9": 40,
-              "gross": 78,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                5,
-                4,
-                3,
-                4,
-                5,
-                3,
-                4,
-                7
-              ],
-              "f9": 40,
-              "gross": 40,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T88",
+          "pos": "T86",
           "name": "Katharina Zeilinger",
           "country": "AT",
           "club": null,
@@ -6221,7 +6268,7 @@
           ]
         },
         {
-          "pos": "T88",
+          "pos": "T86",
           "name": "Maja Ambroziak",
           "country": "PL",
           "club": null,
@@ -6293,7 +6340,7 @@
           ]
         },
         {
-          "pos": "T88",
+          "pos": "T86",
           "name": "Liva Krøl Andersen",
           "country": "DK",
           "club": "Søllerød Golfklub",
@@ -6365,7 +6412,79 @@
           ]
         },
         {
-          "pos": "T88",
+          "pos": "T86",
+          "name": "Yana Beeli",
+          "country": "CH",
+          "club": "Golf Sempachersee",
+          "birthYear": 2005,
+          "hcp": -4.2,
+          "team": "SWITZERLAND",
+          "detailId": "gb48768084",
+          "toPar": 11,
+          "total": 155,
+          "roundGross": [
+            78,
+            77
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                5,
+                7,
+                5,
+                4,
+                3,
+                5,
+                6
+              ],
+              "f9": 35,
+              "b9": 43,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                5,
+                4,
+                2,
+                4,
+                5,
+                3,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                5,
+                5,
+                3,
+                5,
+                4
+              ],
+              "f9": 38,
+              "b9": 39,
+              "gross": 77,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T86",
           "name": "Fjóla Margrét Viðarsdóttir",
           "country": "IS",
           "club": "Golfklúbburinn Keilir",
@@ -6437,7 +6556,7 @@
           ]
         },
         {
-          "pos": "T88",
+          "pos": "T86",
           "name": "Jessica Ross",
           "country": "IG",
           "club": "Clandeboye Golf Club",
@@ -6509,204 +6628,7 @@
           ]
         },
         {
-          "pos": "T88",
-          "name": "Baertz Marie",
-          "country": "LU",
-          "club": null,
-          "birthYear": 2002,
-          "hcp": -2.5,
-          "team": "LUXEMBOURG",
-          "detailId": "gb48768139",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            76,
-            67
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                4,
-                5,
-                5,
-                5,
-                5,
-                4,
-                2,
-                4,
-                5,
-                4,
-                3,
-                3,
-                5,
-                5
-              ],
-              "f9": 41,
-              "b9": 35,
-              "gross": 76,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                6,
-                5,
-                4,
-                5,
-                3,
-                4,
-                5,
-                4,
-                3,
-                5,
-                5,
-                5,
-                4
-              ],
-              "f9": 41,
-              "b9": 26,
-              "gross": 67,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T88",
-          "name": "Andrea Revuelta Goicoechea",
-          "country": "ES",
-          "club": null,
-          "birthYear": 2006,
-          "hcp": -7.9,
-          "team": "SPAIN",
-          "detailId": "gb48768026",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            79,
-            51
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                7,
-                4,
-                5,
-                4,
-                5,
-                4,
-                3,
-                4,
-                5,
-                5,
-                3,
-                4,
-                6,
-                4,
-                4,
-                3,
-                4,
-                5
-              ],
-              "f9": 41,
-              "b9": 38,
-              "gross": 79,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                5,
-                5,
-                4,
-                5,
-                4,
-                3,
-                4,
-                5,
-                4,
-                3,
-                5
-              ],
-              "f9": 39,
-              "b9": 12,
-              "gross": 51,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T88",
-          "name": "Millie Cottrell",
-          "country": "WL",
-          "club": null,
-          "birthYear": 2004,
-          "hcp": -3.9,
-          "team": "WALES",
-          "detailId": "gb48768061",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            77,
-            42
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                5,
-                5,
-                3,
-                4,
-                5,
-                3,
-                4,
-                5,
-                4,
-                4,
-                4,
-                5,
-                5,
-                4,
-                3,
-                4,
-                4
-              ],
-              "f9": 40,
-              "b9": 37,
-              "gross": 77,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                6,
-                5,
-                5,
-                4,
-                4,
-                7,
-                3,
-                3,
-                5
-              ],
-              "f9": 42,
-              "gross": 42,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T96",
+          "pos": "T92",
           "name": "Abigail May",
           "country": "SQ",
           "club": "St Regulus Ladies Golf Club",
@@ -6778,7 +6700,151 @@
           ]
         },
         {
-          "pos": "T96",
+          "pos": "T92",
+          "name": "Sophie Renner",
+          "country": "DE",
+          "club": null,
+          "birthYear": 2007,
+          "hcp": -3.8,
+          "team": "GERMANY",
+          "detailId": "gb48768039",
+          "toPar": 12,
+          "total": 156,
+          "roundGross": [
+            78,
+            78
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                6,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                5,
+                3,
+                5,
+                5
+              ],
+              "f9": 39,
+              "b9": 39,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                6,
+                4,
+                3,
+                6,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                6,
+                5,
+                4,
+                3,
+                3,
+                6
+              ],
+              "f9": 40,
+              "b9": 38,
+              "gross": 78,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T92",
+          "name": "Luce Ravizza",
+          "country": "IT",
+          "club": null,
+          "birthYear": 2008,
+          "hcp": -3,
+          "team": "ITALY",
+          "detailId": "gb48768059",
+          "toPar": 12,
+          "total": 156,
+          "roundGross": [
+            78,
+            78
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                3,
+                5,
+                5,
+                5,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 38,
+              "b9": 40,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                7,
+                3,
+                3,
+                4,
+                7,
+                4,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 40,
+              "b9": 38,
+              "gross": 78,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T92",
           "name": "Kleopatra Kozakiewicz",
           "country": "PL",
           "club": null,
@@ -6850,7 +6916,7 @@
           ]
         },
         {
-          "pos": "T96",
+          "pos": "T92",
           "name": "Fleur van Beek",
           "country": "NL",
           "club": null,
@@ -6922,7 +6988,7 @@
           ]
         },
         {
-          "pos": "T96",
+          "pos": "T92",
           "name": "Kristina Lebová",
           "country": "CZ",
           "club": null,
@@ -6994,7 +7060,7 @@
           ]
         },
         {
-          "pos": "T100",
+          "pos": "T98",
           "name": "Romaine Masserey",
           "country": "CH",
           "club": "Golf Club Montreux",
@@ -7066,7 +7132,7 @@
           ]
         },
         {
-          "pos": "T100",
+          "pos": "T98",
           "name": "Marieke Ebens",
           "country": "NL",
           "club": "Koninklijke Haagsche Golf & Country Club",
@@ -7138,7 +7204,7 @@
           ]
         },
         {
-          "pos": "T100",
+          "pos": "T98",
           "name": "Lahaije Emma",
           "country": "LU",
           "club": null,
@@ -7210,76 +7276,79 @@
           ]
         },
         {
-          "pos": "T100",
-          "name": "Diane Denis",
-          "country": "BE",
-          "club": "ROYAL WATERLOO G. C. ",
-          "birthYear": 2004,
-          "hcp": -1.7,
-          "team": "BELGIUM",
-          "detailId": "gb48768072",
-          "toPar": null,
-          "total": null,
+          "pos": "T98",
+          "name": "Baertz Marie",
+          "country": "LU",
+          "club": null,
+          "birthYear": 2002,
+          "hcp": -2.5,
+          "team": "LUXEMBOURG",
+          "detailId": "gb48768139",
+          "toPar": 13,
+          "total": 157,
           "roundGross": [
-            78,
-            67
+            76,
+            81
           ],
           "rounds": [
             {
               "day": 1,
               "scores": [
-                4,
                 5,
-                5,
-                3,
                 4,
                 5,
                 3,
-                5,
-                6,
-                4,
-                4,
                 4,
                 5,
-                6,
+                5,
+                5,
+                5,
+                4,
+                2,
+                4,
+                5,
                 4,
                 3,
                 3,
+                5,
                 5
               ],
-              "f9": 40,
-              "b9": 38,
-              "gross": 78,
+              "f9": 41,
+              "b9": 35,
+              "gross": 76,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
                 5,
-                8,
-                5,
                 4,
-                4,
-                5,
-                4,
-                5,
                 6,
-                3,
-                2,
-                3,
                 5,
                 4,
-                4
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                5,
+                4,
+                3,
+                4,
+                7
               ],
-              "f9": 46,
-              "b9": 21,
-              "gross": 67,
+              "f9": 41,
+              "b9": 40,
+              "gross": 81,
               "startingHole": 1
             }
           ]
         },
         {
-          "pos": "T104",
+          "pos": "T102",
           "name": "Miserini Ella",
           "country": "LU",
           "club": null,
@@ -7351,7 +7420,7 @@
           ]
         },
         {
-          "pos": "T104",
+          "pos": "T102",
           "name": "Freya Russell",
           "country": "SQ",
           "club": "Royal Troon Golf Club",
@@ -7423,7 +7492,79 @@
           ]
         },
         {
-          "pos": "T104",
+          "pos": "T102",
+          "name": "Diane Denis",
+          "country": "BE",
+          "club": "ROYAL WATERLOO G. C. ",
+          "birthYear": 2004,
+          "hcp": -1.7,
+          "team": "BELGIUM",
+          "detailId": "gb48768072",
+          "toPar": 14,
+          "total": 158,
+          "roundGross": [
+            78,
+            80
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                4,
+                5,
+                3,
+                5,
+                6,
+                4,
+                4,
+                4,
+                5,
+                6,
+                4,
+                3,
+                3,
+                5
+              ],
+              "f9": 40,
+              "b9": 38,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                8,
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                6,
+                3,
+                2,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4
+              ],
+              "f9": 46,
+              "b9": 34,
+              "gross": 80,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T102",
           "name": "Tara Stjepanovic",
           "country": "SI",
           "club": null,
@@ -7490,6 +7631,78 @@
               "f9": 41,
               "b9": 39,
               "gross": 80,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T102",
+          "name": "Millie Cottrell",
+          "country": "WL",
+          "club": null,
+          "birthYear": 2004,
+          "hcp": -3.9,
+          "team": "WALES",
+          "detailId": "gb48768061",
+          "toPar": 14,
+          "total": 158,
+          "roundGross": [
+            77,
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                4
+              ],
+              "f9": 40,
+              "b9": 37,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                5,
+                5,
+                4,
+                4,
+                7,
+                3,
+                3,
+                5,
+                4,
+                3,
+                6,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4
+              ],
+              "f9": 42,
+              "b9": 39,
+              "gross": 81,
               "startingHole": 1
             }
           ]
@@ -8503,76 +8716,7 @@
           ]
         },
         {
-          "pos": "T116",
-          "name": "Saskia Owen",
-          "country": "WL",
-          "club": "Buckinghamshire Golf Club",
-          "birthYear": 2007,
-          "hcp": -2.3,
-          "team": "WALES",
-          "detailId": "gb48768065",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            83,
-            67
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                4,
-                6,
-                4,
-                5,
-                4,
-                3,
-                5,
-                7,
-                3,
-                4,
-                6,
-                8,
-                5,
-                4,
-                1,
-                4,
-                4
-              ],
-              "f9": 44,
-              "b9": 39,
-              "gross": 83,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                4,
-                4,
-                5,
-                6,
-                3,
-                4,
-                5,
-                5,
-                3,
-                5,
-                6,
-                4,
-                4
-              ],
-              "f9": 40,
-              "b9": 27,
-              "gross": 67,
-              "startingHole": 1
-            }
-          ]
-        },
-        {
-          "pos": "T122",
+          "pos": "T121",
           "name": "Eva Kiri Fevzer",
           "country": "SI",
           "club": null,
@@ -8644,7 +8788,79 @@
           ]
         },
         {
-          "pos": "T122",
+          "pos": "T121",
+          "name": "Saskia Owen",
+          "country": "WL",
+          "club": "Buckinghamshire Golf Club",
+          "birthYear": 2007,
+          "hcp": -2.3,
+          "team": "WALES",
+          "detailId": "gb48768065",
+          "toPar": 19,
+          "total": 163,
+          "roundGross": [
+            83,
+            80
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                4,
+                6,
+                4,
+                5,
+                4,
+                3,
+                5,
+                7,
+                3,
+                4,
+                6,
+                8,
+                5,
+                4,
+                1,
+                4,
+                4
+              ],
+              "f9": 44,
+              "b9": 39,
+              "gross": 83,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                5,
+                6,
+                3,
+                4,
+                5,
+                5,
+                3,
+                5,
+                6,
+                4,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 40,
+              "b9": 40,
+              "gross": 80,
+              "startingHole": 1
+            }
+          ]
+        },
+        {
+          "pos": "T121",
           "name": "Luciana Reis",
           "country": "PT",
           "club": null,
@@ -9430,10 +9646,10 @@
                   "name": "Camille Min-Gaultier"
                 },
                 {
-                  "name": "Paula Balanzategui Garcia"
+                  "name": "Stella Jelinek"
                 },
                 {
-                  "name": "Stella Jelinek"
+                  "name": "Paula Balanzategui Garcia"
                 }
               ]
             },
@@ -9442,10 +9658,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Francesca Fiorellini"
+                  "name": "Meja Örtengren"
                 },
                 {
-                  "name": "Meja Örtengren"
+                  "name": "Francesca Fiorellini"
                 },
                 {
                   "name": "Nellie Ong"
@@ -9475,10 +9691,10 @@
                   "name": "Carlotta Locatelli"
                 },
                 {
-                  "name": "Jessica Ross"
+                  "name": "Andrea Revuelta Goicoechea"
                 },
                 {
-                  "name": "Andrea Revuelta Goicoechea"
+                  "name": "Jessica Ross"
                 }
               ]
             },
@@ -9697,13 +9913,13 @@
               "startHole": 1,
               "players": [
                 {
+                  "name": "Beth Coulter"
+                },
+                {
                   "name": "Constance Fouillet"
                 },
                 {
                   "name": "Cayetana Fernandez Garcia-Poggio"
-                },
-                {
-                  "name": "Beth Coulter"
                 }
               ]
             },
@@ -9787,10 +10003,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Elsie Verhoeven"
+                  "name": "Anna Hjerrild Behnsen"
                 },
                 {
-                  "name": "Anna Hjerrild Behnsen"
+                  "name": "Elsie Verhoeven"
                 },
                 {
                   "name": "Millie Cottrell"
@@ -10602,10 +10818,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Sophia Fullbrook"
+                  "name": "Ebba Nordstedt"
                 },
                 {
-                  "name": "Ebba Nordstedt"
+                  "name": "Sophia Fullbrook"
                 },
                 {
                   "name": "Noa Zocco"
@@ -10617,10 +10833,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Elsie Verhoeven"
+                  "name": "Anna Hjerrild Behnsen"
                 },
                 {
-                  "name": "Anna Hjerrild Behnsen"
+                  "name": "Elsie Verhoeven"
                 },
                 {
                   "name": "Bethan Morris"
@@ -10647,13 +10863,13 @@
               "startHole": 1,
               "players": [
                 {
+                  "name": "Sara Brentcheneff"
+                },
+                {
                   "name": "Matilda Björkman"
                 },
                 {
                   "name": "Susanna Brenske"
-                },
-                {
-                  "name": "Sara Brentcheneff"
                 }
               ]
             },
@@ -10692,5 +10908,5 @@
       }
     }
   ],
-  "scrapedAt": "2026-07-08T16:50:28.076Z"
+  "scrapedAt": "2026-07-08T22:10:52.404Z"
 }
