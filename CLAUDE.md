@@ -246,8 +246,14 @@ Sinais positivos: relação de nome (exacto/invertido/subset/inicial/prefixo/
 sobrenome parcial) + mesma DOB (+35) + mesmo país (+10) + mesmo clube (+12) +
 **sufixo RFEG igual** (+30 — mudar de clube muda o prefixo da licença mas os
 últimos 6 dígitos mantêm-se, ex: LV60968059↔LV70968059; gera `preferStrongKey`
-+ `manualHistoricalIds` automáticos no snippet). Com DOB igual, país diferente
-NÃO penaliza (é o caso multi-país que procuramos). Sinais negativos/kill: sexo
++ `manualHistoricalIds` automáticos no snippet) + **nome raro** (+15,
+2026-07-09 — nome exacto/invertido cujo multiset de tokens só existe nas 2
+entidades do par em TODO o corpus E com ≥1 token raro, visto em ≤3 juniores,
+ex: "Bernardini"; um "João Silva" que por acaso só aparece 2× NÃO conta porque
+os tokens são comuns). Com DOB igual OU nome raro, país diferente NÃO penaliza
+(é o caso multi-país/2-bandeiras que procuramos: miúdos com pais de
+nacionalidades diferentes escolhem a bandeira consoante o torneio — caso
+Victor Bernardini FR↔BE, fundido nessa passagem). Sinais negativos/kill: sexo
 diferente, DOB exacta diferente, **escalão impossível** (dos flights jogados —
 ageMax + ano — infere-se o ano de nascimento mínimo; jogar para cima é
 permitido, para baixo não), e **co-ocorrência no mesmo flight do mesmo torneio**
@@ -260,10 +266,12 @@ com 3 nomes completos), todos os seus pares ficam marcados ambíguos → só
 revisão manual, nunca auto-merge.
 
 **Auto-merge (`--apply`):** candidatos com CERTEZA (nome exacto/invertido/
-contido + mesma DOB, ou sufixo RFEG igual) ou corroborados (mesmo clube/país +
-score ≥ `--merge-min`, default 55), sem ambiguidade nem flags, são acrescentados
-ao `forceMerge` do `juniors-overrides.json` com `"auto": true`. Primeira
-passagem 2026-07-08: 221 merges aplicados (17195→16952 juniores), 9/9 sanity.
+contido + mesma DOB, ou sufixo RFEG igual, ou **nome raro** — este último nunca
+em pares ambíguos) ou corroborados (mesmo clube/país + score ≥ `--merge-min`,
+default 55), sem ambiguidade nem flags, são acrescentados ao `forceMerge` do
+`juniors-overrides.json` com `"auto": true`. Primeira passagem 2026-07-08: 221
+merges aplicados (17195→16952 juniores), 9/9 sanity. Segunda passagem
+2026-07-09 (com nome raro, pós-EGR): 208 merges (22373→22165), 9/9 sanity.
 
 ```bash
 node scripts/find-junior-duplicates.js                # relatório (score ≥45)

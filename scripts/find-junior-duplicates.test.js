@@ -273,6 +273,75 @@ describe("países diferentes com mesma DOB não penalizam", () => {
   });
 });
 
+describe("nome raro (regra 2 bandeiras, 2026-07-08)", () => {
+  // Corpus sintético: "victor bernardini" só existe nas 2 entidades do par
+  // (nameKeyCount=2) e "bernardini" é token raro (tokenCount=2); "joao silva"
+  // também só aparece 2× mas os tokens são comuns.
+  const rarityCtx = {
+    nameKeyCount: new Map([
+      ["bernardini victor", 2],
+      ["joao silva", 2],
+    ]),
+    tokenCount: new Map([
+      ["victor", 40], ["bernardini", 2],
+      ["joao", 300], ["silva", 250],
+    ]),
+  };
+
+  it("nome exacto raro: +15, sem penalização de país, elegível p/ auto-merge", () => {
+    const A = mkEnt({ nameVariants: ["victor bernardini"], country: "FR" });
+    const B = mkEnt({ nameVariants: ["victor bernardini"], country: "BE" });
+    const r = evaluatePair(A, B, rarityCtx);
+    expect(r.rareName).toBe(true);
+    // 55 exacto + 15 raro, SEM −5 de país (2 bandeiras é normal em nome raro)
+    expect(r.score).toBe(70);
+    expect(autoMergeEligible(r)).toBe(true);
+  });
+
+  it("nome invertido raro também conta", () => {
+    const A = mkEnt({ nameVariants: ["bernardini victor"], country: "BE" });
+    const B = mkEnt({ nameVariants: ["victor bernardini"], country: "FR" });
+    const r = evaluatePair(A, B, rarityCtx);
+    expect(r.rareName).toBe(true);
+    expect(r.score).toBe(65); // 50 invertido + 15 raro
+  });
+
+  it("nome único no corpus mas com tokens COMUNS não é raro (João Silva)", () => {
+    const A = mkEnt({ nameVariants: ["joao silva"], country: "PT" });
+    const B = mkEnt({ nameVariants: ["joao silva"], country: "BR" });
+    const r = evaluatePair(A, B, rarityCtx);
+    expect(r.rareName).toBe(false);
+    expect(r.score).toBe(50); // 55 exacto − 5 países diferentes sem DOB
+    expect(autoMergeEligible(r)).toBe(false);
+  });
+
+  it("nome que existe em 3+ entidades não é raro", () => {
+    const ctx = {
+      nameKeyCount: new Map([["bernardini victor", 3]]),
+      tokenCount: new Map([["victor", 40], ["bernardini", 3]]),
+    };
+    const A = mkEnt({ nameVariants: ["victor bernardini"], country: "FR" });
+    const B = mkEnt({ nameVariants: ["victor bernardini"], country: "BE" });
+    const r = evaluatePair(A, B, ctx);
+    expect(r.rareName).toBe(false);
+  });
+
+  it("sem ctx de raridade (testes antigos) o sinal fica desligado", () => {
+    const A = mkEnt({ nameVariants: ["victor bernardini"], country: "FR" });
+    const B = mkEnt({ nameVariants: ["victor bernardini"], country: "BE" });
+    const r = evaluatePair(A, B);
+    expect(r.rareName).toBe(false);
+  });
+
+  it("nome raro ambíguo NÃO é elegível (raridade não é prova absoluta)", () => {
+    const A = mkEnt({ nameVariants: ["victor bernardini"], country: "FR" });
+    const B = mkEnt({ nameVariants: ["victor bernardini"], country: "BE" });
+    const r = evaluatePair(A, B, rarityCtx);
+    const c = { A: { id: "a" }, B: { id: "b" }, ...r, ambiguous: true };
+    expect(autoMergeEligible(c)).toBe(false);
+  });
+});
+
 describe("markAmbiguous + autoMergeEligible", () => {
   const mkCand = (aId, bId, over = {}) => ({
     A: { id: aId, canonicalName: aId },

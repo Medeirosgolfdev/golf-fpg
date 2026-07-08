@@ -32,11 +32,18 @@
  *   • SUFIXO RFEG: mudar de clube muda o prefixo da licença mas os últimos 6
  *     dígitos mantêm-se (ex: LV60968059 ↔ LV70968059) — sufixo igual é PROVA
  *     de identidade (+30, gera preferStrongKey automático no snippet).
+ *   • NOME RARO (2026-07-08): nome exacto/invertido cujo multiset de tokens só
+ *     existe nestas 2 entidades em TODO o corpus E com pelo menos um token
+ *     raro (≤3 juniores, ex: "Bernardini") → +15, anula a penalização de
+ *     países diferentes (miúdos com pais de 2 nacionalidades escolhem a
+ *     bandeira consoante o torneio — caso Victor Bernardini FR↔BE) e é
+ *     elegível para auto-merge mesmo sem DOB.
  *
  * Auto-merge (--apply): candidatos com CERTEZA (nome exacto/invertido/contido
- * + mesma DOB, ou sufixo RFEG igual) ou com corroboração (mesmo clube/país,
- * score ≥ --merge-min) e SEM ambiguidade/flags são acrescentados ao
- * forceMerge do juniors-overrides.json (marcados "auto": true).
+ * + mesma DOB, ou sufixo RFEG igual, ou nome raro único no corpus) ou com
+ * corroboração (mesmo clube/país, score ≥ --merge-min) e SEM ambiguidade/flags
+ * são acrescentados ao forceMerge do juniors-overrides.json (marcados
+ * "auto": true).
  *
  * CLI:
  *   node scripts/find-junior-duplicates.js                # relatório completo
@@ -122,6 +129,11 @@ function nameRelation(normA, normB) {
   if (firstInitial && sharedSurname) return { rel: "inicial + sobrenome parcial", pts: 26 };
 
   return null;
+}
+
+/** Chave de multiset de tokens de um nome normalizado ("guo ziyang" = "ziyang guo") */
+function sortedNameKey(norm) {
+  return norm.split(" ").sort().join(" ");
 }
 
 /** Melhor relação entre todas as variantes de nome (canónico + aliases) */
@@ -256,13 +268,40 @@ function evaluatePair(A, B, ctx = {}) {
     evidence.push(`mesma DOB ${A.dob}`);
   }
 
-  // País — com DOB igual, país diferente deixa de penalizar (é o caso
-  // multi-país que procuramos: mesmo miúdo federado em 2 federações)
+  // Nome raro: relação exacta/invertida cujo multiset de tokens só existe
+  // nestas 2 entidades em todo o corpus E com pelo menos um token raro
+  // (≤3 juniores). Um "Victor Bernardini" único vale quase tanto como uma
+  // DOB; um "João Silva" que por acaso só aparece 2× não (tokens comuns).
+  let rareName = false;
+  if ((rel.rel === "nome exacto" || rel.rel === "nome invertido") &&
+      ctx.nameKeyCount && ctx.tokenCount) {
+    const keysA = new Set(A.nameVariants.map(sortedNameKey));
+    let shared = null;
+    for (const v of B.nameVariants) {
+      const k = sortedNameKey(v);
+      if (keysA.has(k)) { shared = k; break; }
+    }
+    if (shared && ctx.nameKeyCount.get(shared) === 2) {
+      const tokens = shared.split(" ").filter((t) => t.length >= 3 && !PARTICLES.has(t));
+      if (tokens.length >= 2) {
+        const rarest = Math.min(...tokens.map((t) => ctx.tokenCount.get(t) || 0));
+        if (rarest <= 3) {
+          rareName = true;
+          score += 15;
+          evidence.push(`nome raro — único no corpus (token mais raro em ${rarest} juniores)`);
+        }
+      }
+    }
+  }
+
+  // País — com DOB igual ou nome raro, país diferente deixa de penalizar (é o
+  // caso multi-país que procuramos: mesmo miúdo federado em 2 federações, ou
+  // com pais de nacionalidades diferentes a escolher a bandeira por torneio)
   const cA = A.country || null, cB = B.country || null;
   const countryEqual = !!(cA && cB && cA === cB);
   if (countryEqual) { score += 10; evidence.push(`mesmo país ${cA}`); }
   else if (cA && cB && cA !== cB) {
-    if (!dobEqual) score -= 5;
+    if (!dobEqual && !rareName) score -= 5;
     evidence.push(`países diferentes ${cA}≠${cB} (multi-país?)`);
   }
 
@@ -333,6 +372,7 @@ function evaluatePair(A, B, ctx = {}) {
     countryEqual,
     clubEqual,
     rfegSuffix,
+    rareName,
   };
 }
 
@@ -367,6 +407,9 @@ function markAmbiguous(candidates) {
  *     pares ambíguos — um cluster de 3 licenças do mesmo miúdo (caso
  *     Graciliano) gera 2+ pares certos e o union-find do matcher funde tudo
  *     transitivamente; a ambiguidade só trava pares SEM prova
+ *   • NOME RARO: nome exacto/invertido único no corpus com token raro →
+ *     elegível sem DOB e mesmo com países diferentes (2 bandeiras), mas
+ *     NUNCA em pares ambíguos (raridade não é prova absoluta como a DOB)
  *   • senão: sem ambiguidade + corroboração (clube/país) + score ≥ mergeMin
  */
 function autoMergeEligible(c, mergeMin = 55) {
@@ -375,6 +418,7 @@ function autoMergeEligible(c, mergeMin = 55) {
   if (c.relPts < 45) return false;
   if (c.dobEqual || c.rfegSuffix) return true;
   if (c.ambiguous) return false;
+  if (c.rareName) return true;
   if (c.score < mergeMin) return false;
   return c.clubEqual || c.countryEqual;
 }
@@ -566,11 +610,30 @@ function main() {
     if (ent.dob) addToBlock(`D:${ent.dob}`, ent);
   }
 
+  // Índice de raridade de nomes — nº de ENTIDADES distintas por multiset de
+  // tokens (nome completo, ordem-agnóstico) e por token individual. Alimenta
+  // o sinal "nome raro" do evaluatePair.
+  const nameKeyCount = new Map();
+  const tokenCount = new Map();
+  for (const ent of ents) {
+    const keys = new Set(ent.nameVariants.map(sortedNameKey));
+    const tokens = new Set();
+    for (const v of ent.nameVariants) {
+      for (const t of v.split(" ")) {
+        if (t.length >= 3 && !PARTICLES.has(t)) tokens.add(t);
+      }
+    }
+    for (const k of keys) nameKeyCount.set(k, (nameKeyCount.get(k) || 0) + 1);
+    for (const t of tokens) tokenCount.set(t, (tokenCount.get(t) || 0) + 1);
+  }
+
   const ctx = {
     flightsByJunior: tIndex?.flightsByJunior,
     tournsByJunior: tIndex?.tournsByJunior,
     birthBound: tIndex?.birthBound,
     includeCoplay: args.includeCoplay,
+    nameKeyCount,
+    tokenCount,
   };
 
   const seen = new Set();
