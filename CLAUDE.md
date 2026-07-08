@@ -236,6 +236,13 @@ mitarjeta os traz).
 
 ### Limpeza de duplicados — `scripts/find-junior-duplicates.js` (2026-07-08)
 
+**Limpeza de nomes no intake do matcher (2026-07-09):** `stripDupAbbrev()`
+(`aggregator/util/names.js`) conserta nomes corrompidos "Jessica WangJ. Wang"
+(EGR/BlueGolf colam nome completo + abreviatura na célula) antes do matching E
+do display; o `normName` do agregador remove anotações entre parênteses
+("(IRE)", "(AJ)", "(jr)") só para matching. Sem isto havia ~185 entidades
+fantasma que nenhum merge apanhava.
+
 O matcher é conservador de propósito, por isso sobram duplicados no canónico:
 mesmo miúdo federado em 2 países (país difere → matcher recusa), nome abreviado
 ("J. Smith"), só 1 dos sobrenomes ("Tomás Silva" vs "Tomás Costa Silva"), nome
