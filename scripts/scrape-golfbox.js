@@ -37,6 +37,7 @@ const INT_MIN = -2147483648; // sentinela GolfBox para "sem valor"
 // Slug/nome legível por competição (fallback = slugify do nome do torneio).
 const SLUG_OVERRIDES = [
   { re: /albert vermeiren|boys & girls u14|boys and girls u14/i, slug: 'avtrophy', name: 'Belgian International Golf Championship U14 — Albert Vermeiren Trophy' },
+  { re: /young masters/i, slug: 'eym', name: 'European Young Masters' },
 ];
 
 function slugify(s) {
