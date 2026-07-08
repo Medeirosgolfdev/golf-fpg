@@ -1,0 +1,107 @@
+name: Actualizar EGR
+
+# Refresh do European Golf Rankings (europeangolfrankings.com) — Node-puro, SEM
+# secrets (HTML server-side + APIs públicas). Pipeline:
+#   1. scrape-egr.js --ranking            → egr-ranking.json (M+F)
+#   2. scrape-egr.js --events --skip-existing → egr/events/egr_{id}.json (novos)
+#   3. scrape-egr-sources.js              → egr-dob-roster.json (ano nasc./HCP via
+#                                           GolfBox, público) + carimba birthYear
+#   4. build-egr-events-list.js           → egr/egr-events-list.json (índice sidebar)
+# Se algo mudou, regenera os canónicos do kids2 (juniors + shards + catálogo) e
+# committa. Push com GITHUB_TOKEN não dispara build-juniors.yml (anti-recursão) →
+# o agregador corre AQUI.
+on:
+  workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: 'Re-fetch de TODOS os eventos (ignora --skip-existing)'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Segunda 06:00 UTC — depois dos eventos de fim-de-semana serem publicados.
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-egr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    concurrency:
+      group: update-egr
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrape EGR (ranking + eventos + roster + índice)
+        run: |
+          set +e
+          SKIP="--skip-existing"
+          if [ "${{ github.event.inputs.full_rebuild }}" = "true" ]; then SKIP=""; fi
+
+          echo "▸ ranking";        node scripts/scrape-egr.js --ranking
+          echo "▸ eventos";        node scripts/scrape-egr.js --events --year 2025 --year 2026 $SKIP
+          echo "▸ roster GolfBox"; node scripts/scrape-egr-sources.js
+          echo "▸ índice eventos"; node scripts/build-egr-events-list.js
+          # Nenhum destes é fatal (exit 2 = sem novidades). Erros reais aparecem nos logs.
+          exit 0
+
+      - name: Detectar alterações EGR
+        id: diff
+        run: |
+          if git diff --quiet -- public/data/egr public/data/egr-ranking.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações EGR — a saltar rebuild e commit"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: EGR refresh + rebuild juniors ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ EGR + juniores canónicos actualizados"

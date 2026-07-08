@@ -13,6 +13,7 @@
  * (o scrape-egr filtra maxAge 18).
  */
 
+const fs = require("fs");
 const path = require("path");
 const { DATA_DIR, readJsonSafe } = require("../util/io");
 const { displayName, countryToIso2 } = require("../util/names");
@@ -21,6 +22,27 @@ const SOURCE_ID = "egr";
 const SOURCE_LABEL = "European Golf Rankings";
 
 const EGR_DIR = path.join(DATA_DIR, "egr");
+
+/**
+ * Dedup ano-a-ano: eventos EGR que TAMBÉM scrapamos numa fonte dedicada (GolfBox
+ * com scorecards + CR/Slope + ano de nascimento) são saltados SÓ se existir o
+ * ficheiro dedicado DESSE ano (`{prefix}_{ano}.json`) — senão mantém-se (não
+ * perder anos que só o EGR tem). Ex: EYM 2025 já vem do golfbox → salta;
+ * Belgian U14 2025 não tem `avtrophy_2025` (só 2026) → mantém-se. */
+const DEDUP_SOURCES = [
+  { re: /young masters/i, prefix: "eym" },
+  { re: /belgian international.*u\s?14|albert vermeiren/i, prefix: "avtrophy" },
+  { re: /european boys.{0,3}team.{0,20}(division\s*2|div\.?\s*2)/i, prefix: "ebtc2" },
+  { re: /european girls.{0,3}team/i, prefix: "egtc" },
+  { re: /european ladies.{0,3}team/i, prefix: "elg" },
+];
+function coveredElsewhere(name, year) {
+  if (!year) return false;
+  for (const d of DEDUP_SOURCES) {
+    if (d.re.test(name) && fs.existsSync(path.join(DATA_DIR, `${d.prefix}_${year}.json`))) return true;
+  }
+  return false;
+}
 
 function normKey(name, iso) {
   const n = String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
@@ -65,6 +87,7 @@ function load() {
   const playerMap = new Map(); // sourceKey → RawPlayer
   const tournaments = [];
 
+  let skippedDup = 0;
   for (const meta of events) {
     const ev = readJsonSafe(path.join(EGR_DIR, "events", `egr_${meta.id}.json`), null);
     const plist = Array.isArray(ev?.players) ? ev.players : [];
@@ -72,6 +95,8 @@ function load() {
 
     const name = ev.name || meta.name || `EGR ${meta.id}`;
     const year = meta.year || ev.year || null;
+    // Dedup: salta se este evento já vem de uma fonte dedicada nesse ano.
+    if (coveredElsewhere(name, year)) { skippedDup++; continue; }
     const par = typeof (ev.par ?? meta.par) === "number" ? (ev.par ?? meta.par) : null;
     const sex = ev.sex === "M" || ev.sex === "F" ? ev.sex : (meta.sex === "M" || meta.sex === "F" ? meta.sex : null);
     const ageMax = Number.isFinite(meta.ageNum) ? meta.ageNum : (Number.isFinite(ev.ageNum) ? ev.ageNum : null);
@@ -146,6 +171,7 @@ function load() {
 
   for (const p of playerMap.values()) players.push(p);
 
+  if (skippedDup) console.log(`  · [egr] ${skippedDup} evento(s) saltado(s) por já virem de fonte dedicada (dedup ano-a-ano)`);
   return { sourceId: SOURCE_ID, sourceLabel: SOURCE_LABEL, players, tournaments };
 }
 

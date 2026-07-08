@@ -557,7 +557,17 @@ Para adicionar: obter fids via `GetMeta&t={t}` campo flights → adicionar a FLI
 
 ## Scripts — BJGT / WJGC / EOWAGR / Doral
 
-**scrape-bluegolf.js** — Scraper genérico BlueGolf. Browser visível (CAPTCHA possível).
+> ⛔ **BlueGolf DESCONTINUADO (2026-07-09).** A BlueGolf identificou a utilizadora
+> pelo nome e pediu formalmente que parem todos os pedidos automatizados (aviso
+> nominal servido no site, citando os Terms of Use; IP de casa bloqueado).
+> **NUNCA mais correr `scrape-bluegolf.js`, `scrape-eowagr25*.js` ou qualquer
+> fetch automatizado a `*.bluegolf.com` — nem de outro IP/UA (seria evasão
+> deliberada após aviso).** Os dados já recolhidos (`bjgt_*`, `wjgc_*`,
+> `eowagr*`, `fcg268_*`) mantêm-se no site. Vias legítimas para dados novos:
+> (a) consulta manual no browser + guardar HTML (Ctrl+S) e parsear offline,
+> (b) pedir permissão/export à BlueGolf, (c) fonte alternativa do mesmo evento.
+
+**scrape-bluegolf.js** — Scraper genérico BlueGolf. **⛔ NÃO CORRER (ver aviso acima).** Browser visível (CAPTCHA possível).
 ```bash
 node scrape-bluegolf.js "https://brjgt.bluegolf.com/…/contest/73/leaderboard.htm" wjgc_2026_b1011.json
 ```
@@ -617,8 +627,8 @@ formatos de output e dois caminhos de scrape:
 | **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
 | **EGA — European Boys' Team Championship, Div. 2** | GolfBox | `ega-golf.ch/…#/competition/5731554/leaderboard` | `scrape-golfbox.js` | `ebtc2_2026.json` (JobFile) | ✅ ligado (source `ebtc2`) — começa 7 Jul 2026 |
 | **EGA — European Girls' Team Championship (U18)** | GolfBox | `ega-golf.ch/…#/competition/5478100/` | `scrape-golfbox.js` | `egtc_2026.json` (JobFile) | ✅ ligado (source `egtc`) — U18, GCC Zürich; começa 7 Jul 2026 |
-| **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | `scrape-bluegolf.js` | `fcg268_{cat}.json` (formato bluegolf) | ⏳ correr em casa (IP bloqueado pelo BlueGolf) |
-| **Uswing Mojing Junior World (JWGC)** | BlueGolf | `jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/` | `scrape-bluegolf.js` | `jwgc261_{cat}.json` (formato bluegolf) | ⏳ correr em casa |
+| **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | ~~scrape-bluegolf.js~~ | `fcg268_{cat}.json` (formato bluegolf) | ⛔ BlueGolf descontinuado 2026-07-09 (pedido nominal p/ parar automação) — só via manual/permissão |
+| **Uswing Mojing Junior World (JWGC)** | BlueGolf | `jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/` | ~~scrape-bluegolf.js~~ | `jwgc261_{cat}.json` (formato bluegolf) | ⛔ idem — BlueGolf descontinuado |
 
 ### GolfBox (`scores.golfbox.dk`) — EGA European Team Championships + avtrophy
 
@@ -644,8 +654,9 @@ o Chrome do utilizador em modo automação) **mas responde a `fetch` puro.** Por
 isso o `scrape-junior-orange-bowl.js` (Playwright) parte-se nestes eventos (UA
 deu "browser closed"; a hub JS do México deu "0 tids"). **A via correcta é
 Node-puro** via `scrape-golfgenius-node.js` (descoberta pela API v2tournaments) —
-corre em qualquer lado, sem browser. Só o **BlueGolf** (FCG + JWGC) continua a
-precisar do PC de casa (IP bloqueado).
+corre em qualquer lado, sem browser. O **BlueGolf** (FCG + JWGC) está
+**⛔ DESCONTINUADO desde 2026-07-09** — pedido nominal da BlueGolf para parar
+pedidos automatizados (ver aviso na secção "Scripts — BJGT / WJGC / EOWAGR / Doral").
 
 ### scrape-fsga.js — GolfGenius Node-puro (v2tid, sem Playwright)
 Já ligado. Deriva o **par por buraco dos marcadores** (birdie=círculo,
@@ -706,12 +717,14 @@ eventos multi-divisão** (GG 403 ao browser / hub JS) — usar o
 node scripts/scrape-junior-orange-bowl.js   # EDITIONS (JOB + World Junior Girls)
 ```
 
-### scrape-bluegolf.js — generalizado para microsites `{sub}.bluegolf.com`
+### scrape-bluegolf.js — generalizado para microsites `{sub}.bluegolf.com` — ⛔ NÃO CORRER
+**DESCONTINUADO 2026-07-09** (pedido nominal da BlueGolf — ver aviso na secção
+"Scripts — BJGT / WJGC / EOWAGR / Doral"). Documentação mantida só como
+referência do formato/parser (útil para parse offline de HTML guardado à mão).
 `discoverContests` passou a derivar a base do contest **directamente da URL do
 evento** (`.../event/{slug}/…`), cobrindo `fcg.bluegolf.com/bluegolf/fcg26/event/…`
 e `jwgc.bluegolf.com/…` além do legado `brjgt`. Regex de sub-evento aceita
-`bluegolfw?` e `slugEvent` captura `/event/` (singular). Browser visível
-(CAPTCHA possível). Corre em casa (IP não bloqueado):
+`bluegolfw?` e `slugEvent` captura `/event/` (singular). Comandos históricos:
 ```bash
 node scrape-bluegolf.js "https://fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/index.htm" public/data
 node scrape-bluegolf.js "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/index.htm" public/data
@@ -1454,7 +1467,7 @@ Montecchia não apareciam).
 | golf-portugal.pt | `golf-portugal.pt/api/*` | Proxy público FPG (REST) | Público |
 | signupanytime.com | `www.signupanytime.com` | Torneios USKids | Público |
 | tournaments.uskidsgolf.com | `tournaments.uskidsgolf.com/tournaments/international` | Calendário torneios | Público |
-| brjgt.bluegolf.com | `brjgt.bluegolf.com` | BJGT/WJGC/EOWAGR | CAPTCHA possível |
+| brjgt.bluegolf.com | `brjgt.bluegolf.com` | BJGT/WJGC/EOWAGR | ⛔ scraping descontinuado 2026-07-09 (pedido nominal BlueGolf) — só consulta manual |
 | GolfGenius (Doral) | `firstteemiamidoraljrclassic.golfgenius.com` | Doral Jr. Classic | Público |
 
 ### scoring.fpg.pt — URLs públicas (linkpage.aspx)
