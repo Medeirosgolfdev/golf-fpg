@@ -494,8 +494,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", fcg: "#1d4ed8", jwgc: "#9333ea" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", fcg: "FCG", jwgc: "JWGC" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", fcg: "#1d4ed8", jwgc: "#9333ea" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", fcg: "FCG", jwgc: "JWGC" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -586,6 +586,8 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
   ebtc2: { file: (y) => `/data/ebtc2_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "ebtc2", series: "ETC Boys", linkLabel: "Livescoring GolfBox", showRatings: true }) },
   egtc: { file: (y) => `/data/egtc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "egtc", series: "ETC Girls", linkLabel: "Livescoring GolfBox", showRatings: true }) },
   elg: { file: (y) => `/data/elg_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "elg", series: "ETC Ladies", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  eatc: { file: (y) => `/data/eatc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "eatc", series: "ETC Men", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  eatc2: { file: (y) => `/data/eatc2_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "eatc2", series: "ETC Men 2", linkLabel: "Livescoring GolfBox", showRatings: true }) },
 };
 
 /** Devolve o `loadDivisions` adequado à fonte do torneio do catálogo. */

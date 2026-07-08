@@ -40,6 +40,8 @@ on:
       - 'public/data/ebtc2_*.json'
       - 'public/data/egtc_*.json'
       - 'public/data/elg_*.json'
+      - 'public/data/eatc_*.json'
+      - 'public/data/eatc2_*.json'
       - 'public/data/juniors-overrides.json'
       - 'scripts/aggregator/**'
       - '.github/workflows/build-juniors.yml'

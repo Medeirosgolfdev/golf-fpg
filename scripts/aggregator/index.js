@@ -46,6 +46,8 @@ const SOURCES = [
   { id: "ebtc2", label: "European Boys' Team Champ Div. 2", load: () => require("./sources/ebtc2") },
   { id: "egtc", label: "European Girls' Team Championship", load: () => require("./sources/egtc") },
   { id: "elg", label: "European Ladies' Team Championship", load: () => require("./sources/elg") },
+  { id: "eatc", label: "European Amateur Team Championship", load: () => require("./sources/eatc") },
+  { id: "eatc2", label: "European Amateur Team Champ Div. 2", load: () => require("./sources/eatc2") },
 ];
 
 function parseArgs(argv) {

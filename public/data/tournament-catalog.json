@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-08T16:34:04.870Z",
+  "generatedAt": "2026-07-08T16:58:37.184Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -70576,6 +70576,28 @@
       "sourceId": "elg",
       "tournamentIds": [
         "elg-elg_2026"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "ega-mens-team",
+      "label": "ETC Men",
+      "sourceId": "eatc",
+      "tournamentIds": [
+        "eatc-eatc_2026"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "ega-mens-team-div2",
+      "label": "ETC Men 2",
+      "sourceId": "eatc2",
+      "tournamentIds": [
+        "eatc2-eatc2_2026"
       ],
       "firstDate": "2026-07-07",
       "lastDate": "2026-07-07",

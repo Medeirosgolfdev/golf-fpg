@@ -247,6 +247,8 @@ const GG_SOURCES = [
   { prefix: "ebtc2_", source: "ebtc2", series: "ETC Boys", name: (f, y) => f.tournament || `ETC Boys ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "egtc_", source: "egtc", series: "ETC Girls", name: (f, y) => f.tournament || `ETC Girls ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "elg_", source: "elg", series: "ETC Ladies", name: (f, y) => f.tournament || `ETC Ladies ${y}`, course: (f) => f.course || undefined, union: true },
+  { prefix: "eatc_", source: "eatc", series: "ETC Men", name: (f, y) => f.tournament || `ETC Men ${y}`, course: (f) => f.course || undefined, union: true },
+  { prefix: "eatc2_", source: "eatc2", series: "ETC Men 2", name: (f, y) => f.tournament || `ETC Men 2 ${y}`, course: (f) => f.course || undefined, union: true },
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);
@@ -305,7 +307,8 @@ for (const e of entries) {
 
 // Torneios ocultados da /major (sem PT/rivais conhecidos — só ocupam espaço).
 // PT feminino joga o European LADIES' Team (fonte elg), não o Girls (egtc).
-const HIDE_IDS = new Set(["egtc:2026"]);
+// PT masculino joga a Div. 2 (fonte eatc2), não a Div. 1 (eatc).
+const HIDE_IDS = new Set(["egtc:2026", "eatc:2026"]);
 {
   const before = entries.length;
   for (let i = entries.length - 1; i >= 0; i--) if (HIDE_IDS.has(entries[i].id)) entries.splice(i, 1);
