@@ -430,6 +430,7 @@ export default function App() {
                 <Route path="/doral" element={<Navigate to="/major" replace />} />
                 <Route path="/doral-legacy" element={<Navigate to="/major" replace />} />
                 <Route path="/ffg" element={<FFGPage />} />
+                <Route path="/ffg/:source/:key" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
                 <Route path="/egr" element={<EGRPage />} />
                 <Route path="/egr/:id" element={<EGRPage />} />

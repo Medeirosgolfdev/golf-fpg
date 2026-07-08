@@ -61,9 +61,12 @@ function collectLinks(divisions, seriesLabel) {
  * @param {string} [opts.defaultCountry]  país por defeito (ISO2) quando o jogador não tem
  * @param {(divKey:string)=>{ageMin:?number,ageMax:?number,sex:?string}} opts.parseDiv
  * @param {(data:object)=>string} [opts.nameFn]  nome do torneio (default: data.tournament + ano)
+ * @param {number} [opts.maxAgeInYear]  se definido, exclui jogadores cujo birthYear
+ *   implica idade > maxAgeInYear no ano do torneio (protege a base de juniores de
+ *   adultos em torneios "open"/seniores; jogadores sem birthYear passam sempre).
  */
 function buildJobfileSource(opts) {
-  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv } = opts;
+  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null } = opts;
 
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
@@ -81,6 +84,10 @@ function buildJobfileSource(opts) {
       for (const pl of divPlayers) {
         const cleanName = displayName(splitName(pl.name || ""));
         if (!cleanName) continue;
+        // Porta de idade opcional: exclui adultos em torneios open/seniores
+        // (ex: European Ladies' Team). Sem birthYear → passa (não fabricar corte).
+        if (maxAgeInYear && year && Number.isInteger(pl.birthYear) && pl.birthYear > 1900
+            && (year - pl.birthYear) > maxAgeInYear) continue;
         const iso = countryToIso2(pl.country || "") || defaultCountry || null;
         const dob = dobToIso(pl.dob) || null;
         // ANO de nascimento sem data completa (ex: GolfBox) → dobRange anual, a

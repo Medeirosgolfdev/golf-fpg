@@ -10,6 +10,7 @@
  * é mostrado.
  */
 import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson, invalidateCache } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 
@@ -56,6 +57,7 @@ import { IntlTournView } from "../ui/IntlTournView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink, CircuitSpecialItem } from "../ui/circuit/types";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
+import { FFGPlayersView } from "./ffg/PlayersView";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import SortableHdr from "../ui/SortableHdr";
@@ -461,7 +463,7 @@ function divisionLabel(div: string): string {
    Poucet=U9-10 · Poussin=U11-12 · Benjamin=U13-14 · Minime=U15-16 ·
    Cadet=U17-18 · Junior=U19-21. Não substitui divisionLabel (tabs/pills
    continuam detalhados) — isto só alimenta `entry.escaloes` + dropdown. */
-function ffgEscalaoCanonico(raw: string | null | undefined): string | null {
+export function ffgEscalaoCanonico(raw: string | null | undefined): string | null {
   const s = String(raw || "").trim();
   if (!s) return null;
   const u = s.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&#\d+;/g, "'");
@@ -2581,6 +2583,11 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
 }
 
 function FFGShellContent() {
+  // Vista informativa via URL: /ffg/info/{key} (deep-linkável, persiste no
+  // reload) — mesmo padrão da /rfeg. A selecção de torneio continua local.
+  const navigate = useNavigate();
+  const params = useParams<{ source?: string; key?: string }>();
+  const selectedInfo = params.source === "info" ? (params.key ?? null) : null;
   const [ffgResIndex, setFfgResIndex] = useState<FFGResIndex | null>(null);
   const [lgpidfIndex, setLgpidfIndex] = useState<LGPIDFIndex | null>(null);
   const [lgpidfData, setLgpidfData] = useState<Map<string, LGPIDFTournament>>(new Map());
@@ -2668,9 +2675,12 @@ function FFGShellContent() {
   }, [ffgResIndex, lgpidfIndex, lgpidfData, matchedLgKeys, manuelIdx]);
 
   const config = useMemo<CircuitConfig>(() => {
-    const specialItems: CircuitSpecialItem[] = ffgCategories
-      ? [{ key: "categorias", label: "📚 Catégories d'âge FFG", render: () => <CategoriesView data={ffgCategories} /> }]
-      : [];
+    const specialItems: CircuitSpecialItem[] = [
+      { key: "joueurs", label: "👥 Joueurs de France", render: () => <FFGPlayersView /> },
+      ...(ffgCategories
+        ? [{ key: "categorias", label: "📚 Catégories d'âge FFG", render: () => <CategoriesView data={ffgCategories} /> }]
+        : []),
+    ];
     return {
       routeBase: "/ffg",
       title: "🇫🇷 France",
@@ -2688,7 +2698,14 @@ function FFGShellContent() {
   }, [ffgCategories]);
 
   if (loading) return <LoadingState message="A carregar FFGolf…" />;
-  return <CircuitShell entries={entries} config={config} />;
+  return (
+    <CircuitShell
+      entries={entries}
+      config={config}
+      selectedInfo={selectedInfo}
+      onSelectInfo={(key) => navigate(key ? `/ffg/info/${key}` : "/ffg")}
+    />
+  );
 }
 
 export default function FFGPage() {

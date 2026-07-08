@@ -59,8 +59,8 @@ function DeltaCell({ d }: { d: number }) {
   );
 }
 
-export default function HcpEvolution({ players, history }: {
-  players: EvoPlayer[]; history: HcpHistoryDb;
+export default function HcpEvolution({ players, history, showChart = true }: {
+  players: EvoPlayer[]; history: HcpHistoryDb; showChart?: boolean;
 }) {
   const [period, setPeriod] = useState(12);
   const [focused, setFocused] = useState<string[]>([]);
@@ -68,7 +68,9 @@ export default function HcpEvolution({ players, history }: {
     pontos: "desc", best: "asc", inicio: "asc", actual: "asc", slope: "asc", delta: "asc", nome: "asc",
   });
 
-  const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
+  // Estável por período (não recalcular Date.now() a cada render — mudava a
+  // identidade de `rows` em todos os renders e punha o useEffect de foco em loop).
+  const cutoff = useMemo(() => period > 0 ? Date.now() - period * 30.44 * 86400000 : 0, [period]);
 
   // Métricas por jogador (só os que têm histórico válido na janela escolhida).
   const rows = useMemo<Row[]>(() => {
@@ -172,7 +174,7 @@ export default function HcpEvolution({ players, history }: {
         </label>
       </div>
 
-      <div className="scroll-x">
+      {showChart && <div className="scroll-x">
         <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", minWidth: 520 }}
           role="img" aria-label="Evolução do HCP ao longo do tempo">
           {/* Grelha + rótulos Y (HCP melhor no topo) */}
@@ -217,10 +219,10 @@ export default function HcpEvolution({ players, history }: {
             );
           })}
         </svg>
-      </div>
+      </div>}
 
       {/* Chips de selecção — clicar destaca/remove */}
-      <div className="flex flex-wrap gap-2" style={{ marginTop: 8 }}>
+      {showChart && <div className="flex flex-wrap gap-2" style={{ marginTop: 8 }}>
         <span className="muted fs-10" style={{ alignSelf: "center", fontWeight: 700 }}>Destacar:</span>
         {sortedRows.map(r => {
           const isOn = focusSet.has(r.p.fed);
@@ -242,7 +244,7 @@ export default function HcpEvolution({ players, history }: {
         {focused.length > 0 && (
           <button className="p p-sm p-muted" onClick={() => setFocused([])} title="Limpar destaques">✕</button>
         )}
-      </div>
+      </div>}
 
       {/* Tabela de métricas de evolução — ordenável */}
       <div className="scroll-x" style={{ marginTop: 12 }}>
@@ -252,7 +254,7 @@ export default function HcpEvolution({ players, history }: {
               <th className="r" style={{ width: 26 }}>#</th>
               <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
               <th>Sx</th>
-              <SortableHdr k="pontos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Nº de rondas com índice na janela">Pts</SortableHdr>
+              <SortableHdr k="pontos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Nº de rondas com índice na janela">Rondas</SortableHdr>
               <SortableHdr k="inicio" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="HCP no início da janela">Início</SortableHdr>
               <SortableHdr k="actual" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="HCP mais recente">Actual</SortableHdr>
               <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Variação na janela (negativo = melhorou)">Δ</SortableHdr>
@@ -262,9 +264,10 @@ export default function HcpEvolution({ players, history }: {
           </thead>
           <tbody>
             {sortedRows.map((r, i) => {
-              const on = focusSet.has(r.p.fed);
+              const on = showChart && focusSet.has(r.p.fed);
               return (
-                <tr key={r.p.fed} onClick={() => toggleFocus(r.p.fed)} style={{ cursor: "pointer" }}
+                <tr key={r.p.fed} onClick={showChart ? () => toggleFocus(r.p.fed) : undefined}
+                  style={showChart ? { cursor: "pointer" } : undefined}
                   className={on ? "cross-current" : ""}>
                   <td className="r" style={{ color: "var(--text-3)" }}>{i + 1}</td>
                   <td style={{ fontWeight: on ? 700 : 500, whiteSpace: "nowrap" }}>

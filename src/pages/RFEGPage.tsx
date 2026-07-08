@@ -1176,7 +1176,21 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
   const drawInfoByIns: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
   const ncParTotal = Array.isArray(nc.course?.par) ? nc.course!.par!.reduce((a, b) => a + (b || 0), 0) : 0;
   const lbPlayers: RFEGPlayer[] = [];
-  for (const cat of (nc.leaderboard || [])) {
+  // O NextCaddy publica o MESMO torneio em classificações Scratch E Handicap
+  // (ex: "Alevín Masculino Scratch" + "Alevín Masculino Handicap"). Nas Handicap,
+  // pos/total/toPar são LÍQUIDOS (gross − hcp de jogo). O dedup abaixo mantém a
+  // primeira ocorrência por licença — ordenar as Scratch primeiro garante que a
+  // linha que sobrevive traz as pancadas reais, nunca o resultado líquido.
+  const ncCatClass = (name?: string | null): number => {
+    const s = (name || "").toLowerCase();
+    if (/scratch/.test(s)) return 0;
+    if (/h[aá]ndicap|\bhcp\b|\bneto\b/.test(s)) return 2;
+    return 1;
+  };
+  const ncCats = [...(nc.leaderboard || [])].sort(
+    (a, b) => ncCatClass(a.categoryName) - ncCatClass(b.categoryName),
+  );
+  for (const cat of ncCats) {
     // Sexo derivado do NOME da categoria scrapada ("Alevín Masculino", "Scratch
     // Señoras", "Caballeros"…). É a fonte fiável — o lookup por licença (e.sex) só
     // resolve os jogadores no roster e deixava a maioria com sexo null, impedindo

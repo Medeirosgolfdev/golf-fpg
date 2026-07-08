@@ -108,6 +108,13 @@ const DATA = {
   eowagrPattern: /^eowagr\d+.*\.json$/,
   wjgcPattern: /^wjgc_\d+.*\.json$/,
   bjgtPattern: /^bjgt_.*\.json$/,
+  // BRJGT / Daily Mail WJGC (BlueGolf) — ficheiros canónicos que a /major
+  // consome (brjgt243_*, brjgt2431_*, brjgt251_*, brjgt2537_*...). São o
+  // superset (14 escalões/ano, todos os anos, com `course`) dos mirrors
+  // legados wjgc_2025_*/wjgc_2026_* (5 escalões, sem course) — o adapter wjgc
+  // lê estes e IGNORA os mirrors para não duplicar torneios. Os wjgc_* ficam
+  // em disco porque a KIDSPage legacy (KIDSdataLoader) ainda os carrega.
+  brjgtPattern: /^brjgt\d+_.*\.json$/,
   // FCG Callaway World Championship + Uswing Mojing Junior World (BlueGolf,
   // formato bluegolf — ingeridos pelo adapter wjgc como o BJGT). ⚠ fcgWorld
   // (fcg{N}_*) ≠ fonte `fcg` catalã, que lê fcg-rivals.json.

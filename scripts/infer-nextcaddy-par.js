@@ -34,8 +34,16 @@ function inferParTotalForRound(roundEntries, nHoles) {
   const max = nHoles === 9 ? 40 : 80;
   const counts = new Map();
   for (const r of roundEntries) {
+    // total e toPar têm de vir da MESMA classificação (self-consistentes: no
+    // Scratch são gross, no Handicap são líquidos — em ambos total−toPar = n×par).
+    // Par por volta = (total − toPar) / nº de voltas jogadas. Comparar o total de
+    // UMA volta com o toPar do TORNEIO (2+ voltas) misturava tudo e dava pares
+    // absurdos (ex: 77 no Campeonato Andalucía Alevín, par real 72).
     if (typeof r.total === "number" && typeof r.toPar === "number") {
-      const pt = r.total - r.toPar;
+      const n = r.rounds || 1;
+      const diff = r.total - r.toPar;
+      if (n < 1 || diff % n !== 0) continue;
+      const pt = diff / n;
       if (pt >= min && pt <= max) {
         counts.set(pt, (counts.get(pt) || 0) + 1);
       }
@@ -149,6 +157,24 @@ for (const file of files) {
     continue;
   }
 
+  // ⚠ Par REAL scrapado da tarjeta (linha "Par") tem sempre prioridade — NUNCA
+  // sobrescrever com inferência. O bug histórico (2026-07-08): este script
+  // clobberava o par verdadeiro que o scrape-nextcaddy.js capturava, substituindo-o
+  // por uma moda de scores contaminada pelas classificações Handicap (par 77 no
+  // Campeonato Andalucía Alevín, real 72) — reparado via repair-nextcaddy-par.js.
+  // Inferência é SÓ fallback para torneios sem par na tarjeta.
+  if (j.course && Array.isArray(j.course.par) && j.course.par.length > 0 && !j.course.parInferred) {
+    const realTotal = j.course.par.reduce((a, b) => a + (b || 0), 0);
+    if (j.course.parTotal !== realTotal) {
+      j.course.parTotal = realTotal;
+      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      updated++;
+    } else {
+      skipped++;
+    }
+    continue;
+  }
+
   // ⚠ Pitch & Putt → TODOS os buracos par 3. Inferir par dos SCORES das crianças
   // (HCP 54, muitos 5-7 num par-3) dava 4/5 e inventava um par-total errado (ex:
   // tour 71286 "ESCUELA INFANTIL P&P" → par 40 em vez de 27). Detecta por
@@ -188,14 +214,19 @@ for (const file of files) {
   const roundsMap = new Map();
   for (const cat of j.leaderboard || []) {
     for (const p of cat.players || []) {
-      for (const rs of p.roundScores || []) {
-        if (!Array.isArray(rs.scores) || rs.scores.length === 0) continue;
+      const played = (p.roundScores || []).filter((rs) => Array.isArray(rs.scores) && rs.scores.length > 0);
+      for (const rs of played) {
         const r = rs.round;
         if (!roundsMap.has(r)) roundsMap.set(r, { scoresMatrix: [], entries: [] });
-        const slot = roundsMap.get(r);
-        slot.scoresMatrix.push(rs.scores);
-        if (typeof rs.total === "number" && typeof p.toPar === "number") {
-          slot.entries.push({ total: rs.total, toPar: p.toPar });
+        roundsMap.get(r).scoresMatrix.push(rs.scores);
+      }
+      // Candidato a par ao nível do EVENTO: p.total e p.toPar são da mesma
+      // classificação (self-consistentes mesmo no Handicap, onde ambos são
+      // líquidos) → (total − toPar) / voltas jogadas = par da volta. Anexar a
+      // cada ronda em que o jogador tem cartão (o consenso é o mesmo).
+      if (played.length > 0 && typeof p.total === "number" && typeof p.toPar === "number") {
+        for (const rs of played) {
+          roundsMap.get(rs.round).entries.push({ total: p.total, toPar: p.toPar, rounds: played.length });
         }
       }
     }
@@ -206,6 +237,9 @@ for (const file of files) {
     // partir de (total, toPar) do leaderboard. Dá o par do campo ao cabeçalho
     // e às cores de total, mesmo sem o par por buraco. Não sobrescreve um par
     // por buraco real já existente.
+    // Nº de voltas agendadas (roundIds) — sem cartões não sabemos quantas cada
+    // jogador jogou; o filtro de divisibilidade+range descarta os outliers.
+    const nRScheduled = Math.max(1, Array.isArray(j.roundIds) ? j.roundIds.length : 1);
     const flat = [];
     for (const cat of j.leaderboard || []) {
       for (const p of cat.players || []) {
@@ -214,7 +248,7 @@ for (const file of files) {
           const t = p.roundScores.find((rs) => typeof rs.total === "number");
           if (t) total = t.total;
         }
-        if (typeof total === "number" && typeof p.toPar === "number") flat.push({ total, toPar: p.toPar });
+        if (typeof total === "number" && typeof p.toPar === "number") flat.push({ total, toPar: p.toPar, rounds: nRScheduled });
       }
     }
     const pt = inferParTotalAny(flat);

@@ -20,9 +20,6 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from "recharts";
 import { useAppContext } from "../context/AppContext";
 import {
   loadFederados, mergePlayersWithFederados,
@@ -257,21 +254,7 @@ export default function JogadoresPorAnoPage() {
     };
   }, [sortKey, sortDir, statsDb]);
 
-  /* ── Dados do gráfico (tamanho + HCP médio por coorte) ─────── */
-  const chartData = useMemo(() => {
-    return cohorts.map(({ year, rows }) => {
-      const hcps = rows.map(r => num(r.hcp)).filter((h): h is number => h != null && h < HCP_UNESTABLISHED);
-      const avgHcp = hcps.length ? hcps.reduce((s, h) => s + h, 0) / hcps.length : null;
-      return {
-        label: `${year}`,
-        idade: CURRENT_YEAR - year,
-        Jogadores: rows.length,
-        HCPmédio: avgHcp == null ? null : Math.round(avgHcp * 10) / 10,
-      };
-    });
-  }, [cohorts]);
-
-  // Jogadores (filtrados) para a secção de evolução de HCP. O componente
+  // Jogadores (filtrados) para a tabela de evolução de HCP. O componente
   // ignora internamente os que não têm histórico em hcp-history.json.
   const evoPlayers = useMemo(
     () => filtered.map(p => ({ fed: p.fed, name: p.name, sex: p.sex, club: clubName(p.club), escalao: p.escalao })),
@@ -529,40 +512,10 @@ export default function JogadoresPorAnoPage() {
         </div>
       )}
 
-      {/* Gráfico de coortes — tamanho + HCP médio */}
-      {chartData.length > 1 && (
-        <div className="card" style={{ padding: "10px 10px 4px" }}>
-          <div className="muted fs-10" style={{ marginBottom: 4 }}>
-            Tamanho da coorte (barras) e HCP médio (linha) por ano de nascimento — HCP exclui valores ≥ {HCP_UNESTABLISHED}
-          </div>
-          <ResponsiveContainer width="100%" height={220}>
-            <ComposedChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
-              <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-              <YAxis yAxisId="left" tick={{ fontSize: 11 }} allowDecimals={false} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} reversed
-                domain={["auto", "auto"]} />
-              <Tooltip
-                contentStyle={{ fontSize: 12 }}
-                formatter={((v: number | null, name: string) => [v == null ? "—" : v, name]) as any}
-                labelFormatter={(l) => {
-                  const d = chartData.find(c => c.label === l);
-                  return `Nascidos em ${l}${d ? ` · ${d.idade} anos` : ""}`;
-                }}
-              />
-              <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar yAxisId="left" dataKey="Jogadores" fill="var(--accent)" radius={[3, 3, 0, 0]} />
-              <Line yAxisId="right" type="monotone" dataKey="HCPmédio" stroke="var(--color-danger)"
-                strokeWidth={2} connectNulls dot={{ r: 3 }} />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {/* Análise de evolução de HCP da coorte/selecção filtrada */}
+      {/* Métricas de evolução de HCP da selecção filtrada (tabela, sem gráfico) */}
       {evoPlayers.length > 0 && (
         <div style={{ margin: "12px 0" }}>
-          <HcpEvolution players={evoPlayers} history={hcpHistory} />
+          <HcpEvolution players={evoPlayers} history={hcpHistory} showChart={false} />
         </div>
       )}
 

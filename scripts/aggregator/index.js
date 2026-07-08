@@ -42,6 +42,10 @@ const SOURCES = [
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
   { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
   { id: "avtrophy", label: "Belgian Intl U14 (Albert Vermeiren)", load: () => require("./sources/avtrophy") },
+  { id: "job", label: "Junior Orange Bowl International", load: () => require("./sources/job") },
+  { id: "ebtc2", label: "European Boys' Team Champ Div. 2", load: () => require("./sources/ebtc2") },
+  { id: "egtc", label: "European Girls' Team Championship", load: () => require("./sources/egtc") },
+  { id: "elg", label: "European Ladies' Team Championship", load: () => require("./sources/elg") },
 ];
 
 function parseArgs(argv) {

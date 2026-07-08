@@ -98,6 +98,9 @@ jobs:
           node scripts/extract-courses.js --force || echo "extract-courses: sem novidades ou aviso"
           node scripts/build-course-player-names.js || echo "build-course-player-names: aviso"
           node scripts/build-course-players.js || echo "build-course-players: aviso"
+          # Página estática /analise-percurso-juniores.html — regenera o bloco
+          # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
+          node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
 
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
@@ -120,6 +123,8 @@ jobs:
           #   - public/data/{fed}/analysis/   → só o Manuel (render estático)
           #   - public/data/players.json      → pipeline.js (sync step)
           #   - public/player-stats.json      → enrich-players.js  ⚠ SEM /data/
+          #   - public/data/hcp-history.json  → enrich-players.js (evolução de HCP)
+          #   - public/analise-percurso-juniores.html → build-analise-percurso.js
           #   - public/data/away-courses.json → extract-courses.js (disabled no pipeline normal)
           #   - public/data/master-courses.json → idem
           #   - players.json (raiz)           → pipeline.js (sync step)
@@ -131,6 +136,8 @@ jobs:
                   public/data/*/analysis/ \
                   public/data/players.json \
                   public/player-stats.json \
+                  public/data/hcp-history.json \
+                  public/analise-percurso-juniores.html \
                   public/data/away-courses.json \
                   public/data/master-courses.json \
                   public/data/course-player-names.json \

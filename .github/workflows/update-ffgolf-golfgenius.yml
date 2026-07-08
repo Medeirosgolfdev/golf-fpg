@@ -62,6 +62,17 @@ jobs:
       - name: Instalar Playwright Chromium
         run: npx playwright install chromium --with-deps
 
+      - name: Descobrir torneios novos no catálogo (ffgolf.org)
+        # Sem isto, o scrape só cobre slugs já conhecidos — torneios GG novos
+        # nunca entravam sozinhos. O merge é cron-safe (preserva anos antigos).
+        # continue-on-error: se o ffgolf.org mudar/bloquear, o scrape continua
+        # com o catálogo existente.
+        continue-on-error: true
+        run: |
+          YEAR="${{ github.event.inputs.year }}"
+          if [ -z "$YEAR" ]; then YEAR=$(date -u +%Y); fi
+          node scripts/discover-ffgolf-catalog.js --year "$YEAR" --headless
+
       - name: Correr scrape-ffgolf.js
         id: scrape
         run: |
@@ -109,12 +120,22 @@ jobs:
           if [ "$RC" = "1" ]; then exit 1; fi
           echo "gg-fetch rc=$RC"
 
+      - name: Regenerar roster FR (contagens GG + gémeos)
+        # Os torneios GG contam para o france-players.json via matching de nome
+        # (lib/ffgolf-gg.js); gémeos do portal resultats são deduplicados em
+        # ffgolf-gg-twins.json. O push do france-players.json dispara o
+        # build-juniors.yml (kids2).
+        run: node scripts/build-france-players.js
+
       - name: Commit e push (se houver mudanças)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/ffgolf/
+          git add public/data/ffgolf/ \
+                  public/data/ffgolf-catalog.json \
+                  public/data/france-players.json \
+                  public/data/ffgolf-gg-twins.json
 
           if git diff --staged --quiet; then
             echo "ℹ️  Nenhuma alteração — sem commit."

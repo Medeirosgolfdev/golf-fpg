@@ -154,22 +154,44 @@ async function getGgIdsForTournament(page, section, year, slug) {
 
   await browser.close();
 
+  // ── Merge com o catálogo existente (cron-safe) ──────────────────────────
+  // O run só descobre os anos pedidos; sobrescrever o ficheiro apagaria os
+  // outros anos. Regras: entradas frescas ganham por (year|section|slug);
+  // entradas antigas não redescobertas MANTÊM-SE (o site delista torneios
+  // antigos, mas os dados continuam válidos e o scraper salta o que já tem).
   const outPath = path.resolve(__dirname, "../public/data/ffgolf-catalog.json");
+  let existing = { years: [], tournaments: [] };
+  try { existing = JSON.parse(fs.readFileSync(outPath, "utf-8")); } catch { /* 1º run */ }
+
+  const keyOf = (t) => `${t.year}|${t.section}|${t.slug}`;
+  const merged = new Map((existing.tournaments || []).map((t) => [keyOf(t), t]));
+  let nNew = 0, nUpd = 0;
+  for (const t of catalog) {
+    const k = keyOf(t);
+    if (!merged.has(k)) nNew++;
+    else nUpd++;
+    // Fresco ganha, mas sem perder campos curados que o discovery não traz.
+    merged.set(k, { ...merged.get(k), ...t });
+  }
+  const tournaments = [...merged.values()].sort((a, b) =>
+    (b.year - a.year) || String(a.section).localeCompare(b.section) || String(a.slug).localeCompare(b.slug));
+  const years = [...new Set([...(existing.years || []), ...args.years])].sort();
+
   fs.writeFileSync(
     outPath,
     JSON.stringify(
       {
         generated_at: new Date().toISOString(),
-        years: args.years,
-        total: catalog.length,
-        with_gg: catalog.filter((c) => c.gg_page).length,
-        tournaments: catalog,
+        years,
+        total: tournaments.length,
+        with_gg: tournaments.filter((c) => c.gg_page).length,
+        tournaments,
       },
       null,
       2
     ),
     "utf-8"
   );
-  console.log(`\n✅ ${catalog.length} torneios → ${outPath}`);
-  console.log(`   ${catalog.filter((c) => c.gg_page).length} com GolfGenius ID`);
+  console.log(`\n✅ ${catalog.length} descobertos (${nNew} novos, ${nUpd} actualizados) → catálogo com ${tournaments.length} torneios em ${outPath}`);
+  console.log(`   ${tournaments.filter((c) => c.gg_page).length} com GolfGenius ID`);
 })();

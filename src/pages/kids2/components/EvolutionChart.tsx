@@ -77,6 +77,10 @@ const SOURCE_COLORS: Record<string, string> = {
   icopa:  "var(--source-icopa)",
   interzonas: "var(--source-interzonas)",
   avtrophy: "var(--source-avtrophy)",
+  job:    "var(--source-job)",
+  ebtc2:  "var(--source-ebtc2)",
+  egtc:   "var(--source-egtc)",
+  elg:    "var(--source-elg)",
 };
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -85,6 +89,7 @@ const SOURCE_LABELS: Record<string, string> = {
   fcg: "FCG", england: "England", gjgl: "GJGL",
   fsga: "FSGA", uajt: "Under Armour", mexnacional: "México",
   icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14",
+  job: "JOB", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies",
 };
 
 export default function EvolutionChart({ data, junior, filterTids }: Props) {

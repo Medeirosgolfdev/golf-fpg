@@ -95,11 +95,29 @@ jobs:
           echo "Args: $ARGS"
           node scripts/scrape-ffgolf-all-jeunes.js $ARGS
 
+      # O all-jeunes (via listCompetitions) só devolve os GPs do circuito da Liga
+      # (~6/ano por liga) — os Grands Prix de CLUBE (ex: GP d'Ozoir) só são
+      # descobertos pela pesquisa do calendário. Corre-se depois, sem
+      # --skip-existing, para também refrescar eventos cujos resultados só agora
+      # foram publicados. continue-on-error para não bloquear o commit do primário.
+      - name: Correr scrape-ffgolf-calendar-jeunes.js (GPs de clube)
+        continue-on-error: true
+        run: |
+          CAL_ARGS=""
+          if [ -n "${{ github.event.inputs.since }}" ]; then
+            CAL_ARGS="--start-month ${{ github.event.inputs.since }}-01"
+          fi
+          echo "Calendar args: $CAL_ARGS"
+          node scripts/scrape-ffgolf-calendar-jeunes.js $CAL_ARGS
+
       - name: Regenerar índice agregado
         run: node scripts/build-ffgolf-resultats-index.js
 
       - name: Regenerar slim juniors (U10/U12/U14)
         run: node scripts/build-ffgolf-juniors-slim.js
+
+      - name: Regenerar roster de jogadores FR (france-players.json)
+        run: node scripts/build-france-players.js
 
       - name: Commit e push (se houver mudanças)
         run: |
@@ -108,7 +126,10 @@ jobs:
 
           git add public/data/ffgolf-resultats/ \
                   public/data/ffgolf-resultats-index.json \
-                  public/data/ffgolf-juniors-slim.json
+                  public/data/ffgolf-juniors-slim.json \
+                  public/data/france-players.json \
+                  public/data/ffgolf-gg-twins.json \
+                  public/data/ffgolf-catalog.json
 
           if git diff --staged --quiet; then
             echo "ℹ️  Nenhuma alteração — sem commit."

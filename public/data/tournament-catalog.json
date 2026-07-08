@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-08T00:59:13.973Z",
+  "generatedAt": "2026-07-08T16:31:14.174Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -533,6 +533,7 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601405024",
         "ffgolf-2601451094",
         "ffgolf-2601405356",
         "ffgolf-2601448904",
@@ -761,7 +762,7 @@
       ],
       "firstDate": "2022-04-23",
       "lastDate": "2026-07-04",
-      "editionsCount": 225
+      "editionsCount": 226
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -1077,6 +1078,56 @@
       ],
       "firstDate": "2019-05-05",
       "lastDate": "2026-05-03",
+      "editionsCount": 40
+    },
+    {
+      "id": "wjgc",
+      "label": "WJGC · BJGT",
+      "sourceId": "wjgc",
+      "tournamentIds": [
+        "wjgc-brjgt2431_boys_12-13",
+        "wjgc-brjgt2431_boys_14-15",
+        "wjgc-brjgt2431_boys_16-18",
+        "wjgc-brjgt2431_girls_14-15",
+        "wjgc-brjgt2431_girls_16-18",
+        "wjgc-brjgt243_boys_10-11",
+        "wjgc-brjgt243_boys_7under",
+        "wjgc-brjgt243_boys_8-9",
+        "wjgc-brjgt243_girls_10-11",
+        "wjgc-brjgt243_girls_12-13",
+        "wjgc-brjgt243_girls_7under",
+        "wjgc-brjgt243_girls_8-9",
+        "wjgc-brjgt251_boys_10-11",
+        "wjgc-brjgt251_boys_12-13",
+        "wjgc-brjgt251_boys_14-15",
+        "wjgc-brjgt251_boys_16-18",
+        "wjgc-brjgt251_boys_7under",
+        "wjgc-brjgt251_boys_8-9",
+        "wjgc-brjgt251_boys_wagr",
+        "wjgc-brjgt251_girls_10-11",
+        "wjgc-brjgt251_girls_12-13",
+        "wjgc-brjgt251_girls_14-15",
+        "wjgc-brjgt251_girls_16-18",
+        "wjgc-brjgt251_girls_7under",
+        "wjgc-brjgt251_girls_8-9",
+        "wjgc-brjgt251_girls_wagr",
+        "wjgc-brjgt2537_boys_10-11",
+        "wjgc-brjgt2537_boys_12-13",
+        "wjgc-brjgt2537_boys_14-15",
+        "wjgc-brjgt2537_boys_16-18",
+        "wjgc-brjgt2537_boys_7under",
+        "wjgc-brjgt2537_boys_8-9",
+        "wjgc-brjgt2537_boys_wagr",
+        "wjgc-brjgt2537_girls_10-11",
+        "wjgc-brjgt2537_girls_12-13",
+        "wjgc-brjgt2537_girls_14-15",
+        "wjgc-brjgt2537_girls_16-18",
+        "wjgc-brjgt2537_girls_7under",
+        "wjgc-brjgt2537_girls_8-9",
+        "wjgc-brjgt2537_girls_wagr"
+      ],
+      "firstDate": "2024-02-26",
+      "lastDate": "2026-02-26",
       "editionsCount": 40
     },
     {
@@ -10952,26 +11003,6 @@
       "editionsCount": 10
     },
     {
-      "id": "wjgc",
-      "label": "WJGC · BJGT",
-      "sourceId": "wjgc",
-      "tournamentIds": [
-        "wjgc-wjgc_2025_b1011",
-        "wjgc-wjgc_2025_b7u",
-        "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2025_bwagr",
-        "wjgc-wjgc_2025_g1213",
-        "wjgc-wjgc_2026_b1011",
-        "wjgc-wjgc_2026_b1213",
-        "wjgc-wjgc_2026_b89",
-        "wjgc-wjgc_2026_bwagr",
-        "wjgc-wjgc_2026_gwagr"
-      ],
-      "firstDate": "2025-02-26",
-      "lastDate": "2026-02-26",
-      "editionsCount": 10
-    },
-    {
       "id": "fcgworld",
       "label": "FCG Callaway World",
       "sourceId": "wjgc",
@@ -17717,8 +17748,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -29082,6 +29113,20 @@
       ],
       "firstDate": "2023-07-27",
       "lastDate": "2024-08-01",
+      "editionsCount": 4
+    },
+    {
+      "id": "junior-orange-bowl",
+      "label": "JOB (Junior Orange Bowl)",
+      "sourceId": "job",
+      "tournamentIds": [
+        "job-orangebowl_2023",
+        "job-orangebowl_2024",
+        "job-orangebowl_2025",
+        "job-orangebowl_2026"
+      ],
+      "firstDate": "2023-01-01",
+      "lastDate": "2026-01-01",
       "editionsCount": 4
     },
     {
@@ -46867,6 +46912,18 @@
       ],
       "firstDate": "2023-06-23",
       "lastDate": "2025-06-13",
+      "editionsCount": 2
+    },
+    {
+      "id": "jwgc",
+      "label": "Uswing Mojing JWGC",
+      "sourceId": "wjgc",
+      "tournamentIds": [
+        "wjgc-jwgc261_boys_13-14",
+        "wjgc-jwgc261_boys_15-18"
+      ],
+      "firstDate": "2026-07-15",
+      "lastDate": "2026-07-15",
       "editionsCount": 2
     },
     {
@@ -69777,17 +69834,6 @@
       "editionsCount": 1
     },
     {
-      "id": "jwgc",
-      "label": "Uswing Mojing JWGC",
-      "sourceId": "wjgc",
-      "tournamentIds": [
-        "wjgc-jwgc261_boys_13-14"
-      ],
-      "firstDate": "2026-07-15",
-      "lastDate": "2026-07-15",
-      "editionsCount": 1
-    },
-    {
       "id": "england-bronte-law-junior-series-cumberwell-park",
       "label": "Bronte Law Junior Series  - Cumberwell Park",
       "sourceId": "england",
@@ -70500,6 +70546,39 @@
       ],
       "firstDate": "2026-07-02",
       "lastDate": "2026-07-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "ega-boys-team-div2",
+      "label": "ETC Boys (Div. 2)",
+      "sourceId": "ebtc2",
+      "tournamentIds": [
+        "ebtc2-ebtc2_2026"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "ega-girls-team",
+      "label": "ETC Girls",
+      "sourceId": "egtc",
+      "tournamentIds": [
+        "egtc-egtc_2026"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "ega-ladies-team",
+      "label": "ETC Ladies",
+      "sourceId": "elg",
+      "tournamentIds": [
+        "elg-elg_2026"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
       "editionsCount": 1
     }
   ]

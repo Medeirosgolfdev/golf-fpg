@@ -15,7 +15,13 @@ const SOURCE_ID = "wjgc";
 const SOURCE_LABEL = "WJGC / BJGT";
 
 function load(opts) {
-  const wjgcFiles = listFiles(DATA_DIR, DATA.wjgcPattern);
+  // BJGT / Daily Mail WJGC: usar os ficheiros canónicos brjgt* (superset com
+  // todos os 14 escalões/ano + course), NÃO os mirrors legados wjgc_2025_*/
+  // wjgc_2026_* (subconjunto sem course, que a KIDSPage legacy ainda usa).
+  // Ler ambos duplicaria o mesmo evento (sourceKeys diferentes) e inflaria a
+  // contagem de confrontos. bjgtPattern (bjgt_*) fica como fallback legado (0
+  // ficheiros hoje).
+  const brjgtFiles = listFiles(DATA_DIR, DATA.brjgtPattern);
   const bjgtFiles = listFiles(DATA_DIR, DATA.bjgtPattern);
   // FCG Callaway World + Uswing Mojing JWGC — mesmo formato bluegolf.
   const fcgWorldFiles = listFiles(DATA_DIR, DATA.fcgWorldPattern);
@@ -26,7 +32,7 @@ function load(opts) {
   // Players nesta fonte: cada jogador único por (nome+país). sourceKey gerado.
   const playerMap = new Map();
 
-  for (const file of [...wjgcFiles, ...bjgtFiles, ...fcgWorldFiles, ...jwgcFiles]) {
+  for (const file of [...brjgtFiles, ...bjgtFiles, ...fcgWorldFiles, ...jwgcFiles]) {
     const data = readJsonSafe(file, null);
     if (!data) continue;
     const tt = normalize(data, path.basename(file), playerMap);

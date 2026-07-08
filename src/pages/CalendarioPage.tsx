@@ -143,9 +143,13 @@ const EVENTS: CalEvent[] = [
   ev("cgss_om_b",     "Torneio Clube de Golf Santo da Serra", new Date(2026,4,30), "Santo da Serra", "Stableford"),
   // Junho
   ev("cgss_patrocin", "Madeira Golf Trophy",                 new Date(2026,5,6),  "Santo da Serra", "Strokeplay"),
+  ev("cgss_ouro",     "III Aberto CGSS 2026",                new Date(2026,5,7),  "Santo da Serra", "Strokeplay"),
   // Julho
-  ev("cgss_pares",    "IV Prova Camp. Clube de Pares",       new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
+  ev("cgss_pares",    "III Prova Camp. Clube de Pares",      new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
+  ev("cgss_patrocin", "Expresso BPI Golf Cup QR",            new Date(2026,6,18), "Santo da Serra", "Texas Scramble"),
+  ev("cgss_patrocin", "Expresso BPI Golf Cup MF",            new Date(2026,6,19), "Santo da Serra", "Texas Scramble"),
   ev("cgss_major",    "Taça do Clube",                       new Date(2026,6,25), "Santo da Serra", "Medal"),
+  ev("cgss_ouro",     "IV Aberto CGSS 2026",                 new Date(2026,6,26), "Santo da Serra", "Strokeplay"),
   // Agosto
   ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
   ev("cgss_om_c",     "Torneio CGSS Summer",                new Date(2026,7,22), "Santo da Serra", "Stableford"),
@@ -153,11 +157,13 @@ const EVENTS: CalEvent[] = [
   ev("cgss_om_c",     "Torneio CGSS",                       new Date(2026,7,29), "Santo da Serra", "Stableford"),
   // Setembro
   ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio Pérola do Atlântico (SCP Golfe)", new Date(2026,8,14), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Taça Prof. Ernâni Lopes",            new Date(2026,8,18), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Porto Santo Colombos",               new Date(2026,8,19), "Porto Santo",    ""),
+  ev("cgss_pares",    "IV Prova Camp. Clube de Pares",      new Date(2026,8,26), "Santo da Serra", "Texas Scramble"),
   // Outubro
-  ev("cgss_om_c",     "Torneio Serras / São Martinho CGSS", new Date(2026,9,10), "Santo da Serra", "Stableford"),
-  ev("cgss_patrocin", "Torneio CGEx ZMM",                   new Date(2026,9,4),  "Santo da Serra", "Stableford"),
-  ev("cgss_major",    "Troféu João Sousa",                  new Date(2026,9,17), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio 50 Anos de Autonomia",       new Date(2026,9,3),  "Santo da Serra", "Stableford", new Date(2026,9,4)),
+  ev("cgss_major",    "Troféu João Sousa",                  new Date(2026,9,10), "Santo da Serra", "Stableford"),
   ev("cgss_pares",    "V Prova Camp. Clube de Pares",       new Date(2026,9,24), "Santo da Serra", "Stableford Agg"),
   ev("cgss_major",    "Taça Presidente",                    new Date(2026,9,31), "Santo da Serra", "Stableford"),
   // Novembro
@@ -182,8 +188,8 @@ const EVENTS: CalEvent[] = [
   // ── Regional Jr ──
   ev("jr_regional", "Campeonato Regional de Jovens D1",    new Date(2026,1,28), "Santo da Serra", "Strokeplay"),
   ev("jr_regional", "Campeonato Regional de Jovens D2",    new Date(2026,2,1),  "Santo da Serra", "Strokeplay"),
-  ev("jr_regional", "Camp. Regional de Clubes D1",         new Date(2026,5,20), "Santo da Serra", "Strokeplay"),
-  ev("jr_regional", "Camp. Regional de Clubes D2",         new Date(2026,5,21), "Santo da Serra", "Strokeplay"),
+  ev("jr_regional", "Camp. Regional de Clubes D1",         new Date(2026,5,20), "Palheiro",       "Strokeplay"),
+  ev("jr_regional", "Camp. Regional de Clubes D2",         new Date(2026,5,21), "Palheiro",       "Strokeplay"),
   ev("jr_regional", "Camp. da Madeira Ind. Absoluto D1",   new Date(2026,10,28),"Porto Santo",    "Strokeplay"),
   ev("jr_regional", "Camp. da Madeira Ind. Absoluto D2",   new Date(2026,10,29),"Porto Santo",    "Strokeplay"),
 
@@ -257,7 +263,7 @@ const EVENTS: CalEvent[] = [
   /* ══════════════════════════════════════
      DESTAQUE — Internacionais (vermelho)
      ══════════════════════════════════════ */
-  ev("dest_intl", "Faldo Series Madeira",                              new Date(2026,9,1),  "Santo da Serra",              "Strokeplay", new Date(2026,9,3)),
+  ev("dest_intl", "Faldo Series Madeira",                              new Date(2026,9,16),  "Santo da Serra",              "Strokeplay", new Date(2026,9,18)),
   ev("dest_intl", "63º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
   ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,4), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
   ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
@@ -311,7 +317,6 @@ const EVENTS: CalEvent[] = [
      ⛳ CAMPO / TREINO
      ══════════════════════════════════════ */
   ev("treino", "Mypro Golf Algarve — Campo de Golf",          new Date(2026,2,28), "Algarve",     "", new Date(2026,3,4)),
-  ev("treino", "Volta de treino — World Kids Golf 2026",      new Date(2026,6,28), "Amendoeira",  ""),
   ev("treino", "Volta de treino — Venice Open 2026",          new Date(2026,7,12), "Venice (IT)", ""),
   ev("treino", "Volta de treino — VIII Miramar Open U25",     new Date(2026,7,18), "CG Miramar",  ""),
   ev("colonias", "Aranhiços 1 — Colónia",                     new Date(2026,6,17), "",            "", new Date(2026,6,26)),

@@ -77,7 +77,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
 | `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
 | `/titulos/nacional` | TitulosPage (tab Nacional) | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
-| `/ffg` | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses) |
+| `/ffg` (+ `/info/:key` — `joueurs` = lista de jogadores FR estilo /rfeg/info/jugadores, `categorias`) | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses); france-players.json (roster c/ contagens, `src/pages/ffg/PlayersView.tsx`) |
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
@@ -233,6 +233,53 @@ mitarjeta os traz).
 3. Matcher de domínio em `kids2/tournamentLinks.ts` (nota: `eg-*.golfgenius.com` → england tem de vir ANTES do matcher genérico `golfgenius.com` → doral).
 4. Paths de trigger no `build-juniors.yml`.
 5. Sanity: Manuel×Dmitrii = **6 confrontos** (EC26, Venice25, QDL25, EOWAGR LTQ25, WJGC25, WJGC26).
+
+### Limpeza de duplicados — `scripts/find-junior-duplicates.js` (2026-07-08)
+
+O matcher é conservador de propósito, por isso sobram duplicados no canónico:
+mesmo miúdo federado em 2 países (país difere → matcher recusa), nome abreviado
+("J. Smith"), só 1 dos sobrenomes ("Tomás Silva" vs "Tomás Costa Silva"), nome
+invertido ("Ziyang Guo" vs "Guo Ziyang"). O detector lê `juniors.json` +
+shards de torneios e gera pares candidatos com score/evidência.
+
+Sinais positivos: relação de nome (exacto/invertido/subset/inicial/prefixo/
+sobrenome parcial) + mesma DOB (+35) + mesmo país (+10) + mesmo clube (+12) +
+**sufixo RFEG igual** (+30 — mudar de clube muda o prefixo da licença mas os
+últimos 6 dígitos mantêm-se, ex: LV60968059↔LV70968059; gera `preferStrongKey`
++ `manualHistoricalIds` automáticos no snippet). Com DOB igual, país diferente
+NÃO penaliza (é o caso multi-país que procuramos). Sinais negativos/kill: sexo
+diferente, DOB exacta diferente, **escalão impossível** (dos flights jogados —
+ageMax + ano — infere-se o ano de nascimento mínimo; jogar para cima é
+permitido, para baixo não), e **co-ocorrência no mesmo flight do mesmo torneio**
+(lado a lado na leaderboard → 2 pessoas; `--include-coplay` desactiva). Mesmo
+torneio em flights diferentes = −15 + flag (irmãos?). Chaves fortes
+conflituantes na mesma fonte sem sufixo RFEG igual = −25 + flag.
+
+**Ambiguidade:** se um junior aparece em vários pares (ex: "Pablo Garcia" bate
+com 3 nomes completos), todos os seus pares ficam marcados ambíguos → só
+revisão manual, nunca auto-merge.
+
+**Auto-merge (`--apply`):** candidatos com CERTEZA (nome exacto/invertido/
+contido + mesma DOB, ou sufixo RFEG igual) ou corroborados (mesmo clube/país +
+score ≥ `--merge-min`, default 55), sem ambiguidade nem flags, são acrescentados
+ao `forceMerge` do `juniors-overrides.json` com `"auto": true`. Primeira
+passagem 2026-07-08: 221 merges aplicados (17195→16952 juniores), 9/9 sanity.
+
+```bash
+node scripts/find-junior-duplicates.js                # relatório (score ≥45)
+node scripts/find-junior-duplicates.js --apply        # aplicar merges seguros
+node scripts/find-junior-duplicates.js --player gao   # filtrar por nome
+```
+
+Outputs: `reports/duplicate-candidates.{json,html}` + `proposed-merges.json`
+(gitignored). O HTML é o fluxo de revisão dos restantes: cada card tem 2
+snippets prontos a copiar — ✅ mesma pessoa → `forceMerge`; ❌ pessoas
+diferentes → **`notDuplicates`** (lista no `juniors-overrides.json`, formato
+`{sourceKeys:[a,b], reason}`) que suprime a sugestão em runs futuros. Ciclo:
+`aggregator/index.js` → detector → rever HTML → colar overrides → repetir.
+Pares já cobertos por `forceMerge`/`notDuplicates` nunca são re-sugeridos.
+Testes: `scripts/find-junior-duplicates.test.js` (vitest apanha
+`scripts/**/*.test.js`).
 
 ---
 
@@ -1699,7 +1746,7 @@ validado server-side. **Não replicável de Node puro.**
 | **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
-| **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
+| **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 | `scripts/scrape-federados-node.js` | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |

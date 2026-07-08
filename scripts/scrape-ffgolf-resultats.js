@@ -201,8 +201,19 @@ function parseListeCompetitionsHtml(html, yearFilter) {
   return list;
 }
 
+function decodeEntities(s) {
+  return String(s == null ? "" : s)
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, n) => { try { return String.fromCodePoint(+n); } catch { return _; } })
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => { try { return String.fromCodePoint(parseInt(h, 16)); } catch { return _; } })
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&"); // &amp; por último para não re-descodificar
+}
 function stripTags(html) {
-  return html.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+  return decodeEntities(html.replace(/<[^>]+>/g, "")).replace(/\s+/g, " ").trim();
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -541,6 +552,7 @@ module.exports = {
   parseFFGPlayer,
   httpRequest,
   enrichWithLinks,
+  decodeEntities,
 };
 
 /* ──────────────────────────────────────────────────────────────
