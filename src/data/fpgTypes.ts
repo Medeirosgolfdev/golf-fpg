@@ -92,6 +92,7 @@ export interface ScorecardOptions {
   hideTee?: boolean;      // ocultar coluna TEE
   hideClub?: boolean;     // ocultar coluna CLUB (usado em RFEG: clube é irrelevante)
   showAge?: boolean;      // mostrar coluna IDADE (separada da ESC, sortable; usa player._age)
+  showClass?: boolean;    // mostrar coluna ANO de graduação/class year (sortable; usa player._classYear) — JWGC/FCG BlueGolf
   noPlayerLink?: boolean; // não criar link /jogadores/{fed} no nome (usado em RFEG: licenças espanholas não correspondem a fed codes FPG)
   clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
   startHole?: number;     // buraco inicial (default 1, back-9: 10)

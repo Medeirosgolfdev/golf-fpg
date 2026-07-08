@@ -17,8 +17,10 @@
 const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
+const { splitGradYearCountry } = require("./scripts/lib/bluegolf-location");
 
 const DELAY_MS = 700;
+const CHECKPOINT_EVERY = 30; // grava progresso parcial a cada N jogadores (rede segura contra CAPTCHA/crash)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function extractRoundNum(label) {
@@ -440,7 +442,7 @@ async function discoverContests(page, eventUrl) {
 }
 
 
-async function scrapeContest(page, leaderboardUrl) {
+async function scrapeContest(page, leaderboardUrl, checkpointPath = null) {
   const contestMatch = leaderboardUrl.match(/^(https?:\/\/.+\/contest\/\d+)/);
   if (!contestMatch) throw new Error(`URL inválida (sem /contest/N/): ${leaderboardUrl}`);
   const contestBase = contestMatch[1];
@@ -599,13 +601,39 @@ async function scrapeContest(page, leaderboardUrl) {
           result = total - parTotal * rounds.length;
         }
       }
-      players.push({ name, country: sc.country || "", pos: sc.pos, result, total, rounds });
+      // JWGC/FCG: sc.country vem "CLASSE, LOCAL" (ex: "2031, Japan"). Separar o
+      // ano de graduação e derivar país p/ bandeira. bjgt/wjgc (país normal)
+      // passam intactos (gradYear=null). hometown só emitido quando difere do país.
+      const loc = splitGradYearCountry(sc.country);
+      players.push({
+        name, country: loc.country || "", pos: sc.pos, result, total, rounds,
+        ...(loc.gradYear != null ? { gradYear: loc.gradYear } : {}),
+        ...(loc.hometown && loc.hometown !== loc.country ? { hometown: loc.hometown } : {}),
+      });
       const nRounds = rounds.length;
       const nHoles = nRounds > 0 ? rounds[0].scores.length : 0;
       process.stdout.write(nRounds === 0 ? " ⚠️ sem scores" : ` ✅ ${nRounds}R ${nHoles}H gross=${total}`);
     } catch (err) {
       process.stdout.write(` ❌ ${err.message.slice(0, 40)}`);
       players.push({ name: c.name, country: "", pos: null, result: null, total: null, rounds: [], _error: err.message });
+    }
+    // Checkpoint parcial — rede de segurança contra CAPTCHA/crash a meio.
+    // Escrita atómica (tmp+rename) para nunca deixar JSON truncado. O ficheiro
+    // final (completo, ordenado, com metadata) sobrepõe-se no fim do contest.
+    if (checkpointPath && players.length % CHECKPOINT_EVERY === 0 && players.length < contestants.length) {
+      try {
+        const cp = {
+          tournament: tournamentTitle, category, course: scCourse || course,
+          _checkpoint: true, _scraped: players.length, _total: contestants.length,
+          par: par || [], ...(si && si.length > 0 ? { si } : {}),
+          ...(yards && yards.length > 0 ? { yards } : {}),
+          players,
+        };
+        const tmp = checkpointPath + ".tmp";
+        fs.writeFileSync(tmp, JSON.stringify(cp, null, 2), "utf-8");
+        fs.renameSync(tmp, checkpointPath);
+        process.stdout.write(`  💾 checkpoint ${players.length}/${contestants.length}\n`);
+      } catch (e) { /* checkpoint best-effort — não abortar o scrape */ }
     }
     await sleep(DELAY_MS);
   }
@@ -694,7 +722,7 @@ function slugEvent(eventUrl) {
 
   if (isContest) {
     const outFile = positional[1] || "bluegolf_scorecards.json";
-    const res = await scrapeContest(page, url);
+    const res = await scrapeContest(page, url, outFile);
     if (!res) { console.error("❌ Nenhum contestant."); await browser.close(); process.exit(1); }
     fs.writeFileSync(outFile, JSON.stringify(res.output, null, 2), "utf-8");
     console.log(`✅ Ficheiro: ${outFile}`);
@@ -733,12 +761,15 @@ function slugEvent(eventUrl) {
       continue;
     }
     try {
-      const res = await scrapeContest(page, c.url);
+      const res = await scrapeContest(page, c.url, expPath);
       if (!res) { summary.push({ contestId: c.contestId, label: c.label, status: "empty" }); continue; }
       const catSlug = slugCategory(res.category) || `contest_${c.contestId}`;
       const fname = `${evSlug}_${catSlug}.json`;
       const fpath = path.join(outDir, fname);
       fs.writeFileSync(fpath, JSON.stringify(res.output, null, 2), "utf-8");
+      // Se a categoria final diferiu da label do dropdown, o checkpoint ficou
+      // com outro nome — remove-o para não deixar um ficheiro parcial órfão.
+      if (expPath !== fpath && fs.existsSync(expPath)) { try { fs.unlinkSync(expPath); } catch {} }
       summary.push({ contestId: c.contestId, label: c.label, category: res.category, file: fname, players: res.output.players.length });
       console.log(`   💾 ${fname}  (${res.output.players.length} jogadores)`);
     } catch (err) {

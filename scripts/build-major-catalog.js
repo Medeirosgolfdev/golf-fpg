@@ -65,6 +65,13 @@ const ROUND_DATES = {
   // bjgt:2025 não tem datas de ronda (roundDates undefined nas URLS).
 };
 
+/* ── Intervalo de datas (start→end) para eventos bluegolf a decorrer, cuja
+   contagem de rondas ainda não está fechada. Só alimenta dateStart/dateEnd —
+   NÃO afecta roundsCount (esse vem do nº real de rondas nos dados). ── */
+const BLUEGOLF_DATE_RANGE = {
+  "jwgc:2026": { start: "6 Jul", end: "9 Jul" }, // Torrey Pines - South, La Jolla CA (parcial: só Boys 13-14/15-18)
+};
+
 /* ── Fallback de datas ISO para torneios sem datas nos dados nem em round.date
    (curadas à mão; datas oficiais dos eventos). Só usadas quando nada mais dá. ── */
 const FALLBACK_DATES = {
@@ -93,6 +100,21 @@ function parseRoundDateISO(s, year) {
   const mon = MONTHS_EN[m[1].toLowerCase()];
   if (!mon) return null;
   return `${year}-${String(mon).padStart(2, "0")}-${String(+m[2]).padStart(2, "0")}`;
+}
+/* ── Meses PT abreviados (ROUND_DATES / BLUEGOLF_DATE_RANGE: "25 Fev", "6 Jul") ── */
+const MONTHS_PT = {
+  jan: 1, fev: 2, mar: 3, abr: 4, mai: 5, jun: 6,
+  jul: 7, ago: 8, set: 9, out: 10, nov: 11, dez: 12,
+};
+/** "25 Fev" (+ ano) → "2026-02-25" ISO. Uniformiza as datas bluegolf com as
+ *  restantes fontes (todas ISO) — sem isto a sidebar não ordena por data. */
+function ptDateToIso(s, year) {
+  if (!s || !year) return undefined;
+  const m = /^\s*(\d{1,2})\s+([A-Za-zçÇ]+)/.exec(String(s));
+  if (!m) return undefined;
+  const mon = MONTHS_PT[m[2].toLowerCase().slice(0, 3)];
+  if (!mon) return undefined;
+  return `${year}-${String(mon).padStart(2, "0")}-${String(+m[1]).padStart(2, "0")}`;
 }
 /** Deriva {dateStart,dateEnd} ISO do campo round.date de uma lista de jogadores. */
 function deriveDatesFromRounds(players, year) {
@@ -155,15 +177,17 @@ function buildBluegolf() {
     const rawName = (divs.find((d) => d.tournament)?.tournament || "").replace(/\s*[-–]\s*(boys|girls|u\d|sub).*$/i, "").trim();
     const seriesLabel = series === "eowagr" ? "EU" : series === "fcg" ? "FCG" : series === "jwgc" ? "JWGC" : "BJGT";
     const rd = ROUND_DATES[key];
+    const dr = BLUEGOLF_DATE_RANGE[key];
+    const rawCourse = divs.find((d) => d.course)?.course || "";
     entries.push({
       id: key,
       source: series,
       series: seriesLabel,
       year,
       name: rawName || `${seriesLabel} ${year}`,
-      course: series === "eowagr" ? "França" : series === "fcg" || series === "jwgc" ? "USA" : "Espanha",
-      dateStart: rd ? `${rd[0]} ${year}` : undefined,
-      dateEnd: rd && rd.length > 1 ? `${rd[rd.length - 1]} ${year}` : undefined,
+      course: series === "eowagr" ? "França" : series === "jwgc" ? (rawCourse || "USA") : series === "fcg" ? "USA" : "Espanha",
+      dateStart: dr ? ptDateToIso(dr.start, year) : rd ? ptDateToIso(rd[0], year) : undefined,
+      dateEnd: dr ? ptDateToIso(dr.end, year) : rd && rd.length > 1 ? ptDateToIso(rd[rd.length - 1], year) : undefined,
       roundsCount: (rd && rd.length) || maxRounds(allValid) || undefined,
       playerCount: allValid.length,
       divisionCount: divs.length,
@@ -277,6 +301,15 @@ for (const e of entries) {
   if ((e.dateStart || e.dateEnd) || !FALLBACK_DATES[e.id]) continue;
   e.dateStart = FALLBACK_DATES[e.id].dateStart;
   e.dateEnd = FALLBACK_DATES[e.id].dateEnd;
+}
+
+// Torneios ocultados da /major (sem PT/rivais conhecidos — só ocupam espaço).
+// PT feminino joga o European LADIES' Team (fonte elg), não o Girls (egtc).
+const HIDE_IDS = new Set(["egtc:2026"]);
+{
+  const before = entries.length;
+  for (let i = entries.length - 1; i >= 0; i--) if (HIDE_IDS.has(entries[i].id)) entries.splice(i, 1);
+  if (entries.length !== before) console.log(`  (ocultados ${before - entries.length} torneio(s): ${[...HIDE_IDS].join(", ")})`);
 }
 
 // Ordenar por ano desc, depois nome — só por estética do ficheiro (o shell reordena).

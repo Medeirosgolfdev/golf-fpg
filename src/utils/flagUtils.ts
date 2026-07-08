@@ -23,13 +23,13 @@ export const FLAG: Record<string, string> = {
   CL:"🇨🇱",BB:"🇧🇧",BS:"🇧🇸",BO:"🇧🇴",DO:"🇩🇴",DZ:"🇩🇿",EC:"🇪🇨",
   GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
   SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
-  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-SCT":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","GB-WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","GB-NIR":"🇬🇧","ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","EN":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","NIR":"🇬🇧",
+  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-SCT":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","GB-WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","GB-NIR":"🇬🇧","ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","EN":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","WL":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","SQ":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","NIR":"🇬🇧",
   // Aliases e variantes (dados USKids)
   UK:"🇬🇧",    // alias de GB
   // Países adicionais encontrados nos torneios completos
   AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
   JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
-  TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",NN:"🏳️",XX:"🏳️",
+  TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",GU:"🇬🇺",WS:"🇼🇸",NN:"🏳️",XX:"🏳️",
   SA:"🇸🇦",  // Arábia Saudita
   KY:"🇰🇾",  // Ilhas Caimão
   AL:"🇦🇱", ME:"🇲🇪",   // Albânia, Montenegro
@@ -74,7 +74,8 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   "united arab emirates":"ae",kazakhstan:"kz","viet nam":"vn",vietnam:"vn",
   austria:"at",paraguay:"py",nigeria:"ng",oman:"om","puerto rico":"pr",
   "costa rica":"cr",jersey:"je",cyprus:"cy",lebanon:"lb",indonesia:"id",
-  "hong kong":"hk",taiwan:"tw","new zealand":"nz",armenia:"am",
+  "hong kong":"hk",taiwan:"tw","chinese taipei":"tw","new zealand":"nz",armenia:"am",
+  "republic of korea":"kr","korea, republic of":"kr",guam:"gu",samoa:"ws",
   barbados:"bb",bahamas:"bs",bolivia:"bo","dominican republic":"do",
   algeria:"dz",ecuador:"ec",guatemala:"gt",honduras:"hn",kenya:"ke",
   cambodia:"kh",nicaragua:"ni",panama:"pa",peru:"pe","el salvador":"sv",
@@ -189,7 +190,7 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   kh:"Cambodia", ni:"Nicaragua", pa:"Panama", pe:"Peru", sv:"El Salvador",
   ug:"Uganda", uy:"Uruguay", ve:"Venezuela", gr:"Greece", il:"Israel",
   hr:"Croatia", rs:"Serbia", lu:"Luxembourg", is:"Iceland", my:"Malaysia",
-  sc:"Scotland", "gb-eng":"England", en:"England", "gb-wls":"Wales", "gb-sct":"Scotland", "gb-nir":"Northern Ireland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
+  sc:"Scotland", sq:"Scotland", "gb-eng":"England", en:"England", "gb-wls":"Wales", wl:"Wales", "gb-sct":"Scotland", "gb-nir":"Northern Ireland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
   az:"Azerbaijan", al:"Albania", me:"Montenegro", ba:"Bosnia & Herzegovina",
   mz:"Mozambique", ao:"Angola", cv:"Cabo Verde", st:"São Tomé & Príncipe",
   gw:"Guinea-Bissau", tl:"Timor-Leste", tt:"Trinidad & Tobago",

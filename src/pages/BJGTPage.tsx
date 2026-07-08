@@ -110,6 +110,13 @@ export const URLS = [
   { id: "fcg25_g910",  url: "/data/fcg251_girls_9-10.json",  label: "2025 // Girls 9-10",  shortLabel: "2025 Girls 9-10",  manuelName: "", year: 2025, category: "Girls 9-10",  roundDates: ["14 Jul", "15 Jul", "16 Jul"] as string[], series: "fcg" as const, sourceUrl: "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/contest/21/leaderboard.htm" },
   { id: "fcg25_b78",   url: "/data/fcg251_boys_7-8.json",    label: "2025 // Boys 7-8",    shortLabel: "2025 Boys 7-8",    manuelName: "", year: 2025, category: "Boys 7-8",    roundDates: ["14 Jul", "15 Jul", "16 Jul"] as string[], series: "fcg" as const, sourceUrl: "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/contest/9/leaderboard.htm" },
   { id: "fcg25_g78",   url: "/data/fcg251_girls_7-8.json",   label: "2025 // Girls 7-8",   shortLabel: "2025 Girls 7-8",   manuelName: "", year: 2025, category: "Girls 7-8",   roundDates: ["14 Jul", "15 Jul", "16 Jul"] as string[], series: "fcg" as const, sourceUrl: "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/contest/5/leaderboard.htm" },
+
+  /* ── Uswing Mojing Junior World (JWGC) 2026 (Torrey Pines - South, San Diego; 3 rondas) ──
+     Escalões PARCIAIS — só Boys 13-14 e 15-18 scrapados (BlueGolf lento + CAPTCHA a
+     meio); restantes escalões a adicionar após os 3 dias do torneio. `roundDates`
+     omitidas (datas por confirmar) — o torneio aparece sem datas precisas. */
+  { id: "jwgc26_b1518", url: "/data/jwgc261_boys_15-18.json", label: "2026 // Boys 15-18", shortLabel: "2026 Boys 15-18", manuelName: "", year: 2026, category: "Boys 15-18", series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/16/leaderboard.htm" },
+  { id: "jwgc26_b1314", url: "/data/jwgc261_boys_13-14.json", label: "2026 // Boys 13-14", shortLabel: "2026 Boys 13-14", manuelName: "", year: 2026, category: "Boys 13-14", series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/35/leaderboard.htm" },
 ];
 
 /* ── Flags ── */
@@ -142,6 +149,23 @@ export function loadT(raw: any, reverseRounds?: boolean): TData {
 /* ═══════════════════════════════════════════════════════════════
    ADAPTADOR TData → FPGTournament (padrão DORALPage)
    ═══════════════════════════════════════════════════════════════ */
+/** Bandeira robusta para localidades JWGC/FCG. O país US/CA já vem resolvido
+ *  ("United States"/"Canada") pela lib; os internacionais podem vir como
+ *  "Cidade, País" (ex: "Hong Kong, China", "Silang, Philippines") ou "Cidade, ISO2"
+ *  ("Taipei, TW"). Tenta a string toda e depois cada segmento por vírgula, do
+ *  ÚLTIMO (normalmente o país) para o primeiro. Sem risco de California→Canada:
+ *  as siglas de estado US foram consumidas antes (viraram "United States"). */
+function flagForLocation(loc: string): string {
+  const whole = gf(loc);
+  if (whole && whole !== "🏳️") return whole;
+  const segs = loc.split(",").map((s) => s.trim()).filter((s) => s && s !== "-");
+  for (let i = segs.length - 1; i >= 0; i--) {
+    const f = gf(segs[i]);
+    if (f && f !== "🏳️") return f;
+  }
+  return "🏳️";
+}
+
 function tDataToTournament(data: TData, def: TDef): FPGTournament {
   const { par, si, parTotal, players } = data;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
@@ -162,11 +186,23 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         teeName,
       }));
       const incomplete = p.rounds.length < nR;
+      // JWGC/FCG: os ficheiros trazem `gradYear` + país já limpo (p/ bandeira) +
+      // `hometown` (cidade/estado, ex: "New York, NY"). Defensivo p/ dados antigos
+      // "CLASSE, LOCAL" ainda no country. A coluna "País" mostra a bandeira do país
+      // + a ORIGEM detalhada (hometown quando existe — mais informativo que só "USA").
+      const rawCountry = p.country || "";
+      const ym = /^(\d{4})\s*,\s*(.*)$/.exec(rawCountry);
+      const gradField = (p as unknown as { gradYear?: number }).gradYear;
+      const classYear = gradField ?? (ym ? +ym[1] : null);
+      const flagCountry = gradField != null ? rawCountry : (ym ? ym[2].trim() : rawCountry);
+      const hometown = (p as unknown as { hometown?: string }).hometown ?? (ym ? ym[2].trim() : "");
+      const origin = hometown || normPaisDisplay(flagCountry);
       return {
         scoreId: p.name,
         pos: p.pos,
         name: p.name,
-        club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+        club: flagCountry ? `${flagForLocation(flagCountry)} ${origin}` : "",
+        _classYear: classYear,
         grossTotal: p.total,
         toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
         nholes: par.length,
@@ -195,13 +231,14 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
 
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto BJGT */
-function bjgtScorecardOptions(): ScorecardOptions {
+function bjgtScorecardOptions(showClass = false): ScorecardOptions {
   return {
     hideHCP: true,
     hideSD: true,
     hideEsc: true,
     hideFed: true,
     hideTee: true,
+    showClass,      // coluna ANO (class year) — só JWGC/FCG a expõem
     clubLabel: "País",
   };
 }
@@ -415,7 +452,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     hasManuel: data.players.some((p) => isM(p.name)),
     links: sourceUrl ? [{ label: "BlueGolf", url: sourceUrl, icon: "🔗" }] : undefined,
     results,
-    scOptions: bjgtScorecardOptions(),
+    scOptions: bjgtScorecardOptions(results.players.some((p) => (p as unknown as { _classYear?: number | null })._classYear != null)),
     roundLabels,
     evoCols,
     // Apresentação PLANA (igual ao JOB/Doral): o leaderboard renderiza sem
