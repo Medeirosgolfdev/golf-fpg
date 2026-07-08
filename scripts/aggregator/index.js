@@ -48,6 +48,7 @@ const SOURCES = [
   { id: "elg", label: "European Ladies' Team Championship", load: () => require("./sources/elg") },
   { id: "eatc", label: "European Amateur Team Championship", load: () => require("./sources/eatc") },
   { id: "eatc2", label: "European Amateur Team Champ Div. 2", load: () => require("./sources/eatc2") },
+  { id: "egr", label: "European Golf Rankings", load: () => require("./sources/egr") },
 ];
 
 function parseArgs(argv) {
