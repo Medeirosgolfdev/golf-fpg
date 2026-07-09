@@ -1,0 +1,117 @@
+name: Actualizar GJGL
+
+# Scraper do Global Junior Golf Live (globaljuniorgolflive.com).
+# Re-scrapa TODOS os eventos do ano corrente do gjgl-catalog.json (sem
+# --skip-existing, para eventos a meio ganharem as rondas finais; a guarda
+# anti-futuros do scraper salta eventos com start_date > hoje — ver memória
+# "GJGL fantasmas por tid reutilizado"). Depois regenera o gjgl-index.json
+# (página /global-junior) e os canónicos do kids2 (agregador).
+#
+# Endpoint PHP do GJGL é PÚBLICO → SEM secrets/cookies.
+#
+# Corre:
+#  - Cron semanal Segunda 05:30 UTC (depois do update-spain às 04:00) — os
+#    eventos GJGL terminam ao Domingo.
+#  - A pedido (botão "Run workflow"), opcionalmente com slugs ad-hoc.
+#
+# O commit só acontece se houver alterações REAIS: o diff ignora linhas de
+# "scrapedAt" (o scraper reescreve sempre o timestamp).
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: 'Slugs ad-hoc separados por vírgula (vazio = ano corrente todo)'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC) — Segunda 05:30 UTC.
+    - cron: '30 5 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-gjgl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    concurrency:
+      group: update-gjgl
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-gjgl.js
+        run: |
+          SLUGS="${{ github.event.inputs.slugs }}"
+          if [ -n "$SLUGS" ]; then
+            node scripts/scrape-gjgl.js --slugs "$SLUGS"
+          else
+            node scripts/scrape-gjgl.js --year "$(date -u +%Y)"
+          fi
+
+      - name: Detectar alterações reais (ignora scrapedAt)
+        id: changes
+        run: |
+          git add public/data/gjgl public/data/gjgl-catalog.json
+          if git diff --staged --quiet -I '"scrapedAt"'; then
+            echo "real_changes=0" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações reais (só timestamps) — a saltar rebuild e commit"
+            git reset --quiet
+          else
+            echo "real_changes=1" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerar índice GJGL
+        if: steps.changes.outputs.real_changes == '1'
+        run: node scripts/build-gjgl-index.js
+
+      # Push com GITHUB_TOKEN não dispara o build-juniors.yml (anti-recursão)
+      # → regenerar os canónicos do kids2 aqui mesmo.
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.changes.outputs.real_changes == '1'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push
+        if: steps.changes.outputs.real_changes == '1'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: GJGL scrape + rebuild juniors ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ GJGL + juniores canónicos actualizados"

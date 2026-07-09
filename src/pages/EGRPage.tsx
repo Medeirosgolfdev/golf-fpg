@@ -30,6 +30,8 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { gf } from "../utils/flagUtils";
 import { norm } from "../utils/format";
 import { useSort } from "../hooks/useSort";
+import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
+import { KidsLink, KidsLinkCtx } from "../ui/KidsLink";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
@@ -181,6 +183,7 @@ type ListKey = "rank" | "name" | "country" | "age" | "born" | "points" | "avgSco
 
 function EGRList({ ranking }: { ranking: EgrRanking }) {
   const navigate = useNavigate();
+  const { kidsMap } = useKidsLinkMap();
   const [q, setQ] = useState("");
   const [country, setCountry] = useState("");
   const [ageGroup, setAgeGroup] = useState("");
@@ -241,6 +244,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
   const pageRows = filtered.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   return (
+   <KidsLinkCtx.Provider value={kidsMap}>
     <div style={{ padding: "8px 12px 24px" }}>
       <Toolbar>
         <ToolbarTitle>🇪🇺 European Golf Rankings</ToolbarTitle>
@@ -314,7 +318,16 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
                       title="Ver histórico e stats deste jogador"
                     >
                       <td className="num" style={{ color: "var(--text-muted)" }}>{p.egrRankSex ?? "—"}</td>
-                      <td style={{ fontWeight: 500 }}>{p.name}</td>
+                      <td style={{ fontWeight: 500 }}>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                          {p.name}
+                          {/* ↗ para a ficha /kids2 (só aparece se o jogador tiver ficha no roster canónico).
+                              stopPropagation: não disparar a navegação da linha (→ detalhe EGR). */}
+                          <span onClick={(e) => e.stopPropagation()} style={{ display: "inline-flex" }}>
+                            <KidsLink nome={p.name} />
+                          </span>
+                        </span>
+                      </td>
                       <td title={p.country || ""}>{flagOf(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
                       <td>{p.sex ? <SexBadge sex={p.sex} /> : ""}</td>
                       <td className="tight">{p.ageGroup || "—"}</td>
@@ -336,6 +349,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
         </>
       )}
     </div>
+   </KidsLinkCtx.Provider>
   );
 }
 

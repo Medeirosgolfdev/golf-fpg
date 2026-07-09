@@ -96,18 +96,60 @@ const EXTRA_TID_BY_NEG: Record<number, string> = (() => {
 })();
 
 /** Extrai escalao a partir do nome do EXTRA_TID (ex: "WJGC 2026 B10-11" → "Boys 10-11"). */
-/** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14" → [0, 14]. */
+/** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14"/"Boys U14" →
+ *  [0, 14]; "10 and Under" → [0, 10]. */
 function parseEscalaoRange(esc: string): [number, number] | null {
   if (!esc) return null;
   // "U14" / "U12" / "U10"
   const u = esc.match(/^U(\d+)$/i);
   if (u) return [0, parseInt(u[1], 10)];
+  // "10 and Under" / "10 & Under" / "Under 10" → [0, N]
+  const und = esc.match(/under\s*(\d+)|(\d+)\s*(?:&|and)?\s*under/i);
+  if (und) return [0, parseInt(und[1] || und[2], 10)];
+  // "Boys U14" / "Girls U16" (U + idade máxima, com prefixo) → [0, N]
+  const ug = esc.match(/\bU\s*(\d+)/i);
+  if (ug) return [0, parseInt(ug[1], 10)];
   // "Boys 12" / "Boys 10-11" / "Boys 10 & 11" / "Boys 10 - 11"
   const m = esc.match(/(\d+)\s*[-&]\s*(\d+)/);
   if (m) return [parseInt(m[1], 10), parseInt(m[2], 10)];
   const s = esc.match(/(\d+)/);
   if (s) { const n = parseInt(s[1], 10); return [n, n]; }
   return null;
+}
+
+/** Nome de escalão a partir de um label de divisão de JobFile
+ *  ("11 & 12" → "Boys 11-12", "10 and Under" → "Boys U10", "Boys U14" →
+ *  "Boys U14", "Overall"/"Divisão 1" → "Geral"). */
+function jobDivToEscalao(label: string): string {
+  const l = (label || "").trim();
+  if (!l || /overall|divis|general|scratch|gross|net/i.test(l)) return "Geral";
+  const g = /girl|femenil|f[ée]minin|ladies/i.test(l) ? "Girls" : "Boys";
+  const und = l.match(/under\s*(\d+)|(\d+)\s*(?:&|and)?\s*under/i);
+  if (und) return `${g} U${und[1] || und[2]}`;
+  const u = l.match(/\bU\s*(\d+)/i);
+  if (u) return `${g} U${u[1]}`;
+  const r = l.match(/(\d+)\s*[-&]\s*(\d+)/);
+  if (r) return `${g} ${r[1]}-${r[2]}`;
+  const s = l.match(/(\d+)/);
+  if (s) return `${g} ${s[1]}`;
+  return "Geral";
+}
+
+/** Converte "Apelido, Nome" → "Nome Apelido" (Orange Bowl usa a ordem
+ *  invertida). Deixa nomes normais intactos. */
+function flipName(n: string): string {
+  const s = (n || "").trim().replace(/\s+/g, " ");
+  const m = s.match(/^([^,]+),\s*(.+)$/);
+  return m ? `${m[2]} ${m[1]}`.replace(/\s+/g, " ").trim() : s;
+}
+
+/** Chave de série de um torneio a partir do nome, removendo o ano
+ *  ("European Championship 2024" → "European Championship"). Torneios sem ano
+ *  (one-offs, ex: "Real Club de Golf El Prat") ficam com o nome inteiro como
+ *  série própria. Usado para colapsar séries multi-edição no dropdown. */
+function pastSeriesKey(name: string): string {
+  const stripped = (name || "").replace(/\s*\b(?:19|20)\d{2}\b\s*/g, " ").replace(/\s+/g, " ").trim();
+  return stripped || (name || "");
 }
 
 /** True se o escalão "user" (ex: Boys 12) está incluído no escalão "candidato"
@@ -117,9 +159,29 @@ function escalaoMatches(userEsc: string, candEsc: string): boolean {
   const u = parseEscalaoRange(userEsc);
   const c = parseEscalaoRange(candEsc);
   if (!u || !c) return false;
+  // Guarda de sexo: se ambos os escalões indicam sexo e diferem, não matcha
+  // (ex: "Boys 12" não deve casar com "Girls U14").
+  const ug = /girl/i.test(userEsc) ? "F" : /boy/i.test(userEsc) ? "M" : null;
+  const cg = /girl/i.test(candEsc) ? "F" : /boy/i.test(candEsc) ? "M" : null;
+  if (ug && cg && ug !== cg) return false;
   // Match se RANGES sobrepõem (qualquer overlap)
   return u[0] <= c[1] && c[0] <= u[1];
 }
+
+// Torneios internacionais (JobFile) não-USKids a integrar como campos
+// seleccionáveis: Future Masters (UK), AV Trophy (Bélgica U14), Junior Orange
+// Bowl, FSGA. IDs negativos ≤ -1000 (afastados dos EXTRA/FFG/famílias). Cada
+// divisão do ficheiro vira um escalão via jobDivToEscalao.
+interface JobIntlDivPlayer { name?: string; country?: string; pos?: number | string; total?: number; toPar?: number }
+interface JobIntlDivision { division?: string; players?: JobIntlDivPlayer[] }
+interface JobIntlFile { tournament?: string; year?: number; divisions?: JobIntlDivision[] }
+interface JobIntlDef { path: string; neg: number; name: string; dateUS: string }
+const JOBFILE_INTL: JobIntlDef[] = [
+  { neg: -1001, path: "/data/ftm_fm_2026.json",     name: "Future Masters 2026",     dateUS: "8/12/2026" },
+  { neg: -1002, path: "/data/avtrophy_2026.json",   name: "AV Trophy U14 2026",      dateUS: "7/2/2026" },
+  { neg: -1003, path: "/data/orangebowl_2026.json", name: "Junior Orange Bowl 2026", dateUS: "12/27/2026" },
+  { neg: -1004, path: "/data/fsga_2026.json",       name: "FSGA Boys' Junior 2026",  dateUS: "6/23/2026" },
+];
 
 // Próximos torneios (UP) — onde os rivais podem aparecer inscritos.
 // Tcodes têm de estar em /data/uskids-field.json (validado em runtime pelo filtro
@@ -283,6 +345,8 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [uskRes, setUskRes] = useState<USKResData | null>(null);
   // Map neg ID → FFG file data (loaded on mount)
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
+  // Map neg ID → JobFile internacional (Future Masters, AV Trophy, Orange Bowl, FSGA)
+  const [jobIntl, setJobIntl] = useState<Map<number, JobIntlFile>>(new Map());
   const [searchParams, setSearchParams] = useSearchParams();
   const [torneioT, setTorneioT] = useState<number>(() => {
     if (syncUrl) { const t = searchParams.get("t"); if (t && !Number.isNaN(Number(t))) return Number(t); }
@@ -331,6 +395,24 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       const m = new Map<number, FFGFile>();
       for (const r of results) { if (r) m.set(r[0], r[1]); }
       setFfgData(m);
+    });
+    return () => { alive = false; };
+  }, []);
+
+  // Load torneios internacionais (JobFile) — Future Masters, AV Trophy, Orange
+  // Bowl, FSGA. Carrega em paralelo, falhas silenciosas.
+  useEffect(() => {
+    let alive = true;
+    Promise.all(JOBFILE_INTL.map(async (def) => {
+      try {
+        const d = await cachedFetchJson<JobIntlFile>(def.path);
+        return d ? [def.neg, d] as const : null;
+      } catch { return null; }
+    })).then(results => {
+      if (!alive) return;
+      const m = new Map<number, JobIntlFile>();
+      for (const r of results) { if (r) m.set(r[0], r[1]); }
+      setJobIntl(m);
     });
     return () => { alive = false; };
   }, []);
@@ -422,6 +504,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     const today = new Date().toISOString().slice(0, 10);
     const out: FieldTorneio[] = [];
     const seenTcodes = new Set<string>();
+    // Séries já presentes em "Próximos torneios" — não voltam a aparecer em
+    // "Passados" (não faz sentido ter World/Venice em futuro E passado).
+    const futureSeries = new Set<string>();
 
     // 1) Futuros (UP_TORN ∩ field)
     if (field) {
@@ -436,6 +521,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       for (const ft of fut) {
         out.push(ft);
         seenTcodes.add(String(ft.t));
+        futureSeries.add(pastSeriesKey(ft.name));
       }
     }
 
@@ -473,8 +559,18 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         }
         if (startIso && startIso < today) candidateTcodes.add(ut.tcode);
       }
+      // (c) Majors europeus curados (CANONICAL_TCODES) — torneios grandes e
+      //     interessantes (European, World, Venice, Marco Simone, Rome, Irish,
+      //     Paris; todas as edições) MESMO que o Manuel não os tenha jogado.
+      //     O filtro hasEscalao adiante remove os que não têm jogadores no
+      //     escalão actual.
+      if (mh) {
+        for (const tcode of CANONICAL_TCODES) {
+          if (mh.torneios[tcode]) candidateTcodes.add(tcode);
+        }
+      }
 
-      const pastTcodes: Array<{ tcode: string; iso: string }> = [];
+      const pastTcodes: Array<{ tcode: string; iso: string; name: string }> = [];
       for (const tcode of candidateTcodes) {
         if (seenTcodes.has(tcode)) continue;
         if (HIDDEN_TCODES.has(tcode)) continue; // blacklist (El Prat, Desert)
@@ -492,13 +588,23 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         if (!synth) continue;
         const hasEscalao = synth.escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
         if (!hasEscalao) continue;
-        pastTcodes.push({ tcode, iso });
+        pastTcodes.push({ tcode, iso, name: synth.name });
       }
       // Ordenar desc (mais recente primeiro)
       pastTcodes.sort((a, b) => b.iso.localeCompare(a.iso));
-      for (const { tcode } of pastTcodes) {
+      // Colapsar séries multi-edição: só a edição MAIS RECENTE de cada série
+      // entra no dropdown (ex: European Championship 2022-2026 → só 2026). Não
+      // faz sentido listar todos os anos como entradas seleccionáveis — as
+      // colunas históricas da cross-table já cobrem as edições anteriores.
+      // Torneios sem ano no nome (one-offs, ex: El Prat) têm série própria.
+      const seenSeries = new Set<string>();
+      for (const { tcode, name } of pastTcodes) {
+        const sk = pastSeriesKey(name);
+        // Já colapsada nesta lista, OU já presente em "Próximos torneios".
+        if (seenSeries.has(sk) || futureSeries.has(sk)) continue;
         const synth = buildSyntheticTorneio(tcode);
         if (synth && synth.escaloes.length > 0) {
+          seenSeries.add(sk);
           out.push(synth);
           seenTcodes.add(tcode);
         }
@@ -614,8 +720,33 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }
     }
 
+    // 5) Torneios internacionais (JobFile) — Future Masters, AV Trophy, Orange
+    //    Bowl, FSGA. Cada divisão vira um escalão (jobDivToEscalao). Só entram
+    //    se ≥1 escalão corresponder ao escalão actual (mesma regra dos Passados).
+    for (const def of JOBFILE_INTL) {
+      const d = jobIntl.get(def.neg);
+      if (!d?.divisions?.length) continue;
+      const escaloes: FieldEscalao[] = [];
+      for (const div of d.divisions) {
+        const players = (div.players || []).filter(p => p.name);
+        if (players.length === 0) continue;
+        const escNome = jobDivToEscalao(div.division || "");
+        const fps: FieldPlayer[] = players.map(p => ({
+          nome: flipName(p.name || "?"),
+          pais: (p.country || "").replace(/^GB-GBN$/, "GB"),
+        }));
+        const existing = escaloes.find(e => e.nome === escNome);
+        if (existing) existing.jogadores!.push(...fps);
+        else escaloes.push({ nome: escNome, jogadores: fps });
+      }
+      if (escaloes.length === 0) continue;
+      const hasEscalao = escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
+      if (!hasEscalao) continue;
+      out.push({ t: def.neg, name: def.name, date_inicio: def.dateUS, escaloes });
+    }
+
     return out;
-  }, [field, mh, autoRivals, ffgData, escalaoNome, uskRes]);
+  }, [field, mh, autoRivals, ffgData, jobIntl, escalaoNome, uskRes]);
 
   // Escalões disponíveis para o torneio escolhido
   const escaloesDisponiveis = useMemo(() => {
@@ -1143,8 +1274,14 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
             const newT = parseInt(v);
             setTorneioT(newT);
             const newTorn = futureTorneios.find(x => x.t === newT);
-            const newEsc = newTorn?.escaloes.find(e => e.nome === escalaoNome);
-            if (!newEsc) setEscalaoNome(newTorn?.escaloes[0]?.nome ?? "");
+            if (newTorn && !newTorn.escaloes.some(e => e.nome === escalaoNome)) {
+              // Sem match exacto: preferir um escalão COMPATÍVEL (ex: escolher
+              // Future Masters com "Boys 12" → cai em "Boys 11-12").
+              const withPlayers = (e: FieldEscalao) => (e.jogadores?.length ?? 0) > 0;
+              const match = newTorn.escaloes.find(e => withPlayers(e) && escalaoMatches(escalaoNome, e.nome))
+                || newTorn.escaloes.find(withPlayers);
+              if (match) setEscalaoNome(match.nome);
+            }
           }}
         >
           {(() => {
@@ -1163,8 +1300,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
                   const iso = y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:"";
                   if (iso && iso >= todayIso) return "Próximos torneios";
                 }
-                return "Passados USKids (Manuel)";
+                return "Passados USKids";
               }
+              if (e.t <= -1000) return "Torneios internacionais";
               if (e.t > -100) return "Outros";
               if (e.t > -200) return "FFG · Internationaux U14";
               // -200+: famílias agrupáveis aparecem só como o nome da série.
@@ -1181,11 +1319,12 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
             }
             const groupOrder = [
               "Próximos torneios",
-              "Passados USKids (Manuel)",
+              "Passados USKids",
               "WJGC",
               "Doral",
               "EOWAGR",
               "FFG · Internationaux U14",
+              "Torneios internacionais",
               "Outros",
             ];
             const seen = new Set<string>();
