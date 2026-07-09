@@ -79,6 +79,15 @@ jobs:
         if: steps.changes.outputs.real_changes == '1'
         run: node scripts/build-gjgl-index.js
 
+      # Distâncias dos eventos PT (cruzamento com voltas WHS dos federados —
+      # ver cabeçalho do build-gjgl-course-overrides.js). Eventos novos em
+      # Portugal só ganham metros depois de o update-data refrescar os
+      # analysis dos federados que lá jogaram; correr aqui apanha-os na
+      # semana seguinte sem intervenção manual.
+      - name: Regenerar overrides de campo/distâncias (eventos PT)
+        if: steps.changes.outputs.real_changes == '1'
+        run: node scripts/build-gjgl-course-overrides.js
+
       # Push com GITHUB_TOKEN não dispara o build-juniors.yml (anti-recursão)
       # → regenerar os canónicos do kids2 aqui mesmo.
       - name: Regenerar juniores canónicos (agregador)
