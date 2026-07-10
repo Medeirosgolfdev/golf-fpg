@@ -61,6 +61,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/jogadores` | JogadoresListPage | federados.json + métricas (landing de /jogadores, tabela tipo FederatedsList) |
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
 | `/jogadores-por-ano` | JogadoresPorAnoPage | players/federados por coorte de ano de nascimento (utilidade, fora da NavBar) |
+| `/torneios-recentes` (+ `/:key`) | RecentTournamentsPage | recent-tournaments.json — torneios recentes reconstruídos das voltas WHS dos nossos jogadores (utilidade, fora da NavBar); detalhe reutiliza `TournamentDetail` |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-40).json, uskids-field.json |
 | `/kids-legacy` (`/kids` → redirect `/kids2`) | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
@@ -447,6 +448,42 @@ node scripts/scrape-fpg-admissions-draws-node.js --year 2026    # só 2026
 node scripts/scrape-fpg-admissions-draws-node.js --tcodes 10941,10937,10935
 node scripts/scrape-fpg-admissions-draws-node.js --since 2026-01-01 --concurrency 3
 ```
+
+### Template de torneios FUTUROS em destaque — `FEATURED_TOURNAMENTS` (2026-07-10)
+
+Generalização da injecção sintética que existia hardcoded para o Nacional 2026:
+`src/data/featuredTournaments.ts` é a config única de torneios futuros que devem
+aparecer na sidebar da FPGPage (lista geral "Todos" + secção Jovens) ANTES de
+haver resultados em pull-torneios/jovens_YYYY.json — com tabs Inscrições/Draw
+automáticas (TournamentDetail). O Nacional 2026 vive agora lá (meta importada de
+`NACIONAL_2026_META`); primeiros torneios do template novo: Amendoeira 2026
+(`179/10604-10606`, adicionados 2026-07-10 ainda só com draw).
+
+**Checklist para adicionar um torneio futuro:**
+1. Entrada em `FEATURED_TOURNAMENTS`: `{ ccode, tcode }` chega — nome/data/campo/
+   escalão vêm do scrape; overrides opcionais (name, escalao, date, campo, rounds,
+   region, extraLinks).
+2. Entrada(s) em `scripts/fpg-admissions-scope.json` com `"date": null` (⚠ null
+   salta a validação `_suspect` — obrigatório quando a data ainda não é conhecida)
+   e `_src: "manual-jovens"`.
+3. Scrape inicial: `node scripts/scrape-fpg-admissions-draws-node.js --tcodes {ccode}:{tcode},...`
+   (o cron Sex/Sáb/Dom mantém depois; quando a data real for conhecida, preenchê-la
+   no scope para o `--since` do cron ser preciso).
+4. Sem dados scraped, a entrada da config fica dormente (não aparece nada) — o
+   `if (!ad) continue` na injecção (2) da FPGPage garante isso.
+
+**Verificação LIVE ao abrir (2026-07-10):** para torneios FEATURED ainda não
+jogados (`live !== false` e sem rondas), o `TournamentDetail` chama
+automaticamente `/api/inscricoes?ccode=X&tcode=Y` (hook
+`src/hooks/useLiveAdmissions.ts`, cache 3 min) — a tab Inscrições mostra a
+lista ACTUAL da FPG com badge `🟢 live FPG · hora · N inscritos` e diff
+"+N novos / −N saíram" face ao último scrape; se o live falhar cai no scrape
+(`💾 live indisponível`). Ambos os endpoints foram GENERALIZADOS (aceitam
+qualquer ccode/tcode, antes hardcoded 10935-10944 + club=000): função Vercel
+`api/inscricoes.js` (agora via gateway linkpage.aspx; precisa do env
+`FPG_ADMISSIONS_COOKIES` no Vercel) e middleware dev em `vite.config.ts`
+(cache key `ccode/tcode` para clubes ≠000 no `inscricoes_nacionais.json`).
+No Nacional 2026 o `live: false` está posto (evento já disputado).
 
 **scrape-classif-node.js** — Node puro (2026-04-22). Substitui `pull-torneios.js` browser-console. GET linkpage warmup + POST `classif.aspx/ClassifLST` paginado + POST `classifAgregate.aspx/ScoreCard` por jogador. Output formato compatível com `pull-torneiosNNN.json`. Scope: `scripts/classif-scope.json` (217 torneios já processados) ou flags CLI. Workflow: `update-classif.yml` (Sáb/Dom 20:30 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
 ```bash
@@ -1193,6 +1230,35 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 ---
 
+## Torneios recentes reconstruídos (`/torneios-recentes`) — 2026-07-10
+
+Página utilitária (fora da NavBar) que lista os **últimos torneios em que os
+nossos jogadores participaram**, mesmo os que NÃO temos scrapeados. Ideia:
+cada volta WHS de um jogador (`output/{fed}/analysis/data.json`) traz
+`eventName`, `ccode`/`tcode`, data, gross, tee e o scorecard buraco-a-buraco
+(`HOLES[scoreId]`). Agregando por torneio (`ccode|tcode`) e juntando todos os
+nossos que lá aparecem, reconstrói-se "quem dos nossos jogou + a pontuação".
+Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
+
+- **Build:** `scripts/build-recent-tournaments.js` → `public/data/recent-tournaments.json`
+  (formato "fpg-pull" — `tournaments[].players[].roundScores[]`, o MESMO que a
+  FPGPage/DrivePage consomem). Só voltas `scoreOrigin==="Torn"` com tcode real
+  (exclui actos administrativos: tcode `000000000`, "Transferência de Clube").
+  Agrupa multi-dia pelo `ccode|tcode` (as rondas diferem por data; nome limpo
+  via `cleanTournName` tira sufixos "D2"/"R3"). `date` em ISO (`toIsoDate`);
+  `parTotal` = par de UMA ronda (convenção pull-torneios — os componentes
+  multiplicam por nº de rondas). Cada torneio ganha `scraped` (já há leaderboard
+  completa em pull-torneios/drive/aquapor/jovens?) e `nOurs` (nº de nossos).
+  Janela default `--since 2024-06-01` (~2.4k torneios, ~9 MB). CLI:
+  `--since`, `--min-ours`, `--all-origins`. Teste: `build-recent-tournaments.test.js`.
+- **Página:** `src/pages/RecentTournamentsPage.tsx`. Lista = tabela sortável
+  (`useSort`+`SortableHdr`, estilo `player-list-table`) com filtros (pesquisa,
+  mín. nº nossos, estado scrapeado, ano). Clicar numa linha → detalhe que
+  **reutiliza `TournamentDetail`** da FPGPage (tabs de ronda + Resumo +
+  Scorecards). ⚠ A posição mostrada é **entre os nossos**, não a oficial.
+- **Automação:** regenerado no `update-data.yml` (a seguir a rebuild dos
+  índices de campos), committa `recent-tournaments.json`.
+
 ## Todos os ficheiros JSON em public/data/
 
 | Ficheiro | Circuito | Gerado por | Scorecard? | Usado em |
@@ -1203,6 +1269,7 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | master-courses.json | FPG | pipeline.js (+ add-paco-do-lumiar.js p/ campos manuais) | ✓ | CamposPage |
 | course-players.json | FPG | build-course-players.js | ✓ | CamposPage (`_players` dos campos PT — quem jogou + scores por volta) |
 | course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome p/ os jogadores dos campos) |
+| recent-tournaments.json | FPG | build-recent-tournaments.js | ✓ | RecentTournamentsPage (`/torneios-recentes`) — torneios reconstruídos das voltas dos nossos |
 | drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | aquapor-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | melhorias.json | FPG | manual | ✓ | JogadoresPage, CamposPage |

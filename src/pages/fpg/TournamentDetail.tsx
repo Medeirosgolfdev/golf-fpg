@@ -17,7 +17,9 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { MultiRoundRow } from "../../ui/multiRoundTypes";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
 import { tournamentHasManuel } from "../../data/fpgUtils";
-import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl } from "../../utils/format";
+import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, norm } from "../../utils/format";
+import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
+import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
   ClubePill, ManuelPill,
@@ -38,7 +40,35 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   // Dados extra (admissions + draws) — injectados no loader Jovens
   const admissions = (tournament as any)._admissions as import("../../data/nacional2026Loader").FpgAdmissions | undefined;
   const draws      = (tournament as any)._draws as Record<string, import("../../data/nacional2026Loader").FpgDraw> | undefined;
-  const hasAdmissions = !!admissions && !admissions.error && (admissions.players?.length ?? 0) > 0;
+
+  // ── Verificação LIVE das inscrições (torneios FEATURED futuros) ──────────
+  // Ao abrir o detalhe de um torneio em destaque ainda não jogado, chama
+  // /api/inscricoes (proxy) para buscar a lista ACTUAL de inscritos na FPG,
+  // compara com o último scrape (fpg-admissions-draws.json) e mostra
+  // "+N novos / −N saíram". A lista live substitui a scraped na tab
+  // Inscrições; se o live falhar (cookies expirados, offline) cai no scrape.
+  const isFeatured = FEATURED_TOURNAMENTS.some(
+    f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode) && f.live !== false);
+  const liveEnabled = isFeatured && !hasAnyRounds;
+  const live = useLiveAdmissions(tournament.ccode, tournament.tcode, liveEnabled);
+  const liveActive = live.status === "live" && live.players.length > 0;
+  const effAdmissions = useMemo(() => (liveActive
+    ? { ...(admissions || {}), players: live.players, totalInscritos: live.players.length, reservas: 0, error: undefined }
+    : admissions), [liveActive, admissions, live.players]);
+  const admissionsDiff = useMemo(() => {
+    if (!liveActive) return null;
+    const scraped = admissions?.players ?? [];
+    if (scraped.length === 0) return null;
+    const keyOf = (p: { fed: string | null; nome: string }) => p.fed || norm(p.nome || "");
+    const liveKeys = new Set(live.players.map(keyOf));
+    const scrKeys = new Set(scraped.map(keyOf));
+    return {
+      novos: live.players.filter(p => !scrKeys.has(keyOf(p))),
+      saidos: scraped.filter(p => !liveKeys.has(keyOf(p))),
+    };
+  }, [liveActive, live.players, admissions]);
+
+  const hasAdmissions = !!effAdmissions && !effAdmissions.error && (effAdmissions.players?.length ?? 0) > 0;
   const drawsByRound = useMemo(() => {
     const out = new Map<number, import("../../data/nacional2026Loader").FpgDraw>();
     if (draws) for (const [k, d] of Object.entries(draws)) {
@@ -377,15 +407,51 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
         // Extra tab injectada pelo parent (ex: scorecards de match play)
         const extraTab = (extraTabs ?? []).find(et => et.key === activeKey);
         if (extraTab) return extraTab.content;
-        if (isAdmissionsTab && admissions)
-          return <AdmissionsTab
-            admissions={admissions}
-            playersDB={playersDB as any}
-            date={tournament.date}
-            fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
-            tournamentEscalao={tournament.escalao || undefined}
-            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
-          />;
+        if (isAdmissionsTab && effAdmissions)
+          return <>
+            {/* Barra de estado da verificação live (só torneios FEATURED futuros) */}
+            {liveEnabled && (
+              <div className="fs-12" style={{ padding: "8px 12px 0", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                {live.status === "loading" && <span className="muted">⏳ a verificar inscrições na FPG…</span>}
+                {liveActive && (
+                  <span className="fw-600" style={{ color: "var(--color-ok, #16a34a)" }}>
+                    🟢 live FPG
+                    {live.fetchedAt ? ` · ${new Date(live.fetchedAt).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}` : ""}
+                    {` · ${live.players.length} inscritos`}
+                  </span>
+                )}
+                {liveActive && admissionsDiff && (
+                  (admissionsDiff.novos.length > 0 || admissionsDiff.saidos.length > 0) ? (
+                    <span className="fw-600">
+                      {admissionsDiff.novos.length > 0 && (
+                        <span style={{ color: "var(--color-ok, #16a34a)" }}>
+                          +{admissionsDiff.novos.length} novos: {admissionsDiff.novos.map(p => p.nome).join(", ")}
+                        </span>
+                      )}
+                      {admissionsDiff.saidos.length > 0 && (
+                        <span style={{ color: "var(--color-warn, #dc2626)", marginLeft: admissionsDiff.novos.length > 0 ? 8 : 0 }}>
+                          −{admissionsDiff.saidos.length} saíram: {admissionsDiff.saidos.map(p => p.nome).join(", ")}
+                        </span>
+                      )}
+                    </span>
+                  ) : (
+                    <span className="muted">sem alterações desde o último scrape</span>
+                  )
+                )}
+                {live.status === "error" && (
+                  <span className="muted" title={live.error}>💾 live indisponível — a mostrar o último scrape</span>
+                )}
+              </div>
+            )}
+            <AdmissionsTab
+              admissions={effAdmissions}
+              playersDB={playersDB as any}
+              date={tournament.date}
+              fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
+              tournamentEscalao={tournament.escalao || undefined}
+              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+            />
+          </>;
         if (isDrawTab)
           return <DrawTab
             draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
@@ -394,7 +460,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             tournamentEscalao={tournament.escalao || undefined}
             tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
             tournamentDate={tournament.date}
-            admissions={admissions}
+            admissions={effAdmissions}
             results={drawResults}
             hideCols={drawHideCols}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}

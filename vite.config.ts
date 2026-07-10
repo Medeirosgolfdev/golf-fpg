@@ -467,12 +467,16 @@ export default defineConfig({
 
           const url   = new URL(req.url, 'http://localhost')
           const tcode = url.searchParams.get('tcode') ?? ''
+          const ccode = (url.searchParams.get('ccode') ?? '000').padStart(3, '0')
           const raw   = url.searchParams.get('raw') === '1'
-          const meta  = TORNEIOS[tcode]
+          // Meta conhecida (Nacional 2026) é opcional — qualquer (ccode, tcode)
+          // válido é aceite. Generalização 2026-07-10 para a verificação live
+          // dos FEATURED_TOURNAMENTS (src/hooks/useLiveAdmissions.ts).
+          const meta  = TORNEIOS[tcode] ?? { nome: 'Torneio ' + ccode + '/' + tcode, escalao: '', sex: '' }
 
-          if (!tcode || !meta) {
+          if (!/^\d{3,6}$/.test(tcode) || !/^\d{3}$/.test(ccode)) {
             res.writeHead(400, { 'Content-Type': 'application/json' })
-            res.end(JSON.stringify({ error: 'tcode invalido (10935-10944)' }))
+            res.end(JSON.stringify({ error: 'tcode/ccode invalido' }))
             return
           }
 
@@ -492,8 +496,8 @@ export default defineConfig({
           //
           // Duas fontes fiáveis = redundância real, não mais teórica. Em cada tcode,
           // as duas devem devolver os mesmos inscritos; o log mostra se divergem.
-          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
-          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
+          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=' + ccode + '&tourn=' + tcode + '&ack=XH256YF450'
+          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=' + ccode + '&tourn=' + tcode + '&ack=XH256YF450'
           const fpgUrl = FPG_URL_1  // mantido para o cache.fpgUrl
 
           const baseHeaders: Record<string, string> = {
@@ -637,8 +641,12 @@ export default defineConfig({
             const jogadores = bestJogadores
             const now       = new Date().toISOString()
 
+            // Chave da cache: tcode simples para o legado (ccode 000 — o painel
+            // antigo e o inscricoes_nacionais.json usam só o tcode); prefixada
+            // com ccode para torneios de clube (evita colisão de tcodes).
+            const cacheKey   = ccode === '000' ? tcode : ccode + '/' + tcode
             const prevCache  = readCache()
-            const cached     = prevCache[tcode]
+            const cached     = prevCache[cacheKey]
 
             // PROTECÇÃO CRÍTICA (2026-04-15): se o parser devolveu 0 mas o
             // cache tinha jogadores, NÃO sobrescrever — provavelmente cookies
@@ -662,7 +670,7 @@ export default defineConfig({
 
             const lastChanged = hasChanges ? now : (cached?.lastChanged ?? now)
             const entry: CacheEntry = { tcode, ...meta, totalInscritos: jogadores.length, jogadores, lastFetched: now, lastChanged, fpgUrl }
-            prevCache[tcode] = entry
+            prevCache[cacheKey] = entry
             writeCache(prevCache)
             const liveSource = diagnostics.find(d => d.parsed > 0)?.label || '?'
             console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado (fonte viva: ' + liveSource + ')')

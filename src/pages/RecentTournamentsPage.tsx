@@ -1,0 +1,270 @@
+/**
+ * RecentTournamentsPage.tsx — Torneios recentes reconstruídos a partir dos nossos
+ *
+ * Rota: /torneios-recentes  (e /torneios-recentes/:key para o detalhe)
+ * FORA da NavBar (acesso por link directo).
+ *
+ * Ideia: muitos torneios recentes NÃO têm leaderboard scrapeada, mas os
+ * "nossos" jogadores jogaram-nos — e cada volta WHS deles traz o scorecard.
+ * Agregando por torneio (ccode|tcode) sabemos "quem dos nossos jogou + a
+ * pontuação". Torneios com MUITOS dos nossos são bons candidatos a scrapear
+ * a sério para ter o quadro completo.
+ *
+ * Fonte: public/data/recent-tournaments.json (gerado por
+ * scripts/build-recent-tournaments.js, formato "fpg-pull").
+ *
+ * Reutiliza os componentes existentes:
+ *   - Tabela sortável (useSort + SortableHdr, estilo `player-list-table`)
+ *   - <TournamentDetail> da FPGPage para o detalhe (tabs de ronda + Resumo +
+ *     Scorecards buraco-a-buraco) — coerência visual total.
+ */
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import type { Tournament } from "../data/fpgTypes";
+import type { PlayersDB } from "../ui/tournamentPrimitives";
+import { cachedFetchJson } from "../data/fetchCache";
+import { loadPlayers } from "../data/loader";
+import { buildEscLookup, normalizePlayer } from "../utils/playerUtils";
+import { norm, fmtDate } from "../utils/format";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "../ui/SortableHdr";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
+import { TournamentDetail } from "./fpg/TournamentDetail";
+
+/* ── tipos do JSON ────────────────────────────────────────────── */
+interface RecentTournament extends Tournament {
+  scraped: boolean;
+  nOurs: number;
+  dateSort: number;
+}
+interface RecentDoc {
+  generated: string;
+  since: string;
+  counts: { playersScanned: number; tournaments: number; scraped: number; unscraped: number };
+  tournaments: RecentTournament[];
+}
+
+/* Chave URL: ccode pode ser vazio (Drive) → usar "_" como separador. */
+const tKey = (t: { ccode?: string; tcode: string }) => `${t.ccode ?? ""}_${t.tcode}`;
+
+type SortKey = "date" | "name" | "campo" | "rounds" | "nOurs" | "scraped";
+
+export default function RecentTournamentsPage() {
+  const { key } = useParams<{ key?: string }>();
+  const navigate = useNavigate();
+
+  const [doc, setDoc] = useState<RecentDoc | null>(null);
+  const [pdb, setPdb] = useState<PlayersDB>({});
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    cachedFetchJson<RecentDoc>("/data/recent-tournaments.json")
+      .then(d => { if (!d) throw new Error("recent-tournaments.json vazio"); setDoc(d); })
+      .catch(e => setErr(String(e?.message || e)));
+    loadPlayers().then(p => setPdb(p as PlayersDB)).catch(() => setPdb({}));
+  }, []);
+
+  /* Normalizar players (restaura scores flat a partir de roundScores[0]). */
+  const tournaments = useMemo<RecentTournament[]>(() => {
+    if (!doc) return [];
+    return doc.tournaments.map(t => ({
+      ...t,
+      players: (t.players || []).map(normalizePlayer),
+    }));
+  }, [doc]);
+
+  const escLookup = useMemo(() => buildEscLookup(pdb as any, tournaments as any), [pdb, tournaments]);
+
+  /* ── Filtros da lista ───────────────────────────────────────── */
+  const [q, setQ] = useState("");
+  const [minOurs, setMinOurs] = useState("");
+  const [estado, setEstado] = useState<"ALL" | "UNSCRAPED" | "SCRAPED">("ALL");
+  const [year, setYear] = useState("ALL");
+
+  const years = useMemo(() => {
+    const s = new Set<string>();
+    for (const t of tournaments) { const y = (t.date || "").slice(-4); if (/^\d{4}$/.test(y)) s.add(y); }
+    return [...s].sort((a, b) => b.localeCompare(a));
+  }, [tournaments]);
+
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("date", "desc", {
+    date: "desc", nOurs: "desc", rounds: "desc",
+  });
+
+  const filtered = useMemo(() => {
+    const qn = norm(q.trim());
+    const words = qn ? qn.split(/\s+/).filter(Boolean) : [];
+    const mo = minOurs === "" ? 0 : Number(minOurs);
+    return tournaments.filter(t => {
+      if (words.length) {
+        const hay = norm(`${t.name} ${t.campo}`);
+        if (!words.every(w => hay.includes(w))) return false;
+      }
+      if (t.nOurs < mo) return false;
+      if (estado === "UNSCRAPED" && t.scraped) return false;
+      if (estado === "SCRAPED" && !t.scraped) return false;
+      if (year !== "ALL" && (t.date || "").slice(-4) !== year) return false;
+      return true;
+    });
+  }, [tournaments, q, minOurs, estado, year]);
+
+  const sorted = useMemo(() => {
+    const arr = filtered.slice();
+    const dir = sortDir === "asc" ? 1 : -1;
+    const str = (v: string) => (v || "").toLocaleLowerCase("pt-PT");
+    arr.sort((a, b) => {
+      switch (sortKey) {
+        case "date":    return ((a.dateSort || 0) - (b.dateSort || 0)) * dir;
+        case "name":    return str(a.name).localeCompare(str(b.name), "pt") * dir;
+        case "campo":   return str(a.campo).localeCompare(str(b.campo), "pt") * dir;
+        case "rounds":  return ((a.rounds || 1) - (b.rounds || 1)) * dir;
+        case "nOurs":   return (a.nOurs - b.nOurs) * dir;
+        case "scraped": return ((a.scraped ? 1 : 0) - (b.scraped ? 1 : 0)) * dir;
+        default:        return 0;
+      }
+    });
+    return arr;
+  }, [filtered, sortKey, sortDir]);
+
+  /* ── Detalhe seleccionado ───────────────────────────────────── */
+  const selected = useMemo(() => {
+    if (!key) return null;
+    return tournaments.find(t => tKey(t) === key) || null;
+  }, [key, tournaments]);
+
+  /* ── Render ─────────────────────────────────────────────────── */
+  if (err) {
+    return (
+      <div style={{ padding: 24 }}>
+        <h2>Torneios recentes</h2>
+        <EmptyState size="md" message={`Erro ao carregar: ${err}`} />
+      </div>
+    );
+  }
+  if (!doc) return <LoadingState size="md" message="A carregar torneios recentes…" />;
+
+  /* ── Detalhe de um torneio ──────────────────────────────────── */
+  if (key) {
+    if (!selected) {
+      return (
+        <div style={{ padding: 24 }}>
+          <button className="btn-pill" onClick={() => navigate("/torneios-recentes")}>← Voltar à lista</button>
+          <EmptyState size="md" message="Torneio não encontrado." />
+        </div>
+      );
+    }
+    return (
+      <div style={{ padding: "8px 12px 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
+          <button className="btn-pill" onClick={() => navigate("/torneios-recentes")}>← Voltar à lista</button>
+          <span style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
+            {selected.nOurs} dos nossos · {selected.scraped ? "leaderboard completa scrapeada" : "só os nossos (por scrapear)"}
+          </span>
+          {selected.scraped && selected.ccode && (
+            <a href={`/FPG/torneio/${selected.ccode}-${selected.tcode}`} target="_blank" rel="noopener noreferrer"
+               className="btn-pill" style={{ fontSize: "var(--fs-12)" }}>
+              ↗ Ver leaderboard completa (FPG)
+            </a>
+          )}
+        </div>
+        <div style={{ padding: "6px 10px 4px", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+          ⓘ Classificação e scorecards reconstruídos a partir das voltas WHS dos jogadores que seguimos —
+          a posição mostrada é <b>entre os nossos</b>, não a posição oficial do torneio.
+        </div>
+        <TournamentDetail tournament={selected} escLookup={escLookup} playersDB={pdb} />
+      </div>
+    );
+  }
+
+  /* ── Lista (tabela sortável) ────────────────────────────────── */
+  return (
+    <div style={{ padding: "8px 12px 24px" }}>
+      <Toolbar>
+        <ToolbarTitle>🏌️ Torneios recentes (via os nossos)</ToolbarTitle>
+        <ToolbarMeta>
+          {sorted.length.toLocaleString("pt-PT")} de {tournaments.length.toLocaleString("pt-PT")}
+          {" · "}{doc.counts.unscraped.toLocaleString("pt-PT")} por scrapear
+        </ToolbarMeta>
+        <ToolbarSep />
+        <span style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+          Reconstruído de {doc.counts.playersScanned} jogadores · desde {doc.since}
+        </span>
+      </Toolbar>
+
+      <div style={{ padding: "4px 8px 6px", fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
+        Lista dos últimos torneios em que os nossos jogadores participaram. Torneios com <b>muitos</b> dos
+        nossos são os melhores candidatos a scrapear a sério. Clica numa linha para ver quem jogou e os scorecards.
+      </div>
+
+      {/* Filtros */}
+      <div className="filter-grid">
+        <div className="filter-field">
+          <div className="filter-label">TORNEIO / CAMPO</div>
+          <input className="filter-input" value={q} onChange={e => setQ(e.target.value)}
+                 placeholder="Pesquisar por nome ou campo…" />
+        </div>
+        <div className="filter-field">
+          <div className="filter-label">MÍN. Nº NOSSOS</div>
+          <input type="number" min="1" className="filter-input" value={minOurs}
+                 onChange={e => setMinOurs(e.target.value)} placeholder="ex: 5" />
+        </div>
+        <div className="filter-field">
+          <div className="filter-label">ESTADO</div>
+          <select className="filter-input" value={estado} onChange={e => setEstado(e.target.value as typeof estado)}>
+            <option value="ALL">Todos</option>
+            <option value="UNSCRAPED">Só por scrapear</option>
+            <option value="SCRAPED">Só já scrapeados</option>
+          </select>
+        </div>
+        <div className="filter-field">
+          <div className="filter-label">ANO</div>
+          <select className="filter-input" value={year} onChange={e => setYear(e.target.value)}>
+            <option value="ALL">Todos</option>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {sorted.length === 0 ? (
+        <EmptyState size="md" message="Nenhum torneio corresponde aos filtros." />
+      ) : (
+        <div style={{ overflowX: "auto" }}>
+          <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+            <thead>
+              <tr>
+                <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Data</SortableHdr>
+                <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+                <SortableHdr k="campo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Rondas capturadas">R</SortableHdr>
+                <SortableHdr k="nOurs" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Quantos dos nossos jogaram">👥 Nossos</SortableHdr>
+                <SortableHdr k="scraped" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Já existe leaderboard completa?">Estado</SortableHdr>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map(t => (
+                <tr key={tKey(t)}
+                    className="player-list-row"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/torneios-recentes/${tKey(t)}`)}
+                    title="Ver quem jogou + scorecards">
+                  <td style={{ whiteSpace: "nowrap" }}>{fmtDate(t.date)}</td>
+                  <td style={{ fontWeight: 500 }}>{t.name}</td>
+                  <td style={{ color: "var(--text-2)" }}>{t.campo || "—"}</td>
+                  <td style={{ textAlign: "right" }}>{t.rounds || 1}</td>
+                  <td style={{ textAlign: "right", fontWeight: 700 }}>{t.nOurs}</td>
+                  <td>
+                    {t.scraped
+                      ? <span className="p p-sm p-muted" title="Leaderboard completa já scrapeada">✓ scrapeado</span>
+                      : <span className="p p-sm" style={{ background: "var(--color-warn, #b45309)", color: "#fff" }} title="Só temos os nossos — candidato a scrapear">por scrapear</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}

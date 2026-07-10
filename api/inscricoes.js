@@ -2,8 +2,13 @@
  * api/inscricoes.js
  * Vercel Serverless Function — proxy para inscrições FPG
  *
- * GET /api/inscricoes?tcode=10941
- * GET /api/inscricoes?tcode=10941&raw=1   (HTML bruto para debug)
+ * GET /api/inscricoes?tcode=10941                (ccode default 000)
+ * GET /api/inscricoes?ccode=179&tcode=10604      (torneios de clube)
+ * GET /api/inscricoes?tcode=10941&raw=1          (HTML bruto para debug)
+ *
+ * Generalizado 2026-07-10: aceita QUALQUER (ccode, tcode) válido — antes só
+ * os tcodes hardcoded do Nacional 2026. Usado pela verificação live dos
+ * FEATURED_TOURNAMENTS (src/hooks/useLiveAdmissions.ts).
  *
  * ─── Autenticação (breakthrough 2026-04-14) ─────────────────────────
  * scoring.datagolf.pt exige dois cookies: ASP.NET_SessionId + DG_Lists_URL.
@@ -209,16 +214,17 @@ function parseAdmissionsTable(html) {
 // ═════════════════════════════════════════════════════════════════════
 // Fetch com várias estratégias de cookie (em ordem de preferência)
 // ═════════════════════════════════════════════════════════════════════
-async function fetchAdmissionsHTML(tcode) {
-  // Domínio certo: scoring.fpg.pt/lists/ (não scoring.datagolf.pt/pt/).
-  // O DG_Lists_URL tem entry-gate com user=admin&page=admissions.
-  const fpgUrl = "https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=" + tcode;
+async function fetchAdmissionsHTML(ccode, tcode) {
+  // Gateway canónico linkpage.aspx (ack universal XH256YF450) — ir directo a
+  // tournAdmissions.aspx é frágil ("Param Error" com sessão fria). O linkpage
+  // aquece a sessão e redirecciona; redirect:"follow" apanha a resposta final.
+  const fpgUrl = "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=" + ccode + "&tourn=" + tcode + "&ack=XH256YF450";
   const baseHeaders = {
     "User-Agent":                UA,
     "Accept":                    "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
     "Accept-Language":           "pt-PT,pt;q=0.9",
     "Upgrade-Insecure-Requests": "1",
-    "Referer":                   "https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/",
+    "Referer":                   "https://competicoes.fpg.pt/",
   };
 
   const cookie = await getScoringCookie();
@@ -231,7 +237,7 @@ async function fetchAdmissionsHTML(tcode) {
         redirect: "follow",
       });
       const html = await r.text();
-      console.log("[inscricoes] tcode=" + tcode + " [com cookies] HTTP=" + r.status + " len=" + html.length);
+      console.log("[inscricoes] " + ccode + "/" + tcode + " [com cookies] HTTP=" + r.status + " len=" + html.length);
       if (r.ok && html && !/Param_Errors|Err=999/.test(html)) {
         return { ok: true, html, status: r.status, via: "cookies" };
       }
@@ -246,7 +252,7 @@ async function fetchAdmissionsHTML(tcode) {
   try {
     const r = await fetch(fpgUrl, { headers: baseHeaders, redirect: "follow" });
     const html = await r.text();
-    console.log("[inscricoes] tcode=" + tcode + " [sem cookie] HTTP=" + r.status + " len=" + html.length);
+    console.log("[inscricoes] " + ccode + "/" + tcode + " [sem cookie] HTTP=" + r.status + " len=" + html.length);
     if (r.ok && html && !/Param_Errors|Err=999/.test(html)) {
       return { ok: true, html, status: r.status, via: "no-cookie" };
     }
@@ -265,15 +271,19 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "GET");
 
   const { tcode, raw } = req.query;
+  const ccode = String(req.query.ccode || "000").padStart(3, "0");
   if (!tcode) return res.status(400).json({ error: "tcode obrigatorio" });
+  if (!/^\d{3,6}$/.test(String(tcode)) || !/^\d{3}$/.test(ccode)) {
+    return res.status(400).json({ error: "tcode/ccode invalido" });
+  }
 
-  const meta = TORNEIOS[tcode];
-  if (!meta) return res.status(400).json({ error: "tcode " + tcode + " nao reconhecido" });
+  // Meta conhecida (Nacional 2026) é opcional — qualquer (ccode,tcode) é aceite.
+  const meta = TORNEIOS[tcode] || { nome: "Torneio " + ccode + "/" + tcode };
 
-  const fpgUrl = "https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=" + tcode;
+  const fpgUrl = "https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=" + ccode + "&tcode=" + tcode;
 
   try {
-    const result = await fetchAdmissionsHTML(tcode);
+    const result = await fetchAdmissionsHTML(ccode, tcode);
 
     if (raw === "1") {
       res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -283,16 +293,16 @@ export default async function handler(req, res) {
     if (!result.ok) {
       return res.status(502).json({
         error: "FPG HTTP " + result.status + (result.error ? " — " + result.error : ""),
-        tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null, via: result.via,
+        ccode, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null, via: result.via,
       });
     }
 
     const jogadores = parseAdmissionsTable(result.html);
-    console.log("[inscricoes] tcode=" + tcode + " -> " + jogadores.length + " inscritos (via " + result.via + ")");
+    console.log("[inscricoes] " + ccode + "/" + tcode + " -> " + jogadores.length + " inscritos (via " + result.via + ")");
 
     res.setHeader("Cache-Control", "no-cache");
     return res.status(200).json({
-      tcode, ...meta,
+      ccode, tcode, ...meta,
       totalInscritos: jogadores.length,
       jogadores,
       lastFetched: new Date().toISOString(),
@@ -302,10 +312,10 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error("[inscricoes] Erro tcode=" + tcode + ":", err);
+    console.error("[inscricoes] Erro " + ccode + "/" + tcode + ":", err);
     return res.status(500).json({
       error: String(err),
-      tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null,
+      ccode, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null,
     });
   }
 }

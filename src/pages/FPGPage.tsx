@@ -44,7 +44,8 @@ import { isDNS } from "../ui/driveUtils";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, type FpgTournamentData } from "../data/nacional2026Loader";
+import { FEATURED_TOURNAMENTS } from "../data/featuredTournaments";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
@@ -1302,50 +1303,54 @@ function Content() {
         }
         seen.set(key, t);
       }
-      // 2) Injectar Nacional 2026 (tcodes 10935-10944) como torneios sintéticos
-      //    se não existirem já em jovens_2026.json.
-      for (const tcode of NACIONAL_2026_TCODES) {
-        const key = "000/" + tcode;
+      // Helpers partilhados pelas injecções sintéticas (2) e (3):
+      const inferEscalao = (name: string): string | null => {
+        const esc = name.match(/\bescal[aã]o\s+([A-Za-z0-9]+)\b/i);
+        if (esc) return `Escalão ${esc[1].toUpperCase()}`;
+        const sub = name.match(/\bsub[\s\-_]?(\d{1,2})\b/i) || name.match(/\bu(\d{1,2})\b/i);
+        return sub ? `Sub ${sub[1]}` : null;
+      };
+      // Remove o sufixo "(Escalão X)" do nome base — o escalão vai para `escalao`.
+      // Necessário para que torneios com o mesmo evento mas datas/sufixos diferentes
+      // (ex: Escalão A num dia, Escalão B noutro) sejam agrupados pelo buildEventGroups
+      // como uma única entrada sidebar com múltiplos tabs.
+      const stripEscalaoSuffix = (name: string): string =>
+        name.replace(/\s*\(\s*escal[aã]o\s+\w+\s*\)/gi, "").replace(/\s+/g, " ").trim();
+
+      // 2) Injectar torneios em destaque (FEATURED_TOURNAMENTS — template genérico
+      //    para torneios futuros: Nacional 2026 Aroeira, Amendoeira 2026, …) como
+      //    torneios sintéticos se não existirem já em pull-torneios/jovens_YYYY.json.
+      //    Só injecta quando há dados scraped no fpg-admissions-draws.json — sem
+      //    scrape, a entrada da config fica dormente. Nome/data/campo/escalão vêm
+      //    do scrape salvo override na config (ver src/data/featuredTournaments.ts).
+      for (const ft of FEATURED_TOURNAMENTS) {
+        const key = ft.ccode + "/" + ft.tcode;
         if (seen.has(key)) continue;
-        const meta = NACIONAL_2026_META[tcode];
-        const ad = admDrawsIdx.get(`000-${tcode}`);
+        const ad = admDrawsIdx.get(`${ft.ccode}-${ft.tcode}`);
         if (!ad) continue;  // sem dados scraped, não injecta
         const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
+        const date = ft.date || ad.date || "";
+        const drawRounds = Object.keys(ad.draws || {}).length;
         const synthetic = {
-          name: meta.name,
-          ccode: "000",
-          tcode,
-          date: "2026-05-01",
-          campo: "PGA Aroeira II",
-          clube: "000",
+          name: ft.name || stripEscalaoSuffix(ad.name || "") || `Torneio ${ft.tcode}`,
+          ccode: ft.ccode,
+          tcode: ft.tcode,
+          date,
+          campo: ft.campo ?? ad.campo ?? null,
+          clube: ft.ccode,
           circuit: "tour",
           series: "jovens",
-          region: "nacional",
-          escalao: meta.escalao,
+          region: ft.region ?? null,
+          escalao: ft.escalao ?? inferEscalao(ad.name || ""),
           num: 1,
-          rounds: 3,
+          rounds: ft.rounds ?? (drawRounds || (ad.admissions as any)?.rounds || 1),
           playerCount,
           players: [],
-          _jovensYear: "2026",
+          _jovensYear: date.substring(0, 4) || String(new Date().getFullYear()),
           _sourceFile: "fpg-admissions-draws.json",
           _admissions: ad.admissions,
           _draws: ad.draws,
-          // Links arquivados do antigo painel "📋 Inscrições 2026" (desactivado
-          // 2026-04-27 por encerramento das inscrições). Mantidos disponíveis
-          // no detalhe do torneio para consulta — página oficial do evento e
-          // PDF dos termos de competição.
-          extraLinks: [
-            {
-              label: "página oficial FPG",
-              url: "https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/",
-              icon: "🏆",
-            },
-            {
-              label: "Termos PDF",
-              url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Campeonato_Nacional_de_Jovens_Sub18-a-Sub-10.pdf",
-              icon: "📋",
-            },
-          ],
+          extraLinks: ft.extraLinks,
         } as unknown as Tournament;
         seen.set(key, synthetic);
       }
@@ -1356,19 +1361,8 @@ function Content() {
       {
         const ADM_JOVEM_RE = /\b(juniors?|júniors?|juvenil|juvenis|sub[\s\-_]?\d{1,2}|u\d{1,2}|jovens?)\b/i;
         const stripDia = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
-        const inferEscalao = (name: string): string | null => {
-          const esc = name.match(/\bescal[aã]o\s+([A-Za-z0-9]+)\b/i);
-          if (esc) return `Escalão ${esc[1].toUpperCase()}`;
-          const sub = name.match(/\bsub[\s\-_]?(\d{1,2})\b/i) || name.match(/\bu(\d{1,2})\b/i);
-          return sub ? `Sub ${sub[1]}` : null;
-        };
-        // Remove o sufixo "(Escalão X)" do nome base — o escalão vai para `escalao`.
-        // Necessário para que torneios com o mesmo evento mas datas/sufixos diferentes
-        // (ex: Escalão A num dia, Escalão B noutro) sejam agrupados pelo buildEventGroups
-        // como uma única entrada sidebar com múltiplos tabs.
-        const stripEscalaoSuffix = (name: string): string =>
-          name.replace(/\s*\(\s*escal[aã]o\s+\w+\s*\)/gi, "").replace(/\s+/g, " ").trim();
-
+        // (inferEscalao / stripEscalaoSuffix definidos acima, partilhados com a
+        //  injecção (2) dos FEATURED_TOURNAMENTS)
         for (const [, ad] of admDrawsIdx) {
           const tournKey = `${ad.ccode}/${ad.tcode}`;
           if (seen.has(tournKey)) continue;

@@ -64,6 +64,7 @@ const RFEGPage = lazy(() => import("./pages/RFEGPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
+const RecentTournamentsPage = lazy(() => import("./pages/RecentTournamentsPage"));
 const DrawsPage = lazy(() => import("./pages/DrawsPage"));
 
 type Status =
@@ -388,6 +389,9 @@ export default function App() {
                 <Route path="/jogadores" element={<JogadoresListPage />} />
                 {/* Utilitário (fora da NavBar): jogadores por ano de nascimento */}
                 <Route path="/jogadores-por-ano" element={<JogadoresPorAnoPage />} />
+                {/* Utilitário (fora da NavBar): torneios recentes reconstruídos das voltas dos nossos */}
+                <Route path="/torneios-recentes" element={<RecentTournamentsPage />} />
+                <Route path="/torneios-recentes/:key" element={<RecentTournamentsPage />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
                 <Route path="/comparar" element={<ComparePage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
