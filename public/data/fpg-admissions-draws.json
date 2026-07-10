@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-10T13:20:54.187Z",
-  "total": 558,
+  "scrapedAt": "2026-07-10T21:04:25.206Z",
+  "total": 560,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -117144,6 +117144,30 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "003",
+      "tcode": "10657",
+      "name": "Torneio Verão - Escola de Golfe",
+      "date": "2026-07-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "107",
+      "tcode": "11084",
+      "name": "Par3 Estágio Verão 4ªSemana",
+      "date": "2026-07-08",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "982",
