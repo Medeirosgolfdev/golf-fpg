@@ -1508,21 +1508,36 @@ construção dos resumos vive em `buildSummaries(raw, players, nameMap, teeFilte
   UMA `PlayersTable` por tee (Brancas, Amarelas, Azuis, Vermelhas, …) com os nossos
   jogadores e os scores que fizeram NESSE tee. Agrupa por `teeCanonicalLabel(r.tee)`
   (junta variantes M/F da mesma cor), ordena back→front (`TEE_COLOR_ORDER`; "Sem
-  tee" por último) e mostra um ponto da cor (`teeGroupHex`+`teeBorder`) no título.
-  Cada tabela mantém sort próprio (regra: todas as tabelas ordenáveis).
+  tee" por último). Cada tee é um **cartão com o mesmo look dos KPIs** (faixa
+  superior da cor + header tingido `teeTint` com ponto `teeDot`, nome, **distância +
+  CR/Slope ♂/♀** vindos de `useTeeInfoMap`); a `PlayersTable` renderiza em modo
+  `bare` (sem o wrapper `.course-players-section`/título) dentro do cartão. Cada
+  tabela mantém sort próprio (regra: todas as tabelas ordenáveis). Helpers de
+  aspecto (`teeTint`/`teeDot`/`useTeeInfoMap`) são partilhados com o `CourseTeeKpis`.
 
 **KPIs por cor de tee — `CourseTeeKpis` (topo do "Como jogou", 2026-07-10).** O tab
 "Como jogou" deixou de mostrar os KPIs genéricos (Par/Tees/Jogadores — esses ficam
 só no Scorecard) e a média-por-buraco do Manuel passou para o fim. Lidera com um
-**cartão por cor de tee**: nº de jogadores + nº de voltas + o **melhor score de cada
-escalão** (Sub-10/12/14/16/18/21/Absoluto), com nome do jogador (link p/ ficha) e
-to-par colorido. O escalão é calculado **à data da volta** (`escalaoAtDate`: coorte
-FPG por ano de nascimento vs ano do evento) — por isso o mesmo miúdo pode aparecer
-como Sub-12 numa volta antiga e Sub-14 noutra. Só voltas de **18 buracos**
-(comparáveis). Precisa da **DOB**: o `build-course-player-names.js` passou a emitir
-`dob` + `sex` por fed (além de `names`) e o loader da CamposPage expõe-os via
-`useCoursePlayerMeta()` (`loadCoursePlayerMeta` substitui o antigo
-`loadCoursePlayerNames`).
+**cartão por cor de tee**, cada um com: header (ponto de cor + **distância + CR/Slope**
+do sexo/volta seleccionados, vindos de `physicalTeeGroups`), nº jogadores + voltas, e
+o **TOP-3 de cada escalão** (Sub-10→Absoluto) com nome (link), to-par colorido,
+**data com ano** (`fmtDMYfull`) e **SD** da volta do recorde. Extras:
+- **Dois toggles** (`Seg`): **♂ Rapazes / ♀ Raparigas** (separa por sexo, `meta.sex`)
+  e **18 buracos / Front 9 / Back 9** (`roundValue`; F9/B9 vêm de `r.f9`/`r.b9` — o
+  `build-course-players.js` passou a emitir `f9`/`f9tp`/`b9`/`b9tp` por volta de 18 a
+  partir do `HOLES[scoreId].g`). As ratings (CR/Slope) do header seguem o toggle
+  (h18/f9/b9).
+- **Ordenado por distância** (dificuldade) desc, não por cor.
+- **Cartão do Manuel sempre no topo** (`MANUEL_FED`): o seu recorde por tee (ordenado
+  por distância), com escalão à data, data e SD — independente do filtro de sexo.
+- **Nota de fonte** (canto): "dados: voltas dos nossos · última {data}" com tooltip a
+  explicar a origem (course-players.json, regen semanal `update-data.yml`).
+
+O escalão é calculado **à data da volta** (`escalaoAtDate`: coorte FPG por ano de
+nascimento vs ano do evento) — o mesmo miúdo aparece como Sub-12 numa volta antiga e
+Sub-14 noutra. Precisa da **DOB**: o `build-course-player-names.js` emite `dob` + `sex`
+por fed (além de `names`); o loader expõe-os via `useCoursePlayerMeta()`
+(`loadCoursePlayerMeta` substitui o antigo `loadCoursePlayerNames`).
 
 ## Tab "Vantagem de Tee" (`/comparar`) — conselho de tee para júnior (2026-06-14)
 

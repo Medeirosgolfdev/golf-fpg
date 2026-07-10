@@ -85,14 +85,27 @@ function main() {
         for (const r of (c.rounds || [])) {
           const name = (r.course || c.course || "").trim();
           if (!name) continue;
-          // par[] por buraco (do scorecard) — necessário p/ resolver SdS/Ribagolfe/Aroeira
+          // par[] + gross[] por buraco (do scorecard) — par necessário p/ resolver
+          // SdS/Ribagolfe/Aroeira; gross usado p/ os splits Front 9 / Back 9.
           const pars = Array.isArray(HOLES[r.scoreId]?.p) ? HOLES[r.scoreId].p : null;
+          const gArr = Array.isArray(HOLES[r.scoreId]?.g) ? HOLES[r.scoreId].g : null;
           const key = resolveCourseKey(name, pars, masterByNorm, masterKeys);
           if (!key) { unmatched[name] = (unmatched[name] || 0) + 1; continue; }
           // Sentinelas: gross 0 / 998 / 999 ("sem cartão") → null (não contam p/ stats)
           let gross = numOr(r.gross);
           if (gross != null && (gross <= 0 || gross >= 200)) gross = null;
           const par = numOr(r.par);
+          // Splits Front 9 / Back 9 (só voltas de 18 com scorecard completo).
+          // f9tp/b9tp = to-par de cada nine. null quando incompleto/em falta.
+          let f9 = null, b9 = null, f9tp = null, b9tp = null;
+          if (gArr && gArr.length >= 18 && pars && pars.length >= 18) {
+            const sumRange = (a, s, e) => { let t = 0; for (let i = s; i < e; i++) { const v = Number(a[i]); if (!v || v <= 0) return null; t += v; } return t; };
+            const gf = sumRange(gArr, 0, 9), gb = sumRange(gArr, 9, 18);
+            const pf = pars.slice(0, 9).reduce((x, y) => x + (Number(y) || 0), 0);
+            const pb = pars.slice(9, 18).reduce((x, y) => x + (Number(y) || 0), 0);
+            if (gf != null) { f9 = gf; if (pf) f9tp = gf - pf; }
+            if (gb != null) { b9 = gb; if (pb) b9tp = gb - pb; }
+          }
           const round = {
             date: toIso(r.date),
             gross,
@@ -101,6 +114,8 @@ function main() {
             tee: typeof r.tee === "string" ? r.tee : null,
             event: typeof r.eventName === "string" ? r.eventName : null,
             sd: numOr(r.sd),
+            ...(f9 != null ? { f9, f9tp } : {}),
+            ...(b9 != null ? { b9, b9tp } : {}),
           };
           (players[key] ||= {});
           (players[key][nfed] ||= []).push(round);

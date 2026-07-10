@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect, Fragment, type ReactNode } from "react";
+﻿import { useMemo, useState, useEffect, Fragment, type ReactNode, type CSSProperties } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
@@ -493,7 +493,7 @@ function buildSummaries(
 /** Tabela sortável de jogadores + scores num campo (18b/18 e 9b em linhas
  *  separadas, expansível para as voltas individuais). Reutilizada pela vista
  *  geral ("Jogadores") e pela vista por-tee ("Como jogaram — por tee"). */
-function PlayersTable({ entries, title, onSelectPlayer }: { entries: PlayerSummary[]; title: ReactNode; onSelectPlayer?: (fed: string) => void }) {
+function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: PlayerSummary[]; title?: ReactNode; onSelectPlayer?: (fed: string) => void; bare?: boolean }) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   // Default: mais voltas primeiro. Por coluna: melhor/média ascendente (menor = melhor),
   // última descendente (mais recente primeiro), nome ascendente.
@@ -565,15 +565,15 @@ function PlayersTable({ entries, title, onSelectPlayer }: { entries: PlayerSumma
           </>
         ) : <span className="muted">–</span>}
       </td>
-      <td className="cp-num cp-muted">{fmtDM(b.last) || "–"}</td>
+      <td className="cp-num cp-muted" style={{ whiteSpace: "nowrap" }}>{fmtDMYfull(b.last) || "–"}</td>
     </>
   );
 
   return (
-    <div className="course-players-section">
-      <h4 className="course-players-title">{title}</h4>
-      <div className="sc-wrap">
-        <table className="cp-table">
+    <div className={bare ? "" : "course-players-section"}>
+      {!bare && <h4 className="course-players-title">{title}</h4>}
+      <div className={bare ? "sc-wrap sc-wrap-bare" : "sc-wrap"}>
+        <table className={bare ? "cp-table cp-table-bare" : "cp-table"}>
           <thead>
             <tr>
               <th className="cp-th-exp" />
@@ -693,6 +693,22 @@ function teeRankKey(label: string): number {
 }
 const NO_TEE_LABEL = "Sem tee";
 
+/* ── Helpers de aspecto dos cartões por tee (partilhados KPIs + tabelas) ── */
+const teeTint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, var(--bg-card))`;
+const teeDot = (hex: string, sz = 12): CSSProperties => ({ width: sz, height: sz, borderRadius: "50%", background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,0.15)", display: "inline-block", flex: "none" });
+type TeeInfo = { dist: number; hex: string; group: PhysTeeGroup };
+function useTeeInfoMap(course: Course): Map<string, TeeInfo> {
+  return useMemo(() => {
+    const m = new Map<string, TeeInfo>();
+    for (const g of physicalTeeGroups(course.master.tees || [])) {
+      const label = teeCanonicalLabel(g.label);
+      const dist = Math.round(g.teeHoles?.distances?.total ?? 0);
+      if (!m.has(label)) m.set(label, { dist, hex: g.colorHex, group: g });
+    }
+    return m;
+  }, [course]);
+}
+
 /* ── Escalão (coorte FPG) à DATA da volta ─────────────────────────────────
  * Por ano de nascimento vs ano do evento (a idade que o jogador FAZ nesse ano
  * — é assim que a FPG define as coortes). "Sub 10..21" ou "Absoluto". */
@@ -708,18 +724,54 @@ function escalaoAtDate(dob: string | undefined, date: string | null): string | n
   return "Absoluto";
 }
 
-type EscBest = { gross: number; toPar: number | null; fed: string; name: string };
+type VoltaKind = "18" | "f9" | "b9";
+type EscRec = { val: number; tp: number | null; fed: string; name: string; date: string | null; sd: number | null };
+type ManuelRec = { label: string; val: number; tp: number | null; date: string | null; sd: number | null; esc: string | null; dist: number };
 
-/** KPIs por cor de tee (topo do tab "Como jogou"): por cada tee, nº de jogadores
- *  + nº de voltas + o MELHOR score de cada escalão (Sub-12/14/16…) — escalão à
- *  data da volta. Só voltas de 18 buracos (comparáveis). */
+/** Valor da volta consoante o tipo (18 buracos / Front 9 / Back 9). null quando
+ *  a volta não tem esse split. */
+function roundValue(r: CoursePlayerRound, kind: VoltaKind): { val: number; tp: number | null } | null {
+  if (kind === "18") return roundHoles(r) === 18 ? { val: r.gross as number, tp: r.toPar ?? null } : null;
+  if (kind === "f9") return r.f9 != null ? { val: r.f9, tp: r.f9tp ?? null } : null;
+  return r.b9 != null ? { val: r.b9, tp: r.b9tp ?? null } : null;
+}
+
+/** Segmented toggle compacto (sexo / tipo de volta). */
+function Seg<T extends string>({ value, onChange, opts }: { value: T; onChange: (v: T) => void; opts: { v: T; label: ReactNode }[] }) {
+  return (
+    <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: "var(--radius-pill, 999px)", overflow: "hidden" }}>
+      {opts.map((o, i) => {
+        const on = value === o.v;
+        return (
+          <button key={o.v} type="button" onClick={() => onChange(o.v)} style={{
+            border: "none", borderLeft: i > 0 ? "1px solid var(--border)" : "none",
+            padding: "4px 10px", cursor: "pointer", fontSize: "var(--fs-12)", fontWeight: on ? 700 : 500,
+            background: on ? "var(--accent)" : "var(--bg-card)", color: on ? "#fff" : "var(--text)",
+            display: "inline-flex", alignItems: "center", gap: 5,
+          }}>{o.label}</button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** KPIs por cor de tee (topo do tab "Como jogou"). Por tee: nº jogadores + voltas
+ *  + TOP-3 de cada escalão (à data da volta) com data (ano) + SD. Ordenado por
+ *  distância (dificuldade). Separa ♂/♀ e 18 / Front 9 / Back 9. Inclui sempre um
+ *  cartão do Manuel (recorde por tee). */
 function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const meta = useCoursePlayerMeta();
   const { players } = useAppContext();
+  const [sex, setSex] = useState<"M" | "F">("M");
+  const [volta, setVolta] = useState<VoltaKind>("18");
 
-  const cards = useMemo(() => {
+  // Info do tee físico: distância + CR/Slope por sexo (18/F9/B9) + cor.
+  const teeInfo = useTeeInfoMap(course);
+
+  const { tees, manuel, lastDate } = useMemo(() => {
     const raw = course.master._players;
-    if (!raw || Object.keys(raw).length === 0) return [];
+    const empty = { tees: [] as { label: string; players: Set<string>; nRounds: number; esc: Map<string, Map<string, EscRec>>; dist: number }[], manuel: [] as ManuelRec[], lastDate: null as string | null };
+    if (!raw || Object.keys(raw).length === 0) return empty;
     const labelOf = (tee: string | null) => (tee ? teeCanonicalLabel(tee) : NO_TEE_LABEL);
     const nameOf = (fed: string) => {
       const p = players[fed];
@@ -727,76 +779,191 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
         ?? (meta.names[fed] && meta.names[fed] !== fed ? meta.names[fed] : null)
         ?? fed;
     };
-    const byTee = new Map<string, { players: Set<string>; nRounds: number; best: Map<string, EscBest> }>();
+    const byTee = new Map<string, { players: Set<string>; nRounds: number; esc: Map<string, Map<string, EscRec>> }>();
+    const manuelByTee = new Map<string, ManuelRec>();
+    let lastDate: string | null = null;
     for (const [fed, val] of Object.entries(raw)) {
       if (!Array.isArray(val)) continue;
       const dob = meta.dob[fed];
+      const psex = meta.sex[fed];
+      const isManuelPlayer = fed === MANUEL_FED;
       for (const r of val) {
-        if (roundHoles(r) !== 18) continue; // só voltas de 18 (comparáveis)
-        const g = r.gross as number;
+        const rv = roundValue(r, volta);
+        if (!rv) continue;
+        if (r.date && (!lastDate || r.date > lastDate)) lastDate = r.date;
         const label = labelOf(r.tee);
+        // Cartão do Manuel — independente do filtro de sexo.
+        if (isManuelPlayer) {
+          const cur = manuelByTee.get(label);
+          if (!cur || rv.val < cur.val) {
+            manuelByTee.set(label, { label, val: rv.val, tp: rv.tp, date: r.date, sd: r.sd ?? null, esc: escalaoAtDate(dob, r.date), dist: teeInfo.get(label)?.dist ?? -1 });
+          }
+        }
+        // Cartões por tee — filtrados pelo sexo seleccionado.
+        if (psex !== sex) continue;
         let t = byTee.get(label);
-        if (!t) { t = { players: new Set(), nRounds: 0, best: new Map() }; byTee.set(label, t); }
+        if (!t) { t = { players: new Set(), nRounds: 0, esc: new Map() }; byTee.set(label, t); }
         t.players.add(fed);
         t.nRounds++;
         const esc = escalaoAtDate(dob, r.date);
         if (!esc) continue;
-        const cur = t.best.get(esc);
-        if (!cur || g < cur.gross) t.best.set(esc, { gross: g, toPar: r.toPar ?? null, fed, name: nameOf(fed) });
+        let em = t.esc.get(esc);
+        if (!em) { em = new Map(); t.esc.set(esc, em); }
+        const cur = em.get(fed);
+        if (!cur || rv.val < cur.val) em.set(fed, { val: rv.val, tp: rv.tp, fed, name: nameOf(fed), date: r.date, sd: r.sd ?? null });
       }
     }
-    return [...byTee.entries()]
-      .map(([label, t]) => ({ label, players: t.players, nRounds: t.nRounds, best: t.best }))
+    const tees = [...byTee.entries()]
+      .map(([label, t]) => ({ label, players: t.players, nRounds: t.nRounds, esc: t.esc, dist: teeInfo.get(label)?.dist ?? -1 }))
       .filter((t) => t.nRounds > 0)
-      .sort((a, b) => {
-        const semA = a.label === NO_TEE_LABEL ? 1 : 0, semB = b.label === NO_TEE_LABEL ? 1 : 0;
-        if (semA !== semB) return semA - semB;
-        return (teeRankKey(a.label) - teeRankKey(b.label)) || (b.players.size - a.players.size);
-      });
-  }, [course, players, meta]);
+      .sort((a, b) => (b.dist - a.dist) || (b.players.size - a.players.size) || a.label.localeCompare(b.label, "pt"));
+    const manuel = [...manuelByTee.values()].sort((a, b) => b.dist - a.dist);
+    return { tees, manuel, lastDate };
+  }, [course, players, meta, sex, volta, teeInfo]);
 
-  if (cards.length === 0) return null;
+  if (tees.length === 0 && manuel.length === 0) return null;
+
+  const ratingField = volta === "18" ? "h18" : volta;
+  const ratingFor = (label: string): { cr: number; sl: number } | null => {
+    const g = teeInfo.get(label)?.group;
+    if (!g) return null;
+    const bucket = g[ratingField as "h18" | "f9" | "b9"];
+    return bucket[sex] ?? bucket.M ?? bucket.F ?? bucket.U ?? null;
+  };
+  const distFor = (label: string) => teeInfo.get(label)?.dist ?? 0;
+  const voltaLabel = volta === "18" ? "18 buracos" : volta === "f9" ? "Front 9" : "Back 9";
+
+  const tint = teeTint;
+  const dotStyle = teeDot;
+
+  const score = (val: number, tp: number | null) => (
+    <span style={{ textAlign: "right", fontWeight: 600, fontSize: "var(--fs-13, 13px)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+      {val}
+      {tp != null && <span style={{ color: tpTextColor(tp), fontWeight: 700 }}> {fmtToPar(tp)}</span>}
+    </span>
+  );
+  const when = (date: string | null, sd: number | null) => (
+    <span className="muted" style={{ fontSize: "var(--fs-10)", whiteSpace: "nowrap", textAlign: "right" }}>
+      {fmtDMYfull(date)}{sd != null ? ` · SD ${sd.toFixed(1)}` : ""}
+    </span>
+  );
+  const nameEl = (fed: string, name: string) => {
+    const st: CSSProperties = { display: "block", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "left", fontWeight: 500 };
+    return onSelectPlayer
+      ? <button type="button" className="tourn-pname tourn-pname-link" style={st} onClick={() => onSelectPlayer(fed)} title={name}>{name}</button>
+      : <span style={st} title={name}>{name}</span>;
+  };
+  /** Marcador de posição para o 2º/3º (o 1º leva o pill do escalão). */
+  const rankBadge = (i: number) => (
+    <span aria-hidden style={{ justifySelf: "center", alignSelf: "center", width: 15, height: 15, borderRadius: "50%", background: "var(--bg-hover, rgba(0,0,0,0.06))", color: "var(--text-muted)", fontSize: 9, fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span>
+  );
+
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "6px 0 12px" }}>
-      {cards.map((c) => {
-        const hex = c.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(c.label);
-        const border = teeBorder(hex) || "1px solid var(--border)";
-        const escs = ESC_KPI_ORDER.filter((e) => c.best.has(e));
-        return (
-          <div key={c.label} style={{ flex: "1 1 230px", minWidth: 210, maxWidth: 340, border: "1px solid var(--border)", borderRadius: 10, background: "var(--bg-card)", padding: "9px 11px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 7 }}>
-              <span aria-hidden style={{ width: 13, height: 13, borderRadius: "50%", background: hex, border, display: "inline-block" }} />
-              <span style={{ fontWeight: 700 }}>{c.label}</span>
-              <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-11)", marginLeft: "auto" }}>
-                {c.players.size} jog · {c.nRounds} voltas
-              </span>
-            </div>
-            {escs.length === 0 ? (
-              <div className="muted" style={{ fontSize: "var(--fs-11)" }}>sem escalão conhecido</div>
-            ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "auto auto minmax(0,1fr)", gap: "3px 8px", alignItems: "center" }}>
-                {escs.map((e) => {
-                  const b = c.best.get(e)!;
-                  return (
-                    <Fragment key={e}>
-                      <EscPill esc={e} />
-                      <span style={{ textAlign: "right", fontWeight: 700, whiteSpace: "nowrap" }}>
-                        {b.gross}
-                        {b.toPar != null && <span style={{ color: tpTextColor(b.toPar), fontWeight: 600 }}> {fmtToPar(b.toPar)}</span>}
-                      </span>
-                      {onSelectPlayer ? (
-                        <button type="button" className="tourn-pname tourn-pname-link" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "left" }} onClick={() => onSelectPlayer(b.fed)} title={b.name}>{b.name}</button>
-                      ) : (
-                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={b.name}>{b.name}</span>
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </div>
-            )}
+    <div style={{ margin: "4px 0 14px" }}>
+      {/* Toolbar: sexo · tipo de volta · fonte */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+        <Seg value={sex} onChange={setSex} opts={[
+          { v: "M", label: <><SexBadge sex="M" /> Rapazes</> },
+          { v: "F", label: <><SexBadge sex="F" /> Raparigas</> },
+        ]} />
+        <Seg value={volta} onChange={setVolta} opts={[
+          { v: "18", label: "18 buracos" }, { v: "f9", label: "Front 9" }, { v: "b9", label: "Back 9" },
+        ]} />
+        <span className="muted" style={{ marginLeft: "auto", fontSize: "var(--fs-11)", cursor: "help" }}
+          title={"Fonte: melhores voltas WHS (scorecards) de todos os jogadores que seguimos — course-players.json, regenerado semanalmente (workflow update-data.yml). Escalão calculado à DATA da volta pela coorte FPG (ano de nascimento, dos federados)."}>
+          ⓘ dados: voltas dos nossos{lastDate ? ` · última ${fmtDMYfull(lastDate)}` : ""}
+        </span>
+      </div>
+
+      {/* Cartão do Manuel — recorde por tee */}
+      {manuel.length > 0 && (
+        <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--accent)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", marginBottom: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: tint("var(--accent)", 12), borderBottom: "1px solid var(--border-light, var(--border))", fontWeight: 800 }}>
+            <span style={{ fontSize: "var(--fs-15, 15px)" }}>🧒 Manuel</span>
+            <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-11)" }}>recorde por tee · {voltaLabel}</span>
           </div>
-        );
-      })}
+          <div style={{ padding: "6px 12px 9px", display: "grid", gridTemplateColumns: "minmax(120px,auto) auto auto minmax(0,1fr)", gap: "4px 12px", alignItems: "center", background: "var(--bg-card)" }}>
+            {manuel.map((mr) => {
+              const hex = mr.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(mr.label);
+              return (
+                <Fragment key={mr.label}>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontWeight: 600, minWidth: 0 }}>
+                    <span aria-hidden style={dotStyle(hex, 11)} />
+                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mr.label}</span>
+                    {distFor(mr.label) ? <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-10)" }}>{distFor(mr.label)}m</span> : null}
+                  </span>
+                  {score(mr.val, mr.tp)}
+                  <span>{mr.esc ? <EscPill esc={mr.esc} /> : <span className="muted">–</span>}</span>
+                  {when(mr.date, mr.sd)}
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Cartões por tee (ordenados por distância/dificuldade) */}
+      {tees.length === 0 ? (
+        <div className="muted" style={{ fontSize: "var(--fs-12)" }}>
+          Sem voltas de {voltaLabel.toLowerCase()} de {sex === "M" ? "rapazes" : "raparigas"} neste campo.
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
+          {tees.map((c) => {
+            const hex = c.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(c.label);
+            const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra visível
+            const rt = ratingFor(c.label);
+            const dist = distFor(c.label);
+            const escs = ESC_KPI_ORDER.filter((e) => c.esc.has(e));
+            return (
+              <div key={c.label} style={{ flex: "1 1 300px", minWidth: 282, maxWidth: 460, borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column" }}>
+                {/* Header do tee (banda tingida) */}
+                <div style={{ padding: "7px 12px", background: tint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span aria-hidden style={dotStyle(hex, 14)} />
+                    <span style={{ fontWeight: 800, fontSize: "var(--fs-15, 15px)" }}>{c.label}</span>
+                    <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-11)", marginLeft: "auto", whiteSpace: "nowrap" }}>{c.players.size} jog · {c.nRounds} voltas</span>
+                  </div>
+                  <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22 }}>
+                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${dec1(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
+                  </div>
+                </div>
+                {/* Corpo: escalões — UMA grelha só (nomes alinhados verticalmente
+                    entre todos os escalões). Escalão = pill na 1ª linha; 2º/3º com
+                    nº; data+SD por baixo do nome (2ª linha, pequena). */}
+                <div style={{ padding: "4px 12px 9px" }}>
+                  {escs.length === 0 ? (
+                    <div className="muted" style={{ fontSize: "var(--fs-11)", padding: "6px 0" }}>sem escalão conhecido</div>
+                  ) : (
+                    <div style={{ display: "grid", gridTemplateColumns: "auto auto minmax(0,1fr)", columnGap: 9, rowGap: 0, alignItems: "center" }}>
+                      {escs.map((e, ei) => {
+                        const top3 = [...c.esc.get(e)!.values()].sort((a, b) => (a.val - b.val) || ((a.tp ?? 0) - (b.tp ?? 0))).slice(0, 3);
+                        return (
+                          <Fragment key={e}>
+                            {ei > 0 && <div style={{ gridColumn: "1 / -1", borderTop: "1px solid var(--border-light, var(--border))", margin: "4px 0" }} />}
+                            {top3.map((b, i) => (
+                              <Fragment key={b.fed + i}>
+                                {i === 0 ? <span style={{ justifySelf: "start", alignSelf: "center" }}><EscPill esc={e} /></span> : rankBadge(i)}
+                                {score(b.val, b.tp)}
+                                <span style={{ minWidth: 0, display: "block", padding: "3px 0" }}>
+                                  {nameEl(b.fed, b.name)}
+                                  <span className="muted" style={{ display: "block", fontSize: "var(--fs-10)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                    {fmtDMYfull(b.date)}{b.sd != null ? ` · SD ${b.sd.toFixed(1)}` : ""}
+                                  </span>
+                                </span>
+                              </Fragment>
+                            ))}
+                          </Fragment>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -806,6 +973,7 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
 function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const { players } = useAppContext();
   const nameMap = useCoursePlayerNames();
+  const teeInfo = useTeeInfoMap(course);
 
   const groups = useMemo(() => {
     const raw = course.master._players;
@@ -834,25 +1002,39 @@ function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSele
   if (groups.length === 0) return null;
   return (
     <div className="course-tee-breakdown">
-      <h4 className="course-players-title" style={{ marginBottom: 2 }}>Como jogaram os nossos — por tee</h4>
-      {groups.map((g) => {
-        const hex = g.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(g.label);
-        const border = teeBorder(hex) || "1px solid var(--border)";
-        return (
-          <PlayersTable
-            key={g.label}
-            entries={g.entries}
-            onSelectPlayer={onSelectPlayer}
-            title={
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
-                <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", background: hex, border }} />
-                {g.label}
-                <span className="muted" style={{ fontWeight: 400 }}>· {g.entries.length} jog.</span>
-              </span>
-            }
-          />
-        );
-      })}
+      <h4 className="course-players-title" style={{ marginBottom: 8 }}>Como jogaram os nossos — por tee</h4>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {groups.map((g) => {
+          const hex = g.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(g.label);
+          const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra
+          const info = teeInfo.get(g.label);
+          const dist = info?.dist ?? 0;
+          const rM = info?.group.h18.M, rF = info?.group.h18.F;
+          return (
+            <div key={g.label} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+              {/* Header do tee (banda tingida) — mesmo look dos KPIs */}
+              <div style={{ padding: "7px 12px", background: teeTint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span aria-hidden style={teeDot(hex, 14)} />
+                  <span style={{ fontWeight: 800, fontSize: "var(--fs-15, 15px)" }}>{g.label}</span>
+                  <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-11)", marginLeft: "auto", whiteSpace: "nowrap" }}>{g.entries.length} jog.</span>
+                </div>
+                {(dist || rM || rF) && (
+                  <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}
+                    {rM && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> CR {dec1(rM.cr)} · Slope {rM.sl}</span>}
+                    {rF && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> CR {dec1(rF.cr)} · Slope {rF.sl}</span>}
+                  </div>
+                )}
+              </div>
+              {/* Tabela (sortável) sem o wrapper de secção */}
+              <div style={{ padding: "6px 10px 8px" }}>
+                <PlayersTable entries={g.entries} onSelectPlayer={onSelectPlayer} bare />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

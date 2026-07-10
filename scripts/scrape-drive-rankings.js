@@ -16,8 +16,11 @@
  *
  * Warmup: GET ao linkpage (gateway canónico) UMA vez por run aquece a sessão.
  *
- * CODE = DC_{ZONA4}{ESCALAO2}{G|N}{ANO2} — MADM/TEJO/SUL_/NOR_ (+ candidatos
- * Açores), Sub 10-18, Gross/Net. Ex: DC_MADM12G26.
+ * CODES conhecidos:
+ *   Challenge: DC_{ZONA4}{ESCALAO2}{G|N}{ANO2} — MADM/TEJO/SUL_/NOR_/ACO_,
+ *              Sub 10-18, Gross/Net. Ex: DC_MADM12G26.
+ *   Tour:      RDT{M|S|T|N|A}{ANO2} — um ranking por zona (Madeira/Sul/Tejo/
+ *              Norte/Açores?), sem escalão no código. Ex: RDTM26.
  *
  * OUTPUT: public/data/drive-rankings.json
  *
@@ -72,18 +75,37 @@ const ZONES = [
 const AGES = ["10", "12", "14", "16", "18"];
 const TYPES = [{ t: "G", label: "gross" }, { t: "N", label: "net" }];
 
+/* Rankings Drive TOUR: um por zona, letra única (sem escalão no código). */
+const TOUR_ZONES = [
+  { letter: "M", region: "madeira" },
+  { letter: "S", region: "sul" },
+  { letter: "T", region: "tejo" },
+  { letter: "N", region: "norte" },
+  { letter: "A", region: "acores" },  // candidato — sondado como os da matriz DC
+];
+
 function buildMatrix() {
   const out = [];
   for (const z of ZONES) for (const a of AGES) for (const ty of TYPES) {
-    out.push({ code: `DC_${z.token}${a}${ty.t}${YEAR2}`, zone: z.region, escalao: `Sub ${a}`, type: ty.label });
+    out.push({ code: `DC_${z.token}${a}${ty.t}${YEAR2}`, series: "challenge", zone: z.region, escalao: `Sub ${a}`, type: ty.label });
+  }
+  for (const z of TOUR_ZONES) {
+    out.push({ code: `RDT${z.letter}${YEAR2}`, series: "tour", zone: z.region, escalao: null, type: "gross" });
   }
   return out;
 }
 function parseCode(code) {
-  const m = code.match(/^DC_(.{4})(\d{2})([GN])(\d{2})$/);
-  if (!m) return { zone: null, escalao: null, type: null, year: null };
-  const z = ZONES.find(x => x.token === m[1]);
-  return { zone: z?.region ?? m[1].toLowerCase(), escalao: `Sub ${m[2]}`, type: m[3] === "G" ? "gross" : "net", year: `20${m[4]}` };
+  let m = code.match(/^DC_(.{4})(\d{2})([GN])(\d{2})$/);
+  if (m) {
+    const z = ZONES.find(x => x.token === m[1]);
+    return { series: "challenge", zone: z?.region ?? m[1].toLowerCase(), escalao: `Sub ${m[2]}`, type: m[3] === "G" ? "gross" : "net", year: `20${m[4]}` };
+  }
+  m = code.match(/^RDT([A-Z])(\d{2})$/);
+  if (m) {
+    const z = TOUR_ZONES.find(x => x.letter === m[1]);
+    return { series: "tour", zone: z?.region ?? m[1].toLowerCase(), escalao: null, type: "gross", year: `20${m[2]}` };
+  }
+  return { series: null, zone: null, escalao: null, type: null, year: null };
 }
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -191,7 +213,8 @@ async function pageMethod(method, params) {
     }
 
     const entry = {
-      code: t.code, zone: t.zone, escalao: t.escalao, type: t.type,
+      code: t.code, series: t.series || "challenge",
+      zone: t.zone, escalao: t.escalao ?? null, type: t.type,
       year: t.year || `20${YEAR2}`,
       fetchedAt: new Date().toISOString(),
       players,
@@ -200,7 +223,7 @@ async function pageMethod(method, params) {
     const same = prevEntry && JSON.stringify(prevEntry.players) === JSON.stringify(players);
     if (!same) changed++;
     rankings[t.code] = entry;
-    console.log(`[drive-rankings] ✓ ${t.code} (${t.zone} ${t.escalao} ${t.type}): ${players.length} jogadores${WITH_DETAILS ? " +detalhe" : ""}${same ? " (inalterado)" : ""}`);
+    console.log(`[drive-rankings] ✓ ${t.code} (${t.series || "challenge"} ${t.zone} ${t.escalao ?? "todos"} ${t.type}): ${players.length} jogadores${WITH_DETAILS ? " +detalhe" : ""}${same ? " (inalterado)" : ""}`);
   }
 
   console.log(`[drive-rankings] ${found} rankings com dados · ${empty} vazios/inexistentes · ${errs} erros · ${changed} alterados`);

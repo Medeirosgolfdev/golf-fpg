@@ -27,7 +27,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
-import { DRIVE_POINTS, drivePoints } from "../constants/drivePoints";
+import { DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, drivePoints } from "../constants/drivePoints";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -327,7 +327,10 @@ const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highl
    ═══════════════════════════════════════════════════════ */
 function DrivePointsTable() {
   const [open, setOpen] = React.useState(false);
-  const entries = Object.entries(DRIVE_POINTS).map(([pos, pts]) => ({ pos: Number(pos), pts }));
+  // Tour e Challenge diferem no 8º (38 vs 35) e o Tour tem 20º=18 — mostrar
+  // ambas as colunas (descoberta 2026-07-10 vs rankings oficiais).
+  const allPos = [...new Set([...Object.keys(DRIVE_POINTS_TOUR), ...Object.keys(DRIVE_POINTS_CHALLENGE)].map(Number))].sort((a, b) => a - b);
+  const entries = allPos.map(pos => ({ pos, pts: DRIVE_POINTS_TOUR[pos] ?? 0, ptsCh: DRIVE_POINTS_CHALLENGE[pos] ?? 0 }));
   const half = Math.ceil(entries.length / 2);
   const col1 = entries.slice(0, half);
   const col2 = entries.slice(half);
@@ -342,23 +345,27 @@ function DrivePointsTable() {
       </button>
       {open && (
         <div className="mt-10">
-          <div className="muted fs-11 mb-8">Pontos atribuídos por posição final em cada torneio.</div>
+          <div className="muted fs-11 mb-8">
+            Pontos por posição final em cada torneio — Tour e Challenge diferem no 8º lugar (validado contra os rankings oficiais FPG).
+          </div>
           <div className="flex-wrap" style={{ display: "flex", gap: 24 }}>
             {[col1, col2].map((col, ci) => (
-              <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 140 }}>
+              <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 190 }}>
                 <thead>
                   <tr>
                     <th className="r" style={{ width: 40 }}>Pos</th>
-                    <th className="r fw-800" style={{ width: 60, color: "var(--color-warn-dark)" }}>Pts</th>
+                    <th className="r fw-800" style={{ width: 60, color: "var(--color-warn-dark)" }}>Tour</th>
+                    <th className="r fw-800" style={{ width: 70, color: "var(--color-warn-dark)" }}>Challenge</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {col.map(({ pos, pts }) => (
+                  {col.map(({ pos, pts, ptsCh }) => (
                     <tr key={pos}>
                       <td className="r fw-700" style={{ color: medalColor(pos) ?? "var(--text)" }}>
                         {medal(pos) ?? pos + "º"}
                       </td>
-                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{pts}</td>
+                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{pts || "—"}</td>
+                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)", opacity: ptsCh === pts ? 0.55 : 1 }}>{ptsCh || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -861,10 +868,13 @@ function buildSub12Data(
       // correctamente em torneios antigos (um jogador que é Sub-14 hoje pode ter
       // sido Sub-12 em 2024, e vice-versa).
       const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
-      // "all" = todos os escalões jovens (Sub 10-18); senão match exacto.
-      if (targetEsc === "all"
-        ? !ESCALOES.some(e => escMatches(esc, e))
-        : !escMatches(esc, targetEsc)) continue;
+      // "all" = TODOS os jogadores do circuito, incluindo os de escalão não
+      // resolvido (sem DOB em players.json/federados — ex: João Santos/PXO,
+      // Maria Cunha, que faltavam vs o ranking oficial RDTM26). O circuito
+      // Drive é exclusivamente jovem, por isso é seguro não filtrar aqui.
+      // Escalão específico exige match exacto (sem DOB fica de fora — não
+      // há como saber o escalão).
+      if (targetEsc !== "all" && !escMatches(esc, targetEsc)) continue;
       const fed = p.fed || p.fedCode || "";
       if (!fed) continue;
       const stats = computeStats(p, sdLookup);
@@ -896,7 +906,7 @@ function buildSub12Data(
       row.totalBird += birdies;
       row.totalPars += parsCount;
       row.totalBog  += bogeys;
-      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0);
+      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0, t.series);
     }
   }
   for (const row of playerMap.values()) {
@@ -935,7 +945,7 @@ function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row
       totalBird: fR.reduce((s, r) => s + r.birdies, 0),
       totalPars: fR.reduce((s, r) => s + r.pars, 0),
       totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
-      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0), 0),
+      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0, r.series), 0),
     };
   }).filter(Boolean) as Sub12Row[];
 }
