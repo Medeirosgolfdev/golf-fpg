@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-09T22:26:37.902Z",
+  "generatedAt": "2026-07-10T17:16:04.996Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -15204,6 +15204,24 @@
       "editionsCount": 8
     },
     {
+      "id": "fpg-qdl-junior-open",
+      "label": "Quinta do Lago Junior Open",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-962-10080-20251229-all",
+        "fpg-962-10078-20251229-all",
+        "fpg-962-10079-20251229-all",
+        "fpg-962-10081-20251229-all",
+        "fpg-962-10067-20241227-all",
+        "fpg-962-10068-20241227-all",
+        "fpg-962-10069-20241227-all",
+        "fpg-962-10070-20241228-all"
+      ],
+      "firstDate": "2024-12-27",
+      "lastDate": "2025-12-29",
+      "editionsCount": 8
+    },
+    {
       "id": "rfeg-campeonato-canarias",
       "label": "Campeonato de Canarias",
       "sourceId": "rfeg",
@@ -29066,20 +29084,6 @@
       "editionsCount": 4
     },
     {
-      "id": "fpg-qdl-junior-open",
-      "label": "Quinta do Lago Junior Open",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-962-10080-20251229-all",
-        "fpg-962-10078-20251229-all",
-        "fpg-962-10079-20251229-all",
-        "fpg-962-10081-20251229-all"
-      ],
-      "firstDate": "2025-12-29",
-      "lastDate": "2025-12-29",
-      "editionsCount": 4
-    },
-    {
       "id": "rfeg-gran-premio",
       "label": "Gran Premio",
       "sourceId": "rfeg",
@@ -36398,6 +36402,45 @@
       ],
       "firstDate": "2026-03-22",
       "lastDate": "2026-05-03",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-sub-14",
+      "label": "Campeonato Nacional de Clubes Sub 14",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10768-20240402-sub_14"
+      ],
+      "firstDate": "2024-04-02",
+      "lastDate": "2026-03-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-sub-18",
+      "label": "Campeonato Nacional de Clubes Sub 18",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10769-20240402-sub_18",
+        "fpg-000-10826-20250415-sub_18"
+      ],
+      "firstDate": "2024-04-02",
+      "lastDate": "2026-03-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-2-categoria-homens",
+      "label": "Campeonato Nacional de 2º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10776-20240511-all",
+        "fpg-000-10829-20250503-all",
+        "fpg-000-10904-20260530-all"
+      ],
+      "firstDate": "2024-05-11",
+      "lastDate": "2026-05-30",
       "editionsCount": 3
     },
     {
@@ -47029,18 +47072,6 @@
       "editionsCount": 2
     },
     {
-      "id": "fpg-campeonato-nacional-de-clubes-sub-14",
-      "label": "Campeonato Nacional de Clubes Sub 14",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
-      ],
-      "firstDate": "2025-04-14",
-      "lastDate": "2026-03-30",
-      "editionsCount": 2
-    },
-    {
       "id": "fpg-campeonato-nacional-de-jovens-sub-12-h",
       "label": "Campeonato Nacional de Jovens Sub 12 H",
       "sourceId": "fpg",
@@ -47050,6 +47081,30 @@
       ],
       "firstDate": "2025-06-27",
       "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
+      "label": "Campeonato Nacional de Clubes Solverde H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10795-20240905-all",
+        "fpg-000-10849-20250828-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2025-08-28",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
+      "label": "Campeonato Nacional de Clubes Solverde S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10796-20240905-all",
+        "fpg-000-10850-20250828-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2025-08-28",
       "editionsCount": 2
     },
     {
@@ -71115,17 +71170,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-campeonato-nacional-de-clubes-sub-18",
-      "label": "Campeonato Nacional de Clubes Sub 18",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
-      ],
-      "firstDate": "2026-03-30",
-      "lastDate": "2026-03-30",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-campeonato-nacional-de-jovens-sub-18-h",
       "label": "Campeonato Nacional de Jovens Sub 18 H",
       "sourceId": "fpg",
@@ -71222,6 +71266,127 @@
       ],
       "firstDate": "2026-06-12",
       "lastDate": "2026-06-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-94th-portuguese-international-ladies-amateur-champ",
+      "label": "94th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10785-20240124-all"
+      ],
+      "firstDate": "2024-01-24",
+      "lastDate": "2024-01-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-94th-portuguese-international-amateur-championship",
+      "label": "94th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10786-20240207-all"
+      ],
+      "firstDate": "2024-02-07",
+      "lastDate": "2024-02-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-3-categorias-homens",
+      "label": "Campeonato Nacional de 3ª Categorias Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10778-20240511-all"
+      ],
+      "firstDate": "2024-05-11",
+      "lastDate": "2024-05-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-flight-b",
+      "label": "Campeonato Nacional de Clubes - Flight B",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10797-20240906-all"
+      ],
+      "firstDate": "2024-09-06",
+      "lastDate": "2024-09-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-95th-portuguese-international-ladies-amateur-champ",
+      "label": "95th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10853-20250129-all"
+      ],
+      "firstDate": "2025-01-29",
+      "lastDate": "2025-01-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-95th-portuguese-international-amateur-championship",
+      "label": "95th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10854-20250212-all"
+      ],
+      "firstDate": "2025-02-12",
+      "lastDate": "2025-02-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-4-categoria-homens",
+      "label": "Campeonato Nacional de 4º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10833-20250503-all"
+      ],
+      "firstDate": "2025-05-03",
+      "lastDate": "2025-05-03",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-profissionais",
+      "label": "Campeonato Nacional de Profissionais",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-912-10210-20250723-all"
+      ],
+      "firstDate": "2025-07-23",
+      "lastDate": "2025-07-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-96th-portuguese-international-ladies-amateur-champ",
+      "label": "96th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10920-20260128-all"
+      ],
+      "firstDate": "2026-01-28",
+      "lastDate": "2026-01-28",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-96th-portuguese-international-amateur-championship",
+      "label": "96th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10921-20260211-all"
+      ],
+      "firstDate": "2026-02-11",
+      "lastDate": "2026-02-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-3-categoria-homens",
+      "label": "Campeonato Nacional de 3º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10906-20260530-all"
+      ],
+      "firstDate": "2026-05-30",
+      "lastDate": "2026-05-30",
       "editionsCount": 1
     },
     {
