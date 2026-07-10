@@ -47,9 +47,14 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   // compara com o último scrape (fpg-admissions-draws.json) e mostra
   // "+N novos / −N saíram". A lista live substitui a scraped na tab
   // Inscrições; se o live falhar (cookies expirados, offline) cai no scrape.
-  const isFeatured = FEATURED_TOURNAMENTS.some(
-    f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode) && f.live !== false);
-  const liveEnabled = isFeatured && !hasAnyRounds;
+  // Elegível para live: (a) está na config FEATURED (respeitando `live: false`),
+  // ou (b) é um torneio sintético admissions-only (injectado a partir do
+  // fpg-admissions-draws.json — inclui os Drive/jovens auto-detectados).
+  // Em ambos os casos só enquanto não houver rondas jogadas.
+  const featured = FEATURED_TOURNAMENTS.find(
+    f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode));
+  const syntheticAdm = (tournament as any)._sourceFile === "fpg-admissions-draws.json";
+  const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds;
   const live = useLiveAdmissions(tournament.ccode, tournament.tcode, liveEnabled);
   const liveActive = live.status === "live" && live.players.length > 0;
   const effAdmissions = useMemo(() => (liveActive
@@ -439,7 +444,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
                   )
                 )}
                 {live.status === "error" && (
-                  <span className="muted" title={live.error}>💾 live indisponível — a mostrar o último scrape</span>
+                  <span className="muted" title={live.error}>
+                    💾 live indisponível — a mostrar o último scrape
+                    {live.error ? <span style={{ opacity: 0.75 }}> ({live.error})</span> : null}
+                  </span>
                 )}
               </div>
             )}

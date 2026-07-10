@@ -146,6 +146,7 @@ jobs:
                   public/data/course-player-names.json \
                   public/data/course-players.json \
                   public/data/recent-tournaments.json \
+                  public/data/recent-tournaments-scrape-scope.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

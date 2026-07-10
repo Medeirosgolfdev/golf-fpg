@@ -144,7 +144,10 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
         escalao: entries.length === 1 ? entries[0].escalao : null,
         isMulti: false,
         isEvent: entries.length > 1,
-        totalRounds: 1,
+        // ⚠ Na lista CRUA (não-expandida) um torneio multi-ronda é UMA entrada
+        // com `rounds: N` — sem isto a sidebar não mostrava o RoundPill "2R"
+        // (bug 2026-07-10, ex: 3º Drive Tour Tejo Santo Estêvão).
+        totalRounds: Math.max(1, ...entries.map(e => e.rounds || 1)),
         entries,
       });
     } else {
@@ -157,7 +160,7 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
         escalao: t.escalao ?? null,
         isMulti: false,
         isEvent: false,
-        totalRounds: 1,
+        totalRounds: t.rounds || 1,  // idem — rounds do próprio torneio cru
         entries: [t],
       });
     }

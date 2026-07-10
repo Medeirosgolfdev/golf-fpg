@@ -45,7 +45,7 @@ import { isDNS } from "../ui/driveUtils";
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, type FpgTournamentData } from "../data/nacional2026Loader";
-import { FEATURED_TOURNAMENTS } from "../data/featuredTournaments";
+import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic, inferEscalao, stripEscalaoSuffix } from "../data/featuredTournaments";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
@@ -1303,54 +1303,23 @@ function Content() {
         }
         seen.set(key, t);
       }
-      // Helpers partilhados pelas injecções sintéticas (2) e (3):
-      const inferEscalao = (name: string): string | null => {
-        const esc = name.match(/\bescal[aã]o\s+([A-Za-z0-9]+)\b/i);
-        if (esc) return `Escalão ${esc[1].toUpperCase()}`;
-        const sub = name.match(/\bsub[\s\-_]?(\d{1,2})\b/i) || name.match(/\bu(\d{1,2})\b/i);
-        return sub ? `Sub ${sub[1]}` : null;
-      };
-      // Remove o sufixo "(Escalão X)" do nome base — o escalão vai para `escalao`.
-      // Necessário para que torneios com o mesmo evento mas datas/sufixos diferentes
-      // (ex: Escalão A num dia, Escalão B noutro) sejam agrupados pelo buildEventGroups
-      // como uma única entrada sidebar com múltiplos tabs.
-      const stripEscalaoSuffix = (name: string): string =>
-        name.replace(/\s*\(\s*escal[aã]o\s+\w+\s*\)/gi, "").replace(/\s+/g, " ").trim();
-
       // 2) Injectar torneios em destaque (FEATURED_TOURNAMENTS — template genérico
       //    para torneios futuros: Nacional 2026 Aroeira, Amendoeira 2026, …) como
       //    torneios sintéticos se não existirem já em pull-torneios/jovens_YYYY.json.
       //    Só injecta quando há dados scraped no fpg-admissions-draws.json — sem
       //    scrape, a entrada da config fica dormente. Nome/data/campo/escalão vêm
       //    do scrape salvo override na config (ver src/data/featuredTournaments.ts).
+      //    Entradas de séries Drive (tour/challenge/aquapor) são da DrivePage.
       for (const ft of FEATURED_TOURNAMENTS) {
+        if ((ft.series ?? "jovens") !== "jovens") continue;  // Drive → DrivePage
         const key = ft.ccode + "/" + ft.tcode;
         if (seen.has(key)) continue;
         const ad = admDrawsIdx.get(`${ft.ccode}-${ft.tcode}`);
         if (!ad) continue;  // sem dados scraped, não injecta
-        const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
         const date = ft.date || ad.date || "";
-        const drawRounds = Object.keys(ad.draws || {}).length;
         const synthetic = {
-          name: ft.name || stripEscalaoSuffix(ad.name || "") || `Torneio ${ft.tcode}`,
-          ccode: ft.ccode,
-          tcode: ft.tcode,
-          date,
-          campo: ft.campo ?? ad.campo ?? null,
-          clube: ft.ccode,
-          circuit: "tour",
-          series: "jovens",
-          region: ft.region ?? null,
-          escalao: ft.escalao ?? inferEscalao(ad.name || ""),
-          num: 1,
-          rounds: ft.rounds ?? (drawRounds || (ad.admissions as any)?.rounds || 1),
-          playerCount,
-          players: [],
+          ...buildFeaturedSynthetic(ft, ad),
           _jovensYear: date.substring(0, 4) || String(new Date().getFullYear()),
-          _sourceFile: "fpg-admissions-draws.json",
-          _admissions: ad.admissions,
-          _draws: ad.draws,
-          extraLinks: ft.extraLinks,
         } as unknown as Tournament;
         seen.set(key, synthetic);
       }
@@ -1361,8 +1330,8 @@ function Content() {
       {
         const ADM_JOVEM_RE = /\b(juniors?|júniors?|juvenil|juvenis|sub[\s\-_]?\d{1,2}|u\d{1,2}|jovens?)\b/i;
         const stripDia = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
-        // (inferEscalao / stripEscalaoSuffix definidos acima, partilhados com a
-        //  injecção (2) dos FEATURED_TOURNAMENTS)
+        // (inferEscalao / stripEscalaoSuffix importados de featuredTournaments.ts,
+        //  partilhados com a injecção (2) e com a DrivePage)
         for (const [, ad] of admDrawsIdx) {
           const tournKey = `${ad.ccode}/${ad.tcode}`;
           if (seen.has(tournKey)) continue;

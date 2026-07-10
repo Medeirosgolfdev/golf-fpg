@@ -41,7 +41,7 @@ const getArg = (flag, def) => {
   const i = args.indexOf(flag);
   return i >= 0 && args[i + 1] ? args[i + 1] : def;
 };
-const SINCE = getArg("--since", "2024-06-01");           // janela temporal (start)
+const SINCE = getArg("--since", "2024-01-01");           // janela temporal (start)
 const MIN_OURS = Number(getArg("--min-ours", "1"));      // mínimo de nossos por torneio
 const ALL_ORIGINS = args.includes("--all-origins");      // incluir origens não-Torn
 const SINCE_MS = new Date(SINCE + "T00:00:00Z").getTime();
@@ -306,10 +306,25 @@ function main() {
   fs.writeFileSync(outPath, JSON.stringify(doc) + "\n");
   const sizeMB = (fs.statSync(outPath).size / 1e6).toFixed(1);
 
+  // ── Scope de scrape: torneios com >5 nossos AINDA por scrapear ──────────
+  // Estes valem o quadro completo — alimenta o scrape-classif-node.js (formato
+  // {tclub,tcode}). Só FPG (ccode presente; Drive vazio scrapa-se por outro
+  // pipeline). Ordenado por nº de nossos desc (mais valiosos primeiro). O
+  // update-classif.yml consome-o e, à medida que forem scrapeados, saem do
+  // scope no build seguinte (auto-drena).
+  const SCRAPE_MIN_OURS = 6; // "mais de 5"
+  const scrapeScope = out
+    .filter((t) => !t.scraped && t.nOurs >= SCRAPE_MIN_OURS && t.ccode && t.ccode.trim() !== "")
+    .sort((a, b) => b.nOurs - a.nOurs)
+    .map((t) => ({ tclub: String(t.ccode).padStart(3, "0"), tcode: String(t.tcode), name: t.name, nOurs: t.nOurs }));
+  const scopePath = path.join(DATA_DIR, "recent-tournaments-scrape-scope.json");
+  fs.writeFileSync(scopePath, JSON.stringify(scrapeScope, null, 1) + "\n");
+
   console.log(`Jogadores lidos: ${scanned} (parseErr ${parseErr})`);
   console.log(`Torneios reconstruídos (desde ${SINCE}, ≥${MIN_OURS} nossos): ${out.length}`);
   console.log(`  já scrapeados: ${nScraped} | por scrapear: ${out.length - nScraped}`);
   console.log(`Escrito: public/data/recent-tournaments.json (${sizeMB} MB) em ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+  console.log(`Scope de scrape (>${SCRAPE_MIN_OURS - 1} nossos, por scrapear): ${scrapeScope.length} → public/data/recent-tournaments-scrape-scope.json`);
 }
 
 if (require.main === module) main();

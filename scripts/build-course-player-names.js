@@ -88,16 +88,24 @@ function main() {
     ...collectFromCoursePlayers("course-players.json"),
   ]);
 
-  // ── construir índices de nome ──────────────────────────────────────────
+  // ── construir índices de nome / dob / sexo ─────────────────────────────
   const playerNames = {};
+  const playerDob = {};
+  const playerSex = {};
   try {
     const players = readJson("players.json");
     for (const [k, v] of Object.entries(players)) {
-      if (v && typeof v === "object" && v.name) playerNames[k] = v.name;
+      if (v && typeof v === "object") {
+        if (v.name) playerNames[k] = v.name;
+        if (v.dob) playerDob[k] = v.dob;
+        if (v.sex === "M" || v.sex === "F") playerSex[k] = v.sex;
+      }
     }
   } catch {/* opcional */}
 
   const fedNames = {};
+  const fedDob = {};
+  const fedSex = {};
   for (const file of ["federados.json", "federados-inativos.json"]) {
     let doc;
     try {
@@ -108,12 +116,17 @@ function main() {
     const list = Array.isArray(doc) ? doc : doc?.players ?? [];
     for (const p of list) {
       const code = p?.federation_code;
-      if (code && p?.name && !(code in fedNames)) fedNames[code] = p.name;
+      if (!code) continue;
+      if (p?.name && !(code in fedNames)) fedNames[code] = p.name;
+      if (p?.birthdate && !(code in fedDob)) fedDob[code] = p.birthdate;
+      if ((p?.gender === "M" || p?.gender === "F") && !(code in fedSex)) fedSex[code] = p.gender;
     }
   }
 
   // ── resolver ────────────────────────────────────────────────────────────
   const map = {};
+  const dobMap = {};
+  const sexMap = {};
   const unresolved = [];
   for (const code of codes) {
     // Ignorar "nomes" placeholder iguais ao próprio código (entradas por
@@ -122,17 +135,29 @@ function main() {
     const name = fromPlayers || fedNames[code];
     if (name) map[code] = name;
     else unresolved.push(code);
+    const dob = playerDob[code] || fedDob[code];
+    if (dob) dobMap[code] = dob;
+    const sex = playerSex[code] || fedSex[code];
+    if (sex) sexMap[code] = sex;
   }
 
   // saída ordenada por código para diffs estáveis
-  const ordered = {};
-  for (const k of Object.keys(map).sort((a, b) => a.localeCompare(b))) ordered[k] = map[k];
+  const order = (m) => {
+    const o = {};
+    for (const k of Object.keys(m).sort((a, b) => a.localeCompare(b))) o[k] = m[k];
+    return o;
+  };
+  const ordered = order(map);
 
   const out = {
     generated: new Date().toISOString(),
     source: "players.json + federados.json + federados-inativos.json",
     total: Object.keys(ordered).length,
     names: ordered,
+    // dob (YYYY-MM-DD) e sexo — usados pela CamposPage para o escalão à data da
+    // volta (KPIs por tee: melhor Sub-12/14/16… em cada cor). Só os que existem.
+    dob: order(dobMap),
+    sex: order(sexMap),
   };
 
   const outPath = path.join(DATA, "course-player-names.json");

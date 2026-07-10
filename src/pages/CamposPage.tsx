@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect, Fragment } from "react";
+﻿import { useMemo, useState, useEffect, Fragment, type ReactNode } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
@@ -12,12 +12,12 @@ import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
-import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
+import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
 import { fmt, fmtCR, norm, sumRange, fmtToPar } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees } from "../utils/teeUtils";
-import { PillBadge } from "../ui/PillBadge";
+import { PillBadge, EscPill } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
@@ -35,24 +35,30 @@ import DetailHeader from "../ui/DetailHeader";
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
    Carregado uma única vez ao nível do módulo. */
-let _coursePlayerNames: Record<string, string> | null = null;
-let _coursePlayerNamesPromise: Promise<Record<string, string>> | null = null;
-function loadCoursePlayerNames(): Promise<Record<string, string>> {
-  if (_coursePlayerNames) return Promise.resolve(_coursePlayerNames);
-  if (!_coursePlayerNamesPromise) {
-    _coursePlayerNamesPromise = cachedFetchJson<{ names?: Record<string, string> }>(
+type CoursePlayerMeta = {
+  names: Record<string, string>;
+  dob: Record<string, string>;   // fed → "YYYY-MM-DD"
+  sex: Record<string, "M" | "F">;
+};
+const EMPTY_META: CoursePlayerMeta = { names: {}, dob: {}, sex: {} };
+let _coursePlayerMeta: CoursePlayerMeta | null = null;
+let _coursePlayerMetaPromise: Promise<CoursePlayerMeta> | null = null;
+function loadCoursePlayerMeta(): Promise<CoursePlayerMeta> {
+  if (_coursePlayerMeta) return Promise.resolve(_coursePlayerMeta);
+  if (!_coursePlayerMetaPromise) {
+    _coursePlayerMetaPromise = cachedFetchJson<Partial<CoursePlayerMeta>>(
       "/data/course-player-names.json"
     )
       .then((d) => {
-        _coursePlayerNames = d?.names ?? {};
-        return _coursePlayerNames;
+        _coursePlayerMeta = { names: d?.names ?? {}, dob: d?.dob ?? {}, sex: (d?.sex as CoursePlayerMeta["sex"]) ?? {} };
+        return _coursePlayerMeta;
       })
       .catch(() => {
-        _coursePlayerNames = {};
-        return _coursePlayerNames;
+        _coursePlayerMeta = EMPTY_META;
+        return _coursePlayerMeta;
       });
   }
-  return _coursePlayerNamesPromise;
+  return _coursePlayerMetaPromise;
 }
 
 
@@ -443,52 +449,57 @@ function headline(s: PlayerSummary): CPBucket {
   return s.b18.n > 0 ? s.b18 : s.b9;
 }
 
-function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
-  const { players } = useAppContext();
-  const [nameMap, setNameMap] = useState<Record<string, string>>(_coursePlayerNames ?? {});
+/** Constrói os resumos por jogador a partir do `_players` do campo. Se
+ *  `teeFilter` for dado, só conta as voltas cujo tee o passa (usado pela vista
+ *  "por tee"). Nome resolvido: players.json → mapa de federados → nº fed. */
+function buildSummaries(
+  raw: Course["master"]["_players"],
+  players: Record<string, { name?: string } | undefined>,
+  nameMap: Record<string, string>,
+  teeFilter?: (tee: string | null) => boolean,
+): PlayerSummary[] {
+  if (!raw || Object.keys(raw).length === 0) return [];
+  const out: PlayerSummary[] = [];
+  for (const [nfed, val] of Object.entries(raw)) {
+    const p = players[nfed];
+    const realName = p?.name && p.name !== nfed ? p.name : null;
+    const fromMap = nameMap[nfed] && nameMap[nfed] !== nfed ? nameMap[nfed] : null;
+    const name = realName ?? fromMap ?? nfed;
+    // Retro-compat: formato antigo = string (só data); novo = array de rondas
+    const allRounds: CoursePlayerRound[] = Array.isArray(val)
+      ? val
+      : typeof val === "string"
+        ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
+        : [];
+    const rounds = teeFilter ? allRounds.filter((r) => teeFilter(r.tee)) : allRounds;
+    if (rounds.length === 0) continue;
+    const sortedRounds = [...rounds].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+    const r18: CoursePlayerRound[] = [];
+    const r9: CoursePlayerRound[] = [];
+    for (const r of sortedRounds) {
+      const h = roundHoles(r);
+      if (h === 18) r18.push(r);
+      else if (h === 9) r9.push(r);
+    }
+    out.push({
+      nfed, name, isM: nfed === MANUEL_FED,
+      rounds: sortedRounds, total: rounds.length,
+      b18: buildBucket(r18), b9: buildBucket(r9),
+    });
+  }
+  return out;
+}
+
+/** Tabela sortável de jogadores + scores num campo (18b/18 e 9b em linhas
+ *  separadas, expansível para as voltas individuais). Reutilizada pela vista
+ *  geral ("Jogadores") e pela vista por-tee ("Como jogaram — por tee"). */
+function PlayersTable({ entries, title, onSelectPlayer }: { entries: PlayerSummary[]; title: ReactNode; onSelectPlayer?: (fed: string) => void }) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   // Default: mais voltas primeiro. Por coluna: melhor/média ascendente (menor = melhor),
   // última descendente (mais recente primeiro), nome ascendente.
   const { sortKey, sortDir, toggleSort } = useSort<CPSortKey>("n", "desc", {
     name: "asc", best: "asc", avg: "asc",
   });
-
-  useEffect(() => {
-    let alive = true;
-    loadCoursePlayerNames().then((m) => { if (alive) setNameMap(m); });
-    return () => { alive = false; };
-  }, []);
-
-  const entries = useMemo<PlayerSummary[]>(() => {
-    const raw = course.master._players;
-    if (!raw || Object.keys(raw).length === 0) return [];
-    return Object.entries(raw).map(([nfed, val]) => {
-      const p = players[nfed];
-      // Nome SEMPRE: players.json → mapa de federados → (último recurso) número.
-      const realName = p?.name && p.name !== nfed ? p.name : null;
-      const fromMap = nameMap[nfed] && nameMap[nfed] !== nfed ? nameMap[nfed] : null;
-      const name = realName ?? fromMap ?? nfed;
-      // Retro-compat: formato antigo = string (só data); novo = array de rondas
-      const rounds: CoursePlayerRound[] = Array.isArray(val)
-        ? val
-        : typeof val === "string"
-          ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
-          : [];
-      const sortedRounds = [...rounds].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
-      const r18: CoursePlayerRound[] = [];
-      const r9: CoursePlayerRound[] = [];
-      for (const r of sortedRounds) {
-        const h = roundHoles(r);
-        if (h === 18) r18.push(r);
-        else if (h === 9) r9.push(r);
-      }
-      return {
-        nfed, name, isM: nfed === MANUEL_FED,
-        rounds: sortedRounds, total: rounds.length,
-        b18: buildBucket(r18), b9: buildBucket(r9),
-      };
-    });
-  }, [course, players, nameMap]);
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -560,7 +571,7 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
 
   return (
     <div className="course-players-section">
-      <h4 className="course-players-title">Jogadores ({entries.length})</h4>
+      <h4 className="course-players-title">{title}</h4>
       <div className="sc-wrap">
         <table className="cp-table">
           <thead>
@@ -642,6 +653,206 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
           </tbody>
         </table>
       </div>
+    </div>
+  );
+}
+
+/* Hook partilhado: carrega o meta dos jogadores (nome + dob + sexo). */
+function useCoursePlayerMeta(): CoursePlayerMeta {
+  const [meta, setMeta] = useState<CoursePlayerMeta>(_coursePlayerMeta ?? EMPTY_META);
+  useEffect(() => {
+    let alive = true;
+    loadCoursePlayerMeta().then((m) => { if (alive) setMeta(m); });
+    return () => { alive = false; };
+  }, []);
+  return meta;
+}
+function useCoursePlayerNames(): Record<string, string> {
+  return useCoursePlayerMeta().names;
+}
+
+/** Vista geral: todos os jogadores que já jogaram o campo (todos os tees). */
+function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
+  const { players } = useAppContext();
+  const nameMap = useCoursePlayerNames();
+  const entries = useMemo(
+    () => buildSummaries(course.master._players, players, nameMap),
+    [course, players, nameMap],
+  );
+  if (entries.length === 0) return null;
+  return <PlayersTable entries={entries} title={`Jogadores (${entries.length})`} onSelectPlayer={onSelectPlayer} />;
+}
+
+/* Ordem de tees por cor (back→front). Tees desconhecidos (juvenis, etc.) e
+ * "Sem tee" vão para o fim. */
+const TEE_COLOR_ORDER = ["pretas", "azuis", "brancas", "amarelas", "laranjas", "verdes", "vermelhas", "rosas", "douradas", "castanhas"];
+function teeRankKey(label: string): number {
+  const k = label.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+  const i = TEE_COLOR_ORDER.indexOf(k);
+  return i < 0 ? 90 : i;
+}
+const NO_TEE_LABEL = "Sem tee";
+
+/* ── Escalão (coorte FPG) à DATA da volta ─────────────────────────────────
+ * Por ano de nascimento vs ano do evento (a idade que o jogador FAZ nesse ano
+ * — é assim que a FPG define as coortes). "Sub 10..21" ou "Absoluto". */
+const ESC_KPI_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 21", "Absoluto"];
+const ESC_THRESHOLDS = [10, 12, 14, 16, 18, 21];
+function escalaoAtDate(dob: string | undefined, date: string | null): string | null {
+  if (!dob || !date) return null;
+  const by = parseInt(dob.slice(0, 4), 10);
+  const ey = parseInt(String(date).slice(0, 4), 10);
+  if (!by || !ey || ey < by) return null;
+  const yrs = ey - by;
+  for (const t of ESC_THRESHOLDS) if (yrs <= t) return `Sub ${t}`;
+  return "Absoluto";
+}
+
+type EscBest = { gross: number; toPar: number | null; fed: string; name: string };
+
+/** KPIs por cor de tee (topo do tab "Como jogou"): por cada tee, nº de jogadores
+ *  + nº de voltas + o MELHOR score de cada escalão (Sub-12/14/16…) — escalão à
+ *  data da volta. Só voltas de 18 buracos (comparáveis). */
+function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
+  const meta = useCoursePlayerMeta();
+  const { players } = useAppContext();
+
+  const cards = useMemo(() => {
+    const raw = course.master._players;
+    if (!raw || Object.keys(raw).length === 0) return [];
+    const labelOf = (tee: string | null) => (tee ? teeCanonicalLabel(tee) : NO_TEE_LABEL);
+    const nameOf = (fed: string) => {
+      const p = players[fed];
+      return (p?.name && p.name !== fed ? p.name : null)
+        ?? (meta.names[fed] && meta.names[fed] !== fed ? meta.names[fed] : null)
+        ?? fed;
+    };
+    const byTee = new Map<string, { players: Set<string>; nRounds: number; best: Map<string, EscBest> }>();
+    for (const [fed, val] of Object.entries(raw)) {
+      if (!Array.isArray(val)) continue;
+      const dob = meta.dob[fed];
+      for (const r of val) {
+        if (roundHoles(r) !== 18) continue; // só voltas de 18 (comparáveis)
+        const g = r.gross as number;
+        const label = labelOf(r.tee);
+        let t = byTee.get(label);
+        if (!t) { t = { players: new Set(), nRounds: 0, best: new Map() }; byTee.set(label, t); }
+        t.players.add(fed);
+        t.nRounds++;
+        const esc = escalaoAtDate(dob, r.date);
+        if (!esc) continue;
+        const cur = t.best.get(esc);
+        if (!cur || g < cur.gross) t.best.set(esc, { gross: g, toPar: r.toPar ?? null, fed, name: nameOf(fed) });
+      }
+    }
+    return [...byTee.entries()]
+      .map(([label, t]) => ({ label, players: t.players, nRounds: t.nRounds, best: t.best }))
+      .filter((t) => t.nRounds > 0)
+      .sort((a, b) => {
+        const semA = a.label === NO_TEE_LABEL ? 1 : 0, semB = b.label === NO_TEE_LABEL ? 1 : 0;
+        if (semA !== semB) return semA - semB;
+        return (teeRankKey(a.label) - teeRankKey(b.label)) || (b.players.size - a.players.size);
+      });
+  }, [course, players, meta]);
+
+  if (cards.length === 0) return null;
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "6px 0 12px" }}>
+      {cards.map((c) => {
+        const hex = c.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(c.label);
+        const border = teeBorder(hex) || "1px solid var(--border)";
+        const escs = ESC_KPI_ORDER.filter((e) => c.best.has(e));
+        return (
+          <div key={c.label} style={{ flex: "1 1 230px", minWidth: 210, maxWidth: 340, border: "1px solid var(--border)", borderRadius: 10, background: "var(--bg-card)", padding: "9px 11px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 7 }}>
+              <span aria-hidden style={{ width: 13, height: 13, borderRadius: "50%", background: hex, border, display: "inline-block" }} />
+              <span style={{ fontWeight: 700 }}>{c.label}</span>
+              <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-11)", marginLeft: "auto" }}>
+                {c.players.size} jog · {c.nRounds} voltas
+              </span>
+            </div>
+            {escs.length === 0 ? (
+              <div className="muted" style={{ fontSize: "var(--fs-11)" }}>sem escalão conhecido</div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "auto auto minmax(0,1fr)", gap: "3px 8px", alignItems: "center" }}>
+                {escs.map((e) => {
+                  const b = c.best.get(e)!;
+                  return (
+                    <Fragment key={e}>
+                      <EscPill esc={e} />
+                      <span style={{ textAlign: "right", fontWeight: 700, whiteSpace: "nowrap" }}>
+                        {b.gross}
+                        {b.toPar != null && <span style={{ color: tpTextColor(b.toPar), fontWeight: 600 }}> {fmtToPar(b.toPar)}</span>}
+                      </span>
+                      {onSelectPlayer ? (
+                        <button type="button" className="tourn-pname tourn-pname-link" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "left" }} onClick={() => onSelectPlayer(b.fed)} title={b.name}>{b.name}</button>
+                      ) : (
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={b.name}>{b.name}</span>
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Vista "por tee" (no tab Como jogou): uma tabela por tee (Brancas, Amarelas,
+ *  …) com os nossos jogadores e as pontuações que fizeram NESSE tee. */
+function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
+  const { players } = useAppContext();
+  const nameMap = useCoursePlayerNames();
+
+  const groups = useMemo(() => {
+    const raw = course.master._players;
+    if (!raw || Object.keys(raw).length === 0) return [];
+    // Rótulo canónico do tee de cada volta (agrupa variantes M/F da mesma cor).
+    const labelOf = (tee: string | null) => (tee ? teeCanonicalLabel(tee) : NO_TEE_LABEL);
+    const labels = new Set<string>();
+    for (const val of Object.values(raw)) {
+      if (Array.isArray(val)) for (const r of val) labels.add(labelOf(r.tee));
+    }
+    return [...labels]
+      .map((label) => ({
+        label,
+        entries: buildSummaries(raw, players, nameMap, (tee) => labelOf(tee) === label),
+      }))
+      .filter((g) => g.entries.length > 0)
+      .sort((a, b) => {
+        const semA = a.label === NO_TEE_LABEL ? 1 : 0, semB = b.label === NO_TEE_LABEL ? 1 : 0;
+        if (semA !== semB) return semA - semB;
+        return (teeRankKey(a.label) - teeRankKey(b.label))
+          || (b.entries.length - a.entries.length)
+          || a.label.localeCompare(b.label, "pt");
+      });
+  }, [course, players, nameMap]);
+
+  if (groups.length === 0) return null;
+  return (
+    <div className="course-tee-breakdown">
+      <h4 className="course-players-title" style={{ marginBottom: 2 }}>Como jogaram os nossos — por tee</h4>
+      {groups.map((g) => {
+        const hex = g.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(g.label);
+        const border = teeBorder(hex) || "1px solid var(--border)";
+        return (
+          <PlayersTable
+            key={g.label}
+            entries={g.entries}
+            onSelectPlayer={onSelectPlayer}
+            title={
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+                <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", background: hex, border }} />
+                {g.label}
+                <span className="muted" style={{ fontWeight: 400 }}>· {g.entries.length} jog.</span>
+              </span>
+            }
+          />
+        );
+      })}
     </div>
   );
 }
@@ -1130,8 +1341,9 @@ export default function CamposPage() {
                 }
               />
 
-              {/* KPIs do campo */}
-              {heroStats && (
+              {/* KPIs do campo — genéricos (Par/Tees/Jogadores) só no Scorecard.
+                  No "Como jogou" mostramos KPIs por cor de tee (mais úteis). */}
+              {detailView === "scorecard" && heroStats && (
                 <div className="kpi-row">
                   <KpiCard label="Par" value={heroStats.par ?? "–"} />
                   <KpiCard label="Tees" value={heroStats.nTees} />
@@ -1151,16 +1363,28 @@ export default function CamposPage() {
                   />
                   <ScorecardGrid tees={selectedTees} selKey={selTeeKey} />
                   <CourseNineRatings tees={selectedTees} />
+                  {/* Lista geral de quem já jogou aqui (todos os tees) */}
+                  <CoursePlayersSection
+                    course={selected}
+                    onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
+                  />
                 </>
               ) : (
-                <CourseHoleAverages course={selected} />
+                <>
+                  {/* KPIs por cor de tee: nº jogadores + melhor Sub-12/14/16… */}
+                  <CourseTeeKpis
+                    course={selected}
+                    onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
+                  />
+                  {/* Quem jogou + scores, partido por tee (Brancas, Amarelas, …) */}
+                  <CoursePlayersByTee
+                    course={selected}
+                    onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
+                  />
+                  {/* Média por buraco do Manuel — em baixo, secundário */}
+                  <CourseHoleAverages course={selected} />
+                </>
               )}
-
-              {/* Jogadores que já jogaram aqui */}
-              <CoursePlayersSection
-                course={selected}
-                onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
-              />
             </>
           ) : (
             <EmptyState icon="⛳" message="Selecciona um campo" />

@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	Classif. Ordens de Mérito/Rankings
+</title><link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="Content/Site.css" rel="stylesheet" type="text/css" /><link href="Content/themes/metroblue/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    <!-- jTable style file -->
+    <link href="Scripts/jtable/themes/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/modernizr-2.8.3.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-2.2.2.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.11.4.min.js" type="text/javascript"></script>
+
+    <script src="Scripts/jtablesite.js" type="text/javascript"></script>
+    <script type="text/javascript" src="Scripts/jtable/localization/jquery.jtable.adapted.js?v=1"></script>
+
+    <!-- A helper library for JSON serialization -->
+    <script type="text/javascript" src="Scripts/jtable/external/json2.js"></script>
+    <!-- Core jTable script file -->
+    <script type="text/javascript" src="Scripts/jtable/jquery.jtable.js"></script>
+    <!-- ASP.NET Web Forms extension for jTable -->
+    <script type="text/javascript" src="Scripts/jtable/extensions/jquery.jtable.aspnetpagemethods.js"></script>
+
+    <!-- Date formatting -->
+    <script type="text/javascript" src="Scripts/moment.min.js"></script>
+
+    <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="Scripts/DataGolf.js"></script>
+
+     <script  type="text/javascript" src="Scripts/iframeResizer.contentWindow.min.js"></script>
+
+    <!-- CSS to control color codes in Scorecard -->
+    <link href="Content/datagolf.min.css" rel="stylesheet" type="text/css" /></head>
+<body>
+    <form method="post" action="./rankings_classif.aspx?ccode=988&amp;ranking=DC_MADM12G26" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="zLBAJAVuIojj+yfs3qnnsuRvLB9ajYiqfb/INfCt1fZVKHaKzhCunDeQgFdv19cw4ZFs1Lc9Muoqi0ruTS6FITQIqeF2m73Bavt2ESgH9cfNLZnjFKtEWOfmopvsAX9lASz7qPDfUHSkJYe64CQXV/trkEdk8+Y8ndjc2NVJXbtOLGYolSsh1S5ViK+0vItTa5/czEtv9zrAEYaZTwlKmM83ZicocW/bkkXsj3x3etxqmS5T2rb6VWjkTh9lzNUa8aOVwWI3abg9/tIi010rSH3cL3kVRmjA6wew7Oi4CgIGJiKtg2ZDzuv1e6OdFTLP" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E0299639" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="jHbhvWUaDXSN6bQIREwSAcwbAS8hXSOOxW8CXNhcdjAhXr9kayfS1r/ok0SRkam55dji7I3cV4+yfs3DE6dcVf4t9oH5d5ziCT8nSg4bUTX+wZWvIyNsdxbqi2/wZlhK/aavx7PaIxLOvwXXkAlyAiYzE2qJC2ETxJ3xVGFck4My4ZfpwJLF5KfETVujLUu2" />
+</div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-8 col-xs-8">
+                    <h3><span id="lblTitle">Classif. Ordens de Mérito/Rankings</span></h3>
+                    <span id="lblClub" style="display: none">988</span>
+                    <span id="lblRkCode" style="display: none">DC_MADM12G26</span>
+                    <span id="lblRkDesc" style="display: none">Ranking Drive Challege Madeira - Sub 12 Gross</span>
+                </div>
+
+                    
+            </div>
+        </div>    
+    
+
+    <div class="container">
+        <div id="ClassifATableContainer"></div>
+        <div class="col-sm-6 cols-xs-6" id="logos">
+          <div class="logos">
+              <a id="buttonLangPT" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangPT&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">PT</a>
+              <a id="buttonLangGB" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangGB&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">UK</a>
+              <a id="buttonLangES" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangES&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">ES</a>
+              <a id="buttonLangTR" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangTR&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">TR</a>
+              &nbsp;&nbsp;<img src="Content/Images/DataGolf_short.gif"  />
+              <img src="Content/Images/pt_fed_logo.png" id="imgLogo" style="width:60px;height:auto" />
+          </div>
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //Prepare jtable plugin
+            $('#ClassifATableContainer').jtable({
+                messages: messagespt,
+                title: 'Ranking Drive Challege Madeira - Sub 12 Gross',
+                //paging: false,
+                sorting: false,
+                paging: true,
+                pageSize: 100,
+                sorting: true,
+                //defaultSorting: 'id ASC',
+                actions: {
+                    listAction: 'rankings_classif.aspx/RankingsClassifLST?Club=' + $("#lblClub").text() + '&Rk_Code=' + $("#lblRkCode").text()
+                },
+               
+                fields: {
+                    id: {
+                        key: true,
+                        create: false,
+                        edit: false,
+                        list: false
+                    },
+                    rk_pos: {
+                        title: "<div class=\"alncenter\">" + 'Pos' + "</div>",
+                        width: '5%',
+                        sorting: false,
+                        display: function (data) {
+                            var a = "";
+                            var b = data.record.classif_status;
+                            if (b == "0") { a = '<div class="alncenter">' + data.record.rk_pos + '</div>'; }
+                            else { a = '<div class="alncenter">' + ' - ' + '</div>'; }
+                            return a;
+                        }
+                    },
+
+                    Player: {
+                        title: 'Nome',
+                        width: '25%',
+                        sorting: false,
+                        edit: false,
+                        create: false,
+
+                        display: function (federData) {
+                            //Create an image that will be used to open child table
+                            //var $img = $('<img class="child-opener-image" src="Content/images/Misc/Sinalmais.png" title="Consultar Detalhe Jogador" />');
+                            var $img = $('<h6 class="child-opener-image" >' + federData.record.name + '</h6>');
+
+                            //Open child table when user clicks the image
+                            $img.click(function () {
+                                $('#ClassifATableContainer').jtable('openChildTable',
+                                    $img.closest('tr'),
+                                    {
+                                        messages: messagespt,
+                                        title: federData.record.name + ' ',
+                                        actions: {
+                                            listAction: 'rankings_classif.aspx/RankingsPlayersLST?Club=' + $("#lblClub").text() + '&Rk_Code=' + $("#lblRkCode").text() + '&fed_code=' + federData.record.federated_code
+                                        },
+                                        fields: {
+                                            tourn_date: {
+                                                title: "<div class=\"alncenter\">" + 'Data' + "</div>",
+                                                width: '15%',
+                                                type: 'date',
+                                                display: function (data) {
+                                                    return "<div class=\"alncenter nowrap\">" + moment(data.record.tourn_date).format('YYYY-MM-DD') + "</div>";
+                                                }                        //displayFormat: 'yy-mm-dd'
+                                            },
+                                            tournament_desc: {
+                                                title: 'Torneio',
+                                                width: '40%',
+                                                sorting: false,
+                                                edit: false,
+                                                create: false,
+                                            },
+                                            rk_pos: {
+                                                title: "<div class=\"alncenter\">" + 'Pos' + "</div>",
+                                                width: '10%',
+                                                sorting: false,
+                                                edit: false,
+                                                create: false,
+                                                display: function (data) {
+                                                    return "<div class=\"alncenter nowrap\">" + data.record.rk_pos + "</div>";
+                                                }
+                                            },
+                                            rank_points: {
+                                                title: "<div class=\"alncenter\">" + 'Pontos' + "</div>",
+                                                width: '10%',
+                                                sorting: false,
+                                                edit: false,
+                                                create: false,
+                                                display: function (data) {
+                                                    var a = "";
+                                                    var b = data.record.rk_type;
+                                                    if (b == "8" || b == "9")
+                                                    {
+                                                        if (data.record.rank_points > 0) { a = '<div class="alncenter"> +' + data.record.rank_points + '</div>';}
+                                                        else if (data.record.rank_points == 0) {a = '<div class="alncenter">PAR</div>';}
+                                                        else { a = '<div class="alncenter">' + data.record.rank_points + '</div>' };
+                                                    }
+                                                    else { a = '<div class="alncenter">' + data.record.rank_points + '</div>'; }
+                                                    return a;
+                                                }
+                                            },
+                                        }
+                                    }, function (data) { //opened handler
+                                        data.childTable.jtable('load');
+                                    });
+                                });
+                                //Return image to show on the person row
+                                return $img;
+                                }
+                            },
+                    acronym: {
+                        title: 'Clube',
+                        width: '25%',
+                        sorting: false,
+                    },
+                    points_real: {
+                        title: "<div class=\"alncenter\">" + 'Total' + "</div>",
+                        width: '8%',
+                        sorting: false,
+                        display: function (data) {
+                            var a = "";
+                            var b = data.record.rk_type;
+                            if (b == "8" || b == "9")
+                            {
+                                if (data.record.points_real > 0) { a = '<div class="alncenter"> +' + data.record.points_real + '</div>';}
+                                else if (data.record.points_real == 0) {a = '<div class="alncenter">PAR</div>';}
+                                else { a = '<div class="alncenter">' + data.record.points_real + '</div>' };
+                            }
+                            else { a = '<div class="alncenter">' + data.record.points_real + '</div>'; }
+                            return a;
+                        }
+                    },
+                    num_val: {
+                        title: "<div class=\"alncenter\">" + 'No. Torneios' + "</div>",
+                        width: '8%',
+                        sorting: false,
+                        display: function (data) {
+                            var a = "";
+                            var b = data.record.rk_type;
+                            if (data.record.numtourn > data.record.num_val) {a = '<div class="alncenter">' + data.record.num_val + ' (' + data.record.numtourn + ')</div>';}
+                            else { a = '<div class="alncenter">' + data.record.num_val + '</div>'; }
+                            return a;
+                        }
+                    },
+                }
+            });
+
+            //Load results list from server
+            $('#ClassifATableContainer').jtable('load');
+
+        });
+
+    </script>
+
+</body>
+</html>

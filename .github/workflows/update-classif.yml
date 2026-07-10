@@ -102,18 +102,44 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      # Drena o scope de torneios recentes com >5 dos nossos que ainda não têm
+      # leaderboard completa (public/data/recent-tournaments-scrape-scope.json,
+      # gerado pelo update-data.yml, ordenado por nº de nossos desc). Cap por
+      # run (--limit) para não estourar o timeout; o merge é aditivo e o scope
+      # encolhe a cada semana à medida que os torneios ficam scrapeados.
+      # Escreve em pull-torneios006.json (a FPGPage lê 000..NNN automaticamente).
+      - name: Scrapar torneios recentes com muitos dos nossos (>5)
+        id: scrape_recent
+        if: github.event_name == 'schedule' || github.event.inputs.tclub == ''
+        run: |
+          set +e
+          SCOPE="public/data/recent-tournaments-scrape-scope.json"
+          if [ ! -s "$SCOPE" ]; then
+            echo "ℹ️  Sem scope de torneios recentes ($SCOPE) — nada a drenar."
+            echo "exit_code=2" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          node scripts/scrape-classif-node.js --scope "$SCOPE" --limit 80 \
+            --out public/data/pull-torneios006.json --concurrency 2
+          EC=$?
+          echo "exit_code=$EC" >> $GITHUB_OUTPUT
+          if [ "$EC" = "1" ]; then echo "⚠ scrape de recentes falhou (não aborta o workflow)"; fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
       - name: Regenerar tracking (após novos dados de classif)
-        if: steps.scrape.outputs.exit_code == '0'
+        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0'
         run: node scripts/build-tournaments-tracking.js
 
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios002.json' }}"
-          git add "$OUT" public/data/fpg-tournaments-tracking.json
+          git add "$OUT" public/data/pull-torneios006.json public/data/fpg-tournaments-tracking.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."

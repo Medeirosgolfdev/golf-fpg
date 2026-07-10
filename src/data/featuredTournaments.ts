@@ -15,6 +15,11 @@
  *  1. Acrescentar entrada(s) aqui: `{ ccode, tcode }` chega — nome, data e
  *     campo vêm do scrape. Overrides opcionais quando o nome FPG é feio ou
  *     se quer escalão/links fixos (ver o Nacional 2026 abaixo).
+ *     ⚠ Torneios do circuito Drive/Aquapor: normalmente NÃO precisam de
+ *     entrada aqui — são AUTO-DESCOBERTOS (o scraper apanha-os na
+ *     TournamentsLST via INCLUDE_RX drive/aquapor e a DrivePage injecta-os
+ *     por nome). Só adicionar com `series: "tour"|"challenge"|"aquapor"`
+ *     (+ `region`) quando é preciso override de nome/região/links.
  *  2. Acrescentar o(s) tcode(s) a scripts/fpg-admissions-scope.json com
  *     `"date": null` (⚠ null salta a validação _suspect de tcode
  *     reutilizado — obrigatório quando a data ainda não é conhecida) e
@@ -29,11 +34,15 @@
  *     e assinala "+N novos / −N saíram" face ao último scrape (ver `live`).
  * ═══════════════════════════════════════════════════════════════════════
  */
-import { NACIONAL_2026_META } from "./nacional2026Loader";
+import { NACIONAL_2026_META, type FpgTournamentData } from "./nacional2026Loader";
 
 export interface FeaturedTournament {
   ccode: string;
   tcode: string;
+  /** Onde o torneio vive: "jovens" (default — secção Jovens da FPGPage) ou
+   *  uma série Drive ("tour" | "challenge" | "aquapor" — sidebar da DrivePage).
+   *  Determina QUAL página injecta o sintético. */
+  series?: "jovens" | "tour" | "challenge" | "aquapor";
   /** Override do nome (default: nome scraped da página de admissions FPG). */
   name?: string;
   /** Override do escalão (default: inferido do nome — "Sub N"/"Escalão X"). */
@@ -70,6 +79,55 @@ const NACIONAL_2026_LINKS: FeaturedTournament["extraLinks"] = [
     icon: "📋",
   },
 ];
+
+// ── Helpers partilhados pelas injecções sintéticas (FPGPage + DrivePage) ──
+
+/** Infere o escalão do nome FPG: "(Escalão A)" → "Escalão A"; "Sub 12"/"U12" → "Sub 12". */
+export const inferEscalao = (name: string): string | null => {
+  const esc = name.match(/\bescal[aã]o\s+([A-Za-z0-9]+)\b/i);
+  if (esc) return `Escalão ${esc[1].toUpperCase()}`;
+  const sub = name.match(/\bsub[\s\-_]?(\d{1,2})\b/i) || name.match(/\bu(\d{1,2})\b/i);
+  return sub ? `Sub ${sub[1]}` : null;
+};
+
+/** Remove o sufixo "(Escalão X)" do nome base — o escalão vai para `escalao`.
+ *  Necessário para que torneios do mesmo evento com sufixos diferentes sejam
+ *  agrupados numa única entrada de sidebar com múltiplos tabs. */
+export const stripEscalaoSuffix = (name: string): string =>
+  name.replace(/\s*\(\s*escal[aã]o\s+\w+\s*\)/gi, "").replace(/\s+/g, " ").trim();
+
+/** Constrói o torneio SINTÉTICO (players: []) a partir da entrada da config +
+ *  dados scraped (fpg-admissions-draws.json). Campos comuns às duas páginas;
+ *  cada página acrescenta os seus (`_jovensYear` na FPGPage, etc.) e faz o
+ *  cast para o seu tipo Tournament. */
+export function buildFeaturedSynthetic(ft: FeaturedTournament, ad: FpgTournamentData): Record<string, unknown> {
+  const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
+  // Data: override da config → data do torneio scraped → data do 1º draw
+  // (torneios remarcados/manuais podem ter date null no nível do torneio).
+  const drawDates = Object.values(ad.draws || {}).map(d => d?.date).filter(Boolean).sort() as string[];
+  const date = ft.date || ad.date || drawDates[0] || "";
+  const drawRounds = Object.keys(ad.draws || {}).length;
+  return {
+    name: ft.name || stripEscalaoSuffix(ad.name || "") || `Torneio ${ft.tcode}`,
+    ccode: ft.ccode,
+    tcode: ft.tcode,
+    date,
+    campo: ft.campo ?? ad.campo ?? null,
+    clube: ft.ccode,
+    circuit: "tour",
+    series: ft.series ?? "jovens",
+    region: ft.region ?? null,
+    escalao: ft.escalao ?? inferEscalao(ad.name || ""),
+    num: 1,
+    rounds: ft.rounds ?? (drawRounds || (ad.admissions as any)?.rounds || 1),
+    playerCount,
+    players: [],
+    _sourceFile: "fpg-admissions-draws.json",
+    _admissions: ad.admissions,
+    _draws: ad.draws,
+    extraLinks: ft.extraLinks,
+  };
+}
 
 export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // ── Campeonato Nacional de Jovens 2026 — PGA Aroeira II (Maio 2026) ──

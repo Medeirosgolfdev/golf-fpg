@@ -118,6 +118,16 @@ if (AUTO_FROM_TRACKING) {
   process.exit(1);
 }
 
+// --limit N: processar só os primeiros N do scope (que pode vir já ordenado
+// por prioridade, ex: recent-tournaments-scrape-scope.json por nº de nossos
+// desc). Capa o tempo por run em automação — o merge é aditivo, por isso runs
+// seguintes continuam a drenar o scope à medida que ele encolhe.
+const LIMIT = parseInt(argVal("--limit", "0"), 10);
+if (LIMIT > 0 && scope.length > LIMIT) {
+  console.log(`[classif] --limit ${LIMIT}: a processar os primeiros ${LIMIT} de ${scope.length}`);
+  scope = scope.slice(0, LIMIT);
+}
+
 /* ── HTTP helpers ───────────────────────────────────────────────────────── */
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 const BASE = "https://scoring.datagolf.pt/pt";

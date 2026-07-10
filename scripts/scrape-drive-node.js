@@ -245,7 +245,11 @@ function parseTournament(raw, circuit) {
   const dateStr = lisbonCivilDayStr(dateMs); // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
 
   let series = circuit === "aquapor" ? "aquapor" : "tour";
-  if (/challenge/i.test(desc)) series = "challenge";
+  // /\bchall/ (prefixo): os nomes longos vêm ABREVIADOS da FPG em pontos
+  // arbitrários — "Drive Chall Tejo-Mosteiro-…", "Drive Challe Tejo-Power…".
+  // Só /challenge/ deixava os Challenge do Tejo classificados como "tour"
+  // (bug corrigido 2026-07-10).
+  if (/\bchall/i.test(desc)) series = "challenge";
 
   let escalao = null;
   const escMatch = desc.match(/Sub\s*(\d+)/i);
