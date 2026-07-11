@@ -1,14 +1,15 @@
 {
-  "scrapedAt": "2026-07-10T18:10:12.376Z",
+  "scrapedAt": "2026-07-11T21:57:32.080Z",
   "source": "scoring.fpg.pt rankings_classif.aspx/RankingsClassifLST (club=988)",
   "rankings": {
     "DC_MADM10G26": {
       "code": "DC_MADM10G26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 10",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:27:50.137Z",
+      "fetchedAt": "2026-07-11T21:47:06.167Z",
       "players": [
         {
           "pos": 1,
@@ -53,11 +54,57 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
         {
           "pos": 2,
+          "name": "Afonso Aniceto",
+          "fed": "56026",
+          "club": "Santo da Serra",
+          "points": 740,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "1",
+              "points": 250
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "-",
+              "points": 0
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "1",
+              "points": 250
+            }
+          ]
+        },
+        {
+          "pos": 3,
           "name": "Daniel Augusto",
           "fed": "57640",
           "club": "PXO Clube",
@@ -99,38 +146,10 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "2",
               "points": 165
-            }
-          ]
-        },
-        {
-          "pos": 3,
-          "name": "Afonso Aniceto",
-          "fed": "56026",
-          "club": "Santo da Serra",
-          "points": 490,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "2",
-              "points": 165
             },
             {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "1",
-              "points": 250
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "-",
-              "points": 0
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
               "pos": "4",
               "points": 75
             }
@@ -141,7 +160,7 @@
           "name": "Dominic Kowalczewski",
           "fed": "58984",
           "club": "Santo da Serra",
-          "points": 387,
+          "points": 398,
           "status": 0,
           "results": [
             {
@@ -173,6 +192,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "5",
+              "points": 64
             }
           ]
         },
@@ -181,7 +206,7 @@
           "name": "João Henriques de Freitas",
           "fed": "58962",
           "club": "Palheiro",
-          "points": 338,
+          "points": 387,
           "status": 0,
           "results": [
             {
@@ -213,6 +238,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "7",
               "points": 45
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -253,6 +284,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "6",
               "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
@@ -261,7 +298,7 @@
           "name": "Lourenço Vasconcelos",
           "fed": "56647",
           "club": "Palheiro",
-          "points": 284,
+          "points": 286,
           "status": 0,
           "results": [
             {
@@ -293,6 +330,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "9",
               "points": 33
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "8",
+              "points": 35
             }
           ]
         },
@@ -333,117 +376,21 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "8",
               "points": 35
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "10",
+              "points": 30
             }
           ]
         },
         {
           "pos": 9,
-          "name": "Manuel Goes",
-          "fed": "52880",
-          "club": "Santo da Serra",
-          "points": 152,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-01-04",
-              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "4",
-              "points": 75
-            },
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "13",
-              "points": 24
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "12",
-              "points": 26
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "11",
-              "points": 27
-            }
-          ]
-        },
-        {
-          "pos": 10,
-          "name": "Mikhail Bugaev",
-          "fed": "56705",
-          "club": "Palheiro",
-          "points": 149,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "12",
-              "points": 26
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "5",
-              "points": 64
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "9",
-              "points": 33
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "12",
-              "points": 26
-            }
-          ]
-        },
-        {
-          "pos": 11,
-          "name": "Francisco Freitas",
-          "fed": "56718",
-          "club": "Santo da Serra",
-          "points": 143,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "10",
-              "points": 30
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "15",
-              "points": 22
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "5",
-              "points": 64
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "11",
-              "points": 27
-            }
-          ]
-        },
-        {
-          "pos": 12,
           "name": "Luis Miguel Alves",
           "fed": "58960",
           "club": "Palheiro",
-          "points": 136,
+          "points": 160,
           "status": 0,
           "results": [
             {
@@ -475,15 +422,175 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "5",
               "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "7",
+              "points": 45
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Goes",
+          "fed": "52880",
+          "club": "Santo da Serra",
+          "points": 152,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-01-04",
+              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "13",
+              "points": 24
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "12",
+              "points": 26
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "11",
+              "points": 27
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Mikhail Bugaev",
+          "fed": "56705",
+          "club": "Palheiro",
+          "points": 149,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "12",
+              "points": 26
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "9",
+              "points": 33
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "12",
+              "points": 26
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 22.5
+            }
+          ]
+        },
+        {
+          "pos": 12,
+          "name": "Francisco Freitas",
+          "fed": "56718",
+          "club": "Santo da Serra",
+          "points": 143.5,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "10",
+              "points": 30
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "15",
+              "points": 22
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "11",
+              "points": 27
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 22.5
             }
           ]
         },
         {
           "pos": 13,
+          "name": "Artur Sobrinho",
+          "fed": "59008",
+          "club": "Santo da Serra",
+          "points": 128,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "11",
+              "points": 27
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 23
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "7",
+              "points": 45
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "9",
+              "points": 33
+            }
+          ]
+        },
+        {
+          "pos": 14,
           "name": "Santiago Freitas",
           "fed": "56717",
           "club": "Santo da Serra",
-          "points": 114,
+          "points": 118,
           "status": 0,
           "results": [
             {
@@ -509,11 +616,51 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "10",
               "points": 30
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "12",
+              "points": 26
             }
           ]
         },
         {
-          "pos": 14,
+          "pos": 15,
+          "name": "Maria Do Carmo Mendes",
+          "fed": "57663",
+          "club": "Santo da Serra",
+          "points": 99,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "14",
+              "points": 23
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "15",
+              "points": 22
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "10",
+              "points": 30
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "13",
+              "points": 24
+            }
+          ]
+        },
+        {
+          "pos": 16,
           "name": "José Eduardo Côrte",
           "fed": "49205",
           "club": "Palheiro",
@@ -541,35 +688,7 @@
           ]
         },
         {
-          "pos": 15,
-          "name": "Artur Sobrinho",
-          "fed": "59008",
-          "club": "Santo da Serra",
-          "points": 95,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "11",
-              "points": 27
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "14",
-              "points": 23
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "7",
-              "points": 45
-            }
-          ]
-        },
-        {
-          "pos": 16,
+          "pos": 17,
           "name": "Gastão Thomaz Medeiros",
           "fed": "59252",
           "club": "Santo da Serra",
@@ -603,7 +722,7 @@
           ]
         },
         {
-          "pos": 17,
+          "pos": 18,
           "name": "Matilde Teixeira",
           "fed": "58969",
           "club": "Palheiro",
@@ -633,34 +752,12 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "14",
               "points": 23
-            }
-          ]
-        },
-        {
-          "pos": 18,
-          "name": "Maria Do Carmo Mendes",
-          "fed": "57663",
-          "club": "Santo da Serra",
-          "points": 75,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "14",
-              "points": 23
             },
             {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "15",
-              "points": 22
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "10",
-              "points": 30
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -669,7 +766,7 @@
           "name": "Manuel Silvério Marques",
           "fed": "55540",
           "club": "Santo da Serra",
-          "points": 45,
+          "points": 72,
           "status": 0,
           "results": [
             {
@@ -683,16 +780,22 @@
               "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
               "pos": "-",
               "points": 0
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "11",
+              "points": 27
             }
           ]
         },
         {
-          "pos": 20,
+          "pos": 0,
           "name": "Martim Góis Macedo",
           "fed": "52394",
           "club": "Santo da Serra",
           "points": 30,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-04-12",
@@ -703,12 +806,34 @@
           ]
         },
         {
-          "pos": 21,
+          "pos": 0,
+          "name": "Benedita Abreu",
+          "fed": "58995",
+          "club": "Santo da Serra",
+          "points": 21,
+          "status": 9,
+          "results": [
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "16",
+              "points": 21
+            }
+          ]
+        },
+        {
+          "pos": 0,
           "name": "Delmar Silva",
           "fed": "59006",
           "club": "Santo da Serra",
           "points": 20,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-05-24",
@@ -719,12 +844,12 @@
           ]
         },
         {
-          "pos": 22,
+          "pos": 0,
           "name": "Matias Velosa",
           "fed": "57626",
           "club": "PXO Clube",
           "points": 0,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-06-28",
@@ -735,28 +860,12 @@
           ]
         },
         {
-          "pos": 22,
-          "name": "Benedita Abreu",
-          "fed": "58995",
-          "club": "Santo da Serra",
-          "points": 0,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "-",
-              "points": 0
-            }
-          ]
-        },
-        {
-          "pos": 22,
+          "pos": 0,
           "name": "Laura Dias",
           "fed": "53291",
           "club": "Santo da Serra",
           "points": 0,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-06-28",
@@ -770,11 +879,12 @@
     },
     "DC_MADM10N26": {
       "code": "DC_MADM10N26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 10",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:27:56.954Z",
+      "fetchedAt": "2026-07-11T21:47:34.541Z",
       "players": [
         {
           "pos": 1,
@@ -819,11 +929,57 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "4",
+              "points": 75
             }
           ]
         },
         {
           "pos": 2,
+          "name": "Afonso Aniceto",
+          "fed": "56026",
+          "club": "Santo da Serra",
+          "points": 729,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "1",
+              "points": 250
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "1",
+              "points": 250
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "-",
+              "points": 0
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "2",
+              "points": 165
+            }
+          ]
+        },
+        {
+          "pos": 3,
           "name": "Henrique Santana",
           "fed": "55539",
           "club": "Santo da Serra",
@@ -865,45 +1021,63 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "3",
               "points": 94
-            }
-          ]
-        },
-        {
-          "pos": 3,
-          "name": "Afonso Aniceto",
-          "fed": "56026",
-          "club": "Santo da Serra",
-          "points": 564,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "1",
-              "points": 250
             },
             {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "1",
-              "points": 250
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "-",
-              "points": 0
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "5",
-              "points": 64
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
         {
           "pos": 4,
+          "name": "João Henriques de Freitas",
+          "fed": "58962",
+          "club": "Palheiro",
+          "points": 562,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "7",
+              "points": 45
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "7",
+              "points": 45
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "3",
+              "points": 94
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "6",
+              "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "1",
+              "points": 250
+            }
+          ]
+        },
+        {
+          "pos": 5,
           "name": "João Lourenço Sousa",
           "fed": "57356",
           "club": "Santo da Serra",
@@ -939,46 +1113,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "9",
               "points": 33
-            }
-          ]
-        },
-        {
-          "pos": 5,
-          "name": "João Henriques de Freitas",
-          "fed": "58962",
-          "club": "Palheiro",
-          "points": 357,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "7",
-              "points": 45
             },
             {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "7",
-              "points": 45
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "2",
-              "points": 165
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "3",
-              "points": 94
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "6",
-              "points": 53
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "10",
+              "points": 30
             }
           ]
         },
@@ -987,7 +1127,7 @@
           "name": "Lourenço Vasconcelos",
           "fed": "56647",
           "club": "Palheiro",
-          "points": 309,
+          "points": 338,
           "status": 0,
           "results": [
             {
@@ -1019,11 +1159,63 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "7",
               "points": 45
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "5",
+              "points": 64
             }
           ]
         },
         {
           "pos": 7,
+          "name": "Luis Miguel Alves",
+          "fed": "58960",
+          "club": "Palheiro",
+          "points": 310,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "18",
+              "points": 19
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "16",
+              "points": 21
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "11",
+              "points": 27
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "13",
+              "points": 24
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "3",
+              "points": 94
+            }
+          ]
+        },
+        {
+          "pos": 8,
           "name": "Dominic Kowalczewski",
           "fed": "58984",
           "club": "Santo da Serra",
@@ -1059,46 +1251,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "4",
               "points": 75
-            }
-          ]
-        },
-        {
-          "pos": 8,
-          "name": "Luis Miguel Alves",
-          "fed": "58960",
-          "club": "Palheiro",
-          "points": 237,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "18",
-              "points": 19
             },
             {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "16",
-              "points": 21
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "11",
-              "points": 27
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "13",
-              "points": 24
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "2",
-              "points": 165
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "8",
+              "points": 35
             }
           ]
         },
@@ -1107,7 +1265,7 @@
           "name": "Maximilian Luckhardt",
           "fed": "56696",
           "club": "Palheiro",
-          "points": 227,
+          "points": 237,
           "status": 0,
           "results": [
             {
@@ -1139,6 +1297,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "8",
               "points": 35
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "7",
+              "points": 45
             }
           ]
         },
@@ -1173,6 +1337,12 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "12",
               "points": 26
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 22.5
             }
           ]
         },
@@ -1181,7 +1351,7 @@
           "name": "Francisco Freitas",
           "fed": "56718",
           "club": "Santo da Serra",
-          "points": 176,
+          "points": 176.5,
           "status": 0,
           "results": [
             {
@@ -1207,6 +1377,12 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "11",
               "points": 27
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 22.5
             }
           ]
         },
@@ -1241,6 +1417,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "11",
               "points": 27
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -1249,7 +1431,7 @@
           "name": "Santiago Freitas",
           "fed": "56717",
           "club": "Santo da Serra",
-          "points": 143,
+          "points": 148,
           "status": 0,
           "results": [
             {
@@ -1275,11 +1457,51 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "10",
               "points": 30
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "11",
+              "points": 27
             }
           ]
         },
         {
           "pos": 14,
+          "name": "Artur Sobrinho",
+          "fed": "59008",
+          "club": "Santo da Serra",
+          "points": 131,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "10",
+              "points": 30
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "14",
+              "points": 23
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
+              "pos": "7",
+              "points": 45
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "9",
+              "points": 33
+            }
+          ]
+        },
+        {
+          "pos": 15,
           "name": "José Eduardo Côrte",
           "fed": "49205",
           "club": "Palheiro",
@@ -1307,35 +1529,41 @@
           ]
         },
         {
-          "pos": 15,
-          "name": "Artur Sobrinho",
-          "fed": "59008",
+          "pos": 16,
+          "name": "Maria Do Carmo Mendes",
+          "fed": "57663",
           "club": "Santo da Serra",
-          "points": 98,
+          "points": 101,
           "status": 0,
           "results": [
             {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "10",
-              "points": 30
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
               "pos": "14",
               "points": 23
             },
             {
               "date": "2026-05-24",
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "7",
-              "points": 45
+              "pos": "15",
+              "points": 22
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "10",
+              "points": 30
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "12",
+              "points": 26
             }
           ]
         },
         {
-          "pos": 16,
+          "pos": 17,
           "name": "Gastão Thomaz Medeiros",
           "fed": "59252",
           "club": "Santo da Serra",
@@ -1369,7 +1597,7 @@
           ]
         },
         {
-          "pos": 17,
+          "pos": 18,
           "name": "Matilde Teixeira",
           "fed": "58969",
           "club": "Palheiro",
@@ -1399,59 +1627,21 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
               "pos": "14",
               "points": 23
-            }
-          ]
-        },
-        {
-          "pos": 18,
-          "name": "Maria Do Carmo Mendes",
-          "fed": "57663",
-          "club": "Santo da Serra",
-          "points": 75,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "14",
-              "points": 23
             },
             {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 10",
-              "pos": "15",
-              "points": 22
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "10",
-              "points": 30
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
         {
           "pos": 19,
-          "name": "Martim Góis Macedo",
-          "fed": "52394",
-          "club": "Santo da Serra",
-          "points": 30,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-              "pos": "10",
-              "points": 30
-            }
-          ]
-        },
-        {
-          "pos": 20,
           "name": "Manuel Silvério Marques",
           "fed": "55540",
           "club": "Santo da Serra",
-          "points": 26,
+          "points": 50,
           "status": 0,
           "results": [
             {
@@ -1465,16 +1655,60 @@
               "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
               "pos": "-",
               "points": 0
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "13",
+              "points": 24
             }
           ]
         },
         {
-          "pos": 21,
+          "pos": 0,
+          "name": "Martim Góis Macedo",
+          "fed": "52394",
+          "club": "Santo da Serra",
+          "points": 30,
+          "status": 9,
+          "results": [
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
+              "pos": "10",
+              "points": 30
+            }
+          ]
+        },
+        {
+          "pos": 0,
+          "name": "Benedita Abreu",
+          "fed": "58995",
+          "club": "Santo da Serra",
+          "points": 21,
+          "status": 9,
+          "results": [
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "-",
+              "points": 0
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10",
+              "pos": "16",
+              "points": 21
+            }
+          ]
+        },
+        {
+          "pos": 0,
           "name": "Delmar Silva",
           "fed": "59006",
           "club": "Santo da Serra",
           "points": 20,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-05-24",
@@ -1485,12 +1719,12 @@
           ]
         },
         {
-          "pos": 22,
+          "pos": 0,
           "name": "Matias Velosa",
           "fed": "57626",
           "club": "PXO Clube",
           "points": 0,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-06-28",
@@ -1501,28 +1735,12 @@
           ]
         },
         {
-          "pos": 22,
-          "name": "Benedita Abreu",
-          "fed": "58995",
-          "club": "Santo da Serra",
-          "points": 0,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
-              "pos": "-",
-              "points": 0
-            }
-          ]
-        },
-        {
-          "pos": 22,
+          "pos": 0,
           "name": "Laura Dias",
           "fed": "53291",
           "club": "Santo da Serra",
           "points": 0,
-          "status": 0,
+          "status": 9,
           "results": [
             {
               "date": "2026-06-28",
@@ -1536,11 +1754,12 @@
     },
     "DC_MADM12G26": {
       "code": "DC_MADM12G26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 12",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:00.641Z",
+      "fetchedAt": "2026-07-11T21:47:44.745Z",
       "players": [
         {
           "pos": 1,
@@ -1573,6 +1792,12 @@
               "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "1",
+              "points": 250
             }
           ]
         },
@@ -1581,7 +1806,7 @@
           "name": "Nicolau Rodrigues",
           "fed": "57486",
           "club": "PXO Clube",
-          "points": 674,
+          "points": 745,
           "status": 0,
           "results": [
             {
@@ -1617,6 +1842,12 @@
             {
               "date": "2026-06-28",
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
               "pos": "2",
               "points": 165
             }
@@ -1659,6 +1890,12 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "4",
+              "points": 75
             }
           ]
         },
@@ -1667,7 +1904,7 @@
           "name": "Vicente Rodrigues",
           "fed": "51896",
           "club": "Palheiro",
-          "points": 438,
+          "points": 532,
           "status": 0,
           "results": [
             {
@@ -1687,6 +1924,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -1735,7 +1978,7 @@
           "name": "António Goes",
           "fed": "52881",
           "club": "Santo da Serra",
-          "points": 267,
+          "points": 278,
           "status": 0,
           "results": [
             {
@@ -1759,6 +2002,12 @@
             {
               "date": "2026-06-28",
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
               "pos": "5",
               "points": 64
             }
@@ -1815,7 +2064,7 @@
           "name": "Benedita Carvalho",
           "fed": "52398",
           "club": "Santo da Serra",
-          "points": 235,
+          "points": 245,
           "status": 0,
           "results": [
             {
@@ -1841,6 +2090,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "7",
+              "points": 45
             }
           ]
         },
@@ -1849,7 +2104,7 @@
           "name": "Laura Temtem",
           "fed": "56635",
           "club": "Santo da Serra",
-          "points": 204,
+          "points": 212,
           "status": 0,
           "results": [
             {
@@ -1881,6 +2136,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "6",
               "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
@@ -1904,18 +2165,19 @@
     },
     "DC_MADM12N26": {
       "code": "DC_MADM12N26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 12",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:03.496Z",
+      "fetchedAt": "2026-07-11T21:47:55.014Z",
       "players": [
         {
           "pos": 1,
           "name": "Nicolau Rodrigues",
           "fed": "57486",
           "club": "PXO Clube",
-          "points": 915,
+          "points": 1000,
           "status": 0,
           "results": [
             {
@@ -1953,6 +2215,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "1",
+              "points": 250
             }
           ]
         },
@@ -1961,7 +2229,7 @@
           "name": "Íris Costa",
           "fed": "47677",
           "club": "Palheiro",
-          "points": 844,
+          "points": 915,
           "status": 0,
           "results": [
             {
@@ -1993,6 +2261,12 @@
               "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
@@ -2001,7 +2275,7 @@
           "name": "Manuel Goulartt Medeiros",
           "fed": "52884",
           "club": "Santo da Serra",
-          "points": 499,
+          "points": 518,
           "status": 0,
           "results": [
             {
@@ -2027,11 +2301,57 @@
               "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
         {
           "pos": 4,
+          "name": "António Goes",
+          "fed": "52881",
+          "club": "Santo da Serra",
+          "points": 398,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-01-04",
+              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
+              "pos": "6",
+              "points": 53
+            },
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "3",
+              "points": 94
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "4",
+              "points": 75
+            }
+          ]
+        },
+        {
+          "pos": 5,
           "name": "Áurea Camacho",
           "fed": "50528",
           "club": "Palheiro",
@@ -2077,45 +2397,11 @@
           ]
         },
         {
-          "pos": 5,
-          "name": "António Goes",
-          "fed": "52881",
-          "club": "Santo da Serra",
-          "points": 376,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-01-04",
-              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
-              "pos": "6",
-              "points": 53
-            },
-            {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
-              "pos": "3",
-              "points": 94
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub12",
-              "pos": "2",
-              "points": 165
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
-              "pos": "5",
-              "points": 64
-            }
-          ]
-        },
-        {
           "pos": 6,
           "name": "Benedita Carvalho",
           "fed": "52398",
           "club": "Santo da Serra",
-          "points": 306,
+          "points": 316,
           "status": 0,
           "results": [
             {
@@ -2141,11 +2427,51 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "7",
+              "points": 45
             }
           ]
         },
         {
           "pos": 7,
+          "name": "Vicente Rodrigues",
+          "fed": "51896",
+          "club": "Palheiro",
+          "points": 308,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
+              "pos": "3",
+              "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "5",
+              "points": 64
+            }
+          ]
+        },
+        {
+          "pos": 8,
           "name": "Miguel Vicente Mendes",
           "fed": "50485",
           "club": "Santo da Serra",
@@ -2185,39 +2511,11 @@
           ]
         },
         {
-          "pos": 8,
-          "name": "Vicente Rodrigues",
-          "fed": "51896",
-          "club": "Palheiro",
-          "points": 244,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
-              "pos": "4",
-              "points": 75
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
-              "pos": "4",
-              "points": 75
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
-              "pos": "3",
-              "points": 94
-            }
-          ]
-        },
-        {
           "pos": 9,
           "name": "Laura Temtem",
           "fed": "56635",
           "club": "Santo da Serra",
-          "points": 226,
+          "points": 234,
           "status": 0,
           "results": [
             {
@@ -2249,6 +2547,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
               "pos": "6",
               "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
@@ -2272,11 +2576,12 @@
     },
     "DC_MADM14G26": {
       "code": "DC_MADM14G26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 14",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:07.959Z",
+      "fetchedAt": "2026-07-11T21:48:05.950Z",
       "players": [
         {
           "pos": 1,
@@ -2321,6 +2626,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "4",
+              "points": 75
             }
           ]
         },
@@ -2361,6 +2672,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -2401,6 +2718,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
@@ -2445,6 +2768,12 @@
             {
               "date": "2026-06-28",
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
+              "pos": "5",
+              "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
               "pos": "5",
               "points": 64
             }
@@ -2493,11 +2822,33 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "4",
               "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "8",
+              "points": 35
             }
           ]
         },
         {
           "pos": 6,
+          "name": "Nestor Tiurin",
+          "fed": "56720",
+          "club": "Santo da Serra",
+          "points": 250,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "1",
+              "points": 250
+            }
+          ]
+        },
+        {
+          "pos": 7,
           "name": "Remi Petim",
           "fed": "55188",
           "club": "Palheiro",
@@ -2537,11 +2888,11 @@
           ]
         },
         {
-          "pos": 7,
+          "pos": 8,
           "name": "Rafael Teixeira",
           "fed": "58604",
           "club": "Palheiro",
-          "points": 186,
+          "points": 204,
           "status": 0,
           "results": [
             {
@@ -2573,11 +2924,39 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "6",
               "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
         {
-          "pos": 8,
+          "pos": 9,
+          "name": "Vadzim Lyhach",
+          "fed": "57388",
+          "club": "Santo da Serra",
+          "points": 98,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
+              "pos": "6",
+              "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "7",
+              "points": 45
+            }
+          ]
+        },
+        {
+          "pos": 10,
           "name": "Valter Fernandes",
           "fed": "58948",
           "club": "Palheiro",
@@ -2603,32 +2982,17 @@
               "points": 0
             }
           ]
-        },
-        {
-          "pos": 9,
-          "name": "Vadzim Lyhach",
-          "fed": "57388",
-          "club": "Santo da Serra",
-          "points": 53,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
-              "pos": "6",
-              "points": 53
-            }
-          ]
         }
       ]
     },
     "DC_MADM14N26": {
       "code": "DC_MADM14N26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 14",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:13.557Z",
+      "fetchedAt": "2026-07-11T21:48:15.116Z",
       "players": [
         {
           "pos": 1,
@@ -2673,6 +3037,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "5",
               "points": 64
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "6",
+              "points": 53
             }
           ]
         },
@@ -2719,6 +3089,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "5",
+              "points": 64
             }
           ]
         },
@@ -2727,7 +3103,7 @@
           "name": "Gonçalo Gouveia",
           "fed": "50398",
           "club": "Santo da Serra",
-          "points": 499,
+          "points": 518,
           "status": 0,
           "results": [
             {
@@ -2759,11 +3135,63 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
         {
           "pos": 4,
+          "name": "Rafael Teixeira",
+          "fed": "58604",
+          "club": "Palheiro",
+          "points": 431,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "6",
+              "points": 53
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-04-12",
+              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
+              "pos": "-",
+              "points": 0
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
+              "pos": "8",
+              "points": 35
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
+              "pos": "6",
+              "points": 53
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "1",
+              "points": 250
+            }
+          ]
+        },
+        {
+          "pos": 5,
           "name": "Mateus Penucho",
           "fed": "52393",
           "club": "Santo da Serra",
@@ -2799,11 +3227,17 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "4",
+              "points": 75
             }
           ]
         },
         {
-          "pos": 5,
+          "pos": 6,
           "name": "Santiago Santos",
           "fed": "53687",
           "club": "PXO Clube",
@@ -2845,11 +3279,17 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
               "pos": "4",
               "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "8",
+              "points": 35
             }
           ]
         },
         {
-          "pos": 6,
+          "pos": 7,
           "name": "Remi Petim",
           "fed": "55188",
           "club": "Palheiro",
@@ -2889,47 +3329,45 @@
           ]
         },
         {
-          "pos": 7,
-          "name": "Rafael Teixeira",
-          "fed": "58604",
-          "club": "Palheiro",
-          "points": 216,
+          "pos": 8,
+          "name": "Nestor Tiurin",
+          "fed": "56720",
+          "club": "Santo da Serra",
+          "points": 165,
           "status": 0,
           "results": [
             {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
-              "pos": "6",
-              "points": 53
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub14",
-              "pos": "4",
-              "points": 75
-            },
-            {
-              "date": "2026-04-12",
-              "tournament": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
-              "pos": "-",
-              "points": 0
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
-              "pos": "8",
-              "points": 35
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
-              "pos": "6",
-              "points": 53
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
         {
-          "pos": 8,
+          "pos": 9,
+          "name": "Vadzim Lyhach",
+          "fed": "57388",
+          "club": "Santo da Serra",
+          "points": 90,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
+              "pos": "7",
+              "points": 45
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
+              "pos": "7",
+              "points": 45
+            }
+          ]
+        },
+        {
+          "pos": 10,
           "name": "Valter Fernandes",
           "fed": "58948",
           "club": "Palheiro",
@@ -2955,32 +3393,17 @@
               "points": 0
             }
           ]
-        },
-        {
-          "pos": 9,
-          "name": "Vadzim Lyhach",
-          "fed": "57388",
-          "club": "Santo da Serra",
-          "points": 45,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 14",
-              "pos": "7",
-              "points": 45
-            }
-          ]
         }
       ]
     },
     "DC_MADM16G26": {
       "code": "DC_MADM16G26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 16",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:18.538Z",
+      "fetchedAt": "2026-07-11T21:48:20.601Z",
       "players": [
         {
           "pos": 1,
@@ -3025,6 +3448,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
@@ -3033,7 +3462,7 @@
           "name": "José Pedro Miranda",
           "fed": "38976",
           "club": "Palheiro",
-          "points": 674,
+          "points": 830,
           "status": 0,
           "results": [
             {
@@ -3063,6 +3492,12 @@
             {
               "date": "2026-06-28",
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
+              "pos": "1",
+              "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
               "pos": "1",
               "points": 250
             }
@@ -3111,6 +3546,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -3119,7 +3560,7 @@
           "name": "Lucas Duarte",
           "fed": "38195",
           "club": "Palheiro",
-          "points": 308,
+          "points": 338,
           "status": 0,
           "results": [
             {
@@ -3151,6 +3592,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "4",
               "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -3208,11 +3655,12 @@
     },
     "DC_MADM16N26": {
       "code": "DC_MADM16N26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 16",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:20.290Z",
+      "fetchedAt": "2026-07-11T21:48:26.560Z",
       "players": [
         {
           "pos": 1,
@@ -3251,6 +3699,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -3297,6 +3751,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -3305,7 +3765,7 @@
           "name": "Salvador Rodrigues",
           "fed": "39465",
           "club": "Palheiro",
-          "points": 603,
+          "points": 674,
           "status": 0,
           "results": [
             {
@@ -3343,6 +3803,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "4",
               "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
@@ -3351,7 +3817,7 @@
           "name": "José Pedro Miranda",
           "fed": "38976",
           "club": "Palheiro",
-          "points": 494,
+          "points": 669,
           "status": 0,
           "results": [
             {
@@ -3383,6 +3849,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16",
+              "pos": "1",
+              "points": 250
             }
           ]
         },
@@ -3440,11 +3912,12 @@
     },
     "DC_MADM18G26": {
       "code": "DC_MADM18G26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 18",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:23.190Z",
+      "fetchedAt": "2026-07-11T21:48:34.186Z",
       "players": [
         {
           "pos": 1,
@@ -3489,11 +3962,63 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
         {
           "pos": 2,
+          "name": "Tomás Câmara",
+          "fed": "53548",
+          "club": "PXO Clube",
+          "points": 830,
+          "status": 0,
+          "results": [
+            {
+              "date": "2026-01-04",
+              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 18",
+              "pos": "4",
+              "points": 75
+            },
+            {
+              "date": "2026-02-08",
+              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "3",
+              "points": 94
+            },
+            {
+              "date": "2026-03-08",
+              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-05-24",
+              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 18",
+              "pos": "2",
+              "points": 165
+            },
+            {
+              "date": "2026-06-28",
+              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
+              "pos": "1",
+              "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "1",
+              "points": 250
+            }
+          ]
+        },
+        {
+          "pos": 3,
           "name": "Rodrigo Abreu",
           "fed": "42684",
           "club": "Palheiro",
@@ -3535,46 +4060,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "4",
               "points": 75
-            }
-          ]
-        },
-        {
-          "pos": 3,
-          "name": "Tomás Câmara",
-          "fed": "53548",
-          "club": "PXO Clube",
-          "points": 674,
-          "status": 0,
-          "results": [
-            {
-              "date": "2026-01-04",
-              "tournament": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 18",
-              "pos": "4",
-              "points": 75
             },
             {
-              "date": "2026-02-08",
-              "tournament": "2 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
               "pos": "3",
               "points": 94
-            },
-            {
-              "date": "2026-03-08",
-              "tournament": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub18",
-              "pos": "2",
-              "points": 165
-            },
-            {
-              "date": "2026-05-24",
-              "tournament": "5º Torneio Drive Challenge Madeira-Palheiro-Sub 18",
-              "pos": "2",
-              "points": 165
-            },
-            {
-              "date": "2026-06-28",
-              "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
-              "pos": "1",
-              "points": 250
             }
           ]
         },
@@ -3615,6 +4106,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -3734,11 +4231,12 @@
     },
     "DC_MADM18N26": {
       "code": "DC_MADM18N26",
+      "series": "challenge",
       "zone": "madeira",
       "escalao": "Sub 18",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:25.457Z",
+      "fetchedAt": "2026-07-11T21:48:41.095Z",
       "players": [
         {
           "pos": 1,
@@ -3777,6 +4275,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "1",
               "points": 250
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "1",
+              "points": 250
             }
           ]
         },
@@ -3785,7 +4289,7 @@
           "name": "André Gonçalves",
           "fed": "41121",
           "club": "Palheiro",
-          "points": 603,
+          "points": 674,
           "status": 0,
           "results": [
             {
@@ -3823,6 +4327,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "3",
               "points": 94
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "2",
+              "points": 165
             }
           ]
         },
@@ -3831,7 +4341,7 @@
           "name": "Rodrigo Abreu",
           "fed": "42684",
           "club": "Palheiro",
-          "points": 565,
+          "points": 584,
           "status": 0,
           "results": [
             {
@@ -3869,6 +4379,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "4",
               "points": 75
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "3",
+              "points": 94
             }
           ]
         },
@@ -3909,6 +4425,12 @@
               "tournament": "6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
               "pos": "2",
               "points": 165
+            },
+            {
+              "date": "2026-07-11",
+              "tournament": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18",
+              "pos": "-",
+              "points": 0
             }
           ]
         },
@@ -4028,11 +4550,12 @@
     },
     "DC_TEJO10G26": {
       "code": "DC_TEJO10G26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 10",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:28.762Z",
+      "fetchedAt": "2026-07-11T21:48:51.647Z",
       "players": [
         {
           "pos": 1,
@@ -4392,11 +4915,12 @@
     },
     "DC_TEJO10N26": {
       "code": "DC_TEJO10N26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 10",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:35.161Z",
+      "fetchedAt": "2026-07-11T21:49:07.522Z",
       "players": [
         {
           "pos": 1,
@@ -4756,11 +5280,12 @@
     },
     "DC_TEJO12G26": {
       "code": "DC_TEJO12G26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 12",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:40.065Z",
+      "fetchedAt": "2026-07-11T21:49:26.002Z",
       "players": [
         {
           "pos": 1,
@@ -5324,11 +5849,12 @@
     },
     "DC_TEJO12N26": {
       "code": "DC_TEJO12N26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 12",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:46.446Z",
+      "fetchedAt": "2026-07-11T21:49:45.932Z",
       "players": [
         {
           "pos": 1,
@@ -5932,11 +6458,12 @@
     },
     "DC_TEJO14G26": {
       "code": "DC_TEJO14G26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 14",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:52.946Z",
+      "fetchedAt": "2026-07-11T21:50:06.616Z",
       "players": [
         {
           "pos": 1,
@@ -6662,11 +7189,12 @@
     },
     "DC_TEJO14N26": {
       "code": "DC_TEJO14N26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 14",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:28:59.647Z",
+      "fetchedAt": "2026-07-11T21:50:28.859Z",
       "players": [
         {
           "pos": 1,
@@ -7392,11 +7920,12 @@
     },
     "DC_TEJO16G26": {
       "code": "DC_TEJO16G26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 16",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:03.790Z",
+      "fetchedAt": "2026-07-11T21:50:37.060Z",
       "players": [
         {
           "pos": 1,
@@ -7732,11 +8261,12 @@
     },
     "DC_TEJO16N26": {
       "code": "DC_TEJO16N26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 16",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:07.129Z",
+      "fetchedAt": "2026-07-11T21:50:47.282Z",
       "players": [
         {
           "pos": 1,
@@ -8072,11 +8602,12 @@
     },
     "DC_TEJO18G26": {
       "code": "DC_TEJO18G26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 18",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:09.106Z",
+      "fetchedAt": "2026-07-11T21:50:51.245Z",
       "players": [
         {
           "pos": 1,
@@ -8244,11 +8775,12 @@
     },
     "DC_TEJO18N26": {
       "code": "DC_TEJO18N26",
+      "series": "challenge",
       "zone": "tejo",
       "escalao": "Sub 18",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:10.821Z",
+      "fetchedAt": "2026-07-11T21:50:58.849Z",
       "players": [
         {
           "pos": 1,
@@ -8416,11 +8948,12 @@
     },
     "DC_SUL_10G26": {
       "code": "DC_SUL_10G26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 10",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:16.466Z",
+      "fetchedAt": "2026-07-11T21:51:14.911Z",
       "players": [
         {
           "pos": 1,
@@ -9000,11 +9533,12 @@
     },
     "DC_SUL_10N26": {
       "code": "DC_SUL_10N26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 10",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:22.243Z",
+      "fetchedAt": "2026-07-11T21:51:39.340Z",
       "players": [
         {
           "pos": 1,
@@ -9584,11 +10118,12 @@
     },
     "DC_SUL_12G26": {
       "code": "DC_SUL_12G26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 12",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:27.358Z",
+      "fetchedAt": "2026-07-11T21:51:56.534Z",
       "players": [
         {
           "pos": 1,
@@ -10162,11 +10697,12 @@
     },
     "DC_SUL_12N26": {
       "code": "DC_SUL_12N26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 12",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:32.788Z",
+      "fetchedAt": "2026-07-11T21:52:12.446Z",
       "players": [
         {
           "pos": 1,
@@ -10740,11 +11276,12 @@
     },
     "DC_SUL_14G26": {
       "code": "DC_SUL_14G26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 14",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:37.792Z",
+      "fetchedAt": "2026-07-11T21:52:23.320Z",
       "players": [
         {
           "pos": 1,
@@ -11306,11 +11843,12 @@
     },
     "DC_SUL_14N26": {
       "code": "DC_SUL_14N26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 14",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:42.685Z",
+      "fetchedAt": "2026-07-11T21:52:36.405Z",
       "players": [
         {
           "pos": 1,
@@ -11872,11 +12410,12 @@
     },
     "DC_SUL_16G26": {
       "code": "DC_SUL_16G26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 16",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:48.268Z",
+      "fetchedAt": "2026-07-11T21:52:52.963Z",
       "players": [
         {
           "pos": 1,
@@ -12488,11 +13027,12 @@
     },
     "DC_SUL_16N26": {
       "code": "DC_SUL_16N26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 16",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:54.105Z",
+      "fetchedAt": "2026-07-11T21:53:02.475Z",
       "players": [
         {
           "pos": 1,
@@ -13104,11 +13644,12 @@
     },
     "DC_SUL_18G26": {
       "code": "DC_SUL_18G26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 18",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:29:57.459Z",
+      "fetchedAt": "2026-07-11T21:53:09.885Z",
       "players": [
         {
           "pos": 1,
@@ -13338,11 +13879,12 @@
     },
     "DC_SUL_18N26": {
       "code": "DC_SUL_18N26",
+      "series": "challenge",
       "zone": "sul",
       "escalao": "Sub 18",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:30:04.485Z",
+      "fetchedAt": "2026-07-11T21:53:13.571Z",
       "players": [
         {
           "pos": 1,
@@ -13572,11 +14114,12 @@
     },
     "DC_NOR_10G26": {
       "code": "DC_NOR_10G26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 10",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:30:17.140Z",
+      "fetchedAt": "2026-07-11T21:53:28.047Z",
       "players": [
         {
           "pos": 1,
@@ -14192,11 +14735,12 @@
     },
     "DC_NOR_10N26": {
       "code": "DC_NOR_10N26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 10",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:30:32.393Z",
+      "fetchedAt": "2026-07-11T21:53:39.641Z",
       "players": [
         {
           "pos": 1,
@@ -14812,11 +15356,12 @@
     },
     "DC_NOR_12G26": {
       "code": "DC_NOR_12G26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 12",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:30:43.923Z",
+      "fetchedAt": "2026-07-11T21:53:56.363Z",
       "players": [
         {
           "pos": 1,
@@ -15770,11 +16315,12 @@
     },
     "DC_NOR_12N26": {
       "code": "DC_NOR_12N26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 12",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:30:55.648Z",
+      "fetchedAt": "2026-07-11T21:54:16.263Z",
       "players": [
         {
           "pos": 1,
@@ -16728,11 +17274,12 @@
     },
     "DC_NOR_14G26": {
       "code": "DC_NOR_14G26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 14",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:06.354Z",
+      "fetchedAt": "2026-07-11T21:54:30.973Z",
       "players": [
         {
           "pos": 1,
@@ -17558,11 +18105,12 @@
     },
     "DC_NOR_14N26": {
       "code": "DC_NOR_14N26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 14",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:14.619Z",
+      "fetchedAt": "2026-07-11T21:54:54.671Z",
       "players": [
         {
           "pos": 1,
@@ -18388,11 +18936,12 @@
     },
     "DC_NOR_16G26": {
       "code": "DC_NOR_16G26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 16",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:22.932Z",
+      "fetchedAt": "2026-07-11T21:55:02.341Z",
       "players": [
         {
           "pos": 1,
@@ -18750,11 +19299,12 @@
     },
     "DC_NOR_16N26": {
       "code": "DC_NOR_16N26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 16",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:32.116Z",
+      "fetchedAt": "2026-07-11T21:55:08.954Z",
       "players": [
         {
           "pos": 1,
@@ -19112,11 +19662,12 @@
     },
     "DC_NOR_18G26": {
       "code": "DC_NOR_18G26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 18",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:34.408Z",
+      "fetchedAt": "2026-07-11T21:55:14.649Z",
       "players": [
         {
           "pos": 1,
@@ -19322,11 +19873,12 @@
     },
     "DC_NOR_18N26": {
       "code": "DC_NOR_18N26",
+      "series": "challenge",
       "zone": "norte",
       "escalao": "Sub 18",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:36.667Z",
+      "fetchedAt": "2026-07-11T21:55:19.895Z",
       "players": [
         {
           "pos": 1,
@@ -19532,11 +20084,12 @@
     },
     "DC_ACO_10G26": {
       "code": "DC_ACO_10G26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 10",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:41.424Z",
+      "fetchedAt": "2026-07-11T21:55:32.778Z",
       "players": [
         {
           "pos": 1,
@@ -19634,11 +20187,12 @@
     },
     "DC_ACO_10N26": {
       "code": "DC_ACO_10N26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 10",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:42.155Z",
+      "fetchedAt": "2026-07-11T21:55:34.052Z",
       "players": [
         {
           "pos": 1,
@@ -19736,11 +20290,12 @@
     },
     "DC_ACO_12G26": {
       "code": "DC_ACO_12G26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 12",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:42.679Z",
+      "fetchedAt": "2026-07-11T21:55:34.894Z",
       "players": [
         {
           "pos": 1,
@@ -19792,11 +20347,12 @@
     },
     "DC_ACO_12N26": {
       "code": "DC_ACO_12N26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 12",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:43.130Z",
+      "fetchedAt": "2026-07-11T21:55:35.770Z",
       "players": [
         {
           "pos": 1,
@@ -19848,11 +20404,12 @@
     },
     "DC_ACO_14G26": {
       "code": "DC_ACO_14G26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 14",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:45.572Z",
+      "fetchedAt": "2026-07-11T21:55:37.458Z",
       "players": [
         {
           "pos": 1,
@@ -19930,11 +20487,12 @@
     },
     "DC_ACO_14N26": {
       "code": "DC_ACO_14N26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 14",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:46.470Z",
+      "fetchedAt": "2026-07-11T21:55:38.942Z",
       "players": [
         {
           "pos": 1,
@@ -20012,11 +20570,12 @@
     },
     "DC_ACO_16G26": {
       "code": "DC_ACO_16G26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 16",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:47.746Z",
+      "fetchedAt": "2026-07-11T21:55:40.927Z",
       "players": [
         {
           "pos": 1,
@@ -20176,11 +20735,12 @@
     },
     "DC_ACO_16N26": {
       "code": "DC_ACO_16N26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 16",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:49.000Z",
+      "fetchedAt": "2026-07-11T21:55:42.919Z",
       "players": [
         {
           "pos": 1,
@@ -20340,11 +20900,12 @@
     },
     "DC_ACO_18G26": {
       "code": "DC_ACO_18G26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 18",
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:51.101Z",
+      "fetchedAt": "2026-07-11T21:55:46.464Z",
       "players": [
         {
           "pos": 1,
@@ -20552,11 +21113,12 @@
     },
     "DC_ACO_18N26": {
       "code": "DC_ACO_18N26",
+      "series": "challenge",
       "zone": "acores",
       "escalao": "Sub 18",
       "type": "net",
       "year": "2026",
-      "fetchedAt": "2026-07-10T16:31:52.997Z",
+      "fetchedAt": "2026-07-11T21:55:52.169Z",
       "players": [
         {
           "pos": 1,
@@ -20769,7 +21331,7 @@
       "escalao": null,
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T18:09:26.073Z",
+      "fetchedAt": "2026-07-11T21:56:00.799Z",
       "players": [
         {
           "pos": 1,
@@ -21166,7 +21728,7 @@
       "escalao": null,
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T18:09:37.478Z",
+      "fetchedAt": "2026-07-11T21:56:18.604Z",
       "players": [
         {
           "pos": 1,
@@ -22083,7 +22645,7 @@
       "escalao": null,
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T18:09:51.837Z",
+      "fetchedAt": "2026-07-11T21:56:55.807Z",
       "players": [
         {
           "pos": 1,
@@ -23180,7 +23742,7 @@
       "escalao": null,
       "type": "gross",
       "year": "2026",
-      "fetchedAt": "2026-07-10T18:10:12.025Z",
+      "fetchedAt": "2026-07-11T21:57:31.747Z",
       "players": [
         {
           "pos": 1,
