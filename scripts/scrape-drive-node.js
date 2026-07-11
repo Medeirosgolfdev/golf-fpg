@@ -66,7 +66,9 @@ function getAllowedMonths() {
   const now = new Date();
   for (let i = 0; i <= MONTHS_BACK; i++) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    allowed.add(d.toISOString().slice(0, 7));
+    // Dia 1 à meia-noite LOCAL: usar o dia civil de Lisboa (não toISOString,
+    // que em horário de verão UTC+1 recua para o mês anterior → "2026-06").
+    allowed.add(lisbonCivilDayStr(d).slice(0, 7));
   }
   return allowed;
 }
@@ -109,11 +111,11 @@ const dgPost = makeFpgPost({
 const regionMap = { "982": "madeira", "983": "acores", "985": "tejo", "987": "norte", "988": "sul", "000": "nacional" };
 const getYear = r => {
   const ms = parseInt((r.started_at || "").match(/\d+/)?.[0] || "0");
-  return new Date(ms).getFullYear();
+  return Number(lisbonCivilDayStr(ms).slice(0, 4));
 };
 const getMonthKey = r => {
   const ms = parseInt((r.started_at || "").match(/\d+/)?.[0] || "0");
-  return new Date(ms).toISOString().slice(0, 7);
+  return lisbonCivilDayStr(ms).slice(0, 7);
 };
 const isInScope = r => {
   const y = getYear(r);
