@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-07-10T21:04:27.251Z",
+  "geradoEm": "2026-07-11T20:45:57.676Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 133,
-  "totalCompanheirosUnicos": 159,
+  "totalRondas": 134,
+  "totalCompanheirosUnicos": 160,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 123,
-      "rondasComDraw": 108,
+      "rondasComDraw": 109,
       "torneiosJogados": 92,
-      "torneiosComDraw": 88,
+      "torneiosComDraw": 89,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "038-10754",
@@ -603,6 +603,33 @@
   "rondas": [
     {
       "circuito": "FPG",
+      "torneioId": "982-10238",
+      "torneioNome": "Final Drive Challenge Madeira-Palheiro-Sub 12",
+      "data": "2026-07-12",
+      "ronda": 1,
+      "teeTime": "12:20",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Irís Costa",
+          "fed": "47677",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Nicolau Rodrigues",
+          "fed": "57486",
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "982-10233",
       "torneioNome": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
       "data": "2026-07-11",
@@ -610,14 +637,20 @@
       "teeTime": "10:50",
       "startHole": 1,
       "campo": null,
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 34,
+        "toPar": -2
+      },
       "companheiros": [
         {
           "nome": "Vicente Rodrigues",
           "fed": "51896",
           "clube": "Palheiro",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 46,
+            "toPar": 10
+          }
         }
       ]
     },

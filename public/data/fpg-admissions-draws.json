@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-10T21:04:25.206Z",
-  "total": 560,
+  "scrapedAt": "2026-07-11T20:45:55.618Z",
+  "total": 567,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -117174,13 +117174,13 @@
       "tcode": "10233",
       "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
       "date": "2026-07-11",
-      "expectedYear": 2026,
+      "expectedYear": "2026",
       "admissions": {
         "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
         "date": "2026-07-11",
         "totalInscritos": 7,
         "reservas": 0,
-        "status": "",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10233",
         "ccode": "982",
@@ -117328,13 +117328,13 @@
       "tcode": "10234",
       "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
       "date": "2026-07-11",
-      "expectedYear": 2026,
+      "expectedYear": "2026",
       "admissions": {
         "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14",
         "date": "2026-07-11",
         "totalInscritos": 8,
         "reservas": 0,
-        "status": "",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10234",
         "ccode": "982",
@@ -117669,6 +117669,79 @@
                   "nome": "Vasco Cabral",
                   "fed": null,
                   "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 16 Dia",
+          "date": "2026-07-12",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "14:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vasco Cabral",
+                  "fed": "53983",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Diogo Paulo Lourenço",
+                  "fed": "53981",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Sidharth Gauba",
+                  "fed": "57368",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Martin Afonso",
+                  "fed": "55796",
+                  "clube": "Qt V.Sotavento"
+                },
+                {
+                  "nome": "Santiago Lázaro",
+                  "fed": "52984",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Luke Samanek",
+                  "fed": "56491",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Jack Murtagh",
+                  "fed": "41593",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Miguel Silva",
+                  "fed": "48791",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Beau Delfortrie",
+                  "fed": "50247",
+                  "clube": "Vila Sol"
                 }
               ]
             }
@@ -118267,6 +118340,25 @@
               ]
             }
           ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Tejo – Oeiras - Sub 18",
+          "date": "2026-07-12",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tiago Lúcio",
+                  "fed": null,
+                  "clube": "Jamor C.G."
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -118402,6 +118494,64 @@
                   "nome": "Afonso Rocha",
                   "fed": null,
                   "clube": "Belas"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Tejo – Oeiras - Sub 16",
+          "date": "2026-07-12",
+          "totalJogadores": 6,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Rocha",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Leonardo Becker",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Francisco Rodrigues",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Guedes",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "João Pereira",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Henrique Rodrigues Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
                 }
               ]
             }
@@ -118590,6 +118740,79 @@
               ]
             }
           ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Tejo – Oeiras - Sub 14",
+          "date": "2026-07-12",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Ario Kiani",
+                  "fed": null,
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Guilherme Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Lucas Lemos Guerreiro",
+                  "fed": null,
+                  "clube": "Clube Benfica"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Mário Novaes Moura",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "David Cruz da Silva",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Maria Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -118759,6 +118982,74 @@
               ]
             }
           ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Tejo – Oeiras - Sub 12",
+          "date": "2026-07-12",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Apolo Silva",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Tiago Borges Oliveira",
+                  "fed": null,
+                  "clube": "The One"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Maria Luz",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Diogo Cajus",
+                  "fed": null,
+                  "clube": "CGCUL"
+                },
+                {
+                  "nome": "Maria Madalena Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Tomás Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Tomás Pinto Barbosa",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -118835,6 +119126,30 @@
                   "nome": "Maria Almeida Santos",
                   "fed": null,
                   "clube": "ACP Golfe"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Tejo – Oeiras - Sub 10",
+          "date": "2026-07-12",
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Maria Almeida Santos",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": null,
+                  "clube": "Estoril"
                 }
               ]
             }
@@ -120636,6 +120951,1464 @@
                   "nome": "David Batista",
                   "fed": null,
                   "clube": "Verdegolf"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "988",
+      "tcode": "10291",
+      "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 18",
+      "date": "2026-07-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 18",
+        "date": "2026-07-11",
+        "totalInscritos": 5,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10291",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "56072",
+            "nome": "Igor Kostyn",
+            "clube": "Vilamoura, C. G",
+            "hcp": 9.2,
+            "vacf": 80.3,
+            "registo": "2026/07/03 11:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "44607",
+            "nome": "Rita Melo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.7,
+            "vacf": 89.3,
+            "registo": "2026/07/03 13:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "42178",
+            "nome": "Yasmin Batista",
+            "clube": "Amendoeira",
+            "hcp": 32.5,
+            "vacf": 104.8,
+            "registo": "2026/06/23 17:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "48792",
+            "nome": "Érica Furtado",
+            "clube": "Amendoeira",
+            "hcp": 46,
+            "vacf": 117.6,
+            "registo": "2026/06/25 00:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "58762",
+            "nome": "Francisco Van Hylçkama Vlieg",
+            "clube": "Vila Sol",
+            "hcp": 53.4,
+            "vacf": null,
+            "registo": "2026/06/27 17:46",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 18",
+          "date": "2026-07-11",
+          "totalJogadores": 5,
+          "groups": [
+            {
+              "teeTime": "14:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Igor Kostyn",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Rita Melo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Yasmin Batista",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Van Hylçkama Vlieg",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Érica Furtado",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 18 Dia",
+          "date": "2026-07-12",
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "14:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Van Hylçkama Vlieg",
+                  "fed": "58762",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Yasmin Batista",
+                  "fed": "42178",
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Igor Kostyn",
+                  "fed": "56072",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Rita Melo",
+                  "fed": "44607",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "988",
+      "tcode": "10290",
+      "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 14",
+      "date": "2026-07-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 14",
+        "date": "2026-07-11",
+        "totalInscritos": 11,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10290",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "55269",
+            "nome": "Finn Gordon",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5.9,
+            "vacf": 77.4,
+            "registo": "2026/07/02 18:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.5,
+            "vacf": 78.1,
+            "registo": "2026/06/12 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "54845",
+            "nome": "José Silva",
+            "clube": "Amendoeira",
+            "hcp": 9.1,
+            "vacf": 80.6,
+            "registo": "2026/07/05 16:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "46037",
+            "nome": "Tomás Lima Pinto",
+            "clube": "Vilamoura, C. G",
+            "hcp": 9.7,
+            "vacf": 81,
+            "registo": "2026/06/18 22:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50628",
+            "nome": "Carlotta Balzer",
+            "clube": "Amendoeira",
+            "hcp": 18.1,
+            "vacf": 90.2,
+            "registo": "2026/06/28 16:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55065",
+            "nome": "Cole Hutchison",
+            "clube": "Vila Sol",
+            "hcp": 21.2,
+            "vacf": 92.2,
+            "registo": "2026/06/29 22:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "55398",
+            "nome": "Cole Wall",
+            "clube": "Vila Sol",
+            "hcp": 24.6,
+            "vacf": 95,
+            "registo": "2026/07/06 08:03",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "50189",
+            "nome": "Thomas Blake Maia",
+            "clube": "Vilamoura, C. G",
+            "hcp": 29.9,
+            "vacf": 101,
+            "registo": "2026/06/16 19:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "55394",
+            "nome": "Lucas Delune",
+            "clube": "Vilamoura, C. G",
+            "hcp": 37.7,
+            "vacf": 108.8,
+            "registo": "2026/07/06 01:35",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "53754",
+            "nome": "Xavier Neves",
+            "clube": "Espiche",
+            "hcp": 43.8,
+            "vacf": 121.8,
+            "registo": "2026/07/05 18:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "57835",
+            "nome": "Eloi Yang",
+            "clube": "Espiche",
+            "hcp": 51.1,
+            "vacf": null,
+            "registo": "2026/07/04 14:29",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 14",
+          "date": "2026-07-11",
+          "totalJogadores": 11,
+          "groups": [
+            {
+              "teeTime": "14:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Finn Gordon",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "José Silva",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Cole Hutchison",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Cole Wall",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Thomas Blake Maia",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Lucas Delune",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Carlotta Balzer",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Xavier Neves",
+                  "fed": null,
+                  "clube": "Espiche"
+                },
+                {
+                  "nome": "Eloi Yang",
+                  "fed": null,
+                  "clube": "Espiche"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 14 Dia",
+          "date": "2026-07-12",
+          "totalJogadores": 11,
+          "groups": [
+            {
+              "teeTime": "14:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Thomas Blake Maia",
+                  "fed": "50189",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Xavier Neves",
+                  "fed": "53754",
+                  "clube": "Espiche"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Lucas Delune",
+                  "fed": "55394",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Eloi Yang",
+                  "fed": "57835",
+                  "clube": "Espiche"
+                },
+                {
+                  "nome": "Cole Wall",
+                  "fed": "55398",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "fed": "46037",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Cole Hutchison",
+                  "fed": "55065",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "José Silva",
+                  "fed": "54845",
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Finn Gordon",
+                  "fed": "55269",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Carlotta Balzer",
+                  "fed": "50628",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "fed": "48794",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "982",
+      "tcode": "10237",
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 10",
+      "date": "2026-07-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Drive Challenge Madeira-Palheiro-Sub 10",
+        "date": "2026-07-12",
+        "totalInscritos": 19,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10237",
+        "ccode": "982",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "55539",
+            "nome": "Henrique Santana",
+            "clube": "Santo da Serra",
+            "hcp": 29.4,
+            "vacf": null,
+            "registo": "2026/07/11 13:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "56026",
+            "nome": "Afonso Aniceto",
+            "clube": "Santo da Serra",
+            "hcp": 36.2,
+            "vacf": null,
+            "registo": "2026/07/11 13:37",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "57640",
+            "nome": "Daniel Augusto",
+            "clube": "PXO Clube",
+            "hcp": 39.2,
+            "vacf": null,
+            "registo": "2026/07/11 13:37",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "58984",
+            "nome": "Dominic Kowalczewski",
+            "clube": "Santo da Serra",
+            "hcp": 36,
+            "vacf": null,
+            "registo": "2026/07/11 13:37",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "58962",
+            "nome": "João Henriques de Freitas",
+            "clube": "Palheiro",
+            "hcp": 42.4,
+            "vacf": null,
+            "registo": "2026/07/11 13:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "56696",
+            "nome": "Maximilian Luckhardt",
+            "clube": "Palheiro",
+            "hcp": 39.7,
+            "vacf": null,
+            "registo": "2026/07/11 13:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "56647",
+            "nome": "Lourenço Vasconcelos",
+            "clube": "Palheiro",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 13:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "57356",
+            "nome": "João Lourenço Sousa",
+            "clube": "Santo da Serra",
+            "hcp": 45.7,
+            "vacf": null,
+            "registo": "2026/07/11 13:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "58960",
+            "nome": "Luis Miguel Alves",
+            "clube": "Palheiro",
+            "hcp": 52.8,
+            "vacf": null,
+            "registo": "2026/07/11 13:39",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "52880",
+            "nome": "Manuel Goes",
+            "clube": "Santo da Serra",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 13:40",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "56705",
+            "nome": "Mikhail Bugaev",
+            "clube": "Palheiro",
+            "hcp": 52.8,
+            "vacf": null,
+            "registo": "2026/07/11 13:41",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "56718",
+            "nome": "Francisco Freitas",
+            "clube": "Santo da Serra",
+            "hcp": 52.8,
+            "vacf": null,
+            "registo": "2026/07/11 13:41",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "59008",
+            "nome": "Artur Sobrinho",
+            "clube": "Santo da Serra",
+            "hcp": 50.8,
+            "vacf": null,
+            "registo": "2026/07/11 13:41",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "56717",
+            "nome": "Santiago Freitas",
+            "clube": "Santo da Serra",
+            "hcp": 53.2,
+            "vacf": null,
+            "registo": "2026/07/11 13:41",
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "57663",
+            "nome": "Maria Do Carmo Mendes",
+            "clube": "Santo da Serra",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 13:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "49205",
+            "nome": "José Eduardo Côrte",
+            "clube": "Palheiro",
+            "hcp": 52.8,
+            "vacf": null,
+            "registo": "2026/07/11 13:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "59252",
+            "nome": "Gastão Thomaz Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 13:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "58969",
+            "nome": "Matilde Teixeira",
+            "clube": "Palheiro",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 13:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "55540",
+            "nome": "Manuel Silvério Marques",
+            "clube": "Santo da Serra",
+            "hcp": 44.9,
+            "vacf": null,
+            "registo": "2026/07/11 13:44",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Madeira-Palheiro-Sub 10",
+          "date": "2026-07-12",
+          "totalJogadores": 16,
+          "groups": [
+            {
+              "teeTime": "12:02",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Manuel Silvério Marques",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Matilde Teixeira",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:11",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Maria Do Carmo Mendes",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Santiago Freitas",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Artur Sobrinho",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Francisco Freitas",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Mikhail Bugaev",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:29",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Luis Miguel Alves",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "João Lourenço Sousa",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Lourenço Vasconcelos",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:38",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Maximilian Luckhardt",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "João Henriques de Freitas",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Dominic Kowalczewski",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:47",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Daniel Augusto",
+                  "fed": null,
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Afonso Aniceto",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Henrique Santana",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "982",
+      "tcode": "10238",
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 12",
+      "date": "2026-07-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Drive Challenge Madeira-Palheiro-Sub 12",
+        "date": "2026-07-12",
+        "totalInscritos": 9,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10238",
+        "ccode": "982",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 9.1,
+            "vacf": null,
+            "registo": "2026/07/11 15:03",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "57486",
+            "nome": "Nicolau Rodrigues",
+            "clube": "PXO Clube",
+            "hcp": 38.6,
+            "vacf": null,
+            "registo": "2026/07/11 15:03",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "47677",
+            "nome": "Íris Costa",
+            "clube": "Palheiro",
+            "hcp": 37.7,
+            "vacf": null,
+            "registo": "2026/07/11 15:04",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "51896",
+            "nome": "Vicente Rodrigues",
+            "clube": "Palheiro",
+            "hcp": 21.8,
+            "vacf": null,
+            "registo": "2026/07/11 15:04",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50485",
+            "nome": "Miguel Vicente Mendes",
+            "clube": "Santo da Serra",
+            "hcp": 38.8,
+            "vacf": null,
+            "registo": "2026/07/11 15:04",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "52881",
+            "nome": "António Goes",
+            "clube": "Santo da Serra",
+            "hcp": 46.8,
+            "vacf": null,
+            "registo": "2026/07/11 15:04",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "50528",
+            "nome": "Áurea Camacho",
+            "clube": "Palheiro",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 15:05",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "52398",
+            "nome": "Benedita Carvalho",
+            "clube": "Santo da Serra",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 15:05",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "56635",
+            "nome": "Laura Temtem",
+            "clube": "Santo da Serra",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 15:05",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Madeira-Palheiro-Sub 12",
+          "date": "2026-07-12",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "12:02",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Laura Temtem",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Benedita Carvalho",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Áurea Camacho",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:11",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "António Goes",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Miguel Vicente Mendes",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Vicente Rodrigues",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Íris Costa",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Nicolau Rodrigues",
+                  "fed": null,
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "982",
+      "tcode": "10239",
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 14",
+      "date": "2026-07-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Drive Challenge Madeira-Palheiro-Sub 14",
+        "date": "2026-07-12",
+        "totalInscritos": 8,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10239",
+        "ccode": "982",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "53532",
+            "nome": "Rafael Brito",
+            "clube": "PXO Clube",
+            "hcp": 18.1,
+            "vacf": null,
+            "registo": "2026/07/11 14:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "52393",
+            "nome": "Mateus Penucho",
+            "clube": "Santo da Serra",
+            "hcp": 13.5,
+            "vacf": null,
+            "registo": "2026/07/11 14:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "50398",
+            "nome": "Gonçalo Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 19.9,
+            "vacf": null,
+            "registo": "2026/07/11 14:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "54757",
+            "nome": "Mafalda Sousa",
+            "clube": "Santo da Serra",
+            "hcp": 32.1,
+            "vacf": null,
+            "registo": "2026/07/11 14:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "53687",
+            "nome": "Santiago Santos",
+            "clube": "PXO Clube",
+            "hcp": 30.2,
+            "vacf": null,
+            "registo": "2026/07/11 14:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55188",
+            "nome": "Remi Petim",
+            "clube": "Palheiro",
+            "hcp": 48.3,
+            "vacf": null,
+            "registo": "2026/07/11 14:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "58604",
+            "nome": "Rafael Teixeira",
+            "clube": "Palheiro",
+            "hcp": 50.2,
+            "vacf": null,
+            "registo": "2026/07/11 14:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "58948",
+            "nome": "Valter Fernandes",
+            "clube": "Palheiro",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 14:57",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Madeira-Palheiro-Sub 14",
+          "date": "2026-07-12",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "11:35",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Valter Fernandes",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Rafael Teixeira",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:44",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Remi Petim",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Santiago Santos",
+                  "fed": null,
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Mafalda Sousa",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:53",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Gouveia",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Mateus Penucho",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Rafael Brito",
+                  "fed": null,
+                  "clube": "PXO Clube"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "982",
+      "tcode": "10240",
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 16",
+      "date": "2026-07-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Drive Challenge Madeira-Palheiro-Sub 16",
+        "date": "2026-07-12",
+        "totalInscritos": 6,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10240",
+        "ccode": "982",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "39465",
+            "nome": "Salvador Rodrigues",
+            "clube": "Palheiro",
+            "hcp": 7.1,
+            "vacf": null,
+            "registo": "2026/07/11 12:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "38976",
+            "nome": "José Pedro Miranda",
+            "clube": "Palheiro",
+            "hcp": 7.5,
+            "vacf": null,
+            "registo": "2026/07/11 12:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "41124",
+            "nome": "Manuel Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 15.3,
+            "vacf": null,
+            "registo": "2026/07/11 12:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "41130",
+            "nome": "Vasco Leal Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 18.1,
+            "vacf": null,
+            "registo": "2026/07/11 12:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "58677",
+            "nome": "Isabela Ramalho",
+            "clube": "Palheiro",
+            "hcp": 36.9,
+            "vacf": null,
+            "registo": "2026/07/11 12:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "38195",
+            "nome": "Lucas Duarte",
+            "clube": "Palheiro",
+            "hcp": 28.5,
+            "vacf": null,
+            "registo": "2026/07/11 14:36",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Madeira-Palheiro-Sub 16",
+          "date": "2026-07-12",
+          "totalJogadores": 5,
+          "groups": [
+            {
+              "teeTime": "11:17",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Isabela Ramalho",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Lucas Duarte",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:26",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Gouveia",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "José Pedro Miranda",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Salvador Rodrigues",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "982",
+      "tcode": "10241",
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 18",
+      "date": "2026-07-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Drive Challenge Madeira-Palheiro-Sub 18",
+        "date": "2026-07-12",
+        "totalInscritos": 8,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10241",
+        "ccode": "982",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "41121",
+            "nome": "André Gonçalves",
+            "clube": "Palheiro",
+            "hcp": 7.1,
+            "vacf": null,
+            "registo": "2026/07/11 14:37",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "53548",
+            "nome": "Tomás Câmara",
+            "clube": "PXO Clube",
+            "hcp": 11.4,
+            "vacf": null,
+            "registo": "2026/07/11 14:37",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "42684",
+            "nome": "Rodrigo Abreu",
+            "clube": "Palheiro",
+            "hcp": 8.6,
+            "vacf": null,
+            "registo": "2026/07/11 14:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "41108",
+            "nome": "Martim Lima",
+            "clube": "Santo da Serra",
+            "hcp": 12.5,
+            "vacf": null,
+            "registo": "2026/07/11 14:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "38006",
+            "nome": "Marcelo Gaspar",
+            "clube": "Santo da Serra",
+            "hcp": 7.7,
+            "vacf": null,
+            "registo": "2026/07/11 14:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "40990",
+            "nome": "Maria Câmara",
+            "clube": "Santo da Serra",
+            "hcp": 9,
+            "vacf": null,
+            "registo": "2026/07/11 14:39",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "59545",
+            "nome": "Timur Vasilev",
+            "clube": "Palheiro",
+            "hcp": 53.2,
+            "vacf": null,
+            "registo": "2026/07/11 14:39",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "58986",
+            "nome": "Vasco Abreu",
+            "clube": "Palheiro",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/11 14:39",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Madeira-Palheiro-Sub 18",
+          "date": "2026-07-12",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vasco Abreu",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Timur Vasilev",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:59",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Maria Câmara",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Marcelo Gaspar",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Martim Lima",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:08",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rodrigo Abreu",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Tomás Câmara",
+                  "fed": null,
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "André Gonçalves",
+                  "fed": null,
+                  "clube": "Palheiro"
                 }
               ]
             }
