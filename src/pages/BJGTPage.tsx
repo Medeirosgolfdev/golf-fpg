@@ -112,14 +112,31 @@ export const URLS = [
   { id: "fcg25_g78",   url: "/data/fcg251_girls_7-8.json",   label: "2025 // Girls 7-8",   shortLabel: "2025 Girls 7-8",   manuelName: "", year: 2025, category: "Girls 7-8",   roundDates: ["14 Jul", "15 Jul", "16 Jul"] as string[], series: "fcg" as const, sourceUrl: "https://fcg.bluegolf.com/bluegolf/fcg25/event/fcg251/contest/5/leaderboard.htm" },
 
   /* ── Uswing Mojing Junior World (JWGC) 2026 (Torrey Pines - South, San Diego; 3 rondas) ──
-     Escalões PARCIAIS — só Boys 13-14 e 15-18 scrapados (BlueGolf lento + CAPTCHA a
-     meio); restantes escalões a adicionar após os 3 dias do torneio. `roundDates`
-     omitidas (datas por confirmar) — o torneio aparece sem datas precisas. */
+     4 escalões Boys (9-10, 11-12, 13-14, 15-18). `roundDates` omitidas
+     (datas por confirmar) — o torneio aparece sem datas precisas. */
   { id: "jwgc26_b1518", url: "/data/jwgc261_boys_15-18.json", label: "2026 // Boys 15-18", shortLabel: "2026 Boys 15-18", manuelName: "", year: 2026, category: "Boys 15-18", series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/16/leaderboard.htm" },
   { id: "jwgc26_b1314", url: "/data/jwgc261_boys_13-14.json", label: "2026 // Boys 13-14", shortLabel: "2026 Boys 13-14", manuelName: "", year: 2026, category: "Boys 13-14", series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/35/leaderboard.htm" },
+  { id: "jwgc26_b1112", url: "/data/jwgc261_boys_11-12.json", label: "2026 // Boys 11-12", shortLabel: "2026 Boys 11-12", manuelName: "", year: 2026, category: "Boys 11-12", series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/31/leaderboard.htm" },
+  { id: "jwgc26_b910",  url: "/data/jwgc261_boys_9-10.json",  label: "2026 // Boys 9-10",  shortLabel: "2026 Boys 9-10",  manuelName: "", year: 2026, category: "Boys 9-10",  series: "jwgc" as const, sourceUrl: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/contest/43/leaderboard.htm" },
 ];
 
 /* ── Flags ── */
+
+/** Buracos efectivamente jogados numa ronda (scores preenchidos e > 0). */
+function roundHolesPlayed(r: any): number {
+  return (r?.scores ?? []).filter((s: any) => s != null && s > 0).length;
+}
+
+/** Um jogador só TERMINOU o torneio se tem todas as rondas E cada ronda tem os
+ *  buracos-padrão do campo jogados. Guarda de segurança: uma ronda parcial
+ *  (WD/DNF a meio, ou ainda em jogo) deflaciona o total e, sem esta verificação,
+ *  o jogador aparecia indevidamente no topo da classificação como "vencedor"
+ *  (ex: JWGC 2026 Boys 11-12 — Ryan Kim jogou só 9 buracos na R3). O BlueGolf
+ *  não traz `pos`, por isso calculamo-la nós — mas só entre quem completou. */
+function isPlayerComplete(p: any, maxR: number, holesPerRound: number): boolean {
+  if (!p.rounds || p.rounds.length < maxR) return false;
+  return p.rounds.every((r: any) => roundHolesPlayed(r) >= holesPerRound);
+}
 
 export function loadT(raw: any, reverseRounds?: boolean): TData {
   const d = raw as TData;
@@ -127,19 +144,21 @@ export function loadT(raw: any, reverseRounds?: boolean): TData {
   if (reverseRounds) {
     players = players.map(p => ({ ...p, rounds: [...p.rounds].reverse() }));
   }
-  const maxR = Math.max(...players.filter((p: any) => p.rounds?.length > 0).map((p: any) => p.rounds.length));
-  players = players.filter((p: any) => p.total != null && p.rounds?.length > 0)
+  const holesPerRound = d.par?.length || 18;
+  const withR = players.filter((p: any) => p.rounds?.length > 0);
+  const maxR = Math.max(0, ...withR.map((p: any) => p.rounds.length));
+  players = withR.filter((p: any) => p.total != null)
+    .map((p: any) => ({ ...p, _complete: isPlayerComplete(p, maxR, holesPerRound) }))
     .sort((a: any, b: any) => {
-      const aFull = a.rounds.length === maxR ? 0 : 1;
-      const bFull = b.rounds.length === maxR ? 0 : 1;
-      if (aFull !== bFull) return aFull - bFull;
+      // Quem não terminou vai sempre para o fim, independentemente do total.
+      if (a._complete !== b._complete) return a._complete ? -1 : 1;
       return a.total - b.total;
     });
   let pos = 1;
   players.forEach((p: any, i: number) => {
-    if (p.rounds.length < maxR) { p.pos = null; return; }
-    const prev = players[i - 1];
-    if (i > 0 && p.total != null && prev != null && prev.total != null && p.total > prev.total && prev.rounds.length === maxR) pos = i + 1;
+    if (!p._complete) { p.pos = null; return; }
+    const prev = players[i - 1] as any;
+    if (i > 0 && prev != null && prev._complete && prev.total != null && p.total != null && p.total > prev.total) pos = i + 1;
     p.pos = pos;
   });
   return { ...d, players };
@@ -185,7 +204,11 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         meters: hasMeters ? meters : [],
         teeName,
       }));
-      const incomplete = p.rounds.length < nR;
+      // Rondas em falta OU ronda parcial (WD/DNF) → não terminou. Reusa o
+      // resultado de loadT (`_complete`); fallback para quem não passou por loadT.
+      const incomplete = (p as any)._complete != null
+        ? !(p as any)._complete
+        : !isPlayerComplete(p, nR, par.length);
       // JWGC/FCG: os ficheiros trazem `gradYear` + país já limpo (p/ bandeira) +
       // `hometown` (cidade/estado, ex: "New York, NY"). Defensivo p/ dados antigos
       // "CLASSE, LOCAL" ainda no country. A coluna "País" mostra a bandeira do país

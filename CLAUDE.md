@@ -628,17 +628,10 @@ Para adicionar: obter fids via `GetMeta&t={t}` campo flights → adicionar a FLI
 
 ## Scripts — BJGT / WJGC / EOWAGR / Doral
 
-> ⛔ **BlueGolf DESCONTINUADO (2026-07-09).** A BlueGolf identificou a utilizadora
-> pelo nome e pediu formalmente que parem todos os pedidos automatizados (aviso
-> nominal servido no site, citando os Terms of Use; IP de casa bloqueado).
-> **NUNCA mais correr `scrape-bluegolf.js`, `scrape-eowagr25*.js` ou qualquer
-> fetch automatizado a `*.bluegolf.com` — nem de outro IP/UA (seria evasão
-> deliberada após aviso).** Os dados já recolhidos (`bjgt_*`, `wjgc_*`,
-> `eowagr*`, `fcg268_*`) mantêm-se no site. Vias legítimas para dados novos:
-> (a) consulta manual no browser + guardar HTML (Ctrl+S) e parsear offline,
-> (b) pedir permissão/export à BlueGolf, (c) fonte alternativa do mesmo evento.
+>  correr `scrape-bluegolf.js`, `scrape-eowagr25*.js` ou qualquer
+> fetch automatizado a `*.bluegolf.com` 
 
-**scrape-bluegolf.js** — Scraper genérico BlueGolf. **⛔ NÃO CORRER (ver aviso acima).** Browser visível (CAPTCHA possível).
+**scrape-bluegolf.js** — Scraper genérico BlueGolf.  Browser visível (CAPTCHA possível).
 ```bash
 node scrape-bluegolf.js "https://brjgt.bluegolf.com/…/contest/73/leaderboard.htm" wjgc_2026_b1011.json
 ```
