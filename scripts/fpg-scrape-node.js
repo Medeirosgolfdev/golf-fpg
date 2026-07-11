@@ -174,6 +174,9 @@ function readJsonIfExists(file) {
   if (!fs.existsSync(file)) return null;
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
 }
+// Compara por DADOS (não por bytes) — ignora diferenças de formatação/line-endings
+// (CRLF vs LF) que existem no ficheiro em disco mas não no conteúdo lógico.
+function sameJson(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
 
 // ─── Core per-player ──────────────────────────────────────
 async function processPlayer(fed) {
@@ -187,6 +190,7 @@ async function processPlayer(fed) {
   //    (sempre único; pode haver múltiplas WHS entries para o mesmo score_id
   //    se houver correções/recálculos)
   const rounds = await fetchWhsAll(fed);
+  const whsExisted = fs.existsSync(whsFile);
   const existingRounds = readJsonIfExists(whsFile) || [];
   const existingIds = new Set(existingRounds.map(r => r.id));
   const newRounds = rounds.filter(r => !existingIds.has(r.id));
@@ -202,6 +206,7 @@ async function processPlayer(fed) {
   //
   //    --full / --full-rebuild: força re-download de TODOS os scorecards
   //    (sobrescreve existingSC). Útil se suspeitares que estão corrompidos.
+  const scExisted = fs.existsSync(scFile);
   const existingSC = readJsonIfExists(scFile) || {};
   const roundsToFetch = FULL_REBUILD
     ? rounds.filter(r => r.score_id)
@@ -216,10 +221,16 @@ async function processPlayer(fed) {
     await new Promise(r => setTimeout(r, 80)); // throttle
   }
 
-  // 3) Escrever — whs.json e scorecards.json com verificação pós-escrita
-  //    (detecta + re-tenta truncagem silenciosa em mounts Windows)
-  writeJsonVerified(whsFile, rounds);
-  writeJsonVerified(scFile, scorecards);
+  // 3) Escrever — SÓ quando o conteúdo muda mesmo (evita churn de git e o
+  //    custo de fsync+re-leitura de writeJsonVerified em cada jogador).
+  //    A comparação é por dados (sameJson), logo ignora CRLF/LF e ordem de
+  //    escrita. Ficheiro em falta ou truncado (existing vazio) → reescreve.
+  //    Mantém-se writeJsonVerified nas escritas reais (detecta + re-tenta
+  //    truncagem silenciosa em mounts Windows).
+  const whsChanged = !whsExisted || !sameJson(existingRounds, rounds);
+  if (whsChanged) writeJsonVerified(whsFile, rounds);
+  const scChanged = !scExisted || !sameJson(existingSC, scorecards);
+  if (scChanged) writeJsonVerified(scFile, scorecards);
 
   // 4) Detectar se data.json (output do pipeline/render) está em falta.
   //    Se sim, marcar para reprocessar mesmo sem scorecards novos —
@@ -228,13 +239,23 @@ async function processPlayer(fed) {
   const dataJsonPath = path.join(dir, "analysis", "data.json");
   const needsRender = !fs.existsSync(dataJsonPath);
 
-  writeJson(sumFile, {
-    fed, lastRun: new Date().toISOString(),
-    totalRounds: rounds.length,
-    totalScorecards: Object.keys(scorecards).length,
-    newRoundsThisRun: newRounds.length,
-    newScorecardsThisRun: newScorecards,
-  });
+  // 5) summary.json — só reescrever se algo mudou de facto. Sem isto, o
+  //    `lastRun` novo a cada corrida sujava o git com dezenas de summary.json
+  //    "modificados" mesmo sem rondas/scorecards novos. Ignoramos lastRun na
+  //    decisão: só conta mudança real de conteúdo (whs/sc) ou totais divergentes.
+  const prevSum = readJsonIfExists(sumFile);
+  const summaryStale = !prevSum
+    || prevSum.totalRounds !== rounds.length
+    || prevSum.totalScorecards !== Object.keys(scorecards).length;
+  if (whsChanged || scChanged || summaryStale) {
+    writeJson(sumFile, {
+      fed, lastRun: new Date().toISOString(),
+      totalRounds: rounds.length,
+      totalScorecards: Object.keys(scorecards).length,
+      newRoundsThisRun: newRounds.length,
+      newScorecardsThisRun: newScorecards,
+    });
+  }
 
   return { fed, rounds: rounds.length, newRounds: newRounds.length, newScorecards, needsRender };
 }

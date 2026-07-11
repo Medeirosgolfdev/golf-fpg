@@ -1,0 +1,33 @@
+{
+  "_note": "Scope do Faldo Series (GolfGenius). Cada circuito (tour) tem um pageId de portal; os eventos são as páginas 'Results' de cada etapa, enumeradas via browser (o fetch puro devolve leagues vazio — a lista é renderizada por JS no directory_iframe). 3 níveis: futures / junior / elite; a região (EUR/ASIA/MEA) é filtro, não tab. Regenerar a lista de eventos via browser quando a época avança. Usado por scripts/scrape-faldo.js.",
+  "tours": {
+    "futures":     { "tier": "futures", "tierLabel": "Futures",     "region": "EUR",  "pageId": "10007206650013847214", "league": "8621276101123018309", "dir": "10943850678417657476" },
+    "futures_mea": { "tier": "futures", "tierLabel": "Futures",     "region": "MEA",  "pageId": "11766481045979959152" },
+    "junior_eur":  { "tier": "junior",  "tierLabel": "Junior Tour", "region": "EUR",  "pageId": "10021941099641212453" },
+    "junior_asia": { "tier": "junior",  "tierLabel": "Junior Tour", "region": "ASIA", "pageId": "10007205530570886829" },
+    "junior_mea":  { "tier": "junior",  "tierLabel": "Junior Tour", "region": "MEA",  "pageId": "11766480261645111151" },
+    "elite":       { "tier": "elite",   "tierLabel": "Elite Tour",  "region": "INT",  "pageId": "10007207499142303407" }
+  },
+  "events": [
+    { "tour": "futures", "id": "12580933112004906713" },
+    { "tour": "futures", "id": "12580911331487551184" },
+    { "tour": "futures", "id": "12580945307765870306" },
+    { "tour": "futures", "id": "12580901392094367431" },
+    { "tour": "futures", "id": "12576839894254521941" },
+    { "tour": "futures", "id": "12580982164524404468" },
+    { "tour": "futures", "id": "12581011866639175430" },
+    { "tour": "futures", "id": "12580993717483114237" },
+    { "tour": "futures", "id": "12580568526089129635" },
+    { "tour": "futures", "id": "12580786898231922366" },
+    { "tour": "futures", "id": "12580966709420134123" },
+    { "tour": "futures", "id": "12580553214832709274" },
+    { "tour": "futures", "id": "12580776840693583541" },
+    { "tour": "futures", "id": "12580577642660531884" },
+    { "tour": "futures", "id": "12326710445246287656" },
+    { "tour": "futures", "id": "12358897208597188277" },
+    { "tour": "futures", "id": "12266056934976687947" },
+    { "tour": "futures", "id": "12070885222606999144" },
+    { "tour": "futures", "id": "12097101907227610890" },
+    { "tour": "futures", "id": "12178167377145401313" }
+  ]
+}

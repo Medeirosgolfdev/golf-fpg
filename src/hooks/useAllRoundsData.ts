@@ -296,7 +296,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         rds,
         total,
         totalTP,
-        isWD: anyWD,
+        isWD: anyWD || !!(p as any)._wd,
         pos: null,
         _rdCount: validRds.length,
         _fullCount: 0,
@@ -306,17 +306,39 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
 
   const rankedGrouped = useMemo(() => {
     const fullCount = Math.max(0, ...groupedRows.map((r) => r._rdCount));
+    // Buracos-padrão do campo por ronda = máximo jogado por qualquer jogador nessa
+    // ronda. Auto-adapta a flights de 9 buracos e a rondas ainda em curso (se TODOS
+    // jogaram parcial, ninguém fica "curto" → sem falsos WD). Uma ronda parcial
+    // (WD/DNF a meio, ex: Ryan Kim jogou 9/18 na R3 do JWGC) deflaciona o total e
+    // NÃO pode ranquear entre finalistas — senão aparecia indevidamente como vencedor.
+    const stdHoles: number[] = [];
+    for (let ri = 0; ri < playedRounds; ri++) {
+      let mx = 0;
+      for (const r of groupedRows) {
+        const rd = r.rds[ri];
+        if (rd) mx = Math.max(mx, rd.scores.filter((s) => s > 0).length);
+      }
+      stdHoles[ri] = mx;
+    }
+    const hasShortRound = (r: PRow) =>
+      r.rds.some((rd, ri) => rd != null && rd.scores.filter((s) => s > 0).length < (stdHoles[ri] || 0));
     const pm = new Map<string, number>();
     const complete = groupedRows
-      .filter((r) => r._rdCount === fullCount && r.total != null && !r.isWD)
+      .filter((r) => r._rdCount === fullCount && r.total != null && !r.isWD && !hasShortRound(r))
       .sort((a, b) => a.total! - b.total!);
     let cnt = 1;
     complete.forEach((r, i) => {
       if (i > 0 && r.total !== complete[i - 1].total) cnt = i + 1;
       pm.set(r.key, cnt);
     });
-    return groupedRows.map((r) => ({ ...r, pos: pm.get(r.key) ?? null, _fullCount: fullCount }));
-  }, [groupedRows]);
+    // Quem não terminou (ronda parcial) é marcado WD → vai para o fundo da tabela.
+    return groupedRows.map((r) => ({
+      ...r,
+      isWD: r.isWD || hasShortRound(r),
+      pos: pm.get(r.key) ?? null,
+      _fullCount: fullCount,
+    }));
+  }, [groupedRows, playedRounds]);
 
   /* ── Flat rows ── */
   const flatRows: FlatRow[] = useMemo(() => {
