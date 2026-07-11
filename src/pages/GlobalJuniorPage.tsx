@@ -150,23 +150,45 @@ interface GjglData {
   divisions: GjglDivision[];
 }
 
+/* ── Overrides de campo/distâncias (eventos jogados em Portugal) ───────
+ * O GJGL não publica distâncias; para os eventos PT o
+ * build-gjgl-course-overrides.js extrai campo + tee + metros/SI por buraco
+ * das voltas WHS dos federados FPG que lá jogaram (por sexo). */
+interface GjglTeeOverride { tee: string; metersTotal: number; meters: number[]; si?: number[] }
+interface GjglCourseOverride { course: string; evidence: string; note?: string; tees: Partial<Record<"M" | "F", GjglTeeOverride>> }
+type GjglOverrides = Record<string, GjglCourseOverride>;
+
+const OVERRIDES_URL = "/data/gjgl-course-overrides.json";
+let _gjglOvr: Promise<GjglOverrides> | null = null;
+function loadGjglOverrides(): Promise<GjglOverrides> {
+  if (!_gjglOvr) {
+    _gjglOvr = cachedFetchJson<{ overrides: GjglOverrides }>(OVERRIDES_URL)
+      .then((d) => d?.overrides || {})
+      .catch(() => ({}));
+  }
+  return _gjglOvr;
+}
+
 /* ── Adapter GjglData → FPGTournament por escalão ─────────────────── */
-function divisionToTournament(d: GjglData, div: GjglDivision, label: string): FPGTournament {
+function divisionToTournament(d: GjglData, div: GjglDivision, label: string, ovr?: GjglCourseOverride | null): FPGTournament {
   const par18: number[] = d.par && d.par.length >= 18 ? (d.par as number[]) : new Array(18).fill(4);
   const parTotal = d.parTotal || par18.reduce((a, b) => a + b, 0);
   const nR = Math.max(...div.players.map(p => (p.rounds || []).length), 0);
   const fpgPlayers: FPGPlayer[] = div.players
     .filter(p => (p.rounds || []).length > 0)
     .map(p => {
+      // Tee curado por sexo — só se houver evidência para ESSE sexo (não
+      // mostrar metros dos rapazes a uma rapariga).
+      const teeOvr = ovr?.tees?.[p.gender === "f" ? "F" : "M"] ?? null;
       const pRounds = p.rounds || [];
       const roundScores: FPGRoundScore[] = pRounds.map((r, ri) => ({
         round: ri + 1,
         gross: r.gross ?? 0,
         scores: (r.scores ?? []).map(x => x ?? 0),
         pars: par18,
-        si: [],
-        meters: [],
-        teeName: "Tee",
+        si: teeOvr?.si ?? [],
+        meters: teeOvr?.meters ?? [],
+        teeName: teeOvr?.tee ?? "Tee",
       }));
       const playedR = pRounds.length;
       const tp = p.total != null && parTotal > 0 ? p.total - parTotal * playedR : null;
@@ -183,9 +205,9 @@ function divisionToTournament(d: GjglData, div: GjglDivision, label: string): FP
         parTotal,
         scores: pRounds[0]?.scores?.map(x => x ?? 0),
         par: par18,
-        si: undefined,
-        meters: undefined,
-        teeName: "Tee",
+        si: teeOvr?.si,
+        meters: teeOvr?.meters,
+        teeName: teeOvr?.tee ?? "Tee",
         roundScores,
         _roundsPlayed: playedR,
         hcpExact: p.hcp ?? undefined,
@@ -196,20 +218,20 @@ function divisionToTournament(d: GjglData, div: GjglDivision, label: string): FP
     name: label,
     tcode: `${d.slug}-u${div.ak}`,
     date: d.start_date || "",
-    campo: d.course || d.country,
+    campo: ovr?.course || d.course || d.country,
     rounds: nR,
     playerCount: fpgPlayers.length,
     players: fpgPlayers,
   };
 }
 
-function gjglScorecardOptions(): ScorecardOptions {
+function gjglScorecardOptions(hasTees?: boolean): ScorecardOptions {
   return {
     hideHCP: false,
     hideSD: true,
     hideEsc: true,
     hideFed: true,
-    hideTee: true,
+    hideTee: !hasTees,
     clubLabel: "País",
   };
 }
@@ -514,11 +536,12 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
 
 /** Carrega o detalhe de um torneio GJGL e constrói as divisões (U14/U18/U23). */
 function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
-  return cachedFetchJson<GjglData>(dataUrl(slug))
-    .then((d) => {
+  return Promise.all([cachedFetchJson<GjglData>(dataUrl(slug)), loadGjglOverrides()])
+    .then(([d, allOvr]) => {
       if (!d || !d.divisions?.length) return [];
+      const ovr = allOvr[slug] ?? null;
       return d.divisions.map((div): CircuitDivision => {
-        const tournament = divisionToTournament(d, div, `${d.tournament} — U${div.ak}`);
+        const tournament = divisionToTournament(d, div, `${d.tournament} — U${div.ak}`, ovr);
         const hasHoleByHole = (tournament.rounds ?? 0) > 0 && tournament.players.length > 0;
         const hasManuel = div.players.some((p) => isM(p.name));
         if (hasHoleByHole) {
@@ -528,7 +551,7 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
             tabLabel: `U${div.ak}`,
             hasManuel,
             results: tournament,
-            scOptions: gjglScorecardOptions(),
+            scOptions: gjglScorecardOptions(!!ovr),
           };
         }
         return {
@@ -546,11 +569,12 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
 /** Catálogo + índice slim → entries do CircuitShell. Metadados (data, campo,
  *  rondas, nº jog, divisões) e links oficiais vêm do índice; o detalhe completo
  *  (scorecards) continua a ser carregado de forma lazy ao seleccionar. */
-function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEntry[] {
+function buildGjglEntries(catalog: Catalog, index: GjglIndex | null, ovr?: GjglOverrides | null): CircuitEntry[] {
   return catalog.tournaments
     .filter((t) => t.gjgl_tournamentid)
     .map((t): CircuitEntry => {
       const ix = index?.tournaments?.[t.slug];
+      const courseOvr = ovr?.[t.slug]?.course;
       const links: CircuitLink[] = [];
       if (ix?.tour_url) links.push({ label: "Página oficial", url: ix.tour_url, icon: "🌐" });
       if (ix?.livescoring_url) links.push({ label: "Live scoring", url: ix.livescoring_url, icon: "📡" });
@@ -560,7 +584,7 @@ function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEnt
         year: t.year,
         name: `${flagForCountry(t.country) || "🏳"} ${t.title}`.trim(),
         federation: t.country,
-        course: ix?.course ?? undefined,
+        course: courseOvr ?? ix?.course ?? undefined,
         dateStart: ix?.start_date ?? undefined,
         dateEnd: ix?.end_date ?? undefined,
         roundsCount: ix?.rounds ?? undefined,
@@ -589,6 +613,7 @@ export default function GlobalJuniorPage() {
   const navigate = useNavigate();
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [index, setIndex] = useState<GjglIndex | null>(null);
+  const [ovr, setOvr] = useState<GjglOverrides | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -600,10 +625,12 @@ export default function GlobalJuniorPage() {
     cachedFetchJson<GjglIndex>("/data/gjgl-index.json")
       .then((d) => { if (!cancelled && d) setIndex(d); })
       .catch(() => {});
+    // Overrides de campo/distâncias (eventos PT) — falha silenciosa (opcional).
+    loadGjglOverrides().then((o) => { if (!cancelled) setOvr(o); });
     return () => { cancelled = true; };
   }, []);
 
-  const entries = useMemo(() => (catalog ? buildGjglEntries(catalog, index) : []), [catalog, index]);
+  const entries = useMemo(() => (catalog ? buildGjglEntries(catalog, index, ovr) : []), [catalog, index, ovr]);
   const selectedId = useMemo<string | undefined>(
     () => (slug && entries.some((e) => e.id === slug) ? slug : undefined),
     [slug, entries],

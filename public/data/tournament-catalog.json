@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-08T23:46:46.890Z",
+  "generatedAt": "2026-07-10T19:02:16.579Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -10504,6 +10504,26 @@
       "editionsCount": 10
     },
     {
+      "id": "uskids-shawnee-hills-golf-course",
+      "label": "Shawnee Hills Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-4103",
+        "uskids-15232",
+        "uskids-4566",
+        "uskids-3064",
+        "uskids-19646",
+        "uskids-13975",
+        "uskids-20303",
+        "uskids-17658",
+        "uskids-17066",
+        "uskids-22488"
+      ],
+      "firstDate": "2016-08-21",
+      "lastDate": "2026-06-20",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-willodell-golf-club",
       "label": "Willodell Golf Club",
       "sourceId": "uskids",
@@ -11990,25 +12010,6 @@
       ],
       "firstDate": "2019-03-31",
       "lastDate": "2025-08-23",
-      "editionsCount": 9
-    },
-    {
-      "id": "uskids-shawnee-hills-golf-course",
-      "label": "Shawnee Hills Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-4103",
-        "uskids-15232",
-        "uskids-4566",
-        "uskids-3064",
-        "uskids-19646",
-        "uskids-13975",
-        "uskids-20303",
-        "uskids-17658",
-        "uskids-17066"
-      ],
-      "firstDate": "2016-08-21",
-      "lastDate": "2025-08-24",
       "editionsCount": 9
     },
     {
@@ -15203,6 +15204,24 @@
       "editionsCount": 8
     },
     {
+      "id": "fpg-qdl-junior-open",
+      "label": "Quinta do Lago Junior Open",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-962-10080-20251229-all",
+        "fpg-962-10078-20251229-all",
+        "fpg-962-10079-20251229-all",
+        "fpg-962-10081-20251229-all",
+        "fpg-962-10067-20241227-all",
+        "fpg-962-10068-20241227-all",
+        "fpg-962-10069-20241227-all",
+        "fpg-962-10070-20241228-all"
+      ],
+      "firstDate": "2024-12-27",
+      "lastDate": "2025-12-29",
+      "editionsCount": 8
+    },
+    {
       "id": "rfeg-campeonato-canarias",
       "label": "Campeonato de Canarias",
       "sourceId": "rfeg",
@@ -16650,6 +16669,23 @@
       "editionsCount": 7
     },
     {
+      "id": "uskids-black-brook-golf-course",
+      "label": "Black Brook Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10789",
+        "uskids-12917",
+        "uskids-14629",
+        "uskids-19647",
+        "uskids-17067",
+        "uskids-17656",
+        "uskids-22490"
+      ],
+      "firstDate": "2021-08-22",
+      "lastDate": "2026-06-21",
+      "editionsCount": 7
+    },
+    {
       "id": "uskids-old-hickory-golf-club",
       "label": "Old Hickory Golf Club",
       "sourceId": "uskids",
@@ -17750,8 +17786,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-22",
-      "lastDate": "2026-06-20",
+      "firstDate": "2019-06-23",
+      "lastDate": "2026-06-21",
       "editionsCount": 7
     },
     {
@@ -19448,22 +19484,6 @@
       ],
       "firstDate": "2016-07-10",
       "lastDate": "2023-06-25",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-black-brook-golf-course",
-      "label": "Black Brook Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10789",
-        "uskids-12917",
-        "uskids-14629",
-        "uskids-19647",
-        "uskids-17067",
-        "uskids-17656"
-      ],
-      "firstDate": "2021-08-22",
-      "lastDate": "2025-06-22",
       "editionsCount": 6
     },
     {
@@ -22674,6 +22694,21 @@
       ],
       "firstDate": "2017-07-11",
       "lastDate": "2023-06-06",
+      "editionsCount": 5
+    },
+    {
+      "id": "uskids-pine-creek-golf-club",
+      "label": "Pine Creek Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-5192",
+        "uskids-7066",
+        "uskids-8620",
+        "uskids-8621",
+        "uskids-22291"
+      ],
+      "firstDate": "2018-05-19",
+      "lastDate": "2026-06-09",
       "editionsCount": 5
     },
     {
@@ -26585,20 +26620,6 @@
       "editionsCount": 4
     },
     {
-      "id": "uskids-pine-creek-golf-club",
-      "label": "Pine Creek Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-5192",
-        "uskids-7066",
-        "uskids-8620",
-        "uskids-8621"
-      ],
-      "firstDate": "2018-05-19",
-      "lastDate": "2020-05-26",
-      "editionsCount": 4
-    },
-    {
       "id": "uskids-south-shore-country-club",
       "label": "South Shore Country Club",
       "sourceId": "uskids",
@@ -29060,20 +29081,6 @@
       ],
       "firstDate": "2025-03-02",
       "lastDate": "2026-02-16",
-      "editionsCount": 4
-    },
-    {
-      "id": "fpg-qdl-junior-open",
-      "label": "Quinta do Lago Junior Open",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-962-10080-20251229-all",
-        "fpg-962-10078-20251229-all",
-        "fpg-962-10079-20251229-all",
-        "fpg-962-10081-20251229-all"
-      ],
-      "firstDate": "2025-12-29",
-      "lastDate": "2025-12-29",
       "editionsCount": 4
     },
     {
@@ -36395,6 +36402,45 @@
       ],
       "firstDate": "2026-03-22",
       "lastDate": "2026-05-03",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-sub-14",
+      "label": "Campeonato Nacional de Clubes Sub 14",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10768-20240402-sub_14"
+      ],
+      "firstDate": "2024-04-02",
+      "lastDate": "2026-03-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-sub-18",
+      "label": "Campeonato Nacional de Clubes Sub 18",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10769-20240402-sub_18",
+        "fpg-000-10826-20250415-sub_18"
+      ],
+      "firstDate": "2024-04-02",
+      "lastDate": "2026-03-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-2-categoria-homens",
+      "label": "Campeonato Nacional de 2º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10776-20240511-all",
+        "fpg-000-10829-20250503-all",
+        "fpg-000-10904-20260530-all"
+      ],
+      "firstDate": "2024-05-11",
+      "lastDate": "2026-05-30",
       "editionsCount": 3
     },
     {
@@ -43942,6 +43988,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-commonground-golf-course",
+      "label": "Commonground Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20724",
+        "uskids-22292"
+      ],
+      "firstDate": "2025-09-21",
+      "lastDate": "2026-06-15",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-the-hertsmere",
       "label": "The Hertsmere",
       "sourceId": "uskids",
@@ -46450,6 +46508,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-the-ranch-country-club",
+      "label": "The Ranch Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19813",
+        "uskids-22295"
+      ],
+      "firstDate": "2025-07-07",
+      "lastDate": "2026-07-06",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-country-club-of-hilton-head",
       "label": "Country Club of Hilton Head",
       "sourceId": "uskids",
@@ -47002,18 +47072,6 @@
       "editionsCount": 2
     },
     {
-      "id": "fpg-campeonato-nacional-de-clubes-sub-14",
-      "label": "Campeonato Nacional de Clubes Sub 14",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
-      ],
-      "firstDate": "2025-04-14",
-      "lastDate": "2026-03-30",
-      "editionsCount": 2
-    },
-    {
       "id": "fpg-campeonato-nacional-de-jovens-sub-12-h",
       "label": "Campeonato Nacional de Jovens Sub 12 H",
       "sourceId": "fpg",
@@ -47023,6 +47081,30 @@
       ],
       "firstDate": "2025-06-27",
       "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
+      "label": "Campeonato Nacional de Clubes Solverde H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10795-20240905-all",
+        "fpg-000-10849-20250828-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2025-08-28",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
+      "label": "Campeonato Nacional de Clubes Solverde S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10796-20240905-all",
+        "fpg-000-10850-20250828-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2025-08-28",
       "editionsCount": 2
     },
     {
@@ -47167,6 +47249,42 @@
       ],
       "firstDate": "2025-08-21",
       "lastDate": "2026-04-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-icelandic-juniors-international",
+      "label": "GJG Icelandic Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-icelandic-juniors-international-2025-iceland",
+        "gjgl-gjg-icelandic-juniors-international-2026-iceland"
+      ],
+      "firstDate": "2025-07-15",
+      "lastDate": "2026-06-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-junior-fream-challenge",
+      "label": "Junior Fream Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-junior-fream-challenge-2025-finland",
+        "gjgl-junior-fream-challenge-2026-finland"
+      ],
+      "firstDate": "2025-07-11",
+      "lastDate": "2026-06-05",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-rb-german-junior",
+      "label": "RB German Junior",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-rb-german-junior-2025-germany",
+        "gjgl-rb-german-junior-2026-germany"
+      ],
+      "firstDate": "2025-09-08",
+      "lastDate": "2026-06-02",
       "editionsCount": 2
     },
     {
@@ -62780,17 +62898,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-commonground-golf-course",
-      "label": "Commonground Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20724"
-      ],
-      "firstDate": "2025-09-21",
-      "lastDate": "2025-09-21",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-valley-country-club",
       "label": "Valley Country Club",
       "sourceId": "uskids",
@@ -68412,17 +68519,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-the-ranch-country-club",
-      "label": "The Ranch Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19813"
-      ],
-      "firstDate": "2025-07-07",
-      "lastDate": "2025-07-07",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-thorncreek-golf-course-tour-championship",
       "label": "Thorncreek Golf Course (Tour Championship)",
       "sourceId": "uskids",
@@ -69809,6 +69905,28 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-racoon-creek-golf-course",
+      "label": "Racoon Creek Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22293"
+      ],
+      "firstDate": "2026-06-23",
+      "lastDate": "2026-06-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-black-bear-golf-club",
+      "label": "Black Bear Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22294"
+      ],
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-06-30",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-penang-golf-resort-tour-championship",
       "label": "Penang Golf Resort (Tour Championship)",
       "sourceId": "uskids",
@@ -71052,17 +71170,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-campeonato-nacional-de-clubes-sub-18",
-      "label": "Campeonato Nacional de Clubes Sub 18",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
-      ],
-      "firstDate": "2026-03-30",
-      "lastDate": "2026-03-30",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-campeonato-nacional-de-jovens-sub-18-h",
       "label": "Campeonato Nacional de Jovens Sub 18 H",
       "sourceId": "fpg",
@@ -71159,6 +71266,127 @@
       ],
       "firstDate": "2026-06-12",
       "lastDate": "2026-06-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-94th-portuguese-international-ladies-amateur-champ",
+      "label": "94th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10785-20240124-all"
+      ],
+      "firstDate": "2024-01-24",
+      "lastDate": "2024-01-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-94th-portuguese-international-amateur-championship",
+      "label": "94th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10786-20240207-all"
+      ],
+      "firstDate": "2024-02-07",
+      "lastDate": "2024-02-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-3-categorias-homens",
+      "label": "Campeonato Nacional de 3ª Categorias Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10778-20240511-all"
+      ],
+      "firstDate": "2024-05-11",
+      "lastDate": "2024-05-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-flight-b",
+      "label": "Campeonato Nacional de Clubes - Flight B",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10797-20240906-all"
+      ],
+      "firstDate": "2024-09-06",
+      "lastDate": "2024-09-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-95th-portuguese-international-ladies-amateur-champ",
+      "label": "95th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10853-20250129-all"
+      ],
+      "firstDate": "2025-01-29",
+      "lastDate": "2025-01-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-95th-portuguese-international-amateur-championship",
+      "label": "95th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10854-20250212-all"
+      ],
+      "firstDate": "2025-02-12",
+      "lastDate": "2025-02-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-4-categoria-homens",
+      "label": "Campeonato Nacional de 4º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10833-20250503-all"
+      ],
+      "firstDate": "2025-05-03",
+      "lastDate": "2025-05-03",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-profissionais",
+      "label": "Campeonato Nacional de Profissionais",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-912-10210-20250723-all"
+      ],
+      "firstDate": "2025-07-23",
+      "lastDate": "2025-07-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-96th-portuguese-international-ladies-amateur-champ",
+      "label": "96th Portuguese International Ladies Amateur Champ",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10920-20260128-all"
+      ],
+      "firstDate": "2026-01-28",
+      "lastDate": "2026-01-28",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-96th-portuguese-international-amateur-championship",
+      "label": "96th Portuguese International Amateur Championship",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10921-20260211-all"
+      ],
+      "firstDate": "2026-02-11",
+      "lastDate": "2026-02-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-3-categoria-homens",
+      "label": "Campeonato Nacional de 3º Categoria Homens",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10906-20260530-all"
+      ],
+      "firstDate": "2026-05-30",
+      "lastDate": "2026-05-30",
       "editionsCount": 1
     },
     {
@@ -71965,6 +72193,17 @@
       "editionsCount": 1
     },
     {
+      "id": "gjgl-bang-golf-city-juniors-international-munich",
+      "label": "Bang Golf City Juniors International Munich",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bang-golf-city-juniors-international-munich-2026-germany"
+      ],
+      "firstDate": "2026-06-04",
+      "lastDate": "2026-06-04",
+      "editionsCount": 1
+    },
+    {
       "id": "gjgl-berlin-juniors-international",
       "label": "Berlin Juniors International",
       "sourceId": "gjgl",
@@ -72028,6 +72267,17 @@
       ],
       "firstDate": "2025-10-06",
       "lastDate": "2025-10-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-dresden-juniors-international",
+      "label": "Dresden Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-dresden-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-07-08",
+      "lastDate": "2026-07-08",
       "editionsCount": 1
     },
     {
@@ -72119,6 +72369,17 @@
       "editionsCount": 1
     },
     {
+      "id": "gjgl-gjg-finnish-juniors-international",
+      "label": "GJG Finnish Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-finnish-juniors-international-2026-finland"
+      ],
+      "firstDate": "2026-06-01",
+      "lastDate": "2026-06-01",
+      "editionsCount": 1
+    },
+    {
       "id": "gjgl-gjg-francine-saxton-trophy",
       "label": "GJG Francine Saxton Trophy",
       "sourceId": "gjgl",
@@ -72138,17 +72399,6 @@
       ],
       "firstDate": "2025-10-02",
       "lastDate": "2025-10-02",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-gjg-icelandic-juniors-international",
-      "label": "GJG Icelandic Juniors International",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-gjg-icelandic-juniors-international-2025-iceland"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -72394,14 +72644,14 @@
       "editionsCount": 1
     },
     {
-      "id": "gjgl-junior-fream-challenge",
-      "label": "Junior Fream Challenge",
+      "id": "gjgl-junior-golf-challenge-schwabisch-hall",
+      "label": "Junior Golf Challenge Schwäbisch Hall",
       "sourceId": "gjgl",
       "tournamentIds": [
-        "gjgl-junior-fream-challenge-2025-finland"
+        "gjgl-junior-golf-challenge-schwabisch-hall-2026-germany"
       ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
+      "firstDate": "2026-05-25",
+      "lastDate": "2026-05-25",
       "editionsCount": 1
     },
     {
@@ -72424,6 +72674,17 @@
       ],
       "firstDate": "2026-04-06",
       "lastDate": "2026-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-loretto-juniors-international",
+      "label": "Loretto Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-loretto-juniors-international-2026-scotland"
+      ],
+      "firstDate": "2026-06-22",
+      "lastDate": "2026-06-22",
       "editionsCount": 1
     },
     {
@@ -72460,6 +72721,39 @@
       "editionsCount": 1
     },
     {
+      "id": "gjgl-mid-summer-juniors-international",
+      "label": "Mid Summer Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-mid-summer-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-06-29",
+      "lastDate": "2026-06-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-migros-golfcard-gjg-international",
+      "label": "Migros GolfCard GJG International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-migros-golfcard-gjg-international-2026-switzerland"
+      ],
+      "firstDate": "2026-07-07",
+      "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-next-golf-estonian-challenge",
+      "label": "Next Golf Estonian Challenge",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-next-golf-estonian-challenge-2026"
+      ],
+      "firstDate": "2026-06-14",
+      "lastDate": "2026-06-14",
+      "editionsCount": 1
+    },
+    {
       "id": "gjgl-portuguese-intercollegiate-open",
       "label": "Portuguese Intercollegiate Open",
       "sourceId": "gjgl",
@@ -72468,17 +72762,6 @@
       ],
       "firstDate": "2026-02-01",
       "lastDate": "2026-02-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-rb-german-junior",
-      "label": "RB German Junior",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-rb-german-junior-2025-germany"
-      ],
-      "firstDate": "2025-09-08",
-      "lastDate": "2025-09-08",
       "editionsCount": 1
     },
     {
@@ -72501,6 +72784,17 @@
       ],
       "firstDate": "2026-03-02",
       "lastDate": "2026-03-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-swedish-junior-classics",
+      "label": "Swedish Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-swedish-junior-classics-2026-sweden"
+      ],
+      "firstDate": "2026-05-21",
+      "lastDate": "2026-05-21",
       "editionsCount": 1
     },
     {

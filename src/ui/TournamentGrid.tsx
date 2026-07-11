@@ -90,14 +90,18 @@ function TournamentGrid({
           return mult * (a.club || "").localeCompare(b.club || "", "pt");
         case "hcp":
           return mult * ((a.hcp ?? INF) - (b.hcp ?? INF));
+        // ⚠ Todos os comparadores devolvem ordem NATURAL ascendente (a−b);
+        // a direcção vem SÓ do `mult` (useSort). Antes, totalPts/totalBird/
+        // totalPars devolviam (b−a) e o mult de "desc" re-invertia → a tabela
+        // abria com os MENOS pontos no topo (bug corrigido 2026-07-10).
         case "totalBird":
-          return mult * (b.totalBird - a.totalBird);
+          return mult * (a.totalBird - b.totalBird);
         case "totalPars":
-          return mult * (b.totalPars - a.totalPars);
+          return mult * (a.totalPars - b.totalPars);
         case "totalBog":
           return mult * (a.totalBog - b.totalBog);
         case "totalPts":
-          return mult * (b.totalPts - a.totalPts);
+          return mult * (a.totalPts - b.totalPts);
         case "avgSD":
           return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
         case "bestSD":
@@ -139,13 +143,13 @@ function TournamentGrid({
             const tk = sortKey.replace("bird_", "");
             const va = a.results.find((r) => r.tournKey === tk)?.birdies ?? -1;
             const vb = b.results.find((r) => r.tournKey === tk)?.birdies ?? -1;
-            return mult * (vb - va); // mais birdies = melhor
+            return mult * (va - vb); // ordem natural; direcção vem do mult
           }
           if (sortKey.startsWith("par_")) {
             const tk = sortKey.replace("par_", "");
             const va = a.results.find((r) => r.tournKey === tk)?.pars ?? -1;
             const vb = b.results.find((r) => r.tournKey === tk)?.pars ?? -1;
-            return mult * (vb - va);
+            return mult * (va - vb);
           }
           if (sortKey.startsWith("bog_")) {
             const tk = sortKey.replace("bog_", "");

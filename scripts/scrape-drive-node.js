@@ -245,7 +245,11 @@ function parseTournament(raw, circuit) {
   const dateStr = lisbonCivilDayStr(dateMs); // epoch = meia-noite Lisboa; UTC dava dia -1 no verão
 
   let series = circuit === "aquapor" ? "aquapor" : "tour";
-  if (/challenge/i.test(desc)) series = "challenge";
+  // /\bchall/ (prefixo): os nomes longos vêm ABREVIADOS da FPG em pontos
+  // arbitrários — "Drive Chall Tejo-Mosteiro-…", "Drive Challe Tejo-Power…".
+  // Só /challenge/ deixava os Challenge do Tejo classificados como "tour"
+  // (bug corrigido 2026-07-10).
+  if (/\bchall/i.test(desc)) series = "challenge";
 
   let escalao = null;
   const escMatch = desc.match(/Sub\s*(\d+)/i);
@@ -477,6 +481,34 @@ function writeIfChanged(filepath, newObj) {
           p.grossTotal = sumGross;
           p.toPar = sumGross - (parT * p.roundScores.length);
         }
+      }
+
+      // ⚠ Posição AGREGADA nos multi-ronda (2026-07-10): o ClassifLST acima é
+      // o da RONDA 1 — o `pos` que trazia NÃO era a classificação final, e os
+      // pontos do ranking saíam errados (ex: 3º DT Tejo: pos 1 = Pedro Costa
+      // Alemão em vez do Nuno Palmares; confirmado contra o RankingsClassifLST
+      // oficial). Recalcular por grossTotal agregado. Empates NÃO partilham
+      // posição — a FPG desempata por countback e atribui posições distintas
+      // (confirmado: Tomás/James empatados → 2º=165 e 3º=94 no oficial).
+      // Countback aproximado: última ronda → back-9 da última ronda.
+      // Jogadores sem todas as rondas (WD a meio) vão para o fim (0 pts).
+      if (nRounds > 1) {
+        const hasGross = (p) => typeof p.grossTotal === "number" && p.grossTotal < 900;
+        const lastGrossOf = (p) => p.roundScores?.[p.roundScores.length - 1]?.gross ?? 999;
+        const lastB9Of = (p) => {
+          const sc = p.roundScores?.[p.roundScores.length - 1]?.scores;
+          if (!sc || sc.length < 18) return 999;
+          return sc.slice(9, 18).reduce((s, x) => s + (x || 0), 0);
+        };
+        const cmp = (a, b) =>
+          (a.grossTotal - b.grossTotal) ||
+          (lastGrossOf(a) - lastGrossOf(b)) ||
+          (lastB9Of(a) - lastB9Of(b)) ||
+          String(a.name || "").localeCompare(String(b.name || ""));
+        const complete = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) >= nRounds).sort(cmp);
+        const partial = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) < nRounds).sort(cmp);
+        let i = 0;
+        for (const p of [...complete, ...partial]) { i++; p.pos = i; }
       }
 
       (circuit === "aquapor" ? aquaporTournaments : driveTournaments).push(t);

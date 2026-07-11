@@ -61,6 +61,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/jogadores` | JogadoresListPage | federados.json + métricas (landing de /jogadores, tabela tipo FederatedsList) |
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
 | `/jogadores-por-ano` | JogadoresPorAnoPage | players/federados por coorte de ano de nascimento (utilidade, fora da NavBar) |
+| `/torneios-recentes` (+ `/:key`) | RecentTournamentsPage | recent-tournaments.json — torneios recentes reconstruídos das voltas WHS dos nossos jogadores (utilidade, fora da NavBar); detalhe reutiliza `TournamentDetail` |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-40).json, uskids-field.json |
 | `/kids-legacy` (`/kids` → redirect `/kids2`) | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
@@ -447,6 +448,76 @@ node scripts/scrape-fpg-admissions-draws-node.js --year 2026    # só 2026
 node scripts/scrape-fpg-admissions-draws-node.js --tcodes 10941,10937,10935
 node scripts/scrape-fpg-admissions-draws-node.js --since 2026-01-01 --concurrency 3
 ```
+
+### Template de torneios FUTUROS em destaque — `FEATURED_TOURNAMENTS` (2026-07-10)
+
+Generalização da injecção sintética que existia hardcoded para o Nacional 2026:
+`src/data/featuredTournaments.ts` é a config única de torneios futuros que devem
+aparecer na sidebar da FPGPage (lista geral "Todos" + secção Jovens) ANTES de
+haver resultados em pull-torneios/jovens_YYYY.json — com tabs Inscrições/Draw
+automáticas (TournamentDetail). O Nacional 2026 vive agora lá (meta importada de
+`NACIONAL_2026_META`); primeiros torneios do template novo: Amendoeira 2026
+(`179/10604-10606`, adicionados 2026-07-10 ainda só com draw).
+
+**DrivePage (2026-07-10):** o mesmo template cobre torneios Drive futuros —
+entradas com `series: "tour"|"challenge"|"aquapor"` (+ `region`) são injectadas
+na sidebar da DrivePage (useMemo `driveEntries`) em vez de /FPG/jovens; o
+detalhe Drive já usa o mesmo `TournamentDetail` (renderFull), logo tabs +
+verificação live vêm de borla. O construtor do sintético é partilhado:
+`buildFeaturedSynthetic()` + `inferEscalao`/`stripEscalaoSuffix` exportados de
+`featuredTournaments.ts`. Dedup por ccode/tcode em ambas as páginas: quando o
+torneio real chega aos ficheiros de resultados, o sintético deixa de entrar.
+
+**Drives futuros AUTO-DESCOBERTOS (2026-07-10):** sem config manual — dois
+mecanismos em cadeia: (1) o `INCLUDE_RX` da Fonte 3 do
+`scrape-fpg-admissions-draws-node.js` ganhou `/\bdrive\s+(tour|challenge)\b/i`
+e `/\baquapor\b/i`, por isso o cron `--auto-extend` (Sex/Sáb/Dom) descobre os
+torneios Drive futuros na TournamentsLST e scrapa admissions/draws; (2) a
+DrivePage auto-injecta qualquer torneio do `fpg-admissions-draws.json` cujo
+nome bata esses regex e que ainda não exista nos `drive-data-*` (série
+inferida do nome: aquapor/challenge/tour; região por
+madeira/açores/norte/tejo/sul; fallback null).
+⚠ A TournamentsLST NÃO devolve torneios futuros (confirmado 2026-07-10 via
+`scripts/probe-tournlist-future.js` — max(started_at) = hoje). A descoberta
+de futuros é a **Fonte 4** do auto-extend (`scanDriveFutureProbes`): os
+organizadores Drive alocam tcodes sequencialmente (Madeira 982: 5º=10212-16,
+6º=10227-31, 7º=10232-36), por isso sonda-se a página de admissions dos
+tcodes acima do máximo conhecido de cada ccode com ≥2 torneios drive/aquapor
+(pára após 5 misses seguidos, tecto +20); página válida entra no scope com a
+data real. ⚠ `--tcodes` com ccode explícito faz match no scope por
+(ccode,tcode) — nunca por tcode isolado (a FPG reutiliza tcodes entre clubes;
+herdar a data do clube errado gerava falsos `_suspect` que apagavam dados
+bons — caso dos Drive Challenge remarcados por mau tempo); sem entrada no
+scope o `--tcodes` usa `date: null` (sem validação _suspect). A verificação live no
+`TournamentDetail` cobre QUALQUER sintético admissions-only
+(`_sourceFile === "fpg-admissions-draws.json"`, incl. jovens auto-detectados
+da FPGPage), não só os FEATURED; `live: false` na config continua a desligar.
+
+**Checklist para adicionar um torneio futuro:**
+1. Entrada em `FEATURED_TOURNAMENTS`: `{ ccode, tcode }` chega — nome/data/campo/
+   escalão vêm do scrape; overrides opcionais (name, escalao, date, campo, rounds,
+   region, extraLinks).
+2. Entrada(s) em `scripts/fpg-admissions-scope.json` com `"date": null` (⚠ null
+   salta a validação `_suspect` — obrigatório quando a data ainda não é conhecida)
+   e `_src: "manual-jovens"`.
+3. Scrape inicial: `node scripts/scrape-fpg-admissions-draws-node.js --tcodes {ccode}:{tcode},...`
+   (o cron Sex/Sáb/Dom mantém depois; quando a data real for conhecida, preenchê-la
+   no scope para o `--since` do cron ser preciso).
+4. Sem dados scraped, a entrada da config fica dormente (não aparece nada) — o
+   `if (!ad) continue` na injecção (2) da FPGPage garante isso.
+
+**Verificação LIVE ao abrir (2026-07-10):** para torneios FEATURED ainda não
+jogados (`live !== false` e sem rondas), o `TournamentDetail` chama
+automaticamente `/api/inscricoes?ccode=X&tcode=Y` (hook
+`src/hooks/useLiveAdmissions.ts`, cache 3 min) — a tab Inscrições mostra a
+lista ACTUAL da FPG com badge `🟢 live FPG · hora · N inscritos` e diff
+"+N novos / −N saíram" face ao último scrape; se o live falhar cai no scrape
+(`💾 live indisponível`). Ambos os endpoints foram GENERALIZADOS (aceitam
+qualquer ccode/tcode, antes hardcoded 10935-10944 + club=000): função Vercel
+`api/inscricoes.js` (agora via gateway linkpage.aspx; precisa do env
+`FPG_ADMISSIONS_COOKIES` no Vercel) e middleware dev em `vite.config.ts`
+(cache key `ccode/tcode` para clubes ≠000 no `inscricoes_nacionais.json`).
+No Nacional 2026 o `live: false` está posto (evento já disputado).
 
 **scrape-classif-node.js** — Node puro (2026-04-22). Substitui `pull-torneios.js` browser-console. GET linkpage warmup + POST `classif.aspx/ClassifLST` paginado + POST `classifAgregate.aspx/ScoreCard` por jogador. Output formato compatível com `pull-torneiosNNN.json`. Scope: `scripts/classif-scope.json` (217 torneios já processados) ou flags CLI. Workflow: `update-classif.yml` (Sáb/Dom 20:30 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
 ```bash
@@ -1193,6 +1264,47 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 ---
 
+## Torneios recentes reconstruídos (`/torneios-recentes`) — 2026-07-10
+
+Página utilitária (fora da NavBar) que lista os **últimos torneios em que os
+nossos jogadores participaram**, mesmo os que NÃO temos scrapeados. Ideia:
+cada volta WHS de um jogador (`output/{fed}/analysis/data.json`) traz
+`eventName`, `ccode`/`tcode`, data, gross, tee e o scorecard buraco-a-buraco
+(`HOLES[scoreId]`). Agregando por torneio (`ccode|tcode`) e juntando todos os
+nossos que lá aparecem, reconstrói-se "quem dos nossos jogou + a pontuação".
+Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
+
+- **Build:** `scripts/build-recent-tournaments.js` → `public/data/recent-tournaments.json`
+  (formato "fpg-pull" — `tournaments[].players[].roundScores[]`, o MESMO que a
+  FPGPage/DrivePage consomem). Só voltas `scoreOrigin==="Torn"` com tcode real
+  (exclui actos administrativos: tcode `000000000`, "Transferência de Clube").
+  Agrupa multi-dia pelo `ccode|tcode` (as rondas diferem por data; nome limpo
+  via `cleanTournName` tira sufixos "D2"/"R3"). `date` em ISO (`toIsoDate`);
+  `parTotal` = par de UMA ronda (convenção pull-torneios — os componentes
+  multiplicam por nº de rondas). Cada torneio ganha `scraped` (já há leaderboard
+  completa em pull-torneios/drive/aquapor/jovens?) e `nOurs` (nº de nossos).
+  Janela default `--since 2024-01-01` (~2.8k torneios, ~10 MB). CLI:
+  `--since`, `--min-ours`, `--all-origins`. Teste: `build-recent-tournaments.test.js`.
+  Também emite `public/data/recent-tournaments-scrape-scope.json` (ver "Auto-scrape").
+- **Página:** `src/pages/RecentTournamentsPage.tsx`. Lista = tabela sortável
+  (`useSort`+`SortableHdr`, estilo `player-list-table`) com filtros (pesquisa,
+  mín. nº nossos, estado scrapeado, ano) + coluna **FPG** (link directo à
+  classificação oficial, `fpgScoringUrl`). Clicar numa linha: torneios com **< 10
+  nossos EXPANDEM inline** (linha `row-expanded` com `colSpan`), a partir de **10
+  abrem em janela nova** (rota `/:key`). O detalhe **reutiliza `TournamentDetail`**
+  da FPGPage (tabs de ronda + Resumo + Scorecards; os links Inscrições/Draw/
+  Scoring ↗ da Federação já vêm de lá). ⚠ A posição é **entre os nossos**, não a oficial.
+- **Auto-scrape dos valiosos (>5 nossos):** o build emite
+  `recent-tournaments-scrape-scope.json` = `[{tclub,tcode,name,nOurs}]` dos
+  **não scrapeados com ≥6 nossos** (só FPG, ccode presente), ordenado por `nOurs`
+  desc. O `update-classif.yml` tem um passo que corre
+  `scrape-classif-node.js --scope <esse ficheiro> --limit 80 --out public/data/pull-torneios006.json`
+  (`--limit` novo no scraper). Merge aditivo → o scope **auto-drena** a cada
+  semana (à medida que ficam scrapeados, saem do scope no build seguinte) e a
+  FPGPage passa a mostrar o leaderboard completo (lê `pull-torneios000..NNN`).
+- **Automação:** regenerado no `update-data.yml` (a seguir a rebuild dos
+  índices de campos), committa `recent-tournaments.json` + o scope.
+
 ## Todos os ficheiros JSON em public/data/
 
 | Ficheiro | Circuito | Gerado por | Scorecard? | Usado em |
@@ -1202,7 +1314,8 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | players.json | FPG | pipeline.js | ✗ | JogadoresPage, FPGPage, KIDSdataLoader (enriquecimento) |
 | master-courses.json | FPG | pipeline.js (+ add-paco-do-lumiar.js p/ campos manuais) | ✓ | CamposPage |
 | course-players.json | FPG | build-course-players.js | ✓ | CamposPage (`_players` dos campos PT — quem jogou + scores por volta) |
-| course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome p/ os jogadores dos campos) |
+| course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome + `dob`/`sex` p/ os jogadores dos campos) |
+| recent-tournaments.json | FPG | build-recent-tournaments.js | ✓ | RecentTournamentsPage (`/torneios-recentes`) — torneios reconstruídos das voltas dos nossos |
 | drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | aquapor-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | melhorias.json | FPG | manual | ✓ | JogadoresPage, CamposPage |
@@ -1383,7 +1496,48 @@ CR/Slope `null` (par-3 sem rating publicado). Idempotente, escrita atómica. ~90
 - Clicar na linha expande as voltas individuais (data + resultado, info completa no hover);
   sentinelas mostradas como "s/ cartão".
 
----
+### Vista por-tee — `CoursePlayersByTee` (tab "Como jogou", 2026-07-10)
+
+A `CoursePlayersSection` foi refactorizada: o corpo da tabela é agora
+`PlayersTable` (componente reutilizável, `{entries, title, onSelectPlayer}`) e a
+construção dos resumos vive em `buildSummaries(raw, players, nameMap, teeFilter?)`
+(o `teeFilter` opcional restringe as voltas a um tee). Dois consumidores:
+- **`CoursePlayersSection`** (tab **Scorecard**): lista geral, todos os tees →
+  `Jogadores (N)`.
+- **`CoursePlayersByTee`** (tab **Como jogou**, a seguir aos KPIs por tee):
+  UMA `PlayersTable` por tee (Brancas, Amarelas, Azuis, Vermelhas, …) com os nossos
+  jogadores e os scores que fizeram NESSE tee. Agrupa por `teeCanonicalLabel(r.tee)`
+  (junta variantes M/F da mesma cor), ordena back→front (`TEE_COLOR_ORDER`; "Sem
+  tee" por último). Cada tee é um **cartão com o mesmo look dos KPIs** (faixa
+  superior da cor + header tingido `teeTint` com ponto `teeDot`, nome, **distância +
+  CR/Slope ♂/♀** vindos de `useTeeInfoMap`); a `PlayersTable` renderiza em modo
+  `bare` (sem o wrapper `.course-players-section`/título) dentro do cartão. Cada
+  tabela mantém sort próprio (regra: todas as tabelas ordenáveis). Helpers de
+  aspecto (`teeTint`/`teeDot`/`useTeeInfoMap`) são partilhados com o `CourseTeeKpis`.
+
+**KPIs por cor de tee — `CourseTeeKpis` (topo do "Como jogou", 2026-07-10).** O tab
+"Como jogou" deixou de mostrar os KPIs genéricos (Par/Tees/Jogadores — esses ficam
+só no Scorecard) e a média-por-buraco do Manuel passou para o fim. Lidera com um
+**cartão por cor de tee**, cada um com: header (ponto de cor + **distância + CR/Slope**
+do sexo/volta seleccionados, vindos de `physicalTeeGroups`), nº jogadores + voltas, e
+o **TOP-3 de cada escalão** (Sub-10→Absoluto) com nome (link), to-par colorido,
+**data com ano** (`fmtDMYfull`) e **SD** da volta do recorde. Extras:
+- **Dois toggles** (`Seg`): **♂ Rapazes / ♀ Raparigas** (separa por sexo, `meta.sex`)
+  e **18 buracos / Front 9 / Back 9** (`roundValue`; F9/B9 vêm de `r.f9`/`r.b9` — o
+  `build-course-players.js` passou a emitir `f9`/`f9tp`/`b9`/`b9tp` por volta de 18 a
+  partir do `HOLES[scoreId].g`). As ratings (CR/Slope) do header seguem o toggle
+  (h18/f9/b9).
+- **Ordenado por distância** (dificuldade) desc, não por cor.
+- **Cartão do Manuel sempre no topo** (`MANUEL_FED`): o seu recorde por tee (ordenado
+  por distância), com escalão à data, data e SD — independente do filtro de sexo.
+- **Nota de fonte** (canto): "dados: voltas dos nossos · última {data}" com tooltip a
+  explicar a origem (course-players.json, regen semanal `update-data.yml`).
+
+O escalão é calculado **à data da volta** (`escalaoAtDate`: coorte FPG por ano de
+nascimento vs ano do evento) — o mesmo miúdo aparece como Sub-12 numa volta antiga e
+Sub-14 noutra. Precisa da **DOB**: o `build-course-player-names.js` emite `dob` + `sex`
+por fed (além de `names`); o loader expõe-os via `useCoursePlayerMeta()`
+(`loadCoursePlayerMeta` substitui o antigo `loadCoursePlayerNames`).
 
 ## Tab "Vantagem de Tee" (`/comparar`) — conselho de tee para júnior (2026-06-14)
 

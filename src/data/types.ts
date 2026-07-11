@@ -87,6 +87,12 @@ export type CoursePlayerRound = {
   tee: string | null;
   event: string | null;
   sd: number | null;
+  /** Splits Front 9 / Back 9 (só voltas de 18 com scorecard completo) — gross
+   *  de cada nine e respectivo to-par. Ausentes se a volta não os tiver. */
+  f9?: number | null;
+  f9tp?: number | null;
+  b9?: number | null;
+  b9tp?: number | null;
 };
 
 export type Course = {

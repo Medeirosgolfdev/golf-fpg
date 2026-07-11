@@ -98,6 +98,9 @@ jobs:
           node scripts/extract-courses.js --force || echo "extract-courses: sem novidades ou aviso"
           node scripts/build-course-player-names.js || echo "build-course-player-names: aviso"
           node scripts/build-course-players.js || echo "build-course-players: aviso"
+          # Torneios recentes reconstruídos das voltas dos nossos jogadores
+          # (public/data/recent-tournaments.json → página /torneios-recentes)
+          node scripts/build-recent-tournaments.js || echo "build-recent-tournaments: aviso"
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
           node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
@@ -142,6 +145,8 @@ jobs:
                   public/data/master-courses.json \
                   public/data/course-player-names.json \
                   public/data/course-players.json \
+                  public/data/recent-tournaments.json \
+                  public/data/recent-tournaments-scrape-scope.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

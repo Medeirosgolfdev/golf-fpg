@@ -1,5 +1,6 @@
 import type { MasterData, PlayersDb, AwayCoursesData, Course } from "./types";
 import { cachedFetchJson } from "./fetchCache";
+import { deepFixMojibake } from "../utils/fixEncoding";
 
 /**
  * Carrega master-courses.json.
@@ -30,7 +31,10 @@ export async function loadPlayers(opts?: { force?: boolean }): Promise<PlayersDb
   }
   const data = await cachedFetchJson<PlayersDb>(url);
   if (!data) throw new Error("Falha a carregar players.json (404)");
-  return data;
+  // Reparar mojibake à entrada (ex: "AÃ§ores", "JosÃ© GonÃ§alves") — o
+  // pipeline ocasionalmente grava strings double-encoded vindas da FPG.
+  // Idempotente; mesmo padrão dos loaders de federados/usePlayerData.
+  return deepFixMojibake(data);
 }
 
 /**

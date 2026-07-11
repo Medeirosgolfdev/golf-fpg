@@ -381,7 +381,7 @@ export function ResumoTable(props: {
             // (not for individual R1/R2 entries)
             const isRoundEntry = t._roundLabel && t._roundLabel !== "Resumo";
             if (!isRoundEntry) {
-              row.totalPts += drivePoints(p.pos);
+              row.totalPts += drivePoints(p.pos, t.series);
             }
           }
         }

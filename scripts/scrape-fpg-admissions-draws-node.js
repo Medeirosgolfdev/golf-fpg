@@ -380,6 +380,14 @@ const INCLUDE_RX = [
   /\bPJA\b/i,
   /\bjovens?\b/i,
   /\bsub[-\s]?(10|12|14|16|18|25)\b/i,
+  // Drive/Aquapor (2026-07-10): descoberta automática dos torneios FUTUROS do
+  // circuito Drive — a DrivePage injecta-os na sidebar (auto-detecção por nome
+  // em fpg-admissions-draws.json) com tabs Inscrições/Draw + live. Os passados
+  // já vinham via Fonte 2 (drive-data-*/aquapor-data-* mensais).
+  // /chall/ como prefixo: nomes longos vêm abreviados em pontos arbitrários
+  // ("Drive Chall Tejo-…", "Drive Challe Tejo-Power…")
+  /\bdrive\s+(tour\b|chall)/i,
+  /\baquapor\b/i,
 ];
 const INCLUDE_CCODES = new Set(["007"]);  // Santo da Serra: qualquer torneio
 const EXCLUDE_RX = [
@@ -592,6 +600,93 @@ async function scanFpgTournamentsLst() {
   return out;
 }
 
+/* Fonte 4: PROBE de tcodes sequenciais — descoberta de torneios FUTUROS dos
+   organizadores Drive/Aquapor.
+   A TournamentsLST NÃO devolve torneios futuros (confirmado 2026-07-10 via
+   scripts/probe-tournlist-future.js: max(started_at) = hoje; ClubCode=982
+   parava no 6º Drive Challenge de 28/06 na véspera do 7º). Mas cada
+   organizador aloca tcodes SEQUENCIALMENTE (Madeira: 5º=10212-16,
+   6º=10227-31, 7º=10232-36) e a página de admissions passa a existir mal as
+   inscrições abrem. Estratégia: para cada ccode "organizador Drive" (≥2
+   torneios com nome drive/aquapor no scope∪base), sondar admissions dos
+   tcodes acima do máximo conhecido até PROBE_MISS_STOP falhas consecutivas
+   (tecto PROBE_AHEAD). Página válida → entra no scope com a data REAL da
+   página (passa o filtro --since do cron e alinha com o markSuspect). */
+const DRIVE_ORG_NAME_RX = [/\bdrive\s+(tour\b|chall)/i, /\baquapor\b/i];
+const PROBE_AHEAD = 20;      // tecto de sondagem acima do máximo conhecido
+const PROBE_MISS_STOP = 5;   // pára após N tcodes seguidos sem página válida
+const PROBE_GAP_BACK = 12;   // backfill de buracos ABAIXO do máximo (ex: 10232
+                             // quando 10233/34 foram scrapados à mão primeiro)
+
+async function scanDriveFutureProbes(known) {
+  // Universo conhecido = entries do scope (manual + fontes 2/3) + base em disco
+  const all = [...known];
+  try {
+    const base = JSON.parse(fs.readFileSync(OUT_FILE, "utf8"));
+    for (const t of (base.tournaments || [])) {
+      all.push({ ccode: t.ccode, tcode: t.tcode, name: t.name || "" });
+    }
+  } catch { /* sem base ainda */ }
+
+  // Organizadores: ccodes com ≥2 torneios de nome Drive/Aquapor
+  const byOrg = new Map();  // ccode → { count, maxT }
+  for (const t of all) {
+    if (!DRIVE_ORG_NAME_RX.some(rx => rx.test(t.name || ""))) continue;
+    const ccode = String(t.ccode || "").padStart(3, "0");
+    const tc = parseInt(String(t.tcode), 10);
+    if (!ccode || !Number.isFinite(tc)) continue;
+    const o = byOrg.get(ccode) || { count: 0, maxT: 0 };
+    o.count++;
+    if (tc > o.maxT) o.maxT = tc;
+    byOrg.set(ccode, o);
+  }
+  const orgs = [...byOrg.entries()].filter(([, o]) => o.count >= 2);
+  if (orgs.length === 0) return [];
+  console.log(`[adm-draws] Fonte 4: a sondar ${orgs.length} organizadores Drive (${orgs.map(([c, o]) => `${c}>${o.maxT}`).join(", ")})`);
+
+  const haveKey = new Set(all.map(t => `${String(t.ccode).padStart(3, "0")}/${t.tcode}`));
+  const out = [];
+  for (const [ccode, o] of orgs) {
+    let found = 0;
+    const probeOne = async (tc) => {
+      const tcode = String(tc);
+      if (haveKey.has(`${ccode}/${tcode}`)) return null;  // já conhecido
+      const r = await fetchLinkpage(ccode, tcode, "admissions");
+      const parsed = (r.ok && !r.paramErr && r.html) ? parseAdmissions(r.html) : null;
+      const valid = parsed && !parsed.error && (parsed.name || (parsed.players?.length ?? 0) > 0);
+      await sleep(DELAY_MS);
+      if (!valid) return false;
+      found++;
+      out.push({
+        ccode, tcode,
+        name: parsed.name || `Torneio ${tcode}`,
+        date: parsed.date || null,  // null → markSuspect salta a validação
+        expectedYear: (parsed.date || "").slice(0, 4) || new Date().getFullYear(),
+        _src: "probe-drive-future",
+      });
+      return true;
+    };
+    // (1) Backfill de buracos abaixo do máximo — sem miss-stop (torneios
+    //     conhecidos intercalam com desconhecidos; probeOne salta os conhecidos).
+    for (let tc = Math.max(1, o.maxT - PROBE_GAP_BACK); tc < o.maxT; tc++) {
+      await probeOne(tc);
+    }
+    // (2) Para a frente do máximo — com miss-stop (fim da sequência alocada).
+    let misses = 0;
+    for (let tc = o.maxT + 1; tc <= o.maxT + PROBE_AHEAD && misses < PROBE_MISS_STOP; tc++) {
+      const res = await probeOne(tc);
+      if (res === true) misses = 0;
+      else if (res === false) misses++;
+      // res === null (já conhecido) não conta como miss nem reset
+    }
+    if (found > 0) console.log(`[adm-draws] Fonte 4 probe ${ccode}: +${found} novos (máximo conhecido era ${o.maxT})`);
+  }
+  if (out.length > 0) {
+    console.log(`[adm-draws] auto-extend Fonte 4 (probe drives futuros): ${out.length} torneios → ${out.map(t => `${t.ccode}/${t.tcode} ${t.date || "s/data"}`).join(", ")}`);
+  }
+  return out;
+}
+
 async function buildAutoExtendedScope(manual, sinceDate = null) {
   const local = scanLocalJsons(sinceDate);
   const fpg = await scanFpgTournamentsLst();
@@ -604,7 +699,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
   for (const t of manual) {
     byKey.set(`${t.ccode}/${t.tcode}`, { ...t, _src: t._src || "manual" });
   }
-  let addedLocal = 0, addedFpg = 0;
+  let addedLocal = 0, addedFpg = 0, addedProbe = 0;
   for (const t of local) {
     const k = `${t.ccode}/${t.tcode}`;
     if (!byKey.has(k)) { byKey.set(k, t); addedLocal++; }
@@ -613,7 +708,13 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     const k = `${t.ccode}/${t.tcode}`;
     if (!byKey.has(k)) { byKey.set(k, t); addedFpg++; }
   }
-  console.log(`[adm-draws] auto-extend total: ${byKey.size} torneios (manual=${manual.length} + local=${addedLocal} novos + fpg=${addedFpg} novos)`);
+  // Fonte 4: probe de tcodes futuros dos organizadores Drive/Aquapor
+  const probes = await scanDriveFutureProbes([...byKey.values()]);
+  for (const t of probes) {
+    const k = `${t.ccode}/${t.tcode}`;
+    if (!byKey.has(k)) { byKey.set(k, t); addedProbe++; }
+  }
+  console.log(`[adm-draws] auto-extend total: ${byKey.size} torneios (manual=${manual.length} + local=${addedLocal} novos + fpg=${addedFpg} novos + probe=${addedProbe} futuros)`);
   return [...byKey.values()];
 }
 
@@ -641,11 +742,22 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
   //    --tcodes é terminal: quando indicado, --since/--year são ignorados
   //    (o utilizador nomeou explicitamente os torneios que quer).
   if (FILTER_TCODE_SPECS.length > 0) {
+    // ⚠ Match no scope por (ccode, tcode) — NUNCA por tcode isolado quando o
+    // spec traz ccode explícito. A FPG reutiliza tcodes ENTRE CLUBES
+    // (982/10233 ≠ 988/10233): herdar a data do clube errado fazia o
+    // markSuspect apagar dados BONS como "tcode reutilizado" (bug descoberto
+    // 2026-07-10 nos Drive Challenge Sul remarcados por mau tempo).
+    const byKey = new Map();
     const byTcode = new Map();
-    for (const t of scope) byTcode.set(String(t.tcode), t);
+    for (const t of scope) {
+      byKey.set(`${String(t.ccode).padStart(3, "0")}/${String(t.tcode)}`, t);
+      if (!byTcode.has(String(t.tcode))) byTcode.set(String(t.tcode), t);
+    }
     const today = new Date().toISOString().slice(0, 10);
     scope = FILTER_TCODE_SPECS.map(spec => {
-      const existing = byTcode.get(spec.tcode);
+      const existing = spec.ccode
+        ? (byKey.get(`${spec.ccode}/${spec.tcode}`) ?? null)  // só o MESMO clube
+        : (byTcode.get(spec.tcode) ?? null);
       // ccode resolvido: explícito (token ou --ccode) > scope > "000" default.
       const ccode = spec.ccode || existing?.ccode || "000";
       if (!existing && !spec.ccode) {
@@ -656,9 +768,12 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
         tcode: spec.tcode,
         // Nome/data reais vêm da página FPG no scrape; estes são só placeholders.
         // NOTA: "date" in (existing||{}) preserva date:null → markSuspect salta a
-        // validação em torneios sem data conhecida (ex: adicionados manualmente ao scope).
+        // validação em torneios sem data conhecida. Sem entrada no scope para
+        // ESTE (ccode,tcode) → date: null (o utilizador nomeou o torneio
+        // explicitamente; não sabemos a data e validar contra "hoje" gerava
+        // falsos _suspect em eventos a >30 dias).
         name: existing?.name || `Torneio ${spec.tcode}`,
-        date: "date" in (existing || {}) ? existing.date : today,
+        date: existing ? ("date" in existing ? existing.date : today) : null,
         expectedYear: existing?.expectedYear || Number(today.slice(0, 4)),
         _src: spec.ccode ? "cli" : (existing?._src || "scope"),
       };

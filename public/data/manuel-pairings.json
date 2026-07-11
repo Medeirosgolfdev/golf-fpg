@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-07-05T20:46:51.612Z",
+  "geradoEm": "2026-07-10T21:04:27.251Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 132,
+  "totalRondas": 133,
   "totalCompanheirosUnicos": 159,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 123,
-      "rondasComDraw": 107,
+      "rondasComDraw": 108,
       "torneiosJogados": 92,
-      "torneiosComDraw": 87,
+      "torneiosComDraw": 88,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "038-10754",
@@ -602,6 +602,26 @@
   },
   "rondas": [
     {
+      "circuito": "FPG",
+      "torneioId": "982-10233",
+      "torneioNome": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+      "data": "2026-07-11",
+      "ronda": 1,
+      "teeTime": "10:50",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Vicente Rodrigues",
+          "fed": "51896",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
       "circuito": "USKids",
       "torneioId": "usk-21795",
       "torneioNome": "Paris Invitational 2026",
@@ -683,8 +703,8 @@
       "startHole": 10,
       "campo": "Paris Val d’Europe Golf Course - White, Paris Val d’Europe Golf Course - Red/Blue",
       "manuelScore": {
-        "gross": 167,
-        "toPar": 95
+        "gross": 87,
+        "toPar": 15
       },
       "companheiros": [
         {
@@ -693,8 +713,8 @@
           "clube": null,
           "pais": "FR",
           "score": {
-            "gross": 166,
-            "toPar": 94
+            "gross": 84,
+            "toPar": 12
           }
         },
         {
@@ -703,8 +723,8 @@
           "clube": null,
           "pais": "FR",
           "score": {
-            "gross": 174,
-            "toPar": 102
+            "gross": 86,
+            "toPar": 14
           }
         }
       ]
@@ -3261,28 +3281,40 @@
       "teeTime": "11:00",
       "startHole": 1,
       "campo": null,
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 39,
+        "toPar": 5
+      },
       "companheiros": [
         {
           "nome": "Luis Miguel Fernandes",
           "fed": "35582",
-          "clube": null,
+          "clube": "Millennium BCP",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 40,
+            "toPar": 6
+          }
         },
         {
           "nome": "João Figueiredo",
           "fed": "44538",
-          "clube": null,
+          "clube": "ACP Golfe",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 38,
+            "toPar": 4
+          }
         },
         {
           "nome": "Rui Manuel Gomes Faria",
           "fed": "19914",
-          "clube": null,
+          "clube": "SNQT Bancários",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 40,
+            "toPar": 6
+          }
         }
       ]
     },
@@ -4877,14 +4909,20 @@
       "teeTime": "09:57",
       "startHole": 1,
       "campo": null,
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 90,
+        "toPar": 18
+      },
       "companheiros": [
         {
           "nome": "Vasco Leal Gouveia",
           "fed": null,
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 96,
+            "toPar": 24
+          }
         }
       ]
     },

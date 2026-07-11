@@ -27,7 +27,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
-import { DRIVE_POINTS, drivePoints } from "../constants/drivePoints";
+import { DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, drivePoints } from "../constants/drivePoints";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -51,6 +51,7 @@ import {
 import { ResumoTable } from "../ui/ResumoTable";
 import DriveAllRoundsScorecardLB from "../ui/DriveAllRoundsScorecardLB";
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../data/nacional2026Loader";
+import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../data/featuredTournaments";
 import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab, { buildDrawResults } from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
@@ -326,7 +327,10 @@ const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highl
    ═══════════════════════════════════════════════════════ */
 function DrivePointsTable() {
   const [open, setOpen] = React.useState(false);
-  const entries = Object.entries(DRIVE_POINTS).map(([pos, pts]) => ({ pos: Number(pos), pts }));
+  // Tour e Challenge diferem no 8º (38 vs 35) e o Tour tem 20º=18 — mostrar
+  // ambas as colunas (descoberta 2026-07-10 vs rankings oficiais).
+  const allPos = [...new Set([...Object.keys(DRIVE_POINTS_TOUR), ...Object.keys(DRIVE_POINTS_CHALLENGE)].map(Number))].sort((a, b) => a - b);
+  const entries = allPos.map(pos => ({ pos, pts: DRIVE_POINTS_TOUR[pos] ?? 0, ptsCh: DRIVE_POINTS_CHALLENGE[pos] ?? 0 }));
   const half = Math.ceil(entries.length / 2);
   const col1 = entries.slice(0, half);
   const col2 = entries.slice(half);
@@ -341,23 +345,27 @@ function DrivePointsTable() {
       </button>
       {open && (
         <div className="mt-10">
-          <div className="muted fs-11 mb-8">Pontos atribuídos por posição final em cada torneio.</div>
+          <div className="muted fs-11 mb-8">
+            Pontos por posição final em cada torneio — Tour e Challenge diferem no 8º lugar (validado contra os rankings oficiais FPG).
+          </div>
           <div className="flex-wrap" style={{ display: "flex", gap: 24 }}>
             {[col1, col2].map((col, ci) => (
-              <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 140 }}>
+              <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 190 }}>
                 <thead>
                   <tr>
                     <th className="r" style={{ width: 40 }}>Pos</th>
-                    <th className="r fw-800" style={{ width: 60, color: "var(--color-warn-dark)" }}>Pts</th>
+                    <th className="r fw-800" style={{ width: 60, color: "var(--color-warn-dark)" }}>Tour</th>
+                    <th className="r fw-800" style={{ width: 70, color: "var(--color-warn-dark)" }}>Challenge</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {col.map(({ pos, pts }) => (
+                  {col.map(({ pos, pts, ptsCh }) => (
                     <tr key={pos}>
                       <td className="r fw-700" style={{ color: medalColor(pos) ?? "var(--text)" }}>
                         {medal(pos) ?? pos + "º"}
                       </td>
-                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{pts}</td>
+                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{pts || "—"}</td>
+                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)", opacity: ptsCh === pts ? 0.55 : 1 }}>{ptsCh || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -804,13 +812,19 @@ const CHART_COLORS = C.charts;
 const SERIE_COLORS: Record<string, string> = { tour: "var(--color-teal)", challenge: C.chartPurple, aquapor: "var(--chart-5)" };
 const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
+/** Labels legíveis das zonas Drive (chaves canónicas em minúsculas). */
+const REGION_LABEL: Record<string, string>  = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
+const regionLabel = (r: string): string => REGION_LABEL[r.toLowerCase()] || r;
 
 const numAvg = (nums: number[]): number | null => nums.length === 0 ? null : nums.reduce((a, b) => a + b, 0) / nums.length;
 
-function isSub12(esc: string): boolean {
-  if (!esc) return false;
-  const n = esc.toLowerCase().replace(/[\s-]/g, "");
-  return n === "sub10" || n === "sub12";
+/** Compara escalões ignorando espaços/hífens/caixa ("Sub-12" ≡ "Sub 12" ≡ "sub12").
+ *  Generalização 2026-07-10: o ranking deixou de ser fixo Sub-10+Sub-12 — o
+ *  escalão-alvo é escolhido no selector da sidebar (estado `sub12Esc`). */
+function escMatches(esc: string, target: string): boolean {
+  if (!esc || !target) return false;
+  const norm = (s: string) => s.toLowerCase().replace(/[\s-]/g, "");
+  return norm(esc) === norm(target);
 }
 function tournShort(t: Tournament): string {
   const num = t.num || "?";
@@ -838,7 +852,8 @@ function buildSub12Data(
   sdLookup: SDLookup,
   escLookup: EscLookup,
   temporalEscLookup?: TemporalEscLookup,
-  fedBirthdates?: Map<string, string>
+  fedBirthdates?: Map<string, string>,
+  targetEsc: string = "Sub 12"
 ): Sub12Row[] {
   // Incluir apenas ronda única OU a entrada "Total" de torneios multi-ronda
   // (nunca R1/R2 individuais — pontos são pela classificação do Total)
@@ -849,11 +864,17 @@ function buildSub12Data(
   for (const t of validTournaments) {
     for (const p of t.players) {
       if (isDNS(p)) continue;
-      // Escalão no ANO do torneio (year-based) — crucial para filtrar Sub-12
+      // Escalão no ANO do torneio (year-based) — crucial para filtrar o escalão
       // correctamente em torneios antigos (um jogador que é Sub-14 hoje pode ter
       // sido Sub-12 em 2024, e vice-versa).
       const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
-      if (!isSub12(esc)) continue;
+      // "all" = TODOS os jogadores do circuito, incluindo os de escalão não
+      // resolvido (sem DOB em players.json/federados — ex: João Santos/PXO,
+      // Maria Cunha, que faltavam vs o ranking oficial RDTM26). O circuito
+      // Drive é exclusivamente jovem, por isso é seguro não filtrar aqui.
+      // Escalão específico exige match exacto (sem DOB fica de fora — não
+      // há como saber o escalão).
+      if (targetEsc !== "all" && !escMatches(esc, targetEsc)) continue;
       const fed = p.fed || p.fedCode || "";
       if (!fed) continue;
       const stats = computeStats(p, sdLookup);
@@ -885,11 +906,21 @@ function buildSub12Data(
       row.totalBird += birdies;
       row.totalPars += parsCount;
       row.totalBog  += bogeys;
-      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0);
+      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0, t.series);
     }
   }
   for (const row of playerMap.values()) {
     row.results.sort((a, b) => a.dateSort - b.dateSort);
+    // Zona DRIVE do jogador = zona MODAL dos torneios que jogou (vocabulário
+    // canónico norte/tejo/sul/madeira/acores). NÃO usar a região de residência
+    // do players.json ("Algarve"/"Lisboa"/…, outro vocabulário e com encoding
+    // partido) — misturava dois mundos no filtro de zonas (bug 2026-07-10).
+    const zoneCounts = new Map<string, number>();
+    for (const r of row.results) {
+      if (r.region) zoneCounts.set(r.region, (zoneCounts.get(r.region) || 0) + 1);
+    }
+    const modalZone = [...zoneCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (modalZone) row.region = modalZone;
     const grosses = row.results.map(r => r.gross);
     const sds = row.results.filter(r => r.sd != null).map(r => r.sd!);
     row.tourneiosPlayed = row.results.length;
@@ -914,7 +945,7 @@ function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row
       totalBird: fR.reduce((s, r) => s + r.birdies, 0),
       totalPars: fR.reduce((s, r) => s + r.pars, 0),
       totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
-      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0), 0),
+      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0, r.series), 0),
     };
   }).filter(Boolean) as Sub12Row[];
 }
@@ -1112,7 +1143,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
       <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: "var(--fs-18)", color: "var(--text-3)" }}>✕</button>
       <div className="mb-8" style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
         <span className="fw-800" style={{ fontSize: "var(--fs-16)" }}>{row.name}</span>
-        <span className="muted fs-11">{row.club} · {row.region} · HCP {fmtHcp(row.hcp)}</span>
+        <span className="muted fs-11">{row.club} · {regionLabel(row.region)} · HCP {fmtHcp(row.hcp)}</span>
         <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: "var(--fs-11)", color: "var(--accent)", textDecoration: "underline" }} />
       </div>
       <div className="mb-10 flex-wrap d-flex gap-6">
@@ -1197,8 +1228,17 @@ function DriveContent() {
   const [sub12View, setSub12View]       = useState<Sub12ViewTab>(() => {
     const v = getQP("s12v"); return (v === "grid" || v === "list") ? v as Sub12ViewTab : "grid";
   });
-  const [sub12Region, setSub12Region]   = useState(() => getQP("s12r") || "all");
+  // Região: `s12r` é o param próprio; `region` (do modo torneios) serve de
+  // fallback — assim `?nav=ranking-sub12&region=acores` filtra o ranking em
+  // vez de ficar um param fantasma sem efeito (bug 2026-07-10).
+  const [sub12Region, setSub12Region]   = useState(() => getQP("s12r") || getQP("region") || "all");
   const [sub12Sex, setSub12Sex]         = useState(() => getQP("s12x") || "all");
+  // Escalão do ranking (generalização 2026-07-10 — deixou de ser fixo Sub-12).
+  // "all" = todos os escalões jovens (Sub 10-18), como "Todas as zonas".
+  const [sub12Esc, setSub12Esc]         = useState<string>(() => {
+    const v = getQP("s12e");
+    return v && (v === "all" || ESCALOES.includes(v)) ? v : "Sub 12";
+  });
   const [sub12Search, setSub12Search]   = useState("");
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
 
@@ -1217,13 +1257,14 @@ function DriveContent() {
       if (sub12View !== "grid") sp.set("s12v", sub12View);
       if (sub12Region !== "all") sp.set("s12r", sub12Region);
       if (sub12Sex !== "all") sp.set("s12x", sub12Sex);
+      if (sub12Esc !== "Sub 12") sp.set("s12e", sub12Esc);
     }
     // Não mexer se o URL já é igual (evita push inútil ao histórico)
     if (sp.toString() !== searchParams.toString()) {
       setSearchParams(sp, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, sub12Series, sub12View, sub12Region, sub12Sex]);
+  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
 
   // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
   // Itera startYear → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
@@ -1354,9 +1395,61 @@ function DriveContent() {
         if (ad) { (t as any)._admissions = ad.admissions; (t as any)._draws = ad.draws; }
       }
     }
+    // Injectar torneios Drive FUTUROS como sintéticos — mesmo template da
+    // FPGPage (src/data/featuredTournaments.ts): aparecem na sidebar apenas
+    // com Inscrições/Draw enquanto não há resultados nos drive-data-*.json;
+    // o TournamentDetail (renderFull abaixo) trata das tabs e da verificação
+    // LIVE das inscrições. Dedup por ccode/tcode: quando o torneio real chega
+    // aos ficheiros mensais, o sintético deixa de ser injectado.
+    // Duas vias:
+    //   (a) config FEATURED_TOURNAMENTS com series tour/challenge/aquapor
+    //       (casos especiais — overrides de nome/região/links);
+    //   (b) AUTO-DETECÇÃO por nome em fpg-admissions-draws.json — o scraper
+    //       descobre os Drive futuros sozinho via TournamentsLST (INCLUDE_RX
+    //       drive tour/challenge + aquapor) e aqui basta o nome bater.
+    let src = raw as any[];
+    if (admDrawsIdx.size > 0) {
+      const have = new Set(src.map(t => `${t.ccode}/${(t as any).tcode}`));
+      // (a) config
+      for (const ft of FEATURED_TOURNAMENTS) {
+        if (!ft.series || ft.series === "jovens") continue;  // jovens → FPGPage
+        const key = `${ft.ccode}/${ft.tcode}`;
+        if (have.has(key)) continue;
+        const ad = admDrawsIdx.get(`${ft.ccode}-${ft.tcode}`);
+        if (!ad) continue;  // sem dados scraped, a entrada fica dormente
+        src = [...src, buildFeaturedSynthetic(ft, ad) as unknown as Tournament];
+        have.add(key);
+      }
+      // (b) auto-detecção por nome — /chall/ como PREFIXO porque os nomes
+      // longos vêm abreviados da FPG em pontos arbitrários ("Drive Chall
+      // Tejo-Mosteiro-…", "Drive Challe Tejo-Power by Belas-…")
+      const DRIVE_RE = /\bdrive\s+(tour\b|chall)/i;
+      const AQUA_RE = /\baquapor\b/i;
+      const inferDriveRegion = (name: string): string | null => {
+        if (/madeira/i.test(name)) return "madeira";
+        if (/a[çc]ores/i.test(name)) return "acores";
+        if (/\bnorte\b/i.test(name)) return "norte";
+        if (/\btejo\b/i.test(name)) return "tejo";
+        if (/\bsul\b/i.test(name)) return "sul";
+        return null;
+      };
+      for (const [, ad] of admDrawsIdx) {
+        const key = `${ad.ccode}/${ad.tcode}`;
+        if (have.has(key)) continue;
+        const name = ad.name || "";
+        if (!DRIVE_RE.test(name) && !AQUA_RE.test(name)) continue;
+        const ftAuto = {
+          ccode: String(ad.ccode),
+          tcode: String(ad.tcode),
+          series: (AQUA_RE.test(name) ? "aquapor" : /\bchall/i.test(name) ? "challenge" : "tour") as "aquapor" | "challenge" | "tour",
+          region: inferDriveRegion(name),
+        };
+        src = [...src, buildFeaturedSynthetic(ftAuto, ad) as unknown as Tournament];
+        have.add(key);
+      }
+    }
     // Filtros tournament-level (partilhados por TODOS os escalões do mesmo dia →
     // não destroem o agrupamento por evento): série / ano / região.
-    let src = raw as any[];
     if (series !== "all") src = src.filter(t => (t.series || "tour") === series);
     // Ano: por defeito o mais recente disponível (não "todos os anos").
     const yrs = [...new Set(src.map(t => (t.date || "").slice(0, 4)).filter(Boolean))].sort().reverse();
@@ -1436,19 +1529,10 @@ function DriveContent() {
     const tourns = activeYear
       ? data.tournaments.filter(t => t.date?.startsWith(activeYear))
       : data.tournaments;
-    return buildSub12Data(tourns, pdb, sdLookup, escLookup, temporalEscLookup, fedBirthdates);
-  }, [sub12Ready, data, pdb, sdLookup, escLookup, temporalEscLookup, activeYear, fedBirthdates]);
+    return buildSub12Data(tourns, pdb, sdLookup, escLookup, temporalEscLookup, fedBirthdates, sub12Esc);
+  }, [sub12Ready, data, pdb, sdLookup, escLookup, temporalEscLookup, activeYear, fedBirthdates, sub12Esc]);
 
   const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
-  const sub12Tourns = useMemo(() => {
-    const m = new Map<string, { key: string; short: string; date: string; series: string; dateSort: number }>();
-    for (const row of sub12SeriesRows) {
-      for (const r of row.results) {
-        if (!m.has(r.tournKey)) m.set(r.tournKey, { key: r.tournKey, short: r.tournShort, date: r.date, series: r.series, dateSort: r.dateSort });
-      }
-    }
-    return [...m.values()].sort((a,b) => a.dateSort - b.dateSort);
-  }, [sub12SeriesRows]);
 
   const sub12Filtered = useMemo(() => {
     let list = sub12SeriesRows;
@@ -1461,7 +1545,23 @@ function DriveContent() {
     return list;
   }, [sub12SeriesRows, sub12Region, sub12Sex, sub12Search]);
 
-  const sub12AvailRegions = useMemo(() => [...new Set(sub12SeriesRows.map(p => p.region).filter(Boolean))].sort(), [sub12SeriesRows]);
+  // Colunas da grid = torneios onde os jogadores VISÍVEIS jogaram (derivadas
+  // das linhas já filtradas) — com o filtro Madeira activo, as colunas das
+  // outras zonas desaparecem em vez de consumir espaço vazio (2026-07-10).
+  const sub12Tourns = useMemo(() => {
+    const m = new Map<string, { key: string; short: string; date: string; series: string; dateSort: number }>();
+    for (const row of sub12Filtered) {
+      for (const r of row.results) {
+        if (!m.has(r.tournKey)) m.set(r.tournKey, { key: r.tournKey, short: r.tournShort, date: r.date, series: r.series, dateSort: r.dateSort });
+      }
+    }
+    return [...m.values()].sort((a,b) => a.dateSort - b.dateSort);
+  }, [sub12Filtered]);
+
+  // Zonas disponíveis: derivadas de TODOS os dados do escalão (não só da série
+  // corrente) — senão o select desaparecia em séries pequenas (AQUAPOR com 1
+  // jogador → 1 zona) e a lista "saltava" ao trocar de série.
+  const sub12AvailRegions = useMemo(() => [...new Set(sub12Data.map(p => p.region).filter(Boolean))].sort(), [sub12Data]);
 
   const sub12Counts = useMemo(() => {
     const counts: Record<string, { players: number; tourns: number }> = {};
@@ -1473,6 +1573,7 @@ function DriveContent() {
     return counts;
   }, [sub12Data]);
 
+  const sub12EscLabel = sub12Esc === "all" ? "Todos os escalões" : sub12Esc;
   const sub12KpiPlayers  = sub12Filtered.length;
   const sub12KpiRounds   = sub12Filtered.reduce((s,p) => s + p.tourneiosPlayed, 0);
   const sub12KpiBestSD   = numAvg(sub12Filtered.filter(p => p.bestSD != null).map(p => p.bestSD!));
@@ -1774,7 +1875,7 @@ function DriveContent() {
             style={{ marginBottom: 0 }}
             tabs={[
               { key: "torneios",      label: "Torneios" },
-              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+              { key: "ranking-sub12", label: "🏅 Rankings" },
             ]}
             active={navMode}
             onChange={(k) => { setNavMode(k as typeof navMode); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
@@ -1889,14 +1990,20 @@ function DriveContent() {
             <div className="sidebar-section-title">Série</div>
             {SUB12_SERIES_TABS.map(s => {
               const c = sub12Counts[s.key];
-              if (!c || c.players === 0) return null;
+              // Série sem jogadores no escalão escolhido: mostrar ESBATIDA em
+              // vez de esconder — esconder fazia parecer que a série tinha
+              // sido removida ao trocar de escalão (ex: AQUAPOR sem Sub 14).
+              const empty = !c || c.players === 0;
               const active = sub12Series === s.key;
               return (
                 <button key={s.key}
                   className={`course-item ${active ? "active" : ""}`}
+                  style={empty ? { opacity: 0.45 } : undefined}
                   onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); md.onSelect(); }}>
                   <div className="course-item-name">{s.emoji} {s.label}</div>
-                  <div className="course-item-sub">{c.tourns} torneios · {c.players} jog · {s.holes}</div>
+                  <div className="course-item-sub">
+                    {empty ? `sem jogadores${sub12Esc === "all" ? "" : ` ${sub12Esc}`}` : `${c.tourns} torneios · ${c.players} jog · ${s.holes}`}
+                  </div>
                 </button>
               );
             })}
@@ -1917,10 +2024,15 @@ function DriveContent() {
             {/* Filtros compactos */}
             <div className="sidebar-section-title mt-8">Filtros</div>
             <div className="flex-col gap-4" style={{ padding: "4px 8px", display: "flex" }}>
-              {sub12AvailRegions.length > 1 && (
+              <select className="select w-full fs-11" value={sub12Esc}
+                onChange={e => { setSub12Esc(e.target.value); setSub12Player(null); }}>
+                <option value="all">Todos os escalões</option>
+                {ESCALOES.map(esc => <option key={esc} value={esc}>{esc}</option>)}
+              </select>
+              {sub12AvailRegions.length > 0 && (
                 <select className="select w-full fs-11" value={sub12Region} onChange={e => setSub12Region(e.target.value)}>
                   <option value="all">Todas as zonas</option>
-                  {sub12AvailRegions.map(z => <option key={z} value={z}>{z}</option>)}
+                  {sub12AvailRegions.map(z => <option key={z} value={z}>{regionLabel(z)}</option>)}
                 </select>
               )}
               <select className="select w-full fs-11" value={sub12Sex} onChange={e => setSub12Sex(e.target.value)}>
@@ -1933,7 +2045,7 @@ function DriveContent() {
             </div>
 
             <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)", marginTop: 8 }}>
-              Sub-10 + Sub-12 · scoring.datagolf.pt
+              {sub12EscLabel} · scoring.datagolf.pt
             </div>
           </div>
 
@@ -1958,7 +2070,7 @@ function DriveContent() {
                 <div className="h-md">
                   {sub12View === "grid" ? "📊" : sub12View === "ranking" ? "🏆" : "📈"}{" "}
                   {sub12View === "grid" ? "Tabela" : sub12View === "ranking" ? "Ranking" : "Evolução SD"}{" "}
-                  — Sub-12 {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} {activeYear ?? ""}
+                  — {sub12EscLabel} {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} {activeYear ?? ""}
                 </div>
                 <div className="muted fs-11 mb-8">
                   {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas

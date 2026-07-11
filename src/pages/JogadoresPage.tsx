@@ -4566,25 +4566,36 @@ export default function JogadoresPage() {
           </button>
         )}
         <Counter ml="auto">{filtered.length} jogadores</Counter>
-        <span style={{ display: "inline-flex", gap: 6, fontSize: "var(--fs-10)", opacity: 0.6, whiteSpace: "nowrap" }}>
+        <span style={{ display: "inline-flex", gap: 6, whiteSpace: "nowrap" }}>
           <a
             href="/analise-percurso-juniores.html"
             target="_blank"
             rel="noopener noreferrer"
             title="Análise de percurso de juniores"
-            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+            className="btn-pill"
+            style={{ fontSize: "var(--fs-11)", textDecoration: "none" }}
           >
             ↗ percurso
           </a>
-          <span aria-hidden>·</span>
           <a
             href="/jogadores-por-ano"
             target="_blank"
             rel="noopener noreferrer"
             title="Jogadores por ano"
-            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+            className="btn-pill"
+            style={{ fontSize: "var(--fs-11)", textDecoration: "none" }}
           >
             ↗ por ano
+          </a>
+          <a
+            href="/torneios-recentes"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Torneios recentes reconstruídos das voltas dos nossos jogadores"
+            className="btn-pill"
+            style={{ fontSize: "var(--fs-11)", textDecoration: "none" }}
+          >
+            ↗ torneio
           </a>
         </span>
       </Toolbar>

@@ -3142,6 +3142,23 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   text-align: right;
   white-space: nowrap;
 }
+/* Tabela "bare" dentro dos cartões por tee (CamposPage · Como jogou):
+   preenche a largura do cartão e usa cabeçalho NEUTRO (o cartão já dá a
+   moldura + a banda de cor no topo — não repetir a barra verde do header).
+   ⚠ Especificidade dupla (.sc-wrap.sc-wrap-bare) de propósito: a regra base
+   `.sc-wrap` vem MAIS ABAIXO no ficheiro e senão ganhava em width/border/etc. */
+.sc-wrap.sc-wrap-bare {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.cp-table.cp-table-bare thead th {
+  background: transparent;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
 .cp-th-exp { width: 26px; padding: 0; }
 .cp-row {
   cursor: pointer;
