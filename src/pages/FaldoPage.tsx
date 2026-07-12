@@ -10,7 +10,7 @@
  * Os 3 NÍVEIS (Futures / Junior Tour / Elite) são o agrupamento da sidebar
  * (`series-year` → `series` = nível); a região (Europa/Ásia/MEA) é filtro.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 import { usePasswordGate } from "../hooks/usePasswordGate";

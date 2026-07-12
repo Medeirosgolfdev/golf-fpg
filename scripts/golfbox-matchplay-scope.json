@@ -1,0 +1,13 @@
+{
+  "_note": "Match play (brackets de equipas) das European Team Championships no GolfBox. Cada evento é uma competição KnockOut/RoundRobin SEPARADA da stroke play (ligada por MainCompetition.ID). Flights têm IDs não-contíguos → registar cada um explicitamente. slug deve bater com a fonte da stroke play na MajorPage (ex: ebtc2). Scrapado por scrape-golfbox-matchplay.js → public/data/{slug}_matchplay_{ano}.json.",
+  "events": [
+    {
+      "slug": "ebtc2",
+      "year": 2026,
+      "name": "European Boys' Team Championship, Div. 2",
+      "flights": [
+        { "competitionId": "5739276", "name": "Flight A" }
+      ]
+    }
+  ]
+}
