@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "09/07/2026",
+  "lastUpdated": "12/07/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
-  "totalTournaments": 56,
-  "totalPlayers": 2100,
-  "totalScorecards": 2004,
+  "totalTournaments": 57,
+  "totalPlayers": 2107,
+  "totalScorecards": 2011,
   "tournaments": [
     {
       "name": "Liga Portuguesa Contra o Cancro",
@@ -379699,6 +379699,527 @@
               "slope": 115,
               "teeName": "AZUIS",
               "teeColorId": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
+      "ccode": "982",
+      "tcode": "10233",
+      "date": "2026-07-11",
+      "campo": "Santo da Serra - Serras-Serras",
+      "clube": "982",
+      "circuit": "drive",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 12",
+      "num": 1,
+      "rounds": 1,
+      "playerCount": 7,
+      "players": [
+        {
+          "scoreId": "1955",
+          "pos": 1,
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "grossTotal": 34,
+          "toPar": -2,
+          "hcpExact": 9.1,
+          "hcpPlay": 0,
+          "fedCode": "52884",
+          "courseRating": 31.7,
+          "slope": 119,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 34,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 31.7,
+              "slope": 119,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1958",
+          "pos": 2,
+          "name": "Nicolau Rodrigues",
+          "club": "PXO Clube",
+          "grossTotal": 45,
+          "toPar": 9,
+          "hcpExact": 38.6,
+          "hcpPlay": 15,
+          "fedCode": "57486",
+          "courseRating": 31.7,
+          "slope": 119,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 45,
+              "scores": [
+                7,
+                3,
+                5,
+                5,
+                3,
+                5,
+                5,
+                6,
+                6
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 31.7,
+              "slope": 119,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1956",
+          "pos": 3,
+          "name": "Vicente Rodrigues",
+          "club": "Palheiro",
+          "grossTotal": 46,
+          "toPar": 10,
+          "hcpExact": 21.8,
+          "hcpPlay": 7,
+          "fedCode": "51896",
+          "courseRating": 31.7,
+          "slope": 119,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "scores": [
+                9,
+                4,
+                5,
+                4,
+                4,
+                5,
+                5,
+                4,
+                6
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 31.7,
+              "slope": 119,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1957",
+          "pos": 4,
+          "name": "Íris Costa",
+          "club": "Palheiro",
+          "grossTotal": 50,
+          "toPar": 14,
+          "hcpExact": 37.7,
+          "hcpPlay": 16,
+          "fedCode": "47677",
+          "courseRating": 33,
+          "slope": 121,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 50,
+              "scores": [
+                5,
+                10,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                10
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 33,
+              "slope": 121,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1959",
+          "pos": 5,
+          "name": "António Goes",
+          "club": "Santo da Serra",
+          "grossTotal": 54,
+          "toPar": 18,
+          "hcpExact": 46.8,
+          "hcpPlay": 19,
+          "fedCode": "52881",
+          "courseRating": 31.7,
+          "slope": 119,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 54,
+              "scores": [
+                8,
+                6,
+                5,
+                5,
+                5,
+                6,
+                7,
+                6,
+                6
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 31.7,
+              "slope": 119,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1961",
+          "pos": 6,
+          "name": "Laura Temtem",
+          "club": "Santo da Serra",
+          "grossTotal": 68,
+          "toPar": 32,
+          "hcpExact": 54,
+          "hcpPlay": 25,
+          "fedCode": "56635",
+          "courseRating": 33,
+          "slope": 121,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "scores": [
+                10,
+                10,
+                7,
+                6,
+                6,
+                8,
+                6,
+                5,
+                10
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 33,
+              "slope": 121,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "1960",
+          "pos": 7,
+          "name": "Benedita Carvalho",
+          "club": "Santo da Serra",
+          "grossTotal": 70,
+          "toPar": 34,
+          "hcpExact": 54,
+          "hcpPlay": 25,
+          "fedCode": "52398",
+          "courseRating": 33,
+          "slope": 121,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 36,
+          "nholes": 9,
+          "course": "Santo da Serra - Serras-Serras",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 70,
+              "scores": [
+                10,
+                8,
+                10,
+                8,
+                7,
+                8,
+                8,
+                3,
+                8
+              ],
+              "pars": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "si": [
+                1,
+                2,
+                7,
+                6,
+                4,
+                3,
+                9,
+                5,
+                8
+              ],
+              "meters": [
+                344,
+                200,
+                246,
+                206,
+                100,
+                240,
+                190,
+                90,
+                305
+              ],
+              "courseRating": 33,
+              "slope": 121,
+              "teeName": "VERDES",
+              "teeColorId": 80
             }
           ]
         }
