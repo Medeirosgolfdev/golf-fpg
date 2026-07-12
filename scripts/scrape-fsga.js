@@ -197,7 +197,13 @@ async function fetchScorecard(detailId) {
   // O detail page linka o perfil do jogador (/profiles/{id}) — captura-se aqui
   // para depois buscar a DOB/clube sem re-fetch (usado no enriquecimento MX).
   const profileId = (html.match(/profiles\/(\d+)/) || [])[1] || null;
-  return { rounds: parseScorecard(html), profileId };
+  // Nacionalidade real: o detail page mostra a bandeira do jogador como
+  // `flag-icon-{cc}` (ISO alpha-2, ex: gb, pt, es). Serve para corrigir o
+  // fallback "US" do inferCountry (afiliação só com clube, sem país) — caso
+  // Faldo (GolfGenius só expõe o clube). Ignora o genérico 'xx'/'un'.
+  const fc = (html.match(/flag-icon-([a-z]{2})\b/) || [])[1] || null;
+  const flagCountry = fc && fc !== 'xx' && fc !== 'un' ? fc.toUpperCase() : null;
+  return { rounds: parseScorecard(html), profileId, flagCountry };
 }
 
 // Ficha do jogador (/profiles/{id}) — algumas federações (ex: FMG México) expõem
@@ -263,8 +269,11 @@ async function scrapeDivision(v2tid, label, opts = {}) {
       if (!p.detailId) { p.rounds = []; continue; }
       process.stdout.write(`\r     [${String(i + 1).padStart(3)}/${lb.players.length}] ${p.name.padEnd(26).slice(0, 26)}`);
       try {
-        const { rounds: parsed, profileId } = await fetchScorecard(p.detailId);
+        const { rounds: parsed, profileId, flagCountry } = await fetchScorecard(p.detailId);
         if (profileId) p.profileId = profileId;
+        // Corrige só o fallback "US" do inferCountry com a bandeira real do
+        // detail page (não sobrepõe países já resolvidos por afiliação).
+        if (flagCountry && p.country === 'US') p.country = flagCountry;
         if (parsed.length) {
           parsed.sort((a, b) => dateKey(a.date) - dateKey(b.date));
           p.rounds = parsed.map((r, idx) => ({ day: idx + 1, scores: r.scores, gross: r.gross, date: r.date, course: r.course, pars: r.par, _ck: courseKey(r.course) }));

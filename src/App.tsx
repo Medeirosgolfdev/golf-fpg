@@ -58,6 +58,7 @@ const FPGPage = lazy(() => import("./pages/FPGPage"));
 const MajorPage = lazy(() => import("./pages/MajorPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
+const FaldoPage = lazy(() => import("./pages/FaldoPage"));
 const EGRPage = lazy(() => import("./pages/EGRPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
 const RFEGPage = lazy(() => import("./pages/RFEGPage"));
@@ -436,6 +437,7 @@ export default function App() {
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/ffg/:source/:key" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
+                <Route path="/faldo" element={<FaldoPage />} />
                 <Route path="/egr" element={<EGRPage />} />
                 <Route path="/egr/:source/:id" element={<EGRPage />} />
                 <Route path="/global-junior" element={<GlobalJuniorPage />} />

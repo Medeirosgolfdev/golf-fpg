@@ -131,10 +131,10 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
-interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
-interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
-interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
+export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
+export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
+export interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
 const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
@@ -142,12 +142,12 @@ const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 // showRatings: fontes que trazem HCP + Course Rating/Slope (ex: GolfBox) mostram
 // as colunas HCP e SD; as GolfGenius (sem esses dados) mantêm-nas escondidas para
 // não exibir colunas vazias.
-function jobScorecardOptions(opts?: { showRatings?: boolean }): ScorecardOptions {
+export function jobScorecardOptions(opts?: { showRatings?: boolean }): ScorecardOptions {
   const hide = !opts?.showRatings;
   return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País" };
 }
 
-function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
+export function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
   // Incluir quem tem total OU rondas com scores — em torneios a DECORRER o
   // GolfGenius ainda não publica o `total` agregado (fica null), mas há já
   // scorecards por ronda que queremos mostrar.

@@ -73,6 +73,17 @@ async function main() {
     try {
       const disc = await discoverDivisions(pageUrl);
       if (!disc.divisions || !disc.divisions.length) throw new Error("sem divisões");
+      // ⚠ Faldo single-division multi-ronda: o seletor GolfGenius lista as rondas
+      // (Round 1/2/3) mas TODAS resolvem para o MESMO v2tid (a leaderboard
+      // agregada, com roundGross já completo). O discoverDivisions genérico
+      // trata cada ronda como divisão → N duplicados. Dedupe por v2tid.
+      const seen = new Map();
+      for (const dv of disc.divisions) if (!seen.has(dv.v2tid)) seen.set(dv.v2tid, dv);
+      disc.divisions = [...seen.values()];
+      // Se sobrou 1 divisão cujo label era "Round N", relabela (é o torneio todo).
+      if (disc.divisions.length === 1 && /^round\s*\d/i.test(disc.divisions[0].label || "")) {
+        disc.divisions[0].label = "Geral";
+      }
       const out = await scrapeEdition(
         { name: disc.title, year: yearDefault, divisions: disc.divisions },
         { skipScorecards }
