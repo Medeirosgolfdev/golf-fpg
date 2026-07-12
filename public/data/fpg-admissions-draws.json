@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-11T20:45:55.618Z",
-  "total": 567,
+  "scrapedAt": "2026-07-12T20:39:55.694Z",
+  "total": 572,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -117170,6 +117170,160 @@
       "draws": {}
     },
     {
+      "ccode": "001",
+      "tcode": "10569",
+      "name": "2º Torneio do Circuito de Verão 2026",
+      "date": "2026-07-09",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-07-09",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "10:45",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Santiago Dias",
+                  "fed": "42908",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Dinis Silva",
+                  "fed": "40910",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "fed": "52487",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:53",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Eva Silva",
+                  "fed": "46437",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Francisca Santos",
+                  "fed": "46853",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Loureiro",
+                  "fed": "46489",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:01",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Francisco Saraiva",
+                  "fed": "39097",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "fed": "46480",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "fed": "56632",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:09",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "fed": "48705",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Gustavo Pinto",
+                  "fed": "56048",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "fed": "45366",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:17",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonçalo Maia",
+                  "fed": "46395",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "fed": "47341",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Dinis Seabra",
+                  "fed": "44821",
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "003",
+      "tcode": "10659",
+      "name": "Torneio Verão - Escola de Golfe 2",
+      "date": "2026-07-09",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "107",
+      "tcode": "11085",
+      "name": "Torneio Quinta da Barca estágio 4ªS",
+      "date": "2026-07-10",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "982",
       "tcode": "10233",
       "name": "7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
@@ -121420,6 +121574,522 @@
                   "nome": "Catarina Sousa Conceição",
                   "fed": "48794",
                   "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "988",
+      "tcode": "10289",
+      "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 12",
+      "date": "2026-07-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 12",
+        "date": "2026-07-11",
+        "totalInscritos": 11,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10289",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.8,
+            "vacf": 79.6,
+            "registo": "2026/07/04 09:30",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "53838",
+            "nome": "Gabriel Costa",
+            "clube": "Amendoeira",
+            "hcp": 18.8,
+            "vacf": 90,
+            "registo": "2026/06/28 17:33",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "53304",
+            "nome": "Francisca Ribeiro Fragoso",
+            "clube": "Vilamoura, C. G",
+            "hcp": 21.5,
+            "vacf": 92.7,
+            "registo": "2026/06/16 19:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "50761",
+            "nome": "Peter Yao",
+            "clube": "Vilamoura, C. G",
+            "hcp": 21.8,
+            "vacf": 93.8,
+            "registo": "2026/06/16 21:07",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "55498",
+            "nome": "Zeyn Lababedi",
+            "clube": "Vila Sol",
+            "hcp": 20.2,
+            "vacf": 94.8,
+            "registo": "2026/06/29 21:10",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "51803",
+            "nome": "Thea Jensen",
+            "clube": "Vila Sol",
+            "hcp": 29.9,
+            "vacf": 101.2,
+            "registo": "2026/06/13 06:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "50425",
+            "nome": "Maria Carolina Custodinho",
+            "clube": "Vilamoura, C. G",
+            "hcp": 34.9,
+            "vacf": 108.9,
+            "registo": "2026/07/05 17:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "48132",
+            "nome": "Charlie Lora Silva",
+            "clube": "Vilamoura, C. G",
+            "hcp": 33.4,
+            "vacf": 109.9,
+            "registo": "2026/06/30 13:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "54265",
+            "nome": "Henry McGovern",
+            "clube": "Vila Sol",
+            "hcp": 38.5,
+            "vacf": 110.8,
+            "registo": "2026/06/29 21:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "54263",
+            "nome": "Poppy Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 45.1,
+            "vacf": 119.7,
+            "registo": "2026/06/25 08:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "55579",
+            "nome": "Thomas Starreveld",
+            "clube": "Assoc. Qta.Lago",
+            "hcp": 44.9,
+            "vacf": 119.7,
+            "registo": "2026/07/01 12:22",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 12",
+          "date": "2026-07-11",
+          "totalJogadores": 11,
+          "groups": [
+            {
+              "teeTime": "15:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Gabriel Costa",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Zeyn Lababedi",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Peter Yao",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Francisca Ribeiro Fragoso",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Thea Jensen",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Charlie Lora Silva",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Henry McGovern",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Maria Carolina Custodinho",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Thomas Starreveld",
+                  "fed": null,
+                  "clube": "Assoc. Qta.Lago"
+                },
+                {
+                  "nome": "Poppy Seabrook",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 12 Dia",
+          "date": "2026-07-12",
+          "totalJogadores": 11,
+          "groups": [
+            {
+              "teeTime": "15:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Poppy Seabrook",
+                  "fed": "54263",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Maria Carolina Custodinho",
+                  "fed": "50425",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Charlie Lora Silva",
+                  "fed": "48132",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Thomas Starreveld",
+                  "fed": "55579",
+                  "clube": "Assoc. Qta.Lago"
+                },
+                {
+                  "nome": "Francisca Ribeiro Fragoso",
+                  "fed": "53304",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Peter Yao",
+                  "fed": "50761",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Henry McGovern",
+                  "fed": "54265",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Gabriel Costa",
+                  "fed": "53838",
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "fed": "48971",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Zeyn Lababedi",
+                  "fed": "55498",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Thea Jensen",
+                  "fed": "51803",
+                  "clube": "Vila Sol"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "988",
+      "tcode": "10284",
+      "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 10",
+      "date": "2026-07-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 10",
+        "date": "2026-07-11",
+        "totalInscritos": 7,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10284",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "54264",
+            "nome": "Harry Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 16.3,
+            "vacf": 89,
+            "registo": "2026/06/25 08:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51969",
+            "nome": "Luca Everest",
+            "clube": "Vilamoura, C. G",
+            "hcp": 38.3,
+            "vacf": 109,
+            "registo": "2026/06/16 22:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "51880",
+            "nome": "Rafael Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 40,
+            "vacf": 110.6,
+            "registo": "2026/07/04 09:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "50955",
+            "nome": "Mateus Miguel Estevão",
+            "clube": "Vilamoura, C. G",
+            "hcp": 47.8,
+            "vacf": 123.6,
+            "registo": "2026/06/12 07:15",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "58831",
+            "nome": "Afonso Furtado de Oliveira",
+            "clube": "Floresta Parque",
+            "hcp": 50.2,
+            "vacf": 128.5,
+            "registo": "2026/07/02 12:30",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "58020",
+            "nome": "Rodrigo Cruz",
+            "clube": "Amendoeira",
+            "hcp": null,
+            "vacf": null,
+            "registo": "2026/07/04 10:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "57834",
+            "nome": "Aurele Yang",
+            "clube": "Espiche",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/07/04 14:32",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 10",
+          "date": "2026-07-11",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "16:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Harry Seabrook",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Luca Everest",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Rafael Ribeiro Crisóstomo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Mateus Miguel Estevão",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Afonso Furtado de Oliveira",
+                  "fed": null,
+                  "clube": "Floresta Parque"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Aurele Yang",
+                  "fed": null,
+                  "clube": "Espiche"
+                },
+                {
+                  "nome": "Rodrigo Cruz",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "7º Torneio Drive Challenge Sul-Benamor- Sub 10 Dia",
+          "date": "2026-07-12",
+          "totalJogadores": 6,
+          "groups": [
+            {
+              "teeTime": "16:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rodrigo Cruz",
+                  "fed": "58020",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Aurele Yang",
+                  "fed": "57834",
+                  "clube": "Espiche"
+                },
+                {
+                  "nome": "Afonso Furtado de Oliveira",
+                  "fed": "58831",
+                  "clube": "Floresta Parque"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rafael Ribeiro Crisóstomo",
+                  "fed": "51880",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Luca Everest",
+                  "fed": "51969",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Harry Seabrook",
+                  "fed": "54264",
+                  "clube": "Vila Sol"
                 }
               ]
             }
