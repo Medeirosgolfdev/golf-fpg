@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-06T08:36:11.146Z",
+  "generatedAt": "2026-07-13T07:08:33.603Z",
   "range": "15500-17200",
   "minYear": 2021,
   "totalProbed": 1701,
-  "totalExisting": 575,
-  "totalJuvenil": 519,
+  "totalExisting": 595,
+  "totalJuvenil": 529,
   "byYear": {
     "2019": 30,
     "2020": 14,
@@ -13,18 +13,18 @@
     "2023": 68,
     "2024": 71,
     "2025": 62,
-    "2026": 58,
-    "2027": 1
+    "2026": 66,
+    "2027": 3
   },
   "byCategory": {
-    "Benjamín": 23,
+    "Benjamín": 25,
     "Juvenil": 159,
-    "Infantil": 62,
+    "Infantil": 64,
     "Sub-16": 50,
     "Junior": 35,
-    "Sub-18": 69,
-    "Alevín": 32,
-    "Cadete": 18,
+    "Sub-18": 71,
+    "Alevín": 34,
+    "Cadete": 20,
     "Sub-25": 2,
     "Sub-21": 1,
     "Sub-14": 2
@@ -6127,6 +6127,96 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": null,
+      "juvenil": true
+    },
+    {
+      "compId": 16225,
+      "exists": true,
+      "name": "Campeonato de España Benjamin Masculino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Benjamín",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16226,
+      "exists": true,
+      "name": "Campeonato de España Benjamin Femenino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Benjamín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16227,
+      "exists": true,
+      "name": "Campeonato de España Alevin Femenino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Alevín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16228,
+      "exists": true,
+      "name": "Campeonato de España Alevin Masculino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Alevín",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16229,
+      "exists": true,
+      "name": "Campeonato de España Infantil Masculino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16230,
+      "exists": true,
+      "name": "Campeonato de España Infantil Femenino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16231,
+      "exists": true,
+      "name": "Campeonato de España Cadete Femenino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Cadete",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16232,
+      "exists": true,
+      "name": "Campeonato de España Cadete Masculino de Pitch & Putt 2026",
+      "year": 2026,
+      "category": "Cadete",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16235,
+      "exists": true,
+      "name": "Campeonato de España Sub-18 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16241,
+      "exists": true,
+      "name": "Internacional de España Sub-18 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "M",
       "juvenil": true
     }
   ]

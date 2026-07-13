@@ -1,0 +1,255 @@
+{
+  "tourId": 72235,
+  "url": "https://www.nextcaddy.com/tour/72235",
+  "scrapedAt": "2026-07-13T07:09:43.014Z",
+  "meta": {
+    "name": "Torneo Campamento",
+    "organizer": null,
+    "course": "Escuela de Golf Miguel ángel Jiménez",
+    "courseCode": "AMI5",
+    "dateStart": "2026-07-10",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros Facebo",
+    "categories": [
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-10",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Rodriguez Lopez",
+          "licencia": "AMI5998051",
+          "hcp": 19.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": -11,
+          "inscribedId": 2359110
+        },
+        {
+          "pos": 2,
+          "name": "Jose Harras Diaz",
+          "licencia": "AMI5517647",
+          "hcp": 33.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2359119
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Tejero Suarez",
+          "licencia": "AMI5934577",
+          "hcp": 4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2359116
+        },
+        {
+          "pos": 4,
+          "name": "Luca Aguilera Cordero",
+          "licencia": "AMI5488550",
+          "hcp": 23.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2359112
+        },
+        {
+          "pos": 5,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": 41.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2359109
+        },
+        {
+          "pos": 6,
+          "name": "Marcos Perez Romero",
+          "licencia": "AMI5892454",
+          "hcp": 23.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2359114
+        },
+        {
+          "pos": 7,
+          "name": "Carlos Jimenez Pachon",
+          "licencia": "AMI5968707",
+          "hcp": 41.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2359106
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carlos Jimenez Pachon",
+      "licencia": "AMI5968707",
+      "hcp": 41.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Rodriguez Lopez",
+      "licencia": "AMI5416477",
+      "hcp": 41.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Jose Rodriguez Lopez",
+      "licencia": "AMI5998051",
+      "hcp": 19.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Luca Aguilera Cordero",
+      "licencia": "AMI5488550",
+      "hcp": 23.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Marcos Perez Romero",
+      "licencia": "AMI5892454",
+      "hcp": 23.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Ignacio Tejero Suarez",
+      "licencia": "AMI5934577",
+      "hcp": 4,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Harras Diaz",
+      "licencia": "AMI5517647",
+      "hcp": 33.9,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77394
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Salinas Sanchez, Juan Carlos",
+          "holeNumber": 5,
+          "createdAt": "21/03/26 15:32:33"
+        },
+        {
+          "playerName": "Fernandez Gomez, Javier",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 17:27:08"
+        },
+        {
+          "playerName": "Herranz Perez, Felipe Antonio",
+          "holeNumber": 14,
+          "createdAt": "21/03/26 17:37:51"
+        },
+        {
+          "playerName": "Garcia Garrido, Jose Manuel",
+          "holeNumber": 14,
+          "createdAt": "21/03/26 17:39:19"
+        },
+        {
+          "playerName": "Gomez Rodriguez, Ricardo",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 17:46:25"
+        },
+        {
+          "playerName": "Castellanos Vela, Angel",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 17:55:59"
+        },
+        {
+          "playerName": "Rincon Muñoz, Angel",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 18:16:57"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2004842652_72235-torneo-campamento.pdf"
+  ],
+  "horariosScrapedAt": "2026-07-13T07:10:20.017Z"
+}

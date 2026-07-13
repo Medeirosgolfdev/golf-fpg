@@ -1,0 +1,453 @@
+{
+  "tourId": 72161,
+  "url": "https://www.nextcaddy.com/tour/72161",
+  "scrapedAt": "2026-07-13T07:10:35.163Z",
+  "meta": {
+    "name": "T. GOLF INFANTIL 9 HOYOS 07-07-26",
+    "organizer": null,
+    "course": "Real Club de Golf Vista Hermosa",
+    "courseCode": "AM05",
+    "dateStart": "2026-07-07",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "infantil",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-07",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Camacho Manuel De Villena",
+          "licencia": "AM05062617",
+          "hcp": 32.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2356217,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                6,
+                4,
+                4,
+                5,
+                5,
+                6
+              ],
+              "total": 47,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Santiago Azofra Martel",
+          "licencia": "AM05306209",
+          "hcp": 53.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2356216,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                4,
+                6,
+                6,
+                5,
+                5,
+                8,
+                5,
+                9
+              ],
+              "total": 57,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Juan Colmenar Pita",
+          "licencia": "AM05508815",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2356218,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                5,
+                11,
+                7,
+                5,
+                8,
+                6,
+                6,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Terry Andrades",
+          "licencia": "AM05519647",
+          "hcp": 47.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2356222,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                6,
+                6,
+                6,
+                4,
+                8,
+                null,
+                6,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Oscar Franco Belda",
+          "licencia": "AM05032189",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2356219,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                4,
+                9,
+                6,
+                8,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Laura Zunzunegui Ybarra",
+          "licencia": "CM01997572",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2356223,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                12,
+                8,
+                13,
+                8,
+                null,
+                8,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Santiago Azofra Martel",
+      "licencia": "AM05306209",
+      "hcp": null,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Camacho Manuel De Villena",
+      "licencia": "AM05062617",
+      "hcp": 32.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Colmenar Pita",
+      "licencia": "AM05508815",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Oscar Franco Belda",
+      "licencia": "AM05032189",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Ignacio Terry Andrades",
+      "licencia": "AM05519647",
+      "hcp": 47.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Laura Zunzunegui Ybarra",
+      "licencia": "CM01997572",
+      "hcp": null,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Pablo Camacho Manuel De Villena",
+          "hcp": 32.8,
+          "ins": "2356217",
+          "jid": "77317",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ignacio Terry Andrades",
+          "hcp": 47.7,
+          "ins": "2356222",
+          "jid": "77317",
+          "nivel": "A"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Santiago Azofra Martel",
+          "hcp": 48,
+          "ins": "2356216",
+          "jid": "77317",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Colmenar Pita",
+          "hcp": 48,
+          "ins": "2356218",
+          "jid": "77317",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Oscar Franco Belda",
+          "hcp": 48,
+          "ins": "2356219",
+          "jid": "77317",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Laura Zunzunegui Ybarra",
+          "hcp": 48,
+          "ins": "2356223",
+          "jid": "77317",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77317
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}
