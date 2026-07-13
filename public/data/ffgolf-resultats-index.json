@@ -1,8 +1,153 @@
 {
-  "generatedAt": "2026-07-13T05:05:15.858Z",
+  "generatedAt": "2026-07-13T05:45:11.308Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1241,
+  "total": 1246,
   "tournaments": [
+    {
+      "file": "01-00-2601445563.json",
+      "trnId": "2601445563",
+      "partKey": "a03ee6ea6f52de0dd88b65a449cdc06e",
+      "name": "PROMOTION U16 GARÇONS INTER REGIONALE (Cameyrac)",
+      "formule": "Simple",
+      "date": "11/07/2026",
+      "dateIso": "2026-07-11",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 98,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 98
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601449752.json",
+      "trnId": "2601449752",
+      "partKey": "957878e8bcc901290b115790945ff6ed",
+      "name": "Promotion Nationale U16 Garçons-Scores",
+      "formule": "Simple",
+      "date": "11/07/2026",
+      "dateIso": "2026-07-11",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 72,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 72
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601451797.json",
+      "trnId": "2601451797",
+      "partKey": "b18abc00919bcd828f9815f2d56e4185",
+      "name": "PROMOTION ITR NORD U16 Garçons",
+      "formule": "Simple",
+      "date": "09/07/2026",
+      "dateIso": "2026-07-09",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 91,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 91
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601451969.json",
+      "trnId": "2601451969",
+      "partKey": "ae14df3d26b86402bd399964da85a40b",
+      "name": "PROMOTION U16 GARCONS",
+      "formule": "Simple",
+      "date": "09/07/2026",
+      "dateIso": "2026-07-09",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 99,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "1ère Série Messieurs",
+          "players": 99
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601405049.json",
+      "trnId": "2601405049",
+      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
+      "name": "Promotion U16 Garçons 2026 - Ligue de Paris Ile-de-France",
+      "formule": "Simple",
+      "date": "08/07/2026",
+      "dateIso": "2026-07-08",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 54,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 54
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "03-01-2601405024.json",
       "trnId": "2601405024",
@@ -3139,8 +3284,8 @@
       "file": "03-01-2601405022.json",
       "trnId": "2601405022",
       "partKey": "fcf5c73189b92c41a3faecdfed94a489",
-      "name": "Grand Prix Jeunes de la Ligue Paris Ile-de-France 1",
-      "formule": "Simple",
+      "name": "Grand Prix Jeunes du Prieuré",
+      "formule": "Score maximum",
       "date": "21/03/2026",
       "dateIso": "2026-03-21",
       "year": 2026,
@@ -3191,12 +3336,12 @@
       "typeCompetition": "03",
       "ligue": "02",
       "seriesCount": 2,
-      "totalPlayers": 96,
+      "totalPlayers": 95,
       "divisions": [
         {
           "serieId": "11",
           "label": "Messieurs",
-          "players": 73
+          "players": 72
         },
         {
           "serieId": "22",
