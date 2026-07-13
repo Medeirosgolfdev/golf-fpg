@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "12/07/2026",
+  "lastUpdated": "13/07/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
-  "totalTournaments": 57,
-  "totalPlayers": 2107,
-  "totalScorecards": 2011,
+  "totalTournaments": 58,
+  "totalPlayers": 2116,
+  "totalScorecards": 2018,
   "tournaments": [
     {
       "name": "Liga Portuguesa Contra o Cancro",
@@ -380222,6 +380222,565 @@
               "teeColorId": 80
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "Final Drive Challenge Madeira-Palheiro-Sub 12",
+      "ccode": "982",
+      "tcode": "10238",
+      "date": "2026-07-12",
+      "campo": "Palheiro Golf",
+      "clube": "982",
+      "circuit": "drive",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 12",
+      "num": 1,
+      "rounds": 1,
+      "playerCount": 9,
+      "players": [
+        {
+          "scoreId": "1984",
+          "pos": 1,
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "grossTotal": 39,
+          "toPar": 5,
+          "hcpExact": 9.1,
+          "hcpPlay": 1,
+          "fedCode": "52884",
+          "courseRating": 30.7,
+          "slope": 111,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 39,
+              "scores": [
+                6,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                5,
+                4
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 30.7,
+              "slope": 111,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1986",
+          "pos": 2,
+          "name": "Íris Costa",
+          "club": "Palheiro",
+          "grossTotal": 46,
+          "toPar": 12,
+          "hcpExact": 37.7,
+          "hcpPlay": 17,
+          "fedCode": "47677",
+          "courseRating": 32.4,
+          "slope": 114,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "scores": [
+                6,
+                4,
+                4,
+                4,
+                5,
+                8,
+                5,
+                6,
+                4
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 32.4,
+              "slope": 114,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1985",
+          "pos": 3,
+          "name": "Vicente Rodrigues",
+          "club": "Palheiro",
+          "grossTotal": 46,
+          "toPar": 12,
+          "hcpExact": 21.8,
+          "hcpPlay": 7,
+          "fedCode": "51896",
+          "courseRating": 30.7,
+          "slope": 111,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "scores": [
+                5,
+                5,
+                4,
+                5,
+                4,
+                6,
+                4,
+                6,
+                7
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 30.7,
+              "slope": 111,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1987",
+          "pos": 4,
+          "name": "Nicolau Rodrigues",
+          "club": "PXO Clube",
+          "grossTotal": 48,
+          "toPar": 14,
+          "hcpExact": 38.6,
+          "hcpPlay": 15,
+          "fedCode": "57486",
+          "courseRating": 30.7,
+          "slope": 111,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 48,
+              "scores": [
+                5,
+                5,
+                4,
+                6,
+                3,
+                9,
+                4,
+                7,
+                5
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 30.7,
+              "slope": 111,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1989",
+          "pos": 5,
+          "name": "António Goes",
+          "club": "Santo da Serra",
+          "grossTotal": 67,
+          "toPar": 33,
+          "hcpExact": 46.8,
+          "hcpPlay": 19,
+          "fedCode": "52881",
+          "courseRating": 30.7,
+          "slope": 111,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 67,
+              "scores": [
+                10,
+                6,
+                5,
+                7,
+                6,
+                10,
+                6,
+                9,
+                8
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 30.7,
+              "slope": 111,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1991",
+          "pos": 6,
+          "name": "Benedita Carvalho",
+          "club": "Santo da Serra",
+          "grossTotal": 72,
+          "toPar": 38,
+          "hcpExact": 54,
+          "hcpPlay": 24,
+          "fedCode": "52398",
+          "courseRating": 32.4,
+          "slope": 114,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 72,
+              "scores": [
+                8,
+                10,
+                7,
+                7,
+                4,
+                10,
+                6,
+                10,
+                10
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 32.4,
+              "slope": 114,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1992",
+          "pos": 7,
+          "name": "Laura Temtem",
+          "club": "Santo da Serra",
+          "grossTotal": 72,
+          "toPar": 38,
+          "hcpExact": 54,
+          "hcpPlay": 24,
+          "fedCode": "56635",
+          "courseRating": 32.4,
+          "slope": 114,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 34,
+          "nholes": 9,
+          "course": "Palheiro Golf",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 72,
+              "scores": [
+                8,
+                9,
+                7,
+                9,
+                5,
+                10,
+                6,
+                8,
+                10
+              ],
+              "pars": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "si": [
+                1,
+                8,
+                4,
+                6,
+                9,
+                2,
+                5,
+                3,
+                7
+              ],
+              "meters": [
+                258,
+                204,
+                133,
+                219,
+                84,
+                411,
+                107,
+                237,
+                263
+              ],
+              "courseRating": 32.4,
+              "slope": 114,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "1988",
+          "pos": "NS",
+          "name": "Miguel Vicente Mendes",
+          "club": "Santo da Serra",
+          "grossTotal": 999,
+          "toPar": null,
+          "hcpExact": 38.8,
+          "hcpPlay": 15,
+          "fedCode": null,
+          "courseRating": null,
+          "slope": null,
+          "teeName": null,
+          "teeColorId": null,
+          "parTotal": null,
+          "nholes": null,
+          "course": null,
+          "roundScores": []
+        },
+        {
+          "scoreId": "1990",
+          "pos": "NS",
+          "name": "Áurea Camacho",
+          "club": "Palheiro",
+          "grossTotal": 999,
+          "toPar": null,
+          "hcpExact": 54,
+          "hcpPlay": 24,
+          "fedCode": null,
+          "courseRating": null,
+          "slope": null,
+          "teeName": null,
+          "teeColorId": null,
+          "parTotal": null,
+          "nholes": null,
+          "course": null,
+          "roundScores": []
         }
       ]
     }
