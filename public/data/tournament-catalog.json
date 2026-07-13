@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-12T00:23:35.263Z",
+  "generatedAt": "2026-07-13T08:41:06.073Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -518,6 +518,10 @@
         "rfeg-nc71532_infantil_hcp",
         "rfeg-nc71639_infantil_hcp",
         "rfeg-nc71825_junior",
+        "rfeg-nc72159_infantil_sc",
+        "rfeg-nc72159_infantil_hcp",
+        "rfeg-nc72161_infantil_hcp",
+        "rfeg-nc72162_infantil_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -525,8 +529,8 @@
         "rfeg-rfeg15361_cadete_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-07-04",
-      "editionsCount": 516
+      "lastDate": "2026-07-07",
+      "editionsCount": 520
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -47290,6 +47294,18 @@
       "editionsCount": 2
     },
     {
+      "id": "gjgl-rhein-main-junior-golf-open",
+      "label": "Rhein Main Junior Golf Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-rhein-main-junior-golf-open-2025-germany",
+        "gjgl-rhein-main-junior-golf-open-2026-germany"
+      ],
+      "firstDate": "2025-07-21",
+      "lastDate": "2026-07-13",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-swiss-golf-national-u14-losone",
       "label": "Swiss Golf National U14 (Losone)",
       "sourceId": "egr",
@@ -72764,17 +72780,6 @@
       ],
       "firstDate": "2026-02-01",
       "lastDate": "2026-02-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-rhein-main-junior-golf-open",
-      "label": "Rhein Main Junior Golf Open",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-rhein-main-junior-golf-open-2025-germany"
-      ],
-      "firstDate": "2025-07-21",
-      "lastDate": "2025-07-21",
       "editionsCount": 1
     },
     {
