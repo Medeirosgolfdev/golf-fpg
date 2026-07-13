@@ -1,8 +1,608 @@
 {
-  "generated_at": "2026-05-05T16:30:00Z",
-  "source": "Discovered via Claude in Chrome navigating ffgolf.org listings + manual additions from existing scrape data",
-  "note": "Some torneios have gg_page (modern), some only gg_league (older customized_tournament_results widget). When 2 slugs share the same gg_page, it's a multi-division event (e.g. U14 Filles + Garçons same page).",
+  "generated_at": "2026-07-13T06:19:17.232Z",
+  "years": [
+    2026
+  ],
+  "total": 78,
+  "with_gg": 26,
   "tournaments": [
+    {
+      "year": 2026,
+      "section": "equipes-de-france",
+      "slug": "championnat-d-europe-par-equipes-boys",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/equipes-de-france/2026/championnat-d-europe-par-equipes-boys",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "equipes-de-france",
+      "slug": "championnat-d-europe-par-equipes-girls",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/equipes-de-france/2026/championnat-d-europe-par-equipes-girls",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "equipes-de-france",
+      "slug": "european-young-masters",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/equipes-de-france/2026/european-young-masters",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-d-hardelot",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-d-hardelot",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-d-ozoir",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-d-ozoir",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-baden",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-baden",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-caen-la-mer",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-caen-la-mer",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-cannes-mougins",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-cannes-mougins",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-castres-u12",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-castres-u12",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-chartres-u12",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-chartres-u12",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-l-odet",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-l-odet",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-la-baule",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-la-baule",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-limere",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-limere",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-perigueux",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-perigueux",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-prunevelle",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-prunevelle",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-roissy",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-roissy",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-saint-julien",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-saint-julien",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-saintes",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-saintes",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-de-valgarde",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-de-valgarde",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-des-trois-vallons-u12",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-des-trois-vallons-u12",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-filles-u14",
+      "title": "Grand Prix Jeunes Majeur U14 Filles (2026)",
+      "gg_page": "12483136787876721193",
+      "gg_league": null,
+      "shares_gg_page_with": "grand-prix-jeunes-majeur-garcons-u14",
+      "discovered_via": "GP Jeunes 2026 crawl"
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-filles-u142",
+      "title": "Grand Prix Jeunes Majeur Filles",
+      "gg_page": "12665680048674616313",
+      "gg_league": null,
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-filles-u142/page-scores-tournoi",
+      "source": "calendar-jeunes"
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-filles-u144",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-filles-u144",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-garcons-u14",
+      "title": "Grand Prix Jeunes Majeur U14 Garçons (2026)",
+      "gg_page": "12483136787876721193",
+      "gg_league": null,
+      "discovered_via": "GP Jeunes 2026 crawl"
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-garcons-u142",
+      "title": "Grand Prix Jeunes Majeur Garçons",
+      "gg_page": "12665680048674616313",
+      "gg_league": null,
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u142/page-scores-tournoi",
+      "source": "calendar-jeunes"
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-garcons-u144",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u144",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-u144",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-u144",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-filles-u12",
+      "title": "Grand Prix National U12 Filles (2026)",
+      "gg_page": "12523210857859035722",
+      "gg_league": null,
+      "shares_gg_page_with": "grand-prix-national-u12-garcons-u12",
+      "discovered_via": "GP Jeunes 2026 crawl"
+    },
+    {
+      "year": 2026,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-garcons-u12",
+      "title": "Grand Prix National U12 Garçons (2026)",
+      "gg_page": "12523210857859035722",
+      "gg_league": null,
+      "discovered_via": "GP Jeunes 2026 crawl"
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-benjamines",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-des-jeunes-benjamines",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-benjamins",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-des-jeunes-benjamins",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-u12-filles-trophee-lacoste",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-des-jeunes-u12-filles-trophee-lacoste",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-minimes-filles-trophee-ginette-dubois",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-minimes-filles-trophee-ginette-dubois",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-minimes-garcons-coupe-yan-le-quellec",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-minimes-garcons-coupe-yan-le-quellec",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-filles-1ere-division-trophee-brigitte-varangot",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-filles-1ere-division-trophee-brigitte-varangot",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-filles-2eme-division",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-filles-2eme-division",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-filles-promotion-a",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-filles-promotion-a",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-filles-promotion-b",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-filles-promotion-b",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-1re-division-trophee-jean-louis-dupont",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-1re-division-trophee-jean-louis-dupont",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-2eme-division-a",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-2eme-division-a",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-2eme-division-b",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-2eme-division-b",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-3eme-division-a",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-3eme-division-a",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-3eme-division-b",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-3eme-division-b",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-3eme-division-c",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-3eme-division-c",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-de-france-par-equipes-u16-garcons-3eme-division-d",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-de-france-par-equipes-u16-garcons-3eme-division-d",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-u18-filles-2",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-u18-filles-2",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-u18-filles-garcons-1",
+      "title": "Championnat U18 Filles/Garçons 1 — 2026",
+      "gg_page": "12497024733373576009",
+      "gg_league": null,
+      "discovered_via": "existing scrape data"
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "championnat-u18-garcons-2",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/championnat-u18-garcons-2",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "interligues-u12-challenge-bernard-martin",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/interligues-u12-challenge-bernard-martin",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-d-ecosse-girls-boys-u14",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/internationaux-d-ecosse-girls-boys-u14",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-d-italie-boys-u16",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/internationaux-d-italie-boys-u16",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-d-italie-girls-u18",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/internationaux-d-italie-girls-u18",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-de-belgique-u14-albert-vermeiren-trophy",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/internationaux-de-belgique-u14-albert-vermeiren-trophy",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-de-france-u14-filles-challenge-alexis-godillot",
+      "title": "Internationaux de France U14 Filles - Challenge Alexis Godillot 2026",
+      "gg_page": "12593417670361133592",
+      "gg_league": null,
+      "shares_gg_page_with": "internationaux-de-france-u14-garcons-challenge-alexis-godillot"
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-de-france-u14-garcons-challenge-alexis-godillot",
+      "title": "Internationaux de France U14 Garçons - Challenge Alexis Godillot 2026",
+      "gg_page": "12593417670361133592",
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-de-france-u18-garcons-championnat-de-france-cadets-trophee-michel-carlhian-trophee-pierre-massie-et-trophee-patrick-pons",
+      "title": "Internationaux de France U18 Garçons - Championnat de France Cadets 2026",
+      "gg_page": "12590516942730736404",
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "internationaux-de-france-u21-filles-championnat-de-france-cadettes-trophee-esmond-trophee-claude-roger-cartier-coupe-vilmorin-et-challenge-newman",
+      "title": "Internationaux de France U21 Filles - Championnat de France Cadettes 2026",
+      "gg_page": "12445548502493213204",
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "junior-invitational",
+      "title": "Junior Invitational 2026 (Sage Valley)",
+      "gg_page": "12019527322941046034",
+      "gg_league": null,
+      "discovered_via": "existing scrape data"
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "r-a-boys-amateur-championship",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/r-a-boys-amateur-championship",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "r-a-girls-amateur-championship",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/r-a-girls-amateur-championship",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2026,
+      "section": "national-international",
+      "slug": "the-amundi-evian-showcase",
+      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/national-international/2026/the-amundi-evian-showcase",
+      "gg_page": null,
+      "gg_league": null
+    },
+    {
+      "year": 2025,
+      "section": "equipes-de-france",
+      "slug": "world-junior-girls-golf-championship",
+      "title": "World Junior Girls Golf Championship 2025",
+      "gg_page": "11529865034507274659",
+      "gg_league": null
+    },
+    {
+      "year": 2025,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-jeunes-majeur-u142",
+      "title": "Grand Prix Jeunes Majeur U14 (2025)",
+      "gg_page": "11482363528833184388",
+      "gg_league": null,
+      "discovered_via": "GP Jeunes 2025 crawl"
+    },
+    {
+      "year": 2025,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-filles-1",
+      "title": "Grand Prix National U12 Filles - Étape 1 (2025)",
+      "gg_page": "11552153706824774492",
+      "gg_league": null,
+      "shares_gg_page_with": "grand-prix-national-u12-garcons-1",
+      "discovered_via": "GP Jeunes 2025 crawl"
+    },
+    {
+      "year": 2025,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-filles-3",
+      "title": "Grand Prix National U12 Filles - Étape 3 (2025)",
+      "gg_page": "12041850617224802891",
+      "gg_league": null,
+      "shares_gg_page_with": "grand-prix-national-u12-garcons-3",
+      "discovered_via": "GP Jeunes 2025 crawl"
+    },
+    {
+      "year": 2025,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-garcons-1",
+      "title": "Grand Prix National U12 Garçons - Étape 1 (2025)",
+      "gg_page": "11552153706824774492",
+      "gg_league": null,
+      "discovered_via": "GP Jeunes 2025 crawl"
+    },
+    {
+      "year": 2025,
+      "section": "grands-prix-jeunes",
+      "slug": "grand-prix-national-u12-garcons-3",
+      "title": "Grand Prix National U12 Garçons - Étape 3 (2025)",
+      "gg_page": "12041850617224802891",
+      "gg_league": null,
+      "discovered_via": "GP Jeunes 2025 crawl"
+    },
+    {
+      "year": 2025,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-benjamines",
+      "title": "Championnat de France des Jeunes - Benjamines",
+      "gg_page": "11842526628687164095",
+      "gg_league": null
+    },
+    {
+      "year": 2025,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-benjamins",
+      "title": "Championnat de France des Jeunes - Benjamins",
+      "gg_page": "11842510449344033466",
+      "gg_league": null
+    },
+    {
+      "year": 2025,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-u12-filles-trophee-crocodile",
+      "title": "Championnat de France des Jeunes - U12 Filles (Trophée Crocodile)",
+      "gg_page": "11842474948620759722",
+      "gg_league": null,
+      "discovered_via": "existing scrape data (not in ffgolf.org listing)"
+    },
+    {
+      "year": 2025,
+      "section": "national-international",
+      "slug": "championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile",
+      "title": "Championnat de France des Jeunes - U12 Garçons (Trophée Crocodile)",
+      "gg_page": "11842494001062130351",
+      "gg_league": null
+    },
     {
       "year": 2025,
       "section": "national-international",
@@ -42,47 +642,6 @@
     {
       "year": 2025,
       "section": "national-international",
-      "slug": "junior-invitational",
-      "title": "Junior Invitational 2025 (Sage Valley)",
-      "gg_page": "11393941428410301550",
-      "gg_league": null
-    },
-    {
-      "year": 2025,
-      "section": "national-international",
-      "slug": "championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile",
-      "title": "Championnat de France des Jeunes - U12 Garçons (Trophée Crocodile)",
-      "gg_page": "11842494001062130351",
-      "gg_league": null
-    },
-    {
-      "year": 2025,
-      "section": "national-international",
-      "slug": "championnat-de-france-des-jeunes-u12-filles-trophee-crocodile",
-      "title": "Championnat de France des Jeunes - U12 Filles (Trophée Crocodile)",
-      "gg_page": "11842474948620759722",
-      "gg_league": null,
-      "discovered_via": "existing scrape data (not in ffgolf.org listing)"
-    },
-    {
-      "year": 2025,
-      "section": "national-international",
-      "slug": "championnat-de-france-des-jeunes-benjamins",
-      "title": "Championnat de France des Jeunes - Benjamins",
-      "gg_page": "11842510449344033466",
-      "gg_league": null
-    },
-    {
-      "year": 2025,
-      "section": "national-international",
-      "slug": "championnat-de-france-des-jeunes-benjamines",
-      "title": "Championnat de France des Jeunes - Benjamines",
-      "gg_page": "11842526628687164095",
-      "gg_league": null
-    },
-    {
-      "year": 2025,
-      "section": "national-international",
       "slug": "internationaux-de-france-u21-filles-championnat-de-france-cadettes-trophee-esmond-trophee-claude-roger-cartier-coupe-vilmorin-et-challenge-newman",
       "title": "Internationaux de France U21 Filles - Championnat de France Cadettes 2025",
       "gg_page": "11578271987637727893",
@@ -90,170 +649,11 @@
     },
     {
       "year": 2025,
-      "section": "equipes-de-france",
-      "slug": "world-junior-girls-golf-championship",
-      "title": "World Junior Girls Golf Championship 2025",
-      "gg_page": "11529865034507274659",
-      "gg_league": null
-    },
-    {
-      "year": 2026,
-      "section": "national-international",
-      "slug": "internationaux-de-france-u18-garcons-championnat-de-france-cadets-trophee-michel-carlhian-trophee-pierre-massie-et-trophee-patrick-pons",
-      "title": "Internationaux de France U18 Garçons - Championnat de France Cadets 2026",
-      "gg_page": "12590516942730736404",
-      "gg_league": null
-    },
-    {
-      "year": 2026,
-      "section": "national-international",
-      "slug": "internationaux-de-france-u21-filles-championnat-de-france-cadettes-trophee-esmond-trophee-claude-roger-cartier-coupe-vilmorin-et-challenge-newman",
-      "title": "Internationaux de France U21 Filles - Championnat de France Cadettes 2026",
-      "gg_page": "12445548502493213204",
-      "gg_league": null
-    },
-    {
-      "year": 2026,
-      "section": "national-international",
-      "slug": "internationaux-de-france-u14-garcons-challenge-alexis-godillot",
-      "title": "Internationaux de France U14 Garçons - Challenge Alexis Godillot 2026",
-      "gg_page": "12593417670361133592",
-      "gg_league": null
-    },
-    {
-      "year": 2026,
-      "section": "national-international",
-      "slug": "internationaux-de-france-u14-filles-challenge-alexis-godillot",
-      "title": "Internationaux de France U14 Filles - Challenge Alexis Godillot 2026",
-      "gg_page": "12593417670361133592",
-      "gg_league": null,
-      "shares_gg_page_with": "internationaux-de-france-u14-garcons-challenge-alexis-godillot"
-    },
-    {
-      "year": 2026,
       "section": "national-international",
       "slug": "junior-invitational",
-      "title": "Junior Invitational 2026 (Sage Valley)",
-      "gg_page": "12019527322941046034",
-      "gg_league": null,
-      "discovered_via": "existing scrape data"
-    },
-    {
-      "year": 2026,
-      "section": "national-international",
-      "slug": "championnat-u18-filles-garcons-1",
-      "title": "Championnat U18 Filles/Garçons 1 — 2026",
-      "gg_page": "12497024733373576009",
-      "gg_league": null,
-      "discovered_via": "existing scrape data"
-    },
-    {
-      "year": 2025,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-jeunes-majeur-u142",
-      "title": "Grand Prix Jeunes Majeur U14 (2025)",
-      "gg_page": "11482363528833184388",
-      "gg_league": null,
-      "discovered_via": "GP Jeunes 2025 crawl"
-    },
-    {
-      "year": 2025,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-filles-1",
-      "title": "Grand Prix National U12 Filles - Étape 1 (2025)",
-      "gg_page": "11552153706824774492",
-      "gg_league": null,
-      "shares_gg_page_with": "grand-prix-national-u12-garcons-1",
-      "discovered_via": "GP Jeunes 2025 crawl"
-    },
-    {
-      "year": 2025,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-garcons-1",
-      "title": "Grand Prix National U12 Garçons - Étape 1 (2025)",
-      "gg_page": "11552153706824774492",
-      "gg_league": null,
-      "discovered_via": "GP Jeunes 2025 crawl"
-    },
-    {
-      "year": 2025,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-filles-3",
-      "title": "Grand Prix National U12 Filles - Étape 3 (2025)",
-      "gg_page": "12041850617224802891",
-      "gg_league": null,
-      "shares_gg_page_with": "grand-prix-national-u12-garcons-3",
-      "discovered_via": "GP Jeunes 2025 crawl"
-    },
-    {
-      "year": 2025,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-garcons-3",
-      "title": "Grand Prix National U12 Garçons - Étape 3 (2025)",
-      "gg_page": "12041850617224802891",
-      "gg_league": null,
-      "discovered_via": "GP Jeunes 2025 crawl"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-garcons-u12",
-      "title": "Grand Prix National U12 Garçons (2026)",
-      "gg_page": "12523210857859035722",
-      "gg_league": null,
-      "discovered_via": "GP Jeunes 2026 crawl"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-national-u12-filles-u12",
-      "title": "Grand Prix National U12 Filles (2026)",
-      "gg_page": "12523210857859035722",
-      "gg_league": null,
-      "shares_gg_page_with": "grand-prix-national-u12-garcons-u12",
-      "discovered_via": "GP Jeunes 2026 crawl"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-jeunes-majeur-garcons-u14",
-      "title": "Grand Prix Jeunes Majeur U14 Garçons (2026)",
-      "gg_page": "12483136787876721193",
-      "gg_league": null,
-      "discovered_via": "GP Jeunes 2026 crawl"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-jeunes-majeur-filles-u14",
-      "title": "Grand Prix Jeunes Majeur U14 Filles (2026)",
-      "gg_page": "12483136787876721193",
-      "gg_league": null,
-      "shares_gg_page_with": "grand-prix-jeunes-majeur-garcons-u14",
-      "discovered_via": "GP Jeunes 2026 crawl"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-jeunes-majeur-filles-u142",
-      "title": "Grand Prix Jeunes Majeur Filles",
-      "gg_page": "12665680048674616313",
-      "gg_league": null,
-      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-filles-u142/page-scores-tournoi",
-      "source": "calendar-jeunes"
-    },
-    {
-      "year": 2026,
-      "section": "grands-prix-jeunes",
-      "slug": "grand-prix-jeunes-majeur-garcons-u142",
-      "title": "Grand Prix Jeunes Majeur Garçons",
-      "gg_page": "12665680048674616313",
-      "gg_league": null,
-      "ffgolf_url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u142/page-scores-tournoi",
-      "source": "calendar-jeunes"
+      "title": "Junior Invitational 2025 (Sage Valley)",
+      "gg_page": "11393941428410301550",
+      "gg_league": null
     }
-  ],
-  "total": 28,
-  "with_gg": 26,
-  "updated_at": "2026-07-04T10:58:12.345Z"
+  ]
 }
