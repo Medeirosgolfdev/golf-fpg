@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-07-13T04:37:19.285Z",
+  "lastUpdated": "2026-07-15T10:40:40.776Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-07-13",
+  "today": "2026-07-15",
   "summary": {
-    "total": 1696,
+    "total": 1697,
     "complete": 762,
-    "in_progress": 0,
+    "in_progress": 1,
     "future": 13,
     "stale": 6,
     "excluded": 915,
@@ -420,6 +420,27 @@
       "full_scorecards_ratio": 0,
       "has_manuel": false,
       "status": "future"
+    },
+    {
+      "ccode": "992",
+      "tcode": "10530",
+      "name": "Torneio 10530",
+      "date": "2026-07-13",
+      "rounds": 3,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 3,
+      "draws_players_total": 53,
+      "has_classif": true,
+      "player_count": 18,
+      "players_with_scorecards": 18,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": "pull-torneios002.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 0,
+      "has_manuel": false,
+      "status": "in_progress"
     },
     {
       "ccode": "982",
