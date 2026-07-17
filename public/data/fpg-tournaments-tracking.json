@@ -1,16 +1,16 @@
 {
-  "lastUpdated": "2026-07-15T16:48:31.940Z",
+  "lastUpdated": "2026-07-17T20:48:29.918Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-07-15",
+  "today": "2026-07-17",
   "summary": {
     "total": 1708,
-    "complete": 762,
-    "in_progress": 6,
+    "complete": 763,
+    "in_progress": 0,
     "future": 13,
     "stale": 6,
     "excluded": 921,
     "missing_admissions": 0,
-    "missing_classif": 0,
+    "missing_classif": 5,
     "missing_scorecards": 0,
     "missing_draws": 0,
     "unknown": 0
@@ -528,7 +528,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "983",
@@ -680,7 +680,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "005",
@@ -701,7 +701,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "005",
@@ -722,7 +722,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "005",
@@ -743,7 +743,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "005",
@@ -764,7 +764,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "983",
