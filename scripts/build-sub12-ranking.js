@@ -151,6 +151,60 @@ function cappedGross(rs, fallbackGross) {
   return jogados ? g : fallbackGross;
 }
 
+/* ── Agrupar os escalões do mesmo evento ─────────────────────────── */
+
+/** Tira o sufixo de escalão do nome: "… Sub 12 H" → "…". */
+function stripEscalaoSuffix(name) {
+  return String(name || "").replace(/\s*[-–]?\s*Sub\s*\d+\s*(?:[HSMF])?\s*$/i, "").trim();
+}
+
+/**
+ * Funde as entradas que são o MESMO evento partido por escalão/sexo — a FPG
+ * regista um tcode por cada. O Campeonato Nacional de Jovens são três provas
+ * (Sub 10 H, Sub 12 H, Sub 12 S) no mesmo dia e campo: em colunas separadas
+ * cada uma ficava com dois terços das linhas vazias.
+ *
+ * Chave: ccode + data + nome sem o sufixo. Cada miúdo só joga um escalão, por
+ * isso não há colisões (verificado: 0 repetidos).
+ */
+function mergeEscalaoSplits(tournaments) {
+  const grupos = new Map();
+  for (const t of tournaments) {
+    const key = `${t.ccode}|${t.date}|${stripEscalaoSuffix(t.name)}`;
+    if (!grupos.has(key)) grupos.set(key, []);
+    grupos.get(key).push(t);
+  }
+
+  const out = [];
+  for (const provas of grupos.values()) {
+    if (provas.length === 1) { out.push(provas[0]); continue; }
+    provas.sort((a, b) => String(a.tcode).localeCompare(String(b.tcode)));
+    const byPlayer = new Map();
+    for (const t of provas) {
+      for (const p of t.players) {
+        const prev = byPlayer.get(p.fedCode);
+        if (prev && prev.roundScores.length >= p.roundScores.length) continue;
+        byPlayer.set(p.fedCode, {
+          ...p,
+          roundScores: p.roundScores.map((r) => ({ ...r, _prova: t.name, _campo: t.campo })),
+        });
+      }
+    }
+    const base = provas[0];
+    const players = [...byPlayer.values()];
+    out.push({
+      ...base,
+      name: stripEscalaoSuffix(base.name),
+      tcode: provas.map((t) => t.tcode).join("+"),
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players,
+      _escaloes: provas.map((t) => t.name),
+    });
+    console.log(`  ⊕ ${stripEscalaoSuffix(base.name)} — ${provas.length} escalões, ${players.length} miúdos`);
+  }
+  return out;
+}
+
 /* ── Agrupar Drive Challenge por edição ─────────────────────────── */
 
 /** Nº da edição no nome: "1º Torneio Drive Challenge…" → "1º"; "Final…" → "Final".
@@ -310,7 +364,7 @@ function main() {
     });
   }
 
-  const merged = mergeRegionalEditions(out);
+  const merged = mergeRegionalEditions(mergeEscalaoSplits(out));
 
   const jogadores = new Map();
   for (const t of merged) for (const p of t.players) {
