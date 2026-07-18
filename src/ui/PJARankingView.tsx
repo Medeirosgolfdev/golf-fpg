@@ -1127,18 +1127,26 @@ export function PJARankingView({
                           );
                           const tpStr = fmtTP(res.toPar);
                           const tpCol = tpColor(res.toPar);
+                          // Tooltip nas TRÊS células da volta: numa coluna
+                          // agregada ("3º Drive Challenge" = 5 regiões) saber
+                          // QUE prova o miúdo jogou é essencial para ler o valor.
+                          const cellTitle = [
+                            res.prova,
+                            res.meters ? `${res.meters.toLocaleString("pt-PT")} m` : null,
+                            res.excludedReason,
+                          ].filter(Boolean).join(" · ") || undefined;
                           const excludedStyle = res.excluded
                             ? { opacity: 0.4, textDecoration: "line-through" as const }
                             : {};
                           return (
                             <React.Fragment key={r.roundKey}>
-                              <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={res.excludedReason}>{tpStr}</td>
-                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={res.excludedReason}>
+                              <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={cellTitle}>{tpStr}</td>
+                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={cellTitle}>
                                 {metric === "sd" ? (res.sd != null ? res.sd.toFixed(1) : "–") : fmtPts(res.pts)}
                               </td>
                               {showMeters && (
                                 <td className="cs-t-topar cs-col muted" style={{ fontVariantNumeric: "tabular-nums", ...excludedStyle }}
-                                    title={res.prova || undefined}>
+                                    title={cellTitle}>
                                   {res.meters ? res.meters.toLocaleString("pt-PT") : "–"}
                                 </td>
                               )}
