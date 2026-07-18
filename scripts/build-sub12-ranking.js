@@ -281,6 +281,93 @@ function mergeSeriesClube(tournaments) {
   return out;
 }
 
+/* ── Agrupar provas de clube semelhantes ─────────────────────────── */
+
+/** Limites de semelhança entre duas provas para partilharem coluna. */
+const SIM = { metros: 0.06, slope: 12, cr: 2.5 };
+
+/**
+ * Junta as provas de clube que sobraram (as que não pertencem a uma série
+ * conhecida) por SEMELHANÇA DE CAMPO: mesmo nº de buracos, distância dentro de
+ * ±6 %, Slope até 12 de diferença e CR até 2.5.
+ *
+ * Serve os casos que o nome não resolve — "Circuito Junior Challenge" (Miramar)
+ * corre a 1402 m numa data e a 2389 m noutra: são provas diferentes com o mesmo
+ * nome, e cada uma pertence a um grupo distinto. Ao contrário, o "3º Torneio
+ * Academia Junior" (Palheiro, 1468 m) e o Circuito Junior Challenge curto são
+ * campos equivalentes apesar de nomes e clubes diferentes.
+ *
+ * ⚠ Só se aplica a provas de clube. Nacionais, Drive Tour/Challenge e Aquapor
+ * mantêm identidade própria — agrupá-los por distância apagaria a competição.
+ */
+function mergeClubesSemelhantes(tournaments) {
+  const perfilDe = (t) => {
+    const rs = t.players.flatMap((p) => p.roundScores);
+    const med = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
+    const m = rs.map((r) => r.meters).filter(Boolean);
+    const cr = rs.map((r) => r.courseRating).filter(Boolean);
+    const sl = rs.map((r) => r.slope).filter(Boolean);
+    return { h: rs[0]?.holes || 18, m: med(m), cr: med(cr), sl: med(sl) };
+  };
+
+  const candidatas = [], resto = [];
+  for (const t of tournaments) {
+    if (t.serie === "Circuito juvenil" && !t._agregado) {
+      const perf = perfilDe(t);
+      if (perf.m && perf.cr && perf.sl) { candidatas.push({ t, perf }); continue; }
+    }
+    resto.push(t);
+  }
+
+  candidatas.sort((a, b) => a.perf.h - b.perf.h || a.perf.m - b.perf.m);
+  const clusters = [];
+  for (const c of candidatas) {
+    const alvo = clusters.find((cl) => {
+      const ref = cl[0].perf;
+      return ref.h === c.perf.h
+        && Math.abs(c.perf.m - ref.m) / ref.m <= SIM.metros
+        && Math.abs(c.perf.sl - ref.sl) <= SIM.slope
+        && Math.abs(c.perf.cr - ref.cr) <= SIM.cr;
+    });
+    if (alvo) alvo.push(c); else clusters.push([c]);
+  }
+
+  const out = [...resto];
+  for (const cl of clusters) {
+    if (cl.length === 1) { out.push(cl[0].t); continue; }
+    const provas = cl.map((c) => c.t).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    const byPlayer = new Map();
+    for (const t of provas) {
+      for (const p of t.players) {
+        let acc = byPlayer.get(p.fedCode);
+        if (!acc) { acc = { ...p, roundScores: [] }; byPlayer.set(p.fedCode, acc); }
+        for (const r of p.roundScores) {
+          acc.roundScores.push({ ...r, round: acc.roundScores.length + 1, _prova: t.name, _campo: t.campo });
+        }
+      }
+    }
+    const players = [...byPlayer.values()].map((p) => {
+      const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
+      const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
+      return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
+    });
+    const mMed = Math.round(cl.reduce((a, c) => a + c.perf.m, 0) / cl.length);
+    const h = cl[0].perf.h;
+    out.push({
+      ...provas[0],
+      name: `Provas de clube · ${h} buracos (~${mMed.toLocaleString("pt-PT")} m)`,
+      tcode: `clube-${h}-${mMed}`,
+      campo: `${provas.length} provas · ${[...new Set(provas.map((t) => t.campo))].join(", ")}`,
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players,
+      _agregado: true,
+      _provas: provas.map((t) => t.name),
+    });
+    console.log(`  ⊕ clube ${h}b ~${mMed} m — ${provas.length} provas, ${players.length} miúdos: ${provas.map((t) => t.name.slice(0, 26)).join(" + ")}`);
+  }
+  return out;
+}
+
 /* ── Agrupar Drive Challenge por edição ─────────────────────────── */
 
 /** Nº da edição no nome: "1º Torneio Drive Challenge…" → "1º"; "Final…" → "Final".
@@ -303,6 +390,13 @@ function edicaoOf(name) {
  * Um jogador que tenha jogado em duas regiões na mesma edição (aconteceu uma
  * vez em 2026) fica com as duas voltas, como R1 e R2.
  */
+/** Recalcula gross/toPar de um jogador a partir das voltas que ficaram. */
+function comTotais(p) {
+  const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
+  const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
+  return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
+}
+
 function mergeRegionalEditions(tournaments) {
   const grupos = new Map();
   const resto = [];
@@ -317,14 +411,15 @@ function mergeRegionalEditions(tournaments) {
   }
 
   const out = [...resto];
+  // Provas EXTRA (2ª, 3ª… da mesma edição) acumuladas por circuito — vão todas
+  // para uma coluna só no fim, em vez de uma coluna por edição com 1-2 miúdos.
+  const extraPorSerie = new Map();
+
   for (const [key, provas] of grupos) {
     const [serie, ed] = key.split("|");
     provas.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
 
-    // Cada miúdo joga a prova da SUA região — essa vai para a coluna principal.
-    // Os raros que disputaram uma segunda prova da mesma edição (5 casos em
-    // 2026) vão para uma coluna "2ª prova" à parte, em vez de esticarem a
-    // coluna principal com voltas que não são rondas do mesmo torneio.
+    // Cada miúdo joga a prova da SUA região — essa vai para a coluna da edição.
     const porJogador = new Map();
     for (const t of provas) {
       for (const p of t.players) {
@@ -334,42 +429,62 @@ function mergeRegionalEditions(tournaments) {
       }
     }
 
-    const níveis = [];   // níveis[0] = coluna principal, [1] = 2ª prova, …
+    const principal = new Map();
     for (const { base, provas: lista } of porJogador.values()) {
       lista.forEach((entrada, i) => {
-        if (!níveis[i]) níveis[i] = new Map();
-        níveis[i].set(base.fedCode, {
+        const volta = {
           ...base,
           roundScores: entrada.rondas.map((r, k) => ({
             ...r, round: k + 1,
             _prova: entrada.t.name, _campo: entrada.t.campo, _regiao: entrada.t.regiao,
           })),
-        });
+        };
+        if (i === 0) { principal.set(base.fedCode, volta); return; }
+        // 2ª prova em diante → balde de extras do circuito
+        if (!extraPorSerie.has(serie)) extraPorSerie.set(serie, { provas: new Set(), datas: [], jogadores: new Map() });
+        const balde = extraPorSerie.get(serie);
+        balde.provas.add(entrada.t.name);
+        if (entrada.t.date) balde.datas.push(entrada.t.date);
+        let acc = balde.jogadores.get(base.fedCode);
+        if (!acc) { acc = { ...base, roundScores: [] }; balde.jogadores.set(base.fedCode, acc); }
+        for (const r of volta.roundScores) {
+          acc.roundScores.push({ ...r, round: acc.roundScores.length + 1 });
+        }
       });
     }
 
     const sigla = serie === "Drive Tour" ? "dt" : "dc";
-    níveis.forEach((mapa, i) => {
-      const players = [...mapa.values()].map((p) => {
-        const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
-        const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
-        return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
-      });
-      const usadas = provas.filter((t) => players.some((p) => p.roundScores.some((r) => r._prova === t.name)));
-      out.push({
-        ccode: sigla.toUpperCase(), tcode: `${sigla}-${ed}${i ? `-x${i}` : ""}`,
-        name: i === 0 ? `${ed} ${serie}` : `${ed} ${serie} · ${i + 1}ª prova`,
-        date: provas[0].date,
-        campo: `${usadas.length} prova${usadas.length === 1 ? "" : "s"} · ${[...new Set(usadas.map((t) => t.regiao).filter(Boolean))].join(", ")}`,
-        serie, regiao: null,
-        rounds: Math.max(...players.map((p) => p.roundScores.length)),
-        players,
-        _agregado: true,
-        _edicao: ed,
-        _provas: usadas.map((t) => ({ ccode: t.ccode, tcode: t.tcode, name: t.name, regiao: t.regiao })),
-      });
-      console.log(`  ⊕ ${ed} ${serie}${i ? ` · ${i + 1}ª prova` : ""} — ${usadas.length} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
+    const players = [...principal.values()].map(comTotais);
+    const usadas = provas.filter((t) => players.some((p) => p.roundScores.some((r) => r._prova === t.name)));
+    out.push({
+      ccode: sigla.toUpperCase(), tcode: `${sigla}-${ed}`,
+      name: `${ed} ${serie}`,
+      date: provas[0].date,
+      campo: `${usadas.length} prova${usadas.length === 1 ? "" : "s"} · ${[...new Set(usadas.map((t) => t.regiao).filter(Boolean))].join(", ")}`,
+      serie, regiao: null,
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players, _agregado: true, _edicao: ed,
+      _provas: usadas.map((t) => ({ ccode: t.ccode, tcode: t.tcode, name: t.name, regiao: t.regiao })),
     });
+    console.log(`  ⊕ ${ed} ${serie} — ${usadas.length} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
+  }
+
+  for (const [serie, balde] of extraPorSerie) {
+    const sigla = serie === "Drive Tour" ? "dt" : "dc";
+    const players = [...balde.jogadores.values()].map(comTotais);
+    const regioes = [...new Set(players.flatMap((p) => p.roundScores.map((r) => r._regiao).filter(Boolean)))];
+    out.push({
+      ccode: sigla.toUpperCase(), tcode: `${sigla}-extra`,
+      name: `${serie} · provas extra`,
+      // A data tem de ser real: o filtro por ano descarta colunas sem data.
+      date: balde.datas.sort()[0] || null,
+      campo: `${balde.provas.size} provas · ${regioes.join(", ")}`,
+      serie, regiao: null,
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players, _agregado: true, _extra: true,
+      _provas: [...balde.provas],
+    });
+    console.log(`  ⊕ ${serie} · provas extra — ${balde.provas.size} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
   }
   out.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   return out;
@@ -463,7 +578,7 @@ function main() {
     });
   }
 
-  const merged = mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out)));
+  const merged = mergeClubesSemelhantes(mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out))));
 
   const jogadores = new Map();
   for (const t of merged) for (const p of t.players) {

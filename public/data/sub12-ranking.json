@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18T18:51:42.266Z",
+  "generated": "2026-07-18T19:03:26.521Z",
   "year": "2026",
   "source": "build-sub12-ranking.js",
   "metric": "differential sem componente de HCP: (113/Slope)×(Gross−CR), ×2 em 9 buracos",
@@ -454,86 +454,6 @@
           "tcode": "10155",
           "name": "1º Torneio Drive Tour Terceira",
           "regiao": "Açores"
-        }
-      ]
-    },
-    {
-      "ccode": "DT",
-      "tcode": "dt-1º-x1",
-      "name": "1º Drive Tour · 2ª prova",
-      "date": "2026-01-03",
-      "campo": "1 prova · Sul",
-      "serie": "Drive Tour",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "53838",
-          "name": "Gabriel Costa",
-          "escalao": "Sub 12",
-          "regiao": "Tejo",
-          "sex": "M",
-          "club": "Amendoeira",
-          "hcpExact": 21.5,
-          "grossTotal": 94,
-          "toPar": 22,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 94,
-              "parTotal": 72,
-              "meters": 4900,
-              "courseRating": 66.1,
-              "slope": 123,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 25.6,
-              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
-              "_campo": "Vilamoura - Laguna",
-              "_regiao": "Sul"
-            }
-          ]
-        },
-        {
-          "fedCode": "52069",
-          "name": "Marek Pejas",
-          "escalao": "Sub 12",
-          "regiao": "Tejo",
-          "sex": "M",
-          "club": "Vilamoura, C. G",
-          "hcpExact": 20.1,
-          "grossTotal": 101,
-          "toPar": 29,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 101,
-              "parTotal": 72,
-              "meters": 4900,
-              "courseRating": 66.1,
-              "slope": 123,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 32.1,
-              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
-              "_campo": "Vilamoura - Laguna",
-              "_regiao": "Sul"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_edicao": "1º",
-      "_provas": [
-        {
-          "ccode": "988",
-          "tcode": "10292",
-          "name": "1º Torneio Drive Tour Sul – Laguna G.C.",
-          "regiao": "Sul"
         }
       ]
     },
@@ -1068,247 +988,123 @@
       ]
     },
     {
-      "ccode": "132",
-      "tcode": "10160",
-      "name": "1ª Ordem de de Mérito - Marques de Marialva",
-      "date": "2026-01-10",
-      "campo": "Royal Óbidos",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "57233",
-          "name": "Valentin Iria",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Quinta Lágrimas",
-          "hcpExact": 31.8,
-          "grossTotal": 107,
-          "toPar": 35,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 107,
-              "parTotal": 72,
-              "meters": 5024,
-              "courseRating": 66.9,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 36.5
-            }
-          ]
-        },
-        {
-          "fedCode": "52077",
-          "name": "Tomás Tomásio",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Cantanhede",
-          "hcpExact": 49.5,
-          "grossTotal": 110,
-          "toPar": 38,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 110,
-              "parTotal": 72,
-              "meters": 5024,
-              "courseRating": 66.9,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 39.3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "003",
-      "tcode": "10612",
-      "name": "Circuito Junior Challenge",
+      "ccode": "DT",
+      "tcode": "dt-extra",
+      "name": "Drive Tour · provas extra",
       "date": "2026-01-11",
-      "campo": "Miramar",
-      "serie": "Circuito juvenil",
+      "campo": "3 provas · Sul, Açores",
+      "serie": "Drive Tour",
       "regiao": null,
-      "rounds": 1,
+      "rounds": 2,
       "players": [
         {
-          "fedCode": "53685",
-          "name": "Bruno Neto Lichuck",
-          "escalao": "Sub 10",
-          "regiao": null,
+          "fedCode": "53838",
+          "name": "Gabriel Costa",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
           "sex": "M",
-          "club": "Citynorte",
-          "hcpExact": 52.8,
-          "grossTotal": 60,
-          "toPar": 25,
-          "parTotal": 35,
-          "nholes": 9,
+          "club": "Amendoeira",
+          "hcpExact": 21.5,
+          "grossTotal": 184,
+          "toPar": 40,
+          "parTotal": 72,
+          "nholes": 18,
           "roundScores": [
             {
               "round": 1,
-              "gross": 60,
-              "parTotal": 35,
-              "meters": 2389,
-              "courseRating": 33.2,
-              "slope": 115,
+              "gross": 94,
+              "parTotal": 72,
+              "meters": 4900,
+              "courseRating": 66.1,
+              "slope": 123,
               "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 52.7
+              "holes": 18,
+              "sd": 25.6,
+              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
+              "_campo": "Vilamoura - Laguna",
+              "_regiao": "Sul"
+            },
+            {
+              "round": 2,
+              "gross": 90,
+              "parTotal": 72,
+              "meters": 4789,
+              "courseRating": 67.2,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 21.5,
+              "_prova": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
+              "_campo": "Quinta do Vale",
+              "_regiao": null
             }
           ]
         },
         {
-          "fedCode": "51176",
-          "name": "Henrique Monção",
-          "escalao": "Sub 10",
-          "regiao": null,
+          "fedCode": "52069",
+          "name": "Marek Pejas",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
           "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 49.8,
-          "grossTotal": 66,
-          "toPar": 31,
-          "parTotal": 35,
-          "nholes": 9,
+          "club": "Vilamoura, C. G",
+          "hcpExact": 20.1,
+          "grossTotal": 101,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
           "roundScores": [
             {
               "round": 1,
-              "gross": 66,
-              "parTotal": 35,
-              "meters": 2389,
-              "courseRating": 33.2,
-              "slope": 115,
+              "gross": 101,
+              "parTotal": 72,
+              "meters": 4900,
+              "courseRating": 66.1,
+              "slope": 123,
               "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 64.5
+              "holes": 18,
+              "sd": 32.1,
+              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
+              "_campo": "Vilamoura - Laguna",
+              "_regiao": "Sul"
             }
           ]
         },
         {
-          "fedCode": "52797",
-          "name": "Francisco Vaz",
-          "escalao": "Sub 10",
+          "fedCode": "48052",
+          "name": "Miguel Nunes",
+          "escalao": "Sub 12",
           "regiao": null,
           "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 54,
-          "grossTotal": 68,
-          "toPar": 33,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 68,
-              "parTotal": 35,
-              "meters": 2389,
-              "courseRating": 33.2,
-              "slope": 115,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 68.4
-            }
-          ]
-        },
-        {
-          "fedCode": "58549",
-          "name": "Tom Georges",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 53.1,
+          "club": "Ilha Terceira",
+          "hcpExact": 16.4,
           "grossTotal": 77,
-          "toPar": 42,
-          "parTotal": 35,
-          "nholes": 9,
+          "toPar": 5,
+          "parTotal": 69,
+          "nholes": 18,
           "roundScores": [
             {
               "round": 1,
               "gross": 77,
-              "parTotal": 35,
-              "meters": 2389,
-              "courseRating": 33.2,
-              "slope": 115,
+              "parTotal": 72,
+              "meters": 4860,
+              "courseRating": 67.1,
+              "slope": 127,
               "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 86.1
+              "holes": 18,
+              "sd": 8.8,
+              "_prova": "4º Torneio Drive Tour Terceira",
+              "_campo": "Terceira",
+              "_regiao": "Açores"
             }
           ]
         }
-      ]
-    },
-    {
-      "ccode": "001",
-      "tcode": "10548",
-      "name": "1ª Prova de Apuramento sub14",
-      "date": "2026-01-11",
-      "campo": "Oporto",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "49328",
-          "name": "Catarina Loureiro",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Oporto",
-          "hcpExact": 20.1,
-          "grossTotal": 99,
-          "toPar": 28,
-          "parTotal": 71,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 99,
-              "parTotal": 71,
-              "meters": 4969,
-              "courseRating": 72.4,
-              "slope": 129,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 23.3
-            }
-          ]
-        },
-        {
-          "fedCode": "54475",
-          "name": "Maksim Mutalapov",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 31.6,
-          "grossTotal": 114,
-          "toPar": 43,
-          "parTotal": 71,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 114,
-              "parTotal": 71,
-              "meters": 5408,
-              "courseRating": 69.4,
-              "slope": 129,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 39.1
-            }
-          ]
-        }
+      ],
+      "_agregado": true,
+      "_extra": true,
+      "_provas": [
+        "1º Torneio Drive Tour Sul – Laguna G.C.",
+        "3º Torneio do Circuito Drive Tour - Quinta do Vale",
+        "4º Torneio Drive Tour Terceira"
       ]
     },
     {
@@ -3858,264 +3654,6 @@
       ]
     },
     {
-      "ccode": "059",
-      "tcode": "10614",
-      "name": "2º Torneio Academia Junior - 9 buracos",
-      "date": "2026-02-21",
-      "campo": "Palheiro Golf",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "56696",
-          "name": "Luckhardt,Maximilian",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 47.8,
-          "grossTotal": 55,
-          "toPar": 21,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 55,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 40.1
-            }
-          ]
-        },
-        {
-          "fedCode": "50528",
-          "name": "Camacho,Áurea",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 56,
-          "toPar": 22,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 56,
-              "parTotal": 34,
-              "meters": 2180,
-              "courseRating": 34,
-              "slope": 120,
-              "teeName": "AZUIS",
-              "holes": 9,
-              "sd": 41.4
-            }
-          ]
-        },
-        {
-          "fedCode": "58962",
-          "name": "Henriques de Freitas,João",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 56,
-          "toPar": 22,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 56,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 41.9
-            }
-          ]
-        },
-        {
-          "fedCode": "49205",
-          "name": "Côrte,José Eduardo",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 61,
-          "toPar": 27,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 51.1
-            }
-          ]
-        },
-        {
-          "fedCode": "56647",
-          "name": "Vasconcelos,Lourenço",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 65,
-          "toPar": 31,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 65,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 58.4
-            }
-          ]
-        },
-        {
-          "fedCode": "56705",
-          "name": "Bugaev,Mikhail",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 76,
-          "toPar": 42,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 76,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 78.6
-            }
-          ]
-        },
-        {
-          "fedCode": "58960",
-          "name": "Alves,Luis Miguel",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 78,
-          "toPar": 44,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 78,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 82.3
-            }
-          ]
-        },
-        {
-          "fedCode": "58969",
-          "name": "Teixeira,Matilde",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 88,
-          "toPar": 54,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 88,
-              "parTotal": 34,
-              "meters": 2180,
-              "courseRating": 34,
-              "slope": 120,
-              "teeName": "AZUIS",
-              "holes": 9,
-              "sd": 101.7
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "059",
-      "tcode": "10613",
-      "name": "2º Torneio Academia Junior - 18 buracos",
-      "date": "2026-02-21",
-      "campo": "Palheiro Golf",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "47677",
-          "name": "Costa,Íris",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 43.1,
-          "grossTotal": 108,
-          "toPar": 36,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 108,
-              "parTotal": 72,
-              "meters": 4398,
-              "courseRating": 68.7,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 35.8
-            }
-          ]
-        }
-      ]
-    },
-    {
       "ccode": "022",
       "tcode": "10653",
       "name": "8ª Taça Manuel Melo",
@@ -4826,225 +4364,6 @@
           "tcode": "10308",
           "name": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
           "regiao": null
-        }
-      ]
-    },
-    {
-      "ccode": "DT",
-      "tcode": "dt-3º-x1",
-      "name": "3º Drive Tour · 2ª prova",
-      "date": "2026-02-28",
-      "campo": "1 prova · ",
-      "serie": "Drive Tour",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "53838",
-          "name": "Gabriel Costa",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Amendoeira",
-          "hcpExact": 21.2,
-          "grossTotal": 90,
-          "toPar": 18,
-          "parTotal": 73,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 90,
-              "parTotal": 72,
-              "meters": 4789,
-              "courseRating": 67.2,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 21.5,
-              "_prova": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-              "_campo": "Quinta do Vale",
-              "_regiao": null
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_edicao": "3º",
-      "_provas": [
-        {
-          "ccode": "988",
-          "tcode": "10308",
-          "name": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "regiao": null
-        }
-      ]
-    },
-    {
-      "ccode": "003",
-      "tcode": "10622",
-      "name": "Circuito Junior Challenge",
-      "date": "2026-03-01",
-      "campo": "Miramar",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "51176",
-          "name": "Henrique Monção",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 49.8,
-          "grossTotal": 46,
-          "toPar": 11,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 46,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 37.6
-            }
-          ]
-        },
-        {
-          "fedCode": "53685",
-          "name": "Bruno Neto Lichuck",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 52.8,
-          "grossTotal": 46,
-          "toPar": 11,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 46,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 37.6
-            }
-          ]
-        },
-        {
-          "fedCode": "58549",
-          "name": "Tom Georges",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 53.1,
-          "grossTotal": 50,
-          "toPar": 15,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 50,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 46.8
-            }
-          ]
-        },
-        {
-          "fedCode": "51980",
-          "name": "Diego Braga",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 54,
-          "grossTotal": 51,
-          "toPar": 16,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 51,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 49.1
-            }
-          ]
-        },
-        {
-          "fedCode": "52798",
-          "name": "Vicente Messala",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 54,
-          "grossTotal": 55,
-          "toPar": 20,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 55,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 58.3
-            }
-          ]
-        },
-        {
-          "fedCode": "57580",
-          "name": "Luis Maria Azevedo",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 48.8,
-          "grossTotal": 66,
-          "toPar": 31,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 66,
-              "parTotal": 35,
-              "meters": 1402,
-              "courseRating": 29.7,
-              "slope": 98,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 83.7
-            }
-          ]
         }
       ]
     },
@@ -8523,57 +7842,6 @@
       ]
     },
     {
-      "ccode": "DC",
-      "tcode": "dc-3º-x1",
-      "name": "3º Drive Challenge · 2ª prova",
-      "date": "2026-03-08",
-      "campo": "1 prova · Norte",
-      "serie": "Drive Challenge",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "47318",
-          "name": "Tiago Borges Oliveira",
-          "escalao": "Sub 12",
-          "regiao": "Tejo",
-          "sex": "M",
-          "club": "The One",
-          "hcpExact": 42.4,
-          "grossTotal": 61,
-          "toPar": 25,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 36,
-              "meters": 1956,
-              "courseRating": 32.1,
-              "slope": 116,
-              "teeName": "VERDES",
-              "holes": 9,
-              "sd": 56.3,
-              "_prova": "3º Torneio Drive Challenge Norte - Vidago",
-              "_campo": "Vidago Palace",
-              "_regiao": "Norte"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_edicao": "3º",
-      "_provas": [
-        {
-          "ccode": "987",
-          "tcode": "10220+10221",
-          "name": "3º Torneio Drive Challenge Norte - Vidago",
-          "regiao": "Norte"
-        }
-      ]
-    },
-    {
       "ccode": "000",
       "tcode": "10875",
       "name": "2º Torneio do Circuito Aquapor - Qtª do Peru",
@@ -8771,6 +8039,67 @@
             }
           ]
         }
+      ]
+    },
+    {
+      "ccode": "DC",
+      "tcode": "dc-extra",
+      "name": "Drive Challenge · provas extra",
+      "date": "2026-03-29",
+      "campo": "2 provas · Norte, Tejo",
+      "serie": "Drive Challenge",
+      "regiao": null,
+      "rounds": 2,
+      "players": [
+        {
+          "fedCode": "47318",
+          "name": "Tiago Borges Oliveira",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
+          "sex": "M",
+          "club": "The One",
+          "hcpExact": 42.4,
+          "grossTotal": 111,
+          "toPar": 39,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 61,
+              "parTotal": 36,
+              "meters": 1956,
+              "courseRating": 32.1,
+              "slope": 116,
+              "teeName": "VERDES",
+              "holes": 9,
+              "sd": 56.3,
+              "_prova": "3º Torneio Drive Challenge Norte - Vidago",
+              "_campo": "Vidago Palace",
+              "_regiao": "Norte"
+            },
+            {
+              "round": 2,
+              "gross": 50,
+              "parTotal": 36,
+              "meters": 1854,
+              "courseRating": 30.8,
+              "slope": 123,
+              "teeName": "VERDES",
+              "holes": 9,
+              "sd": 35.3,
+              "_prova": "4º Torneio Drive Challenge Tejo-Quinta Peru",
+              "_campo": "Quinta do Peru",
+              "_regiao": "Tejo"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_extra": true,
+      "_provas": [
+        "3º Torneio Drive Challenge Norte - Vidago",
+        "4º Torneio Drive Challenge Tejo-Quinta Peru"
       ]
     },
     {
@@ -12501,57 +11830,6 @@
       ]
     },
     {
-      "ccode": "DC",
-      "tcode": "dc-4º-x1",
-      "name": "4º Drive Challenge · 2ª prova",
-      "date": "2026-04-07",
-      "campo": "1 prova · Tejo",
-      "serie": "Drive Challenge",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "47318",
-          "name": "Tiago Borges Oliveira",
-          "escalao": "Sub 12",
-          "regiao": "Sul",
-          "sex": "M",
-          "club": "The One",
-          "hcpExact": 40.4,
-          "grossTotal": 50,
-          "toPar": 14,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 50,
-              "parTotal": 36,
-              "meters": 1854,
-              "courseRating": 30.8,
-              "slope": 123,
-              "teeName": "VERDES",
-              "holes": 9,
-              "sd": 35.3,
-              "_prova": "4º Torneio Drive Challenge Tejo-Quinta Peru",
-              "_campo": "Quinta do Peru",
-              "_regiao": "Tejo"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_edicao": "4º",
-      "_provas": [
-        {
-          "ccode": "985",
-          "tcode": "10221+10222",
-          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru",
-          "regiao": "Tejo"
-        }
-      ]
-    },
-    {
       "ccode": "003",
       "tcode": "10617",
       "name": "Miramar Spring Cup",
@@ -13150,57 +12428,6 @@
           "tcode": "10298",
           "name": "4º Torneio Drive Tour Sul - Boavista",
           "regiao": null
-        }
-      ]
-    },
-    {
-      "ccode": "DT",
-      "tcode": "dt-4º-x1",
-      "name": "4º Drive Tour · 2ª prova",
-      "date": "2026-04-11",
-      "campo": "1 prova · Açores",
-      "serie": "Drive Tour",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "48052",
-          "name": "Miguel Nunes",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Ilha Terceira",
-          "hcpExact": 16.4,
-          "grossTotal": 77,
-          "toPar": 5,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4860,
-              "courseRating": 67.1,
-              "slope": 127,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 8.8,
-              "_prova": "4º Torneio Drive Tour Terceira",
-              "_campo": "Terceira",
-              "_regiao": "Açores"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_edicao": "4º",
-      "_provas": [
-        {
-          "ccode": "983",
-          "tcode": "10158",
-          "name": "4º Torneio Drive Tour Terceira",
-          "regiao": "Açores"
         }
       ]
     },
@@ -13916,166 +13143,6 @@
               "teeName": "VERMELHAS",
               "holes": 18,
               "sd": 46.7
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "029",
-      "tcode": "10543",
-      "name": "PJA  Aroeira Masters 2026",
-      "date": "2026-04-24",
-      "campo": "PGA  Aroeira No.2",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 2,
-      "players": [
-        {
-          "fedCode": "57904",
-          "name": "Guo Ziyang",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 11.6,
-          "grossTotal": 161,
-          "toPar": 17,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 11.1
-            },
-            {
-              "round": 2,
-              "gross": 84,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 17.9
-            }
-          ]
-        },
-        {
-          "fedCode": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 6.8,
-          "grossTotal": 151,
-          "toPar": 7,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 78,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 12.1
-            },
-            {
-              "round": 2,
-              "gross": 73,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 7.2
-            }
-          ]
-        },
-        {
-          "fedCode": "48971",
-          "name": "Sabrina Ribeiro Crisóstomo",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Vilamoura, C. G",
-          "hcpExact": 9.9,
-          "grossTotal": 173,
-          "toPar": 29,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 87,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 69.8,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 16.2
-            },
-            {
-              "round": 2,
-              "gross": 86,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 69.8,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 15.3
-            }
-          ]
-        },
-        {
-          "fedCode": "52884",
-          "name": "Manuel Goulartt Medeiros",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 9.8,
-          "grossTotal": 173,
-          "toPar": 29,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 94,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 27.5
-            },
-            {
-              "round": 2,
-              "gross": 79,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 13
             }
           ]
         }
@@ -16530,70 +15597,6 @@
       ]
     },
     {
-      "ccode": "007",
-      "tcode": "11020",
-      "name": "Torneio Cidade de Machico 2026",
-      "date": "2026-05-08",
-      "campo": "Santo da Serra - Machico-Desertas",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "52884",
-          "name": "Manuel Goulartt Medeiros",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 9.5,
-          "grossTotal": 79,
-          "toPar": 7,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 79,
-              "parTotal": 72,
-              "meters": 4657,
-              "courseRating": 65.9,
-              "slope": 125,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 11.8
-            }
-          ]
-        },
-        {
-          "fedCode": "51896",
-          "name": "Vicente Rodrigues",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 27.5,
-          "grossTotal": 98,
-          "toPar": 26,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 98,
-              "parTotal": 72,
-              "meters": 4657,
-              "courseRating": 65.9,
-              "slope": 125,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 29
-            }
-          ]
-        }
-      ]
-    },
-    {
       "ccode": "002",
       "tcode": "11297",
       "name": "109ª Lisbon Cup",
@@ -16637,252 +15640,6 @@
               "teeName": "BRANCAS",
               "holes": 18,
               "sd": 16.7
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "001",
-      "tcode": "10559",
-      "name": "3º Torneio Academia",
-      "date": "2026-05-10",
-      "campo": "Oporto",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "54330",
-          "name": "Lucas Pereira Amorim",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 12.3,
-          "grossTotal": 39,
-          "toPar": 4,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 39,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 11.2
-            }
-          ]
-        },
-        {
-          "fedCode": "49328",
-          "name": "Catarina Loureiro",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Oporto",
-          "hcpExact": 18.3,
-          "grossTotal": 46,
-          "toPar": 11,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 46,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 35.6,
-              "slope": 125,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 18.8
-            }
-          ]
-        },
-        {
-          "fedCode": "54475",
-          "name": "Maksim Mutalapov",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 29.5,
-          "grossTotal": 47,
-          "toPar": 12,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 47,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 26.4
-            }
-          ]
-        },
-        {
-          "fedCode": "56643",
-          "name": "Francisco Petit Ramos",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 54,
-          "grossTotal": 52,
-          "toPar": 17,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 52,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 35.9
-            }
-          ]
-        },
-        {
-          "fedCode": "56641",
-          "name": "Rafael Paço",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 31.8,
-          "grossTotal": 52,
-          "toPar": 17,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 52,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 35.9
-            }
-          ]
-        },
-        {
-          "fedCode": "49745",
-          "name": "Guilherme Petit Ramos",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 49.6,
-          "grossTotal": 56,
-          "toPar": 21,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 56,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 43.5
-            }
-          ]
-        },
-        {
-          "fedCode": "56940",
-          "name": "Marta Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Oporto",
-          "hcpExact": 54,
-          "grossTotal": 61,
-          "toPar": 26,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 35.6,
-              "slope": 125,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 45.9
-            }
-          ]
-        },
-        {
-          "fedCode": "53020",
-          "name": "Francisco Raposo de Magalhães",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 54,
-          "grossTotal": 61,
-          "toPar": 26,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 53
-            }
-          ]
-        },
-        {
-          "fedCode": "56745",
-          "name": "Miguel de Sá",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 54,
-          "grossTotal": 68,
-          "toPar": 33,
-          "parTotal": 35,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 68,
-              "parTotal": 35,
-              "meters": 2413,
-              "courseRating": 33.1,
-              "slope": 119,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 66.3
             }
           ]
         }
@@ -20735,238 +19492,6 @@
     },
     {
       "ccode": "059",
-      "tcode": "10615",
-      "name": "3º Torneio Academia Junior - 18 buracos",
-      "date": "2026-06-05",
-      "campo": "Palheiro Golf",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "52884",
-          "name": "Goulartt Medeiros,Manuel",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 9.3,
-          "grossTotal": 75,
-          "toPar": 3,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 75,
-              "parTotal": 72,
-              "meters": 4398,
-              "courseRating": 64.2,
-              "slope": 121,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 10.1
-            }
-          ]
-        },
-        {
-          "fedCode": "51896",
-          "name": "Rodrigues,Vicente",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 27.8,
-          "grossTotal": 82,
-          "toPar": 10,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 82,
-              "parTotal": 72,
-              "meters": 4398,
-              "courseRating": 64.2,
-              "slope": 121,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 16.6
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "059",
-      "tcode": "10616",
-      "name": "3º Torneio Academia Junior - 9 buracos",
-      "date": "2026-06-05",
-      "campo": "Palheiro Golf",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "56696",
-          "name": "Luckhardt,Maximilian",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 44.7,
-          "grossTotal": 44,
-          "toPar": 10,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 44,
-              "parTotal": 34,
-              "meters": 1378,
-              "courseRating": 29,
-              "slope": 103,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 32.9
-            }
-          ]
-        },
-        {
-          "fedCode": "56647",
-          "name": "Vasconcelos,Lourenço",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 57,
-          "toPar": 23,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 57,
-              "parTotal": 34,
-              "meters": 1378,
-              "courseRating": 29,
-              "slope": 103,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 61.4
-            }
-          ]
-        },
-        {
-          "fedCode": "58962",
-          "name": "Henriques de Freitas,João",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 48.2,
-          "grossTotal": 57,
-          "toPar": 23,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 57,
-              "parTotal": 34,
-              "meters": 1378,
-              "courseRating": 29,
-              "slope": 103,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 61.4
-            }
-          ]
-        },
-        {
-          "fedCode": "49205",
-          "name": "Côrte,José Eduardo",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 62,
-          "toPar": 28,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 62,
-              "parTotal": 34,
-              "meters": 1378,
-              "courseRating": 29,
-              "slope": 103,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 72.4
-            }
-          ]
-        },
-        {
-          "fedCode": "58969",
-          "name": "Teixeira,Matilde",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 68,
-          "toPar": 34,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 68,
-              "parTotal": 34,
-              "meters": 1916,
-              "courseRating": 32.4,
-              "slope": 114,
-              "teeName": "VERMELHAS",
-              "holes": 9,
-              "sd": 70.6
-            }
-          ]
-        },
-        {
-          "fedCode": "59252",
-          "name": "Thomaz Medeiros,Gastão",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 54,
-          "grossTotal": 68,
-          "toPar": 34,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 68,
-              "parTotal": 34,
-              "meters": 1378,
-              "courseRating": 29,
-              "slope": 103,
-              "teeName": "ROXAS",
-              "holes": 9,
-              "sd": 85.6
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "059",
       "tcode": "10643",
       "name": "XXI Torneio Savoy Signature Vacation Club - 2 dias",
       "date": "2026-06-11",
@@ -24029,96 +22554,6 @@
     },
     {
       "ccode": "003",
-      "tcode": "10648",
-      "name": "Circuito Junior",
-      "date": "2026-06-14",
-      "campo": "Miramar",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "53645",
-          "name": "José Maria Pereira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 16.2,
-          "grossTotal": 86,
-          "toPar": 16,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 86,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 16.6
-            }
-          ]
-        },
-        {
-          "fedCode": "51180",
-          "name": "Ricardo Rocha Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 13.8,
-          "grossTotal": 87,
-          "toPar": 17,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 87,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 17.5
-            }
-          ]
-        },
-        {
-          "fedCode": "51182",
-          "name": "Eduardo Rocha Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 18,
-          "grossTotal": 90,
-          "toPar": 20,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 90,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 20.3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "003",
       "tcode": "10646",
       "name": "Taça R. S. Yeatman",
       "date": "2026-06-19",
@@ -24491,129 +22926,6 @@
       ]
     },
     {
-      "ccode": "038",
-      "tcode": "10754",
-      "name": "QUINTA DO PERU PJA Masters 2026",
-      "date": "2026-06-26",
-      "campo": "Quinta do Peru",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 2,
-      "players": [
-        {
-          "fedCode": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 6,
-          "grossTotal": 144,
-          "toPar": 0,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 70,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 4.9
-            },
-            {
-              "round": 2,
-              "gross": 74,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 8.6
-            }
-          ]
-        },
-        {
-          "fedCode": "52884",
-          "name": "Manuel Goulartt Medeiros",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 9.5,
-          "grossTotal": 150,
-          "toPar": 6,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 75,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 9.5
-            },
-            {
-              "round": 2,
-              "gross": 75,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 9.5
-            }
-          ]
-        },
-        {
-          "fedCode": "57904",
-          "name": "Guo Ziyang",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 11.2,
-          "grossTotal": 155,
-          "toPar": 11,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 78,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 12.2
-            },
-            {
-              "round": 2,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 11.3
-            }
-          ]
-        }
-      ]
-    },
-    {
       "ccode": "009",
       "tcode": "10675",
       "name": "Torneio Fim de Época - 18 buracos",
@@ -24840,434 +23152,6 @@
               "teeName": "BRANCAS",
               "holes": 18,
               "sd": 49.9
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "059",
-      "tcode": "10618",
-      "name": "Junior Major - 9 buracos",
-      "date": "2026-07-04",
-      "campo": "Palheiro Golf",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "58962",
-          "name": "Henriques de Freitas,João",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 48.2,
-          "grossTotal": 40,
-          "toPar": 6,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 40,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 12.5
-            }
-          ]
-        },
-        {
-          "fedCode": "56696",
-          "name": "Luckhardt,Maximilian",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 43,
-          "grossTotal": 47,
-          "toPar": 13,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 47,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 25.4
-            }
-          ]
-        },
-        {
-          "fedCode": "50528",
-          "name": "Camacho,Áurea",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 60,
-          "toPar": 26,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 60,
-              "parTotal": 34,
-              "meters": 2180,
-              "courseRating": 34,
-              "slope": 120,
-              "teeName": "AZUIS",
-              "holes": 9,
-              "sd": 49
-            }
-          ]
-        },
-        {
-          "fedCode": "56705",
-          "name": "Bugaev,Mikhail",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 61,
-          "toPar": 27,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 51.1
-            }
-          ]
-        },
-        {
-          "fedCode": "56647",
-          "name": "Vasconcelos,Lourenço",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 61,
-          "toPar": 27,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 61,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 51.1
-            }
-          ]
-        },
-        {
-          "fedCode": "58960",
-          "name": "Alves,Luis Miguel",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Palheiro",
-          "hcpExact": 52.8,
-          "grossTotal": 62,
-          "toPar": 28,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 62,
-              "parTotal": 34,
-              "meters": 2428,
-              "courseRating": 33.2,
-              "slope": 123,
-              "teeName": "AMARELAS",
-              "holes": 9,
-              "sd": 52.9
-            }
-          ]
-        },
-        {
-          "fedCode": "58969",
-          "name": "Teixeira,Matilde",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "F",
-          "club": "Palheiro",
-          "hcpExact": 54,
-          "grossTotal": 64,
-          "toPar": 30,
-          "parTotal": 34,
-          "nholes": 9,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 64,
-              "parTotal": 34,
-              "meters": 2180,
-              "courseRating": 34,
-              "slope": 120,
-              "teeName": "AZUIS",
-              "holes": 9,
-              "sd": 56.5
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ccode": "004",
-      "tcode": "10581",
-      "name": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
-      "date": "2026-07-07",
-      "campo": "Estoril",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 2,
-      "players": [
-        {
-          "fedCode": "49085",
-          "name": "CASTRO FERREIRA,Ricardo",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 6,
-          "grossTotal": 153,
-          "toPar": 15,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 77,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 11.4
-            },
-            {
-              "round": 2,
-              "gross": 76,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 10.4
-            }
-          ]
-        },
-        {
-          "fedCode": "57904",
-          "name": "ZIYANG,Guo",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 10.5,
-          "grossTotal": 159,
-          "toPar": 21,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 78,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 12.4
-            },
-            {
-              "round": 2,
-              "gross": 81,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 15.3
-            }
-          ]
-        },
-        {
-          "fedCode": "58864",
-          "name": "KHONTULEV,Mikhail",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 25.9,
-          "grossTotal": 185,
-          "toPar": 47,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 91,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 25.2
-            },
-            {
-              "round": 2,
-              "gross": 94,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 28.1
-            }
-          ]
-        },
-        {
-          "fedCode": "57587",
-          "name": "FERREIRA,Maria Madalena Neves",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Estoril",
-          "hcpExact": 27.3,
-          "grossTotal": 205,
-          "toPar": 67,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 100,
-              "parTotal": 69,
-              "meters": 4345,
-              "courseRating": 68.6,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 29.6
-            },
-            {
-              "round": 2,
-              "gross": 105,
-              "parTotal": 69,
-              "meters": 4345,
-              "courseRating": 68.6,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 34.3
-            }
-          ]
-        },
-        {
-          "fedCode": "54255",
-          "name": "IVO DE CARVALHO,Francisco",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Belas",
-          "hcpExact": 28.2,
-          "grossTotal": 194,
-          "toPar": 56,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 100,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 34
-            },
-            {
-              "round": 2,
-              "gross": 94,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 28.1
-            }
-          ]
-        },
-        {
-          "fedCode": "44649",
-          "name": "SANTOS,Artur",
-          "escalao": "Sub 10",
-          "regiao": null,
-          "sex": "M",
-          "club": "Exército",
-          "hcpExact": 36.6,
-          "grossTotal": 216,
-          "toPar": 78,
-          "parTotal": 69,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 106,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 39.9
-            },
-            {
-              "round": 2,
-              "gross": 110,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 43.8
             }
           ]
         }
@@ -32105,6 +29989,1914 @@
       "_provas": [
         "Torneio Cidade de Machico Junior 9 Buracos",
         "Torneio NOS Empresas Junior 9 Buracos 2026"
+      ]
+    },
+    {
+      "ccode": "003",
+      "tcode": "clube-9-1435",
+      "name": "Provas de clube · 9 buracos (~1435 m)",
+      "date": "2026-03-01",
+      "campo": "2 provas · Miramar, Palheiro Golf",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "51176",
+          "name": "Henrique Monção",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 49.8,
+          "grossTotal": 46,
+          "toPar": 11,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 37.6,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "53685",
+          "name": "Bruno Neto Lichuck",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 52.8,
+          "grossTotal": 46,
+          "toPar": 11,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 37.6,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "58549",
+          "name": "Tom Georges",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 53.1,
+          "grossTotal": 50,
+          "toPar": 15,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 50,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 46.8,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "51980",
+          "name": "Diego Braga",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 54,
+          "grossTotal": 51,
+          "toPar": 16,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 51,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 49.1,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "52798",
+          "name": "Vicente Messala",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 54,
+          "grossTotal": 55,
+          "toPar": 20,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 55,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 58.3,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "57580",
+          "name": "Luis Maria Azevedo",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 48.8,
+          "grossTotal": 66,
+          "toPar": 31,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 66,
+              "parTotal": 35,
+              "meters": 1402,
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 83.7,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "56696",
+          "name": "Luckhardt,Maximilian",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 44.7,
+          "grossTotal": 44,
+          "toPar": 10,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 44,
+              "parTotal": 34,
+              "meters": 1378,
+              "courseRating": 29,
+              "slope": 103,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 32.9,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "56647",
+          "name": "Vasconcelos,Lourenço",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 57,
+          "toPar": 23,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 57,
+              "parTotal": 34,
+              "meters": 1378,
+              "courseRating": 29,
+              "slope": 103,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 61.4,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "58962",
+          "name": "Henriques de Freitas,João",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 48.2,
+          "grossTotal": 57,
+          "toPar": 23,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 57,
+              "parTotal": 34,
+              "meters": 1378,
+              "courseRating": 29,
+              "slope": 103,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 61.4,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "49205",
+          "name": "Côrte,José Eduardo",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 52.8,
+          "grossTotal": 62,
+          "toPar": 28,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 62,
+              "parTotal": 34,
+              "meters": 1378,
+              "courseRating": 29,
+              "slope": 103,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 72.4,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "58969",
+          "name": "Teixeira,Matilde",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "F",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 68,
+          "toPar": 34,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 34,
+              "meters": 1916,
+              "courseRating": 32.4,
+              "slope": 114,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 70.6,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "59252",
+          "name": "Thomaz Medeiros,Gastão",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Santo da Serra",
+          "hcpExact": 54,
+          "grossTotal": 68,
+          "toPar": 34,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 34,
+              "meters": 1378,
+              "courseRating": 29,
+              "slope": 103,
+              "teeName": "ROXAS",
+              "holes": 9,
+              "sd": 85.6,
+              "_prova": "3º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_provas": [
+        "Circuito Junior Challenge",
+        "3º Torneio Academia Junior - 9 buracos"
+      ]
+    },
+    {
+      "ccode": "003",
+      "tcode": "clube-9-2381",
+      "name": "Provas de clube · 9 buracos (~2381 m)",
+      "date": "2026-01-11",
+      "campo": "4 provas · Miramar, Palheiro Golf, Oporto",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 2,
+      "players": [
+        {
+          "fedCode": "53685",
+          "name": "Bruno Neto Lichuck",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Citynorte",
+          "hcpExact": 52.8,
+          "grossTotal": 60,
+          "toPar": 25,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 60,
+              "parTotal": 35,
+              "meters": 2389,
+              "courseRating": 33.2,
+              "slope": 115,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 52.7,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "51176",
+          "name": "Henrique Monção",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 49.8,
+          "grossTotal": 66,
+          "toPar": 31,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 66,
+              "parTotal": 35,
+              "meters": 2389,
+              "courseRating": 33.2,
+              "slope": 115,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 64.5,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "52797",
+          "name": "Francisco Vaz",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 54,
+          "grossTotal": 68,
+          "toPar": 33,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 35,
+              "meters": 2389,
+              "courseRating": 33.2,
+              "slope": 115,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 68.4,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "58549",
+          "name": "Tom Georges",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 53.1,
+          "grossTotal": 77,
+          "toPar": 42,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 35,
+              "meters": 2389,
+              "courseRating": 33.2,
+              "slope": 115,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 86.1,
+              "_prova": "Circuito Junior Challenge",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "56696",
+          "name": "Luckhardt,Maximilian",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 47.8,
+          "grossTotal": 102,
+          "toPar": 34,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 55,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 40.1,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 47,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 25.4,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "50528",
+          "name": "Camacho,Áurea",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 116,
+          "toPar": 48,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 56,
+              "parTotal": 34,
+              "meters": 2180,
+              "courseRating": 34,
+              "slope": 120,
+              "teeName": "AZUIS",
+              "holes": 9,
+              "sd": 41.4,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 60,
+              "parTotal": 34,
+              "meters": 2180,
+              "courseRating": 34,
+              "slope": 120,
+              "teeName": "AZUIS",
+              "holes": 9,
+              "sd": 49,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "58962",
+          "name": "Henriques de Freitas,João",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 96,
+          "toPar": 28,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 56,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 41.9,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 40,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 12.5,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "49205",
+          "name": "Côrte,José Eduardo",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 52.8,
+          "grossTotal": 61,
+          "toPar": 27,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 61,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 51.1,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "56647",
+          "name": "Vasconcelos,Lourenço",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 126,
+          "toPar": 58,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 65,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 58.4,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 61,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 51.1,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "56705",
+          "name": "Bugaev,Mikhail",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 52.8,
+          "grossTotal": 137,
+          "toPar": 69,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 78.6,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 61,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 51.1,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "58960",
+          "name": "Alves,Luis Miguel",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 52.8,
+          "grossTotal": 140,
+          "toPar": 72,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 82.3,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 62,
+              "parTotal": 34,
+              "meters": 2428,
+              "courseRating": 33.2,
+              "slope": 123,
+              "teeName": "AMARELAS",
+              "holes": 9,
+              "sd": 52.9,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "58969",
+          "name": "Teixeira,Matilde",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "F",
+          "club": "Palheiro",
+          "hcpExact": 54,
+          "grossTotal": 152,
+          "toPar": 84,
+          "parTotal": 34,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 88,
+              "parTotal": 34,
+              "meters": 2180,
+              "courseRating": 34,
+              "slope": 120,
+              "teeName": "AZUIS",
+              "holes": 9,
+              "sd": 101.7,
+              "_prova": "2º Torneio Academia Junior - 9 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 2,
+              "gross": 64,
+              "parTotal": 34,
+              "meters": 2180,
+              "courseRating": 34,
+              "slope": 120,
+              "teeName": "AZUIS",
+              "holes": 9,
+              "sd": 56.5,
+              "_prova": "Junior Major - 9 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "54330",
+          "name": "Lucas Pereira Amorim",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 12.3,
+          "grossTotal": 39,
+          "toPar": 4,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 39,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 11.2,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "49328",
+          "name": "Catarina Loureiro",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Oporto",
+          "hcpExact": 18.3,
+          "grossTotal": 46,
+          "toPar": 11,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 46,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 35.6,
+              "slope": 125,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 18.8,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "54475",
+          "name": "Maksim Mutalapov",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 29.5,
+          "grossTotal": 47,
+          "toPar": 12,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 47,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 26.4,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "56643",
+          "name": "Francisco Petit Ramos",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 54,
+          "grossTotal": 52,
+          "toPar": 17,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 52,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 35.9,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "56641",
+          "name": "Rafael Paço",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 31.8,
+          "grossTotal": 52,
+          "toPar": 17,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 52,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 35.9,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "49745",
+          "name": "Guilherme Petit Ramos",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 49.6,
+          "grossTotal": 56,
+          "toPar": 21,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 56,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 43.5,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "56940",
+          "name": "Marta Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Oporto",
+          "hcpExact": 54,
+          "grossTotal": 61,
+          "toPar": 26,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 61,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 35.6,
+              "slope": 125,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 45.9,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "53020",
+          "name": "Francisco Raposo de Magalhães",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 54,
+          "grossTotal": 61,
+          "toPar": 26,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 61,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 53,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "56745",
+          "name": "Miguel de Sá",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 54,
+          "grossTotal": 68,
+          "toPar": 33,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 35,
+              "meters": 2413,
+              "courseRating": 33.1,
+              "slope": 119,
+              "teeName": "VERMELHAS",
+              "holes": 9,
+              "sd": 66.3,
+              "_prova": "3º Torneio Academia",
+              "_campo": "Oporto"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_provas": [
+        "Circuito Junior Challenge",
+        "2º Torneio Academia Junior - 9 buracos",
+        "3º Torneio Academia",
+        "Junior Major - 9 buracos"
+      ]
+    },
+    {
+      "ccode": "059",
+      "tcode": "10613",
+      "name": "2º Torneio Academia Junior - 18 buracos",
+      "date": "2026-02-21",
+      "campo": "Palheiro Golf",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "47677",
+          "name": "Costa,Íris",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Palheiro",
+          "hcpExact": 43.1,
+          "grossTotal": 108,
+          "toPar": 36,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 108,
+              "parTotal": 72,
+              "meters": 4398,
+              "courseRating": 68.7,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 35.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccode": "007",
+      "tcode": "clube-18-4535",
+      "name": "Provas de clube · 18 buracos (~4535 m)",
+      "date": "2026-05-08",
+      "campo": "4 provas · Santo da Serra - Machico-Desertas, Palheiro Golf, Quinta do Peru, Estoril",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 4,
+      "players": [
+        {
+          "fedCode": "52884",
+          "name": "Manuel Goulartt Medeiros",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Santo da Serra",
+          "hcpExact": 9.5,
+          "grossTotal": 304,
+          "toPar": 16,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 79,
+              "parTotal": 72,
+              "meters": 4657,
+              "courseRating": 65.9,
+              "slope": 125,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 11.8,
+              "_prova": "Torneio Cidade de Machico 2026",
+              "_campo": "Santo da Serra - Machico-Desertas"
+            },
+            {
+              "round": 2,
+              "gross": 75,
+              "parTotal": 72,
+              "meters": 4398,
+              "courseRating": 64.2,
+              "slope": 121,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 10.1,
+              "_prova": "3º Torneio Academia Junior - 18 buracos",
+              "_campo": "Palheiro Golf"
+            },
+            {
+              "round": 3,
+              "gross": 75,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 9.5,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 4,
+              "gross": 75,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 9.5,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            }
+          ]
+        },
+        {
+          "fedCode": "51896",
+          "name": "Vicente Rodrigues",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Palheiro",
+          "hcpExact": 27.5,
+          "grossTotal": 180,
+          "toPar": 36,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 98,
+              "parTotal": 72,
+              "meters": 4657,
+              "courseRating": 65.9,
+              "slope": 125,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 29,
+              "_prova": "Torneio Cidade de Machico 2026",
+              "_campo": "Santo da Serra - Machico-Desertas"
+            },
+            {
+              "round": 2,
+              "gross": 82,
+              "parTotal": 72,
+              "meters": 4398,
+              "courseRating": 64.2,
+              "slope": 121,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 16.6,
+              "_prova": "3º Torneio Academia Junior - 18 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 6,
+          "grossTotal": 297,
+          "toPar": 15,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 70,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 4.9,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 2,
+              "gross": 74,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 8.6,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 3,
+              "gross": 77,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 11.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 4,
+              "gross": 76,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 10.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "57904",
+          "name": "Guo Ziyang",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 11.2,
+          "grossTotal": 314,
+          "toPar": 32,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 12.2,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 2,
+              "gross": 77,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 11.3,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 3,
+              "gross": 78,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 12.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 4,
+              "gross": 81,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 15.3,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "58864",
+          "name": "KHONTULEV,Mikhail",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 25.9,
+          "grossTotal": 185,
+          "toPar": 47,
+          "parTotal": 69,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 91,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 25.2,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 2,
+              "gross": 94,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 28.1,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "57587",
+          "name": "FERREIRA,Maria Madalena Neves",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Estoril",
+          "hcpExact": 27.3,
+          "grossTotal": 205,
+          "toPar": 67,
+          "parTotal": 69,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 100,
+              "parTotal": 69,
+              "meters": 4345,
+              "courseRating": 68.6,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 29.6,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 2,
+              "gross": 105,
+              "parTotal": 69,
+              "meters": 4345,
+              "courseRating": 68.6,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 34.3,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "54255",
+          "name": "IVO DE CARVALHO,Francisco",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Belas",
+          "hcpExact": 28.2,
+          "grossTotal": 194,
+          "toPar": 56,
+          "parTotal": 69,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 100,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 34,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 2,
+              "gross": 94,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 28.1,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "44649",
+          "name": "SANTOS,Artur",
+          "escalao": "Sub 10",
+          "regiao": null,
+          "sex": "M",
+          "club": "Exército",
+          "hcpExact": 36.6,
+          "grossTotal": 216,
+          "toPar": 78,
+          "parTotal": 69,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 106,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 39.9,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 2,
+              "gross": 110,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 43.8,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_provas": [
+        "Torneio Cidade de Machico 2026",
+        "3º Torneio Academia Junior - 18 buracos",
+        "QUINTA DO PERU PJA Masters 2026",
+        "CAMP. JUVENIL - T.V.P.M. (Escalão B)"
+      ]
+    },
+    {
+      "ccode": "132",
+      "tcode": "clube-18-4915",
+      "name": "Provas de clube · 18 buracos (~4915 m)",
+      "date": "2026-01-10",
+      "campo": "2 provas · Royal Óbidos, PGA  Aroeira No.2",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 2,
+      "players": [
+        {
+          "fedCode": "57233",
+          "name": "Valentin Iria",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Quinta Lágrimas",
+          "hcpExact": 31.8,
+          "grossTotal": 107,
+          "toPar": 35,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 107,
+              "parTotal": 72,
+              "meters": 5024,
+              "courseRating": 66.9,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 36.5,
+              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
+              "_campo": "Royal Óbidos"
+            }
+          ]
+        },
+        {
+          "fedCode": "52077",
+          "name": "Tomás Tomásio",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Cantanhede",
+          "hcpExact": 49.5,
+          "grossTotal": 110,
+          "toPar": 38,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 110,
+              "parTotal": 72,
+              "meters": 5024,
+              "courseRating": 66.9,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 39.3,
+              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
+              "_campo": "Royal Óbidos"
+            }
+          ]
+        },
+        {
+          "fedCode": "57904",
+          "name": "Guo Ziyang",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 11.6,
+          "grossTotal": 161,
+          "toPar": 17,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 11.1,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 84,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 17.9,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            }
+          ]
+        },
+        {
+          "fedCode": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 6.8,
+          "grossTotal": 151,
+          "toPar": 7,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 12.1,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 73,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 7.2,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            }
+          ]
+        },
+        {
+          "fedCode": "48971",
+          "name": "Sabrina Ribeiro Crisóstomo",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Vilamoura, C. G",
+          "hcpExact": 9.9,
+          "grossTotal": 173,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 69.8,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 16.2,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 86,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 69.8,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 15.3,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            }
+          ]
+        },
+        {
+          "fedCode": "52884",
+          "name": "Manuel Goulartt Medeiros",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Santo da Serra",
+          "hcpExact": 9.8,
+          "grossTotal": 173,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 94,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 27.5,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 79,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 13,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_provas": [
+        "1ª Ordem de de Mérito - Marques de Marialva",
+        "PJA  Aroeira Masters 2026"
+      ]
+    },
+    {
+      "ccode": "001",
+      "tcode": "clube-18-5236",
+      "name": "Provas de clube · 18 buracos (~5236 m)",
+      "date": "2026-01-11",
+      "campo": "2 provas · Oporto, Miramar",
+      "serie": "Circuito juvenil",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "49328",
+          "name": "Catarina Loureiro",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Oporto",
+          "hcpExact": 20.1,
+          "grossTotal": 99,
+          "toPar": 28,
+          "parTotal": 71,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 99,
+              "parTotal": 71,
+              "meters": 4969,
+              "courseRating": 72.4,
+              "slope": 129,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 23.3,
+              "_prova": "1ª Prova de Apuramento sub14",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "54475",
+          "name": "Maksim Mutalapov",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 31.6,
+          "grossTotal": 114,
+          "toPar": 43,
+          "parTotal": 71,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 114,
+              "parTotal": 71,
+              "meters": 5408,
+              "courseRating": 69.4,
+              "slope": 129,
+              "teeName": "AMARELAS",
+              "holes": 18,
+              "sd": 39.1,
+              "_prova": "1ª Prova de Apuramento sub14",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "53645",
+          "name": "José Maria Pereira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 16.2,
+          "grossTotal": 86,
+          "toPar": 16,
+          "parTotal": 70,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 86,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
+              "holes": 18,
+              "sd": 16.6,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "51180",
+          "name": "Ricardo Rocha Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 13.8,
+          "grossTotal": 87,
+          "toPar": 17,
+          "parTotal": 70,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
+              "holes": 18,
+              "sd": 17.5,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "51182",
+          "name": "Eduardo Rocha Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 18,
+          "grossTotal": 90,
+          "toPar": 20,
+          "parTotal": 70,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 90,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
+              "holes": 18,
+              "sd": 20.3,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_provas": [
+        "1ª Prova de Apuramento sub14",
+        "Circuito Junior"
       ]
     }
   ]

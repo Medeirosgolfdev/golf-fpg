@@ -340,7 +340,12 @@ export function PJARankingView({
     // Fonte com série própria (sub12-ranking.json): agrupar por série e, dentro
     // dela, por ordem cronológica.
     const serie = (t as any).serie as string | undefined;
-    if (serie) return `${SERIE_ORDER[serie] ?? "8"}_${serie}_${date}`;
+    if (serie) {
+      // As colunas de "provas extra" fecham o circuito, em vez de se meterem
+      // entre as edições pela data.
+      const sufixo = (t as any)._extra ? "z" : "a";
+      return `${SERIE_ORDER[serie] ?? "8"}_${serie}_${sufixo}_${date}`;
+    }
     const evType = classifyPJAEvent(t);
     // DT por região
     if (evType === "DT") {
