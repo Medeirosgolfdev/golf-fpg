@@ -12,9 +12,11 @@
  *      scrapeados (pull-torneios*, drive-data-*, aquapor-data-*). Torneios sem
  *      leaderboard ficam de fora — só temos lá as voltas dos nossos, o que
  *      falsearia o ranking.
- *   3. Mantém apenas jogadores JÚNIORES (Sub-21 ou abaixo à data de hoje),
+ *   3. Descarta os torneios em EXCLUDE_RX (Drive Tour — circuito regional,
+ *      colunas não comparáveis entre regiões; tem ranking próprio no PJA).
+ *   4. Mantém apenas jogadores JÚNIORES (Sub-21 ou abaixo à data de hoje),
  *      resolvendo a DOB por players.json → federados.json.
- *   4. Escreve public/data/classificacoes.json no formato "fpg-pull" (o mesmo
+ *   5. Escreve public/data/classificacoes.json no formato "fpg-pull" (o mesmo
  *      que a FPGPage/PJARankingView já consomem).
  *
  * CLI:
@@ -40,6 +42,14 @@ const ANCHOR_FEDS = [
 
 /** Escalão máximo incluído (Sub-21 = 21 anos ou menos hoje). */
 const MAX_JUNIOR_AGE = 21;
+
+/** Torneios excluídos do ranking mesmo quando um âncora lá jogou.
+ *  Drive Tour: circuito regional (Tejo/Norte/Madeira/Sul/Açores) — cada miúdo
+ *  só disputa a sua região, portanto as colunas nunca são comparáveis entre
+ *  jogadores de regiões diferentes. Tem ranking próprio no /FPG/rankingPJA. */
+const EXCLUDE_RX = [
+  /Drive\s+Tour/i,
+];
 
 const argv = process.argv.slice(2);
 const argOf = (flag, def) => {
@@ -162,7 +172,7 @@ function main() {
   const todayYear = new Date().getFullYear();
 
   const out = [];
-  let semLeaderboard = 0, semAnchors = 0;
+  let semLeaderboard = 0, semAnchors = 0, excluidos = 0;
   let totalLinhas = 0, juniores = 0, semDob = 0;
 
   for (const e of [...anchorTourns.values()].sort((a, b) => b.date.localeCompare(a.date))) {
@@ -170,6 +180,7 @@ function main() {
     const hit = scraped.get(`${e.ccode}|${e.tcode}`);
     if (!hit) { semLeaderboard++; continue; }
     const t = hit._t;
+    if (EXCLUDE_RX.some((rx) => rx.test(t.name || ""))) { excluidos++; continue; }
 
     const players = [];
     for (const p of t.players || []) {
@@ -234,6 +245,7 @@ function main() {
 
   console.log(`\n  Torneios ranqueados: ${out.length}`);
   console.log(`   ↳ descartados: ${semLeaderboard} sem leaderboard completa` +
+              (excluidos ? `, ${excluidos} excluídos por regra (Drive Tour)` : "") +
               (semAnchors ? `, ${semAnchors} abaixo de --min-anchors` : ""));
   console.log(`  Linhas de jogador: ${totalLinhas} → ${juniores} juniores (${semDob} sem DOB conhecida)`);
   console.log(`  Juniores distintos: ${nPlayers.size}`);
