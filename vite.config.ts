@@ -104,6 +104,20 @@ function parseNum(s: string): number | null {
   return isNaN(n) ? null : n
 }
 
+/* Handicap com a conven\u00e7\u00e3o do golfe: "+5.1" \u00e9 PLUS (abaixo de scratch) e
+   guarda-se NEGATIVO (-5.1), como o resto do projecto (fmtHcp formata
+   negativos como "+5.1"). `parseFloat("+5.1")` dava 5.1 e o sinal
+   desaparecia \u2014 a Sofia Barroso S\u00e1 (+5.1) aparecia como um 5.1 vulgar.
+   Espelha parseHcp() de scripts/fpg-admissions-draw-parser.js. */
+function parseHcp(s: string): number | null {
+  if (!s || s === '-' || s === '\u2013') return null
+  const t = s.trim().replace(',', '.')
+  const isPlus = t.startsWith('+')
+  const n = parseFloat(isPlus ? t.slice(1) : t)
+  if (isNaN(n)) return null
+  return isPlus && n !== 0 ? -n : n
+}
+
 function extractCells(rowHtml: string): string[] {
   const cells: string[] = []
   let m: RegExpExecArray | null
@@ -182,7 +196,7 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
 
     // HCP e VAC: por header se encontrado, senão fallback posicional
     // HCP está no intervalo [-10, 54]; VAC é tipicamente > 60
-    let hcp: number | null = iHcp >= 0 ? parseNum(cells[iHcp] ?? '') : null
+    let hcp: number | null = iHcp >= 0 ? parseHcp(cells[iHcp] ?? '') : null
     let vac: number | null = iVac >= 0 ? parseNum(cells[iVac] ?? '') : null
 
     if ((hcp === null || vac === null) && fedIdx >= 0) {

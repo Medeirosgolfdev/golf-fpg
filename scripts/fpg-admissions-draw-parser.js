@@ -43,6 +43,30 @@ function parseNum(s) {
   return Number.isFinite(n) ? n : null;
 }
 
+/** Parse de HANDICAP com a convenção do golfe.
+ *
+ * "+5.1" é um handicap PLUS — o jogador está ABAIXO de scratch e DEVOLVE
+ * pancadas. É o oposto de "5.1". A FPG publica-o com o "+" no HTML, mas tanto
+ * `parseFloat("+5.1")` como `Number("+5.1")` devolvem 5.1 e o sinal
+ * desaparecia em silêncio: a Sofia Barroso Sá (+5.1) aparecia nas inscrições
+ * como um 5.1 vulgar — mais de 10 pancadas de diferença, e a ordenação por
+ * handicap ficava errada.
+ *
+ * Guarda-se como NEGATIVO (-5.1), que é a convenção já usada em todo o
+ * projecto: `fmtHcp` (src/utils/format.ts) formata negativos como "+5.1",
+ * o `hcpExact` dos drive-data vem negativo da API, e o body do ClassifLST usa
+ * `minhcp: "-8"`. Assim o parser passa a concordar com o resto.
+ */
+function parseHcp(s) {
+  const t = String(s || "").trim().replace(",", ".");
+  if (!t) return null;
+  const isPlus = t.startsWith("+");
+  const n = Number(isPlus ? t.slice(1) : t);
+  if (!Number.isFinite(n)) return null;
+  // "+0.0" é scratch, não "-0" — normalizar para 0.
+  return isPlus && n !== 0 ? -n : n;
+}
+
 /* ═══════════════════════════════════════════════════════
    PARSE ADMISSIONS (tournAdmissions.aspx)
    ═══════════════════════════════════════════════════════
@@ -142,7 +166,7 @@ function parseAdmissions(html) {
       fed: nfed || null,
       nome: nome || null,
       clube: clube || null,
-      hcp: parseNum(hcp),
+      hcp: parseHcp(hcp),
       vacf: parseNum(vacf),
       registo: registo || null,  // "YYYY/MM/DD HH:MM" raw format
       status: "confirmed",       // refinado em baixo
@@ -305,4 +329,5 @@ module.exports = {
   _stripTags: stripTags,
   _decodeHTML: decodeHTML,
   _parseNum: parseNum,
+  _parseHcp: parseHcp,
 };

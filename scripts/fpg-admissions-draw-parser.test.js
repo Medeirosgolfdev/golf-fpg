@@ -135,3 +135,71 @@ describe("parseDraw", () => {
     expect(ps[1].clube).toBe("Palheiro");
   });
 });
+
+/* ─────────────────────────────────────────────────────────────────────────
+   HANDICAPS PLUS ("+5.1")
+   Regressão 2026-07-18: a FPG publica handicaps plus com "+" no HTML, mas
+   parseFloat("+5.1") devolve 5.1 e o sinal desaparecia em silêncio — a Sofia
+   Barroso Sá (+5.1, abaixo de scratch) aparecia nas inscrições como um 5.1
+   vulgar. Convenção do projecto: plus guarda-se NEGATIVO (fmtHcp formata
+   negativos como "+5.1").
+   ───────────────────────────────────────────────────────────────────────── */
+const { _parseHcp } = require("./fpg-admissions-draw-parser.js");
+
+describe("parseHcp — convenção de handicap plus", () => {
+  it('"+5.1" (plus) → negativo', () => {
+    expect(_parseHcp("+5.1")).toBe(-5.1);
+  });
+  it('"5.1" (normal) → positivo', () => {
+    expect(_parseHcp("5.1")).toBe(5.1);
+  });
+  it('aceita vírgula decimal', () => {
+    expect(_parseHcp("+2,3")).toBe(-2.3);
+    expect(_parseHcp("2,3")).toBe(2.3);
+  });
+  it('"+0.0" é scratch, não -0', () => {
+    expect(Object.is(_parseHcp("+0.0"), 0)).toBe(true);
+  });
+  it("vazio/inválido → null", () => {
+    expect(_parseHcp("")).toBe(null);
+    expect(_parseHcp("-")).toBe(null);
+    expect(_parseHcp("abc")).toBe(null);
+  });
+});
+
+describe("parseAdmissions — torneio com handicap plus (fixture 10880)", () => {
+  const adm = parseAdmissions(loadFixture("admissions-10880-plushcp.html"));
+
+  it("parseia o torneio", () => {
+    expect(adm.name).toBe("4º Torneio do Circuito Aquapor S");
+    expect(adm.players.length).toBe(12);
+  });
+
+  it("Sofia Barroso Sá (+5.1) fica guardada como -5.1", () => {
+    const sofia = adm.players.find(p => /Sofia Barroso/.test(p.nome || ""));
+    expect(sofia).toBeTruthy();
+    expect(sofia.hcp).toBe(-5.1);
+  });
+
+  it("apanha TODOS os plus do torneio (eram 3 em 12)", () => {
+    // Confirmado no HTML cru: "+5.1", "+0.2", "+0.6" — os três apareciam
+    // como 5.1 / 0.2 / 0.6 antes deste fix.
+    const plus = adm.players.filter(p => p.hcp != null && p.hcp < 0)
+      .map(p => [p.nome, p.hcp]);
+    expect(plus).toEqual([
+      ["Sofia Barroso Sá", -5.1],
+      ["Francisca Ferreira Da Costa", -0.2],
+      ["Eva Silva", -0.6],
+    ]);
+  });
+
+  it("handicaps normais mantêm-se positivos", () => {
+    const laura = adm.players.find(p => /Laura Santos/.test(p.nome || ""));
+    expect(laura.hcp).toBe(1.2);
+  });
+
+  it("o VAC não é afectado pela regra do plus", () => {
+    const sofia = adm.players.find(p => /Sofia Barroso/.test(p.nome || ""));
+    expect(sofia.vacf).toBe(70.4);
+  });
+});

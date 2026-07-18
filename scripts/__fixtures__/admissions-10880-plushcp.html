@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	Inscritos em Torneio
+</title><link href="Content/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="Content/Site.css" rel="stylesheet" type="text/css" /><link href="Content/themes/metroblue/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    <!-- jTable style file -->
+    <link href="Scripts/jtable/themes/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/modernizr-2.8.3.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-2.2.2.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.11.4.min.js" type="text/javascript"></script>
+    
+    <script src="Scripts/jtablesite.js" type="text/javascript"></script>
+
+    <!-- A helper library for JSON serialization -->
+    <script type="text/javascript" src="Scripts/jtable/external/json2.js"></script>
+    <!-- Core jTable script file -->
+    <script type="text/javascript" src="Scripts/jtable/jquery.jtable.js"></script>
+    <!-- ASP.NET Web Forms extension for jTable -->
+    <script type="text/javascript" src="Scripts/jtable/extensions/jquery.jtable.aspnetpagemethods.js"></script>
+
+    <!-- Date formatting -->
+    <script type="text/javascript" src="Scripts/moment.min.js"></script>
+    
+    <script src="Scripts/bootstrap.min.js"  type="text/javascript"></script>
+
+    
+
+    
+    
+    
+
+    <!-- CSS to control color codes in Scorecard -->
+    
+    <link href="Content/datagolf.css" rel="stylesheet" type="text/css" />
+    
+    
+    
+    
+
+     <script  type="text/javascript" src="Scripts/iframeResizer.contentWindow.min.js"></script>
+
+</head>
+
+<body>
+
+<form method="post" action="./tournAdmissions.aspx?ccode=000&amp;tcode=10880" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="97EA050D" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="4R14+6BQmNpprgi+N59VBrjTM+LwVsS6YqISaYWbvCgI6l9VjUfBO8gN4IVXKcKyD4+cM8sMEy8EiXYKONjWjD00nMkuTHlz5Ofo6TVYFLOAnmxsNEpoxkvus65oBw1L1iWMyzJGbtu07mIdhfiN2pi8/CI9na9oQt7i6uNr8GvQcJoDD3GRzSUJYq5QI34/Gfw7qF1nQTE78YSZAQbTX0PEn9/zesA1RxuvRib5cywpP8Y6g5w1oUfZoW9eTZc1z2ugvYdCS/jZpRNUXAEbdXMOBX16fuw98sVbBEJ6PbcRRlF4ez/Rda3XZkNK1xGdTcHZhZ+L9xbjLD55oj0aHFiOX8ZM3ETsc9rmd68DRm4=" />
+</div>
+
+    <span id="lblTorn" style="display:none;">10880</span>
+    <span id="lblClub" style="display:none;">000</span>
+    <span id="lblTournAdminID" style="display:none;">70176</span>
+    <span id="lblorderName" style="display:none;">SACASC</span>
+    <span id="lblRegDate" style="display:none;">Y</span>
+    <span id="lblStatus" style="display:none;">3</span>
+    <span id="lblTeams" style="display:none;">0</span>
+    <span id="lblCutNumber" style="display:none;">48</span>
+    <span id="lblCutOrder" style="display:none;">3</span>
+    <span id="lblSacfUsed" style="display:none;">Y</span>
+
+<div class="container">
+
+    <div id="panelTournInfo">
+	
+        <div class="jumbotron jumboadmis">
+            <div class="row">
+                <div class="col-sm-10 col-xs-9">
+                    <div class="form-group">
+                    <span id="lblTdesc" Class="H4title">4º Torneio do Circuito Aquapor S</span>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-3">
+                    <div class="form-group">
+                    <span id="lbldt" type="date" Class="H4Date">18/07/2026</span>
+                    </div>
+                </div>
+            </div>            
+
+            <div id="drNumRounds" class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <table id="radioNRounds" cellspacing="5" cellpadding="0" style="width:100%;display:none;">
+		<tr>
+			<td><span style="margin-right:5px;"><input id="radioNRounds_0" type="radio" name="radioNRounds" value="1" checked="checked" /><label for="radioNRounds_0">Volta 1  </label></span></td>
+		</tr>
+	</table> 
+                    </div>
+                </div>
+            </div>
+
+            <div id="divbuttons" class="row">
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <a id="btnInscri" type="button" class="btn btn-primary btn-md btnAdmis" href="javascript:__doPostBack(&#39;btnInscri&#39;,&#39;&#39;)">Verificar Inscritos</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12" style="text-align:center;">
+                    <span id="lblPlayersCount">Jogadores Inscritos:</span>
+                    <span id="PlayersCount">12</span><br />
+                    
+                    <span id="lblTournStatus">Inscrições fechadas</span>&nbsp;&nbsp;&nbsp;
+                </div>
+                
+
+            </div>
+            <div id="DescAdic" class="row" style="display:none;">
+                <div class="col-sm-12 col-xs-12">
+                    <span id="lblDescAdic"></span>
+                </div>
+            </div>
+
+        </div>
+    
+</div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th><span id="id" class="colheader">#</span></th>
+            <th><span id="nfeder" class="colheader">Nº Fed.</span></th>
+            <th><a id="lnkBtSoName" class="colheader" href="javascript:__doPostBack(&#39;lnkBtSoName&#39;,&#39;&#39;)">Nome</a></th>
+            <th><a id="lnkBtSoTeam" class="colheader" href="javascript:__doPostBack(&#39;lnkBtSoTeam&#39;,&#39;&#39;)">Clube</a></th>
+            <th><a id="lnkBtSoHcp" class="colheader" href="javascript:__doPostBack(&#39;lnkBtSoHcp&#39;,&#39;&#39;)">HCP</a></th>
+              
+            <th><a id="lnkBtSoSacf" class="colheader" href="javascript:__doPostBack(&#39;lnkBtSoSacf&#39;,&#39;&#39;)">VAC-F</a></th>
+              
+            <th><a id="lnkBtSoReg" class="colheader" href="javascript:__doPostBack(&#39;lnkBtSoReg&#39;,&#39;&#39;)">Registo</a></th>
+            
+            </tr>
+        </thead>
+            
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            1
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            32437
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Sofia Barroso Sá
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Assoc. Qta.Lago
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_0">
+                                +5.1
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            70.4
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/07/08 16:02
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            2
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            40981
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Francisca Ferreira Da Costa
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_1">
+                                +0.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            70.7
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/07/01 07:36
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            3
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46437
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Eva Silva
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Oporto
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_2">
+                                +0.6
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            70.8
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/23 18:39
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            4
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            45393
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Laura Santos
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            PXO Clube
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_3">
+                                1.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            73.2
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/21 15:57
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            5
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            55270
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Grace Gordon
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_4">
+                                2.8
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            73.9
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/22 14:32
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            6
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46297
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Camila Pazos
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_5">
+                                2.7
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            74.5
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/28 10:51
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            7
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46853
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Maria Francisca Santos
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Oporto
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_6">
+                                4.6
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            75.9
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/18 13:09
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            8
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46310
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Margarida Silva Pinto
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_7">
+                                6.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            77.3
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/07/05 12:02
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            9
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46489
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Maria Loureiro
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Oporto
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_8">
+                                5.6
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            78.0
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/20 14:02
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            10
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            48794
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Catarina Sousa Conceição
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_9">
+                                7.7
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            78.1
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/18 11:05
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            11
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            46482
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Maria Cunha
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Palheiro
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_10">
+                                4.9
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            78.1
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/06/25 20:00
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            12
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            48971
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Sabrina Ribeiro Crisóstomo
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_11">
+                                7.3
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            79.3
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/07/04 15:01
+                            </td>
+                        
+                    </tr>
+                </tbody>
+            
+    </table>
+
+    <p class="cutline col-sm-12 text-center" ><span id="lblCutLine" Class="cutline">Linha de CUT</span></p>
+
+    <table class="table table-hover">
+        
+    </table>
+    <div class="row">
+       <div class="col-xs-12 languages">
+            <a id="buttonLangPT" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangPT&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">PT</a>
+              <a id="buttonLangGB" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangGB&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">UK</a>
+              <a id="buttonLangES" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangES&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">ES</a>
+              <a id="buttonLangTR" class="btn btn-secondary btn-sm" href="javascript:__doPostBack(&#39;buttonLangTR&#39;,&#39;&#39;)" style="font-size:11px; padding:3px 3px 3px 3px;">TR</a>
+        </div>      
+    </div>
+</div>
+
+</form>
+
+</body>
+</html>

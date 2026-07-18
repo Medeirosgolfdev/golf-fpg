@@ -145,6 +145,19 @@ function parseNum(s) {
   const n = parseFloat(String(s).replace(",", "."));
   return isNaN(n) ? null : n;
 }
+/* Handicap com a conven\u00e7\u00e3o do golfe: "+5.1" \u00e9 PLUS (abaixo de scratch) e
+   guarda-se NEGATIVO (-5.1) \u2014 \u00e9 assim que o resto do projecto o representa
+   (fmtHcp formata negativos como "+5.1"). `parseFloat("+5.1")` devolvia 5.1
+   e o sinal desaparecia em sil\u00eancio. Espelha parseHcp() de
+   scripts/fpg-admissions-draw-parser.js e do vite.config.ts. */
+function parseHcp(s) {
+  if (!s || s === "-" || s === "\u2013") return null;
+  const t = String(s).trim().replace(",", ".");
+  const isPlus = t.startsWith("+");
+  const n = parseFloat(isPlus ? t.slice(1) : t);
+  if (isNaN(n)) return null;
+  return isPlus && n !== 0 ? -n : n;
+}
 function extractCells(rowHtml) {
   const cells = [];
   const re = /<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/gi;
@@ -209,7 +222,7 @@ function parseAdmissionsTable(html) {
       : (cells.find(c => c.length > 4 && /[a-záéíóúâêîôûãõç]/i.test(c) && !/^\d/.test(c)) || "");
     const clube = iClube >= 0 ? (cells[iClube] || "") : "";
 
-    let hcp = iHcp >= 0 ? parseNum(cells[iHcp] || "") : null;
+    let hcp = iHcp >= 0 ? parseHcp(cells[iHcp] || "") : null;
     let vac = iVac >= 0 ? parseNum(cells[iVac] || "") : null;
     if ((hcp === null || vac === null) && fedIdx >= 0) {
       for (let ci = fedIdx + 1; ci < cells.length; ci++) {
