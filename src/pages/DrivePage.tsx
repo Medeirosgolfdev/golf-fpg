@@ -1242,6 +1242,14 @@ function DriveContent() {
   const [sub12Search, setSub12Search]   = useState("");
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
 
+  // Torneio seleccionado — vem do URL (?t=) para que o link seja partilhável.
+  // Sem isto, /drive?series=aquapor abria sempre o torneio MAIS RECENTE da
+  // série e não aquele que se estava a ver: partilhar o link mandava a outra
+  // pessoa para outro torneio (e mudava sozinho à medida que novos torneios
+  // fossem scrapados). Declarado aqui, acima do efeito state→URL, porque esse
+  // efeito passou a lê-lo.
+  const [selectedDriveId, setSelectedDriveId] = useState<string | null>(() => getQP("t"));
+
   // Sincronização state → URL (query string). Constrói params só com valores
   // não-default para manter URLs limpas. `replace: true` não pollui histórico.
   useEffect(() => {
@@ -1252,6 +1260,9 @@ function DriveContent() {
     if (regionFilter) sp.set("region", regionFilter);
     if (escFilter.length) sp.set("esc", escFilter.join(","));
     if (yearFilter) sp.set("year", yearFilter);
+    // Torneio aberto — torna o link partilhável ("estamos a ver ESTE").
+    // Só na vista de torneios: nos rankings não há torneio seleccionado.
+    if (navMode === "torneios" && selectedDriveId) sp.set("t", selectedDriveId);
     if (navMode === "ranking-sub12") {
       if (sub12Series !== "tour") sp.set("s12s", sub12Series);
       if (sub12View !== "grid") sp.set("s12v", sub12View);
@@ -1264,7 +1275,7 @@ function DriveContent() {
       setSearchParams(sp, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
+  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, selectedDriveId, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
 
   // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
   // Itera startYear → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
@@ -1348,7 +1359,6 @@ function DriveContent() {
   // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
   const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
   const [raw, setRaw] = useState<Tournament[]>([]);
-  const [selectedDriveId, setSelectedDriveId] = useState<string | null>(null);
   const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   useEffect(() => {
     loadFpgAdmissionsDraws()
