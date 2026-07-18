@@ -67,6 +67,39 @@ describe("buildDriveGroups", () => {
     expect(g[0].entries.map(e => e.escalao)).toEqual(["Sub 10", "Sub 12"]);
   });
 
+  it("funde AQUAPOR Masculino + Senhoras (mesma data/clube) num só evento", () => {
+    // O masculino é multi-ronda (R1/R2/Resumo); o feminino ainda só tem inscrições.
+    const r1  = t({ name: "4º Torneio do Circuito Aquapor - PalmaresGolf", tcode: "10879", series: "aquapor",
+      ccode: "000", date: "2026-07-18", _multiGroup: "AQ", _roundLabel: "R1", _totalRounds: 2 });
+    const res = t({ name: "4º Torneio do Circuito Aquapor - PalmaresGolf", tcode: "10879", series: "aquapor",
+      ccode: "000", date: "2026-07-18", _multiGroup: "AQ", _roundLabel: "Resumo", _totalRounds: 2 });
+    const sen = t({ name: "4º Torneio do Circuito Aquapor S", tcode: "10880", series: "aquapor",
+      ccode: "000", date: "2026-07-18" });
+    const g = buildDriveGroups([r1, res, sen]);
+    expect(g).toHaveLength(1);
+    expect(g[0].isEvent).toBe(true);
+    expect(g[0].subGroups?.map(s => s.divLabel)).toEqual(["Masculino", "Senhoras"]);
+    // O evento herda o id/nome do masculino → URLs já partilhadas continuam válidas.
+    expect(g[0].tcode).toBe("10879");
+
+    const divs = buildDriveDivisions(g[0]);
+    expect(divs.map(d => d.escalao)).toEqual(["Masculino", "Senhoras"]);
+    expect(divs.map(d => d.sex)).toEqual(["M", "F"]);
+    // O sub-grupo masculino continua multi-ronda dentro da sua divisão.
+    expect(divs[0].roundLabels).toEqual(["R1", "R2"]);
+    expect(divs[0].results?._roundLabel).toBe("Resumo");
+    expect(divs[1].results?.tcode).toBe("10880");
+  });
+
+  it("AQUAPOR sem prova de Senhoras fica como grupo único", () => {
+    const g = buildDriveGroups([
+      t({ name: "3º Torneio do Circuito Aquapor", tcode: "10877", series: "aquapor", ccode: "000", date: "2026-05-16" }),
+    ]);
+    expect(g).toHaveLength(1);
+    expect(g[0].isEvent).toBe(false);
+    expect(g[0].subGroups).toBeUndefined();
+  });
+
   it("Challenge single-escalão NÃO é evento", () => {
     const g = buildDriveGroups([t({ name: "X", tcode: "400", series: "challenge", escalao: "Sub 10", ccode: "009" })]);
     expect(g[0].isEvent).toBe(false);

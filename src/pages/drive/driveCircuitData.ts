@@ -77,6 +77,23 @@ export interface DriveGroup {
   isEvent: boolean;
   totalRounds: number;
   entries: FPGTournament[];
+  /** Sub-grupos que viram divisões (tabs) do mesmo evento — usado no AQUAPOR,
+   *  onde Masculino e Senhoras são tcodes distintos da MESMA prova. Cada
+   *  sub-grupo mantém o seu próprio isMulti/totalRounds. */
+  subGroups?: DriveGroup[];
+  /** Label da divisão quando o grupo é sub-grupo de um evento (ex: "Senhoras"). */
+  divLabel?: string;
+  /** Sexo da divisão (badge no tab). */
+  divSex?: "M" | "F";
+}
+
+/** O AQUAPOR publica cada prova em DOIS tcodes na mesma data/clube: o masculino
+ *  ("4º Torneio do Circuito Aquapor") e o feminino, sufixado " S" de Senhoras
+ *  ("4º Torneio do Circuito Aquapor S"). São a MESMA prova — na sidebar têm de
+ *  aparecer como uma entrada só, com tabs Masculino/Senhoras. */
+const AQUAPOR_SENHORAS_RE = /\bS\s*$/;
+function isAquaporSenhoras(t: FPGTournament | undefined): boolean {
+  return !!t && AQUAPOR_SENHORAS_RE.test((t.name || "").trim());
 }
 
 /**
@@ -165,7 +182,59 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
       });
     }
   }
-  return groups;
+  return mergeAquaporSexGroups(groups);
+}
+
+/** Funde os grupos AQUAPOR Masculino + Senhoras da mesma data/clube num só
+ *  evento com dois sub-grupos (→ duas divisões/tabs). Grupos sem par ficam
+ *  intactos (as épocas até 2025 só tinham a prova masculina). */
+function mergeAquaporSexGroups(groups: DriveGroup[]): DriveGroup[] {
+  const byEvent = new Map<string, DriveGroup[]>();
+  for (const g of groups) {
+    const t = g.entries[0];
+    if (t?.series !== "aquapor") continue;
+    const key = `aq-${g.date}-${t.ccode ?? g.campo ?? ""}`;
+    if (!byEvent.has(key)) byEvent.set(key, []);
+    byEvent.get(key)!.push(g);
+  }
+  const merged = new Map<string, DriveGroup>();
+  for (const [key, gs] of byEvent) {
+    if (gs.length < 2) continue;
+    // Masculino primeiro (é o que dá nome/id ao evento — mantém as URLs já
+    // partilhadas), Senhoras depois.
+    const subGroups = [...gs].sort((a, b) =>
+      Number(isAquaporSenhoras(a.entries[0])) - Number(isAquaporSenhoras(b.entries[0])));
+    for (const sg of subGroups) {
+      const fem = isAquaporSenhoras(sg.entries[0]);
+      sg.divLabel = fem ? "Senhoras" : "Masculino";
+      sg.divSex = fem ? "F" : "M";
+    }
+    const main = subGroups[0];
+    merged.set(key, {
+      ...main,
+      escalao: null,
+      isMulti: false,
+      isEvent: true,
+      totalRounds: Math.max(...subGroups.map(s => s.totalRounds)),
+      entries: subGroups.flatMap(s => s.entries),
+      subGroups,
+    });
+  }
+  if (merged.size === 0) return groups;
+  // Preservar a ordem original, substituindo o grupo masculino pelo fundido e
+  // deixando cair o feminino (agora é uma divisão dentro dele).
+  const emitted = new Set<string>();
+  const out: DriveGroup[] = [];
+  for (const g of groups) {
+    const t = g.entries[0];
+    const key = t?.series === "aquapor" ? `aq-${g.date}-${t.ccode ?? g.campo ?? ""}` : null;
+    const m = key ? merged.get(key) : undefined;
+    if (!m) { out.push(g); continue; }
+    if (emitted.has(key!)) continue;
+    emitted.add(key!);
+    out.push(m);
+  }
+  return out;
 }
 
 /** Ano civil a partir da data "YYYY-MM-DD". */
@@ -223,6 +292,20 @@ function runtimeSections(t: FPGTournament): { inscritos?: CircuitInscritos; draw
 
 /** Constrói as divisões (tabs de escalão/ronda) de um grupo. */
 export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
+  if (group.subGroups) {
+    // Evento com sub-grupos (AQUAPOR M/S): cada sub-grupo constrói a sua
+    // divisão pela via normal (preservando multi-ronda) e só troca de rótulo.
+    return group.subGroups.map((sg, i): CircuitDivision => {
+      const [div] = buildDriveDivisions({ ...sg, subGroups: undefined });
+      return {
+        ...div,
+        key: sg.divLabel || `d${i}`,
+        escalao: sg.divLabel || div.escalao,
+        tabLabel: sg.divLabel,
+        ...(sg.divSex ? { sex: sg.divSex } : {}),
+      };
+    });
+  }
   if (group.isEvent) {
     // Challenge multi-escalão: uma divisão por escalão.
     return group.entries.map((t, i): CircuitDivision => ({
