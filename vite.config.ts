@@ -256,6 +256,79 @@ function writeCache(data: CacheFile): void {
   } catch (e) { console.warn('[inscricoes] Erro a gravar public/data/:', e) }
 }
 
+/* Persistir a verificação LIVE no fpg-admissions-draws.json.
+ *
+ * PORQUÊ: o inscricoes_nacionais.json é só a cache do painel dos Nacionais.
+ * A BASE que as páginas (FPGPage/DrivePage → TournamentDetail) mostram, e
+ * contra a qual o badge calcula o "+N novos", é o fpg-admissions-draws.json
+ * — que só o scraper escrevia. Resultado: consultar o live mostrava 9
+ * inscritos mas a página continuava a dizer 6 até o cron correr. Com isto, o
+ * que se vê no live fica gravado na hora.
+ *
+ * Salvaguardas (as mesmas do scraper, para não estragar dados bons):
+ *   • NUNCA tocar em entradas `_manual: true` (curadas à mão);
+ *   • NUNCA gravar 0 inscritos por cima de uma entrada com jogadores;
+ *   • só mexe em `admissions` — os `draws` ficam intactos;
+ *   • se o torneio não existir no ficheiro, é criado com o mínimo.
+ *
+ * ⚠ SÓ FUNCIONA EM DEV. Na Vercel o filesystem é read-only, por isso em
+ * produção o live continua a ser só de leitura (a página mostra na mesma os
+ * números actuais, mas o ficheiro só muda quando o cron committar).
+ */
+const ADM_FILE = join(process.cwd(), 'public', 'data', 'fpg-admissions-draws.json')
+
+function persistLiveAdmissions(
+  ccode: string, tcode: string, jogadores: Jogador[], meta: { nome?: string }
+): void {
+  if (!jogadores.length) return
+  try {
+    if (!existsSync(ADM_FILE)) return
+    const db = JSON.parse(readFileSync(ADM_FILE, 'utf8'))
+    if (!Array.isArray(db.tournaments)) return
+
+    const idx = db.tournaments.findIndex(
+      (t: any) => String(t.ccode) === String(ccode) && String(t.tcode) === String(tcode)
+    )
+    const prev = idx >= 0 ? db.tournaments[idx] : null
+
+    if (prev?._manual) {
+      console.log('[inscricoes] ' + ccode + '/' + tcode + ' é _manual — live NÃO gravado (curado à mão)')
+      return
+    }
+    const antes = prev?.admissions?.totalInscritos ?? 0
+    if (jogadores.length < antes) {
+      // Menos gente do que já tínhamos: pode ser fonte parcial. Não destruir.
+      console.warn('[inscricoes] ' + ccode + '/' + tcode + ' live tem ' + jogadores.length
+        + ' < ' + antes + ' gravados — NÃO gravado (suspeito de fonte parcial)')
+      return
+    }
+    if (jogadores.length === antes) return  // nada de novo, evita reescrever o ficheiro
+
+    const players = jogadores.map((j, i) => ({
+      pos: i + 1, fed: j.fed, nome: j.nome, clube: j.clube,
+      hcp: j.hcp, vac: j.vac, dataInscricao: j.dataInscricao, status: 'confirmed',
+    }))
+    const admissions = {
+      ...(prev?.admissions || {}),
+      name: prev?.admissions?.name || meta.nome || prev?.name,
+      totalInscritos: players.length,
+      players,
+      _liveUpdatedAt: new Date().toISOString(),
+    }
+
+    if (idx >= 0) db.tournaments[idx] = { ...prev, admissions }
+    else db.tournaments.push({ ccode, tcode, name: meta.nome || ('Torneio ' + tcode), date: null, admissions, draws: {} })
+
+    db.scrapedAt = db.scrapedAt || new Date().toISOString()
+    db.total = db.tournaments.length
+    writeAtomic(ADM_FILE, JSON.stringify(db, null, 2))
+    console.log('[inscricoes] ✓ live gravado em fpg-admissions-draws.json: '
+      + ccode + '/' + tcode + ' ' + antes + ' → ' + players.length + ' inscritos')
+  } catch (e) {
+    console.warn('[inscricoes] falhou gravar live em fpg-admissions-draws.json:', (e as Error).message)
+  }
+}
+
 function diffJogadores(
   prev: Jogador[], next: Jogador[]
 ): { added: string[]; removed: string[] } {
@@ -704,6 +777,9 @@ export default defineConfig({
             const entry: CacheEntry = { tcode, ...meta, totalInscritos: jogadores.length, jogadores, lastFetched: now, lastChanged, fpgUrl }
             prevCache[cacheKey] = entry
             writeCache(prevCache)
+            // Gravar também na BASE que as páginas lêem — senão o live mostra
+            // N mas a página continua a dizer o número do último scrape.
+            persistLiveAdmissions(ccode, tcode, jogadores, meta)
             const liveSource = diagnostics.find(d => d.parsed > 0)?.label || '?'
             console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado (fonte viva: ' + liveSource + ')')
 

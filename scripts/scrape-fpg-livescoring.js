@@ -63,6 +63,42 @@
  *
  * Exit codes: 0 = capturou algo · 2 = nada live (não é erro) · 1 = erro.
  *
+ * ─── ⚠ INVESTIGAÇÃO 2026-07-18: porque é que o Node leva 500 ────────────
+ * Conclusão: NÃO é o Node que é discriminado — é qualquer chamada FEITA POR
+ * SCRIPT. O que foi medido, na mesma prova (000/10879) e na mesma sessão:
+ *
+ *   navegação real do browser ao gate  → jTable carrega, 82 jogadores  ✓ 200
+ *   fetch() na PRÓPRIA página          → 500
+ *   jQuery.ajax na própria página      → 500
+ *   $(...).jtable('load') na página    → 500   ← o mecanismo do próprio site!
+ *   Node (gate → página → POST)        → 500
+ *
+ * O pedido do jTable foi interceptado no XHR e é EXACTAMENTE o que enviamos:
+ *   POST ls_classif.aspx/lsClassifLST?jtSorting=Topar_cl ASC
+ *   body {"jtSorting":"Topar_cl ASC"}
+ *   headers Accept: application/json…, Content-Type: application/json;
+ *           charset=utf-8, X-Requested-With: XMLHttpRequest
+ * Mesmo assim, só a chamada disparada pelo CARREGAMENTO da página passa. Uma
+ * repetição idêntica segundos depois, no mesmo separador e sessão, dá 500.
+ *
+ * Hipóteses ELIMINADAS por medição: cookies/sessão (a mesma sessão serve e
+ * recusa), IP/rate-limit (o browser continua a servir enquanto o Node leva
+ * 500), fingerprint TLS/HTTP2 (o fetch do próprio browser também leva 500),
+ * headers (interceptados e replicados), body (idem), paginação, e HTML
+ * server-rendered (a página vem com 0 <tr> — as linhas vêm mesmo do
+ * PageMethod).
+ *
+ * O que resta: o servidor parece ligar a autorização do PageMethod ao ciclo
+ * de vida do pedido de NAVEGAÇÃO que renderizou a página (algo como um
+ * one-shot por render), coisa que não se consegue reproduzir com pedidos
+ * avulso. Não encontrei forma de replicar isso de Node.
+ *
+ * ⇒ CONSEQUÊNCIA PRÁTICA: para capturar live scoring de forma fiável, a via
+ * que FUNCIONA é navegar mesmo a página num browser e ler a TABELA do DOM
+ * (foi assim que se capturou public/data/fpg-livescoring.json). Este script
+ * Node fica como está — útil para o `--probe` (o gate responde bem e diz se a
+ * prova está a decorrer), mas o passo dos dados precisa de browser.
+ *
  * ─── ⚠ ESTADO: NÃO VALIDADO PONTA-A-PONTA (2026-07-18) ──────────────────
  * O que ESTÁ provado a correr de Node:
  *   • o entry gate responde 302 + emite ASP.NET_SessionId;
