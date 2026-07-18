@@ -52,6 +52,18 @@ const MAX_AGE = 12;
  *  "Estágio" — par-3 de estágios de verão, treino e não competição. */
 const SERIES_EXCLUIDAS = new Set(["Adultos", "Estágio"]);
 
+/** Colunas retiradas por decisão editorial — pequenos circuitos internos de
+ *  clube, de campos muito curtos, que não medem o mesmo que o resto do
+ *  calendário. Custavam 5 colunas / 39 sub-colunas e a sua saída tira 5 miúdos
+ *  do ranking (ficam abaixo do mínimo de voltas). */
+const COLUNAS_EXCLUIDAS = [
+  /^CityKids$/,
+  /^Vila Sol Junior Comp · 9 buracos$/,
+  /^Sto da Serra Junior · 9 buracos$/,
+  /^Paredes Junior · 9 buracos$/,
+  /^Circuito Fim de Semana$/,
+];
+
 /** Mínimo de juniores numa coluna. Abaixo disto não há comparação possível —
  *  são sub-colunas gastas com uma ou duas células soltas. */
 const MIN_JUNIORES_COLUNA = 3;
@@ -606,7 +618,9 @@ function main() {
   }
 
   const agrupados = mergeClubesSemelhantes(mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out))));
-  const semExcluidas = agrupados.filter((t) => !SERIES_EXCLUIDAS.has(t.serie));
+  const semExcluidas = agrupados.filter(
+    (t) => !SERIES_EXCLUIDAS.has(t.serie) && !COLUNAS_EXCLUIDAS.some((rx) => rx.test(t.name))
+  );
   const merged = semExcluidas.filter((t) => t.players.length >= MIN_JUNIORES_COLUNA);
   const cortadasSerie = agrupados.length - semExcluidas.length;
   const cortadasPoucos = semExcluidas.length - merged.length;
