@@ -79,12 +79,25 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      # Só o ano corrente: são os únicos ficheiros que o scrape toca
+      # (--months-back 1). Os históricos não mudam — validá-los todos os runs
+      # eram ~60 ficheiros lidos à toa. Para validar tudo: workflow_dispatch
+      # com months_back=99 (aí o scrape reescreve o histórico e convém).
       - name: Validar dados scrapados
         if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |
-          node scripts/validate-data.js \
-            --glob "public/data/drive-data-*.json" \
-            --glob "public/data/aquapor-data-*.json"
+          if [ "${{ github.event.inputs.months_back }}" = "99" ]; then
+            YEARS="*"
+          else
+            # ano corrente + anterior (em Janeiro o --months-back 1 cai em Dezembro)
+            YEARS="$(date +'%Y') $(( $(date +'%Y') - 1 ))"
+          fi
+          ARGS=""
+          for Y in $YEARS; do
+            ARGS="$ARGS --glob public/data/drive-data-${Y}-*.json"
+            ARGS="$ARGS --glob public/data/aquapor-data-${Y}-*.json"
+          done
+          node scripts/validate-data.js $ARGS
 
       # ── Rankings OFICIAIS (RankingsClassifLST) + verificação contra os nossos ──
       # Corre SEMPRE (mesmo sem drive-data novo): a FPG pode actualizar os
