@@ -105,7 +105,8 @@ export interface ScorecardOptions {
 
 export interface SDResult {
   sd: number | null;
-  source: "ags" | "raw" | null;
+  /** "fpg" = SD oficial vindo da fonte (WHS), não recalculado localmente. */
+  source: "ags" | "raw" | "fpg" | null;
 }
 
 export interface PlayerFilter {

@@ -9,6 +9,7 @@
  *   /FPG/pja                  → tab PJA
  *   /FPG/rankingPJA           → modo Ranking PJA
  *   /FPG/rankingSub12         → modo Ranking Sub-12
+ *   /FPG/classificacoes       → modo CLASSIFICAÇÕES (calendário dos jogadores de referência)
  *   /FPG/jovens/inscritosCN   → tab Jovens com painel de inscrições aberto
  */
 // Mapa URL-segment ↔ seriesFilter — usado para sincronizar URL e estado.
@@ -25,16 +26,18 @@ export const URL_TO_FILTER: Record<string, SeriesKey> = {
 // Mapa URL-segment ↔ navMode (tabs "Torneios" / "Ranking PJA" / "Ranking Sub-12").
 // ⚠ As chaves têm de ser lowercase porque `urlSeg = params.filter.toLowerCase()`.
 // Para preservar leitura natural na URL ("rankingPJA"), usamos redirect no lookup.
-export const URL_TO_NAV: Record<string, "torneios" | "ranking-pja" | "ranking-sub12"> = {
-  rankingpja:   "ranking-pja",
-  rankingsub12: "ranking-sub12",
+export const URL_TO_NAV: Record<string, "torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes"> = {
+  rankingpja:     "ranking-pja",
+  rankingsub12:   "ranking-sub12",
+  classificacoes: "classificacoes",
 };
 // URLs geradas — mantemos o case "camelCase" para leitura, mas o comparison
 // com urlSeg é sempre lowercase.
-export const NAV_TO_URL: Record<"torneios" | "ranking-pja" | "ranking-sub12", string> = {
-  "torneios":      "",
-  "ranking-pja":   "rankingPJA",
-  "ranking-sub12": "rankingSub12",
+export const NAV_TO_URL: Record<"torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes", string> = {
+  "torneios":       "",
+  "ranking-pja":    "rankingPJA",
+  "ranking-sub12":  "rankingSub12",
+  "classificacoes": "classificacoes",
 };
 export const FILTER_TO_URL: Record<SeriesKey, string> = {
   "":        "",

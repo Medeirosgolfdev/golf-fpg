@@ -55,7 +55,9 @@ export function AllRoundsScorecardLB({
         grossTotal: gross,
       };
       const { sd } = computeSD(sdP);
-      return sd;
+      // Sem CR/Slope não há cálculo local — usar o SD oficial da ronda quando
+      // a fonte já o traz (ex.: recent-tournaments.json, vindo do WHS).
+      return sd ?? (typeof rs.sd === "number" ? rs.sd : null);
     };
   }, []);
 

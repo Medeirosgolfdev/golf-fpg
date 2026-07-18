@@ -101,6 +101,9 @@ jobs:
           # Torneios recentes reconstruídos das voltas dos nossos jogadores
           # (public/data/recent-tournaments.json → página /torneios-recentes)
           node scripts/build-recent-tournaments.js || echo "build-recent-tournaments: aviso"
+          # Calendário dos jogadores de referência, só juniores
+          # (public/data/classificacoes.json → /FPG/classificacoes)
+          node scripts/build-classificacoes.js || echo "build-classificacoes: aviso"
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
           node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
@@ -147,6 +150,7 @@ jobs:
                   public/data/course-players.json \
                   public/data/recent-tournaments.json \
                   public/data/recent-tournaments-scrape-scope.json \
+                  public/data/classificacoes.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

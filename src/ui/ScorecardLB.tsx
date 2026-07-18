@@ -8,7 +8,7 @@
  */
 import React, { useState, useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
-import type { Player, Tournament, ScorecardOptions, PlayerFilter } from "../data/fpgTypes";
+import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
 import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate } from "../utils/format";
@@ -161,8 +161,12 @@ export function ScorecardLB({
   // Sem CR/Slope o computeSD devolve "–" (mesmo com a metaLine a mostrar CR·Slope);
   // sem SI cai no ramo raw ("≈") em vez do AGS ("~") quando há HCP. Overlay dos
   // campos da 1ª ronda (a mostrada) → SD idêntico ao AllRoundsScorecardLB/AccumulatedLB.
-  const sdOf = (p: Player) => {
+  const sdOf = (p: Player): SDResult => {
     const rs0 = p.roundScores?.[0];
+    // Fonte sem CR/Slope mas com o SD oficial na ronda (ex: recent-tournaments.json,
+    // reconstruído das voltas WHS) → usar esse valor em vez de "–".
+    if (rs0 && typeof rs0.sd === "number" && (p.courseRating ?? rs0.courseRating) == null)
+      return { sd: rs0.sd, source: "fpg" };
     if (rs0 && (p.courseRating == null || p.slope == null || !p.si?.length)) {
       return computeSD({
         ...p,

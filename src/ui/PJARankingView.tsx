@@ -228,6 +228,7 @@ export interface PjaPdfEntry {
 
 export function PJARankingView({
   pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
+  specialRules = true, emptyLabel = "Sem torneios PJA.",
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;
@@ -241,6 +242,13 @@ export function PJARankingView({
   /** Filtro de nome/clube externo (normalmente da toolbar da FPGPage).
    *  Quando definido, sobrepõe o filterName interno (inline fallback). */
   externalFilterName?: string;
+  /** Regras de elegibilidade específicas do circuito PJA (Aquapor só os 2
+   *  primeiros e só para quem não fez Drive Tour, Greatgolf Main só R2+R3).
+   *  `false` = ranking genérico: todas as rondas de todos os torneios contam.
+   *  Usado pela vista CLASSIFICAÇÕES, que ranqueia um calendário arbitrário. */
+  specialRules?: boolean;
+  /** Texto quando não há torneios para o filtro actual. */
+  emptyLabel?: string;
 }) {
   const years = useMemo(() => {
     const s = new Set<string>();
@@ -372,7 +380,7 @@ export function PJARankingView({
       // GG Main 3R em 2026+: R1 nunca conta (regulamento §2.5 — só os últimos 2
       // dias contam). Ocultar a coluna R1 e mostrar só R2/R3.
       const evType = classifyPJAEvent(t);
-      const hideR1 = (year >= "2026") && evType === "GG_MAIN" && nR === 3;
+      const hideR1 = specialRules && (year >= "2026") && evType === "GG_MAIN" && nR === 3;
 
       if (nR > 1) {
         const rounds: PJARound[] = [];
@@ -390,24 +398,25 @@ export function PJARankingView({
       }
     }
     return cols;
-  }, [yearTournaments]);
+  }, [yearTournaments, year, specialRules]);
 
   // Para regras 2026+: identificar os 2 primeiros Aquapor do ano (ordem cronológica)
   // — só esses contam para o ranking PJA.
   const aquaporAllowedKeys = useMemo(() => {
+    if (!specialRules) return null;  // ranking genérico: sem regra Aquapor
     if (year < "2026") return null;  // Aquapor não se aplica a anos anteriores
     const aqs = yearTournaments
       .filter(t => classifyPJAEvent(t) === "AQUAPOR")
       .sort((a, b) => (a.date || "").localeCompare(b.date || ""))
       .slice(0, 2);
     return new Set(aqs.map(t => t.tcode + "_" + t.date));
-  }, [yearTournaments, year]);
+  }, [yearTournaments, year, specialRules]);
 
   const allRows: PJAPRow[] = useMemo(() => {
     const map = new Map<string, PJAPRow>();
     // applyNewRules: regras especiais 2026+ de elegibilidade de torneios
     // (DT/Aquapor exclusão mútua, GG Main R2+R3 só, Aquapor só os 2 primeiros).
-    const applyNewRules = year >= "2026";
+    const applyNewRules = specialRules && year >= "2026";
     // applyMembershipMode: modo "lista oficial de inscritos" — injecta skeleton
     // rows para todos os fedCodes em pja-members.json[year] e filtra a tabela
     // a apenas membros com tag "PJA". Activa-se quando há lista oficial para
@@ -493,13 +502,13 @@ export function PJARankingView({
 
         if (isSynth && subRounds.length > 1 && p.roundScores && p.roundScores.length > 0) {
           p.roundScores.forEach((rs: any, i: number) => {
-            const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0);
+            const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
             addRound(i + 1, rs.gross, parR);
           });
         } else if (p.roundScores && p.roundScores.length > 1) {
           // Multi-round não-sintético (e.g. pull-torneios 2-round event vindo directo)
           p.roundScores.forEach((rs: any, i: number) => {
-            const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0);
+            const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
             addRound(i + 1, rs.gross, parR);
           });
         } else {
@@ -626,7 +635,7 @@ export function PJARankingView({
     }
 
     return rows;
-  }, [yearTournaments, playersDB, year, aquaporAllowedKeys, pjaMembersByYear]);
+  }, [yearTournaments, playersDB, year, aquaporAllowedKeys, pjaMembersByYear, specialRules]);
 
   // Conjunto de fedCodes INSCRITOS no ano corrente (lido de pja-members.json).
   // Se vazio/indefinido para este ano, tratamos todos os membros PJA como inscritos.
@@ -750,7 +759,7 @@ export function PJARankingView({
   }, []);
 
   if (loading && pjaList.length === 0) return <LoadingState size="sm" />;
-  if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
+  if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>{emptyLabel}</div>;
 
   const toolbarInner = <>
     <div style={{ display: "flex", gap: 4 }}>
@@ -784,10 +793,10 @@ export function PJARankingView({
       <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
       <FilterChip active={false} onClick={() => { setFilterEsc([]); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title={year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+    <span className="muted fs-10 ml-auto" title={!specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
       ℹ Regras
     </span>
-    <span className="chip" title={`${allRows.length} jogadores PJA · ${visibleTournCols.length} torneios`}>
+    <span className="chip" title={`${allRows.length} ${specialRules ? "jogadores PJA" : "juniores"} · ${visibleTournCols.length} torneios`}>
       {allRows.length}j · {visibleTournCols.length}t
     </span>
   </>;

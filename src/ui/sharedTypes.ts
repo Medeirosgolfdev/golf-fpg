@@ -15,6 +15,9 @@ export interface BaseRoundScore {
   meters: number[];
   courseRating?: number;
   slope?: number;
+  /** SD oficial da ronda (fonte WHS). Usado como fallback quando não há
+   *  CR/Slope para o cálculo local — ex.: recent-tournaments.json. */
+  sd?: number | null;
   teeName?: string;
   teeColorId?: number;
   /** Buraco de saída desta ronda (1 ou 10 em saídas a dois tees). */

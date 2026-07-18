@@ -32,6 +32,7 @@ import {
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 import { PJARankingView } from "../ui/PJARankingView";
+import { cachedFetchJson } from "../data/fetchCache";
 import ClubesGruposView from "../ui/ClubesGruposView";
 import ClubesCategoriasView, { type CategoriaCfg } from "../ui/ClubesCategoriasView";
 import TournExtLinks from "../ui/TournExtLinks";
@@ -634,7 +635,7 @@ function Content() {
   // Ex: `/FPG?year=2026&manuel=0&q=pedro`. Declarado ANTES dos useStates que
   // dependem dele (Temporal Dead Zone).
   const [searchParams, setSearchParams] = useSearchParams();
-  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">(
+  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes">(
     URL_TO_NAV[urlSeg] ?? "torneios"
   );
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(
@@ -663,6 +664,34 @@ function Content() {
   // Carregamos separadamente para não afectar o displayList principal (tabs
   // Todos/Circuito/Santo continuam a ver apenas pull-torneios).
   const [pjaExtraTournaments, setPjaExtraTournaments] = useState<Tournament[]>([]);
+
+  // ── Estado CLASSIFICAÇÕES ─────────────────────────────────────────────────
+  // Calendário dos jogadores de referência (Nuno Palmares, Santiago Dias,
+  // João Setúbal) com o campo reduzido a juniores. Ficheiro pré-construído por
+  // scripts/build-classificacoes.js — carregado lazy ao abrir o tab.
+  const [classifTournaments, setClassifTournaments] = useState<Tournament[]>([]);
+  const [classifLoading, setClassifLoading]         = useState(false);
+
+  // ⚠ O guard de "já está a carregar" é um ref, NÃO state: pô-lo nas deps faz
+  // o efeito re-correr assim que setClassifLoading(true) aplica, e a cleanup
+  // dessa primeira execução marcava alive=false antes do fetch resolver — os
+  // dados chegavam e eram deitados fora (ficava preso em "A carregar…").
+  const classifFetchStarted = useRef(false);
+  useEffect(() => {
+    if (navMode !== "classificacoes" || classifFetchStarted.current) return;
+    classifFetchStarted.current = true;
+    setClassifLoading(true);
+    (async () => {
+      try {
+        const d = await cachedFetchJson<{ tournaments?: Tournament[] }>("/data/classificacoes.json");
+        setClassifTournaments(d?.tournaments || []);
+      } catch {
+        setClassifTournaments([]);
+      } finally {
+        setClassifLoading(false);
+      }
+    })();
+  }, [navMode]);
 
   // Sincronização state → URL (query string). Só parâmetros com valor
   // não-default vão para o URL. replace:true evita poluir o histórico.
@@ -1657,7 +1686,7 @@ function Content() {
     // para fora do ranking.
     if (navMode !== "torneios") return;
     // urlSeg é sempre lowercase (.toLowerCase() em params.filter) — comparar em lowercase.
-    if (urlSeg === "rankingpja" || urlSeg === "rankingsub12") return;
+    if (urlSeg === "rankingpja" || urlSeg === "rankingsub12" || urlSeg === "classificacoes") return;
     // Guarda anti-loop: se URL→state ou escIdx-sync acabaram de actualizar
     // estado, esse estado pode ainda não reflectir TUDO (ex: escIdx actualizado
     // mas groupKey acabou de mudar e entries[escIdx] aponta noutro lado). Saltar
@@ -1995,7 +2024,7 @@ function Content() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder={
-                  navMode === "ranking-pja" ? "jogador ou clube..."
+                  navMode === "ranking-pja" || navMode === "classificacoes" ? "jogador ou clube..."
                     : navMode === "ranking-sub12" ? "jogador..."
                     : "nome, campo, clube..."
                 }
@@ -2032,6 +2061,7 @@ function Content() {
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-pja",   label: "📊 Ranking PJA" },
               { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+              { key: "classificacoes", label: "🏆 CLASSIFICAÇÕES" },
             ] as const).map(({ key, label }) => (
               <button key={key}
                 className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : " tourn-tab-muted")}
@@ -2050,7 +2080,7 @@ function Content() {
             {/* Slot de portal: o PJARankingView renderiza os seus filtros
                 (years, search, escalões) aqui via createPortal em vez de ter
                 uma toolbar separada. */}
-            {navMode === "ranking-pja" && <>
+            {(navMode === "ranking-pja" || navMode === "classificacoes") && <>
               <ToolbarSep />
               <div id="pja-toolbar-slot" style={{ display: "contents" }} />
             </>}
@@ -2741,6 +2771,22 @@ function Content() {
               )
             )}
           </div>
+        </div>
+      )}
+
+      {/* CLASSIFICAÇÕES — ranking do calendário dos jogadores de referência
+          (ver scripts/build-classificacoes.js). Reusa a vista do ranking PJA
+          com as regras específicas do circuito PJA desligadas. */}
+      {navMode === "classificacoes" && (
+        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+          <PJARankingView
+            pjaList={classifTournaments}
+            playersDB={playersDB}
+            loading={classifLoading}
+            externalFilterName={searchQuery}
+            specialRules={false}
+            emptyLabel="Sem torneios para classificar."
+          />
         </div>
       )}
 
