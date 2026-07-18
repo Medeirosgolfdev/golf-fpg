@@ -87,12 +87,13 @@ function normalize(data, fileName, playerMap) {
       playerSourceKey: key,
       playerName,
       pos: typeof pl.pos === "number" ? pl.pos : null,
-      status: pl.pos === null && pl._error ? "DNS" : (pl.pos === null ? "CUT" : "OK"),
+      status: pl._error ? "DNS" : "OK",
       totalGross: typeof pl.total === "number" ? pl.total : null,
       toPar: typeof pl.result === "number" ? pl.result : null,
       rounds,
     });
   }
+  rankResults(results, par ? par.length : 18);
 
   // Determinar ageMin/ageMax do category
   const ageRange = /(\d+)\s*-\s*(\d+)/.exec(category);
@@ -113,7 +114,11 @@ function normalize(data, fileName, playerMap) {
   let effectiveYear = year;
   const yrInName = /\b(20\d{2})\b/.exec(name);
   if (yrInName) effectiveYear = +yrInName[1];
-  let dateIso = data.date || data.startDate || null;
+  // Datas reais por evento (o ficheiro bluegolf não as traz) → só se cai fora
+  // da tabela é que se fabrica uma data pela convenção do torneio.
+  const known = EVENT_DATES[eventSlug(sourceKey)];
+  let dateIso = data.date || data.startDate || (known ? known.start : null);
+  let endIso = known ? known.end : null;
   if (!dateIso && effectiveYear) {
     dateIso = inferDateFromName(name, effectiveYear);
   }
@@ -128,6 +133,7 @@ function normalize(data, fileName, playerMap) {
     name,
     date: dateIso,
     startDate: dateIso,
+    ...(endIso ? { endDate: endIso } : {}),
     year: effectiveYear, // pelo menos preserva ano para ordenação na UI
     seriesId: series.id,
     seriesLabel: series.label,
@@ -146,6 +152,77 @@ function normalize(data, fileName, playerMap) {
     links,
   };
 }
+
+/**
+ * Reconstrói a POSIÇÃO de cada jogador.
+ *
+ * ⚠ A leaderboard da BlueGolf só imprime a posição na PRIMEIRA linha de cada
+ * empate (T5 aparece uma vez, as linhas seguintes vêm em branco) — no FCG 2026
+ * Boys 11-12 só 18 dos 75 jogadores traziam `pos`, e os restantes ficavam com
+ * "—" na ficha do kids2. A `/major` já recalculava isto no `loadT`; aqui
+ * espelha-se a MESMA regra para o canónico: quem não terminou vai para o fim
+ * sem posição, e empates partilham a posição (ranking de competição).
+ */
+function rankResults(results, holesPerRound) {
+  const withRounds = results.filter((r) => r.rounds.length > 0 && r.totalGross != null);
+  if (!withRounds.length) return;
+  const maxR = Math.max(...withRounds.map((r) => r.rounds.length));
+  const isComplete = (r) =>
+    r.status !== "DNS" &&
+    r.rounds.length === maxR &&
+    r.rounds.every((rd) =>
+      rd.gross != null &&
+      (!Array.isArray(rd.strokes) || rd.strokes.filter((s) => s > 0).length >= holesPerRound)
+    );
+
+  const ranked = withRounds
+    .map((r) => ({ r, complete: isComplete(r) }))
+    .sort((a, b) => (a.complete !== b.complete ? (a.complete ? -1 : 1) : a.r.totalGross - b.r.totalGross));
+
+  let pos = 1;
+  ranked.forEach((entry, i) => {
+    if (!entry.complete) {
+      entry.r.pos = null;
+      if (entry.r.status === "OK") entry.r.status = "CUT"; // não terminou
+      return;
+    }
+    const prev = ranked[i - 1];
+    if (i > 0 && prev && prev.complete && entry.r.totalGross > prev.r.totalGross) pos = i + 1;
+    entry.r.pos = pos;
+  });
+
+  // Sem total não há posição possível (inscrito que não jogou).
+  for (const r of results) {
+    if (r.totalGross == null || r.rounds.length === 0) {
+      r.pos = null;
+      if (r.status === "OK") r.status = "DNS";
+    }
+  }
+}
+
+/** Slug do EVENTO a partir do nome do ficheiro ("fcg268_boys_11-12" → "fcg268").
+ *  Todos os escalões do mesmo evento partilham datas. */
+function eventSlug(sourceKey) {
+  return String(sourceKey).split("_")[0];
+}
+
+/** Datas REAIS por evento — os ficheiros bluegolf não trazem data nenhuma e a
+ *  UI do kids2 filtra torneios sem ela. Preferidas ao `inferDateFromName`.
+ *  Espelham as `roundDates` do catálogo `URLS` (BJGTPage.tsx). */
+const EVENT_DATES = {
+  // FCG Callaway World Championship (Palm Springs / Palm Desert, CA)
+  fcg251: { start: "2025-07-14", end: "2025-07-16" }, // Westin Mission - Pete Dye
+  fcg268: { start: "2026-07-13", end: "2026-07-15" }, // Desert Willow - Mt. View
+  // Uswing Mojing Junior World — Torrey Pines South, La Jolla CA
+  jwgc261: { start: "2026-07-06", end: "2026-07-09" },
+  // Daily Mail WJGC — Villa Padierna, Espanha
+  brjgt243: { start: "2024-02-20", end: "2024-02-22" },
+  brjgt2431: { start: "2024-02-20", end: "2024-02-22" },
+  brjgt251: { start: "2025-04-05", end: "2025-04-06" },
+  brjgt2537: { start: "2026-02-25", end: "2026-02-27" },
+  // European Open WAGR — Le Touquet (La Forêt), França
+  eowagr25: { start: "2025-08-11", end: "2025-08-13" },
+};
 
 /** Fallback URL para JSONs WJGC scrapados antes do source ser gravado.
  *  Mapping baseado no `RE-SCRAPE-WJGC.md` — contest IDs conhecidos. */
@@ -217,4 +294,4 @@ function wjgcSeries(name) {
   return { id: "wjgc-other", label: name };
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, rankResults, EVENT_DATES };

@@ -62,6 +62,7 @@ const ROUND_DATES = {
   "bjgt:2026": ["25 Fev", "26 Fev", "27 Fev"],
   "eowagr:2025": ["11 Ago", "12 Ago", "13 Ago"],
   "fcg:2025": ["14 Jul", "15 Jul", "16 Jul"],
+  "fcg:2026": ["13 Jul", "14 Jul", "15 Jul"],
   // bjgt:2025 não tem datas de ronda (roundDates undefined nas URLS).
 };
 
@@ -185,7 +186,7 @@ function buildBluegolf() {
       series: seriesLabel,
       year,
       name: rawName || `${seriesLabel} ${year}`,
-      course: series === "eowagr" ? "França" : series === "jwgc" ? (rawCourse || "USA") : series === "fcg" ? "USA" : "Espanha",
+      course: series === "eowagr" ? "França" : series === "jwgc" || series === "fcg" ? (rawCourse || "USA") : "Espanha",
       dateStart: dr ? ptDateToIso(dr.start, year) : rd ? ptDateToIso(rd[0], year) : undefined,
       dateEnd: dr ? ptDateToIso(dr.end, year) : rd && rd.length > 1 ? ptDateToIso(rd[rd.length - 1], year) : undefined,
       roundsCount: (rd && rd.length) || maxRounds(allValid) || undefined,

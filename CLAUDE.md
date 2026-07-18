@@ -798,7 +798,31 @@ Output: 1 JSON por escalão (`{evSlug}_{cat}.json`, ex: `fcg268_boys_10-11.json`
 formato **bluegolf** (`{tournament,category,course,year,par,si,yards,parTotal,
 players:[{name,country,pos,result,total,rounds:[{day,scores,f9,b9,gross}]}]}`) —
 o mesmo dos `wjgc_*`/`bjgt_*`. Ligar ao `/major` = registar em `BJGT_URLS`
-(`BJGTPage.tsx`) com série/escalão/ano, como os BJGT/EOWAGR.
+(`BJGTPage.tsx`) com série/escalão/ano, como os BJGT/EOWAGR. Registados:
+`fcg251_*` (2025), `fcg268_*` (2026, 10 escalões, 13-15 Jul) e `jwgc261_*`.
+
+⚠ **Localidade FCG/JWGC é preenchida pelo inscrito e vem suja** — resolvida em
+`scripts/lib/bluegolf-location.js` (`splitGradYearCountry`, usada pelo
+`scrape-bluegolf.js` da RAIZ). O campo "país" do perfil é `"CLASSE, LOCAL"` e o
+LOCAL trazia (1) cidade estrangeira + sigla de estado dos EUA — "Bangkok, CA",
+"Hong Kong, FL", "Mexico City, NM" → bandeira americana errada; (2) só a cidade
+— "Auckland", "Tokyo", "宇都宮" → sem bandeira. Resolução por confiança:
+**(a)** um segmento é um país (também colado no fim: "Cap Cana Dominican
+Republic") → **(b)** dicionário de cidades, onde as inequívocas (`strong`)
+GANHAM à sigla de estado e as ambíguas (London, Melbourne, Panama City,
+Ontario, La Canada — todas com gémea nos EUA) só valem sem sigla → **(c)** sigla
+→ EUA/Canadá (territórios GU/MP/PR/VI/AS com bandeira própria). Quando o país
+resolvido não é EUA/Canadá a sigla é lixo e sai do `hometown` mostrado.
+Testes: `scripts/lib/bluegolf-location.test.js`.
+
+`node scripts/backfill-bluegolf-location.js [--dry-run]` aplica a resolução aos
+`fcg*`/`jwgc*` já scrapados (BlueGolf está descontinuado — **não re-scrapar**;
+a string original é reconstruída do `hometown`/`country` guardados). É
+idempotente por uma guarda que salta jogadores cujo país já está resolvido — sem
+ela a 2ª passagem re-derivava de um `hometown` já limpo ("Tamuning" sem ", GU")
+e perdia o país. Passagem 2026-07-19: 552 jogadores corrigidos; ficam ~28
+localidades genuinamente ambíguas (Santiago, San Jose, Victoria, Milton…) sem
+país — de propósito, mostram só o texto da cidade.
 
 ### Enriquecimento por DOB (ficha GG `/profiles`) — México
 O `scrape-fsga.js` ganhou `fetchProfile(id)`: o scorecard detail page linka

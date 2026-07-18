@@ -138,6 +138,43 @@ const COUNTRY_TO_ISO2 = {
   CHL: "CL", CHILE: "CL",
   VEN: "VE", VENEZUELA: "VE",
   CRI: "CR",
+  // Ásia / Pacífico / Médio Oriente — países que chegam pelos circuitos
+  // americanos (FCG World, JWGC, Doral) e que sem isto ficavam sem ISO2.
+  THA: "TH", THAILAND: "TH",
+  VNM: "VN", VIE: "VN", VIETNAM: "VN",
+  SGP: "SG", SIN: "SG", SINGAPORE: "SG",
+  MYS: "MY", MAS: "MY", MALAYSIA: "MY",
+  IDN: "ID", INA: "ID", INDONESIA: "ID",
+  KHM: "KH", CAMBODIA: "KH",
+  MAC: "MO", MACAU: "MO", MACAO: "MO",
+  ARE: "AE", UAE: "AE", UNITEDARABEMIRATES: "AE",
+  QAT: "QA", QATAR: "QA",
+  SAU: "SA", KSA: "SA", SAUDIARABIA: "SA",
+  LBN: "LB", LEBANON: "LB",
+  GUM: "GU", GUAM: "GU",
+  MNP: "MP", NORTHERNMARIANAISLANDS: "MP",
+  PRI: "PR", PUERTORICO: "PR",
+  WSM: "WS", SAMOA: "WS",
+  COK: "CK", COOKISLANDS: "CK",
+  BMU: "BM", BERMUDA: "BM",
+  // Américas / Europa / África em falta
+  DOM: "DO", DOMINICANREPUBLIC: "DO",
+  SLV: "SV", ELSALVADOR: "SV",
+  HND: "HN", HONDURAS: "HN",
+  NIC: "NI", NICARAGUA: "NI",
+  ECU: "EC", ECUADOR: "EC",
+  BOL: "BO", BOLIVIA: "BO",
+  URY: "UY", URUGUAY: "UY",
+  BRB: "BB", BARBADOS: "BB",
+  BHS: "BS", BAHAMAS: "BS",
+  JAM: "JM", JAMAICA: "JM",
+  LVA: "LV", LATVIA: "LV",
+  ZWE: "ZW", ZIMBABWE: "ZW",
+  // Nações do Reino Unido → GB. ⚠ NÃO usar "GB-ENG"/"GB-SCT" aqui: o ISO2 é a
+  // chave de identidade das fontes fracas (nome+país) e as outras fontes dizem
+  // "GB" — separar as nações criava um duplicado por cada miúdo inglês.
+  ENGLAND: "GB", SCOTLAND: "GB", WALES: "GB", NORTHERNIRELAND: "GB",
+  GBENG: "GB", GBSCT: "GB", GBWLS: "GB", GBNIR: "GB",
 };
 
 const COUNTRY_NAME = {
@@ -151,6 +188,14 @@ const COUNTRY_NAME = {
   CZ: "Czech Republic", IN: "India", PH: "Philippines", TW: "Taiwan",
   HK: "Hong Kong", ZA: "South Africa", MA: "Morocco", CR: "Costa Rica",
   GT: "Guatemala", PA: "Panama", PE: "Peru", CL: "Chile", VE: "Venezuela",
+  TH: "Thailand", VN: "Vietnam", SG: "Singapore", MY: "Malaysia",
+  ID: "Indonesia", KH: "Cambodia", MO: "Macau", AE: "United Arab Emirates",
+  QA: "Qatar", SA: "Saudi Arabia", LB: "Lebanon", GU: "Guam",
+  MP: "Northern Mariana Islands", PR: "Puerto Rico", WS: "Samoa",
+  CK: "Cook Islands", BM: "Bermuda", DO: "Dominican Republic",
+  SV: "El Salvador", HN: "Honduras", NI: "Nicaragua", EC: "Ecuador",
+  BO: "Bolivia", UY: "Uruguay", BB: "Barbados", BS: "Bahamas",
+  JM: "Jamaica", LV: "Latvia", ZW: "Zimbabwe",
 };
 
 function countryToIso2(s) {

@@ -692,7 +692,7 @@
     {
       "sourceKeys": [
         "uskids:562671",
-        "wjgc:cristian leonardo hernandez covarrubias|"
+        "wjgc:cristian leonardo hernandez covarrubias|MX"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 55] Cristian Leonardo Hernandez (MX) ↔ Cristian Leonardo Hernandez Covarrubias (MX) — nome contido no outro; mesmo país MX."
@@ -2365,7 +2365,7 @@
     {
       "sourceKeys": [
         "uskids:631044",
-        "wjgc:zijing wang|US"
+        "wjgc:zijing wang|CN"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Zijing Wang (CN) ↔ Zijing Wang (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes CN≠US (multi-país?)."
@@ -2397,7 +2397,7 @@
     {
       "sourceKeys": [
         "uskids:534316",
-        "wjgc:sohraab singh talwar|US"
+        "wjgc:sohraab singh talwar|IN"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Sohraab Singh Talwar (IN) ↔ Sohraab Singh Talwar (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes IN≠US (multi-país?)."
@@ -2525,7 +2525,7 @@
     {
       "sourceKeys": [
         "uskids:549296",
-        "wjgc:danish verma|US"
+        "wjgc:danish verma|IN"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Danish Verma (IN) ↔ Danish Verma (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes IN≠US (multi-país?)."
@@ -2629,7 +2629,7 @@
     {
       "sourceKeys": [
         "uskids:592235",
-        "wjgc:yubo shen|US"
+        "wjgc:yubo shen|TH"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Yubo Shen (TH) ↔ Yubo Shen (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes TH≠US (multi-país?)."
@@ -2653,7 +2653,7 @@
     {
       "sourceKeys": [
         "uskids:604438",
-        "wjgc:riku takase|US"
+        "wjgc:riku takase|JP"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Riku Takase (JP) ↔ Riku Takase (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes JP≠US (multi-país?)."
@@ -2741,7 +2741,7 @@
     {
       "sourceKeys": [
         "rfeg:AM72922076",
-        "wjgc:pablo tomas del grosso|PA"
+        "wjgc:pablo tomas del grosso|AR"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 70] Pablo Tomas Del Grosso (ES) ↔ Pablo Tomas del Grosso (PA) — nome exacto; nome raro — único no corpus (token mais raro em 3 juniores); países diferentes ES≠PA (multi-país?); idade/escalão compatível."
@@ -3133,7 +3133,7 @@
     {
       "sourceKeys": [
         "uskids:603639",
-        "wjgc:yiyan christopher lu|"
+        "wjgc:yiyan christopher lu|NZ"
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 65] Christopher Yiyan Lu (NZ) ↔ Yiyan Christopher Lu — nome invertido; nome raro — único no corpus (token mais raro em 2 juniores)."
@@ -3865,6 +3865,632 @@
       ],
       "auto": true,
       "reason": "[auto find-junior-duplicates 2026-07-08, score 55] Ferdinand Von Westphalen (DE) ↔ Ferdinand Graf Von Westphalen (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "rfeg:CB44752371",
+        "rfeg:CB05752371"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 95] Marcel Fonseca Aguilar (ES) ↔ Marcel Fonseca Aguilar (ES) — nome exacto; mesmo país ES; licenças RFEG com o mesmo sufixo (CB44752371 ↔ CB05752371) — mudança de clube; idade/escalão compatível.",
+      "preferStrongKey": {
+        "rfeg": "CB05752371"
+      },
+      "manualHistoricalIds": {
+        "rfeg": [
+          {
+            "lic": "CB44752371",
+            "club": "CLUB DE GOLF D'ARO",
+            "catEdad": "Cadete",
+            "note": "Licença anterior (mesmo sufixo pessoal — mudança de clube)"
+          }
+        ]
+      }
+    },
+    {
+      "sourceKeys": [
+        "rfeg:LV05927962",
+        "rfeg:LV02927962"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 80] Xinyi Gu (CN) ↔ Xinyi Gu (ES) — nome exacto; países diferentes CN≠ES (multi-país?); licenças RFEG com o mesmo sufixo (LV05927962 ↔ LV02927962) — mudança de clube; idade/escalão compatível.",
+      "preferStrongKey": {
+        "rfeg": "LV02927962"
+      },
+      "manualHistoricalIds": {
+        "rfeg": [
+          {
+            "lic": "LV05927962",
+            "club": "CLUB DE GOLF EL BOSQUE",
+            "catEdad": "Infantil",
+            "note": "Licença anterior (mesmo sufixo pessoal — mudança de clube)"
+          }
+        ]
+      }
+    },
+    {
+      "sourceKeys": [
+        "rfeg:BP14470435",
+        "egr:lawrence navrotskiy jones|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Lawrence Navrotskiy Jones (ES) ↔ Lawrence Navrotskiy Jones (GB) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes ES≠GB (multi-país?); idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "uskids:606486",
+        "wjgc:aoran zhang|MY"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Aoran Zhang (CN) ↔ Aoran Zhang (MY) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes CN≠MY (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:612342",
+        "wjgc:sebastian cowen mendez|AE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Sebastian  Cowen Mendez (NZ) ↔ Sebastian Cowen Mendez (AE) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes NZ≠AE (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:562853",
+        "wjgc:jose julian munoz damm|US"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] José Julian Munoz Damm (MX) ↔ Jose Julian Munoz Damm (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes MX≠US (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:532381",
+        "doral:doral-1875206810"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Santino Doglioli (AR) ↔ Santino Doglioli (DO) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes AR≠DO (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:534283",
+        "ffgolf:E86125991"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Alexander Dunmall (GB) ↔ Alexander Dunmall (FR) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes GB≠FR (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:539533",
+        "egr:lucas weisberg|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Lucas Weisberg (US) ↔ Lucas Weisberg (GB) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes US≠GB (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:568175",
+        "interzonas:interzonas-2210096031"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Ashton O'kola (BB) ↔ Ashton O'kola (MX) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes BB≠MX (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:591602",
+        "egr:phebe pickett|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Phebe Pickett (PT) ↔ Phebe Pickett (GB) — nome exacto; nome raro — único no corpus (token mais raro em 3 juniores); países diferentes PT≠GB (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:591990",
+        "fpg:51319"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Eleonora Savanovich (RU) ↔ Eleonora Savanovich (PT) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes RU≠PT (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:604024",
+        "wjgc:pruksila prukpaiboon|US"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Pruksila Prukpaiboon (TH) ↔ Pruksila Prukpaiboon (US) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes TH≠US (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "uskids:620681",
+        "wjgc:james padron|CA"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] James Padron (PH) ↔ James Padron (CA) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes PH≠CA (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "ffgolf:E73262709",
+        "rfeg:anon|pieter werner"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 70] Pieter Werner (NL) ↔ Pieter Werner (ES) — nome exacto; nome raro — único no corpus (token mais raro em 2 juniores); países diferentes NL≠ES (multi-país?)."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|noa terroba|ES",
+        "rfeg:AM51889655"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 67] Noa Terroba (ES) ↔ Noa Terroba Toro (ES) — nome contido no outro; mesmo país ES; mesmo clube."
+    },
+    {
+      "sourceKeys": [
+        "england:owen rafferty|GB",
+        "egr:owen jack rafferty|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 67] Owen Rafferty (GB) ↔ Owen Jack Rafferty (GB) — nome contido no outro; mesmo país GB; mesmo clube."
+    },
+    {
+      "sourceKeys": [
+        "uskids:524281",
+        "egr:paul fletcher|IE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 62] Paul Fletcher (GB) ↔ Paul Fletcher (IE) — nome exacto; países diferentes GB≠IE (multi-país?); mesmo clube."
+    },
+    {
+      "sourceKeys": [
+        "fpg:48049",
+        "gjgl:Marie_Pinto da Cunha"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 62] Marie Pinto da Cunha (PT) ↔ Marie Pinto da Cunha (FR) — nome exacto; países diferentes PT≠FR (multi-país?); mesmo clube; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:olivia johnson|CA",
+        "wjgc:olivia johnson johnson|CA"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Olivia Johnson (CA) ↔ Olivia Johnson Johnson (CA) — nome contido no outro; mesmo país CA."
+    },
+    {
+      "sourceKeys": [
+        "eowagr:veer zoravar singh|",
+        "egr:veer singh|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Veer Zoravar Singh (GB) ↔ Veer Singh (GB) — nome contido no outro; mesmo país GB."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:diana maria martin posadillo|MX",
+        "interzonas:interzonas-2210095936"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Diana Maria Martin Posadillo (MX) ↔ Diana María Martín-Posadillo García (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "rfeg:CM06962573",
+        "egr:noa ayala|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Noa Ayala-hurtado (GB) ↔ Noa Ayala (GB) — nome contido no outro; mesmo país GB; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "ffgolf:E60163304",
+        "rfeg:CB01892885"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Nagore Martinez (ES) ↔ Nagore Martinez Salcedo (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "uskids:562252",
+        "wjgc:daniel rodriguez stepanischev|CO"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Daniel Alejandro Rodríguez Stepanischev (CO) ↔ Daniel Rodriguez Stepanischev (CO) — nome contido no outro; mesmo país CO."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-760512205",
+        "doral:doral-1025616089"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Justin E Rodriguez (DO) ↔ Justin Rodriguez (DO) — nome contido no outro; mesmo país DO."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-760512023",
+        "doral:doral-1025616121"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Kevin E Rodriguez (DO) ↔ Kevin Rodriguez (DO) — nome contido no outro; mesmo país DO."
+    },
+    {
+      "sourceKeys": [
+        "uskids:522525",
+        "wjgc:alejandro balbuena cruceta|DO"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Alejandro Balbuena (DO) ↔ Alejandro Balbuena Cruceta (DO) — nome contido no outro; mesmo país DO."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-1011545645",
+        "doral:doral-1025624648"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Angelis Marie Rivera Gandara (PR) ↔ Angelis Rivera Gandara (PR) — nome contido no outro; mesmo país PR."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-1025199229",
+        "doral:doral-1594941733"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Alex J. Diaz Rodriguez (PR) ↔ Alex Díaz (PR) — nome contido no outro; mesmo país PR."
+    },
+    {
+      "sourceKeys": [
+        "uskids:568606",
+        "wjgc:ramses lozano rodriguez|MX"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Ramses Lozano (MX) ↔ Ramses Lozano Rodriguez (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:isabel mejia ramirez|MX",
+        "interzonas:interzonas-2210095994"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Isabel Mejia Ramirez (MX) ↔ Isabel  Mejía (MX) — nome contido no outro; mesmo país MX; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:isabella hernandez garrido|MX",
+        "doral:doral-405999163"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Isabella Hernandez Garrido (MX) ↔ Isabella Hernandez (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:jana castillo|MX",
+        "interzonas:interzonas-2210095990"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Jana Castillo (MX) ↔ Jana Castillo Gonzalez (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "england:adam stephen campbell|GB",
+        "gjgl:Adam_Campbell"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Adam Stephen Campbell (GB) ↔ Adam Campbell (GB) — nome contido no outro; mesmo país GB."
+    },
+    {
+      "sourceKeys": [
+        "uskids:561286",
+        "wjgc:nicolas humphrey humphrey|MX"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Nicolas Humphrey (MX) ↔ Nicolas Humphrey Humphrey (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "uskids:567073",
+        "wjgc:francis patrick besinga|US"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Francis Besinga (US) ↔ Francis Patrick Besinga (US) — nome contido no outro; mesmo país US."
+    },
+    {
+      "sourceKeys": [
+        "uskids:568077",
+        "wjgc:isak lindstrom salazar|CR"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Isak Lindstrom (CR) ↔ Isak Lindstrom Salazar (CR) — nome contido no outro; mesmo país CR."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-1875207538",
+        "doral:doral-2174304497"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Pedro Bertin Morales (PR) ↔ Pedro Morales (PR) — nome contido no outro; mesmo país PR."
+    },
+    {
+      "sourceKeys": [
+        "uskids:588965",
+        "wjgc:kenzo gavin tan|PH"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Kenzo Tan (PH) ↔ Kenzo Gavin Tan (PH) — nome contido no outro; mesmo país PH."
+    },
+    {
+      "sourceKeys": [
+        "uskids:576999",
+        "egr:harris munro|GB"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Harris Hector Munro (GB) ↔ Harris Munro (GB) — nome contido no outro; mesmo país GB."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-405998930",
+        "doral:doral-760434022"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Victor Choe (BO) ↔ Victor Daniel Choe (BO) — nome contido no outro; mesmo país BO."
+    },
+    {
+      "sourceKeys": [
+        "uskids:607102",
+        "wjgc:joss guzman guzman|MX"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Joss Guzman (MX) ↔ Joss Guzman Guzman (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "rfeg:CM07897966",
+        "fpg:anon|liz hao|ES"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Liz Siyu (ES) ↔ Liz Hao (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:mateo ochoa|MX",
+        "mexnacional:mexnacional-2219366971"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Mateo Ochoa (MX) ↔ Mateo Ochoa Rangel (MX) — nome contido no outro; mesmo país MX; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "uskids:629791",
+        "wjgc:peyton robert coyiuto|PH"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Peyton Robert Eli Coyiuto (PH) ↔ Peyton Robert Coyiuto (PH) — nome contido no outro; mesmo país PH."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|rocio tejedo|ES",
+        "rfeg:LV35798192"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Rocio Tejedo (ES) ↔ Rocio Tejedo Mulet (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|fernanda gorostiaga|ES",
+        "rfeg:VB08722373"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Fernanda Gorostiaga (ES) ↔ Fernanda Gorostiaga Alvarez (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|teodora katerina nikolovski|FR",
+        "ffgolf:525330312"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Teodora Katerina Nikolovski (FR) ↔ Teodora Nikolovski (FR) — nome contido no outro; mesmo país FR."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|patricia bañon|ES",
+        "rfeg:LV06820154"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Patricia Bañon (ES) ↔ Patricia Banon Rautenstrauch (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "fpg:anon|pedro gallegos|ES",
+        "rfeg:CM04777820"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Pedro Gallegos (ES) ↔ Pedro Gallegos Marsal (ES) — nome contido no outro; mesmo país ES."
+    },
+    {
+      "sourceKeys": [
+        "rfeg:AM51164111",
+        "eym:eym-gb44170600"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Samuel Love (ES) ↔ Samuel Love Li (ES) — nome contido no outro; mesmo país ES; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Mia Clarissa_Schmid",
+        "egr:mia schmid|CH"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Mia Clarissa Schmid (CH) ↔ Mia Schmid (CH) — nome contido no outro; mesmo país CH."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:adrián fajardo barrios|GT",
+        "doral:doral-1875120451"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Adrián Fajardo Barrios (GT) ↔ Adrian Fajardo (GT) — nome contido no outro; mesmo país GT."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-1011545638",
+        "doral:doral-1025624646"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Adriana Isabel Balaguer (PR) ↔ Adriana Balaguer (PR) — nome contido no outro; mesmo país PR."
+    },
+    {
+      "sourceKeys": [
+        "doral:doral-760511980",
+        "doral:doral-1025616091"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Jose Canales (PR) ↔ Jose M Canales (PR) — nome contido no outro; mesmo país PR."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:maximiliano pedraza trinidad zülck|MX",
+        "mexnacional:mexnacional-2220677763"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Maximiliano Pedraza Trinidad Zülck (MX) ↔ Maximiliano Pedraza (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:jay bingheng lian|US",
+        "wjgc:jay lian|US"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Jay Bingheng Lian (US) ↔ Jay Lian (US) — nome contido no outro; mesmo país US."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:carla fernanda antolin|MX",
+        "wjgc:carla fernanda antolín servín|MX"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Carla Fernanda Antolin (MX) ↔ Carla Fernanda Antolín Servín (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:sebastian diego sajuela|US",
+        "wjgc:sebastian sajuela|US"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Sebastian Diego Sajuela (US) ↔ Sebastian Sajuela (US) — nome contido no outro; mesmo país US."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:salvador villagomez gomez|MX",
+        "mexnacional:mexnacional-2231538552"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Salvador Villagomez Gomez (MX) ↔ Salvador Villagomez (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:fatima wahnnatah hurtado|MX",
+        "mexnacional:mexnacional-2231521186"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Fatima Wahnnatah Hurtado (MX) ↔ Fátima Wahnnatah (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:maría sofía avalos|MX",
+        "interzonas:interzonas-2210096014"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] María Sofía Avalos (MX) ↔ Maria Sofia Avalos Hernandez (MX) — nome contido no outro; mesmo país MX."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:kimi tanaka bracamontes|MX",
+        "mexnacional:mexnacional-2231540112"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Kimi Tanaka Bracamontes (MX) ↔ Kimi Tanaka (MX) — nome contido no outro; mesmo país MX; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:mauricio leyva|MX",
+        "mexnacional:mexnacional-2231519290"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Mauricio Leyva (MX) ↔ Mauricio Leyva Garcia (MX) — nome contido no outro; mesmo país MX; idade/escalão compatível."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:diego albuja lopez|EC",
+        "job:job-12338986637324233752"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Diego Albuja Lopez (EC) ↔ Diego Albuja (EC) — nome contido no outro; mesmo país EC."
+    },
+    {
+      "sourceKeys": [
+        "job:job-11280789669190610005",
+        "egr:david albuja lopez|EC"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] David Albuja (EC) ↔ David Albuja Lopez (EC) — nome contido no outro; mesmo país EC."
+    },
+    {
+      "sourceKeys": [
+        "wjgc:marcos betances pichardo|DO",
+        "doral:doral-1025231405"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Marcos Betances Pichardo (DO) ↔ Marcos Betances (DO) — nome contido no outro; mesmo país DO."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Chiara_Bothe",
+        "egr:chiara jasmin bothe|DE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Chiara Bothe (DE) ↔ Chiara Jasmin Bothe (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Gurveer_Kalsi",
+        "egr:gurveer singh kalsi|DE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Gurveer Kalsi (DE) ↔ Gurveer Singh Kalsi (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Valentin Ben_Clages",
+        "egr:valentin clages|DE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Valentin Ben Clages (DE) ↔ Valentin Clages (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Bastian_Bohl",
+        "egr:bastian bohl larsen|DK"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Bastian Bohl (DK) ↔ Bastian Bohl Larsen (DK) — nome contido no outro; mesmo país DK."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Constantin_Carbonare",
+        "egr:constantin marco carbonare|DE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Constantin Carbonare (DE) ↔ Constantin Marco Carbonare (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "gjgl:Santiago Josè_Rothländer",
+        "egr:santiago rothlander|DE"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Santiago Josè Rothländer (DE) ↔ Santiago Rothländer (DE) — nome contido no outro; mesmo país DE."
+    },
+    {
+      "sourceKeys": [
+        "job:job-1597070836",
+        "egr:keegan james shutt|ZW"
+      ],
+      "auto": true,
+      "reason": "[auto find-junior-duplicates 2026-07-18, score 55] Keegan Shutt (ZW) ↔ Keegan James Shutt (ZW) — nome contido no outro; mesmo país ZW."
     }
   ],
   "forceSplit": [],
