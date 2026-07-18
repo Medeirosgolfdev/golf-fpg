@@ -1632,7 +1632,7 @@ https://scoring.fpg.pt/lists/linkpage.aspx?page={page}&club={ccode}&tourn={tcode
 | Inscrições | `admissions` | `XH256YF450` | — |
 | Draw (pairings) | `draw` | `8428ACK987` | `&round={1|2|3}` |
 | Resultados (classificação) | `classif` | `8428ACK987` | — |
-| Live Scoring | — (URL diferente) | — | `/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0` |
+| Live Scoring | — (app própria, ver secção abaixo) | — | `/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0` |
 
 `club` é normalmente `000` (três dígitos, com zeros à esquerda) para Campeonatos Nacionais; outros ccodes aplicam-se a torneios organizados por clubes. `tcode` é o identificador numérico do torneio (ex: `10941` para Sub-12 Masculino Jovens 2026 Aroeira, `10935-10944` para o conjunto Sub 10/12/14/16/18 M+F).
 
@@ -1657,6 +1657,52 @@ Estas URLs são úteis para scrapar dados **pré-jogo** (quem está inscrito, te
 | **classif** (resultados) | `classif` | `8428ACK987` | GET linkpage (warmup) + POST `classif.aspx/ClassifLST` | ✓ dois passos |
 
 **Testado e confirmado em 3 casos reais** (futuro, passado 1 ronda, passado 3 rondas), ambos domínios, 17 pares comparados, 0 divergências entre `scoring.fpg.pt` e `scoring.datagolf.pt`.
+
+#### 4ª página: LIVE SCORING — `/live-scoring/` (app separada, com scorecards)
+
+**URL a guardar** (o "género que já conhecemos", mas noutra app):
+
+```
+https://scoring.fpg.pt/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0
+```
+
+Não é `linkpage.aspx` nem usa `ack`: é uma aplicação ASP.NET à parte, com
+**entry gate próprio** (`1.aspx`) que guarda o torneio NA SESSÃO e faz 302 para
+`/live-scoring/Home/ls_classif.aspx`. Ir directo a `ls_classif.aspx` dá sempre
+HTTP 500 — falta contexto, não cookies. **Não precisa dos cookies do Chrome 90**
+(emite sessão própria) — é o único backend FPG assim.
+
+**Porque interessa:** é a ÚNICA fonte com o jogo a decorrer — posição, buraco
+em que cada um vai (ou tee time se ainda não saiu), to-par do dia — **e tem
+scorecards buraco-a-buraco** (na UI abre-se um por um, clicando no nome).
+A `classif.aspx/ClassifLST` só publica depois de fechada, e a `TournamentsLST`
+nem sequer lista o torneio enquanto decorre (confirmado 2026-07-18: o 4º
+Aquapor de nesse dia não aparecia em nenhuma das duas).
+
+⚠ **EFÉMERO** — só existe enquanto a prova decorre. Não há backfill: o que não
+for capturado durante o jogo perde-se.
+
+| Recurso | Chamada |
+|---|---|
+| Gate (obrigatório 1º) | `GET /live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r={ronda}` |
+| Leaderboard | `POST /live-scoring/Home/ls_classif.aspx/lsClassifLST?jtSorting=Topar_cl ASC` · body **só** `{jtSorting}` |
+| **Scorecard de 1 jogador** | `POST /live-scoring/Home/ls_classif.aspx/ScoreCard?score_id={Score_id}&Classi={n}` → `Records[].scdisplay` (HTML) |
+
+Campos do record: `Player_name`, `Score_id`, `Team_description`, `Nholes`,
+`Tee_Time`, `ScoreStatusId`, `Topar`, `Topar_day`, `Tot_R1..R3`.
+`Nholes=0` → ainda não saiu (mostrar `Tee_Time`); `Topar_cl>900` → sem posição
+(`ScoreStatusId` 20/30=DQ, 40=NR, 99=NS). `Classi` = tipo de classificação do
+dropdown `DpClassif` (1=Gross, 2=Medal Net, 3=Stableford Gross, 4=Stableford
+Net, 5=Bogey par).
+
+⚠ **Os PageMethods só respondem à chamada disparada pela NAVEGAÇÃO que
+renderiza a página.** Medido em 2026-07-18 na mesma prova e sessão: navegação
+real do browser → 200; `fetch()` na própria página → 500; `jQuery.ajax` na
+própria página → 500; `$(…).jtable('load')` na própria página → 500; Node → 500.
+Eliminadas por medição as hipóteses de cookies/sessão, IP/rate-limit,
+fingerprint TLS e headers/body (interceptados no XHR e replicados à letra).
+⇒ **Para automatizar, é preciso navegar mesmo a página num browser** e ler o
+DOM. Detalhe completo no cabeçalho de `scripts/scrape-fpg-livescoring.js`.
 
 **O `ack` é universal cross-domain** (mesma infra ASP.NET partilhada) — `XH256YF450` para admissions, `8428ACK987` para draw/classif, iguais em ambos os domínios.
 
