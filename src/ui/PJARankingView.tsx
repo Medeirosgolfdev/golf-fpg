@@ -89,6 +89,8 @@ interface PJATournCol {
 interface PJARoundResult {
   toPar: number;
   pts: number;
+  /** Só no modo metric="sd": differential da volta (sem componente de HCP). */
+  sd?: number | null;
   inTop14: boolean;
   /** Ronda foi excluída do ranking (ex. GG Main R1, Aquapor com DT, >2 Aquapor). */
   excluded?: boolean;
@@ -107,7 +109,7 @@ interface PJAPRow {
   results: Map<string, PJARoundResult>;
   /** Voltas que contam para o ranking. Inclui tournKey/isGF/tcode para
    *  permitir agregação por torneio (regra 2025 = top-7 torneios + GF). */
-  allRounds: { roundKey: string; pts: number; tournKey: string; isGF: boolean; tcode: string }[];
+  allRounds: { roundKey: string; pts: number; sd: number | null; tournKey: string; isGF: boolean; tcode: string }[];
   total: number;
   voltas: number;
   eligible: boolean;
@@ -116,6 +118,10 @@ interface PJAPRow {
 /* ─────────────────────────────────────────────
    Helper Functions
    ───────────────────────────────────────────── */
+
+/** Modo metric="sd": quantas voltas entram na média e mínimo para ranquear. */
+const BEST_SD_N = 8;
+const MIN_SD_ROUNDS = 4;
 
 function pjaPts(toPar: number, mult: number): number {
   return Math.max(0, 25 - toPar) * mult;
@@ -228,7 +234,7 @@ export interface PjaPdfEntry {
 
 export function PJARankingView({
   pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
-  specialRules = true, emptyLabel = "Sem torneios PJA.",
+  specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts",
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;
@@ -249,6 +255,15 @@ export function PJARankingView({
   specialRules?: boolean;
   /** Texto quando não há torneios para o filtro actual. */
   emptyLabel?: string;
+  /** Métrica das células e do total:
+   *   "pts" (default) — pontos por ±par (25 − pancadas acima), total = soma do top-14.
+   *   "sd"            — score differential SEM componente de handicap,
+   *                     total = média das 8 melhores (MENOR é melhor).
+   * O modo "sd" existe para escalões que jogam sobretudo 9 buracos em campos
+   * muito diferentes, onde os pontos por ±par não são comparáveis e o SD
+   * oficial do WHS traria o handicap para dentro da conta. Ver
+   * scripts/build-sub12-ranking.js. */
+  metric?: "pts" | "sd";
 }) {
   const years = useMemo(() => {
     const s = new Set<string>();
@@ -259,7 +274,9 @@ export function PJARankingView({
   const [activeYear, setActiveYear] = useState<string>("");
   const year = activeYear || years[0] || "";
 
-  const { sortKey, sortDir, toggleSort: handleSort, resetSort: resetYearSort } = useSort<string>("total", "desc");
+  // No modo SD o total é uma média onde MENOR é melhor → arranca ascendente.
+  const { sortKey, sortDir, toggleSort: handleSort, resetSort: resetYearSort } =
+    useSort<string>("total", metric === "sd" ? "asc" : "desc");
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
   /** "" = todos · "F" = só raparigas · "M" = só rapazes. */
   const [filterSex, setFilterSex] = useState<"" | "F" | "M">("");
@@ -494,7 +511,7 @@ export function PJARankingView({
         // Aquapor: se jogador fez DT no ano, as rondas não contam.
         const aquaporSkipped = applyNewRules && evType === "AQUAPOR" && playerDidDT.get(playerKey) === true;
 
-        const addRound = (roundNum: number, gross: number, par: number) => {
+        const addRound = (roundNum: number, gross: number, par: number, rs?: any) => {
           if (!par || !gross || gross >= 900) return;
           const tp = gross - par;
           const pts = pjaPts(tp, mult);
@@ -507,27 +524,33 @@ export function PJARankingView({
           if (ggMainExcluded) excludedReason = "Greatgolf Main: R1 não conta para o ranking PJA (só R2+R3)";
           else if (aquaporSkipped) excludedReason = "Aquapor: jogador também fez Drive Tour, Aquapor não conta";
 
-          row.results.set(roundKey, { toPar: tp, pts, inTop14: false, excluded, excludedReason });
-          if (!excluded) row.allRounds.push({ roundKey, pts, tournKey, isGF, tcode: String((t as any).tcode || "") });
+          // Modo "sd": o differential vem pré-calculado na ronda pelo builder
+          // (não é recalculado aqui — depende de CR/Slope e do nº de buracos).
+          const sd = metric === "sd" && rs && typeof rs.sd === "number" ? rs.sd : null;
+          row.results.set(roundKey, { toPar: tp, pts, sd, inTop14: false, excluded, excludedReason });
+          if (!excluded) row.allRounds.push({ roundKey, pts, sd, tournKey, isGF, tcode: String((t as any).tcode || "") });
         };
 
         if (isSynth && subRounds.length > 1 && p.roundScores && p.roundScores.length > 0) {
           p.roundScores.forEach((rs: any, i: number) => {
             const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
-            addRound(i + 1, rs.gross, parR);
+            addRound(i + 1, rs.gross, parR, rs);
           });
         } else if (p.roundScores && p.roundScores.length > 1) {
           // Multi-round não-sintético (e.g. pull-torneios 2-round event vindo directo)
           p.roundScores.forEach((rs: any, i: number) => {
             const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
-            addRound(i + 1, rs.gross, parR);
+            addRound(i + 1, rs.gross, parR, rs);
           });
         } else {
           const tp = typeof p.toPar === "string" ? parseInt(p.toPar) : p.toPar as number;
           const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal as number;
           if (tp == null || isNaN(tp) || gross == null || isNaN(gross) || gross >= 900) continue;
           const par = gross - tp;
-          addRound(1, gross, par);
+          // Passar a ronda (quando existe) para o modo metric="sd" poder ler o
+          // differential dela — torneios de 1 ronda caem neste ramo e sem isto
+          // ficavam sem SD (é a maioria do Drive Challenge).
+          addRound(1, gross, par, p.roundScores?.[0]);
         }
       }
     }
@@ -540,6 +563,21 @@ export function PJARankingView({
     //  • 2026+: TOP-14 melhores rondas (com regras DT/Aquapor/GG_MAIN).
     //  • Anos anteriores: TOP-14 voltas (legado simples).
     for (const row of map.values()) {
+      if (metric === "sd") {
+        // Média das BEST_SD_N melhores voltas — menor é melhor. Sem soma de
+        // pontos: somar differentials premiaria quem joga mais provas.
+        const sds = row.allRounds.filter(r => r.sd != null) as { roundKey: string; sd: number }[];
+        const ordenadas = [...sds].sort((a, b) => a.sd - b.sd);
+        const melhores = ordenadas.slice(0, BEST_SD_N);
+        const chaves = new Set(melhores.map(r => r.roundKey));
+        for (const [rk, res] of row.results.entries()) res.inTop14 = chaves.has(rk);
+        row.total = melhores.length
+          ? Math.round((melhores.reduce((a, r) => a + r.sd, 0) / melhores.length) * 10) / 10
+          : NaN;
+        row.voltas = sds.length;
+        row.eligible = sds.length >= MIN_SD_ROUNDS;
+        continue;
+      }
       // A regra 2025 (top-7 torneios + GF à parte) é do regulamento PJA — o
       // ranking genérico usa sempre top-14 voltas, sem provas de peso especial.
       if (specialRules && year === "2025") {
@@ -635,6 +673,8 @@ export function PJARankingView({
     let rows = applyMembershipMode
       ? [...map.values()]
       : [...map.values()].filter(r => r.voltas > 0);
+    // No modo SD uma média de 1-3 voltas não diz nada — exigir um mínimo.
+    if (metric === "sd") rows = rows.filter(r => r.voltas >= MIN_SD_ROUNDS);
 
     // Membership mode: filtrar apenas membros PJA (tag "PJA" em players.json).
     // Sem lista oficial (legado): qualquer participante aparece.
@@ -648,7 +688,7 @@ export function PJARankingView({
     }
 
     return rows;
-  }, [yearTournaments, playersDB, year, aquaporAllowedKeys, pjaMembersByYear, specialRules]);
+  }, [yearTournaments, playersDB, year, aquaporAllowedKeys, pjaMembersByYear, specialRules, metric]);
 
   // Conjunto de fedCodes INSCRITOS no ano corrente (lido de pja-members.json).
   // Se vazio/indefinido para este ano, tratamos todos os membros PJA como inscritos.
@@ -832,7 +872,7 @@ export function PJARankingView({
       <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{sortedRows.length} de {allRows.length}</span>
       <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title={!specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+    <span className="muted fs-10 ml-auto" title={metric === "sd" ? `SD = (113/Slope) × (Gross − CR), ×2 nas voltas de 9 buracos · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor · não depende do handicap` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
       ℹ Regras
     </span>
     <span className="chip" title={`${allRows.length} ${specialRules ? "jogadores PJA" : "juniores"} · ${visibleTournCols.length} torneios`}>
@@ -925,7 +965,7 @@ export function PJARankingView({
                       <CSortTh k={"toPar_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-grp">
                         {r.label ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
                       </CSortTh>
-                      <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>Pts</CSortTh>
+                      <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>{metric === "sd" ? "SD" : "Pts"}</CSortTh>
                     </React.Fragment>
                   ))}
                 </>
@@ -936,7 +976,10 @@ export function PJARankingView({
             </th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
-              <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
+              <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}
+                title={metric === "sd" ? `Média das ${BEST_SD_N} melhores voltas — MENOR é melhor` : undefined}>
+                {metric === "sd" ? "SD méd" : "Total"}
+              </CSortTh>
             </>}
           >
             {sortedRows.map((row, idx) => {
@@ -979,7 +1022,9 @@ export function PJARankingView({
                           return (
                             <React.Fragment key={r.roundKey}>
                               <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={res.excludedReason}>{tpStr}</td>
-                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={res.excludedReason}>{fmtPts(res.pts)}</td>
+                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={res.excludedReason}>
+                                {metric === "sd" ? (res.sd != null ? res.sd.toFixed(1) : "–") : fmtPts(res.pts)}
+                              </td>
                             </React.Fragment>
                           );
                         })}
@@ -991,7 +1036,7 @@ export function PJARankingView({
                     {row.voltas}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
-                    {fmtPts(row.total)}
+                    {metric === "sd" ? (isNaN(row.total) ? "–" : row.total.toFixed(1)) : fmtPts(row.total)}
                   </td>
                 </tr>
               );

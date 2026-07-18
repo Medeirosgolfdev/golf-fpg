@@ -58,14 +58,17 @@ export interface SortThProps {
   className?: string;
   colSpan?: number;
   style?: React.CSSProperties;
+  /** Tooltip do cabeçalho (ex: explicar a métrica da coluna). */
+  title?: string;
   children: React.ReactNode;
 }
 
-export function SortTh({ k, s, d, on, className, colSpan, style, children }: SortThProps) {
+export function SortTh({ k, s, d, on, className, colSpan, style, title, children }: SortThProps) {
   const active = s === k;
   return (
     <th
       colSpan={colSpan}
+      title={title}
       style={style}
       className={"cs-sortable " + (className || "")}
       onClick={() => on(k)}

@@ -677,6 +677,29 @@ function Content() {
   // dessa primeira execução marcava alive=false antes do fetch resolver — os
   // dados chegavam e eram deitados fora (ficava preso em "A carregar…").
   const classifFetchStarted = useRef(false);
+  // ── Estado Ranking Sub-12 ────────────────────────────────────────────────
+  // Ficheiro pré-construído por scripts/build-sub12-ranking.js — mesma vista do
+  // Ranking PJA, mas com metric="sd" (differential sem componente de handicap,
+  // porque o escalão joga sobretudo 9 buracos em campos muito diferentes).
+  const [sub12Tournaments, setSub12Tournaments] = useState<Tournament[]>([]);
+  const [sub12Loading, setSub12Loading] = useState(false);
+  const sub12FetchStarted = useRef(false);
+  useEffect(() => {
+    if (navMode !== "ranking-sub12" || sub12FetchStarted.current) return;
+    sub12FetchStarted.current = true;
+    setSub12Loading(true);
+    (async () => {
+      try {
+        const d = await cachedFetchJson<{ tournaments?: Tournament[] }>("/data/sub12-ranking.json");
+        setSub12Tournaments(d?.tournaments || []);
+      } catch {
+        setSub12Tournaments([]);
+      } finally {
+        setSub12Loading(false);
+      }
+    })();
+  }, [navMode]);
+
   useEffect(() => {
     if (navMode !== "classificacoes" || classifFetchStarted.current) return;
     classifFetchStarted.current = true;
@@ -2131,7 +2154,7 @@ function Content() {
               FPGPage acabar de carregar e procura o slot no primeiro render —
               se ele ainda não existisse, os filtros caíam na toolbar de
               fallback e apareciam numa segunda linha. */}
-          {(navMode === "ranking-pja" || navMode === "classificacoes") && <>
+          {(navMode === "ranking-pja" || navMode === "classificacoes" || navMode === "ranking-sub12") && <>
             {!loading && <ToolbarSep />}
             <div id="pja-toolbar-slot" style={{ display: "contents" }} />
           </>}
@@ -2774,6 +2797,23 @@ function Content() {
               )
             )}
           </div>
+        </div>
+      )}
+
+      {/* Ranking Sub-12 (e abaixo) — métrica de differential sem componente de
+          HCP, porque as voltas são quase todas de 9 buracos e os campos variam
+          muito. Ver scripts/build-sub12-ranking.js. */}
+      {navMode === "ranking-sub12" && (
+        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+          <PJARankingView
+            pjaList={sub12Tournaments}
+            playersDB={playersDB}
+            loading={sub12Loading}
+            externalFilterName={searchQuery}
+            specialRules={false}
+            metric="sd"
+            emptyLabel="Sem torneios Sub-12."
+          />
         </div>
       )}
 
