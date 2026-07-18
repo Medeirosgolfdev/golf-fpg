@@ -527,10 +527,23 @@ export default defineConfig({
           // servidor rejeita cookies de subdomínio errado). NUNCA sem cookies (500
           // por falta de sessão ASP.NET). A experiência "cross-subdomain via SSO"
           // foi testada 2026-04-17 → 2026-04-22 e é conclusivamente inviável.
-          type Attempt = { url: string; headers: Record<string, string>; label: string }
+          type Attempt = { url: string; headers: Record<string, string>; label: string; warmup?: boolean }
           const attempts: Attempt[] = []
           if (cookieFpg)      attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg },      label: 'fpg+cookie' })
           if (cookieDatagolf) attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieDatagolf }, label: 'datagolf+cookie' })
+          // 3) URL DIRECTA tournAdmissions.aspx — obrigatória para ccodes de CLUBE.
+          //    O linkpage.aspx só aceita ccodes servidos por esse gateway (ex: 000
+          //    dos Nacionais); para um ccode de clube (ex: 179 Amendoeira) devolve
+          //    Param_Errors.aspx?Err=400 nos DOIS domínios. O scraper
+          //    (scrape-fpg-admissions-draws-node.js, fetchLinkpage tentativa 3) já
+          //    fazia este fallback — o middleware não, por isso a verificação live
+          //    dava sempre 502 em torneios de clube enquanto o scrape tinha dados.
+          //    Requer warmup do entry-gate (seta DG_Lists_URL server-side).
+          if (cookieDatagolf) attempts.push({
+            url: 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=' + ccode + '&tcode=' + tcode,
+            headers: { ...baseHeaders, Cookie: cookieDatagolf, Referer: 'https://scoring.datagolf.pt/' },
+            label: 'datagolf+directo', warmup: true,
+          })
 
           // Tentar todos os URLs e FUNDIR resultados (deduplicar por fed code).
           // Os 2 URLs (scoring.fpg.pt vs scoring.datagolf.pt) podem ter
@@ -552,9 +565,28 @@ export default defineConfig({
           // é o que importa para avaliar se uma fonte acrescenta valor.
           const parsedByLabel: Record<string, number> = {}
           const uniqueByLabel: Record<string, number> = {}
+          let dgWarmupDone = false
           for (const att of attempts) {
+            // O fallback directo só serve para salvar o caso em que o linkpage
+            // não cobre o ccode; se as fontes anteriores já deram inscritos,
+            // poupa-se o warmup + pedido extra.
+            if (att.warmup && merged.size > 0) continue
             console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] ' + att.url)
             try {
+              if (att.warmup && !dgWarmupDone) {
+                // Entry-gate: sem esta passagem o tournAdmissions.aspx directo
+                // devolve 500/Param_Errors (sessão ASP.NET sem contexto).
+                try {
+                  const w = await fetch('https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T', {
+                    headers: att.headers, redirect: 'follow',
+                  })
+                  await w.text()
+                  console.log('[inscricoes] datagolf warmup HTTP ' + w.status)
+                } catch (we) {
+                  console.warn('[inscricoes] datagolf warmup falhou:', (we as Error).message)
+                }
+                dgWarmupDone = true
+              }
               const r = await fetch(att.url, { headers: att.headers, redirect: 'follow' })
               const txt = await r.text()
               const paramErr = /Param_Errors|Err=999/.test(txt)

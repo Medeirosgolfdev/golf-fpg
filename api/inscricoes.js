@@ -76,6 +76,27 @@ function loadLocalScoringCookies() {
   return null;
 }
 
+/* Cookies de scoring.datagolf.pt — separados dos de scoring.fpg.pt/lists.
+ * Só necessários para o fallback directo tournAdmissions.aspx (ccodes de clube,
+ * que o gateway linkpage.aspx não serve). Em produção requer o env
+ * DATAGOLF_SCORING_COOKIES no Vercel; sem ele o fallback é simplesmente
+ * saltado e o comportamento é o antigo (502 nesses torneios). */
+function loadDatagolfCookies() {
+  if (process.env.DATAGOLF_SCORING_COOKIES) return process.env.DATAGOLF_SCORING_COOKIES;
+  try {
+    const path = require("path");
+    const fs = require("fs");
+    const fp = path.join(__dirname, ".scoring-datagolf-cookies.json");
+    if (fs.existsSync(fp)) {
+      const j = JSON.parse(fs.readFileSync(fp, "utf8"));
+      if (j.cookieHeader) return j.cookieHeader;
+    }
+  } catch (e) {
+    console.log("[inscricoes] erro a ler cookies datagolf:", e.message);
+  }
+  return null;
+}
+
 async function gpBorrowSession() {
   // Tentar roubar um ASP.NET_SessionId válido do pool do golf-portugal.pt
   try {
@@ -256,11 +277,45 @@ async function fetchAdmissionsHTML(ccode, tcode) {
     if (r.ok && html && !/Param_Errors|Err=999/.test(html)) {
       return { ok: true, html, status: r.status, via: "no-cookie" };
     }
-    return { ok: false, html, status: r.status, via: "no-cookie" };
   } catch (e) {
     console.error("[inscricoes] erro sem cookie:", e.message);
-    return { ok: false, html: "", status: 0, via: "error", error: e.message };
   }
+
+  // Tentativa 3: URL DIRECTA tournAdmissions.aspx em scoring.datagolf.pt.
+  // Obrigatória para ccodes de CLUBE (ex: 179 Amendoeira): o linkpage.aspx só
+  // serve os ccodes do seu gateway (ex: 000 dos Nacionais) e devolve
+  // Param_Errors.aspx?Err=400 para os restantes. É o mesmo fallback que o
+  // scraper (scrape-fpg-admissions-draws-node.js, fetchLinkpage tentativa 3)
+  // já fazia — sem ele a verificação live dava 502 em todos os torneios de
+  // clube. Requer warmup do entry-gate, que seta DG_Lists_URL server-side.
+  const cookieDg = loadDatagolfCookies();
+  if (cookieDg) {
+    const dgHeaders = { ...baseHeaders, "Cookie": cookieDg, "Referer": "https://scoring.datagolf.pt/" };
+    try {
+      const w = await fetch("https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T", {
+        headers: dgHeaders, redirect: "follow",
+      });
+      await w.text();
+      console.log("[inscricoes] datagolf warmup HTTP=" + w.status);
+    } catch (e) {
+      console.warn("[inscricoes] datagolf warmup falhou:", e.message);
+    }
+    try {
+      const url = "https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=" + ccode + "&tcode=" + tcode;
+      const r = await fetch(url, { headers: dgHeaders, redirect: "follow" });
+      const html = await r.text();
+      console.log("[inscricoes] " + ccode + "/" + tcode + " [datagolf directo] HTTP=" + r.status + " len=" + html.length);
+      if (r.ok && html && !/Param_Errors|Err=999/.test(html)) {
+        return { ok: true, html, status: r.status, via: "datagolf-directo" };
+      }
+      return { ok: false, html, status: r.status, via: "datagolf-directo" };
+    } catch (e) {
+      console.error("[inscricoes] erro datagolf directo:", e.message);
+      return { ok: false, html: "", status: 0, via: "error", error: e.message };
+    }
+  }
+
+  return { ok: false, html: "", status: 0, via: "sem-fallback-datagolf" };
 }
 
 // ═════════════════════════════════════════════════════════════════════

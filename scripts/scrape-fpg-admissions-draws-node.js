@@ -781,8 +781,18 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios (${scope.map(t => `${t.ccode}/${t.tcode}`).join(", ")})`);
   } else {
     if (FILTER_SINCE) {
-      scope = scope.filter(t => t.date >= FILTER_SINCE);
-      console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios`);
+      // Entradas com data DESCONHECIDA (date: null) NUNCA são filtradas: são o
+      // padrão documentado para torneios futuros acabados de adicionar ao scope
+      // (a data real só se sabe depois do primeiro scrape). Sem esta excepção
+      // `null >= "YYYY-MM-DD"` é sempre false em JS, por isso o cron
+      // (--since 4d) saltava-as em silêncio para sempre — foi o que aconteceu
+      // ao Amendoeira 179/10604-10606, cujas inscrições ficaram congeladas nos
+      // valores do scrape manual inicial enquanto a FPG já tinha mais inscritos.
+      const before = scope.length;
+      scope = scope.filter(t => t.date == null || t.date >= FILTER_SINCE);
+      const semData = scope.filter(t => t.date == null).length;
+      console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios (de ${before})`
+        + (semData ? ` — inclui ${semData} sem data conhecida` : ""));
     }
     if (FILTER_YEAR) {
       scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
