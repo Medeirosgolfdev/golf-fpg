@@ -2812,6 +2812,7 @@ function Content() {
             externalFilterName={searchQuery}
             specialRules={false}
             metric="sd"
+            showMeters
             emptyLabel="Sem torneios Sub-12."
           />
         </div>

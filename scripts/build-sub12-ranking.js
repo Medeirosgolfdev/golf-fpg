@@ -85,9 +85,12 @@ function serieOf(name) {
   return "Circuito juvenil";
 }
 
-/** Região do Drive Challenge (null nas outras séries). */
+/** Séries organizadas por zona — cada miúdo só disputa a sua região. */
+const SERIES_REGIONAIS = new Set(["Drive Challenge", "Drive Tour"]);
+
+/** Região da prova (null nas séries que não são regionais). */
 function regiaoOf(name, serie) {
-  if (serie !== "Drive Challenge") return null;
+  if (!SERIES_REGIONAIS.has(serie)) return null;
   const n = name || "";
   if (/madeira|santo da serra|st[ºo]?\.? da serra|palheiro|porto santo/i.test(n)) return "Madeira";
   if (/norte|estela|vale pis[aã]o|vidago|paredes|barca/i.test(n)) return "Norte";
@@ -148,6 +151,81 @@ function cappedGross(rs, fallbackGross) {
   return jogados ? g : fallbackGross;
 }
 
+/* ── Agrupar Drive Challenge por edição ─────────────────────────── */
+
+/** Nº da edição no nome: "1º Torneio Drive Challenge…" → "1º"; "Final…" → "Final".
+ *  A FPG escreve de várias formas: "1º Torneio", "2 ºTorn.", "5º Torneio Drive
+ *  Challe", "6º Torneio Drive Chall". */
+function edicaoOf(name) {
+  const m = String(name || "").match(/^\s*(\d+)\s*[ºo°]/);
+  if (m) return `${m[1]}º`;
+  if (/^\s*Final/i.test(name || "")) return "Final";
+  return null;
+}
+
+/**
+ * Junta as provas da MESMA edição de um circuito regional (Drive Challenge e
+ * Drive Tour) numa coluna só: "1º Drive Challenge" leva todos os miúdos que
+ * jogaram a 1ª prova da SUA região (e do seu escalão). Cada um só disputa a sua zona, por isso em
+ * colunas separadas por região a tabela ficava quase toda vazia; o SD já
+ * desconta a diferença de campo, portanto pô-los lado a lado é legítimo.
+ *
+ * Um jogador que tenha jogado em duas regiões na mesma edição (aconteceu uma
+ * vez em 2026) fica com as duas voltas, como R1 e R2.
+ */
+function mergeRegionalEditions(tournaments) {
+  const grupos = new Map();
+  const resto = [];
+  for (const t of tournaments) {
+    const ed = SERIES_REGIONAIS.has(t.serie) ? edicaoOf(t.name) : null;
+    if (!ed) { resto.push(t); continue; }
+    // Chave por SÉRIE + edição: o 1º Drive Tour e o 1º Drive Challenge são
+    // circuitos distintos (níveis diferentes) e não se misturam.
+    const key = `${t.serie}|${ed}`;
+    if (!grupos.has(key)) grupos.set(key, []);
+    grupos.get(key).push(t);
+  }
+
+  const out = [...resto];
+  for (const [key, provas] of grupos) {
+    const [serie, ed] = key.split("|");
+    provas.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    const byPlayer = new Map();
+    for (const t of provas) {
+      for (const p of t.players) {
+        let acc = byPlayer.get(p.fedCode);
+        if (!acc) { acc = { ...p, roundScores: [] }; byPlayer.set(p.fedCode, acc); }
+        for (const r of p.roundScores) {
+          // A prova de origem viaja com a volta — sem isto perdia-se qual foi
+          // a região/campo de cada miúdo dentro da coluna agregada.
+          acc.roundScores.push({ ...r, round: acc.roundScores.length + 1, _prova: t.name, _campo: t.campo, _regiao: t.regiao });
+        }
+      }
+    }
+    const players = [...byPlayer.values()].map((p) => {
+      const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
+      const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
+      return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
+    });
+    const sigla = serie === "Drive Tour" ? "dt" : "dc";
+    out.push({
+      ccode: sigla.toUpperCase(), tcode: `${sigla}-${ed}`,
+      name: `${ed} ${serie}`,
+      date: provas[0].date,
+      campo: `${provas.length} provas · ${[...new Set(provas.map((t) => t.regiao).filter(Boolean))].join(", ")}`,
+      serie,
+      regiao: null,
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players,
+      _edicao: ed,
+      _provas: provas.map((t) => ({ ccode: t.ccode, tcode: t.tcode, name: t.name, regiao: t.regiao })),
+    });
+    console.log(`  ⊕ ${ed} ${serie} — ${provas.length} provas, ${players.length} miúdos`);
+  }
+  out.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  return out;
+}
+
 /* ── main ────────────────────────────────────────────────────────── */
 function main() {
   console.log(`\n🏅 RANKING SUB-12 ${YEAR}${CAP_OVER_PAR != null ? ` (cap par+${CAP_OVER_PAR})` : ""}\n`);
@@ -190,10 +268,12 @@ function main() {
         const parTotal = (rs.pars || []).reduce((a, b) => a + (b || 0), 0) || p.parTotal || null;
         // Formato "fpg-pull" (roundScores) para a vista de ranking poder
         // consumir estes torneios exactamente como consome os do PJA.
+        const metros = (rs.meters || []).reduce((a, b) => a + (Number(b) || 0), 0) || null;
         rondas.push({
           round: rs.round || rondas.length + 1,
           gross,
           parTotal,
+          meters: metros,
           courseRating: cr,
           slope: sl,
           teeName: rs.teeName || p.teeName || null,
@@ -230,10 +310,10 @@ function main() {
     });
   }
 
-  out.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  const merged = mergeRegionalEditions(out);
 
   const jogadores = new Map();
-  for (const t of out) for (const p of t.players) {
+  for (const t of merged) for (const p of t.players) {
     const e = jogadores.get(p.fedCode) || { n: 0, esc: p.escalao };
     e.n += p.roundScores.length;
     jogadores.set(p.fedCode, e);
@@ -246,13 +326,13 @@ function main() {
     source: "build-sub12-ranking.js",
     metric: "differential sem componente de HCP: (113/Slope)×(Gross−CR), ×2 em 9 buracos",
     capOverPar: CAP_OVER_PAR,
-    tournaments: out,
+    tournaments: merged,
   });
 
   const porSerie = {};
   for (const t of out) porSerie[t.serie] = (porSerie[t.serie] || 0) + 1;
 
-  console.log(`  Torneios: ${out.length}`);
+  console.log(`  Torneios (colunas): ${merged.length} — ${out.length} provas antes de agrupar os circuitos regionais`);
   console.log(`   ↳ ${Object.entries(porSerie).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(" · ")}`);
   console.log(`  Voltas com CR+Slope: ${voltasOk}${semRating ? ` (${semRating} saltadas por falta de rating)` : ""}`);
   console.log(`  Miúdos: ${jogadores.size} (${com4} com ≥4 voltas)`);

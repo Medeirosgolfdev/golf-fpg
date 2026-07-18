@@ -91,6 +91,11 @@ interface PJARoundResult {
   pts: number;
   /** Só no modo metric="sd": differential da volta (sem componente de HCP). */
   sd?: number | null;
+  /** Metros jogados nessa volta (o tee/campo varia entre jogadores quando a
+   *  coluna agrega várias provas — ex: "3º Drive Challenge" junta as regiões). */
+  meters?: number | null;
+  /** Prova concreta que o jogador disputou dentro de uma coluna agregada. */
+  prova?: string | null;
   inTop14: boolean;
   /** Ronda foi excluída do ranking (ex. GG Main R1, Aquapor com DT, >2 Aquapor). */
   excluded?: boolean;
@@ -244,7 +249,7 @@ export interface PjaPdfEntry {
 
 export function PJARankingView({
   pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
-  specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts",
+  specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts", showMeters = false,
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;
@@ -274,6 +279,10 @@ export function PJARankingView({
    * oficial do WHS traria o handicap para dentro da conta. Ver
    * scripts/build-sub12-ranking.js. */
   metric?: "pts" | "sd";
+  /** Acrescenta uma coluna "m" (metros jogados) a cada ronda. Útil quando a
+   *  coluna agrega provas de campos diferentes — ex: "3º Drive Challenge"
+   *  junta as 5 regiões e cada miúdo jogou a distância da sua. */
+  showMeters?: boolean;
 }) {
   const years = useMemo(() => {
     const s = new Set<string>();
@@ -385,6 +394,7 @@ export function PJARankingView({
 
   const tournCols: PJATournCol[] = useMemo(() => {
     const cols: PJATournCol[] = [];
+    const perRound = showMeters ? 3 : 2;
     for (const t of yearTournaments) {
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
@@ -424,13 +434,13 @@ export function PJARankingView({
             date: (subRounds[i]?.date) || t.date || "",
           });
         }
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds, colSpan: rounds.length * 2, ccode, tcode, totalRondas: nR });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds, colSpan: rounds.length * perRound, ccode, tcode, totalRondas: nR });
       } else {
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2, ccode, tcode, totalRondas: 1 });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: perRound, ccode, tcode, totalRondas: 1 });
       }
     }
     return cols;
-  }, [yearTournaments, year, specialRules]);
+  }, [yearTournaments, year, specialRules, showMeters]);
 
   // Para regras 2026+: identificar os 2 primeiros Aquapor do ano (ordem cronológica)
   // — só esses contam para o ranking PJA.
@@ -537,7 +547,9 @@ export function PJARankingView({
           // Modo "sd": o differential vem pré-calculado na ronda pelo builder
           // (não é recalculado aqui — depende de CR/Slope e do nº de buracos).
           const sd = metric === "sd" && rs && typeof rs.sd === "number" ? rs.sd : null;
-          row.results.set(roundKey, { toPar: tp, pts, sd, inTop14: false, excluded, excludedReason });
+          const meters = rs && typeof rs.meters === "number" ? rs.meters : null;
+          const prova = rs && rs._prova ? String(rs._prova) : null;
+          row.results.set(roundKey, { toPar: tp, pts, sd, meters, prova, inTop14: false, excluded, excludedReason });
           if (!excluded) row.allRounds.push({ roundKey, pts, sd, tournKey, isGF, tcode: String((t as any).tcode || "") });
         };
 
@@ -798,9 +810,10 @@ export function PJARankingView({
       // sempre no fim, nas duas direcções. (Antes o valor em falta era ±INF e
       // em ordem descendente os ausentes subiam ao topo de um torneio que nunca
       // disputaram.)
-      if (sortKey.startsWith("toPar_") || sortKey.startsWith("pts_")) {
+      if (sortKey.startsWith("toPar_") || sortKey.startsWith("pts_") || sortKey.startsWith("m_")) {
         const isPts = sortKey.startsWith("pts_");
-        const rk = sortKey.slice(isPts ? 4 : 6);
+        const isM = sortKey.startsWith("m_");
+        const rk = sortKey.slice(isM ? 2 : isPts ? 4 : 6);
         const va = a.results.get(rk), vb = b.results.get(rk);
         if (!va && !vb) return 0;
         if (!va) return 1;
@@ -808,7 +821,7 @@ export function PJARankingView({
         // A 2ª coluna de cada ronda mostra Pts ou SD consoante a métrica —
         // ordenar pelo valor que está mesmo à vista.
         const val = (r: PJARoundResult) =>
-          isPts ? (metric === "sd" ? (r.sd ?? INF) : r.pts) : r.toPar;
+          isM ? (r.meters ?? INF) : isPts ? (metric === "sd" ? (r.sd ?? INF) : r.pts) : r.toPar;
         return mult * (val(va) - val(vb));
       }
       // NB: allRows só é usado para filtros/availEscs; o ranking usa rowsInscritos.
@@ -1000,6 +1013,10 @@ export function PJARankingView({
                         {r.label ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
                       </CSortTh>
                       <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>{metric === "sd" ? "SD" : "Pts"}</CSortTh>
+                      {showMeters && (
+                        <CSortTh k={"m_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-col"
+                          title="Metros jogados nesta volta">m</CSortTh>
+                      )}
                     </React.Fragment>
                   ))}
                 </>
@@ -1048,6 +1065,7 @@ export function PJARankingView({
                             <React.Fragment key={r.roundKey}>
                               <td className="cs-t-topar cs-grp" />
                               <td className="cs-t-gross cs-col" />
+                              {showMeters && <td className="cs-t-topar cs-col" />}
                             </React.Fragment>
                           );
                           const tpStr = fmtTP(res.toPar);
@@ -1061,6 +1079,12 @@ export function PJARankingView({
                               <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={res.excludedReason}>
                                 {metric === "sd" ? (res.sd != null ? res.sd.toFixed(1) : "–") : fmtPts(res.pts)}
                               </td>
+                              {showMeters && (
+                                <td className="cs-t-topar cs-col muted" style={{ fontVariantNumeric: "tabular-nums", ...excludedStyle }}
+                                    title={res.prova || undefined}>
+                                  {res.meters ? res.meters.toLocaleString("pt-PT") : "–"}
+                                </td>
+                              )}
                             </React.Fragment>
                           );
                         })}
