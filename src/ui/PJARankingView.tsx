@@ -111,6 +111,8 @@ interface PJAPRow {
   escalao: string;
   sex: string;
   hcp: number | null;
+  /** Regiões onde o jogador competiu (circuitos regionais). */
+  regioes: string[];
   results: Map<string, PJARoundResult>;
   /** Voltas que contam para o ranking. Inclui tournKey/isGF/tcode para
    *  permitir agregação por torneio (regra 2025 = top-7 torneios + GF). */
@@ -249,7 +251,7 @@ export interface PjaPdfEntry {
 
 export function PJARankingView({
   pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
-  specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts", showMeters = false,
+  specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts", showMeters = false, hcpFilterMax,
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;
@@ -283,6 +285,9 @@ export function PJARankingView({
    *  coluna agrega provas de campos diferentes — ex: "3º Drive Challenge"
    *  junta as 5 regiões e cada miúdo jogou a distância da sua. */
   showMeters?: boolean;
+  /** Quando definido, mostra um chip que filtra por HCP abaixo deste valor
+   *  (ex: 25 no Sub-12 — separa quem já joga a sério de quem está a começar). */
+  hcpFilterMax?: number;
 }) {
   const years = useMemo(() => {
     const s = new Set<string>();
@@ -299,6 +304,8 @@ export function PJARankingView({
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
   /** "" = todos · "F" = só raparigas · "M" = só rapazes. */
   const [filterSex, setFilterSex] = useState<"" | "F" | "M">("");
+  const [filterRegiao, setFilterRegiao] = useState<string[]>([]);
+  const [filterHcp, setFilterHcp] = useState(false);
   const [internalFilterName, setFilterName] = useState("");
   // Quando a FPGPage passa um search externo (via toolbar unificada), usa-o;
   // senão cai no state interno (uso standalone). Trim+lowercase feito nos consumers.
@@ -522,11 +529,14 @@ export function PJARankingView({
             // sexo vem da própria linha do torneio (a fonte preenche-o a partir
             // do federados.json). Sem isto o badge e o filtro ♀ falhavam neles.
             sex: db?.sex || (p as any).sex || "", hcp: p.hcpExact ?? null,
+            regioes: [],
             results: new Map(), allRounds: [], total: 0, voltas: 0, eligible: false,
           });
         }
         const row = map.get(playerKey)!;
         if (p.hcpExact != null) row.hcp = p.hcpExact;
+        const reg = (p as any).regiao;
+        if (reg && !row.regioes.includes(reg)) row.regioes.push(reg);
 
         // Aquapor: se jogador fez DT no ano, as rondas não contam.
         const aquaporSkipped = applyNewRules && evType === "AQUAPOR" && playerDidDT.get(playerKey) === true;
@@ -681,6 +691,7 @@ export function PJARankingView({
           escalao: esc,
           sex: (db as any).sex || "",
           hcp: (db as any).hcpExact ?? (db as any).hcp ?? null,
+          regioes: [],
           results: new Map(),
           allRounds: [],
           total: 0,
@@ -784,6 +795,12 @@ export function PJARankingView({
     return [...s].sort() as ("M" | "F")[];  // F antes de M
   }, [allRows]);
 
+  const availRegioes = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of allRows) for (const g of r.regioes) s.add(g);
+    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [allRows]);
+
   const availEscs = useMemo(() => {
     const s = new Set<string>();
     for (const r of allRows) if (r.escalao) s.add(r.escalao);
@@ -794,6 +811,8 @@ export function PJARankingView({
     // Ranking principal = só inscritos no ano corrente (se houver lista).
     let rows = rowsInscritos;
     if (filterSex) rows = rows.filter(r => r.sex === filterSex);
+    if (filterRegiao.length) rows = rows.filter(r => r.regioes.some(g => filterRegiao.includes(g)));
+    if (filterHcp && hcpFilterMax != null) rows = rows.filter(r => r.hcp != null && r.hcp < hcpFilterMax);
     if (filterEsc.length) rows = rows.filter(r => filterEsc.includes(r.escalao));
     if (filterName.trim()) {
       const q = filterName.trim().toLowerCase();
@@ -829,7 +848,7 @@ export function PJARankingView({
       const tb = isNaN(b.total) ? INF : b.total;
       return mult * (ta - tb);
     });
-  }, [rowsInscritos, filterSex, filterEsc, filterName, sortKey, sortDir, metric]);
+  }, [rowsInscritos, filterSex, filterRegiao, filterHcp, hcpFilterMax, filterEsc, filterName, sortKey, sortDir, metric]);
 
   /** Posição no RANKING (pela métrica), não a ordem da tabela.
    *  A coluna "#" tem de ser estável: ao ordenar por uma coluna de torneio, o
@@ -848,13 +867,15 @@ export function PJARankingView({
   const sortedNaoInscritos = useMemo(() => {
     let rows = rowsNaoInscritos;
     if (filterSex) rows = rows.filter(r => r.sex === filterSex);
+    if (filterRegiao.length) rows = rows.filter(r => r.regioes.some(g => filterRegiao.includes(g)));
+    if (filterHcp && hcpFilterMax != null) rows = rows.filter(r => r.hcp != null && r.hcp < hcpFilterMax);
     if (filterEsc.length) rows = rows.filter(r => filterEsc.includes(r.escalao));
     if (filterName.trim()) {
       const q = filterName.trim().toLowerCase();
       rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q));
     }
     return [...rows].sort((a, b) => b.total - a.total);
-  }, [rowsNaoInscritos, filterSex, filterEsc, filterName]);
+  }, [rowsNaoInscritos, filterSex, filterRegiao, filterHcp, hcpFilterMax, filterEsc, filterName]);
 
 
 
@@ -881,7 +902,7 @@ export function PJARankingView({
       {years.map(yr => (
         <button key={yr}
           className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")}
-          onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterSex(""); setFilterName(""); resetYearSort(); }}
+          onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); setFilterName(""); resetYearSort(); }}
           style={{ flexShrink: 0 }}>
           {yr}
         </button>
@@ -909,15 +930,30 @@ export function PJARankingView({
         </FilterChip>
       ))}
     </>}
+    {availRegioes.length > 1 && <>
+      <span style={{ color: "var(--border)" }}>|</span>
+      {availRegioes.map(g => (
+        <FilterChip key={g} active={filterRegiao.includes(g)}
+          onClick={() => setFilterRegiao(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g])}>
+          {g}
+        </FilterChip>
+      ))}
+    </>}
+    {hcpFilterMax != null && <>
+      <span style={{ color: "var(--border)" }}>|</span>
+      <FilterChip active={filterHcp} onClick={() => setFilterHcp(v => !v)} color="var(--color-good)">
+        HCP &lt; {hcpFilterMax}
+      </FilterChip>
+    </>}
     {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
     {availEscs.map(e => {
       const k = e.toLowerCase().replace(/[\s-]/g, "");
       const s = ESC_STYLE[k];
       return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
     })}
-    {(filterEsc.length > 0 || filterSex || filterName) && <>
+    {(filterEsc.length > 0 || filterSex || filterRegiao.length > 0 || filterHcp || filterName) && <>
       <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{sortedRows.length} de {allRows.length}</span>
-      <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
+      <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
     <span className="muted fs-10 ml-auto" title={metric === "sd" ? `SD = (113/Slope) × (Gross − CR), ×2 nas voltas de 9 buracos · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor · não depende do handicap` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
       ℹ Regras

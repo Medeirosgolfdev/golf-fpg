@@ -342,6 +342,10 @@ function main() {
       const parSum = rondas.reduce((a, r) => a + (r.parTotal || 0), 0);
       players.push({
         fedCode, name: p.name, escalao: esc,
+        // Região da prova, guardada NO JOGADOR: as colunas passam a ser
+        // agregadas (ex: "3º Drive Challenge" junta as 5 zonas), por isso a
+        // região deixa de ser propriedade da coluna e passa a ser de quem jogou.
+        regiao: regiaoOf(t.name, serieOf(t.name)),
         sex: p.sex || sex.get(fedCode) || "",
         club: p.club || club.get(fedCode) || "",
         hcpExact: p.hcpExact ?? null,

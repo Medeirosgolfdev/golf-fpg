@@ -2813,6 +2813,7 @@ function Content() {
             specialRules={false}
             metric="sd"
             showMeters
+            hcpFilterMax={25}
             emptyLabel="Sem torneios Sub-12."
           />
         </div>
