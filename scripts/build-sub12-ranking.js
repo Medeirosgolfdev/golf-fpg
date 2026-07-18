@@ -62,6 +62,7 @@ const COLUNAS_EXCLUIDAS = [
   /^Sto da Serra Junior · 9 buracos$/,
   /^Paredes Junior · 9 buracos$/,
   /^Circuito Fim de Semana$/,
+  /^Estoril Golf Junior Open$/,
 ];
 
 /** Mínimo de juniores numa coluna. Abaixo disto não há comparação possível —
