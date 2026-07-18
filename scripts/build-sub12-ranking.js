@@ -206,6 +206,77 @@ function mergeEscalaoSplits(tournaments) {
   return out;
 }
 
+/* ── Agrupar séries de clube ─────────────────────────────────────── */
+
+/**
+ * Séries de clube que se repetem ao longo do ano no MESMO campo e com os
+ * mesmos ratings — juntam-se numa coluna só, cada prova uma ronda.
+ *
+ * ⚠ Ao contrário do Drive Challenge (onde cada miúdo só joga a SUA região e
+ * 10 provas colapsam em 1 ronda), aqui quem joga costuma jogar tudo — o
+ * ganho é de legibilidade (menos cabeçalhos, provas relacionadas juntas), não
+ * de largura.
+ *
+ * NÃO incluídas de propósito, apesar do nome sugerir série:
+ *  • "Academia Junior 9 buracos" (Palheiro): 2º com 2366 m / CR 33-34 vs 3º
+ *    com 1468 m / CR 29-32 — tees diferentes, não é a mesma prova.
+ *  • "Circuito Junior Challenge" (Miramar): 2389 m / CR 33.2 vs 1402 m / CR 29.7.
+ */
+const SERIES_CLUBE = [
+  { nome: "CityKids", campo: "Citygolf", rx: /CityKids/i },
+  { nome: "Estoril Golf Junior Open", campo: "Estoril", rx: /ESTORIL\s+Golf\s+Junior\s+Open/i },
+  { nome: "Vila Sol Junior Comp · 9 buracos", campo: "Vila Sol - Prestige", rx: /VILA\s+SOL\s+JUNIOR\s+COMP.*9\s*HOLES/i },
+  { nome: "Vila Sol Junior Comp · 18 buracos", campo: "Vila Sol - Prime", rx: /VILA\s+SOL\s+JUNIOR\s+COMP/i, excluir: /9\s*HOLES/i },
+  { nome: "Circuito Fim de Semana", campo: "Jamor", rx: /Circuito\s+Fim\s+de\s+Semana/i },
+  // Mesma prova com dois nomes: mesmo campo, CR 30.3-30.6, Slope 114-115, 1475 m.
+  { nome: "Sto da Serra Junior · 9 buracos", campo: "Santo da Serra - Serras", rx: /Cidade\s+de\s+Machico\s+Junior|NOS\s+Empresas\s+Junior/i },
+  // Idem: Paredes-Aqueduto, CR 26.6-28, Slope 82-84, 894 m.
+  { nome: "Paredes Junior · 9 buracos", campo: "Paredes - Aqueduto", rx: /Mc\s*Donald.*Junior\s+Challenge|Torneio\s+da\s+Academia\s+#1/i },
+];
+
+function mergeSeriesClube(tournaments) {
+  const grupos = new Map();
+  const resto = [];
+  for (const t of tournaments) {
+    const cfg = SERIES_CLUBE.find((c) => c.rx.test(t.name) && !(c.excluir && c.excluir.test(t.name)));
+    if (!cfg) { resto.push(t); continue; }
+    if (!grupos.has(cfg.nome)) grupos.set(cfg.nome, { cfg, provas: [] });
+    grupos.get(cfg.nome).provas.push(t);
+  }
+
+  const out = [...resto];
+  for (const { cfg, provas } of grupos.values()) {
+    if (provas.length === 1) { out.push(provas[0]); continue; }
+    provas.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    const byPlayer = new Map();
+    for (const t of provas) {
+      for (const p of t.players) {
+        let acc = byPlayer.get(p.fedCode);
+        if (!acc) { acc = { ...p, roundScores: [] }; byPlayer.set(p.fedCode, acc); }
+        for (const r of p.roundScores) {
+          acc.roundScores.push({ ...r, round: acc.roundScores.length + 1, _prova: t.name, _campo: t.campo });
+        }
+      }
+    }
+    const players = [...byPlayer.values()].map((p) => {
+      const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
+      const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
+      return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
+    });
+    out.push({
+      ...provas[0],
+      name: cfg.nome,
+      tcode: provas.map((t) => t.tcode).join("+"),
+      campo: `${cfg.campo} · ${provas.length} provas`,
+      rounds: Math.max(...players.map((p) => p.roundScores.length)),
+      players,
+      _provas: provas.map((t) => t.name),
+    });
+    console.log(`  ⊕ ${cfg.nome} — ${provas.length} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
+  }
+  return out;
+}
+
 /* ── Agrupar Drive Challenge por edição ─────────────────────────── */
 
 /** Nº da edição no nome: "1º Torneio Drive Challenge…" → "1º"; "Final…" → "Final".
@@ -369,7 +440,7 @@ function main() {
     });
   }
 
-  const merged = mergeRegionalEditions(mergeEscalaoSplits(out));
+  const merged = mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out)));
 
   const jogadores = new Map();
   for (const t of merged) for (const p of t.players) {
