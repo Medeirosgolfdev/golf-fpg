@@ -149,6 +149,16 @@ function getTournMultiplier(t: Tournament): number {
   return 1.0;
 }
 
+/** Chave única de um torneio na tabela.
+ *  ⚠ TEM de incluir o ccode: a FPG reutiliza tcodes entre clubes, e sem ele
+ *  duas provas do mesmo dia colapsavam na MESMA coluna — o cabeçalho ficava com
+ *  o nome de uma e as células com os jogadores da outra (caso real 2026-01-04:
+ *  Drive Challenge Madeira-Palheiro Sub 10 (ccode 982) × Drive Tour Tejo
+ *  Montado (ccode 985), ambos tcode 10202). */
+function tournKeyOf(t: Tournament): string {
+  return `${(t as any).ccode ?? "?"}_${t.tcode}_${t.date}`;
+}
+
 function fmtPts(pts: number): string {
   return pts % 1 === 0 ? String(pts) : pts.toFixed(1);
 }
@@ -383,7 +393,7 @@ export function PJARankingView({
       // calendário onde todas as provas valem o mesmo).
       const isGF = specialRules && isGFTournament(t);
       const mult = specialRules ? getTournMultiplier(t) : 1.0;
-      const tournKey = t.tcode + "_" + t.date;
+      const tournKey = tournKeyOf(t);
 
       // Descobrir nº de rondas: preferencialmente pelos subRounds sintéticos,
       // senão por t.rounds ou pelo máximo de roundScores de algum jogador.
@@ -431,7 +441,7 @@ export function PJARankingView({
       .filter(t => classifyPJAEvent(t) === "AQUAPOR")
       .sort((a, b) => (a.date || "").localeCompare(b.date || ""))
       .slice(0, 2);
-    return new Set(aqs.map(t => t.tcode + "_" + t.date));
+    return new Set(aqs.map(tournKeyOf));
   }, [yearTournaments, year, specialRules]);
 
   const allRows: PJAPRow[] = useMemo(() => {
@@ -454,7 +464,7 @@ export function PJARankingView({
       const evType = classifyPJAEvent(t);
       if (!evType) continue;
       // Com regras novas, Aquapor fora dos 2 primeiros é ignorado por completo
-      if (applyNewRules && evType === "AQUAPOR" && aquaporAllowedKeys && !aquaporAllowedKeys.has(t.tcode + "_" + t.date)) {
+      if (applyNewRules && evType === "AQUAPOR" && aquaporAllowedKeys && !aquaporAllowedKeys.has(tournKeyOf(t))) {
         continue;
       }
       for (const p of t.players) {
@@ -468,7 +478,7 @@ export function PJARankingView({
     for (const t of yearTournaments) {
       const evType = classifyPJAEvent(t);
       if (!evType) continue;
-      if (applyNewRules && evType === "AQUAPOR" && aquaporAllowedKeys && !aquaporAllowedKeys.has(t.tcode + "_" + t.date)) continue;
+      if (applyNewRules && evType === "AQUAPOR" && aquaporAllowedKeys && !aquaporAllowedKeys.has(tournKeyOf(t))) continue;
 
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
@@ -477,7 +487,7 @@ export function PJARankingView({
       // calendário onde todas as provas valem o mesmo).
       const isGF = specialRules && isGFTournament(t);
       const mult = specialRules ? getTournMultiplier(t) : 1.0;
-      const tournKey = t.tcode + "_" + t.date;
+      const tournKey = tournKeyOf(t);
 
       for (const p of t.players) {
         const playerKey = p.fedCode || ("name:" + p.name.toLowerCase().trim());
@@ -736,7 +746,7 @@ export function PJARankingView({
       return false;
     };
     return tournCols.filter(tc => {
-      const t = yearTournaments.find(x => (x.tcode + "_" + x.date) === tc.tournKey);
+      const t = yearTournaments.find(x => tournKeyOf(x) === tc.tournKey);
       return !t || hasPjaInscrito(t);
     });
   }, [tournCols, yearTournaments, pjaMembersByYear, year]);
@@ -784,18 +794,42 @@ export function PJARankingView({
       if (sortKey === "club")    return mult * a.club.localeCompare(b.club, "pt");
       if (sortKey === "escalao") return mult * a.escalao.localeCompare(b.escalao, "pt");
       if (sortKey === "voltas")  return mult * (a.voltas - b.voltas);
-      if (sortKey.startsWith("toPar_")) {
-        const rk = sortKey.slice(6);
-        return mult * ((a.results.get(rk)?.toPar ?? INF) - (b.results.get(rk)?.toPar ?? INF));
+      // Ordenar por uma coluna de torneio: quem NÃO jogou essa prova fica
+      // sempre no fim, nas duas direcções. (Antes o valor em falta era ±INF e
+      // em ordem descendente os ausentes subiam ao topo de um torneio que nunca
+      // disputaram.)
+      if (sortKey.startsWith("toPar_") || sortKey.startsWith("pts_")) {
+        const isPts = sortKey.startsWith("pts_");
+        const rk = sortKey.slice(isPts ? 4 : 6);
+        const va = a.results.get(rk), vb = b.results.get(rk);
+        if (!va && !vb) return 0;
+        if (!va) return 1;
+        if (!vb) return -1;
+        // A 2ª coluna de cada ronda mostra Pts ou SD consoante a métrica —
+        // ordenar pelo valor que está mesmo à vista.
+        const val = (r: PJARoundResult) =>
+          isPts ? (metric === "sd" ? (r.sd ?? INF) : r.pts) : r.toPar;
+        return mult * (val(va) - val(vb));
       }
-      if (sortKey.startsWith("pts_")) {
-        const rk = sortKey.slice(4);
-        return mult * ((a.results.get(rk)?.pts ?? -1) - (b.results.get(rk)?.pts ?? -1));
-      }
-      // NB: allRows depende só usado para filtros/availEscs; ranking usa rowsInscritos.
-      return mult * (a.total - b.total);
+      // NB: allRows só é usado para filtros/availEscs; o ranking usa rowsInscritos.
+      const ta = isNaN(a.total) ? INF : a.total;
+      const tb = isNaN(b.total) ? INF : b.total;
+      return mult * (ta - tb);
     });
-  }, [rowsInscritos, filterSex, filterEsc, filterName, sortKey, sortDir]);
+  }, [rowsInscritos, filterSex, filterEsc, filterName, sortKey, sortDir, metric]);
+
+  /** Posição no RANKING (pela métrica), não a ordem da tabela.
+   *  A coluna "#" tem de ser estável: ao ordenar por uma coluna de torneio, o
+   *  1º do ranking continua a ser o 1º — antes mostrava o índice da linha e o
+   *  líder aparecia como "124º", o que lia como se fosse a classificação. */
+  const rankByKey = useMemo(() => {
+    const better = metric === "sd"
+      ? (a: PJAPRow, b: PJAPRow) => (isNaN(a.total) ? Infinity : a.total) - (isNaN(b.total) ? Infinity : b.total)
+      : (a: PJAPRow, b: PJAPRow) => b.total - a.total;
+    const m = new Map<string, number>();
+    [...rowsInscritos].sort(better).forEach((r, i) => m.set(r.key, i + 1));
+    return m;
+  }, [rowsInscritos, metric]);
 
   // Não inscritos: também aceita filtro por escalão/nome, ordenados por total desc.
   const sortedNaoInscritos = useMemo(() => {
@@ -992,7 +1026,9 @@ export function PJARankingView({
                 <tr key={row.key} className={classes}
                     onClick={() => setSelectedKey(isSel ? null : row.key)}
                     style={{ cursor: "pointer" }}>
-                  <td className="cs-pos sticky-col-0">{idx + 1}</td>
+                  <td className="cs-pos sticky-col-0" title={`Posição no ranking (${sortKey === "total" ? "ordem actual" : "independente da ordenação da tabela"})`}>
+                    {rankByKey.get(row.key) ?? idx + 1}
+                  </td>
                   <td className="cs-name sticky-col-1">
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
