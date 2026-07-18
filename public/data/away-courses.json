@@ -7345,6 +7345,170 @@
       }
     },
     {
+      "courseKey": "away-camiral-golf-welness-stadium-course",
+      "master": {
+        "courseId": "away-camiral-golf-welness-stadium-course",
+        "name": "Camiral Golf & Welness Stadium Course",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-camiral-golf-welness-stadium-course-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 71.3,
+                "slopeRating": 142
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 35.6,
+                "slopeRating": 142
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 35.6,
+                "slopeRating": 142
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 3,
+                "distance": 321
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 5,
+                "distance": 311
+              },
+              {
+                "hole": 3,
+                "par": 5,
+                "si": 13,
+                "distance": 432
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": 9,
+                "distance": 342
+              },
+              {
+                "hole": 5,
+                "par": 3,
+                "si": 7,
+                "distance": 162
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 11,
+                "distance": 281
+              },
+              {
+                "hole": 7,
+                "par": 5,
+                "si": 17,
+                "distance": 450
+              },
+              {
+                "hole": 8,
+                "par": 3,
+                "si": 15,
+                "distance": 120
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": 1,
+                "distance": 374
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": 12,
+                "distance": 317
+              },
+              {
+                "hole": 11,
+                "par": 3,
+                "si": 16,
+                "distance": 130
+              },
+              {
+                "hole": 12,
+                "par": 5,
+                "si": 14,
+                "distance": 462
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 6,
+                "distance": 328
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 4,
+                "distance": 353
+              },
+              {
+                "hole": 15,
+                "par": 5,
+                "si": 18,
+                "distance": 401
+              },
+              {
+                "hole": 16,
+                "par": 3,
+                "si": 10,
+                "distance": 136
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 8,
+                "distance": 352
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": 2,
+                "distance": 360
+              }
+            ],
+            "distances": {
+              "total": 5632,
+              "front9": 2793,
+              "back9": 2839,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "52856": [
+            {
+              "date": "2026-07-17",
+              "gross": 77,
+              "toPar": 5,
+              "tee": "AMARELAS",
+              "event": "Junior Elite Summer Camp Tournament",
+              "sd": 4.5
+            }
+          ]
+        }
+      }
+    },
+    {
       "courseKey": "away-campeonato-absoluto-aberto-ciudad-de-leon",
       "master": {
         "courseId": "away-campeonato-absoluto-aberto-ciudad-de-leon",
