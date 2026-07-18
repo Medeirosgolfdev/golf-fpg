@@ -63,6 +63,7 @@ const COLUNAS_EXCLUIDAS = [
   /^Paredes Junior · 9 buracos$/,
   /^Circuito Fim de Semana$/,
   /^Estoril Golf Junior Open$/,
+  /^Vila Sol Junior Comp · 18 buracos$/,
 ];
 
 /** Mínimo de juniores numa coluna. Abaixo disto não há comparação possível —
@@ -622,7 +623,19 @@ function main() {
   const semExcluidas = agrupados.filter(
     (t) => !SERIES_EXCLUIDAS.has(t.serie) && !COLUNAS_EXCLUIDAS.some((rx) => rx.test(t.name))
   );
-  const merged = semExcluidas.filter((t) => t.players.length >= MIN_JUNIORES_COLUNA);
+  const merged = semExcluidas
+    .filter((t) => t.players.length >= MIN_JUNIORES_COLUNA)
+    .map((t) => {
+      // O rótulo "V" (volta) só faz sentido quando algum jogador tem voltas de
+      // PROVAS diferentes na mesma coluna. Se cada um jogou uma prova só, as
+      // voltas são rondas a sério do mesmo torneio e devem ler-se R1, R2, R3 —
+      // é o caso do Campeonato Nacional de Jovens (3 rondas, escalões fundidos)
+      // e do 3º Drive Tour (Vale Pisão e Sto Estêvão foram provas de 2 rondas).
+      const multiProva = t.players.some(
+        (p) => new Set(p.roundScores.map((r) => r._prova || t.name)).size > 1
+      );
+      return { ...t, _agregado: t._agregado && multiProva };
+    });
   const cortadasSerie = agrupados.length - semExcluidas.length;
   const cortadasPoucos = semExcluidas.length - merged.length;
 
