@@ -16,7 +16,9 @@
  *      colunas não comparáveis entre regiões; tem ranking próprio no PJA).
  *   4. Mantém apenas jogadores JÚNIORES (Sub-21 ou abaixo à data de hoje),
  *      resolvendo a DOB por players.json → federados.json.
- *   5. Escreve public/data/classificacoes.json no formato "fpg-pull" (o mesmo
+ *   5. Funde os escalões do mesmo evento (Nacional de Clubes Sub 14 + Sub 18
+ *      são um torneio só, não duas colunas meio-vazias).
+ *   6. Escreve public/data/classificacoes.json no formato "fpg-pull" (o mesmo
  *      que a FPGPage/PJARankingView já consomem).
  *
  * CLI:
@@ -137,6 +139,63 @@ function loadScrapedTournaments() {
   return byKey;
 }
 
+/* ── Fusão de escalões do mesmo evento ───────────────────────────── */
+
+/** Tira o sufixo de escalão do nome: "… Sub 14 H" → "…". */
+function stripEscalaoSuffix(name) {
+  return String(name || "").replace(/\s*[-–]?\s*Sub\s*\d+\s*(?:[HSMF])?\s*$/i, "").trim();
+}
+
+/**
+ * Funde entradas que são o MESMO evento partido por escalão (a FPG regista um
+ * tcode por escalão): Campeonato Nacional de Clubes Sub 14 + Sub 18, Nacional
+ * de Jovens Sub 14 H + Sub 16 H, etc. Sem isto a tabela ganha uma coluna por
+ * escalão com metade das linhas vazia — cada miúdo só joga o seu.
+ *
+ * Chave de fusão: mesmo ccode + mesma data + mesmo nome sem o sufixo. Cada
+ * jogador aparece num só escalão, por isso não há colisões; se aparecer em
+ * dois (não devia), fica a entrada com mais rondas e o script avisa.
+ */
+function mergeEscalaoSplits(tournaments) {
+  const groups = new Map();
+  for (const t of tournaments) {
+    const key = `${t.ccode}|${t.date}|${stripEscalaoSuffix(t.name)}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(t);
+  }
+
+  const out = [];
+  for (const grp of groups.values()) {
+    if (grp.length === 1) { out.push(grp[0]); continue; }
+    grp.sort((a, b) => String(a.tcode).localeCompare(String(b.tcode)));
+
+    const byPlayer = new Map();
+    for (const t of grp) {
+      for (const p of t.players) {
+        const prev = byPlayer.get(p.fedCode);
+        if (prev) {
+          console.warn(`  ⚠ ${p.name} (${p.fedCode}) aparece em 2 escalões de "${stripEscalaoSuffix(t.name)}"`);
+          if ((prev.roundScores || []).length >= (p.roundScores || []).length) continue;
+        }
+        byPlayer.set(p.fedCode, p);
+      }
+    }
+
+    const base = grp[0];
+    out.push({
+      ...base,
+      name: stripEscalaoSuffix(base.name),
+      tcode: grp.map((t) => t.tcode).join("+"),
+      rounds: Math.max(...grp.map((t) => t.rounds || 1)),
+      players: [...byPlayer.values()],
+      // Escalões fundidos — o escalão real de cada jogador vive em players[].escalao.
+      _mergedEscaloes: grp.map((t) => ({ tcode: t.tcode, name: t.name })),
+    });
+    console.log(`  ⊕ fundidos ${grp.length} escalões → "${stripEscalaoSuffix(base.name)}" (${byPlayer.size} juniores)`);
+  }
+  return out;
+}
+
 /* ── 3. DOB por fedCode ──────────────────────────────────────────── */
 function buildDobIndex() {
   const dob = new Map();
@@ -230,20 +289,23 @@ function main() {
     });
   }
 
+  const merged = mergeEscalaoSplits(out);
+
   const payload = {
     generated: new Date().toISOString(),
     year: YEAR,
     source: "build-classificacoes.js",
     anchors: ANCHOR_FEDS,
     maxJuniorAge: MAX_JUNIOR_AGE,
-    tournaments: out,
+    tournaments: merged,
   };
   writeJsonAtomic(OUT_FILE, payload);
 
   const nPlayers = new Set();
-  for (const t of out) for (const p of t.players) nPlayers.add(p.fedCode);
+  for (const t of merged) for (const p of t.players) nPlayers.add(p.fedCode);
 
-  console.log(`\n  Torneios ranqueados: ${out.length}`);
+  console.log(`\n  Torneios ranqueados: ${merged.length}` +
+              (out.length !== merged.length ? ` (${out.length} antes de fundir escalões)` : ""));
   console.log(`   ↳ descartados: ${semLeaderboard} sem leaderboard completa` +
               (excluidos ? `, ${excluidos} excluídos por regra (Drive Tour)` : "") +
               (semAnchors ? `, ${semAnchors} abaixo de --min-anchors` : ""));
