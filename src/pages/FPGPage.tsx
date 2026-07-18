@@ -2077,13 +2077,6 @@ function Content() {
                 {label}
               </button>
             ))}
-            {/* Slot de portal: o PJARankingView renderiza os seus filtros
-                (years, search, escalões) aqui via createPortal em vez de ter
-                uma toolbar separada. */}
-            {(navMode === "ranking-pja" || navMode === "classificacoes") && <>
-              <ToolbarSep />
-              <div id="pja-toolbar-slot" style={{ display: "contents" }} />
-            </>}
             {navMode === "torneios" && availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
@@ -2132,6 +2125,16 @@ function Content() {
                 </>
             }
           </>)}
+          {/* Slot de portal: o PJARankingView renderiza os seus filtros (anos,
+              sexo, escalões) aqui via createPortal em vez de ter toolbar própria.
+              ⚠ FORA do guard `!loading`: a vista de ranking monta antes de a
+              FPGPage acabar de carregar e procura o slot no primeiro render —
+              se ele ainda não existisse, os filtros caíam na toolbar de
+              fallback e apareciam numa segunda linha. */}
+          {(navMode === "ranking-pja" || navMode === "classificacoes") && <>
+            {!loading && <ToolbarSep />}
+            <div id="pja-toolbar-slot" style={{ display: "contents" }} />
+          </>}
         </Toolbar>
 
         {/* Linha 2: filtros de série — wrap em mobile */}

@@ -157,6 +157,7 @@ export function TournPName({
   playersDB,
   highlight,
   maxLen = 26,
+  sex: sexProp,
 }: {
   name: string;
   fed?: string;
@@ -164,6 +165,10 @@ export function TournPName({
   playersDB?: PlayersDB;
   highlight?: boolean;
   maxLen?: number;
+  /** Sexo vindo da própria fonte (ex: linha do torneio), usado quando o
+   *  jogador não está no playersDB. Evita que quem chama acrescente um
+   *  segundo SexBadge por fora — o badge é sempre renderizado aqui. */
+  sex?: string;
 }) {
   const fedKey = fed || fedCode;
   const hasLink = !!fedKey;
@@ -190,7 +195,7 @@ export function TournPName({
   // Para cada campo (sex/kidsHash/country): preferir directEntry; fallback aos
   // candidates por nome (filtrar pelo campo desejado para evitar apanhar entry
   // FPG sem kidsHash quando há um intl: com kidsHash).
-  const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex;
+  const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex ?? sexProp;
   const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
   const country = directEntry?.country ?? candidates.find(e => e.country)?.country;
   const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;

@@ -215,6 +215,10 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  overflow-x: auto;
  scrollbar-width: none;
  -webkit-overflow-scrolling: touch;
+ /* A toolbar é uma linha só: já rola na horizontal (overflow-x), por isso
+    nenhum item deve partir o texto em 2/3 linhas quando o espaço aperta.
+    `white-space` herda — um filho que precise mesmo de quebrar sobrepõe. */
+ white-space: nowrap;
 }
 .toolbar::-webkit-scrollbar { display: none; }
 
@@ -388,6 +392,10 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  color: var(--accent);
  background: var(--accent-light);
  border-radius: var(--radius-xl);
+ /* Um chip é uma etiqueta atómica: nunca parte em 2 linhas nem encolhe quando
+    a toolbar fica apertada (senão "185j · 26t" quebrava a meio). */
+ white-space: nowrap;
+ flex-shrink: 0;
 }
 
 .btn-link {

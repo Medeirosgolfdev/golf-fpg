@@ -215,8 +215,8 @@ function shortDate(isoDate?: string): string {
    Local Components
    ───────────────────────────────────────────── */
 
-const PName = ({ name, fedCode, playersDB }: { name: string; fedCode?: string; playersDB: PlayersDB }) =>
-  <TournPName name={name} fedCode={fedCode} playersDB={playersDB} />;
+const PName = ({ name, fedCode, playersDB, sex }: { name: string; fedCode?: string; playersDB: PlayersDB; sex?: string }) =>
+  <TournPName name={name} fedCode={fedCode} playersDB={playersDB} sex={sex} />;
 
 /* ─────────────────────────────────────────────
    Main Component
@@ -261,6 +261,8 @@ export function PJARankingView({
 
   const { sortKey, sortDir, toggleSort: handleSort, resetSort: resetYearSort } = useSort<string>("total", "desc");
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
+  /** "" = todos · "F" = só raparigas · "M" = só rapazes. */
+  const [filterSex, setFilterSex] = useState<"" | "F" | "M">("");
   const [internalFilterName, setFilterName] = useState("");
   // Quando a FPGPage passa um search externo (via toolbar unificada), usa-o;
   // senão cai no state interno (uso standalone). Trim+lowercase feito nos consumers.
@@ -303,7 +305,7 @@ export function PJARankingView({
     // pela FPG como 2 tcodes distintos, mas a comissão técnica PJA conta como
     // UM só torneio com 2 rondas. Combinar num torneio sintético antes do
     // sort/agregação. (Ver pja-members.json _2025_regras + Excel oficial.)
-    if (year === "2025") {
+    if (specialRules && year === "2025") {
       const d1 = filtered.find(t => String(t.tcode || "") === "10370");
       const d2 = filtered.find(t => String(t.tcode || "") === "10371");
       if (d1 && d2) {
@@ -359,8 +361,11 @@ export function PJARankingView({
     for (const t of yearTournaments) {
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
-      const isGF = isGFTournament(t);
-      const mult = getTournMultiplier(t);
+      // Sem specialRules nenhum torneio pesa mais que outro: multiplicador 1.0
+      // e nada é tratado como Grande Final (a vista CLASSIFICAÇÕES ranqueia um
+      // calendário onde todas as provas valem o mesmo).
+      const isGF = specialRules && isGFTournament(t);
+      const mult = specialRules ? getTournMultiplier(t) : 1.0;
       const tournKey = t.tcode + "_" + t.date;
 
       // Descobrir nº de rondas: preferencialmente pelos subRounds sintéticos,
@@ -450,8 +455,11 @@ export function PJARankingView({
 
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
-      const isGF = isGFTournament(t);
-      const mult = getTournMultiplier(t);
+      // Sem specialRules nenhum torneio pesa mais que outro: multiplicador 1.0
+      // e nada é tratado como Grande Final (a vista CLASSIFICAÇÕES ranqueia um
+      // calendário onde todas as provas valem o mesmo).
+      const isGF = specialRules && isGFTournament(t);
+      const mult = specialRules ? getTournMultiplier(t) : 1.0;
       const tournKey = t.tcode + "_" + t.date;
 
       for (const p of t.players) {
@@ -473,7 +481,10 @@ export function PJARankingView({
           map.set(playerKey, {
             key: playerKey, name: p.name, fedCode: p.fedCode,
             club, escalao: esc,
-            sex: db?.sex || "", hcp: p.hcpExact ?? null,
+            // playersDB só cobre os nossos jogadores — para o resto do campo o
+            // sexo vem da própria linha do torneio (a fonte preenche-o a partir
+            // do federados.json). Sem isto o badge e o filtro ♀ falhavam neles.
+            sex: db?.sex || (p as any).sex || "", hcp: p.hcpExact ?? null,
             results: new Map(), allRounds: [], total: 0, voltas: 0, eligible: false,
           });
         }
@@ -529,7 +540,9 @@ export function PJARankingView({
     //  • 2026+: TOP-14 melhores rondas (com regras DT/Aquapor/GG_MAIN).
     //  • Anos anteriores: TOP-14 voltas (legado simples).
     for (const row of map.values()) {
-      if (year === "2025") {
+      // A regra 2025 (top-7 torneios + GF à parte) é do regulamento PJA — o
+      // ranking genérico usa sempre top-14 voltas, sem provas de peso especial.
+      if (specialRules && year === "2025") {
         // Agrupar voltas por tournKey. Vale Pisão D1+D2 já vem combinado num
         // torneio sintético (tcode "10370+10371") graças ao yearTournaments
         // useMemo, portanto basta agrupar pelo tournKey natural.
@@ -702,6 +715,13 @@ export function PJARankingView({
     return { rowsInscritos: ins, rowsNaoInscritos: out };
   }, [allRows, inscritosSet]);
 
+  /** Sexos presentes nas linhas — o chip só aparece quando há ambos. */
+  const availSexes = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of allRows) if (r.sex === "M" || r.sex === "F") s.add(r.sex);
+    return [...s].sort() as ("M" | "F")[];  // F antes de M
+  }, [allRows]);
+
   const availEscs = useMemo(() => {
     const s = new Set<string>();
     for (const r of allRows) if (r.escalao) s.add(r.escalao);
@@ -711,6 +731,7 @@ export function PJARankingView({
   const sortedRows = useMemo(() => {
     // Ranking principal = só inscritos no ano corrente (se houver lista).
     let rows = rowsInscritos;
+    if (filterSex) rows = rows.filter(r => r.sex === filterSex);
     if (filterEsc.length) rows = rows.filter(r => filterEsc.includes(r.escalao));
     if (filterName.trim()) {
       const q = filterName.trim().toLowerCase();
@@ -734,18 +755,19 @@ export function PJARankingView({
       // NB: allRows depende só usado para filtros/availEscs; ranking usa rowsInscritos.
       return mult * (a.total - b.total);
     });
-  }, [rowsInscritos, filterEsc, filterName, sortKey, sortDir]);
+  }, [rowsInscritos, filterSex, filterEsc, filterName, sortKey, sortDir]);
 
   // Não inscritos: também aceita filtro por escalão/nome, ordenados por total desc.
   const sortedNaoInscritos = useMemo(() => {
     let rows = rowsNaoInscritos;
+    if (filterSex) rows = rows.filter(r => r.sex === filterSex);
     if (filterEsc.length) rows = rows.filter(r => filterEsc.includes(r.escalao));
     if (filterName.trim()) {
       const q = filterName.trim().toLowerCase();
       rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q));
     }
     return [...rows].sort((a, b) => b.total - a.total);
-  }, [rowsNaoInscritos, filterEsc, filterName]);
+  }, [rowsNaoInscritos, filterSex, filterEsc, filterName]);
 
 
 
@@ -753,10 +775,16 @@ export function PJARankingView({
   // via createPortal para lá (evita ter 2 toolbars empilhadas). Se não existir
   // (fallback), mostramos a toolbar dentro do próprio componente.
   const [toolbarSlot, setToolbarSlot] = useState<HTMLElement | null>(null);
+  // ⚠ Sem deps de propósito: a FPGPage só monta o slot depois de `loading`
+  // acabar, e esta vista pode montar ANTES disso (os dados dela carregam mais
+  // depressa). Com `[]` a procura corria uma única vez, falhava, e os filtros
+  // caíam na toolbar de fallback — uma segunda linha por baixo da barra. Agora
+  // tenta a cada render até encontrar (getElementById é barato e pára aí).
   useEffect(() => {
+    if (toolbarSlot) return;
     const el = document.getElementById("pja-toolbar-slot");
-    setToolbarSlot(el);
-  }, []);
+    if (el) setToolbarSlot(el);
+  });
 
   if (loading && pjaList.length === 0) return <LoadingState size="sm" />;
   if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>{emptyLabel}</div>;
@@ -766,7 +794,7 @@ export function PJARankingView({
       {years.map(yr => (
         <button key={yr}
           className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")}
-          onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); resetYearSort(); }}
+          onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterSex(""); setFilterName(""); resetYearSort(); }}
           style={{ flexShrink: 0 }}>
           {yr}
         </button>
@@ -783,17 +811,28 @@ export function PJARankingView({
           className="input-search" style={{ width: 140 }} />
       </div>
     )}
+    {availSexes.length > 1 && <>
+      <span style={{ color: "var(--border)" }}>|</span>
+      {availSexes.map(sx => (
+        <FilterChip key={sx} active={filterSex === sx}
+                    onClick={() => setFilterSex(filterSex === sx ? "" : sx)}
+                    color={sx === "F" ? "var(--badge-female)" : "var(--badge-male)"}>
+          <SexBadge sex={sx} size="sm" />
+          {sx === "F" ? " Raparigas" : " Rapazes"}
+        </FilterChip>
+      ))}
+    </>}
     {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
     {availEscs.map(e => {
       const k = e.toLowerCase().replace(/[\s-]/g, "");
       const s = ESC_STYLE[k];
       return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
     })}
-    {(filterEsc.length > 0 || filterName) && <>
-      <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
-      <FilterChip active={false} onClick={() => { setFilterEsc([]); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
+    {(filterEsc.length > 0 || filterSex || filterName) && <>
+      <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{sortedRows.length} de {allRows.length}</span>
+      <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title={!specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+    <span className="muted fs-10 ml-auto" title={!specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
       ℹ Regras
     </span>
     <span className="chip" title={`${allRows.length} ${specialRules ? "jogadores PJA" : "juniores"} · ${visibleTournCols.length} torneios`}>
@@ -912,8 +951,7 @@ export function PJARankingView({
                     style={{ cursor: "pointer" }}>
                   <td className="cs-pos sticky-col-0">{idx + 1}</td>
                   <td className="cs-name sticky-col-1">
-                    <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
-                    {row.sex === "F" && <SexBadge sex="F" className="ml-4" />}
+                    <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
                   <td className="cs-esc">
                     {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : <span className="muted">–</span>}
@@ -996,8 +1034,7 @@ export function PJARankingView({
                     style={{ opacity: isSel ? 1 : 0.75, cursor: "pointer" }}>
                   <td style={{ padding: "5px 8px" }}>{idx + 1}</td>
                   <td style={{ padding: "5px 8px" }}>
-                    <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
-                    {row.sex === "F" && <SexBadge sex="F" className="ml-4" />}
+                    <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
                   <td style={{ padding: "5px 8px", textAlign: "center" }}>
                     {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : <span className="muted">–</span>}
