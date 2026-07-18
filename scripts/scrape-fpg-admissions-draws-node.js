@@ -92,6 +92,15 @@ if (FILTER_SINCE && /^\d+d$/i.test(FILTER_SINCE)) {
   FILTER_SINCE = isoDate;
 }
 const FILTER_YEAR   = argVal("--year", null);
+/* --force-adm: a lista de inscritos nova GANHA mesmo que tenha MENOS jogadores
+ * do que a guardada. Por omissão o merge recusa descidas (protege contra fontes
+ * parciais/falhadas), mas isso também bloqueia dois casos legítimos:
+ *   • desistências reais (o torneio passa de 15 para 12 inscritos);
+ *   • re-scrapes para CORRIGIR dados já guardados — foi o caso do fix dos
+ *     handicaps plus (2026-07-18): os valores estavam errados mas a contagem
+ *     era igual ou maior, por isso o merge dava "inalterado" e nada mudava.
+ * Só usar com --tcodes (escolha explícita), como a trava de congelamento. */
+const FORCE_ADM     = process.argv.includes("--force-adm");
 const CONCURRENCY   = parseInt(argVal("--concurrency", "3"), 10);
 // --max-rounds: override EXPLÍCITO do utilizador. Quando não passado, o script
 // deteta o nº de rondas por torneio (via t.rounds conhecido ou sondagem dinâmica).
@@ -861,7 +870,10 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     const prevAdm = prev.admissions;
     const nAdm = admScore(newAdm, tournament.date);
     const pAdm = admScore(prevAdm, tournament.date);
-    const finalAdm = (nAdm >= pAdm && nAdm > 0) ? newAdm
+    // Com --force-adm a lista nova ganha desde que não seja vazia/suspect
+    // (nAdm > 0) — ver comentário na definição da flag.
+    const finalAdm = (FORCE_ADM && nAdm > 0) ? newAdm
+                   : (nAdm >= pAdm && nAdm > 0) ? newAdm
                    : (pAdm > 0 ? prevAdm : newAdm);  // mantém o actual se o novo é pior/vazio
 
     // DRAWS: merge ronda a ronda (cada ronda pode vir de scrape diferente)
