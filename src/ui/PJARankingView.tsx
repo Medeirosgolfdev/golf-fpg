@@ -323,9 +323,20 @@ export function PJARankingView({
   // Categoria de um torneio para ordenar por grupo na tabela.
   // Ordem: Madeira → Sul → Tejo → Norte → Açores → Aquapor → Greatgolf →
   // PJA exclusivos. Dentro de cada grupo, ordena por data ascendente.
+  /** Ordem das SÉRIES quando a fonte as declara (ranking Sub-12). Mantém cada
+   *  circuito em colunas seguidas em vez de intercalado por data. */
+  const SERIE_ORDER: Record<string, string> = {
+    "Drive Tour": "1", "Drive Challenge": "2", "Aquapor": "3",
+    "Nacional": "4", "Circuito juvenil": "5", "Adultos": "6", "Estágio": "7",
+  };
+
   const tournSortKey = (t: Tournament): string => {
     const n = t.name || "";
     const date = t.date || "";
+    // Fonte com série própria (sub12-ranking.json): agrupar por série e, dentro
+    // dela, por ordem cronológica.
+    const serie = (t as any).serie as string | undefined;
+    if (serie) return `${SERIE_ORDER[serie] ?? "8"}_${serie}_${date}`;
     const evType = classifyPJAEvent(t);
     // DT por região
     if (evType === "DT") {
