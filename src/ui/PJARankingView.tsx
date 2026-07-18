@@ -84,6 +84,10 @@ interface PJATournCol {
   /** Nº real de rondas do torneio — pode ser maior que `rounds.length` quando
    *  alguma ronda está ocultada por regra (ex: GG Main 3R → mostra só R2+R3). */
   totalRondas?: number;
+  /** Coluna que junta várias provas (ex: "3º Drive Tour" = as 4 regiões). As
+   *  "rondas" aqui são VOLTAS que podem vir de provas diferentes — não são
+   *  rondas do mesmo torneio, por isso não levam o pill de nº de rondas. */
+  agregado?: boolean;
 }
 
 interface PJARoundResult {
@@ -437,6 +441,7 @@ export function PJARankingView({
 
       const ccode = (t as any).ccode || "";
       const tcode = String((t as any).tcode || "");
+      const agregado = !!(t as any)._agregado;
       // GG Main 3R em 2026+: R1 nunca conta (regulamento §2.5 — só os últimos 2
       // dias contam). Ocultar a coluna R1 e mostrar só R2/R3.
       const evType = classifyPJAEvent(t);
@@ -448,13 +453,13 @@ export function PJARankingView({
           if (hideR1 && i === 0) continue;  // R1 ocultada
           rounds.push({
             roundKey: tournKey + "_r" + (i + 1),
-            label: "R" + (i + 1),
+            label: (agregado ? "V" : "R") + (i + 1),
             date: (subRounds[i]?.date) || t.date || "",
           });
         }
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds, colSpan: rounds.length * perRound, ccode, tcode, totalRondas: nR });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds, colSpan: rounds.length * perRound, ccode, tcode, totalRondas: nR, agregado });
       } else {
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: perRound, ccode, tcode, totalRondas: 1 });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: perRound, ccode, tcode, totalRondas: 1, agregado });
       }
     }
     return cols;
@@ -1025,7 +1030,7 @@ export function PJARankingView({
                     </div>
                     <div style={{ ...lineStyle, color: "var(--text-muted)" }}>
                       {shortDate(tc.date)}
-                      {(tc.totalRondas ?? tc.rounds.length) > 1 && <>
+                      {!tc.agregado && (tc.totalRondas ?? tc.rounds.length) > 1 && <>
                         {" · "}
                         <RoundPill nR={tc.totalRondas ?? tc.rounds.length} />
                         {tc.totalRondas && tc.totalRondas > tc.rounds.length && (
@@ -1057,7 +1062,12 @@ export function PJARankingView({
                   {tc.rounds.map(r => (
                     <React.Fragment key={r.roundKey}>
                       <CSortTh k={"toPar_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-grp">
-                        {r.label ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
+                        {r.label
+                          ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}
+                                  title={tc.agregado
+                                    ? "Volta — nesta coluna as voltas podem vir de provas diferentes (passa o rato numa célula para ver qual)"
+                                    : `Ronda ${r.label.slice(1)}`}>{r.label}</span>
+                          : "±Par"}
                       </CSortTh>
                       <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>{metric === "sd" ? "SD" : "Pts"}</CSortTh>
                       {showMeters && (

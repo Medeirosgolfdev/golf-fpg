@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18T18:45:03.132Z",
+  "generated": "2026-07-18T18:51:42.266Z",
   "year": "2026",
   "source": "build-sub12-ranking.js",
   "metric": "differential sem componente de HCP: (113/Slope)×(Gross−CR), ×2 em 9 buracos",
@@ -13,7 +13,7 @@
       "campo": "5 provas · Madeira, Tejo, Norte, Sul, Açores",
       "serie": "Drive Tour",
       "regiao": null,
-      "rounds": 2,
+      "rounds": 1,
       "players": [
         {
           "fedCode": "52884",
@@ -139,8 +139,8 @@
           "sex": "M",
           "club": "Amendoeira",
           "hcpExact": 21.5,
-          "grossTotal": 188,
-          "toPar": 44,
+          "grossTotal": 94,
+          "toPar": 22,
           "parTotal": 72,
           "nholes": 18,
           "roundScores": [
@@ -157,20 +157,6 @@
               "_prova": "1º Torneio Drive Tour Tejo – Montado",
               "_campo": "Montado",
               "_regiao": "Tejo"
-            },
-            {
-              "round": 2,
-              "gross": 94,
-              "parTotal": 72,
-              "meters": 4900,
-              "courseRating": 66.1,
-              "slope": 123,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 25.6,
-              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
-              "_campo": "Vilamoura - Laguna",
-              "_regiao": "Sul"
             }
           ]
         },
@@ -182,8 +168,8 @@
           "sex": "M",
           "club": "Vilamoura, C. G",
           "hcpExact": 20.1,
-          "grossTotal": 199,
-          "toPar": 55,
+          "grossTotal": 98,
+          "toPar": 26,
           "parTotal": 72,
           "nholes": 18,
           "roundScores": [
@@ -200,20 +186,6 @@
               "_prova": "1º Torneio Drive Tour Tejo – Montado",
               "_campo": "Montado",
               "_regiao": "Tejo"
-            },
-            {
-              "round": 2,
-              "gross": 101,
-              "parTotal": 72,
-              "meters": 4900,
-              "courseRating": 66.1,
-              "slope": 123,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 32.1,
-              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
-              "_campo": "Vilamoura - Laguna",
-              "_regiao": "Sul"
             }
           ]
         },
@@ -450,6 +422,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "1º",
       "_provas": [
         {
@@ -481,6 +454,86 @@
           "tcode": "10155",
           "name": "1º Torneio Drive Tour Terceira",
           "regiao": "Açores"
+        }
+      ]
+    },
+    {
+      "ccode": "DT",
+      "tcode": "dt-1º-x1",
+      "name": "1º Drive Tour · 2ª prova",
+      "date": "2026-01-03",
+      "campo": "1 prova · Sul",
+      "serie": "Drive Tour",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "53838",
+          "name": "Gabriel Costa",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
+          "sex": "M",
+          "club": "Amendoeira",
+          "hcpExact": 21.5,
+          "grossTotal": 94,
+          "toPar": 22,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 94,
+              "parTotal": 72,
+              "meters": 4900,
+              "courseRating": 66.1,
+              "slope": 123,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 25.6,
+              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
+              "_campo": "Vilamoura - Laguna",
+              "_regiao": "Sul"
+            }
+          ]
+        },
+        {
+          "fedCode": "52069",
+          "name": "Marek Pejas",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
+          "sex": "M",
+          "club": "Vilamoura, C. G",
+          "hcpExact": 20.1,
+          "grossTotal": 101,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 101,
+              "parTotal": 72,
+              "meters": 4900,
+              "courseRating": 66.1,
+              "slope": 123,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 32.1,
+              "_prova": "1º Torneio Drive Tour Sul – Laguna G.C.",
+              "_campo": "Vilamoura - Laguna",
+              "_regiao": "Sul"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_edicao": "1º",
+      "_provas": [
+        {
+          "ccode": "988",
+          "tcode": "10292",
+          "name": "1º Torneio Drive Tour Sul – Laguna G.C.",
+          "regiao": "Sul"
         }
       ]
     },
@@ -901,6 +954,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "1º",
       "_provas": [
         {
@@ -1686,6 +1740,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "2º",
       "_provas": [
         {
@@ -3465,6 +3520,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "2º",
       "_provas": [
         {
@@ -4195,7 +4251,7 @@
       "campo": "4 provas · Norte, Madeira",
       "serie": "Drive Tour",
       "regiao": null,
-      "rounds": 3,
+      "rounds": 2,
       "players": [
         {
           "fedCode": "54330",
@@ -4578,8 +4634,8 @@
           "sex": "M",
           "club": "Amendoeira",
           "hcpExact": 21.2,
-          "grossTotal": 266,
-          "toPar": 48,
+          "grossTotal": 176,
+          "toPar": 30,
           "parTotal": 73,
           "nholes": 18,
           "roundScores": [
@@ -4609,20 +4665,6 @@
               "sd": 23.2,
               "_prova": "3º Torneio Drive Tour Tejo – Santo Estêvão",
               "_campo": "Santo Estevão Golf",
-              "_regiao": null
-            },
-            {
-              "round": 3,
-              "gross": 90,
-              "parTotal": 72,
-              "meters": 4789,
-              "courseRating": 67.2,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 21.5,
-              "_prova": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-              "_campo": "Quinta do Vale",
               "_regiao": null
             }
           ]
@@ -4758,6 +4800,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "3º",
       "_provas": [
         {
@@ -4778,6 +4821,57 @@
           "name": "3º Torneio Drive Tour Tejo – Santo Estêvão",
           "regiao": null
         },
+        {
+          "ccode": "988",
+          "tcode": "10308",
+          "name": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
+          "regiao": null
+        }
+      ]
+    },
+    {
+      "ccode": "DT",
+      "tcode": "dt-3º-x1",
+      "name": "3º Drive Tour · 2ª prova",
+      "date": "2026-02-28",
+      "campo": "1 prova · ",
+      "serie": "Drive Tour",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "53838",
+          "name": "Gabriel Costa",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Amendoeira",
+          "hcpExact": 21.2,
+          "grossTotal": 90,
+          "toPar": 18,
+          "parTotal": 73,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 90,
+              "parTotal": 72,
+              "meters": 4789,
+              "courseRating": 67.2,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 21.5,
+              "_prova": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
+              "_campo": "Quinta do Vale",
+              "_regiao": null
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_edicao": "3º",
+      "_provas": [
         {
           "ccode": "988",
           "tcode": "10308",
@@ -5026,7 +5120,7 @@
       "campo": "5 provas · Madeira, Tejo, Sul, Norte, Açores",
       "serie": "Drive Challenge",
       "regiao": null,
-      "rounds": 2,
+      "rounds": 1,
       "players": [
         {
           "fedCode": "56026",
@@ -6225,8 +6319,8 @@
           "sex": "M",
           "club": "The One",
           "hcpExact": 42.4,
-          "grossTotal": 111,
-          "toPar": 40,
+          "grossTotal": 50,
+          "toPar": 15,
           "parTotal": 35,
           "nholes": 9,
           "roundScores": [
@@ -6243,20 +6337,6 @@
               "_prova": "3º Torneio Drive Challenge Tejo - Jamor",
               "_campo": "Jamor",
               "_regiao": "Tejo"
-            },
-            {
-              "round": 2,
-              "gross": 61,
-              "parTotal": 36,
-              "meters": 1956,
-              "courseRating": 32.1,
-              "slope": 116,
-              "teeName": "VERDES",
-              "holes": 9,
-              "sd": 56.3,
-              "_prova": "3º Torneio Drive Challenge Norte - Vidago",
-              "_campo": "Vidago Palace",
-              "_regiao": "Norte"
             }
           ]
         },
@@ -8407,6 +8487,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "3º",
       "_provas": [
         {
@@ -8438,6 +8519,57 @@
           "tcode": "10159+10160",
           "name": "3º Torneio Drive Challenge Açores–Terceira",
           "regiao": "Açores"
+        }
+      ]
+    },
+    {
+      "ccode": "DC",
+      "tcode": "dc-3º-x1",
+      "name": "3º Drive Challenge · 2ª prova",
+      "date": "2026-03-08",
+      "campo": "1 prova · Norte",
+      "serie": "Drive Challenge",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "47318",
+          "name": "Tiago Borges Oliveira",
+          "escalao": "Sub 12",
+          "regiao": "Tejo",
+          "sex": "M",
+          "club": "The One",
+          "hcpExact": 42.4,
+          "grossTotal": 61,
+          "toPar": 25,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 61,
+              "parTotal": 36,
+              "meters": 1956,
+              "courseRating": 32.1,
+              "slope": 116,
+              "teeName": "VERDES",
+              "holes": 9,
+              "sd": 56.3,
+              "_prova": "3º Torneio Drive Challenge Norte - Vidago",
+              "_campo": "Vidago Palace",
+              "_regiao": "Norte"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_edicao": "3º",
+      "_provas": [
+        {
+          "ccode": "987",
+          "tcode": "10220+10221",
+          "name": "3º Torneio Drive Challenge Norte - Vidago",
+          "regiao": "Norte"
         }
       ]
     },
@@ -9082,7 +9214,7 @@
       "campo": "5 provas · Açores, Sul, Madeira, Tejo, Norte",
       "serie": "Drive Challenge",
       "regiao": null,
-      "rounds": 2,
+      "rounds": 1,
       "players": [
         {
           "fedCode": "59154",
@@ -9730,8 +9862,8 @@
           "sex": "M",
           "club": "The One",
           "hcpExact": 40.4,
-          "grossTotal": 99,
-          "toPar": 28,
+          "grossTotal": 49,
+          "toPar": 14,
           "parTotal": 35,
           "nholes": 9,
           "roundScores": [
@@ -9748,20 +9880,6 @@
               "_prova": "4º Torneio Drive Challenge Sul–Penina",
               "_campo": "Penina Resort Course",
               "_regiao": "Sul"
-            },
-            {
-              "round": 2,
-              "gross": 50,
-              "parTotal": 36,
-              "meters": 1854,
-              "courseRating": 30.8,
-              "slope": 123,
-              "teeName": "VERDES",
-              "holes": 9,
-              "sd": 35.3,
-              "_prova": "4º Torneio Drive Challenge Tejo-Quinta Peru",
-              "_campo": "Quinta do Peru",
-              "_regiao": "Tejo"
             }
           ]
         },
@@ -12347,6 +12465,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "4º",
       "_provas": [
         {
@@ -12378,6 +12497,57 @@
           "tcode": "10225+10226",
           "name": "4º Torneio Drive Challenge Norte - Estela",
           "regiao": "Norte"
+        }
+      ]
+    },
+    {
+      "ccode": "DC",
+      "tcode": "dc-4º-x1",
+      "name": "4º Drive Challenge · 2ª prova",
+      "date": "2026-04-07",
+      "campo": "1 prova · Tejo",
+      "serie": "Drive Challenge",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "47318",
+          "name": "Tiago Borges Oliveira",
+          "escalao": "Sub 12",
+          "regiao": "Sul",
+          "sex": "M",
+          "club": "The One",
+          "hcpExact": 40.4,
+          "grossTotal": 50,
+          "toPar": 14,
+          "parTotal": 35,
+          "nholes": 9,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 50,
+              "parTotal": 36,
+              "meters": 1854,
+              "courseRating": 30.8,
+              "slope": 123,
+              "teeName": "VERDES",
+              "holes": 9,
+              "sd": 35.3,
+              "_prova": "4º Torneio Drive Challenge Tejo-Quinta Peru",
+              "_campo": "Quinta do Peru",
+              "_regiao": "Tejo"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_edicao": "4º",
+      "_provas": [
+        {
+          "ccode": "985",
+          "tcode": "10221+10222",
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru",
+          "regiao": "Tejo"
         }
       ]
     },
@@ -12542,10 +12712,10 @@
       "tcode": "dt-4º",
       "name": "4º Drive Tour",
       "date": "2026-04-11",
-      "campo": "5 provas · Madeira, Açores",
+      "campo": "4 provas · Madeira",
       "serie": "Drive Tour",
       "regiao": null,
-      "rounds": 2,
+      "rounds": 1,
       "players": [
         {
           "fedCode": "52884",
@@ -12671,8 +12841,8 @@
           "sex": "M",
           "club": "Ilha Terceira",
           "hcpExact": 16.4,
-          "grossTotal": 166,
-          "toPar": 25,
+          "grossTotal": 89,
+          "toPar": 20,
           "parTotal": 69,
           "nholes": 18,
           "roundScores": [
@@ -12689,20 +12859,6 @@
               "_prova": "4º Torneio Drive Tour Tejo – Lisbon SC",
               "_campo": "Lisbon Sports Club",
               "_regiao": null
-            },
-            {
-              "round": 2,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4860,
-              "courseRating": 67.1,
-              "slope": 127,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 8.8,
-              "_prova": "4º Torneio Drive Tour Terceira",
-              "_campo": "Terceira",
-              "_regiao": "Açores"
             }
           ]
         },
@@ -12968,6 +13124,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "4º",
       "_provas": [
         {
@@ -12993,7 +13150,52 @@
           "tcode": "10298",
           "name": "4º Torneio Drive Tour Sul - Boavista",
           "regiao": null
-        },
+        }
+      ]
+    },
+    {
+      "ccode": "DT",
+      "tcode": "dt-4º-x1",
+      "name": "4º Drive Tour · 2ª prova",
+      "date": "2026-04-11",
+      "campo": "1 prova · Açores",
+      "serie": "Drive Tour",
+      "regiao": null,
+      "rounds": 1,
+      "players": [
+        {
+          "fedCode": "48052",
+          "name": "Miguel Nunes",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Ilha Terceira",
+          "hcpExact": 16.4,
+          "grossTotal": 77,
+          "toPar": 5,
+          "parTotal": 69,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "meters": 4860,
+              "courseRating": 67.1,
+              "slope": 127,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 8.8,
+              "_prova": "4º Torneio Drive Tour Terceira",
+              "_campo": "Terceira",
+              "_regiao": "Açores"
+            }
+          ]
+        }
+      ],
+      "_agregado": true,
+      "_edicao": "4º",
+      "_provas": [
         {
           "ccode": "983",
           "tcode": "10158",
@@ -16320,6 +16522,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_escaloes": [
         "Campeonato Nacional de Jovens Sub 12 H",
         "Campeonato Nacional de Jovens Sub 12 S",
@@ -20251,6 +20454,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "5º",
       "_provas": [
         {
@@ -23788,6 +23992,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "6º",
       "_provas": [
         {
@@ -28390,6 +28595,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "7º",
       "_provas": [
         {
@@ -29102,6 +29308,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_edicao": "Final",
       "_provas": [
         {
@@ -29446,6 +29653,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "Mc Donald´s Junior Challenge #04",
         "Torneio da Academia #1"
@@ -30193,6 +30401,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "1º Ranking CityKids - AMARELO TOUR",
         "2º Ranking CityKids - AMARELO TOUR",
@@ -30457,6 +30666,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "ESTORIL Golf Junior Open by Manuel Leão",
         "2º ESTORIL Golf Junior Open by Arqtº António Lino",
@@ -30721,6 +30931,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "29th VILA SOL JUNIOR COMP",
         "30th VILA SOL JUNIOR COMP",
@@ -31383,6 +31594,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "29th VILA SOL JUNIOR COMP - 9 HOLES",
         "30th VILA SOL JUNIOR COMP - 9 HOLES",
@@ -31553,6 +31765,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "3º Torneio Circuito Fim de Semana 2026",
         "2º Torneio Circuito Fim de Semana 2026"
@@ -31888,6 +32101,7 @@
           ]
         }
       ],
+      "_agregado": true,
       "_provas": [
         "Torneio Cidade de Machico Junior 9 Buracos",
         "Torneio NOS Empresas Junior 9 Buracos 2026"

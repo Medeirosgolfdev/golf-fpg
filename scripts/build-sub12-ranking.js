@@ -199,6 +199,8 @@ function mergeEscalaoSplits(tournaments) {
       tcode: provas.map((t) => t.tcode).join("+"),
       rounds: Math.max(...players.map((p) => p.roundScores.length)),
       players,
+      // Coluna agregada: as "rondas" podem vir de provas diferentes.
+      _agregado: true,
       _escaloes: provas.map((t) => t.name),
     });
     console.log(`  ⊕ ${stripEscalaoSuffix(base.name)} — ${provas.length} escalões, ${players.length} miúdos`);
@@ -270,6 +272,8 @@ function mergeSeriesClube(tournaments) {
       campo: `${cfg.campo} · ${provas.length} provas`,
       rounds: Math.max(...players.map((p) => p.roundScores.length)),
       players,
+      // Coluna agregada: as "rondas" podem vir de provas diferentes.
+      _agregado: true,
       _provas: provas.map((t) => t.name),
     });
     console.log(`  ⊕ ${cfg.nome} — ${provas.length} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
@@ -316,37 +320,56 @@ function mergeRegionalEditions(tournaments) {
   for (const [key, provas] of grupos) {
     const [serie, ed] = key.split("|");
     provas.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
-    const byPlayer = new Map();
+
+    // Cada miúdo joga a prova da SUA região — essa vai para a coluna principal.
+    // Os raros que disputaram uma segunda prova da mesma edição (5 casos em
+    // 2026) vão para uma coluna "2ª prova" à parte, em vez de esticarem a
+    // coluna principal com voltas que não são rondas do mesmo torneio.
+    const porJogador = new Map();
     for (const t of provas) {
       for (const p of t.players) {
-        let acc = byPlayer.get(p.fedCode);
-        if (!acc) { acc = { ...p, roundScores: [] }; byPlayer.set(p.fedCode, acc); }
-        for (const r of p.roundScores) {
-          // A prova de origem viaja com a volta — sem isto perdia-se qual foi
-          // a região/campo de cada miúdo dentro da coluna agregada.
-          acc.roundScores.push({ ...r, round: acc.roundScores.length + 1, _prova: t.name, _campo: t.campo, _regiao: t.regiao });
-        }
+        let e = porJogador.get(p.fedCode);
+        if (!e) { e = { base: p, provas: [] }; porJogador.set(p.fedCode, e); }
+        e.provas.push({ t, rondas: p.roundScores });
       }
     }
-    const players = [...byPlayer.values()].map((p) => {
-      const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
-      const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
-      return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
-    });
+
+    const níveis = [];   // níveis[0] = coluna principal, [1] = 2ª prova, …
+    for (const { base, provas: lista } of porJogador.values()) {
+      lista.forEach((entrada, i) => {
+        if (!níveis[i]) níveis[i] = new Map();
+        níveis[i].set(base.fedCode, {
+          ...base,
+          roundScores: entrada.rondas.map((r, k) => ({
+            ...r, round: k + 1,
+            _prova: entrada.t.name, _campo: entrada.t.campo, _regiao: entrada.t.regiao,
+          })),
+        });
+      });
+    }
+
     const sigla = serie === "Drive Tour" ? "dt" : "dc";
-    out.push({
-      ccode: sigla.toUpperCase(), tcode: `${sigla}-${ed}`,
-      name: `${ed} ${serie}`,
-      date: provas[0].date,
-      campo: `${provas.length} provas · ${[...new Set(provas.map((t) => t.regiao).filter(Boolean))].join(", ")}`,
-      serie,
-      regiao: null,
-      rounds: Math.max(...players.map((p) => p.roundScores.length)),
-      players,
-      _edicao: ed,
-      _provas: provas.map((t) => ({ ccode: t.ccode, tcode: t.tcode, name: t.name, regiao: t.regiao })),
+    níveis.forEach((mapa, i) => {
+      const players = [...mapa.values()].map((p) => {
+        const grossTotal = p.roundScores.reduce((a, r) => a + r.gross, 0);
+        const parSum = p.roundScores.reduce((a, r) => a + (r.parTotal || 0), 0);
+        return { ...p, grossTotal, toPar: parSum ? grossTotal - parSum : null };
+      });
+      const usadas = provas.filter((t) => players.some((p) => p.roundScores.some((r) => r._prova === t.name)));
+      out.push({
+        ccode: sigla.toUpperCase(), tcode: `${sigla}-${ed}${i ? `-x${i}` : ""}`,
+        name: i === 0 ? `${ed} ${serie}` : `${ed} ${serie} · ${i + 1}ª prova`,
+        date: provas[0].date,
+        campo: `${usadas.length} prova${usadas.length === 1 ? "" : "s"} · ${[...new Set(usadas.map((t) => t.regiao).filter(Boolean))].join(", ")}`,
+        serie, regiao: null,
+        rounds: Math.max(...players.map((p) => p.roundScores.length)),
+        players,
+        _agregado: true,
+        _edicao: ed,
+        _provas: usadas.map((t) => ({ ccode: t.ccode, tcode: t.tcode, name: t.name, regiao: t.regiao })),
+      });
+      console.log(`  ⊕ ${ed} ${serie}${i ? ` · ${i + 1}ª prova` : ""} — ${usadas.length} provas, ${players.length} miúdos, ${Math.max(...players.map((p) => p.roundScores.length))} rondas`);
     });
-    console.log(`  ⊕ ${ed} ${serie} — ${provas.length} provas, ${players.length} miúdos`);
   }
   out.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   return out;
