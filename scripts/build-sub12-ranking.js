@@ -88,6 +88,10 @@ function serieOf(name) {
   if (/Drive\s+Tour/i.test(n)) return "Drive Tour";
   if (/Circuito\s+Aquapor/i.test(n)) return "Aquapor";
   if (/Campeonato\s+(Nacional|Regional)\s+de\s+(Jovens|Clubes)|Greatgolf|Campeonato\s+Regional\s+de\s+Jovens/i.test(n)) return "Nacional";
+  // ⚠ "Júnior"/"Juvenil" no nome ganha sempre ao padrão de Taça — a Taça
+  // Yeatman Júnior (23 jogadores, 10 a 20 anos, zero adultos) estava a cair
+  // no balde dos adultos só por começar por "Taça".
+  if (/j[úu]nior|juvenil|jovens|sub\s*-?\s*\d+/i.test(n)) return "Circuito juvenil";
   // Provas de adultos onde caiu 1 ou 2 miúdos — o escalão joga de tees que não
   // são os dele. Separadas para poderem ficar de fora do ranking.
   if (/Campeonato\s+Nacional\s+(de\s+[23]|Absoluto)|Ordem\s+de\s+M[ée]rito|Lisbon\s+Cup|Campeonato\s+do\s+Clube|Campe[ãa]o\s+do\s+Clube|Savoy|Di[áa]rio\s+de\s+Not[íi]cias|Ta[çc]a\s|Spring\s+Cup|Torneio\s+de\s+Inverno|Restaura[çc][ãa]o|Aberto\s+do\s+Estoril|Fim\s+de\s+[ÉEe]poca/i.test(n)) return "Adultos";
