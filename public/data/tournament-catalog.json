@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-15T11:03:31.793Z",
+  "generatedAt": "2026-07-18T15:23:32.697Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -35136,6 +35136,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-rock-creek-golf-club",
+      "label": "Rock Creek Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19231",
+        "uskids-20313",
+        "uskids-22475"
+      ],
+      "firstDate": "2025-03-16",
+      "lastDate": "2026-07-11",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-golf-club-naxhelet",
       "label": "Golf Club Naxhelet",
       "sourceId": "uskids",
@@ -44591,18 +44604,6 @@
       ],
       "firstDate": "2025-01-12",
       "lastDate": "2026-01-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-rock-creek-golf-club",
-      "label": "Rock Creek Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19231",
-        "uskids-20313"
-      ],
-      "firstDate": "2025-03-16",
-      "lastDate": "2025-09-07",
       "editionsCount": 2
     },
     {
