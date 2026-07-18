@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18T21:10:20.510Z",
+  "generated": "2026-07-18T21:15:51.978Z",
   "year": "2026",
   "source": "build-sub12-ranking.js",
   "metric": "differential sem componente de HCP: (113/Slope)×(Gross−CR), ×2 em 9 buracos",
@@ -28527,15 +28527,382 @@
       ]
     },
     {
-      "ccode": "007",
-      "tcode": "clube-18-4535",
-      "name": "Provas de clube · 18 buracos (~4535 m)",
-      "date": "2026-05-08",
-      "campo": "4 provas · Santo da Serra - Machico-Desertas, Palheiro Golf, Quinta do Peru, Estoril",
+      "ccode": "132",
+      "tcode": "clube-18-4760",
+      "name": "Provas de clube · 18 buracos (~4760 m)",
+      "date": "2026-01-10",
+      "campo": "9 provas · Royal Óbidos, Oporto, Palheiro Golf, PGA  Aroeira No.2, Santo da Serra - Machico-Desertas, Miramar, Quinta do Peru, Estoril",
       "serie": "Circuito juvenil",
       "regiao": null,
-      "rounds": 4,
+      "rounds": 6,
       "players": [
+        {
+          "fedCode": "57233",
+          "name": "Valentin Iria",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Quinta Lágrimas",
+          "hcpExact": 31.8,
+          "grossTotal": 107,
+          "toPar": 35,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 107,
+              "parTotal": 72,
+              "meters": 5024,
+              "courseRating": 66.9,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 36.5,
+              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
+              "_campo": "Royal Óbidos"
+            }
+          ]
+        },
+        {
+          "fedCode": "52077",
+          "name": "Tomás Tomásio",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Cantanhede",
+          "hcpExact": 49.5,
+          "grossTotal": 110,
+          "toPar": 38,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 110,
+              "parTotal": 72,
+              "meters": 5024,
+              "courseRating": 66.9,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 39.3,
+              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
+              "_campo": "Royal Óbidos"
+            }
+          ]
+        },
+        {
+          "fedCode": "49328",
+          "name": "Catarina Loureiro",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Oporto",
+          "hcpExact": 20.1,
+          "grossTotal": 99,
+          "toPar": 28,
+          "parTotal": 71,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 99,
+              "parTotal": 71,
+              "meters": 4969,
+              "courseRating": 72.4,
+              "slope": 129,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 23.3,
+              "_prova": "1ª Prova de Apuramento sub14",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "54475",
+          "name": "Maksim Mutalapov",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Oporto",
+          "hcpExact": 31.6,
+          "grossTotal": 114,
+          "toPar": 43,
+          "parTotal": 71,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 114,
+              "parTotal": 71,
+              "meters": 5408,
+              "courseRating": 69.4,
+              "slope": 129,
+              "teeName": "AMARELAS",
+              "holes": 18,
+              "sd": 39.1,
+              "_prova": "1ª Prova de Apuramento sub14",
+              "_campo": "Oporto"
+            }
+          ]
+        },
+        {
+          "fedCode": "47677",
+          "name": "Costa,Íris",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Palheiro",
+          "hcpExact": 43.1,
+          "grossTotal": 108,
+          "toPar": 36,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 108,
+              "parTotal": 72,
+              "meters": 4398,
+              "courseRating": 68.7,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 35.8,
+              "_prova": "2º Torneio Academia Junior - 18 buracos",
+              "_campo": "Palheiro Golf"
+            }
+          ]
+        },
+        {
+          "fedCode": "57904",
+          "name": "Guo Ziyang",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 11.6,
+          "grossTotal": 475,
+          "toPar": 49,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 11.1,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 84,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 17.9,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 3,
+              "gross": 78,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 12.2,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 4,
+              "gross": 77,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 11.3,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 5,
+              "gross": 78,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 12.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 6,
+              "gross": 81,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 15.3,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Estoril",
+          "hcpExact": 6.8,
+          "grossTotal": 448,
+          "toPar": 22,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 12.1,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 73,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 7.2,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 3,
+              "gross": 70,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 4.9,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 4,
+              "gross": 74,
+              "parTotal": 72,
+              "meters": 4529,
+              "courseRating": 64.6,
+              "slope": 124,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 8.6,
+              "_prova": "QUINTA DO PERU PJA Masters 2026",
+              "_campo": "Quinta do Peru"
+            },
+            {
+              "round": 5,
+              "gross": 77,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 11.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            },
+            {
+              "round": 6,
+              "gross": 76,
+              "parTotal": 69,
+              "meters": 4596,
+              "courseRating": 65.4,
+              "slope": 115,
+              "teeName": "AZUIS",
+              "holes": 18,
+              "sd": 10.4,
+              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
+              "_campo": "Estoril"
+            }
+          ]
+        },
+        {
+          "fedCode": "48971",
+          "name": "Sabrina Ribeiro Crisóstomo",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "F",
+          "club": "Vilamoura, C. G",
+          "hcpExact": 9.9,
+          "grossTotal": 173,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 69.8,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 16.2,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 86,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 69.8,
+              "slope": 120,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 15.3,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            }
+          ]
+        },
         {
           "fedCode": "52884",
           "name": "Manuel Goulartt Medeiros",
@@ -28543,14 +28910,40 @@
           "regiao": null,
           "sex": "M",
           "club": "Santo da Serra",
-          "hcpExact": 9.5,
-          "grossTotal": 304,
-          "toPar": 16,
+          "hcpExact": 9.8,
+          "grossTotal": 477,
+          "toPar": 45,
           "parTotal": 72,
           "nholes": 18,
           "roundScores": [
             {
               "round": 1,
+              "gross": 94,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 27.5,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 2,
+              "gross": 79,
+              "parTotal": 72,
+              "meters": 4805,
+              "courseRating": 65.5,
+              "slope": 117,
+              "teeName": "VERMELHAS",
+              "holes": 18,
+              "sd": 13,
+              "_prova": "PJA  Aroeira Masters 2026",
+              "_campo": "PGA  Aroeira No.2"
+            },
+            {
+              "round": 3,
               "gross": 79,
               "parTotal": 72,
               "meters": 4657,
@@ -28563,7 +28956,7 @@
               "_campo": "Santo da Serra - Machico-Desertas"
             },
             {
-              "round": 2,
+              "round": 4,
               "gross": 75,
               "parTotal": 72,
               "meters": 4398,
@@ -28576,7 +28969,7 @@
               "_campo": "Palheiro Golf"
             },
             {
-              "round": 3,
+              "round": 5,
               "gross": 75,
               "parTotal": 72,
               "meters": 4529,
@@ -28589,7 +28982,7 @@
               "_campo": "Quinta do Peru"
             },
             {
-              "round": 4,
+              "round": 6,
               "gross": 75,
               "parTotal": 72,
               "meters": 4529,
@@ -28645,136 +29038,86 @@
           ]
         },
         {
-          "fedCode": "49085",
-          "name": "Ricardo Castro Ferreira",
+          "fedCode": "53645",
+          "name": "José Maria Pereira",
           "escalao": "Sub 12",
           "regiao": null,
           "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 6,
-          "grossTotal": 297,
-          "toPar": 15,
-          "parTotal": 72,
+          "club": "Miramar",
+          "hcpExact": 16.2,
+          "grossTotal": 86,
+          "toPar": 16,
+          "parTotal": 70,
           "nholes": 18,
           "roundScores": [
             {
               "round": 1,
-              "gross": 70,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
+              "gross": 86,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
               "holes": 18,
-              "sd": 4.9,
-              "_prova": "QUINTA DO PERU PJA Masters 2026",
-              "_campo": "Quinta do Peru"
-            },
-            {
-              "round": 2,
-              "gross": 74,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 8.6,
-              "_prova": "QUINTA DO PERU PJA Masters 2026",
-              "_campo": "Quinta do Peru"
-            },
-            {
-              "round": 3,
-              "gross": 77,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 11.4,
-              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
-              "_campo": "Estoril"
-            },
-            {
-              "round": 4,
-              "gross": 76,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 10.4,
-              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
-              "_campo": "Estoril"
+              "sd": 16.6,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
             }
           ]
         },
         {
-          "fedCode": "57904",
-          "name": "Guo Ziyang",
+          "fedCode": "51180",
+          "name": "Ricardo Rocha Ferreira",
           "escalao": "Sub 12",
           "regiao": null,
           "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 11.2,
-          "grossTotal": 314,
-          "toPar": 32,
-          "parTotal": 72,
+          "club": "Miramar",
+          "hcpExact": 13.8,
+          "grossTotal": 87,
+          "toPar": 17,
+          "parTotal": 70,
           "nholes": 18,
           "roundScores": [
             {
               "round": 1,
-              "gross": 78,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
+              "gross": 87,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
               "holes": 18,
-              "sd": 12.2,
-              "_prova": "QUINTA DO PERU PJA Masters 2026",
-              "_campo": "Quinta do Peru"
-            },
+              "sd": 17.5,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
+            }
+          ]
+        },
+        {
+          "fedCode": "51182",
+          "name": "Eduardo Rocha Ferreira",
+          "escalao": "Sub 12",
+          "regiao": null,
+          "sex": "M",
+          "club": "Miramar",
+          "hcpExact": 18,
+          "grossTotal": 90,
+          "toPar": 20,
+          "parTotal": 70,
+          "nholes": 18,
+          "roundScores": [
             {
-              "round": 2,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4529,
-              "courseRating": 64.6,
-              "slope": 124,
-              "teeName": "VERMELHAS",
+              "round": 1,
+              "gross": 90,
+              "parTotal": 70,
+              "meters": 5284,
+              "courseRating": 68.4,
+              "slope": 120,
+              "teeName": "AMARELAS",
               "holes": 18,
-              "sd": 11.3,
-              "_prova": "QUINTA DO PERU PJA Masters 2026",
-              "_campo": "Quinta do Peru"
-            },
-            {
-              "round": 3,
-              "gross": 78,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 12.4,
-              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
-              "_campo": "Estoril"
-            },
-            {
-              "round": 4,
-              "gross": 81,
-              "parTotal": 69,
-              "meters": 4596,
-              "courseRating": 65.4,
-              "slope": 115,
-              "teeName": "AZUIS",
-              "holes": 18,
-              "sd": 15.3,
-              "_prova": "CAMP. JUVENIL - T.V.P.M. (Escalão B)",
-              "_campo": "Estoril"
+              "sd": 20.3,
+              "_prova": "Circuito Junior",
+              "_campo": "Miramar"
             }
           ]
         },
@@ -28945,404 +29288,15 @@
       ],
       "_agregado": true,
       "_provas": [
+        "1ª Ordem de de Mérito - Marques de Marialva",
+        "1ª Prova de Apuramento sub14",
+        "2º Torneio Academia Junior - 18 buracos",
+        "PJA  Aroeira Masters 2026",
         "Torneio Cidade de Machico 2026",
         "3º Torneio Academia Junior - 18 buracos",
+        "Circuito Junior",
         "QUINTA DO PERU PJA Masters 2026",
         "CAMP. JUVENIL - T.V.P.M. (Escalão B)"
-      ]
-    },
-    {
-      "ccode": "132",
-      "tcode": "clube-18-4915",
-      "name": "Provas de clube · 18 buracos (~4915 m)",
-      "date": "2026-01-10",
-      "campo": "2 provas · Royal Óbidos, PGA  Aroeira No.2",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 2,
-      "players": [
-        {
-          "fedCode": "57233",
-          "name": "Valentin Iria",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Quinta Lágrimas",
-          "hcpExact": 31.8,
-          "grossTotal": 107,
-          "toPar": 35,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 107,
-              "parTotal": 72,
-              "meters": 5024,
-              "courseRating": 66.9,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 36.5,
-              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
-              "_campo": "Royal Óbidos"
-            }
-          ]
-        },
-        {
-          "fedCode": "52077",
-          "name": "Tomás Tomásio",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Cantanhede",
-          "hcpExact": 49.5,
-          "grossTotal": 110,
-          "toPar": 38,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 110,
-              "parTotal": 72,
-              "meters": 5024,
-              "courseRating": 66.9,
-              "slope": 124,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 39.3,
-              "_prova": "1ª Ordem de de Mérito - Marques de Marialva",
-              "_campo": "Royal Óbidos"
-            }
-          ]
-        },
-        {
-          "fedCode": "57904",
-          "name": "Guo Ziyang",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 11.6,
-          "grossTotal": 161,
-          "toPar": 17,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 77,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 11.1,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            },
-            {
-              "round": 2,
-              "gross": 84,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 17.9,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            }
-          ]
-        },
-        {
-          "fedCode": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Estoril",
-          "hcpExact": 6.8,
-          "grossTotal": 151,
-          "toPar": 7,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 78,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 12.1,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            },
-            {
-              "round": 2,
-              "gross": 73,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 7.2,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            }
-          ]
-        },
-        {
-          "fedCode": "48971",
-          "name": "Sabrina Ribeiro Crisóstomo",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Vilamoura, C. G",
-          "hcpExact": 9.9,
-          "grossTotal": 173,
-          "toPar": 29,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 87,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 69.8,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 16.2,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            },
-            {
-              "round": 2,
-              "gross": 86,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 69.8,
-              "slope": 120,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 15.3,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            }
-          ]
-        },
-        {
-          "fedCode": "52884",
-          "name": "Manuel Goulartt Medeiros",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Santo da Serra",
-          "hcpExact": 9.8,
-          "grossTotal": 173,
-          "toPar": 29,
-          "parTotal": 72,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 94,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 27.5,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            },
-            {
-              "round": 2,
-              "gross": 79,
-              "parTotal": 72,
-              "meters": 4805,
-              "courseRating": 65.5,
-              "slope": 117,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 13,
-              "_prova": "PJA  Aroeira Masters 2026",
-              "_campo": "PGA  Aroeira No.2"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_provas": [
-        "1ª Ordem de de Mérito - Marques de Marialva",
-        "PJA  Aroeira Masters 2026"
-      ]
-    },
-    {
-      "ccode": "001",
-      "tcode": "clube-18-5236",
-      "name": "Provas de clube · 18 buracos (~5236 m)",
-      "date": "2026-01-11",
-      "campo": "2 provas · Oporto, Miramar",
-      "serie": "Circuito juvenil",
-      "regiao": null,
-      "rounds": 1,
-      "players": [
-        {
-          "fedCode": "49328",
-          "name": "Catarina Loureiro",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "F",
-          "club": "Oporto",
-          "hcpExact": 20.1,
-          "grossTotal": 99,
-          "toPar": 28,
-          "parTotal": 71,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 99,
-              "parTotal": 71,
-              "meters": 4969,
-              "courseRating": 72.4,
-              "slope": 129,
-              "teeName": "VERMELHAS",
-              "holes": 18,
-              "sd": 23.3,
-              "_prova": "1ª Prova de Apuramento sub14",
-              "_campo": "Oporto"
-            }
-          ]
-        },
-        {
-          "fedCode": "54475",
-          "name": "Maksim Mutalapov",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Oporto",
-          "hcpExact": 31.6,
-          "grossTotal": 114,
-          "toPar": 43,
-          "parTotal": 71,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 114,
-              "parTotal": 71,
-              "meters": 5408,
-              "courseRating": 69.4,
-              "slope": 129,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 39.1,
-              "_prova": "1ª Prova de Apuramento sub14",
-              "_campo": "Oporto"
-            }
-          ]
-        },
-        {
-          "fedCode": "53645",
-          "name": "José Maria Pereira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 16.2,
-          "grossTotal": 86,
-          "toPar": 16,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 86,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 16.6,
-              "_prova": "Circuito Junior",
-              "_campo": "Miramar"
-            }
-          ]
-        },
-        {
-          "fedCode": "51180",
-          "name": "Ricardo Rocha Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 13.8,
-          "grossTotal": 87,
-          "toPar": 17,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 87,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 17.5,
-              "_prova": "Circuito Junior",
-              "_campo": "Miramar"
-            }
-          ]
-        },
-        {
-          "fedCode": "51182",
-          "name": "Eduardo Rocha Ferreira",
-          "escalao": "Sub 12",
-          "regiao": null,
-          "sex": "M",
-          "club": "Miramar",
-          "hcpExact": 18,
-          "grossTotal": 90,
-          "toPar": 20,
-          "parTotal": 70,
-          "nholes": 18,
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 90,
-              "parTotal": 70,
-              "meters": 5284,
-              "courseRating": 68.4,
-              "slope": 120,
-              "teeName": "AMARELAS",
-              "holes": 18,
-              "sd": 20.3,
-              "_prova": "Circuito Junior",
-              "_campo": "Miramar"
-            }
-          ]
-        }
-      ],
-      "_agregado": true,
-      "_provas": [
-        "1ª Prova de Apuramento sub14",
-        "Circuito Junior"
       ]
     }
   ]

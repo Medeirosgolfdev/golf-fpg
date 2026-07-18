@@ -298,8 +298,19 @@ function mergeSeriesClube(tournaments) {
 
 /* ── Agrupar provas de clube semelhantes ─────────────────────────── */
 
-/** Limites de semelhança entre duas provas para partilharem coluna. */
-const SIM = { metros: 0.06, slope: 12, cr: 2.5 };
+/** Limites de semelhança entre duas provas para partilharem coluna, por nº de
+ *  buracos. Como o SD já normaliza a dificuldade, isto é organização visual —
+ *  o que interessa é não juntar campos que se leiam como coisas diferentes.
+ *
+ *  9 buracos: apertado. As provas curtas (~1435 m) e longas (~2381 m) são
+ *  quase o dobro uma da outra — juntá-las daria 76 % de amplitude e nem sequer
+ *  poupava largura (ninguém joga as duas no mesmo dia).
+ *  18 buracos: largo. Todas as provas de clube cabem numa coluna (4345-5408 m,
+ *  24 % de amplitude) e poupa 3 sub-colunas. */
+const SIM = {
+  9:  { metros: 0.06, slope: 12, cr: 2.5 },
+  18: { metros: 0.25, slope: 20, cr: 8 },
+};
 
 /**
  * Junta as provas de clube que sobraram (as que não pertencem a uma série
@@ -337,12 +348,13 @@ function mergeClubesSemelhantes(tournaments) {
   candidatas.sort((a, b) => a.perf.h - b.perf.h || a.perf.m - b.perf.m);
   const clusters = [];
   for (const c of candidatas) {
+    const lim = SIM[c.perf.h] || SIM[18];
     const alvo = clusters.find((cl) => {
       const ref = cl[0].perf;
       return ref.h === c.perf.h
-        && Math.abs(c.perf.m - ref.m) / ref.m <= SIM.metros
-        && Math.abs(c.perf.sl - ref.sl) <= SIM.slope
-        && Math.abs(c.perf.cr - ref.cr) <= SIM.cr;
+        && Math.abs(c.perf.m - ref.m) / ref.m <= lim.metros
+        && Math.abs(c.perf.sl - ref.sl) <= lim.slope
+        && Math.abs(c.perf.cr - ref.cr) <= lim.cr;
     });
     if (alvo) alvo.push(c); else clusters.push([c]);
   }
