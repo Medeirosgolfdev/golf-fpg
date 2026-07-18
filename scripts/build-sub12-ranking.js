@@ -45,6 +45,17 @@ const OUT_FILE = path.join(DATA_DIR, "sub12-ranking.json");
 /** Idade máxima (à data do torneio) para entrar no ranking: Sub-12 e abaixo. */
 const MAX_AGE = 12;
 
+/** Séries que NÃO entram no ranking.
+ *  "Adultos" — provas de adultos onde caíram 1-3 miúdos, que jogam de tees que
+ *  não são os deles. Custavam 25 colunas (120 sub-colunas) para 21 miúdos e a
+ *  sua remoção só tira 1 miúdo do ranking.
+ *  "Estágio" — par-3 de estágios de verão, treino e não competição. */
+const SERIES_EXCLUIDAS = new Set(["Adultos", "Estágio"]);
+
+/** Mínimo de juniores numa coluna. Abaixo disto não há comparação possível —
+ *  são sub-colunas gastas com uma ou duas células soltas. */
+const MIN_JUNIORES_COLUNA = 3;
+
 const argv = process.argv.slice(2);
 const argOf = (flag, def) => {
   const i = argv.indexOf(flag);
@@ -578,7 +589,11 @@ function main() {
     });
   }
 
-  const merged = mergeClubesSemelhantes(mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out))));
+  const agrupados = mergeClubesSemelhantes(mergeSeriesClube(mergeRegionalEditions(mergeEscalaoSplits(out))));
+  const semExcluidas = agrupados.filter((t) => !SERIES_EXCLUIDAS.has(t.serie));
+  const merged = semExcluidas.filter((t) => t.players.length >= MIN_JUNIORES_COLUNA);
+  const cortadasSerie = agrupados.length - semExcluidas.length;
+  const cortadasPoucos = semExcluidas.length - merged.length;
 
   const jogadores = new Map();
   for (const t of merged) for (const p of t.players) {
@@ -600,7 +615,8 @@ function main() {
   const porSerie = {};
   for (const t of out) porSerie[t.serie] = (porSerie[t.serie] || 0) + 1;
 
-  console.log(`  Torneios (colunas): ${merged.length} — ${out.length} provas antes de agrupar os circuitos regionais`);
+  console.log(`  Torneios (colunas): ${merged.length} — ${out.length} provas antes de agrupar`);
+  console.log(`   ↳ cortadas: ${cortadasSerie} de séries excluídas (${[...SERIES_EXCLUIDAS].join(", ")}) · ${cortadasPoucos} com < ${MIN_JUNIORES_COLUNA} juniores`);
   console.log(`   ↳ ${Object.entries(porSerie).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(" · ")}`);
   console.log(`  Voltas com CR+Slope: ${voltasOk}${semRating ? ` (${semRating} saltadas por falta de rating)` : ""}`);
   console.log(`  Miúdos: ${jogadores.size} (${com4} com ≥4 voltas)`);
