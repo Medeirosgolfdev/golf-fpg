@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-18T20:43:01.587Z",
-  "total": 585,
+  "scrapedAt": "2026-07-19T20:40:59.579Z",
+  "total": 586,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -124627,6 +124627,136 @@
       }
     },
     {
+      "ccode": "001",
+      "tcode": "10572",
+      "name": "3º Torneio do Circuito de Verão 2026",
+      "date": "2026-07-15",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-07-15",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Ferreira",
+                  "fed": "43810",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Dinis Silva",
+                  "fed": "40910",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Eva Silva",
+                  "fed": "46437",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:08",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Francisco Saraiva",
+                  "fed": "39097",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "fed": "52487",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Francisca Santos",
+                  "fed": "46853",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:16",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "fed": "48705",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "fed": "46480",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Loureiro",
+                  "fed": "46489",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:24",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonçalo Maia",
+                  "fed": "46395",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "fed": "47341",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Gustavo Pinto",
+                  "fed": "56048",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:32",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Diogo Guilherme",
+                  "fed": "56632",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Dinis Seabra",
+                  "fed": "44821",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "fed": "45366",
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "000",
       "tcode": "10879",
       "name": "4º Torneio do Circuito Aquapor",
@@ -126588,7 +126718,7 @@
       "tcode": "10880",
       "name": "4º Torneio do Circuito Aquapor S",
       "date": "2026-07-18",
-      "expectedYear": 2026,
+      "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio do Circuito Aquapor S",
         "date": "2026-07-18",
