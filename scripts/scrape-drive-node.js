@@ -32,6 +32,7 @@ const fs = require("fs");
 const path = require("path");
 const { writeAtomic } = require("../lib/atomic-write");
 const { lisbonCivilDayStr } = require("../lib/helpers");
+const { compareForRanking, assignPositions } = require("./lib/drive-countback.cjs");
 
 // ═══════════════════════════════════════════════════════════
 // CONFIGURAÇÃO
@@ -489,28 +490,24 @@ function writeIfChanged(filepath, newObj) {
       // o da RONDA 1 — o `pos` que trazia NÃO era a classificação final, e os
       // pontos do ranking saíam errados (ex: 3º DT Tejo: pos 1 = Pedro Costa
       // Alemão em vez do Nuno Palmares; confirmado contra o RankingsClassifLST
-      // oficial). Recalcular por grossTotal agregado. Empates NÃO partilham
-      // posição — a FPG desempata por countback e atribui posições distintas
-      // (confirmado: Tomás/James empatados → 2º=165 e 3º=94 no oficial).
-      // Countback aproximado: última ronda → back-9 da última ronda.
+      // oficial). Recalcular por grossTotal agregado.
+      //
+      // Desempate = COUNTBACK oficial (2026-07-19): última volta → últimos
+      // 9 → 6 → 3 → 1 buraco. Reproduz o oficial em 20 dos 26 grupos de
+      // empate de 2026 (o critério anterior — back-9 só de 18 buracos, depois
+      // ordem alfabética — falhava em quase todos, ex. Tomás/James
+      // empatados a 81: 165 vs 94 pts trocados). Ver scripts/lib/drive-countback.cjs.
       // Jogadores sem todas as rondas (WD a meio) vão para o fim (0 pts).
-      if (nRounds > 1) {
+      // ⚠ Aquapor FICA DE FORA: não é classificação gross (no 2º Aquapor 2025
+      // o 3º fez 143 e o 4º fez 141 — é com handicap), logo reordenar por
+      // gross agregado corrompia a ordem oficial. Lá mantém-se o pos da FPG.
+      if (nRounds > 1 && circuit !== "aquapor") {
         const hasGross = (p) => typeof p.grossTotal === "number" && p.grossTotal < 900;
-        const lastGrossOf = (p) => p.roundScores?.[p.roundScores.length - 1]?.gross ?? 999;
-        const lastB9Of = (p) => {
-          const sc = p.roundScores?.[p.roundScores.length - 1]?.scores;
-          if (!sc || sc.length < 18) return 999;
-          return sc.slice(9, 18).reduce((s, x) => s + (x || 0), 0);
-        };
-        const cmp = (a, b) =>
-          (a.grossTotal - b.grossTotal) ||
-          (lastGrossOf(a) - lastGrossOf(b)) ||
-          (lastB9Of(a) - lastB9Of(b)) ||
-          String(a.name || "").localeCompare(String(b.name || ""));
-        const complete = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) >= nRounds).sort(cmp);
-        const partial = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) < nRounds).sort(cmp);
-        let i = 0;
-        for (const p of [...complete, ...partial]) { i++; p.pos = i; }
+        const complete = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) >= nRounds).sort(compareForRanking);
+        const partial = t.players.filter(p => hasGross(p) && (p.roundScores?.length || 0) < nRounds).sort(compareForRanking);
+        assignPositions(complete);
+        assignPositions(partial);
+        for (const p of partial) p.pos += complete.length;
       }
 
       (circuit === "aquapor" ? aquaporTournaments : driveTournaments).push(t);

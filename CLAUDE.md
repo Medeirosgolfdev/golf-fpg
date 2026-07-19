@@ -437,6 +437,43 @@ Depois no F12 do site correspondente: `fetch("http://localhost:3456/browser-scri
 
 **scrape-drive-aquapor-v7.js** (`scripts/_archive/browser-console/`) — Colar no F12 de `scoring.datagolf.pt/pt/tournaments.aspx`. v7 fix: usa `classifAgregate.aspx/ScoreCard` (v6 tinha bug R1=R2). **Legacy** — substituído por `scrape-drive-node.js` (Node puro, correr em GitHub Actions). Movido da raiz para `scripts/_archive/browser-console/` em 2026-06-23.
 
+### Rankings oficiais Drive/Aquapor — `scrape-drive-rankings.js` + `verify-drive-rankings.js` (2026-07-19)
+
+O `RankingsClassifLST` (`scoring.fpg.pt/lists/rankings_classif.aspx`) publica os
+rankings oficiais. **São QUATRO famílias de código, não uma** — e cada uma tem
+regras próprias, todas medidas contra o oficial (não são suposições):
+
+| Código | O que é | Clube | Regra |
+|---|---|---|---|
+| `DC_{ZONA4}{esc}{G\|N}{aa}` | Challenge, **fase regular** | 988 | melhores-4; **as Finais NÃO entram** |
+| `RDT{M\|S\|T\|N\|A}{aa}` | Drive Tour por zona | 988 | melhores-N (3 ou 4) |
+| `RFDC_{aa}{M\|N\|S\|T\|A\|C}{esc}{G\|N}` | Challenge, **ranking final** | 988 | total da fase regular **+ Final ×1.5** |
+| `RCA{H\|S}{aa}` | Circuito Aquapor | **000** | nacional, **separado por sexo** |
+
+- **Final ×1.5** (arredondado): 1º 250→375 · 2º 165→**248** · 3º 94→141 · 4º 75→**113**.
+  A Final **Nacional** não entra em ranking regional nenhum.
+- **Empates:** o Challenge/Tour desempata por **countback** (última volta →
+  últimos 9 → 6 → 3 → 1 buraco — `scripts/lib/drive-countback.cjs`); o
+  **Aquapor NÃO** — empatados partilham o lugar e **dividem os pontos**
+  (2 no 14º → 22,5 cada; 3 no 12º → 24,3). O oficial publica 1 decimal.
+- **Sentinelas:** gross ≥ 900 (999, 1044, 1080…) é "sem cartão" — não pontua
+  nem ocupa lugar. Contá-las dava pontos a quem a FPG não pontua.
+- **Aquapor ≠ gross puro no leaderboard guardado:** o `pos` dos
+  `aquapor-data-*.json` é do leaderboard combinado M+F; o ranking usa a posição
+  **dentro do sexo** (sexo via `federados.json.gender`, com os próprios rankings
+  como fonte primária para estrangeiros). Por isso o `scrape-drive-node.js`
+  **não recalcula posições no Aquapor** — lá a classificação não é por gross.
+- **Desfasamento:** o verify ignora provas nossas posteriores à última prova
+  publicada no oficial (senão um torneio de ontem gera dezenas de falsos
+  positivos).
+
+`--details` é **incremental** (só refaz o detalhe de quem mudou de pontos);
+`--force-details` ignora a cache. Estado 2026-07-19: **71 rankings iguais, 1
+divergente** — o RDTN26, por causa do 3º Drive Tour Norte (2026-02-28), cujo
+desempate não segue R1, R2 nem countback (anomalia da fonte).
+No `update-drive.yml` estes dois passos correm **só ao Domingo** (ou em run
+manual): mudam devagar e dominavam o tempo do workflow.
+
 **scrape-fpg-admissions-draws-node.js** — Node puro (2026-04-22). Substitui os browser-scripts `browser-scrape-fpg-admissions-draws.js` + `browser-scrape-fpg-draws-only.js` + `merge-fpg-admissions-draws.js`. Corre linkpage cross-domain (scoring.fpg.pt/lists) em paralelo, merge aditivo (preserva bons, rejeita `_suspect`), output único em `public/data/fpg-admissions-draws.json`. Scope: `scripts/fpg-admissions-scope.json` (333 torneios). Exit code 2 = sem novidades. Workflow: `update-fpg-admissions-draws.yml` (Sex/Sáb/Dom 20:00 UTC) — **regenera também `public/data/manuel-pairings.json` via `pairings-build.js` e committa-o** (alimenta a página `/draws`). Secret: `FPG_ADMISSIONS_COOKIES`.
 
 ⚠ **Trava `_manual` (2026-06-14):** uma entrada de torneio com `"_manual": true` é **curada à mão** e o scraper preserva-a INTACTA (salta-a no merge — ver guarda no topo do loop em `scrape-fpg-admissions-draws-node.js`). Usar quando se inserem draws/admissions manualmente (ex: folhas de pairing fotografadas) que NÃO devem ser sobrescritos num run futuro — crítico porque a FPG reutiliza tcodes (um tcode antigo reaproveitado traria um draw "legítimo" `nScore>0` que de outra forma ganhava ao manual). Os draws por jogador podem ter `tee` próprio (flights com tees mistos M/F) — `FpgDrawFlight.players[].tee` em `nacional2026Loader.ts`, lido pelo `DrawTab` (`p.tee ?? g.tee`). Actualmente marcados: `125/10370` (PJA Vale Pisão Dia 2) e `152/10444` (AT&T Pebble Beach Royal Óbidos D1+D2).

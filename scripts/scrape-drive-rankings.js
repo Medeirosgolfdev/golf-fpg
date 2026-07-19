@@ -19,8 +19,16 @@
  * CODES conhecidos:
  *   Challenge: DC_{ZONA4}{ESCALAO2}{G|N}{ANO2} — MADM/TEJO/SUL_/NOR_/ACO_,
  *              Sub 10-18, Gross/Net. Ex: DC_MADM12G26.
+ *              É a FASE REGULAR: as Finais NÃO entram (medido em 2025, ano
+ *              fechado: 0 entradas "Final" em 5 rankings de 3 zonas).
  *   Tour:      RDT{M|S|T|N|A}{ANO2} — um ranking por zona (Madeira/Sul/Tejo/
  *              Norte/Açores?), sem escalão no código. Ex: RDTM26.
+ *   Final:     RFDC_{ANO2}{M|N|S|T|A|C}{ESCALAO2}{G|N} — RANKING FINAL do
+ *              Challenge. Ex: RFDC_26M18G. Duas linhas por jogador:
+ *                · "Fase Regular Drive Challenge" = total do DC_ correspondente
+ *                · a Final regional, com os pontos a ×1.5 (arredondado):
+ *                  1º 250→375 · 2º 165→248 · 3º 94→141 · 4º 75→113
+ *              Só existe para zonas cuja Final já se disputou.
  *
  * OUTPUT: public/data/drive-rankings.json
  *
@@ -51,7 +59,10 @@ const OUT_FILE = path.join(REPO, "public", "data", "drive-rankings.json");
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 const ACK = "8428ACK987";
+// Clube "dono" do ranking na FPG. O Drive (Challenge/Tour) vive no 988; os
+// rankings do Circuito Aquapor vivem no 000. Cada target leva o seu.
 const CLUB = "988";
+const CLUB_AQUAPOR = "000";
 const BASE = "https://scoring.fpg.pt/lists";
 
 const COOKIE = loadCookieHeader({
@@ -90,6 +101,24 @@ const TOUR_ZONES = [
   { letter: "A", region: "acores" },  // candidato — sondado como os da matriz DC
 ];
 
+/* Letras de zona usadas nos códigos RFDC_ (ranking final do Challenge).
+   Só existem códigos para as zonas cuja Final JÁ se disputou — as restantes
+   devolvem 0 registos e são ignoradas em silêncio (como o resto da matriz). */
+const ZONE_LETTERS = [
+  { letter: "M", region: "madeira" },
+  { letter: "N", region: "norte" },
+  { letter: "S", region: "sul" },
+  { letter: "T", region: "tejo" },
+  { letter: "A", region: "acores" },
+  { letter: "C", region: "centro" },
+];
+
+/* Rankings do Circuito Aquapor (clube 000, não 988). */
+const AQUAPOR_SEXES = [
+  { letter: "H", sex: "M" },
+  { letter: "S", sex: "F" },
+];
+
 function buildMatrix() {
   const out = [];
   for (const z of ZONES) for (const a of AGES) for (const ty of TYPES) {
@@ -97,6 +126,15 @@ function buildMatrix() {
   }
   for (const z of TOUR_ZONES) {
     out.push({ code: `RDT${z.letter}${YEAR2}`, series: "tour", zone: z.region, escalao: null, type: "gross" });
+  }
+  // Ranking FINAL do Challenge: Fase Regular (= total do DC_) + Final ×1.5.
+  for (const z of ZONE_LETTERS) for (const a of AGES) for (const ty of TYPES) {
+    out.push({ code: `RFDC_${YEAR2}${z.letter}${a}${ty.t}`, series: "challenge-final", zone: z.region, escalao: `Sub ${a}`, type: ty.label });
+  }
+  // Circuito Aquapor: 1 ranking por sexo, no clube 000 (H = masculino,
+  // S = feminino). Sem zona nem escalão — é nacional e absoluto.
+  for (const s of AQUAPOR_SEXES) {
+    out.push({ code: `RCA${s.letter}${YEAR2}`, series: "aquapor", zone: null, escalao: null, type: "gross", sex: s.sex, club: CLUB_AQUAPOR });
   }
   return out;
 }
@@ -110,6 +148,16 @@ function parseCode(code) {
   if (m) {
     const z = TOUR_ZONES.find(x => x.letter === m[1]);
     return { series: "tour", zone: z?.region ?? m[1].toLowerCase(), escalao: null, type: "gross", year: `20${m[2]}` };
+  }
+  m = code.match(/^RCA([HS])(\d{2})$/);
+  if (m) {
+    const s = AQUAPOR_SEXES.find(x => x.letter === m[1]);
+    return { series: "aquapor", zone: null, escalao: null, type: "gross", sex: s?.sex ?? null, club: CLUB_AQUAPOR, year: `20${m[2]}` };
+  }
+  m = code.match(/^RFDC_(\d{2})([A-Z])(\d{2})([GN])$/);
+  if (m) {
+    const z = ZONE_LETTERS.find(x => x.letter === m[2]);
+    return { series: "challenge-final", zone: z?.region ?? m[2].toLowerCase(), escalao: `Sub ${m[3]}`, type: m[4] === "G" ? "gross" : "net", year: `20${m[1]}` };
   }
   return { series: null, zone: null, escalao: null, type: null, year: null };
 }
@@ -125,8 +173,8 @@ function dotNetToIso(s) {
 }
 
 /* ── HTTP ── */
-async function warmup(code) {
-  const url = `${BASE}/linkpage.aspx?page=rankingresult&club=${CLUB}&ranking=${code}&ack=${ACK}&minpoints=1`;
+async function warmup(code, club = CLUB) {
+  const url = `${BASE}/linkpage.aspx?page=rankingresult&club=${club}&ranking=${code}&ack=${ACK}&minpoints=1`;
   const r = await fetch(url, {
     headers: {
       "User-Agent": UA, "Cookie": COOKIE,
@@ -155,7 +203,7 @@ async function pageMethod(method, params) {
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "application/json, text/javascript, */*; q=0.01",
         "Origin": "https://scoring.fpg.pt",
-        "Referer": `${BASE}/linkpage.aspx?page=rankingresult&club=${CLUB}&ranking=${params.Rk_Code}&ack=${ACK}&minpoints=1`,
+        "Referer": `${BASE}/linkpage.aspx?page=rankingresult&club=${params.Club ?? CLUB}&ranking=${params.Rk_Code}&ack=${ACK}&minpoints=1`,
       },
       body: JSON.stringify(body),
     });
@@ -187,7 +235,7 @@ async function pageMethod(method, params) {
   let found = 0, empty = 0, changed = 0, errs = 0;
   let detailFetched = 0, detailReused = 0;
   for (const t of targets) {
-    const res = await pageMethod("RankingsClassifLST", { Club: CLUB, Rk_Code: t.code });
+    const res = await pageMethod("RankingsClassifLST", { Club: t.club || CLUB, Rk_Code: t.code });
     await sleep(DELAY_MS);
     if (res.error && !/http-500/.test(res.error)) { errs++; console.warn(`[drive-rankings] ⚠ ${t.code}: ${res.error}`); continue; }
     if (!res.records || res.records.length === 0) { empty++; continue; }
@@ -220,7 +268,7 @@ async function pageMethod(method, params) {
           reused++;
           continue;
         }
-        const det = await pageMethod("RankingsPlayersLST", { Club: CLUB, Rk_Code: t.code, fed_code: p.fed });
+        const det = await pageMethod("RankingsPlayersLST", { Club: t.club || CLUB, Rk_Code: t.code, fed_code: p.fed });
         await sleep(DELAY_MS);
         fetched++;
         if (det.records?.length) {
@@ -239,12 +287,19 @@ async function pageMethod(method, params) {
     const entry = {
       code: t.code, series: t.series || "challenge",
       zone: t.zone, escalao: t.escalao ?? null, type: t.type,
+      sex: t.sex ?? null, club: t.club || CLUB,
       year: t.year || `20${YEAR2}`,
       fetchedAt: new Date().toISOString(),
       players,
     };
     const prevEntry = rankings[t.code];
-    const same = prevEntry && JSON.stringify(prevEntry.players) === JSON.stringify(players);
+    // Compara jogadores E metadata (série/zona/escalão/sexo/clube): sem isto,
+    // enriquecer a metadata de um ranking cujos pontos não mudaram não chegava
+    // a ser gravado (o run saía com "sem novidades").
+    const metaOf = (e) => JSON.stringify([e.series, e.zone, e.escalao, e.type, e.sex ?? null, e.club ?? null]);
+    const same = prevEntry
+      && JSON.stringify(prevEntry.players) === JSON.stringify(players)
+      && metaOf(prevEntry) === metaOf(entry);
     if (!same) changed++;
     rankings[t.code] = entry;
     console.log(`[drive-rankings] ✓ ${t.code} (${t.series || "challenge"} ${t.zone} ${t.escalao ?? "todos"} ${t.type}): ${players.length} jogadores${WITH_DETAILS ? " +detalhe" : ""}${same ? " (inalterado)" : ""}`);
