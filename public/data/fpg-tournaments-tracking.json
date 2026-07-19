@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-19T04:29:17.364Z",
+  "lastUpdated": "2026-07-19T20:41:03.391Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-07-19",
   "summary": {
@@ -429,9 +429,9 @@
       "rounds": 1,
       "has_admissions": false,
       "admissions_count": 0,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 1,
+      "draws_players_total": 15,
       "has_classif": true,
       "player_count": 15,
       "players_with_scorecards": 15,
