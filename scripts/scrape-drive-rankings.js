@@ -27,8 +27,13 @@
  * USAGE:
  *   node scripts/scrape-drive-rankings.js                    # matriz do ano corrente
  *   node scripts/scrape-drive-rankings.js --details          # + detalhe por torneio/jogador
+ *   node scripts/scrape-drive-rankings.js --details --force-details   # ignora cache do detalhe
  *   node scripts/scrape-drive-rankings.js --codes DC_MADM12G26,DC_MADM12N26 --details
  *   node scripts/scrape-drive-rankings.js --year 26
+ *
+ * O --details é INCREMENTAL: só refaz o pedido de detalhe dos jogadores cujo
+ * total de pontos mudou face ao drive-rankings.json anterior (os outros são
+ * copiados). Primeira vez ~2400 pedidos; runs seguintes, poucas dezenas.
  *
  * EXIT: 0 = dados novos · 2 = sem novidades · 1 = erro fatal
  * ─────────────────────────────────────────────────────────────────────────
@@ -60,6 +65,7 @@ const args = process.argv.slice(2);
 const argVal = (f, d) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : d; };
 const YEAR2 = String(argVal("--year", String(new Date().getFullYear() % 100))).padStart(2, "0");
 const WITH_DETAILS = args.includes("--details");
+const FORCE_DETAILS = args.includes("--force-details");
 const EXPLICIT_CODES = (argVal("--codes", "") || "").split(",").map(s => s.trim()).filter(Boolean);
 const DELAY_MS = parseInt(argVal("--delay", "150"), 10);
 
@@ -179,6 +185,7 @@ async function pageMethod(method, params) {
   const rankings = { ...(prev.rankings || {}) };
 
   let found = 0, empty = 0, changed = 0, errs = 0;
+  let detailFetched = 0, detailReused = 0;
   for (const t of targets) {
     const res = await pageMethod("RankingsClassifLST", { Club: CLUB, Rk_Code: t.code });
     await sleep(DELAY_MS);
@@ -195,12 +202,27 @@ async function pageMethod(method, params) {
       status: rec.classif_status ?? null,
     }));
 
-    // Detalhe por torneio (child table) — opcional, 1 POST por jogador.
+    // Detalhe por torneio (child table) — 1 POST por jogador.
+    // INCREMENTAL: o detalhe só muda se o total de pontos do jogador mudou —
+    // reaproveita-se o do run anterior para os restantes. Sem isto eram ~2400
+    // pedidos/run (~12 min no Action); com isto, só os jogadores que jogaram.
+    // `--force-details` refaz tudo (útil se o cache ficar suspeito).
     if (WITH_DETAILS) {
+      const prevByFed = new Map(
+        (rankings[t.code]?.players || []).filter(p => p.fed).map(p => [String(p.fed), p]),
+      );
+      let reused = 0, fetched = 0;
       for (const p of players) {
         if (!p.fed) continue;
+        const old = prevByFed.get(String(p.fed));
+        if (!FORCE_DETAILS && old?.results && old.points === p.points) {
+          p.results = old.results;
+          reused++;
+          continue;
+        }
         const det = await pageMethod("RankingsPlayersLST", { Club: CLUB, Rk_Code: t.code, fed_code: p.fed });
         await sleep(DELAY_MS);
+        fetched++;
         if (det.records?.length) {
           p.results = det.records.map(r => ({
             date: dotNetToIso(r.tourn_date),
@@ -210,6 +232,8 @@ async function pageMethod(method, params) {
           }));
         }
       }
+      detailFetched += fetched;
+      detailReused += reused;
     }
 
     const entry = {
@@ -227,6 +251,9 @@ async function pageMethod(method, params) {
   }
 
   console.log(`[drive-rankings] ${found} rankings com dados · ${empty} vazios/inexistentes · ${errs} erros · ${changed} alterados`);
+  if (WITH_DETAILS) {
+    console.log(`[drive-rankings] detalhe: ${detailFetched} pedidos · ${detailReused} reaproveitados do run anterior${FORCE_DETAILS ? " (--force-details)" : ""}`);
+  }
   if (found === 0) {
     console.error("[drive-rankings] nenhum ranking devolveu dados — cookies expirados? (testa: node scripts/test-fpg-admissions-auth.js)");
     process.exit(1);

@@ -100,10 +100,22 @@ jobs:
           node scripts/validate-data.js $ARGS
 
       # ── Rankings OFICIAIS (RankingsClassifLST) + verificação contra os nossos ──
-      # Corre SEMPRE (mesmo sem drive-data novo): a FPG pode actualizar os
-      # rankings mais tarde do que as classificações. exit 2 = sem novidades.
+      # Só 1×/semana (run de Domingo) ou a pedido: os rankings mudam devagar e
+      # estes dois passos dominavam o tempo do workflow. O --details é
+      # incremental (só refaz o detalhe de quem mudou de pontos).
+      - name: É dia de rankings?
+        id: rkday
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "7" ]; then
+            echo "run=yes" >> $GITHUB_OUTPUT
+          else
+            echo "run=no" >> $GITHUB_OUTPUT
+            echo "ℹ️  Rankings Drive só correm ao Domingo (ou em run manual) — a saltar"
+          fi
+
       - name: Scrape rankings oficiais Drive (com detalhe por torneio)
         id: rankings
+        if: steps.rkday.outputs.run == 'yes'
         run: |
           set +e
           node scripts/scrape-drive-rankings.js --details
@@ -117,6 +129,7 @@ jobs:
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
 
       - name: Verificar rankings calculados vs oficiais
+        if: steps.rkday.outputs.run == 'yes'
         run: |
           set +e
           node scripts/verify-drive-rankings.js
