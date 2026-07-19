@@ -17,7 +17,7 @@ import { meanArr } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import { normPaisDisplay } from "../../utils/flagUtils";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, displayName } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
@@ -46,6 +46,10 @@ const CANONICAL_TCODES = new Set([
   "8660", "11307", "13470", "16020", "18978",          // 2021, 2022, 2023, 2024, 2025
   // Paris Invitational (França) — 1 edição disponível no member-history
   "18975",                                             // 2025
+  // Red White & Blue Invitational 2026 (4 Jul) — grande field US do escalão
+  "22187",
+  // Washington State Invitational 2026 (3 Jul)
+  "22121",
   // (Holiday Classic excluído — raramente há ≥ 5 europeus do escalão a
   //  jogar, faz mais barulho que sinal na cross-table.)
 ]);
@@ -59,8 +63,29 @@ const SERIES_PRIORITY: Record<string, number> = {
   EU: 2,
 };
 
-// Threshold mínimo: torneios não-canónicos com pelo menos N jogadores do escalão
-const MIN_PARTICIPANTS = 5;
+// Circuito europeu "pequeno" — Irish, Rome, Marco Simone, Paris (+ EOWAGR, que
+// é tid EXTRA e sai pelo EURO_EXTRA_PREFIXES). São referências úteis quando se
+// analisa um torneio EUROPEU, mas não dizem nada sobre um field global como o
+// World Championship (onde tipicamente só o Manuel os jogou) — aí só fazem
+// barulho. Escondidos quando o torneio seleccionado tem scope "global".
+const EURO_CIRCUIT_TCODES = new Set([
+  "8660", "11307", "13470", "16020", "18978",          // Irish Open 2021-2025
+  "12578", "14670", "16795", "20175",                  // Rome Classic 2022-2025
+  "18438", "21080",                                    // Marco Simone 2025, 2026
+  "18975",                                             // Paris Invitational 2025
+]);
+const EURO_EXTRA_PREFIXES = ["eowagr"] as const;
+
+// Mínimo de jogadores DO FIELD ACTUAL com resultado para uma coluna valer a
+// pena. Abaixo disto a coluna é uma tira vazia com 1-2 células — não dá
+// comparação nenhuma e só empurra as colunas úteis para fora do ecrã.
+const MIN_FIELD_HITS = 3;
+
+// Colunas da cross-table = torneios CURADOS (CANONICAL_TCODES + INTL_COLUMNS).
+// Antes qualquer tcode com ≥5 jogadores do escalão virava coluna — com um field
+// como o World Boys 12 (107 dos 151 são US) isso enchia a tabela de State
+// Invitationals regionais americanos (Tennessee, Colonial Williamsburg, Monterey,
+// Caribbean, Florida…), que não dizem nada sobre o nível de um europeu.
 // Máximo de colunas (para não rebentar a UI) — prioridade aos mais recentes
 const MAX_COLUMNS = 20;
 
@@ -176,6 +201,111 @@ interface JobIntlDivPlayer { name?: string; country?: string; pos?: number | str
 interface JobIntlDivision { division?: string; players?: JobIntlDivPlayer[] }
 interface JobIntlFile { tournament?: string; year?: number; divisions?: JobIntlDivision[] }
 interface JobIntlDef { path: string; neg: number; name: string; dateUS: string }
+// Resultado normalizado de uma coluna INTL: par por ronda, nº de rondas e
+// jogadores indexados por nome normalizado.
+interface IntlColCell { p: number | string; t: number | null; tp: number | null; rd: number[] }
+interface IntlColData { parPer: number; rounds: number; players: Map<string, IntlColCell> }
+
+/** BlueGolf (players[] no topo) e JobFile (divisions[]) → IntlColData. */
+function normalizeIntlCol(def: IntlColDef, raw: unknown): IntlColData | null {
+  const o = raw as {
+    parTotal?: number;
+    players?: Array<Record<string, unknown>>;
+    divisions?: Array<{ division?: string; parTotal?: number; players?: Array<Record<string, unknown>> }>;
+  };
+  let src: Array<Record<string, unknown>> | undefined;
+  let parPer = 0;
+  if (def.division) {
+    const dv = (o.divisions ?? []).find(d => def.division!.test((d.division ?? "").trim()));
+    if (!dv) return null;
+    src = dv.players;
+    parPer = dv.parTotal ?? 0;
+  } else {
+    src = o.players;
+    parPer = o.parTotal ?? 0;
+  }
+  if (!src?.length) return null;
+
+  const players = new Map<string, IntlColCell>();
+  let maxRounds = 0;
+  for (const p of src) {
+    const nome = String(p.name ?? "").trim();
+    if (!nome) continue;
+    // rondas: roundGross[] (JobFile) ou rounds[].gross (ambos os formatos)
+    const rg = Array.isArray(p.roundGross) ? (p.roundGross as unknown[]) : null;
+    const rd = (rg ?? (Array.isArray(p.rounds) ? (p.rounds as Array<{ gross?: unknown }>).map(r => r?.gross) : []))
+      .map(Number).filter(g => Number.isFinite(g) && g > 0);
+    if (rd.length === 0) continue;
+    maxRounds = Math.max(maxRounds, rd.length);
+    const total = Number(p.total);
+    const t = Number.isFinite(total) && total > 0 ? total : rd.reduce((a, b) => a + b, 0);
+    // toPar (JobFile) ou result (BlueGolf) — servem para inferir o par por ronda
+    const tpRaw = Number(p.toPar ?? p.result);
+    const tp = Number.isFinite(tpRaw) ? tpRaw : null;
+    if (!parPer && tp != null) parPer = Math.round((t - tp) / rd.length);
+    const posNum = Number(p.pos);
+    players.set(normName(nome), {
+      p: Number.isFinite(posNum) && posNum > 0 ? posNum : 0, // 0 = a calcular
+      t, tp, rd,
+    });
+  }
+  if (players.size === 0) return null;
+  if (!parPer) parPer = 72;
+  // Os ficheiros BlueGolf só trazem `pos` para os primeiros classificados (no
+  // FCG 2026 são 57 nulos em 75) — o resto ficava "#—". Como temos o total de
+  // toda a divisão, a posição calcula-se: ordenar por total e dar o mesmo
+  // lugar a totais iguais (empates).
+  const rank = [...players.values()].filter(c => c.t != null).sort((a, b) => a.t! - b.t!);
+  let prevTotal = -1, prevPlace = 0;
+  rank.forEach((c, i) => {
+    const place = c.t === prevTotal ? prevPlace : i + 1;
+    prevTotal = c.t!; prevPlace = place;
+    if (!c.p) c.p = place;
+  });
+  for (const c of players.values()) if (!c.p) c.p = "WD";
+  // tp em falta: derivar do par da divisão
+  for (const c of players.values()) {
+    if (c.tp == null && c.t != null) c.tp = c.t - parPer * c.rd.length;
+  }
+  return { parPer, rounds: maxRounds || 1, players };
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// COLUNAS de torneios não-USKids (Jun/Jul 2026) — os grandes campeonatos
+// juvenis onde o field do World se cruzou este Verão. Ficheiros em dois
+// formatos: BlueGolf (players[] no topo) e JobFile (divisions[]).
+// Só divisões MASCULINAS — a cross-table segue o escalão do Manuel.
+// Uma coluna só aparece se ≥1 jogador do field actual lá jogou.
+// ─────────────────────────────────────────────────────────────────────
+interface IntlColDef {
+  id: string; path: string; name: string; short: string;
+  date: string;            // ISO — ordenação das colunas
+  escalao: string;         // testado com escalaoMatches contra o escalão activo
+  division?: RegExp;       // JobFile: divisão a usar. Ausente = ficheiro BlueGolf
+  /** Tids EXTRA (autoRivals) que representam ESTE mesmo torneio — o FCG e o
+   *  JWGC chegam também por lá, sob o prefixo `wjgc-`. Suprimidos para não
+   *  ficarem duas colunas do mesmo evento. */
+  dupTid?: RegExp;
+  url: string;
+}
+const INTL_COLUMNS: IntlColDef[] = [
+  { id: "intl-fm26", path: "/data/ftm_fm_2026.json", division: /^11 & 12$/,
+    name: "Future Masters 2026 (11-12)", short: "F.Masters '26", date: "2026-06-21",
+    escalao: "Boys 11-12", url: "https://www.golfgenius.com/pages/12683907823877241012" },
+  { id: "intl-uajt26", path: "/data/uajt_2026.json", division: /^Boys 11-12$/,
+    name: "Under Armour Summer National 2026 (Boys 11-12)", short: "UA '26", date: "2026-06-25",
+    escalao: "Boys 11-12", url: "https://www.golfgenius.com/pages/12770450567004716088" },
+  { id: "intl-fsga26", path: "/data/fsga_2026.json", division: /^Overall$/,
+    name: "72nd Boys' Junior Championship 2026 (FSGA)", short: "FSGA '26", date: "2026-06-30",
+    escalao: "Boys 13-18", url: "https://www.fsga.org" },
+  { id: "intl-jwgc26", path: "/data/jwgc261_boys_11-12.json", dupTid: /^wjgc-jwgc261_/,
+    name: "Uswing Mojing Junior World 2026 (Boys 11-12)", short: "JWGC '26", date: "2026-07-06",
+    escalao: "Boys 11-12", url: "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261/index.htm" },
+  { id: "intl-fcg26", path: "/data/fcg268_boys_11-12.json", dupTid: /^wjgc-fcg268_/,
+    name: "FCG Callaway World Championship 2026 (Boys 11-12)", short: "FCG '26", date: "2026-07-13",
+    escalao: "Boys 11-12", url: "https://fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/index.htm" },
+];
+
 const JOBFILE_INTL: JobIntlDef[] = [
   { neg: -1001, path: "/data/ftm_fm_2026.json",     name: "Future Masters 2026",     dateUS: "8/12/2026" },
   { neg: -1002, path: "/data/avtrophy_2026.json",   name: "AV Trophy U14 2026",      dateUS: "7/2/2026" },
@@ -189,7 +319,9 @@ const JOBFILE_INTL: JobIntlDef[] = [
 // NOTA: Marco Simone Local Tour 2026 (tcode 21573) ficou fora porque é uma
 // série de eventos locais não-coberta pelo scraper signupanytime. Quando a
 // FPG publicar field também desse torneio, adicionar aqui.
-const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; hub?: string; tcode?: string; date_iso?: string }> = [
+// `scope`: "global" = field mundial (World) → esconde o circuito europeu pequeno
+// das colunas. Ausente = "eu" (default; a esmagadora maioria destes torneios).
+const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; hub?: string; tcode?: string; date_iso?: string; scope?: "eu" | "global" }> = [
   // European Championship 2026 (26 Mai — já jogado, Manuel participou)
   { id: "european26", tcode: "21131", date_iso: "2026-05-26", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
   // Irish Open 2026 — 1-2 Jul, K Club (Irlanda)
@@ -197,7 +329,7 @@ const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; h
   // Paris Invitational 2026 — 4-6 Jul (França)
   { id: "paris26",    tcode: "21795", date_iso: "2026-07-04", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field", hub: "https://tournaments.uskidsgolf.com/paris_player_hub" },
   // World Championship 2026 — 30 Jul-1 Ago (Pinehurst, USA)
-  { id: "world26",    tcode: "21610", date_iso: "2026-07-30", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
+  { id: "world26",    tcode: "21610", date_iso: "2026-07-30", scope: "global", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
   // Venice Open 2026 — 13-15 Ago (Itália)
   { id: "venice26",   tcode: "22243", date_iso: "2026-08-13", name: "Venice Open 2026",           short: "Venice '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522243/venice-open-2026/field" },
   // Belgium Invitational 2026 — 26-27 Set (Bélgica, novo torneio europeu)
@@ -266,13 +398,73 @@ function describeExtraTid(
   else if (/_g1213(?:[_\-]|$)/.test(tid)) esc = "G12-13";
   else if (/^wjgc\d{2}$/.test(tid)) esc = "B10-11";
 
-  const pfx = tid.startsWith("wjgc") ? "WJGC" : tid.startsWith("doral") ? "Doral" : tid.startsWith("eowagr") ? "EOWAGR" : "";
+  // ⚠ O prefixo `wjgc-` é só o guarda-chuva do loader — por baixo dele vivem
+  // eventos BlueGolf diferentes (brjgt = Daily Mail WJGC, fcg = FCG Callaway,
+  // jwgc = Uswing Mojing). Rotular tudo "WJGC" fazia o FCG 2025 aparecer como
+  // "WJGC '25". O rótulo sai do slug do evento, não do guarda-chuva.
+  const pfx = /^wjgc-fcg/.test(tid) ? "FCG"
+    : /^wjgc-jwgc/.test(tid) ? "JWGC"
+    : tid.startsWith("wjgc") ? "WJGC"
+    : tid.startsWith("doral") ? "Doral"
+    : tid.startsWith("eowagr") ? "EOWAGR" : "";
   return {
-    name: meta?.name || `${pfx} ${year}${esc ? " " + esc : ""}`,
+    name: prettifyExtraName(meta?.name || "") || `${pfx} ${year}${esc ? " " + esc : ""}`,
     short: `${pfx} '${yy}${esc ? " " + esc : ""}`,
     date: meta?.dateISO || `${year}-06-15`,
     url: meta?.url || "",
   };
+}
+
+/** Escalão de um tid EXTRA (wjgc/doral/eowagr) em formato testável por
+ *  escalaoMatches. Usado para não mostrar como coluna divisões que não têm
+ *  nada a ver com o escalão activo — Doral B8-9 ou WJGC Girls 12-13 numa
+ *  análise de Boys 12. "Geral" quando o tid não codifica escalão. */
+function extraTidEscalao(tid: string): string {
+  const sex = /_girls?_|_g(?:\d|wagr)/.test(tid) ? "Girls" : "Boys";
+  // Formato longo: "wjgc-brjgt251_boys_12-13", "wjgc-fcg268_girls_9-10"
+  const rng = tid.match(/_(?:boys|girls)_(\d{1,2})-(\d{1,2})(?:[_-]|$)/);
+  if (rng) return `${sex} ${rng[1]}-${rng[2]}`;
+  if (/_(?:boys|girls)_7under(?:[_-]|$)/.test(tid)) return `${sex} U7`;
+  // WAGR = divisão aberta de ranking, na prática 13+; fora de uma análise Sub-12.
+  if (/_(?:boys|girls)_wagr(?:[_-]|$)/.test(tid)) return `${sex} 13-18`;
+  // Formato compacto: "doral25_b1011", "eowagr25_b78" (⚠ o \d{2,4} tem de vir
+  // SEMPRE colado ao b/g — senão apanha o ano de "wjgc-wjgc_2025_b1011").
+  const cmp = tid.match(/_[bg](\d{2,4})(?:[_-]|$)/);
+  if (cmp) {
+    const a = cmp[1];
+    if (a.length === 4) return `${sex} ${a.slice(0, 2)}-${a.slice(2)}`;
+    if (a.length === 2) return `${sex} ${a[0]}-${a[1]}`;
+  }
+  if (/^wjgc\d{2}$/.test(tid)) return "Boys 10-11";
+  return "Geral";
+}
+
+/** Desloca um escalão N anos para trás: "Boys 12" + 1 ano → "Boys 11".
+ *  Necessário porque as colunas são torneios PASSADOS — um miúdo que hoje está
+ *  em Boys 12 jogou o Doral de Dez/2025 na divisão B10-11, não na B12-13.
+ *  Sem isto a coluna escolhida era a errada (e vinha quase vazia). */
+function shiftEscalao(esc: string, yearsAgo: number): string {
+  if (!yearsAgo) return esc;
+  const r = parseEscalaoRange(esc);
+  if (!r) return esc;
+  const sex = /girl/i.test(esc) ? "Girls" : /boy/i.test(esc) ? "Boys" : "";
+  const lo = Math.max(0, r[0] - yearsAgo);
+  const hi = Math.max(0, r[1] - yearsAgo);
+  return `${sex} ${lo === hi ? lo : `${lo}-${hi}`}`.trim();
+}
+
+/** Nomes canónicos do BRJGT vêm com o título comercial inteiro
+ *  ("Daily Mail WJGC, 6-11 Boys & 6-13 Girls - 10-11 Boys"). Encurta para
+ *  "WJGC - 10-11 Boys" — o cabeçalho de grupo não precisa do resto. */
+function prettifyExtraName(name: string): string {
+  const s = name
+    .replace(/^Daily Mail\s+/i, "")
+    .replace(/,\s*6-11 Boys\s*&\s*6-13 Girls\s*/i, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  // Alguns nomes canónicos vêm em CAIXA ALTA ("FCG CALLAWAY WORLD CHAMPIONSHIP").
+  // O displayName title-caseia tudo, incluindo as siglas — repostas a seguir.
+  return displayName(s).replace(/\b(fcg|wjgc|jwgc|eowagr|fsga|rwb|usa?)\b/gi, m => m.toUpperCase());
 }
 
 interface FFGPlayer { name?: string; country?: string; club?: string; pos?: number; total?: number;
@@ -347,6 +539,8 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
   // Map neg ID → JobFile internacional (Future Masters, AV Trophy, Orange Bowl, FSGA)
   const [jobIntl, setJobIntl] = useState<Map<number, JobIntlFile>>(new Map());
+  // Colunas INTL normalizadas (id → dados), ver INTL_COLUMNS.
+  const [intlCols, setIntlCols] = useState<Map<string, IntlColData>>(new Map());
   const [searchParams, setSearchParams] = useSearchParams();
   const [torneioT, setTorneioT] = useState<number>(() => {
     if (syncUrl) { const t = searchParams.get("t"); if (t && !Number.isNaN(Number(t))) return Number(t); }
@@ -395,6 +589,25 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       const m = new Map<number, FFGFile>();
       for (const r of results) { if (r) m.set(r[0], r[1]); }
       setFfgData(m);
+    });
+    return () => { alive = false; };
+  }, []);
+
+  // Load colunas INTL (Future Masters, UA, FSGA, JWGC, FCG) — normalizadas
+  // para {parPer, rounds, players}. Carrega em paralelo, falhas silenciosas.
+  useEffect(() => {
+    let alive = true;
+    Promise.all(INTL_COLUMNS.map(async (def) => {
+      try {
+        const d = await cachedFetchJson<unknown>(def.path);
+        const n = d ? normalizeIntlCol(def, d) : null;
+        return n ? [def.id, n] as const : null;
+      } catch { return null; }
+    })).then(results => {
+      if (!alive) return;
+      const m = new Map<string, IntlColData>();
+      for (const r of results) { if (r) m.set(r[0], r[1]); }
+      setIntlCols(m);
     });
     return () => { alive = false; };
   }, []);
@@ -850,16 +1063,21 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
 
     // ── PASSO 2: seleccionar tcodes a mostrar ──
-    // Inclui TODOS os canónicos (mesmo com 0 participantes do escalão actual —
-    // são bons indicadores de nível) + não-canónicos com >= MIN_PARTICIPANTS.
-    const allTcodes = new Set<string>([...CANONICAL_TCODES, ...tcodeCount.keys()]);
-    const selectedTcodes = [...allTcodes]
-      .filter(tcode => {
-        // Canónicos: sempre incluir (se metadata existe)
-        if (CANONICAL_TCODES.has(tcode)) return !!mh.torneios[tcode];
-        // Não-canónicos: precisam de MIN_PARTICIPANTS
-        return (tcodeCount.get(tcode) ?? 0) >= MIN_PARTICIPANTS;
-      })
+    // SÓ os canónicos (curados) — mesmo com 0 participantes do escalão actual,
+    // porque são os que dão referência de nível. Ver nota no topo do ficheiro.
+    // Num field global (World), o circuito europeu pequeno fica de fora.
+    const upSel = UP_TORN.find(u => u.tcode === String(torneioT));
+    const isGlobalField = upSel
+      ? upSel.scope === "global"
+      : /world championship/i.test(torneio?.name || "");
+    // Ano do torneio em análise — base para calcular a idade que o field tinha
+    // em cada torneio passado (ver shiftEscalao).
+    const refYear = parseInt(
+      (upSel?.date_iso || toIso(torneio?.date_inicio || "")).slice(0, 4), 10,
+    ) || new Date().getFullYear();
+    const selectedTcodes = [...CANONICAL_TCODES]
+      .filter(tcode => !!mh.torneios[tcode])
+      .filter(tcode => !(isGlobalField && EURO_CIRCUIT_TCODES.has(tcode)))
       .sort((a, b) => {
         // ordenar por data desc (mais recente primeiro)
         const da = mh.torneios[a]?.startDate || "";
@@ -875,6 +1093,13 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
     // ── PASSO 3: construir TournDef[] a partir dos tcodes seleccionados ──
     function shortName(name: string): string {
+      // Nomes com o ano à FRENTE ("2026 Washington State Invitational")
+      const pre = name.match(/^(\d{4})\s+(.+)$/);
+      if (pre) {
+        const yr = pre[1].slice(2);
+        const st = pre[2].match(/^([A-Za-zÀ-ÿ ]+?)\s+State Invitational/i);
+        return st ? `${st[1].trim()} '${yr}` : `${pre[2].slice(0, 8)} '${yr}`;
+      }
       // "European Championship 2024" → "EU '24"; "Venice Open 2025" → "Venice '25"
       const m = name.match(/^(.+?)\s+(\d{4})$/);
       if (!m) return name.slice(0, 12);
@@ -979,7 +1204,19 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     // oficial vindos do canónico via extraTidMeta; par/rondas inferidos do field).
     for (const [tid, count] of extraCounts) {
       if (count < 1) continue;
+      // Divisão tem de conter o escalão activo (mata Doral B8-9 e as divisões
+      // Girls do WJGC numa análise Boys 12).
+      // Circuito europeu pequeno fora das análises de field global (World).
+      if (isGlobalField && EURO_EXTRA_PREFIXES.some(p => tid.startsWith(p))) continue;
+      // Já coberto por uma coluna INTL (FCG, JWGC) — evita coluna duplicada.
+      if (INTL_COLUMNS.some(d => d.dupTid?.test(tid))) continue;
       const info = describeExtraTid(tid, extraTidMeta.get(tid));
+      // Divisão tem de conter o escalão que estes miúdos tinham À DATA do
+      // torneio (mata Doral B8-9, divisões Girls, e escolhe a B10-11 em vez da
+      // B12-13 num Doral de 2025 para um field que hoje é Boys 12).
+      const tidYear = parseInt(info.date.match(/(?:19|20)\d{2}/)?.[0] || "", 10) || refYear;
+      const anosAtras = Math.max(0, refYear - tidYear);
+      if (!escalaoMatches(shiftEscalao(escalaoNome, anosAtras), extraTidEscalao(tid))) continue;
       const nrounds = extraRounds.get(tid) ?? 1;
       // Par por ronda: derivado de (total − toPar) / nº de rondas de um jogador.
       let parPer = 72;
@@ -1004,6 +1241,36 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         url: info.url,
       });
     }
+    // ── PASSO 3b-bis: colunas INTL (Future Masters, UA, FSGA, JWGC, FCG) ──
+    // Cruzamento por nome normalizado com o field actual. Uma coluna só entra
+    // se pelo menos um jogador do field lá tiver resultado, e se o escalão da
+    // divisão contiver o escalão activo.
+    const intlData = new Map<string, Map<string, IntlColCell>>();
+    for (const def of INTL_COLUMNS) {
+      const data = intlCols.get(def.id);
+      if (!data) continue;
+      if (!escalaoMatches(escalaoNome, def.escalao)) continue;
+      const hits = new Map<string, IntlColCell>();
+      for (const fm of fieldMids) {
+        const cell = data.players.get(normName(fm.p.nome));
+        if (cell) hits.set(normName(fm.p.nome), cell);
+      }
+      if (hits.size === 0) continue;
+      intlData.set(def.id, hits);
+      T.push({
+        id: def.id,
+        name: def.name,
+        short: def.short,
+        date: def.date,
+        rounds: Math.max(...[...hits.values()].map(c => c.rd.length), 1),
+        intendedRounds: data.rounds,
+        par: data.parPer,
+        field: hits.size,
+        nations: 0,
+        url: def.url,
+      });
+    }
+
     // ── Ordenar T: agrupar por série, edições antigas → recentes, ─────────
     // séries ordenadas pela sua edição mais antiga.
     function toTs(d: string): number {
@@ -1015,8 +1282,15 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
     // Extrair "série" do short (ex: "EU '24" → "EU", "WJGC '26 B12-13" → "WJGC B12-13")
     function seriesKey(short: string): string {
-      // Tirar a parte do ano '24 / '25 / '26
-      return short.replace(/\s*'?\d{2}\s*/g, " ").replace(/\s+/g, " ").trim();
+      // A DIVISÃO sai primeiro ("B8-9", "B10-11") — senão o Doral partia-se em
+      // duas séries e uma terceira série mais antiga (Venice) encaixava-se pelo
+      // meio. Todas as edições do mesmo torneio ficam num só grupo, por data.
+      // ⚠ A ordem importa: apagar o ano antes comeria o "10-11" da divisão.
+      return short
+        .replace(/\bB\d{1,2}-\d{1,2}\b/gi, " ")
+        .replace(/'\d{2}/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
     }
     const seriesOf = new Map<string, string>();      // tid → seriesKey
     const seriesEarliest = new Map<string, number>(); // seriesKey → ts da edição + antiga
@@ -1139,6 +1413,11 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         const data = m.get(playerKey);
         if (data) r[tid] = data;
       }
+      // Colunas INTL (JobFile/BlueGolf) — mesma indexação por nome normalizado
+      for (const [colId, m] of intlData) {
+        const data = m.get(playerKey);
+        if (data) r[colId] = data;
+      }
 
       const up: string[] = [];
       const upCurrent = UP_TORN.find(u => u.tcode === String(torneioT));
@@ -1159,6 +1438,32 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
 
     if (D.length === 0) return null;
+
+    // ── PASSO 4b: cortar colunas quase vazias ──────────────────────────
+    // Só aqui se sabe a contagem REAL: as estimativas do passo 2 vinham do
+    // member-history e sub-contavam torneios cujas células chegam pelo
+    // uskids-results (o RWB'26 tem 1 jogador no slim mas 21 na tabela).
+    const realHits = new Map<string, number>();
+    for (const td of T) realHits.set(td.id, D.filter(p => p.r[td.id]).length);
+    const kept = T.filter(td => (realHits.get(td.id) ?? 0) >= MIN_FIELD_HITS);
+    if (kept.length < T.length) {
+      const keepIds = new Set(kept.map(t => t.id));
+      for (const p of D) {
+        for (const k of Object.keys(p.r)) if (!keepIds.has(k)) delete p.r[k];
+      }
+      T.length = 0;
+      T.push(...kept);
+      // Recalcular os limites de série (as fronteiras mudaram com o corte)
+      seriesBoundaries.clear();
+      let sbPrev: string | null = null;
+      for (const td of T) {
+        const sk = seriesOf.get(td.id)!;
+        if (sk !== sbPrev) { seriesBoundaries.add(td.id); sbPrev = sk; }
+      }
+    }
+    if (T.length === 0) return null;
+    // `field` passa a ser a contagem real (alimenta o peso de prestígio)
+    for (const td of T) td.field = realHits.get(td.id) ?? td.field;
 
     // Recalcular nations por torneio (contar países únicos de quem jogou)
     for (const td of T) {
@@ -1200,7 +1505,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
     const allCountries = [...new Set(D.map(p => p.co))].sort();
     return { D, T, UP: UP_TORN_FUTURE, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
-  }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes]);
+  }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes, intlCols]);
 
   // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
   // vezes por ano/escalão (Doral, WJGC, EOWAGR). Quando a família tem >1 edição,

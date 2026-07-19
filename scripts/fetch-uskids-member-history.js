@@ -113,6 +113,11 @@ const ALL_TCODES = [
 
   // ── 2026 USA (já estavam) ──
   21004, // Desert Shootout 2026
+
+  // ── State Invitationals (EUA) ──
+  // ⚠ Excepção deliberada: o fetch-uskids-discovery.js exclui "state
+  // invitational" por defeito (ruído local dos EUA). Adicionado a pedido.
+  22121, // Washington State Invitational 2026
 ];
 
 // Prefixos de escalão a incluir na auto-descoberta.
@@ -161,6 +166,10 @@ const FULL_FIELD_TCODES = new Set([
   21795, // 2026
   // ── Belgium Invitational ──
   22480, // 2026
+  // ── Red White & Blue Invitational ──
+  22187, // 2026
+  // ── State Invitationals (EUA) ──
+  22121, // Washington State Invitational 2026
   // ── Preparados para correr DEPOIS de ocorrerem ──
   21610, // World Championship 2026 (Set 2026)
   22243, // Venice Open 2026 (Ago 2026)

@@ -3,7 +3,7 @@
  */
 import React, { useMemo, useState } from "react";
 import { fmtSign, sortArrow } from "../utils/format";
-import { FL } from "../utils/flagUtils";
+import { flag as countryFlag } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
 import { sc3m } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
@@ -66,6 +66,8 @@ export default function RivaisDashboard({
   const [fUp, setFUp] = useState("all");
   const [fCo, setFCo] = useState("all");
   const [q, setQ] = useState("");
+  // Nome do jogador com a linha marcada (clique no nome). null = nenhuma.
+  const [selectedRow, setSelectedRow] = useState<string | null>(null);
   const [sort, setSort] = useState("zrank");
   const [dir, setDir] = useState<"asc" | "desc">("asc");
   // Em fieldMode (tabela /kids2/next-t) "Só com dados" arranca ON para esconder
@@ -258,7 +260,7 @@ export default function RivaisDashboard({
           <option value="all">🌍 País</option>
           {allCountries.map(c => (
             <option key={c} value={c}>
-              {FL[c] || ""} {c}
+              {countryFlag(c)} {c}
             </option>
           ))}
         </select>
@@ -316,7 +318,18 @@ export default function RivaisDashboard({
                 };
                 // Nome completo da série a partir do t.name ("European Championship
                 // 2026" -> "European Championship"); fallback ao short.
-                const fullName = (name: string): string => name.replace(/\s+\d{4}\s*$/, "").trim();
+                // O ano e a divisão já vêm no sub-cabeçalho de cada edição
+                // ("UA '26"), por isso saem do rótulo do grupo — senão um nome
+                // como "Under Armour Summer National 2026 (Boys 11-12)" ocupa
+                // 10 linhas numa coluna de uma só edição.
+                const fullName = (name: string): string =>
+                  name
+                    .replace(/\s*\([^)]*\)\s*$/, " ")            // "(Boys 11-12)"
+                    .replace(/\s*[-–]\s*(?:Boys|Girls)\s*\d.*$/i, " ") // "- Boys 12-13"
+                    .replace(/^\s*(?:19|20)\d{2}\s+/, "")        // "2026 Washington…"
+                    .replace(/\s+(?:19|20)\d{2}(?=\s|$)/g, " ")  // ano no meio/fim
+                    .replace(/\s+/g, " ")
+                    .trim();
                 T.forEach((t, i) => {
                   const isBoundary = i === 0 || seriesBoundaries?.has(t.id);
                   if (isBoundary) {
@@ -343,12 +356,29 @@ export default function RivaisDashboard({
                           padding: "6px 8px",
                           borderLeft: gi > 0 ? "1px solid var(--border)" : undefined,
                           borderBottom: "1px solid var(--border)",
-                          whiteSpace: "nowrap",
+                          // Grupos de uma só edição são estreitos demais para o
+                          // nome (quebrava em 8-10 linhas) — piso de 104px.
+                          minWidth: g.span === 1 ? 104 : undefined,
                         }}
                       >
+                        {/* Título quebra em várias linhas dentro da largura natural
+                            do grupo (span × ~78px) — sem isto, nomes longos tipo
+                            "Under Armour Summer National 2026 (Boys 11-12)"
+                            esticavam a coluna toda. */}
+                        <span
+                          style={{
+                            display: "block",
+                            maxWidth: `${Math.max(g.span * 78, 104)}px`,
+                            margin: "0 auto",
+                            whiteSpace: "normal",
+                            overflowWrap: "anywhere",
+                            lineHeight: 1.25,
+                          }}
+                        >
                         {g.url ? (
                           <a href={g.url} target="_blank" rel="noopener noreferrer" className="rivais-link" title={`Página oficial — ${g.label}`}>{g.label}</a>
                         ) : g.label}
+                        </span>
                       </th>
                     ))}
                   </tr>
@@ -447,15 +477,20 @@ export default function RivaisDashboard({
               {list.map(p => {
                 const isM = p.isM;
                 const tr = getTrend(p);
-                const flag = FL[p.co] || "🏳️";
+                // countryFlag() e não FL[…]: o FL é indexado por nome
+                // title-cased ("Usa") e falhava em siglas como "USA" — que é
+                // o que o normPaisDisplay devolve para os americanos.
+                const flag = countryFlag(p.co);
                 const vsAvg = vsOn ? getVsAvg(p) : null;
                 const played = nPlayed(p);
+
+                const isSel = selectedRow === p.n;
 
                 return (
                   <tr
                     key={p.n}
-                    className={isM ? "rivais-row-ref" : ""}
-                    style={{ height: 52 }}
+                    className={`${isM ? "rivais-row-ref" : ""}${isSel ? " rivais-row-sel" : ""}`}
+                    style={{ height: 34 }}
                   >
                     {/* Player name — clickable */}
                     <td className="rivais-player-name" style={{ verticalAlign: "middle" }}>
@@ -464,28 +499,34 @@ export default function RivaisDashboard({
                           {flag}
                         </span>
                         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-                          {onSelectPlayer ? (
+                          {/* Clicar no NOME selecciona/desselecciona a linha —
+                              numa tabela com 24 colunas é a única forma de não
+                              perder o jogador a meio do scroll. A ficha do
+                              jogador abre no ↗ ao lado. */}
+                          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
                             <button
-                              className="btn-link fs-12 fw-600"
+                              className={`btn-link fs-12${isM ? " fw-700" : " fw-600"}`}
                               style={{
                                 color: isM ? "var(--text)" : "var(--text-2)",
                                 padding: 0,
                                 textAlign: "left",
                               }}
-                              onClick={() => onSelectPlayer(p.n)}
+                              title={isSel ? "Clicar para desmarcar" : "Clicar para marcar esta linha"}
+                              onClick={() => setSelectedRow(isSel ? null : p.n)}
                             >
                               {p.n}
                             </button>
-                          ) : (
-                            <span
-                              className={`fs-12${isM ? " fw-700" : " fw-600"}`}
-                              style={{
-                                color: isM ? "var(--text)" : "var(--text-2)",
-                              }}
-                            >
-                              {p.n}
-                            </span>
-                          )}
+                            {onSelectPlayer && (
+                              <button
+                                className="btn-link fs-10"
+                                style={{ padding: 0, color: "var(--text-3)" }}
+                                title={`Abrir ficha de ${p.n}`}
+                                onClick={() => onSelectPlayer(p.n)}
+                              >
+                                ↗
+                              </button>
+                            )}
+                          </span>
                           {p.dob && (() => {
                             // Em fieldMode + tournamentDate mostra idade calculada
                             // ("11.8 anos"). Sem tournamentDate cai no DOB cru.
@@ -599,7 +640,8 @@ export default function RivaisDashboard({
                           className="ta-c"
                           style={{
                             background: cellBg,
-                            padding: "5px 4px",
+                            padding: "1px 4px",
+                            lineHeight: 1.15,
                             ...boundaryStyle,
                           }}
                         >

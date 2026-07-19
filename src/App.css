@@ -2065,6 +2065,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
 
+/* Linha seleccionada (clique no nome) — a tabela é muito larga e sem isto
+   perde-se a linha a meio do scroll horizontal. Marca-se com filete em cima e
+   em baixo em vez de fundo, para não tapar as cores de score das células. */
+.rivais-row-sel > td { border-top: 2px solid var(--accent) !important; border-bottom: 2px solid var(--accent) !important; }
+.rivais-row-sel > td:first-child { box-shadow: inset 3px 0 0 var(--accent); background: var(--accent-light); }
+
 /* HCP columns */
 
 /* ─── LEADERBOARD / SCORECARD TABLE ─── */
@@ -2258,7 +2264,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Rivais table */
 
 .rivais-group-header { background: var(--bg-header); color: var(--text-3); border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.03em; }
-.rivais-player-name { padding: 6px 8px; font-size: var(--fs-12); font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
+.rivais-player-name { padding: 2px 8px; font-size: var(--fs-12); font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
 .rivais-flag { font-size: var(--fs-13); margin-right: 4px; }
 
 /* ─── Calendar Page ─── */

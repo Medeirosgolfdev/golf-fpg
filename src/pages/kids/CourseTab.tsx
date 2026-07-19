@@ -74,6 +74,9 @@ function findPrevEdition(mh: MHSlim, torneio: FieldTorneio, escalao: string): MH
 const COURSE_STOPWORDS = new Set([
   "golf", "club", "course", "country", "the", "de", "do", "da", "of", "and",
   "g", "gc", "cc", "resort", "links",
+  // "No." \u00e9 numera\u00e7\u00e3o de percurso, n\u00e3o identidade do campo \u2014 sem isto o
+  // "Pinehurst No. 8" casava com o "PGA Aroeira No.2" s\u00f3 pelo "no".
+  "no", "n", "n\u00ba", "num",
 ]);
 
 function courseTokens(name: string): Set<string> {
@@ -83,8 +86,16 @@ function courseTokens(name: string): Set<string> {
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, " ")
       .split(" ")
-      .filter(t => t.length >= 2 && !COURSE_STOPWORDS.has(t)),
+      // D\u00edgitos isolados CONTAM (distinguem "No. 2" de "No. 8" no mesmo clube);
+      // antes ca\u00edam no filtro de comprimento e o n\u00famero do percurso perdia-se.
+      .filter(t => (t.length >= 2 || /^\d$/.test(t)) && !COURSE_STOPWORDS.has(t)),
   );
+}
+
+/** Token que identifica mesmo um campo (n\u00e3o \u00e9 n\u00famero nem part\u00edcula curta).
+ *  Um match s\u00f3 vale se partilharem pelo menos um destes. */
+function isStrongToken(t: string): boolean {
+  return t.length >= 3 && !/^\d+$/.test(t);
 }
 
 /** Encontra o Course em simCourses que melhor casa por sobreposicao de tokens.
@@ -94,15 +105,25 @@ function matchSimCourse(courseName: string, simCourses: Course[]): Course | null
   const target = courseTokens(courseName);
   if (target.size === 0) return null;
   let best: { course: Course; score: number } | null = null;
+  // Sem nenhum token forte no alvo não há como identificar o campo com
+  // confiança — melhor não casar do que casar ao calhas.
+  if (![...target].some(isStrongToken)) return null;
   for (const c of simCourses) {
     const ct = courseTokens(c.master.name);
     if (ct.size === 0) continue;
     let inter = 0;
-    for (const t of target) if (ct.has(t)) inter++;
-    if (inter === 0) continue;
+    let strongInter = 0;
+    for (const t of target) {
+      if (!ct.has(t)) continue;
+      inter++;
+      if (isStrongToken(t)) strongInter++;
+    }
+    // Exige ≥1 token forte partilhado: "Pinehurst No. 8" vs "PGA Aroeira No.2"
+    // partilhavam só numeração e passavam com cobertura exactamente 0.5.
+    if (strongInter === 0) continue;
     const score = inter / Math.min(target.size, ct.size);
     const coverage = inter / target.size;
-    if (coverage < 0.5) continue;
+    if (coverage <= 0.5) continue;
     if (!best || score > best.score) best = { course: c, score };
   }
   return best ? best.course : null;

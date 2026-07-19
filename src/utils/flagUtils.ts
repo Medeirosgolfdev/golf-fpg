@@ -248,9 +248,12 @@ export const FL: Record<string, string> = Object.fromEntries(
     const emoji = FLAG[code.toUpperCase()] ?? "🏳️";
     const titleKey = toTitleCase(name);
     const firstCapKey = name.charAt(0).toUpperCase() + name.slice(1);
-    return titleKey === firstCapKey
-      ? [[titleKey, emoji]]
-      : [[titleKey, emoji], [firstCapKey, emoji]];
+    // Siglas em CAIXA ALTA ("USA", "UAE") — o toTitleCase transformava-as em
+    // "Usa"/"Uae" e o lookup falhava justamente para o país mais comum nos
+    // fields americanos. A chave crua em maiúsculas cobre esse caso.
+    const upperKey = name.toUpperCase();
+    const keys = new Set([titleKey, firstCapKey, upperKey]);
+    return [...keys].map(k => [k, emoji] as [string, string]);
   })
 );
 
