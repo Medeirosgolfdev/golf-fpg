@@ -33,6 +33,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
+const { mergeTournamentMaps } = require('./lib/uskids-merge-guard');
 
 // ── Config ───────────────────────────────────
 const DIR    = path.join(__dirname, '..', 'data-archive');
@@ -981,12 +982,14 @@ async function main() {
           };
         }
 
-        // Merge: API devolve o histórico completo, mas preservamos
-        // eventuais campos extra que possamos ter adicionado manualmente
-        const torneiosMerged = { ...torneiosExistentes, ...torneiosNovos };
+        // Merge: a API devolve o histórico completo, mas às vezes com
+        // entradas degradadas (par/yards vazios, place/strokes a 0). Um
+        // spread raso substituía o torneio inteiro e apagava dados bons —
+        // ver scripts/lib/uskids-merge-guard.js. Agora vence o mais rico.
+        const torneiosMerged = mergeTournamentMaps(torneiosExistentes, torneiosNovos);
 
         cache.jogadores[midStr] = {
-          memberId: mid,
+          memberId: midStr,
           name:     playerName !== '?' ? playerName : (entradaExistente?.name || '?'),
           country:  playerCountry || entradaExistente?.country || '',
           place:    playerPlace   || entradaExistente?.place   || '',
