@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T06:58:45.242Z",
+  "generatedAt": "2026-07-20T06:50:01.879Z",
   "source": "/competiciones-comite",
   "comite": null,
   "year": null,
@@ -7,7 +7,7 @@
   "club": null,
   "provincia": null,
   "filter": null,
-  "total": 1636,
+  "total": 1686,
   "tours": [
     {
       "tourId": 67162,
@@ -862,14 +862,6 @@
       "name": "V Interclub Villanueva- RCG",
       "date": "24 ene 2026",
       "rounds": null,
-      "clubCode": "LUIS",
-      "year": 2026
-    },
-    {
-      "tourId": 67538,
-      "name": "MEMORIAL LUIS MUÑOZ",
-      "date": "24 ene 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -884,6 +876,14 @@
     {
       "tourId": 67843,
       "name": "SATCOMP2401",
+      "date": "24 ene 2026",
+      "rounds": null,
+      "clubCode": "LUIS",
+      "year": 2026
+    },
+    {
+      "tourId": 67538,
+      "name": "MEMORIAL LUIS MUÑOZ",
       "date": "24 ene 2026",
       "rounds": null,
       "clubCode": "RFGM",
@@ -2414,14 +2414,6 @@
       "name": "VI partida de liguilla",
       "date": "28 feb 2026",
       "rounds": null,
-      "clubCode": "RACE",
-      "year": 2026
-    },
-    {
-      "tourId": 68516,
-      "name": "RACE TO CANASTA - Sábado",
-      "date": "28 feb 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -2436,6 +2428,14 @@
     {
       "tourId": 69000,
       "name": "CAPTAINS DAY 07 03",
+      "date": "28 feb 2026",
+      "rounds": null,
+      "clubCode": "RACE",
+      "year": 2026
+    },
+    {
+      "tourId": 68516,
+      "name": "RACE TO CANASTA - Sábado",
       "date": "28 feb 2026",
       "rounds": null,
       "clubCode": null,
@@ -3214,14 +3214,6 @@
       "name": "2ª Prueba del Circuito RCG Vista Hermosa 14-03-26",
       "date": "14 mar 2026",
       "rounds": null,
-      "clubCode": "RYDER",
-      "year": 2026
-    },
-    {
-      "tourId": 68862,
-      "name": "RYDER Sevilla Vs Huelva",
-      "date": "14 mar 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -3236,6 +3228,14 @@
     {
       "tourId": 69145,
       "name": "AMIGOS MIRFLROES",
+      "date": "14 mar 2026",
+      "rounds": null,
+      "clubCode": "RYDER",
+      "year": 2026
+    },
+    {
+      "tourId": 68862,
+      "name": "RYDER Sevilla Vs Huelva",
       "date": "14 mar 2026",
       "rounds": null,
       "clubCode": null,
@@ -3586,16 +3586,16 @@
       "year": 2026
     },
     {
-      "tourId": 69356,
-      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
+      "tourId": 69226,
+      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": "ZONAL",
       "year": 2026
     },
     {
-      "tourId": 69226,
-      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
+      "tourId": 69356,
+      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": null,
@@ -3734,20 +3734,20 @@
       "name": "Torneo Benjamín Femenino \"Las Rejas\"",
       "date": "22 mar 2026",
       "rounds": null,
-      "clubCode": "JAS",
-      "year": 2026
-    },
-    {
-      "tourId": 67777,
-      "name": "Torneo Benjamín Masculino \"JAS\"",
-      "date": "22 mar 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
     {
       "tourId": 67794,
       "name": "Torneo Alevín Femenino \"Las Rejas\"",
+      "date": "22 mar 2026",
+      "rounds": null,
+      "clubCode": "JAS",
+      "year": 2026
+    },
+    {
+      "tourId": 67777,
+      "name": "Torneo Benjamín Masculino \"JAS\"",
       "date": "22 mar 2026",
       "rounds": null,
       "clubCode": "JAS",
@@ -9182,20 +9182,20 @@
       "name": "I TORNEO BENÉFICO HONGO´S CUP",
       "date": "20 jun 2026",
       "rounds": null,
-      "clubCode": "FINAL",
-      "year": 2026
-    },
-    {
-      "tourId": 71680,
-      "name": "FINAL LIGA PRINCIPIANTES 25/26",
-      "date": "20 jun 2026",
-      "rounds": null,
       "clubCode": "RYDER",
       "year": 2026
     },
     {
       "tourId": 71609,
       "name": "RYDER NUEVO PORTIL(SEVILLA- HUELVA)",
+      "date": "20 jun 2026",
+      "rounds": null,
+      "clubCode": "FINAL",
+      "year": 2026
+    },
+    {
+      "tourId": 71680,
+      "name": "FINAL LIGA PRINCIPIANTES 25/26",
       "date": "20 jun 2026",
       "rounds": null,
       "clubCode": null,
@@ -10574,6 +10574,22 @@
       "name": "Real Club de Golf de Guadalhorce - Categoria Especial",
       "date": "14 jul 2026",
       "rounds": null,
+      "clubCode": "MAYOR",
+      "year": 2026
+    },
+    {
+      "tourId": 72312,
+      "name": "T. MAYOR/MENOR 18 HOYOS 14-07-26",
+      "date": "14 jul 2026",
+      "rounds": null,
+      "clubCode": "MAYOR",
+      "year": 2026
+    },
+    {
+      "tourId": 72313,
+      "name": "T. MAYOR/MENOR 9 HOYOS 14-07-26",
+      "date": "14 jul 2026",
+      "rounds": null,
       "clubCode": "MENS",
       "year": 2026
     },
@@ -10586,11 +10602,27 @@
       "year": 2026
     },
     {
+      "tourId": 72349,
+      "name": "Abonados",
+      "date": "15 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 68051,
       "name": "IX Prueba del Circuito Senior de CyL",
       "date": "15 jul 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "DAMAS",
+      "year": 2026
+    },
+    {
+      "tourId": 72304,
+      "name": "PUNTUABLE DAMAS Y CABALLEROS JULIO",
+      "date": "15 jul 2026",
+      "rounds": null,
+      "clubCode": "WAGC",
       "year": 2026
     },
     {
@@ -10606,12 +10638,20 @@
       "name": "Torneo Senior Damas \"RSHECC\"",
       "date": "16 jul 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "SIGG",
       "year": 2026
     },
     {
       "tourId": 72253,
       "name": "Sherry International Golf Group (SIGG) - Jueves 16 Julio 2026 (Grupo privado)",
+      "date": "16 jul 2026",
+      "rounds": null,
+      "clubCode": "VOBS",
+      "year": 2026
+    },
+    {
+      "tourId": 72338,
+      "name": "VOBS COMPETITION",
       "date": "16 jul 2026",
       "rounds": null,
       "clubCode": "LIGA",
@@ -10642,11 +10682,35 @@
       "year": 2026
     },
     {
+      "tourId": 72311,
+      "name": "Torneo Campamento de Verano",
+      "date": "17 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72363,
+      "name": "torneo campamento de verano",
+      "date": "17 jul 2026",
+      "rounds": null,
+      "clubCode": "SORIA",
+      "year": 2026
+    },
+    {
       "tourId": 71022,
       "name": "II TORNEO SORIA GOLF DE ALTURA - WARG (VALEDERA SACE)",
       "date": "17 jul 2026",
       "rounds": 3,
       "clubCode": "WAGR",
+      "year": 2026
+    },
+    {
+      "tourId": 72341,
+      "name": "Torneo Social 17-07-26",
+      "date": "17 jul 2026",
+      "rounds": null,
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -10670,6 +10734,22 @@
       "name": "IV Torneo El Príncipe (Grupo Privado)",
       "date": "18 jul 2026",
       "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72345,
+      "name": "Liga Dos Banderas",
+      "date": "18 jul 2026",
+      "rounds": null,
+      "clubCode": "LOS",
+      "year": 2026
+    },
+    {
+      "tourId": 72384,
+      "name": "LOS GALLOS 18-07-2026",
+      "date": "18 jul 2026",
+      "rounds": null,
       "clubCode": "III",
       "year": 2026
     },
@@ -10678,12 +10758,44 @@
       "name": "III PRUEBA CIRCUITO DE DOBLES DE CASTILLA Y LEON",
       "date": "18 jul 2026",
       "rounds": null,
+      "clubCode": "GRAN",
+      "year": 2026
+    },
+    {
+      "tourId": 72290,
+      "name": "I GRAN PREMIO DE GOLF ADAPTADO POR EQUIPOS DE FEDERACIONES AUTONÓMICAS",
+      "date": "18 jul 2026",
+      "rounds": 3,
       "clubCode": null,
       "year": 2026
     },
     {
       "tourId": 72154,
       "name": "Tour myGolf 2026",
+      "date": "18 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72354,
+      "name": "TORNEO CALLAWAY",
+      "date": "18 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72342,
+      "name": "Torneo Social 18-07-26",
+      "date": "18 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72381,
+      "name": "AMIGOS MIRAFLROES",
       "date": "18 jul 2026",
       "rounds": null,
       "clubCode": null,
@@ -10698,9 +10810,81 @@
       "year": 2026
     },
     {
+      "tourId": 72344,
+      "name": "I Pro Am Alhaurin Golf",
+      "date": "19 jul 2026",
+      "rounds": null,
+      "clubCode": "PRO",
+      "year": 2026
+    },
+    {
+      "tourId": 72441,
+      "name": "I PRO AM CATEGORIA Pro's",
+      "date": "19 jul 2026",
+      "rounds": null,
+      "clubCode": "PABLO",
+      "year": 2026
+    },
+    {
+      "tourId": 72443,
+      "name": "PABLO GARCIA",
+      "date": "19 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 67973,
       "name": "Circuito de Madrid de Profesionales \"RSHECC\"",
       "date": "20 jul 2026",
+      "rounds": null,
+      "clubCode": "SIGG",
+      "year": 2026
+    },
+    {
+      "tourId": 72405,
+      "name": "Sherry International Golf Group (SIGG) - Lunes 20 Julio 2026 (Grupo privado)",
+      "date": "20 jul 2026",
+      "rounds": null,
+      "clubCode": "VOBS",
+      "year": 2026
+    },
+    {
+      "tourId": 72439,
+      "name": "VOBS COMPETITION",
+      "date": "20 jul 2026",
+      "rounds": null,
+      "clubCode": "GOLF",
+      "year": 2026
+    },
+    {
+      "tourId": 72387,
+      "name": "T. INFANTIL GOLF ESTUDIO 18 HOYOS 21-07-26",
+      "date": "21 jul 2026",
+      "rounds": null,
+      "clubCode": "GOLF",
+      "year": 2026
+    },
+    {
+      "tourId": 72388,
+      "name": "T. INFANTIL GOLF ESTUDIO 9 HOYOS 21-07-26",
+      "date": "21 jul 2026",
+      "rounds": null,
+      "clubCode": "GOLF",
+      "year": 2026
+    },
+    {
+      "tourId": 72389,
+      "name": "T. INFANTIL GOLF ESTUDIO 9P3 HOYOS 21-07-26",
+      "date": "21 jul 2026",
+      "rounds": null,
+      "clubCode": "GOLF",
+      "year": 2026
+    },
+    {
+      "tourId": 72390,
+      "name": "T. INFANTIL GOLF ESTUDIO 5P3 HOYOS 21-07-26",
+      "date": "21 jul 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
@@ -10733,6 +10917,54 @@
       "tourId": 70153,
       "name": "La Cañada Club de Golf - Categoría Especial",
       "date": "22 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72447,
+      "name": "JUEGOS DEPORTIVOS NAVARROS 2026.",
+      "date": "22 jul 2026",
+      "rounds": null,
+      "clubCode": "HOYOS",
+      "year": 2026
+    },
+    {
+      "tourId": 72448,
+      "name": "JUEGOS DEPORTIVOS NAVARROS 2026 9 HOYOS",
+      "date": "22 jul 2026",
+      "rounds": null,
+      "clubCode": "SIGG",
+      "year": 2026
+    },
+    {
+      "tourId": 72406,
+      "name": "Sherry International Golf Group (SIGG) - Jueves 23 Julio 2026 (Grupo privado)",
+      "date": "23 jul 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72428,
+      "name": "LIGA EXPRES JORNADA 5 (MAÑANA 9:30)",
+      "date": "23 jul 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72429,
+      "name": "LIGA EXPRES JORNADA 5 ( TARDE 18:00 )",
+      "date": "23 jul 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72369,
+      "name": "LIGA FEMENINA ULZAMA 2026 24 de julio",
+      "date": "24 jul 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
@@ -10771,10 +11003,10 @@
     },
     {
       "tourId": 72289,
-      "name": "VII Torneo Santiago Apóstol",
+      "name": "VII Torneo Santiago Apóstol 2026",
       "date": "25 jul 2026",
       "rounds": null,
-      "clubCode": "ASR",
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -10782,7 +11014,7 @@
       "name": "Torneo por equipos de Golf Adaptado \"ASR\"",
       "date": "26 jul 2026",
       "rounds": null,
-      "clubCode": "SACE",
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -10810,6 +11042,30 @@
       "year": 2026
     },
     {
+      "tourId": 72366,
+      "name": "CIRCUITO YMPLAN 2026",
+      "date": "26 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72367,
+      "name": "CIRCUITO YMPLAN 2026 BENJAMINES",
+      "date": "26 jul 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72370,
+      "name": "LIGA FEMENINA ULZAMA 2026 26 de julio",
+      "date": "26 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 67975,
       "name": "Circuito de Madrid de Profesionales \"RC La Moraleja\"",
       "date": "27 jul 2026",
@@ -10820,6 +11076,14 @@
     {
       "tourId": 70567,
       "name": "Campeonato MaryVinos (Grupo Privado)",
+      "date": "30 jul 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72375,
+      "name": "I Proam Realfooding (Grupo Privado)",
       "date": "30 jul 2026",
       "rounds": null,
       "clubCode": "TOUR",
@@ -10886,6 +11150,14 @@
       "name": "CIRCUITO HEINEKEN",
       "date": "01 ago 2026",
       "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72358,
+      "name": "I Torneo Royal Bliss",
+      "date": "01 ago 2026",
+      "rounds": null,
       "clubCode": "RACE",
       "year": 2026
     },
@@ -10902,7 +11174,15 @@
       "name": "VII Tanger Cup - Campeonato Familia Solís (Grupo Privado)",
       "date": "02 ago 2026",
       "rounds": null,
-      "clubCode": "RACE",
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72359,
+      "name": "I Open Srixon/Cleveland by Alfredo García Heredia",
+      "date": "02 ago 2026",
+      "rounds": null,
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -10957,6 +11237,22 @@
       "tourId": 72167,
       "name": "Ryder Costa Ballena-Sancti Petri (Grupo Privado)",
       "date": "04 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72333,
+      "name": "I Pool Fiction 2026 (Grupo Privado)",
+      "date": "04 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72361,
+      "name": "Tour de verano Holiday golf",
+      "date": "05 ago 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
@@ -11074,6 +11370,14 @@
       "year": 2026
     },
     {
+      "tourId": 72334,
+      "name": "II Pool Fiction 2026 (Grupo Privado)",
+      "date": "11 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 71830,
       "name": "Torneo Jóvenes Gran Premio Dobles (hasta 35 años)",
       "date": "12 ago 2026",
@@ -11086,12 +11390,12 @@
       "name": "XXIII Murrys Cup (Grupo Privado)",
       "date": "13 ago 2026",
       "rounds": null,
-      "clubCode": "XIII",
+      "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 72198,
-      "name": "XIII Pool Familiar Vistahermosa (Grupo Privado)",
+      "tourId": 72343,
+      "name": "TORNEO VINOLENTO",
       "date": "13 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11106,8 +11410,32 @@
       "year": 2026
     },
     {
+      "tourId": 72396,
+      "name": "Gran Premio Villanueva Golf 20 aniversario - VIERNES",
+      "date": "14 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72397,
+      "name": "Gran Premio Villanueva Golf 20 aniversario - SABADO MAÑANA O TARDE",
+      "date": "15 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 70969,
       "name": "Torneo Tío Luis (Grupo Privado)",
+      "date": "17 ago 2026",
+      "rounds": null,
+      "clubCode": "XIII",
+      "year": 2026
+    },
+    {
+      "tourId": 72198,
+      "name": "XIII Pool Familiar Vistahermosa (Grupo Privado)",
       "date": "17 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11166,7 +11494,7 @@
       "name": "Torneo de Verano Sherry Golf Jerez 2026",
       "date": "22 ago 2026",
       "rounds": null,
-      "clubCode": "RCPH",
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -11570,14 +11898,6 @@
       "year": 2026
     },
     {
-      "tourId": 68166,
-      "name": "Torneo de 5ª Categoría 9 hoyos campo largo \"Olivar de la Hinojosa\"",
-      "date": "13 sep 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
       "tourId": 68195,
       "name": "Liga Femenina (hcp igual o menor de 42.0)",
       "date": "13 sep 2026",
@@ -11588,6 +11908,14 @@
     {
       "tourId": 68202,
       "name": "Liga Femenina (hcp mayor o igual a 42.1)",
+      "date": "13 sep 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 68166,
+      "name": "Final Circuito 5ª Categoría 9 hoyos campo largo \"El Encín\"",
       "date": "13 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -11734,6 +12062,22 @@
       "name": "Campeonato Individual Caballeros \"La Dehesa\"",
       "date": "19 sep 2026",
       "rounds": 2,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72391,
+      "name": "VI Torneo RKN 2026 1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
+      "date": "19 sep 2026",
+      "rounds": null,
+      "clubCode": "RKN",
+      "year": 2026
+    },
+    {
+      "tourId": 72399,
+      "name": "VI Torneo RKN 2026 · 6ª Categoría · Turno Mañana 15:30 · Turno Tarde 17:30",
+      "date": "19 sep 2026",
+      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -11924,6 +12268,22 @@
     {
       "tourId": 68170,
       "name": "Torneo Circuito Amateur \"El Fresnillo\"",
+      "date": "27 sep 2026",
+      "rounds": null,
+      "clubCode": "VII",
+      "year": 2026
+    },
+    {
+      "tourId": 72392,
+      "name": "VII Torneo RKN 2026 1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
+      "date": "27 sep 2026",
+      "rounds": null,
+      "clubCode": "VII",
+      "year": 2026
+    },
+    {
+      "tourId": 72400,
+      "name": "VII Torneo RKN 2026 · 6ª Categoría · Turno Mañana 15:30 · Turno Tarde 17:30",
       "date": "27 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -12630,6 +12990,22 @@
       "name": "Torneo Infantil \"Montealvar\"",
       "date": "08 nov 2026",
       "rounds": null,
+      "clubCode": "VIII",
+      "year": 2026
+    },
+    {
+      "tourId": 72393,
+      "name": "VIII Torneo RKN 2026 1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
+      "date": "08 nov 2026",
+      "rounds": null,
+      "clubCode": "VIII",
+      "year": 2026
+    },
+    {
+      "tourId": 72401,
+      "name": "VIII Torneo RKN 2026 · 6ª Categoría · Turno Mañana 15:00 · Turno Tarde 17:00",
+      "date": "08 nov 2026",
+      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -12716,6 +13092,14 @@
     {
       "tourId": 68358,
       "name": "Torneo Benjamín Masculino \"Illescas\"",
+      "date": "14 nov 2026",
+      "rounds": null,
+      "clubCode": "RKN",
+      "year": 2026
+    },
+    {
+      "tourId": 72395,
+      "name": "IX Torneo RKN 2026 1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
       "date": "14 nov 2026",
       "rounds": null,
       "clubCode": "GROSS",
@@ -13078,6 +13462,22 @@
       "name": "Final de Ranking Benjamín",
       "date": "19 dic 2026",
       "rounds": 2,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72403,
+      "name": "IX Torneo RKN 2026 1ª a 5ª Categoría · Turno Mañana 10:00 · Turno Tarde 13:00",
+      "date": "19 dic 2026",
+      "rounds": null,
+      "clubCode": "RKN",
+      "year": 2026
+    },
+    {
+      "tourId": 72402,
+      "name": "IX Torneo RKN 2026 · 6ª Categoría · Turno Mañana 10:00 · Turno Tarde 12:00",
+      "date": "20 dic 2026",
+      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
