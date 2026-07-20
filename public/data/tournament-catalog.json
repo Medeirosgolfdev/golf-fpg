@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-19T23:00:07.854Z",
+  "generatedAt": "2026-07-20T08:32:07.618Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -537,6 +537,7 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601432264",
         "ffgolf-2601405024",
         "ffgolf-2601451094",
         "ffgolf-2601405356",
@@ -765,8 +766,8 @@
         "ffgolf-2200795265"
       ],
       "firstDate": "2022-04-23",
-      "lastDate": "2026-07-04",
-      "editionsCount": 226
+      "lastDate": "2026-07-18",
+      "editionsCount": 227
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -72546,6 +72547,17 @@
       ],
       "firstDate": "2026-04-02",
       "lastDate": "2026-04-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-latvia-juniors-international",
+      "label": "GJG Latvia Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-latvia-juniors-international-2026-latvia"
+      ],
+      "firstDate": "2026-07-13",
+      "lastDate": "2026-07-13",
       "editionsCount": 1
     },
     {
