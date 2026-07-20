@@ -36,6 +36,7 @@
 const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
+const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
 
 const GG = "https://www.golfgenius.com";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -1107,9 +1108,21 @@ function parseArgs(argv) {
       process.exit(1);
     }
     const cat = JSON.parse(fs.readFileSync(catPath, "utf-8"));
-    tournaments = (cat.tournaments || []).filter((t) => t.gg_page);
+    const all = cat.tournaments || [];
+    tournaments = all.filter((t) => t.gg_page);
     if (args.slug) tournaments = tournaments.filter((t) => t.slug === args.slug);
     if (args.year) tournaments = tournaments.filter((t) => t.year === args.year);
+
+    // Sem gg_page não há nada a scrapar — mas dizê-lo em voz alta. Saltar em
+    // silêncio já escondeu torneios inteiros do site (CFJ U12 Garçons 2026).
+    const mudos = all
+      .filter((t) => !t.gg_page)
+      .filter((t) => (!args.slug || t.slug === args.slug) && (!args.year || t.year === args.year));
+    if (mudos.length) {
+      console.warn(`⚠️  ${mudos.length} torneio(s) do catálogo sem gg_page — SALTADOS:`);
+      for (const t of mudos) console.warn(`   ✗ ${t.year} ${t.slug}`);
+      console.warn(`   (corre o discover-ffgolf-catalog.js, ou preenche o gg_page à mão)`);
+    }
   }
 
   if (!tournaments.length) {
@@ -1142,6 +1155,11 @@ function parseArgs(argv) {
       }
       const result = await scrapeOne(browser, t);
       if (result) {
+        // Cartão oficial (par + metros por buraco) ganha ao inferido dos marcadores.
+        // Aqui em cima do hasMeters de propósito: o override é quem traz os metros
+        // nos torneios em que o GolfGenius não os expõe.
+        const ov = applyCourseOverride(result);
+        if (ov) console.log("   cartao oficial aplicado: " + (result.course.tee || "?") + " · par " + result.course.parTotal + " · " + result.course.metersTotal + "m");
         const hasMeters = Array.isArray(result.course && result.course.meters) && result.course.meters.length === 18;
         const hasPlayers = Array.isArray(result.players) && result.players.length > 0;
         // Torneios sem jogadores (leaderboard vazio, só match play, ou divisão não

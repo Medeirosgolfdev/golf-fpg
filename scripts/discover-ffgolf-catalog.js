@@ -81,6 +81,13 @@ async function listSlugsInListing(page, section, year) {
   return slugs;
 }
 
+/** Título legível a partir do slug ("championnat-de-france-u12" → "Championnat De France U12 (2026)"). */
+function titleFromSlug(slug, year) {
+  const words = String(slug).split("-").filter(Boolean)
+    .map((w) => (w.length <= 3 && /^u\d+$/i.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)));
+  return `${words.join(" ")} (${year})`;
+}
+
 async function getGgIdsForTournament(page, section, year, slug) {
   const url = `${FFGOLF_BASE}/${section}/${year}/${slug}/page-scores-tournoi`;
   try {
@@ -143,6 +150,11 @@ async function getGgIdsForTournament(page, section, year, slug) {
             year,
             section,
             slug,
+            // `title` mesmo sem iframe: a FFGPage ordena a lista por title e
+            // rebentava com undefined assim que uma destas entradas ganhasse um
+            // gg_page à mão. Derivado do slug — o discovery só o sabe melhor
+            // quando chega à página do torneio.
+            title: titleFromSlug(slug, year),
             ffgolf_url: `${FFGOLF_BASE}/${section}/${year}/${slug}`,
             gg_page: null,
             gg_league: null,
@@ -165,13 +177,27 @@ async function getGgIdsForTournament(page, section, year, slug) {
 
   const keyOf = (t) => `${t.year}|${t.section}|${t.slug}`;
   const merged = new Map((existing.tournaments || []).map((t) => [keyOf(t), t]));
-  let nNew = 0, nUpd = 0;
+  let nNew = 0, nUpd = 0, nKept = 0;
   for (const t of catalog) {
     const k = keyOf(t);
     if (!merged.has(k)) nNew++;
     else nUpd++;
+    const prev = merged.get(k) || {};
     // Fresco ganha, mas sem perder campos curados que o discovery não traz.
-    merged.set(k, { ...merged.get(k), ...t });
+    const next = { ...prev, ...t };
+    // ⚠ NUNCA deixar um null fresco apagar um gg_page/gg_league já conhecido.
+    // O ffgolf.org falha de forma intermitente (404 no /page-scores-tournoi,
+    // iframe `next_round` em vez do leaderboard, manutenção) e o spread acima
+    // dava-lhe poder de apagar ids bons — incluindo os preenchidos à mão para
+    // torneios que o site nunca publica (ex: CFJ U12 Garçons 2026). Um id só
+    // muda quando a descoberta traz OUTRO id, nunca para nada.
+    for (const f of ["gg_page", "gg_league", "gg_iframe"]) {
+      if (!t[f] && prev[f]) {
+        next[f] = prev[f];
+        if (f === "gg_page") nKept++;
+      }
+    }
+    merged.set(k, next);
   }
   const tournaments = [...merged.values()].sort((a, b) =>
     (b.year - a.year) || String(a.section).localeCompare(b.section) || String(a.slug).localeCompare(b.slug));
@@ -194,4 +220,22 @@ async function getGgIdsForTournament(page, section, year, slug) {
   );
   console.log(`\n✅ ${catalog.length} descobertos (${nNew} novos, ${nUpd} actualizados) → catálogo com ${tournaments.length} torneios em ${outPath}`);
   console.log(`   ${tournaments.filter((c) => c.gg_page).length} com GolfGenius ID`);
+  if (nKept) console.log(`   🔒 ${nKept} gg_page preservados (descoberta veio vazia — id antigo mantido)`);
+
+  // ── Aviso: torneios dos anos pedidos que continuam sem GolfGenius ID ─────
+  // O scrape-ffgolf.js filtra `t.gg_page` e salta estes EM SILÊNCIO. Sem este
+  // bloco, um torneio que o ffgolf.org nunca publica (slug renomeado pelo
+  // patrocinador, /page-scores-tournoi inexistente) desaparece do site sem
+  // ninguém dar por isso — foi o caso do CFJ U12 Garçons 2026, que só foi
+  // notado por alguém encontrar o link do GolfGenius à mão.
+  const mudos = tournaments
+    .filter((t) => args.years.includes(t.year) && !t.gg_page)
+    .sort((a, b) => String(a.slug).localeCompare(b.slug));
+  if (mudos.length) {
+    console.log(`\n⚠️  ${mudos.length} torneio(s) SEM gg_page nos anos ${args.years.join(", ")} — serão saltados pelo scrape:`);
+    for (const t of mudos) console.log(`   ✗ ${t.year} ${t.section}/${t.slug}`);
+    console.log(`\n   Para resolver um destes: encontra a página GolfGenius do torneio`);
+    console.log(`   (golfgenius.com/pages/{id}) e preenche o "gg_page" da entrada no`);
+    console.log(`   catálogo — o merge acima já garante que não volta a ser apagado.`);
+  }
 })();

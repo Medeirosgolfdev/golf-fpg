@@ -159,6 +159,22 @@ const nameMaps = buildNameMaps(
   [...players.values()].map((e) => ({ name: e.name, lic: e.license })),
 );
 const ggTourns = listGgTournaments(GG_DIR);
+/**
+ * Overlap mínimo de licenças para declarar que um evento GG é o MESMO evento do
+ * portal. Medido em 2026-07-20 sobre os 19 gémeos então detectados: 17 estavam
+ * em 1.00 (campo idêntico) e 1 em 0.67. O limiar antigo (0.40) apanhava também
+ * pares que só partilham a COORTE — os mesmos U12 franceses jogam várias provas
+ * na época. Caso real: "CFJ - U12 Garçons" (Julho, Golf du Gouverneur, 87 jog.)
+ * foi dado como gémeo de "GPN U12 - Strasbourg" (30/05, 72 jog.) com 0.48, e a
+ * /ffg escondia-o — um falso gémeo não duplica, APAGA o torneio da página.
+ *
+ * ⚠ O guard de data (±5 dias) que devia apanhar isto nunca disparou: nenhum dos
+ * 25 ficheiros GG traz data. Enquanto não trouxerem, o overlap é o único sinal.
+ */
+const MIN_TWIN_OVERLAP = 0.6;
+/** Abaixo disto o gémeo é plausível mas não óbvio — vale a pena olhar. */
+const TWIN_REVIEW_BELOW = 0.9;
+
 const twins = {};
 let nGgCounted = 0, nGgTwins = 0, nGgMatched = 0, nGgUnmatched = 0;
 
@@ -188,7 +204,7 @@ for (const gg of ggTourns) {
       let inter = 0;
       for (const lic of matched.keys()) if (t.lics.has(lic)) inter++;
       const ratio = inter / matched.size;
-      if (ratio >= 0.4 && (!twin || ratio > twin.overlap)) {
+      if (ratio >= MIN_TWIN_OVERLAP && (!twin || ratio > twin.overlap)) {
         twin = { trnId, overlap: +ratio.toFixed(2) };
       }
     }
@@ -196,6 +212,11 @@ for (const gg of ggTourns) {
   if (twin) {
     twins[gg.key] = twin;
     nGgTwins++;
+    if (twin.overlap < TWIN_REVIEW_BELOW) {
+      // Esconder um torneio é irreversível do ponto de vista do utilizador (não
+      // aparece em lado nenhum) — um gémeo não-óbvio tem de ser visível no log.
+      console.warn(`  ⚠ gémeo pouco óbvio (overlap ${twin.overlap}): ${gg.key} → trnId ${twin.trnId} — confirmar que é mesmo o mesmo evento`);
+    }
     continue; // já contado pela versão do portal (que tem licenças)
   }
 

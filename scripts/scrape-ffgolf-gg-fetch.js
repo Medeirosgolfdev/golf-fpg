@@ -30,6 +30,7 @@ const fs = require("fs");
 const path = require("path");
 const { scrapeEdition, GG } = require("./scrape-fsga.js");
 const { discoverDivisions } = require("./scrape-golfgenius-node.js");
+const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/ffgolf");
 const CATALOG_PATH = path.resolve(__dirname, "../public/data/ffgolf-catalog.json");
@@ -44,6 +45,25 @@ const skipScorecards = args.includes("--skip-scorecards");
 
 const sum = (a) => a.reduce((x, y) => x + (y || 0), 0);
 const toPos = (p) => { const n = parseInt(String(p.pos || "").replace(/^T/i, ""), 10); return isNaN(n) ? null : n; };
+const GG_MONTHS = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+};
+/** "Tue, July 22" (+ ano do torneio) → "2026-07-22". null se não parsear. */
+function isoFromGgDate(txt, year) {
+  if (!txt || !year) return null;
+  const m = String(txt).match(/([A-Za-z]+)\s+(\d{1,2})\b/);
+  if (!m) return null;
+  const mon = GG_MONTHS[m[1].toLowerCase()];
+  if (!mon) return null;
+  const day = parseInt(m[2], 10);
+  if (!(day >= 1 && day <= 31)) return null;
+  return `${year}-${String(mon).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+/** Soma dos gross das rondas — null se alguma ronda não tiver gross (total incerto). */
+const grossSum = (rounds) =>
+  rounds.length && rounds.every((r) => typeof r.gross === "number") ? sum(rounds.map((r) => r.gross)) : null;
 
 /** JobFile (scrapeEdition) → formato ffgolf/{year}_{slug}.json (lido pela FFGPage). */
 function jobfileToFfgolf(jf, t, lid) {
@@ -61,6 +81,11 @@ function jobfileToFfgolf(jf, t, lid) {
           scores,
           f9: scores.length >= 9 ? sum(scores.slice(0, 9)) : 0,
           b9: scores.length >= 18 ? sum(scores.slice(9, 18)) : 0,
+          // Data da ronda ("Tue, July 22" nas header rows do scorecard GG). Sem
+          // isto os ficheiros ffgolf/*.json ficavam SEM data nenhuma — e é a
+          // data que faz a ordenação na /ffg e o guard anti-falso-gémeo.
+          date: r.date || null,
+          dateIso: isoFromGgDate(r.date, t.year),
         };
       });
       players.push({
@@ -75,7 +100,12 @@ function jobfileToFfgolf(jf, t, lid) {
         country: p.country && p.country !== "US" ? p.country : "FR",
         club: p.location || "",
         hcp: null,
-        total: p.total ?? null,
+        // Alguns eventos (CFJ U12 Garçons 2026) não publicam coluna "total" —
+        // derivamos da soma dos gross das rondas. O `toPar` do GG é sempre
+        // respeitado: é to-par a sério, contra o par REAL do campo, e é mais
+        // fiável do que recalculá-lo com o par que inferimos dos marcadores
+        // do scorecard (que pode estar errado — ver ffgolf-course-overrides).
+        total: p.total ?? grossSum(rounds),
         toPar: p.toPar ?? null,
         roundScores: p.roundGross || [],
         division: dv.division,
@@ -100,9 +130,14 @@ function jobfileToFfgolf(jf, t, lid) {
   }));
   const nRounds = players.reduce((m, p) => Math.max(m, p.roundScores.length, p.rounds.length), 0);
 
-  return {
+  // Datas do evento = min/max das datas das rondas de todos os jogadores.
+  const allIso = players.flatMap((p) => p.rounds.map((r) => r.dateIso).filter(Boolean)).sort();
+
+  const out = {
     tournament: jf.tournament || t.title || t.slug,
     slug: t.slug, year: t.year, section: t.section || "grands-prix-jeunes",
+    dateStart: allIso[0] || null,
+    dateEnd: allIso[allIso.length - 1] || null,
     source: `${GG}/pages/${t.gg_page}`, gg_page: t.gg_page, gg_league: lid || t.gg_league || null,
     stats_page: null, scrapedAt: new Date().toISOString(),
     course, courses,
@@ -111,6 +146,12 @@ function jobfileToFfgolf(jf, t, lid) {
     divisions: (jf.divisions || []).map((d) => d.division),
     players, events: [],
   };
+
+  // Cartão oficial (par + metros por buraco) ganha ao par inferido dos marcadores.
+  const ov = applyCourseOverride(out);
+  if (ov) console.log(`     🗂  cartão oficial aplicado: ${out.course.tee || "?"} · par ${out.course.parTotal} · ${out.course.metersTotal}m`);
+
+  return out;
 }
 
 function needsFetch(outPath) {

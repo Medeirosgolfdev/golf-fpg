@@ -107,6 +107,11 @@ interface FFGTournament {
   course: CourseInfo;
   rounds: number;
   format: string;
+  /** Nomes das divisões do torneio (o scraper emite-os; ficheiros antigos não têm). */
+  divisions?: string[];
+  /** Datas do evento, derivadas das rondas. Ficheiros antigos não as têm. */
+  dateStart?: string | null;
+  dateEnd?: string | null;
   players: FFGPlayer[];
   scrapedAt?: string;
 }
@@ -115,10 +120,12 @@ interface CatalogEntry {
   year: number;
   section: string;
   slug: string;
-  title: string;
+  /** Pode faltar em entradas descobertas sem página de scores — ver entryTitle(). */
+  title?: string;
   gg_page: string | null;
   gg_league: string | null;
   ffgolf_url?: string;
+  ffgolf_scores_url?: string;
 }
 interface Catalog {
   generated_at: string;
@@ -495,7 +502,11 @@ function ffgEscaloesOf(labels: (string | null | undefined)[]): string[] {
 
 /* ── Categoria/título amigável a partir do nome do torneio ────── */
 function shortTitle(t: FFGTournament | CatalogEntry): string {
-  const name = "title" in t ? t.title : t.tournament;
+  // `title` é opcional no catálogo (entradas sem página de scores no ffgolf.org)
+  // → cai no nome do torneio scrapado e, em último caso, no slug.
+  const name = ("title" in t && t.title) ? t.title
+    : "tournament" in t ? t.tournament
+    : t.slug;
   return name
     .replace(/^Championnat de France des Jeunes\s*-\s*/i, "Champ. France ")
     .replace(/^Internationaux de France\s+/i, "Internat. France ")
@@ -1962,9 +1973,13 @@ function FFGContentLegacy() {
   }
 
   // Lista visível GG: só torneios que TÊM dados scrapados
+  // ⚠ `title` pode faltar: o discover só o preenche quando chega à página do
+  // torneio no ffgolf.org. Uma entrada sem title rebentava aqui o localeCompare
+  // e deixava a lista INTEIRA em branco — cai-se no slug em vez de partir.
+  const entryTitle = (t: { title?: string; slug: string }) => t.title || t.slug;
   const visibleEntries = catalog.tournaments
     .filter((t) => t.gg_page && data.has(`${t.year}_${t.slug}`))
-    .sort((a, b) => (b.year - a.year) || a.title.localeCompare(b.title));
+    .sort((a, b) => (b.year - a.year) || entryTitle(a).localeCompare(entryTitle(b)));
 
   // Lista visível FFG Resultats: ordenada por dateIso DESC (mais recente primeiro)
   const ffgResAll = (ffgResIndex?.tournaments || []).filter((t) => ffgResData.has(t.trnId));
@@ -2082,6 +2097,12 @@ function FFGContentLegacy() {
   );
 
   const cur = effectiveSelection.kind === "gg" ? data.get(effectiveSelection.key) : null;
+  // Entrada do catálogo do torneio GG seleccionado — traz o ffgolf_url oficial,
+  // que o ficheiro scrapado não tem. Sem isto o ramo GG só conseguia mostrar um
+  // link (o leaderboard), enquanto os torneios do portal FFG mostram a fila toda.
+  const curCatEntry = effectiveSelection.kind === "gg"
+    ? catalog.tournaments.find((t) => `${t.year}_${t.slug}` === effectiveSelection.key) ?? null
+    : null;
   const lgCur = effectiveSelection.kind === "lgpidf" ? lgpidfData.get(effectiveSelection.key) : null;
   const ffgCur = effectiveSelection.kind === "ffgres" ? ffgResData.get(effectiveSelection.key) : null;
   const ffgCurMeta = ffgCur ? ffgResIndex?.tournaments.find((t) => t.trnId === ffgCur.trnId) : null;
@@ -2392,8 +2413,28 @@ function FFGContentLegacy() {
                           )}
                         </span>
                         <ExtLink href={cur.source} className="tourn-ext-link" style={{ marginLeft: 8 }}>
-                          🔗 Leaderboard oficial
+                          🏌️ GolfGenius
                         </ExtLink>
+                        {curCatEntry?.ffgolf_url && (
+                          <ExtLink
+                            href={curCatEntry.ffgolf_url}
+                            className="tourn-ext-link"
+                            style={{ marginLeft: 8 }}
+                            title="Página oficial do torneio em ffgolf.org"
+                          >
+                            🔗 Página FFG
+                          </ExtLink>
+                        )}
+                        {curCatEntry?.ffgolf_scores_url && (
+                          <ExtLink
+                            href={curCatEntry.ffgolf_scores_url}
+                            className="tourn-ext-link"
+                            style={{ marginLeft: 8 }}
+                            title="Página de resultados em ffgolf.org (iframe GolfGenius)"
+                          >
+                            🏁 Resultados FFG
+                          </ExtLink>
+                        )}
                       </>
                     }
                   />
@@ -2555,6 +2596,40 @@ function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolea
   };
 }
 
+/** GolfGenius: torneio FFG que vive só no GG (sem gémeo no portal de resultados).
+ *  Reutiliza a DivView — a mesma vista que a versão pré-CircuitShell usava. */
+function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
+  const hasManuel = data.players.some((p) => isM(p.name));
+  const links: CircuitLink[] = [
+    { label: "GolfGenius", url: data.source || `https://www.golfgenius.com/pages/${meta.gg_page}`, icon: "🏌️", title: "Leaderboard e scorecards no GolfGenius" },
+  ];
+  if (meta.ffgolf_scores_url) links.push({ label: "Resultados FFG", url: meta.ffgolf_scores_url, icon: "🏁" });
+  if (meta.ffgolf_url) links.push({ label: "Página FFG", url: meta.ffgolf_url, icon: "🔗" });
+  return {
+    id: `gg:${meta.year}_${meta.slug}`,
+    year: meta.year,
+    name: data.tournament || meta.title || meta.slug,
+    series: "GolfGenius",
+    source: "gg",
+    course: data.course?.name ?? undefined,
+    dateStart: data.dateStart ?? undefined,
+    dateEnd: data.dateEnd ?? undefined,
+    federation: "FFG",
+    intl: isIntlName(data.tournament || meta.title || ""),
+    escaloes: ffgEscaloesOf(data.divisions ?? []),
+    links,
+    playerCount: data.players.length,
+    divisionCount: (data.divisions ?? []).length || 1,
+    hasManuel,
+    divisions: [{
+      key: "main",
+      escalao: (data.divisions ?? []).join("/") || "—",
+      hasManuel,
+      customResults: <DivView data={data} />,
+    }],
+  };
+}
+
 /** LGPIDF: 1 entry, uma divisão que reutiliza a LGPIDFView (todas as tabs PDF). */
 function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEntry {
   const inscritos = data.inscritosPdfs.reduce((s, pf) => s + pf.players.length, 0);
@@ -2592,6 +2667,9 @@ function FFGShellContent() {
   const [lgpidfIndex, setLgpidfIndex] = useState<LGPIDFIndex | null>(null);
   const [lgpidfData, setLgpidfData] = useState<Map<string, LGPIDFTournament>>(new Map());
   const [ffgCategories, setFfgCategories] = useState<FFGCategoriesData | null>(null);
+  const [ggCatalog, setGgCatalog] = useState<Catalog | null>(null);
+  const [ggData, setGgData] = useState<Map<string, FFGTournament>>(new Map());
+  const [ggTwins, setGgTwins] = useState<Set<string>>(new Set());
   // Índice opcional Manuel/PT por trnId (gerado por scripts/build-ffgolf-manuel-index.js)
   // — permite o filtro Manuel/PT na LISTA sem carregar os 1607 ficheiros.
   const [manuelIdx, setManuelIdx] = useState<Record<string, { m?: boolean; pt?: boolean }>>({});
@@ -2623,6 +2701,33 @@ function FFGShellContent() {
         try {
           const mi = await cachedFetchJson<{ tournaments: Record<string, { m?: boolean; pt?: boolean }> }>("/data/ffgolf-manuel-index.json");
           if (mi?.tournaments && alive) setManuelIdx(mi.tournaments);
+        } catch { /* opcional */ }
+
+        // Catálogo GolfGenius — torneios FFG hospedados no GG. A maioria é gémea
+        // de um evento do portal (entra por ffgres); os que NÃO têm gémeo só
+        // existem aqui e, sem este bloco, não apareciam em lado nenhum.
+        try {
+          const cat = await cachedFetchJson<Catalog>("/data/ffgolf-catalog.json");
+          if (cat && alive) {
+            setGgCatalog(cat);
+            const ggMap = new Map<string, FFGTournament>();
+            await Promise.all(
+              cat.tournaments.filter((t) => t.gg_page).map(async (t) => {
+                try {
+                  const td = await cachedFetchJson<FFGTournament>(`/data/ffgolf/${t.year}_${t.slug}.json`);
+                  if (td) ggMap.set(`${t.year}_${t.slug}`, td);
+                } catch { /* ficheiro em falta é normal */ }
+              })
+            );
+            if (alive) setGgData(ggMap);
+          }
+        } catch { /* catálogo opcional */ }
+
+        // Gémeos GG ↔ portal: quando o mesmo evento existe nos dois sítios, o
+        // portal ganha (tem licenças) e a versão GG é escondida.
+        try {
+          const tw = await cachedFetchJson<{ twins: Record<string, unknown> }>("/data/ffgolf-gg-twins.json");
+          if (tw?.twins && alive) setGgTwins(new Set(Object.keys(tw.twins)));
         } catch { /* opcional */ }
 
         // Catégories d'âge (Vademecum).
@@ -2671,8 +2776,18 @@ function FFGShellContent() {
         out.push(lgpidfEntry(meta, data));
       }
     }
+    if (ggCatalog) {
+      for (const meta of ggCatalog.tournaments) {
+        if (!meta.gg_page) continue;
+        const key = `${meta.year}_${meta.slug}`;
+        if (ggTwins.has(key)) continue; // o portal já mostra este evento
+        const data = ggData.get(key);
+        if (!data || !data.players?.length) continue;
+        out.push(ggEntry(meta, data));
+      }
+    }
     return out;
-  }, [ffgResIndex, lgpidfIndex, lgpidfData, matchedLgKeys, manuelIdx]);
+  }, [ffgResIndex, lgpidfIndex, lgpidfData, matchedLgKeys, manuelIdx, ggCatalog, ggData, ggTwins]);
 
   const config = useMemo<CircuitConfig>(() => {
     const specialItems: CircuitSpecialItem[] = [
@@ -2686,12 +2801,16 @@ function FFGShellContent() {
       title: "🇫🇷 France",
       color: "var(--color-ffg-dark)",
       textColor: "#fff",
-      grouping: "series-year",
-      seriesOrder: ["FFG Officiel", "LGPIDF"],
-      sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c" },
-      sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF" },
+      // Agrupar só por ANO, não por série: um torneio é um torneio, e a fonte
+      // de onde o extraímos é um detalhe nosso, não uma divisão do calendário.
+      // Separado por série, o punhado de eventos GolfGenius ficava debaixo de
+      // 1265 entradas do portal — presente mas invisível. A fonte continua
+      // legível na pill de cada linha e filtrável no dropdown "Fonte".
+      grouping: "year",
+      sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c", gg: "#1f7a4d" },
+      sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF", gg: "GolfGenius" },
       ligaLabels: FFG_LIGUE_LABELS,
-      filters: { search: true, year: true, escalao: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
+      filters: { search: true, year: true, escalao: true, source: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
       specialItems,
       loadingMessage: "A carregar FFGolf…",
     };

@@ -111,10 +111,16 @@ function listGgTournaments(dir) {
     try { d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")); } catch { continue; }
     const players = Array.isArray(d.players) ? d.players : [];
     if (!players.length) continue;
-    let dateIso = null;
-    for (const ev of d.events || []) {
-      dateIso = eventDateIso(ev.name, year);
-      if (dateIso) break;
+    // `dateStart` vem das datas das rondas (scrape-ffgolf-gg-fetch.js) e é a
+    // fonte boa. O fallback pelos `events[].name` só serve os ficheiros da rota
+    // Playwright — a rota fetch escreve `events: []`, e por isso TODOS os
+    // ficheiros GG ficaram sem data, cegando o guard anti-falso-gémeo.
+    let dateIso = d.dateStart || null;
+    if (!dateIso) {
+      for (const ev of d.events || []) {
+        dateIso = eventDateIso(ev.name, year);
+        if (dateIso) break;
+      }
     }
     out.push({
       file: f,

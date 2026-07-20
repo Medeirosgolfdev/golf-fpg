@@ -1,0 +1,17 @@
+{
+  "_fonte": "Cartão oficial do campo publicado no GolfGenius do próprio torneio (tab \"By course and date\" → tee). Transcrito à mão.",
+  "_porque": "O scrape-ffgolf-gg-fetch.js infere o par dos MARCADORES do scorecard (círculo=birdie, quadrado=bogey). Quando um buraco não tem marcador em nenhum jogador o par sai errado, e não há metros nenhuns. Estes overrides trazem o cartão real (par + metros por buraco) e ganham sempre ao inferido.",
+  "_formato": "chave = \"{year}_{slug}\" (o mesmo nome do ficheiro em public/data/ffgolf/). si: [] quando o cartão publicado não traz stroke index.",
+  "overrides": {
+    "2026_championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile": {
+      "course": "Golf du Gouverneur (Montaplan)",
+      "tee": "Jaunes",
+      "par": [4, 4, 5, 3, 4, 5, 3, 5, 4, 3, 4, 4, 4, 3, 4, 4, 4, 4],
+      "meters": [312, 321, 406, 122, 272, 416, 117, 423, 350, 152, 305, 320, 355, 112, 306, 336, 349, 283],
+      "si": [],
+      "parTotal": 71,
+      "metersTotal": 5257,
+      "nota": "Todos os 87 jogadores nas Jaunes. O par inferido dos marcadores dava 75 (errado nos buracos 2, 13, 14 e 17)."
+    }
+  }
+}
