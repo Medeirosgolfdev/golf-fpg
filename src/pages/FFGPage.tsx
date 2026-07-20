@@ -61,6 +61,8 @@ import { FFGPlayersView } from "./ffg/PlayersView";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import SortableHdr from "../ui/SortableHdr";
+import DrawTab from "../ui/DrawTab";
+import type { FpgDraw } from "../data/nacional2026Loader";
 import { useSort } from "../hooks/useSort";
 import SexBadge from "../ui/SexBadge";
 
@@ -112,8 +114,29 @@ interface FFGTournament {
   /** Datas do evento, derivadas das rondas. Ficheiros antigos não as têm. */
   dateStart?: string | null;
   dateEnd?: string | null;
+  /** Tee sheet do GolfGenius (scrape-ffgolf-gg-teesheet.js). */
+  draws?: FFGDrawRound[];
   players: FFGPlayer[];
   scrapedAt?: string;
+}
+
+interface FFGDrawPlayer {
+  name: string;
+  hcp: number | null;
+  club: string | null;
+  tee: string | null;
+}
+interface FFGDrawGroup {
+  teeTime: string;
+  players: FFGDrawPlayer[];
+}
+interface FFGDrawRound {
+  round: number;
+  label: string | null;
+  dateIso: string | null;
+  course: string | null;
+  tee: string | null;
+  groups: FFGDrawGroup[];
 }
 
 interface CatalogEntry {
@@ -639,6 +662,12 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
     if (b.total == null) return -1;
     return a.total - b.total;
   });
+  // ⚠ O ScorecardLeaderboard só desenha a linha de metros para tees que
+  // conheça pelo NOME (teeMetersMap é indexado por teeName). Sem teeName os
+  // metros chegam ao componente e são ignorados — era por isso que o cartão
+  // do campo não aparecia nos torneios GG. Mesmo truque do caminho do portal.
+  const ggTeeName = t.course.tee || t.course.name || "Tees";
+  const hasMeters = Array.isArray(t.course.meters) && t.course.meters.length === t.course.par.length;
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const roundScores: FPGRoundScore[] = p.rounds.map((r) => ({
       round: r.round,
@@ -647,6 +676,7 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
       pars: t.course.par,
       si: t.course.si,
       meters: t.course.meters,
+      teeName: hasMeters ? ggTeeName : undefined,
     }));
     const incomplete = p.rounds.length < t.rounds;
     // Position: usar p.pos se válido, senão idx+1
@@ -665,6 +695,7 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
       par: t.course.par,
       si: t.course.si,
       meters: t.course.meters,
+      teeName: hasMeters ? ggTeeName : undefined,
       roundScores,
       _wd: incomplete,
       _roundsPlayed: p.rounds.length,
@@ -673,7 +704,7 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
   return {
     name: `${t.year} // ${shortTitle(t)}`,
     tcode: `${t.year}_${t.slug}`,
-    date: "",
+    date: t.dateStart || "",
     campo: t.course.name,
     rounds: t.rounds,
     playerCount: players.length,
@@ -2596,6 +2627,27 @@ function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolea
   };
 }
 
+/** Tee sheet GG → `FpgDraw`, para reutilizar o DrawTab partilhado (o mesmo
+ *  que a /FPG, /major, /rfeg e /drive usam) em vez de uma tabela própria. */
+function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
+  return {
+    name: round.label ?? undefined,
+    date: round.dateIso ?? undefined,
+    totalJogadores: round.groups.reduce((s, g) => s + g.players.length, 0),
+    groups: round.groups.map((g) => ({
+      teeTime: g.teeTime,
+      startHole: null, // o GG não publica buraco de saída na tee sheet
+      tee: round.tee ?? null,
+      players: g.players.map((p) => ({
+        nome: normalizeName(p.name),
+        clube: p.club,
+        hcp: p.hcp,
+        tee: p.tee ?? null,
+      })),
+    })),
+  };
+}
+
 /** GolfGenius: torneio FFG que vive só no GG (sem gémeo no portal de resultados).
  *  Reutiliza a DivView — a mesma vista que a versão pré-CircuitShell usava. */
 function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
@@ -2625,7 +2677,32 @@ function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
       key: "main",
       escalao: (data.divisions ?? []).join("/") || "—",
       hasManuel,
-      customResults: <DivView data={data} />,
+      // `results` (não `customResults`): só assim a shell renderiza ela própria
+      // o IntlTournView e consegue intercalar as abas "Draw R{n}" antes de cada
+      // ronda. Com uma vista fechada, o roundDraws nunca chega a ser usado.
+      results: toFPGTournament(data),
+      scOptions: ffgScorecardOptions(),
+      siLabel: "m",
+      // Draw por ronda intercalado com os resultados (mesmo padrão da /rfeg).
+      // Inclui rondas ainda por jogar — num match play saber COM QUEM se joga
+      // a eliminatória seguinte é metade da informação.
+      roundDraws: (data.draws ?? []).filter((r) => r.groups.length).length
+        ? (data.draws ?? [])
+            .filter((r) => r.groups.length)
+            .map((r) => ({
+              round: r.round,
+              render: () => (
+                <DrawTab
+                  draw={ggDrawToFpgDraw(r)}
+                  roundNum={r.round}
+                  tournamentDate={r.dateIso}
+                  // O GolfGenius não expõe federação nem data de nascimento;
+                  // o escalão é o do próprio torneio, não por jogador.
+                  hideCols={{ fed: true, nasc: true, esc: true }}
+                />
+              ),
+            }))
+        : undefined,
     }],
   };
 }

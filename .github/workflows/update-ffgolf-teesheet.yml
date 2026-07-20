@@ -1,0 +1,118 @@
+name: Actualizar FFGolf — tee sheet + resultados (diário)
+
+# Torneios FFG no GolfGenius que estão A DECORRER: leaderboard, draws das
+# rondas e handicaps, uma vez por dia.
+#
+# O update-ffgolf-golfgenius.yml (semanal, Segunda) faz o varrimento largo do
+# catálogo. Este é o complemento diário para eventos em curso — provas juvenis
+# duram vários dias (o CFJ U12 Garçons 2026 corre de 20 a 25 de Julho, com
+# 2 rondas de qualificação e 4 de match play) e o estado muda todos os dias.
+#
+# Auto-limitante: o `--live` do scrape-ffgolf-gg-teesheet.js só processa
+# torneios cuja janela (dateStart → última ronda conhecida) inclui hoje. Quando
+# a prova acaba, os runs seguintes não fazem nada e não há commit. Não é
+# preciso lembrar de o desligar.
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Ano a processar. Vazio = ano corrente.'
+        required: false
+        default: ''
+      all:
+        description: 'true = ignora o filtro --live e processa o ano todo'
+        required: false
+        default: 'false'
+
+  schedule:
+    # 20:00 UTC = 21:00/22:00 em Lisboa e 22:00 em França — depois de as rondas
+    # do dia estarem fechadas e publicadas.
+    - cron: '0 20 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-ffgolf-teesheet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Sem secrets: o GolfGenius é público. Node puro — o GG devolve 403 a
+      # browsers automatizados mas responde a fetch (ver CLAUDE.md).
+      - name: Resultados (leaderboard + scorecards)
+        run: |
+          YEAR="${{ github.event.inputs.year }}"
+          if [ -z "$YEAR" ]; then YEAR=$(date -u +%Y); fi
+          set +e
+          node scripts/scrape-ffgolf-gg-fetch.js --year "$YEAR" --force
+          RC=$?
+          set -e
+          if [ "$RC" = "1" ]; then exit 1; fi
+          echo "gg-fetch rc=$RC"
+
+      - name: Tee sheet (draws + handicaps)
+        run: |
+          YEAR="${{ github.event.inputs.year }}"
+          if [ -z "$YEAR" ]; then YEAR=$(date -u +%Y); fi
+          ARGS="--year $YEAR"
+          if [ "${{ github.event.inputs.all }}" != "true" ]; then ARGS="$ARGS --live"; fi
+          echo "Args: $ARGS"
+          set +e
+          node scripts/scrape-ffgolf-gg-teesheet.js $ARGS
+          RC=$?
+          set -e
+          # 1 = erro real; 2 = nada a fazer (nenhum torneio a decorrer) — normal.
+          if [ "$RC" = "1" ]; then exit 1; fi
+          echo "teesheet rc=$RC"
+
+      - name: Regenerar roster FR (handicaps → fichas kids2)
+        run: node scripts/build-france-players.js
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/ffgolf/ \
+                  public/data/france-players.json \
+                  public/data/ffgolf-gg-twins.json
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: FFGolf tee sheet + resultados ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"
