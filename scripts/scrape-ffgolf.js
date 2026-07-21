@@ -37,6 +37,7 @@ const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
 const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
+const { preserveTeesheet } = require("./lib/ffgolf-teesheet-preserve.js");
 
 const GG = "https://www.golfgenius.com";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -1182,6 +1183,10 @@ function parseArgs(argv) {
           skippedEmpty++;
           continue;
         }
+        // Preservar o enriquecimento do tee-sheet scraper (draws + hcp) — o
+        // re-scrape do leaderboard não os traz e apagava-os (caso CFJ U12 2026).
+        const kept = preserveTeesheet(outPath, result);
+        if (kept.draws || kept.hcps) console.log("   tee sheet preservado: " + kept.draws + " ronda(s) de draw, " + kept.hcps + " hcp(s)");
         // Atomic write: escrever para .tmp e renomear no fim. Evita ficheiros truncados
         // se o processo for interrompido (Ctrl+C) durante a escrita.
         const tmpPath = outPath + ".tmp";

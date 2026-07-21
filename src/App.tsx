@@ -437,7 +437,9 @@ export default function App() {
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/ffg/:source/:key" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
+                <Route path="/england/:source/:key" element={<EnglandGolfPage />} />
                 <Route path="/faldo" element={<FaldoPage />} />
+                <Route path="/faldo/:source/:key" element={<FaldoPage />} />
                 <Route path="/egr" element={<EGRPage />} />
                 <Route path="/egr/:source/:id" element={<EGRPage />} />
                 <Route path="/global-junior" element={<GlobalJuniorPage />} />

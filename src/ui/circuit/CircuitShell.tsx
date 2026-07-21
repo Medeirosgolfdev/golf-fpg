@@ -70,6 +70,21 @@ function entryLigas(e: CircuitEntry): string[] {
   return e.ligas?.length ? e.ligas : e.liga ? [e.liga] : [];
 }
 
+/** Chave de ordenação por data (YYYYMMDD; ISO ou DD/MM/YYYY; sem data → 0). */
+function entryDateKey(e: CircuitEntry): string {
+  const s = e.dateEnd ?? e.dateStart ?? "";
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+  if (iso) return `${iso[1]}${iso[2]}${iso[3]}`;
+  const dmy = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
+  if (dmy) return `${dmy[3]}${dmy[2].padStart(2, "0")}${dmy[1].padStart(2, "0")}`;
+  return "00000000";
+}
+/** Mais recente primeiro (desempate por nome) — a ordem da sidebar. */
+function entriesByDateDesc(a: CircuitEntry, b: CircuitEntry): number {
+  const d = entryDateKey(b).localeCompare(entryDateKey(a));
+  return d !== 0 ? d : (a.name || "").localeCompare(b.name || "");
+}
+
 /** Pills 🗺️ de liga com cap — as qualificações nacionais FFG aparecem nas 22
  *  ligas todas; mostramos `max` + "+N" com as restantes no tooltip. */
 function LigaPills({ entry, config, max, style }: {
@@ -552,8 +567,10 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const cur = useMemo(() => {
     const byId = wantId ? visible.find(e => e.id === wantId) ?? entries.find(e => e.id === wantId) : null;
     if (byId) return byId;
-    // Default: primeiro com Manuel, senão primeiro visível.
-    return visible.find(e => e.hasManuel) ?? visible[0] ?? null;
+    // Default: o torneio mais RECENTE por data (= topo da sidebar). Antes era
+    // "primeiro com Manuel, senão primeiro na ordem crua de entries", que podia
+    // aterrar num torneio antigo qualquer conforme a ordem de build das fontes.
+    return [...visible].sort(entriesByDateDesc)[0] ?? null;
   }, [wantId, visible, entries]);
 
   // Deep-link automático do torneio seleccionado por default. Ao aterrar na página
@@ -1015,26 +1032,12 @@ function CircuitSidebar({
     } else {
       keys = keys.sort();
     }
-    // Chave de ordenação por data (mais recente primeiro) dentro de cada ano.
-    // Sem isto a sidebar saía na ordem crua de `entries` (ex: as entradas
-    // agrupadas no topo, datas baralhadas). Usa dateEnd → dateStart (ISO ou
-    // DD/MM/YYYY) e desempata pelo nome.
-    const dateKey = (e: CircuitEntry): string => {
-      const s = e.dateEnd ?? e.dateStart ?? "";
-      const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
-      if (iso) return `${iso[1]}${iso[2]}${iso[3]}`;
-      const dmy = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
-      if (dmy) return `${dmy[3]}${dmy[2].padStart(2, "0")}${dmy[1].padStart(2, "0")}`;
-      return "00000000";
-    };
-    const byDateDesc = (a: CircuitEntry, b: CircuitEntry): number => {
-      const d = dateKey(b).localeCompare(dateKey(a));
-      return d !== 0 ? d : (a.name || "").localeCompare(b.name || "");
-    };
+    // Ordenação por data (mais recente primeiro) dentro de cada ano — ver
+    // entryDateKey/entriesByDateDesc (partilhados com o default de selecção).
     return keys.map(k => {
       const items = byL1.get(k)!;
       const years = [...new Set(items.map(e => e.year))].sort((a, b) => (b ?? -1) - (a ?? -1));
-      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y).sort(byDateDesc) })) };
+      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y).sort(entriesByDateDesc) })) };
     });
   }, [entries, l1Mode, config.seriesOrder]);
 

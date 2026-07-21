@@ -11,6 +11,7 @@
  * (`series-year` → `series` = nível); a região (Europa/Ásia/MEA) é filtro.
  */
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 import { usePasswordGate } from "../hooks/usePasswordGate";
@@ -186,8 +187,21 @@ function FaldoShellContent() {
 
   const entries = useMemo(() => (catalog ? buildFaldoEntries(catalog, jobs) : []), [catalog, jobs]);
 
+  // Torneio seleccionado via URL: /faldo/t/{entryId} — deep-linkável (mesmo
+  // padrão da /ffg e /rfeg; o shell reflecte o default no URL ao aterrar).
+  const navigate = useNavigate();
+  const params = useParams<{ source?: string; key?: string }>();
+  const selectedTourn = params.source === "t" && params.key ? params.key : undefined;
+
   if (loading) return <LoadingState />;
-  return <CircuitShell entries={entries} config={FALDO_CONFIG} />;
+  return (
+    <CircuitShell
+      entries={entries}
+      config={FALDO_CONFIG}
+      selectedId={selectedTourn}
+      onSelectEntry={(e) => navigate(`/faldo/t/${encodeURIComponent(e.id)}`)}
+    />
+  );
 }
 
 export default function FaldoPage() {

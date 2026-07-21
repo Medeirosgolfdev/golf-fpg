@@ -32,6 +32,7 @@ const { scrapeEdition, GG } = require("./scrape-fsga.js");
 const { discoverDivisions } = require("./scrape-golfgenius-node.js");
 const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
 const { fetchCourseStats } = require("./lib/gg-course-stats.js");
+const { preserveTeesheet } = require("./lib/ffgolf-teesheet-preserve.js");
 
 /**
  * Enriquece `out.course`/`out.courses` com par+metros+SI REAIS do widget
@@ -240,6 +241,10 @@ function needsFetch(outPath) {
       if (ffg.course.metersSource !== "cartao-oficial") {
         await applyCourseStats(ffg, disc.lid);
       }
+      // Preservar o enriquecimento do tee-sheet scraper (draws + hcp) — o
+      // re-fetch do leaderboard não os traz e apagava-os (caso CFJ U12 2026).
+      const kept = preserveTeesheet(outPath, ffg);
+      if (kept.draws || kept.hcps) console.log(`     tee sheet preservado: ${kept.draws} ronda(s) de draw, ${kept.hcps} hcp(s)`);
       const tmp = outPath + ".tmp";
       fs.writeFileSync(tmp, JSON.stringify(ffg, null, 2), "utf8");
       fs.renameSync(tmp, outPath);

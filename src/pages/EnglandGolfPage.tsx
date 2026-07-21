@@ -8,6 +8,7 @@
  * (ou `_div1`, `_div2`, etc.).
  */
 import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
@@ -474,8 +475,21 @@ function EnglandShellContent() {
 
   const entries = useMemo(() => buildEnglandEntries(URLS, all), [URLS, all]);
 
+  // Torneio seleccionado via URL: /england/t/{entryId} — deep-linkável (mesmo
+  // padrão da /ffg e /rfeg; o shell reflecte o default no URL ao aterrar).
+  const navigate = useNavigate();
+  const params = useParams<{ source?: string; key?: string }>();
+  const selectedTourn = params.source === "t" && params.key ? params.key : undefined;
+
   if (loading) return <LoadingState />;
-  return <CircuitShell entries={entries} config={ENGLAND_CONFIG} />;
+  return (
+    <CircuitShell
+      entries={entries}
+      config={ENGLAND_CONFIG}
+      selectedId={selectedTourn}
+      onSelectEntry={(e) => navigate(`/england/t/${encodeURIComponent(e.id)}`)}
+    />
+  );
 }
 
 export default function EnglandGolfPage() {

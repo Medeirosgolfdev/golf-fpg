@@ -414,18 +414,21 @@ interface FFGCategoriesData {
   };
 }
 
-/* ── Normalização de nome (FFGolf usa "APELIDO Nome") ──────────── */
+/* ── Normalização de nome (FFGolf/GolfGenius usam "APELIDO(S) Nome") ────
+ * O run INICIAL de tokens todo-em-CAPS é o apelido (pode ser composto):
+ * "CASTRO FERREIRA Ricardo" → "Ricardo Castro Ferreira". Tratar só o 1º
+ * token baralhava nomes de apelido duplo ("Ferreira Ricardo Castro"). */
 function normalizeName(raw: string): string {
   const trimmed = raw.trim();
   const parts = trimmed.split(/\s+/);
   if (parts.length < 2) return trimmed;
-  const first = parts[0];
-  const rest = parts.slice(1).join(" ");
-  if (first.length >= 3 && first === first.toUpperCase() && /^[A-ZÀ-Ý-]+$/.test(first)) {
-    const last = first.charAt(0) + first.slice(1).toLowerCase();
-    return `${rest} ${last}`;
-  }
-  return trimmed;
+  const isCaps = (t: string) => t.length >= 2 && t === t.toUpperCase() && /^[A-ZÀ-Ý'-]+$/.test(t);
+  let n = 0;
+  while (n < parts.length && isCaps(parts[n])) n++;
+  if (n === 0 || n === parts.length) return trimmed; // sem run em CAPS, ou nome inteiro em CAPS
+  if (!parts.slice(0, n).some((t) => t.length >= 3)) return trimmed; // só iniciais/partículas
+  const apelido = toTitleCase(parts.slice(0, n).join(" "));
+  return `${parts.slice(n).join(" ")} ${apelido}`;
 }
 
 /* Normalize um apelido em CAPS para Title Case (ex: "MARCINIAK" → "Marciniak", "DE LOS RIOS" → "De Los Rios") */
@@ -740,6 +743,10 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
       roundScores,
       _wd: incomplete,
       _roundsPlayed: p.rounds.length,
+      // Marca conterrâneos (.row-portuguese) — o caminho FFG-resultats já o
+      // fazia; sem isto os torneios GolfGenius não destacavam PT (o GG publica
+      // country null, mas a excepção por nome — Ricardo Castro Ferreira — pega).
+      _isPortuguese: isPT(p.country, null, p.name),
     } as FPGPlayer;
   });
   return {
@@ -2803,6 +2810,10 @@ function FFGShellContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; key?: string }>();
   const selectedInfo = params.source === "info" ? (params.key ?? null) : null;
+  // Torneio seleccionado via URL: /ffg/t/{entryId} — deep-linkável/partilhável.
+  // O CircuitShell reflecte o default no URL ao aterrar em /ffg (mesmo padrão
+  // da /rfeg e /egr). react-router já devolve o param descodificado.
+  const selectedTourn = params.source === "t" && params.key ? params.key : undefined;
   const [ffgResIndex, setFfgResIndex] = useState<FFGResIndex | null>(null);
   const [lgpidfIndex, setLgpidfIndex] = useState<LGPIDFIndex | null>(null);
   const [lgpidfData, setLgpidfData] = useState<Map<string, LGPIDFTournament>>(new Map());
@@ -2973,6 +2984,8 @@ function FFGShellContent() {
     <CircuitShell
       entries={entries}
       config={config}
+      selectedId={selectedTourn}
+      onSelectEntry={(e) => navigate(`/ffg/t/${encodeURIComponent(e.id)}`)}
       selectedInfo={selectedInfo}
       onSelectInfo={(key) => navigate(key ? `/ffg/info/${key}` : "/ffg")}
     />

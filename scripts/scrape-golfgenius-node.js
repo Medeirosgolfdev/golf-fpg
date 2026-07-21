@@ -60,6 +60,9 @@ function divisionBase(label) {
   return label
     .replace(/\s*[-–]\s*[^-–]*$/,'')                 // tira o " - {campo}" final
     .replace(/\s*(final\s+round|round\s+\d+)\s*$/i, '') // tira " Final Round"/" Round N"
+    // tira o sufixo de data "(Mon, July 20)" dos eventos por-fase (CFJ) — o
+    // <select> do GG trunca labels longos com "..." e deixava "(Mon, Jul" solto
+    .replace(/\s*\((?:mon|tue|wed|thu|fri|sat|sun)[^)]*\)?\s*$/i, '')
     .replace(/\s+/g, ' ').trim();
 }
 function isFinalRound(label) { return /final\s+round/i.test(label); }

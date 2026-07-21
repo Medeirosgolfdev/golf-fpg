@@ -11,7 +11,7 @@
  * are injected via props — either simple slots or full render-section callbacks.
  */
 
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "./tournamentPrimitives";
 import { AccumulatedLB, ScorecardLB, AllRoundsScorecardLB } from "./LeaderboardComponents";
 import { expandMultiRound, type Tournament as FPGTournament, type ScorecardOptions } from "../pages/FPGPage";
@@ -105,10 +105,14 @@ export function IntlTournView({
   // expandMultiRound: [R1_tourn, R2_tourn, ..., Resumo_tourn]
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
 
-  // Cut detection (vem do expandMultiRound -- _cutAfterRound no _isTotal entry)
+  // Cut detection (vem do expandMultiRound -- _cutAfterRound no _isTotal entry).
+  // Cut após a R1 NÃO gera tab: "Pré-Cut R1–R1" seria idêntica à própria R1
+  // (o acumulado de 1 ronda é a ronda) — só ordena tabs redundantes na barra.
+  // A promoção dos jogadores cortados no Resumo (fpgUtils) mantém-se na mesma.
   const cutAfterRound = useMemo(() => {
     const tot = expanded.find((t: any) => (t as any)._isTotal);
-    return (tot as any)?._cutAfterRound as number | undefined;
+    const n = (tot as any)?._cutAfterRound as number | undefined;
+    return n != null && n >= 2 ? n : undefined;
   }, [expanded]);
 
   /** Construir tournament Pre-Cut: todos os jogadores que jogaram >= cutAfterRound
@@ -192,7 +196,7 @@ export function IntlTournView({
     | { kind: "leading"; label: string; li: number }
     | { kind: "draw"; label: string; render: () => React.ReactNode }
     | { kind: "round"; label: string; rtab: number };
-  const { tabDescs, firstRoundIdx } = useMemo(() => {
+  const { tabDescs, initialIdx } = useMemo(() => {
     const descs: TabDesc[] = [];
     (leadingTabs ?? []).forEach((t, li) => descs.push({ kind: "leading", label: t.label, li }));
     const draws = roundDraws ?? [];
@@ -227,14 +231,27 @@ export function IntlTournView({
       roundTabLabels.forEach((lbl, i) => descs.push({ kind: "round", label: lbl, rtab: i }));
     }
     const fri = descs.findIndex(d => d.kind === "round");
-    return { tabDescs: descs, firstRoundIdx: fri < 0 ? 0 : fri };
+    // Tab inicial: o RESUMO (classificação acumulada) quando existe — é a vista
+    // que se quer ao abrir um torneio. Senão a primeira aba de ronda.
+    const ri = descs.findIndex(d => d.kind === "round" && (roundTabLabels[d.rtab] ?? "").startsWith("Resumo"));
+    return { tabDescs: descs, initialIdx: ri >= 0 ? ri : (fri < 0 ? 0 : fri) };
   }, [leadingTabs, roundDraws, roundTabLabels, isMulti, cutAfterRound, expanded]);
 
   // Mostrar barra se há >1 tab no total.
   const showTabBar = tabDescs.length > 1;
 
-  // Início: primeira aba de RONDA — abre nos resultados, como a FPG.
-  const [tab, setTab] = useState(firstRoundIdx);
+  // Início: Resumo (ou 1ª ronda) — e RESET ao trocar de torneio: a shell reusa
+  // esta instância entre torneios, senão o índice de tab "colava" de um para o
+  // outro e abria-se noutro torneio numa tab arbitrária.
+  const [tab, setTab] = useState(initialIdx);
+  const tournKey = `${(tournament as { tcode?: string }).tcode ?? ""}|${tournament.name}`;
+  const prevTournKey = useRef(tournKey);
+  useEffect(() => {
+    if (prevTournKey.current !== tournKey) {
+      prevTournKey.current = tournKey;
+      setTab(initialIdx);
+    }
+  }, [tournKey, initialIdx]);
   const safeTab = Math.min(Math.max(tab, 0), Math.max(0, tabDescs.length - 1));
   const active = tabDescs[safeTab] ?? tabDescs[0];
 

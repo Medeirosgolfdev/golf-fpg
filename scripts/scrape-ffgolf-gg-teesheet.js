@@ -67,11 +67,8 @@ function isoFromLabel(label, year) {
   return `${year}-${String(mon).padStart(2, "0")}-${String(m[2]).padStart(2, "0")}`;
 }
 
-const normName = (s) =>
-  String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
-/** "RUBAL Alexandre" e "Alexandre Rubal" batem: comparamos o multiset de tokens. */
-const nameKey = (s) => normName(s).split(" ").filter(Boolean).sort().join(" ");
+// nameKey partilhado com o merge de preservação dos scrapers de leaderboard.
+const { nameKey } = require("./lib/ffgolf-teesheet-preserve.js");
 
 /* ── passo 1+2: encontrar a página "Départs" do evento ───────────── */
 async function findTeeSheetPage(ggPage) {
