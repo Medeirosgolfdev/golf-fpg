@@ -14,12 +14,13 @@
 import type React from "react";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
+import type { MatchplayFile } from "./matchplayTypes";
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
 
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */
-export type CircuitSectionKind = "results" | "inscritos" | "draw";
+export type CircuitSectionKind = "results" | "inscritos" | "draw" | "matchplay";
 
 /** Modo de agrupamento da sidebar. */
 type CircuitGrouping = "year" | "series-year" | "source-year";
@@ -130,6 +131,14 @@ export interface CircuitDivision {
    * os pairings, sem resultados).
    */
   roundDraws?: { round: number; render: () => React.ReactNode }[];
+  /**
+   * MATCH PLAY (brackets) do torneio — schema `MatchplayFile` gerado pelo
+   * `scrape-golfbox-matchplay.js` (ETC no GolfBox: {slug}_matchplay_{ano}.json).
+   * Com resultados de ronda, aparece como aba "Match Play" no FIM da barra do
+   * IntlTournView (é a fase final, depois da qualificação stroke play); sem
+   * rondas, entra na barra de secções. Renderizado pelo <MatchplayView>.
+   */
+  matchplay?: MatchplayFile;
 }
 
 /** Lista de inscritos de uma divisão — sub-listas opcionais. */

@@ -2689,10 +2689,14 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Destaque Português — usado em páginas internacionais (FFG, etc.)
    onde queremos marcar conterrâneos. Cor: verde néon #00FF00 (mesma do
    pill INTL global, ver --pill-intl-bg em tokens.css). ─── */
-.row-portuguese { background: #00FF00 !important; color: #000 !important; }
+/* 2026-07-21: era #00FF00 cheio + texto preto — demasiado intenso (pedido para
+   discreto, caso Ricardo na /ffg). Tinta suave do MESMO verde néon, misturada
+   com o fundo do cartão para as sticky-cols ficarem OPACAS (senão o conteúdo
+   por baixo aparecia através delas no scroll horizontal). */
+.row-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
 .row-portuguese .sticky-col-0,
-.row-portuguese .sticky-col-1 { background: #00FF00 !important; color: #000 !important; }
-.row-portuguese:hover { background: #00FF00 !important; filter: brightness(0.95); }
+.row-portuguese .sticky-col-1 { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
+.row-portuguese:hover { background: color-mix(in srgb, #00FF00 26%, var(--bg-card, #fff)) !important; }
 .row-portuguese.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
 .row-portuguese.row-selected .sticky-col-0,
 .row-portuguese.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }

@@ -24,6 +24,7 @@ import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../u
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import ExtLink from "../ui/ExternalLink";
+import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { monthLabel, tournamentUrl, parseTournKey } from "../utils/format";
@@ -302,8 +303,8 @@ function MatchPlayResultsTable({
                                     {player?.name ?? cl.name}
                                   </div>
                                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 1 }}>
-                                    {wins.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={`w${hi}`} style={{ fontSize: "var(--fs-10)", color: MP_CLUB_COLOR }}>✓ {opp?.shortName ?? h.l}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                    {losses.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={`l${hi}`} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>✗ {opp?.shortName ?? h.w}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                    {wins.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={`w${hi}`} style={{ fontSize: "var(--fs-10)", color: MP_CLUB_COLOR }}><ResultMark kind="win" gap={3} />{opp?.shortName ?? h.l}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                    {losses.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={`l${hi}`} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}><ResultMark kind="loss" gap={3} />{opp?.shortName ?? h.w}{h.margin ? ` ${h.margin}` : ""}</span>; })}
                                   </div>
                                 </td>
                                 {f9.map(i => { const g = sc[i]; return <td key={i} style={cSc}>{g != null ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...scCls(g, par[i]) }}>{g}</span> : <span style={{ color: "var(--text-3)" }}>–</span>}</td>; })}
@@ -421,10 +422,11 @@ function MatchPlayResultsTable({
                                     <td key={opp.key} style={{ padding: "5px 6px", textAlign: "center", ...tdB }}>
                                       {h2hEntry ? (
                                         isHalf ? (
-                                          <span style={{ fontSize: "var(--fs-11)", fontWeight: 500, color: "var(--text-2)" }}>½</span>
+                                          <ResultMark kind="half" gap={0} />
                                         ) : (
-                                        <span style={{ fontSize: "var(--fs-11)", fontWeight: won ? 700 : 400, color: won ? "var(--accent)" : "var(--score-birdie)" }}>
-                                          {won ? "✓" : "✗"}{margin ? <> <strong>{margin}</strong></> : ""}
+                                        // 🏆/✗ do <ResultMark> — o mesmo vocabulário do match play ETC (MatchplayView)
+                                        <span style={{ fontSize: "var(--fs-11)", fontWeight: won ? 700 : 400 }}>
+                                          <ResultMark kind={won ? "win" : "loss"} gap={margin ? 4 : 0} />{margin ? <strong>{margin}</strong> : ""}
                                         </span>
                                         )
                                       ) : (
@@ -513,9 +515,9 @@ function MatchPlayResultsTable({
                               <span style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-1)" }}>{player?.name ?? cl.name}</span>
                               {player?.gross != null && <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
                               <span style={{ display: "flex", gap: 4 }}>
-                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--accent)" }}>✓ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>✗ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)" }}>½ {opp?.shortName}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--accent)" }}><ResultMark kind="win" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}><ResultMark kind="loss" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)" }}><ResultMark kind="half" gap={3} />{opp?.shortName}</span>; })}
                               </span>
                             </div>
                           );
@@ -2263,6 +2265,14 @@ function Content() {
               páginas diferentes a piscar até o match ser encontrado.
               Aceita tcode sintético "A+B" quando o URL pede apenas "A". */}
           {(() => {
+            // Torneios de clubes em MATCH PLAY (ex: Regional 2026, 059/10685):
+            // a FPG não publica classificação stroke (o pull-torneios traz 0
+            // jogadores) — os resultados reais (pontos + H2H + scorecards)
+            // vivem na vista /FPG/clubes. Redireccionar em vez de mostrar um
+            // detalhe vazio.
+            if (params.tkey && CLUBES_TEAM_FORMAT[params.tkey]?.matchPlay) {
+              return <Navigate to="/FPG/clubes" replace />;
+            }
             // Resolver torneio DIRECTAMENTE pela URL (find por ccode/tcode).
             // Evita problemas com displayList[selected] stale durante async.
             const tShow = (() => {

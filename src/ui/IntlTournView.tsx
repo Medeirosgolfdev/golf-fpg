@@ -64,6 +64,12 @@ export interface IntlTournViewProps {
    * Ausente = comportamento original. Ignorado em torneios com Pré-Cut.
    */
   roundDraws?: { round: number; render: () => React.ReactNode }[];
+  /**
+   * Abas no FIM da barra, DEPOIS das rondas/Resumo/📋 Scorecards — para fases
+   * posteriores aos resultados stroke play (ex: "Match Play" nos ETC):
+   *   R1 → R2 → Resumo → 📋 Scorecards → Match Play
+   */
+  trailingTabs?: { key: string; label: string; content: React.ReactNode }[];
 }
 
 export function IntlTournView({
@@ -80,6 +86,7 @@ export function IntlTournView({
   accShowCols,
   leadingTabs,
   roundDraws,
+  trailingTabs,
 }: IntlTournViewProps) {
   const nR = tournament.rounds || 1;
   const isMulti = nR > 1;
@@ -195,7 +202,8 @@ export function IntlTournView({
   type TabDesc =
     | { kind: "leading"; label: string; li: number }
     | { kind: "draw"; label: string; render: () => React.ReactNode }
-    | { kind: "round"; label: string; rtab: number };
+    | { kind: "round"; label: string; rtab: number }
+    | { kind: "trailing"; label: string; ti: number };
   const { tabDescs, initialIdx } = useMemo(() => {
     const descs: TabDesc[] = [];
     (leadingTabs ?? []).forEach((t, li) => descs.push({ kind: "leading", label: t.label, li }));
@@ -230,12 +238,14 @@ export function IntlTournView({
     } else {
       roundTabLabels.forEach((lbl, i) => descs.push({ kind: "round", label: lbl, rtab: i }));
     }
+    // Abas finais (fases pós-stroke play, ex: Match Play) — sempre no fim.
+    (trailingTabs ?? []).forEach((t, ti) => descs.push({ kind: "trailing", label: t.label, ti }));
     const fri = descs.findIndex(d => d.kind === "round");
     // Tab inicial: o RESUMO (classificação acumulada) quando existe — é a vista
     // que se quer ao abrir um torneio. Senão a primeira aba de ronda.
     const ri = descs.findIndex(d => d.kind === "round" && (roundTabLabels[d.rtab] ?? "").startsWith("Resumo"));
     return { tabDescs: descs, initialIdx: ri >= 0 ? ri : (fri < 0 ? 0 : fri) };
-  }, [leadingTabs, roundDraws, roundTabLabels, isMulti, cutAfterRound, expanded]);
+  }, [leadingTabs, roundDraws, trailingTabs, roundTabLabels, isMulti, cutAfterRound, expanded]);
 
   // Mostrar barra se há >1 tab no total.
   const showTabBar = tabDescs.length > 1;
@@ -308,9 +318,11 @@ export function IntlTournView({
       {/* Content */}
       {active.kind === "leading"
         ? leadingTabs![active.li].content
-        : active.kind === "draw"
-          ? active.render()
-          : renderRoundContent(active.rtab)}
+        : active.kind === "trailing"
+          ? trailingTabs![active.ti].content
+          : active.kind === "draw"
+            ? active.render()
+            : renderRoundContent(active.rtab)}
     </div>
   );
 }

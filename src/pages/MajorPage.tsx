@@ -18,6 +18,8 @@ import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit/types";
+import type { MatchplayFile } from "../ui/circuit/matchplayTypes";
+import MatchplayView from "../ui/circuit/MatchplayView";
 import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
@@ -388,10 +390,13 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
  *  TournamentDetail com tabs flat intercaladas (Draw R{n} · R{n} · Resumo ·
  *  Scorecards) — mesma apresentação dos restantes MAJORS. A ordem das divisões
  *  é preservada do ficheiro (não ordenada por idade). */
-function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean }): CircuitEntry[] {
+function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean; matchplay?: MatchplayFile }): CircuitEntry[] {
   const linkLabel = opts.linkLabel ?? "Resultados GolfGenius";
   const scOpts = withKidsLink(jobScorecardOptions({ showRatings: opts.showRatings }));
   return files.map((f): CircuitEntry => {
+    // Match play (brackets ETC) — tab extra no TournamentDetail da edição certa.
+    const mp = opts.matchplay && opts.matchplay.year === f.year ? opts.matchplay : null;
+    const mpTabs = mp ? [{ key: "matchplay", label: "Match Play", content: <MatchplayView data={mp} /> }] : undefined;
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = dv.division || opts.series;
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
@@ -426,6 +431,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
             hideHeader
+            extraTabs={mpTabs}
           />
         ),
       };
@@ -573,7 +579,7 @@ async function loadDoralDivisions(year: number): Promise<CircuitDivision[]> {
 
 /** Fontes GolfGenius/JobFile (1 ficheiro por ano). Cada uma reusa o seu builder.
  *  A evolução (`jobEvoFor`) só precisa do ano anterior → carregamos [ano-1, ano]. */
-const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (files: JobFile[]) => CircuitEntry[] }> = {
+const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (files: JobFile[], mp?: MatchplayFile) => CircuitEntry[] }> = {
   job: { file: (y) => `/data/orangebowl_${y}.json`, build: buildJobEntries },
   fm: { file: (y) => `/data/ftm_fm_${y}.json`, build: buildFmEntries },
   fsga: { file: (y) => `/data/fsga_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "fsga", series: "FSGA" }) },
@@ -583,14 +589,20 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
   interzonas: { file: (y) => `/data/interzonas_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "interzonas", series: "Interzonas" }) },
   avtrophy: { file: (y) => `/data/avtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }) },
   // EGA European Team Championships (GolfBox) — mesmo formato do avtrophy.
-  ebtc2: { file: (y) => `/data/ebtc2_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "ebtc2", series: "ETC Boys", linkLabel: "Livescoring GolfBox", showRatings: true }) },
-  egtc: { file: (y) => `/data/egtc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "egtc", series: "ETC Girls", linkLabel: "Livescoring GolfBox", showRatings: true }) },
-  elg: { file: (y) => `/data/elg_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "elg", series: "ETC Ladies", linkLabel: "Livescoring GolfBox", showRatings: true }) },
-  eatc: { file: (y) => `/data/eatc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "eatc", series: "ETC Men", linkLabel: "Livescoring GolfBox", showRatings: true }) },
-  eatc2: { file: (y) => `/data/eatc2_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "eatc2", series: "ETC Men 2", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  // `mp` = ficheiro de match play irmão (brackets) → tab "Match Play".
+  ebtc2: { file: (y) => `/data/ebtc2_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "ebtc2", series: "ETC Boys", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
+  egtc: { file: (y) => `/data/egtc_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "egtc", series: "ETC Girls", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
+  elg: { file: (y) => `/data/elg_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "elg", series: "ETC Ladies", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
+  eatc: { file: (y) => `/data/eatc_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "eatc", series: "ETC Men", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
+  eatc2: { file: (y) => `/data/eatc2_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "eatc2", series: "ETC Men 2", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
   // European Young Masters (EGA, GolfBox) — U16, 2M+2F por país; PT tem equipa.
-  eym: { file: (y) => `/data/eym_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "eym", series: "Young Masters", linkLabel: "Livescoring GolfBox", showRatings: true }) },
+  eym: { file: (y) => `/data/eym_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "eym", series: "Young Masters", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
 };
+
+/** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão
+ *  ({source}_matchplay_{ano}.json, gerado por scrape-golfbox-matchplay.js) —
+ *  a fase knockout de equipas depois da qualificação stroke play. */
+const GOLFBOX_MATCHPLAY_SOURCES = new Set(["ebtc2", "egtc", "elg", "eatc", "eatc2", "eym"]);
 
 /** Devolve o `loadDivisions` adequado à fonte do torneio do catálogo. */
 function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision[]> {
@@ -599,10 +611,18 @@ function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision
     if (cat.source === "doral") return loadDoralDivisions(cat.year);
     const gg = GG_JOB_LOADERS[cat.source];
     if (gg) {
-      const files = (await Promise.all([cat.year - 1, cat.year].map((y) =>
-        cachedFetchJson<JobFile>(gg.file(y)).catch(() => null),
-      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
-      return gg.build(files).find((e) => e.id === cat.id)?.divisions ?? [];
+      // Match play (brackets de equipas) — ficheiro irmão das fontes ETC; entra
+      // no build para o TournamentDetail ganhar a tab "Match Play" (extraTabs).
+      const [files, mp] = await Promise.all([
+        Promise.all([cat.year - 1, cat.year].map((y) =>
+          cachedFetchJson<JobFile>(gg.file(y)).catch(() => null),
+        )).then((fs) => fs.filter((f): f is JobFile => !!f && Array.isArray(f.divisions))),
+        GOLFBOX_MATCHPLAY_SOURCES.has(cat.source)
+          ? cachedFetchJson<MatchplayFile>(`/data/${cat.source}_matchplay_${cat.year}.json`).catch(() => null)
+          : Promise.resolve(null),
+      ]);
+      const okMp = mp && Array.isArray(mp.flights) && mp.flights.length ? mp : undefined;
+      return gg.build(files, okMp).find((e) => e.id === cat.id)?.divisions ?? [];
     }
     return [];
   };

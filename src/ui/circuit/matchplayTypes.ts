@@ -1,11 +1,13 @@
 /**
- * src/pages/major/matchplayTypes.ts
+ * src/ui/circuit/matchplayTypes.ts
  *
  * Tipos do ficheiro de MATCH PLAY (brackets de equipas) das European Team
  * Championships, gerado por `scripts/scrape-golfbox-matchplay.js` →
  * `public/data/{slug}_matchplay_{ano}.json`. Complementa a stroke play
- * (JobFile) — ver `scrape-golfbox.js`. Consumido pela `MajorPage` (tab
- * "Match Play" dentro do torneio EBTC/ETC).
+ * (JobFile) — ver `scrape-golfbox.js`. Modelo genérico do CircuitShell:
+ * `CircuitDivision.matchplay` → aba "Match Play" no fim da barra, renderizada
+ * pelo <MatchplayView> (a MajorPage anexa-o às fontes ETC via
+ * GOLFBOX_MATCHPLAY_SOURCES em loadDivisionsFor).
  */
 
 export interface MatchplaySide {

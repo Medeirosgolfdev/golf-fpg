@@ -36,6 +36,7 @@ import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
 import { flag } from "../../utils/flagUtils";
 import SortableHdr from "../SortableHdr";
+import MatchplayView from "./MatchplayView";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
 import { normName } from "../../utils/normName";
@@ -131,6 +132,7 @@ const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> =
   results:   { label: "Resultados",  icon: "" },
   inscritos: { label: "Inscrições",  icon: "" },
   draw:      { label: "Draw",        icon: "" },
+  matchplay: { label: "Match Play",  icon: "" },
 };
 /** Label de secção com ícone opcional (sem espaço à frente quando não há ícone). */
 const sectionLabel = (s: CircuitSectionKind): string => {
@@ -146,6 +148,7 @@ function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   // "draw" aparece se a divisão traz um render próprio (DrawSaidaView/DrawTab — RFEG)
   // OU dados de draw genéricos não-vazios (DrawView do shell).
   if (d.renderDrawSection || (d.draw && Object.keys(d.draw.rounds).length > 0)) out.push("draw");
+  if (d.matchplay && d.matchplay.flights.length > 0) out.push("matchplay");
   return out;
 }
 
@@ -676,6 +679,16 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       });
     }
   }
+  // Match Play (brackets) — aba no FIM da barra (é a fase final do torneio,
+  // depois da qualificação stroke play): R1 → … → Resumo → 📋 → Match Play.
+  const trailingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
+  if (curDiv && !curDiv.renderFull && curDiv.matchplay && curDiv.matchplay.flights.length > 0) {
+    trailingTabs.push({
+      key: "matchplay",
+      label: sectionLabel("matchplay"),
+      content: <MatchplayView data={curDiv.matchplay} />,
+    });
+  }
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -957,6 +970,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     renderAccSection={curDiv.renderAccSection}
                     renderRoundSection={curDiv.renderRoundSection}
                     leadingTabs={leadingTabs.length ? leadingTabs : undefined}
+                    trailingTabs={trailingTabs.length ? trailingTabs : undefined}
                     roundDraws={curDiv.roundDraws}
                   />
                 ) : (
@@ -985,6 +999,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                       curDiv.renderDrawSection
                         ? curDiv.renderDrawSection()
                         : curDiv.draw && <DrawView rounds={curDiv.draw.rounds} />
+                    )}
+                    {curSection === "matchplay" && curDiv.matchplay && (
+                      <MatchplayView data={curDiv.matchplay} />
                     )}
                   </>
                 ))}

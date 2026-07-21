@@ -174,7 +174,9 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const urlTabKey = searchParams.get("tab");
   const urlTabIdx = urlTabKey ? tabs.findIndex(t => t.key === urlTabKey) : -1;
   const lastProgressionIdx = useMemo(() => {
-    const SKIP = new Set(["scorecards", "analise-aroeira2"]);
+    // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
+    // a fase knockout vê-se por clique explícito na tab "Match Play".
+    const SKIP = new Set(["scorecards", "analise-aroeira2", "matchplay"]);
     for (let i = tabs.length - 1; i >= 0; i--) {
       if (!SKIP.has(tabs[i].key)) return i;
     }
