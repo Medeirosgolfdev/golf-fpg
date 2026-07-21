@@ -65,46 +65,13 @@ function isJuvenil(name, typeCompetition) {
 }
 
 // ── Helpers de matching com catálogo ────────────────────────────
+// Matcher partilhado (uma só cópia honesta — ver lib/ffgolf-catalog-match.js).
 const PAGES_FFGOLF_URL = "https://pages.ffgolf.org/resultats/";
-const STOP_TOK = new Set(["de","des","du","la","le","les","et","au","aux","un","une","sur","par","pour","2024","2025","2026"]);
-function normName(s) {
-  return String(s || "").toLowerCase().normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
-}
-function sigTokens(s) {
-  return normName(s).split(" ").filter(t => t.length >= 3 && !STOP_TOK.has(t));
-}
+const { matchCatalog: _matchCatalog } = require("./lib/ffgolf-catalog-match.js");
 const catalog = fs.existsSync(CATALOG_FILE)
   ? (JSON.parse(fs.readFileSync(CATALOG_FILE, "utf-8")).tournaments || [])
   : [];
-function matchCatalog(name, year) {
-  if (!name || !year) return null;
-  const tok = sigTokens(name);
-  if (!tok.length) return null;
-  const same = catalog.filter(e => String(e.year) === String(year));
-  if (!same.length) return null;
-  const exact = same.find(e => normName(e.title) === normName(name));
-  if (exact) return exact;
-  const cand = same.filter(e => {
-    const c = normName(e.title);
-    return tok.every(t => c.includes(t));
-  });
-  if (cand.length === 1) return cand[0];
-  if (cand.length > 1) {
-    const hasG = /gar[cç]ons|boys|men|messieurs/i.test(name);
-    const hasF = /filles|girls|women|dames/i.test(name);
-    if (hasG) {
-      const m = cand.find(e => /gar[cç]ons|boys|men|messieurs/i.test(e.title));
-      if (m) return m;
-    }
-    if (hasF) {
-      const m = cand.find(e => /filles|girls|women|dames/i.test(e.title));
-      if (m) return m;
-    }
-    return cand[0];
-  }
-  return null;
-}
+const matchCatalog = (name, year) => _matchCatalog(name, year, catalog);
 function officialUrl(e) {
   if (!e || !e.year || !e.slug || !e.section) return null;
   return "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/" +
@@ -137,12 +104,40 @@ for (const file of files) {
     if (!isJuvenil(j.name, typeCompetition)) { skippedNonJuvenil++; continue; }
     const dateIso = dateToIso(j.date);
     const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
-    const series = (j.details?.series || []).map((s) => ({
+    const rawSeries = j.details?.series || [];
+    const series = rawSeries.map((s) => ({
       serieId: s.serieId,
       label: s.label,
       players: s.players?.length || 0,
     }));
     const totalPlayers = series.reduce((sum, s) => sum + s.players, 0);
+
+    // Assinatura por licenças (conjunto ordenado) para dedup de re-publicações:
+    // a FFG por vezes republica o MESMO evento com outro trnId. Não vai ao
+    // output — só serve para agrupar. Guardada por-torneio (interno).
+    const licSet = new Set();
+    for (const s of rawSeries) for (const p of (s.players || [])) if (p.license) licSet.add(p.license);
+    const licSig = [...licSet].sort().join(",");
+
+    // ── Campos ricos p/ a sidebar (existem no detalhe; o índice não os tinha) ──
+    // Campo(s): courseTerrain de cada série, sem o prefixo "(FFG) ", dedup.
+    const courses = [...new Set(
+      rawSeries.map((s) => String(s.courseTerrain || "").replace(/^\(FFG\)\s*/i, "").trim()).filter(Boolean)
+    )];
+    const course = courses.length === 1 ? courses[0] : (courses.length ? courses : null);
+    // Sexo do torneio a partir dos jogadores (M/F/mixed). Só o que a fonte diz.
+    let nM = 0, nF = 0;
+    for (const s of rawSeries) for (const p of (s.players || [])) {
+      if (p.sex === "M") nM++; else if (p.sex === "F") nF++;
+    }
+    const sex = nM && nF ? "MF" : nM ? "M" : nF ? "F" : null;
+    // Nº de rondas efectivamente jogadas: maior índice r com algum score/estado.
+    let roundsPlayed = 0;
+    for (const s of rawSeries) for (const p of (s.players || [])) {
+      for (let r = 4; r > roundsPlayed; r--) {
+        if (p["t" + r] != null || (p["statusR" + r] && p["statusR" + r] !== "")) { roundsPlayed = r; break; }
+      }
+    }
     const cm = j.ggPage ? null : matchCatalog(j.name, year);
     tournaments.push({
       file,
@@ -159,6 +154,11 @@ for (const file of files) {
       ligue,
       seriesCount: series.length,
       totalPlayers,
+      _licSig: licSig,        // interno (removido antes do output) — dedup de re-publicação
+      _licCount: licSet.size, // idem
+      course,
+      sex,
+      roundsPlayed: roundsPlayed || null,
       divisions: series,
       pagesFfgolfUrl: j.pagesFfgolfUrl || PAGES_FFGOLF_URL,
       ffgolfOfficialUrl: j.ffgolfOfficialUrl || (cm ? officialUrl(cm) : null),
@@ -191,21 +191,66 @@ for (const group of byTrnId.values()) {
   deduped.push(keep);
 }
 
-deduped.sort((a, b) => (b.dateIso || "").localeCompare(a.dateIso || ""));
+// ── Dedup de RE-PUBLICAÇÃO (mesmo evento, trnId diferente) ──────────
+// A FFG por vezes republica o mesmo torneio com outro trnId (às vezes com
+// nome ligeiramente diferente — "GRAND PRIX JEUNES" vs "…DE DEAUVILLE"). O
+// dedup por trnId acima não os apanha. Agrupamos por (ano + conjunto EXACTO
+// de licenças) com datas a ≤3 dias e ficamos com UM canónico (mais jogadores,
+// depois mais ligas, depois trnId menor). Só actua com licenças a sério
+// (≥5) e conjuntos IDÊNTICOS — rosters só parecidos (ex: Critérium Cadet a
+// partilhar jogadores) NÃO são fundidos. Espelha o scripts/delete-... que
+// apaga os ficheiros; aqui é a rede que aguenta um re-scrape recriá-los.
+const dayDiff = (a, b) => {
+  if (!a || !b) return 99;
+  return Math.abs((new Date(a) - new Date(b)) / 864e5);
+};
+const bySig = new Map();
+for (const t of deduped) {
+  if (!t._licSig || t._licCount < 5) { bySig.set(`solo:${t.trnId}`, [t]); continue; }
+  const key = `${t.year}|${t._licSig}`;
+  if (!bySig.has(key)) bySig.set(key, []);
+  bySig.get(key).push(t);
+}
+const canonical = [];
+let droppedRepub = 0;
+for (const group of bySig.values()) {
+  if (group.length === 1) { canonical.push(group[0]); continue; }
+  // Confirmar proximidade de data dentro do grupo (licenças iguais já garantem
+  // o evento; a data protege contra coincidências raras entre épocas).
+  group.sort((a, b) =>
+    (b.totalPlayers - a.totalPlayers) ||
+    ((b.ligues?.length || 1) - (a.ligues?.length || 1)) ||
+    a.trnId.localeCompare(b.trnId)
+  );
+  const keep = group[0];
+  const merged = [keep];
+  for (const t of group.slice(1)) {
+    if (dayDiff(keep.dateIso, t.dateIso) <= 3) {
+      keep.ligues = [...new Set([...(keep.ligues || [keep.ligue]), ...(t.ligues || [t.ligue])])].sort();
+      droppedRepub++;
+    } else {
+      merged.push(t); // data distante → evento diferente, mantém
+    }
+  }
+  canonical.push(...merged);
+}
+
+for (const t of canonical) { delete t._licSig; delete t._licCount; }
+canonical.sort((a, b) => (b.dateIso || "").localeCompare(a.dateIso || ""));
 
 const out = {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-ffgolf-resultats-index.js",
-  total: deduped.length,
-  tournaments: deduped,
+  total: canonical.length,
+  tournaments: canonical,
 };
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2), "utf-8");
 console.log(`OK: ${OUT}`);
-console.log(`   ${deduped.length} torneios juvenis · ${droppedDup} duplicados de liga removidos · ${skippedNonJuvenil} não-juvenis filtrados · ${deduped.reduce((s, t) => s + t.totalPlayers, 0)} jogadores`);
+console.log(`   ${canonical.length} torneios juvenis · ${droppedDup} duplicados de liga + ${droppedRepub} re-publicações removidos · ${skippedNonJuvenil} não-juvenis filtrados · ${canonical.reduce((s, t) => s + t.totalPlayers, 0)} jogadores`);
 const byYear = {};
-deduped.forEach((t) => { byYear[t.year || "?"] = (byYear[t.year || "?"] || 0) + 1; });
+canonical.forEach((t) => { byYear[t.year || "?"] = (byYear[t.year || "?"] || 0) + 1; });
 console.log("   por ano:", JSON.stringify(byYear));
-const withGG = deduped.filter(t => t.ggPage).length;
-const withOff = deduped.filter(t => t.ffgolfOfficialUrl).length;
+const withGG = canonical.filter(t => t.ggPage).length;
+const withOff = canonical.filter(t => t.ffgolfOfficialUrl).length;
 console.log(`   com GolfGenius: ${withGG}, com URL oficial: ${withOff}`);

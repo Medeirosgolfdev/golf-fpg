@@ -81,13 +81,6 @@ async function listSlugsInListing(page, section, year) {
   return slugs;
 }
 
-/** Título legível a partir do slug ("championnat-de-france-u12" → "Championnat De France U12 (2026)"). */
-function titleFromSlug(slug, year) {
-  const words = String(slug).split("-").filter(Boolean)
-    .map((w) => (w.length <= 3 && /^u\d+$/i.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)));
-  return `${words.join(" ")} (${year})`;
-}
-
 async function getGgIdsForTournament(page, section, year, slug) {
   const url = `${FFGOLF_BASE}/${section}/${year}/${slug}/page-scores-tournoi`;
   try {
@@ -150,11 +143,9 @@ async function getGgIdsForTournament(page, section, year, slug) {
             year,
             section,
             slug,
-            // `title` mesmo sem iframe: a FFGPage ordena a lista por title e
-            // rebentava com undefined assim que uma destas entradas ganhasse um
-            // gg_page à mão. Derivado do slug — o discovery só o sabe melhor
-            // quando chega à página do torneio.
-            title: titleFromSlug(slug, year),
+            // SEM `title`: o ffgolf.org não no-lo deu. Não se deriva do slug —
+            // seria um nome inventado a passar por oficial. Quem consome tem de
+            // aguentar a ausência (a FFGPage cai no nome do torneio scrapado).
             ffgolf_url: `${FFGOLF_BASE}/${section}/${year}/${slug}`,
             gg_page: null,
             gg_league: null,

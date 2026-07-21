@@ -40,11 +40,6 @@ function norm(s) {
     .trim();
 }
 
-const STOP = new Set(["de","des","du","la","le","les","et","au","aux","un","une","sur","par","pour","2024","2025","2026"]);
-function sigTokens(s) {
-  return norm(s).split(" ").filter(t => t.length >= 3 && !STOP.has(t));
-}
-
 function loadCatalog() {
   if (!fs.existsSync(CATALOG_FILE)) {
     console.warn("[backfill] catálogo não encontrado — só será adicionado pagesFfgolfUrl");
@@ -53,39 +48,9 @@ function loadCatalog() {
   return JSON.parse(fs.readFileSync(CATALOG_FILE, "utf-8")).tournaments || [];
 }
 
-function findCatalogMatch(resName, resYear, catalog) {
-  if (!resName || !resYear) return null;
-  const resTok = sigTokens(resName);
-  if (!resTok.length) return null;
-  const resY = String(resYear);
-  const same = catalog.filter(e => String(e.year) === resY);
-  if (!same.length) return null;
-  let hit = same.find(e => norm(e.title) === norm(resName));
-  if (hit) return hit;
-  const cand = same.filter(e => {
-    const catN = norm(e.title);
-    return resTok.every(t => catN.includes(t));
-  });
-  if (cand.length) {
-    if (cand.length === 1) return cand[0];
-    const hasG = /gar[cç]ons|boys|men|messieurs/i.test(resName);
-    const hasF = /filles|girls|women|dames/i.test(resName);
-    if (hasG) {
-      const m = cand.find(e => /gar[cç]ons|boys|men|messieurs/i.test(e.title));
-      if (m) return m;
-    }
-    if (hasF) {
-      const m = cand.find(e => /filles|girls|women|dames/i.test(e.title));
-      if (m) return m;
-    }
-    return cand[0];
-  }
-  hit = same.find(e => {
-    const catN = norm(e.title);
-    return catN.includes(norm(resName)) || norm(resName).includes(catN);
-  });
-  return hit || null;
-}
+// Matcher partilhado (uma só cópia honesta — ver lib/ffgolf-catalog-match.js).
+const { matchCatalog } = require("./lib/ffgolf-catalog-match.js");
+const findCatalogMatch = (resName, resYear, catalog) => matchCatalog(resName, resYear, catalog);
 
 function ffgolfOfficialUrl(catEntry) {
   if (!catEntry || !catEntry.year || !catEntry.slug || !catEntry.section) return null;
@@ -126,6 +91,13 @@ function enrichTournament(t, catalog) {
     if (match.section && updated.ffgolfSection !== match.section) {
       updated.ffgolfSection = match.section;
       changed = true;
+    }
+  } else {
+    // Sem match agora → LIMPAR quaisquer links de catálogo escritos por uma
+    // versão anterior do matcher (que ligava torneios a entradas erradas). Um
+    // link errado é pior que nenhum; sem match seguro, apagam-se.
+    for (const k of ["ggPage", "ffgolfOfficialUrl", "ffgolfSlug", "ffgolfSection"]) {
+      if (updated[k] != null) { delete updated[k]; changed = true; }
     }
   }
 

@@ -3,67 +3,147 @@
   "slug": "grand-prix-national-u12-filles-1",
   "year": 2025,
   "section": "grands-prix-jeunes",
+  "dateStart": "2025-04-12",
+  "dateEnd": "2025-04-13",
   "source": "https://www.golfgenius.com/pages/11552153706824774492",
   "gg_page": "11552153706824774492",
   "gg_league": "11552153678370616131",
   "stats_page": null,
-  "scrapedAt": "2026-07-04T11:48:47.094Z",
+  "scrapedAt": "2026-07-21T10:58:19.475Z",
   "course": {
     "name": "Golf de Nîmes Vacquerolles (Les Chevreuils)",
-    "tee": "",
+    "tee": "U12 Filles",
     "par": [
-      6,
+      5,
       4,
       4,
       3,
       5,
       4,
+      3,
+      4,
+      4,
       4,
       5,
-      4,
-      4,
-      6,
       4,
       3,
-      5,
+      4,
       3,
-      5,
+      4,
       5,
       4
     ],
-    "meters": [],
-    "si": [],
-    "parTotal": 78,
-    "metersTotal": 0
+    "meters": [
+      390,
+      256,
+      252,
+      116,
+      320,
+      175,
+      144,
+      237,
+      170,
+      240,
+      320,
+      210,
+      108,
+      250,
+      85,
+      302,
+      417,
+      240
+    ],
+    "si": [
+      6,
+      13,
+      14,
+      8,
+      17,
+      18,
+      5,
+      4,
+      9,
+      12,
+      1,
+      10,
+      11,
+      7,
+      16,
+      3,
+      2,
+      15
+    ],
+    "parTotal": 72,
+    "metersTotal": 4232,
+    "parSource": "course_analytics",
+    "metersSource": "course_analytics"
   },
   "courses": [
     {
-      "teeName": "",
+      "teeName": "U12 Filles",
       "courseName": "Golf de Nîmes Vacquerolles (Les Chevreuils)",
       "par": [
-        6,
+        5,
         4,
         4,
         3,
         5,
         4,
+        3,
+        4,
+        4,
         4,
         5,
-        4,
-        4,
-        6,
         4,
         3,
-        5,
+        4,
         3,
-        5,
+        4,
         5,
         4
       ],
-      "meters": [],
-      "si": [],
-      "parTotal": 78,
-      "metersTotal": 0
+      "meters": [
+        390,
+        256,
+        252,
+        116,
+        320,
+        175,
+        144,
+        237,
+        170,
+        240,
+        320,
+        210,
+        108,
+        250,
+        85,
+        302,
+        417,
+        240
+      ],
+      "si": [
+        6,
+        13,
+        14,
+        8,
+        17,
+        18,
+        5,
+        4,
+        9,
+        12,
+        1,
+        10,
+        11,
+        7,
+        16,
+        3,
+        2,
+        15
+      ],
+      "parTotal": 72,
+      "metersTotal": 4232
     }
   ],
   "rounds": 2,
@@ -73,10 +153,54 @@
   ],
   "players": [
     {
+      "id": "11561253373235737454",
+      "pos": null,
+      "name": "VIEGAS ESTREIA Paul",
+      "country": null,
+      "club": "GOLF DE LERY POSES",
+      "hcp": null,
+      "total": 80,
+      "toPar": null,
+      "roundScores": [
+        80
+      ],
+      "division": "Round 1 (Sat, April 12)",
+      "rounds": [
+        {
+          "round": 1,
+          "gross": 80,
+          "scores": [
+            5,
+            5,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            6,
+            6,
+            4,
+            3,
+            6,
+            3,
+            5,
+            5,
+            4
+          ],
+          "f9": 38,
+          "b9": 42,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
+        }
+      ]
+    },
+    {
       "id": "11561253373269291917",
       "pos": 1,
       "name": "PETIT-DUBOUSQUET Arthur",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE LA PREE - LA ROCHELLE",
       "hcp": null,
       "total": 148,
@@ -111,7 +235,9 @@
             4
           ],
           "f9": 33,
-          "b9": 38
+          "b9": 38,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -137,7 +263,9 @@
             5
           ],
           "f9": 36,
-          "b9": 41
+          "b9": 41,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -145,7 +273,7 @@
       "id": "11561253373269291906",
       "pos": 2,
       "name": "GONZALVEZ Emile",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE NIMES VACQUEROLLES",
       "hcp": null,
       "total": 148,
@@ -180,7 +308,9 @@
             3
           ],
           "f9": 35,
-          "b9": 37
+          "b9": 37,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -206,7 +336,9 @@
             4
           ],
           "f9": 38,
-          "b9": 38
+          "b9": 38,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -214,7 +346,7 @@
       "id": "11561253373302846353",
       "pos": 3,
       "name": "LE SOLLIEC Maël",
-      "country": "FR",
+      "country": null,
       "club": "GOLF D'ANJOU",
       "hcp": null,
       "total": 149,
@@ -249,7 +381,9 @@
             4
           ],
           "f9": 37,
-          "b9": 37
+          "b9": 37,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -275,7 +409,9 @@
             4
           ],
           "f9": 36,
-          "b9": 39
+          "b9": 39,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -283,7 +419,7 @@
       "id": "11561253373269291910",
       "pos": 4,
       "name": "BAILLY Octavio",
-      "country": "FR",
+      "country": null,
       "club": "LYON SALVAGNY GOLF CLUB",
       "hcp": null,
       "total": 149,
@@ -318,7 +454,9 @@
             4
           ],
           "f9": 37,
-          "b9": 37
+          "b9": 37,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -344,7 +482,9 @@
             4
           ],
           "f9": 34,
-          "b9": 41
+          "b9": 41,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -352,7 +492,7 @@
       "id": "11561253373269291915",
       "pos": 5,
       "name": "BECERRA Artyom",
-      "country": "FR",
+      "country": null,
       "club": "GOLF MONTPELLIER FONTCAUDE",
       "hcp": null,
       "total": 151,
@@ -387,7 +527,9 @@
             4
           ],
           "f9": 37,
-          "b9": 39
+          "b9": 39,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -413,7 +555,9 @@
             4
           ],
           "f9": 36,
-          "b9": 39
+          "b9": 39,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -421,7 +565,7 @@
       "id": "11561253373302846358",
       "pos": 6,
       "name": "GALLE Theophile",
-      "country": "FR",
+      "country": null,
       "club": "LYON SALVAGNY GOLF CLUB",
       "hcp": null,
       "total": 152,
@@ -456,7 +600,9 @@
             4
           ],
           "f9": 36,
-          "b9": 37
+          "b9": 37,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -482,7 +628,9 @@
             5
           ],
           "f9": 38,
-          "b9": 41
+          "b9": 41,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -490,7 +638,7 @@
       "id": "11561253373269291919",
       "pos": 7,
       "name": "JOLY Paul",
-      "country": "FR",
+      "country": null,
       "club": "GOLF BASTIDE DE LA SALETTE",
       "hcp": null,
       "total": 153,
@@ -525,7 +673,9 @@
             4
           ],
           "f9": 36,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -551,7 +701,9 @@
             5
           ],
           "f9": 37,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -559,7 +711,7 @@
       "id": "11561253373235737459",
       "pos": 8,
       "name": "POMERLEAU Alex",
-      "country": "FR",
+      "country": null,
       "club": "GOLF&COUNTRY DE MAISON BLANCHE",
       "hcp": null,
       "total": 154,
@@ -594,7 +746,9 @@
             4
           ],
           "f9": 37,
-          "b9": 42
+          "b9": 42,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -620,7 +774,9 @@
             4
           ],
           "f9": 37,
-          "b9": 38
+          "b9": 38,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -628,7 +784,7 @@
       "id": "11561253373302846357",
       "pos": 8,
       "name": "MOUY Arthur",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB DE LYON",
       "hcp": null,
       "total": 154,
@@ -663,7 +819,9 @@
             4
           ],
           "f9": 39,
-          "b9": 38
+          "b9": 38,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -689,7 +847,9 @@
             5
           ],
           "f9": 39,
-          "b9": 38
+          "b9": 38,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -697,7 +857,7 @@
       "id": "11561253373235737452",
       "pos": 8,
       "name": "ALLOUACHE Adam",
-      "country": "FR",
+      "country": null,
       "club": "GOLF TRAINING CENTER AIX-MARSEILLE",
       "hcp": null,
       "total": 154,
@@ -732,7 +892,9 @@
             4
           ],
           "f9": 40,
-          "b9": 38
+          "b9": 38,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -758,7 +920,9 @@
             4
           ],
           "f9": 36,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -766,7 +930,7 @@
       "id": "11561253373269291920",
       "pos": 11,
       "name": "JEUCH Eliel",
-      "country": "FR",
+      "country": null,
       "club": "KEMPFERHOF RESORT",
       "hcp": null,
       "total": 155,
@@ -801,7 +965,9 @@
             4
           ],
           "f9": 41,
-          "b9": 38
+          "b9": 38,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -827,7 +993,9 @@
             4
           ],
           "f9": 40,
-          "b9": 36
+          "b9": 36,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -835,7 +1003,7 @@
       "id": "11561253373269291905",
       "pos": 11,
       "name": "POILLERAT Harry",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE SAINT-MALO",
       "hcp": null,
       "total": 155,
@@ -870,7 +1038,9 @@
             5
           ],
           "f9": 44,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -896,7 +1066,9 @@
             4
           ],
           "f9": 34,
-          "b9": 37
+          "b9": 37,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -904,7 +1076,7 @@
       "id": "11561253373302846356",
       "pos": 13,
       "name": "LE GARREC Raphael",
-      "country": "FR",
+      "country": null,
       "club": "GOLF BASTIDE DE LA SALETTE",
       "hcp": null,
       "total": 156,
@@ -939,7 +1111,9 @@
             5
           ],
           "f9": 39,
-          "b9": 41
+          "b9": 41,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -965,7 +1139,9 @@
             4
           ],
           "f9": 37,
-          "b9": 39
+          "b9": 39,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -973,7 +1149,7 @@
       "id": "11561253373269291901",
       "pos": 14,
       "name": "CAMOU Alexis",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB DE STRASBOURG",
       "hcp": null,
       "total": 157,
@@ -1008,7 +1184,9 @@
             4
           ],
           "f9": 41,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1034,7 +1212,9 @@
             5
           ],
           "f9": 36,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1042,7 +1222,7 @@
       "id": "11561253373269291908",
       "pos": 14,
       "name": "PAUL Misha",
-      "country": "FR",
+      "country": null,
       "club": "GOLF COUNTRY CLUB DE CANNES MOUGINS",
       "hcp": null,
       "total": 157,
@@ -1077,7 +1257,9 @@
             3
           ],
           "f9": 41,
-          "b9": 39
+          "b9": 39,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1103,7 +1285,9 @@
             6
           ],
           "f9": 36,
-          "b9": 41
+          "b9": 41,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1111,7 +1295,7 @@
       "id": "11561253373235737447",
       "pos": 14,
       "name": "DAGOMMER Clément",
-      "country": "FR",
+      "country": null,
       "club": "GOLF MUNICIPAL MIMIZAN",
       "hcp": null,
       "total": 157,
@@ -1146,7 +1330,9 @@
             5
           ],
           "f9": 39,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1172,7 +1358,9 @@
             5
           ],
           "f9": 35,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1180,7 +1368,7 @@
       "id": "11561253373269291909",
       "pos": 17,
       "name": "LACUBE Gaspard",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB D'ARCANGUES",
       "hcp": null,
       "total": 158,
@@ -1215,7 +1403,9 @@
             5
           ],
           "f9": 41,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1241,7 +1431,9 @@
             4
           ],
           "f9": 38,
-          "b9": 39
+          "b9": 39,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1249,7 +1441,7 @@
       "id": "11561253373302846354",
       "pos": 17,
       "name": "LEGLEYE Gaspard",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DES VOLCANS",
       "hcp": null,
       "total": 158,
@@ -1284,7 +1476,9 @@
             4
           ],
           "f9": 40,
-          "b9": 42
+          "b9": 42,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1310,7 +1504,9 @@
             4
           ],
           "f9": 38,
-          "b9": 38
+          "b9": 38,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1318,7 +1514,7 @@
       "id": "11561253373269291918",
       "pos": 17,
       "name": "BERNARDINI Victor",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE BONDUES",
       "hcp": null,
       "total": 158,
@@ -1353,7 +1549,9 @@
             4
           ],
           "f9": 39,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1379,7 +1577,9 @@
             4
           ],
           "f9": 39,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1387,7 +1587,7 @@
       "id": "11561253373235737455",
       "pos": 17,
       "name": "XIAO Philippe",
-      "country": "FR",
+      "country": null,
       "club": "RACING CLUB DE FRANCE",
       "hcp": null,
       "total": 158,
@@ -1422,7 +1622,9 @@
             4
           ],
           "f9": 39,
-          "b9": 37
+          "b9": 37,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1448,7 +1650,9 @@
             4
           ],
           "f9": 41,
-          "b9": 41
+          "b9": 41,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1456,7 +1660,7 @@
       "id": "11561253373269291903",
       "pos": 21,
       "name": "GERMOUTY Paul",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE COURSON STADE FRANCAIS",
       "hcp": null,
       "total": 160,
@@ -1491,7 +1695,9 @@
             5
           ],
           "f9": 39,
-          "b9": 41
+          "b9": 41,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1517,7 +1723,9 @@
             5
           ],
           "f9": 42,
-          "b9": 38
+          "b9": 38,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1525,7 +1733,7 @@
       "id": "11561253373235737464",
       "pos": 21,
       "name": "DUNLOP Cayssi",
-      "country": "FR",
+      "country": null,
       "club": "UGOLF DES TROIS VALLONS",
       "hcp": null,
       "total": 160,
@@ -1560,7 +1768,9 @@
             3
           ],
           "f9": 42,
-          "b9": 36
+          "b9": 36,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1586,7 +1796,9 @@
             6
           ],
           "f9": 39,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1594,7 +1806,7 @@
       "id": "11561253373269291913",
       "pos": 21,
       "name": "BERTHET Alexandre",
-      "country": "FR",
+      "country": null,
       "club": "RACING CLUB DE FRANCE",
       "hcp": null,
       "total": 160,
@@ -1629,7 +1841,9 @@
             5
           ],
           "f9": 37,
-          "b9": 39
+          "b9": 39,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1655,7 +1869,9 @@
             5
           ],
           "f9": 41,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1663,7 +1879,7 @@
       "id": "11561253373302846355",
       "pos": 24,
       "name": "BONENFANT Nathan",
-      "country": "FR",
+      "country": null,
       "club": "GOLF BLUEGREEN LA DOMANGERE",
       "hcp": null,
       "total": 161,
@@ -1698,7 +1914,9 @@
             3
           ],
           "f9": 37,
-          "b9": 44
+          "b9": 44,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1724,7 +1942,9 @@
             5
           ],
           "f9": 40,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1732,7 +1952,7 @@
       "id": "11561253373269291912",
       "pos": 25,
       "name": "RAMAROSON Iavo",
-      "country": "FR",
+      "country": null,
       "club": "GOLF D'OZOIR LA FERRIERE",
       "hcp": null,
       "total": 162,
@@ -1767,7 +1987,9 @@
             4
           ],
           "f9": 41,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1793,7 +2015,9 @@
             4
           ],
           "f9": 38,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1801,7 +2025,7 @@
       "id": "11561253373269291916",
       "pos": 25,
       "name": "FERBUS-BOISDET Althys",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE MARCILLY-ORLEANS",
       "hcp": null,
       "total": 162,
@@ -1836,7 +2060,9 @@
             4
           ],
           "f9": 40,
-          "b9": 43
+          "b9": 43,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1862,7 +2088,9 @@
             7
           ],
           "f9": 34,
-          "b9": 45
+          "b9": 45,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1870,7 +2098,7 @@
       "id": "11561253373269291902",
       "pos": 27,
       "name": "ROBILLART Andreas",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB THUMERIES-MONCHEAUX",
       "hcp": null,
       "total": 163,
@@ -1905,7 +2133,9 @@
             5
           ],
           "f9": 41,
-          "b9": 41
+          "b9": 41,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -1931,7 +2161,9 @@
             4
           ],
           "f9": 39,
-          "b9": 42
+          "b9": 42,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -1939,7 +2171,7 @@
       "id": "11561253373269291914",
       "pos": 27,
       "name": "DA SILVA Mathis",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE LA BOSSE",
       "hcp": null,
       "total": 163,
@@ -1974,7 +2206,9 @@
             7
           ],
           "f9": 39,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2000,7 +2234,9 @@
             5
           ],
           "f9": 42,
-          "b9": 42
+          "b9": 42,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2008,7 +2244,7 @@
       "id": "11561253373235737453",
       "pos": 27,
       "name": "TURNER Jack",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE CHIBERTA",
       "hcp": null,
       "total": 163,
@@ -2043,7 +2279,9 @@
             4
           ],
           "f9": 42,
-          "b9": 42
+          "b9": 42,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2069,7 +2307,9 @@
             4
           ],
           "f9": 39,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2077,7 +2317,7 @@
       "id": "11561253373235737458",
       "pos": 30,
       "name": "DELMAS Victor",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE MARCILLY-ORLEANS",
       "hcp": null,
       "total": 164,
@@ -2112,7 +2352,9 @@
             5
           ],
           "f9": 39,
-          "b9": 42
+          "b9": 42,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2138,7 +2380,9 @@
             5
           ],
           "f9": 38,
-          "b9": 45
+          "b9": 45,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2146,7 +2390,7 @@
       "id": "11561253373269291904",
       "pos": 30,
       "name": "RISSE Solal",
-      "country": "FR",
+      "country": null,
       "club": "LYON SALVAGNY GOLF CLUB",
       "hcp": null,
       "total": 164,
@@ -2181,7 +2425,9 @@
             5
           ],
           "f9": 41,
-          "b9": 45
+          "b9": 45,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2207,7 +2453,9 @@
             5
           ],
           "f9": 41,
-          "b9": 37
+          "b9": 37,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2215,7 +2463,7 @@
       "id": "11561253373235737463",
       "pos": 32,
       "name": "MONFORT Eloan",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE BONDUES",
       "hcp": null,
       "total": 165,
@@ -2250,7 +2498,9 @@
             4
           ],
           "f9": 36,
-          "b9": 44
+          "b9": 44,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2276,7 +2526,9 @@
             4
           ],
           "f9": 40,
-          "b9": 45
+          "b9": 45,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2284,7 +2536,7 @@
       "id": "11561253373269291907",
       "pos": 32,
       "name": "TOSATTO Gabin",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE GUERANDE",
       "hcp": null,
       "total": 165,
@@ -2319,7 +2571,9 @@
             4
           ],
           "f9": 41,
-          "b9": 41
+          "b9": 41,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2345,7 +2599,9 @@
             6
           ],
           "f9": 39,
-          "b9": 44
+          "b9": 44,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2353,7 +2609,7 @@
       "id": "11561253373235737448",
       "pos": 34,
       "name": "LANGLOIS NIETO Louis",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE LA PREE - LA ROCHELLE",
       "hcp": null,
       "total": 167,
@@ -2388,7 +2644,9 @@
             4
           ],
           "f9": 41,
-          "b9": 43
+          "b9": 43,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2414,7 +2672,9 @@
             5
           ],
           "f9": 41,
-          "b9": 42
+          "b9": 42,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2422,7 +2682,7 @@
       "id": "11561253373235737451",
       "pos": 35,
       "name": "CASIMIR Clément",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE VALESCURE",
       "hcp": null,
       "total": 168,
@@ -2457,7 +2717,9 @@
             3
           ],
           "f9": 44,
-          "b9": 40
+          "b9": 40,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2483,7 +2745,9 @@
             4
           ],
           "f9": 37,
-          "b9": 47
+          "b9": 47,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2491,7 +2755,7 @@
       "id": "11561253373269291911",
       "pos": 35,
       "name": "PERROT Jules",
-      "country": "FR",
+      "country": null,
       "club": "GOLF COUNTRY CLUB DE CANNES MOUGINS",
       "hcp": null,
       "total": 168,
@@ -2526,7 +2790,9 @@
             4
           ],
           "f9": 42,
-          "b9": 44
+          "b9": 44,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2552,7 +2818,9 @@
             4
           ],
           "f9": 40,
-          "b9": 42
+          "b9": 42,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2560,7 +2828,7 @@
       "id": "11561253373269291900",
       "pos": 37,
       "name": "SMITH Jack",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE SAINT-MALO",
       "hcp": null,
       "total": 169,
@@ -2595,7 +2863,9 @@
             4
           ],
           "f9": 38,
-          "b9": 41
+          "b9": 41,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2621,7 +2891,9 @@
             6
           ],
           "f9": 43,
-          "b9": 47
+          "b9": 47,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2629,7 +2901,7 @@
       "id": "11561253373269291897",
       "pos": 37,
       "name": "TREHIN Charles",
-      "country": "FR",
+      "country": null,
       "club": "GOLF COUNTRY CLUB DE CANNES MOUGINS",
       "hcp": null,
       "total": 169,
@@ -2664,7 +2936,9 @@
             5
           ],
           "f9": 40,
-          "b9": 45
+          "b9": 45,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2690,7 +2964,9 @@
             6
           ],
           "f9": 41,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2698,7 +2974,7 @@
       "id": "11561253373235737461",
       "pos": 37,
       "name": "BOUAZZA Naël",
-      "country": "FR",
+      "country": null,
       "club": "UGOLF LA RAMEE",
       "hcp": null,
       "total": 169,
@@ -2733,7 +3009,9 @@
             5
           ],
           "f9": 41,
-          "b9": 44
+          "b9": 44,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2759,7 +3037,9 @@
             5
           ],
           "f9": 40,
-          "b9": 44
+          "b9": 44,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2767,7 +3047,7 @@
       "id": "11561253373235737462",
       "pos": 40,
       "name": "RONGIERAS Raphael",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB DE PERIGUEUX",
       "hcp": null,
       "total": 175,
@@ -2802,7 +3082,9 @@
             4
           ],
           "f9": 44,
-          "b9": 49
+          "b9": 49,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2828,7 +3110,9 @@
             4
           ],
           "f9": 39,
-          "b9": 43
+          "b9": 43,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2836,7 +3120,7 @@
       "id": "11561253373235737450",
       "pos": 41,
       "name": "SERVANT DIAZ Marco",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE LA PREE - LA ROCHELLE",
       "hcp": null,
       "total": 179,
@@ -2871,7 +3155,9 @@
             4
           ],
           "f9": 40,
-          "b9": 50
+          "b9": 50,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2897,7 +3183,9 @@
             5
           ],
           "f9": 45,
-          "b9": 44
+          "b9": 44,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2905,7 +3193,7 @@
       "id": "11561253373269291898",
       "pos": 41,
       "name": "BESNOUX Mahe",
-      "country": "FR",
+      "country": null,
       "club": "GOLF GILLES DE BOISGELIN",
       "hcp": null,
       "total": 179,
@@ -2940,7 +3228,9 @@
             5
           ],
           "f9": 45,
-          "b9": 47
+          "b9": 47,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -2966,7 +3256,9 @@
             5
           ],
           "f9": 43,
-          "b9": 44
+          "b9": 44,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -2974,7 +3266,7 @@
       "id": "11561253373235737460",
       "pos": 43,
       "name": "DERAMECOURT Gaspard",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE CHANTILLY",
       "hcp": null,
       "total": 180,
@@ -3009,7 +3301,9 @@
             5
           ],
           "f9": 42,
-          "b9": 48
+          "b9": 48,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -3035,7 +3329,9 @@
             4
           ],
           "f9": 43,
-          "b9": 47
+          "b9": 47,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -3043,7 +3339,7 @@
       "id": "11561253373235737449",
       "pos": 44,
       "name": "LAQUAIS Paul",
-      "country": "FR",
+      "country": null,
       "club": "GOLF DE CASTRES-GOURJADE",
       "hcp": null,
       "total": 183,
@@ -3078,7 +3374,9 @@
             5
           ],
           "f9": 46,
-          "b9": 43
+          "b9": 43,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -3104,7 +3402,9 @@
             6
           ],
           "f9": 43,
-          "b9": 51
+          "b9": 51,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -3112,7 +3412,7 @@
       "id": "11561253373235737457",
       "pos": 44,
       "name": "THUILLANT Oscar",
-      "country": "FR",
+      "country": null,
       "club": "GOLF BARRIERE DEAUVILLE",
       "hcp": null,
       "total": 183,
@@ -3147,7 +3447,9 @@
             3
           ],
           "f9": 51,
-          "b9": 44
+          "b9": 44,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -3173,7 +3475,9 @@
             5
           ],
           "f9": 44,
-          "b9": 44
+          "b9": 44,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -3181,7 +3485,7 @@
       "id": "11561253373235737456",
       "pos": 44,
       "name": "BARNETCHE Adrien",
-      "country": "FR",
+      "country": null,
       "club": "GOLF BORDELAIS",
       "hcp": null,
       "total": 183,
@@ -3216,7 +3520,9 @@
             6
           ],
           "f9": 49,
-          "b9": 49
+          "b9": 49,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -3242,7 +3548,9 @@
             4
           ],
           "f9": 45,
-          "b9": 40
+          "b9": 40,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     },
@@ -3250,7 +3558,7 @@
       "id": "11561253373269291899",
       "pos": 47,
       "name": "YANEZ Baptiste",
-      "country": "FR",
+      "country": null,
       "club": "GOLF CLUB DE STRASBOURG",
       "hcp": null,
       "total": 188,
@@ -3285,7 +3593,9 @@
             7
           ],
           "f9": 49,
-          "b9": 47
+          "b9": 47,
+          "date": "Sat, April 12",
+          "dateIso": "2025-04-12"
         },
         {
           "round": 2,
@@ -3311,49 +3621,9 @@
             6
           ],
           "f9": 44,
-          "b9": 48
-        }
-      ]
-    },
-    {
-      "id": "11561253373235737454",
-      "pos": null,
-      "name": "VIEGAS ESTREIA Paul",
-      "country": "FR",
-      "club": "GOLF DE LERY POSES",
-      "hcp": null,
-      "total": null,
-      "toPar": null,
-      "roundScores": [
-        80
-      ],
-      "division": "Round 1 (Sat, April 12)",
-      "rounds": [
-        {
-          "round": 1,
-          "gross": 80,
-          "scores": [
-            5,
-            5,
-            5,
-            3,
-            5,
-            3,
-            4,
-            4,
-            4,
-            6,
-            6,
-            4,
-            3,
-            6,
-            3,
-            5,
-            5,
-            4
-          ],
-          "f9": 38,
-          "b9": 42
+          "b9": 48,
+          "date": "Sun, April 13",
+          "dateIso": "2025-04-13"
         }
       ]
     }

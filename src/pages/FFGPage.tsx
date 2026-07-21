@@ -3,11 +3,16 @@
  *
  * Carrega o catálogo `public/data/ffgolf-catalog.json` (lista de torneios
  * mapeados) e, para cada um, tenta `public/data/ffgolf/{year}_{slug}.json`
- * (gerado pelo scraper). Os ficheiros têm par REAL, metros e SI vindos do
- * widget course_statistics do GolfGenius — não há adivinhação.
+ * (gerado pelo scraper).
  *
- * Match play (knockout) é excluído pelo scraper. Só stroke play (qualifiers)
- * é mostrado.
+ * ⚠ Proveniência dos dados de campo: os metros/SI só existem quando a fonte
+ * os publica (rota Playwright, ou override do cartão oficial). A rota fetch
+ * (v2tournaments) NÃO os expõe, e nesses ficheiros o PAR vem INFERIDO dos
+ * marcadores do scorecard (`course.parSource`) — pode divergir do oficial.
+ * Nada é preenchido por adivinhação: sem fonte, o campo fica vazio.
+ *
+ * Fontes na lista: `ffgres` (portal FFG), `gg` (GolfGenius, sem gémeo no
+ * portal) e `lgpidf`. Match play (knockout) é excluído no scrape.
  */
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -366,6 +371,12 @@ interface FFGResIndexEntry {
   ligues?: string[];
   seriesCount: number;
   totalPlayers: number;
+  /** Campo(s) do torneio — courseTerrain do detalhe, sem prefixo "(FFG)". */
+  course?: string | string[] | null;
+  /** Sexo agregado dos jogadores: "M", "F" ou "MF" (misto). Da fonte, não inferido. */
+  sex?: "M" | "F" | "MF" | null;
+  /** Nº de rondas efectivamente jogadas (maior índice com score/estado). */
+  roundsPlayed?: number | null;
   divisions: { serieId: string; label: string | null; players: number }[];
   // Links cruzados pelo build-ffgolf-resultats-index.js (a partir do catálogo).
   pagesFfgolfUrl?: string | null;
@@ -435,6 +446,20 @@ function ffgPlayerName(p: { name?: string; nameNom?: string | null; namePrenom?:
     return `${p.namePrenom.trim()} ${apelido}`;
   }
   return normalizeName(p.name || "");
+}
+
+/** País do jogador FFG para bandeira. Só o que a fonte dá — NUNCA inventar
+ *  "FR" quando falta (mostrava estrangeiros como franceses e estragava o
+ *  filtro 🇵🇹). "FRA" real do portal converte-se no código FR. Sem país → null. */
+function ffgCountry(p: { nationality?: string | null; flag?: string | null }): string | null {
+  const c = p.nationality || p.flag || null;
+  if (!c) return null;
+  return c === "FRA" ? "FR" : c;
+}
+/** Bandeira só quando há país real (senão string vazia — sem 🏳️ nem FR falso). */
+function ffgFlag(p: { nationality?: string | null; flag?: string | null }): string {
+  const c = ffgCountry(p);
+  return c ? gf(c) : "";
 }
 
 /* ── Legenda das siglas de divisão / categoria FFG ─────────────
@@ -514,8 +539,19 @@ export function ffgEscalaoCanonico(raw: string | null | undefined): string | nul
   // Limites por idade: "Joueurs jusqu'à 14 ans", "MOINS DE 15 ANS", "-13 ans"
   const am = u.match(/(?:JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
   if (am) return bucket(+am[1]);
-  if (/MESSIEURS|DAMES|SERIE|SENIOR|ADULTE|HOMMES|FEMMES/.test(u)) return "Adultos";
+  // ⚠ Só marcadores GENUINAMENTE adultos. MESSIEURS/DAMES/HOMMES/FEMMES são
+  // SEXO e "1ère Série" é NÍVEL de divisão — nenhum diz a idade. No portal FFG
+  // as divisões de um torneio juvenil chamam-se "Messieurs"/"Dames"; a idade
+  // vive no NOME ("U16 Filles"). Mapear sexo→"Adultos" rotulava 399 provas
+  // juvenis como adultas. Sem sinal de idade → null (não se adivinha).
+  if (/\bSENIOR|\bVETERAN|\bADULTE|MID[\s-]?AM/.test(u)) return "Adultos";
   return null;
+}
+
+/** Escalões de um torneio: divisões + NOME (a idade FFG mora no nome quando as
+ *  divisões só dizem o sexo). Junta ambas as fontes e dedup. */
+function ffgEscaloesOfTournament(name: string | undefined, labels: (string | null | undefined)[]): string[] {
+  return ffgEscaloesOf([...labels, name]);
 }
 
 /** Escalões canónicos (dedup, sem nulls) de uma lista de labels de série. */
@@ -617,13 +653,14 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
       rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
     }
     const incomplete = rounds.length < numRounds;
-    const playerCountry = p.nationality || p.flag || "FRA";
-    const clubLabel = (p.club && p.club.trim()) ? p.club.trim() : playerCountry;
+    const playerCountry = ffgCountry(p); // país REAL ou null — nunca "FRA" inventado
+    const clubText = (p.club && p.club.trim()) ? p.club.trim() : (playerCountry ? normPaisDisplay(playerCountry) : "");
+    const flagPrefix = playerCountry ? `${gf(playerCountry)} ` : "";
     return {
       scoreId: p.license || `${data.trnId}-${p._serieId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: ffgPlayerName(p),
-      club: `${gf(playerCountry)} ${clubLabel}`,
+      club: `${flagPrefix}${clubText}`.trim(),
       grossTotal: p.total,
       toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * numRounds) : null,
       hcpExact: p.hcp ?? undefined,
@@ -666,8 +703,12 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
   // conheça pelo NOME (teeMetersMap é indexado por teeName). Sem teeName os
   // metros chegam ao componente e são ignorados — era por isso que o cartão
   // do campo não aparecia nos torneios GG. Mesmo truque do caminho do portal.
-  const ggTeeName = t.course.tee || t.course.name || "Tees";
-  const hasMeters = Array.isArray(t.course.meters) && t.course.meters.length === t.course.par.length;
+  // NUNCA inventar um nome de tee: o ScorecardLB indexa os metros por teeName,
+  // portanto sem nome REAL de tee (vindo do cartão oficial) não há linha de
+  // metros — fica vazia, que é o correcto quando não sabemos em que tee se jogou.
+  const ggTeeName = t.course.tee || null;
+  const hasMeters = !!ggTeeName
+    && Array.isArray(t.course.meters) && t.course.meters.length === t.course.par.length;
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const roundScores: FPGRoundScore[] = p.rounds.map((r) => ({
       round: r.round,
@@ -772,7 +813,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
       sortName: ffgPlayerName(p),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf(p.nationality || p.flag || "FRA")}</span>
+          <span style={{ marginRight: 4 }}>{ffgFlag(p)}</span>
           <span className="fw-700">{ffgPlayerName(p)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
@@ -1074,7 +1115,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
       sortName: ffgPlayerName(p),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf(p.nationality || p.flag || "FRA")}</span>
+          <span style={{ marginRight: 4 }}>{ffgFlag(p)}</span>
           <span className="fw-700">{ffgPlayerName(p)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
@@ -1415,7 +1456,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
       sortName: normalizeName(p.name),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf(p.nationality === "FRA" ? "FR" : (p.nationality || "FR"))}</span>
+          <span style={{ marginRight: 4 }}>{ffgFlag(p)}</span>
           <span className="fw-700">{normalizeName(p.name)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
@@ -1544,7 +1585,7 @@ function LGPIDFTeeTimesTab({ data }: { data: LGPIDFTournament }) {
       sortName: normalizeName(p.name),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf("FR")}</span>
+          <span style={{ marginRight: 4 }}>{ffgFlag(p as { nationality?: string | null; flag?: string | null })}</span>
           <span className="fw-700">{normalizeName(p.name)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
@@ -1712,7 +1753,7 @@ function LGPIDFLeaderboardTab({ data }: { data: LGPIDFTournament }) {
       sortName: normalizeName(p.name),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf("FR")}</span>
+          <span style={{ marginRight: 4 }}>{ffgFlag(p as { nationality?: string | null; flag?: string | null })}</span>
           <span className="fw-700">{normalizeName(p.name)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
           {p.dnf && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)", background: "var(--bg-muted)" }}>DNF</span>}
@@ -2617,7 +2658,12 @@ function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolea
     liga: meta.ligue,
     ligas: meta.ligues?.length ? meta.ligues : undefined,
     intl: isIntlName(meta.name),
-    escaloes: ffgEscaloesOf((meta.divisions ?? []).map((d) => d.label || d.serieId)),
+    escaloes: ffgEscaloesOfTournament(meta.name, (meta.divisions ?? []).map((d) => d.label || d.serieId)),
+    // Campos ricos da sidebar (existem no índice; antes não eram expostos).
+    course: Array.isArray(meta.course) ? meta.course.join(" · ") : (meta.course ?? undefined),
+    sex: meta.sex === "MF" ? "Mixed" : (meta.sex ?? undefined),
+    roundsCount: meta.roundsPlayed ?? undefined,
+    hasResults: meta.totalPlayers > 0,
     links,
     playerCount: meta.totalPlayers,
     divisionCount: meta.seriesCount,
@@ -2648,6 +2694,19 @@ function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
   };
 }
 
+/** Slugs GG que NÃO são torneios franceses (espelha EXCLUDE_SLUGS de
+ *  scripts/lib/ffgolf-gg.js — o roster já os exclui; a /ffg também deve). */
+const GG_NON_FR_SLUGS = new Set<string>([
+  "junior-invitational",                    // Sage Valley (EUA)
+  "world-junior-girls-golf-championship",   // WAGR (Canadá)
+]);
+
+/** Sexo a partir do nome do torneio (só quando é inequívoco). Sem sinal → undefined. */
+function ggSexFromName(name: string): "M" | "F" | undefined {
+  const g = /gar[cç]ons|boys/i.test(name), f = /filles|girls/i.test(name);
+  return g && !f ? "M" : f && !g ? "F" : undefined;
+}
+
 /** GolfGenius: torneio FFG que vive só no GG (sem gémeo no portal de resultados).
  *  Reutiliza a DivView — a mesma vista que a versão pré-CircuitShell usava. */
 function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
@@ -2668,7 +2727,11 @@ function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
     dateEnd: data.dateEnd ?? undefined,
     federation: "FFG",
     intl: isIntlName(data.tournament || meta.title || ""),
-    escaloes: ffgEscaloesOf(data.divisions ?? []),
+    escaloes: ffgEscaloesOfTournament(data.tournament || meta.title, data.divisions ?? []),
+    // Sexo do nome do torneio (Garçons/Filles) — o GG não o dá por jogador.
+    sex: ggSexFromName(data.tournament || meta.title || ""),
+    roundsCount: data.rounds || undefined,
+    hasResults: data.players.length > 0,
     links,
     playerCount: data.players.length,
     divisionCount: (data.divisions ?? []).length || 1,
@@ -2723,7 +2786,7 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
     federation: "LGPIDF",
     playerCount: data.players.length || inscritos,
     divisionCount: 1,
-    escaloes: ffgEscaloesOf(meta.divisions ?? []),
+    escaloes: ffgEscaloesOfTournament(data.tournament || meta.tournament, meta.divisions ?? []),
     hasManuel,
     divisions: [{
       key: "main",
@@ -2854,12 +2917,24 @@ function FFGShellContent() {
       }
     }
     if (ggCatalog) {
+      // Rede de segurança: uma página GolfGenius que aloja as duas divisões
+      // (Filles + Garçons) tem slugs distintos a apontar ao MESMO gg_page e o
+      // seu leaderboard é combinado — os dois ficheiros ficam idênticos. Dedup
+      // por gg_page para não mostrar o mesmo evento duas vezes (o nome exibido
+      // vem do próprio GG, que é o título combinado real, não do slug).
+      const seenGgPage = new Set<string>();
       for (const meta of ggCatalog.tournaments) {
         if (!meta.gg_page) continue;
+        // Eventos não-franceses que o catálogo GG arrastou (Sage Valley/EUA,
+        // World Junior Girls/Canadá) — mesma lista do EXCLUDE_SLUGS do roster.
+        // Não pertencem à página 🇫🇷 France.
+        if (GG_NON_FR_SLUGS.has(meta.slug)) continue;
         const key = `${meta.year}_${meta.slug}`;
         if (ggTwins.has(key)) continue; // o portal já mostra este evento
+        if (seenGgPage.has(meta.gg_page)) continue;
         const data = ggData.get(key);
         if (!data || !data.players?.length) continue;
+        seenGgPage.add(meta.gg_page);
         out.push(ggEntry(meta, data));
       }
     }
@@ -2887,7 +2962,7 @@ function FFGShellContent() {
       sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c", gg: "#1f7a4d" },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF", gg: "GolfGenius" },
       ligaLabels: FFG_LIGUE_LABELS,
-      filters: { search: true, year: true, escalao: true, source: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
+      filters: { search: true, year: true, escalao: true, sex: true, source: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10", "results"] },
       specialItems,
       loadingMessage: "A carregar FFGolf…",
     };

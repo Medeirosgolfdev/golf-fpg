@@ -31,6 +31,37 @@ const path = require("path");
 const { scrapeEdition, GG } = require("./scrape-fsga.js");
 const { discoverDivisions } = require("./scrape-golfgenius-node.js");
 const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
+const { fetchCourseStats } = require("./lib/gg-course-stats.js");
+
+/**
+ * Enriquece `out.course`/`out.courses` com par+metros+SI REAIS do widget
+ * course_statistics do GolfGenius. Escolhe como principal o tee cujo par TOTAL
+ * bate com o par inferido dos scorecards (para os scores alinharem); se nenhum
+ * bater, o tee mais longo. Todos os tees ficam em `courses[]`. Marca a origem.
+ */
+async function applyCourseStats(out, lid) {
+  let tees;
+  try { tees = await fetchCourseStats(lid); } catch { tees = []; }
+  if (!tees || !tees.length) return;
+
+  out.courses = tees.map((c) => ({
+    teeName: c.teeName || "", courseName: out.course.name || "",
+    par: c.par, meters: c.meters, si: c.si,
+    parTotal: c.parTotal, metersTotal: c.metersTotal,
+  }));
+
+  const inferredParTotal = out.course.parTotal;
+  const primary = tees.find((c) => c.parTotal === inferredParTotal) || tees[0];
+  out.course.par = primary.par;
+  out.course.meters = primary.meters;
+  out.course.si = primary.si;
+  out.course.parTotal = primary.parTotal;
+  out.course.metersTotal = primary.metersTotal;
+  if (primary.teeName) out.course.tee = primary.teeName;
+  out.course.parSource = "course_analytics";
+  out.course.metersSource = "course_analytics";
+  console.log(`     📐 course_statistics: ${tees.length} tee(s) · principal ${out.course.tee || "?"} par ${primary.parTotal} · ${primary.metersTotal}m`);
+}
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/ffgolf");
 const CATALOG_PATH = path.resolve(__dirname, "../public/data/ffgolf-catalog.json");
@@ -92,13 +123,15 @@ function jobfileToFfgolf(jf, t, lid) {
         id: p.detailId || null,
         pos: toPos(p),
         name: p.name,
-        // ⚠ O v2tournaments API (e o widget/scorecard) NÃO expõem nacionalidade — só o
-        // Playwright a tinha (flag-icon do DOM), mas o DOM destes torneios é o widget
-        // errado (next_round). Sendo campeonatos da FFG (França), defaultamos FR;
-        // preservamos qualquer país inferido ≠US (o motor cai em "US" por defeito).
-        // Internacionais (incl. PT) podem ficar mal-flagados nestes torneios fetch-route.
-        country: p.country && p.country !== "US" ? p.country : "FR",
-        club: p.location || "",
+        // Nacionalidade: o motor (inferCountry) LÊ o país da afiliação quando
+        // esta o traz ("… , ES" → ES) — isso é dado real e preserva-se. Mas
+        // devolve "US" como RECURSO quando não consegue parsear, e o código
+        // antigo virava esse "US" em "FR" por ser prova francesa. Ambos são
+        // invenção: num tracker de um miúdo PT em provas estrangeiras, marcar
+        // franceses/desconhecidos como FR (ou US) estraga o filtro 🇵🇹 PT.
+        // → Mantém o país REAL; o recurso "US" fica VAZIO.
+        country: (p.country && p.country !== "US") ? p.country : null,
+        club: p.location || null,
         hcp: null,
         // Alguns eventos (CFJ U12 Garçons 2026) não publicam coluna "total" —
         // derivamos da soma dos gross das rondas. O `toPar` do GG é sempre
@@ -147,9 +180,23 @@ function jobfileToFfgolf(jf, t, lid) {
     players, events: [],
   };
 
+  // ⚠ PROVENIÊNCIA DO PAR. Sem override, o par vem INFERIDO dos marcadores do
+  // scorecard (círculo=birdie, quadrado=bogey): um buraco sem marcador em
+  // jogador nenhum sai errado. Medido no CFJ U12 Garçons 2026: inferido dava
+  // 75, o cartão oficial é 71 (errado nos buracos 2, 13, 14 e 17). Marcar a
+  // origem para que ninguém a jusante o tome por dado oficial.
+  out.course.parSource = "inferido-marcadores";
+  out.course.metersSource = null; // o GG não expõe metros nesta rota
+
   // Cartão oficial (par + metros por buraco) ganha ao par inferido dos marcadores.
   const ov = applyCourseOverride(out);
-  if (ov) console.log(`     🗂  cartão oficial aplicado: ${out.course.tee || "?"} · par ${out.course.parTotal} · ${out.course.metersTotal}m`);
+  if (ov) {
+    out.course.parSource = "cartao-oficial";
+    out.course.metersSource = "cartao-oficial";
+    console.log(`     🗂  cartão oficial aplicado: ${out.course.tee || "?"} · par ${out.course.parTotal} · ${out.course.metersTotal}m`);
+  } else {
+    console.log(`     ⚠ par INFERIDO dos marcadores (${out.course.parTotal}) — sem cartão oficial; metros vazios`);
+  }
 
   return out;
 }
@@ -187,6 +234,12 @@ function needsFetch(outPath) {
       );
       const ffg = jobfileToFfgolf(jf, t, disc.lid);
       if (!ffg.players.length) { console.log(`   ⚠ ${t.slug}: 0 jogadores mesmo por tournament_results`); empty++; continue; }
+      // Distâncias REAIS via course_statistics do GolfGenius (Node puro). Só
+      // quando não há já cartão oficial curado (esse é autoritativo). Traz par
+      // + metros + SI por buraco de cada tee — substitui o par inferido.
+      if (ffg.course.metersSource !== "cartao-oficial") {
+        await applyCourseStats(ffg, disc.lid);
+      }
       const tmp = outPath + ".tmp";
       fs.writeFileSync(tmp, JSON.stringify(ffg, null, 2), "utf8");
       fs.renameSync(tmp, outPath);

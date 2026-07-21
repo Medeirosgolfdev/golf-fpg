@@ -483,44 +483,7 @@ function _loadCatalog() {
   } catch { _catalogCache = []; }
   return _catalogCache;
 }
-function _normName(s) {
-  return String(s || "").toLowerCase().normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
-}
-const _STOP_TOK = new Set(["de","des","du","la","le","les","et","au","aux","un","une","sur","par","pour","2024","2025","2026"]);
-function _sigTokens(s) {
-  return _normName(s).split(" ").filter(t => t.length >= 3 && !_STOP_TOK.has(t));
-}
-function _findCatalogMatch(name, year, cat) {
-  if (!name || !year) return null;
-  const resTok = _sigTokens(name);
-  if (!resTok.length) return null;
-  const same = cat.filter(e => String(e.year) === String(year));
-  let hit = same.find(e => _normName(e.title) === _normName(name));
-  if (hit) return hit;
-  const cand = same.filter(e => {
-    const catN = _normName(e.title);
-    return resTok.every(t => catN.includes(t));
-  });
-  if (cand.length) {
-    if (cand.length === 1) return cand[0];
-    const hasG = /gar[cç]ons|boys|men|messieurs/i.test(name);
-    const hasF = /filles|girls|women|dames/i.test(name);
-    if (hasG) {
-      const m = cand.find(e => /gar[cç]ons|boys|men|messieurs/i.test(e.title));
-      if (m) return m;
-    }
-    if (hasF) {
-      const m = cand.find(e => /filles|girls|women|dames/i.test(e.title));
-      if (m) return m;
-    }
-    return cand[0];
-  }
-  return same.find(e => {
-    const catN = _normName(e.title);
-    return catN.includes(_normName(name)) || _normName(name).includes(catN);
-  }) || null;
-}
+const { matchCatalog: _findCatalogMatch } = require("./lib/ffgolf-catalog-match.js");
 function enrichWithLinks(t) {
   const out = { ...t, pagesFfgolfUrl: PAGES_FFGOLF_URL };
   const cat = _loadCatalog();
