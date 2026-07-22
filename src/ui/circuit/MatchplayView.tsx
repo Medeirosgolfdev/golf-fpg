@@ -151,7 +151,17 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
     });
   }, [games, sortKey, sortDir]);
 
-  const names = (ps: string[] | undefined): string => (ps && ps.length ? ps.join(" · ") : "—");
+  // Nomes com ↗ kids2 por jogador (foursomes têm 2 nomes — cada um com a sua seta).
+  const names = (ps: string[] | undefined) =>
+    ps && ps.length
+      ? ps.map((p, i) => (
+          <Fragment key={i}>
+            {i > 0 && " · "}
+            {p}
+            <KidsLink nome={p} />
+          </Fragment>
+        ))
+      : "—";
 
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
@@ -249,13 +259,17 @@ function RoundTable({ round }: { round: MatchplayRound }) {
   // Nomes encostados ao centro (estilo GolfBox/R&A): a Casa alinha à direita,
   // a Fora à esquerda, e o badge de resultado fica entre eles com a seta a
   // apontar ao vencedor. Vencedor a bold, vencido esbatido.
+  // Ordem espelhada à volta do badge: Casa = "Nome ↗ 🏆" e Fora = "🏆 ↗ Nome"
+  // — o troféu/cruz fica sempre encostado ao centro, nos dois lados.
+  // O ↗ kids2 só aparece se o jogador existir no roster (equipas ETC não batem).
   const teamCell = (s: MatchplayTeamMatch["home"], won: boolean, settled: boolean, align: "right" | "left") => (
     <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
-      {settled && align === "right" && <ResultMark kind={won ? "win" : "loss"} />}
+      {align === "left" && settled && <ResultMark kind={won ? "win" : "loss"} />}
+      {align === "left" && s?.name && <KidsLink nome={s.name} />}
+      {align === "left" && " "}
       {sideFlag(s?.iso ?? null, s?.country ?? null)} {s?.name ?? "?"}
-      {/* ↗ kids2 — só aparece se o jogador existir no roster (equipas ETC não batem, e não faz mal) */}
-      {s?.name && <KidsLink nome={s.name} />}
-      {settled && align === "left" && <ResultMark kind={won ? "win" : "loss"} />}
+      {align === "right" && s?.name && <KidsLink nome={s.name} />}
+      {align === "right" && settled && <ResultMark kind={won ? "win" : "loss"} />}
     </span>
   );
 

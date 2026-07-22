@@ -1162,23 +1162,57 @@ async function fetchBracket(page) {
   });
 }
 
-/** Linha "Match" da ficha do confronto → estado por buraco ("A/S"/"1UP"/"2DN"). */
+/** Linha "Match" da ficha do confronto → estado por buraco ("A/S"/"1UP"/"2DN").
+ *  A linha "Match" vem às vezes INCOMPLETA (caso CFJ: "6&5" com estados só até
+ *  ao 5º) — mas os botões por-buraco da linha do 1º jogador (team1) trazem o
+ *  jogo inteiro: `hole_result_w|l|t` (win/loss/tie na perspectiva do team1 =
+ *  o jogador de topo, a mesma da linha Match). Reconstruímos o estado corrido
+ *  a partir deles e usamos a fonte com MAIS cobertura. */
 function parseMatchHoles(html) {
+  // Fonte 1: linha "Match"
+  let fromRow = null;
   const rowM = html.match(/<tr class='status_header_first'>([\s\S]*?)<\/tr>/);
-  if (!rowM) return null;
-  const cells = [...rowM[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)]
-    .map((c) => c[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
-  const statuses = cells.slice(1); // 1ª célula é o label "Match"
-  if (!statuses.length) return null;
-  return statuses.map((s, i) => {
-    let status = null;
-    if (/^T$/i.test(s)) status = "A/S";
-    else {
-      const m = s.match(/^(\d+)\s*(up|dn|down)$/i);
-      if (m) status = m[1] + (/up/i.test(m[2]) ? "UP" : "DN");
+  if (rowM) {
+    const cells = [...rowM[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)]
+      .map((c) => c[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+    const statuses = cells.slice(1); // 1ª célula é o label "Match"
+    if (statuses.length) {
+      fromRow = statuses.map((s, i) => {
+        let status = null;
+        if (/^T$/i.test(s)) status = "A/S";
+        else {
+          const m = s.match(/^(\d+)\s*(up|dn|down)$/i);
+          if (m) status = m[1] + (/up/i.test(m[2]) ? "UP" : "DN");
+        }
+        return { hole: i + 1, par: null, status };
+      });
     }
-    return { hole: i + 1, par: null, status };
-  });
+  }
+  // Fonte 2: botões por-buraco do team1 → estado corrido acumulado
+  let fromButtons = null;
+  const t1 = html.match(/<tr class='team1'[\s\S]*?<\/tr>/);
+  if (t1) {
+    const seq = [...t1[0].matchAll(/data-hole-nr='(\d+)'[^>]*>\s*<button class='hole_result_(\w+?)[ ']/g)]
+      .map((m) => ({ nr: parseInt(m[1], 10), r: m[2] }));
+    if (seq.length) {
+      seq.sort((a, b) => a.nr - b.nr);
+      const holes = [];
+      let lead = 0;
+      let decided = false;
+      for (const { nr, r } of seq) {
+        if (decided) { holes.push({ hole: nr + 1, par: null, status: null }); continue; }
+        lead += r === "w" ? 1 : r === "l" ? -1 : 0;
+        holes.push({ hole: nr + 1, par: null, status: lead === 0 ? "A/S" : Math.abs(lead) + (lead > 0 ? "UP" : "DN") });
+        // Vantagem maior do que os buracos restantes → match decidido aqui; os
+        // "ties" seguintes são buracos não jogados que o GG marca como T.
+        if (Math.abs(lead) > seq.length - (nr + 1)) decided = true;
+      }
+      fromButtons = holes;
+    }
+  }
+  const cover = (a) => (a ? a.filter((h) => h.status != null).length : 0);
+  const best = cover(fromButtons) > cover(fromRow) ? fromButtons : fromRow;
+  return best && cover(best) ? best : null;
 }
 
 const MP_MONTHS = {
