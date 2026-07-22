@@ -151,4 +151,27 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   { ccode: "179", tcode: "10604" },
   { ccode: "179", tcode: "10605" },
   { ccode: "179", tcode: "10606" },
+
+  // ── VIII Miramar Internacional Open U25 — 19-21 Ago 2026 (CGM, ccode 003) ──
+  // Inscritos scraped MANUALMENTE da página do clube (cgm.pt), NÃO da FPG:
+  // https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/
+  // O tcode real das Classifications (ccode=003) ainda NÃO é conhecido —
+  // "90003" é um placeholder sintético (entrada _manual no
+  // fpg-admissions-draws.json, protegida do cron). Quando a FPG publicar o
+  // tcode: substituir aqui + no fpg-admissions-draws.json, acrescentar ao
+  // fpg-admissions-scope.json e pôr live: true.
+  {
+    ccode: "003",
+    tcode: "90003",
+    name: "VIII Miramar Internacional Open U25",
+    escalao: null,          // multi-escalão (Sub10→Sub25) — sem tab única
+    date: "2026-08-19",     // 19-21 Ago 2026, 54 buracos (Sub10: 27)
+    campo: "Miramar",
+    rounds: 3,
+    extraLinks: [
+      { label: "página do torneio (CGM)", url: "https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/", icon: "🏌️" },
+      { label: "Termos de Competição PDF", url: "https://www.cgm.pt/client/files/0000000001/regulamento-mjo-2026_1461.pdf", icon: "📋" },
+    ],
+    live: false,            // sem tcode FPG real — /api/inscricoes daria lixo
+  },
 ];

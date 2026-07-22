@@ -4199,3 +4199,58 @@ table td.lb-col-divider {
   min-width: 30px;
   text-align: right;
 }
+
+/* ── Match play (MatchplayView) — badge central estilo GolfBox/R&A ──────── */
+/* O resultado vive num badge escuro ao centro; a seta aponta ao vencedor.   */
+.mp-res {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-hover);
+  color: var(--text-inv);
+  font-weight: 700;
+  font-size: var(--fs-12);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.mp-res.mp-arr-l::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 11px solid var(--accent-hover);
+}
+.mp-res.mp-arr-r::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 11px solid var(--accent-hover);
+}
+.mp-res.mp-res-open {
+  background: var(--accent-alpha-20);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+/* Estado por buraco (faixa hole-by-hole): chips UP/DN/AS */
+.mp-hole-chip {
+  display: inline-block;
+  min-width: 26px;
+  padding: 1px 2px;
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+}
+.mp-hole-chip.mp-up { background: var(--accent-alpha-10); color: var(--accent); }
+.mp-hole-chip.mp-dn { background: var(--medal-bronze-bg); color: var(--medal-bronze-strong); }
+.mp-hole-chip.mp-as { color: var(--text-3); }

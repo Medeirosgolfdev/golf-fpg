@@ -178,43 +178,60 @@ function parseAdmissionsTable(html) {
   while ((trM = trRe.exec(clean)) !== null) rows.push(trM[1]);
   if (rows.length < 2) return jogadores;
 
-  // Detectar a melhor header row nas primeiras 10 linhas
+  // Detectar a melhor header row.
+  // FIX 2026-07-22 (paridade com vite.config.ts): varre até 40 linhas — nas
+  // páginas de CLUBE o preâmbulo empurra o header para lá da linha 10 e o
+  // parser caía em modo posicional cego.
   let headerRowIdx = 0;
   let bestScore = -1;
-  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+  for (let i = 0; i < Math.min(rows.length, 40); i++) {
     const joined = extractCells(rows[i]).join(" ").toLowerCase();
     let score = 0;
     if (/fed|lic/.test(joined))                  score += 3;
     if (/nome|jogador/.test(joined))             score += 3;
     if (/hcp|handicap|ndice|index/.test(joined)) score += 2;
     if (/\bvac\b/.test(joined))                  score += 2;
-    if (/data|insc/.test(joined))                score += 2;
+    if (/data|insc|registo/.test(joined))        score += 2;
     if (/clube|assoc/.test(joined))              score += 1;
     if (score > bestScore) { bestScore = score; headerRowIdx = i; }
   }
 
-  const headers = extractCells(rows[headerRowIdx]).map(c => c.toLowerCase());
+  // Score baixo (<3) = linha de dados/ruído, não header — processar TODAS as
+  // linhas em modo posicional (paridade com o FIX 2026-04-15 do vite.config.ts).
+  const hasRealHeader = bestScore >= 3;
+  const startRow = hasRealHeader ? headerRowIdx + 1 : 0;
+
+  const headers = hasRealHeader
+    ? extractCells(rows[headerRowIdx]).map(c => c.toLowerCase())
+    : [];
   const iNome  = headers.findIndex(h => /nome|jogador/.test(h));
   const iFed   = headers.findIndex(h => /fed|lic/.test(h));
   const iHcp   = headers.findIndex(h => /hcp|handicap|ndice|index/.test(h));
   const iVac   = headers.findIndex(h => /\bvac\b/.test(h));
   const iClube = headers.findIndex(h => /clube|assoc/.test(h));
-  const iData  = headers.findIndex(h => /data|insc/.test(h));
+  const iData  = headers.findIndex(h => /data|insc|registo/.test(h));
 
-  for (let i = headerRowIdx + 1; i < rows.length; i++) {
+  for (let i = startRow; i < rows.length; i++) {
     const cells = [];
     const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
     let tdM;
     while ((tdM = tdRe.exec(rows[i])) !== null) cells.push(stripTags(tdM[1]));
     if (cells.length < 2) continue;
 
+    // FIX 2026-07-22: o scan de fed apanhava o ano da coluna Registo
+    // ("2026/07/20 14:38" → fed="2026") em jogadores sem nº de federado —
+    // vários jogadores colapsavam num só no merge e a UI ligava-os ao
+    // federado real nº 2026. Agora: célula inteira numérica e nunca datas.
+    const isDateCell = (c) => /\d{4}\/\d{2}\/\d{2}/.test(c || "");
     let fed = iFed >= 0 ? ((cells[iFed] || "").match(/\b(\d{4,6})\b/) || [])[1] || null : null;
     let fedIdx = iFed;
     if (!fed) {
       for (let ci = 0; ci < cells.length; ci++) {
-        const m = (cells[ci] || "").match(/\b(\d{4,6})\b/);
+        if (isDateCell(cells[ci])) continue;
+        const m = (cells[ci] || "").trim().match(/^(\d{4,6})$/);
         if (m) { fed = m[1]; fedIdx = ci; break; }
       }
+      if (!fed) fedIdx = -1;
     }
 
     const nome = iNome >= 0
@@ -224,8 +241,12 @@ function parseAdmissionsTable(html) {
 
     let hcp = iHcp >= 0 ? parseHcp(cells[iHcp] || "") : null;
     let vac = iVac >= 0 ? parseNum(cells[iVac] || "") : null;
-    if ((hcp === null || vac === null) && fedIdx >= 0) {
-      for (let ci = fedIdx + 1; ci < cells.length; ci++) {
+    // FIX 2026-07-22: saltar datas (parseNum("2026/07/20…")→2026 ficava como
+    // VAC) e, sem fed, começar o scan a seguir ao nome em vez de desistir.
+    const scanStart = fedIdx >= 0 ? fedIdx + 1 : (nome ? cells.indexOf(nome) + 1 : 0);
+    if ((hcp === null || vac === null) && scanStart > 0) {
+      for (let ci = scanStart; ci < cells.length; ci++) {
+        if (isDateCell(cells[ci])) continue;
         const v = parseNum(cells[ci]);
         if (v === null) continue;
         if (hcp === null && v >= -10 && v <= 54) { hcp = v; continue; }

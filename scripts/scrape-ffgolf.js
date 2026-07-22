@@ -432,6 +432,9 @@ async function detectDivisions(page) {
         /^(round|tour|jour|day|day\s*\d|\d+(st|nd|rd|th))\b/i.test(t) ||
         /^\d{1,2}\s+(jan|fev|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec)/i.test(t) ||
         /^\d+\s*$/.test(t) ||
+        // Nome de jogador "APELIDO Nome" (ex: "LIONS Benjamin" — o \bbenjamins?\b
+        // do ramo 3 apanhava-o como divisão). Labels reais nunca têm este padrão.
+        /^[A-ZÀ-Ý][A-ZÀ-Ý' -]+\s+[A-ZÀ-Ý][a-zà-ÿ]+\s*$/.test(t) ||
         lt === "all" || lt === "default" || lt === "men" || lt === "women" || lt.length < 4
       );
     };
@@ -975,6 +978,32 @@ async function scrapeOne(browser, t) {
 
     if (teamDetected) return null;
 
+    // 4c. BRACKET de match play (CFJ etc.) — árvore completa + holes por confronto.
+    //     O bracket-container fica no DOM depois de um evento match ser seleccionado
+    //     (o loop acima termina no último evento, que nos knockouts é match play).
+    let matchplay = null;
+    if (events.some((e) => e.format === "match")) {
+      try {
+        // O fetchPairings deixa a tab na página de Départs — voltar ao
+        // classement e re-seleccionar um evento match (o 1º, para garantir um
+        // change real no dropdown: só o handler de change carrega o bracket).
+        const firstMatch = allEvents.find((e) => !isStrokePlay(e.name));
+        if (firstMatch) await fetchLeaderboard(page, t.gg_page, firstMatch.id);
+        const br = await fetchBracket(page);
+        if (br && br.cols.length) {
+          matchplay = await buildMatchplayFromBracket(page, br, t, allEvents);
+          if (matchplay) {
+            const nHoles = matchplay.flights[0].rounds.reduce((s, r) => s + r.matches.filter((x) => x.games.length).length, 0);
+            console.log(`   🥊 bracket: ${br.cols.map((c) => `${c.round}=${c.matches.length}`).join(" · ")} (${nHoles} confrontos c/ holes)`);
+          }
+        } else {
+          console.log("   ⚠ eventos match sem .bracket-container no DOM");
+        }
+      } catch (e) {
+        console.log(`   ⚠ bracket erro: ${e.message.slice(0, 60)}`);
+      }
+    }
+
     // 5. Consolidar scorecards de TODOS os eventos para um único map por playerId
     const allScorecards = {};
     for (const ev of events) {
@@ -1062,10 +1091,179 @@ async function scrapeOne(browser, t) {
       // Vista por evento — todos os 7+ eventos do dropdown com leaderboard própria
       // Se há múltiplas divisões, há um event entry POR divisão por evento (ex: "Qualif T1 — Boys", "Qualif T1 — Girls")
       events,
+      // Bracket knockout no schema MatchplayFile (matchplayTypes.ts) — a /ffg
+      // renderiza-o via <MatchplayView> quando presente.
+      ...(matchplay ? { matchplay } : {}),
     };
   } finally {
     await ctx.close();
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MATCH PLAY — bracket + holes (CFJ etc.)
+   O widget tournament_results de um evento match play traz um
+   .bracket-container escondido com a árvore COMPLETA do knockout:
+   colunas (.column) por eliminatória, .match com .top/.bottom
+   (classe winner/loser), seed, e no .status_or_affiliation da coluna
+   seguinte o RESULTADO com que o jogador avançou ("2 & 1"). O meio
+   (.in-match-spacing-text) tem "8:00, Hole 12" (live) ou a hora.
+   A ficha /tournaments2/details/{aggId}?aggregate2_id={opp}&is_bracket=true
+   tem a linha "Match" (tr.status_header_first) com o estado
+   buraco-a-buraco ("T", "1 up", "2 up") na perspectiva do 1º jogador.
+   ───────────────────────────────────────────────────────────────── */
+async function fetchBracket(page) {
+  // O bracket-placeholder pode carregar depois da leaderboard (é um partial
+  // data-remote). Poll até 15s; a meio, clicar no botão "Bracket Display"
+  // para forçar o load se ainda não estiver no DOM.
+  for (let i = 0; i < 15; i++) {
+    const has = await page.evaluate(() => {
+      const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
+      return !!ifr?.contentDocument?.querySelector(".bracket-container .column");
+    });
+    if (has) break;
+    if (i === 4) {
+      await page.evaluate(() => {
+        const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
+        ifr?.contentDocument?.querySelector("a.bracket-button")?.click();
+      });
+    }
+    await sleep(1000);
+  }
+  return page.evaluate(() => {
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    const cont = doc?.querySelector(".bracket-container");
+    if (!cont) return null;
+    const name = doc.querySelector(".bracket_name")?.textContent.replace(/\s+/g, " ").trim() || null;
+    const cols = [...cont.querySelectorAll(".column")].map((col) => {
+      const round = col.querySelector(".round_name")?.textContent.replace(/\s+/g, " ").trim() || null;
+      const matches = [...col.querySelectorAll(".match")].map((m) => {
+        const side = (sel) => {
+          const s = m.querySelector(sel);
+          const a = s?.querySelector("a.aggregate_bracket_match");
+          if (!a) return null;
+          const href = a.getAttribute("href") || "";
+          return {
+            name: a.textContent.replace(/\s+/g, " ").trim(),
+            aggId: (href.match(/details\/(\d+)/) || [])[1] || null,
+            oppId: (href.match(/aggregate2_id=(\d+)/) || [])[1] || null,
+            below: s.querySelector(".status_or_affiliation")?.textContent.replace(/\s+/g, " ").trim() || null,
+            seed: parseInt(s.querySelector(".match_player_seed")?.textContent.trim() || "", 10) || null,
+            winner: s.classList.contains("winner"),
+          };
+        };
+        const mid = m.querySelector(".in-match-spacing-text")?.textContent.replace(/\s+/g, " ").trim() || null;
+        return { top: side(".top"), bottom: side(".bottom"), mid };
+      }).filter((x) => x.top || x.bottom);
+      return { round, matches };
+    }).filter((c) => c.matches.length);
+    return { name, cols };
+  });
+}
+
+/** Linha "Match" da ficha do confronto → estado por buraco ("A/S"/"1UP"/"2DN"). */
+function parseMatchHoles(html) {
+  const rowM = html.match(/<tr class='status_header_first'>([\s\S]*?)<\/tr>/);
+  if (!rowM) return null;
+  const cells = [...rowM[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)]
+    .map((c) => c[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  const statuses = cells.slice(1); // 1ª célula é o label "Match"
+  if (!statuses.length) return null;
+  return statuses.map((s, i) => {
+    let status = null;
+    if (/^T$/i.test(s)) status = "A/S";
+    else {
+      const m = s.match(/^(\d+)\s*(up|dn|down)$/i);
+      if (m) status = m[1] + (/up/i.test(m[2]) ? "UP" : "DN");
+    }
+    return { hole: i + 1, par: null, status };
+  });
+}
+
+const MP_MONTHS = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7,
+  august: 8, september: 9, october: 10, november: 11, december: 12,
+  janvier: 1, fevrier: 2, mars: 3, avril: 4, mai: 5, juin: 6, juillet: 7,
+  aout: 8, septembre: 9, octobre: 10, novembre: 11, decembre: 12,
+};
+/** "1/16e de Finale (Wed, July 22)" / "(Mer, Juillet 22)" + ano → "2026-07-22".
+ *  O dropdown pode vir truncado ("(Mer, Juil…") — aceitar prefixos ≥3 letras. */
+function mpDateFromEventName(name, year) {
+  const m = (name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").match(/\(\s*\w+,\s*(\w+)\.?\s+(\d{1,2})/);
+  if (!m) return null;
+  const token = m[1].toLowerCase();
+  const mo = MP_MONTHS[token] ?? Object.entries(MP_MONTHS).find(([k]) => token.length >= 3 && k.startsWith(token))?.[1];
+  if (!mo) return null;
+  return `${year}-${String(mo).padStart(2, "0")}-${String(m[2]).padStart(2, "0")}`;
+}
+
+/** Bracket + fichas → objecto no schema MatchplayFile (matchplayTypes.ts). */
+async function buildMatchplayFromBracket(page, br, t, allEvents) {
+  const labelBase = (s) => (s || "").replace(/\(.*$/, "").replace(/\s+/g, " ").trim().toLowerCase();
+  const rounds = [];
+  for (let k = 0; k < br.cols.length; k++) {
+    const col = br.cols[k];
+    const next = br.cols[k + 1];
+    const ev = allEvents.find((e) => labelBase(e.name) === labelBase(col.round));
+    const matches = [];
+    for (let i = 0; i < col.matches.length; i++) {
+      const m = col.matches[i];
+      const winnerSide = m.top?.winner ? "home" : m.bottom?.winner ? "away" : null;
+      const winnerName = winnerSide === "home" ? m.top?.name : winnerSide === "away" ? m.bottom?.name : null;
+      // Resultado ("2 & 1"): fica na entrada do vencedor na coluna seguinte.
+      let result = null;
+      if (winnerName && next) {
+        for (const nm of next.matches) {
+          for (const s of [nm.top, nm.bottom]) {
+            if (s && s.name === winnerName && s.below && /\d\s*&\s*\d|\bup\b|w\/o|walkover|forfait/i.test(s.below)) result = s.below;
+          }
+        }
+      }
+      const startTime = (m.mid || "").match(/(\d{1,2}:\d{2})/)?.[1] || null;
+      const isStarted = /hole/i.test(m.mid || "") || winnerSide != null;
+      // Holes: ficha do confronto (perspectiva do TOP = home)
+      let holes = null;
+      if (m.top?.aggId && m.top?.oppId && isStarted) {
+        try {
+          const html = await page.evaluate(async ({ aggId, oppId }) => {
+            const r = await fetch(`/tournaments2/details/${aggId}?aggregate2_id=${oppId}&is_bracket=true`, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+            return r.ok ? await r.text() : "";
+          }, { aggId: m.top.aggId, oppId: m.top.oppId });
+          if (html) holes = parseMatchHoles(html);
+        } catch { /* ficha opcional */ }
+      }
+      const played = holes ? holes.filter((h) => h.status != null).length : null;
+      const gSide = (s, won) => (s ? { teamId: null, name: s.name, players: [s.name], result: won && result ? result : "", won } : null);
+      const mSide = (s) => (s ? { teamId: null, name: s.name, iso: null, country: null, points: null, isLead: false } : null);
+      matches.push({
+        teamMatchId: null, matchNo: i + 1, startTime,
+        result, isSettled: winnerSide != null, isStarted,
+        home: mSide(m.top), away: mSide(m.bottom), winner: winnerSide,
+        games: holes && holes.some((h) => h.status) ? [{
+          matchNo: i + 1, order: 1, format: "single", result,
+          playedHoles: played, startTime, isFinal: false,
+          home: gSide(m.top, winnerSide === "home"), away: gSide(m.bottom, winnerSide === "away"),
+          holes,
+        }] : [],
+      });
+    }
+    if (!matches.length) continue;
+    rounds.push({ number: k + 1, name: col.round, date: ev ? mpDateFromEventName(ev.name, t.year) : null, matches });
+  }
+  if (!rounds.length) return null;
+  const lastCol = rounds[rounds.length - 1];
+  return {
+    tournament: br.name || t.title || t.slug, slug: t.slug, year: t.year,
+    format: "KnockOut", parentCompetitionId: null,
+    startDate: rounds[0]?.date || undefined, endDate: lastCol?.date || undefined,
+    flights: [{
+      competitionId: 1, name: br.name || "Match Play", format: "KnockOut", parentId: null,
+      isCompleted: lastCol.matches.every((x) => x.winner != null), source: `${GG}/pages/${t.gg_page}`,
+      rounds,
+    }],
+    scrapedAt: new Date().toISOString(),
+  };
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -1187,6 +1385,35 @@ function parseArgs(argv) {
         // re-scrape do leaderboard não os traz e apagava-os (caso CFJ U12 2026).
         const kept = preserveTeesheet(outPath, result);
         if (kept.draws || kept.hcps) console.log("   tee sheet preservado: " + kept.draws + " ronda(s) de draw, " + kept.hcps + " hcp(s)");
+        // dateStart/dateEnd — a rota Playwright não os traz (só a rota fetch).
+        // Derivar dos draws preservados (dateIso) e, à falta deles, herdar do
+        // ficheiro anterior — sem data o torneio cai para o fundo da sidebar.
+        if (!result.dateStart) {
+          const isoDates = (result.draws || []).map((d) => d && d.dateIso).filter(Boolean).sort();
+          if (isoDates.length) {
+            result.dateStart = isoDates[0];
+            result.dateEnd = isoDates[isoDates.length - 1];
+          } else if (fs.existsSync(outPath)) {
+            try {
+              const prev = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+              if (prev.dateStart) { result.dateStart = prev.dateStart; result.dateEnd = prev.dateEnd ?? null; }
+            } catch { /* ficheiro anterior inválido */ }
+          }
+        }
+        // Datas das rondas de match play: o dropdown vem truncado ("(Mer, Juil…")
+        // mas os draws preservados têm o label completo + dateIso.
+        if (result.matchplay && Array.isArray(result.draws)) {
+          const labBase = (s) => (s || "").replace(/\(.*$/, "").replace(/\s+/g, " ").trim().toLowerCase();
+          for (const fl of result.matchplay.flights) {
+            for (const r of fl.rounds) {
+              if (r.date) continue;
+              const dr = result.draws.find((x) => labBase(x.label) === labBase(r.name));
+              if (dr?.dateIso) r.date = dr.dateIso;
+            }
+          }
+          const ds = result.matchplay.flights.flatMap((f) => f.rounds.map((r) => r.date)).filter(Boolean).sort();
+          if (ds.length) { result.matchplay.startDate = ds[0]; result.matchplay.endDate = ds[ds.length - 1]; }
+        }
         // Atomic write: escrever para .tmp e renomear no fim. Evita ficheiros truncados
         // se o processo for interrompido (Ctrl+C) durante a escrita.
         const tmpPath = outPath + ".tmp";

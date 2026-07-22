@@ -138,17 +138,21 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
   while ((m = trRe.exec(clean)) !== null) rows.push(m[1])
   if (rows.length < 2) return jogadores
 
-  // Detectar a melhor header row nas primeiras 10 linhas
+  // Detectar a melhor header row.
+  // FIX 2026-07-22: era Math.min(rows.length, 10) — nas páginas de CLUBE
+  // (ex: 179 Amendoeira, US Kids) o preâmbulo (jumbotron, radioNRounds,
+  // categorias…) empurra o header real para lá da linha 10 e o parser caía
+  // em modo posicional cego. Agora varre até 40 linhas.
   let headerRowIdx = 0
   let bestScore = -1
-  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+  for (let i = 0; i < Math.min(rows.length, 40); i++) {
     const joined = extractCells(rows[i]).join(' ').toLowerCase()
     let score = 0
     if (/fed|lic/.test(joined))                  score += 3
     if (/nome|jogador/.test(joined))             score += 3
     if (/hcp|handicap|ndice|index/.test(joined)) score += 2
     if (/\bvac\b/.test(joined))                  score += 2
-    if (/data|insc/.test(joined))                score += 2
+    if (/data|insc|registo/.test(joined))        score += 2
     if (/clube|assoc/.test(joined))              score += 1
     if (score > bestScore) { bestScore = score; headerRowIdx = i }
   }
@@ -167,7 +171,7 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
   const iHcp   = headers.findIndex(h => /hcp|handicap|ndice|index/.test(h))
   const iVac   = headers.findIndex(h => /\bvac\b/.test(h))
   const iClube = headers.findIndex(h => /clube|assoc/.test(h))
-  const iData  = headers.findIndex(h => /data|insc/.test(h))
+  const iData  = headers.findIndex(h => /data|insc|registo/.test(h))
   console.log(logPrefix + ' headers:' + JSON.stringify(headers.slice(0, 8)) + ' (score=' + bestScore + (hasRealHeader ? ', usar' : ', sem header — fallback posicional') + ') cols nome:' + iNome + ' fed:' + iFed + ' hcp:' + iHcp + ' vac:' + iVac + ' clube:' + iClube + ' data:' + iData)
 
   for (let i = startRow; i < rows.length; i++) {
@@ -176,14 +180,23 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
     while ((m = tdRe.exec(rows[i])) !== null) cells.push(stripTags(m[1]))
     if (cells.length < 2) continue
 
-    // Fed: por header, senão scan de todas as células
+    // Fed: por header, senão scan de todas as células.
+    // FIX 2026-07-22: o scan apanhava o ano da coluna Registo ("2026/07/20
+    // 14:38" → fed="2026") em jogadores SEM nº de federado (estrangeiros dos
+    // US Kids). Resultado: 4 jogadores todos com fed=2026, o merge por fed
+    // colapsava-os num só, e a UI ligava-os ao federado real nº 2026 (um
+    // Super Sénior de 1949). Agora o scan só aceita células que SÃO um
+    // número (célula inteira) e nunca células com datas.
+    const isDateCell = (c: string) => /\d{4}\/\d{2}\/\d{2}/.test(c)
     let fed: string | null = iFed >= 0 ? ((cells[iFed]?.match(/\b(\d{4,6})\b/) ?? [])[1] ?? null) : null
     let fedIdx = iFed
     if (!fed) {
       for (let ci = 0; ci < cells.length; ci++) {
-        const fm = cells[ci].match(/\b(\d{4,6})\b/)
+        if (isDateCell(cells[ci])) continue
+        const fm = cells[ci].trim().match(/^(\d{4,6})$/)
         if (fm) { fed = fm[1]; fedIdx = ci; break }
       }
+      if (!fed) fedIdx = -1
     }
 
     // Nome: por header, senão primeira célula com texto longo
@@ -199,8 +212,13 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
     let hcp: number | null = iHcp >= 0 ? parseHcp(cells[iHcp] ?? '') : null
     let vac: number | null = iVac >= 0 ? parseNum(cells[iVac] ?? '') : null
 
-    if ((hcp === null || vac === null) && fedIdx >= 0) {
-      for (let ci = fedIdx + 1; ci < cells.length; ci++) {
+    // FIX 2026-07-22: (a) saltar células com datas — parseNum("2026/07/20…")
+    // devolvia 2026 e ficava gravado como VAC=2026.0; (b) sem fed (estrangeiros),
+    // começar o scan a seguir à célula do nome em vez de desistir.
+    const scanStart = fedIdx >= 0 ? fedIdx + 1 : (nome ? cells.indexOf(nome) + 1 : 0)
+    if ((hcp === null || vac === null) && scanStart > 0) {
+      for (let ci = scanStart; ci < cells.length; ci++) {
+        if (isDateCell(cells[ci])) continue
         const v = parseNum(cells[ci])
         if (v === null) continue
         if (hcp === null && v >= -10 && v <= 54) { hcp = v; continue }
@@ -346,11 +364,15 @@ function persistLiveAdmissions(
 function diffJogadores(
   prev: Jogador[], next: Jogador[]
 ): { added: string[]; removed: string[] } {
-  const prevFeds = new Set(prev.map(j => j.fed).filter(Boolean) as string[])
-  const nextFeds = new Set(next.map(j => j.fed).filter(Boolean) as string[])
+  // FIX 2026-07-22: chave fed OU nome — antes jogadores sem nº de federado
+  // (estrangeiros) eram invisíveis ao diff, e feds errados (bug do "2026")
+  // geravam falsos "+novos/−saíram".
+  const keyOf = (j: Jogador) => j.fed || ('nome:' + j.nome.toLowerCase())
+  const prevMap = new Map(prev.filter(j => j.fed || j.nome).map(j => [keyOf(j), j]))
+  const nextMap = new Map(next.filter(j => j.fed || j.nome).map(j => [keyOf(j), j]))
   return {
-    added:   [...nextFeds].filter(f => !prevFeds.has(f)).map(f => next.find(j => j.fed === f)?.nome ?? f),
-    removed: [...prevFeds].filter(f => !nextFeds.has(f)).map(f => prev.find(j => j.fed === f)?.nome ?? f),
+    added:   [...nextMap.keys()].filter(k => !prevMap.has(k)).map(k => nextMap.get(k)!.nome || k),
+    removed: [...prevMap.keys()].filter(k => !nextMap.has(k)).map(k => prevMap.get(k)!.nome || k),
   }
 }
 

@@ -43,6 +43,10 @@ function preserveTeesheet(outPath, fresh) {
     stats.draws = existing.draws.length;
   }
 
+  // Bracket de match play (scrape-ffgolf.js rota Playwright) — um re-scrape
+  // pela rota fetch (sem browser) não o consegue reconstruir; não o apagar.
+  if (existing.matchplay && !fresh.matchplay) fresh.matchplay = existing.matchplay;
+
   // hcp por nome normalizado: dos players antigos E dos draws (a tee sheet é
   // quem traz o hcp; um jogador do draw pode nem estar no leaderboard antigo).
   const hcpByName = new Map();
