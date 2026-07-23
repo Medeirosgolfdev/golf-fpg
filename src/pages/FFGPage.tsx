@@ -3043,6 +3043,9 @@ function FFGShellContent() {
       ligaLabels: FFG_LIGUE_LABELS,
       filters: { search: true, year: true, escalao: true, sex: true, source: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10", "results"] },
       specialItems,
+      // "Edições anteriores": família pelo nome (o `tournamentFamilyKey` tira o
+      // prefixo "{ano} // " e os anos) — agrupa o mesmo Grand Prix ano-a-ano.
+      editionKey: (e) => tournamentFamilyKey(e.name),
       loadingMessage: "A carregar FFGolf…",
     };
   }, [ffgCategories]);

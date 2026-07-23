@@ -3399,6 +3399,10 @@ const RFEG_CONFIG: CircuitConfig = {
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },
   veteranoThreshold: 3,
+  // "Edições anteriores": família pelo nome do torneio (sem ano) — os
+  // Campeonatos recorrem e agrupam-se; os tours de nome único ficam singletons
+  // (a tab esconde-se). Só é útil quando há ≥2 anos com o mesmo nome.
+  editionKey: (e) => tournamentFamilyKey(e.name),
   loadingMessage: "A carregar dados...",
 };
 
