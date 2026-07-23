@@ -460,6 +460,15 @@ export interface CircuitShellProps {
   entries: CircuitEntry[];
   config: CircuitConfig;
   loading?: boolean;
+  /**
+   * Pool COMPLETO (não filtrado) para calcular as edições irmãs da tab "Edições
+   * anteriores". Quando a página filtra `entries` (ex: a DrivePage mostra só um
+   * ano/série/região de cada vez), as irmãs de outros anos/etapas ficariam de
+   * fora. Passando aqui o conjunto integral, a tab compara todas as edições —
+   * incl. as etapas que se repetem no MESMO ano (Drive) e os anos anteriores.
+   * Omitido → usa as próprias `entries` (comportamento das páginas lazy).
+   */
+  pastEditionsPool?: CircuitEntry[];
   /** ID seleccionado (resolvido pela página a partir da URL). Opcional. */
   selectedId?: string;
   /** Chamado ao seleccionar um torneio (a página navega/actualiza URL). */
@@ -471,7 +480,7 @@ export interface CircuitShellProps {
   onSelectInfo?: (key: string | null) => void;
 }
 
-export default function CircuitShell({ entries, config, loading, selectedId, onSelectEntry, selectedInfo, onSelectInfo }: CircuitShellProps) {
+export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo }: CircuitShellProps) {
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -716,13 +725,17 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const curDivLabel = curDiv ? (curDiv.tabLabel || curDiv.escalao || "") : "";
   // ⚠ `siblings` MEMOIZADO: sem isto o array era recriado a cada render e o
   // useEffect do CircuitPastEditionsTab (dep em `editions`) recarregava em loop.
+  // Pool das irmãs: o `pastEditionsPool` integral quando a página o fornece
+  // (Drive filtra `entries` por ano/série/região → sem isto a tab só via as
+  // edições do filtro actual), senão as próprias `entries`.
+  const editionsSource = pastEditionsPool ?? entries;
   const pastEditionsSiblings = useMemo(() => {
     if (!cur || !editionKey) return null;
     const k = editionKey(cur);
     if (!k) return null;
-    const sib = entries.filter((e) => editionKey(e) === k);
+    const sib = editionsSource.filter((e) => editionKey(e) === k);
     return sib.length >= 2 ? sib : null;
-  }, [cur, entries, editionKey]);
+  }, [cur, editionsSource, editionKey]);
   const pastEditionsTabNode = (() => {
     if (!curDiv || !cur) return null;
     if (pastEditionsSiblings) {

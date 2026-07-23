@@ -24,7 +24,6 @@
  */
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritos, CircuitDraw } from "../../ui/circuit/types";
-import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import type { FpgAdmissions, FpgDraw } from "../../data/nacional2026Loader";
 import { isManuelByName } from "../../constants/manuel";
 
@@ -380,15 +379,20 @@ export const DRIVE_CONFIG: CircuitConfig = {
     liga: true,
     toggles: ["manuel", "pt", "top10"],
   },
-  // "Edições anteriores": o Drive repete o evento MUITAS vezes (várias etapas
-  // por ano, a repetir campos) → a família é o nome sem ordinal/ano ("3º DT
-  // Norte" → "dt norte") e a tab mostra TODAS as etapas de todos os anos.
-  // ⚠ Inclui o escalão na chave porque as entradas Drive são POR escalão: sem
-  // isso o match ±1 puxava uma etapa Sub-14 para a vista de Sub-12.
+  // "Edições anteriores": o Drive repete o MESMO circuito MUITAS vezes por ano
+  // (etapas), e cada etapa é num CAMPO diferente — o campo vai no NOME do
+  // torneio ("Drive Tour Madeira - Palheiro" vs "- Santo da Serra"), por isso
+  // uma família derivada do nome (tournamentFamilyKey) partia as etapas do mesmo
+  // circuito por campo. A identidade estável é a SÉRIE + REGIÃO (metadados, não
+  // o nome): todas as etapas de "Drive Tour Madeira" (qualquer campo, incl.
+  // Finais) → uma só família, com uma coluna por etapa/ano.
+  // NÃO se inclui o escalão na chave (o `matchDivision` casa-o por label): os
+  // escalões Drive distam 2 (Sub 10/12/14/16/18), logo o fallback ±1 do
+  // matchDivision nunca cruza escalões — o exact-match resolve tudo e um escalão
+  // ausente numa etapa fica de fora dessa coluna (correcto), sem contaminação.
   editionKey: (e) => {
-    const fam = tournamentFamilyKey(e.name);
-    if (!fam) return null;
-    return e.escalao ? `${fam}|${e.escalao}` : fam;
+    if (!e.series) return null;
+    return `${e.series}|${e.liga ?? ""}`;
   },
   loadingMessage: "A carregar torneios do Drive…",
 };
