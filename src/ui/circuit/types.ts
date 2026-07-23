@@ -19,6 +19,13 @@ import type { MatchplayFile } from "./matchplayTypes";
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
 
+/** Extras que o shell passa a `renderFull` — hoje só a tab "Edições anteriores"
+ *  (construída pelo shell a partir do `editionKey`), para as divisões que
+ *  delegam no TournamentDetail a intercalarem via `extraTabs`. */
+export interface CircuitRenderFullExtras {
+  pastEditionsTab?: { key: string; label: string; content: React.ReactNode };
+}
+
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */
 export type CircuitSectionKind = "results" | "inscritos" | "draw" | "matchplay";
 
@@ -106,7 +113,7 @@ export interface CircuitDivision {
    * (tabs flat Inscrições·Draw·R1·R2·Resumo·Scorecards). Outras páginas não o
    * definem e mantêm o render por secções do shell.
    */
-  renderFull?: () => React.ReactNode;
+  renderFull?: (extras?: CircuitRenderFullExtras) => React.ReactNode;
   /**
    * Só relevante com `renderFull`: mantém o DetailHeader do shell (título do
    * torneio + campo + pills) por cima do conteúdo `renderFull`. A FM usa isto
@@ -336,6 +343,18 @@ export interface CircuitConfig {
    * pelo `extraTabs` desse componente — o shell não lhes toca no conteúdo.
    */
   pastEditionsTab?: (entry: CircuitEntry, div: CircuitDivision) => { label: string; content: React.ReactNode } | null;
+
+  /**
+   * Identidade do TORNEIO entre anos, para a tab "Edições anteriores" embutida
+   * no shell. Duas entradas com a mesma chave são a mesma prova em anos
+   * diferentes (ex: MAJOR → `e.source`; England/GJGL → família do slug). Quando
+   * definida, o shell constrói a tab automaticamente (entrega-a às divisões do
+   * IntlTournView como trailing-tab e às `renderFull` via argumento) usando as
+   * próprias `entries` — sem cada página reimplementar o carregador. `null`/
+   * ausente para uma entrada = sem tab. Alternativa ao `pastEditionsTab` (mais
+   * baixo nível); quando ambos existem, `editionKey` ganha.
+   */
+  editionKey?: (entry: CircuitEntry) => string | null;
 
   /** Mensagem de loading. */
   loadingMessage?: string;

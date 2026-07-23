@@ -18,6 +18,7 @@
 
 import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CircuitPastEditionsTab } from "./pastEditions";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
@@ -705,11 +706,32 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     }, { replace: true });
   }, [setSearchParams]);
 
-  // Tab genérica do circuito (MAJOR: "Edições anteriores") — última da barra.
-  if (curDiv && !curDiv.renderFull && cur && config.pastEditionsTab) {
-    const pe = config.pastEditionsTab(cur, curDiv);
-    if (pe) trailingTabs.push({ key: "past-editions", label: pe.label, content: pe.content });
-  }
+  // ── Tab "Edições anteriores" (embutida, keyed por config.editionKey) ──────
+  // O shell tem TODAS as entradas (todos os anos) em memória, cada uma com o
+  // seu `loadDivisions` lazy → basta agrupar as irmãs (mesma `editionKey`) e
+  // entregá-las ao componente partilhado. Só se mostra com ≥2 edições (uma só
+  // não tem com que comparar). Construída aqui uma vez e entregue às duas vias:
+  // trailing-tab (IntlTournView) e argumento de `renderFull` (TournamentDetail).
+  const pastEditionsTabNode = (() => {
+    if (!curDiv || !cur) return null;
+    const division = curDiv.tabLabel || curDiv.escalao || "";
+    if (config.editionKey) {
+      const k = config.editionKey(cur);
+      if (!k) return null;
+      const siblings = entries.filter((e) => config.editionKey!(e) === k);
+      if (siblings.length < 2) return null;
+      return { key: "past-editions", label: "Edições anteriores",
+        content: <CircuitPastEditionsTab editions={siblings} division={division} /> };
+    }
+    // Fallback: hook de baixo nível `pastEditionsTab` (legado; só usado quando
+    // uma página não fornece `editionKey`).
+    if (config.pastEditionsTab) {
+      const pe = config.pastEditionsTab(cur, curDiv);
+      if (pe) return { key: "past-editions", label: pe.label, content: pe.content };
+    }
+    return null;
+  })();
+  if (pastEditionsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastEditionsTabNode);
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -977,7 +999,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                       barra do IntlTournView (Inscritos → Draw → R1 → … → Resumo).
                     • Sem rondas (customResults / só inscritos) → barra de secção
                       simples (já era plana, sem aninhamento). */}
-                {curDiv.renderFull && curDiv.renderFull()}
+                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined })}
                 {!curDiv.renderFull && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}

@@ -21,6 +21,7 @@ import LoadingState from "../ui/LoadingState";
 import { RoundPill } from "../ui/PillBadge";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../ui/circuit/types";
+import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -438,6 +439,9 @@ const ENGLAND_CONFIG: CircuitConfig = {
   sourceLabels: { england: "England Golf" },
   filters: { search: true, year: true, escalao: true, sex: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
   veteranoThreshold: 3,
+  // "Edições anteriores": família = o nome do torneio (Carris/McGregor/… já vêm
+  // sem ano); o shell agrupa as entradas irmãs e desenha a tab.
+  editionKey: (e) => tournamentFamilyKey(e.name),
   loadingMessage: "A carregar England Golf…",
 };
 

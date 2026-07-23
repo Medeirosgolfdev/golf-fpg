@@ -70,20 +70,17 @@ function writeJsonAtomic(filePath, data) {
 // Divisão-base a partir do label da opção: remove " Final Round"/" Round N" e o
 // sufixo de campo (" - Fazio Course"). "Boys 13-14 Final Round - Fazio" → "Boys 13-14".
 function divisionBase(label) {
-  return label
-    .replace(/\s*[-–]\s*[^-–]*$/,'')                 // tira o " - {campo}" final
-    // O <select> do GG TRUNCA os labels longos, deixando um parêntesis por
-    // fechar: "Boys 8 & Under Round 2 (B9" (UA Worlds, onde o 8&U joga 9
-    // buracos e cada ronda tem vista própria). Sem tirar esse resto, o
-    // "Round N" deixava de estar no fim e o escalão aparecia 3× na lista.
-    .replace(/\s*\([^)]*$/, '')
-    // " Final Round"/" Round N" — `final\s+\w*` (e não `final\s+round`) porque
-    // o truncamento do GG também corta a palavra: "Girls 8 & Under Final Roun".
-    .replace(/\s*(final\s+\w*|round\s+\d+)\s*$/i, '')
-    // tira o sufixo de data "(Mon, July 20)" dos eventos por-fase (CFJ) — o
-    // <select> do GG trunca labels longos com "..." e deixava "(Mon, Jul" solto
-    .replace(/\s*\((?:mon|tue|wed|thu|fri|sat|sun)[^)]*\)?\s*$/i, '')
-    .replace(/\s+/g, ' ').trim();
+  // ⚠ O rótulo do escalão vem SEMPRE antes de "Round N"/"Final Round"; o campo
+  // e a data vêm depois ("Boys 12-14 Final Round - Palmer Course (Sat…").
+  // Cortar TUDO a partir de "Round"/"Final Rou…" resolve os três problemas de
+  // uma vez: (a) o hífen do escalão "12-14" fica preservado (é antes do corte),
+  // (b) a truncatura do GG — "Final Roun", "Round 2 (B9", "Final Round -" — não
+  // deixa fantasmas, (c) não é preciso apanhar campo/data em separado.
+  // `Rou\w*` cobre "Round"/"Roun"; o número da ronda é opcional (pode estar
+  // truncado). Fallback: sem "Round" no label, tira só o " - campo" com espaços.
+  let base = label.replace(/\s+(?:final\s+)?rou\w*.*$/i, '');
+  if (base === label) base = label.replace(/\s+[-–]\s+.*$/, '');   // sem "Round" → tira " - campo"
+  return base.replace(/\s+/g, ' ').trim();
 }
 function isFinalRound(label) { return /final\s+round/i.test(label); }
 function roundNum(label) { const m = label.match(/round\s+(\d+)/i); return m ? +m[1] : (isFinalRound(label) ? 999 : 0); }

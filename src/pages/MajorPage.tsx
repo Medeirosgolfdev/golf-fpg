@@ -17,7 +17,7 @@ import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitRenderFullExtras } from "../ui/circuit/types";
 import type { MatchplayFile } from "../ui/circuit/matchplayTypes";
 import MatchplayView from "../ui/circuit/MatchplayView";
 import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
@@ -28,9 +28,7 @@ import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions
 import type { FpgDraw } from "../data/nacional2026Loader";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
-import { playedParTotal, isRoundInProgress } from "../data/fpgUtils";
-import PastEditionsTable, { type PastEdition } from "../ui/circuit/PastEditionsTable";
-import EmptyState from "../ui/EmptyState";
+import { playedParTotal } from "../data/fpgUtils";
 import { KidsLink } from "../ui/KidsLink";
 
 /** Seta ↗ para a página KIDS2 do jogador, injectada nos nomes do detalhe (via
@@ -285,126 +283,6 @@ export function jobDivisionToTournament(div: JobDivision, name: string): FPGTour
   return { name, tcode: `job-${name}`, date: "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
 }
 
-/* ─── Tab "Edições anteriores" (fontes JobFile) ─────────────────────────────
- * Equivalente ao `HistoricTopNTable` do FieldRivaisDashboard (a tab `scores` do
- * /kids2/next-t), mas para as fontes GolfGenius/GolfBox: uma coluna por edição
- * do MESMO torneio+escalão. Carrega os `{slug}_{ano}.json` das outras edições
- * SÓ quando o utilizador abre a tab (o CircuitShell já é lazy por torneio).
- */
-
-/** "Under 12 Boys" / "Boys 12-13" / "Femenil 15" → {sex, age} para casar o
- *  mesmo escalão entre edições quando o nome muda (2023 "Under 15 Girls" →
- *  2024 "Under 14 Girls"). */
-function divKey(label: string): { sex: string; age: number | null } {
-  const sex = /\bboys\b|\bvaronil\b|\bmen\b/i.test(label) ? "M" : /\bgirls\b|\bfemenil\b|\bladies\b|\bwomen\b/i.test(label) ? "F" : "?";
-  const m = label.match(/\d+/);
-  return { sex, age: m ? parseInt(m[0], 10) : null };
-}
-/** Divisão correspondente noutra edição: nome exacto → sexo+idade → sexo e
- *  idade mais próxima (±1). Devolve null quando o escalão não existiu. */
-function matchDivision(divisions: CircuitDivision[], label: string): CircuitDivision | null {
-  const lab = (d: CircuitDivision) => d.tabLabel || d.escalao || "";
-  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
-  const exact = divisions.find((d) => norm(lab(d)) === norm(label));
-  if (exact) return exact;
-  const k = divKey(label);
-  if (k.age == null) return null;
-  // ⚠ Só se casa por idade quando o FORMATO do nome é o mesmo — senão o
-  // fallback de ±1 ano dava "10 and Under" (FM) como sendo "11 & 12".
-  //   "Under 15 Girls" → "under girls"  ·  "10 and Under" → "and under"
-  const shape = (s: string) => s.toLowerCase().replace(/\d+/g, " ").replace(/[^a-z]+/g, " ").trim();
-  const sh = shape(label);
-  const same = divisions.filter((d) => divKey(lab(d)).sex === k.sex && shape(lab(d)) === sh);
-  const eq = same.find((d) => divKey(lab(d)).age === k.age);
-  if (eq) return eq;
-  const near = same
-    .map((d) => ({ d, age: divKey(lab(d)).age }))
-    .filter((x): x is { d: CircuitDivision; age: number } => x.age != null && Math.abs(x.age - k.age!) <= 1)
-    .sort((a, b) => Math.abs(a.age - k.age!) - Math.abs(b.age - k.age!))[0];
-  return near ? near.d : null;
-}
-
-/** Volta jogada até ao fim — ver `isRoundInProgress` (fpgUtils) para a regra
- *  que distingue "cartão truncado na fonte" de "volta ainda a decorrer". */
-const isFullRound = (r: { gross?: number | null; scores?: number[]; pars?: (number | null)[] }) =>
-  (r.gross || 0) > 0 && !isRoundInProgress(r);
-
-/**
- * Carrega as edições passando pelo `loadDivisionsFor` — o MESMO loader que o
- * shell usa para abrir um torneio. Assim a tab funciona em TODAS as fontes do
- * MAJOR (BJGT/EOWAGR/FCG/JWGC, Doral, JOB, FM e as JobFile GolfGenius/GolfBox)
- * sem cada uma precisar de código próprio, e reaproveita o cache de fetch.
- */
-function PastEditionsTab({ source, year, division }: { source: string; year: number; division: string }) {
-  const [state, setState] = useState<{ loading: boolean; editions: PastEdition[]; err?: string }>({ loading: true, editions: [] });
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        const cat = await cachedFetchJson<MajorCatalog>("/data/major-catalog.json").catch(() => null);
-        const entries = (cat?.entries || []).filter((e) => e.source === source).sort((a, b) => b.year - a.year);
-        const list = entries.length ? entries : [{ id: `${source}:${year}`, source, series: "", year, name: "" } as MajorCatalogEntry];
-        const loaded = await Promise.all(list.map(async (e) => {
-          try { return { e, divs: await loadDivisionsFor(e)() }; } catch { return { e, divs: [] as CircuitDivision[] }; }
-        }));
-        const editions: PastEdition[] = [];
-        for (const { e, divs } of loaded) {
-          const dv = matchDivision(divs, division);
-          const res = dv?.results;
-          if (!dv || !res) continue;
-          const players = res.players
-            .filter((p) => p.grossTotal != null || (p.roundScores || []).some((r) => (r.scores || []).length))
-            .map((p) => ({
-              pos: typeof p.pos === "number" ? p.pos : (parseInt(String(p.pos ?? ""), 10) || null),
-              name: p.name,
-              club: p.club || null,
-              total: typeof p.grossTotal === "number" ? p.grossTotal : null,
-              toPar: typeof p.toPar === "number" ? p.toPar : null,
-              rounds: (p.roundScores || []).map((r) => r.gross ?? null),
-              holesPlayed: (p.roundScores || []).reduce((s, r) => s + (r.scores || []).filter(Boolean).length, 0),
-              // Voltas COMPLETAS (chave de ordenação — ver abaixo).
-              fullRounds: (p.roundScores || []).filter(isFullRound).length,
-              isManuel: isM(p.name),
-              isPt: !!(p as unknown as { _isPortuguese?: boolean })._isPortuguese,
-            }))
-            // ⚠ Ordenar por total sozinho põe em 1º quem NÃO acabou: 2 voltas
-            // somam menos que 3 (168 < 205) e um WD/DNF aparecia como campeão.
-            // Quem tem mais VOLTAS COMPLETAS vem primeiro; o total só desempata
-            // entre iguais. Serve para o DNF e para a prova a decorrer.
-            .sort((a, b) => (b.fullRounds - a.fullRounds)
-              || (b.rounds.filter(Boolean).length - a.rounds.filter(Boolean).length)
-              || ((a.total ?? 9e9) - (b.total ?? 9e9)));
-          if (!players.length) continue;
-          editions.push({
-            year: e.year, division: dv.tabLabel || dv.escalao || division,
-            course: res.campo || e.course || null, url: e.sourceUrl || null,
-            nRounds: Math.max(1, ...players.map((p) => p.rounds.length)),
-            parPerRound: res.players[0]?.parTotal ?? null,
-            players,
-          });
-        }
-        if (alive) setState({ loading: false, editions });
-      } catch (e) {
-        if (alive) setState({ loading: false, editions: [], err: String((e as Error)?.message || e) });
-      }
-    })();
-    return () => { alive = false; };
-  }, [source, year, division]);
-
-  if (state.loading) return <LoadingState />;
-  if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
-  return <PastEditionsTable editions={state.editions} title={division} />;
-}
-
-/** A MESMA tab em todas as fontes: as que delegam no TournamentDetail passam-na
- *  em `extraTabs`; as que ficam no IntlTournView do shell recebem-na como
- *  `trailingTab` (ver `pastEditionsTab` no CircuitConfig). */
-const PAST_EDITIONS_TAB = (source: string, year: number, division: string) => ({
-  key: "past-editions",
-  label: "Edições anteriores",
-  content: <PastEditionsTab source={source} year={year} division={division} />,
-});
 
 /** Evolução ano-a-ano do JOB/FM: marca quem regressou da edição do ano anterior
  *  e em que escalão estava, usando o to-par total como valor comparável.
@@ -499,7 +377,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
         // do FM (esconder HCP/SD/Fed/Tee, clube="País") e a evolução ano-a-ano.
         // `hideHeader` evita o header próprio do TournamentDetail (que mostraria
         // só o escalão "13 & 14") — quem desenha o cabeçalho é o shell.
-        renderFull: () => (
+        renderFull: (extras?: CircuitRenderFullExtras) => (
           <TournamentDetail
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
@@ -510,7 +388,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
             hideHeader
-            extraTabs={[PAST_EDITIONS_TAB("fm", f.year, label)]}
+            extraTabs={extras?.pastEditionsTab ? [extras.pastEditionsTab] : []}
           />
         ),
       };
@@ -551,9 +429,6 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
     const mpBase = mp ? [{ key: "matchplay", label: "Match Play", content: <MatchplayView data={mp} /> }] : [];
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = dv.division || opts.series;
-      // Tab "Edições anteriores" — mesma vista que o /kids2/next-t?tab=scores dá
-      // aos USKids, mas alimentada pelos JobFiles das outras edições (lazy).
-      const mpTabs = [...mpBase, PAST_EDITIONS_TAB(opts.source, f.year, label)];
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
@@ -575,7 +450,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
         results,
         links: dv.source ? [{ label: linkLabel, icon: "🔗", url: dv.source }] : undefined,
         renderFullKeepHeader: true,
-        renderFull: () => (
+        renderFull: (extras?: CircuitRenderFullExtras) => (
           <TournamentDetail
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
@@ -586,7 +461,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
             hideHeader
-            extraTabs={mpTabs}
+            extraTabs={[...mpBase, ...(extras?.pastEditionsTab ? [extras.pastEditionsTab] : [])]}
           />
         ),
       };
@@ -658,13 +533,10 @@ const MAJOR_CONFIG: CircuitConfig = {
   sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12" },
   sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
-  // "Edições anteriores" nas divisões que ficam no render por secções do shell
-  // (BJGT/EOWAGR/FCG/JWGC e Doral). As que delegam no TournamentDetail (JOB, FM
-  // e as JobFile GolfGenius/GolfBox) recebem a MESMA tab via `extraTabs`.
-  pastEditionsTab: (entry, div) => ({
-    label: "Edições anteriores",
-    content: <PastEditionsTab source={entry.source || ""} year={entry.year ?? 0} division={div.tabLabel || div.escalao} />,
-  }),
+  // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
+  // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
+  // às divisões do IntlTournView (trailing-tab) E às `renderFull` (via extras).
+  editionKey: (entry) => entry.source || null,
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
 };
