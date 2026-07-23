@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-22T16:34:45.108Z",
+  "generatedAt": "2026-07-23T15:38:51.973Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -17821,8 +17821,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -29184,6 +29184,20 @@
       ],
       "firstDate": "2023-07-27",
       "lastDate": "2024-08-01",
+      "editionsCount": 4
+    },
+    {
+      "id": "coc-world",
+      "label": "Champion of Champions",
+      "sourceId": "coc",
+      "tournamentIds": [
+        "coc-coc_2023",
+        "coc-coc_2024",
+        "coc-coc_2025",
+        "coc-coc_2026"
+      ],
+      "firstDate": "2023-01-01",
+      "lastDate": "2026-01-01",
       "editionsCount": 4
     },
     {

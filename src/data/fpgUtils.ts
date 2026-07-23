@@ -414,6 +414,49 @@ function detectRoundNumber(name: string): number | null {
   return m ? parseInt(m[1]) : null;
 }
 
+/**
+ * Par dos buracos REALMENTE jogados numa ronda.
+ *
+ * ⚠ Não usar o `parTotal` do jogador (par da volta completa) numa ronda a meio:
+ * numa prova a decorrer o cartão só tem os buracos já jogados e comparar 9
+ * buracos com o par de 18 dá to-pars absurdos (o Champion of Champions 2026
+ * mostrava a R3 com "Média 44.6 (−26)" e um total de −50). Casos cobertos:
+ *   - `pars` já vem do tamanho da ronda (9) → soma direita;
+ *   - cartão de 18 com zeros nos buracos por jogar → só conta onde há score;
+ *   - menos scores do que pares (sem zeros) → conta os primeiros N.
+ */
+export function playedParTotal(rs: { scores?: number[]; pars?: number[] }, fallback = 0): number {
+  const pars = rs.pars || [];
+  const sc = rs.scores || [];
+  if (!pars.length) return fallback;
+  const sum = (a: number[]) => a.reduce((x, y) => x + (y || 0), 0);
+  if (sc.length === pars.length) {
+    return sc.some((s) => !s) ? sum(pars.filter((_, i) => !!sc[i])) : sum(pars);
+  }
+  if (sc.length && sc.length < pars.length) return sum(pars.slice(0, sc.length));
+  return sum(pars);
+}
+
+/**
+ * Volta AINDA A DECORRER (não é o mesmo que cartão incompleto na fonte).
+ * Distingue-se pelo gross publicado:
+ *   • gross === soma dos buracos visíveis → o gross só cobre o que já jogou →
+ *     está a meio da volta;
+ *   • gross MAIOR que essa soma → jogou a volta toda e é o CARTÃO que vem
+ *     truncado da fonte.
+ * Sem isto, quem vai a meio aparece em 1º no acumulado: 13 buracos somam 54 e
+ * uma volta inteira 68 (caso Johanna Janisch, European Ladies' Team Ch. 2026).
+ */
+export function isRoundInProgress(rs: { gross?: number | null; scores?: number[]; pars?: (number | null)[] }): boolean {
+  const gross = rs.gross || 0;
+  if (gross <= 0) return false;
+  const sc = rs.scores || [];
+  const n = sc.filter(Boolean).length;
+  const nPar = (rs.pars || []).length;
+  if (!n || !nPar || n >= nPar) return false;
+  return sc.reduce((a, b) => a + (b > 0 ? b : 0), 0) === gross;
+}
+
 /** Expand multi-round: 1 torneio → R1 + R2 + ... + Total */
 export function expandMultiRound(t: Tournament): Tournament[] {
   const nRounds = t.rounds || 1;
@@ -428,7 +471,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     for (const p of t.players) {
       const rs = p.roundScores?.find(r => r.round === rd);
       if (!rs) continue;
-      const parT = p.parTotal || rs.pars.reduce((a, b) => a + b, 0);
+      const parT = playedParTotal(rs, p.parTotal || 0);
       rdPlayers.push(normalizePlayer({
         ...p,
         scoreId: p.scoreId + "_R" + rd,
@@ -466,12 +509,17 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     const isWD = validRounds.length < p.roundScores.length;   // desistiu em ≥1 ronda
     const nPlayed = validRounds.length;
 
-    // "incompleto" = menos rondas válidas do que o máximo disponível, sem ser WD
-    const incomplete = !isWD && nPlayed < playedRounds;
+    // "incompleto" = menos rondas válidas do que o máximo disponível OU alguma
+    // volta ainda a decorrer (sem ser WD). O MultiRoundLeaderboard só classifica
+    // os completos — sem a 2ª condição, quem ia a meio da última volta entrava
+    // na classificação com um total mais baixo e ficava em 1º.
+    const incomplete = !isWD && (nPlayed < playedRounds || validRounds.some(isRoundInProgress));
 
     const gross = validRounds.reduce((s, rs) => s + rs.gross, 0);
     const parPerRound = p.parTotal || (p.roundScores[0]?.pars.reduce((a, b) => a + b, 0) || 0);
-    const parT = parPerRound * nPlayed;
+    // Somar o par RONDA A RONDA (e só dos buracos jogados) em vez de
+    // `parPerRound × nPlayed` — com uma ronda a meio o produto inventa par.
+    const parT = validRounds.reduce((s, rs) => s + playedParTotal(rs, parPerRound), 0);
 
     totalPlayers.push(normalizePlayer({
       ...p,

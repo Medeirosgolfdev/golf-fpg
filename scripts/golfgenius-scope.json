@@ -1,0 +1,39 @@
+{
+  "_comment": [
+    "Eventos GolfGenius mantidos pelo cron (update-golfgenius.yml).",
+    "O cron corre TODAS as entradas activas; como o scraper só escreve o ficheiro",
+    "quando o conteúdo muda (ignorando o `scrapedAt`), as edições passadas dão",
+    "sempre 'sem alterações' e não geram commit. Se o custo de tempo incomodar,",
+    "pôr `disabled: true` nas edições encerradas.",
+    "Campos: url | v2tids, slug, name, year, league, country, skipScorecards,",
+    "profiles, disabled, note. `slug` fixa o nome do ficheiro {slug}_{ano}.json.",
+    "`country: none` = não assumir país nenhum quando a afiliação não o diz",
+    "(default do motor é 'US', certo para FSGA/UA, errado num mundial)."
+  ],
+  "events": [
+    {
+      "slug": "coc",
+      "url": "https://www.golfgenius.com/pages/12114827382448210411",
+      "country": "none",
+      "note": "'Champion of Champions' World Championship 2026 — Lough Erne Resort (Faldo + Castle Hume), 21-23 Jul 2026."
+    },
+    {
+      "slug": "coc",
+      "url": "https://www.golfgenius.com/pages/10999123520230801498",
+      "country": "none",
+      "note": "CoC 2025 (encerrado) — microsite mpg-coc25.golfgenius.com."
+    },
+    {
+      "slug": "coc",
+      "url": "https://www.golfgenius.com/pages/10007590223342485762",
+      "country": "none",
+      "note": "CoC 2024 (encerrado) — microsite mpg-coc24.golfgenius.com."
+    },
+    {
+      "slug": "coc",
+      "url": "https://www.golfgenius.com/pages/8989257390612300246",
+      "country": "none",
+      "note": "CoC 2023 (encerrado) — ggid/cocwc23. ⚠ Esta edição não publica afiliação nenhuma no GG → jogadores ficam sem país (é o que a fonte tem). 2020-2022 não estão no GolfGenius; o site oficial só lista os campeões."
+    }
+  ]
+}

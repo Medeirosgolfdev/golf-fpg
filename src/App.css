@@ -2701,6 +2701,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .row-portuguese.row-selected .sticky-col-0,
 .row-portuguese.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
 
+/* Mesmo destaque, mas por CÉLULA — a tabela "Edições anteriores" da /major põe
+   um torneio diferente em cada coluna, logo cada linha tem jogadores distintos
+   e o realce não pode ir no <tr>. Cores idênticas às regras acima. */
+td.cell-manuel { background: var(--bg-success-subtle) !important; }
+td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
+
 /* Link no header do torneio (Ranking PJA) — hover subtil para indicar
    que é clicável sem ser ruidoso. */
 .tourn-header-link:hover { background: var(--bg-hover-subtle, #F5F5F5); }
@@ -3540,9 +3546,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* --- Tee color dot (in filter chips) --- */
 .tee-dot-sq { display:inline-block; width:8px; height:8px; border-radius:2px; border:1px solid rgba(0,0,0,.18); }
 
-/* --- Score inline separators --- */
-.inline-sep { border-left:2px solid var(--border); padding:0 3px; display:inline-block; }
-
 /* Separador entre colunas — para criar uma linha vertical mais forte
    entre grupos de colunas numa tabela (e.g. R2 → Ant. no Doral).
    Usa !important para sobrepor border-left dos seletores .lb-* mais específicos. */
@@ -3903,6 +3906,12 @@ table td.lb-col-divider {
 /* Colunas estreitas (Nº Fed, DOB, Sexo, Escalão, país): encolher ao conteúdo
    para que toda a folga da tabela vá para Nome/Clube, não para estas. */
 .player-list-table th.tight { width: 1%; white-space: nowrap; }
+/* Tabela ANINHADA num painel expandido (ex: torneios de um jogador em
+   /ffg/info/joueurs): o cabeçalho não pode ser sticky, senão fica a flutuar
+   por cima da lista principal quando se faz scroll. */
+.player-list-row-detail .player-list-table thead th {
+  position: static;
+}
 .player-list-row:hover {
   background: var(--bg-hover, rgba(0, 0, 0, 0.03));
 }
@@ -4243,6 +4252,19 @@ table td.lb-col-divider {
   color: var(--accent-text);
   font-weight: 600;
 }
+/* Slot de largura fixa para os símbolos (↗ kids2, 🏆/✗) nas linhas de match
+   play: mantém-nos em coluna independentemente do comprimento do nome. O
+   margin próprio do <KidsLink> é anulado — aqui quem espaça é o slot. */
+.mp-slot {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* !important: <KidsLink>/<ResultMark> trazem margens INLINE, que de outra forma
+   ganhavam à classe e descentravam o glifo dentro do slot. */
+.mp-slot > * { margin: 0 !important; }
+
 /* Estado por buraco (faixa hole-by-hole): chips UP/DN/AS */
 .mp-hole-chip {
   display: inline-block;

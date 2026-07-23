@@ -115,7 +115,15 @@ export function ScorecardLB({
   // (React exige que todos os hooks sejam chamados incondicionalmente)
   const refP = rawPlayers[0];
   const refRs0 = refP?.roundScores?.[0];
-  const par = refP?.par?.length ? refP.par : refRs0?.pars || [];
+  // ⚠ O par da grelha vem da volta MAIS LONGA, não do 1º jogador: numa ronda a
+  // decorrer há cartões de 9 buracos ao lado de cartões de 18 e, como a lista
+  // vem ordenada por gross, o 1º era um dos que ainda ia a meio — a grelha
+  // encolhia para 9 colunas e escondia os buracos de quem já tinha acabado.
+  // (A maioria também não serve: a meio da tarde os incompletos são a maioria.)
+  const parOf = (p: Player) => (p.par?.length ? p.par : p.roundScores?.[0]?.pars) || [];
+  let longest: number[] = [];
+  for (const p of rawPlayers) { const pp = parOf(p); if (pp.length > longest.length) longest = pp; }
+  const par = longest.length ? longest : (refP?.par?.length ? refP.par : refRs0?.pars || []);
   const nh = par.length;
   // Par por buraco do PRÓPRIO jogador (o campo que ele jogou nesta ronda). Em
   // torneios cujo campo se divide por vários percursos numa mesma ronda (ex:
@@ -182,17 +190,32 @@ export function ScorecardLB({
 
   const nonWD = rawPlayers.filter((p) => !p._wd);
   const wdOnly = rawPlayers.filter((p) => p._wd);
-  const byGross = [...nonWD].sort((a, b) => numGross(a) - numGross(b));
+  // ⚠ Ordenar só por gross põe quem NÃO terminou a volta em 1º: 13 buracos
+  // somam 54 e 18 somam 68 (caso Johanna Janisch, ELG 2026 R2). Quem tem a
+  // volta completa vem primeiro; os que ainda vão a meio ficam no fim, por
+  // gross. Rondas sem cartão hole-by-hole (só totais) não são afectadas: aí
+  // ninguém tem buracos e a chave é neutra.
+  const holesOf = (p: Player) => (p.scores || []).filter(Boolean).length;
+  const anyHoles = nonWD.some((p) => holesOf(p) > 0);
+  const done = (p: Player) => (anyHoles ? (holesOf(p) === nh ? 1 : 0) : 1);
+  const byGross = [...nonWD].sort((a, b) => (done(b) - done(a)) || (numGross(a) - numGross(b)));
   let posCounter = 1;
   byGross.forEach((p, i) => {
-    if (i > 0 && numGross(p) !== numGross(byGross[i - 1])) posCounter = i + 1;
+    const prev = byGross[i - 1];
+    if (i > 0 && (numGross(p) !== numGross(prev) || done(p) !== done(prev))) posCounter = i + 1;
     (p as any)._pos = posCounter;
   });
   wdOnly.forEach((p) => {
     (p as any)._pos = 9999;
   });
-  const grosses = byGross.map((p) => numGross(p)).filter((g) => !isNaN(g));
+  // A média só junta voltas COMPLETAS (do tamanho da grelha) — misturar quem
+  // fez 9 buracos com quem fez 18 dava "Média 44.6 (−26)" numa ronda a decorrer.
+  // "completa" = buracos com score, não o tamanho do array (os buracos por
+  // jogar de uma volta a decorrer vêm a zero para as colunas não desalinharem).
+  const complete = byGross.filter((p) => holesOf(p) === nh);
+  const grosses = (complete.length ? complete : byGross).map((p) => numGross(p)).filter((g) => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
+  const nIncompletos = byGross.length - complete.length;
 
   // Hooks têm de vir ANTES de qualquer return condicional
   const fedBirthdates = useFedBirthdates();
@@ -364,12 +387,26 @@ export function ScorecardLB({
     const bogs = stats?.bogs ?? 0;
     const pp = playerPar(p);
     const ppTotal = pp === par ? parTotal : pp.reduce((a, b) => a + b, 0);
+    // Cartão INCOMPLETO sem gross oficial (o `inferred` só reconcilia quando há
+    // gross publicado): comparar a soma dos buracos jogados com o par de TODOS
+    // dava um ±par falso — 16 buracos em 81 apareciam como "+9" (caso Tomás
+    // Câmara, Regional de Clubes 2026). Sem cartão completo não há ±par.
+    // ⚠ EXCEPÇÃO: volta a DECORRER. Aí o gross publicado é o dos buracos já
+    // jogados (36 ao fim de 9) — o cartão é coerente consigo próprio e o ±par
+    // desses buracos é exactamente o que qualquer leaderboard live mostra.
+    // Distingue-se do caso acima por `gross === soma dos buracos publicados`.
+    const scoredHoles = scores.filter(Boolean).length;
+    const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+    const inProgress = scoredHoles > 0 && scoredHoles < pp.length && playedSum === gross;
+    const isPartial = scoredHoles > 0 && scoredHoles < pp.length && inferred.every(v => !v) && !inProgress;
+    // Par só dos buracos jogados quando a volta ainda vai a meio.
+    const refParTotal = inProgress ? pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0) : ppTotal;
 
     return {
       key: p.scoreId || idx,
       pos: posDisplay,
       gross,
-      toPar: isWDPlayer ? null : gross - ppTotal,
+      toPar: isWDPlayer || isPartial ? null : gross - refParTotal,
       scores,
       holePars: pp,
       inferredHoles: inferred,
@@ -552,10 +589,11 @@ export function ScorecardLB({
             {rawPlayers.length} jog · Par {parTotal} · {nh}h
           </span>
           {avg > 0 && (
-            <span>
+            <span title={nIncompletos > 0 ? `Média só das ${grosses.length} voltas completas (${nIncompletos} ainda a decorrer)` : undefined}>
               · Média {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
             </span>
           )}
+          {nIncompletos > 0 && <span className="muted">· {nIncompletos} a decorrer</span>}
           {refP.course && <span>· 📍 {refP.course}</span>}
           {teeCrSlopes.length === 1 && (
             <span>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}</span>

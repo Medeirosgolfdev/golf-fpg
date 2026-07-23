@@ -135,6 +135,7 @@ jobs:
           git add public/data/ffgolf/ \
                   public/data/ffgolf-catalog.json \
                   public/data/france-players.json \
+                  public/data/ffgolf-player-tournaments.json \
                   public/data/ffgolf-gg-twins.json
 
           if git diff --staged --quiet; then

@@ -259,19 +259,37 @@ function RoundTable({ round }: { round: MatchplayRound }) {
   // Nomes encostados ao centro (estilo GolfBox/R&A): a Casa alinha à direita,
   // a Fora à esquerda, e o badge de resultado fica entre eles com a seta a
   // apontar ao vencedor. Vencedor a bold, vencido esbatido.
-  // Ordem espelhada à volta do badge: Casa = "Nome ↗ 🏆" e Fora = "🏆 ↗ Nome"
-  // — o troféu/cruz fica sempre encostado ao centro, nos dois lados.
+  // Ordem espelhada à volta do badge: Casa = "Nome ↗ 🏆" e Fora = "🏆 ↗ Nome".
+  // Flex com slots de largura FIXA para o ↗ e a marca — inline, os símbolos
+  // andavam com o comprimento do nome e nunca ficavam em coluna.
   // O ↗ kids2 só aparece se o jogador existir no roster (equipas ETC não batem).
-  const teamCell = (s: MatchplayTeamMatch["home"], won: boolean, settled: boolean, align: "right" | "left") => (
-    <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
-      {align === "left" && settled && <ResultMark kind={won ? "win" : "loss"} />}
-      {align === "left" && s?.name && <KidsLink nome={s.name} />}
-      {align === "left" && " "}
-      {sideFlag(s?.iso ?? null, s?.country ?? null)} {s?.name ?? "?"}
-      {align === "right" && s?.name && <KidsLink nome={s.name} />}
-      {align === "right" && settled && <ResultMark kind={won ? "win" : "loss"} />}
-    </span>
-  );
+  // `.mp-slot` (App.css) anula o margin próprio do <KidsLink>/<ResultMark> — o
+  // espaçamento vem todo do slot + gap, igual dos dois lados do badge.
+  const teamCell = (s: MatchplayTeamMatch["home"], won: boolean, settled: boolean, align: "right" | "left") => {
+    const link = <span className="mp-slot" style={{ width: 18 }}>{s?.name ? <KidsLink nome={s.name} /> : null}</span>;
+    // O 🏆 é bem mais largo que o ✗. Em vez de os encostar a um dos lados (o que
+    // alinha um bordo e desalinha o outro), dá-se A MESMA largura à marca e
+    // centra-se o glifo lá dentro: ambos os bordos ficam em coluna e a folga
+    // para a seta é igual em todas as linhas.
+    const mark = (
+      <span className="mp-slot" style={{ width: 18 }}>
+        {settled ? <ResultMark kind={won ? "win" : "loss"} gap={0} style={{ width: 18, textAlign: "center" }} /> : null}
+      </span>
+    );
+    const fl = sideFlag(s?.iso ?? null, s?.country ?? null);
+    const name = (
+      // Sem bandeira não há espaço a separar nada — o espaço literal empurrava o
+      // nome e desequilibrava a folga face à seta do lado Fora.
+      <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
+        {fl ? `${fl} ` : ""}{s?.name ?? "?"}
+      </span>
+    );
+    return (
+      <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
+        {align === "left" ? <>{mark}{link}{name}</> : <>{name}{link}{mark}</>}
+      </span>
+    );
+  };
 
   return (
     <div style={{ overflowX: "auto" }}>

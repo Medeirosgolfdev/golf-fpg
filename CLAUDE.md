@@ -725,6 +725,7 @@ formatos de output e dois caminhos de scrape:
 | **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (multi-liga) | `pages/5989156` (hub JS) | **`scrape-golfgenius-node.js --v2tids`** | `mexnacional_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `mexnacional`) |
 | **México — Copa Bobby Díaz (7-15)** | GolfGenius | `pages/5666137` (liga 502696) | `scrape-golfgenius-node.js --v2tids` | `icopa_2025.json` (4 divisões c/ jogadores) | ✅ ligado (source `icopa`) |
 | **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2025.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
+| **'Champion of Champions' World Championship** | GolfGenius (pages) | `pages/12114827382448210411` (2026) | **`scrape-golfgenius-node.js --scope`** | `coc_{2023,2024,2025,2026}.json` (JobFile, 8-10 divisões) | ✅ ligado (source `coc`) — cron `update-golfgenius.yml` |
 | **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
 | **EGA — European Boys' Team Championship, Div. 2** | GolfBox | `ega-golf.ch/…#/competition/5731554/leaderboard` | `scrape-golfbox.js` | `ebtc2_2026.json` (JobFile) | ✅ ligado (source `ebtc2`) — começa 7 Jul 2026 |
 | **EGA — European Girls' Team Championship (U18)** | GolfBox | `ega-golf.ch/…#/competition/5478100/` | `scrape-golfbox.js` | `egtc_2026.json` (JobFile) | ✅ ligado (source `egtc`) — U18, GCC Zürich; começa 7 Jul 2026 |
@@ -789,8 +790,39 @@ node scripts/scrape-golfgenius-node.js "https://www.golfgenius.com/pages/1277045
 node scripts/scrape-golfgenius-node.js <url> --league 528939       # página 100% JS sem leagueId no HTML
 node scripts/scrape-golfgenius-node.js <url> --skip-scorecards     # só leaderboards (rápido)
 ```
-**Slug/nome**: `SLUG_OVERRIDES` (UA→`uajt`, "infantil juvenil"→`mexnacional`) ou
-`--slug/--name/--year`. Output `{slug}_{ano}.json` (JobFile).
+**Slug/nome**: `SLUG_OVERRIDES` (UA→`uajt`, "infantil juvenil"→`mexnacional`,
+"champion of champions"→`coc`) ou `--slug/--name/--year`. Output
+`{slug}_{ano}.json` (JobFile).
+
+**Modo `--scope` (cron, 2026-07-23):** `--scope scripts/golfgenius-scope.json`
+corre uma lista de eventos (`{url|v2tids, slug, name, year, league, country,
+skipScorecards, profiles, disabled}`); `--slug X` filtra a um. O ficheiro só é
+reescrito quando o conteúdo muda (comparação ignorando o `scrapedAt`) → **exit
+0** = houve novidades, **2** = nada novo (não é erro), **1** = tudo falhou.
+Workflow: `update-golfgenius.yml` (diário 22:00 UTC), que a seguir regenera o
+agregador de juniores + o `major-catalog.json` e committa. `--country none`
+desliga o país por defeito "US" (ver CoC abaixo).
+
+**Tee sheets = draws REAIS (2026-07-23).** ⚠ O widget dos tee sheets chama-se
+**`next_round`** — `tee_times`, `pairings`, `tee_sheet` e `tee_sheets` dão todos
+404. A página é descoberta sozinha: o HTML da página de resultados anuncia-a num
+input escondido `tee_sheet_button`. O `<select>` do widget lista as rondas
+(`&round_id=…`) e cada uma traz a tabela `by_tee_times_table` com pares
+(hora, jogadores); cada jogador leva a afiliação **e a divisão**, que é o que
+permite dar a cada escalão o seu draw (um flight pode juntar escalões — o grupo
+entra no draw de todos os que estão nele). Vai para `divisions[].draws` do
+JobFile, que a `MajorPage` já converte para as abas Draw R1/R2/R3.
+Sem isto o `TournamentDetail` só mostrava draws **estimados** do acumulado
+(`synthesizeDrawFromCumulative`) — e nunca para a R1, que não tem ronda anterior
+de onde inferir. `--skip-tee-sheets` desliga.
+
+**Merge ADITIVO (default, `--no-merge` desliga):** re-scrapar uma prova a
+decorrer apanha jogadores a meio da volta e devolveria MENOS buracos do que já
+temos guardado. Antes de escrever, cada volta é casada com a de disco **pela
+DATA** (não pelo índice — quem falta a uma ronda desalinha os dias) e fica a que
+tem **mais buracos**; voltas que só existem em disco são mantidas. Posição,
+total e ±par vêm sempre do scrape novo (autoritativo). Assim pode-se correr o
+scraper as vezes que se quiser durante a prova sem perder nada.
 
 ⚠ **México é multi-LIGA** (uma liga por categoria de idade, cada uma com Varonil
 + Femenil; a hub `pages/5989156` é 100% JS sem leagueId). Não dá para descobrir
@@ -861,6 +893,135 @@ e perdia o país. Passagem 2026-07-19: 552 jogadores corrigidos; ficam ~28
 localidades genuinamente ambíguas (Santiago, San Jose, Victoria, Milton…) sem
 país — de propósito, mostram só o texto da cidade.
 
+### Tab "Edições anteriores" na `/major` (2026-07-23)
+
+Última tab da barra de cada escalão (a seguir a Resumo/📋 Scorecards/Match
+Play): uma coluna por EDIÇÃO do mesmo torneio+escalão, linhas = posição,
+células = nome · total · ±par · pancadas de cada ronda. É o equivalente à tab
+`scores` do `/kids2/next-t` (`HistoricTopNTable`), que só serve o mundo USKids
+(lê `uskids-member-history-slim.json` + `autoRivals`) — daí um componente
+próprio, `src/ui/circuit/PastEditionsTable.tsx`. Responde a "que score foi
+preciso para ganhar / entrar no top-10 neste escalão ao longo dos anos".
+
+Funciona em **TODAS** as fontes do MAJOR porque o carregador (`PastEditionsTab`
+na `MajorPage`) passa pelo **`loadDivisionsFor`** — o mesmo loader que o shell
+usa para abrir um torneio — em vez de ler os JobFiles directamente. Anos vêm do
+`major-catalog.json`; tudo lazy (só ao abrir a tab) e cacheado.
+
+Duas vias de injecção, conforme a divisão:
+- **`renderFull`** (JOB, FM e as JobFile GolfGenius/GolfBox) → `extraTabs` do
+  `TournamentDetail`;
+- **render por secções do shell** (BJGT/EOWAGR/FCG/JWGC, Doral) → novo
+  `pastEditionsTab` no `CircuitConfig`, que o `CircuitShell` acrescenta aos
+  `trailingTabs`.
+
+⚠ **Ordenar por total põe quem NÃO acabou em 1º** — 2 voltas somam menos que 3
+(168 < 205) e um WD aparecia como campeão; num caso real o vencedor (205, −11)
+caía para 89º atrás de 88 desistências. A chave é **voltas completas** desc,
+depois voltas com gross, e só então o total. "Volta completa" distingue os dois
+motivos para um cartão ter buracos em branco: se o gross é MAIOR que a soma dos
+buracos visíveis, o cartão é que está truncado na fonte (conta como completa);
+se é IGUAL, a volta está a decorrer (não conta) — ver `isFullRound`. Os totais
+de quem não acabou aparecem em itálico esbatido.
+
+⚠ **O match de escalão entre edições exige o mesmo FORMATO de nome.** Só idade
+±1 não chega: no Future Masters casava "10 and Under" com "11 & 12". A regra é
+sexo igual + o nome sem dígitos igual ("Under 15 Girls"→"under girls" bate com
+"Under 14 Girls"; "10 and Under"→"and under" não bate com "11 & 12").
+
+⚠ **Destaque Manuel/PT é por CÉLULA** (`td.cell-manuel` / `td.cell-portuguese`
+no `App.css`, mesmas cores das regras `.row-*`): cada coluna é um torneio
+diferente, logo a linha tem jogadores distintos e `.row-manuel` pintaria a linha
+toda. Nunca inventar tokens novos aqui — a 1ª versão usava
+`var(--bg-manuel, …)`, token inexistente, e ficava com o fallback hardcoded
+(cores diferentes do resto da app).
+
+### Deep-link de abas (`?tab=…`) unificado — 2026-07-23
+
+O `TournamentDetail` já sincronizava a aba com o URL; o `IntlTournView` (a barra
+das páginas assentes no `CircuitShell` — MAJOR BJGT/Doral, RFEG, FFG, England,
+GJGL, Drive) tinha a aba só em estado local, por isso `?tab=…` não abria nada
+lá. Agora cada aba do `IntlTournView` tem uma `key` com o MESMO vocabulário
+(`admissions` · `draw:N` · `round:I` · `precut` · `resumo` · `scorecards` +
+a chave das leading/trailing tabs) e o `CircuitShell` liga-a ao `?tab=` via
+`useSearchParams` (escrita com `replace` para não encher o histórico). O URL
+manda enquanto apontar para uma aba existente; caso contrário mantém-se a
+escolha automática (Resumo).
+
+### ⚠ Campo hardcoded na família BlueGolf (corrigido 2026-07-23)
+
+O `tDataToTournament` (`BJGTPage.tsx`) fixava o campo em "Villa Padierna —
+Flamingos"/"— Alferini", com uma excepção para o EOWAGR. Quando o **FCG** e o
+**JWGC** entraram nesta família (também BlueGolf) herdaram o hardcode: o FCG
+Callaway World Championship aparecia a jogar-se em Villa Padierna em vez de
+Desert Willow. Os ficheiros BJGT/WJGC trazem `course: "Villa Padierna"` sem o
+percurso e o EOWAGR vem vazio — daí os hardcodes serem úteis — mas fcg/jwgc
+trazem o campo certo, por isso agora só bjgt/eowagr usam o valor fixo e as
+restantes séries usam `data.course`.
+
+### 'Champion of Champions' World Championship (`coc`) — 2026-07-23
+
+Convite mundial de campeões nacionais juvenis no **Lough Erne Resort** (Irlanda
+do Norte), 3 voltas nos campos **Faldo (par 72)** e **Castle Hume (par 71)**;
+~250 miúdos de 40+ países, escalões **Under 7/9/12/14/15/19 Boys+Girls** (o
+Under 9 e o Under 7 jogam **27 buracos = 3×9**). Ficheiros
+`coc_{2023,2024,2025,2026}.json`, source `coc` na `/major`.
+
+⚠ **Os subdomínios `coc20…coc26.golfgenius.com` NÃO são um por ano** — só o
+`coc26` existe (os outros caem em `golfgenius.com`), e qualquer um deles serve a
+mesma página se lhe dermos o id. As edições anteriores vivem noutras ligas, com
+o prefixo **`mpg-coc{YY}`** (MG Pro Golf, o organizador) — descobertas pelo CDX
+do Wayback Machine, porque o site oficial (`championofchampions.co`) só linka a
+edição em curso e, das passadas, publica apenas o campeão de cada escalão:
+
+| Ano | Página de resultados | Como se chega lá |
+|---|---|---|
+| 2026 | `pages/12114827382448210411` | `coc26.golfgenius.com` |
+| 2025 | `pages/10999123520230801498` | `mpg-coc25.golfgenius.com` |
+| 2024 | `pages/10007590223342485762` | `mpg-coc24.golfgenius.com` ou `ggid/coc24` |
+| 2023 | `pages/8989257390612300246`  | `ggid/cocwc23` |
+
+2020-2022 **não estão no GolfGenius** (o torneio nasceu em 2020 em Powerscourt).
+
+Quatro armadilhas resolvidas neste evento — todas no motor partilhado
+(`scrape-fsga.js`), por isso valem para qualquer fonte GolfGenius:
+1. **Uma vista, várias divisões.** O `<select name="round">` só muda de RONDA e
+   o widget traz os 8-10 escalões empilhados. O agrupamento por label descobria
+   "Round 1/2/3" em vez de divisões → `discoverDivisions` detecta labels que só
+   nomeiam a ronda e passa a tratar **cada v2tid do widget** como uma divisão,
+   com o label vindo do `event.name` ("54 Hole World Championship - Under 12
+   Boys" → "Under 12 Boys").
+2. **Rondas fora de ordem.** Com o evento a decorrer o GG devolve a ronda em
+   curso PRIMEIRO (medido: R3, R1, R2) → a R1 ficava com o gross da ronda por
+   jogar e o dia 1 saía a zero. `sortRounds()` reordena pela data de `ev.rounds`.
+3. **Outro vocabulário de marcadores.** As células são `par-hole` /
+   `birdie-hole` / `eagle-hole` / `plusN-hole` (não os `circle`/`square` do
+   FSGA) → sem isso TODA a célula contava como par e o par derivado saía igual
+   ao score ("Under 12 Girls par 82"). Ver `parAdjust`.
+4. **Chave de campo colidia.** `courseKey` ficava-se pelo último segmento depois
+   do "-": "Faldo - World Championship" e "Castle Hume - World Championship"
+   davam ambos `world championship` e misturavam os pares dos dois campos. Passa
+   a usar o nome completo (sem o tee entre parênteses).
+
+Mais: `parseScorecard` passou a ler **cada nine em separado** (cartões de 9
+buracos usam a mesma tabela de 18 com metade em branco) e a ronda leva
+`startingHole`; o consenso de par aceita 9 ou 18 e a chave inclui `|f9`/`|b9`
+(front e back do mesmo campo têm pares diferentes).
+
+⚠ **Tecto por buraco = 30, não 15.** O Maximilian Oberlin fez **17** no buraco 8
+da R2 de 2026: com o tecto antigo o `readNine` rejeitava o nine inteiro e a
+volta de 100 entrava na UI como uma volta de **9 buracos** (só o back). O tecto
+serve só para rejeitar lixo — a célula vazia (buraco por jogar) já é rejeitada
+por não ser numérica.
+
+⚠ **Nacionalidade:** a afiliação do GG é o PRÓPRIO PAÍS (~50 valores, incl.
+"Great Britain and Ireland", "Golf Ireland", "Hong Kong, China", "Türkiye"),
+mas **a edição de 2023 não publica afiliação nenhuma**. O default `US` do
+`inferCountry` (correcto para FSGA/UA, cujas afiliações são cidades
+americanas) carimbava 243 miúdos de 40 países como americanos → `inferCountry`
+ganhou um `fallback` e o `--country none` passa `null`. Todas as entradas CoC
+do scope usam `country: "none"`.
+
 ### Enriquecimento por DOB (ficha GG `/profiles`) — México
 O `scrape-fsga.js` ganhou `fetchProfile(id)`: o scorecard detail page linka
 `/profiles/{id}` (ficha do jogador), que a FMG-México expõe com **DATE OF BIRTH
@@ -895,6 +1056,110 @@ com DOB/clube). Flag em `SOURCE_FLAGS.México = flagOf("Mexico")`.
 
 > **Nota México — handicaps:** a FMG (`fmg.org.mx/ghin`) publica índices dos
 > jovens mas o GHIN bloqueia consultas fora do México. Não incorporado.
+
+---
+
+## Scripts — FFG (França)
+
+### Categoria FFG de um jogador (`cat`/`catYear`) — 2026-07-23
+
+A FFG **não expõe DOB**, por isso a categoria de cada jogador do
+`france-players.json` é inferida. ⚠ **A série sozinha não chega**: no portal
+resultats as divisões de uma prova juvenil chamam-se muitas vezes só
+"Messieurs"/"Dames" (a idade vive no NOME — "1re Division U16 Garçons"). Antes
+`cat` saía só do `lastSerie` e apenas **4560/13230** jogadores ficavam
+classificados; os outros caíam fora de QUALQUER filtro de escalão e do toggle
+"Só Jovens" da `/ffg/info/joueurs` (o Xan Iribarne, inscrito no torneio mais
+recente, era invisível). O `build-france-players.js` passou a acumular os
+escalões por ÉPOCA a partir de **série + nome da prova** (`addEsc`) → **13187/13230**.
+
+`cat` = escalão **mais novo** da época mais recente com sinal de idade
+(`categoriaDe` + `ffgEscalaoMaisNovo`), **não** o da última prova: um júnior
+pode inscrever-se acima do escalão dele mas nunca abaixo, e o Xan (U12) fez a
+"1re Division U16" em Julho — pelo máximo ficava Sub-16. `catYear` guarda a
+época usada (tooltip da coluna Catégorie).
+
+A regra canónica vive em `src/utils/ffgEscalao.ts` (`ffgEscalaoCanonico` +
+`ffgEscalaoMaisNovo`), **espelhada** em `scripts/lib/ffg-escalao.cjs` para o
+build Node — `scripts/ffg-escalao-mirror.test.js` compara as duas sobre os
+labels reais do portal e falha se divergirem (padrão do `lib/course-aliases.cjs`).
+A `FFGPage` reexporta `ffgEscalaoCanonico` (metade da app importa-o de lá).
+
+### Torneios+resultados por jogador — `ffgolf-player-tournaments.json` (2026-07-23)
+
+Clicar numa linha da `/ffg/info/joueurs` expande a lista de **todos os torneios
+do jogador com o resultado** (data · torneio · série · posição · voltas ·
+total), e o nome do torneio abre a leaderboard completa em `/ffg/t/{entryId}`.
+UI: `src/pages/ffg/PlayerTournaments.tsx`.
+
+Gerado pelo **mesmo passo** que o `france-players.json`
+(`build-france-players.js`, 2ª saída) — de propósito: a dedup de participações
+é a MESMA que a da coluna 📊 Tot (por `trnId`; um jogador aparece por vezes em
+2 séries do mesmo torneio), por isso o nº de linhas bate sempre certo. O
+builder avisa se divergir.
+
+Formato compacto (~95k participações → 2,5 MB): catálogo `tournaments[]`
+partilhado + labels de série internados em `series[]`, e cada linha é
+`[ti, pos, total, [gross por volta], si]`. Carregado só quando o utilizador
+expande a primeira linha (não pesa no load da página).
+
+⚠ **O `pos` do portal FFG é a classificação do TORNEIO INTEIRO, não da série** —
+medido: em 1212/1225 provas o máximo bate certo com o nº de licenças do torneio,
+e há séries de 41 jogadores com gente em 42º. Por isso o "N.º de" vem de
+`tournaments[].np` (licenças distintas de todo o `trnId`) e não do tamanho da
+série. Duas sentinelas: `pos ≥ 900` = sem classificação, e **sem score não há
+posição** (nas provas por jogar / só com tee sheet o `pos` é a ordem da linha na
+lista de partida — dava "91º" a quem nem jogou; nesses casos mostra-se
+"inscrito").
+
+### Torneios+resultados por jogador (ES) — `spain-player-tournaments.json` (2026-07-23)
+
+Gémeo espanhol do `ffgolf-player-tournaments.json`: clicar numa linha da
+`/rfeg/info/jugadores` expande as provas do jogador com posicao e voltas, e o
+nome abre a classificacao em `/rfeg/{source}/{id}`. UI partilhada com a FFG:
+`src/ui/PlayerTournamentsPanel.tsx` + adaptador `src/pages/rfeg/PlayerTournaments.tsx`.
+⚠ O painel recebe TODAS as licencas do jogador (a lista agrupa quem mudou de
+clube) e deduplica por prova.
+
+**Substituiu o `build-spain-player-results.js`** (removido): esse gerava um
+`spain-player-results.json` de 9,6 MB, era corrido e committado pelo workflow
+mas **nunca teve consumidor no `src/`** — a UI nunca chegou a ser feita. O que
+tinha de bom foi portado (matching de nome contra os inscritos da propria prova,
+FCG/golfdirecto, e o unswap `licencia`↔`nivel` do NextCaddy).
+
+Linhas = inscricoes (`sources[]` do `licencia-dob-lookup.json`) ∪ classificacoes.
+As inscricoes trazem provas em que o jogador nao chegou a jogar — mostradas com
+o estado (baja/reserva/no admitido). As classificacoes trazem os **Campeonatos
+de España publicados so no LiveGolfScoring** (164 provas), que nao tem lista de
+inscritos na RFEGolf e por isso nao apareciam em `sources[]` nenhuma.
+
+⚠ **`counts` (tot/ano) vem deste ficheiro para o `spain-players.json`** — o
+`build-spain-players-export.js` le-os, para a coluna 📊 Tot ser exactamente o nº
+de linhas do painel. Logo **a ordem no `update-spain.yml` importa**:
+`build-lgs-twins` → `build-fcg-rivals` → `build-spain-player-tournaments` →
+`build-spain-players-export`.
+
+Armadilhas medidas (todas com caso real):
+- **`pos` do NextCaddy é dentro da CATEGORIA**, e um tour junta 12 categorias →
+  o "de N" é por LINHA (tamanho da categoria), não do torneio: "34º de 768" era
+  na verdade 34º de 113.
+- **Os blocos do microsite RFEGolf são muitas vezes de UMA jornada**
+  ("Clasificación - 3ª Jornada", 60 jogadores). Quando a prova tem gémeo LGS, o
+  **LGS ganha** — senão o Sub-16 2025 dizia "1º de 60" a quem foi 3º de 90.
+- **Classificações por handicap trazem LÍQUIDOS** nos campos de gross → preferir
+  sempre a scratch (mesma regra da memória "NextCaddy par real = tarjeta").
+- **Gémeos RFEGolf↔LGS que o `rfegolf-lgs-twins.json` não apanha** (cruza por
+  nome+ano, e a RFEG baptiza o mesmo evento de forma diferente em cada
+  plataforma) são detectados aqui por ROSTER — possível porque os nomes do LGS
+  ficam resolvidos em licenças. Guardas contra o falso gémeo: as duas datas têm
+  de existir e ficar a ≤7 dias, ≥5 licenças e ≥80% de sobreposição. Sem o guard
+  de data, a "Copa S.M. El Rey" (sem data) fundia com um Sub-16 de outro ano a
+  0,81 — a mesma coorte de juniores de topo joga tudo.
+- **Deep-link para provas agrupadas**: o `buildRfegEntries` funde as categorias
+  de um Campeonato numa entrada `grp-…`, e um link `/rfeg/{source}/{id}` não
+  batia com entrada nenhuma. As entradas combinadas passaram a levar
+  `memberIds[]` (novo campo opcional em `CircuitEntry`) e o `selectedId` da
+  RFEGPage resolve o membro → grupo.
 
 ---
 
@@ -1392,6 +1657,11 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | bjgt_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js | ✓ | BJGTPage, KIDSdataLoader |
 | eowagr25_*.json | EOWAGR | scrape-eowagr25*.js | ✓ | KIDSdataLoader |
 | ftm_doral_2024/2025.json | Doral | scrape-golfgenius.js | r1/r2Gross | KIDSdataLoader |
+| coc_{2023..2026}.json | Champion of Champions | scrape-golfgenius-node.js (`--scope`) | ✓ (9 e 18 buracos) | MajorPage (source `coc`), aggregator (`sources/coc.js`) |
+| france-players.json | FFG | build-france-players.js | ✗ | FFGPage (`/ffg/info/joueurs`), KIDSdataLoader (france-enrich), aggregator |
+| ffgolf-player-tournaments.json | FFG | build-france-players.js | ✗ | FFGPage — torneios+resultados de cada jogador (painel expansível) |
+| spain-players.json | RFEG | build-spain-players-export.js | ✗ | RFEGPage (`/rfeg/info/jugadores`), KIDSdataLoader, aggregator |
+| spain-player-tournaments.json | RFEG | build-spain-player-tournaments.js | ✗ | RFEGPage — torneios+resultados de cada jogador (painel expansível) |
 | england_{slug}.json | England Golf | scrape-england-golf.js | ✓ (com teeColour/metersPlayed[18] por ronda) | EnglandGolfPage |
 | england-golf-catalog.json | England Golf | manual | ✗ | EnglandGolfPage (sidebar) |
 | torneio-greatgolf.json | Greatgolf | scrape-drive-aquapor-v7.js | ✓ | KIDSdataLoader |
@@ -2029,8 +2299,9 @@ validado server-side. **Não replicável de Node puro.**
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
-| **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
+| **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 | `scripts/scrape-federados-node.js` | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-golfgenius.yml`** | ✅ Novo 2026-07-23 | `scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json` | Diário 22:00 UTC | Eventos GolfGenius do scope (hoje: as 4 edições do Champion of Champions). Sem secrets (GG público a `fetch`). Exit 2 = sem alterações. Quando há novidades regenera o agregador + `major-catalog.json` e committa. `workflow_dispatch` aceita `slug` (só um evento do scope) ou `page_url` ad-hoc. |
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
 | **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |

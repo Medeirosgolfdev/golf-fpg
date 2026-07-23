@@ -83,6 +83,57 @@ function validatePlayers(file, d) {
   ok(file, `${n} entradas`);
 }
 
+function validateFrancePlayers(file, d) {
+  if (!isNonEmptyObject(d.byLicense)) return fail(file, "byLicense vazio/ausente");
+  const n = Object.keys(d.byLicense).length;
+  const comCat = Object.values(d.byLicense).filter(p => p && p.cat).length;
+  // A categoria é o que alimenta o filtro de escalão e o toggle "Só Jovens" da
+  // /ffg/info/joueurs — se cair para valores baixos, a lista fica quase vazia.
+  if (comCat < n * 0.9) return fail(file, `só ${comCat}/${n} jogadores com categoria (esperado >90%)`);
+  ok(file, `${n} jogadores, ${comCat} com categoria`);
+}
+
+function validateFfgPlayerTournaments(file, d) {
+  if (!Array.isArray(d.tournaments) || !d.tournaments.length) return fail(file, "tournaments vazio/ausente");
+  if (!isNonEmptyObject(d.byLicense)) return fail(file, "byLicense vazio/ausente");
+  const nT = d.tournaments.length;
+  const nS = (d.series || []).length;
+  let rows = 0, bad = 0;
+  for (const list of Object.values(d.byLicense)) {
+    if (!Array.isArray(list)) { bad++; continue; }
+    for (const r of list) {
+      rows++;
+      // Índices fora do catálogo dariam linhas fantasma (ou crash) na UI.
+      if (!Array.isArray(r) || !(r[0] >= 0 && r[0] < nT)) { bad++; continue; }
+      if (r[4] !== -1 && !(r[4] >= 0 && r[4] < nS)) bad++;
+    }
+  }
+  if (bad) return fail(file, `${bad} linhas com índice fora do catálogo`);
+  ok(file, `${Object.keys(d.byLicense).length} jogadores, ${rows} participações, ${nT} torneios`);
+}
+
+function validateSpainPlayerTournaments(file, d) {
+  if (!Array.isArray(d.tournaments) || !d.tournaments.length) return fail(file, "tournaments vazio/ausente");
+  if (!isNonEmptyObject(d.byLicencia)) return fail(file, "byLicencia vazio/ausente");
+  const nT = d.tournaments.length;
+  const nS = (d.status || []).length;
+  let rows = 0, bad = 0, badCount = 0;
+  for (const [lic, list] of Object.entries(d.byLicencia)) {
+    if (!Array.isArray(list)) { bad++; continue; }
+    for (const r of list) {
+      rows++;
+      if (!Array.isArray(r) || !(r[0] >= 0 && r[0] < nT)) { bad++; continue; }
+      if (r[4] !== -1 && !(r[4] >= 0 && r[4] < nS)) bad++;
+    }
+    // `counts` alimenta a coluna 📊 Tot do spain-players.json — se não for o nº
+    // de linhas, a tabela diz um número e o painel mostra outro.
+    if ((d.counts?.[lic]?.[0] ?? list.length) !== list.length) badCount++;
+  }
+  if (bad) return fail(file, `${bad} linhas com índice fora do catálogo`);
+  if (badCount) return fail(file, `${badCount} licenças com counts ≠ nº de linhas`);
+  ok(file, `${Object.keys(d.byLicencia).length} licenças, ${rows} participações, ${nT} torneios`);
+}
+
 function validateGeneric(file, d, raw) {
   if (raw.trim().length <= 2) return fail(file, "JSON trivialmente vazio");
   ok(file, `JSON válido (${(raw.length / 1024).toFixed(0)} KB)`);
@@ -93,6 +144,9 @@ const RULES = [
   { re: /fpg-admissions-draws\.json$/i, fn: validateAdmissionsDraws },
   { re: /uskids-results\.json$/i, fn: validateUskidsResults },
   { re: /uskids-member-history-slim\.json$/i, fn: validateMemberHistorySlim },
+  { re: /france-players\.json$/i, fn: validateFrancePlayers },
+  { re: /ffgolf-player-tournaments\.json$/i, fn: validateFfgPlayerTournaments },
+  { re: /spain-player-tournaments\.json$/i, fn: validateSpainPlayerTournaments },
   { re: /(players|player-stats)\.json$/i, fn: validatePlayers },
 ];
 

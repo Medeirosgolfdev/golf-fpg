@@ -1,0 +1,127 @@
+name: Actualizar GolfGenius
+
+# Scraper genérico de eventos GolfGenius (Node puro — o GG devolve 403 a browsers
+# automatizados mas responde a `fetch`). Lê scripts/golfgenius-scope.json (só a
+# edição EM CURSO de cada série) e reescreve os JobFiles em
+# public/data/{slug}_{ano}.json. Se algum mudou, regenera de seguida os canónicos
+# do kids2 (juniors.json + shards) e o catálogo MAJOR.
+#
+# GolfGenius público → SEM secrets/cookies.
+#
+# Corre:
+#  - Cron diário às 22:00 UTC — apanha o fim de cada dia de prova (o Champion of
+#    Champions joga-se em Julho na Irlanda do Norte, UTC+1). Sem alterações →
+#    exit 2 → sem commit.
+#  - A pedido, opcionalmente restringindo a um slug do scope ou dando uma URL
+#    ad-hoc de uma página /pages/{id}.
+#
+# Nota: o commit é self-contained (scrape + agregador + catálogo) porque um push
+# feito com GITHUB_TOKEN não dispara os workflows build-juniors/build-major-catalog.
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Correr só este slug do scope (vazio = todos)'
+        required: false
+        default: ''
+        type: string
+      page_url:
+        description: 'URL /pages/{id} ad-hoc (ignora o scope)'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC)
+    - cron: '0 22 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-golfgenius:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: update-golfgenius
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-golfgenius-node.js
+        id: scrape
+        run: |
+          set +e
+          URL="${{ github.event.inputs.page_url }}"
+          SLUG="${{ github.event.inputs.slug }}"
+          if [ -n "$URL" ]; then
+            node scripts/scrape-golfgenius-node.js "$URL"
+          elif [ -n "$SLUG" ]; then
+            node scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json --slug "$SLUG"
+          else
+            node scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json
+          fi
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = houve novidades → regenerar canónico + commit
+          # 2 = sem alterações → no-op (NÃO é erro)
+          # 1 = erro real
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper GolfGenius falhou — ver logs acima"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem alterações — a saltar regeneração e commit"
+          fi
+          exit 0
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/aggregator/index.js
+
+      - name: Regenerar catálogo MAJOR
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/build-major-catalog.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: GolfGenius scrape + rebuild juniors ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ GolfGenius + juniores canónicos actualizados"

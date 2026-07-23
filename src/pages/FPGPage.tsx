@@ -197,17 +197,120 @@ interface MatchPlayData {
 
 const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
 
+/** Uma linha por JOGADOR (não por match): no modo Total um miúdo joga nos dois
+ *  dias e aparecia 2× na tabela. Agrega por fed (ou nome) somando os pontos e
+ *  juntando os confrontos de cada adversário. */
+interface MpRow {
+  key: string;
+  player: MpPlayer | undefined;
+  pts: number | null;
+  /** Uma entrada POR CONFRONTO JOGADO (não por resultado): quando o jogador
+   *  esteve emparelhado mas o resultado não foi publicado, a entrada fica
+   *  `pending` — assim a linha do dia não desaparece e vê-se o que falta. */
+  byOpp: Map<string, { won: boolean; half: boolean; margin: string | null; pending?: boolean }[]>;
+}
+/** Pontos de um clube num dia. O `subtotal` do ficheiro nem sempre existe (o
+ *  Dia 2 do Regional 2026 não o tem) — nesse caso somam-se os pontos dos
+ *  próprios confrontos, senão os pontos ficavam de fora do total do clube. */
+function diaPoints(dia: MpDia, clubKey: string): number {
+  const fromMatches = (dia.matches ?? []).reduce((s, m) => {
+    const v = (m as unknown as Record<string, unknown>)[clubKey];
+    return s + (typeof v === "number" ? v : 0);
+  }, 0);
+  const hasMatchPts = (dia.matches ?? []).some(m => typeof (m as unknown as Record<string, unknown>)[clubKey] === "number");
+  return hasMatchPts ? fromMatches : (dia.subtotal?.[clubKey] ?? 0);
+}
+
+/** Confrontos de um dia ainda sem resultado publicado (h2h vazio e sem pontos). */
+function diaPendentes(dia: MpDia): number {
+  return (dia.matches ?? []).filter(m => !(m.h2h?.length) ).length;
+}
+
+function playerRows(matches: (MpMatch & { _dia?: number })[], clubKey: string): MpRow[] {
+  const out: MpRow[] = [];
+  const idx = new Map<string, MpRow>();
+  for (const m of matches) {
+    const player = m.players?.[clubKey];
+    const pts = (m as unknown as Record<string, unknown>)[clubKey] as number | null | undefined;
+    const key = player?.fed ?? (player?.name ? `n:${player.name.toLowerCase()}` : `m:${m._dia}-${m.match}`);
+    let row = idx.get(key);
+    if (!row) {
+      row = { key, player, pts: null, byOpp: new Map() };
+      idx.set(key, row);
+      out.push(row);
+    }
+    // Prefere o registo com gross (o dia de stroke play traz-no).
+    if (!row.player?.gross && player?.gross != null) row.player = player;
+    if (pts != null) row.pts = (row.pts ?? 0) + pts;
+    // UNIÃO dos adversários do match: os que têm jogador listado (para gerar a
+    // entrada pendente quando o resultado não foi publicado) MAIS os que só
+    // aparecem no h2h (há matches em que se sabe o resultado mas não o nome do
+    // adversário — Senhoras m1/m2, Homens m1). Percorrer só um dos lados
+    // perderia informação de um deles.
+    const oppKeys = new Set<string>([
+      ...Object.keys(m.players ?? {}),
+      ...(m.h2h ?? []).flatMap(h => [h.w, h.l]),
+    ]);
+    for (const opp of oppKeys) {
+      if (opp === clubKey) continue;
+      const h = (m.h2h ?? []).find(x =>
+        (x.w === clubKey && x.l === opp) || (x.l === clubKey && x.w === opp));
+      const list = row.byOpp.get(opp) ?? [];
+      list.push(h
+        ? { won: !h.half && h.w === clubKey, half: h.half === true, margin: h.margin }
+        : { won: false, half: false, margin: null, pending: true });
+      row.byOpp.set(opp, list);
+    }
+  }
+  return out;
+}
+
+/** Vistas da mesma prova de match play:
+ *  • `standings` — cartões de clube com os pontos (tab Grupos)
+ *  • `matches`   — os confrontos 3-way, com estado buraco-a-buraco (tab Match Play)
+ *  • `scorecardOnly` — só os scorecards em pancadas (tab Individual) */
 function MatchPlayResultsTable({
   results,
   categories: catCfg,
   scorecardOnly = false,
+  mode = "standings",
 }: {
   results: MatchPlayData;
   categories: { key: string; label: string; bestN: number }[];
   scorecardOnly?: boolean;
+  mode?: "standings" | "matches";
 }) {
   const clubs = results.clubs;
   const par = results.course?.par ?? [];
+
+  // Dias da prova (o Regional 2026 são 2: match play + stroke play). Sem o
+  // filtro, os dois dias apareciam empilhados no mesmo cartão e cada jogador
+  // saía repetido — daí o selector.
+  const dias = useMemo(() => {
+    const s = new Set<number>();
+    for (const cat of results.categories) for (const d of cat.dias) s.add(d.dia);
+    return [...s].sort((a, b) => a - b);
+  }, [results]);
+  const [selDia, setSelDia] = useState<number | "all">(dias[0] ?? 1);
+  const diaOf = (d: MpDia) => selDia === "all" || d.dia === selDia;
+  const DiaPicker = dias.length > 1 ? (
+    <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "10px 16px 0" }}>
+      <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.4px", fontWeight: 700 }}>Dia</span>
+      <div className="segmented-toggle" role="tablist" aria-label="Dia da prova">
+        {dias.map(d => (
+          <button key={d} role="tab" aria-selected={selDia === d}
+            className={`seg-btn${selDia === d ? " active" : ""}`} onClick={() => setSelDia(d)}>
+            <span className="seg-label">Dia {d}</span>
+          </button>
+        ))}
+        <button role="tab" aria-selected={selDia === "all"}
+          className={`seg-btn${selDia === "all" ? " active" : ""}`} onClick={() => setSelDia("all")}
+          title="Somar os dois dias">
+          <span className="seg-label">Total</span>
+        </button>
+      </div>
+    </div>
+  ) : null;
 
   const fmtPts = (v: number | null | undefined) => {
     if (v == null) return "—";
@@ -229,7 +332,11 @@ function MatchPlayResultsTable({
   const grand: Record<string, number> = {};
   for (const cl of clubs)
     grand[cl.key] = results.categories.reduce((gs, rcat) =>
-      gs + rcat.dias.reduce((ds, dia) => ds + (dia.subtotal?.[cl.key] ?? 0), 0), 0);
+      gs + rcat.dias.filter(diaOf).reduce((ds, dia) => ds + diaPoints(dia, cl.key), 0), 0);
+  // Confrontos por disputar/publicar na selecção actual — o Dia 2 do Regional
+  // 2026 só tem 1 dos 4 resultados, e sem isto o total parecia definitivo.
+  const pendentes = results.categories.reduce((s, rcat) =>
+    s + rcat.dias.filter(diaOf).reduce((ds, dia) => ds + diaPendentes(dia), 0), 0);
   const places: Record<string, number> | undefined = (results as any).grandTotal?._places;
   const sortedClubs = [...clubs].sort((a, b) =>
     places ? (places[a.key] ?? 99) - (places[b.key] ?? 99) : (grand[b.key] ?? 0) - (grand[a.key] ?? 0));
@@ -330,8 +437,20 @@ function MatchPlayResultsTable({
 
   return (
     <div style={{ paddingBottom: 24 }}>
+      {DiaPicker}
+      {pendentes > 0 && (
+        <div style={{
+          margin: "10px 16px 0", padding: "8px 12px", borderRadius: 6,
+          background: "var(--bg-note-warn)", border: "1px solid var(--border-warn)",
+          fontSize: "var(--fs-11)", color: "var(--text-2)",
+        }}>
+          ⚠ <strong>{pendentes}</strong> {pendentes === 1 ? "confronto sem resultado publicado" : "confrontos sem resultado publicado"} —
+          a FPG não publicou a classificação desta prova, por isso estas linhas ficam sem pontos até os resultados serem inseridos.
+        </div>
+      )}
 
       {/* ══ CLUBE CARDS — standings + resultados ════════════ */}
+      {mode === "standings" && (
       <div style={{ padding: "16px 16px 0" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 10 }}>
           {sortedClubs.map((cl, rank) => {
@@ -359,8 +478,12 @@ function MatchPlayResultsTable({
                   const catParticipants: string[] | undefined = (rcat as any).participants;
                   if (catParticipants && !catParticipants.includes(cl.key)) return null;
                   const catLabel = catCfg.find(c => c.key === rcat.key)?.label ?? rcat.key;
-                  const catTotal = rcat.dias.reduce((s, dia) => s + (dia.subtotal?.[cl.key] ?? 0), 0);
-                  const allMatches = rcat.dias.flatMap(dia => dia.matches ?? []);
+                  const visDias = rcat.dias.filter(diaOf);
+                  const catTotal = visDias.reduce((s, dia) => s + diaPoints(dia, cl.key), 0);
+                  // Um jogador por LINHA por dia — sem o filtro, os 2 dias
+                  // empilhavam-se e o mesmo miúdo aparecia 2× na tabela.
+                  const allMatches = visDias.flatMap(dia => (dia.matches ?? []).map(m => ({ ...m, _dia: dia.dia })));
+                  if (!allMatches.length) return null;
                   // Opponents: filtered by category participants when defined
                   const catOpps = catParticipants
                     ? opps.filter(o => catParticipants.includes(o.key))
@@ -390,13 +513,12 @@ function MatchPlayResultsTable({
                           </tr>
                         </thead>
                         <tbody>
-                          {allMatches.map((m, mi) => {
-                            const mRec = m as unknown as Record<string, unknown>;
-                            const player = m.players?.[cl.key];
-                            const pts = mRec[cl.key] as number | null | undefined;
+                          {playerRows(allMatches, cl.key).map((row) => {
+                            const player = row.player;
+                            const pts = row.pts;
                             const tdB: React.CSSProperties = { borderBottom: "1px solid var(--border)" };
                             return (
-                              <tr key={`${m.match}-${mi}`}>
+                              <tr key={row.key}>
                                 <td style={{ padding: "5px 10px", ...tdB }}>
                                   {player?.name
                                     ? (player.fed
@@ -412,23 +534,27 @@ function MatchPlayResultsTable({
                                   )}
                                 </td>
                                 {catOpps.map(opp => {
-                                  const h2hEntry = m.h2h?.find(h =>
-                                    (h.w === cl.key && h.l === opp.key) || (h.l === cl.key && h.w === opp.key)
-                                  );
-                                  const isHalf = h2hEntry?.half === true;
-                                  const won = !isHalf && h2hEntry?.w === cl.key;
-                                  const margin = h2hEntry?.margin;
+                                  // No modo Total um jogador tem um confronto por dia
+                                  // contra o mesmo adversário — mostram-se os dois.
+                                  const entries = row.byOpp.get(opp.key) ?? [];
                                   return (
                                     <td key={opp.key} style={{ padding: "5px 6px", textAlign: "center", ...tdB }}>
-                                      {h2hEntry ? (
-                                        isHalf ? (
-                                          <ResultMark kind="half" gap={0} />
-                                        ) : (
-                                        // 🏆/✗ do <ResultMark> — o mesmo vocabulário do match play ETC (MatchplayView)
-                                        <span style={{ fontSize: "var(--fs-11)", fontWeight: won ? 700 : 400 }}>
-                                          <ResultMark kind={won ? "win" : "loss"} gap={margin ? 4 : 0} />{margin ? <strong>{margin}</strong> : ""}
+                                      {entries.length ? (
+                                        // Um confronto por LINHA (empilhados) — no modo
+                                        // Total, os dois dias lado a lado liam-se como um
+                                        // resultado só ("✗ 🏆5&4").
+                                        <span style={{ display: "inline-flex", flexDirection: "column", gap: 2, alignItems: "center" }}>
+                                          {entries.map((e, ei) => e.pending ? (
+                                            <span key={ei} style={{ color: "var(--text-4)" }} title="Sem resultado publicado">—</span>
+                                          ) : e.half ? (
+                                            <ResultMark key={ei} kind="half" gap={0} />
+                                          ) : (
+                                            // 🏆/✗ do <ResultMark> — o mesmo vocabulário do match play ETC (MatchplayView)
+                                            <span key={ei} style={{ fontSize: "var(--fs-11)", fontWeight: e.won ? 700 : 400 }}>
+                                              <ResultMark kind={e.won ? "win" : "loss"} gap={e.margin ? 4 : 0} />{e.margin ? <strong>{e.margin}</strong> : ""}
+                                            </span>
+                                          ))}
                                         </span>
-                                        )
                                       ) : (
                                         <span style={{ color: "var(--text-3)" }}>—</span>
                                       )}
@@ -456,9 +582,10 @@ function MatchPlayResultsTable({
           })}
         </div>
       </div>
+      )}
 
-      {/* ══ SCORECARDS — match play style (sem números, só resultado por buraco) ══ */}
-      {hasScorecards && (() => {
+      {/* ══ CONFRONTOS — match play (estado por buraco, sem pancadas) ══ */}
+      {mode === "matches" && hasScorecards && (() => {
         // Running match-play status (from clA perspective)
         const mpRunning = (scA: (number|null)[], scB: (number|null)[]) => {
           const n = par.length;
@@ -480,11 +607,10 @@ function MatchPlayResultsTable({
 
         return (
           <div style={{ padding: "20px 16px 0" }}>
-            <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "var(--text-2)", marginBottom: 12 }}>Scorecards</div>
             {catCfg.flatMap(c => {
               const rcat = results.categories.find(rc => rc.key === c.key);
               if (!rcat) return [];
-              return rcat.dias.flatMap(dia =>
+              return rcat.dias.filter(diaOf).flatMap(dia =>
                 (dia.matches ?? []).map(m => {
                   const withScores = clubs.filter(cl => (m.players?.[cl.key]?.scores?.length ?? 0) >= 9);
                   if (withScores.length < 2) return null;
@@ -495,47 +621,49 @@ function MatchPlayResultsTable({
                     for (let j = i + 1; j < withScores.length; j++)
                       pairs.push([withScores[i], withScores[j]]);
 
-                  const cMatch: React.CSSProperties = { ...cSc, fontSize: "var(--fs-9)", fontWeight: 500, padding: "5px 3px" };
-
+                  // Colunas: rótulo (fixo) + 18 buracos (repartem o resto) + resultado.
+                  // As antigas células vazias de separação Out/In absorviam toda a
+                  // folga da tabela e esmagavam os buracos 10-18 — agora o corte do
+                  // 9→10 é só uma borda na 10ª coluna.
+                  const cHole: React.CSSProperties = { padding: "4px 2px", textAlign: "center", fontSize: "var(--fs-10)", whiteSpace: "nowrap" };
+                  const sep9: React.CSSProperties = { borderLeft: "2px solid var(--sc-par-border)" };
                   return (
-                    <div key={`${dia.dia}-${m.match}`} style={{ marginBottom: 28 }}>
+                    <div key={`${dia.dia}-${m.match}`} style={{ marginBottom: 22, maxWidth: 980 }}>
                       <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.4px" }}>
-                        Match {m.match} — {c.label}
+                        {c.label} · Match {m.match}
+                        {dias.length > 1 && <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> · Dia {dia.dia}</span>}
                       </div>
 
-                      {/* Player summary */}
-                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 10 }}>
-                        {withScores.map(cl => {
-                          const player = m.players?.[cl.key];
-                          const pts = m[cl.key as keyof MpMatch] as number | undefined;
-                          const isTop = pts != null && withScores.every(c2 => (m[c2.key as keyof MpMatch] as number ?? 0) <= pts);
-                          return (
-                            <div key={cl.key} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: isTop ? "var(--accent)" : "var(--text-3)", textTransform: "uppercase" }}>{cl.shortName}</span>
-                              <span style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-1)" }}>{player?.name ?? cl.name}</span>
-                              {player?.gross != null && <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
-                              <span style={{ display: "flex", gap: 4 }}>
-                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--accent)" }}><ResultMark kind="win" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}><ResultMark kind="loss" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)" }}><ResultMark kind="half" gap={3} />{opp?.shortName}</span>; })}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Match table — one "Match" row per pair */}
                       <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+                        {/* Cabeçalho do confronto: os 3 jogadores e o que fizeram */}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, padding: "8px 10px", borderBottom: "1px solid var(--border)" }}>
+                          {withScores.map(cl => {
+                            const player = m.players?.[cl.key];
+                            const pts = m[cl.key as keyof MpMatch] as number | undefined;
+                            const isTop = pts != null && withScores.every(c2 => (m[c2.key as keyof MpMatch] as number ?? 0) <= pts);
+                            return (
+                              <div key={cl.key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-11)" }}>
+                                <span className="p p-sm p-muted">{cl.shortName}</span>
+                                <span style={{ fontWeight: isTop ? 700 : 600, color: "var(--text-1)" }}>{player?.name ?? cl.name}</span>
+                                {player?.gross != null && <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
+                                <span style={{ display: "flex", gap: 5 }}>
+                                  {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--accent)" }}><ResultMark kind="win" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                  {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}><ResultMark kind="loss" gap={3} />{opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                  {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)" }}><ResultMark kind="half" gap={3} />{opp?.shortName}</span>; })}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+
                         <div style={{ overflowX: "auto" }}>
-                          <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
+                          <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "var(--fs-11)" }}>
                             <thead>
-                              <tr style={{ background: "var(--bg-2)", borderBottom: "2px solid var(--border)" }}>
-                                <th style={{ ...cLbl, fontWeight: 700, color: "var(--text-2)" }}>Match</th>
-                                {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
-                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
-                                {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
-                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
-                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Resultado</th>
+                              <tr style={{ background: "var(--accent-light)" }}>
+                                <th style={{ ...cLbl, background: "var(--accent-light)", width: "1%", fontWeight: 700, fontSize: "var(--fs-10)", color: "var(--accent-text)", textTransform: "uppercase", letterSpacing: "0.4px" }}>Confronto</th>
+                                {f9.map(i => <th key={i} style={{ ...cHole, color: "var(--accent-text)", fontWeight: 700 }}>{i + 1}</th>)}
+                                {b9.map((i, k) => <th key={i} style={{ ...cHole, ...(k === 0 ? sep9 : {}), color: "var(--accent-text)", fontWeight: 700 }}>{i + 1}</th>)}
+                                <th style={{ ...cHole, width: "1%", borderLeft: "2px solid var(--sc-par-border)", padding: "4px 10px", color: "var(--accent-text)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.4px", fontSize: "var(--fs-10)" }}>Resultado</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -548,31 +676,28 @@ function MatchPlayResultsTable({
                                   (h.w === clA.key && h.l === clB.key) || (h.w === clB.key && h.l === clA.key)
                                 );
                                 const finalLabel = finalEntry?.half ? "½" : finalEntry ? `${finalEntry.margin ?? (diff > 0 ? clA.shortName : clB.shortName + " ganha")}` : (winner ? `${Math.abs(diff)}up` : "AS");
-                                const cellColor = (s: typeof statuses[0]) => {
-                                  if (!s || s.label === "" || s.ended && s.label === "") return "var(--text-3)";
-                                  if (s.label === "AS") return "var(--text-3)";
-                                  if (s.aLeads) return "var(--accent)";
-                                  if (s.bLeads) return "var(--medal-bronze)";
-                                  return "var(--text-2)";
+                                // Último buraco com estado — o desfecho do confronto.
+                                const lastIdx = statuses.reduce((acc, s, i) => (s?.label ? i : acc), -1);
+                                const chip = (i: number) => {
+                                  const s = statuses[i];
+                                  const lab = s?.label || "";
+                                  if (!lab) return "";
+                                  // "AS" é o estado neutro: ponto discreto, como no MatchplayView
+                                  // (18 células "AS" repetidas afogavam o que interessa).
+                                  if (lab === "AS" && i !== lastIdx) return <span style={{ color: "var(--text-4)" }}>·</span>;
+                                  const kind = s.aLeads ? "mp-up" : s.bLeads ? "mp-dn" : "mp-as";
+                                  return <span className={`mp-hole-chip ${kind}`} style={i === lastIdx ? { fontWeight: 800, boxShadow: "inset 0 0 0 1px currentColor" } : undefined}>{lab}</span>;
                                 };
                                 return (
                                   <tr key={pi} style={{ borderTop: pi === 0 ? "none" : "1px solid var(--border)" }}>
-                                    <td style={{ ...cLbl, fontStyle: "normal" }}>
+                                    <td style={{ ...cLbl, width: "1%", fontStyle: "normal" }}>
                                       <span style={{ color: "var(--accent)", fontWeight: 700 }}>{clA.shortName}</span>
                                       <span style={{ color: "var(--text-3)", margin: "0 4px" }}>vs</span>
                                       <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>{clB.shortName}</span>
                                     </td>
-                                    {f9.map((i) => {
-                                      const s = statuses[i];
-                                      return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)" }}>{s?.label || ""}</td>;
-                                    })}
-                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
-                                    {b9.map(i => {
-                                      const s = statuses[i];
-                                      return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)", fontWeight: s?.ended ? 700 : 500 }}>{s?.label || ""}</td>;
-                                    })}
-                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
-                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)", fontWeight: 700, color: finalEntry?.half ? "var(--text-2)" : winner ? (winner.key === clA.key ? "var(--accent)" : "var(--medal-bronze)") : "var(--text-3)" }}>
+                                    {f9.map(i => <td key={i} style={{ ...cHole, padding: "5px 2px" }}>{chip(i)}</td>)}
+                                    {b9.map((i, k) => <td key={i} style={{ ...cHole, ...(k === 0 ? sep9 : {}), padding: "5px 2px" }}>{chip(i)}</td>)}
+                                    <td style={{ ...cHole, width: "1%", padding: "5px 10px", borderLeft: "2px solid var(--sc-par-border)", fontWeight: 700, fontSize: "var(--fs-11)", color: finalEntry?.half ? "var(--text-2)" : winner ? (winner.key === clA.key ? "var(--accent)" : "var(--medal-bronze)") : "var(--text-3)" }}>
                                       {finalLabel}
                                     </td>
                                   </tr>
@@ -660,7 +785,7 @@ function Content() {
   const [clubesLoading, setClubesLoading]         = useState(false);
   const [clubesLoaded, setClubesLoaded]           = useState(false);
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
-  const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
+  const [clubesView, setClubesView]               = useState<"individual" | "grupos" | "matchplay">("grupos");
 
   // ── Estado PJA (drive/aquapor mensais, para o Ranking PJA 2026+) ─────────
   // Carregamos separadamente para não afectar o displayList principal (tabs
@@ -2401,13 +2526,20 @@ function Content() {
             <div className="tabbar-under" style={{
               background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
             }}>
-              {(["grupos", "individual"] as const).map(v => {
-                const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
-                const active = clubesView === v;
-                return (
-                  <button key={v} onClick={() => setClubesView(v)} className={"tab-under" + (active ? " active" : "")}>{label}</button>
-                );
-              })}
+              {(() => {
+                // O tab Match Play só existe em provas de match play com dados
+                // (Regional de Clubes 2026) — nos strokeplay não faria sentido.
+                const _fmtTabs = curClubes ? CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`] : undefined;
+                const hasMp = !!_fmtTabs?.matchPlay && !!(curClubes as any)?.matchPlayResults;
+                const views = hasMp
+                  ? (["grupos", "matchplay", "individual"] as const)
+                  : (["grupos", "individual"] as const);
+                const LABELS = { grupos: "🏅 Grupos", matchplay: "🆚 Match Play", individual: "📋 Individual" } as const;
+                return views.map(v => (
+                  <button key={v} onClick={() => setClubesView(v)}
+                    className={"tab-under" + (clubesView === v ? " active" : "")}>{LABELS[v]}</button>
+                ));
+              })()}
             </div>
 
             {/* Links directos FPG (Inscritos · Draw · Resultados) — visíveis em
@@ -2429,7 +2561,26 @@ function Content() {
               </div>
             )}
 
-            {clubesView === "individual"
+            {clubesView === "matchplay" && curClubes ? (() => {
+              const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
+              const _mp = (curClubes as any).matchPlayResults as MatchPlayData | undefined;
+              if (!_mp || !_fmt?.categories) {
+                return <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>Sem confrontos publicados.</div>;
+              }
+              return (
+                <>
+                  <div className="flex-wrap" style={{
+                    display: "flex", alignItems: "center", gap: 8,
+                    padding: "10px 16px", borderBottom: "1px solid var(--border)",
+                    background: "var(--accent-light, #eef6ef)", fontSize: "var(--fs-12)", color: "var(--text-2)",
+                  }}>
+                    <span style={{ fontSize: "var(--fs-16)" }}>🆚</span>
+                    <span>Confrontos 3-way, buraco a buraco. Estado corrido na perspectiva do <strong>1º clube</strong> de cada linha.</span>
+                  </div>
+                  <MatchPlayResultsTable results={_mp} categories={_fmt.categories} mode="matches" />
+                </>
+              );
+            })() : clubesView === "individual"
               ? curClubes
                   ? (() => {
                       const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
@@ -2465,9 +2616,13 @@ function Content() {
                             }
                             return Array.from(byPlayer.entries()).map(([key, entry]) => {
                               const allGross = entry.rounds.reduce((s, r) => s + r.gross, 0);
-                              const allComplete = entry.rounds.every(r => r.nholes >= 18);
+                              const allComplete = entry.rounds.every(r => r.nholes >= _par.length);
                               const toPar = allComplete ? allGross - parTot * entry.rounds.length : null;
-                              const nholes = entry.rounds.reduce((s, r) => s + r.nholes, 0);
+                              // ⚠ `nholes` é o TAMANHO DA VOLTA (18), não os buracos
+                              // preenchidos: com 16 o leaderboard desenhava uma volta
+                              // de 16 buracos e o ±par comparava com o par errado
+                              // (caso Tomás Câmara, Regional de Clubes 2026).
+                              const nholes = _par.length;
                               return {
                                 scoreId: `mp-${key}`,
                                 name: entry.name,
@@ -2563,7 +2718,7 @@ function Content() {
                         <span>
                           <strong>Match Play — classificação por pontos.</strong>{" "}{fmt.note}.
                           {mpResults
-                            ? <> Resultados Dia 1 · {mpResults.lastUpdated}. Dia 2: stroke play, Palheiro Golf.</>
+                            ? <> Dia 1 match play · Dia 2 stroke play (Palheiro Golf) — usa o selector de <strong>Dia</strong>. Confrontos buraco-a-buraco no tab <strong>Match Play</strong>.</>
                             : <> A classificação por equipa surge quando houver resultados; vê o <strong>Draw</strong> para os emparelhamentos 3-way.</>}
                         </span>
                       </div>

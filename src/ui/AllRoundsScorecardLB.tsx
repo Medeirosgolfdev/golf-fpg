@@ -101,6 +101,15 @@ export function AllRoundsScorecardLB({
   function ScoreCells({ scores, pars }: { scores: number[]; pars: number[] }) {
     const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
     const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+    // ±par do nine soma o par SÓ DOS BURACOS JOGADOS (mesma regra do
+    // ScorecardLeaderboard): num cartão incompleto, o par dos 9 contra a soma
+    // de 7 buracos dava um to-par enganador.
+    const pAt = (i: number) => pars[i] ?? par[i] ?? 0;
+    const playedPar = (from: number, to: number) =>
+      scores.slice(from, to).reduce((a, s, i) => a + (s ? pAt(from + i) : 0), 0);
+    const playedN = (from: number, to: number) => scores.slice(from, to).filter(Boolean).length;
+    const rpF9 = playedPar(0, 9), rpB9 = !is9 ? playedPar(9, 18) : 0;
+    const nF9 = playedN(0, 9), nB9 = !is9 ? playedN(9, 18) : 0;
     return (
       <>
         {scores.slice(0, 9).map((sc, i) => (
@@ -110,8 +119,10 @@ export function AllRoundsScorecardLB({
             </span>
           </td>
         ))}
-        <td className="lb-halftot">
-          {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - parF9)})</span>
+        <td className="lb-halftot" title={nF9 > 0 && nF9 < 9 ? `Parcial — ${nF9} de 9 buracos` : undefined}>
+          {f9 || "–"}{nF9 > 0 && <span className="fs-10 c-text-3">
+            {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && ` ·${nF9}b`}
+          </span>}
         </td>
         {!is9 && (
           <>
@@ -122,8 +133,10 @@ export function AllRoundsScorecardLB({
                 </span>
               </td>
             ))}
-            <td className="lb-halftot">
-              {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - parB9)})</span>
+            <td className="lb-halftot" title={nB9 > 0 && nB9 < 9 ? `Parcial — ${nB9} de 9 buracos` : undefined}>
+              {b9 || "–"}{nB9 > 0 && <span className="fs-10 c-text-3">
+                {" "}({fmtToPar(b9 - rpB9)}){nB9 < 9 && ` ·${nB9}b`}
+              </span>}
             </td>
           </>
         )}

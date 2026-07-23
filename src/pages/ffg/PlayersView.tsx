@@ -8,12 +8,13 @@
  *
  * Colunas (ordem igual à ES): Licence · Jogador · Clube · Région · HCP · Sexo ·
  * Catégorie · 📊 Tot · 🗓 Ano · Últ. HCP. A FFG NÃO expõe DOB — as colunas
- * DOB/Idade da vista espanhola não existem aqui; a categoria vem da SÉRIE mais
- * recente em que o jogador competiu (não da idade actual).
+ * DOB/Idade da vista espanhola não existem aqui; a categoria (`cat`) é o
+ * escalão mais novo da última época em que houve sinal de idade, calculada por
+ * build-france-players.js a partir da série E do nome da prova.
  *
  * Renderizada como item especial ("👥 Joueurs") no menu ⓘ Info da página /ffg.
  */
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
@@ -27,7 +28,8 @@ import { displayName } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl } from "../../ui/KidsLink";
-import { ffgEscalaoCanonico } from "../FFGPage";
+import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
+import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTournaments";
 
 interface FrancePlayer {
   license: string;
@@ -39,6 +41,10 @@ interface FrancePlayer {
   region?: string;
   /** Label da série mais recente em que competiu (ex: "U12G", "BENJAMINES"). */
   lastSerie?: string;
+  /** Escalão canónico bakado pelo builder (série + nome da prova, época mais
+   *  recente com sinal de idade). Fallback à série para ficheiros antigos. */
+  cat?: string;
+  catYear?: number;
   hcp?: number;
   hcpDate?: string;
   /** Contagem de torneios (portal FFGolf resultats) bakada pelo builder. */
@@ -110,6 +116,29 @@ export function FFGPlayersView() {
   const [page, setPage] = useState(1);
   const [roster, setRoster] = useState<RosterJunior[]>([]);
   const { sortKey, sortDir, toggleSort } = useSort<SK>("name");
+  // Torneios por jogador — ficheiro pesado (~2,8 MB), só carrega quando o
+  // utilizador expande a PRIMEIRA linha. Depois fica em memória para todas.
+  const [open, setOpen] = useState<Set<string>>(() => new Set());
+  const [tourns, setTourns] = useState<FfgPlayerTournamentsFile | null>(null);
+  const [tournsState, setTournsState] = useState<"idle" | "loading" | "error">("idle");
+
+  const toggleOpen = (lic: string) => {
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(lic)) next.delete(lic); else next.add(lic);
+      return next;
+    });
+    if (!tourns && tournsState === "idle") {
+      setTournsState("loading");
+      cachedFetchJson<FfgPlayerTournamentsFile>("/data/ffgolf-player-tournaments.json")
+        .then((d) => {
+          if (!d || !d.byLicense) { setTournsState("error"); return; }
+          setTourns(d);
+          setTournsState("idle");
+        })
+        .catch(() => setTournsState("error"));
+    }
+  };
 
   useEffect(() => {
     cachedFetchJson<FrancePlayersFile>("/data/france-players.json")
@@ -151,7 +180,9 @@ export function FFGPlayersView() {
     if (!data) return [];
     return Object.values(data.byLicense).map((p) => {
       const _name = formatPlayerName(p.name || "");
-      const _cat = ffgEscalaoCanonico(p.lastSerie);
+      // `cat` vem do builder (série + nome da prova); a série sozinha só
+      // resolve ~1/3 dos jogadores — fallback só para ficheiros pré-2026-07.
+      const _cat = p.cat ?? ffgEscalaoCanonico(p.lastSerie);
       return {
         ...p,
         _name,
@@ -176,6 +207,10 @@ export function FFGPlayersView() {
     tot: all.some((p) => p._tot > 0),
     hcpDate: all.some((p) => !!p.hcpDate),
   }), [all]);
+
+  /** Nº de colunas visíveis — o colSpan da linha expandida tem de bater certo. */
+  const colCount = 3 + (has.club ? 1 : 0) + (has.region ? 1 : 0) + (has.sex ? 1 : 0)
+    + (has.cat ? 1 : 0) + (has.tot ? 2 : 0) + (has.hcpDate ? 1 : 0);
 
   const catOptions = useMemo(() => {
     const s = new Set<string>();
@@ -245,6 +280,7 @@ export function FFGPlayersView() {
           <span className="muted">
             {all.length.toLocaleString("pt")} jogadores vistos nos torneios do portal FFGolf (por licença)
             {kidsCount > 0 && <> — <b>{kidsCount.toLocaleString("pt")}</b> com ficha kids2 (↗)</>}
+            <> · clica numa linha para ver os torneios e resultados</>
           </span>
         }
       />
@@ -300,7 +336,7 @@ export function FFGPlayersView() {
                   {has.region && <SortableHdr k="region" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Ligue</SortableHdr>}
                   <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">HCP</SortableHdr>
                   {has.sex && <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Sexo</SortableHdr>}
-                  {has.cat && <SortableHdr k="cat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Categoria da série mais recente em que competiu (a FFG não expõe data de nascimento)">Catégorie</SortableHdr>}
+                  {has.cat && <SortableHdr k="cat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Escalão mais novo em que competiu na última época com sinal de idade (série ou nome da prova). A FFG não expõe data de nascimento; jogar acima do escalão é permitido, abaixo não — daí o mínimo.">Catégorie</SortableHdr>}
                   {has.tot && <SortableHdr k="tot" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Total de torneios FFGolf em que apareceu">📊 Tot</SortableHdr>}
                   {has.tot && <SortableHdr k="ano" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title={`Torneios em ${CUR_YEAR}`}>🗓 {CUR_YEAR}</SortableHdr>}
                   {has.hcpDate && <SortableHdr k="hcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Data do torneio com o HCP mais recente">Últ. HCP</SortableHdr>}
@@ -309,9 +345,19 @@ export function FFGPlayersView() {
               <tbody>
                 {pageRows.map((r) => {
                   const catParts = r._cat ? splitCat(r._cat) : null;
+                  const isOpen = open.has(r.license);
                   return (
-                    <tr key={r.license} className={"player-list-row" + (r._manuel ? " row-manuel" : "")}>
-                      <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap" }}>{r.license}</td>
+                    <Fragment key={r.license}>
+                    <tr
+                      className={"player-list-row" + (r._manuel ? " row-manuel" : "")}
+                      onClick={() => toggleOpen(r.license)}
+                      style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
+                      title="Ver os torneios e resultados deste jogador"
+                    >
+                      <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+                        <span aria-hidden style={{ marginRight: 5, color: "var(--accent)" }}>{isOpen ? "▾" : "▸"}</span>
+                        {r.license}
+                      </td>
                       <td style={{ fontWeight: 600 }} title={r.lastSerie ? `Série mais recente: ${r.lastSerie}` : undefined}>
                         {r._name || "—"}
                         {r.country && r.country !== "FRA" && (
@@ -320,7 +366,7 @@ export function FFGPlayersView() {
                         {r._kid && (
                           <a
                             href={kidsUrl({ id: r._kid })}
-                            onClick={(e) => { e.preventDefault(); window.open(kidsUrl({ id: r._kid }), "_blank"); }}
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(kidsUrl({ id: r._kid }), "_blank"); }}
                             title="Ver ficha em Kids"
                             style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)", cursor: "pointer", textDecoration: "none", marginLeft: 4 }}
                           >
@@ -333,7 +379,7 @@ export function FFGPlayersView() {
                       <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? r.hcp.toFixed(1) : MUTED}</td>
                       {has.sex && <td>{r.sex === "M" || r.sex === "F" ? <SexBadge sex={r.sex} /> : MUTED}</td>}
                       {has.cat && (
-                        <td title={r.lastSerie ? `Série: ${r.lastSerie}` : undefined}>
+                        <td title={[r.catYear ? `Época ${r.catYear}` : null, r.lastSerie ? `Série mais recente: ${r.lastSerie}` : null].filter(Boolean).join(" · ") || undefined}>
                           {catParts ? (
                             r._young ? (
                               <>
@@ -350,6 +396,20 @@ export function FFGPlayersView() {
                       {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
                       {has.hcpDate && <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>{r.hcpDate ? isoToBr(r.hcpDate) : MUTED}</td>}
                     </tr>
+                    {isOpen && (
+                      <tr className="player-list-row-detail">
+                        <td colSpan={colCount} style={{ background: "var(--bg-detail)", padding: "0 12px 4px" }}>
+                          {tourns
+                            ? <PlayerTournaments file={tourns} license={r.license} />
+                            : tournsState === "error"
+                              ? <div className="muted fs-11" style={{ padding: "8px 4px" }}>
+                                  Não foi possível carregar <code>ffgolf-player-tournaments.json</code> — corre <code>node scripts/build-france-players.js</code>.
+                                </div>
+                              : <LoadingState message="A carregar torneios…" />}
+                        </td>
+                      </tr>
+                    )}
+                    </Fragment>
                   );
                 })}
               </tbody>
@@ -372,7 +432,8 @@ export function FFGPlayersView() {
       <div className="muted fs-11" style={{ marginTop: 16, textAlign: "center" }}>
         Fonte: <code>france-players.json</code> (portal resultats FFGolf — GP Jeunes + Compétitions Fédérales juvenis).
         Os torneios GolfGenius (Champ. de France, Internationaux) também contam — ligados por nome ao roster de licenças,
-        com dedup dos que o portal já publica. A FFG não expõe DOB; a categoria é a da última série jogada.
+        com dedup dos que o portal já publica. A FFG não expõe DOB; a categoria é o escalão mais novo da última época jogada (série + nome da prova).
+        Os torneios de cada jogador vêm de <code>ffgolf-player-tournaments.json</code> (mesmo builder) e abrem na classificação completa da /ffg.
       </div>
     </div>
   );

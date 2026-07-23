@@ -86,16 +86,29 @@ function normalizeName(raw) {
   return raw;
 }
 const US_STATES = new Set(['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC']);
-const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-SCT', Wales:'GB-WLS', France:'FR', Germany:'DE', Spain:'ES', Italy:'IT', Sweden:'SE', Portugal:'PT', China:'CN', Japan:'JP', 'South Korea':'KR', Korea:'KR', Australia:'AU', Colombia:'CO', Venezuela:'VE', Brazil:'BR', Argentina:'AR', 'Puerto Rico':'PR', Bahamas:'BS', 'Dominican Republic':'DO' };
-function inferCountry(affiliation) {
-  if (!affiliation) return 'US';
+const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-SCT', Wales:'GB-WLS', France:'FR', Germany:'DE', Spain:'ES', Italy:'IT', Sweden:'SE', Portugal:'PT', China:'CN', Japan:'JP', 'South Korea':'KR', Korea:'KR', Australia:'AU', Colombia:'CO', Venezuela:'VE', Brazil:'BR', Argentina:'AR', 'Puerto Rico':'PR', Bahamas:'BS', 'Dominican Republic':'DO',
+  // Eventos internacionais (Champion of Champions) declaram a afiliação como
+  // PAÍS, não como cidade — sem estas entradas caíam todos no fallback "US".
+  Ireland:'IE', 'Northern Ireland':'GB-NIR', 'Great Britain and Ireland':'GB', 'Isle of Man':'IM', 'United States':'US', 'United States of America':'US',
+  Belgium:'BE', Netherlands:'NL', Denmark:'DK', Norway:'NO', Finland:'FI', Iceland:'IS', Austria:'AT', Switzerland:'CH', Poland:'PL', 'Czech Republic':'CZ', Czechia:'CZ', Slovakia:'SK', Slovenia:'SI', Croatia:'HR', Hungary:'HU', Bulgaria:'BG', Romania:'RO', Greece:'GR', Turkey:'TR', Malta:'MT', Luxembourg:'LU', Estonia:'EE', Latvia:'LV', Lithuania:'LT', Ukraine:'UA', Kazakhstan:'KZ',
+  'South Africa':'ZA', Zimbabwe:'ZW', Zambia:'ZM', Botswana:'BW', Egypt:'EG', Morocco:'MA', Kenya:'KE', Nigeria:'NG',
+  'United Kingdom':'GB', 'Great Britain':'GB', 'Golf Ireland':'IE', Azerbaijan:'AZ', 'Türkiye':'TR', Turkiye:'TR',
+  India:'IN', 'Hong Kong':'HK', 'Hong Kong, China':'HK', Singapore:'SG', Malaysia:'MY', Thailand:'TH', Philippines:'PH', Indonesia:'ID', Vietnam:'VN', Taiwan:'TW', 'Chinese Taipei':'TW', 'New Zealand':'NZ', 'United Arab Emirates':'AE', Israel:'IL', Chile:'CL', Peru:'PE', Uruguay:'UY', Paraguay:'PY', Ecuador:'EC', Panama:'PA', 'Costa Rica':'CR', Guatemala:'GT', Jamaica:'JM' };
+// `fallback` = o que devolver quando a afiliação não identifica país nenhum.
+// Default "US" (as afiliações FSGA/UA são cidades americanas), mas eventos
+// mundiais passam `null` — no CoC 2023 o GG não publica afiliação NENHUMA e
+// carimbar 243 miúdos de 40 países como americanos seria pior que não saber.
+function inferCountry(affiliation, fallback = 'US') {
+  if (!affiliation) return fallback;
   // Afiliações FSGA são cidades (ex: "Ponte Vedra Beach (2026)"). Só marcamos
-  // país estrangeiro quando o último segmento após ", " é um país conhecido.
+  // país estrangeiro quando a afiliação inteira, ou o último segmento após
+  // ", ", é um país conhecido ("Hong Kong, China" bate como um todo).
   const clean = affiliation.replace(/\s*\(\d{4}\)\s*$/, '').trim();
+  if (COUNTRY_MAP[clean]) return COUNTRY_MAP[clean];
   const parts = clean.split(', ');
   const last  = parts[parts.length - 1].trim();
   if (US_STATES.has(last)) return 'US';
-  return COUNTRY_MAP[last] || 'US';
+  return COUNTRY_MAP[last] || fallback;
 }
 
 function parseToPar(str) {
@@ -118,6 +131,15 @@ function parAdjust(cls) {
   if (/circle/.test(cls))        return 1;
   if (/double_square/.test(cls)) return -2;
   if (/square/.test(cls))        return -1;
+  // Vocabulário alternativo (visto no Champion of Champions 2026): a célula
+  // nomeia o resultado — par-hole / birdie-hole / eagle-hole / plusN-hole.
+  // Sem isto TODAS as células contavam como par e o par saía = ao score (o
+  // U12 Girls dava "par 82"). ⚠ `starting-hole` não é marcador de resultado.
+  if (/\b(double-eagle|albatross)-hole\b/.test(cls)) return 3;
+  if (/\beagle-hole\b/.test(cls))  return 2;
+  if (/\bbirdie-hole\b/.test(cls)) return 1;
+  const plus = cls.match(/\bplus(\d)-hole\b/);
+  if (plus) return -Number(plus[1]);
   return 0;
 }
 
@@ -127,14 +149,37 @@ function courseKey(course) {
   const m = (course || '').replace(/\([^)]*\)/g, '').toLowerCase();
   if (/karoo/.test(m)) return 'karoo';
   if (/roost/.test(m)) return 'roost';
-  return (m.split('-').pop() || m).replace(/course/g, '').replace(/\s+/g, ' ').trim() || 'course';
+  // ⚠ Nome COMPLETO (sem o tee entre parênteses) como chave. Ficar-se pelo
+  // último segmento depois do "-" fundia campos distintos que partilham o
+  // sufixo — no CoC "Faldo - World Championship" e "Castle Hume - World
+  // Championship" davam ambos "world championship" e misturavam os pares.
+  return m.replace(/\s+/g, ' ').trim() || 'course';
 }
 
 // ─── Parse do scorecard (HTML de tournaments2/details) ──────────────────────
 // Uma <table class="detail_table"> por jogador, com uma header_row (data+campo)
 // antes de cada ronda e uma net-line com os 18 buracos. Layout 18H:
 //   [nome, h1-h9, Out, h10-h18, In, Total] = 22 células.
-const HOLE_IDX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+// ⚠ Divisões de 9 buracos (ex: CoC "Under 9" = 27 buracos em 3 voltas de 9)
+// usam a MESMA tabela de 18 colunas com metade em branco → lê-se cada nine em
+// separado e a ronda fica com 9 scores + `startingHole` (1 ou 10).
+const F9_IDX = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const B9_IDX = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+// ⚠ O tecto por buraco tem de aguentar um desastre real: no CoC 2026 o
+// Maximilian Oberlin fez **17** no buraco 8 da R2 e, com o antigo tecto de 15,
+// o nine inteiro era rejeitado — ficava só o back nine e a volta de 100 entrava
+// como uma volta de 9 buracos. Só interessa rejeitar células vazias/não
+// numéricas (buraco por jogar); 30 é um tecto anti-lixo, não uma regra de golfe.
+function readNine(cells, idxs) {
+  const scores = [], par = [];
+  for (const i of idxs) {
+    const n = parseInt(cells[i].txt, 10);
+    if (isNaN(n) || n < 1 || n > 30) return null;
+    scores.push(n);
+    par.push(n + parAdjust(cells[i].cls));
+  }
+  return { scores, par };
+}
 function parseScorecard(html) {
   const rounds = [];
   const tableRe = /<table[^>]+class=["'][^"']*detail_table[^"']*["'][^>]*>([\s\S]*?)<\/table>/gi;
@@ -163,21 +208,18 @@ function parseScorecard(html) {
       if (cells.length < 22) continue;
       const label = (cells[0].txt || '').toLowerCase().replace(/[a-z]+,.*$/i, '').trim();
       if (/^(par|yards?|yds?|metres?|meters?|si|hdcp|hcp|stroke index)$/.test(label)) continue;
-      const scores = [], par = [];
-      let ok = true;
-      for (const i of HOLE_IDX) {
-        const n = parseInt(cells[i].txt, 10);
-        if (isNaN(n) || n < 1 || n > 15) { ok = false; break; }
-        scores.push(n);
-        par.push(n + parAdjust(cells[i].cls));
-      }
-      if (!ok || scores.length < 18) continue;
+      const front = readNine(cells, F9_IDX), back = readNine(cells, B9_IDX);
+      if (!front && !back) continue;
+      const scores = [...(front?.scores || []), ...(back?.scores || [])];
+      const par    = [...(front?.par || []),    ...(back?.par || [])];
+      const startingHole = front ? 1 : 10;
       const rowDateM = cells[0].txt.match(/([A-Za-z]+,\s+[A-Za-z]+\s+\d+)/);
       const date  = rowDateM ? rowDateM[1].replace(/\s+/g, ' ').trim() : curDate;
-      const f9    = parseInt(cells[10].txt, 10) || scores.slice(0, 9).reduce((a, b) => a + b, 0);
-      const b9    = parseInt(cells[20].txt, 10) || scores.slice(9).reduce((a, b) => a + b, 0);
-      const gross = parseInt(cells[21].txt, 10) || f9 + b9;
-      rounds.push({ date, course: curCourse, scores, par, f9, b9, gross });
+      const sum   = (a) => a.reduce((x, y) => x + y, 0);
+      const f9    = front ? (parseInt(cells[10].txt, 10) || sum(front.scores)) : null;
+      const b9    = back  ? (parseInt(cells[20].txt, 10) || sum(back.scores))  : null;
+      const gross = front && back ? (parseInt(cells[21].txt, 10) || f9 + b9) : (f9 ?? b9);
+      rounds.push({ date, course: curCourse, scores, par, f9, b9, gross, startingHole });
     }
   }
   return rounds;
@@ -221,11 +263,35 @@ async function fetchProfile(profileId) {
   return { dob, club, gradYear };
 }
 
+// ─── Ordem cronológica das rondas ───────────────────────────────────────────
+// `ev.rounds` e `agg.rounds` partilham id/nome mas NÃO vêm ordenados quando o
+// evento está a decorrer. Ordena qualquer lista de rondas pela data declarada
+// em `ev.rounds` (fallback: número no nome "R2"). No-op quando já está em ordem.
+function sortRounds(rounds, evRounds) {
+  const byId = new Map(), byName = new Map();
+  for (const r of evRounds || []) {
+    if (r.id != null) byId.set(String(r.id), r.date || '');
+    if (r.name) byName.set(String(r.name), r.date || '');
+  }
+  const dateOf = (r) => byId.get(String(r.id)) || byName.get(String(r.name)) || r.date || '';
+  const numOf  = (r) => parseInt(String(r.name || '').replace(/\D/g, ''), 10) || 0;
+  return [...(rounds || [])].sort((a, b) => {
+    const da = dateOf(a), db = dateOf(b);
+    if (da && db && da !== db) return da < db ? -1 : 1;
+    return numOf(a) - numOf(b);
+  });
+}
+
 // ─── Leaderboard via v2 JSON ────────────────────────────────────────────────
-async function scrapeLeaderboard(v2tid) {
+async function scrapeLeaderboard(v2tid, opts = {}) {
+  const defaultCountry = opts.defaultCountry === undefined ? 'US' : opts.defaultCountry;
   const data = await ggGet(`${GG}/v2tournaments/${v2tid}`, 'application/json');
   const ev   = data.event;
   const aggs = (ev.scopes || []).flatMap((s) => s.aggregates || []);
+  // ⚠ O GG NÃO devolve as rondas por ordem cronológica: num evento em curso a
+  // ronda a decorrer vem PRIMEIRO (medido no CoC 2026: R3,R1,R2). Sem isto, a
+  // R1 ficava com o gross da ronda em curso ("-") e o dia 1 saía a zero.
+  const evRounds  = sortRounds(ev.rounds || [], ev.rounds || []);
   const players = aggs
     .filter((agg) => {
       const d = agg.disposition || '';
@@ -236,13 +302,13 @@ async function scrapeLeaderboard(v2tid) {
     .map((agg) => ({
       pos:        String(agg.position || agg.rank || ''),
       name:       normalizeName(agg.name || ''),
-      country:    inferCountry(agg.affiliation || ''),
+      country:    inferCountry(agg.affiliation || '', defaultCountry),
       location:   agg.affiliation || '',
       detailId:   agg.id_str,
       toPar:      parseToPar(agg.score),
       total:      parseGross(agg.total),
-      roundGross: (agg.rounds || []).map((r) => parseGross(r.total)).filter((n) => n != null),
-      rounds:     (agg.rounds || []).map((r, i) => ({ day: i + 1, scores: [], gross: parseGross(r.total) ?? 0 })),
+      roundGross: sortRounds(agg.rounds || [], ev.rounds || []).map((r) => parseGross(r.total)).filter((n) => n != null),
+      rounds:     sortRounds(agg.rounds || [], ev.rounds || []).map((r, i) => ({ day: i + 1, scores: [], gross: parseGross(r.total) ?? 0 })),
       ...(agg.disposition ? { disposition: agg.disposition } : {}),
     }))
     .filter((p) => p.name && (p.total != null || p.roundGross.length > 0));
@@ -251,14 +317,14 @@ async function scrapeLeaderboard(v2tid) {
     const pb = parseInt(String(b.pos).replace(/^T/i, ''), 10) || 9999;
     return pa - pb || (a.total ?? 999) - (b.total ?? 999);
   });
-  const year = parseInt(((ev.rounds || [])[0]?.date || '').slice(0, 4), 10) || null;
-  return { name: ev.name || `FSGA ${v2tid}`, year, nRounds: (ev.rounds || []).length, players };
+  const year = parseInt((evRounds[0]?.date || '').slice(0, 4), 10) || null;
+  return { name: ev.name || `FSGA ${v2tid}`, year, nRounds: evRounds.length, players };
 }
 
 // ─── Scrape de UMA divisão (v2tid) ──────────────────────────────────────────
 async function scrapeDivision(v2tid, label, opts = {}) {
   const { skipScorecards = false } = opts;
-  const lb = await scrapeLeaderboard(v2tid);
+  const lb = await scrapeLeaderboard(v2tid, opts);
   console.log(`   ━ ${label} — ${lb.players.length} jogadores · ${lb.nRounds} rondas (v2tid ${v2tid})`);
 
   // Scorecards
@@ -273,10 +339,16 @@ async function scrapeDivision(v2tid, label, opts = {}) {
         if (profileId) p.profileId = profileId;
         // Corrige só o fallback "US" do inferCountry com a bandeira real do
         // detail page (não sobrepõe países já resolvidos por afiliação).
-        if (flagCountry && p.country === 'US') p.country = flagCountry;
+        if (flagCountry && (p.country === 'US' || p.country == null)) p.country = flagCountry;
         if (parsed.length) {
           parsed.sort((a, b) => dateKey(a.date) - dateKey(b.date));
-          p.rounds = parsed.map((r, idx) => ({ day: idx + 1, scores: r.scores, gross: r.gross, date: r.date, course: r.course, pars: r.par, _ck: courseKey(r.course) }));
+          // A chave de consenso distingue o nine jogado: numa divisão de 9
+          // buracos o front e o back do MESMO campo têm pares diferentes.
+          p.rounds = parsed.map((r, idx) => ({
+            day: idx + 1, scores: r.scores, gross: r.gross, date: r.date, course: r.course, pars: r.par,
+            ...(r.scores.length === 9 ? { startingHole: r.startingHole } : {}),
+            _ck: courseKey(r.course) + (r.scores.length === 9 ? (r.startingHole === 10 ? '|b9' : '|f9') : ''),
+          }));
           done++;
         } else { p.rounds = []; }
       } catch { p.rounds = []; }
@@ -308,13 +380,15 @@ async function scrapeDivision(v2tid, label, opts = {}) {
 
   // Consenso de par por campo (moda por buraco) a partir de todas as rondas.
   const courseNames = new Set();
-  const byCourse = new Map(); // ck → [ {votes[18]} ]
+  const byCourse = new Map(); // ck → { count, votes[nHoles] }
   for (const p of lb.players) for (const r of (p.rounds || [])) {
     if (r.course) courseNames.add(r.course);
-    if (!r.pars || r.pars.length !== 18) continue;
+    const nH = r.pars ? r.pars.length : 0;
+    if (nH !== 18 && nH !== 9) continue;   // 9 = divisões de 9 buracos (CoC Under 9)
     const ck = r._ck || courseKey(r.course);
-    if (!byCourse.has(ck)) byCourse.set(ck, { count: 0, votes: Array.from({ length: 18 }, () => ({})) });
+    if (!byCourse.has(ck)) byCourse.set(ck, { count: 0, votes: Array.from({ length: nH }, () => ({})) });
     const rec = byCourse.get(ck);
+    if (rec.votes.length !== nH) continue;
     rec.count++;
     r.pars.forEach((v, i) => { rec.votes[i][v] = (rec.votes[i][v] || 0) + 1; });
   }
@@ -373,6 +447,10 @@ async function scrapeEdition(ed, opts = {}) {
 // "Cabot Citrus Farms - Karoo Course (…)" + "… - Roost (…)" → "Cabot Citrus Farms (Karoo & Roost)"
 function courseNamesLabel(courseNames) {
   if (!courseNames.length) return null;
+  // Campos REALMENTE diferentes (CoC: "Faldo - World Championship" +
+  // "Castle Hume - World Championship") → listar os dois, não só o primeiro.
+  const bases = [...new Set(courseNames.map((c) => c.replace(/\([^)]*\)/g, '').split(' - ')[0].trim()).filter(Boolean))];
+  if (bases.length > 1) return bases.join(' & ');
   const base = courseNames[0].split(' - ')[0].replace(/\([^)]*\)/g, '').trim();
   const layouts = [...new Set(courseNames.map((c) => {
     const m = c.replace(/\([^)]*\)/g, '').split(' - ')[1] || '';

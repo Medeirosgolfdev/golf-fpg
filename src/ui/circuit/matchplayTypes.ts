@@ -9,6 +9,7 @@
  * pelo <MatchplayView> (a MajorPage anexa-o às fontes ETC via
  * GOLFBOX_MATCHPLAY_SOURCES em loadDivisionsFor).
  */
+import { isPTByName } from "../../utils/ptPlayers";
 
 export interface MatchplaySide {
   teamId: number | null;
@@ -88,10 +89,15 @@ export interface MatchplayFile {
   scrapedAt: string;
 }
 
-/** Um lado é português? (para destaque na UI). */
+/** Um lado é português? (para destaque na UI). Equipas trazem iso/nome do país;
+ *  nos brackets individuais (FFG) não há país nenhum — aí vale a lista de
+ *  jogadores PT federados noutro país (`utils/ptPlayers`). */
 export function sideIsPt(s: MatchplaySide | MatchplayGameSide | null): boolean {
   if (!s) return false;
   const iso = (s as MatchplaySide).iso;
   if (iso) return iso.toUpperCase() === "PT";
-  return /portugal/i.test(s.name || "");
+  if (/portugal/i.test(s.name || "")) return true;
+  const players = (s as MatchplayGameSide).players;
+  if (players?.some((p) => isPTByName(p))) return true;
+  return isPTByName(s.name);
 }

@@ -184,8 +184,11 @@ function buildJobfileSource(opts) {
 // {ageMin, ageMax, sex}. Boys/Varonil→M, Girls/Femenil→F, senão null (misto).
 function parseSexAge(divKey) {
   const s = String(divKey || "");
-  const sex = /^\s*(boys|var)/i.test(s) ? "M" : /^\s*(girls|fem)/i.test(s) ? "F" : null;
-  if (/\bU\b|and under|y menores/i.test(s)) { const m = /(\d+)/.exec(s); return { ageMin: null, ageMax: m ? +m[1] : null, sex }; }
+  // O sexo tanto vem no início ("Boys 13-14", "Varonil 18") como no FIM
+  // ("Under 12 Boys" — Champion of Champions).
+  const sex = /^\s*(boys|var)/i.test(s) ? "M" : /^\s*(girls|fem)/i.test(s) ? "F"
+    : /\bboys\b/i.test(s) ? "M" : /\bgirls\b/i.test(s) ? "F" : null;
+  if (/\bU\b|and under|y menores|\bunder\s*\d/i.test(s)) { const m = /(\d+)/.exec(s); return { ageMin: null, ageMax: m ? +m[1] : null, sex }; }
   if (/(\d+)\s*U\b/i.test(s)) { const m = /(\d+)\s*U/i.exec(s); return { ageMin: null, ageMax: +m[1], sex }; }
   const range = /(\d+)\s*(?:-|&|to|y|\/)\s*(\d+)/i.exec(s);
   if (range) return { ageMin: +range[1], ageMax: +range[2], sex };

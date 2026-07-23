@@ -7,7 +7,7 @@
 import React, { useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD } from "../data/fpgUtils";
+import { numGross, resolveEsc, computeSD, playedParTotal } from "../data/fpgUtils";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import EmptyState from "./EmptyState";
@@ -77,7 +77,9 @@ export function AccumulatedLB({
         }
         return {
           gross: rs.gross,
-          parPerRound: rs.pars?.reduce((a, b) => a + b, 0) || parPerRound,
+          // Par SÓ dos buracos jogados — numa volta a decorrer os restantes vêm
+          // a zero e comparar 9 buracos com o par de 18 dava "36 (−36)".
+          parPerRound: playedParTotal(rs, parPerRound) || parPerRound,
           sd,
           sdSource: null as string | null,
           eagles,
@@ -118,7 +120,17 @@ export function AccumulatedLB({
   const cr = refRS?.courseRating ?? refP0?.courseRating;
   const slope = refRS?.slope ?? refP0?.slope;
   const campo = tournament.campo || "";
-  const grosses = complete.map((p) => numGross(p)).filter((g) => !isNaN(g) && g > 0);
+  // A média só junta quem tem TODAS as voltas terminadas — com uma ronda a
+  // decorrer (metade do campo com 9 buracos) o total médio não é comparável
+  // com `Par × nRondas` e saía um "(−3.2)" enganador.
+  const roundDone = (rs: { scores?: number[]; pars?: number[] }) =>
+    !!rs.pars?.length && (rs.scores || []).filter(Boolean).length === rs.pars.length;
+  const fully = complete.filter((p) => {
+    const rss = p.roundScores || [];
+    return rss.length >= nRounds && rss.every(roundDone);
+  });
+  const nEmCurso = complete.length - fully.length;
+  const grosses = (fully.length ? fully : complete).map((p) => numGross(p)).filter((g) => !isNaN(g) && g > 0);
   const avgGross = grosses.length
     ? grosses.reduce((a, b) => a + b, 0) / grosses.length
     : null;
@@ -126,6 +138,7 @@ export function AccumulatedLB({
   const infoParts: (string | null)[] = [
     `${complete.length} classif.`,
     incomplete.length > 0 ? `${incomplete.length} inc.` : null,
+    nEmCurso > 0 ? `${nEmCurso} a decorrer` : null,
     nRounds > 1 ? `__ROUND_PILL__` : null,
     `Par ${parPerRound * nRounds}`,
     avgGross != null

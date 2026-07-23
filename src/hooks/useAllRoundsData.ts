@@ -255,7 +255,13 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     const refPars = rs.pars?.length ? rs.pars : ref.pars;
     const capped = rs.scores?.map((s) => Math.min(s, maxHoleScore)) ?? [];
     const gross = capped.length ? capped.reduce((a, b) => a + b, 0) : rs.gross;
-    const rdPar = refPars?.reduce((a, b) => a + b, 0) || parTot;
+    // Par da ronda = par dos buracos EFECTIVAMENTE JOGADOS. Com o par de todos
+    // os buracos, um cartão incompleto (ou uma volta de 9 guardada como 18 com
+    // zeros) dava um to-par enganador — o gross só conta os jogados.
+    const rdPar = capped.length
+      ? (capped.reduce((a, s, i) => a + (s > 0 ? (refPars?.[i] ?? par[i] ?? 0) : 0), 0)
+         || refPars?.reduce((a, b) => a + b, 0) || parTot)
+      : (refPars?.reduce((a, b) => a + b, 0) || parTot);
     let eags = 0, birds = 0, pars2 = 0, bogs = 0;
     capped.forEach((s, h) => {
       if (!s || s <= 0) return; // buraco não jogado (9H guardadas como 18 com zeros)

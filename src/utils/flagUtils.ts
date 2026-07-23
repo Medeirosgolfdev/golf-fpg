@@ -30,6 +30,7 @@ export const FLAG: Record<string, string> = {
   AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
   JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
   TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",GU:"🇬🇺",WS:"🇼🇸",NN:"🏳️",XX:"🏳️",
+  BW:"🇧🇼",IM:"🇮🇲",  // Botswana, Ilha de Man (Champion of Champions)
   SA:"🇸🇦",  // Arábia Saudita
   KY:"🇰🇾",  // Ilhas Caimão
   AL:"🇦🇱", ME:"🇲🇪",   // Albânia, Montenegro
@@ -198,7 +199,7 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   mu:"Mauritius", kg:"Kyrgyzstan", by:"Belarus", dm:"Dominica", gd:"Grenada",
   np:"Nepal", sz:"Eswatini", tn:"Tunisia", qa:"Qatar", mt:"Malta",
   bm:"Bermuda", cd:"DR Congo", cu:"Cuba", re:"Réunion", zm:"Zambia",
-  zw:"Zimbabwe",
+  zw:"Zimbabwe", bw:"Botswana", im:"Isle of Man",
 };
 
 /** Placeholders FPG/USKids para "sem nacionalidade conhecida" — devem ficar fora do dropdown. */
@@ -211,6 +212,10 @@ export function normPaisDisplay(raw: string): string {
   if (!raw) return "";
   const lower = raw.trim().toLowerCase();
   if (!lower || COUNTRY_PLACEHOLDERS.has(lower)) return "";
+  // Subdivisões do Reino Unido ("GB-ENG"/"GB-SCT"/"GB-NIR") têm nome próprio:
+  // sem isto o normCountry reduzia-as a "gb" e a bandeira de Inglaterra saía
+  // rotulada "United Kingdom" (duas entradas iguais no filtro de clubes).
+  if (CODE_TO_DISPLAY[lower]) return CODE_TO_DISPLAY[lower];
   const code = normCountry(raw); // → "us", "ru", "gb", etc.
   if (code.length === 2) return CODE_TO_DISPLAY[code] ?? raw;
   // normCountry didn't resolve → devolve o original capitalizado

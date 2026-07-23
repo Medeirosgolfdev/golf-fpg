@@ -16,7 +16,8 @@
  * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
  */
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
@@ -689,6 +690,26 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       content: <MatchplayView data={curDiv.matchplay} />,
     });
   }
+  // ── Deep-link da aba (?tab=…) ──────────────────────────────────────
+  // Mesmo vocabulário do TournamentDetail ("round:0", "draw:2", "resumo",
+  // "scorecards", "matchplay", "past-editions"), para o link funcionar tanto
+  // nas divisões com `renderFull` (TournamentDetail) como nas que ficam no
+  // IntlTournView do shell. `replace` para não encher o histórico.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab") || undefined;
+  const setTabParam = useCallback((k: string) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set("tab", k);
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  // Tab genérica do circuito (MAJOR: "Edições anteriores") — última da barra.
+  if (curDiv && !curDiv.renderFull && cur && config.pastEditionsTab) {
+    const pe = config.pastEditionsTab(cur, curDiv);
+    if (pe) trailingTabs.push({ key: "past-editions", label: pe.label, content: pe.content });
+  }
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -972,6 +993,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     leadingTabs={leadingTabs.length ? leadingTabs : undefined}
                     trailingTabs={trailingTabs.length ? trailingTabs : undefined}
                     roundDraws={curDiv.roundDraws}
+                    tabKey={tabParam}
+                    onTabKey={setTabParam}
                   />
                 ) : (
                   <>

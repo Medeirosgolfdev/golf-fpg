@@ -70,6 +70,14 @@ export interface IntlTournViewProps {
    *   R1 → R2 → Resumo → 📋 Scorecards → Match Play
    */
   trailingTabs?: { key: string; label: string; content: React.ReactNode }[];
+  /**
+   * Deep-link da aba activa (?tab=…), com as MESMAS chaves do TournamentDetail:
+   * "admissions" · "draw:N" · "round:I" · "resumo" · "scorecards" · "matchplay"
+   * · "past-editions". Quando `tabKey` não bate com aba nenhuma, mantém-se a
+   * escolha automática (Resumo). `onTabKey` é chamado a cada clique.
+   */
+  tabKey?: string;
+  onTabKey?: (key: string) => void;
 }
 
 export function IntlTournView({
@@ -87,6 +95,8 @@ export function IntlTournView({
   leadingTabs,
   roundDraws,
   trailingTabs,
+  tabKey,
+  onTabKey,
 }: IntlTournViewProps) {
   const nR = tournament.rounds || 1;
   const isMulti = nR > 1;
@@ -199,14 +209,28 @@ export function IntlTournView({
   // Com `roundDraws` (e sem Pré-Cut): intercala "Draw R{n}" ANTES de cada ronda n
   //   Inscritos → Draw R1 → R1 → Draw R2 → R2 → … → Resumo → 📋 Scorecards
   // incluindo rondas de draw ainda sem resultado (ex: Draw R3 só com pairings).
+  // `key` = identificador ESTÁVEL da aba para o deep-link (?tab=…). Usa o MESMO
+  // vocabulário do TournamentDetail — "admissions" · "draw:N" · "round:I" ·
+  // "resumo" · "scorecards" · chave da leading/trailing tab — para que o mesmo
+  // link funcione nas duas famílias de páginas (as que delegam no
+  // TournamentDetail e as que ficam neste IntlTournView).
   type TabDesc =
-    | { kind: "leading"; label: string; li: number }
-    | { kind: "draw"; label: string; render: () => React.ReactNode }
-    | { kind: "round"; label: string; rtab: number }
-    | { kind: "trailing"; label: string; ti: number };
+    | { kind: "leading"; key: string; label: string; li: number }
+    | { kind: "draw"; key: string; label: string; render: () => React.ReactNode }
+    | { kind: "round"; key: string; label: string; rtab: number }
+    | { kind: "trailing"; key: string; label: string; ti: number };
   const { tabDescs, initialIdx } = useMemo(() => {
     const descs: TabDesc[] = [];
-    (leadingTabs ?? []).forEach((t, li) => descs.push({ kind: "leading", label: t.label, li }));
+    // Chave de uma aba de ronda: "resumo" · "scorecards" · "precut" · "round:I"
+    // (I = índice em `expanded`, tal como no TournamentDetail).
+    const roundKey = (rtab: number): string => {
+      const lbl = roundTabLabels[rtab] ?? "";
+      if (lbl === COMBINED_TAB) return "scorecards";
+      if (lbl.startsWith("Resumo")) return "resumo";
+      if (cutAfterRound != null && rtab === cutAfterRound) return "precut";
+      return `round:${(cutAfterRound != null && rtab > cutAfterRound) ? rtab - 1 : rtab}`;
+    };
+    (leadingTabs ?? []).forEach((t, li) => descs.push({ kind: "leading", key: t.key, label: t.label, li }));
     const draws = roundDraws ?? [];
     if (draws.length) {
       // Intercalar "Draw R{n}" ANTES de cada ronda de resultado R{n}, percorrendo
@@ -223,9 +247,9 @@ export function IntlTournView({
         if (!isPreCut && !isCombined && !isTotal) {
           const roundNum = expIdx + 1; // expanded[expIdx] = ronda expIdx+1
           const dr = drawByRound.get(roundNum);
-          if (dr) { descs.push({ kind: "draw", label: `Draw R${roundNum}`, render: dr }); used.add(roundNum); }
+          if (dr) { descs.push({ kind: "draw", key: `draw:${roundNum}`, label: `Draw R${roundNum}`, render: dr }); used.add(roundNum); }
         }
-        descs.push({ kind: "round", label: roundTabLabels[rtab], rtab });
+        descs.push({ kind: "round", key: roundKey(rtab), label: roundTabLabels[rtab], rtab });
       }
       // Draws de rondas SEM aba de resultado (ex: Draw R3 futura, só pairings) →
       // inseridos por ordem antes do Resumo, mantendo a sequência de rondas.
@@ -233,13 +257,13 @@ export function IntlTournView({
       if (extra.length) {
         let at = descs.findIndex(d => d.kind === "round" && (d.label === "Resumo" || d.label === COMBINED_TAB));
         if (at < 0) at = descs.length;
-        descs.splice(at, 0, ...extra.map(d => ({ kind: "draw" as const, label: `Draw R${d.round}`, render: d.render })));
+        descs.splice(at, 0, ...extra.map(d => ({ kind: "draw" as const, key: `draw:${d.round}`, label: `Draw R${d.round}`, render: d.render })));
       }
     } else {
-      roundTabLabels.forEach((lbl, i) => descs.push({ kind: "round", label: lbl, rtab: i }));
+      roundTabLabels.forEach((lbl, i) => descs.push({ kind: "round", key: roundKey(i), label: lbl, rtab: i }));
     }
     // Abas finais (fases pós-stroke play, ex: Match Play) — sempre no fim.
-    (trailingTabs ?? []).forEach((t, ti) => descs.push({ kind: "trailing", label: t.label, ti }));
+    (trailingTabs ?? []).forEach((t, ti) => descs.push({ kind: "trailing", key: t.key, label: t.label, ti }));
     const fri = descs.findIndex(d => d.kind === "round");
     // Tab inicial: o RESUMO (classificação acumulada) quando existe — é a vista
     // que se quer ao abrir um torneio. Senão a primeira aba de ronda.
@@ -253,15 +277,21 @@ export function IntlTournView({
   // Início: Resumo (ou 1ª ronda) — e RESET ao trocar de torneio: a shell reusa
   // esta instância entre torneios, senão o índice de tab "colava" de um para o
   // outro e abria-se noutro torneio numa tab arbitrária.
-  const [tab, setTab] = useState(initialIdx);
+  // Aba pedida no URL (?tab=…) — tem prioridade sobre o default (Resumo).
+  const urlIdx = tabKey ? tabDescs.findIndex((d) => d.key === tabKey) : -1;
+  const [tab, setTab] = useState(urlIdx >= 0 ? urlIdx : initialIdx);
   const tournKey = `${(tournament as { tcode?: string }).tcode ?? ""}|${tournament.name}`;
   const prevTournKey = useRef(tournKey);
   useEffect(() => {
     if (prevTournKey.current !== tournKey) {
       prevTournKey.current = tournKey;
-      setTab(initialIdx);
+      setTab(urlIdx >= 0 ? urlIdx : initialIdx);
     }
-  }, [tournKey, initialIdx]);
+  }, [tournKey, initialIdx, urlIdx]);
+  // O URL manda enquanto apontar para uma aba existente (deep-link + back/forward).
+  useEffect(() => {
+    if (urlIdx >= 0) setTab((t) => (t === urlIdx ? t : urlIdx));
+  }, [urlIdx]);
   const safeTab = Math.min(Math.max(tab, 0), Math.max(0, tabDescs.length - 1));
   const active = tabDescs[safeTab] ?? tabDescs[0];
 
@@ -310,7 +340,8 @@ export function IntlTournView({
       {showTabBar && (
         <div className="tab-bar">
           {tabDescs.map((d, i) => (
-            <button key={i} className={`tab-under${safeTab === i ? " active" : ""}`} onClick={() => setTab(i)}>{d.label}</button>
+            <button key={i} className={`tab-under${safeTab === i ? " active" : ""}`}
+                    onClick={() => { setTab(i); onTabKey?.(d.key); }}>{d.label}</button>
           ))}
         </div>
       )}

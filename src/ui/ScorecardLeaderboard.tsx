@@ -386,8 +386,16 @@ export function ScorecardLeaderboard({
               // Par por buraco do jogador (campo que ele jogou nesta ronda) —
               // cai para o par partilhado quando a linha não traz o seu próprio.
               const rp = row.holePars && row.holePars.length >= nh ? row.holePars : par;
-              const rpF9 = rp.slice(0, 9).reduce((a, b) => a + b, 0);
-              const rpB9 = !is9 ? rp.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+              // ⚠ O ±par de cada nine soma o par SÓ DOS BURACOS JOGADOS. Com um
+              // scorecard incompleto (cartão por entregar, jogo interrompido), o
+              // par dos 9 contra a soma de 7 buracos dava um "(−1)" enganador.
+              const playedPar = (from: number, to: number) =>
+                rp.slice(from, to).reduce((a, p, i) => a + (scores[from + i] ? p : 0), 0);
+              const playedN = (from: number, to: number) =>
+                scores.slice(from, to).filter(Boolean).length;
+              const rpF9 = playedPar(0, 9);
+              const rpB9 = !is9 ? playedPar(9, 18) : 0;
+              const nF9 = playedN(0, 9), nB9 = !is9 ? playedN(9, 18) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
                 <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
@@ -411,8 +419,11 @@ export function ScorecardLeaderboard({
                           title={inf[i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     );})}
-                    <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
-                      {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - rpF9)})</span>
+                    <td className="lb-halftot" style={{ borderTop: row.borderTop }}
+                      title={nF9 > 0 && nF9 < 9 ? `Parcial — ${nF9} de 9 buracos` : undefined}>
+                      {f9 || "–"}{nF9 > 0 && <span className="fs-10 c-text-3">
+                        {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && <span title={`${nF9} de 9 buracos`}> ·{nF9}b</span>}
+                      </span>}
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => {
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + 9 + i) === row.startHole;
@@ -424,8 +435,11 @@ export function ScorecardLeaderboard({
                       </td>
                     );})}
                     {!is9 && (
-                      <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
-                        {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - rpB9)})</span>
+                      <td className="lb-halftot" style={{ borderTop: row.borderTop }}
+                        title={nB9 > 0 && nB9 < 9 ? `Parcial — ${nB9} de 9 buracos` : undefined}>
+                        {b9 || "–"}{nB9 > 0 && <span className="fs-10 c-text-3">
+                          {" "}({fmtToPar(b9 - rpB9)}){nB9 < 9 && <span title={`${nB9} de 9 buracos`}> ·{nB9}b</span>}
+                        </span>}
                       </td>
                     )}
                   </>}

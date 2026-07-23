@@ -25,6 +25,7 @@ import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
+import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
 
 interface SpainPlayer {
   licencia: string;
@@ -200,8 +201,24 @@ export function RFEGPlayersView() {
   const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const { sortKey, sortDir, toggleSort } = useSort<SK>("name");
-  const toggleExp = (lic: string) =>
+  // Torneios por jogador — ficheiro pesado (~2,5 MB), só carrega quando o
+  // utilizador expande a PRIMEIRA linha. Depois serve todas.
+  const [tourns, setTourns] = useState<EsPlayerTournamentsFile | null>(null);
+  const [tournsState, setTournsState] = useState<"idle" | "loading" | "error">("idle");
+
+  const toggleExp = (lic: string) => {
     setExpanded((s) => { const n = new Set(s); n.has(lic) ? n.delete(lic) : n.add(lic); return n; });
+    if (!tourns && tournsState === "idle") {
+      setTournsState("loading");
+      cachedFetchJson<EsPlayerTournamentsFile>("/data/spain-player-tournaments.json")
+        .then((d) => {
+          if (!d || !d.byLicencia) { setTournsState("error"); return; }
+          setTourns(d);
+          setTournsState("idle");
+        })
+        .catch(() => setTournsState("error"));
+    }
+  };
 
   useEffect(() => {
     cachedFetchJson<SpainPlayersFile>("/data/spain-players.json")
@@ -408,13 +425,19 @@ export function RFEGPlayersView() {
                   ];
                   return (
                   <Fragment key={r.licencia}>
-                  <tr className={"player-list-row" + (r._manuel ? " row-manuel" : "") + (isOpen ? " is-open" : "")}>
+                  <tr
+                    className={"player-list-row" + (r._manuel ? " row-manuel" : "") + (isOpen ? " is-open" : "")}
+                    onClick={() => toggleExp(r.licencia)}
+                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
+                    title="Ver os torneios e resultados deste jogador"
+                  >
                     <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+                      <span aria-hidden style={{ marginRight: 5, color: "var(--accent)" }}>{isOpen ? "▾" : "▸"}</span>
                       {r.licencia}
                       {nLic > 1 && (
                         <button
                           type="button"
-                          onClick={() => toggleExp(r.licencia)}
+                          onClick={(e) => { e.stopPropagation(); toggleExp(r.licencia); }}
                           title={`Mudou de clube — ${nLic} licenças. Clica para ver o histórico.`}
                           style={{
                             marginLeft: 6, cursor: "pointer", border: "1px solid var(--accent)",
@@ -429,6 +452,19 @@ export function RFEGPlayersView() {
                     </td>
                     {dataCells(mainView, has)}
                   </tr>
+                  {isOpen && (
+                    <tr className="player-list-row-detail">
+                      <td colSpan={colCount} style={{ background: "var(--bg-detail)", padding: "0 12px 4px" }}>
+                        {tourns
+                          ? <PlayerTournaments file={tourns} licencias={subLics.map((s) => s.lic)} />
+                          : tournsState === "error"
+                            ? <div className="muted fs-11" style={{ padding: "8px 4px" }}>
+                                Não foi possível carregar <code>spain-player-tournaments.json</code> — corre <code>node scripts/build-spain-player-tournaments.js</code>.
+                              </div>
+                            : <LoadingState message="A carregar torneios…" />}
+                      </td>
+                    </tr>
+                  )}
                   {isOpen && r.aliases && (
                     <>
                       <tr className="player-list-row-detail">

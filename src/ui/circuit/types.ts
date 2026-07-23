@@ -189,6 +189,10 @@ export interface CircuitEntry {
   tcode?: string;
   /** Fonte de dados (RFEGolf/NextCaddy/...) — controla cor do chip na sidebar. */
   source?: string;
+  /** Ids das entradas FUNDIDAS numa entrada combinada (ex: as categorias de um
+   *  Campeonato de España). Permite que um deep-link para um id membro
+   *  seleccione o grupo — sem isto a URL não corresponde a entrada nenhuma. */
+  memberIds?: string[];
   /** Liga/região (FFG: ligue) — alimenta o filtro `liga` da toolbar. */
   liga?: string;
   /** TODAS as ligas onde o torneio aparece (dedup multi-liga do portal FFG).
@@ -321,6 +325,17 @@ export interface CircuitConfig {
    * a partir das divisões EAGER carregadas.
    */
   veteranIndex?: Map<string, number>;
+
+  /**
+   * Tab extra no FIM da barra de cada divisão (a seguir a Resumo/Scorecards/
+   * Match Play) — a MAJOR usa-a para "Edições anteriores". Recebe o torneio e a
+   * divisão abertos e devolve o conteúdo; `null` esconde a tab.
+   *
+   * ⚠ Só se aplica às divisões que usam o render por secções do shell. As que
+   * definem `renderFull` (delegam tudo no TournamentDetail) têm de passar a tab
+   * pelo `extraTabs` desse componente — o shell não lhes toca no conteúdo.
+   */
+  pastEditionsTab?: (entry: CircuitEntry, div: CircuitDivision) => { label: string; content: React.ReactNode } | null;
 
   /** Mensagem de loading. */
   loadingMessage?: string;

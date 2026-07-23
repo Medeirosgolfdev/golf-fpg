@@ -8,6 +8,7 @@ const path = require("path");
 const IN = path.resolve(__dirname, "../public/data/licencia-dob-lookup.json");
 const HCP_IN = path.resolve(__dirname, "../public/data/licencia-hcp-lookup.json");
 const IDX_IN = path.resolve(__dirname, "../public/data/rfegolf-resultats-index.json");
+const SPT_IN = path.resolve(__dirname, "../public/data/spain-player-tournaments.json");
 const OUT = path.resolve(__dirname, "../public/data/spain-players.json");
 const d = JSON.parse(fs.readFileSync(IN, "utf-8"));
 const lookup = d.lookup || {};
@@ -32,6 +33,22 @@ try {
   }
 } catch (e) {
   console.warn("Aviso: rfegolf-resultats-index.json em falta — contagem por ano fica a 0.");
+}
+
+// ── Contagem de torneios: o painel expansível da lista é a fonte ─────────
+// `spain-player-tournaments.json` (build-spain-player-tournaments.js) tem as
+// LINHAS que o utilizador vê ao abrir um jogador. A coluna 📊 Tot tem de contar
+// exactamente essas — se contássemos as `sources[]` cruas, a tabela dizia 22 e
+// a lista mostrava 25 (as `sources` não têm os Campeonatos publicados só no
+// LiveGolfScoring, e contam a dobrar os que aparecem em duas plataformas).
+let sptCounts = null, sptRows = null, sptYears = null;
+try {
+  const spt = JSON.parse(fs.readFileSync(SPT_IN, "utf-8"));
+  sptCounts = spt.counts || null;
+  sptRows = spt.byLicencia || null;
+  sptYears = (spt.tournaments || []).map((t) => t.year);
+} catch (e) {
+  console.warn("Aviso: spain-player-tournaments.json em falta — contagem cai nas `sources[]` cruas. Corre `node scripts/build-spain-player-tournaments.js` primeiro.");
 }
 
 // HCP mais recente por licença (licencia-hcp-lookup é keyed em MAIÚSCULAS).
@@ -68,8 +85,8 @@ for (const [lic, e] of Object.entries(lookup)) {
     hcpDate: hcpEntry?.dateIso || null,
     nat: "ESP",
     // Contagem de torneios (todas as plataformas) — total + ano corrente.
-    tot: sources.length,
-    ano,
+    tot: sptCounts?.[lic]?.[0] ?? sources.length,
+    ano: sptCounts?.[lic]?.[1] ?? ano,
     firstSeenIso: e.firstSeenIso || null,
     lastSeenIso: e.lastSeenIso || null,
   };
@@ -131,7 +148,7 @@ for (const arr of Object.values(clusters)) {
   const dobs = new Set(arr.map((e) => e.dobIso).filter(Boolean));
   if (names.size > 1 && dobs.size > 1) continue;
 
-  const srcLen = (e) => (lookup[e.licencia] && lookup[e.licencia].sources || []).length;
+  const srcLen = (e) => sptCounts?.[e.licencia]?.[0] ?? (lookup[e.licencia] && lookup[e.licencia].sources || []).length;
   // Primário = aparição mais recente em torneio (= clube actual). Desempate:
   // mais torneios → tem DOB → tem clube → licença (determinístico).
   const ranked = [...arr].sort((a, b) => {
@@ -146,10 +163,20 @@ for (const arr of Object.values(clusters)) {
   const others = ranked.slice(1);
 
   // União de torneios (todas as licenças) → contagem REAL do jogador físico.
-  const allSources = new Set();
-  for (const e of arr) for (const s of (lookup[e.licencia] && lookup[e.licencia].sources || [])) allSources.add(String(s));
-  let anoAll = 0;
-  for (const s of allSources) if (idToYear[s] === CUR_YEAR) anoAll++;
+  // Com o painel disponível, a união é feita sobre as MESMAS provas que ele
+  // lista (índice do catálogo); senão cai nas `sources[]` cruas.
+  let totAll, anoAll = 0;
+  if (sptRows) {
+    const tis = new Set();
+    for (const e of arr) for (const r of (sptRows[e.licencia] || [])) tis.add(r[0]);
+    totAll = tis.size;
+    for (const ti of tis) if (sptYears[ti] === CUR_YEAR) anoAll++;
+  } else {
+    const allSources = new Set();
+    for (const e of arr) for (const s of (lookup[e.licencia] && lookup[e.licencia].sources || [])) allSources.add(String(s));
+    totAll = allSources.size;
+    for (const s of allSources) if (idToYear[s] === CUR_YEAR) anoAll++;
+  }
 
   // HCP actual = o da licença com hcpDate mais recente (o índice "vivo"); as
   // licenças antigas congelam o HCP no momento em que o jogador saiu do clube.
@@ -160,7 +187,7 @@ for (const arr of Object.values(clusters)) {
   }
 
   primary.dupKey = dupKeyOf(primary.licencia);
-  primary.totAll = allSources.size;
+  primary.totAll = totAll;
   primary.anoAll = anoAll;
   if (cur && cur.licencia !== primary.licencia) {
     primary.curHcp = cur.hcp;
@@ -175,7 +202,7 @@ for (const arr of Object.values(clusters)) {
     firstSeenIso: e.firstSeenIso || null,
     lastSeenIso: e.lastSeenIso || null,
     tot: srcLen(e),    // torneios desta licença (= o que a linha mostraria sem dedup)
-    ano: e.ano || 0,   // torneios desta licença no ano corrente
+    ano: sptCounts?.[e.licencia]?.[1] ?? e.ano ?? 0, // torneios desta licença no ano corrente
   }));
   for (const e of others) { e.aliasOf = primary.licencia; e.dupKey = primary.dupKey; }
   dupPlayers++;

@@ -226,22 +226,25 @@ jobs:
       - name: Build licencia-hcp-lookup.json
         run: node scripts/build-licencia-hcp-lookup.js
 
-      - name: Build spain-players.json
-        run: node scripts/build-spain-players-export.js
-
       # Os gémeos têm de existir ANTES do rivals: build-rfegolf-rivals.js usa
       # rfegolf-lgs-twins.json para não duplicar torneios RFEGolf↔LGS.
       - name: Build mapa de gémeos RFEGolf<->LGS
         run: node scripts/build-lgs-twins.js
 
-      - name: Build rfegolf-rivals.json
-        run: node scripts/build-rfegolf-rivals.js
-
       - name: Build fcg-rivals.json
         run: node scripts/build-fcg-rivals.js
 
-      - name: Build spain-player-results.json (torneios por jogador)
-        run: node scripts/build-spain-player-results.js
+      # ⚠ ORDEM: os torneios por jogador precisam dos gémeos + fcg-rivals, e o
+      # spain-players.json precisa DELES (usa os `counts` para a coluna 📊 Tot —
+      # o número da tabela tem de ser o nº de linhas do painel expansível).
+      - name: Build spain-player-tournaments.json (torneios por jogador)
+        run: node scripts/build-spain-player-tournaments.js
+
+      - name: Build spain-players.json
+        run: node scripts/build-spain-players-export.js
+
+      - name: Build rfegolf-rivals.json
+        run: node scripts/build-rfegolf-rivals.js
 
       - name: Commit e push (se houver mudanças)
         run: |
@@ -258,7 +261,7 @@ jobs:
                   public/data/spain-players.json \
                   public/data/rfegolf-rivals.json \
                   public/data/fcg-rivals.json \
-                  public/data/spain-player-results.json \
+                  public/data/spain-player-tournaments.json \
                   public/data/rfegolf-lgs-twins.json \
                   scripts/fcg-scope.json \
                   scripts/nextcaddy-scope-all.json \

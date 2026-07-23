@@ -309,8 +309,10 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
                 const f9 = r.scores.slice(0, 9).reduce((a, b) => a + b, 0);
                 const b9 = r.scores.slice(9, 18).reduce((a, b) => a + b, 0);
                 const rPars = r.pars && r.pars.length === 18 ? r.pars : parRef;
-                const rParF9 = rPars.slice(0, 9).reduce((a, b) => a + b, 0);
-                const rParB9 = rPars.slice(9, 18).reduce((a, b) => a + b, 0);
+                // Par SÓ dos buracos jogados — num cartão incompleto o par dos
+                // 9 contra a soma de menos buracos dava um ±par enganador.
+                const rParF9 = rPars.slice(0, 9).reduce((a, p, i) => a + (r.scores[i] ? p : 0), 0);
+                const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
                   <tr key={idx}>
                     <td className="lb-name muted fs-11" style={{ whiteSpace: "nowrap" }}>{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
@@ -818,8 +820,10 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                 const b9 = r.scores.slice(9, 18).reduce((a, b) => a + b, 0);
                 const isManuel = r.fedCode === MANUEL_FED;
                 const rPars = r.pars && r.pars.length === 18 ? r.pars : pkg.parReference;
-                const rParF9 = rPars.slice(0, 9).reduce((a, b) => a + b, 0);
-                const rParB9 = rPars.slice(9, 18).reduce((a, b) => a + b, 0);
+                // Par SÓ dos buracos jogados — num cartão incompleto o par dos
+                // 9 contra a soma de menos buracos dava um ±par enganador.
+                const rParF9 = rPars.slice(0, 9).reduce((a, p, i) => a + (r.scores[i] ? p : 0), 0);
+                const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
                   <tr key={idx} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
                     <td className="lb-pos muted fs-11">{idx + 1}</td>

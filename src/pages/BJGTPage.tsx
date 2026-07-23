@@ -259,7 +259,15 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
     name: def.label,
     tcode: def.id,
     date: "",
-    campo: def.series === "eowagr" ? "Le Touquet GC — La Forêt" : def.category === "Boys 12-13" ? "Villa Padierna — Alferini" : "Villa Padierna — Flamingos",
+    // ⚠ O campo hardcoded só vale para as séries para que foi escrito: os
+    // ficheiros BJGT/WJGC trazem "Villa Padierna" sem o percurso (Flamingos vs
+    // Alferini) e o EOWAGR vem vazio. Quando o FCG e o JWGC entraram nesta
+    // família (também BlueGolf) herdaram o hardcode e o FCG aparecia a jogar em
+    // "Villa Padierna — Flamingos" em vez de Desert Willow. Esses trazem o
+    // campo real no próprio ficheiro → usar `data.course`.
+    campo: def.series === "eowagr" ? "Le Touquet GC — La Forêt"
+      : def.series === "bjgt" ? (def.category === "Boys 12-13" ? "Villa Padierna — Alferini" : "Villa Padierna — Flamingos")
+      : (data.course || ""),
     rounds: nR,
     playerCount: fpgPlayers.length,
     players: fpgPlayers,
@@ -454,9 +462,13 @@ export type EvoRowWithPos = MultiRoundRow & { _pos?: number | null };
 export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): ExtraColumn<EvoRowWithPos>[] {
   return [
     {
-      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600",
-      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
-      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <span className="inline-sep">{fmtSign(ev.otherValue)}</span> : <span className="c-muted inline-sep">–</span>; },
+      // ⚠ O separador do grupo de evolução é bordo da COLUNA (`lb-col-divider`,
+      // aplicado ao th E ao td), não um border-left num <span> dentro da célula:
+      // assim é uma linha vertical contínua da tabela, em vez de um traço curto
+      // à altura do texto, colado ao número e diferente em cada linha.
+      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600 lb-col-divider",
+      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px" },
+      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <span>{fmtSign(ev.otherValue)}</span> : <span className="c-muted">–</span>; },
     },
     {
       header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },

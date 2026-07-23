@@ -3331,6 +3331,9 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       year,
       name,
       source: sorted[0].source,
+      // Deep-link vindo de fora (ex: painel de torneios de um jogador) usa o id
+      // da prova; sem esta lista não bateria com nenhuma entrada da sidebar.
+      memberIds: sorted.map((t) => `${t.source}:${t.id}`),
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
@@ -3497,8 +3500,13 @@ export default function RFEGPage() {
     if (onInfo) return undefined;
     const idStr = params.id ?? params.compId;
     if (!idStr) return undefined;
-    if (params.source) return `${params.source}:${idStr}`;
-    return entries.find((e) => e.id.endsWith(`:${idStr}`))?.id;
+    if (params.source) {
+      const direct = `${params.source}:${idStr}`;
+      if (entries.some((e) => e.id === direct)) return direct;
+      // Prova fundida numa entrada combinada (`grp-…`) → seleccionar o grupo.
+      return entries.find((e) => e.memberIds?.includes(direct))?.id ?? direct;
+    }
+    return entries.find((e) => e.id.endsWith(`:${idStr}`) || e.memberIds?.some((m) => m.endsWith(`:${idStr}`)))?.id;
   }, [params.id, params.compId, params.source, entries, onInfo]);
 
   // Config + páginas informativas (menu INFO na toolbar do shell).

@@ -39,6 +39,7 @@ const SOURCES = [
   { id: "fsga", label: "Florida State Golf Association", load: () => require("./sources/fsga") },
   { id: "uajt", label: "The Junior Tour (Under Armour)", load: () => require("./sources/uajt") },
   { id: "mexnacional", label: "Nacional Infantil Juvenil (México)", load: () => require("./sources/mexnacional") },
+  { id: "coc", label: "Champion of Champions World Championship", load: () => require("./sources/coc") },
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
   { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
   { id: "avtrophy", label: "Belgian Intl U14 (Albert Vermeiren)", load: () => require("./sources/avtrophy") },

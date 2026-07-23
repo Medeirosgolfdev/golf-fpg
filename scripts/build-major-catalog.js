@@ -241,6 +241,10 @@ const GG_SOURCES = [
   { prefix: "fsga_", source: "fsga", series: "FSGA", name: (f, y) => f.tournament || `FSGA ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "uajt_", source: "uajt", series: "UA", name: (f, y) => f.tournament || `UA ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "mexnacional_", source: "mexnacional", series: "MÉX", name: (f, y) => f.tournament || `MÉX ${y}`, course: (f) => f.course || undefined, union: true },
+  // O título do GG só leva o ano em algumas edições ("2025 'Champion of…'" vs
+  // "'Champion of…'") → tirar o prefixo para a lista não misturar os dois (o
+  // ano já é coluna própria).
+  { prefix: "coc_", source: "coc", series: "CoC", name: (f, y) => (f.tournament || `Champion of Champions ${y}`).replace(/^\d{4}\s+/, ""), course: (f) => f.course || undefined, union: true },
   { prefix: "icopa_", source: "icopa", series: "Bobby Díaz", name: (f, y) => f.tournament || `Bobby Díaz ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "interzonas_", source: "interzonas", series: "Interzonas", name: (f, y) => f.tournament || `Interzonas ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "avtrophy_", source: "avtrophy", series: "BEL U14", name: (f, y) => f.tournament || `BEL U14 ${y}`, course: (f) => f.course || undefined, union: true },
