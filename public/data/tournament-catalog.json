@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-23T17:09:17.894Z",
+  "generatedAt": "2026-07-23T17:29:12.851Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -72943,6 +72943,17 @@
       "sourceId": "uajt",
       "tournamentIds": [
         "uajt-uajt_2026"
+      ],
+      "firstDate": "2026-01-01",
+      "lastDate": "2026-01-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "ua-worlds",
+      "label": "Under Armour World Championship",
+      "sourceId": "uaworlds",
+      "tournamentIds": [
+        "uaworlds-uaworlds_2026"
       ],
       "firstDate": "2026-01-01",
       "lastDate": "2026-01-01",
