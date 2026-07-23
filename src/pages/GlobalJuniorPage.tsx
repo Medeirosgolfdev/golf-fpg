@@ -27,6 +27,7 @@ import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundS
 import { IntlTournView } from "../ui/IntlTournView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink } from "../ui/circuit/types";
+import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 
 /* ── Nome de país (por extenso, vindo do scraper) → ISO-2 ──────────
    O scraper GJGL extrai o país de um comentário HTML embutido na row do
@@ -605,6 +606,9 @@ const GJGL_CONFIG: CircuitConfig = {
   textColor: "#fff",
   grouping: "year",
   filters: { search: true, year: true, toggles: ["manuel", "pt", "top10"] },
+  // "Edições anteriores": família pelo nome (sem bandeira/ano) — agrupa a mesma
+  // prova GJGL ano-a-ano.
+  editionKey: (e) => tournamentFamilyKey(e.name),
   loadingMessage: "A carregar GJGL…",
 };
 

@@ -41,6 +41,7 @@ import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
+import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 
 /* ── Types ──────────────────────────────────────────────── */
 
