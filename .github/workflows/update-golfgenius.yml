@@ -40,7 +40,7 @@ permissions:
 jobs:
   update-golfgenius:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     concurrency:
       group: update-golfgenius
       cancel-in-progress: false
@@ -98,6 +98,7 @@ jobs:
       - name: Commit e push (se houve alterações)
         if: steps.scrape.outputs.exit_code == '0'
         run: |
+          set +e
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -110,13 +111,52 @@ jobs:
 
           DATE=$(date +'%Y-%m-%d %H:%M')
           git commit -m "data: GolfGenius scrape + rebuild juniors ${DATE}"
+
+          # Ficheiros GERADOS (não-fonte). Um push concorrente (build-juniors,
+          # outro update-*) regenera-os no mesmo instante → o rebase entra em
+          # conflito. Fundir à mão só produz JSON inválido; a política do repo
+          # (ver CLAUDE.md "Conflitos de git nos ficheiros GERADOS") é REGENERAR.
+          # Por isso: se os ÚNICOS conflitos forem estes, aceitamos qualquer lado
+          # (é indiferente — regeneramos logo a seguir), continuamos o rebase e
+          # reconstruímos os agregados a partir da árvore já fundida.
+          GEN_FILES="public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json"
+
           PUSH_OK=0
           for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+            git fetch origin "${GITHUB_REF_NAME}"
+
+            git rebase "origin/${GITHUB_REF_NAME}"
+            if [ $? -ne 0 ]; then
+              # Só resolvemos automaticamente se TODOS os conflitos forem gerados
+              CONFLICTED=$(git diff --name-only --diff-filter=U)
+              UNEXPECTED=$(printf '%s\n' $CONFLICTED | grep -vxF -f <(printf '%s\n' $GEN_FILES))
+              if [ -n "$UNEXPECTED" ]; then
+                echo "Conflito inesperado em ficheiros não-gerados:"
+                echo "$UNEXPECTED"
+                git rebase --abort 2>/dev/null || true
+                echo "❌ Rebase com conflitos que não sabemos resolver automaticamente"
+                exit 1
+              fi
+              git checkout --theirs -- $CONFLICTED
+              git add -- $CONFLICTED
+              GIT_EDITOR=true git rebase --continue
+              if [ $? -ne 0 ]; then
+                git rebase --abort 2>/dev/null || true
+                echo "Rebase --continue falhou — retry em $((i * 5))s"
+                sleep $((i * 5))
+                continue
+              fi
+              # Reconstruir os agregados com os JobFiles novos + as alterações remotas
+              node scripts/aggregator/index.js || { echo "❌ agregador falhou"; exit 1; }
+              node scripts/build-major-catalog.js || { echo "❌ build-major-catalog falhou"; exit 1; }
+              git add public/data
+              git diff --staged --quiet || git commit --amend --no-edit
+            fi
+
+            if git push; then
               PUSH_OK=1
               break
             fi
-            git rebase --abort 2>/dev/null || true
             echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
             sleep $((i * 5))
           done
