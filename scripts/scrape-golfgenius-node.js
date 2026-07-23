@@ -40,6 +40,9 @@ const OUT = path.join(__dirname, '..', 'public', 'data');
 
 // Slug/nome legível por evento (fallback = slugify do título).
 const SLUG_OVERRIDES = [
+  // ⚠ O Worlds TEM de vir antes do `uajt`: o regex do Summer National apanha
+  // "under armour" e mandaria as duas provas para o mesmo ficheiro.
+  { re: /under armour world championship/i,            slug: 'uaworlds', name: 'The Junior Tour Powered by Under Armour — World Championship' },
   { re: /under armour|summer national championship/i, slug: 'uajt', name: 'The Junior Tour Powered by Under Armour — Summer National Championship' },
   { re: /campeonato nacional infantil juvenil/i,       slug: 'mexnacional', name: 'Campeonato Nacional Infantil Juvenil (México)' },
   { re: /champion of champions/i,                      slug: 'coc', name: '“Champion of Champions” World Championship' },
@@ -69,7 +72,14 @@ function writeJsonAtomic(filePath, data) {
 function divisionBase(label) {
   return label
     .replace(/\s*[-–]\s*[^-–]*$/,'')                 // tira o " - {campo}" final
-    .replace(/\s*(final\s+round|round\s+\d+)\s*$/i, '') // tira " Final Round"/" Round N"
+    // O <select> do GG TRUNCA os labels longos, deixando um parêntesis por
+    // fechar: "Boys 8 & Under Round 2 (B9" (UA Worlds, onde o 8&U joga 9
+    // buracos e cada ronda tem vista própria). Sem tirar esse resto, o
+    // "Round N" deixava de estar no fim e o escalão aparecia 3× na lista.
+    .replace(/\s*\([^)]*$/, '')
+    // " Final Round"/" Round N" — `final\s+\w*` (e não `final\s+round`) porque
+    // o truncamento do GG também corta a palavra: "Girls 8 & Under Final Roun".
+    .replace(/\s*(final\s+\w*|round\s+\d+)\s*$/i, '')
     // tira o sufixo de data "(Mon, July 20)" dos eventos por-fase (CFJ) — o
     // <select> do GG trunca labels longos com "..." e deixava "(Mon, Jul" solto
     .replace(/\s*\((?:mon|tue|wed|thu|fri|sat|sun)[^)]*\)?\s*$/i, '')
@@ -181,13 +191,24 @@ async function discoverDivisions(pageUrl, leagueOverride) {
   const title = decodeEntities(((pageHtml.match(/<title>([^<]*)<\/title>/) || [])[1] || ''))
     .replace(/\s+/g, ' ').replace(/\s*Event\s*::.*$/i, '').trim();
   const lid = leagueOverride || (pageHtml.match(/leagues\/(\d+)/) || [])[1];
-  // Página "Tee Sheets" do microsite — anunciada no HTML por um input escondido.
-  const teePageId = (pageHtml.match(/tee_sheet_button[^>]*value="\/pages\/(\d+)"/) || [])[1] || null;
+  // Página "Tee Sheets" do microsite — normalmente anunciada num input
+  // escondido `tee_sheet_button`. ⚠ Em edições mais antigas (CoC 2024) esse
+  // input vem VAZIO apesar de a página existir → fallback pelo link da navegação.
+  const teePageId = (pageHtml.match(/tee_sheet_button[^>]*value="\/pages\/(\d+)"/) || [])[1]
+    || (() => {
+      for (const m of pageHtml.matchAll(/<a[^>]+href="[^"]*\/pages\/(\d+)"[^>]*>([\s\S]{0,150}?)<\/a>/g)) {
+        if (/tee\s*sheets?/i.test(m[2].replace(/<[^>]+>/g, ' '))) return m[1];
+      }
+      return null;
+    })()
+    || null;
   if (!lid) throw new Error(`leagueId não encontrado (página 100% JS?). Passar --league {id}. Título: "${title}"`);
 
   const widget = await ggGet(`${GG}/leagues/${lid}/widgets/tournament_results?page_id=${pid}`);
   const opts = [...widget.matchAll(/<option[^>]*value="(\d+)"[^>]*>([^<]+)<\/option>/g)]
-    .map((m) => ({ val: m[1], label: m[2].replace(/\s+/g, ' ').replace(/\.\.\.$/, '').trim() }));
+    // ⚠ decodeEntities: os labels vêm com `&amp;` ("Boys 8 &amp; Under") e sem
+    // isto o escalão ficava com a entidade crua no nome do tab e no ficheiro.
+    .map((m) => ({ val: m[1], label: decodeEntities(m[2]).replace(/\s+/g, ' ').replace(/\.\.\.$/, '').trim() }));
 
   // Sem <select name=round> → divisão única: o v2tid está directo no widget.
   if (!opts.length) {
@@ -386,6 +407,7 @@ async function main() {
   const getArg = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };
   const skipScorecards = args.includes('--skip-scorecards');
   const noMerge = args.includes('--no-merge');
+  const skipTeeSheets = args.includes('--skip-tee-sheets');
   const scopeFile = getArg('--scope');
   const pageUrl = args.find((a) => /^https?:\/\/.*\/pages\/\d+/.test(a));
   const v2Arg = getArg('--v2tids');
@@ -404,13 +426,14 @@ async function main() {
         nameOverride: e.name || null, slugOverride: e.slug || null,
         yearOverride: e.year ? parseInt(e.year, 10) : null, countryDefault: e.country || null,
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
+        skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
     jobs = [{
       pageUrl, v2Arg, leagueOverride: getArg('--league'), nameOverride: getArg('--name'),
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
-      countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge,
+      countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets,
     }];
   } else {
     console.error('Uso: node scripts/scrape-golfgenius-node.js <pageUrl> [--league id] [--v2tids a,b] [--name] [--slug] [--year] [--country XX] [--skip-scorecards]');

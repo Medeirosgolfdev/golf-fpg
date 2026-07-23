@@ -655,8 +655,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", fcg: "FCG", jwgc: "JWGC", coc: "CoC" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // "Edições anteriores" nas divisões que ficam no render por secções do shell
   // (BJGT/EOWAGR/FCG/JWGC e Doral). As que delegam no TournamentDetail (JOB, FM
@@ -746,6 +746,9 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
   fm: { file: (y) => `/data/ftm_fm_${y}.json`, build: buildFmEntries },
   fsga: { file: (y) => `/data/fsga_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "fsga", series: "FSGA" }) },
   uajt: { file: (y) => `/data/uajt_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "uajt", series: "UA" }) },
+  // The Junior Tour (Under Armour) — WORLD Championship. Prova distinta do
+  // `uajt` (Summer National Championship) da mesma tour.
+  uaworlds: { file: (y) => `/data/uaworlds_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "uaworlds", series: "UA Worlds" }) },
   mexnacional: { file: (y) => `/data/mexnacional_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "mexnacional", series: "MÉX" }) },
   // 'Champion of Champions' World Championship (Lough Erne, Irlanda do Norte) —
   // convite mundial de campeões juvenis, Sub-7 a Sub-19 M+F.

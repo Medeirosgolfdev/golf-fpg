@@ -244,6 +244,7 @@ const GG_SOURCES = [
   // O título do GG só leva o ano em algumas edições ("2025 'Champion of…'" vs
   // "'Champion of…'") → tirar o prefixo para a lista não misturar os dois (o
   // ano já é coluna própria).
+  { prefix: "uaworlds_", source: "uaworlds", series: "UA Worlds", name: (f, y) => (f.tournament || `UA Worlds ${y}`).replace(/^d{4}s+/, ""), course: (f) => f.course || undefined, union: true },
   { prefix: "coc_", source: "coc", series: "CoC", name: (f, y) => (f.tournament || `Champion of Champions ${y}`).replace(/^\d{4}\s+/, ""), course: (f) => f.course || undefined, union: true },
   { prefix: "icopa_", source: "icopa", series: "Bobby Díaz", name: (f, y) => f.tournament || `Bobby Díaz ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "interzonas_", source: "interzonas", series: "Interzonas", name: (f, y) => f.tournament || `Interzonas ${y}`, course: (f) => f.course || undefined, union: true },

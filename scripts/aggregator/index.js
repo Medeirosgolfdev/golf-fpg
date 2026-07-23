@@ -38,6 +38,7 @@ const SOURCES = [
   { id: "gjgl", label: "Global Junior Golf Live", load: () => require("./sources/gjgl") },
   { id: "fsga", label: "Florida State Golf Association", load: () => require("./sources/fsga") },
   { id: "uajt", label: "The Junior Tour (Under Armour)", load: () => require("./sources/uajt") },
+  { id: "uaworlds", label: "The Junior Tour (Under Armour) — World Championship", load: () => require("./sources/uaworlds") },
   { id: "mexnacional", label: "Nacional Infantil Juvenil (México)", load: () => require("./sources/mexnacional") },
   { id: "coc", label: "Champion of Champions World Championship", load: () => require("./sources/coc") },
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },

@@ -806,7 +806,8 @@ desliga o país por defeito "US" (ver CoC abaixo).
 **Tee sheets = draws REAIS (2026-07-23).** ⚠ O widget dos tee sheets chama-se
 **`next_round`** — `tee_times`, `pairings`, `tee_sheet` e `tee_sheets` dão todos
 404. A página é descoberta sozinha: o HTML da página de resultados anuncia-a num
-input escondido `tee_sheet_button`. O `<select>` do widget lista as rondas
+input escondido `tee_sheet_button` (⚠ que em edições antigas vem VAZIO apesar de
+a página existir — CoC 2024 — daí o fallback pelo link "Tee Sheets" da nav). O `<select>` do widget lista as rondas
 (`&round_id=…`) e cada uma traz a tabela `by_tee_times_table` com pares
 (hora, jogadores); cada jogador leva a afiliação **e a divisão**, que é o que
 permite dar a cada escalão o seu draw (um flight pode juntar escalões — o grupo
