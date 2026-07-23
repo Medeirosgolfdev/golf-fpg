@@ -87,7 +87,7 @@ const isFullRound = (r: { gross?: number | null; scores?: number[]; pars?: (numb
  *  Devolve null se não houver jogadores com resultado. */
 export function buildPastEditionFromTournament(
   t: FPGTournament,
-  meta: { year: number; division: string; course?: string | null; url?: string | null },
+  meta: { id: string; year: number; division: string; course?: string | null; url?: string | null; label?: string | null },
 ): PastEdition | null {
   const players = t.players
     .filter((p) => p.grossTotal != null || (p.roundScores || []).some((r) => (r.scores || []).length))
@@ -110,7 +110,9 @@ export function buildPastEditionFromTournament(
       || ((a.total ?? 9e9) - (b.total ?? 9e9)));
   if (!players.length) return null;
   return {
+    id: meta.id,
     year: meta.year,
+    label: meta.label ?? null,
     division: meta.division,
     course: meta.course ?? t.campo ?? null,
     url: meta.url ?? null,
@@ -144,28 +146,26 @@ export function CircuitPastEditionsTab({ editions, division }: { editions: Circu
         const loaded = await Promise.all(sorted.map(async (e) => {
           try { return { e, divs: await entryDivisions(e) }; } catch { return { e, divs: [] as CircuitDivision[] }; }
         }));
-        const rows: PastEdition[] = [];
+        const rows: { ed: PastEdition; stamp: string }[] = [];
         for (const { e, divs } of loaded) {
           const dv = matchDivision(divs, division);
           if (!dv?.results) continue;
           const ed = buildPastEditionFromTournament(dv.results, {
+            id: e.id,
             year: e.year ?? 0,
+            // Rótulo distintivo para fontes com VÁRIAS edições no mesmo ano (Drive:
+            // etapas de um tour) — a tabela só o mostra quando o ano se repete.
+            label: e.name || null,
             division: dv.tabLabel || dv.escalao || division,
             course: dv.results.campo || e.course || null,
             url: e.sourceUrl || null,
           });
-          if (ed) rows.push(ed);
+          if (ed) rows.push({ ed, stamp: e.dateStart || String(e.year ?? 0) });
         }
-        // Uma coluna por ANO: fontes com vários torneios do mesmo nome no mesmo
-        // ano (tours semanais FFG/RFEG) dariam colunas "2025" repetidas — fica a
-        // edição com mais jogadores.
-        const byYear = new Map<number, PastEdition>();
-        for (const ed of rows) {
-          const prev = byYear.get(ed.year);
-          if (!prev || ed.players.length > prev.players.length) byYear.set(ed.year, ed);
-        }
-        const deduped = [...byYear.values()].sort((a, b) => b.year - a.year);
-        if (alive) setState({ loading: false, rows: deduped });
+        // TODAS as edições (o Drive repete o evento várias vezes por ano — cada
+        // etapa é uma coluna). Mais recente primeiro; empate por nome estável.
+        rows.sort((a, b) => (b.stamp < a.stamp ? -1 : b.stamp > a.stamp ? 1 : (a.ed.label || "").localeCompare(b.ed.label || "")));
+        if (alive) setState({ loading: false, rows: rows.map((r) => r.ed) });
       } catch (err) {
         if (alive) setState({ loading: false, rows: [], err: String((err as Error)?.message || err) });
       }

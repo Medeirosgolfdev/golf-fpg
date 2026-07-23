@@ -712,21 +712,27 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   // entregá-las ao componente partilhado. Só se mostra com ≥2 edições (uma só
   // não tem com que comparar). Construída aqui uma vez e entregue às duas vias:
   // trailing-tab (IntlTournView) e argumento de `renderFull` (TournamentDetail).
+  const { editionKey, pastEditionsTab: pastEditionsTabConfig } = config;
+  const curDivLabel = curDiv ? (curDiv.tabLabel || curDiv.escalao || "") : "";
+  // ⚠ `siblings` MEMOIZADO: sem isto o array era recriado a cada render e o
+  // useEffect do CircuitPastEditionsTab (dep em `editions`) recarregava em loop.
+  const pastEditionsSiblings = useMemo(() => {
+    if (!cur || !editionKey) return null;
+    const k = editionKey(cur);
+    if (!k) return null;
+    const sib = entries.filter((e) => editionKey(e) === k);
+    return sib.length >= 2 ? sib : null;
+  }, [cur, entries, editionKey]);
   const pastEditionsTabNode = (() => {
     if (!curDiv || !cur) return null;
-    const division = curDiv.tabLabel || curDiv.escalao || "";
-    if (config.editionKey) {
-      const k = config.editionKey(cur);
-      if (!k) return null;
-      const siblings = entries.filter((e) => config.editionKey!(e) === k);
-      if (siblings.length < 2) return null;
+    if (pastEditionsSiblings) {
       return { key: "past-editions", label: "Edições anteriores",
-        content: <CircuitPastEditionsTab editions={siblings} division={division} /> };
+        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} /> };
     }
     // Fallback: hook de baixo nível `pastEditionsTab` (legado; só usado quando
     // uma página não fornece `editionKey`).
-    if (config.pastEditionsTab) {
-      const pe = config.pastEditionsTab(cur, curDiv);
+    if (pastEditionsTabConfig) {
+      const pe = pastEditionsTabConfig(cur, curDiv);
       if (pe) return { key: "past-editions", label: pe.label, content: pe.content };
     }
     return null;

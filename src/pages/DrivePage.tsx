@@ -1476,7 +1476,8 @@ function DriveContent() {
         d.inscritos = undefined;
         d.draw = undefined;
         const t = d.results as any;
-        d.renderFull = () => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any} />;
+        d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any}
+          extraTabs={extras?.pastEditionsTab ? [extras.pastEditionsTab] : undefined} />;
       }
     }
     // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.

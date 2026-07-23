@@ -30,6 +30,13 @@
       "autoPort": false
     },
     {
+      "name": "golf-fpg-http-5302",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--config", "_probe-tmp/vite-http.config.ts", "--port", "5302", "--strictPort"],
+      "port": 5302,
+      "autoPort": false
+    },
+    {
       "name": "golf-fpg-5399",
       "runtimeExecutable": "node",
       "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5399", "--strictPort"],

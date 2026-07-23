@@ -24,6 +24,7 @@
  */
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritos, CircuitDraw } from "../../ui/circuit/types";
+import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import type { FpgAdmissions, FpgDraw } from "../../data/nacional2026Loader";
 import { isManuelByName } from "../../constants/manuel";
 
@@ -378,6 +379,16 @@ export const DRIVE_CONFIG: CircuitConfig = {
     escalao: true,
     liga: true,
     toggles: ["manuel", "pt", "top10"],
+  },
+  // "Edições anteriores": o Drive repete o evento MUITAS vezes (várias etapas
+  // por ano, a repetir campos) → a família é o nome sem ordinal/ano ("3º DT
+  // Norte" → "dt norte") e a tab mostra TODAS as etapas de todos os anos.
+  // ⚠ Inclui o escalão na chave porque as entradas Drive são POR escalão: sem
+  // isso o match ±1 puxava uma etapa Sub-14 para a vista de Sub-12.
+  editionKey: (e) => {
+    const fam = tournamentFamilyKey(e.name);
+    if (!fam) return null;
+    return e.escalao ? `${fam}|${e.escalao}` : fam;
   },
   loadingMessage: "A carregar torneios do Drive…",
 };
