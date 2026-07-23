@@ -34,7 +34,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const { scrapeEdition, ggGet, GG, dateKey } = require('./scrape-fsga.js');
+const { scrapeEdition, ggGet, GG, dateKey, inferCountry, normalizeName } = require('./scrape-fsga.js');
 
 const OUT = path.join(__dirname, '..', 'public', 'data');
 
@@ -150,21 +150,52 @@ function parseTeeSheet(html) {
 }
 
 /**
- * Draws por DIVISÃO a partir da página de tee sheets.
- * @returns Map<divisão, { [ronda]: {round, label, groups:[{time, players:[{name}]}]} }>
+ * Roster de presenças — a MESMA página de "tee sheets" serve, em alguns
+ * eventos, uma `attending_roster_table` em vez de horas de saída:
+ *   <td class='name'><strong>Apelido, Nome</strong><br><i>País</i></td>
+ * É a única fonte de NACIONALIDADE quando o leaderboard não traz afiliação
+ * (UA Worlds: o v2tournaments vem sem `affiliation` e os 583 jogadores caíam
+ * todos em "US", apesar de haver Venezuela, Colômbia, México, GB…).
+ * @returns [{ name, country }] com o nome já em "Nome Apelido".
+ */
+function parseRoster(html) {
+  const out = [];
+  for (const tm of html.matchAll(/<table[^>]*attending_roster_table[\s\S]*?<\/table>/gi)) {
+    for (const cm of tm[0].matchAll(/<td[^>]*class='[^']*name[^']*'[^>]*>([\s\S]*?)<\/td>/gi)) {
+      const name = txt((cm[1].match(/<strong>([\s\S]*?)<\/strong>/) || [])[1] || '');
+      const country = txt((cm[1].match(/<i>([\s\S]*?)<\/i>/) || [])[1] || '');
+      if (name) out.push({ name: normalizeName(name), country: country || null });
+    }
+  }
+  return out;
+}
+
+/** Chave de comparação de nomes entre fontes (sem acentos/pontuação). */
+const nameKey = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+/**
+ * Draws por DIVISÃO + países por jogador, a partir da página de tee sheets.
+ * Os dois vêm do MESMO widget (cada evento publica um ou outro), por isso são
+ * lidos numa só passagem.
+ * @returns { draws: Map<divisão, {[ronda]: {...}}>, countries: Map<nome, país> }
  */
 async function fetchTeeSheets(lid, teePageId) {
   const base = `${GG}/leagues/${lid}/widgets/next_round?page_id=${teePageId}`;
   const first = await ggGet(base);
   const opts = [...first.matchAll(/<option[^>]*value="([^"]*round_id=\d+)"[^>]*>([^<]+)</g)]
-    .map((m) => ({ url: m[1].replace(/&amp;/g, '&'), label: m[2].trim() }));
+    .map((m) => ({ url: m[1].replace(/&amp;/g, '&'), label: decodeEntities(m[2]).trim() }));
   const rounds = opts.length ? opts : [{ url: null, label: 'Round 1' }];
   const byDiv = new Map();
+  const countries = new Map();
   for (let i = 0; i < rounds.length; i++) {
     const r = rounds[i];
     const html = r.url ? await ggGet(GG + r.url) : first;
+    for (const p of parseRoster(html)) {
+      if (p.country && !countries.has(nameKey(p.name))) countries.set(nameKey(p.name), p.country);
+    }
     const groups = parseTeeSheet(html);
-    if (!groups.length) continue;
+    if (!groups.length) { await new Promise((res) => setTimeout(res, 300)); continue; }
     const roundNum = (r.label.match(/round\s+(\d+)/i) || [, String(i + 1)])[1];
     const date = (r.label.match(/\(([^)]+)\)/) || [])[1] || undefined;
     // Um flight pode juntar escalões diferentes → o grupo entra no draw de
@@ -180,7 +211,7 @@ async function fetchTeeSheets(lid, teePageId) {
     }
     await new Promise((res) => setTimeout(res, 300));
   }
-  return byDiv;
+  return { draws: byDiv, countries };
 }
 
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
@@ -376,13 +407,27 @@ async function runOne(opts) {
   // nunca a R1, que não tem ronda anterior de onde inferir emparelhamentos.
   if (teePageId && lid && !opts.skipTeeSheets) {
     try {
-      const byDiv = await fetchTeeSheets(lid, teePageId);
+      const { draws, countries } = await fetchTeeSheets(lid, teePageId);
       let n = 0;
       for (const dv of out.divisions) {
-        const d = byDiv.get(dv.division);
+        const d = draws.get(dv.division);
         if (d && Object.keys(d).length) { dv.draws = d; n++; }
       }
       if (n) console.log(`   🕘 tee sheets: draws reais em ${n}/${out.divisions.length} divisão(ões)`);
+      // Nacionalidade pela roster — SÓ para quem o leaderboard não afiliou.
+      // Não toca em quem já tem país resolvido pela afiliação (CoC, FSGA…).
+      if (countries.size) {
+        let nc = 0;
+        for (const dv of out.divisions) for (const p of dv.players) {
+          if (p.location) continue;                 // já tinha afiliação → manda ela
+          const c = countries.get(nameKey(p.name));
+          if (!c) continue;
+          p.location = c;
+          const iso = inferCountry(c, p.country || null);
+          if (iso && iso !== p.country) { p.country = iso; nc++; }
+        }
+        if (nc) console.log(`   🌍 roster: país corrigido em ${nc} jogador(es) (leaderboard sem afiliação)`);
+      }
     } catch (e) { console.log(`   ⚠ tee sheets indisponíveis: ${e.message}`); }
   }
 
@@ -458,4 +503,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet };
+module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster };

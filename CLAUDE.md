@@ -100,6 +100,31 @@ npm run scrape    # pipeline completo (golf-all.js)
 npm run login     # login FPG (gera sessão)
 ```
 
+## ⚠ Conflitos de git nos ficheiros GERADOS — regenerar, nunca fundir
+
+Os workflows regeneram e committam os mesmos ficheiros que nós geramos em
+local, por isso um `git pull` depois de um push nosso dá conflito quase sempre
+**nestes quatro**:
+
+| Ficheiro | Regenerar com |
+|---|---|
+| `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
+| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` | `node scripts/aggregator/index.js` |
+
+São **output de scripts, não fonte**: nenhum dos lados do conflito está certo
+(são builds de instantes diferentes) e fundir à mão só produz lixo. Resolução:
+
+```bash
+git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json
+node scripts/build-major-catalog.js && node scripts/aggregator/index.js
+git add public/data/major-catalog.json public/data/juniors*.json public/data/tournament-catalog.json && git commit
+```
+
+⚠ **Deixar o conflito por resolver parte a app inteira**, não só o ficheiro: os
+marcadores `<<<<<<<` tornam o JSON inválido e, como a `/major` lê a lista
+lateral SÓ do `major-catalog.json` (lazy-load desde 2026-07-06), a página fica
+sem torneios nenhuns. Aconteceu a 2026-07-23.
+
 ## IDs importantes
 
 | O quê | Valor |

@@ -93,6 +93,8 @@ const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-S
   Belgium:'BE', Netherlands:'NL', Denmark:'DK', Norway:'NO', Finland:'FI', Iceland:'IS', Austria:'AT', Switzerland:'CH', Poland:'PL', 'Czech Republic':'CZ', Czechia:'CZ', Slovakia:'SK', Slovenia:'SI', Croatia:'HR', Hungary:'HU', Bulgaria:'BG', Romania:'RO', Greece:'GR', Turkey:'TR', Malta:'MT', Luxembourg:'LU', Estonia:'EE', Latvia:'LV', Lithuania:'LT', Ukraine:'UA', Kazakhstan:'KZ',
   'South Africa':'ZA', Zimbabwe:'ZW', Zambia:'ZM', Botswana:'BW', Egypt:'EG', Morocco:'MA', Kenya:'KE', Nigeria:'NG',
   'United Kingdom':'GB', 'Great Britain':'GB', 'Golf Ireland':'IE', Azerbaijan:'AZ', 'Türkiye':'TR', Turkiye:'TR',
+  // Formas longas ISO que a roster do GolfGenius usa (UA Worlds).
+  'Russian Federation':'RU', Russia:'RU', 'Korea, Republic of':'KR', Bolivia:'BO', Barbados:'BB',
   India:'IN', 'Hong Kong':'HK', 'Hong Kong, China':'HK', Singapore:'SG', Malaysia:'MY', Thailand:'TH', Philippines:'PH', Indonesia:'ID', Vietnam:'VN', Taiwan:'TW', 'Chinese Taipei':'TW', 'New Zealand':'NZ', 'United Arab Emirates':'AE', Israel:'IL', Chile:'CL', Peru:'PE', Uruguay:'UY', Paraguay:'PY', Ecuador:'EC', Panama:'PA', 'Costa Rica':'CR', Guatemala:'GT', Jamaica:'JM' };
 // `fallback` = o que devolver quando a afiliação não identifica país nenhum.
 // Default "US" (as afiliações FSGA/UA são cidades americanas), mas eventos
@@ -488,4 +490,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e); process.exit(1); });
-module.exports = { parseScorecard, scrapeLeaderboard, scrapeDivision, scrapeEdition, courseKey, dateKey, ggGet, courseNamesLabel, fetchProfile, GG };
+module.exports = { parseScorecard, scrapeLeaderboard, scrapeDivision, scrapeEdition, courseKey, dateKey, ggGet, courseNamesLabel, fetchProfile, inferCountry, normalizeName, GG };
