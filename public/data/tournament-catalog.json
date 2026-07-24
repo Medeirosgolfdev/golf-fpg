@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-23T17:49:40.677Z",
+  "generatedAt": "2026-07-24T00:39:11.766Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -29187,6 +29187,20 @@
       "editionsCount": 4
     },
     {
+      "id": "ua-worlds",
+      "label": "Under Armour World Championship",
+      "sourceId": "uaworlds",
+      "tournamentIds": [
+        "uaworlds-uaworlds_2023",
+        "uaworlds-uaworlds_2024",
+        "uaworlds-uaworlds_2025",
+        "uaworlds-uaworlds_2026"
+      ],
+      "firstDate": "2023-01-01",
+      "lastDate": "2026-01-01",
+      "editionsCount": 4
+    },
+    {
       "id": "coc-world",
       "label": "Champion of Champions",
       "sourceId": "coc",
@@ -40206,6 +40220,18 @@
       ],
       "firstDate": "2019-06-08",
       "lastDate": "2021-08-15",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-hickory-ridge-golf-country-club",
+      "label": "Hickory Ridge Golf & Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-7861",
+        "uskids-22215"
+      ],
+      "firstDate": "2019-09-22",
+      "lastDate": "2026-06-07",
       "editionsCount": 2
     },
     {
@@ -54840,17 +54866,6 @@
       ],
       "firstDate": "2019-08-25",
       "lastDate": "2019-08-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-hickory-ridge-golf-country-club",
-      "label": "Hickory Ridge Golf & Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-7861"
-      ],
-      "firstDate": "2019-09-22",
-      "lastDate": "2019-09-22",
       "editionsCount": 1
     },
     {
@@ -71153,6 +71168,17 @@
       ],
       "firstDate": "2025-05-11",
       "lastDate": "2025-05-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-caledonia-country-club",
+      "label": "Caledonia Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22668"
+      ],
+      "firstDate": "2026-07-19",
+      "lastDate": "2026-07-19",
       "editionsCount": 1
     },
     {
