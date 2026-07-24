@@ -322,7 +322,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
         if (isAccTab) {
           return <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} />;
         }
-        return <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ hideRawSDTip: true }} />;
+        return <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ hideRawSDTip: true, noInferBlanks: true }} />;
       })()}
 
     </div>

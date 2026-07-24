@@ -55,6 +55,15 @@ const escIdx = (esc: string | null | undefined): number => {
   return i >= 0 ? i : 99;
 };
 
+/** Remove o sufixo de escalão ("-Sub 10", "– Sub 12", "Sub18") do fim do nome do
+ *  torneio. Como agrupamos TODOS os escalões de um evento numa única entrada de
+ *  sidebar (o escalão vive nos tabs/badge), manter o "Sub NN" no nome fica
+ *  redundante e confuso — a etapa "Final Drive Challenge Madeira-Palheiro-Sub 10"
+ *  aparecia como se fosse só o Sub 10. */
+export function stripEscalaoFromName(name: string | undefined | null): string {
+  return (name || "").replace(/[\s\-–—]*\bsub\s*\d{1,2}\b\s*$/i, "").trim();
+}
+
 /** Encurta o nome do campo para a sidebar/label (espelha shortCampo da DrivePage). */
 export function shortCampo(c: string | undefined | null): string {
   return (c || "")
@@ -137,7 +146,7 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
       const resumo = entries.find(e => e._roundLabel === "Resumo") ?? entries[0];
       groups.push({
         key: t._multiGroup,
-        label: resumo?.name || shortCampo(t.campo),
+        label: stripEscalaoFromName(resumo?.name) || shortCampo(t.campo),
         campo: t.campo,
         tcode: resumo?.tcode,
         date: t.date,
@@ -154,7 +163,7 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
       const entries = [...(eventMap.get(eventKey) || [])].sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
       groups.push({
         key: eventKey,
-        label: entries[0]?.name || shortCampo(t.campo),
+        label: stripEscalaoFromName(entries[0]?.name) || shortCampo(t.campo),
         campo: t.campo,
         tcode: entries.length === 1 ? entries[0].tcode : undefined,
         date: t.date,
@@ -170,7 +179,7 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
     } else {
       groups.push({
         key: t.tcode + "_" + t.date,
-        label: t.name || shortCampo(t.campo),
+        label: stripEscalaoFromName(t.name) || shortCampo(t.campo),
         campo: t.campo,
         tcode: t.tcode,
         date: t.date,

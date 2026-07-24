@@ -12,6 +12,7 @@ import {
   admissionsToInscritos,
   drawsToCircuitDraw,
   shortCampo,
+  stripEscalaoFromName,
   DRIVE_CONFIG,
 } from "../driveCircuitData";
 
@@ -37,7 +38,29 @@ describe("shortCampo", () => {
   });
 });
 
+describe("stripEscalaoFromName", () => {
+  it("remove o sufixo de escalão em todas as variantes de separador", () => {
+    expect(stripEscalaoFromName("Final Drive Challenge Madeira-Palheiro-Sub 10")).toBe("Final Drive Challenge Madeira-Palheiro");
+    expect(stripEscalaoFromName("7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10")).toBe("7 ºTorn.Drive Challenge Madeira-Stº da Serra");
+    expect(stripEscalaoFromName("7º Torneio Drive Challenge Sul-Benamor- Sub 16")).toBe("7º Torneio Drive Challenge Sul-Benamor");
+    expect(stripEscalaoFromName("Final Nacional Drive Challenge Açores Sub 10")).toBe("Final Nacional Drive Challenge Açores");
+    expect(stripEscalaoFromName("7º Torneio Drive Challenge Tejo – Oeiras - Sub 10")).toBe("7º Torneio Drive Challenge Tejo – Oeiras");
+  });
+  it("não mexe em nomes sem escalão no fim", () => {
+    expect(stripEscalaoFromName("3º Torneio Drive Tour Terceira")).toBe("3º Torneio Drive Tour Terceira");
+    expect(stripEscalaoFromName(undefined)).toBe("");
+  });
+});
+
 describe("buildDriveGroups", () => {
+  it("tira o 'Sub NN' do label do evento agrupado", () => {
+    const a = t({ name: "Final Drive Challenge Madeira-Palheiro-Sub 10", tcode: "300", series: "challenge", escalao: "Sub 10", ccode: "982", campo: "Palheiro Golf", date: "2026-07-12" });
+    const b = t({ name: "Final Drive Challenge Madeira-Palheiro-Sub 12", tcode: "301", series: "challenge", escalao: "Sub 12", ccode: "982", campo: "Palheiro Golf", date: "2026-07-12" });
+    const [g] = buildDriveGroups([a, b]);
+    expect(g.isEvent).toBe(true);
+    expect(g.label).toBe("Final Drive Challenge Madeira-Palheiro");
+  });
+
   it("torneio single vira 1 grupo single", () => {
     const g = buildDriveGroups([t({ name: "A", tcode: "100", escalao: "Sub 12", series: "tour" })]);
     expect(g).toHaveLength(1);

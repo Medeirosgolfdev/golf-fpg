@@ -92,6 +92,7 @@ export function ScorecardLB({
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;
+  const noInfer = options?.noInferBlanks ?? false;
   // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas
   // ocultas, mais 1 se IDADE estiver ligada (showAge)
   const parLabelColSpan =
@@ -132,6 +133,16 @@ export function ScorecardLB({
   const playerPar = (p: Player): number[] => {
     const pp = p.par?.length ? p.par : p.roundScores?.[0]?.pars;
     return pp && pp.length >= nh ? pp : par;
+  };
+
+  // Scores crus (sem estimativa NDB) — usado quando noInferBlanks está ligado:
+  // os buracos por jogar ficam a 0 (→ em branco na grelha), nunca estimados.
+  const rawFilled = (p: Player): { scores: number[]; inferred: boolean[] } => {
+    const rs0 = p.roundScores?.[0];
+    const raw = (p.scores?.length ? p.scores : rs0?.scores) || [];
+    const n = p.nholes || raw.length || nh || 18;
+    const scores = raw.slice(0, n).map((v) => (typeof v === "number" && v > 0 ? v : 0));
+    return { scores, inferred: new Array(scores.length).fill(false) };
   };
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si = refP?.si?.length ? refP.si : refRs0?.si || [];
@@ -231,7 +242,7 @@ export function ScorecardLB({
   const statsByPlayer = useMemo(() => {
     const m = new Map<Player, { eags: number; birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
     for (const p of rawPlayers) {
-      const { scores, inferred } = fillBlankHoles(p);
+      const { scores, inferred } = noInfer ? rawFilled(p) : fillBlankHoles(p);
       const pp = playerPar(p);
       let eags = 0, birds = 0, pars = 0, bogs = 0;
       for (let i = 0; i < scores.length && i < pp.length; i++) {
@@ -397,16 +408,36 @@ export function ScorecardLB({
     // Distingue-se do caso acima por `gross === soma dos buracos publicados`.
     const scoredHoles = scores.filter(Boolean).length;
     const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
-    const inProgress = scoredHoles > 0 && scoredHoles < pp.length && playedSum === gross;
-    const isPartial = scoredHoles > 0 && scoredHoles < pp.length && inferred.every(v => !v) && !inProgress;
-    // Par só dos buracos jogados quando a volta ainda vai a meio.
-    const refParTotal = inProgress ? pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0) : ppTotal;
+    const playedParSum = pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0);
+    let toParVal: number | null;
+    if (isWDPlayer) {
+      toParVal = null;
+    } else if (noInfer) {
+      // Torneio interrompido / a decorrer: nunca estimar buracos por jogar.
+      if (scoredHoles >= nh) {
+        toParVal = ppTotal > 0 ? gross - ppTotal : null;            // volta completa
+      } else if (scoredHoles > 0) {
+        toParVal = playedSum - playedParSum;                        // a meio → só os jogados
+      } else {
+        // Sem cartão hole-by-hole: só há ±par se o gross for um total de volta
+        // completa credível (não um total a correr de uma volta parada).
+        toParVal = ppTotal > 0 && gross >= nh && gross >= ppTotal - 12
+          ? gross - ppTotal
+          : null;
+      }
+    } else {
+      const inProgress = scoredHoles > 0 && scoredHoles < pp.length && playedSum === gross;
+      const isPartial = scoredHoles > 0 && scoredHoles < pp.length && inferred.every(v => !v) && !inProgress;
+      // Par só dos buracos jogados quando a volta ainda vai a meio.
+      const refParTotal = inProgress ? pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0) : ppTotal;
+      toParVal = isPartial ? null : gross - refParTotal;
+    }
 
     return {
       key: p.scoreId || idx,
       pos: posDisplay,
       gross,
-      toPar: isWDPlayer || isPartial ? null : gross - refParTotal,
+      toPar: toParVal,
       scores,
       holePars: pp,
       inferredHoles: inferred,

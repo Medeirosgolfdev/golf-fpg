@@ -177,11 +177,16 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
     // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
     // a fase knockout vê-se por clique explícito na tab "Match Play".
     const SKIP = new Set(["scorecards", "analise-aroeira2", "matchplay"]);
+    // As tabs extra injectadas pelo parent (Época, Edições anteriores, …) são
+    // vistas SUPLEMENTARES — nunca podem ser o auto-default, senão um torneio
+    // com resultados abre na "Época" (vazia) em vez do Resumo. Vêm no fim da
+    // barra (a seguir a Scorecards) e só se abrem por clique / ?tab= explícito.
+    const extraKeys = new Set((extraTabs ?? []).map(et => et.key));
     for (let i = tabs.length - 1; i >= 0; i--) {
-      if (!SKIP.has(tabs[i].key)) return i;
+      if (!SKIP.has(tabs[i].key) && !extraKeys.has(tabs[i].key)) return i;
     }
     return 0;
-  }, [tabs]);
+  }, [tabs, extraTabs]);
   const tab = urlTabIdx >= 0 ? urlTabIdx : lastProgressionIdx;
 
   const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];

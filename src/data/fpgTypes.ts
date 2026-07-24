@@ -101,6 +101,11 @@ export interface ScorecardOptions {
   hideRawSDTip?: boolean;
   /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link). */
   nameDecorator?: (name: string, content: React.ReactNode) => React.ReactNode;
+  /** USKids / torneio a decorrer ou interrompido: NÃO estimar (Net Double
+   *  Bogey) os buracos por jogar. Um cartão em branco = buraco por jogar (fica
+   *  em branco), não um buraco por terminar; o ±par sai só dos buracos jogados
+   *  (ou null), nunca gross − par total. */
+  noInferBlanks?: boolean;
 }
 
 export interface SDResult {

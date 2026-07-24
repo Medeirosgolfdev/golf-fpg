@@ -494,16 +494,18 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
     return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #{pos}</span>;
   }
   // Não-finalista com posição real: mostra "#45" (posição na leaderboard) em vez
-  // de "CUT". O número fica IDÊNTICO ao das outras linhas (mesmo tamanho, sem
-  // <sup> que inflava a caixa de linha); o motivo fica num rótulo pequeno ao lado
-  // + tooltip, para não perder o contexto de que não passou o corte.
+  // de "CUT". O número fica IDÊNTICO ao das outras linhas (mesmo tamanho); o
+  // motivo vai numa 2ª linha, a vermelho, + tooltip.
   const dnf = status && status !== "OK";
-  return (
-    <span style={{ color: "var(--text-3)" }} title={dnf ? DNF_LABEL[status] || status : undefined}>
-      #{pos}
-      {dnf ? <span style={{ fontSize: "var(--fs-9)", marginLeft: 2, textTransform: "lowercase" }}>{status === "CUT" ? "cut" : status.toLowerCase()}</span> : null}
-    </span>
-  );
+  if (dnf) {
+    return (
+      <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.1 }} title={DNF_LABEL[status] || status}>
+        <span style={{ color: "var(--text-3)" }}>#{pos}</span>
+        <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, color: "var(--color-danger)", textTransform: "lowercase" }}>{status === "CUT" ? "cut" : status.toLowerCase()}</span>
+      </span>
+    );
+  }
+  return <span style={{ color: "var(--text-3)" }}>#{pos}</span>;
 }
 
 const DNF_LABEL: Record<string, string> = {
