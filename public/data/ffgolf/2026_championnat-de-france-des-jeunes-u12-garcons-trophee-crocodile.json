@@ -9,7 +9,7 @@
   "gg_page": "12891806910545703850",
   "gg_league": "12891806821458686569",
   "stats_page": null,
-  "scrapedAt": "2026-07-23T21:21:20.157Z",
+  "scrapedAt": "2026-07-24T21:24:23.512Z",
   "course": {
     "name": "Golf du Gouverneur (Montaplan)",
     "tee": "Jaunes",
@@ -113,8 +113,9 @@
     }
   ],
   "rounds": 2,
-  "format": "4 divisão(ões) via tournament_results (fetch)",
+  "format": "5 divisão(ões) via tournament_results (fetch)",
   "divisions": [
+    "1/2 Finale (Sat, July 25)",
     "1/4 de Finale (Fri, July 24)",
     "1/8e de Finale (Thu, July 23)",
     "1/16e de Finale (Wed, July",
@@ -8311,9 +8312,44 @@
       "roundId": "12891806935409537769",
       "label": "1/2 Finale (Sat, July 25)",
       "dateIso": "2026-07-25",
-      "course": null,
-      "tee": null,
-      "groups": []
+      "course": "Golf du Gouverneur - Montaplan CFJ 2026",
+      "tee": "Jaunes",
+      "groups": [
+        {
+          "teeTime": "8:18",
+          "players": [
+            {
+              "name": "GALLE Theophile",
+              "hcp": 1.9,
+              "club": "LYON SALVAGNY GOLF CLUB",
+              "tee": null
+            },
+            {
+              "name": "DUNLOP Cayssi",
+              "hcp": 2.1,
+              "club": "UGOLF DES TROIS VALLONS",
+              "tee": null
+            }
+          ]
+        },
+        {
+          "teeTime": "8:27",
+          "players": [
+            {
+              "name": "ROLLAND Arthur",
+              "hcp": 1.6,
+              "club": "GOLF DE VALESCURE",
+              "tee": null
+            },
+            {
+              "name": "VIEGAS ESTREIA Paul",
+              "hcp": 2.1,
+              "club": "GOLF DE LERY POSES",
+              "tee": null
+            }
+          ]
+        }
+      ]
     },
     {
       "round": 7,
@@ -8326,7 +8362,7 @@
     }
   ],
   "teeSheetPage": "12891806909606179753",
-  "teeSheetScrapedAt": "2026-07-23T21:26:44.337Z",
+  "teeSheetScrapedAt": "2026-07-24T21:30:58.768Z",
   "matchplay": {
     "tournament": "U12 GARÇONS - MATCH PLAY",
     "slug": "championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile",
