@@ -40,7 +40,7 @@ import TournExtLinks from "../ui/TournExtLinks";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { Tournament, GrupoEntry } from "../data/fpgTypes";
-import { buildDisplayList, tournamentHasManuel, isHiddenNonManuelDrive } from "../data/fpgUtils";
+import { buildDisplayList, tournamentHasManuel, isHiddenNonManuelDrive, isDriveOrAquapor } from "../data/fpgUtils";
 import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
@@ -65,6 +65,7 @@ import {
 } from "./fpg/routes";
 import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
+import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT
@@ -1629,12 +1630,17 @@ function Content() {
     //  - "júnior" (Taça Yeatman Júnior — strip de diacríticos antes do test)
     //  - "subN"   (sub10, sub-14, sub 14, ...)
     //  - "UN"     (U10, U12, U14, U16, U18, U21 — categorias internacionais)
-    const JOVEM_NAME_RE = /\b(juniors?|júniors?|juvenil|juvenis|jovens?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
+    //  - "escola"/"estagio"/"academia" (contexto juvenil: Escola de Golfe,
+    //    Estágio Verão, Academia Junior)
+    const JOVEM_NAME_RE = /\b(juniors?|júniors?|juvenil|juvenis|jovens?|sub[\s-]?\d{1,2}|u\d{1,2}|escola|estagio|academia)\b/i;
     const stripAcc = (s: string) =>
       s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     for (const t of tournaments) {
       const cleanName = stripAcc(t.name || "");
-      if (!JOVEM_NAME_RE.test(cleanName)) continue;
+      // "kids" pode vir colado ao nome do clube ("CityKids") — teste à parte.
+      if (!JOVEM_NAME_RE.test(cleanName) && !/kids/i.test(cleanName)) continue;
+      // Falsos positivos de "academia": "Academia Militar" não é juvenil.
+      if (/academia\s+militar/i.test(cleanName)) continue;
       if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
       if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
       const k = keyOf(t);
@@ -1645,7 +1651,8 @@ function Content() {
     // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
     // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
     const filtered = combined
-      .filter(t => !isHiddenNonManuelDrive(t))
+      // Drive/Aquapor têm a sua própria página /drive — fora da /FPG (incl. jovens).
+      .filter(t => !isDriveOrAquapor(t))
       .filter(t => !filterManuel || tournamentHasManuel(t))
       .filter(t => yearMatchesFilter((t as any)._jovensYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t));
@@ -1875,6 +1882,14 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cur, curJovens, navMode]);
 
+  /** Índice de "edições anteriores" (clube + família do nome → edições noutros
+   *  anos). Construído uma vez sobre TODOS os torneios carregados; a tab só
+   *  aparece nos torneios com ≥2 edições. Ver fpgPastEditions.tsx. */
+  const editionsIndex = useMemo(
+    () => buildFpgEditionsIndex([...tournaments, ...jovensTournaments]),
+    [tournaments, jovensTournaments],
+  );
+
   /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
    *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm
    *  _sourceFile próprio) além dos pull-torneios. */
@@ -1926,7 +1941,9 @@ function Content() {
   // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",
   // "Santo" e "PJA" para mostrar 1 linha por evento físico (não 1 por tcode).
   const allEventGroups = useMemo(
-    () => buildEventGroups(displayList),
+    // Drive/Aquapor NÃO aparecem na sidebar da /FPG (têm a página /drive). Filtra-se
+    // aqui (na vista), não em `displayList`, para os deep-links continuarem a resolver.
+    () => buildEventGroups(displayList.filter(t => !isDriveOrAquapor(t)), { mergeEditions: true }),
     [displayList]
   );
 
@@ -2438,9 +2455,15 @@ function Content() {
                       const _suffix = _gNm && e.name && e.name.toLowerCase().startsWith(_gNm.toLowerCase())
                         ? e.name.slice(_gNm.length).replace(/^[\s\-–:·]+/, "").trim()
                         : "";
+                      // Fallback de data (dd/mm) para grupos multi-data sem
+                      // escalão nem sufixo distintivo (ex.: "Circuito Junior" em
+                      // várias datas) — senão as sub-tabs ficavam com o nome
+                      // repetido. Só relevante quando há tabs (entries.length>1).
+                      const _dm = e.date && e.date.length >= 10
+                        ? `${e.date.slice(8, 10)}/${e.date.slice(5, 7)}` : "";
                       const label = (e as any)._tabLabel
                         ?? e.escalao
-                        ?? (_suffix || (e.name && e.name.length <= 20 ? e.name : "Esc"));
+                        ?? (_suffix || _dm || (e.name && e.name.length <= 20 ? e.name : "Esc"));
                       const nJog = e.playerCount || e.players.length;
                       const entryIdx = findInDisplayList(e);
                       return (
@@ -2465,7 +2488,7 @@ function Content() {
                     })}
                   </div>
                 )}
-                <TournamentDetail tournament={tShow} escLookup={escLookup} playersDB={playersDB} />
+                <TournamentDetail tournament={tShow} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, tShow)} />
               </>
             );
           })()}
@@ -2676,7 +2699,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, _t as any)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2950,7 +2973,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, curJovens)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>

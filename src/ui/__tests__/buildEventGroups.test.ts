@@ -210,3 +210,85 @@ describe("buildJovensGroups (wrapper) — preserva contrato antigo", () => {
     expect(groups[0].year).toBe("2026");
   });
 });
+
+describe("buildEventGroups — fusão de edições (opts.mergeEditions)", () => {
+  it("agrupa 1º/2º da mesma série no mesmo clube+campo+ano", () => {
+    const g = buildEventGroups([
+      mkT({ name: "1º Torneio do Circuito de Verão 2026", date: "2026-07-02", ccode: "050", campo: "Oporto", tcode: "10567" }),
+      mkT({ name: "2º Torneio do Circuito de Verão 2026", date: "2026-07-09", ccode: "050", campo: "Oporto", tcode: "10569" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(1);
+    expect(g[0].entries).toHaveLength(2);
+    // rotuladas pela data (dd/mm)
+    expect(g[0].entries.map(e => (e as any)._tabLabel).sort()).toEqual(["02/07", "09/07"]);
+  });
+
+  it("agrupa 'X' / 'X 2' (número de edição final)", () => {
+    const g = buildEventGroups([
+      mkT({ name: "Torneio Verão – Escola de Golfe", date: "2026-07-07", ccode: "010", campo: "Miramar", tcode: "10657" }),
+      mkT({ name: "Torneio Verão – Escola de Golfe 2", date: "2026-07-09", ccode: "010", campo: "Miramar", tcode: "10659" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(1);
+    expect(g[0].entries).toHaveLength(2);
+  });
+
+  it("NUNCA agrupa quando o campo diverge", () => {
+    const g = buildEventGroups([
+      mkT({ name: "1º Torneio de Verão 2026", date: "2026-07-02", ccode: "010", campo: "Miramar", tcode: "1" }),
+      mkT({ name: "2º Torneio de Verão 2026", date: "2026-07-09", ccode: "011", campo: "Oporto", tcode: "2" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(2);
+  });
+
+  it("não agrupa edições de ANOS diferentes (isso é a tab Edições anteriores)", () => {
+    const g = buildEventGroups([
+      mkT({ name: "1º Torneio de Natal", date: "2025-12-20", ccode: "010", campo: "Miramar", tcode: "1" }),
+      mkT({ name: "1º Torneio de Natal", date: "2026-12-19", ccode: "010", campo: "Miramar", tcode: "2" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(2);
+  });
+
+  it("mergeEditions desligado (default) mantém edições separadas", () => {
+    const g = buildEventGroups([
+      mkT({ name: "1º Torneio do Circuito de Verão 2026", date: "2026-07-02", ccode: "050", campo: "Oporto", tcode: "10567" }),
+      mkT({ name: "2º Torneio do Circuito de Verão 2026", date: "2026-07-09", ccode: "050", campo: "Oporto", tcode: "10569" }),
+    ]);
+    expect(g).toHaveLength(2);
+  });
+
+  it("NÃO funde Sub 10 / Sub 12 de datas diferentes (nº é escalão, não edição)", () => {
+    const g = buildEventGroups([
+      mkT({ name: "Torneio Regional Sub 10", date: "2026-06-06", ccode: "010", campo: "Miramar", tcode: "1", escalao: "Sub 10" }),
+      mkT({ name: "Torneio Regional Sub 12", date: "2026-06-13", ccode: "010", campo: "Miramar", tcode: "2", escalao: "Sub 12" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(2);
+  });
+
+  it("escalões do mesmo dia continuam a agrupar (sem regressão)", () => {
+    const g = buildEventGroups([
+      mkT({ name: "Campeonato X Sub 10", date: "2026-05-01", ccode: "000", campo: "Aroeira", tcode: "1", escalao: "Sub 10" }),
+      mkT({ name: "Campeonato X Sub 12", date: "2026-05-01", ccode: "000", campo: "Aroeira", tcode: "2", escalao: "Sub 12" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(1);
+    expect(g[0].entries).toHaveLength(2);
+  });
+
+  it("fusão FORÇADA: Par3 Citygolf junta apesar dos patrocinadores diferentes", () => {
+    const g = buildEventGroups([
+      mkT({ name: "3º Troféu Par3 2025 by Clark - Grupo ECB", date: "2025-04-26", ccode: "107", campo: "Citygolf", tcode: "10927" }),
+      mkT({ name: "4º Troféu Par3 2025 by OP - GRUPO BOA IMAGEM", date: "2025-06-21", ccode: "107", campo: "Citygolf", tcode: "10948" }),
+      mkT({ name: "5º Troféu Par3 2025 by Chef Mamã", date: "2025-09-06", ccode: "107", campo: "Citygolf", tcode: "10975" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(1);
+    expect(g[0].entries).toHaveLength(3);
+    expect(g[0].name).toBe("Torneios Par3");
+  });
+
+  it("fusão FORÇADA não junta ANOS diferentes (continua por ano)", () => {
+    const g = buildEventGroups([
+      mkT({ name: "3º Troféu Par3 2024 by Chef Mamã", date: "2024-05-18", ccode: "107", campo: "Citygolf", tcode: "10824" }),
+      mkT({ name: "3º Troféu Par3 2025 by Clark", date: "2025-04-26", ccode: "107", campo: "Citygolf", tcode: "10927" }),
+    ], { mergeEditions: true });
+    expect(g).toHaveLength(2);
+  });
+});

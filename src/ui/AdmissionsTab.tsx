@@ -20,7 +20,8 @@ import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
-import { useFedCountries, useFedBirthdates } from "./InscricoesComponents";
+import { useFedCountries, useFedBirthdates, useFedGenders } from "./InscricoesComponents";
+import { parseSubNumber, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -34,6 +35,11 @@ interface Props {
   tournamentSex?: "M" | "F";
   /** Esconde VAC/Registo/Status — fontes sem esses dados (ex.: NextCaddy/España). */
   hidePostCols?: boolean;
+  /** Regra de "área de partida" por escalão+sexo (ver src/utils/teeRegulation.ts).
+   *  Quando presente, o tee é calculado POR JOGADOR (do escalão dele à data + sexo)
+   *  e mostrado como quadradinho de cor. Usado por torneios multi-escalão cujo
+   *  regulamento define os tees (ex.: Miramar Open U25). */
+  teeRule?: TeeRule;
 }
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status";
@@ -50,11 +56,12 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
-  tournamentEscalao, tournamentSex, hidePostCols,
+  tournamentEscalao, tournamentSex, hidePostCols, teeRule,
 }: Props) {
   const [q, setQ] = useState("");
   const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
+  const fedGenders = useFedGenders();
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
 
   const players = admissions.players || [];
@@ -79,6 +86,14 @@ export default function AdmissionsTab({
     // porque torneios combinados (Regional Sub 14-24, Sub 10+12) misturam vários
     // escalões — o genérico engana.
     const escHist = p.escalao || escalaoAtDate(dob, date || undefined) || null;
+    // Tee por REGULAMENTO (escalão do jogador + sexo) — só quando o torneio
+    // traz uma `teeRule`. Sexo: override do jogador → playersDB → federados.json.
+    const sex: "M" | "F" | undefined =
+      ((p as any).sex as "M" | "F" | undefined) ||
+      (bd?.sex as "M" | "F" | undefined) ||
+      (p.fed ? fedGenders.get(p.fed) : undefined) ||
+      tournamentSex;
+    const ruleTee = teeRule ? teeRule(parseSubNumber(escHist), sex) : undefined;
     return {
       ...p,
       _nomeFormatted: nomeFormatted,
@@ -86,8 +101,9 @@ export default function AdmissionsTab({
       _dob: dob,
       _dobYear: dobYear,
       _escHist: escHist,
+      _ruleTee: ruleTee,
     };
-  }), [players, playersDB, fedBirthdates, date]);
+  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex]);
 
   const filtered = useMemo(() => {
     if (!term) return enriched;
@@ -165,7 +181,14 @@ export default function AdmissionsTab({
             <td className="lb-fed">{p.fed || "–"}</td>
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
             <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
-            <td className="lb-tee">{p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span> : <TeeDot teeName={teeName} />}</td>
+            <td className="lb-tee">{
+              // 1) tee do regulamento (escalão+sexo) → quadradinho de cor;
+              // 2) teeName explícito (ex.: NextCaddy = distância "5498 m") → texto;
+              // 3) fallback: tee genérico do escalão global → quadradinho.
+              p._ruleTee ? <TeeDot teeName={p._ruleTee} />
+                : p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span>
+                : <TeeDot teeName={teeName} />
+            }</td>
             <td title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
               {p._dobYear != null ? (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>

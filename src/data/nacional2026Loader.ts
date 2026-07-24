@@ -133,6 +133,13 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     vac: p.vac ?? p.vacf ?? null,
     dataInscricao: p.dataInscricao ?? p.registo ?? null,
     status: p.status === "reserva" ? "reserva" : "confirmed",
+    // Overrides opcionais por jogador — preservar quando existem (senão a coluna
+    // TEE e os enriquecimentos de fontes não-FPG desapareciam aqui). `tee` é
+    // aceite como alias antigo de `teeName`.
+    ...(p.teeName ?? p.tee ? { teeName: p.teeName ?? p.tee } : {}),
+    ...(p.dob ? { dob: p.dob } : {}),
+    ...(p.country ? { country: p.country } : {}),
+    ...(p.escalao ? { escalao: p.escalao } : {}),
   };
 }
 

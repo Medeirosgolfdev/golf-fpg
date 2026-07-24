@@ -29,6 +29,7 @@ import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
 import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
+import { teeRuleFor } from "../../utils/teeRegulation";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 
@@ -79,16 +80,22 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
     if (draws) for (const [k, d] of Object.entries(draws)) {
       if (d && (d.groups?.length ?? 0) > 0) out.set(parseInt(k, 10), d);
     }
-    // Sintetizar draws em falta a partir do leaderboard acumulado.
-    // Quando a FPG ainda não publicou o draw oficial de uma ronda (ou o scraper
-    // não o apanhou), gerar emparelhamentos pelos resultados das rondas anteriores
-    // (regra FPG: 1º+2º+3º acumulado juntos, depois 4º+5º+6º, etc.). O DrawTab
-    // mostra um aviso (note) a indicar que é estimado.
+    // Sintetizar o draw da PRÓXIMA ronda ainda não jogada, a partir do
+    // leaderboard acumulado (regra FPG: 1º+2º+3º acumulado juntos, depois
+    // 4º+5º+6º…). É uma PREVISÃO — só faz sentido para a ronda que está prestes
+    // a sair (torneio a decorrer), quando a FPG ainda não publicou o draw
+    // oficial. O DrawTab mostra um aviso (note) a indicar que é estimado.
+    //
+    // ⚠ NUNCA sintetizar o draw de uma ronda JÁ JOGADA: nesse caso o
+    // emparelhamento real existiu (e está na FPG) e a estimativa seria
+    // enganadora — foi o que acontecia em torneios concluídos, que mostravam
+    // um "Draw R2" fabricado apesar de a R2 já ter sido disputada.
     const nR = tournament.rounds || 1;
-    for (let r = 2; r <= nR; r++) {
-      if (out.has(r)) continue;
-      const synth = synthesizeDrawFromCumulative(tournament, r);
-      if (synth && (synth.groups?.length ?? 0) > 0) out.set(r, synth);
+    const playedRounds = Math.max(0, ...(tournament.players ?? []).map(p => p.roundScores?.length ?? 0));
+    const nextRound = playedRounds + 1;
+    if (nextRound >= 2 && nextRound <= nR && !out.has(nextRound)) {
+      const synth = synthesizeDrawFromCumulative(tournament, nextRound);
+      if (synth && (synth.groups?.length ?? 0) > 0) out.set(nextRound, synth);
     }
     return out;
   }, [draws, tournament]);
@@ -465,6 +472,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
               fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
               tournamentEscalao={tournament.escalao || undefined}
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+              teeRule={teeRuleFor(tournament.ccode, tournament.tcode)}
             />
           </>;
         if (isDrawTab)

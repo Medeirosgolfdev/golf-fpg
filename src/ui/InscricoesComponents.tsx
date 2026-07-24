@@ -170,6 +170,38 @@ export function useFedHcp(): Map<string, number> {
   return m;
 }
 
+/* ── fed → sexo "M"/"F" (lazy-load, partilhado entre instâncias) ──
+ *
+ * Fonte: `/data/federados.json` (campo `gender`, "M"/"F").
+ *
+ * Usado para calcular a "área de partida" (tee) por jogador em torneios cuja
+ * regra de tees depende de escalão + sexo (ver src/utils/teeRegulation.ts).
+ * Reutiliza o mesmo `cachedFetchJson` de birthdates/hcp — sem fetch extra. */
+let _fedGenderPromise: Promise<Map<string, "M" | "F">> | null = null;
+function loadFedGenders(): Promise<Map<string, "M" | "F">> {
+  if (_fedGenderPromise) return _fedGenderPromise;
+  _fedGenderPromise = cachedFetchJson<any>("/data/federados.json")
+    .catch(() => null)
+    .then(feds => {
+      const m = new Map<string, "M" | "F">();
+      if (!feds) return m;
+      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
+      for (const p of items) {
+        const fed = String(p.federation_code || p.fed || "");
+        const g = String(p.gender || p.sex || "").toUpperCase();
+        if (fed && (g === "M" || g === "F")) m.set(fed, g);
+      }
+      return m;
+    });
+  return _fedGenderPromise;
+}
+
+export function useFedGenders(): Map<string, "M" | "F"> {
+  const [m, setM] = useState<Map<string, "M" | "F">>(new Map());
+  useEffect(() => { loadFedGenders().then(setM); }, []);
+  return m;
+}
+
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira).
  *  Aceita `country` directo (override) — usado para jogadores internacionais sem
  *  fedCode português, onde a info vem de kids-links.json / playersDB entry virtual. */
@@ -801,7 +833,7 @@ function cleanGroupName(raw: string): string {
  *         manter no mesmo grupo (default 0.5).  */
 export function buildEventGroups(
   tournaments: Tournament[],
-  opts: { jaccardThreshold?: number } = {}
+  opts: { jaccardThreshold?: number; mergeEditions?: boolean } = {}
 ): EventGroup[] {
   const threshold = opts.jaccardThreshold ?? 0.5;
   const escIdx = (esc: string | null | undefined) => {
@@ -853,12 +885,14 @@ export function buildEventGroups(
     }
   }
 
-  return finalParts.map((entries) => {
-    entries.sort((a, b) => {
-      const dCmp = (a.date || "").localeCompare(b.date || "");
-      if (dCmp !== 0) return dCmp;
-      return escIdx(getEsc(a)) - escIdx(getEsc(b));
-    });
+  const sortEntries = (entries: Tournament[]) => entries.sort((a, b) => {
+    const dCmp = (a.date || "").localeCompare(b.date || "");
+    if (dCmp !== 0) return dCmp;
+    return escIdx(getEsc(a)) - escIdx(getEsc(b));
+  });
+
+  let groups: EventGroup[] = finalParts.map((entries) => {
+    sortEntries(entries);
     const t0 = entries[0];
     const cleanName = cleanGroupName(t0.name || "");
     // Chave única: inclui o tcode da primeira entrada para desambiguar quando
@@ -875,7 +909,119 @@ export function buildEventGroups(
         ? e
         : { ...e, escalao: inferEscalao(e.name || "") } as Tournament),
     };
-  }).sort((a, b) => b.date.localeCompare(a.date));
+  });
+
+  // Phase 4 (opt-in): fundir EDIÇÕES numeradas da mesma série — "1º/2º Torneio
+  // …", "… / … 2" — que a Phase 2 mantém separadas (datas diferentes). Só junta
+  // dentro do MESMO ano + MESMO clube + MESMO campo; campos diferentes NUNCA
+  // agrupam (regra explícita). Cada edição vira uma sub-tab rotulada pela data.
+  if (opts.mergeEditions) groups = mergeEditionGroups(groups, getEsc, sortEntries);
+
+  return groups.sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/** Remove marcadores de edição de um nome de série: ordinal inicial ("1º"),
+ *  número de edição final ("… 2") e ano. Duas séries com o mesmo resultado são
+ *  edições da mesma prova. */
+function editionSeriesKey(name: string): string {
+  return (name || "")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/\b20\d{2}\b/g, " ")               // ano
+    .replace(/^\s*\d{1,3}\s*[ºªo°.]+\s*/, " ")  // ordinal inicial "1º"/"2.ª"
+    // número de edição final "… 2" — MAS não o nº de escalão ("… Sub 12"):
+    .replace(/(?<!sub)\s+\d{1,2}\s*$/, " ")
+    .replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+/**
+ * Fusões FORÇADAS (curadas) — séries que a regra automática não junta porque o
+ * nome varia entre edições de forma que `editionSeriesKey` não normaliza (ex.:
+ * sufixo de patrocinador diferente por edição). Cada regra força um `key` comum
+ * a todos os torneios que casam `match` no `ccode` dado; continua a agrupar por
+ * ANO + CAMPO (não funde anos nem campos diferentes). `label` = nome do grupo.
+ */
+const FORCED_EDITION_SERIES: { ccode: string; match: RegExp; key: string; label: string }[] = [
+  // Citygolf — os "Troféu Par3" (e Par3 Estágio Verão) trocam de patrocinador a
+  // cada edição ("by Chef Mamã"/"by Trueknowledge"/"by Clark…"), o que impedia a
+  // fusão automática. Forçar a série toda por ano.
+  { ccode: "107", match: /\bpar\s*-?\s*3\b/i, key: "citygolf-par3", label: "Torneios Par3" },
+  // Palheiro — circuito "Academia Junior" (1º/2º/3º, alguns com sufixo "Natal")
+  // + a "Junior Major" final. Nomes variam demais para a regra automática.
+  { ccode: "059", match: /academia\s+junior|junior\s+major/i, key: "palheiro-academia-junior", label: "Academia Junior" },
+];
+
+/** Fusão de grupos-edição (ver Phase 4). Junta grupos com o mesmo
+ *  ano|ccode|campo|editionSeriesKey; cada entrada ganha `_tabLabel` = data
+ *  (dd/mm), com o escalão quando o grupo tem vários. */
+function mergeEditionGroups(
+  groups: EventGroup[],
+  getEsc: (t: Tournament) => string | null,
+  sortEntries: (e: Tournament[]) => Tournament[],
+): EventGroup[] {
+  const byKey = new Map<string, EventGroup[]>();
+  const forcedLabel = new Map<string, string>();  // key → nome de grupo curado
+  for (const g of groups) {
+    const year = (g.date || "").slice(0, 4);
+    const camp = (g.campo || "").toLowerCase().trim();
+    const rawName = g.entries[0]?.name || g.name;
+    // Fusão FORÇADA (curada) tem prioridade sobre a regra automática.
+    const forced = FORCED_EDITION_SERIES.find(f => f.ccode === g.ccode && f.match.test(rawName));
+    // Casar pelo nome ORIGINAL da 1ª entrada (mantém o escalão) e não por
+    // `g.name` (que já tirou o escalão) — assim só juntamos quando os nomes
+    // diferem MESMO por número de edição (ordinal/nº final), nunca por escalão:
+    // "Torneio Regional Sub 10" e "… Sub 12" ficam separados de propósito.
+    const sk = forced ? forced.key : editionSeriesKey(rawName);
+    if (!sk) { byKey.set("__solo__" + g.key, [g]); continue; }
+    const k = `${year}|${g.ccode || camp || "?"}|${camp}|${sk}`;
+    if (forced) forcedLabel.set(k, forced.label);
+    if (!byKey.has(k)) byKey.set(k, []);
+    byKey.get(k)!.push(g);
+  }
+  const out: EventGroup[] = [];
+  for (const [k, grp] of byKey) {
+    if (grp.length === 1) { out.push(grp[0]); continue; }
+    const allEntries = sortEntries(grp.flatMap(g => g.entries));
+    // Só fundir quando TODAS as edições têm data real — a sub-tab é rotulada
+    // pela data (dd/mm); sem data ficaria vazia. Torneios sem data mantêm-se
+    // como entradas separadas (não regride o que já existia).
+    if (!allEntries.every(e => (e.date || "").length >= 7)) {
+      for (const g of grp) out.push(g);
+      continue;
+    }
+    const multiEsc = new Set(allEntries.map(e => getEsc(e) || "")).size > 1;
+    // Nº de buracos do nome ("- 9 buracos"/"18 B") — desambigua variantes 9b/18b
+    // que partilham a data (ex.: Academia Junior tem os dois no mesmo dia).
+    const holesOf = (name: string) => {
+      const m = /(\d{1,2})\s*(?:buracos?|b)\b/i.exec(name || "");
+      return m ? `${m[1]}b` : "";
+    };
+    const seenLbl = new Map<string, number>();
+    const labelled = allEntries.map(e => {
+      const dm = (e.date || "").length >= 10 ? `${e.date!.slice(8, 10)}/${e.date!.slice(5, 7)}` : (e.date || "");
+      const esc = getEsc(e);
+      const extra = [multiEsc && esc ? esc : "", holesOf(e.name || "")].filter(Boolean).join(" · ");
+      let lbl = extra ? `${dm} · ${extra}` : dm;
+      // Garantir tabs únicas: se ainda houver colisão, sufixar contador.
+      const n = (seenLbl.get(lbl) || 0) + 1;
+      seenLbl.set(lbl, n);
+      if (n > 1) lbl = `${lbl} (${n})`;
+      return { ...e, _tabLabel: lbl } as Tournament;
+    });
+    // Nome do grupo: label curado (fusão forçada) ou o da edição mais recente,
+    // sem os marcadores de edição.
+    const base = [...grp].sort((a, b) => b.date.localeCompare(a.date))[0];
+    const cleanBase = cleanGroupName(
+      (base.name || "").replace(/^\s*\d{1,3}\s*[ºªo°.]+\s*/, "").replace(/\s+\d{1,2}\s*$/, ""),
+    );
+    out.push({
+      ...base,
+      name: forcedLabel.get(k) || cleanBase || base.name,
+      date: allEntries.reduce((m, e) => (e.date || "") > m ? (e.date || "") : m, ""),
+      entries: labelled,
+    });
+  }
+  return out;
 }
 
 /** JovensGroup — extends EventGroup com campos específicos da vista Jovens. */

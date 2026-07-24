@@ -55,6 +55,17 @@ function isDriveSeries(t: Tournament | undefined | null): boolean {
 }
 
 /**
+ * True para QUALQUER torneio do circuito Drive/Aquapor (pelo nome). Estes
+ * circuitos têm a sua própria página `/drive` e não devem aparecer na `/FPG` —
+ * mesmo os que o Manuel jogou (chegam à `/FPG` porque foram scrapeados para
+ * pull-torneios). É um filtro de VISUALIZAÇÃO da sidebar da FPGPage: o torneio
+ * continua em `displayList` (para deep-links resolverem) e nos ficheiros.
+ */
+export function isDriveOrAquapor(t: Tournament | undefined | null): boolean {
+  return /\b(drive|aquapor)\b/i.test(t?.name || "");
+}
+
+/**
  * True para drives onde o Manuel NÃO jogou. Estes vivem na página /drive
  * (pipeline drive-data) e não devem poluir a lista do /diversos — mesmo quando
  * só têm dados de admissions. Os admissions ficam intactos no ficheiro; isto é

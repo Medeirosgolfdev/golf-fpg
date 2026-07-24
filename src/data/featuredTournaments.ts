@@ -153,23 +153,41 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   { ccode: "179", tcode: "10606" },
 
   // ── VIII Miramar Internacional Open U25 — 19-21 Ago 2026 (CGM, ccode 003) ──
-  // Inscritos scraped MANUALMENTE da página do clube (cgm.pt), NÃO da FPG:
-  // https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/
-  // O tcode real das Classifications (ccode=003) ainda NÃO é conhecido —
-  // "90003" é um placeholder sintético (entrada _manual no
-  // fpg-admissions-draws.json, protegida do cron). Quando a FPG publicar o
-  // tcode: substituir aqui + no fpg-admissions-draws.json, acrescentar ao
-  // fpg-admissions-scope.json e pôr live: true.
+  // Inscritos scraped MANUALMENTE das páginas do clube (cgm.pt), NÃO da FPG.
+  // São DUAS competições distintas com páginas de inscrição separadas:
+  //   • U25 (Sub12→Sub25) — 54 buracos (18/dia) — placeholder tcode 90003
+  //   • Sub-10           — 27 buracos ( 9/dia) — placeholder tcode 90004
+  // O Sub-10 é separado de propósito (jogam só 9 buracos/dia), por isso NÃO
+  // entra na lista do U25. Os tcodes reais das Classifications (ccode=003)
+  // ainda NÃO são conhecidos — edições anteriores: 10564 (U25) + 10565 (Sub10).
+  // "9000x" são placeholders sintéticos (entradas _manual no
+  // fpg-admissions-draws.json, protegidas do cron). Quando a FPG publicar os
+  // tcodes reais: substituir aqui + no fpg-admissions-draws.json + na chave do
+  // teeRegulation.ts, acrescentar ao fpg-admissions-scope.json e pôr live: true.
   {
     ccode: "003",
     tcode: "90003",
     name: "VIII Miramar Internacional Open U25",
-    escalao: null,          // multi-escalão (Sub10→Sub25) — sem tab única
-    date: "2026-08-19",     // 19-21 Ago 2026, 54 buracos (Sub10: 27)
+    escalao: null,          // multi-escalão (Sub12→Sub25) — sem tab única
+    date: "2026-08-19",     // 19-21 Ago 2026, 54 buracos (18/dia)
     campo: "Miramar",
     rounds: 3,
     extraLinks: [
       { label: "página do torneio (CGM)", url: "https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/", icon: "🏌️" },
+      { label: "Termos de Competição PDF", url: "https://www.cgm.pt/client/files/0000000001/regulamento-mjo-2026_1461.pdf", icon: "📋" },
+    ],
+    live: false,            // sem tcode FPG real — /api/inscricoes daria lixo
+  },
+  {
+    ccode: "003",
+    tcode: "90004",
+    name: "VIII Miramar Internacional Open U25 — Sub 10",
+    escalao: "Sub 10",
+    date: "2026-08-19",     // 19-21 Ago 2026, 27 buracos (9/dia)
+    campo: "Miramar",
+    rounds: 3,
+    extraLinks: [
+      { label: "página do torneio (CGM)", url: "https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/", icon: "🏌️" },
       { label: "Termos de Competição PDF", url: "https://www.cgm.pt/client/files/0000000001/regulamento-mjo-2026_1461.pdf", icon: "📋" },
     ],
     live: false,            // sem tcode FPG real — /api/inscricoes daria lixo
