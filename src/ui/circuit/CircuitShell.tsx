@@ -41,7 +41,7 @@ import SortableHdr from "../SortableHdr";
 import MatchplayView from "./MatchplayView";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
-import { normName } from "../../utils/normName";
+import { normName, vetKey } from "../../utils/normName";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -219,7 +219,7 @@ function applyToggles(
   // os jogadores do leaderboard — ver entryManuelState/entryPtState. Aqui só os
   // filtros de jogador (top10/veteranos/regressados/subiram).
   if (active.has("veteranos")) {
-    players = players.filter(p => (vetIndex.get(normName(p.name)) ?? 0) >= vetThreshold);
+    players = players.filter(p => (vetIndex.get(vetKey(p.name)) ?? 0) >= vetThreshold);
   }
   if (active.has("regressados")) {
     players = players.filter(p => (p as unknown as { _regressado?: boolean })._regressado === true);
@@ -513,7 +513,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       const seen = new Set<string>();
       for (const d of e.divisions ?? []) {
         for (const p of d.results?.players ?? []) {
-          const k = normName(p.name);
+          const k = vetKey(p.name);
           if (!seen.has(k)) { seen.add(k); m.set(k, (m.get(k) ?? 0) + 1); }
         }
       }

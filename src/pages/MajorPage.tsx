@@ -30,6 +30,7 @@ import { TournamentDetail } from "./fpg/TournamentDetail";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
 import { playedParTotal } from "../data/fpgUtils";
 import { KidsLink } from "../ui/KidsLink";
+import MajorVeteransView from "./major/MajorVeteransView";
 
 /** Seta ↗ para a página KIDS2 do jogador, injectada nos nomes do detalhe (via
  *  `nameDecorator`). Resolve pelo KidsLinkCtx que o CircuitShell já fornece — só
@@ -539,6 +540,17 @@ const MAJOR_CONFIG: CircuitConfig = {
   editionKey: (entry) => entry.source || null,
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
+  // Tab "✈️ Internacionalizações" (menu ⓘ Info): ranking de jogadores por nº de
+  // torneios internacionais / anos / circuitos. Lê major-veterans.json lazy.
+  specialItems: [
+    {
+      key: "internacionalizacoes",
+      label: "✈️ Internacionalizações",
+      render: () => (
+        <MajorVeteransView sourceLabels={MAJOR_CONFIG.sourceLabels} sourceColors={MAJOR_CONFIG.sourceColors} />
+      ),
+    },
+  ],
 };
 
 const doralYearOf = (u: string) => Number(u.match(/ftm_doral_(\d+)/)?.[1] ?? 0);

@@ -739,6 +739,23 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 > avtrophy + o próprio script). As regras de metadata do script **espelham** os
 > builders da `MajorPage.tsx` — se um builder mudar name/playerCount/etc., alinhar
 > o script.
+>
+> **`vetKey` (2026-07-24)** — o `veteranIndex` (toggle ✦ Veteranos) e a tab de
+> internacionalizações usam agora `vetKey` (`src/utils/normName.ts`): `normName`
+> + vírgulas removidas + **tokens ordenados alfabeticamente**, para "Apelido, Nome"
+> (Doral) e "Nome Apelido" (Future Masters/GolfGenius) darem a MESMA chave — antes
+> a mesma pessoa contava 2× (o Axel Monssoh saltou de 8→15 presenças). O
+> `build-major-catalog.js` espelha o `vetKey`; o `CircuitShell` faz o lookup com o
+> mesmo; o `normNameVet` da RFEGPage passou a reexportar o `vetKey` partilhado.
+>
+> **`major-veterans.json` + tab "✈️ Internacionalizações" (2026-07-24)** — o mesmo
+> `build-major-catalog.js` emite um 2º ficheiro (`public/data/major-veterans.json`,
+> ~800 KB, jogadores com ≥2 torneios: nome, país dominante, flags pt/usa, nº
+> torneios/anos/circuitos, séries e lista de entradas). A tab (menu ⓘ Info da
+> /major, `src/pages/major/MajorVeteransView.tsx`) carrega-o **lazy** e mostra um
+> ranking ordenável com filtros (procura, circuito, mín. torneios, 🇵🇹 Só PT,
+> 🚫🇺🇸 Esconder EUA); cada linha expande para os torneios do jogador com link
+> para `/major`. O `build-major-catalog.yml` committa ambos os ficheiros.
 
 Fonte única `/major` cresceu com campeonatos juvenis mundiais/nacionais. Dois
 formatos de output e dois caminhos de scrape:

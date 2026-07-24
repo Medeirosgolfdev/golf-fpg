@@ -32,7 +32,22 @@ const OUT = path.join(DATA_DIR, "major-catalog.json");
 
 /* ── Helpers de nome (espelho de src/utils/normName.ts + constants/manuel.ts) ── */
 function normName(s) {
-  return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  return String(s || "")
+    .trim().toLowerCase()
+    .replace(/[-'’.·/]+/g, " ")
+    .replace(/\s+/g, " ").trim()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+/** vetKey — espelho de src/utils/normName.ts: chave tolerante à ordem nome/apelido
+ *  (Doral escreve "Apelido, Nome", GolfGenius "Nome Apelido"). Ordena os tokens. */
+function vetKey(s) {
+  return normName(s).replace(/,/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+}
+/** EUA em qualquer variante — para o filtro "esconder americanos" da tab. */
+function isUsaCountry(c) {
+  const s = String(c || "").trim().toLowerCase();
+  return s === "usa" || s === "us" || s === "u.s.a." || s === "u.s." ||
+    s === "united states" || s === "united states of america" || s === "estados unidos";
 }
 function isManuelByName(name) {
   const n = normName(name);
@@ -133,16 +148,29 @@ function deriveDatesFromRounds(players, year) {
 
 /* ── Acumuladores ── */
 const entries = [];
-const vet = new Map(); // normName -> nº de torneios em que aparece (para o toggle Veteranos)
+// vetKey -> registo do jogador (para o toggle Veteranos E a tab de ranking).
+const vet = new Map();
 
-/** Conta cada jogador UMA vez por torneio (dedup por nome normalizado). */
-function addVet(names) {
+/** Conta cada jogador UMA vez por torneio-edição (dedup por vetKey, tolerante à
+ *  ordem nome/apelido). Acumula detalhe (anos, séries, entradas, país) para o
+ *  ranking de "internacionalizações" (public/data/major-veterans.json). */
+function addVet(entryId, series, year, players) {
   const seen = new Set();
-  for (const nm of names) {
-    const k = normName(nm);
+  for (const p of players) {
+    const nm = p && p.name;
+    const k = vetKey(nm);
     if (!k || seen.has(k)) continue;
     seen.add(k);
-    vet.set(k, (vet.get(k) || 0) + 1);
+    let r = vet.get(k);
+    if (!r) { r = { name: nm, entries: new Set(), years: new Set(), series: new Set(), countries: new Map(), pt: false, usa: false }; vet.set(k, r); }
+    if (String(nm).length > String(r.name).length) r.name = nm; // variante mais completa
+    r.entries.add(entryId);
+    r.years.add(year);
+    r.series.add(series);
+    const co = String((p && p.country) || "").trim();
+    if (co) r.countries.set(co, (r.countries.get(co) || 0) + 1);
+    if (isPtCountry(co) || isManuelByName(nm)) r.pt = true;
+    if (isUsaCountry(co)) r.usa = true;
   }
 }
 
@@ -195,7 +223,7 @@ function buildBluegolf() {
       hasManuel: allPlayers.some((p) => isManuelByName(p.name)),
       hasPt: allPlayers.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
     });
-    addVet(allValid.map((p) => p.name));
+    addVet(key, series, year, allValid);
   }
 }
 
@@ -227,7 +255,7 @@ function buildDoral() {
       hasPt: players.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
       escalao: d.divisions.length === 1 ? d.divisions[0].division : undefined,
     });
-    addVet(valid.map((p) => p.name));
+    addVet(`doral:${year}`, "doral", year, valid);
   }
 }
 
@@ -294,7 +322,7 @@ function buildGgJob() {
         hasPt: players.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
         escalao: f.divisions.length === 1 ? f.divisions[0].division : undefined,
       });
-      addVet(valid.map((p) => p.name));
+      addVet(`${src.source}:${year}`, src.source, year, valid);
     }
   }
 }
@@ -325,10 +353,11 @@ const HIDE_IDS = new Set(["egtc:2026", "eatc:2026"]);
 // Ordenar por ano desc, depois nome — só por estética do ficheiro (o shell reordena).
 entries.sort((a, b) => (b.year - a.year) || String(a.name).localeCompare(String(b.name)));
 
-// veteranIndex: só nomes com ≥2 presenças (o toggle usa threshold 3; ≥2 chega
-// e poda milhares de one-offs → ficheiro muito mais pequeno).
+// veteranIndex: só chaves com ≥2 presenças (o toggle usa threshold 3; ≥2 chega
+// e poda milhares de one-offs → ficheiro muito mais pequeno). A chave é o vetKey
+// (tokens ordenados) — o shell faz o lookup com o MESMO vetKey.
 const veteranIndex = {};
-for (const [k, n] of vet) if (n >= 2) veteranIndex[k] = n;
+for (const [k, r] of vet) if (r.entries.size >= 2) veteranIndex[k] = r.entries.size;
 
 // Limpar undefined (JSON não os guarda, mas mantém o ficheiro enxuto).
 for (const e of entries) for (const key of Object.keys(e)) if (e[key] === undefined) delete e[key];
@@ -343,6 +372,47 @@ const out = {
 
 writeJsonAtomic(OUT, out);
 
+// ── major-veterans.json: ranking de "internacionalizações" (tab da /major) ──
+// Um jogador por linha, ≥2 torneios internacionais. Carregado LAZY só quando a
+// tab abre (não pesa no arranque da página). Ordenado por nº de torneios desc.
+// País dominante para DISPLAY. Ignora lixo sem letras (várias fontes GG metem
+// ano de graduação/estado no campo país — ex: "2028"). Os filtros de região da
+// tab usam os booleanos pt/usa (robustos), não esta string.
+const modeCountry = (m) => {
+  let best = null, bestN = -1;
+  for (const [c, n] of m) {
+    if (!/[a-z]/i.test(c)) continue; // sem letras → não é país
+    if (n > bestN) { best = c; bestN = n; }
+  }
+  return best;
+};
+const rankPlayers = [...vet.values()]
+  .filter((r) => r.entries.size >= 2)
+  .map((r) => ({
+    name: r.name,
+    country: modeCountry(r.countries) || undefined,
+    pt: r.pt || undefined,
+    usa: r.usa || undefined,
+    tournaments: r.entries.size,
+    years: r.years.size,
+    seriesCount: r.series.size,
+    series: [...r.series].sort(),
+    detail: [...r.entries].sort(),
+  }))
+  .sort((a, b) => b.tournaments - a.tournaments || b.years - a.years || a.name.localeCompare(b.name));
+for (const p of rankPlayers) for (const k of Object.keys(p)) if (p[k] === undefined) delete p[k];
+
+const VET_OUT = path.join(DATA_DIR, "major-veterans.json");
+writeJsonAtomic(VET_OUT, {
+  generatedAt: new Date().toISOString(),
+  source: "build-major-catalog.js",
+  tournamentsTotal: entries.length,
+  count: rankPlayers.length,
+  players: rankPlayers,
+});
+
 const withM = entries.filter((e) => e.hasManuel).length;
 console.log(`major-catalog.json: ${entries.length} torneios, ${Object.keys(veteranIndex).length} veteranos (≥2), ${withM} com Manuel`);
 console.log(`  → ${OUT}`);
+console.log(`major-veterans.json: ${rankPlayers.length} jogadores (≥2 torneios)`);
+console.log(`  → ${VET_OUT}`);

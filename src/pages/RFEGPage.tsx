@@ -42,6 +42,7 @@ import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
+import { vetKey } from "../utils/normName";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -3413,22 +3414,18 @@ const RFEG_CONFIG: CircuitConfig = {
  * agregados de rivais (rfegolf-rivals + fcg-rivals), que já trazem a lista
  * de jogadores por torneio sem precisar de abrir cada ficheiro de detalhe.
  *
- * ⚠ As chaves TÊM de bater com `normName(player.name)` do shell: o leaderboard
- * formata os nomes via formatPlayerName() (reordena "APELIDO, Nome" e
- * Title-Case), por isso aplicamos a MESMA transformação aqui antes de
- * normalizar (lowercase + NFD sem diacríticos + espaços únicos). */
+ * ⚠ As chaves TÊM de bater com `vetKey(player.name)` do shell (índice de
+ * veteranos): o leaderboard formata os nomes via formatPlayerName() (reordena
+ * "APELIDO, Nome" e Title-Case), por isso aplicamos a MESMA transformação aqui
+ * antes da chave. Usamos o `vetKey` partilhado (normName + tokens ordenados),
+ * tolerante à ordem nome/apelido. */
 interface RfegRivalsFile {
   torneios?:
     | Record<string, { players?: { n?: string }[] }>
     | { players?: { n?: string }[] }[];
 }
 
-/** Replica EXACTA do normName interno do CircuitShell (manter em sincronia). */
-function normNameVet(s: string): string {
-  return (s || "")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .toLowerCase().replace(/\s+/g, " ").trim();
-}
+const normNameVet = vetKey;
 
 function buildRfegVetIndex(files: (RfegRivalsFile | null | undefined)[]): Map<string, number> {
   const m = new Map<string, number>();
