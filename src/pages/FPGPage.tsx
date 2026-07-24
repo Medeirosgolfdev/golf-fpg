@@ -1653,6 +1653,8 @@ function Content() {
     const filtered = combined
       // Drive/Aquapor têm a sua própria página /drive — fora da /FPG (incl. jovens).
       .filter(t => !isDriveOrAquapor(t))
+      // Clubes match-play vivem em /FPG/clubes (não na lista strokeplay).
+      .filter(t => !CLUBES_TEAM_FORMAT[`${t.ccode}-${t.tcode}`]?.matchPlay)
       .filter(t => !filterManuel || tournamentHasManuel(t))
       .filter(t => yearMatchesFilter((t as any)._jovensYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t));
@@ -1941,9 +1943,16 @@ function Content() {
   // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",
   // "Santo" e "PJA" para mostrar 1 linha por evento físico (não 1 por tcode).
   const allEventGroups = useMemo(
-    // Drive/Aquapor NÃO aparecem na sidebar da /FPG (têm a página /drive). Filtra-se
-    // aqui (na vista), não em `displayList`, para os deep-links continuarem a resolver.
-    () => buildEventGroups(displayList.filter(t => !isDriveOrAquapor(t)), { mergeEditions: true }),
+    // Drive/Aquapor NÃO aparecem na sidebar da /FPG (têm a página /drive). E os
+    // torneios de clubes em MATCH PLAY vivem na vista /FPG/clubes (o deep-link
+    // redirige para lá) — não fazem sentido na lista strokeplay "Todos" (têm 0
+    // jogadores e só um draw). Filtra-se na VISTA (não em `displayList`) para os
+    // deep-links continuarem a resolver.
+    () => buildEventGroups(
+      displayList.filter(t =>
+        !isDriveOrAquapor(t) && !CLUBES_TEAM_FORMAT[`${t.ccode}-${t.tcode}`]?.matchPlay),
+      { mergeEditions: true },
+    ),
     [displayList]
   );
 
