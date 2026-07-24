@@ -38,7 +38,7 @@ const KEYWORDS_EXCLUIR = [
   '(ok)','(ar)','(la)','(ms)','(tn)','(ky)','(wv)','(md)','(de)',
   '(pa)','(ny)','(ct)','(ri)','(ma)','(vt)','(me)','(az)',
 ];
-const FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133]);
+const FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133, 21667]); // 21667=World Teen Championship 2026 (excepção às teen series)
 
 const T_MAX      = 23000;
 const MISS_LIMIT = 100;
