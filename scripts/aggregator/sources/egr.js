@@ -44,6 +44,30 @@ function coveredElsewhere(name, year) {
   return false;
 }
 
+/**
+ * O World Junior Golf Championship (Daily Mail WJGC, Villa Padierna) é
+ * scrapado com scorecards pela fonte dedicada `wjgc` (ficheiros brjgt e wjgc_).
+ * O EGR republica o MESMO evento só com totais → torneio duplicado no kids2
+ * (o mesmo miúdo aparecia 2× lado a lado). Saltamos as edições EGR "World
+ * Junior Golf Championship" dos anos que o wjgc cobre — mas NUNCA os torneios
+ * regulares do tour BJGT (Telford, Belton Woods, Easter Challenge), que o wjgc
+ * não scrapa. O `re` exige "world junior golf championship" no nome; os tour
+ * events não batem.
+ */
+const WJGC_WORLD_RE = /world junior golf championship|daily mail\s*wjgc/i;
+function wjgcCoveredYears() {
+  const years = new Set();
+  let files;
+  try { files = fs.readdirSync(DATA_DIR); } catch { return years; }
+  for (const f of files) {
+    if (!/^(?:brjgt\d|wjgc_)/i.test(f) || !f.endsWith(".json")) continue;
+    const d = readJsonSafe(path.join(DATA_DIR, f), null);
+    const y = d && (d.year || (/\b(20\d{2})\b/.exec(d.tournament || "") || [])[1]);
+    if (y) years.add(+y);
+  }
+  return years;
+}
+
 function normKey(name, iso) {
   const n = String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
   return `${n}|${iso || ""}`;
@@ -82,6 +106,7 @@ function load() {
   // ── Índice de eventos scrapados ──
   const list = readJsonSafe(path.join(EGR_DIR, "egr-events-list.json"), null);
   const events = Array.isArray(list?.events) ? list.events : [];
+  const wjgcYears = wjgcCoveredYears();
 
   const players = [];
   const playerMap = new Map(); // sourceKey → RawPlayer
@@ -97,6 +122,9 @@ function load() {
     const year = meta.year || ev.year || null;
     // Dedup: salta se este evento já vem de uma fonte dedicada nesse ano.
     if (coveredElsewhere(name, year)) { skippedDup++; continue; }
+    // Dedup WJGC: o World Junior Golf Championship vem (com scorecards) da fonte
+    // `wjgc` — saltar a cópia EGR só-totais nos anos cobertos.
+    if (WJGC_WORLD_RE.test(name) && year && wjgcYears.has(year)) { skippedDup++; continue; }
     const par = typeof (ev.par ?? meta.par) === "number" ? (ev.par ?? meta.par) : null;
     const sex = ev.sex === "M" || ev.sex === "F" ? ev.sex : (meta.sex === "M" || meta.sex === "F" ? meta.sex : null);
     const ageMax = Number.isFinite(meta.ageNum) ? meta.ageNum : (Number.isFinite(ev.ageNum) ? ev.ageNum : null);

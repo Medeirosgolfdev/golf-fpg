@@ -23,23 +23,111 @@ function parsePos(pos) {
   return m ? parseInt(m[1], 10) : null;
 }
 
+/**
+ * Classifica o `pos` cru da fonte em { pos, status }.
+ * Distingue "posição em falta" (undefined/"" → status OK, pos null, ELEGÍVEL a
+ * inferência) de um token de não-classificação ("CUT"/"WD"/"DQ"/… → status
+ * próprio, pos null, NUNCA inferido). Sem isto o `inferMissingPositions` dava
+ * uma posição — e como um jogador CUT tem menos voltas, o seu total parcial é
+ * mais baixo e saltava para 1º à frente dos que acabaram (caso Under Armour
+ * World 2026 Boys 11-12: 96 CUT de 2 voltas empurravam os 19 finalistas).
+ */
+function classifyPos(pos) {
+  const num = parsePos(pos);
+  if (num != null) return { pos: num, status: "OK" };
+  const s = String(pos == null ? "" : pos).trim().toUpperCase();
+  if (/\b(?:CUT|MC|MDF)\b/.test(s)) return { pos: null, status: "CUT" };
+  if (/\b(?:WD|WDN|RTD|RET)\b/.test(s)) return { pos: null, status: "WD" };
+  if (/\b(?:DQ|DSQ|DQD)\b/.test(s)) return { pos: null, status: "DQ" };
+  if (/\b(?:DNS|DNF|NR|NC)\b/.test(s)) return { pos: null, status: "DNS" };
+  return { pos: null, status: "OK" }; // posição genuinamente em falta → inferível
+}
+
+const MONTHS_EN = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+};
+/** "Thu, July 16" (+ ano do ficheiro) → "2026-07-16". */
+function parseRoundDateISO(s, year) {
+  if (!s || !year) return null;
+  const m = /([A-Za-z]+)\s+(\d{1,2})/.exec(String(s).replace(/^[A-Za-z]+,\s*/, ""));
+  if (!m) return null;
+  const mon = MONTHS_EN[m[1].toLowerCase()];
+  if (!mon) return null;
+  return `${year}-${String(mon).padStart(2, "0")}-${String(+m[2]).padStart(2, "0")}`;
+}
+/**
+ * Data REAL do evento = 1ª ronda, derivada dos `round.date` que o scraper
+ * GolfGenius já guarda ("Thu, July 16"). Sem isto o fallback era 1 de Janeiro
+ * do ano → todos os GolfGenius (UA World, México, FSGA, CoC) apareciam a "01
+ * Jan" e ficavam enterrados no fundo do ano na timeline do kids2.
+ */
+function deriveDateFromRounds(divisions, year) {
+  let min = null;
+  for (const div of divisions || []) {
+    for (const pl of (Array.isArray(div.players) ? div.players : [])) {
+      for (const r of (Array.isArray(pl.rounds) ? pl.rounds : [])) {
+        const iso = parseRoundDateISO(r && r.date, year);
+        if (iso && (min === null || iso < min)) min = iso;
+      }
+    }
+  }
+  return min;
+}
+
 function cleanLocation(loc) {
   if (!loc || typeof loc !== "string") return null;
   return loc.replace(/,\s*\d{3,4}\s*$/, "").trim() || null;
 }
 
+function roundsPlayed(r) {
+  return Array.isArray(r.rounds) ? r.rounds.filter((x) => typeof x.gross === "number").length : 0;
+}
+
 function inferMissingPositions(results) {
-  const withTotal = results.filter((r) => typeof r.totalGross === "number");
-  if (withTotal.length === 0) return;
-  const sorted = [...withTotal].sort((a, b) => (a.totalGross || 0) - (b.totalGross || 0));
-  let lastTotal = -1, lastPos = 0;
-  for (let i = 0; i < sorted.length; i++) {
-    const r = sorted[i];
-    const t = r.totalGross || 0;
-    const pos = t === lastTotal ? lastPos : i + 1;
-    if (r.pos == null) r.pos = pos;
-    lastTotal = t; lastPos = pos;
+  // 1) Finalistas (status OK): quem já traz posição da fonte mantém-na; quem não
+  //    traz é rankeado pelo total. Um CUT/WD/DQ nunca entra aqui — senão o seu
+  //    total parcial (menos voltas) saltava à frente de quem acabou.
+  const withTotal = results.filter((r) => r.status === "OK" && typeof r.totalGross === "number");
+  if (withTotal.length) {
+    const sorted = [...withTotal].sort((a, b) => (a.totalGross || 0) - (b.totalGross || 0));
+    let lastTotal = -1, lastPos = 0;
+    for (let i = 0; i < sorted.length; i++) {
+      const r = sorted[i];
+      const t = r.totalGross || 0;
+      const pos = t === lastTotal ? lastPos : i + 1;
+      if (r.pos == null) r.pos = pos;
+      lastTotal = t; lastPos = pos;
+    }
   }
+
+  // 2) Não-finalistas (CUT/WD/DQ/DNS): recebem a posição REAL na leaderboard —
+  //    SEMPRE depois de todos os que passaram o corte — ordenados por voltas
+  //    jogadas (desc) e depois total parcial (asc). Assim a UI mostra "#45" em
+  //    vez de "CUT" mas ninguém cortado passa à frente de um finalista.
+  const dnf = results.filter((r) => r.status && r.status !== "OK" && r.pos == null && typeof r.totalGross === "number");
+  if (dnf.length) {
+    const maxFinisherPos = results.reduce((m, r) => (typeof r.pos === "number" && r.pos > m ? r.pos : m), 0);
+    const nFinishers = results.filter((r) => r.status === "OK" && typeof r.pos === "number").length;
+    const offset = Math.max(maxFinisherPos, nFinishers);
+    const sorted = [...dnf].sort((a, b) => roundsPlayed(b) - roundsPlayed(a) || (a.totalGross || 0) - (b.totalGross || 0));
+    let lastKey = null, lastPos = 0;
+    for (let i = 0; i < sorted.length; i++) {
+      const r = sorted[i];
+      const key = `${roundsPlayed(r)}|${r.totalGross || 0}`;
+      const pos = key === lastKey ? lastPos : offset + i + 1;
+      r.pos = pos;
+      lastKey = key; lastPos = pos;
+    }
+  }
+}
+
+/** Junta o ano ao nome só se ainda não estiver lá — o nome do UA World já
+ *  começa com "2026", não precisa de o repetir no fim. */
+function nameWithYear(base, year) {
+  const b = String(base || "").trim();
+  if (!year) return b;
+  return b.includes(String(year)) ? b : `${b} ${year}`;
 }
 
 function collectLinks(divisions, seriesLabel) {
@@ -128,11 +216,12 @@ function buildJobfileSource(opts) {
           rounds = pl.roundGross.filter((g) => typeof g === "number").map((g, i) => ({ round: i + 1, gross: g }));
         }
 
+        const { pos: parsedPos, status } = classifyPos(pl.pos);
         results.push({
           playerSourceKey: key,
           playerName: cleanName,
-          pos: parsePos(pl.pos),
-          status: "OK",
+          pos: parsedPos,
+          status,
           totalGross: typeof pl.total === "number" ? pl.total : null,
           toPar: typeof pl.toPar === "number" ? pl.toPar : null,
           rounds,
@@ -152,10 +241,10 @@ function buildJobfileSource(opts) {
 
     return {
       sourceKey,
-      name: (opts.nameFn ? opts.nameFn(data) : `${data.tournament || seriesLabel} ${year || ""}`).trim(),
-      // Data real do evento quando a fonte a expõe (ex: GolfBox → startDate);
-      // as fontes GolfGenius não a trazem → fallback a 1 de Janeiro do ano.
-      date: data.startDate || data.date || (year ? `${year}-01-01` : null),
+      name: (opts.nameFn ? opts.nameFn(data) : nameWithYear(data.tournament || seriesLabel, year)).trim(),
+      // Data real do evento: startDate da fonte (GolfBox) → data derivada dos
+      // round.date (GolfGenius) → fallback a 1 de Janeiro do ano.
+      date: data.startDate || data.date || deriveDateFromRounds(divisions, year) || (year ? `${year}-01-01` : null),
       seriesId,
       seriesLabel,
       course: data.course || null,

@@ -374,7 +374,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
         </span>
       </td>
       <td style={{ textAlign: "center" }}>
-        <PosBadgeSmall pos={r.result.pos} />
+        <PosBadgeSmall pos={r.result.pos} status={r.result.status} />
         {r.topPct != null && (
           <div style={{
             fontSize: "var(--fs-9)", marginTop: 1,
@@ -479,15 +479,40 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
 }
 
 
-function PosBadgeSmall({ pos }: { pos: number | null | undefined }) {
-  if (typeof pos !== "number") return <span style={{ color: "var(--text-3)" }}>—</span>;
+function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status?: string }) {
+  if (typeof pos !== "number") {
+    // Sem posição mas classificado como não-finalista → mostrar o motivo
+    // (CUT/WD/DQ/DNS) em vez de "—", para a participação não desaparecer.
+    if (status && status !== "OK") {
+      return <span style={{ color: "var(--text-3)", fontWeight: 700, fontSize: "var(--fs-9)" }} title="Não classificado">{status}</span>;
+    }
+    return <span style={{ color: "var(--text-3)" }}>—</span>;
+  }
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
     const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
     return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #{pos}</span>;
   }
-  return <span style={{ color: "var(--text-3)" }}>#{pos}</span>;
+  // Não-finalista com posição real: mostra "#45" (posição na leaderboard) em vez
+  // de "CUT". O número fica IDÊNTICO ao das outras linhas (mesmo tamanho, sem
+  // <sup> que inflava a caixa de linha); o motivo fica num rótulo pequeno ao lado
+  // + tooltip, para não perder o contexto de que não passou o corte.
+  const dnf = status && status !== "OK";
+  return (
+    <span style={{ color: "var(--text-3)" }} title={dnf ? DNF_LABEL[status] || status : undefined}>
+      #{pos}
+      {dnf ? <span style={{ fontSize: "var(--fs-9)", marginLeft: 2, textTransform: "lowercase" }}>{status === "CUT" ? "cut" : status.toLowerCase()}</span> : null}
+    </span>
+  );
 }
+
+const DNF_LABEL: Record<string, string> = {
+  CUT: "Não passou o corte (CUT)",
+  WD: "Desistiu (WD)",
+  DQ: "Desqualificado (DQ)",
+  DNS: "Não compareceu (DNS)",
+  IE: "Inelegível (IE)",
+};
 
 /** Pill SCRATCH/HANDICAP — SÓ se aplica a torneios RFEG, onde o eixo
  *  scratch vs handicap é metadado oficial publicado pela federação. Outras
