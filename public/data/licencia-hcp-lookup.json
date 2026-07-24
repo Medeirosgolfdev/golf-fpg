@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-20T07:02:01.957Z",
+  "generatedAt": "2026-07-24T23:49:31.392Z",
   "source": "scripts/build-licencia-hcp-lookup.js",
-  "total": 25594,
-  "ncTournaments": 2210,
+  "total": 25743,
+  "ncTournaments": 2235,
   "rfegTournaments": 530,
   "lookup": {
     "1100050485": {
@@ -42,7 +42,7 @@
       "dateIso": null
     },
     "1100927099": {
-      "hcp": 0,
+      "hcp": 0.1,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
@@ -166,6 +166,12 @@
       "source": "nextcaddy-lb",
       "tourneyId": 67530,
       "dateIso": null
+    },
+    "1101410040": {
+      "hcp": 13.5,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "1101474820": {
       "hcp": 54,
@@ -354,7 +360,7 @@
       "dateIso": "2025-05-21"
     },
     "1102898007": {
-      "hcp": 5.3,
+      "hcp": 4.6,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -366,7 +372,7 @@
       "dateIso": "2023-10-09"
     },
     "1102914606": {
-      "hcp": 15,
+      "hcp": 14.7,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -384,7 +390,7 @@
       "dateIso": "2025-10-09"
     },
     "1102992588": {
-      "hcp": 19.9,
+      "hcp": 19.5,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -426,7 +432,7 @@
       "dateIso": null
     },
     "1106478321": {
-      "hcp": 13.5,
+      "hcp": 13.1,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -558,7 +564,7 @@
       "dateIso": null
     },
     "1116052336": {
-      "hcp": 17.3,
+      "hcp": 16.4,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -570,7 +576,7 @@
       "dateIso": "2026-08-07"
     },
     "1116093703": {
-      "hcp": 17.1,
+      "hcp": 16.8,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -592,6 +598,12 @@
       "source": "nextcaddy-insc",
       "tourneyId": 71317,
       "dateIso": null
+    },
+    "1116926119": {
+      "hcp": 23.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "1116950921": {
       "hcp": 6.5,
@@ -1746,7 +1758,7 @@
       "dateIso": null
     },
     "7776959774": {
-      "hcp": 1.3,
+      "hcp": 1.8,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
@@ -2334,10 +2346,10 @@
       "dateIso": null
     },
     "7752931568": {
-      "hcp": -1.4,
+      "hcp": -0.1,
       "source": "rfegolf",
-      "tourneyId": 15915,
-      "dateIso": "2026-03-29"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "7773961075": {
       "hcp": 19.1,
@@ -4122,7 +4134,7 @@
       "dateIso": null
     },
     "7759069356": {
-      "hcp": 2.9,
+      "hcp": 2.2,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
@@ -4332,10 +4344,10 @@
       "dateIso": null
     },
     "7753162326": {
-      "hcp": -0.665,
+      "hcp": -0.7,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "7753456254": {
       "hcp": 5.5,
@@ -4866,7 +4878,7 @@
       "dateIso": "2026-05-01"
     },
     "9919966006": {
-      "hcp": 11.4,
+      "hcp": 9.8,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -6042,7 +6054,7 @@
       "dateIso": "2026-03-19"
     },
     "GC07934757": {
-      "hcp": 0.6,
+      "hcp": 0.8,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
@@ -6312,7 +6324,7 @@
       "dateIso": "2025-10-09"
     },
     "7770078318": {
-      "hcp": 8,
+      "hcp": 7.6,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -6324,7 +6336,7 @@
       "dateIso": "2026-06-26"
     },
     "7772981136": {
-      "hcp": 2.6,
+      "hcp": 2.1,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -6564,10 +6576,10 @@
       "dateIso": "2022-02-11"
     },
     "CM11974375": {
-      "hcp": -2.2,
+      "hcp": -2.9,
       "source": "rfegolf",
-      "tourneyId": 16065,
-      "dateIso": "2026-04-23"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CM41912986": {
       "hcp": -2,
@@ -7500,7 +7512,7 @@
       "dateIso": "2026-07-11"
     },
     "7709944170": {
-      "hcp": 15.6,
+      "hcp": 13.1,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -7854,16 +7866,16 @@
       "dateIso": "2026-05-01"
     },
     "CP02817962": {
-      "hcp": 2.4,
+      "hcp": -1,
       "source": "rfegolf",
-      "tourneyId": 15915,
-      "dateIso": "2026-03-29"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CP02817964": {
-      "hcp": 1.004,
+      "hcp": 0.3,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CP01897445": {
       "hcp": 4.939,
@@ -7962,10 +7974,10 @@
       "dateIso": null
     },
     "CP02404587": {
-      "hcp": 19.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 53424,
-      "dateIso": null
+      "hcp": 18,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CP14463638": {
       "hcp": 1.7,
@@ -8598,10 +8610,10 @@
       "dateIso": null
     },
     "CP02404588": {
-      "hcp": 7.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 53857,
-      "dateIso": null
+      "hcp": 6.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CP01082551": {
       "hcp": 4.2,
@@ -10362,10 +10374,10 @@
       "dateIso": null
     },
     "CP02306058": {
-      "hcp": 11.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 53918,
-      "dateIso": null
+      "hcp": 13.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CP06056100": {
       "hcp": 14.2,
@@ -11214,10 +11226,10 @@
       "dateIso": null
     },
     "CP02797588": {
-      "hcp": 10.9,
+      "hcp": 9.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 53939,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CP29938645": {
       "hcp": 1.5,
@@ -12342,13 +12354,13 @@
       "dateIso": null
     },
     "7776372629": {
-      "hcp": 12.9,
+      "hcp": 12.5,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "7770474202": {
-      "hcp": 14.1,
+      "hcp": 13.9,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -13188,10 +13200,10 @@
       "dateIso": "2026-05-01"
     },
     "CM11926949": {
-      "hcp": 0.4,
+      "hcp": -1.4,
       "source": "rfegolf",
-      "tourneyId": 15915,
-      "dateIso": "2026-03-29"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CM61935168": {
       "hcp": 2.2,
@@ -13740,7 +13752,7 @@
       "dateIso": null
     },
     "CP26003513": {
-      "hcp": 29.3,
+      "hcp": 27.2,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -14016,10 +14028,10 @@
       "dateIso": "2023-07-14"
     },
     "AM15935229": {
-      "hcp": 2.679,
+      "hcp": 0.1,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "AM67913244": {
       "hcp": 0.8,
@@ -14046,10 +14058,10 @@
       "dateIso": "2026-07-14"
     },
     "AM85903397": {
-      "hcp": 3.8,
-      "source": "nextcaddy-insc",
-      "tourneyId": 61185,
-      "dateIso": "2026-06-24"
+      "hcp": 2.6,
+      "source": "rfegolf",
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "AM02929154": {
       "hcp": 5.237,
@@ -14136,7 +14148,7 @@
       "dateIso": "2026-03-19"
     },
     "AM85964619": {
-      "hcp": 6.1,
+      "hcp": 5.6,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -14220,10 +14232,10 @@
       "dateIso": "2026-06-24"
     },
     "AM85931978": {
-      "hcp": 2,
-      "source": "nextcaddy-insc",
-      "tourneyId": 61185,
-      "dateIso": "2026-06-24"
+      "hcp": -0.1,
+      "source": "rfegolf",
+      "tourneyId": 16231,
+      "dateIso": "2026-08-07"
     },
     "AM83916837": {
       "hcp": 3.6,
@@ -14496,13 +14508,13 @@
       "dateIso": "2026-06-26"
     },
     "AM51169290": {
-      "hcp": 10.9,
+      "hcp": 6.8,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "AM15976580": {
-      "hcp": 6.4,
+      "hcp": 4.2,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -14538,7 +14550,7 @@
       "dateIso": "2026-06-26"
     },
     "AM85984457": {
-      "hcp": 16.7,
+      "hcp": 16.2,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -14598,7 +14610,7 @@
       "dateIso": "2026-07-11"
     },
     "AM15063290": {
-      "hcp": 17.7,
+      "hcp": 17.4,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -14628,7 +14640,7 @@
       "dateIso": "2026-06-26"
     },
     "AM85978344": {
-      "hcp": 19,
+      "hcp": 18.5,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -16128,10 +16140,10 @@
       "dateIso": null
     },
     "CM81925694": {
-      "hcp": 2.6,
+      "hcp": -2.5,
       "source": "rfegolf",
-      "tourneyId": 16187,
-      "dateIso": "2026-06-26"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "0200065433": {
       "hcp": 3.7,
@@ -16296,10 +16308,10 @@
       "dateIso": "2026-05-01"
     },
     "CM11939859": {
-      "hcp": -0.3,
+      "hcp": -2.7,
       "source": "rfegolf",
-      "tourneyId": 16187,
-      "dateIso": "2026-06-26"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CM04962488": {
       "hcp": 0.9,
@@ -17184,10 +17196,10 @@
       "dateIso": null
     },
     "CP02306059": {
-      "hcp": 20.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 59975,
-      "dateIso": null
+      "hcp": 19.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CP09894163": {
       "hcp": 11,
@@ -17712,13 +17724,13 @@
       "dateIso": null
     },
     "BP15927934": {
-      "hcp": 5.3,
+      "hcp": 5.2,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
     },
     "BP15927935": {
-      "hcp": 4.4,
+      "hcp": 5,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"
@@ -17892,10 +17904,10 @@
       "dateIso": "2026-08-06"
     },
     "CP05497242": {
-      "hcp": 54,
-      "source": "nextcaddy-insc",
-      "tourneyId": 60011,
-      "dateIso": null
+      "hcp": 37.8,
+      "source": "rfegolf",
+      "tourneyId": 16225,
+      "dateIso": "2026-08-06"
     },
     "CP09489258": {
       "hcp": 54,
@@ -18456,10 +18468,10 @@
       "dateIso": "2026-07-18"
     },
     "4411150908": {
-      "hcp": 5.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 60107,
-      "dateIso": null
+      "hcp": 5.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "GC57395381": {
       "hcp": 9.4,
@@ -19134,10 +19146,10 @@
       "dateIso": null
     },
     "AM15933482": {
-      "hcp": 9.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 61047,
-      "dateIso": null
+      "hcp": 8.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "EXX1911394": {
       "hcp": 1.6,
@@ -19488,10 +19500,10 @@
       "dateIso": "2026-03-01"
     },
     "AM22700962": {
-      "hcp": 19.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "hcp": 19.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMC7354660": {
       "hcp": 20.8,
@@ -19506,10 +19518,10 @@
       "dateIso": null
     },
     "AM76885942": {
-      "hcp": 22.4,
+      "hcp": 22.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72381,
-      "dateIso": "2026-07-18"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AMC8515918": {
       "hcp": 23.1,
@@ -19622,8 +19634,8 @@
     "AM76914987": {
       "hcp": 23.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AME7808305": {
       "hcp": 15.6,
@@ -19860,10 +19872,10 @@
       "dateIso": "2026-05-16"
     },
     "AM76482636": {
-      "hcp": 25.2,
+      "hcp": 25.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM58675633": {
       "hcp": 24.9,
@@ -19908,10 +19920,10 @@
       "dateIso": "2026-07-11"
     },
     "AM76809386": {
-      "hcp": 25.8,
+      "hcp": 25.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72157,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM15916689": {
       "hcp": 32,
@@ -20036,8 +20048,8 @@
     "AM76903264": {
       "hcp": 17.6,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM95195497": {
       "hcp": 11.9,
@@ -20232,10 +20244,10 @@
       "dateIso": null
     },
     "AMB2092191": {
-      "hcp": 12.6,
+      "hcp": 11.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 61140,
-      "dateIso": "2026-05-16"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM16961754": {
       "hcp": 4.7,
@@ -20388,10 +20400,10 @@
       "dateIso": null
     },
     "AM76903258": {
-      "hcp": 23,
+      "hcp": 22.8,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM15016723": {
       "hcp": 13.6,
@@ -20431,9 +20443,9 @@
     },
     "AM22237045": {
       "hcp": 22.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM11801817": {
       "hcp": 1.7,
@@ -20833,9 +20845,9 @@
     },
     "AM22617828": {
       "hcp": 11.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM23063450": {
       "hcp": 6.9,
@@ -21360,10 +21372,10 @@
       "dateIso": null
     },
     "AM76937265": {
-      "hcp": 10.5,
+      "hcp": 11.2,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "0201019310": {
       "hcp": 11.4,
@@ -21828,10 +21840,10 @@
       "dateIso": null
     },
     "AM05070594": {
-      "hcp": 2.1,
+      "hcp": 1.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM07409669": {
       "hcp": 0.7,
@@ -21878,14 +21890,14 @@
     "AM05198914": {
       "hcp": 0.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05286263": {
-      "hcp": 2.3,
+      "hcp": 2.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM60997685": {
       "hcp": 1.2,
@@ -21972,16 +21984,16 @@
       "dateIso": null
     },
     "AM05262723": {
-      "hcp": 2.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 2.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02055355": {
       "hcp": 1.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02975531": {
       "hcp": 7.7,
@@ -22008,7 +22020,7 @@
       "dateIso": null
     },
     "AM85948360": {
-      "hcp": -1.7,
+      "hcp": -2.8,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -22446,10 +22458,10 @@
       "dateIso": null
     },
     "AM85419489": {
-      "hcp": 54,
-      "source": "nextcaddy-lb",
-      "tourneyId": 61061,
-      "dateIso": null
+      "hcp": 47.6,
+      "source": "rfegolf",
+      "tourneyId": 16225,
+      "dateIso": "2026-08-06"
     },
     "AM02488139": {
       "hcp": 52.4,
@@ -22681,9 +22693,9 @@
     },
     "AM05604799": {
       "hcp": 19.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05156693": {
       "hcp": 24,
@@ -22704,10 +22716,10 @@
       "dateIso": null
     },
     "AM05138959": {
-      "hcp": 21.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 20.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AMG3314046": {
       "hcp": 21.8,
@@ -23124,7 +23136,7 @@
       "dateIso": "2026-06-26"
     },
     "AM51996386": {
-      "hcp": 17.8,
+      "hcp": 15,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -23610,10 +23622,10 @@
       "dateIso": "2026-07-14"
     },
     "AM05097683": {
-      "hcp": 24.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72159,
-      "dateIso": "2026-07-07"
+      "hcp": 20.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM95157797": {
       "hcp": 30.1,
@@ -23928,10 +23940,10 @@
       "dateIso": null
     },
     "AMC3984695": {
-      "hcp": 22,
-      "source": "rfegolf",
-      "tourneyId": 16192,
-      "dateIso": "2026-06-26"
+      "hcp": 18.6,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "AM85961800": {
       "hcp": 20.3,
@@ -23964,10 +23976,10 @@
       "dateIso": "2026-06-26"
     },
     "AMC3984693": {
-      "hcp": 22.4,
-      "source": "rfegolf",
-      "tourneyId": 16189,
-      "dateIso": "2026-06-26"
+      "hcp": 21.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "AMG8989359": {
       "hcp": 28.1,
@@ -24732,10 +24744,10 @@
       "dateIso": "2026-06-16"
     },
     "AM76170011": {
-      "hcp": 16.9,
+      "hcp": 17.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72156,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AMD5006723": {
       "hcp": 54,
@@ -25050,10 +25062,10 @@
       "dateIso": null
     },
     "AM02899772": {
-      "hcp": 4.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 61097,
-      "dateIso": null
+      "hcp": 4.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "GC54233936": {
       "hcp": 2.7,
@@ -26028,10 +26040,10 @@
       "dateIso": null
     },
     "AMH1091587": {
-      "hcp": 26.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 61125,
-      "dateIso": null
+      "hcp": 28.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00967022": {
       "hcp": 29,
@@ -26424,10 +26436,10 @@
       "dateIso": "2026-07-11"
     },
     "AM65957026": {
-      "hcp": -0.276,
+      "hcp": -1.8,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "AM59978977": {
       "hcp": 16.8,
@@ -27842,8 +27854,8 @@
     "AM05795533": {
       "hcp": 1.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM83887416": {
       "hcp": 1,
@@ -28964,8 +28976,8 @@
     "AME7902244": {
       "hcp": 20.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72338,
-      "dateIso": "2026-07-16"
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AME7613371": {
       "hcp": 26.3,
@@ -31914,10 +31926,10 @@
       "dateIso": null
     },
     "4401282434": {
-      "hcp": 17,
+      "hcp": 15.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 70454,
-      "dateIso": "2026-05-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401130096": {
       "hcp": 19.3,
@@ -32448,10 +32460,10 @@
       "dateIso": "2026-06-26"
     },
     "CM41305716": {
-      "hcp": 14.6,
+      "hcp": 14.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72363,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM02199385": {
       "hcp": 24.2,
@@ -32550,10 +32562,10 @@
       "dateIso": "2026-06-26"
     },
     "CMA5952481": {
-      "hcp": 14,
+      "hcp": 13.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72363,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM60982842": {
       "hcp": 11,
@@ -32574,10 +32586,10 @@
       "dateIso": "2026-06-26"
     },
     "CM41052121": {
-      "hcp": 12.9,
+      "hcp": 12.5,
       "source": "rfegolf",
-      "tourneyId": 16192,
-      "dateIso": "2026-06-26"
+      "tourneyId": 16228,
+      "dateIso": "2026-08-07"
     },
     "CM41993877": {
       "hcp": 12.2,
@@ -32664,7 +32676,7 @@
       "dateIso": "2025-06-25"
     },
     "CM41070966": {
-      "hcp": 10.9,
+      "hcp": 10.5,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -32694,7 +32706,7 @@
       "dateIso": null
     },
     "CM41090369": {
-      "hcp": 20.2,
+      "hcp": 18.9,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -32778,7 +32790,7 @@
       "dateIso": "2026-08-06"
     },
     "CM41373590": {
-      "hcp": 34.3,
+      "hcp": 34.1,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -32796,7 +32808,7 @@
       "dateIso": "2026-08-06"
     },
     "CM41322611": {
-      "hcp": 16,
+      "hcp": 16.7,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -32838,7 +32850,7 @@
       "dateIso": "2026-06-26"
     },
     "CM41414699": {
-      "hcp": 21.9,
+      "hcp": 20.2,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -34442,8 +34454,8 @@
     "AMI5965307": {
       "hcp": 39.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 66820,
-      "dateIso": "2026-01-10"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM92337688": {
       "hcp": 44.3,
@@ -34476,10 +34488,10 @@
       "dateIso": null
     },
     "AM60483194": {
-      "hcp": 38,
+      "hcp": 33.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 66820,
-      "dateIso": "2026-01-10"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMI5480057": {
       "hcp": 38.5,
@@ -36584,8 +36596,8 @@
     "CM41484593": {
       "hcp": 54,
       "source": "nextcaddy-lb",
-      "tourneyId": 72311,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72506,
+      "dateIso": "2026-07-24"
     },
     "CM41070812": {
       "hcp": 20,
@@ -36750,10 +36762,10 @@
       "dateIso": "2026-05-31"
     },
     "CM41305714": {
-      "hcp": 43.3,
+      "hcp": 41.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72311,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72506,
+      "dateIso": "2026-07-24"
     },
     "CM03982078": {
       "hcp": 9.6,
@@ -36854,8 +36866,8 @@
     "CM41479430": {
       "hcp": 54,
       "source": "nextcaddy-lb",
-      "tourneyId": 72311,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72506,
+      "dateIso": "2026-07-24"
     },
     "CM41977905": {
       "hcp": 14.7,
@@ -37044,7 +37056,7 @@
       "dateIso": "2026-01-04"
     },
     "CM41967554": {
-      "hcp": 9.3,
+      "hcp": 8.4,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -37074,7 +37086,7 @@
       "dateIso": "2026-01-04"
     },
     "CMA1947666": {
-      "hcp": 11.2,
+      "hcp": 10.6,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -37122,10 +37134,10 @@
       "dateIso": "2026-01-10"
     },
     "AMD7011752": {
-      "hcp": 36,
+      "hcp": 39.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 66820,
-      "dateIso": "2026-01-10"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM15951115": {
       "hcp": 38,
@@ -38520,10 +38532,10 @@
       "dateIso": null
     },
     "AMC3981690": {
-      "hcp": 13.4,
+      "hcp": 14,
       "source": "nextcaddy-insc",
-      "tourneyId": 72405,
-      "dateIso": "2026-07-20"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AMC9784516": {
       "hcp": 21,
@@ -38754,10 +38766,10 @@
       "dateIso": "2026-08-07"
     },
     "CM41985756": {
-      "hcp": 35.7,
-      "source": "rfegolf",
-      "tourneyId": 16194,
-      "dateIso": "2026-06-26"
+      "hcp": 32.3,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM41410725": {
       "hcp": 35.8,
@@ -38772,10 +38784,10 @@
       "dateIso": "2026-08-06"
     },
     "CM41189420": {
-      "hcp": 36.5,
+      "hcp": 35.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72212,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM41995218": {
       "hcp": 19.2,
@@ -38814,16 +38826,16 @@
       "dateIso": "2026-05-30"
     },
     "CM41508458": {
-      "hcp": 54,
+      "hcp": 51.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72311,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72506,
+      "dateIso": "2026-07-24"
     },
     "CM41925362": {
-      "hcp": 13.1,
+      "hcp": 13.8,
       "source": "nextcaddy-lb",
-      "tourneyId": 72363,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM41992466": {
       "hcp": 8.9,
@@ -39504,10 +39516,10 @@
       "dateIso": "2026-05-30"
     },
     "AME7185224": {
-      "hcp": 15.4,
+      "hcp": 15.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 71300,
-      "dateIso": "2026-06-03"
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AMC3482080": {
       "hcp": 26,
@@ -39684,40 +39696,40 @@
       "dateIso": null
     },
     "AME7775047": {
-      "hcp": 21,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 20.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMD5485623": {
-      "hcp": 20.3,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 19.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AM29975464": {
-      "hcp": 4.2,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 4.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMD5979795": {
-      "hcp": 16.1,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 15.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMC3064506": {
-      "hcp": 19.9,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 20.2,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AM66412924": {
       "hcp": 12.4,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AM66981542": {
       "hcp": 12.9,
@@ -39726,10 +39738,10 @@
       "dateIso": null
     },
     "AMD5975115": {
-      "hcp": 15.3,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72154,
-      "dateIso": "2026-07-18"
+      "hcp": 14.7,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMC7993315": {
       "hcp": 54,
@@ -39768,16 +39780,16 @@
       "dateIso": null
     },
     "AM25979495": {
-      "hcp": 16.9,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 16.7,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMD5492691": {
       "hcp": 31.9,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMC3605716": {
       "hcp": 34.4,
@@ -40038,10 +40050,10 @@
       "dateIso": "2026-07-11"
     },
     "CM02156692": {
-      "hcp": 30.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 30.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05489598": {
       "hcp": 32.9,
@@ -40105,9 +40117,9 @@
     },
     "AM17094533": {
       "hcp": 18.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05198900": {
       "hcp": 12.2,
@@ -40130,8 +40142,8 @@
     "CM81201050": {
       "hcp": 17.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05767309": {
       "hcp": 25.3,
@@ -40176,10 +40188,10 @@
       "dateIso": null
     },
     "AM05615730": {
-      "hcp": 22.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 22,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05364014": {
       "hcp": 22.4,
@@ -40242,10 +40254,10 @@
       "dateIso": "2026-07-11"
     },
     "AM05700915": {
-      "hcp": 8.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 8.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05972918": {
       "hcp": 6.4,
@@ -40272,16 +40284,16 @@
       "dateIso": "2026-07-11"
     },
     "AM05109092": {
-      "hcp": 10.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 10.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM56350091": {
       "hcp": 10,
       "source": "nextcaddy-insc",
-      "tourneyId": 72359,
-      "dateIso": "2026-08-02"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05353221": {
       "hcp": 5.7,
@@ -42444,7 +42456,7 @@
       "dateIso": null
     },
     "MM06055417": {
-      "hcp": 10.2,
+      "hcp": 10,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -42456,7 +42468,7 @@
       "dateIso": "2026-05-31"
     },
     "MM06055423": {
-      "hcp": 15.2,
+      "hcp": 15.1,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -44264,8 +44276,8 @@
     "CM41063031": {
       "hcp": 24.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72150,
-      "dateIso": "2026-07-18"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "CM22085984": {
       "hcp": 33.2,
@@ -44850,10 +44862,10 @@
       "dateIso": null
     },
     "AMI4186114": {
-      "hcp": 12.1,
+      "hcp": 10.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 71194,
-      "dateIso": "2026-06-10"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "CM52138410": {
       "hcp": 20.9,
@@ -44868,10 +44880,10 @@
       "dateIso": "2026-07-18"
     },
     "AMI4349508": {
-      "hcp": 19.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67218,
-      "dateIso": null
+      "hcp": 16.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM76149178": {
       "hcp": 22.2,
@@ -44892,10 +44904,10 @@
       "dateIso": "2026-07-18"
     },
     "AM76071888": {
-      "hcp": 16.1,
+      "hcp": 15.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72381,
-      "dateIso": "2026-07-18"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "7724148919": {
       "hcp": 12,
@@ -44984,8 +44996,8 @@
     "AM76901048": {
       "hcp": 16.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76965019": {
       "hcp": 28.6,
@@ -45002,62 +45014,62 @@
     "AM76984723": {
       "hcp": 22.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76898519": {
-      "hcp": 29.3,
+      "hcp": 30.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72157,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76924290": {
       "hcp": 20.6,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76187026": {
-      "hcp": 19.3,
+      "hcp": 19,
       "source": "nextcaddy-lb",
-      "tourneyId": 72156,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76913697": {
-      "hcp": 9.7,
+      "hcp": 9.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76060131": {
-      "hcp": 17.2,
+      "hcp": 17.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76517674": {
-      "hcp": 26.4,
+      "hcp": 26.8,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76485663": {
-      "hcp": 10.2,
+      "hcp": 9.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76946225": {
       "hcp": 21.6,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76777364": {
-      "hcp": 20.1,
+      "hcp": 20.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76955135": {
       "hcp": 19.6,
@@ -45066,10 +45078,10 @@
       "dateIso": "2026-06-27"
     },
     "AM76168571": {
-      "hcp": 26.6,
+      "hcp": 27,
       "source": "nextcaddy-lb",
-      "tourneyId": 71967,
-      "dateIso": "2026-06-27"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76064739": {
       "hcp": 2.9,
@@ -45078,22 +45090,22 @@
       "dateIso": null
     },
     "AM76927634": {
-      "hcp": 18.4,
+      "hcp": 18.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76918998": {
-      "hcp": 16,
+      "hcp": 15.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76099395": {
-      "hcp": 20.1,
+      "hcp": 20.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76983395": {
       "hcp": 20.8,
@@ -45108,10 +45120,10 @@
       "dateIso": "2026-07-11"
     },
     "AM76898521": {
-      "hcp": 14.7,
+      "hcp": 15.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76492110": {
       "hcp": 12.7,
@@ -45120,28 +45132,28 @@
       "dateIso": "2026-07-11"
     },
     "AM76416779": {
-      "hcp": 3.3,
+      "hcp": 3.6,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76508703": {
-      "hcp": 28.9,
+      "hcp": 29.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76187036": {
-      "hcp": 16.3,
+      "hcp": 16,
       "source": "nextcaddy-lb",
-      "tourneyId": 71967,
-      "dateIso": "2026-06-27"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76951885": {
-      "hcp": 8.3,
+      "hcp": 7.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "03-01-26 13:38": {
       "hcp": 24.8,
@@ -46873,9 +46885,9 @@
     },
     "AM05811453": {
       "hcp": 17.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AMC3195493": {
       "hcp": 26.3,
@@ -46890,10 +46902,10 @@
       "dateIso": null
     },
     "AM00954595": {
-      "hcp": 17.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67245,
-      "dateIso": null
+      "hcp": 16.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
     },
     "AM25980453": {
       "hcp": 16.6,
@@ -47016,10 +47028,10 @@
       "dateIso": "2026-07-11"
     },
     "AM17609364": {
-      "hcp": 16.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67245,
-      "dateIso": null
+      "hcp": 17.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
     },
     "AMF7077185": {
       "hcp": 26.9,
@@ -47108,8 +47120,8 @@
     "AM05080914": {
       "hcp": 4.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72312,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM66245333": {
       "hcp": 5.6,
@@ -47168,8 +47180,8 @@
     "AM05062958": {
       "hcp": 2.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 72359,
-      "dateIso": "2026-08-02"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM95156964": {
       "hcp": 8.9,
@@ -47208,10 +47220,10 @@
       "dateIso": "2026-04-04"
     },
     "AMC3416361": {
-      "hcp": 10.3,
+      "hcp": 10.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 72396,
-      "dateIso": "2026-08-14"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AME7097565": {
       "hcp": 10.2,
@@ -47670,10 +47682,10 @@
       "dateIso": null
     },
     "AM76808636": {
-      "hcp": 30.6,
+      "hcp": 30.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76700327": {
       "hcp": 16.1,
@@ -47730,16 +47742,16 @@
       "dateIso": null
     },
     "AM76937266": {
-      "hcp": 20.5,
+      "hcp": 21.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72193,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76170029": {
       "hcp": 10.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76959136": {
       "hcp": 17.6,
@@ -47748,16 +47760,16 @@
       "dateIso": null
     },
     "AM76473524": {
-      "hcp": 17.4,
+      "hcp": 17.6,
       "source": "nextcaddy-lb",
-      "tourneyId": 72193,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76994503": {
-      "hcp": 15.3,
+      "hcp": 16,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76482058": {
       "hcp": 14.9,
@@ -47772,10 +47784,10 @@
       "dateIso": "2026-07-11"
     },
     "AM76198382": {
-      "hcp": 12.4,
+      "hcp": 12.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76615636": {
       "hcp": 27.9,
@@ -47802,16 +47814,16 @@
       "dateIso": "2026-07-11"
     },
     "AM76185453": {
-      "hcp": 12.6,
+      "hcp": 12.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76943935": {
       "hcp": 18.5,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "06-01-26 13:11": {
       "hcp": 22.5,
@@ -48361,9 +48373,9 @@
     },
     "AMI5922864": {
       "hcp": 22.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72086,
-      "dateIso": "2026-07-02"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMI5916931": {
       "hcp": 36.8,
@@ -49034,20 +49046,20 @@
     "AMD5980718": {
       "hcp": 17.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72338,
-      "dateIso": "2026-07-16"
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMD5492062": {
-      "hcp": 21,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 21.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMD5344094": {
-      "hcp": 13,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 13.3,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "CP15480687": {
       "hcp": 34.5,
@@ -49560,10 +49572,10 @@
       "dateIso": null
     },
     "CM01944598": {
-      "hcp": 13.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67399,
-      "dateIso": "2026-07-05"
+      "hcp": 13.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CM01920941": {
       "hcp": 7.7,
@@ -49770,10 +49782,10 @@
       "dateIso": "2026-07-05"
     },
     "AM05018089": {
-      "hcp": 8.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67362,
-      "dateIso": null
+      "hcp": 8.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM01059628": {
       "hcp": 9.7,
@@ -50004,10 +50016,10 @@
       "dateIso": "2026-07-07"
     },
     "CM01024094": {
-      "hcp": 11.7,
+      "hcp": 10.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 67368,
-      "dateIso": null
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CM01019843": {
       "hcp": 1.1,
@@ -50102,26 +50114,26 @@
     "AM00374568": {
       "hcp": 16.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22619245": {
-      "hcp": 26.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67373,
-      "dateIso": null
+      "hcp": 27.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22374569": {
       "hcp": 21.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22607158": {
       "hcp": 19.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM83610131": {
       "hcp": 24.3,
@@ -50130,34 +50142,34 @@
       "dateIso": null
     },
     "AM22604924": {
-      "hcp": 6.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "hcp": 6.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM83899519": {
       "hcp": 15.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22619238": {
-      "hcp": 16.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67373,
-      "dateIso": null
+      "hcp": 17.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22900039": {
-      "hcp": 22,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "hcp": 21.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22610999": {
-      "hcp": 27.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67373,
-      "dateIso": null
+      "hcp": 28,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00189293": {
       "hcp": 29,
@@ -50166,10 +50178,10 @@
       "dateIso": "2026-07-18"
     },
     "AM22984989": {
-      "hcp": 20.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72384,
-      "dateIso": "2026-07-18"
+      "hcp": 20.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22171907": {
       "hcp": 42.6,
@@ -50491,9 +50503,9 @@
     },
     "CM01071368": {
       "hcp": 10.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM01053554": {
       "hcp": 5.7,
@@ -51930,10 +51942,10 @@
       "dateIso": null
     },
     "CM01251946": {
-      "hcp": 12.1,
+      "hcp": 12.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 67388,
-      "dateIso": null
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CM01214063": {
       "hcp": 15.9,
@@ -52478,8 +52490,8 @@
     "CM01378246": {
       "hcp": 12,
       "source": "nextcaddy-lb",
-      "tourneyId": 67399,
-      "dateIso": "2026-07-05"
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CM01746697": {
       "hcp": 8.2,
@@ -52716,10 +52728,10 @@
       "dateIso": "2026-06-27"
     },
     "CM07094435": {
-      "hcp": 0.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67395,
-      "dateIso": "2026-06-27"
+      "hcp": 0.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM05973055": {
       "hcp": 0.4,
@@ -53137,9 +53149,9 @@
     },
     "AM69075633": {
       "hcp": 13,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67399,
-      "dateIso": "2026-07-05"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM01764699": {
       "hcp": 19.9,
@@ -53316,10 +53328,10 @@
       "dateIso": null
     },
     "AM76202985": {
-      "hcp": 28.2,
-      "source": "nextcaddy-insc",
-      "tourneyId": 67404,
-      "dateIso": null
+      "hcp": 28.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76949882": {
       "hcp": 16.9,
@@ -53360,8 +53372,8 @@
     "AM76801467": {
       "hcp": 20.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72157,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76471727": {
       "hcp": 31.1,
@@ -54379,9 +54391,9 @@
     },
     "AM25603729": {
       "hcp": 9.1,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMI5467648": {
       "hcp": 25,
@@ -54732,16 +54744,16 @@
       "dateIso": null
     },
     "AM76091046": {
-      "hcp": 26.7,
-      "source": "nextcaddy-insc",
-      "tourneyId": 67496,
-      "dateIso": null
+      "hcp": 25.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76961090": {
-      "hcp": 32.9,
+      "hcp": 33,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76050517": {
       "hcp": 20.7,
@@ -54750,22 +54762,22 @@
       "dateIso": null
     },
     "AM76817411": {
-      "hcp": 17.1,
+      "hcp": 16.2,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76609551": {
-      "hcp": 28.3,
+      "hcp": 28.5,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76604230": {
-      "hcp": 32.6,
+      "hcp": 33,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76926037": {
       "hcp": 12.4,
@@ -54780,16 +54792,16 @@
       "dateIso": null
     },
     "AM76412062": {
-      "hcp": 25.1,
-      "source": "nextcaddy-insc",
-      "tourneyId": 67496,
-      "dateIso": null
+      "hcp": 21.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76481985": {
-      "hcp": 22.7,
+      "hcp": 22.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76322141": {
       "hcp": 29.2,
@@ -54804,10 +54816,10 @@
       "dateIso": null
     },
     "AM76478287": {
-      "hcp": 11.4,
+      "hcp": 10.8,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "13-01-26 13:12": {
       "hcp": 22.5,
@@ -55614,10 +55626,10 @@
       "dateIso": null
     },
     "0102992357": {
-      "hcp": 6.584,
-      "source": "rfegolf",
-      "tourneyId": 15957,
-      "dateIso": "2025-06-25"
+      "hcp": 4.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM52950813": {
       "hcp": 2.8,
@@ -55884,10 +55896,10 @@
       "dateIso": null
     },
     "AM95931760": {
-      "hcp": 22,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67520,
-      "dateIso": null
+      "hcp": 21.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "AMG3093557": {
       "hcp": 36.6,
@@ -56076,10 +56088,10 @@
       "dateIso": null
     },
     "AMH8785810": {
-      "hcp": 17.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67520,
-      "dateIso": null
+      "hcp": 17.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "AM91909938": {
       "hcp": 7.9,
@@ -56228,8 +56240,8 @@
     "AM95958912": {
       "hcp": 18.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 72375,
-      "dateIso": "2026-07-30"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM85970337": {
       "hcp": 19.8,
@@ -56330,14 +56342,14 @@
     "AM05018097": {
       "hcp": 16.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 71498,
-      "dateIso": "2026-06-10"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05972847": {
       "hcp": 15.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 71203,
-      "dateIso": "2026-05-30"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05978677": {
       "hcp": 18.6,
@@ -56628,16 +56640,16 @@
       "dateIso": "2026-07-18"
     },
     "AMD5698526": {
-      "hcp": 11.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67524,
-      "dateIso": null
+      "hcp": 11,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AMD5769349": {
-      "hcp": 5.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67524,
-      "dateIso": null
+      "hcp": 6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CM02041072": {
       "hcp": 8.1,
@@ -56646,10 +56658,10 @@
       "dateIso": null
     },
     "AMD5926544": {
-      "hcp": 13.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67524,
-      "dateIso": null
+      "hcp": 14.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AMD5150875": {
       "hcp": 9,
@@ -59329,9 +59341,9 @@
     },
     "AMC9506407": {
       "hcp": 19.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67548,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "21-01-26 10:06": {
       "hcp": 32.8,
@@ -59508,10 +59520,10 @@
       "dateIso": null
     },
     "AM76481987": {
-      "hcp": 25.5,
+      "hcp": 25.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 72156,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "TR00000009": {
       "hcp": 7.2,
@@ -59910,10 +59922,10 @@
       "dateIso": null
     },
     "AM02325665": {
-      "hcp": 6.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67558,
-      "dateIso": null
+      "hcp": 4.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CM00992359": {
       "hcp": 16.6,
@@ -59994,10 +60006,10 @@
       "dateIso": null
     },
     "AMD5030872": {
-      "hcp": 13.4,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72439,
-      "dateIso": "2026-07-20"
+      "hcp": 14,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AMC7489559": {
       "hcp": 28,
@@ -60816,10 +60828,10 @@
       "dateIso": "2023-03-16"
     },
     "CM02672072": {
-      "hcp": 1.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67586,
-      "dateIso": null
+      "hcp": 1.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CMA8811168": {
       "hcp": 7.9,
@@ -62514,7 +62526,7 @@
       "dateIso": "2026-06-21"
     },
     "CM41988996": {
-      "hcp": 12.9,
+      "hcp": 12.1,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -62730,7 +62742,7 @@
       "dateIso": "2026-06-26"
     },
     "VB10733438": {
-      "hcp": 28.4,
+      "hcp": 28.1,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -62850,10 +62862,10 @@
       "dateIso": null
     },
     "AMD5033553": {
-      "hcp": 13.2,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72269,
-      "dateIso": "2026-07-13"
+      "hcp": 13.6,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AM76033186": {
       "hcp": 11.9,
@@ -62862,10 +62874,10 @@
       "dateIso": null
     },
     "AM76951476": {
-      "hcp": 14.6,
+      "hcp": 14.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72193,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76089138": {
       "hcp": 14.7,
@@ -62886,16 +62898,16 @@
       "dateIso": "2026-06-27"
     },
     "AM76943934": {
-      "hcp": 24.9,
+      "hcp": 26.8,
       "source": "nextcaddy-lb",
-      "tourneyId": 67659,
-      "dateIso": null
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76515877": {
-      "hcp": 6,
+      "hcp": 6.3,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76051222": {
       "hcp": 21,
@@ -62924,8 +62936,8 @@
     "AM76946855": {
       "hcp": 13.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72151,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76326533": {
       "hcp": 24.2,
@@ -63192,10 +63204,10 @@
       "dateIso": null
     },
     "AM05020936": {
-      "hcp": 17.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 16.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05153116": {
       "hcp": 19.7,
@@ -63205,33 +63217,33 @@
     },
     "CM04075963": {
       "hcp": 21.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05147437": {
       "hcp": 10.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05249394": {
-      "hcp": 14.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 14.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05067772": {
-      "hcp": 15.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 15.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05249035": {
       "hcp": 6.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05277780": {
       "hcp": 18.3,
@@ -64008,7 +64020,7 @@
       "dateIso": null
     },
     "CM02927177": {
-      "hcp": 2,
+      "hcp": 1.2,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -64128,10 +64140,10 @@
       "dateIso": null
     },
     "CM41052120": {
-      "hcp": 11.8,
+      "hcp": 13.1,
       "source": "rfegolf",
-      "tourneyId": 16187,
-      "dateIso": "2026-06-26"
+      "tourneyId": 16229,
+      "dateIso": "2026-08-07"
     },
     "CM66991354": {
       "hcp": 2.5,
@@ -64194,7 +64206,7 @@
       "dateIso": "2026-06-26"
     },
     "8828322659": {
-      "hcp": 9.9,
+      "hcp": 8.6,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -64260,7 +64272,7 @@
       "dateIso": "2026-06-26"
     },
     "8828468227": {
-      "hcp": 22.9,
+      "hcp": 22.2,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -64326,7 +64338,7 @@
       "dateIso": "2026-06-26"
     },
     "CMA8990764": {
-      "hcp": 25.3,
+      "hcp": 24.1,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -64362,19 +64374,19 @@
       "dateIso": "2026-06-26"
     },
     "CMA5496403": {
-      "hcp": 33,
+      "hcp": 30.8,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
     },
     "CM06355871": {
-      "hcp": 32,
+      "hcp": 31.2,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
     },
     "CMA5496404": {
-      "hcp": 32.7,
+      "hcp": 31.1,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -64470,10 +64482,10 @@
       "dateIso": null
     },
     "0102946603": {
-      "hcp": 6.1,
-      "source": "rfegolf",
-      "tourneyId": 16187,
-      "dateIso": "2026-06-26"
+      "hcp": 2.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "0102003407": {
       "hcp": 37,
@@ -66192,10 +66204,10 @@
       "dateIso": "2026-05-12"
     },
     "CM12194033": {
-      "hcp": 26.7,
+      "hcp": 26.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 68907,
-      "dateIso": "2026-06-12"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "CM17171065": {
       "hcp": 28,
@@ -66462,7 +66474,7 @@
       "dateIso": null
     },
     "CMA8994392": {
-      "hcp": 8.8,
+      "hcp": 7.1,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -66942,22 +66954,22 @@
       "dateIso": null
     },
     "AM22986175": {
-      "hcp": 14.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67827,
-      "dateIso": null
+      "hcp": 16.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22344746": {
-      "hcp": 21.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67827,
-      "dateIso": null
+      "hcp": 20.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMC8604925": {
       "hcp": 29.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "24-01-26 13:36": {
       "hcp": 13.2,
@@ -67308,10 +67320,10 @@
       "dateIso": null
     },
     "AM76033183": {
-      "hcp": 36,
-      "source": "nextcaddy-insc",
-      "tourneyId": 67843,
-      "dateIso": null
+      "hcp": 31.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72455,
+      "dateIso": "2026-07-22"
     },
     "AM76033787": {
       "hcp": 13.3,
@@ -68346,10 +68358,10 @@
       "dateIso": null
     },
     "AMC3082204": {
-      "hcp": 0.8,
+      "hcp": 1.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 67892,
-      "dateIso": null
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "02-02-26 10:37": {
       "hcp": 32.9,
@@ -69768,10 +69780,10 @@
       "dateIso": null
     },
     "CM07207010": {
-      "hcp": 2.6,
+      "hcp": 2,
       "source": "nextcaddy-insc",
-      "tourneyId": 67950,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "VB01777323": {
       "hcp": 2.8,
@@ -69781,9 +69793,9 @@
     },
     "AM05358122": {
       "hcp": 14.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "26-01-26 19:05": {
       "hcp": 18.2,
@@ -69811,15 +69823,15 @@
     },
     "AM74279270": {
       "hcp": 35.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM92344367": {
-      "hcp": 18.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 17.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM86149158": {
       "hcp": 14.2,
@@ -69846,10 +69858,10 @@
       "dateIso": "2026-07-19"
     },
     "AMB5291878": {
-      "hcp": 36.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 34.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22608847": {
       "hcp": 6.7,
@@ -69858,16 +69870,16 @@
       "dateIso": null
     },
     "AM74279269": {
-      "hcp": 14.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 13.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22484501": {
-      "hcp": 27.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 24,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM01267116": {
       "hcp": 24.4,
@@ -69876,10 +69888,10 @@
       "dateIso": "2026-07-19"
     },
     "AM22076252": {
-      "hcp": 19.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 19.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00150052": {
       "hcp": 12.2,
@@ -69912,16 +69924,16 @@
       "dateIso": null
     },
     "AM22195256": {
-      "hcp": 29,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "hcp": 28.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM83812386": {
       "hcp": 1.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMB5898783": {
       "hcp": 15.9,
@@ -69936,28 +69948,28 @@
       "dateIso": null
     },
     "AM93206877": {
-      "hcp": 15.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 15.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22479087": {
       "hcp": 23,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM04279645": {
-      "hcp": 14.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 13.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM74605832": {
-      "hcp": 17.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72345,
-      "dateIso": "2026-07-18"
+      "hcp": 18.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMI5893661": {
       "hcp": 6.9,
@@ -69966,10 +69978,10 @@
       "dateIso": null
     },
     "AMB5617860": {
-      "hcp": 17.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 17,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM11897404": {
       "hcp": 21,
@@ -69978,10 +69990,10 @@
       "dateIso": null
     },
     "AMD7775833": {
-      "hcp": 23.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 22.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00612895": {
       "hcp": 16.4,
@@ -70004,8 +70016,8 @@
     "AM22992232": {
       "hcp": 13.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMI5893633": {
       "hcp": 18.7,
@@ -70014,10 +70026,10 @@
       "dateIso": null
     },
     "AM22979708": {
-      "hcp": 20.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 20.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMC8968943": {
       "hcp": 28.1,
@@ -70062,10 +70074,10 @@
       "dateIso": null
     },
     "AM22982047": {
-      "hcp": 35.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 36.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMB5070030": {
       "hcp": 13,
@@ -70116,10 +70128,10 @@
       "dateIso": null
     },
     "AM22076201": {
-      "hcp": 11.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "hcp": 11.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "TAM2205060": {
       "hcp": 21.9,
@@ -70142,8 +70154,8 @@
     "AM22992233": {
       "hcp": 12.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "TAM2204657": {
       "hcp": 19.9,
@@ -70153,9 +70165,9 @@
     },
     "AM22467828": {
       "hcp": 26.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 67952,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "TAM2262636": {
       "hcp": 22,
@@ -70416,10 +70428,10 @@
       "dateIso": null
     },
     "CM61154278": {
-      "hcp": 18.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 18.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM12365252": {
       "hcp": 19.9,
@@ -70704,10 +70716,10 @@
       "dateIso": "2026-04-27"
     },
     "CM41887505": {
-      "hcp": 19.6,
+      "hcp": 18.5,
       "source": "nextcaddy-lb",
-      "tourneyId": 67977,
-      "dateIso": null
+      "tourneyId": 72508,
+      "dateIso": "2026-07-24"
     },
     "CM02944522": {
       "hcp": 20.7,
@@ -72552,10 +72564,10 @@
       "dateIso": null
     },
     "AM05617975": {
-      "hcp": 7.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68024,
-      "dateIso": null
+      "hcp": 7.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM56639071": {
       "hcp": 13.6,
@@ -73830,16 +73842,16 @@
       "dateIso": null
     },
     "AMG1799938": {
-      "hcp": 28.8,
+      "hcp": 30.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 68079,
-      "dateIso": null
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMG1328068": {
-      "hcp": 14.8,
+      "hcp": 18,
       "source": "nextcaddy-insc",
-      "tourneyId": 68079,
-      "dateIso": null
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMG1619277": {
       "hcp": 14.3,
@@ -73860,10 +73872,10 @@
       "dateIso": null
     },
     "AMG1604659": {
-      "hcp": 13.6,
+      "hcp": 17,
       "source": "nextcaddy-insc",
-      "tourneyId": 68079,
-      "dateIso": null
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMG1346956": {
       "hcp": 28,
@@ -73915,9 +73927,9 @@
     },
     "CM00288854": {
       "hcp": 5.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68134,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM861445-P": {
       "hcp": 8.1,
@@ -76638,10 +76650,10 @@
       "dateIso": null
     },
     "CMF3114295": {
-      "hcp": 7.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68228,
-      "dateIso": null
+      "hcp": 3.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM04066810": {
       "hcp": 2.7,
@@ -76746,10 +76758,10 @@
       "dateIso": null
     },
     "CM02127232": {
-      "hcp": 6.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68228,
-      "dateIso": null
+      "hcp": 5.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "LV73340177": {
       "hcp": 1.6,
@@ -76926,10 +76938,10 @@
       "dateIso": null
     },
     "CM52016982": {
-      "hcp": 5.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68228,
-      "dateIso": null
+      "hcp": 6.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "GC51014684": {
       "hcp": 7.2,
@@ -76946,8 +76958,8 @@
     "CM01024990": {
       "hcp": 2.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 68228,
-      "dateIso": null
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CM04305055": {
       "hcp": 3.3,
@@ -77318,8 +77330,8 @@
     "CM41518697": {
       "hcp": 54,
       "source": "nextcaddy-lb",
-      "tourneyId": 72311,
-      "dateIso": "2026-07-17"
+      "tourneyId": 72506,
+      "dateIso": "2026-07-24"
     },
     "CM18035682": {
       "hcp": 42,
@@ -77412,10 +77424,10 @@
       "dateIso": "2026-05-12"
     },
     "CM04045168": {
-      "hcp": 6.4,
+      "hcp": 3.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 68233,
-      "dateIso": "2026-05-12"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM07494609": {
       "hcp": 12.8,
@@ -77880,16 +77892,16 @@
       "dateIso": null
     },
     "CM61128192": {
-      "hcp": 11.5,
-      "source": "nextcaddy-insc",
-      "tourneyId": 70412,
-      "dateIso": "2026-04-29"
+      "hcp": 11.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CMA8887112": {
-      "hcp": 14.1,
-      "source": "nextcaddy-insc",
-      "tourneyId": 71228,
-      "dateIso": "2026-05-30"
+      "hcp": 13,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "CM61036660": {
       "hcp": 54,
@@ -78624,28 +78636,28 @@
       "dateIso": "2026-07-02"
     },
     "CM61150551": {
-      "hcp": 20.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 20.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM51144461": {
-      "hcp": 22,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 21.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02006659": {
       "hcp": 10.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05111272": {
-      "hcp": 18.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 18.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "10-02-26 08:27": {
       "hcp": 7.3,
@@ -79284,10 +79296,10 @@
       "dateIso": null
     },
     "BP13927933": {
-      "hcp": 3.606,
+      "hcp": 1.2,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "EXX1911848": {
       "hcp": 6.8,
@@ -80652,10 +80664,10 @@
       "dateIso": null
     },
     "AMD5518776": {
-      "hcp": 12.6,
+      "hcp": 12.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72338,
-      "dateIso": "2026-07-16"
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "AM86468382": {
       "hcp": 19.9,
@@ -80748,10 +80760,10 @@
       "dateIso": "2026-06-27"
     },
     "AM76086891": {
-      "hcp": 26.7,
+      "hcp": 26.4,
       "source": "nextcaddy-lb",
-      "tourneyId": 72193,
-      "dateIso": "2026-07-08"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76971494": {
       "hcp": 12,
@@ -81427,9 +81439,9 @@
     },
     "CM02158043": {
       "hcp": 23.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05146075": {
       "hcp": 26.5,
@@ -83010,10 +83022,10 @@
       "dateIso": null
     },
     "AM05167477": {
-      "hcp": 15.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 14.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05055119": {
       "hcp": 5.6,
@@ -83142,10 +83154,10 @@
       "dateIso": null
     },
     "AM76977650": {
-      "hcp": 20.8,
+      "hcp": 20.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76805450": {
       "hcp": 25.1,
@@ -83174,8 +83186,8 @@
     "AM76421011": {
       "hcp": 14.1,
       "source": "nextcaddy-lb",
-      "tourneyId": 72234,
-      "dateIso": "2026-07-11"
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
     },
     "AM76515362": {
       "hcp": 19.4,
@@ -84432,10 +84444,10 @@
       "dateIso": "2026-06-28"
     },
     "AM22941675": {
-      "hcp": 18.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "hcp": 18.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "21-02-26 14:18": {
       "hcp": 17.2,
@@ -85525,9 +85537,9 @@
     },
     "AM05233386": {
       "hcp": 21,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "GC07075525": {
       "hcp": 18.9,
@@ -85620,10 +85632,10 @@
       "dateIso": null
     },
     "GC07443224": {
-      "hcp": 20.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68672,
-      "dateIso": null
+      "hcp": 20.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "25-02-26 08:35": {
       "hcp": 27.5,
@@ -87818,8 +87830,8 @@
     "CM00290305": {
       "hcp": 14.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 68796,
-      "dateIso": null
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "AM00946686": {
       "hcp": 18.4,
@@ -88578,13 +88590,13 @@
       "dateIso": "2021-04-15"
     },
     "GC53981926": {
-      "hcp": 5.2,
+      "hcp": 3.7,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
     },
     "GC59942335": {
-      "hcp": 6,
+      "hcp": 5.5,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -89354,14 +89366,14 @@
     "AM05498895": {
       "hcp": 21.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 68934,
-      "dateIso": null
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05247223": {
-      "hcp": 11.7,
+      "hcp": 11.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 68934,
-      "dateIso": null
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05147063": {
       "hcp": 22.2,
@@ -89498,8 +89510,8 @@
     "AME7506492": {
       "hcp": 7.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 71203,
-      "dateIso": "2026-05-30"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM18992200": {
       "hcp": 30.5,
@@ -89808,10 +89820,10 @@
       "dateIso": null
     },
     "CM52044940": {
-      "hcp": 3.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72304,
-      "dateIso": "2026-07-15"
+      "hcp": 3.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AMC3961265": {
       "hcp": 21.9,
@@ -90470,14 +90482,14 @@
     "AM05150572": {
       "hcp": 6.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02042900": {
       "hcp": 15,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05019877": {
       "hcp": 13.4,
@@ -90511,9 +90523,9 @@
     },
     "AM05016001": {
       "hcp": 10.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05059565": {
       "hcp": 12.5,
@@ -90571,9 +90583,9 @@
     },
     "AM69137364": {
       "hcp": 26.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 68947,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM00764113": {
       "hcp": 26.6,
@@ -90642,16 +90654,16 @@
       "dateIso": null
     },
     "AM02067648": {
-      "hcp": 19.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72081,
-      "dateIso": "2026-07-03"
+      "hcp": 19.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "CM01062769": {
       "hcp": 24.2,
       "source": "nextcaddy-lb",
-      "tourneyId": 68947,
-      "dateIso": null
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
     },
     "AM06611857": {
       "hcp": 20.8,
@@ -91584,7 +91596,7 @@
       "dateIso": null
     },
     "MM06068945": {
-      "hcp": 11.3,
+      "hcp": 10.5,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -92088,16 +92100,16 @@
       "dateIso": null
     },
     "AM05149055": {
-      "hcp": 16.8,
+      "hcp": 17.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 71300,
-      "dateIso": "2026-06-03"
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05606805": {
-      "hcp": 16.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 16.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05099345": {
       "hcp": 15.6,
@@ -94489,9 +94501,9 @@
     },
     "AM05354290": {
       "hcp": 12.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05043397": {
       "hcp": 5.1,
@@ -94501,9 +94513,9 @@
     },
     "AM05351550": {
       "hcp": 19,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM84976764": {
       "hcp": 19.5,
@@ -94518,10 +94530,10 @@
       "dateIso": "2026-03-14"
     },
     "AM02155063": {
-      "hcp": 19,
+      "hcp": 19.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 69094,
-      "dateIso": "2026-03-14"
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM05166402": {
       "hcp": 11.2,
@@ -94532,14 +94544,14 @@
     "AM05000159": {
       "hcp": 28,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05504962": {
       "hcp": 10.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AMC8747156": {
       "hcp": 16.4,
@@ -94548,10 +94560,10 @@
       "dateIso": null
     },
     "AM93783598": {
-      "hcp": 17.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 69107,
-      "dateIso": null
+      "hcp": 19.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMH1173761": {
       "hcp": 38.6,
@@ -94560,10 +94572,10 @@
       "dateIso": null
     },
     "AM93606292": {
-      "hcp": 21.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 69107,
-      "dateIso": null
+      "hcp": 23.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00082623": {
       "hcp": 38.6,
@@ -95442,10 +95454,10 @@
       "dateIso": null
     },
     "AMD5492066": {
-      "hcp": 25.4,
-      "source": "nextcaddy-insc",
-      "tourneyId": 72269,
-      "dateIso": "2026-07-13"
+      "hcp": 25.2,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72502,
+      "dateIso": "2026-07-23"
     },
     "9901988332": {
       "hcp": 48.7,
@@ -96510,7 +96522,7 @@
       "dateIso": null
     },
     "MM06983647": {
-      "hcp": 10.5,
+      "hcp": 11.1,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -96540,7 +96552,7 @@
       "dateIso": "2026-06-26"
     },
     "8808973934": {
-      "hcp": 18.9,
+      "hcp": 16.2,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -96968,8 +96980,8 @@
     "AM05153979": {
       "hcp": 6.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 72312,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AMG3468785": {
       "hcp": 22.9,
@@ -97046,14 +97058,14 @@
     "AM02324303": {
       "hcp": 1,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02153969": {
-      "hcp": 19.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 19.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AMG3973878": {
       "hcp": 36,
@@ -97064,8 +97076,8 @@
     "VB04728717": {
       "hcp": 12.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 69266,
-      "dateIso": null
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "CM18078777": {
       "hcp": 34,
@@ -98012,8 +98024,8 @@
     "TAM2235795": {
       "hcp": 28,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "TAM2216479": {
       "hcp": 28,
@@ -99198,10 +99210,10 @@
       "dateIso": null
     },
     "AM05325355": {
-      "hcp": 30.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 30.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "24-03-26 08:39": {
       "hcp": 20,
@@ -99894,10 +99906,10 @@
       "dateIso": "2026-07-24"
     },
     "4401442096": {
-      "hcp": 6,
+      "hcp": 6.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 70454,
-      "dateIso": "2026-05-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401789073": {
       "hcp": 21.6,
@@ -100080,10 +100092,10 @@
       "dateIso": "2026-07-11"
     },
     "CM02639720": {
-      "hcp": 12.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 11.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM01385578": {
       "hcp": 7.6,
@@ -100104,16 +100116,16 @@
       "dateIso": null
     },
     "CM61150581": {
-      "hcp": 8.2,
+      "hcp": 8.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 69401,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CM05012724": {
-      "hcp": 4.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 4.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM02389322": {
       "hcp": 28.8,
@@ -100188,10 +100200,10 @@
       "dateIso": "2026-07-18"
     },
     "AM05292380": {
-      "hcp": 23,
+      "hcp": 23.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 69401,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CM11100906": {
       "hcp": 5.6,
@@ -101498,8 +101510,8 @@
     "AM22352977": {
       "hcp": 25.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "27-03-26 12:49": {
       "hcp": 21.2,
@@ -101616,10 +101628,10 @@
       "dateIso": null
     },
     "AM05926562": {
-      "hcp": 32.5,
+      "hcp": 18.9,
       "source": "nextcaddy-lb",
-      "tourneyId": 69481,
-      "dateIso": null
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "AM05977027": {
       "hcp": 42.1,
@@ -101634,10 +101646,10 @@
       "dateIso": null
     },
     "AMC3977026": {
-      "hcp": 22.7,
+      "hcp": 21.5,
       "source": "nextcaddy-lb",
-      "tourneyId": 72159,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "CM18995620": {
       "hcp": 24.1,
@@ -102474,16 +102486,16 @@
       "dateIso": "2026-07-04"
     },
     "CM11749765": {
-      "hcp": 9.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 69544,
-      "dateIso": null
+      "hcp": 8.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CMA8985648": {
       "hcp": 20.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 69544,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02970977": {
       "hcp": 13.2,
@@ -103220,8 +103232,8 @@
     "4401234676": {
       "hcp": 23,
       "source": "nextcaddy-insc",
-      "tourneyId": 72369,
-      "dateIso": "2026-07-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401240551": {
       "hcp": 15.4,
@@ -105176,14 +105188,14 @@
     "AM02779523": {
       "hcp": 18.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 72461,
+      "dateIso": "2026-08-05"
     },
     "AM02322490": {
       "hcp": 18.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02489461": {
       "hcp": 21.5,
@@ -105200,8 +105212,8 @@
     "AM02971094": {
       "hcp": 15.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02808610": {
       "hcp": 23.7,
@@ -105254,8 +105266,8 @@
     "AM02699759": {
       "hcp": 19.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "CMA8155048": {
       "hcp": 34,
@@ -105272,14 +105284,14 @@
     "AM70250110": {
       "hcp": 18.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
     },
     "AM02070333": {
       "hcp": 0,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02940246": {
       "hcp": 14.1,
@@ -105290,8 +105302,8 @@
     "CM00291708": {
       "hcp": 25,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
     },
     "AMG3754466": {
       "hcp": 17.1,
@@ -105320,8 +105332,8 @@
     "AM00506467": {
       "hcp": 6,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05247224": {
       "hcp": 11.8,
@@ -105356,8 +105368,8 @@
     "AM02822127": {
       "hcp": 16.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
     },
     "AMH8606871": {
       "hcp": 22.2,
@@ -105404,8 +105416,8 @@
     "AM02137208": {
       "hcp": 9.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02970428": {
       "hcp": 17.3,
@@ -105474,10 +105486,10 @@
       "dateIso": null
     },
     "AM05249039": {
-      "hcp": 2.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 2.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM85918571": {
       "hcp": 16.7,
@@ -105506,14 +105518,14 @@
     "AM02167778": {
       "hcp": 25.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02773029": {
-      "hcp": 9.9,
+      "hcp": 9.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 69682,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02766354": {
       "hcp": 13.9,
@@ -105530,8 +105542,8 @@
     "AM05249071": {
       "hcp": 17.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 72313,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM00895580": {
       "hcp": 19.5,
@@ -105608,8 +105620,8 @@
     "AM02054959": {
       "hcp": 17.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 72034,
-      "dateIso": "2026-07-03"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM05614462": {
       "hcp": 7.8,
@@ -106218,10 +106230,10 @@
       "dateIso": "2026-05-17"
     },
     "4405976229": {
-      "hcp": 7.3,
+      "hcp": 7.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 70454,
-      "dateIso": "2026-05-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4402967124": {
       "hcp": 7.3,
@@ -106272,10 +106284,10 @@
       "dateIso": null
     },
     "4401184809": {
-      "hcp": 3.6,
-      "source": "nextcaddy-lb",
-      "tourneyId": 69705,
-      "dateIso": null
+      "hcp": 3.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4411442403": {
       "hcp": 11.3,
@@ -108788,8 +108800,8 @@
     "AM05024580": {
       "hcp": 7.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 72312,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM00762129": {
       "hcp": 12.3,
@@ -108842,8 +108854,8 @@
     "AM05894587": {
       "hcp": 5.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM02600418": {
       "hcp": 16.6,
@@ -109860,10 +109872,10 @@
       "dateIso": "2026-07-22"
     },
     "4402926951": {
-      "hcp": 6.5,
+      "hcp": 6.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72447,
-      "dateIso": "2026-07-22"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "RL04914816": {
       "hcp": 7.477,
@@ -109902,16 +109914,16 @@
       "dateIso": null
     },
     "RL06081519": {
-      "hcp": 12.8,
+      "hcp": 12,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "AMB5891481": {
-      "hcp": 28.4,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72345,
-      "dateIso": "2026-07-18"
+      "hcp": 28.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "TAM2201438": {
       "hcp": 2.9,
@@ -111198,10 +111210,10 @@
       "dateIso": "2026-05-17"
     },
     "4402282430": {
-      "hcp": 14.5,
+      "hcp": 15.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 70454,
-      "dateIso": "2026-05-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401448626": {
       "hcp": 18.9,
@@ -111918,10 +111930,10 @@
       "dateIso": null
     },
     "AM85769836": {
-      "hcp": 17.1,
+      "hcp": 18.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 70196,
-      "dateIso": null
+      "tourneyId": 72461,
+      "dateIso": "2026-08-05"
     },
     "AM29033625": {
       "hcp": 36,
@@ -112158,10 +112170,10 @@
       "dateIso": null
     },
     "AM85701671": {
-      "hcp": 14.8,
+      "hcp": 14.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 70196,
-      "dateIso": null
+      "tourneyId": 72461,
+      "dateIso": "2026-08-05"
     },
     "AM02603562": {
       "hcp": 15.3,
@@ -114294,10 +114306,10 @@
       "dateIso": "2026-04-28"
     },
     "CM07392699": {
-      "hcp": 13,
+      "hcp": 12.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 70285,
-      "dateIso": "2026-04-28"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM61240353": {
       "hcp": 14.7,
@@ -114337,15 +114349,15 @@
     },
     "AM02360180": {
       "hcp": 0.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70298,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05796207": {
       "hcp": 15,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "VB01108926": {
       "hcp": 16.6,
@@ -114642,10 +114654,10 @@
       "dateIso": null
     },
     "4401260209": {
-      "hcp": 8.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70340,
-      "dateIso": null
+      "hcp": 7.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "AME8619294": {
       "hcp": 18.4,
@@ -115662,10 +115674,10 @@
       "dateIso": null
     },
     "AM02822130": {
-      "hcp": 11.6,
+      "hcp": 11.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 70377,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM00919204": {
       "hcp": 15.4,
@@ -115778,8 +115790,8 @@
     "AM02616420": {
       "hcp": 13.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 70377,
-      "dateIso": null
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM95174819": {
       "hcp": 19.1,
@@ -116120,8 +116132,8 @@
     "VB04728814": {
       "hcp": 15.8,
       "source": "nextcaddy-insc",
-      "tourneyId": 70378,
-      "dateIso": null
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
     },
     "LV00929585": {
       "hcp": 15.9,
@@ -116258,8 +116270,8 @@
     "AM02954654": {
       "hcp": 15.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 70379,
-      "dateIso": null
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM95970078": {
       "hcp": 10,
@@ -116336,8 +116348,8 @@
     "AM02773310": {
       "hcp": 12.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 72375,
-      "dateIso": "2026-07-30"
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
     },
     "AM85168659": {
       "hcp": 4.2,
@@ -116424,10 +116436,10 @@
       "dateIso": null
     },
     "CM52014143": {
-      "hcp": 13.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70391,
-      "dateIso": null
+      "hcp": 12.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "CM07977570": {
       "hcp": 21.3,
@@ -117396,10 +117408,10 @@
       "dateIso": "2026-05-24"
     },
     "4402009690": {
-      "hcp": 1.8,
+      "hcp": 0.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 70454,
-      "dateIso": "2026-05-24"
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401018397": {
       "hcp": 6.3,
@@ -120371,7 +120383,7 @@
       "tourneyId": 70614,
       "dateIso": "2026-05-17"
     },
-    "0230150287": {
+    "4401150287": {
       "hcp": 13.4,
       "source": "nextcaddy-insc",
       "tourneyId": 70614,
@@ -125790,10 +125802,10 @@
       "dateIso": null
     },
     "CP02018095": {
-      "hcp": 12.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70961,
-      "dateIso": null
+      "hcp": 12.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "CM02259160": {
       "hcp": 6.1,
@@ -125887,9 +125899,9 @@
     },
     "AM02012986": {
       "hcp": 23.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "20-05-26 09:30": {
       "hcp": 31.8,
@@ -126109,15 +126121,15 @@
     },
     "AMI5979862": {
       "hcp": 24.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMD7773268": {
       "hcp": 32.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72116,
-      "dateIso": "2026-07-04"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM70889803": {
       "hcp": 21.6,
@@ -126132,10 +126144,10 @@
       "dateIso": null
     },
     "AM22051843": {
-      "hcp": 27.5,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "hcp": 25.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22526483": {
       "hcp": 22.5,
@@ -126145,9 +126157,9 @@
     },
     "AM22063796": {
       "hcp": 22.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMJ1517458": {
       "hcp": 25,
@@ -126157,9 +126169,9 @@
     },
     "AM22520868": {
       "hcp": 23,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22526450": {
       "hcp": 25,
@@ -126175,9 +126187,9 @@
     },
     "AM22526423": {
       "hcp": 26,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22982484": {
       "hcp": 19.2,
@@ -126192,16 +126204,16 @@
       "dateIso": null
     },
     "AM83941677": {
-      "hcp": 6,
-      "source": "rfegolf",
-      "tourneyId": 15129,
-      "dateIso": "2023-02-10"
+      "hcp": 5.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22978702": {
       "hcp": 9.7,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22030104": {
       "hcp": 16,
@@ -126216,10 +126228,10 @@
       "dateIso": null
     },
     "AM22485056": {
-      "hcp": 15.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "hcp": 17.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM00973714": {
       "hcp": 11.5,
@@ -126228,10 +126240,10 @@
       "dateIso": null
     },
     "AM22495286": {
-      "hcp": 14,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "hcp": 15,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AMH1883572": {
       "hcp": 7.9,
@@ -126260,20 +126272,20 @@
     "AM22377165": {
       "hcp": 15.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22495317": {
-      "hcp": 34.2,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "hcp": 31.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22012776": {
-      "hcp": 38,
-      "source": "nextcaddy-lb",
-      "tourneyId": 70990,
-      "dateIso": null
+      "hcp": 39.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22471349": {
       "hcp": 27.7,
@@ -126391,6 +126403,12 @@
     },
     "4401002159": {
       "hcp": 23.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 70997,
+      "dateIso": null
+    },
+    "0230150287": {
+      "hcp": 13,
       "source": "nextcaddy-insc",
       "tourneyId": 70997,
       "dateIso": null
@@ -127014,10 +127032,10 @@
       "dateIso": null
     },
     "AM02813082": {
-      "hcp": 21.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 71060,
-      "dateIso": null
+      "hcp": 22,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72461,
+      "dateIso": "2026-08-05"
     },
     "AMD5214346": {
       "hcp": 13.4,
@@ -128876,8 +128894,8 @@
     "AM05198902": {
       "hcp": 6.4,
       "source": "nextcaddy-insc",
-      "tourneyId": 72312,
-      "dateIso": "2026-07-14"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM00310796": {
       "hcp": 26,
@@ -130956,10 +130974,10 @@
       "dateIso": null
     },
     "AM00908893": {
-      "hcp": 15.7,
-      "source": "nextcaddy-lb",
-      "tourneyId": 71309,
-      "dateIso": null
+      "hcp": 14.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72485,
+      "dateIso": "2026-08-06"
     },
     "AM15791885": {
       "hcp": 0.2,
@@ -133284,10 +133302,10 @@
       "dateIso": null
     },
     "4402815492": {
-      "hcp": -1.1,
-      "source": "rfegolf",
-      "tourneyId": 15239,
-      "dateIso": "2023-04-02"
+      "hcp": 0.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "4401072734": {
       "hcp": 4,
@@ -136472,8 +136490,8 @@
     "AM05146079": {
       "hcp": 5.2,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "GC00428853": {
       "hcp": 14.1,
@@ -136494,16 +136512,16 @@
       "dateIso": "2026-07-04"
     },
     "AM05044120": {
-      "hcp": 6.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 6.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05097176": {
       "hcp": 12.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 71758,
-      "dateIso": "2026-07-04"
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05106083": {
       "hcp": 24.1,
@@ -137666,14 +137684,14 @@
     "0106645855": {
       "hcp": 11.3,
       "source": "nextcaddy-insc",
-      "tourneyId": 71880,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "0106431124": {
-      "hcp": 17.3,
+      "hcp": 17.5,
       "source": "nextcaddy-insc",
-      "tourneyId": 71880,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "0106422971": {
       "hcp": 21.6,
@@ -137712,10 +137730,10 @@
       "dateIso": null
     },
     "0102976702": {
-      "hcp": 17.7,
+      "hcp": 17.1,
       "source": "nextcaddy-insc",
-      "tourneyId": 71880,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "0102062733": {
       "hcp": 15.2,
@@ -137808,10 +137826,10 @@
       "dateIso": null
     },
     "0102775109": {
-      "hcp": 12.4,
+      "hcp": 11.6,
       "source": "nextcaddy-insc",
-      "tourneyId": 71880,
-      "dateIso": null
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
     },
     "0206930531": {
       "hcp": 17.4,
@@ -138737,6 +138755,60 @@
       "tourneyId": 71966,
       "dateIso": "2026-06-28"
     },
+    "AM02912010": {
+      "hcp": 17.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "AM02783408": {
+      "hcp": 26.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "AM02797163": {
+      "hcp": 25.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "CM04293724": {
+      "hcp": 19.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "9906191060": {
+      "hcp": 0.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "CM01280923": {
+      "hcp": 15.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "AM06611340": {
+      "hcp": 10.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "AM06974650": {
+      "hcp": 15.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
+    "CM81304137": {
+      "hcp": 30.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 71990,
+      "dateIso": "2026-08-18"
+    },
     "AM95633753": {
       "hcp": 17.2,
       "source": "nextcaddy-insc",
@@ -139069,9 +139141,9 @@
     },
     "AM02249748": {
       "hcp": 22.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72081,
-      "dateIso": "2026-07-03"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM02148244": {
       "hcp": 14.1,
@@ -139081,9 +139153,9 @@
     },
     "AM02078928": {
       "hcp": 17.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72081,
-      "dateIso": "2026-07-03"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM02771919": {
       "hcp": 18.8,
@@ -139117,9 +139189,9 @@
     },
     "AM02011791": {
       "hcp": 14.9,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72081,
-      "dateIso": "2026-07-03"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
     },
     "AM02062515": {
       "hcp": 29.3,
@@ -139200,10 +139272,10 @@
       "dateIso": "2026-07-18"
     },
     "AM05180205": {
-      "hcp": 30.7,
+      "hcp": 23.7,
       "source": "nextcaddy-lb",
-      "tourneyId": 72159,
-      "dateIso": "2026-07-07"
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "AM05411748": {
       "hcp": 54,
@@ -139290,10 +139362,10 @@
       "dateIso": "2026-07-11"
     },
     "CMB2949607": {
-      "hcp": 29,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 27.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05604532": {
       "hcp": 21.7,
@@ -139344,16 +139416,16 @@
       "dateIso": "2026-07-11"
     },
     "CM01345200": {
-      "hcp": 21.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 22.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02358481": {
       "hcp": 17.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05145472": {
       "hcp": 17.5,
@@ -139362,10 +139434,10 @@
       "dateIso": "2026-07-11"
     },
     "AM05472666": {
-      "hcp": 21.8,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "hcp": 10.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05508737": {
       "hcp": 28,
@@ -139404,10 +139476,10 @@
       "dateIso": "2026-07-11"
     },
     "0200488947": {
-      "hcp": 28.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "hcp": 24.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05614329": {
       "hcp": 28.6,
@@ -139501,9 +139573,9 @@
     },
     "AM05043388": {
       "hcp": 14.1,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72169,
-      "dateIso": "2026-07-11"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM02016152": {
       "hcp": 5.7,
@@ -140851,9 +140923,9 @@
     },
     "AM02320234": {
       "hcp": 21,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM06978548": {
       "hcp": 25.1,
@@ -140875,9 +140947,9 @@
     },
     "AM51101702": {
       "hcp": 9.3,
-      "source": "nextcaddy-lb",
-      "tourneyId": 72342,
-      "dateIso": "2026-07-18"
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
     },
     "AM05167607": {
       "hcp": 16.6,
@@ -141038,8 +141110,8 @@
     "EXX1912125": {
       "hcp": 6.9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM010327-P": {
       "hcp": 0,
@@ -141050,8 +141122,8 @@
     "TAM2203468": {
       "hcp": 9,
       "source": "nextcaddy-insc",
-      "tourneyId": 72344,
-      "dateIso": "2026-07-19"
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
     },
     "AM22940655": {
       "hcp": 15.6,
@@ -141376,6 +141448,810 @@
       "source": "nextcaddy-insc",
       "tourneyId": 72448,
       "dateIso": "2026-07-22"
+    },
+    "AM76530407": {
+      "hcp": 26,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72453,
+      "dateIso": "2026-07-21"
+    },
+    "AM02061673": {
+      "hcp": 32.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72461,
+      "dateIso": "2026-08-05"
+    },
+    "AM02972581": {
+      "hcp": 16.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
+    },
+    "AM02050440": {
+      "hcp": 18.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
+    },
+    "AM02370200": {
+      "hcp": 25.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
+    },
+    "CM41475297": {
+      "hcp": 21.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
+    },
+    "CMD4994752": {
+      "hcp": 33.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72462,
+      "dateIso": "2026-08-06"
+    },
+    "AM02781981": {
+      "hcp": 13.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02471551": {
+      "hcp": 24,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02313023": {
+      "hcp": 7.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02916974": {
+      "hcp": 13.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM05909306": {
+      "hcp": 18.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02605435": {
+      "hcp": 7.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02166879": {
+      "hcp": 7.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM05059968": {
+      "hcp": 8.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM05055135": {
+      "hcp": 9.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "CM02754679": {
+      "hcp": 10.6,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "CM00159709": {
+      "hcp": 18,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM05164483": {
+      "hcp": 9.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02342387": {
+      "hcp": 18.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM03184711": {
+      "hcp": 10.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM02982666": {
+      "hcp": 22.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "AM05183518": {
+      "hcp": 4.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "CM01142517": {
+      "hcp": 15.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "CM01818327": {
+      "hcp": 19.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "CM00315739": {
+      "hcp": 6.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72482,
+      "dateIso": "2026-07-24"
+    },
+    "VB04221848": {
+      "hcp": 4.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "VB02009037": {
+      "hcp": 8.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "VB02200399": {
+      "hcp": 1.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AM02197654": {
+      "hcp": 13,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AM86234848": {
+      "hcp": 3.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CM18797781": {
+      "hcp": 13.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CMA8484879": {
+      "hcp": 8.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AM17279948": {
+      "hcp": 10.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CM00512382": {
+      "hcp": 4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AME7910393": {
+      "hcp": 17.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AME7910394": {
+      "hcp": 23.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CB79057541": {
+      "hcp": 21.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CB79058690": {
+      "hcp": 34.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CM22251526": {
+      "hcp": 16.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "CM00513297": {
+      "hcp": 19.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72489,
+      "dateIso": "2026-08-09"
+    },
+    "AMB2499829": {
+      "hcp": 30.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "ML05939314": {
+      "hcp": 16.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "CM41626208": {
+      "hcp": 13.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "CM00300527": {
+      "hcp": 16.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM22519178": {
+      "hcp": 18.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM57343927": {
+      "hcp": 13.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "CM04186744": {
+      "hcp": 24.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMG1605878": {
+      "hcp": 18.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMG1970639": {
+      "hcp": 21.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMG1606739": {
+      "hcp": 22.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMB2474043": {
+      "hcp": 26.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM49897063": {
+      "hcp": 26.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMB2480998": {
+      "hcp": 36.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "EXX1912161": {
+      "hcp": 19.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMG1050672": {
+      "hcp": 16.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM22051852": {
+      "hcp": 34.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "EXX1467771": {
+      "hcp": 28.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM75966556": {
+      "hcp": 19.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMC4896449": {
+      "hcp": 30.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "CM04186743": {
+      "hcp": 32.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AM22618091": {
+      "hcp": 27.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "EXX1912166": {
+      "hcp": 31.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "EXX1912167": {
+      "hcp": 31.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "EXX1467772": {
+      "hcp": 31.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "AMB2978669": {
+      "hcp": 28.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72496,
+      "dateIso": "2026-07-25"
+    },
+    "CM00893208": {
+      "hcp": 14.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM02910281": {
+      "hcp": 22.6,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM11397950": {
+      "hcp": 3.5,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM00353135": {
+      "hcp": 29.3,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01053661": {
+      "hcp": 34,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM02164454": {
+      "hcp": 22.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM00188533": {
+      "hcp": 25.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CMD4477352": {
+      "hcp": 30,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM04495074": {
+      "hcp": 34,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "BP00223056": {
+      "hcp": 3.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01636514": {
+      "hcp": 5.9,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "AM29911529": {
+      "hcp": 11.9,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01768497": {
+      "hcp": 11.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01815248": {
+      "hcp": 9.3,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "4401973200": {
+      "hcp": 13.3,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01514979": {
+      "hcp": 35,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM02309899": {
+      "hcp": 19.5,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01675762": {
+      "hcp": 23.2,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CMA8978155": {
+      "hcp": 22.7,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "AM29968485": {
+      "hcp": 17,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "AM17185514": {
+      "hcp": 8.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM04516865": {
+      "hcp": 30,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01146340": {
+      "hcp": 6.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01304966": {
+      "hcp": 12.2,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM05198031": {
+      "hcp": 21.1,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM02749738": {
+      "hcp": 29.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM02080771": {
+      "hcp": 22.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01141319": {
+      "hcp": 14,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "EXX1912169": {
+      "hcp": 24,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CMD4996927": {
+      "hcp": 30,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM00926114": {
+      "hcp": 23.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM00481428": {
+      "hcp": 9.8,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "CM01813310": {
+      "hcp": 15.9,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "GC08188997": {
+      "hcp": 36,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72497,
+      "dateIso": "2026-07-24"
+    },
+    "AM05014375": {
+      "hcp": 27.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM05255149": {
+      "hcp": 16.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM02779164": {
+      "hcp": 27.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "CM01002930": {
+      "hcp": 18.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM05145473": {
+      "hcp": 12.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM02053383": {
+      "hcp": 15.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM05029564": {
+      "hcp": 22.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "AM02010125": {
+      "hcp": 16.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72501,
+      "dateIso": "2026-07-23"
+    },
+    "0102019474": {
+      "hcp": 8.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "VB05313623": {
+      "hcp": 13.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "VB05690185": {
+      "hcp": 16.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0102023389": {
+      "hcp": 8.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0111390607": {
+      "hcp": 7.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM52097004": {
+      "hcp": 12.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0102243086": {
+      "hcp": 11.4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM04094967": {
+      "hcp": 10.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM04013821": {
+      "hcp": 9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM04945299": {
+      "hcp": 5.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "4408188037": {
+      "hcp": 6.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CP02286973": {
+      "hcp": 11.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM00902013": {
+      "hcp": 9.1,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "4405792009": {
+      "hcp": 5.7,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM07135051": {
+      "hcp": 5.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "4401414406": {
+      "hcp": 5.5,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0102091091": {
+      "hcp": 4,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0102200250": {
+      "hcp": 7.2,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0106247370": {
+      "hcp": 10,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "0106403871": {
+      "hcp": 15.3,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "VB05416300": {
+      "hcp": 18.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CP02060338": {
+      "hcp": 7.9,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM04505762": {
+      "hcp": 11.8,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM07392698": {
+      "hcp": 10,
+      "source": "nextcaddy-insc",
+      "tourneyId": 72524,
+      "dateIso": "2026-08-01"
+    },
+    "CM22024430": {
+      "hcp": 44.5,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
+    },
+    "MM17075747": {
+      "hcp": 19.4,
+      "source": "nextcaddy-lb",
+      "tourneyId": 72529,
+      "dateIso": "2026-07-24"
     },
     "LV35814104": {
       "hcp": -3.3,
@@ -142294,12 +143170,6 @@
       "source": "rfegolf",
       "tourneyId": 13221,
       "dateIso": "2019-10-09"
-    },
-    "4405792009": {
-      "hcp": 3.3,
-      "source": "rfegolf",
-      "tourneyId": 14499,
-      "dateIso": "2022-03-24"
     },
     "CP37902091": {
       "hcp": 4.7,
@@ -143796,10 +144666,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXFRA02": {
-      "hcp": -3.4,
+      "hcp": -4.1,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXNET05": {
       "hcp": -3.7,
@@ -143820,10 +144690,10 @@
       "dateIso": "2024-09-05"
     },
     "XXXXXSWE00": {
-      "hcp": -2.3,
+      "hcp": -2.4,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXAUS07": {
       "hcp": -2.9,
@@ -143850,10 +144720,10 @@
       "dateIso": "2026-09-02"
     },
     "XXXXXAUS01": {
-      "hcp": -3,
+      "hcp": -1.6,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXAUS04": {
       "hcp": -1.2,
@@ -143874,10 +144744,10 @@
       "dateIso": "2023-09-07"
     },
     "XXXXXNOR01": {
-      "hcp": -3.5,
+      "hcp": -3.4,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXDEN01": {
       "hcp": -2,
@@ -143886,10 +144756,10 @@
       "dateIso": "2024-09-05"
     },
     "XXXXXAUS00": {
-      "hcp": -3.1,
+      "hcp": -2.1,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXNOR00": {
       "hcp": -2,
@@ -143934,10 +144804,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXSWE01": {
-      "hcp": -1.4,
+      "hcp": -1.9,
       "source": "rfegolf",
-      "tourneyId": 15383,
-      "dateIso": "2024-09-05"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXNET03": {
       "hcp": -4.9,
@@ -143982,16 +144852,16 @@
       "dateIso": "2021-09-02"
     },
     "XXXXXNET00": {
-      "hcp": -2.9,
+      "hcp": -1.8,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXIRE00": {
-      "hcp": -1.1,
+      "hcp": -1.6,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXFRA00": {
       "hcp": -3.3,
@@ -144006,10 +144876,10 @@
       "dateIso": "2023-09-07"
     },
     "XXXXXNOR02": {
-      "hcp": -0.8,
+      "hcp": -3.2,
       "source": "rfegolf",
-      "tourneyId": 15383,
-      "dateIso": "2024-09-05"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CM11756842": {
       "hcp": -2.7,
@@ -144078,28 +144948,28 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXIRE01": {
-      "hcp": -3.5,
+      "hcp": -0.9,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXBEL01": {
-      "hcp": -0.7,
+      "hcp": -4.9,
       "source": "rfegolf",
-      "tourneyId": 13944,
-      "dateIso": "2021-09-02"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXSCO00": {
-      "hcp": -3.3,
+      "hcp": -4.1,
       "source": "rfegolf",
       "tourneyId": 15923,
       "dateIso": "2026-09-02"
     },
     "XXXXXFRA01": {
-      "hcp": -3,
+      "hcp": -5.6,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CB65777335": {
       "hcp": 3.3,
@@ -145926,10 +146796,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXSWI03": {
-      "hcp": -2.2,
+      "hcp": -1.6,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXENG00": {
       "hcp": -4.1,
@@ -146136,10 +147006,10 @@
       "dateIso": "2022-09-01"
     },
     "XXXXXENG02": {
-      "hcp": -3.3,
+      "hcp": -4.5,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXLAT00": {
       "hcp": 0.3,
@@ -146166,10 +147036,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXIRE02": {
-      "hcp": -0.3,
+      "hcp": -1.1,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXFRA08": {
       "hcp": 1.3,
@@ -146202,10 +147072,10 @@
       "dateIso": "2023-09-07"
     },
     "XXXXXCZE00": {
-      "hcp": -5.2,
+      "hcp": 3.9,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "AM11789277": {
       "hcp": 2,
@@ -146250,10 +147120,10 @@
       "dateIso": "2022-09-01"
     },
     "XXXXXSWI02": {
-      "hcp": -3.2,
+      "hcp": -3.7,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXGER05": {
       "hcp": -3,
@@ -146262,10 +147132,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXSCO01": {
-      "hcp": -6.1,
+      "hcp": -2,
       "source": "rfegolf",
-      "tourneyId": 14955,
-      "dateIso": "2023-09-07"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXGER03": {
       "hcp": -2.8,
@@ -146742,10 +147612,10 @@
       "dateIso": "2021-07-06"
     },
     "0102918067": {
-      "hcp": -0.407,
+      "hcp": 0,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "CBB1896725": {
       "hcp": 16.1,
@@ -146764,12 +147634,6 @@
       "source": "rfegolf",
       "tourneyId": 14527,
       "dateIso": "2021-07-06"
-    },
-    "CM04945299": {
-      "hcp": 11.4,
-      "source": "rfegolf",
-      "tourneyId": 15261,
-      "dateIso": "2023-06-27"
     },
     "CP02045911": {
       "hcp": 16.9,
@@ -147216,10 +148080,10 @@
       "dateIso": "2021-07-06"
     },
     "LV65915604": {
-      "hcp": -0.869,
+      "hcp": -1.5,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "0208911913": {
       "hcp": 6.633,
@@ -147456,7 +148320,7 @@
       "dateIso": "2022-06-28"
     },
     "GC08939553": {
-      "hcp": 1.3,
+      "hcp": 1.1,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -147510,7 +148374,7 @@
       "dateIso": "2024-06-25"
     },
     "GC61935536": {
-      "hcp": 3.5,
+      "hcp": 4.2,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -148236,10 +149100,10 @@
       "dateIso": "2024-03-24"
     },
     "XXXXXSWI01": {
-      "hcp": -1.3,
+      "hcp": -1.8,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXSLK00": {
       "hcp": -1.1,
@@ -148296,10 +149160,10 @@
       "dateIso": "2025-03-20"
     },
     "XXXXXSWI00": {
-      "hcp": -2.9,
+      "hcp": -2.4,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "LV35819214": {
       "hcp": 1,
@@ -148452,7 +149316,7 @@
       "dateIso": "2025-06-25"
     },
     "MM04945181": {
-      "hcp": 4.2,
+      "hcp": 4.4,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -148554,7 +149418,7 @@
       "dateIso": "2026-06-26"
     },
     "GC07958719": {
-      "hcp": 9.7,
+      "hcp": 9.5,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -148668,7 +149532,7 @@
       "dateIso": "2023-06-27"
     },
     "MM04968968": {
-      "hcp": 12.6,
+      "hcp": 12,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -148728,7 +149592,7 @@
       "dateIso": "2026-06-26"
     },
     "0202917137": {
-      "hcp": 9.3,
+      "hcp": 8.9,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -149106,7 +149970,7 @@
       "dateIso": "2022-06-28"
     },
     "0208947258": {
-      "hcp": 12.7,
+      "hcp": 11.9,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -149118,7 +149982,7 @@
       "dateIso": "2023-07-14"
     },
     "0208947260": {
-      "hcp": 8.7,
+      "hcp": 7.6,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -149670,7 +150534,7 @@
       "dateIso": "2023-06-27"
     },
     "0208950462": {
-      "hcp": 10.5,
+      "hcp": 10.9,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -149718,7 +150582,7 @@
       "dateIso": "2024-06-25"
     },
     "GC54974890": {
-      "hcp": 7.8,
+      "hcp": 7.6,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -149832,7 +150696,7 @@
       "dateIso": "2025-06-25"
     },
     "LV01989367": {
-      "hcp": 11.4,
+      "hcp": 10.9,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -150330,10 +151194,10 @@
       "dateIso": "2024-08-29"
     },
     "VB01727018": {
-      "hcp": 0.911,
+      "hcp": -1.7,
       "source": "rfegolf",
-      "tourneyId": 16179,
-      "dateIso": "2026-05-01"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "VB01726871": {
       "hcp": 1.724,
@@ -150612,10 +151476,10 @@
       "dateIso": "2026-03-29"
     },
     "XXXXXIRE03": {
-      "hcp": 2,
+      "hcp": 1,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXITA01": {
       "hcp": 2.2,
@@ -150738,7 +151602,7 @@
       "dateIso": "2024-02-09"
     },
     "GC67954713": {
-      "hcp": 2,
+      "hcp": 1.2,
       "source": "rfegolf",
       "tourneyId": 16231,
       "dateIso": "2026-08-07"
@@ -150774,10 +151638,10 @@
       "dateIso": "2025-05-21"
     },
     "LV35057688": {
-      "hcp": -2.7,
+      "hcp": -2.1,
       "source": "rfegolf",
-      "tourneyId": 16065,
-      "dateIso": "2026-04-23"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "MM23178614": {
       "hcp": -3.2,
@@ -150936,7 +151800,7 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXBEL00": {
-      "hcp": -2.7,
+      "hcp": -2.8,
       "source": "rfegolf",
       "tourneyId": 15923,
       "dateIso": "2026-09-02"
@@ -150944,8 +151808,8 @@
     "XXXXXIRE06": {
       "hcp": -1.9,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXPOR07": {
       "hcp": -1.3,
@@ -150954,16 +151818,16 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXIRE05": {
-      "hcp": -1.1,
+      "hcp": 0.7,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXIRE04": {
-      "hcp": -0.7,
+      "hcp": -2.9,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXPOR02": {
       "hcp": -0.4,
@@ -151020,10 +151884,10 @@
       "dateIso": "2025-09-04"
     },
     "XXXXXSCO02": {
-      "hcp": -2,
+      "hcp": -1.7,
       "source": "rfegolf",
-      "tourneyId": 15526,
-      "dateIso": "2025-09-04"
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
     },
     "XXXXXIRE08": {
       "hcp": -1.4,
@@ -151224,7 +152088,7 @@
       "dateIso": "2024-06-25"
     },
     "GC67954712": {
-      "hcp": 10.7,
+      "hcp": 10.2,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -151434,7 +152298,7 @@
       "dateIso": "2026-06-26"
     },
     "GC59964939": {
-      "hcp": 21.9,
+      "hcp": 21,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -151470,7 +152334,7 @@
       "dateIso": "2025-08-08"
     },
     "GC61000043": {
-      "hcp": 17.3,
+      "hcp": 15.6,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -151512,7 +152376,7 @@
       "dateIso": "2025-08-07"
     },
     "GC05978967": {
-      "hcp": 10,
+      "hcp": 9.2,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -151548,7 +152412,7 @@
       "dateIso": "2026-08-06"
     },
     "GC53471336": {
-      "hcp": 14.2,
+      "hcp": 13.7,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -151566,7 +152430,7 @@
       "dateIso": "2026-06-26"
     },
     "GC59000733": {
-      "hcp": 24.6,
+      "hcp": 22.8,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -152075,6 +152939,12 @@
       "tourneyId": 15923,
       "dateIso": "2026-09-02"
     },
+    "AM16487387": {
+      "hcp": -0.1,
+      "source": "rfegolf",
+      "tourneyId": 15923,
+      "dateIso": "2026-09-02"
+    },
     "LV35885160": {
       "hcp": -2.3,
       "source": "rfegolf",
@@ -152130,7 +153000,7 @@
       "dateIso": "2026-06-26"
     },
     "GC51968993": {
-      "hcp": 18,
+      "hcp": 17.3,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -152196,7 +153066,7 @@
       "dateIso": "2025-06-25"
     },
     "LV01989369": {
-      "hcp": 12.1,
+      "hcp": 12.2,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -152220,7 +153090,7 @@
       "dateIso": "2026-06-26"
     },
     "VB04731210": {
-      "hcp": 15.9,
+      "hcp": 14.3,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -152232,7 +153102,7 @@
       "dateIso": "2025-06-25"
     },
     "GC03959637": {
-      "hcp": 13,
+      "hcp": 12,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -152298,7 +153168,7 @@
       "dateIso": "2026-06-26"
     },
     "LV02980817": {
-      "hcp": 15.3,
+      "hcp": 14.6,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -152364,7 +153234,7 @@
       "dateIso": "2026-06-26"
     },
     "GC51305815": {
-      "hcp": 24.8,
+      "hcp": 22.8,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -152436,13 +153306,13 @@
       "dateIso": "2026-06-26"
     },
     "GC07099319": {
-      "hcp": 10.7,
+      "hcp": 10.8,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
     },
     "GC03980014": {
-      "hcp": 6.5,
+      "hcp": 5.3,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -152454,7 +153324,7 @@
       "dateIso": "2025-06-25"
     },
     "GC51969363": {
-      "hcp": 19.8,
+      "hcp": 18.5,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -152700,13 +153570,13 @@
       "dateIso": "2025-06-25"
     },
     "GC61197108": {
-      "hcp": 10.6,
+      "hcp": 7.3,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "GC61000216": {
-      "hcp": 27.8,
+      "hcp": 25.9,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -152730,31 +153600,31 @@
       "dateIso": "2026-06-26"
     },
     "GC05250245": {
-      "hcp": 29.3,
+      "hcp": 28.9,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "GC05003134": {
-      "hcp": 22.7,
+      "hcp": 22.3,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "GC61003607": {
-      "hcp": 36.4,
+      "hcp": 34.4,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "LV02169384": {
-      "hcp": 32.1,
+      "hcp": 27.9,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "GC67346558": {
-      "hcp": 36.1,
+      "hcp": 34.7,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -152844,13 +153714,13 @@
       "dateIso": "2025-08-08"
     },
     "GC01965741": {
-      "hcp": 13.5,
+      "hcp": 13.1,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "GC61001299": {
-      "hcp": 17.4,
+      "hcp": 16.4,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -152862,31 +153732,31 @@
       "dateIso": "2025-08-08"
     },
     "GC61966560": {
-      "hcp": 21.6,
+      "hcp": 18.6,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "GC61003660": {
-      "hcp": 21.4,
+      "hcp": 20.1,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "GC67095452": {
-      "hcp": 17.4,
+      "hcp": 17.1,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "GC03075270": {
-      "hcp": 23.8,
+      "hcp": 15.5,
       "source": "rfegolf",
-      "tourneyId": 15997,
-      "dateIso": "2025-08-08"
+      "tourneyId": 16229,
+      "dateIso": "2026-08-07"
     },
     "GC51305817": {
-      "hcp": 17.1,
+      "hcp": 16.4,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -153060,7 +153930,7 @@
       "dateIso": "2026-06-26"
     },
     "GC08980280": {
-      "hcp": 10.7,
+      "hcp": 10.9,
       "source": "rfegolf",
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
@@ -153096,7 +153966,7 @@
       "dateIso": "2026-06-26"
     },
     "GC54983846": {
-      "hcp": 5.1,
+      "hcp": 3.1,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -153174,7 +154044,7 @@
       "dateIso": "2026-06-26"
     },
     "GC03998263": {
-      "hcp": 12.9,
+      "hcp": 10.6,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -153234,7 +154104,7 @@
       "dateIso": "2026-06-26"
     },
     "GC07467959": {
-      "hcp": 16.4,
+      "hcp": 15.1,
       "source": "rfegolf",
       "tourneyId": 16227,
       "dateIso": "2026-08-07"
@@ -153312,13 +154182,13 @@
       "dateIso": "2026-06-26"
     },
     "LV01478272": {
-      "hcp": 30,
+      "hcp": 28.2,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
     "LV01994012": {
-      "hcp": 31.7,
+      "hcp": 28.7,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -153420,7 +154290,7 @@
       "dateIso": "2026-06-26"
     },
     "CB04493758": {
-      "hcp": 22,
+      "hcp": 20.9,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -153444,13 +154314,13 @@
       "dateIso": "2026-06-26"
     },
     "0201306225": {
-      "hcp": 40.1,
+      "hcp": 39.1,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
     },
     "0201051867": {
-      "hcp": 42,
+      "hcp": 40.1,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -153485,8 +154355,14 @@
       "tourneyId": 16195,
       "dateIso": "2026-06-26"
     },
+    "CB00523310": {
+      "hcp": 28,
+      "source": "rfegolf",
+      "tourneyId": 16225,
+      "dateIso": "2026-08-06"
+    },
     "LV56346661": {
-      "hcp": 34.8,
+      "hcp": 32.7,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -153497,14 +154373,20 @@
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
-    "GC07491595": {
-      "hcp": 44.8,
+    "LV56498389": {
+      "hcp": 41.2,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
     },
-    "LV56498389": {
-      "hcp": 44.9,
+    "GC05027127": {
+      "hcp": 41.4,
+      "source": "rfegolf",
+      "tourneyId": 16225,
+      "dateIso": "2026-08-06"
+    },
+    "GC07491595": {
+      "hcp": 43.7,
       "source": "rfegolf",
       "tourneyId": 16225,
       "dateIso": "2026-08-06"
@@ -153516,7 +154398,7 @@
       "dateIso": "2026-08-06"
     },
     "GC07491598": {
-      "hcp": 45.2,
+      "hcp": 46.3,
       "source": "rfegolf",
       "tourneyId": 16226,
       "dateIso": "2026-08-06"
@@ -153528,13 +154410,13 @@
       "dateIso": "2026-08-06"
     },
     "GC67094685": {
-      "hcp": 16.6,
+      "hcp": 16.4,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
     "GC63003404": {
-      "hcp": 23.8,
+      "hcp": 23.3,
       "source": "rfegolf",
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
@@ -153545,14 +154427,14 @@
       "tourneyId": 16228,
       "dateIso": "2026-08-07"
     },
-    "GC00984027": {
-      "hcp": 11.9,
+    "MM04968952": {
+      "hcp": 12.4,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
     },
-    "MM04968952": {
-      "hcp": 12.4,
+    "GC00984027": {
+      "hcp": 13.7,
       "source": "rfegolf",
       "tourneyId": 16229,
       "dateIso": "2026-08-07"
@@ -153563,8 +154445,20 @@
       "tourneyId": 16230,
       "dateIso": "2026-08-07"
     },
+    "GC67982213": {
+      "hcp": 14.2,
+      "source": "rfegolf",
+      "tourneyId": 16231,
+      "dateIso": "2026-08-07"
+    },
     "GC54963848": {
-      "hcp": 10.6,
+      "hcp": 10,
+      "source": "rfegolf",
+      "tourneyId": 16232,
+      "dateIso": "2026-08-07"
+    },
+    "0213066969": {
+      "hcp": 11.4,
       "source": "rfegolf",
       "tourneyId": 16232,
       "dateIso": "2026-08-07"

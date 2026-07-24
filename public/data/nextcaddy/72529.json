@@ -1,0 +1,762 @@
+{
+  "tourId": 72529,
+  "url": "https://www.nextcaddy.com/tour/72529",
+  "scrapedAt": "2026-07-24T23:49:16.667Z",
+  "meta": {
+    "name": "Equipo de Competición Junior Sherry Golf - Viernes  23 Julio (grupo privado)",
+    "organizer": null,
+    "course": "Sherry Golf Jerez",
+    "courseCode": "AMC3",
+    "dateStart": "2026-07-24",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Junior",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-24",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      321,
+      348,
+      435,
+      138,
+      483,
+      287,
+      127,
+      363,
+      353,
+      303,
+      464,
+      128,
+      365,
+      117,
+      361,
+      230,
+      423,
+      345
+    ],
+    "parTotal": 72
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Santiago De La Calle Liniers",
+          "licencia": "AM05926562",
+          "hcp": 18.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2366614,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                3,
+                7,
+                3,
+                3,
+                6,
+                7,
+                6,
+                6,
+                3,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 86,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Jorge Martinez-Monche Alvarez",
+          "licencia": "CM22024430",
+          "hcp": 44.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2366739,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                7,
+                4,
+                8,
+                6,
+                5,
+                5,
+                6,
+                7,
+                9,
+                4,
+                6,
+                9,
+                5,
+                5,
+                6,
+                6
+              ],
+              "total": 109,
+              "meters": [
+                269,
+                305,
+                384,
+                114,
+                459,
+                221,
+                111,
+                296,
+                318,
+                242,
+                428,
+                96,
+                328,
+                105,
+                296,
+                200,
+                375,
+                323
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Del Camino Muñoz",
+          "licencia": "AMC3977026",
+          "hcp": 21.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2366743,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                6,
+                3,
+                7,
+                4,
+                3,
+                6,
+                6,
+                5,
+                6,
+                3,
+                7,
+                5,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 90,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Breijo Cegarra",
+          "licencia": "AMC3984695",
+          "hcp": 18.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2366615,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                8,
+                6,
+                3,
+                4,
+                5,
+                5,
+                7,
+                4,
+                6,
+                3,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 88,
+              "meters": [
+                269,
+                305,
+                384,
+                114,
+                459,
+                221,
+                111,
+                296,
+                318,
+                242,
+                428,
+                96,
+                328,
+                105,
+                296,
+                200,
+                375,
+                323
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Marta Breijo Cegarra",
+          "licencia": "AMC3984693",
+          "hcp": 21.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2366616,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                6,
+                4,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                7,
+                5,
+                10,
+                4,
+                5,
+                4,
+                6,
+                5
+              ],
+              "total": 101,
+              "meters": [
+                269,
+                305,
+                384,
+                114,
+                459,
+                221,
+                111,
+                296,
+                318,
+                242,
+                428,
+                96,
+                328,
+                105,
+                296,
+                200,
+                375,
+                323
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Fernando De Liniers Lopez",
+          "licencia": "MM17075747",
+          "hcp": 19.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2366718,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                7,
+                5,
+                4,
+                5,
+                3,
+                7,
+                5,
+                5,
+                6,
+                4,
+                4,
+                5,
+                6,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Santiago Colmenar Pita",
+          "licencia": "AM05180205",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2366742,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                6,
+                5,
+                null,
+                5,
+                5,
+                6,
+                6,
+                6,
+                8,
+                4,
+                7,
+                6,
+                6,
+                6,
+                6,
+                5
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Santiago De La Calle Liniers",
+      "licencia": "AM05926562",
+      "hcp": 18.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando De Liniers Lopez",
+      "licencia": "MM17075747",
+      "hcp": 19.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Santiago Colmenar Pita",
+      "licencia": "AM05180205",
+      "hcp": 23.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Del Camino Muñoz",
+      "licencia": "AMC3977026",
+      "hcp": 21.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Carlos Breijo Cegarra",
+      "licencia": "AMC3984695",
+      "hcp": 18.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Jorge Martinez-Monche Alvarez",
+      "licencia": "CM22024430",
+      "hcp": 44.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Marta Breijo Cegarra",
+      "licencia": "AMC3984693",
+      "hcp": 21.4,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Carlos Breijo Cegarra",
+          "hcp": 18.6,
+          "ins": "2366615",
+          "jid": "77704",
+          "nivel": "A"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Marta Breijo Cegarra",
+          "hcp": 21.4,
+          "ins": "2366616",
+          "jid": "77704",
+          "nivel": "I"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Jorge Martinez-Monche Alvarez",
+          "hcp": 44.5,
+          "ins": "2366739",
+          "jid": "77704",
+          "nivel": "A"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Santiago De La Calle Liniers",
+          "hcp": 18.9,
+          "ins": "2366614",
+          "jid": "77704",
+          "nivel": "C"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Santiago Colmenar Pita",
+          "hcp": 23.7,
+          "ins": "2366742",
+          "jid": "77704",
+          "nivel": "I"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Manuel Del Camino Muñoz",
+          "hcp": 21.5,
+          "ins": "2366743",
+          "jid": "77704",
+          "nivel": "I"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Fernando De Liniers Lopez",
+          "hcp": 19.4,
+          "ins": "2366718",
+          "jid": "77704",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77704
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Crespo Barco, Diego",
+          "holeNumber": 2,
+          "createdAt": "15/03/26 12:25:15"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 1,
+          "createdAt": "15/03/26 12:34:55"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 2,
+          "createdAt": "15/03/26 12:34:55"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 3,
+          "createdAt": "15/03/26 12:45:45"
+        },
+        {
+          "playerName": "Uribe De Leon, Maria Del Pino",
+          "holeNumber": 1,
+          "createdAt": "15/03/26 13:24:31"
+        },
+        {
+          "playerName": "Crespo Barco, Diego",
+          "holeNumber": 6,
+          "createdAt": "15/03/26 13:33:12"
+        },
+        {
+          "playerName": "Galban Morales, Paula",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 13:39:03"
+        },
+        {
+          "playerName": "Uribe De Leon, Maria Del Pino",
+          "holeNumber": 5,
+          "createdAt": "15/03/26 13:58:43"
+        },
+        {
+          "playerName": "Sanchez Lopez, Alejandro",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 14:04:40"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 14,
+          "createdAt": "15/03/26 15:11:21"
+        },
+        {
+          "playerName": "Crespo Barco, Diego",
+          "holeNumber": 16,
+          "createdAt": "15/03/26 15:11:45"
+        },
+        {
+          "playerName": "Selig Marrero, Carlos",
+          "holeNumber": 6,
+          "createdAt": "15/03/26 15:56:58"
+        },
+        {
+          "playerName": "Selig Marrero, Carlos",
+          "holeNumber": 17,
+          "createdAt": "15/03/26 15:56:58"
+        },
+        {
+          "playerName": "Gomez Guerra, Jose",
+          "holeNumber": 4,
+          "createdAt": "15/03/26 16:31:53"
+        },
+        {
+          "playerName": "Herwig, Oskar",
+          "holeNumber": 13,
+          "createdAt": "15/03/26 16:38:28"
+        },
+        {
+          "playerName": "De Bethencourt, Maxima",
+          "holeNumber": 14,
+          "createdAt": "15/03/26 17:02:59"
+        },
+        {
+          "playerName": "Delgado Castro, Francisco",
+          "holeNumber": 12,
+          "createdAt": "15/03/26 17:08:57"
+        },
+        {
+          "playerName": "Peñafiel Martinez, Martina",
+          "holeNumber": 6,
+          "createdAt": "15/03/26 18:26:08"
+        },
+        {
+          "playerName": "Peñafiel Martinez, Martina",
+          "holeNumber": 17,
+          "createdAt": "15/03/26 18:26:08"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}
