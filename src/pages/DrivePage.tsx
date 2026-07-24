@@ -1487,6 +1487,13 @@ function DriveContent() {
     return out;
   }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup]);
 
+  // Pool INTEGRAL para a tab "Edições anteriores" — TODOS os torneios (todos os
+  // anos/séries/regiões), sem os filtros da sidebar nem os sintéticos futuros.
+  // O Drive repete o mesmo evento várias vezes por ano (etapas), por vezes no
+  // mesmo campo; a tab mostra-os todos como colunas. Sem este pool integral, as
+  // irmãs ficavam limitadas ao ano/série/região filtrados na sidebar.
+  const driveEditionsPool = useMemo(() => (raw.length === 0 ? [] : buildDriveEntries(raw as any)), [raw]);
+
   // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
   // actual deixa de estar visível depois de mudar filtros).
   useEffect(() => {
@@ -2104,7 +2111,7 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
-        <CircuitShell entries={driveEntries} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
+        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
           selectedId={selectedDriveId ?? undefined}
           onSelectEntry={(e) => setSelectedDriveId(e.id)} />
       )}
