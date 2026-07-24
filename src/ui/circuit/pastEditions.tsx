@@ -176,5 +176,7 @@ export function CircuitPastEditionsTab({ editions, division }: { editions: Circu
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
-  return <PastEditionsTable editions={state.rows} title={division} />;
+  // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
+  // não faz sentido como título da tabela.
+  return <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
 }
