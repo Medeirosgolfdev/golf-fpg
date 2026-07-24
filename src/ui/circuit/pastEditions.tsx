@@ -64,6 +64,21 @@ export function matchDivision(divisions: CircuitDivision[], label: string): Circ
   const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
   const exact = divisions.find((d) => norm(lab(d)) === norm(label));
   if (exact) return exact;
+  // Drive/AQUAPOR: a prova masculina aparece ora como divisão ÚNICA "—" (época
+  // sem par feminino — é o caso do pool de edições, que não injecta as Senhoras),
+  // ora FUNDIDA em "Masculino"/"Senhoras" (quando há admissions da prova feminina).
+  // Sem casar estas duas representações, a tab Época do 4º Aquapor (rotulado
+  // "Masculino") não encontrava as irmãs (rotuladas "—") e ficava vazia.
+  // "Senhoras" só casa com "senhoras" explícito — uma prova única é a masculina.
+  const nl = norm(label);
+  const isGeneric = (s: string) => { const v = norm(s); return v === "" || v === "—" || v === "-"; };
+  if (nl === "masculino" || isGeneric(label)) {
+    const masc = divisions.find((d) => norm(lab(d)) === "masculino");
+    if (masc) return masc;
+    const generics = divisions.filter((d) => isGeneric(lab(d)));
+    return generics.length === 1 ? generics[0] : null;
+  }
+  if (nl === "senhoras") return divisions.find((d) => norm(lab(d)) === "senhoras") ?? null;
   const k = divKey(label);
   if (k.age == null) return null;
   const shape = (s: string) => s.toLowerCase().replace(/\d+/g, " ").replace(/[^a-z]+/g, " ").trim();
