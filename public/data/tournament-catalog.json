@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-24T17:10:11.509Z",
+  "generatedAt": "2026-07-24T23:57:18.745Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -522,6 +522,7 @@
         "rfeg-nc72159_infantil_hcp",
         "rfeg-nc72161_infantil_hcp",
         "rfeg-nc72162_infantil_hcp",
+        "rfeg-nc72529_junior_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -529,8 +530,8 @@
         "rfeg-rfeg15361_cadete_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-07-07",
-      "editionsCount": 520
+      "lastDate": "2026-07-24",
+      "editionsCount": 521
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -706,7 +707,6 @@
         "ffgolf-2301093633",
         "ffgolf-2301094133",
         "ffgolf-2301078417",
-        "ffgolf-2301118517",
         "ffgolf-2301093501",
         "ffgolf-2301075890",
         "ffgolf-2301109443",
@@ -761,13 +761,12 @@
         "ffgolf-2300965790",
         "ffgolf-2200891310",
         "ffgolf-2200883250",
-        "ffgolf-2200892530",
         "ffgolf-2200840623",
         "ffgolf-2200795265"
       ],
       "firstDate": "2022-04-23",
       "lastDate": "2026-07-18",
-      "editionsCount": 227
+      "editionsCount": 225
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -36598,6 +36597,19 @@
       "editionsCount": 3
     },
     {
+      "id": "ua-junior-tour",
+      "label": "Under Armour Junior Tour",
+      "sourceId": "uajt",
+      "tournamentIds": [
+        "uajt-uajt_2024",
+        "uajt-uajt_2025",
+        "uajt-uajt_2026"
+      ],
+      "firstDate": "2024-06-20",
+      "lastDate": "2026-06-25",
+      "editionsCount": 3
+    },
+    {
       "id": "egr-junior-u12-no-2",
       "label": "Junior U12 (No.2)",
       "sourceId": "egr",
@@ -71061,6 +71073,28 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-certovo-bremeno",
+      "label": "Certovo Bremeno",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22135"
+      ],
+      "firstDate": "2026-06-20",
+      "lastDate": "2026-06-20",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-certovo-bremeno-tour-championship",
+      "label": "Certovo Bremeno (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22136"
+      ],
+      "firstDate": "2026-06-21",
+      "lastDate": "2026-06-21",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-palmetto-hall-arthur-hills-course",
       "label": "Palmetto Hall - Arthur Hills Course",
       "sourceId": "uskids",
@@ -71498,6 +71532,50 @@
       ],
       "firstDate": "2026-05-30",
       "lastDate": "2026-05-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-cfj-benjamins",
+      "label": "CFJ  - Benjamins",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601456223"
+      ],
+      "firstDate": "2026-07-21",
+      "lastDate": "2026-07-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-cfj-benjamines",
+      "label": "CFJ  - Benjamines",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601459195"
+      ],
+      "firstDate": "2026-07-21",
+      "lastDate": "2026-07-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-cfj-u12-garcons",
+      "label": "CFJ  - U12 Garçons",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601457465"
+      ],
+      "firstDate": "2026-07-20",
+      "lastDate": "2026-07-20",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-cfj-u12-filles",
+      "label": "CFJ  - U12 Filles",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601459090"
+      ],
+      "firstDate": "2026-07-20",
+      "lastDate": "2026-07-20",
       "editionsCount": 1
     },
     {
@@ -72950,17 +73028,6 @@
       ],
       "firstDate": "2026-06-30",
       "lastDate": "2026-06-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "ua-junior-tour",
-      "label": "Under Armour Junior Tour",
-      "sourceId": "uajt",
-      "tournamentIds": [
-        "uajt-uajt_2026"
-      ],
-      "firstDate": "2026-06-25",
-      "lastDate": "2026-06-25",
       "editionsCount": 1
     },
     {
