@@ -1,8 +1,136 @@
 {
-  "generatedAt": "2026-07-21T10:23:58.083Z",
+  "generatedAt": "2026-07-24T23:46:25.997Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1230,
+  "total": 1234,
   "tournaments": [
+    {
+      "file": "01-00-2601456223.json",
+      "trnId": "2601456223",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "CFJ 2026 - Benjamins",
+      "formule": "Simple",
+      "date": "21/07/2026",
+      "dateIso": "2026-07-21",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 83,
+      "course": "Le Breuil",
+      "sex": "M",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 83
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601459195.json",
+      "trnId": "2601459195",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "CFJ 2026 - Benjamines",
+      "formule": "Simple",
+      "date": "21/07/2026",
+      "dateIso": "2026-07-21",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 65,
+      "course": "Le Breuil",
+      "sex": "F",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 65
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601457465.json",
+      "trnId": "2601457465",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "CFJ 2026 - U12 Garçons",
+      "formule": "Simple",
+      "date": "20/07/2026",
+      "dateIso": "2026-07-20",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 87,
+      "course": "Montaplan",
+      "sex": "M",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 87
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601459090.json",
+      "trnId": "2601459090",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "CFJ 2026 - U12 Filles",
+      "formule": "Simple",
+      "date": "20/07/2026",
+      "dateIso": "2026-07-20",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 60,
+      "course": "Montaplan",
+      "sex": "F",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 60
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "03-12-2601432264.json",
       "trnId": "2601432264",
