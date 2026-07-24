@@ -19,11 +19,12 @@ import type { MatchplayFile } from "./matchplayTypes";
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
 
-/** Extras que o shell passa a `renderFull` — hoje só a tab "Edições anteriores"
- *  (construída pelo shell a partir do `editionKey`), para as divisões que
- *  delegam no TournamentDetail a intercalarem via `extraTabs`. */
+/** Extras que o shell passa a `renderFull` — as tabs "Edições anteriores"
+ *  (construída do `editionKey`) e "Época" (do `seasonKey`), para as divisões
+ *  que delegam no TournamentDetail a intercalarem via `extraTabs`. */
 export interface CircuitRenderFullExtras {
   pastEditionsTab?: { key: string; label: string; content: React.ReactNode };
+  seasonTab?: { key: string; label: string; content: React.ReactNode };
 }
 
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */
@@ -353,8 +354,25 @@ export interface CircuitConfig {
    * próprias `entries` — sem cada página reimplementar o carregador. `null`/
    * ausente para uma entrada = sem tab. Alternativa ao `pastEditionsTab` (mais
    * baixo nível); quando ambos existem, `editionKey` ganha.
+   *
+   * ⚠ Semântica = "a MESMA prova": para a MAJOR/England é o torneio anual; para
+   * o Drive é a MESMA prova NO MESMO CAMPO (série+campo), porque uma etapa Drive
+   * é identificada pelo campo — as etapas noutros campos são provas diferentes.
+   * Para a vista "toda a série neste ano" há o `seasonKey` (tab "Época").
    */
   editionKey?: (entry: CircuitEntry) => string | null;
+
+  /**
+   * Identidade da SÉRIE (não da prova) para a tab "Época" — todas as etapas do
+   * mesmo circuito/região. O shell mostra, nessa tab, as etapas com o mesmo
+   * `seasonKey` E o mesmo ANO do torneio aberto (a "época" em curso). É o
+   * complemento do `editionKey` (que compara a mesma prova ao longo dos anos):
+   * o Drive usa `editionKey` = série+campo e `seasonKey` = série+região.
+   * Ausente = sem tab "Época".
+   */
+  seasonKey?: (entry: CircuitEntry) => string | null;
+  /** Rótulo da tab "Época" (default "Época"). */
+  seasonTabLabel?: string;
 
   /** Mensagem de loading. */
   loadingMessage?: string;

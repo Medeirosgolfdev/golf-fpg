@@ -1477,7 +1477,7 @@ function DriveContent() {
         d.draw = undefined;
         const t = d.results as any;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any}
-          extraTabs={extras?.pastEditionsTab ? [extras.pastEditionsTab] : undefined} />;
+          extraTabs={[extras?.seasonTab, extras?.pastEditionsTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
     // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.

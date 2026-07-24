@@ -379,20 +379,28 @@ export const DRIVE_CONFIG: CircuitConfig = {
     liga: true,
     toggles: ["manuel", "pt", "top10"],
   },
-  // "Edições anteriores": o Drive repete o MESMO circuito MUITAS vezes por ano
-  // (etapas), e cada etapa é num CAMPO diferente — o campo vai no NOME do
-  // torneio ("Drive Tour Madeira - Palheiro" vs "- Santo da Serra"), por isso
-  // uma família derivada do nome (tournamentFamilyKey) partia as etapas do mesmo
-  // circuito por campo. A identidade estável é a SÉRIE + REGIÃO (metadados, não
-  // o nome): todas as etapas de "Drive Tour Madeira" (qualquer campo, incl.
-  // Finais) → uma só família, com uma coluna por etapa/ano.
-  // NÃO se inclui o escalão na chave (o `matchDivision` casa-o por label): os
-  // escalões Drive distam 2 (Sub 10/12/14/16/18), logo o fallback ±1 do
-  // matchDivision nunca cruza escalões — o exact-match resolve tudo e um escalão
-  // ausente numa etapa fica de fora dessa coluna (correcto), sem contaminação.
+  // "Edições anteriores" = a MESMA prova NO MESMO CAMPO ao longo do tempo. Uma
+  // etapa Drive é identificada pelo CAMPO (o Aquapor de Vidago Palace é a mesma
+  // prova que se repete lá; as etapas noutros campos são provas diferentes) →
+  // chave = SÉRIE + campo canónico (`shortCampo`: "Palheiro Golf"→"Palheiro",
+  // "Santo da Serra - Desertas"→"Stº Serra"). Assim o 1º e o 3º Drive Tour
+  // Madeira (ambos em Palheiro) ficam juntos, mas o 2º (Santo da Serra) não.
+  // Série na chave para não misturar Tour/Challenge/Aquapor no mesmo campo
+  // (leaderboards de escalões diferentes). Escalão FORA da chave — o
+  // `matchDivision` casa-o por label (escalões Drive distam 2, sem contaminação ±1).
   editionKey: (e) => {
+    if (!e.series) return null;
+    const campo = shortCampo(e.course).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+    if (!campo) return null;
+    return `${e.series}|${campo}`;
+  },
+  // "Época" = toda a série/região do ANO em curso (as etapas da temporada,
+  // cada uma noutro campo). Complemento das "Edições anteriores" (mesma prova/
+  // campo entre anos). O shell filtra por este key + o ano do torneio aberto.
+  seasonKey: (e) => {
     if (!e.series) return null;
     return `${e.series}|${e.liga ?? ""}`;
   },
+  seasonTabLabel: "Época",
   loadingMessage: "A carregar torneios do Drive…",
 };

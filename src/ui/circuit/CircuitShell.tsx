@@ -721,7 +721,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // entregá-las ao componente partilhado. Só se mostra com ≥2 edições (uma só
   // não tem com que comparar). Construída aqui uma vez e entregue às duas vias:
   // trailing-tab (IntlTournView) e argumento de `renderFull` (TournamentDetail).
-  const { editionKey, pastEditionsTab: pastEditionsTabConfig } = config;
+  const { editionKey, seasonKey, pastEditionsTab: pastEditionsTabConfig } = config;
   const curDivLabel = curDiv ? (curDiv.tabLabel || curDiv.escalao || "") : "";
   // ⚠ `siblings` MEMOIZADO: sem isto o array era recriado a cada render e o
   // useEffect do CircuitPastEditionsTab (dep em `editions`) recarregava em loop.
@@ -751,6 +751,24 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     }
     return null;
   })();
+  // ── Tab "Época" (embutida, keyed por config.seasonKey) ────────────────────
+  // Toda a série/região do MESMO ANO do torneio aberto (as etapas da época em
+  // curso), em contraste com "Edições anteriores" (a mesma prova/campo ao longo
+  // dos anos). Só se mostra com ≥2 etapas nesse ano.
+  const seasonSiblings = useMemo(() => {
+    if (!cur || !seasonKey) return null;
+    const k = seasonKey(cur);
+    if (!k) return null;
+    const sib = editionsSource.filter((e) => seasonKey(e) === k && e.year === cur.year);
+    return sib.length >= 2 ? sib : null;
+  }, [cur, editionsSource, seasonKey]);
+  const seasonTabNode = (() => {
+    if (!curDiv || !cur || !seasonSiblings) return null;
+    return { key: "season", label: config.seasonTabLabel ?? "Época",
+      content: <CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} /> };
+  })();
+  // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
+  if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
   if (pastEditionsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastEditionsTabNode);
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
@@ -1019,7 +1037,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       barra do IntlTournView (Inscritos → Draw → R1 → … → Resumo).
                     • Sem rondas (customResults / só inscritos) → barra de secção
                       simples (já era plana, sem aninhamento). */}
-                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined })}
+                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined })}
                 {!curDiv.renderFull && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}
