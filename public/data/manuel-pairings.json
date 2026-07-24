@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-07-21T14:53:38.225Z",
+  "geradoEm": "2026-07-24T20:58:56.677Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 134,
-  "totalCompanheirosUnicos": 160,
+  "totalRondas": 137,
+  "totalCompanheirosUnicos": 166,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 125,
-      "rondasComDraw": 109,
+      "rondasComDraw": 112,
       "torneiosJogados": 94,
-      "torneiosComDraw": 89,
+      "torneiosComDraw": 88,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "982-10238",
@@ -145,12 +145,6 @@
           "nome": "1º Torneio Academia Junior Natal - 18 buracos",
           "data": "2025-12-06",
           "rondas": 1
-        },
-        {
-          "torneioId": "192-10019",
-          "nome": "Race to Dunas G. Final",
-          "data": "2025-11-29",
-          "rondas": 2
         },
         {
           "torneioId": "029-10523",
@@ -522,11 +516,18 @@
         "007-10857",
         "125-10371",
         "183-10129",
+        "192-10019",
         "920-10062",
         "920-10077",
         "988-10190"
       ],
       "torneiosSemDrawDetalhe": [
+        {
+          "torneioId": "192-10019",
+          "nome": "Race to Dunas G. Final",
+          "data": "2025-11-29",
+          "rondas": 2
+        },
         {
           "torneioId": "125-10371",
           "nome": "PJA TOUR Vale Pisão - Dia 2",
@@ -810,7 +811,7 @@
         {
           "nome": "Ricardo Castro Ferreira",
           "fed": "49085",
-          "clube": "Estoril",
+          "clube": "Quinta Lágrimas",
           "pais": null,
           "score": {
             "gross": 70,
@@ -836,7 +837,7 @@
         {
           "nome": "Salvador Ivo de Carvalho",
           "fed": "43968",
-          "clube": "C.G. Vilamoura A",
+          "clube": "Belas",
           "pais": null,
           "score": {
             "gross": 75,
@@ -1233,7 +1234,7 @@
         {
           "nome": "Ricardo Castro Ferreira",
           "fed": "49085",
-          "clube": "Estoril",
+          "clube": "Quinta Lágrimas",
           "pais": null,
           "score": {
             "gross": 78,
@@ -2022,7 +2023,7 @@
         {
           "nome": "Francisco Carvalho",
           "fed": "52856",
-          "clube": "Vale Pisão",
+          "clube": "POR",
           "pais": null,
           "score": {
             "gross": 80,
@@ -2164,42 +2165,6 @@
     },
     {
       "circuito": "FPG",
-      "torneioId": "192-10019",
-      "torneioNome": "Race to Dunas G. Final",
-      "data": "2025-11-29",
-      "ronda": 2,
-      "teeTime": "G5",
-      "startHole": null,
-      "campo": null,
-      "manuelScore": {
-        "gross": 81,
-        "toPar": 10
-      },
-      "companheiros": [
-        {
-          "nome": "Tomás Lima Pinto",
-          "fed": "46037",
-          "clube": "Vilamoura, C. G",
-          "pais": null,
-          "score": {
-            "gross": 77,
-            "toPar": 6
-          }
-        },
-        {
-          "nome": "André Castro Mendes",
-          "fed": "55056",
-          "clube": "Oitavos",
-          "pais": null,
-          "score": {
-            "gross": 80,
-            "toPar": 9
-          }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
       "torneioId": "029-10523",
       "torneioNome": "PJA Masters by Details - PGA  Aroeira 2",
       "data": "2025-11-22",
@@ -2284,7 +2249,7 @@
         {
           "nome": "David Filip",
           "fed": "51949",
-          "clube": "Lisbon Sports Club",
+          "clube": "Orizonte",
           "pais": null,
           "score": {
             "gross": 85,
@@ -2417,7 +2382,7 @@
       "companheiros": [
         {
           "nome": "Sabrina Ribeiro Crisóstomo",
-          "fed": null,
+          "fed": "48971",
           "clube": "Sul",
           "pais": null,
           "score": {
@@ -2464,7 +2429,7 @@
         {
           "nome": "Ricardo Castro Ferreira",
           "fed": "49085",
-          "clube": "Estoril",
+          "clube": "Quinta Lágrimas",
           "pais": null,
           "score": {
             "gross": 74,
@@ -2572,7 +2537,7 @@
         {
           "nome": "Afonso Pinto",
           "fed": "46480",
-          "clube": "Oporto",
+          "clube": "Paredes",
           "pais": null,
           "score": {
             "gross": 78,
@@ -2925,7 +2890,7 @@
       "companheiros": [
         {
           "nome": "Vasco Leal Gouveia",
-          "fed": null,
+          "fed": "41130",
           "clube": null,
           "pais": null,
           "score": {
@@ -3198,7 +3163,7 @@
         },
         {
           "nome": "Ricardo Mendonça",
-          "fed": null,
+          "fed": "25090",
           "clube": "PXO Clube",
           "pais": null,
           "score": {
@@ -3223,25 +3188,51 @@
       "torneioId": "003-10551",
       "torneioNome": "Taça R.S. Yeatman",
       "data": "2025-06-14",
+      "ronda": 1,
+      "teeTime": "13:19",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 98,
+        "toPar": 30
+      },
+      "companheiros": [
+        {
+          "nome": "Pedro Abreu",
+          "fed": "40268",
+          "clube": "Miramar",
+          "pais": null,
+          "score": {
+            "gross": 88,
+            "toPar": 20
+          }
+        },
+        {
+          "nome": "Nuno Graça Moura Costa Lobo",
+          "fed": "30921",
+          "clube": "Miramar",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 18
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "003-10551",
+      "torneioNome": "Taça R.S. Yeatman",
+      "data": "2025-06-14",
       "ronda": 2,
-      "teeTime": "G25",
-      "startHole": null,
+      "teeTime": "08:08",
+      "startHole": 1,
       "campo": null,
       "manuelScore": {
         "gross": 91,
         "toPar": 23
       },
       "companheiros": [
-        {
-          "nome": "Vasco Balixa",
-          "fed": "47470",
-          "clube": "Miramar",
-          "pais": null,
-          "score": {
-            "gross": 96,
-            "toPar": 28
-          }
-        },
         {
           "nome": "André Silva Pinto",
           "fed": "47760",
@@ -3250,6 +3241,16 @@
           "score": {
             "gross": 87,
             "toPar": 19
+          }
+        },
+        {
+          "nome": "Vasco Balixa",
+          "fed": "47470",
+          "clube": "Miramar",
+          "pais": null,
+          "score": {
+            "gross": 96,
+            "toPar": 28
           }
         }
       ]
@@ -3648,9 +3649,45 @@
       "torneioId": "935-10260",
       "torneioNome": "Final Drive Challenge Sul - Castro Marim - Sub 12",
       "data": "2025-03-02",
+      "ronda": 1,
+      "teeTime": "12:49",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 88,
+        "toPar": 16
+      },
+      "companheiros": [
+        {
+          "nome": "Miguel Coelho Porfírio",
+          "fed": "44160",
+          "clube": "Miramar",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
+        },
+        {
+          "nome": "Sabrina Ribeiro Crisóstomo",
+          "fed": "48971",
+          "clube": "Vilamoura, C. G",
+          "pais": null,
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "935-10260",
+      "torneioNome": "Final Drive Challenge Sul - Castro Marim - Sub 12",
+      "data": "2025-03-02",
       "ronda": 2,
-      "teeTime": "G10",
-      "startHole": null,
+      "teeTime": "09:39",
+      "startHole": 1,
       "campo": null,
       "manuelScore": {
         "gross": 89,
@@ -3658,9 +3695,9 @@
       },
       "companheiros": [
         {
-          "nome": "Beau Delfortrie",
-          "fed": "50247",
-          "clube": "Vila Sol",
+          "nome": "Afonso Pinto",
+          "fed": "46480",
+          "clube": "Oporto",
           "pais": null,
           "score": {
             "gross": 85,
@@ -3668,9 +3705,9 @@
           }
         },
         {
-          "nome": "Clara Trindade",
-          "fed": "45812",
-          "clube": "Belas",
+          "nome": "Sabrina Ribeiro Crisóstomo",
+          "fed": "48971",
+          "clube": "Vilamoura, C. G",
           "pais": null,
           "score": {
             "gross": 85,
@@ -3696,7 +3733,7 @@
         {
           "nome": "Martim Sousa de Morais",
           "fed": "41609",
-          "clube": "Belas",
+          "clube": "Quinta Lágrimas",
           "pais": null,
           "score": {
             "gross": 91,
@@ -3706,7 +3743,7 @@
         {
           "nome": "Salvador Ivo de Carvalho",
           "fed": "43968",
-          "clube": "C.G. Vilamoura A",
+          "clube": "Belas",
           "pais": null,
           "score": {
             "gross": 88,
@@ -3889,7 +3926,7 @@
         {
           "nome": "Rafaela Pinto",
           "fed": "40390",
-          "clube": "Arquitectos",
+          "clube": "Quinta do Peru",
           "pais": null,
           "score": {
             "gross": 71,
@@ -3997,7 +4034,7 @@
         {
           "nome": "Salvador Ivo de Carvalho",
           "fed": "43968",
-          "clube": "C.G. Vilamoura A",
+          "clube": "Belas",
           "pais": null,
           "score": {
             "gross": 88,
@@ -4035,11 +4072,47 @@
     {
       "circuito": "FPG",
       "torneioId": "059-10483",
-      "torneioNome": " Campeonato Regional de Clubes Absoluto",
+      "torneioNome": "Campeonato Regional de Clubes Absoluto",
+      "data": "2024-11-30",
+      "ronda": 1,
+      "teeTime": "12:30",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 87,
+        "toPar": 15
+      },
+      "companheiros": [
+        {
+          "nome": "Salvador Rodrigues",
+          "fed": "39465",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": {
+            "gross": 89,
+            "toPar": 17
+          }
+        },
+        {
+          "nome": "João Bernardo Dias",
+          "fed": "39023",
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": {
+            "gross": 109,
+            "toPar": 37
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "059-10483",
+      "torneioNome": "Campeonato Regional de Clubes Absoluto",
       "data": "2024-11-30",
       "ronda": 2,
-      "teeTime": "G6",
-      "startHole": null,
+      "teeTime": "09:21",
+      "startHole": 1,
       "campo": null,
       "manuelScore": {
         "gross": 82,
@@ -4047,23 +4120,23 @@
       },
       "companheiros": [
         {
-          "nome": "José Duarte Rodrigues",
-          "fed": "35256",
+          "nome": "Salvador Rodrigues",
+          "fed": "39465",
           "clube": "Palheiro",
           "pais": null,
           "score": {
-            "gross": 83,
-            "toPar": 11
+            "gross": 85,
+            "toPar": 13
           }
         },
         {
-          "nome": "Camacho,Cecilio",
-          "fed": "42849",
-          "clube": "Palheiro",
+          "nome": "Tomás Câmara",
+          "fed": "53548",
+          "clube": "PXO Clube",
           "pais": null,
           "score": {
-            "gross": 96,
-            "toPar": 24
+            "gross": 84,
+            "toPar": 12
           }
         }
       ]
@@ -4331,7 +4404,7 @@
         {
           "nome": "Pedro Ribeiro Lima",
           "fed": "48628",
-          "clube": "Estela",
+          "clube": "Miramar",
           "pais": null,
           "score": {
             "gross": 35,
@@ -4536,9 +4609,45 @@
       "torneioId": "179-10514",
       "torneioNome": "World Kids Golf 2024 Under 10",
       "data": "2024-07-24",
+      "ronda": 1,
+      "teeTime": "09:10",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 42,
+        "toPar": 6
+      },
+      "companheiros": [
+        {
+          "nome": "CRISÓSTOMO,Sabrina Ribeiro",
+          "fed": null,
+          "clube": "POR",
+          "pais": null,
+          "score": {
+            "gross": 43,
+            "toPar": 7
+          }
+        },
+        {
+          "nome": "COSTA,Gabriel",
+          "fed": null,
+          "clube": "POR",
+          "pais": null,
+          "score": {
+            "gross": 49,
+            "toPar": 13
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "179-10514",
+      "torneioNome": "World Kids Golf 2024 Under 10",
+      "data": "2024-07-24",
       "ronda": 2,
-      "teeTime": "G1",
-      "startHole": null,
+      "teeTime": "08:50",
+      "startHole": 1,
       "campo": null,
       "manuelScore": {
         "gross": 41,
@@ -4546,8 +4655,8 @@
       },
       "companheiros": [
         {
-          "nome": "Ricardo Castro Ferreira",
-          "fed": "49085",
+          "nome": "CASTRO FERREIRA,Ricardo",
+          "fed": null,
           "clube": "POR",
           "pais": null,
           "score": {
@@ -4556,8 +4665,8 @@
           }
         },
         {
-          "nome": "Joe Short",
-          "fed": "51804",
+          "nome": "SHORT,Joe",
+          "fed": null,
           "clube": "UK",
           "pais": null,
           "score": {
@@ -4573,8 +4682,8 @@
       "torneioNome": "World Kids Golf 2024 Under 10",
       "data": "2024-07-24",
       "ronda": 3,
-      "teeTime": "G1",
-      "startHole": null,
+      "teeTime": "09:10",
+      "startHole": 1,
       "campo": null,
       "manuelScore": {
         "gross": 41,
@@ -4582,8 +4691,8 @@
       },
       "companheiros": [
         {
-          "nome": "Ricardo Castro Ferreira",
-          "fed": "49085",
+          "nome": "CASTRO FERREIRA,Ricardo",
+          "fed": null,
           "clube": "POR",
           "pais": null,
           "score": {
@@ -4592,8 +4701,8 @@
           }
         },
         {
-          "nome": "Joe Short",
-          "fed": "51804",
+          "nome": "SHORT,Joe",
+          "fed": null,
           "clube": "UK",
           "pais": null,
           "score": {
@@ -4726,7 +4835,7 @@
       },
       "companheiros": [
         {
-          "nome": "Miguel Tavares Jr",
+          "nome": "Miguel Tavares",
           "fed": "2188",
           "clube": "Santo da Serra",
           "pais": null,
@@ -4957,7 +5066,7 @@
     {
       "circuito": "FPG",
       "torneioId": "982-10165",
-      "torneioNome": "1º Torneio D. Challenge LevelUPMadeira - Palheiro",
+      "torneioNome": "1º Torneio Drive Challenge Level Up Madeira - Palheiro",
       "data": "2024-03-09",
       "ronda": 1,
       "teeTime": "09:57",
@@ -4970,7 +5079,7 @@
       "companheiros": [
         {
           "nome": "Vasco Leal Gouveia",
-          "fed": null,
+          "fed": "41130",
           "clube": "Santo da Serra",
           "pais": null,
           "score": {
@@ -5143,7 +5252,7 @@
       },
       "companheiros": [
         {
-          "nome": "Araújo,Pedro",
+          "nome": "Pedro Araújo",
           "fed": "31745",
           "clube": "Santo da Serra",
           "pais": null,
@@ -5153,7 +5262,7 @@
           }
         },
         {
-          "nome": "Henrique São Marcos dos Reis",
+          "nome": "Henrique São Marcos Dos Reis",
           "fed": "40407",
           "clube": "Santo da Serra",
           "pais": null,
