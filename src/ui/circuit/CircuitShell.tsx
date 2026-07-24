@@ -727,8 +727,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // useEffect do CircuitPastEditionsTab (dep em `editions`) recarregava em loop.
   // Pool das irmãs: o `pastEditionsPool` integral quando a página o fornece
   // (Drive filtra `entries` por ano/série/região → sem isto a tab só via as
-  // edições do filtro actual), senão as próprias `entries`.
-  const editionsSource = pastEditionsPool ?? entries;
+  // edições do filtro actual), senão as próprias `entries`. Fallback também
+  // quando o pool ainda está vazio (a carregar) — `[] ?? entries` daria `[]`.
+  const editionsSource = pastEditionsPool && pastEditionsPool.length ? pastEditionsPool : entries;
   const pastEditionsSiblings = useMemo(() => {
     if (!cur || !editionKey) return null;
     const k = editionKey(cur);
