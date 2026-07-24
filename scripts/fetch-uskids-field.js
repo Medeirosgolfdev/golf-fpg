@@ -34,7 +34,7 @@ const KEYWORDS_EXCLUIR = [
   'thailand championship', 'korean championship', 'malaysian championship', 'philippines championship',
   // state abbreviations removidos: 'invitational' já inclui e queremos ver state invitationals
 ];
-const FORCAR_INCLUIR = new Set([21080, 21133]); // 21080=Marco Simone 2026, 21133=Jekyll Island Cup
+const FORCAR_INCLUIR = new Set([21080, 21133, 21667]); // 21080=Marco Simone 2026, 21133=Jekyll Island Cup, 21667=World Teen Championship 2026 (excepção às teen series)
 const FORCAR_EXCLUIR  = new Set([
   21573, // Marco Simone local tour
   21298, // International Teen Series at Al Hamra

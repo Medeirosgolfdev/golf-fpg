@@ -65,6 +65,18 @@ const HISTORICOS = [
     date_inicio: '7/6/2025', date_fim: '7/8/2025', rondas: 2, ax: 1129,
     escalao_manuel: null,
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=18975' },
+  // ── World Teen Championship (Pinehurst, NC — Boys/Girls 13-18) ──
+  // EXCEPÇÃO à exclusão geral das teen series (ver KEYWORDS_EXCLUIR nos scrapers
+  // de discovery/field): o World Teen é o evento-bandeira dos teens e queremos
+  // acompanhá-lo. Manuel (Boys 12) não joga → escalao_manuel: null; sem
+  // age_groups → apanha TODOS os escalões Boys (13-18) via escalaoApanhar, Girls
+  // ficam de fora. ax 1129 (conta intl US Kids habitual). tcode confirmado via
+  // iframe linksviews (2024=16111, 2025=18425, 2026=21667).
+  { t: 21667, name: 'World Teen Championship 2026',
+    date_inicio: '7/23/2026', date_fim: '7/25/2026', rondas: 3, ax: 1129,
+    escalao_manuel: null,
+    url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/world-teen/find-tournament/517597/world-teen-championship-2026',
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21667' },
   // ── Holiday Classic (Regional Championship, NC, 21-22 Dez, 2 rondas) ──
   // Sem age_groups → apanha Boys 9-12 (foco do tracker). Manuel não jogou.
   // ⚠ Se "GetMeta falhou" no log, o ax 1129 (intl) pode não ter acesso ao
