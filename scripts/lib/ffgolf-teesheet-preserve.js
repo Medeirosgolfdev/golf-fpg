@@ -47,6 +47,17 @@ function preserveTeesheet(outPath, fresh) {
   // pela rota fetch (sem browser) não o consegue reconstruir; não o apagar.
   if (existing.matchplay && !fresh.matchplay) fresh.matchplay = existing.matchplay;
 
+  // Datas + campo: alguns eventos GG (CFJ 2026 Filles/Benjamins/Benjamines) não
+  // expõem dateStart/dateEnd/course ao scraper e ficavam sem data — o que os
+  // afundava para o fundo da sidebar (ordenada por data). Depois de preenchidos
+  // (do portal FFG), um re-scrape fetch voltava a apagá-los. Preservar.
+  if (existing.dateStart && !fresh.dateStart) fresh.dateStart = existing.dateStart;
+  if (existing.dateEnd && !fresh.dateEnd) fresh.dateEnd = existing.dateEnd;
+  if (existing.course && existing.course.name && (!fresh.course || !fresh.course.name)) {
+    fresh.course = fresh.course || {};
+    fresh.course.name = existing.course.name;
+  }
+
   // hcp por nome normalizado: dos players antigos E dos draws (a tee sheet é
   // quem traz o hcp; um jogador do draw pode nem estar no leaderboard antigo).
   const hcpByName = new Map();
