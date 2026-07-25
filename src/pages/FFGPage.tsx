@@ -2789,6 +2789,18 @@ function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
   ];
   if (meta.ffgolf_scores_url) links.push({ label: "Resultados FFG", url: meta.ffgolf_scores_url, icon: "🏁" });
   if (meta.ffgolf_url) links.push({ label: "Página FFG", url: meta.ffgolf_url, icon: "🔗" });
+  // Fallback de datas: alguns ficheiros GG do scraper vêm sem `dateStart`/
+  // `dateEnd` (só o Garçons do CFJ 2026 os trazia; Filles/Benjamins/Benjamines
+  // não). Sem data, a `entryDateKey` dá "00000000" e a entrada afunda para o
+  // FUNDO da lista do ano — buried entre ~1200 torneios = "não aparece".
+  // Deriva-se a data das rondas do match play (que estão sempre presentes)
+  // quando o topo não a traz, para a entrada ordenar junto das irmãs.
+  const mpDates = (data.matchplay?.flights ?? [])
+    .flatMap((f) => (f.rounds ?? []).map((r) => r.date))
+    .filter((d): d is string => !!d)
+    .sort();
+  const ggDateStart = data.dateStart ?? mpDates[0];
+  const ggDateEnd = data.dateEnd ?? mpDates[mpDates.length - 1];
   return {
     id: `gg:${meta.year}_${meta.slug}`,
     year: meta.year,
@@ -2796,8 +2808,8 @@ function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
     series: "GolfGenius",
     source: "gg",
     course: data.course?.name ?? undefined,
-    dateStart: data.dateStart ?? undefined,
-    dateEnd: data.dateEnd ?? undefined,
+    dateStart: ggDateStart ?? undefined,
+    dateEnd: ggDateEnd ?? undefined,
     federation: "FFG",
     intl: isIntlName(data.tournament || meta.title || ""),
     escaloes: ffgEscaloesOfTournament(data.tournament || meta.title, data.divisions ?? []),
