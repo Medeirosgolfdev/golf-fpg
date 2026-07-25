@@ -3009,10 +3009,17 @@ function FFGShellContent() {
         // Não pertencem à página 🇫🇷 France.
         if (GG_NON_FR_SLUGS.has(meta.slug)) continue;
         const key = `${meta.year}_${meta.slug}`;
-        if (ggTwins.has(key)) continue; // o portal já mostra este evento
         if (seenGgPage.has(meta.gg_page)) continue;
         const data = ggData.get(key);
         if (!data || !data.players?.length) continue;
+        // Gémeo do portal: por regra escondemos a versão GG (o portal traz
+        // licenças + leaderboard mais rico). EXCEPÇÃO: quando a versão GG tem
+        // match play (bracket knockout) mantemo-la SEMPRE — o portal só publica
+        // o stroke play da qualificação e não representa os confrontos, logo a
+        // GG é a única fonte do match play (caso CFJ U12 Garçons 2026, que o
+        // build-france-players marcou como gémeo e desaparecia da lista).
+        const hasMatchplay = !!data.matchplay?.flights?.length;
+        if (ggTwins.has(key) && !hasMatchplay) continue; // o portal já mostra este evento
         seenGgPage.add(meta.gg_page);
         out.push(ggEntry(meta, data));
       }
