@@ -8,7 +8,7 @@ import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { isDNS } from "./driveUtils";
-import { drivePoints } from "../constants/drivePoints";
+import { tournamentPoints, rankingTotal } from "../constants/drivePoints";
 
 // Wrapper que aceita style (não incluído nos props originais de SortTh)
 const CSortTh = _CSortTh as React.ComponentType<
@@ -339,6 +339,23 @@ export function ResumoTable(props: {
       }
       return "";
     };
+    // Pontos oficiais por prova (empates partilhados; Aquapor por sexo).
+    // Acumulam-se por jogador e só no fim se aplica a regra dos melhores-N +
+    // Final ×1.5 — somar tudo dava totais diferentes dos da FPG.
+    const ptsPorProva = new Map<string, Map<string, number>>();
+    for (const t of sorted) {
+      ptsPorProva.set(mkKey(t), tournamentPoints(
+        t.players.map(p => ({
+          fed: p.fed || p.name,
+          pos: p.pos,
+          gross: typeof p.grossTotal === "number" ? p.grossTotal : null,
+          sex: playersDB[p.fed || ""]?.sex || "",
+        })),
+        t.series,
+      ));
+    }
+    const provasPorJogador = new Map<string, { pos: number | string | null; pts: number; series?: string | null; tournName?: string }[]>();
+
     for (const t of sorted) {
       const tKey = mkKey(t);
       const isTotal = totalKeys.has(tKey);
@@ -381,7 +398,13 @@ export function ResumoTable(props: {
             // (not for individual R1/R2 entries)
             const isRoundEntry = t._roundLabel && t._roundLabel !== "Resumo";
             if (!isRoundEntry) {
-              row.totalPts += drivePoints(p.pos, t.series);
+              if (!provasPorJogador.has(pKey)) provasPorJogador.set(pKey, []);
+              provasPorJogador.get(pKey)!.push({
+                pos: p.pos,
+                pts: ptsPorProva.get(tKey)?.get(p.fed || p.name) ?? 0,
+                series: t.series,
+                tournName: t.name,
+              });
             }
           }
         }
@@ -396,6 +419,7 @@ export function ResumoTable(props: {
       }
       row.bestSD = sds.length ? Math.min(...sds) : null;
       row.avgSD = sds.length ? sds.reduce((s, v) => s + v, 0) / sds.length : null;
+      row.totalPts = rankingTotal(provasPorJogador.get(row.pKey) || []);
     }
     return [...map.values()];
   }, [sorted, playersDB, sdLookup, challEscLookup, globalEscLookup, fedBirthdates]);

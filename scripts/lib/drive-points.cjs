@@ -55,7 +55,64 @@ function sharedPoints(pos, count, series) {
   return Math.round((sum / n) * 10) / 10;
 }
 
+const RANKING_BEST_N = 4;
+
+function hasCard(gross) {
+  return typeof gross === "number" && gross > 0 && gross < 900;
+}
+
+/** Pontos de UM torneio por federado, com as regras oficiais de empate.
+ *  Aquapor classifica dentro do sexo; Challenge/Tour usa a posição já
+ *  desempatada por countback. ESPELHO de src/constants/drivePoints.ts. */
+function tournamentPoints(field, series) {
+  const out = new Map();
+  const scored = field.filter(p => p.fed && hasCard(p.gross));
+  if (series === "aquapor") {
+    for (const sex of ["M", "F", ""]) {
+      const grupo = scored.filter(p => (p.sex || "") === sex);
+      if (!grupo.length) continue;
+      const ord = [...grupo].sort((a, b) => a.gross - b.gross);
+      let i = 0;
+      while (i < ord.length) {
+        let j = i + 1;
+        while (j < ord.length && ord[j].gross === ord[i].gross) j++;
+        const pts = sharedPoints(i + 1, j - i, series);
+        for (let k = i; k < j; k++) out.set(ord[k].fed, pts);
+        i = j;
+      }
+    }
+    return out;
+  }
+  const porPos = new Map();
+  for (const p of scored) {
+    const k = String(p.pos);
+    if (!porPos.has(k)) porPos.set(k, []);
+    porPos.get(k).push(p);
+  }
+  for (const [, grupo] of porPos) {
+    const pts = sharedPoints(grupo[0].pos, grupo.length, series);
+    for (const p of grupo) out.set(p.fed, pts);
+  }
+  return out;
+}
+
+/** Total do ranking como a FPG: melhores-N da fase regular + Finais ×1.5. */
+function rankingTotal(results, bestN = RANKING_BEST_N) {
+  const regulares = [];
+  let finais = 0;
+  for (const r of results) {
+    if (isNacionalFinal(r.tournName)) continue;
+    const base = r.pts ?? drivePoints(r.pos, r.series);
+    if (!base) continue;
+    if (isFinalEvent(r.tournName)) finais += Math.round(base * FINAL_WEIGHT);
+    else regulares.push(base);
+  }
+  const melhores = regulares.sort((a, b) => b - a).slice(0, bestN).reduce((s, x) => s + x, 0);
+  return Math.round((melhores + finais) * 10) / 10;
+}
+
 module.exports = {
   DRIVE_POINTS, DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, drivePoints,
   FINAL_WEIGHT, isFinalEvent, isNacionalFinal, finalPoints, sharedPoints,
+  RANKING_BEST_N, hasCard, tournamentPoints, rankingTotal,
 };

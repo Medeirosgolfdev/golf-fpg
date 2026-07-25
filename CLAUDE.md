@@ -499,6 +499,15 @@ desempate não segue R1, R2 nem countback (anomalia da fonte).
 No `update-drive.yml` estes dois passos correm **só ao Domingo** (ou em run
 manual): mudam devagar e dominavam o tempo do workflow.
 
+**O site calcula como a FPG** (2026-07-20): `src/constants/drivePoints.ts`
+(+ espelho `scripts/lib/drive-points.cjs`) exporta `tournamentPoints(field,
+series)` — pontos de UMA prova por federado, com empates partilhados (Aquapor
+por sexo) — e `rankingTotal(results)` — melhores-4 da fase regular + Finais
+regionais ×1.5 (Final Nacional fora). A `DrivePage` (`buildSub12Data`) e a
+`ResumoTable` usam-nas em vez de somar `drivePoints` de todas as provas.
+Teste de integração `scripts/lib/drive-ranking-vs-oficial.test.js` confronta o
+total calculado com os rankings oficiais reais do repo (RFDC_ quando existe).
+
 **scrape-fpg-admissions-draws-node.js** — Node puro (2026-04-22). Substitui os browser-scripts `browser-scrape-fpg-admissions-draws.js` + `browser-scrape-fpg-draws-only.js` + `merge-fpg-admissions-draws.js`. Corre linkpage cross-domain (scoring.fpg.pt/lists) em paralelo, merge aditivo (preserva bons, rejeita `_suspect`), output único em `public/data/fpg-admissions-draws.json`. Scope: `scripts/fpg-admissions-scope.json` (333 torneios). Exit code 2 = sem novidades. Workflow: `update-fpg-admissions-draws.yml` (Sex/Sáb/Dom 20:00 UTC) — **regenera também `public/data/manuel-pairings.json` via `pairings-build.js` e committa-o** (alimenta a página `/draws`). Secret: `FPG_ADMISSIONS_COOKIES`.
 
 ⚠ **Trava `_manual` (2026-06-14):** uma entrada de torneio com `"_manual": true` é **curada à mão** e o scraper preserva-a INTACTA (salta-a no merge — ver guarda no topo do loop em `scrape-fpg-admissions-draws-node.js`). Usar quando se inserem draws/admissions manualmente (ex: folhas de pairing fotografadas) que NÃO devem ser sobrescritos num run futuro — crítico porque a FPG reutiliza tcodes (um tcode antigo reaproveitado traria um draw "legítimo" `nScore>0` que de outra forma ganhava ao manual). Os draws por jogador podem ter `tee` próprio (flights com tees mistos M/F) — `FpgDrawFlight.players[].tee` em `nacional2026Loader.ts`, lido pelo `DrawTab` (`p.tee ?? g.tee`). Actualmente marcados: `125/10370` (PJA Vale Pisão Dia 2) e `152/10444` (AT&T Pebble Beach Royal Óbidos D1+D2).

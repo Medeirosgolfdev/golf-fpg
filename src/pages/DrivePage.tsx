@@ -27,7 +27,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
-import { DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, drivePoints } from "../constants/drivePoints";
+import { DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, tournamentPoints, rankingTotal } from "../constants/drivePoints";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -792,6 +792,9 @@ interface TournResult {
   series: "tour" | "challenge" | "aquapor";
   gross: number; toPar: number; sd: number | null; sdSource: "fpg" | "ags" | "raw" | null;
   pos: number | string | null; totalPlayers: number;
+  /** Pontos oficiais desta prova (já com empates partilhados; nas Finais é o
+   *  valor SIMPLES — o ×1.5 é aplicado pelo rankingTotal). */
+  pts: number;
   nholes: number; birdies: number; pars: number; bogeys: number;
 }
 interface Sub12Row {
@@ -862,6 +865,18 @@ function buildSub12Data(
   );
   const playerMap = new Map<string, Sub12Row>();
   for (const t of validTournaments) {
+    // Pontos oficiais da prova, para o campo TODO (não só o escalão filtrado):
+    // a posição que pontua é a do leaderboard completo. No Aquapor é dentro do
+    // sexo, daí passar o sexo do players.json.
+    const ptsByFed = tournamentPoints(
+      t.players.map(p => ({
+        fed: p.fed || p.fedCode || "",
+        pos: p.pos,
+        gross: typeof p.grossTotal === "number" ? p.grossTotal : null,
+        sex: playersDB[p.fed || p.fedCode || ""]?.sex || "",
+      })),
+      t.series,
+    );
     for (const p of t.players) {
       if (isDNS(p)) continue;
       // Escalão no ANO do torneio (year-based) — crucial para filtrar o escalão
@@ -900,13 +915,12 @@ function buildSub12Data(
         campo: t.campo || "", region: t.region || "", series: (t.series || "tour") as "tour" | "challenge" | "aquapor",
         gross: g, toPar: tp,
         sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null, sdSource,
-        pos: p.pos, totalPlayers: t.playerCount,
+        pos: p.pos, totalPlayers: t.playerCount, pts: ptsByFed.get(fed) ?? 0,
         nholes, birdies, pars: parsCount, bogeys,
       });
       row.totalBird += birdies;
       row.totalPars += parsCount;
       row.totalBog  += bogeys;
-      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0, t.series);
     }
   }
   for (const row of playerMap.values()) {
@@ -928,6 +942,8 @@ function buildSub12Data(
     row.avgSD = numAvg(sds);
     row.bestGross = grosses.length > 0 ? Math.min(...grosses) : null;
     row.bestSD = sds.length > 0 ? Math.min(...sds) : null;
+    // Ranking COMO A FPG: melhores-4 da fase regular + Final regional ×1.5.
+    row.totalPts = rankingTotal(row.results);
   }
   return [...playerMap.values()].sort((a, b) => b.totalPts - a.totalPts);
 }
@@ -945,7 +961,7 @@ function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row
       totalBird: fR.reduce((s, r) => s + r.birdies, 0),
       totalPars: fR.reduce((s, r) => s + r.pars, 0),
       totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
-      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0, r.series), 0),
+      totalPts:  rankingTotal(fR),
     };
   }).filter(Boolean) as Sub12Row[];
 }

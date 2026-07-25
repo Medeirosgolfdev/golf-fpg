@@ -67,6 +67,84 @@ export function finalPoints(pos: number | string | null, series?: string | null)
   return Math.round(drivePoints(pos, series) * FINAL_WEIGHT);
 }
 
+/** Quantas provas contam para o ranking (as melhores). Medido no oficial:
+ *  o Gonçalo Gouveia tinha 6 provas e o total = as 4 melhores. */
+export const RANKING_BEST_N = 4;
+
+/** Gross sentinela da FPG (999, 1044, 1080…) = "sem cartão": não pontua. */
+export function hasCard(gross: number | null | undefined): boolean {
+  return typeof gross === "number" && gross > 0 && gross < 900;
+}
+
+export interface FieldEntry {
+  fed: string;
+  pos: number | string | null;
+  gross: number | null;
+  sex?: string | null;
+}
+
+/** Pontos de UM torneio, por federado — com as regras oficiais de empate.
+ *  · Aquapor: classifica DENTRO do sexo e empates partilham lugar/pontos.
+ *  · Challenge/Tour: usa a posição já desempatada por countback no scrape;
+ *    se ainda assim duas partilharem lugar, dividem os pontos. */
+export function tournamentPoints(field: FieldEntry[], series?: string | null): Map<string, number> {
+  const out = new Map<string, number>();
+  const scored = field.filter(p => p.fed && hasCard(p.gross));
+
+  if (series === "aquapor") {
+    for (const sex of ["M", "F", ""]) {
+      const grupo = scored.filter(p => (p.sex || "") === sex);
+      if (!grupo.length) continue;
+      const ord = [...grupo].sort((a, b) => (a.gross as number) - (b.gross as number));
+      let i = 0;
+      while (i < ord.length) {
+        let j = i + 1;
+        while (j < ord.length && ord[j].gross === ord[i].gross) j++;
+        const pts = sharedPoints(i + 1, j - i, series);
+        for (let k = i; k < j; k++) out.set(ord[k].fed, pts);
+        i = j;
+      }
+    }
+    return out;
+  }
+
+  const porPos = new Map<string, FieldEntry[]>();
+  for (const p of scored) {
+    const k = String(p.pos);
+    if (!porPos.has(k)) porPos.set(k, []);
+    porPos.get(k)!.push(p);
+  }
+  for (const [, grupo] of porPos) {
+    const pts = sharedPoints(grupo[0].pos, grupo.length, series);
+    for (const p of grupo) out.set(p.fed, pts);
+  }
+  return out;
+}
+
+export interface RankingResultLike {
+  pos: number | string | null;
+  pts?: number | null;
+  series?: string | null;
+  tournName?: string | null;
+}
+
+/** Total do ranking COMO A FPG o calcula:
+ *  melhores-N da fase regular + as Finais regionais a ×1.5.
+ *  A Final NACIONAL não entra em ranking regional nenhum. */
+export function rankingTotal(results: RankingResultLike[], bestN: number = RANKING_BEST_N): number {
+  const regulares: number[] = [];
+  let finais = 0;
+  for (const r of results) {
+    if (isNacionalFinal(r.tournName)) continue;
+    const base = r.pts ?? drivePoints(r.pos, r.series);
+    if (!base) continue;
+    if (isFinalEvent(r.tournName)) finais += Math.round(base * FINAL_WEIGHT);
+    else regulares.push(base);
+  }
+  const melhores = regulares.sort((a, b) => b - a).slice(0, bestN).reduce((s, x) => s + x, 0);
+  return Math.round((melhores + finais) * 10) / 10;
+}
+
 /** Empate não desfeito pelo countback: os `count` jogadores partilham a posição
  *  e recebem a MÉDIA dos pontos dos lugares ocupados (pos..pos+count-1).
  *  Confirmado no oficial: 2 empatados no 14º → (23+22)/2 = 22,5 cada. */
