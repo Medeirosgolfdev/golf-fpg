@@ -2914,7 +2914,10 @@ function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament }[]): 
   };
   const divisions = members.map((m) => ffgGgDivision(m.meta, m.data)).sort((a, b) => escRank(a) - escRank(b));
   const y = members[0].meta.year;
-  const course = members.map((m) => m.data.course?.name).find(Boolean) ?? undefined;
+  // Os escalões podem jogar percursos diferentes do mesmo clube — no cabeçalho
+  // da entrada fundida mostra-se o CLUBE (cada aba de escalão traz o seu percurso).
+  const rawCourse = members.map((m) => m.data.course?.name).find(Boolean);
+  const course = rawCourse ? rawCourse.replace(/\s*\(.*$/, "").trim() : undefined;
   const starts = members.map((m) => ggInferDates(m.data).start).filter((d): d is string => !!d).sort();
   const ends = members.map((m) => ggInferDates(m.data).end).filter((d): d is string => !!d).sort();
   const fam = ffgPrettyTitle(ffgEventFamilyKey(members[0].meta));
@@ -3126,14 +3129,17 @@ function FFGShellContent() {
       }
       // Fundir escalões do MESMO campeonato numa entrada com abas de escalão
       // (CFJ 2026 = U12 Garçons/Filles + Benjamins/Benjamines, 4 leagues GG mas 1
-      // evento). Chave: família do nome + ano + campo. Só funde quando há CAMPO
-      // (para nunca fundir por engano); sem campo, fica solo (1 entrada por league).
+      // evento). Chave: família do nome + ano + CLUBE. Usa-se o clube (nome antes
+      // do parêntesis) e não o percurso exato — o mesmo evento joga percursos
+      // diferentes por escalão E o GG nomeia-os de forma inconsistente ("Golf du
+      // Gouverneur (Montaplan)" vs "(Montaplan CFJ 2026)" vs "(Le Breuil …)").
+      // Só funde quando há campo (para nunca fundir por engano); sem campo, solo.
+      const clubKey = (c: string) => c.toLowerCase().replace(/\s*\(.*$/, "").replace(/\s+/g, " ").trim();
       const byEvent = new Map<string, { meta: CatalogEntry; data: FFGTournament }[]>();
       for (const pr of ggPairs) {
         const course = pr.data.course?.name || "";
-        const courseKey = course.toLowerCase().replace(/\s+/g, " ").trim();
         const gkey = course
-          ? `${ffgEventFamilyKey(pr.meta)}|${pr.meta.year}|${courseKey}`
+          ? `${ffgEventFamilyKey(pr.meta)}|${pr.meta.year}|${clubKey(course)}`
           : `__solo__|${pr.meta.year}_${pr.meta.slug}`;
         if (!byEvent.has(gkey)) byEvent.set(gkey, []);
         byEvent.get(gkey)!.push(pr);
