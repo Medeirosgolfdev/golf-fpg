@@ -2782,25 +2782,103 @@ function ggSexFromName(name: string): "M" | "F" | undefined {
 
 /** GolfGenius: torneio FFG que vive só no GG (sem gémeo no portal de resultados).
  *  Reutiliza a DivView — a mesma vista que a versão pré-CircuitShell usava. */
-function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
+/** Datas de um torneio GG: usa o topo do ficheiro, senão deriva das rondas do
+ *  match play (sempre presentes). Sem isto, ficheiros sem `dateStart` (CFJ 2026
+ *  Filles/Benjamins/Benjamines) davam `entryDateKey` "00000000" e afundavam para
+ *  o fundo da sidebar (ordenada por data) = "não aparecem". */
+function ggInferDates(data: FFGTournament): { start?: string; end?: string } {
+  const mp = (data.matchplay?.flights ?? [])
+    .flatMap((f) => (f.rounds ?? []).map((r) => r.date))
+    .filter((d): d is string => !!d)
+    .sort();
+  return { start: data.dateStart ?? mp[0], end: data.dateEnd ?? mp[mp.length - 1] };
+}
+
+/** Label de escalão de UM torneio GG FFG (o GG não o publica) — inferido do slug:
+ *  "…u12-garcons…" → "U12 Garçons", "…benjamines" → "Benjamines". */
+function ffgGgEscalaoLabel(meta: CatalogEntry, data: FFGTournament): string {
+  const s = (meta.slug || "").toLowerCase();
+  const sex = /gar[cç]ons|boys/.test(s) ? "Garçons" : /filles|girls/.test(s) ? "Filles" : "";
+  const age = /u1[0248]/.exec(s)?.[0]?.toUpperCase();
+  if (/benjamines/.test(s)) return "Benjamines";
+  if (/benjamins/.test(s)) return "Benjamins";
+  if (/minimes/.test(s)) return sex ? `Minimes ${sex}` : "Minimes";
+  if (age) return sex ? `${age} ${sex}` : age;
+  const esc = ffgEscaloesOfTournament(data.tournament || meta.title, data.divisions ?? []);
+  return esc[0] || ((data.divisions ?? []).join("/")) || meta.title || "—";
+}
+
+/** Chave de "evento" para fundir escalões do MESMO campeonato: tira do slug os
+ *  tokens de escalão/sexo/patrocinador. Os 4 do CFJ 2026 colapsam todos em
+ *  "championnat-de-france-des-jeunes". */
+function ffgEventFamilyKey(meta: CatalogEntry): string {
+  return (meta.slug || "")
+    .toLowerCase()
+    .replace(/-troph[ée]e-.*$/, "")
+    .replace(/\b(u1[0248]|benjamins|benjamines|minimes|gar[cç]ons|filles|boys|girls)\b/g, "")
+    .replace(/-+/g, "-").replace(/^-|-$/g, "");
+}
+
+/** Slug de família → título legível FR ("championnat-de-france-des-jeunes" →
+ *  "Championnat de France des Jeunes"). */
+function ffgPrettyTitle(familyKey: string): string {
+  const small = new Set(["de", "des", "du", "la", "le", "et", "d", "aux", "au"]);
+  return familyKey.split("-").filter(Boolean)
+    .map((w, i) => (i > 0 && small.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+/** Uma divisão (escalão) de um torneio GG FFG — leaderboard + match play + draws. */
+function ffgGgDivision(meta: CatalogEntry, data: FFGTournament): CircuitDivision {
   const hasManuel = data.players.some((p) => isM(p.name));
+  const label = ffgGgEscalaoLabel(meta, data);
+  return {
+    key: `${meta.year}_${meta.slug}`,
+    escalao: label,
+    tabLabel: label,
+    sex: ggSexFromName(data.tournament || meta.title || ""),
+    hasManuel,
+    // `results` (não `customResults`): só assim a shell renderiza o IntlTournView
+    // e intercala as abas "Draw R{n}" antes de cada ronda.
+    results: toFPGTournament(data),
+    scOptions: ffgScorecardOptions(),
+    siLabel: "m",
+    // Bracket knockout (CFJ etc.) — aba "Match Play" no fim da barra.
+    matchplay: buildFfgMatchplay(data),
+    // Draw por ronda intercalado com os resultados (mesmo padrão da /rfeg). Inclui
+    // rondas por jogar — no match play saber COM QUEM se joga a seguinte é metade
+    // da informação.
+    roundDraws: (data.draws ?? []).filter((r) => r.groups.length).length
+      ? (data.draws ?? [])
+          .filter((r) => r.groups.length)
+          .map((r) => ({
+            round: r.round,
+            render: () => (
+              <DrawTab
+                draw={ggDrawToFpgDraw(r)}
+                roundNum={r.round}
+                tournamentDate={r.dateIso}
+                hideCols={{ fed: true, nasc: true, esc: true }}
+              />
+            ),
+          }))
+      : undefined,
+  };
+}
+
+function ggLinks(meta: CatalogEntry, data: FFGTournament): CircuitLink[] {
   const links: CircuitLink[] = [
     { label: "GolfGenius", url: data.source || `https://www.golfgenius.com/pages/${meta.gg_page}`, icon: "🏌️", title: "Leaderboard e scorecards no GolfGenius" },
   ];
   if (meta.ffgolf_scores_url) links.push({ label: "Resultados FFG", url: meta.ffgolf_scores_url, icon: "🏁" });
   if (meta.ffgolf_url) links.push({ label: "Página FFG", url: meta.ffgolf_url, icon: "🔗" });
-  // Fallback de datas: alguns ficheiros GG do scraper vêm sem `dateStart`/
-  // `dateEnd` (só o Garçons do CFJ 2026 os trazia; Filles/Benjamins/Benjamines
-  // não). Sem data, a `entryDateKey` dá "00000000" e a entrada afunda para o
-  // FUNDO da lista do ano — buried entre ~1200 torneios = "não aparece".
-  // Deriva-se a data das rondas do match play (que estão sempre presentes)
-  // quando o topo não a traz, para a entrada ordenar junto das irmãs.
-  const mpDates = (data.matchplay?.flights ?? [])
-    .flatMap((f) => (f.rounds ?? []).map((r) => r.date))
-    .filter((d): d is string => !!d)
-    .sort();
-  const ggDateStart = data.dateStart ?? mpDates[0];
-  const ggDateEnd = data.dateEnd ?? mpDates[mpDates.length - 1];
+  return links;
+}
+
+/** Torneio GG de escalão único. */
+function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
+  const div = ffgGgDivision(meta, data);
+  const { start, end } = ggInferDates(data);
   return {
     id: `gg:${meta.year}_${meta.slug}`,
     year: meta.year,
@@ -2808,52 +2886,62 @@ function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
     series: "GolfGenius",
     source: "gg",
     course: data.course?.name ?? undefined,
-    dateStart: ggDateStart ?? undefined,
-    dateEnd: ggDateEnd ?? undefined,
+    dateStart: start ?? undefined,
+    dateEnd: end ?? undefined,
     federation: "FFG",
     intl: isIntlName(data.tournament || meta.title || ""),
     escaloes: ffgEscaloesOfTournament(data.tournament || meta.title, data.divisions ?? []),
-    // Sexo do nome do torneio (Garçons/Filles) — o GG não o dá por jogador.
     sex: ggSexFromName(data.tournament || meta.title || ""),
     roundsCount: data.rounds || undefined,
     hasResults: data.players.length > 0,
-    links,
+    links: ggLinks(meta, data),
     playerCount: data.players.length,
     divisionCount: (data.divisions ?? []).length || 1,
-    hasManuel,
-    divisions: [{
-      key: "main",
-      escalao: (data.divisions ?? []).join("/") || "—",
-      hasManuel,
-      // `results` (não `customResults`): só assim a shell renderiza ela própria
-      // o IntlTournView e consegue intercalar as abas "Draw R{n}" antes de cada
-      // ronda. Com uma vista fechada, o roundDraws nunca chega a ser usado.
-      results: toFPGTournament(data),
-      scOptions: ffgScorecardOptions(),
-      siLabel: "m",
-      // Bracket knockout (CFJ etc.) — aba "Match Play" no fim da barra.
-      matchplay: buildFfgMatchplay(data),
-      // Draw por ronda intercalado com os resultados (mesmo padrão da /rfeg).
-      // Inclui rondas ainda por jogar — num match play saber COM QUEM se joga
-      // a eliminatória seguinte é metade da informação.
-      roundDraws: (data.draws ?? []).filter((r) => r.groups.length).length
-        ? (data.draws ?? [])
-            .filter((r) => r.groups.length)
-            .map((r) => ({
-              round: r.round,
-              render: () => (
-                <DrawTab
-                  draw={ggDrawToFpgDraw(r)}
-                  roundNum={r.round}
-                  tournamentDate={r.dateIso}
-                  // O GolfGenius não expõe federação nem data de nascimento;
-                  // o escalão é o do próprio torneio, não por jogador.
-                  hideCols={{ fed: true, nasc: true, esc: true }}
-                />
-              ),
-            }))
-        : undefined,
-    }],
+    hasManuel: div.hasManuel,
+    divisions: [div],
+  };
+}
+
+/** Vários escalões do MESMO campeonato GG (mesmo ano+campo) fundidos numa entrada
+ *  com abas de escalão — ex: CFJ 2026 (U12 Garçons/Filles + Benjamins/Benjamines):
+ *  4 leagues GolfGenius distintas mas 1 só evento (mesmos dias, mesmo campo). */
+function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament }[]): CircuitEntry {
+  const escRank = (d: CircuitDivision): number => {
+    const s = d.escalao.toLowerCase();
+    const age = /u10/.test(s) ? 10 : /u12/.test(s) ? 12 : /benjamin/.test(s) ? 13
+      : /u14/.test(s) ? 14 : /minime/.test(s) ? 15 : /u16/.test(s) ? 16 : /u18/.test(s) ? 18 : 99;
+    return age * 10 + (d.sex === "F" ? 1 : 0);   // Garçons antes de Filles
+  };
+  const divisions = members.map((m) => ffgGgDivision(m.meta, m.data)).sort((a, b) => escRank(a) - escRank(b));
+  const y = members[0].meta.year;
+  const course = members.map((m) => m.data.course?.name).find(Boolean) ?? undefined;
+  const starts = members.map((m) => ggInferDates(m.data).start).filter((d): d is string => !!d).sort();
+  const ends = members.map((m) => ggInferDates(m.data).end).filter((d): d is string => !!d).sort();
+  const fam = ffgPrettyTitle(ffgEventFamilyKey(members[0].meta));
+  return {
+    id: `gg:evt:${ffgEventFamilyKey(members[0].meta)}_${y}`,
+    year: y,
+    name: `${fam} ${y}`,
+    series: "GolfGenius",
+    source: "gg",
+    course,
+    dateStart: starts[0],
+    dateEnd: ends[ends.length - 1],
+    federation: "FFG",
+    intl: isIntlName(fam),
+    escaloes: divisions.map((d) => d.escalao),
+    sex: "Mixed",
+    roundsCount: Math.max(0, ...members.map((m) => m.data.rounds || 0)) || undefined,
+    hasResults: members.some((m) => m.data.players.length > 0),
+    links: members.map((m) => ({
+      label: `GG · ${ffgGgEscalaoLabel(m.meta, m.data)}`,
+      url: m.data.source || `https://www.golfgenius.com/pages/${m.meta.gg_page}`,
+      icon: "🏌️",
+    })),
+    playerCount: members.reduce((s, m) => s + m.data.players.length, 0),
+    divisionCount: divisions.length,
+    hasManuel: divisions.some((d) => d.hasManuel),
+    divisions,
   };
 }
 
@@ -3014,6 +3102,7 @@ function FFGShellContent() {
       // por gg_page para não mostrar o mesmo evento duas vezes (o nome exibido
       // vem do próprio GG, que é o título combinado real, não do slug).
       const seenGgPage = new Set<string>();
+      const ggPairs: { meta: CatalogEntry; data: FFGTournament }[] = [];
       for (const meta of ggCatalog.tournaments) {
         if (!meta.gg_page) continue;
         // Eventos não-franceses que o catálogo GG arrastou (Sage Valley/EUA,
@@ -3033,7 +3122,24 @@ function FFGShellContent() {
         const hasMatchplay = !!data.matchplay?.flights?.length;
         if (ggTwins.has(key) && !hasMatchplay) continue; // o portal já mostra este evento
         seenGgPage.add(meta.gg_page);
-        out.push(ggEntry(meta, data));
+        ggPairs.push({ meta, data });
+      }
+      // Fundir escalões do MESMO campeonato numa entrada com abas de escalão
+      // (CFJ 2026 = U12 Garçons/Filles + Benjamins/Benjamines, 4 leagues GG mas 1
+      // evento). Chave: família do nome + ano + campo. Só funde quando há CAMPO
+      // (para nunca fundir por engano); sem campo, fica solo (1 entrada por league).
+      const byEvent = new Map<string, { meta: CatalogEntry; data: FFGTournament }[]>();
+      for (const pr of ggPairs) {
+        const course = pr.data.course?.name || "";
+        const courseKey = course.toLowerCase().replace(/\s+/g, " ").trim();
+        const gkey = course
+          ? `${ffgEventFamilyKey(pr.meta)}|${pr.meta.year}|${courseKey}`
+          : `__solo__|${pr.meta.year}_${pr.meta.slug}`;
+        if (!byEvent.has(gkey)) byEvent.set(gkey, []);
+        byEvent.get(gkey)!.push(pr);
+      }
+      for (const members of byEvent.values()) {
+        out.push(members.length > 1 ? ggMergedEntry(members) : ggEntry(members[0].meta, members[0].data));
       }
     }
     return out;
