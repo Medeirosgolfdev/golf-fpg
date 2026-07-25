@@ -7,7 +7,7 @@
   "gg_page": "12891806910545703850",
   "gg_league": "12891806821458686569",
   "stats_page": null,
-  "scrapedAt": "2026-07-25T00:49:48.825Z",
+  "scrapedAt": "2026-07-25T07:45:57.379Z",
   "course": {
     "name": "Golf du Gouverneur (Montaplan)",
     "tee": "Jaunes",
@@ -14572,24 +14572,24 @@
       ],
       "players": [
         {
-          "id": "12915335991664882282",
+          "id": "12917045458005701347",
           "pos": 1,
           "name": "GALLE Theophile",
           "country": "",
           "club": "LYON SALVAGNY GOLF CLUB",
           "hcp": null,
-          "toPar": null,
+          "toPar": 1,
           "roundScores": [],
           "division": "U12 garçons - Match play - Semifinals"
         },
         {
-          "id": "12915335991799100012",
+          "id": "12917045458005701349",
           "pos": 2,
           "name": "ROLLAND Arthur",
           "country": "",
           "club": "GOLF DE VALESCURE",
           "hcp": null,
-          "toPar": null,
+          "toPar": 2,
           "roundScores": [],
           "division": "U12 garçons - Match play - Semifinals"
         }
@@ -14683,7 +14683,7 @@
       ],
       "division": "Développer tout",
       "scorecardsByPlayerId": {
-        "12915335991664882282": [
+        "12917045458005701347": [
           {
             "scores": [
               1,
@@ -14700,7 +14700,7 @@
             "nineHole": true
           }
         ],
-        "12915335991799100012": [
+        "12917045458005701349": [
           {
             "scores": [
               1,
@@ -14734,7 +14734,7 @@
         "name": "U12 GARÇONS - MATCH PLAY",
         "format": "KnockOut",
         "parentId": null,
-        "isCompleted": false,
+        "isCompleted": true,
         "source": "https://www.golfgenius.com/pages/12891806910545703850",
         "rounds": [
           {
@@ -18263,7 +18263,7 @@
               {
                 "teamMatchId": null,
                 "matchNo": 1,
-                "startTime": "8:30",
+                "startTime": null,
                 "result": "1 up",
                 "isSettled": true,
                 "isStarted": true,
@@ -18291,7 +18291,7 @@
                     "format": "single",
                     "result": "1 up",
                     "playedHoles": 18,
-                    "startTime": "8:30",
+                    "startTime": null,
                     "isFinal": false,
                     "home": {
                       "teamId": null,
@@ -18409,7 +18409,7 @@
               {
                 "teamMatchId": null,
                 "matchNo": 2,
-                "startTime": "8:40",
+                "startTime": null,
                 "result": "5 & 4",
                 "isSettled": true,
                 "isStarted": true,
@@ -18437,7 +18437,7 @@
                     "format": "single",
                     "result": "5 & 4",
                     "playedHoles": 18,
-                    "startTime": "8:40",
+                    "startTime": null,
                     "isFinal": false,
                     "home": {
                       "teamId": null,
@@ -18555,7 +18555,7 @@
               {
                 "teamMatchId": null,
                 "matchNo": 3,
-                "startTime": "8:50",
+                "startTime": null,
                 "result": "1 up",
                 "isSettled": true,
                 "isStarted": true,
@@ -18583,7 +18583,7 @@
                     "format": "single",
                     "result": "1 up",
                     "playedHoles": 18,
-                    "startTime": "8:50",
+                    "startTime": null,
                     "isFinal": false,
                     "home": {
                       "teamId": null,
@@ -18701,7 +18701,7 @@
               {
                 "teamMatchId": null,
                 "matchNo": 4,
-                "startTime": "9:00",
+                "startTime": null,
                 "result": "3 & 2",
                 "isSettled": true,
                 "isStarted": true,
@@ -18729,7 +18729,7 @@
                     "format": "single",
                     "result": "3 & 2",
                     "playedHoles": 17,
-                    "startTime": "9:00",
+                    "startTime": null,
                     "isFinal": false,
                     "home": {
                       "teamId": null,
@@ -18856,7 +18856,7 @@
                 "matchNo": 1,
                 "startTime": "8:18",
                 "result": null,
-                "isSettled": false,
+                "isSettled": true,
                 "isStarted": true,
                 "home": {
                   "teamId": null,
@@ -18874,15 +18874,135 @@
                   "points": null,
                   "isLead": false
                 },
-                "winner": null,
-                "games": []
+                "winner": "home",
+                "games": [
+                  {
+                    "matchNo": 1,
+                    "order": 1,
+                    "format": "single",
+                    "result": null,
+                    "playedHoles": 5,
+                    "startTime": "8:18",
+                    "isFinal": false,
+                    "home": {
+                      "teamId": null,
+                      "name": "GALLE Theophile",
+                      "players": [
+                        "GALLE Theophile"
+                      ],
+                      "result": "",
+                      "won": true
+                    },
+                    "away": {
+                      "teamId": null,
+                      "name": "DUNLOP Cayssi",
+                      "players": [
+                        "DUNLOP Cayssi"
+                      ],
+                      "result": "",
+                      "won": false
+                    },
+                    "holes": [
+                      {
+                        "hole": 1,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 2,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 3,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 4,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 5,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 6,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 7,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 8,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 9,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 10,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 11,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 12,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 13,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 14,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 15,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 16,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 17,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 18,
+                        "par": null,
+                        "status": null
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "teamMatchId": null,
                 "matchNo": 2,
                 "startTime": "8:27",
                 "result": null,
-                "isSettled": false,
+                "isSettled": true,
                 "isStarted": true,
                 "home": {
                   "teamId": null,
@@ -18900,15 +19020,135 @@
                   "points": null,
                   "isLead": false
                 },
-                "winner": null,
-                "games": []
+                "winner": "home",
+                "games": [
+                  {
+                    "matchNo": 2,
+                    "order": 1,
+                    "format": "single",
+                    "result": null,
+                    "playedHoles": 5,
+                    "startTime": "8:27",
+                    "isFinal": false,
+                    "home": {
+                      "teamId": null,
+                      "name": "ROLLAND Arthur",
+                      "players": [
+                        "ROLLAND Arthur"
+                      ],
+                      "result": "",
+                      "won": true
+                    },
+                    "away": {
+                      "teamId": null,
+                      "name": "VIEGAS ESTREIA Paul",
+                      "players": [
+                        "VIEGAS ESTREIA Paul"
+                      ],
+                      "result": "",
+                      "won": false
+                    },
+                    "holes": [
+                      {
+                        "hole": 1,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 2,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 3,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 4,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 5,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 6,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 7,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 8,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 9,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 10,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 11,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 12,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 13,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 14,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 15,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 16,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 17,
+                        "par": null,
+                        "status": null
+                      },
+                      {
+                        "hole": 18,
+                        "par": null,
+                        "status": null
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
         ]
       }
     ],
-    "scrapedAt": "2026-07-25T00:49:48.824Z"
+    "scrapedAt": "2026-07-25T07:45:57.379Z"
   },
   "draws": [
     {
