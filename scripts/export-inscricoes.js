@@ -32,7 +32,7 @@ const cache = JSON.parse(readFileSync(SRC, 'utf8'));
 const entries = Object.entries(cache);
 console.log(`[export-inscricoes] Exportados ${entries.length} torneios para ${DEST}`);
 entries.forEach(([tcode, entry]) => {
-  const e = entry as any;
+  const e = entry;
   console.log(`  ${e.nome ?? tcode}: ${e.totalInscritos ?? 0} inscritos (${e.lastFetched ? new Date(e.lastFetched).toLocaleString('pt-PT') : '?'})`);
 });
 console.log('\n[export-inscricoes] Faz commit de public/data/inscricoes_nacionais.json e faz deploy.');
