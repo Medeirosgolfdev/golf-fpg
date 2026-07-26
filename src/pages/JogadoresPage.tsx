@@ -6,7 +6,7 @@ import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../utils/playedDist
 import { norm, shortDate, fmtSign, fpgScoringUrl } from "../utils/format";
 import { getTeeHex, normKey } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
-import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
+import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope, median } from "../utils/mathUtils";
 import { acesFromHoleScores } from "../utils/aces";
 import { fmtStb, sdClassByHcp, sc3m, SC } from "../utils/scoreDisplay";
 import {
@@ -1211,11 +1211,8 @@ function HistogramCard({ rounds, period, setPeriod }: {
       return { ...d, count };
     });
     const avg = meanArr(diffs) ?? 0;
-    const sorted = [...diffs].sort((a, b) => a - b);
-    const median = sorted.length % 2 === 0
-      ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
-      : sorted[Math.floor(sorted.length / 2)] || 0;
-    return { bins: result, maxCount, total: diffs.length, avg, median };
+    const med = median(diffs) ?? 0;
+    return { bins: result, maxCount, total: diffs.length, avg, median: med };
   }, [rounds]);
 
   return (

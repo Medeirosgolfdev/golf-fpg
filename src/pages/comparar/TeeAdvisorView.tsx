@@ -29,6 +29,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
 import { norm, fmtToPar } from "../../utils/format";
+import { median } from "../../utils/mathUtils";
 import { getTeeHex } from "../../utils/teeColors";
 import SharedTeePill from "../../ui/TeePill";
 import HoleDiffTable from "../../ui/HoleDiffTable";
@@ -42,15 +43,6 @@ const MONO = "'JetBrains Mono', monospace";
 const toNum = (v: unknown): number | null => {
   const n = typeof v === "number" ? v : parseFloat(String(v));
   return Number.isFinite(n) ? n : null;
-};
-
-/** Mediana de uma lista de números (null se vazia). Robusta a voltas atípicas:
- *  uma ronda catastrófica não distorce o resultado típico, ao contrário da média. */
-const median = (nums: number[]): number | null => {
-  if (nums.length === 0) return null;
-  const s = [...nums].sort((a, b) => a - b);
-  const m = Math.floor(s.length / 2);
-  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 };
 
 /* ═══════════════════ Escala de distâncias do saco ═══════════════════ */

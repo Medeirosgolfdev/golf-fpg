@@ -35,6 +35,15 @@ export function stdevArr(arr: (number | null | undefined)[]): number | null {
   return Math.sqrt(variance);
 }
 
+/** Mediana de uma lista de números (null se vazia). Robusta a valores atípicos:
+ *  uma ronda catastrófica não distorce o resultado típico, ao contrário da média. */
+export function median(nums: number[]): number | null {
+  if (nums.length === 0) return null;
+  const s = [...nums].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
 /** Soma elementos de array numérico entre índices [from, to) */
 export function sumArr(arr: (number | null)[], from: number, to: number): number {
   let s = 0;
