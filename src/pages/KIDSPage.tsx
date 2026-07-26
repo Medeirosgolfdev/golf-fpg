@@ -7,7 +7,6 @@
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
-import { getAvgZ } from "../utils/mathUtils";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -904,10 +903,20 @@ export function useMH() { return React.useContext(MemberHistCtx); }
 const ScoringStatsCtx = React.createContext<ScoringStatsData | null>(null);
 export function useScoringStatsCtx() { return React.useContext(ScoringStatsCtx); }
 
-/* ── Rank map derivado do array de rivais ── */
+/* ── Rank map derivado do array de rivais (to-par médio, ≥2 torneios) ──
+   Mesma métrica que a TabelaGlobal (tgBuildRankMap): menor to-par médio = 1º.
+   Antes chamava getAvgZ(p) com 1 argumento (faltava o `stats`), mascarado por
+   um cast `as unknown as`, e devolvia sempre null → rankMap ficava vazio. */
 export function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
-  const scored = rivals.map(p => ({ n: p.n, z: (getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) })).filter(x => x.z != null) as { n: string; z: number }[];
-  scored.sort((a, b) => a.z - b.z);
+  const scored: { n: string; avg: number }[] = [];
+  for (const p of rivals) {
+    const hidden = hiddenTids(p);
+    const tps = Object.entries(p.r)
+      .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
+      .map(([, r]) => r.tp as number);
+    if (tps.length >= 2) scored.push({ n: p.n, avg: tps.reduce((a, b) => a + b, 0) / tps.length });
+  }
+  scored.sort((a, b) => a.avg - b.avg);
   const m: Record<string, number> = {};
   scored.forEach((s, i) => { m[s.n] = i + 1; });
   return m;
