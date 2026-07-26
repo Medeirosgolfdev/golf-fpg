@@ -4,6 +4,8 @@ import { EscPill } from "./PillBadge";
 import SortableHdr from "./SortableHdr";
 import { useSort } from "../hooks/useSort";
 import type { Player, Tournament, GrupoEntry } from "../data/fpgTypes";
+import { bestN } from "../utils/mathUtils";
+import { firstPlayerParTotal } from "../data/fpgUtils";
 import type { PlayersDB } from "./tournamentPrimitives";
 
 /* ─────────────────────────────────────────────
@@ -60,9 +62,6 @@ function grossForRound(p: Player | undefined, rd: number): number | null {
   return null;
 }
 
-function bestN(scores: number[], n: number): number {
-  return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
-}
 
 export default function ClubesCategoriasView({ tournament, grupos, playersDB, categories, intro, bestNLabel, initialSort, rosterMode }: Props) {
   const tournDate = tournament?.date ?? null;
@@ -75,12 +74,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
     return m;
   }, [tournament]);
 
-  const parTotal = useMemo(() =>
-    tournament?.players[0]?.parTotal
-    || tournament?.players[0]?.par?.reduce((a, b) => a + b, 0)
-    || tournament?.players[0]?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0)
-    || 0,
-  [tournament]);
+  const parTotal = useMemo(() => firstPlayerParTotal(tournament), [tournament]);
 
   // Categoria de um jogador: Juniores (≤Sub-18) → senão Senhoras (F) → senão Homens.
   function catOf(fed: string | null): string {

@@ -6,6 +6,15 @@
  */
 import type { Player, Tournament, RoundScore, SDResult, PlayerFilter } from "./fpgTypes";
 import { normLoose } from "../utils/normName";
+
+/** Par total do percurso inferido do 1º jogador: parTotal → soma de par[] → soma dos pars da 1ª ronda → 0. */
+export function firstPlayerParTotal(tournament: Tournament | null | undefined): number {
+  const p = tournament?.players?.[0];
+  return p?.parTotal
+    || p?.par?.reduce((a, b) => a + b, 0)
+    || p?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0)
+    || 0;
+}
 import type { EscLookup } from "../utils/playerUtils";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { FpgDraw } from "./nacional2026Loader";

@@ -44,6 +44,12 @@ export function median(nums: number[]): number | null {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 }
 
+/** Soma dos N melhores (menores) scores de uma lista — usado nos rankings por clube. */
+export function bestN(scores: number[], n: number): number {
+  if (!scores.length) return 0;
+  return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
+}
+
 /** Soma elementos de array numérico entre índices [from, to) */
 export function sumArr(arr: (number | null)[], from: number, to: number): number {
   let s = 0;

@@ -3,6 +3,8 @@ import { useSort } from "../hooks/useSort";
 import { C as _C } from "../utils/colors";
 import { abreviarNome, medal } from "../utils/format";
 import type { Player, Tournament, GrupoJogador, GrupoEntry } from "../data/fpgTypes";
+import { bestN } from "../utils/mathUtils";
+import { firstPlayerParTotal } from "../data/fpgUtils";
 
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
@@ -36,10 +38,6 @@ function grossForRound(p: Player, rd: number, maxHole: number = MAX_HOLE_SCORE):
   return null;
 }
 
-function bestN(scores: number[], n: number): number {
-  if (!scores.length) return 0;
-  return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
-}
 
 function fmtHcp(h: number | string) {
   return typeof h === "string" ? h : h % 1 === 0 ? String(h) : h.toFixed(1);
@@ -121,12 +119,7 @@ export default function ClubesGruposView({
     return { bir, par, bog };
   }
 
-  const parTotal = useMemo(() =>
-    tournament?.players[0]?.parTotal
-    || tournament?.players[0]?.par?.reduce((a, b) => a + b, 0)
-    || tournament?.players[0]?.roundScores?.[0]?.pars.reduce((a, b) => a + b, 0)
-    || 0,
-  [tournament]);
+  const parTotal = useMemo(() => firstPlayerParTotal(tournament), [tournament]);
 
   const { clubColorMap, clubCount, clubTeamOrder } = useMemo(() => {
     const counts = new Map<string, number>();
