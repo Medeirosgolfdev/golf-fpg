@@ -126,6 +126,13 @@ export function fmtDateShort(s: string): string {
   return `${day}/${m}`;
 }
 
+/** Data "17 Mar 2026" (dia sem zero à esquerda, mês abreviado PT, ano) a partir de ISO. */
+export function fmtDayMonthYear(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${Number(d)} ${MONTHS_PT[Number(m) - 1] || m} ${y}`;
+}
+
 /** Formata chave "YYYY-MM" → "Jan 2025". Aceita "?" e anos de 4 dígitos. */
 export function monthLabel(key: string): string {
   if (!key || key === "?") return "Data desconhecida";

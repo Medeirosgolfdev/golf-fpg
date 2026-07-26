@@ -16,7 +16,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { useJuniorsCanonical, type Junior } from "./data";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
-import { MONTHS_PT } from "../../utils/format";
+import { fmtDayMonthYear } from "../../utils/format";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -27,11 +27,6 @@ export default function NextTournamentsGlobal() {
 interface Row { junior: Junior; reg: UpcomingReg; }
 type SortK = "date" | "player" | "tournament" | "circuit" | "escalao";
 
-function fmtDate(iso: string): string {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-");
-  return `${Number(d)} ${MONTHS_PT[Number(m) - 1] || m} ${y}`;
-}
 const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = { uskids: "🇺🇸 USKids", fpg: "🇵🇹 FPG" };
 
 function Content() {
@@ -153,7 +148,7 @@ function Content() {
                         }}>RESERVA</span>
                       )}
                     </td>
-                    <td style={{ whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDate(row.reg.date)}</td>
+                    <td style={{ whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDayMonthYear(row.reg.date)}</td>
                     <td style={{ whiteSpace: "nowrap", color: "var(--text-3)" }}>{row.reg.escalao || "—"}</td>
                     <td>
                       <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-3)", textDecoration: "none", fontWeight: 600 }} title="Abrir torneio (nova aba)">↗</a>

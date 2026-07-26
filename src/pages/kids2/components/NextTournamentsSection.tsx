@@ -8,19 +8,13 @@
 
 import type { CanonicalData, Junior } from "../data";
 import { useUpcomingByJunior, type UpcomingReg } from "../upcomingRegs";
-import { MONTHS_PT } from "../../../utils/format";
+import { fmtDayMonthYear } from "../../../utils/format";
 
 interface Props {
   data: CanonicalData;
   junior: Junior;
 }
 
-function fmtDate(iso: string): string {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-");
-  const mi = Number(m) - 1;
-  return `${Number(d)} ${MONTHS_PT[mi] || m} ${y}`;
-}
 
 const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = {
   uskids: "🇺🇸 USKids",
@@ -60,7 +54,7 @@ export default function NextTournamentsSection({ data, junior }: Props) {
             title={`${r.name}${r.campo ? " · " + r.campo : ""}`}
           >
             <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", minWidth: 78 }}>
-              {fmtDate(r.date)}
+              {fmtDayMonthYear(r.date)}
             </span>
             <span style={{ flex: 1, minWidth: 0 }}>
               <span style={{ display: "block", fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>

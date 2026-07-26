@@ -9,7 +9,7 @@ import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
-import { escalaoAtDate } from "../utils/format";
+import { escalaoAtDate, shortDateSlash } from "../utils/format";
 import type { Tournament } from "../data/fpgTypes";
 
 /* ─────────────────────────────────────────────
@@ -232,11 +232,6 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
   return { circuito: n, local: campo || "" };
 }
 
-/** Data curta "DD/MM" (extraí de YYYY-MM-DD). */
-function shortDate(isoDate?: string): string {
-  if (!isoDate || isoDate.length < 10) return "";
-  return isoDate.slice(8, 10) + "/" + isoDate.slice(5, 7);
-}
 
 /* ─────────────────────────────────────────────
    Local Components
@@ -1034,7 +1029,7 @@ export function PJARankingView({
                       {local || "\u00A0"}
                     </div>
                     <div style={{ ...lineStyle, color: "var(--text-muted)" }}>
-                      {shortDate(tc.date)}
+                      {shortDateSlash(tc.date)}
                       {!tc.agregado && (tc.totalRondas ?? tc.rounds.length) > 1 && <>
                         {" · "}
                         <RoundPill nR={tc.totalRondas ?? tc.rounds.length} />

@@ -27,7 +27,7 @@ import ExtLink from "../ui/ExternalLink";
 import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { monthLabel, tournamentUrl, parseTournKey } from "../utils/format";
+import { monthLabel, tournamentUrl, parseTournKey, fmtDateShort } from "../utils/format";
 import {
   isManuel,
   type PlayersDB,
@@ -2879,7 +2879,7 @@ function Content() {
                   };
                   const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
                   // Data só dd/mm (ano já está no cabeçalho de secção)
-                  const ddmm = g.date ? g.date.substring(8, 10) + "/" + g.date.substring(5, 7) : "";
+                  const ddmm = g.date ? fmtDateShort(g.date) : "";
                   // Manuel detection: procurar em TODAS as entries do grupo (o grupo
                   // pode ter Sub 10 e Sub 14 do mesmo Regional — Manuel está só numa).
                   const groupHasManuel = g.entries.some(e => tournamentHasManuel(e));
