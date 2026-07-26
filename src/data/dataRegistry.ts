@@ -367,8 +367,7 @@ Idêntico a master-courses mas sem \`numbers\` nem \`country\` em master, e com:
         "parTotal      — par total do percurso",
       ],
       posCalcNote:
-        "pos pré-calculado. Para torneio com categorias usar " +
-        "tournamentTypes.ts → normalizeTournament().",
+        "pos pré-calculado (vem já resolvido no JSON).",
     },
     scorecard: {
       available: true,
