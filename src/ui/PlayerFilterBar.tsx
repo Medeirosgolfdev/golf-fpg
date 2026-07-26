@@ -4,6 +4,7 @@
  * Extracted from LeaderboardComponents.tsx
  */
 import { useMemo } from "react";
+import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, PlayerFilter } from "../data/fpgTypes";
 import { resolveEsc, filterPlayers } from "../data/fpgUtils";
@@ -59,7 +60,7 @@ export function PlayerFilterBar({
   // Só mostra o filtro se houver AMBOS sexos representados.
   const availSex = useMemo(() => {
     // Index por nome normalizado para lookup O(1) — replica getNameIndex
-    const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const norm = normLoose;
     const byName = new Map<string, string>();
     for (const k in playersDB) {
       const e = (playersDB as any)[k];

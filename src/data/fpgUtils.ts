@@ -5,6 +5,7 @@
  * Extraídas de FPGPage.tsx.
  */
 import type { Player, Tournament, RoundScore, SDResult, PlayerFilter } from "./fpgTypes";
+import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { FpgDraw } from "./nacional2026Loader";
@@ -397,7 +398,7 @@ export function filterPlayers(
   if (f.sex) {
     // Resolve sexo via _sex, playersDB[fed].sex, OU lookup por nome em
     // playersDB (entries kids:* com sex extraído de FFG resultats).
-    const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const norm = normLoose;
     const sexByName = new Map<string, string>();
     for (const k in playersDB) {
       const e = (playersDB as any)[k];

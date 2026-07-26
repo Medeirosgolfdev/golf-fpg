@@ -11,6 +11,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { buildAutoRivals, normName, uskTournNames, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { normLoose } from "../utils/normName";
 import { cachedFetchJson } from "../data/fetchCache";
 import { AUTO_COVERED_BY, HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
@@ -942,9 +943,8 @@ export function hiddenTids(p: RivalPlayer): Set<string> {
 // auto (`wjgc25_b{N}`) na getCanonicalTids — ambos eram skipados → torneio
 // desaparecia.
 
-/** Normaliza nome de torneio para matching (NFD, sem diacríticos; ≠ normName partilhado, que também colapsa pontuação). */
-const normKN = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
-  .replace(/\s+/g, " ").trim();
+/** Normaliza nome de torneio para matching (mantém pontuação; ≠ normName, que a colapsa). */
+const normKN = normLoose;
 
 const _MANUAL_TIDS_SET = new Set(T.map(t => t.id));
 

@@ -22,6 +22,16 @@ export function normName(n: string): string {
 }
 
 /**
+ * normLoose — normalização "leve" para matching: lowercase + sem diacríticos +
+ * espaços condensados, mas MANTÉM a pontuação (hífens/apóstrofos), ao contrário
+ * de normName (que converte  -  '  ’  .  ·  /  em espaço). Para matchings de
+ * leaderboard onde o nome já vem limpo e não se quer colapsar "Jean-Pierre".
+ */
+export function normLoose(s: string): string {
+  return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+/**
  * vetKey — chave de IDENTIDADE de jogador tolerante à ORDEM dos nomes.
  *
  * Além do `normName`, remove vírgulas e ordena os tokens alfabeticamente, para

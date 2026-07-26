@@ -7,6 +7,7 @@
  * Columns: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
  */
 import React, { useState, useMemo } from "react";
+import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
 import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
@@ -533,7 +534,7 @@ export function ScorecardLB({
                   (p.fedCode && playersDB[p.fedCode]?.dob)
                   || (p.fedCode ? fedBirthdates.get(p.fedCode) : undefined);
                 if (!dob && p.name) {
-                  const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+                  const norm = normLoose;
                   const nn = norm(p.name);
                   for (const k in playersDB) {
                     const e = (playersDB as any)[k];

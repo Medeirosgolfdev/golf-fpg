@@ -1,5 +1,6 @@
 ﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
+import { normLoose } from "../utils/normName";
 import { fmtHcp, medal } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
@@ -70,7 +71,7 @@ function resolveSex(row: MultiRoundRow, playersDB?: PlayersDB, byName?: Map<stri
   const s = row.sex || (row.fed && playersDB?.[row.fed]?.sex);
   if (s === "M" || s === "F") return s;
   if (row.name && byName) {
-    const norm = (x: string) => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const norm = normLoose;
     const v = byName.get(norm(row.name));
     if (v === "M" || v === "F") return v;
   }
@@ -80,7 +81,7 @@ function resolveSex(row: MultiRoundRow, playersDB?: PlayersDB, byName?: Map<stri
 function buildSexByName(playersDB?: PlayersDB): Map<string, string> {
   const m = new Map<string, string>();
   if (!playersDB) return m;
-  const norm = (x: string) => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  const norm = normLoose;
   for (const k in playersDB) {
     const e = (playersDB as any)[k];
     if ((e?.sex === "M" || e?.sex === "F") && e?.name) {
