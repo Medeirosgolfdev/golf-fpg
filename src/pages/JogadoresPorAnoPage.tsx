@@ -38,7 +38,7 @@ import type { PlayerClub } from "../data/types";
 
 /* ─────────────────────────────────────────────────────────────── */
 
-const ESC_ORDER = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21", "Sub-24", "Absoluto", "MidAmateur", "Sénior", "SuperSenior", "Outros"];
+import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const HCP_UNESTABLISHED = 54;
 const CURRENT_YEAR = new Date().getFullYear();

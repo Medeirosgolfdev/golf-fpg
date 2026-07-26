@@ -5,6 +5,7 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { ESCALOES_DRIVE as ESCALOES } from "../constants/escaloes";
 import { useSort } from "../hooks/useSort";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
@@ -84,7 +85,6 @@ const REGIONS = [
   { id: "madeira", label: "Madeira", emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
   { id: "acores",  label: "Açores",  emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
 ];
-const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 /** Remove o sufixo de ronda/total do tcode ("X_R2"/"X_Total" → "X"). */
 const stripRoundSuffix = (tc: string | null | undefined) => (tc || "").replace(/_R\d+$|_Total$/, "");
 const regionOf = (id: string | null | undefined) => REGIONS.find((r) => r.id === id);

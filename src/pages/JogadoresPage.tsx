@@ -49,6 +49,7 @@ import { CrossAnalysis } from "../ui/CrossAnalysis";
 import { ByTournamentView } from "../ui/ByTournamentView";
 import { buildCourseKeyMap, setCourseKeyMap, findCourseKey, CourseLink } from "../ui/jogadoresHelpers";
 import { PIN_RANK } from "../constants/pinnedPlayers";
+import { ESC_ORDER_FULL as ESC_ORDER, ESCALOES_JOVENS } from "../constants/escaloes";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -3250,7 +3251,6 @@ function KV({ label, value, description }: { label: string; value: React.ReactNo
    Main Page — Jogadores (master-detail)
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
-const ESC_ORDER = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21", "Sub-24", "Absoluto", "MidAmateur", "Sénior", "SuperSenior", "Outros"];
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
@@ -4397,7 +4397,7 @@ export default function JogadoresPage() {
             if (isJuvenilFilter) {
               setEscalaoFilter(new Set());
             } else {
-              const jovens = new Set(["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21"]);
+              const jovens = new Set(ESCALOES_JOVENS);
               setEscalaoFilter(jovens);
             }
           }}
@@ -4606,7 +4606,7 @@ export default function JogadoresPage() {
           )}
           {viewMode === "todos" && isJuvenilFilter && (() => {
             // KPI por escalão jovem — contagem total e por sexo
-            const jovensOrdem = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21"];
+            const jovensOrdem = ESCALOES_JOVENS;
             const stats: Record<string, { total: number; m: number; f: number }> = {};
             for (const esc of jovensOrdem) stats[esc] = { total: 0, m: 0, f: 0 };
             for (const p of filtered) {

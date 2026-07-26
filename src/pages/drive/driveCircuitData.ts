@@ -23,6 +23,7 @@
  * Este módulo é puro (sem React) e testável isoladamente.
  */
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
+import { ESCALOES_DRIVE as DRIVE_ESCALOES } from "../../constants/escaloes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritos, CircuitDraw } from "../../ui/circuit/types";
 import type { FpgAdmissions, FpgDraw } from "../../data/nacional2026Loader";
 import { isManuelByName } from "../../constants/manuel";
@@ -31,7 +32,6 @@ import { isManuelByName } from "../../constants/manuel";
 type DriveRuntime = { _admissions?: FpgAdmissions; _draws?: Record<string, FpgDraw> };
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
-const DRIVE_ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 
 /** Labels legíveis por série (usadas no agrupamento da sidebar). */
 const DRIVE_SERIES_LABEL: Record<string, string> = {

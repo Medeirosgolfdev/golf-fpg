@@ -30,6 +30,7 @@ import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
 import { norm, fmtToPar } from "../../utils/format";
 import { median } from "../../utils/mathUtils";
+import { calcCourseHcp } from "../../utils/whsCalc";
 import { getTeeHex } from "../../utils/teeColors";
 import SharedTeePill from "../../ui/TeePill";
 import HoleDiffTable from "../../ui/HoleDiffTable";
@@ -118,10 +119,6 @@ function ClubDistanceTable({ driveM }: { driveM: number }) {
 
 /* ═══════════════════ Modelos de cálculo ═══════════════════ */
 
-/** Playing handicap WHS (não arredondado). */
-function playingHcpRaw(hi: number, slope: number, cr: number, par: number): number {
-  return hi * (slope / 113) + (cr - par);
-}
 
 interface ReachInfo { hole: number; par: number; dist: number; budget: number; reachable: boolean }
 interface ReachOutcome { reach: number[]; total: number; detail: ReachInfo[] }
@@ -297,7 +294,7 @@ function buildMetrics(
   const cr = tee.ratings?.holes18?.courseRating ?? null;
   const slope = tee.ratings?.holes18?.slopeRating ?? null;
   const dist = tee.distances?.total ?? null;
-  const phRaw = cr != null && slope != null && par > 0 ? playingHcpRaw(hi, slope, cr, par) : null;
+  const phRaw = cr != null && slope != null && par > 0 ? calcCourseHcp(hi, slope, cr, par) : null;
   const ph = phRaw != null ? Math.round(phRaw) : null;
   return {
     tee, dist, par, cr, slope, ph, phRaw,
