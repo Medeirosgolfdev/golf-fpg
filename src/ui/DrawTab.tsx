@@ -19,6 +19,7 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
+import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
@@ -132,15 +133,6 @@ const TEE_TIME_PALETTE = [
   "rgba(20, 184, 166, 0.14)",   // teal
 ];
 
-function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
-  if (!escalao) return undefined;
-  const n = norm(escalao);
-  if (/sub\s*10/.test(n)) return "Verdes";
-  if (/sub\s*12/.test(n)) return "Vermelhas";
-  if (/sub\s*14/.test(n)) return sex === "F" ? "Vermelhas" : "Amarelas";
-  if (/sub\s*16/.test(n) || /sub\s*18/.test(n)) return sex === "F" ? "Azuis" : "Brancas";
-  return undefined;
-}
 
 export default function DrawTab({
   draw, roundNum, playersDB,

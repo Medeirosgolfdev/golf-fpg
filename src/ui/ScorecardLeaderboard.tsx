@@ -64,8 +64,6 @@ export interface ScorecardRow {
   prefixCells?: React.ReactNode;
   /** <td> após In (fim do scorecard) — usar classes .lb-sd .lb-bird .lb-par-stat .lb-bog */
   postScorecardCells?: React.ReactNode;
-  /** @deprecated use postScorecardCells */
-  postTotalCells?: React.ReactNode;
   /** Nome em texto para sorting interno (quando sortable=true) */
   sortName?: string;
   /** Posição numérica para sorting interno (quando sortable=true) */
@@ -85,8 +83,6 @@ interface ScorecardLeaderboardProps {
   prefixHeaderCells?: React.ReactNode;
   /** Headers após In (SD, 🐦, Par, ■) */
   postScorecardHeaderCells?: React.ReactNode;
-  /** @deprecated use postScorecardHeaderCells */
-  postTotalHeaderCells?: React.ReactNode;
   parLabelColSpan?: number;
   postTotalColCount?: number;
   /** Número de colunas após o scorecard (SD, 🐦, Par, ■) — para preencher SI/PAR rows */
@@ -122,7 +118,7 @@ type SCSortKey = "pos" | "name" | "gross" | "toPar" | "f9" | "b9" | `hole:${numb
 export function ScorecardLeaderboard({
   par, si, siLabel = "S.I.", teeMeters, rows,
   prefixHeaderCells,
-  postScorecardHeaderCells, postTotalHeaderCells,
+  postScorecardHeaderCells,
   parLabelColSpan = 1,
   postTotalColCount = 0,
   postScorecardColCount = 0,
@@ -145,7 +141,7 @@ export function ScorecardLeaderboard({
   // Filtrar teeMeters válidos (com metros suficientes)
   const validTeeMeters = (teeMeters || []).filter(tm => tm.meters.length >= nh);
 
-  const afterScorecardHeaders = postScorecardHeaderCells ?? postTotalHeaderCells;
+  const afterScorecardHeaders = postScorecardHeaderCells;
 
   /* ── Sorting interno ── */
   const { sortKey: intSortKey, sortDir: intSortDir, toggleSort: intToggle } = useSort<SCSortKey>("pos", "asc");
@@ -396,7 +392,7 @@ export function ScorecardLeaderboard({
               const rpF9 = playedPar(0, 9);
               const rpB9 = !is9 ? playedPar(9, 18) : 0;
               const nF9 = playedN(0, 9), nB9 = !is9 ? playedN(9, 18) : 0;
-              const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
+              const afterScorecard = row.postScorecardCells;
               return (
                 <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
                   <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>

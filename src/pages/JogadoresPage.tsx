@@ -523,7 +523,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 <>
                   {/* Eclectic */}
                   {ecList.length > 0 && (
-                    <EclecticSection ecList={ecList} ecDet={ecDet} holeStats={holeStats}
+                    <EclecticSection ecList={ecList} ecDet={ecDet}
                       courseRounds={course.rounds} holesData={data.HOLES}
                       activeTee={activeTee} onSelectTee={handleSelectTee} />
                   )}

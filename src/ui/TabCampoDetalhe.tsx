@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { isoDate, fmtDate, displayName } from "../utils/format";
+import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { kidsUrl } from "./KidsLink";
@@ -265,7 +265,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               {/* Resultados anos anteriores */}
                               {prevResults.map(({ y, res }) => {
                                 const p = res!.p;
-                                const medal = p === 1 ? "🥇" : p === 2 ? "🥈" : p === 3 ? "🥉" : null;
+                                const medal = medalOf(p);
                                 const col = p <= 3 ? "var(--color-warn-dark)" : p <= 10 ? "var(--color-good-dark)" : "var(--text-3)";
                                 return (
                                   <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}

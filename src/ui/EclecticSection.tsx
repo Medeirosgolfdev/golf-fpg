@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { RoundData, EclecticEntry, HoleStatsData, HoleScores } from "../data/playerDataLoader";
+import type { RoundData, EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
 import { fmtSign, fmtToPar } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
@@ -11,7 +11,6 @@ import { SC, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 
 export function EclecticSection({ ecList, ecDet, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
-  holeStats: Record<string, HoleStatsData>;
   courseRounds: RoundData[]; holesData: Record<string, HoleScores>;
   activeTee: string | null; onSelectTee: (tk: string) => void;
 }) {

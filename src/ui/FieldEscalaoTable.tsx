@@ -3,7 +3,7 @@ import { AutoRivalPlayer, normName as normNameAuto } from "../data/KIDSdataLoade
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { fmtToParRivais } from "../utils/scoreDisplay";
-import { displayName } from "../utils/format";
+import { displayName, medal } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { isManuel } from "../constants/manuel";
 import { fmtPosRivais, playerSeriesResult } from "./uskidsHelpers";
@@ -241,7 +241,7 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                 <tr key={p.nome} style={{ background: rowBg, fontWeight: isM ? 700 : 400 }}>
                   {!isFuture && (
                     <td style={{ textAlign:"center", fontSize: "var(--fs-14)", fontWeight:700 }}>
-                      {(p.pos ?? 0) === 1 ? "🥇" : (p.pos ?? 0) === 2 ? "🥈" : (p.pos ?? 0) === 3 ? "🥉" : (p.pos ?? "?")}
+                      {medal(p.pos ?? 0) ?? (p.pos ?? "?")}
                     </td>
                   )}
                   <td style={{ textAlign:"center", fontSize: "var(--fs-16)" }}>{flag(p.pais)}</td>

@@ -23,8 +23,7 @@ import { useSort } from "../hooks/useSort";
 import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
-
-const MANUEL_FED = "52884";
+import { MANUEL_FED } from "../constants/manuel";
 
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);

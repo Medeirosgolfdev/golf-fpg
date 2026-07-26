@@ -21,7 +21,7 @@ import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
 import { useFedCountries, useFedBirthdates, useFedGenders } from "./InscricoesComponents";
-import { parseSubNumber, type TeeRule } from "../utils/teeRegulation";
+import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -44,15 +44,6 @@ interface Props {
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status";
 
-function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
-  if (!escalao) return undefined;
-  const n = norm(escalao);
-  if (/sub\s*10/.test(n)) return "Verdes";
-  if (/sub\s*12/.test(n)) return "Vermelhas";
-  if (/sub\s*14/.test(n)) return sex === "F" ? "Vermelhas" : "Amarelas";
-  if (/sub\s*16/.test(n) || /sub\s*18/.test(n)) return sex === "F" ? "Azuis" : "Brancas";
-  return undefined;
-}
 
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,

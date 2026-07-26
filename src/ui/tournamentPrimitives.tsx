@@ -32,6 +32,7 @@
 import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
+import { normLoose } from "../utils/normName";
 import { fmtToPar } from "../utils/format";
 import { flag as flagOf } from "../utils/flagUtils";
 
@@ -124,8 +125,7 @@ export const EMPTY_ESC_LOOKUP = new Map<string, string>();
 export const EMPTY_PLAYERS_DB: PlayersDB = {} as PlayersDB;
 
 /** Strip diacríticos + lowercase + espaços únicos. Usado para lookup rápido. */
-const normNameLocal = (s: string | undefined) =>
-  (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+const normNameLocal = (s: string | undefined) => normLoose(s || "");
 
 /** Cache de índices por nome para cada `playersDB` distinto. WeakMap permite
  *  GC quando o playersDB é substituído (não causa memory leak entre renders). */

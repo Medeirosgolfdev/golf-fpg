@@ -15,14 +15,28 @@
  *
  * O `AdmissionsTab` usa a regra quando o TournamentDetail lha passa
  * (resolvida por ccode/tcode em `teeRuleFor`). Sem regra, cai no
- * comportamento genérico (`teeNameFor` do próprio AdmissionsTab).
+ * comportamento genérico (`teeNameFor`, definido neste módulo).
  * ═══════════════════════════════════════════════════════════════════════
  */
+
+import { norm } from "./format";
 
 export type TeeSex = "M" | "F";
 
 /** (nº do escalão — 10/12/14/16/18/21/24…, ou null p/ absoluto; sexo) → cor do tee. */
 export type TeeRule = (subNum: number | null, sex?: TeeSex) => string | undefined;
+
+/** Tee genérico da FPG por escalão+sexo (fallback quando não há TeeRule própria).
+ *  Sub10→Verdes · Sub12→Vermelhas · Sub14 M→Amarelas/F→Vermelhas · Sub16/18 M→Brancas/F→Azuis. */
+export function teeNameFor(escalao?: string, sex?: TeeSex): string | undefined {
+  if (!escalao) return undefined;
+  const n = norm(escalao);
+  if (/sub\s*10/.test(n)) return "Verdes";
+  if (/sub\s*12/.test(n)) return "Vermelhas";
+  if (/sub\s*14/.test(n)) return sex === "F" ? "Vermelhas" : "Amarelas";
+  if (/sub\s*16/.test(n) || /sub\s*18/.test(n)) return sex === "F" ? "Azuis" : "Brancas";
+  return undefined;
+}
 
 /** Extrai o nº do escalão de um label "Sub 14" → 14. "Absoluto"/sem nº → null. */
 export function parseSubNumber(escalao?: string | null): number | null {

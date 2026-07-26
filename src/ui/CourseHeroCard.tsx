@@ -6,14 +6,14 @@
  * para reuso em /kids2/next-t (tab "O Campo") e potencialmente noutras
  * páginas que precisem de visualizar a anatomia de um campo+tee.
  *
- * Os helpers (parBreakdown, holeColor, holesByNumber, PAR_HSL) também são
- * exportados para usos pontuais (ex: gerar legenda à parte).
+ * PAR_HSL e getParTotal são exportados para reuso; os restantes helpers
+ * (parBreakdown, holeColor, holesByNumber) são internos.
  */
 import { useMemo, useState } from "react";
 import type { Course, Tee } from "../data/types";
 
 interface HoleEntry { hole: number; distance: number | null }
-export interface ParBreakdown {
+interface ParBreakdown {
   par: 3 | 4 | 5;
   count: number;
   avgDistance: number | null;
@@ -58,7 +58,7 @@ export const PAR_HSL: Record<3 | 4 | 5, { h: number; s: number }> = {
   5: { h: 355, s: 72 },  // vermelho
 };
 
-export function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
+function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
   const { h, s: sMax } = PAR_HSL[par];
   const l = 82 - t * 27;
   const s = 45 + t * (sMax - 45);
