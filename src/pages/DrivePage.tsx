@@ -85,6 +85,8 @@ const REGIONS = [
   { id: "acores",  label: "Açores",  emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
 ];
 const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
+/** Remove o sufixo de ronda/total do tcode ("X_R2"/"X_Total" → "X"). */
+const stripRoundSuffix = (tc: string | null | undefined) => (tc || "").replace(/_R\d+$|_Total$/, "");
 const regionOf = (id: string | null | undefined) => REGIONS.find((r) => r.id === id);
 
 /* ── Rankings oficiais FPG (scoring.fpg.pt) ──
@@ -428,7 +430,6 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
   // Resolver escalão e stats por jogador antes de ordenar
-  const ESC_ORDER = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18"];
   const escOf = (p: Player) => resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
   const sdOf = (p: Player) => computeStats(p, sdLookup)?.sd18 ?? null;
 
@@ -439,7 +440,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       return mult * ((a._dp ?? INF) - (b._dp ?? INF));
     }
     if (sortKey === "esc") {
-      const ai = ESC_ORDER.indexOf(escOf(a)); const bi = ESC_ORDER.indexOf(escOf(b));
+      const ai = ESCALOES.indexOf(escOf(a)); const bi = ESCALOES.indexOf(escOf(b));
       const av = ai >= 0 ? ai : INF; const bv = bi >= 0 ? bi : INF;
       if (av !== bv) return mult * (av - bv);
       // secundário: pos
@@ -1755,7 +1756,7 @@ function DriveContent() {
       // da sidebar de eventos multi-ronda, onde as entries são "_Total".
       if (entryIdx < 0) {
         entryIdx = g.entries.findIndex(e => {
-          const base = (e.tcode || "").replace(/_R\d+$|_Total$/, "");
+          const base = stripRoundSuffix(e.tcode);
           return e.ccode === ccode && (base === tcode || base.split("+").includes(tcode));
         });
       }
@@ -1814,7 +1815,7 @@ function DriveContent() {
       ? (<>
           {g.entries.map(e => {
             const esc = e.escalao;
-            const tc = e.tcode?.replace(/_R\d+$|_Total$/, "") || "";
+            const tc = stripRoundSuffix(e.tcode);
             const url = (tc && e.ccode) ? `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${String(e.ccode).padStart(3,"0")}&tcode=${tc}` : "";
             return esc && (
               <span key={esc} className="gap-2" style={{ display: "inline-flex", alignItems: "center" }}>
@@ -1845,7 +1846,7 @@ function DriveContent() {
       : regionLabel ?? undefined;
 
     const tData: SidebarItemTournament = {
-      tcode:       g.isEvent ? undefined : (t0?.tcode?.replace(/_R\d+$|_Total$/, "") || undefined),
+      tcode:       g.isEvent ? undefined : (stripRoundSuffix(t0?.tcode) || undefined),
       ccode:       t0?.ccode,
       name:        sidebarItemLabel(g),
       campo:       campoDisplay,
@@ -1862,7 +1863,7 @@ function DriveContent() {
     // Deep-link canónico — o TournSidebarItem renderiza como <a href> (com
     // Ctrl/Cmd+click a abrir em nova aba). Para sintéticos com tcode "A+B"
     // usamos apenas o primeiro tcode no URL (parseTournKey match ambos).
-    const firstTcode = (t0?.tcode || "").split("+")[0].replace(/_R\d+$|_Total$/, "");
+    const firstTcode = stripRoundSuffix((t0?.tcode || "").split("+")[0]);
     const href = (t0?.ccode && firstTcode) ? tournamentUrl("drive", t0.ccode, firstTcode) : undefined;
     return (
       <TournSidebarItem
