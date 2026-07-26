@@ -272,6 +272,19 @@ function Delta({ a, b, decimals = 0, unit = "" }: {
 
 // ═══════════════════ Tabela Score→SD lado a lado (tee A vs tee B) ═══════════
 
+/** Tee de `course` mais próximo em dificuldade (CR/Slope 18h) do `refTee`, excluindo `excludeTee`. */
+function nearestTee(course: Course, excludeTee: Tee, refTee: Tee): Tee | null {
+  const crRef = refTee.ratings?.holes18?.courseRating;
+  const slRef = refTee.ratings?.holes18?.slopeRating;
+  if (!crRef || !slRef) return null;
+  const score = (t: Tee) =>
+    Math.abs((t.ratings!.holes18!.courseRating! - crRef) / 3) +
+    Math.abs((t.ratings!.holes18!.slopeRating! - slRef) / 15);
+  return course.master.tees
+    .filter(t => t.teeId !== excludeTee.teeId && t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating)
+    .sort((a, b) => score(a) - score(b))[0] ?? null;
+}
+
 function TwoTeeSDTable({
   courseA, teeA, courseB, teeB, hi, pcc,
 }: {
@@ -280,33 +293,8 @@ function TwoTeeSDTable({
   hi: number; pcc: number;
 }) {
   // Tee mais próximo em dificuldade (CR/Slope) do tee escolhido no outro campo
-  const bestMatchA = useMemo(() => {
-    const crRef = teeB.ratings?.holes18?.courseRating;
-    const slRef = teeB.ratings?.holes18?.slopeRating;
-    if (!crRef || !slRef) return null;
-    return courseA.master.tees
-      .filter(t => t.teeId !== teeA.teeId && t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating)
-      .sort((a, b) => {
-        const score = (t: Tee) =>
-          Math.abs((t.ratings!.holes18!.courseRating! - crRef) / 3) +
-          Math.abs((t.ratings!.holes18!.slopeRating! - slRef) / 15);
-        return score(a) - score(b);
-      })[0] ?? null;
-  }, [courseA, teeA, teeB]);
-
-  const bestMatchB = useMemo(() => {
-    const crRef = teeA.ratings?.holes18?.courseRating;
-    const slRef = teeA.ratings?.holes18?.slopeRating;
-    if (!crRef || !slRef) return null;
-    return courseB.master.tees
-      .filter(t => t.teeId !== teeB.teeId && t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating)
-      .sort((a, b) => {
-        const score = (t: Tee) =>
-          Math.abs((t.ratings!.holes18!.courseRating! - crRef) / 3) +
-          Math.abs((t.ratings!.holes18!.slopeRating! - slRef) / 15);
-        return score(a) - score(b);
-      })[0] ?? null;
-  }, [courseB, teeA, teeB]);
+  const bestMatchA = useMemo(() => nearestTee(courseA, teeA, teeB), [courseA, teeA, teeB]);
+  const bestMatchB = useMemo(() => nearestTee(courseB, teeB, teeA), [courseB, teeA, teeB]);
 
   // Colunas: [teeA escolhido, bestMatchA?] | [bestMatchB?, teeB escolhido]
   type ColDef = { tee: Tee; cr: number; sl: number; par: number; hex: string; isChosen: boolean };

@@ -340,6 +340,22 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
   } as FpgDraw]));
 }
 
+/** Marca cada jogador do torneio com _regressado (aparece no evo do ano anterior)
+ *  e _subiu (mudou de escalão para cima), a partir do mapa de evolução. */
+function tagEvo(
+  results: { players: { name: string }[] },
+  evo: ReadonlyMap<string, { pill: string }> | null | undefined,
+): void {
+  if (!evo || evo.size === 0) return;
+  for (const pl of results.players) {
+    const ev = evo.get(pl.name);
+    if (ev) {
+      (pl as unknown as { _regressado?: boolean })._regressado = true;
+      if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true;
+    }
+  }
+}
+
 function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
@@ -347,10 +363,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
-      if (hasEvo) for (const pl of results.players) {
-        const ev = evo!.get(pl.name);
-        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
-      }
+      tagEvo(results, evo);
       // Anexar os draws ao torneio → o TournamentDetail monta as tabs flat
       // intercaladas (Draw R1 · R1 · Draw R2 · R2 · … · Resumo · Scorecards).
       if (dv.draws && Object.keys(dv.draws).length) {
@@ -433,10 +446,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
-      if (hasEvo) for (const pl of results.players) {
-        const ev = evo!.get(pl.name);
-        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
-      }
+      tagEvo(results, evo);
       if (dv.draws && Object.keys(dv.draws).length) {
         (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
       }
@@ -492,10 +502,7 @@ function buildJobEntries(files: JobFile[]): CircuitEntry[] {
       const { evo, evoYear } = jobEvoFor(f, files, i, (d, idx) => JOB_DIV_LABELS[idx] || d.division);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
-      if (hasEvo) for (const pl of results.players) {
-        const ev = evo!.get(pl.name);
-        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
-      }
+      tagEvo(results, evo);
       return {
         key: `d${i}`,
         escalao: label,
