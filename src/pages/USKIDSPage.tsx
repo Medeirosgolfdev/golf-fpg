@@ -7,7 +7,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtDate, monthLabel } from "../utils/format";
+import { isoDate, fmtDate, monthLabel, fmtToPar } from "../utils/format";
 import EmptyState from "../ui/EmptyState";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
@@ -863,7 +863,7 @@ export default function USKidsFieldPage() {
               borderColor: "transparent",
             }}>
               {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
-              {manuelScore != null && ` (${manuelScore > 0 ? "+" : ""}${manuelScore === 0 ? "E" : manuelScore})`}
+              {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
             </span>
           )}
           {t.urlResultados && (

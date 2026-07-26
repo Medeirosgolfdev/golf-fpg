@@ -385,10 +385,6 @@ function fmtDMYfull(d: string | null): string {
   const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
   return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
 }
-/** Número com vírgula decimal (pt). */
-function dec1(n: number): string {
-  return n.toFixed(1).replace(".", ",");
-}
 
 type CPBucket = {
   n: number;
@@ -558,9 +554,9 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
       <td className="cp-num">
         {b.avgGross != null ? (
           <>
-            {dec1(b.avgGross)}
+            {fmtCR(b.avgGross)}
             {b.avgToPar != null && (
-              <span className="cp-tp" style={{ color: tpTextColor(Math.round(b.avgToPar)) }}> ({b.avgToPar >= 0 ? "+" : ""}{dec1(b.avgToPar)})</span>
+              <span className="cp-tp" style={{ color: tpTextColor(Math.round(b.avgToPar)) }}> ({b.avgToPar >= 0 ? "+" : ""}{fmtCR(b.avgToPar)})</span>
             )}
           </>
         ) : <span className="muted">–</span>}
@@ -925,7 +921,7 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
                     <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-11)", marginLeft: "auto", whiteSpace: "nowrap" }}>{c.players.size} jog · {c.nRounds} voltas</span>
                   </div>
                   <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22 }}>
-                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${dec1(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
+                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${fmtCR(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
                   </div>
                 </div>
                 {/* Corpo: escalões — UMA grelha só (nomes alinhados verticalmente
@@ -1022,8 +1018,8 @@ function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSele
                 {(dist || rM || rF) && (
                   <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}
-                    {rM && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> CR {dec1(rM.cr)} · Slope {rM.sl}</span>}
-                    {rF && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> CR {dec1(rF.cr)} · Slope {rF.sl}</span>}
+                    {rM && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> CR {fmtCR(rM.cr)} · Slope {rM.sl}</span>}
+                    {rF && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> CR {fmtCR(rF.cr)} · Slope {rF.sl}</span>}
                   </div>
                 )}
               </div>

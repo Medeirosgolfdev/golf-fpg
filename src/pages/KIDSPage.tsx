@@ -933,12 +933,15 @@ export function hiddenTids(p: RivalPlayer): Set<string> {
 // auto (`wjgc25_b{N}`) na getCanonicalTids — ambos eram skipados → torneio
 // desaparecia.
 
+/** Normaliza nome de torneio para matching (NFD, sem diacríticos; ≠ normName partilhado, que também colapsa pontuação). */
+const normKN = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .replace(/\s+/g, " ").trim();
+
 const _MANUAL_TIDS_SET = new Set(T.map(t => t.id));
 
 const _T_BY_NAME = (() => {
   const m = new Map<string, string>();
-  const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, " ").trim();
+  const norm = normKN;
   for (const t of T) {
     const k1 = norm(t.name);
     const k2 = norm(t.name).replace(/\s*\d{4}$/, "").trim();
@@ -971,8 +974,7 @@ export function getCanonicalTids(p: RivalPlayer): Set<string> {
     out.add(t.id);
   }
   // 2. Auto tids não cobertos por manual
-  const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, " ").trim();
+  const norm = normKN;
   for (const [tid, res] of Object.entries(p.r)) {
     if (_MANUAL_TIDS_SET.has(tid)) continue;
     // Aceitar tids com rd hbh OU pos/total (cp00 maioria sem hbh, só leaderboard)

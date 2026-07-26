@@ -44,6 +44,10 @@ import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, 
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { vetKey } from "../utils/normName";
 
+/** Normaliza nome/texto ES para matching: NFKD, sem diacríticos, vírgulas/pontos → espaço.
+ *  ⚠ Diferente do `norm` partilhado (format.ts), que tira apóstrofos em vez de vírgulas. */
+const normEs = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+
 /* ── Types ──────────────────────────────────────────────── */
 
 interface RFEGIndexEntry {
@@ -280,7 +284,7 @@ function lgsToFPGTournament(
   },
   dobLookup?: DobLookup,
 ): FPGTournament {
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
@@ -577,7 +581,7 @@ function ncToFPGTournament(
   const parTotal = par18.reduce((a, b) => a + b, 0);
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
 
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
@@ -701,7 +705,7 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
   const par18 = new Array(18).fill(4);  // RFEGolf não expõe par
   const parTotal = par18.reduce((a, b) => a + b, 0);
 
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
@@ -804,7 +808,7 @@ function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FP
   const courseRating = group.courseRating ?? undefined;
   const slope = group.slope ?? undefined;
 
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
@@ -1001,7 +1005,7 @@ interface LgsHorarioRound {
 }
 
 function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) {
     for (const e of Object.values(dobLookup)) {
@@ -1382,7 +1386,7 @@ function ResultsTable({ results, dobLookup, dateRef }: {
   const nR = g.nRounds || (g.players[0]?.rounds?.length ?? 0);
 
   // Enriquecer com dobLookup por nome (RFEGolf não dá licencia no PDF)
-  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) {
     for (const e of Object.values(dobLookup)) {

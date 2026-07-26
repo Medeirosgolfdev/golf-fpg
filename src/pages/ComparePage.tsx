@@ -29,12 +29,11 @@ import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
 import { fmtSD } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { textOnColor } from "../utils/teeColors";
+import { MANUEL_FED } from "../constants/manuel";
 
 const CompararPlayersView = lazy(() => import("./CompararPage"));
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 const SimuladorPageEmbedded = lazy(() => import("./SimuladorPage"));
-
-const MANUEL_FED = "52884";
 
 // ═══════════════════ Helpers ═══════════════════
 
