@@ -14,7 +14,7 @@
  *   • Tabs por ronda (R1, R2, ... + Acumulado para multi-ronda)
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
@@ -66,6 +66,9 @@ import {
 import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitConfig } from "../ui/circuit/types";
+import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT
@@ -2090,6 +2093,89 @@ function Content() {
   const findInDisplayList = (t: Tournament): number =>
     displayList.findIndex(d => d.ccode === t.ccode && d.tcode === t.tcode);
 
+  // ── Vista opt-in via CircuitShell (?shell=1) ──────────────────────────
+  // Migração das vistas Todos / Santo da Serra / PJA para o shell partilhado,
+  // atrás de um flag para permitir comparação lado-a-lado com o render actual
+  // antes de trocar o default. Não afecta Clubes / Jovens / rankings.
+  const shellMode = searchParams.get("shell") === "1";
+  const shellGroups = seriesFilter === "santo" ? santoEventGroups
+    : seriesFilter === "" ? allEventGroups
+    : pjaEventGroups;
+  const shellEntries = useMemo(() => {
+    if (!shellMode) return [];
+    const ents = buildFpgEntries(shellGroups);
+    // Anexa o render do detalhe (delegado ao TournamentDetail da FPG, que tem
+    // escLookup/playersDB em runtime) — mesmo padrão do DrivePage. As tabs
+    // "Edições anteriores" vêm do índice próprio da FPG (fpgPastEditionsTabs),
+    // não do mecanismo do shell — por isso a config não define editionKey.
+    for (const e of ents) for (const d of e.divisions ?? []) {
+      const t = d.results!;
+      d.renderFull = () => (
+        <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
+          extraTabs={fpgPastEditionsTabs(editionsIndex, t)} />
+      );
+    }
+    return ents;
+  }, [shellMode, shellGroups, escLookup, playersDB, editionsIndex]);
+
+  // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão). Um membro pode ter
+  // tcode sintético "A+B" (multi-dia); o URL canónico usa só o 1º tcode, por isso
+  // o match parte o "+".
+  const shellSel = useMemo(() => {
+    const empty = { id: undefined as string | undefined, divKey: undefined as string | undefined };
+    if (!shellMode || !params.tkey) return empty;
+    const parsed = parseTournKey(params.tkey);
+    if (!parsed) return empty;
+    const matches = (memberKey: string) => {
+      const mp = parseTournKey(memberKey);
+      if (!mp || String(mp.ccode) !== String(parsed.ccode)) return false;
+      const mt = String(mp.tcode ?? "");
+      return mt === String(parsed.tcode) || mt.split("+").includes(String(parsed.tcode));
+    };
+    for (const e of shellEntries) {
+      const d = e.divisions?.find(dv => matches(dv.key));
+      if (d) return { id: e.id, divKey: d.key };
+    }
+    return empty;
+  }, [shellMode, params.tkey, shellEntries]);
+
+  // Navega o URL para o tcode canónico (ccode-firstTcode) de uma divisão,
+  // PRESERVANDO a query (senão o `?shell=1` cairia na 1ª navegação e saíamos do
+  // modo opt-in). Remove `tab` para o shell reescrever a aba do novo torneio.
+  const shellNavToDiv = useCallback((divKey: string, replace: boolean) => {
+    const p = parseTournKey(divKey);
+    if (!p) return;
+    const firstTcode = String(p.tcode ?? "").split("+")[0];
+    const path = tournamentUrl("FPG", p.ccode, firstTcode);
+    if (!path) return;
+    const sp = new URLSearchParams(location.search);
+    sp.delete("tab");
+    const search = sp.toString();
+    const target = search ? `${path}?${search}` : path;
+    if (location.pathname + location.search !== target) navigate(target, { replace });
+  }, [location.pathname, location.search, navigate]);
+
+  const shellConfig: CircuitConfig = {
+    ...FPG_CONFIG,
+    grouping: seriesFilter === "" ? "month-year" : "year",
+    title: seriesFilter === "santo" ? "⛳ Santo da Serra"
+      : seriesFilter === "" ? "🇵🇹 FPG — Todos" : "🏆 PJA",
+  };
+  const shellView = shellMode ? (
+    <CircuitShell
+      entries={shellEntries}
+      config={shellConfig}
+      loading={loading}
+      selectedId={shellSel.id}
+      selectedDivKey={shellSel.divKey}
+      onSelectEntry={(e) => {
+        const rep = fpgRepDivision(e.divisions ?? []);
+        if (rep) shellNavToDiv(rep.key, true);
+      }}
+      onSelectDivision={(_e, d) => shellNavToDiv(d.key, true)}
+    />
+  ) : null;
+
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
@@ -2349,7 +2435,12 @@ function Content() {
                       e.preventDefault();
                       setSeriesFilter(key);
                       setJovensShowInscricoes(false);
-                      navigate(urlSeg ? `/FPG/${urlSeg}` : "/FPG");
+                      // Preserva a query (ex.: ?shell=1, ?manuel=0) ao trocar de
+                      // série; remove `tab` (é por-torneio, não por-série).
+                      const _sp = new URLSearchParams(location.search);
+                      _sp.delete("tab");
+                      const _s = _sp.toString();
+                      navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
                     }
                   }}
                   style={st}>
@@ -2367,8 +2458,11 @@ function Content() {
         </div>
       )}
 
-      {/* Master-detail (modos "month" e "circuit") */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && (
+      {/* Vista opt-in via CircuitShell (?shell=1) — comparação lado-a-lado */}
+      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && shellMode && shellView}
+
+      {/* Master-detail (modos "month" e "circuit") — render actual (default) */}
+      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && !shellMode && (
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
