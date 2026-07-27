@@ -55,7 +55,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const featured = FEATURED_TOURNAMENTS.find(
     f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode));
   const syntheticAdm = (tournament as any)._sourceFile === "fpg-admissions-draws.json";
-  const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds;
+  // Inscrições já encerradas no último scrape → não vale a pena ir ao live
+  // (a lista não muda mais e a FPG deixa de a servir): evita fetches inúteis.
+  const admissionsClosed = /fechad|encerrad/i.test(admissions?.status || "");
+  const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds && !admissionsClosed;
   const live = useLiveAdmissions(tournament.ccode, tournament.tcode, liveEnabled);
   const liveActive = live.status === "live" && live.players.length > 0;
   const effAdmissions = useMemo(() => (liveActive
