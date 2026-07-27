@@ -2175,6 +2175,12 @@ function Content() {
     />
   );
 
+  // Vistas de torneios servidas pelo CircuitShell (Todos/Santo/PJA). O shell traz
+  // a sua própria pesquisa + toggle de sidebar, por isso os equivalentes da
+  // toolbar exterior são escondidos aqui (evita chrome duplicado). Clubes/Jovens
+  // (master-detail próprio) e os modos Ranking/Classificações mantêm-nos.
+  const shellTorneios = navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens";
+
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
@@ -2251,14 +2257,18 @@ function Content() {
 
         {/* Linha 1: toda numa linha scrollável */}
         <Toolbar>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+          {/* Toggle exterior escondido nas vistas do shell (o shell tem o seu). */}
+          {!shellTorneios && <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />}
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
-          {!loading && (<>
+          {/* Pesquisa exterior: nos modos Ranking/Classificações filtra jogadores;
+              em Clubes/Jovens filtra a lista. Nas vistas do shell (Torneios) é o
+              shell que pesquisa, por isso esconde-se aqui. */}
+          {!loading && !shellTorneios && (<>
             <ToolbarSep />
             {/* Search unificado — mesmo local e tamanho em todos os modos.
-                Filtra torneios em modo Torneios, jogadores em modo Ranking PJA,
-                etc. O valor é partilhado (searchQuery). */}
+                Filtra jogadores em Ranking PJA, a lista em Clubes/Jovens, etc.
+                O valor é partilhado (searchQuery). */}
             <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
               <span aria-hidden="true" style={{
                 position: "absolute", left: 8, fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none",
@@ -2441,7 +2451,7 @@ function Content() {
       )}
 
       {/* Torneios (Todos / Santo da Serra / PJA) — vista via CircuitShell */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && shellView}
+      {shellTorneios && shellView}
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
       {navMode === "torneios" && seriesFilter === "clubes" && (
