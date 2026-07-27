@@ -2173,6 +2173,25 @@ function Content() {
         if (rep) shellNavToDiv(rep.key, true);
       }}
       onSelectDivision={(_e, d) => shellNavToDiv(d.key, true)}
+      // Paridade total da sidebar: reusa o MESMO TournSidebarItem do render
+      // clássico (pills NACIONAL/JUNIOR/9H/SSerra/Clube, 🔗 por-tcode, FileBadge
+      // da fonte, contagem de inscritos), mas com click/href do shell (URL com
+      // ?shell=1 preservado). O grupo vem por id (= EventGroup.key).
+      renderSidebarItem={(entry, { active, onSelect }) => {
+        const g = shellGroups.find(gr => gr.key === entry.id);
+        if (!g) return null;
+        const first = g.entries[0];
+        const firstTcode = (first?.tcode || "").split("+")[0];
+        const path = first?.ccode && firstTcode ? tournamentUrl("FPG", first.ccode, firstTcode) : undefined;
+        let href = path;
+        if (path) {
+          const sp = new URLSearchParams(location.search);
+          sp.delete("tab");
+          const s = sp.toString();
+          href = s ? `${path}?${s}` : path;
+        }
+        return renderSidebarItem(g, { onClick: onSelect, href, isActive: active });
+      }}
     />
   ) : null;
 
@@ -2181,7 +2200,7 @@ function Content() {
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
    *    pills agregados de todas as entradas; clique vai à entrada activa
    *    se `cur` já pertence ao grupo, senão vai à primeira entrada. */
-  function renderSidebarItem(g: EventGroup) {
+  function renderSidebarItem(g: EventGroup, opts?: { onClick?: () => void; href?: string; isActive?: boolean }) {
     const isMulti = g.entries.length > 1;
     // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa).
     const activeEntryIdx = cur
@@ -2248,14 +2267,17 @@ function Content() {
     // com tcode "A+B" usa o primeiro tcode no URL (parseTournKey match ambos).
     const firstTcode = (activeEntry.tcode || "").split("+")[0];
     const href = (activeEntry.ccode && firstTcode) ? tournamentUrl("FPG", activeEntry.ccode, firstTcode) : undefined;
+    // `opts` permite ao render do shell (CircuitSidebar) reutilizar ESTE mesmo
+    // item — mesmos pills/badges/contagens — mas com click/href/active próprios
+    // (URL com ?shell=1 preservado). Sem opts, comportamento clássico.
     return (
       <TournSidebarItem
         key={(activeEntry._isSynthetic ? "synth_" : "") + keyTcodes + "_" + g.date}
         t={tData}
-        isActive={isActive}
-        onClick={handleClick}
+        isActive={opts?.isActive ?? isActive}
+        onClick={opts?.onClick ?? handleClick}
         extraPills={extraPills}
-        href={href}
+        href={opts?.href ?? href}
       />
     );
   }

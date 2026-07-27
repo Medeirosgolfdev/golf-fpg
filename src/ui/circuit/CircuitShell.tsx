@@ -486,9 +486,17 @@ export interface CircuitShellProps {
    *  é estado interno (comportamento das restantes páginas). */
   selectedDivKey?: string;
   onSelectDivision?: (entry: CircuitEntry, div: CircuitDivision) => void;
+  /** Render custom do item da sidebar. Quando fornecido, a `CircuitSidebar` usa-o
+   *  em vez do card interno — a página assume TODO o item (pills, click, href),
+   *  recebendo `active` e o `onSelect` do shell (para preservar fecho-mobile +
+   *  selecção interna). Usado pela FPG para reutilizar o `TournSidebarItem` e ter
+   *  paridade total com o render clássico. Sem esta prop, o card default é usado
+   *  (comportamento das restantes páginas). O agrupamento/divisórias da sidebar
+   *  continuam a ser do shell. */
+  renderSidebarItem?: (entry: CircuitEntry, ctx: { active: boolean; onSelect: () => void }) => React.ReactNode;
 }
 
-export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo, selectedDivKey, onSelectDivision }: CircuitShellProps) {
+export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo, selectedDivKey, onSelectDivision, renderSidebarItem }: CircuitShellProps) {
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -678,10 +686,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     setFLiga("all"); setFIntl(false); setToggles(new Set());
   };
 
-  if (loading) {
-    return <div className="tourn-layout"><LoadingState message={config.loadingMessage ?? "A carregar…"} /></div>;
-  }
-
   // ── Leaderboard com toggles aplicados ───────────────────────────────
   const resultsTourn = curDiv?.results
     ? applyToggles(curDiv.results, toggles, vetIndex, vetThreshold)
@@ -812,6 +816,14 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
   const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0) || (curDiv?.links && curDiv.links.length > 0)));
 
+  // Early-return de loading DEPOIS de todos os hooks (rules of hooks): o shell
+  // pode ser montado com loading=true e transitar para false enquanto montado
+  // (ex.: FPGPage passa loading={loading}). Se ficasse antes de useSearchParams
+  // & co., a contagem de hooks mudaria na transição → crash "order of Hooks".
+  if (loading) {
+    return <div className="tourn-layout"><LoadingState message={config.loadingMessage ?? "A carregar…"} /></div>;
+  }
+
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
       <div className="tourn-layout">
@@ -941,6 +953,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               config={config}
               curId={cur?.id ?? null}
               onSelect={selectEntry}
+              renderItem={renderSidebarItem}
             />
           </div>
 
@@ -1127,12 +1140,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 // ── Sidebar (agrupamento por ano / série / fonte) ─────────────────────
 
 function CircuitSidebar({
-  entries, config, curId, onSelect,
+  entries, config, curId, onSelect, renderItem,
 }: {
   entries: CircuitEntry[];
   config: CircuitConfig;
   curId: string | null;
   onSelect: (e: CircuitEntry) => void;
+  renderItem?: (entry: CircuitEntry, ctx: { active: boolean; onSelect: () => void }) => React.ReactNode;
 }) {
   // Agrupamento de 1º nível (none | série | fonte).
   const l1Mode = config.grouping === "series-year" ? "series"
@@ -1205,11 +1219,14 @@ function CircuitSidebar({
           )}
           {g.buckets.map(({ bk, label, items }) => (
             <React.Fragment key={bk}>
-              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color, color: config.textColor ?? "#fff" }}>
+              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color ?? "var(--color-good-dark)", color: config.textColor ?? "#fff" }}>
                 {label}
               </div>
               {items.map(e => {
                 const active = e.id === curId;
+                // Render custom (FPG reutiliza o TournSidebarItem) — assume o item
+                // inteiro; o shell só fornece `active` + o seu `onSelect`.
+                if (renderItem) return <React.Fragment key={e.id}>{renderItem(e, { active, onSelect: () => onSelect(e) })}</React.Fragment>;
                 const nP = entryPlayerCount(e);
                 const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
                 const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;
