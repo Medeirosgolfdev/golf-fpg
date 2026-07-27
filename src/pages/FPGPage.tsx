@@ -857,6 +857,9 @@ function Content() {
     if (!filterManuel) sp.set("manuel", "0"); else sp.delete("manuel");
     // search
     if (searchQuery.trim()) sp.set("q", searchQuery.trim()); else sp.delete("q");
+    // Normaliza links antigos: `shell` já não faz nada (o CircuitShell é o
+    // default das vistas de torneios), por isso remove-se do URL.
+    sp.delete("shell");
     if (sp.toString() !== searchParams.toString()) {
       setSearchParams(sp, { replace: true });
     }
@@ -2427,8 +2430,8 @@ function Content() {
                       e.preventDefault();
                       setSeriesFilter(key);
                       setJovensShowInscricoes(false);
-                      // Preserva a query (ex.: ?shell=1, ?manuel=0) ao trocar de
-                      // série; remove `tab` (é por-torneio, não por-série).
+                      // Preserva a query (ex.: ?manuel=0) ao trocar de série;
+                      // remove `tab` (é por-torneio, não por-série).
                       const _sp = new URLSearchParams(location.search);
                       _sp.delete("tab");
                       const _s = _sp.toString();
