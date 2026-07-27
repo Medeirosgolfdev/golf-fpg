@@ -27,7 +27,7 @@ import ExtLink from "../ui/ExternalLink";
 import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { monthLabel, tournamentUrl, parseTournKey } from "../utils/format";
+import { tournamentUrl, parseTournKey } from "../utils/format";
 import {
   isManuel,
   type PlayersDB,
@@ -1959,18 +1959,6 @@ function Content() {
     [displayList]
   );
 
-  /** Map rápido (ccode/tcode) → EventGroup que o contém. Permite descobrir o
-   *  grupo do `cur` activo em O(1) para renderizar os tabs de escalão. */
-  const eventGroupByKey = useMemo(() => {
-    const m = new Map<string, EventGroup>();
-    for (const g of allEventGroups) {
-      for (const e of g.entries) {
-        m.set((e.ccode || "?") + "/" + String(e.tcode ?? "?"), g);
-      }
-    }
-    return m;
-  }, [allEventGroups]);
-
   // Agrupamento por mês — todos os torneios (pull + clubes + jovens) — alimenta o tab "Todos"
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, EventGroup[]> = {};
@@ -2087,22 +2075,14 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [santoEventGroups, activeYear, filterManuel, searchTerm]);
 
-  /** Encontra o índice de um torneio em displayList por (ccode, tcode) — NÃO
-   *  por referência, porque buildEventGroups pode embrulhar entradas em novos
-   *  objectos para injectar o escalão inferido (quebra a igualdade `===`). */
-  const findInDisplayList = (t: Tournament): number =>
-    displayList.findIndex(d => d.ccode === t.ccode && d.tcode === t.tcode);
-
-  // ── Vista opt-in via CircuitShell (?shell=1) ──────────────────────────
-  // Migração das vistas Todos / Santo da Serra / PJA para o shell partilhado,
-  // atrás de um flag para permitir comparação lado-a-lado com o render actual
-  // antes de trocar o default. Não afecta Clubes / Jovens / rankings.
-  const shellMode = searchParams.get("shell") === "1";
+  // ── Vista de Torneios via CircuitShell (Todos / Santo da Serra / PJA) ──
+  // As três vistas de torneios usam o shell partilhado (mesmo componente de
+  // /rfeg, /drive, /major, …). Não afecta Clubes / Jovens / rankings (que têm
+  // UI própria mais abaixo). O detalhe é delegado ao TournamentDetail da FPG.
   const shellGroups = seriesFilter === "santo" ? santoEventGroups
     : seriesFilter === "" ? allEventGroups
     : pjaEventGroups;
   const shellEntries = useMemo(() => {
-    if (!shellMode) return [];
     const ents = buildFpgEntries(shellGroups);
     // Anexa o render do detalhe (delegado ao TournamentDetail da FPG, que tem
     // escLookup/playersDB em runtime) — mesmo padrão do DrivePage. As tabs
@@ -2116,14 +2096,14 @@ function Content() {
       );
     }
     return ents;
-  }, [shellMode, shellGroups, escLookup, playersDB, editionsIndex]);
+  }, [shellGroups, escLookup, playersDB, editionsIndex]);
 
   // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão). Um membro pode ter
   // tcode sintético "A+B" (multi-dia); o URL canónico usa só o 1º tcode, por isso
   // o match parte o "+".
   const shellSel = useMemo(() => {
     const empty = { id: undefined as string | undefined, divKey: undefined as string | undefined };
-    if (!shellMode || !params.tkey) return empty;
+    if (!params.tkey) return empty;
     const parsed = parseTournKey(params.tkey);
     if (!parsed) return empty;
     const matches = (memberKey: string) => {
@@ -2137,11 +2117,11 @@ function Content() {
       if (d) return { id: e.id, divKey: d.key };
     }
     return empty;
-  }, [shellMode, params.tkey, shellEntries]);
+  }, [params.tkey, shellEntries]);
 
   // Navega o URL para o tcode canónico (ccode-firstTcode) de uma divisão,
-  // PRESERVANDO a query (senão o `?shell=1` cairia na 1ª navegação e saíamos do
-  // modo opt-in). Remove `tab` para o shell reescrever a aba do novo torneio.
+  // PRESERVANDO a query (ex.: ?manuel=0). Remove `tab` para o shell reescrever a
+  // aba do novo torneio.
   const shellNavToDiv = useCallback((divKey: string, replace: boolean) => {
     const p = parseTournKey(divKey);
     if (!p) return;
@@ -2161,7 +2141,7 @@ function Content() {
     title: seriesFilter === "santo" ? "⛳ Santo da Serra"
       : seriesFilter === "" ? "🇵🇹 FPG — Todos" : "🏆 PJA",
   };
-  const shellView = shellMode ? (
+  const shellView = (
     <CircuitShell
       entries={shellEntries}
       config={shellConfig}
@@ -2175,8 +2155,8 @@ function Content() {
       onSelectDivision={(_e, d) => shellNavToDiv(d.key, true)}
       // Paridade total da sidebar: reusa o MESMO TournSidebarItem do render
       // clássico (pills NACIONAL/JUNIOR/9H/SSerra/Clube, 🔗 por-tcode, FileBadge
-      // da fonte, contagem de inscritos), mas com click/href do shell (URL com
-      // ?shell=1 preservado). O grupo vem por id (= EventGroup.key).
+      // da fonte, contagem de inscritos), mas com click/href do shell.
+      // O grupo vem por id (= EventGroup.key).
       renderSidebarItem={(entry, { active, onSelect }) => {
         const g = shellGroups.find(gr => gr.key === entry.id);
         if (!g) return null;
@@ -2193,36 +2173,21 @@ function Content() {
         return renderSidebarItem(g, { onClick: onSelect, href, isActive: active });
       }}
     />
-  ) : null;
+  );
 
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
    *    pills agregados de todas as entradas; clique vai à entrada activa
    *    se `cur` já pertence ao grupo, senão vai à primeira entrada. */
-  function renderSidebarItem(g: EventGroup, opts?: { onClick?: () => void; href?: string; isActive?: boolean }) {
+  function renderSidebarItem(g: EventGroup, opts: { onClick: () => void; href?: string; isActive: boolean }) {
     const isMulti = g.entries.length > 1;
-    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa).
+    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa) —
+    // é dela que sai o campo/tcode/players do `tData`.
     const activeEntryIdx = cur
       ? g.entries.findIndex(e => e.ccode === cur.ccode && e.tcode === cur.tcode)
       : -1;
     const activeEntry = activeEntryIdx >= 0 ? g.entries[activeEntryIdx] : g.entries[0];
-    const idx = findInDisplayList(activeEntry);
-    const isActive = activeEntryIdx >= 0 && selected === idx;
-
-    const handleClick = () => {
-      if (idx >= 0) setSelected(idx);
-      md.onSelect();
-      // Navegar imediatamente para a URL do torneio escolhido. Sem isto, o
-      // state→URL effect pode ficar bloqueado pelo guard anti-loop (params.tkey
-      // diferente do novo cur → SKIPPED) e o user fica preso na URL antiga.
-      if (activeEntry && activeEntry.ccode && activeEntry.tcode) {
-        const target = tournamentUrl("FPG", activeEntry.ccode, activeEntry.tcode);
-        if (target && location.pathname !== target) {
-          navigate(target, { replace: true });
-        }
-      }
-    };
 
     // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
     const allTcodes = g.entries.flatMap(e => (e.tcode || "").split("+"));
@@ -2263,21 +2228,16 @@ function Content() {
       pill: pillVal,
       _manuelInscrito: g.entries.some(tournamentHasManuel),
     };
-    // Deep-link canónico — o TournSidebarItem vira <a href>. Para sintéticos
-    // com tcode "A+B" usa o primeiro tcode no URL (parseTournKey match ambos).
-    const firstTcode = (activeEntry.tcode || "").split("+")[0];
-    const href = (activeEntry.ccode && firstTcode) ? tournamentUrl("FPG", activeEntry.ccode, firstTcode) : undefined;
-    // `opts` permite ao render do shell (CircuitSidebar) reutilizar ESTE mesmo
-    // item — mesmos pills/badges/contagens — mas com click/href/active próprios
-    // (URL com ?shell=1 preservado). Sem opts, comportamento clássico.
+    // `opts` (click/href/isActive) vem do CircuitSidebar: o click navega
+    // preservando a query e o href é o deep-link canónico (ccode-firstTcode).
     return (
       <TournSidebarItem
         key={(activeEntry._isSynthetic ? "synth_" : "") + keyTcodes + "_" + g.date}
         t={tData}
-        isActive={opts?.isActive ?? isActive}
-        onClick={opts?.onClick ?? handleClick}
+        isActive={opts.isActive}
+        onClick={opts.onClick}
         extraPills={extraPills}
-        href={opts?.href ?? href}
+        href={opts.href}
       />
     );
   }
@@ -2480,146 +2440,8 @@ function Content() {
         </div>
       )}
 
-      {/* Vista opt-in via CircuitShell (?shell=1) — comparação lado-a-lado */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && shellMode && shellView}
-
-      {/* Master-detail (modos "month" e "circuit") — render actual (default) */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && !shellMode && (
-      <div className="master-detail">
-        {/* Sidebar */}
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-          {loading && displayList.length === 0 && (
-            <LoadingState size="sm" message="A carregar…" />
-          )}
-
-          {seriesFilter === ""
-            ? monthKeys.map(gk => (
-                <React.Fragment key={gk}>
-                  <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
-                  {monthGroups[gk].map(eg => renderSidebarItem(eg))}
-                </React.Fragment>
-              ))
-            : seriesFilter === "santo"
-              ? santoByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
-                : santoByYear.years.map(yr => {
-                    const items = santoByYear.byYear[yr];  // já filtrado no useMemo
-                    if (items.length === 0) return null;
-                    return (
-                      <React.Fragment key={yr}>
-                        <div className="sidebar-section-title-dark">⛳ Santo da Serra {yr}</div>
-                        {items.map(eg => renderSidebarItem(eg))}
-                      </React.Fragment>
-                    );
-                  })
-              : pjaByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
-                : pjaByYear.years.map(yr => (
-                    <React.Fragment key={yr}>
-                      <div className="sidebar-section-title-dark">🏆 {yr}</div>
-                      {pjaByYear.byYear[yr].map(eg => renderSidebarItem(eg))}
-                    </React.Fragment>
-                  ))
-          }
-        </div>
-
-        {/* Detail */}
-        <div className="course-detail" ref={md.detailRef}>
-          {/* Deep-link em curso: URL tem /FPG/torneio/{tkey} mas `cur` ainda
-              não corresponde (displayList incompleto — pull-torneios,
-              pjaExtra, jovens estão a carregar). Mostra "A carregar..." em
-              vez do torneio errado, evitando que o utilizador veja várias
-              páginas diferentes a piscar até o match ser encontrado.
-              Aceita tcode sintético "A+B" quando o URL pede apenas "A". */}
-          {(() => {
-            // Torneios de clubes em MATCH PLAY (ex: Regional 2026, 059/10685):
-            // a FPG não publica classificação stroke (o pull-torneios traz 0
-            // jogadores) — os resultados reais (pontos + H2H + scorecards)
-            // vivem na vista /FPG/clubes. Redireccionar em vez de mostrar um
-            // detalhe vazio.
-            if (params.tkey && CLUBES_TEAM_FORMAT[params.tkey]?.matchPlay) {
-              return <Navigate to="/FPG/clubes" replace />;
-            }
-            // Resolver torneio DIRECTAMENTE pela URL (find por ccode/tcode).
-            // Evita problemas com displayList[selected] stale durante async.
-            const tShow = (() => {
-              if (!params.tkey) return cur;
-              const parsed = parseTournKey(params.tkey);
-              if (!parsed) return cur;
-              return displayList.find(t => {
-                if (String(t.ccode) !== String(parsed.ccode)) return false;
-                const tt = String(t.tcode ?? "");
-                if (tt === String(parsed.tcode)) return true;
-                if (tt.split("+").includes(String(parsed.tcode))) return true;
-                return false;
-              });
-            })();
-            if (params.tkey && !tShow) {
-              return <LoadingState size="sm" message={`A carregar torneio ${params.tkey}…`} />;
-            }
-            if (!tShow) {
-              return !loading && <div className="center-msg muted">Selecciona um torneio</div>;
-            }
-            const curGroup = eventGroupByKey.get((tShow.ccode || "?") + "/" + String(tShow.tcode ?? "?"));
-            const showTabs = curGroup && curGroup.entries.length > 1;
-            return (
-              <>
-                {showTabs && (
-                  // Botões de escalão alinhados à esquerda com o título (sem indent
-                  // extra) e sem linha divisória. `gap` trata o espaçamento entre
-                  // botões (e entre linhas ao quebrar); o padding-bottom dá o mesmo
-                  // espaço acima do título que o que existe abaixo (título → sub).
-                  <div style={{ display: "flex", gap: 6, padding: "0 0 6px", flexWrap: "wrap" }}>
-                    {curGroup!.entries.map((e) => {
-                      const active = e.ccode === tShow.ccode && e.tcode === tShow.tcode;
-                      // Quando as entradas do grupo não têm escalão (ex: "3º Torneio
-                      // Academia Junior - 18 buracos" / "- 9 buracos"), derivar o
-                      // label da tab a partir do sufixo que distingue cada entrada do
-                      // nome comum do grupo (curGroup.name já vem sem o sufixo).
-                      const _gNm = curGroup!.name || "";
-                      const _suffix = _gNm && e.name && e.name.toLowerCase().startsWith(_gNm.toLowerCase())
-                        ? e.name.slice(_gNm.length).replace(/^[\s\-–:·]+/, "").trim()
-                        : "";
-                      // Fallback de data (dd/mm) para grupos multi-data sem
-                      // escalão nem sufixo distintivo (ex.: "Circuito Junior" em
-                      // várias datas) — senão as sub-tabs ficavam com o nome
-                      // repetido. Só relevante quando há tabs (entries.length>1).
-                      const _dm = e.date && e.date.length >= 10
-                        ? `${e.date.slice(8, 10)}/${e.date.slice(5, 7)}` : "";
-                      const label = (e as any)._tabLabel
-                        ?? e.escalao
-                        ?? (_suffix || _dm || (e.name && e.name.length <= 20 ? e.name : "Esc"));
-                      const nJog = e.playerCount || e.players.length;
-                      const entryIdx = findInDisplayList(e);
-                      return (
-                        <button key={e.tcode + "_" + e.date}
-                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                          onClick={() => {
-                            if (entryIdx >= 0) setSelected(entryIdx);
-                            // Navegar imediatamente — state→URL pode estar bloqueado por guard anti-loop
-                            if (e.ccode && e.tcode) {
-                              const target = tournamentUrl("FPG", e.ccode, e.tcode);
-                              if (target && location.pathname !== target) navigate(target, { replace: true });
-                            }
-                          }}>
-                          {label}
-                          {nJog > 0 && (
-                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
-                              ({nJog} jog)
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                <TournamentDetail tournament={tShow} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, tShow)} />
-              </>
-            );
-          })()}
-        </div>
-      </div>
-      )}
+      {/* Torneios (Todos / Santo da Serra / PJA) — vista via CircuitShell */}
+      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && shellView}
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
       {navMode === "torneios" && seriesFilter === "clubes" && (
