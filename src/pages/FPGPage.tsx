@@ -1943,7 +1943,6 @@ function Content() {
     return out;
   }, [displayList]);
   const activeYear = yearFilter ?? null;
-  const inYear = (t: Tournament) => yearMatchesFilter((t.date || "").substring(0, 4), activeYear);
 
   // Event-groups globais — os mesmos torneios agrupados por (date+ccode) com
   // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",
@@ -1961,23 +1960,6 @@ function Content() {
     ),
     [displayList]
   );
-
-  // Agrupamento por mês — todos os torneios (pull + clubes + jovens) — alimenta o tab "Todos"
-  const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
-    const g: Record<string, EventGroup[]> = {};
-    for (const eg of allEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const key = eg.date ? eg.date.substring(0, 7) : "?";
-      if (!g[key]) g[key] = [];
-      g[key].push(eg);
-    }
-    return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allEventGroups, filterManuel, activeYear, searchTerm]);
 
   // Lista PJA (modo circuito) — apenas torneios com "PJA" no nome ou
   // registados em TOURN_PILLS como PJA. Exclui SSerra (tab próprio).
@@ -2037,46 +2019,12 @@ function Content() {
 
   const pjaEventGroups = useMemo(() => buildEventGroups(pjaList), [pjaList]);
 
-  const pjaByYear = useMemo(() => {
-    const byYear: Record<string, EventGroup[]> = {};
-    for (const eg of pjaEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const yr = eg.date ? eg.date.substring(0, 4) : "?";
-      if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(eg);
-    }
-    const years = Object.keys(byYear).sort().reverse();
-    return { byYear, years };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pjaEventGroups, activeYear, filterManuel, searchTerm]);
-
   // ── Santo da Serra ──
   const santoList = useMemo(
     () => displayList.filter(t => t.ccode === SSERRA_CCODE),
     [displayList]
   );
   const santoEventGroups = useMemo(() => buildEventGroups(santoList), [santoList]);
-
-  const santoByYear = useMemo(() => {
-    const byYear: Record<string, EventGroup[]> = {};
-    for (const eg of santoEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const yr = eg.date ? eg.date.substring(0, 4) : "?";
-      if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(eg);
-    }
-    const years = Object.keys(byYear).sort().reverse();
-    return { byYear, years };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [santoEventGroups, activeYear, filterManuel, searchTerm]);
 
   // ── Vista de Torneios via CircuitShell (Todos / Santo da Serra / PJA) ──
   // As três vistas de torneios usam o shell partilhado (mesmo componente de
@@ -2334,7 +2282,53 @@ function Content() {
                 {label}
               </button>
             ))}
-            {navMode === "torneios" && availYears.length > 1 && (<>
+            {/* Tabs de série (Todos/JOVENS/CLUBES/STO/PJA) — na MESMA barra, a
+                seguir ao mode-switcher (antes ficavam numa 2ª linha). Só em modo
+                Torneios. */}
+            {navMode === "torneios" && (<>
+              <ToolbarSep />
+              {([
+                { key: "",        label: "Todos" },
+                { key: "jovens",  label: "🏆 JOVENS" },
+                { key: "clubes",  label: "🏅 CLUBES" },
+                { key: "santo",   label: "⛳ STO" },
+                { key: "circuit", label: "🏆 PJA" },
+              ] as const).map(({ key, label }) => {
+                const active = seriesFilter === key;
+                const st = active
+                  ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
+                  : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
+                  : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
+                  : { flexShrink: 0 }
+                  : { flexShrink: 0 };
+                const urlSeg = FILTER_TO_URL[key];
+                const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
+                return (
+                  <a key={key} href={href}
+                    className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+                    onClick={e => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        setSeriesFilter(key);
+                        setJovensShowInscricoes(false);
+                        // Preserva a query (ex.: ?manuel=0); remove `tab` (é por-torneio).
+                        const _sp = new URLSearchParams(location.search);
+                        _sp.delete("tab");
+                        const _s = _sp.toString();
+                        navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
+                      }
+                    }}
+                    style={st}>
+                    {label}
+                  </a>
+                );
+              })}
+            </>)}
+            {/* Pills de ano + ★Manuel exteriores: nas vistas do shell (Torneios)
+                o CircuitShell já os tem, por isso escondem-se aqui para um
+                cabeçalho limpo (estilo /ffg). Clubes/Jovens mantêm-nos (filtram
+                a lista master-detail própria). */}
+            {!shellTorneios && navMode === "torneios" && availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
@@ -2364,21 +2358,18 @@ function Content() {
             {loading
               ? <span className="muted fs-11 shrink-0"  style={{ fontStyle: "italic" }}>{loadingMsg}</span>
               : <>
-                  {navMode === "torneios" && (() => {
-                    const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
-                                : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
-                                : seriesFilter === "clubes"  ? clubesList.length
+                  {/* Contadores exteriores só nos modos SEM shell (Clubes/Jovens)
+                      — nas vistas do shell o próprio CircuitShell mostra a
+                      contagem, e estes dependiam dos filtros de ano/Manuel que
+                      foram escondidos. */}
+                  {!shellTorneios && navMode === "torneios" && (() => {
+                    const count = seriesFilter === "clubes"  ? clubesList.length
                                 : seriesFilter === "jovens"  ? jovensGroups.length
-                                : monthKeys.reduce((s, k) => s + (monthGroups[k]?.length ?? 0), 0);  // "Todos" respeita search + year + manuel
+                                : 0;
                     return <span className="chip shrink-0" title={searchTerm ? `Com filtro "${searchQuery}"` : undefined}>
                       {count} torneio{count !== 1 ? "s" : ""}{searchTerm ? " ✓" : ""}
                     </span>;
                   })()}
-                  {seriesFilter !== "santo" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && navMode === "torneios" && (
-                    <span className="chip" style={{ flexShrink: 0, marginLeft: 4, background: "var(--bg-hover)" }}>
-                      {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
-                    </span>
-                  )}
                 </>
             }
           </>)}
@@ -2393,58 +2384,6 @@ function Content() {
             <div id="pja-toolbar-slot" style={{ display: "contents" }} />
           </>}
         </Toolbar>
-
-        {/* Linha 2: filtros de série — wrap em mobile */}
-        {!loading && navMode === "torneios" && (
-          <div style={{
-            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
-            padding: "4px 12px 6px",
-            overflowX: md.isMobile ? "visible" : "auto",
-            flexWrap: md.isMobile ? "wrap" : "nowrap",
-            rowGap: md.isMobile ? 4 : undefined,
-            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
-            borderTop: "1px solid var(--border-light)",
-          }}>
-            {([
-              { key: "",        label: "Todos" },
-              { key: "jovens",  label: "🏆 JOVENS" },
-              { key: "clubes",  label: "🏅 CLUBES" },
-              { key: "santo",   label: "⛳ STO" },
-              { key: "circuit", label: "🏆 PJA" },
-            ] as const).map(({ key, label }) => {
-              const active = seriesFilter === key;
-              const st = active
-                ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
-                : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
-                : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
-                : { flexShrink: 0 }
-                : { flexShrink: 0 };
-              const urlSeg = FILTER_TO_URL[key];
-              const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
-              return (
-                <a key={key}
-                  href={href}
-                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-                  onClick={e => {
-                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                      e.preventDefault();
-                      setSeriesFilter(key);
-                      setJovensShowInscricoes(false);
-                      // Preserva a query (ex.: ?manuel=0) ao trocar de série;
-                      // remove `tab` (é por-torneio, não por-série).
-                      const _sp = new URLSearchParams(location.search);
-                      _sp.delete("tab");
-                      const _s = _sp.toString();
-                      navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
-                    }
-                  }}
-                  style={st}>
-                  {label}
-                </a>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {error && (
