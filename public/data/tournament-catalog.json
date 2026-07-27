@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-27T09:03:02.434Z",
+  "generatedAt": "2026-07-27T10:06:11.058Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -47776,6 +47776,54 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-dgv-gvnb-1-ak14-jungen",
+      "label": "DGV-GVNB 1. AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12822",
+        "egr-egr11047"
+      ],
+      "firstDate": "2025-04-26",
+      "lastDate": "2026-05-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-dgv-gvnb-1-ak14-madchen",
+      "label": "DGV-GVNB 1. AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12823",
+        "egr-egr11045"
+      ],
+      "firstDate": "2025-04-26",
+      "lastDate": "2026-05-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-dgv-gvnb-1-ak16-18-jungen",
+      "label": "DGV-GVNB 1. AK16/18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12824",
+        "egr-egr10965"
+      ],
+      "firstDate": "2025-04-26",
+      "lastDate": "2026-05-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-dgv-gvnb-1-ak16-18-madchen",
+      "label": "DGV-GVNB 1. AK16/18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12825",
+        "egr-egr10966"
+      ],
+      "firstDate": "2025-04-26",
+      "lastDate": "2026-05-09",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-dgv-bwgv-1-ak14-jungen",
       "label": "DGV-BWGV 1. AK14 Jungen",
       "sourceId": "egr",
@@ -73147,6 +73195,39 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-munster-u18-girls-amateur-open-championship",
+      "label": "Munster U18 Girls' Amateur Open Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12834"
+      ],
+      "firstDate": "2026-07-15",
+      "lastDate": "2026-07-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-junior-u12-no-4",
+      "label": "Junior U12 (No.4)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12832"
+      ],
+      "firstDate": "2026-07-10",
+      "lastDate": "2026-07-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-junior-u14-no-4",
+      "label": "Junior U14 (No.4)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12831"
+      ],
+      "firstDate": "2026-07-10",
+      "lastDate": "2026-07-10",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-west-coast-masters-u18",
       "label": "West Coast Masters (U18)",
       "sourceId": "egr",
@@ -73218,6 +73299,50 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12809"
+      ],
+      "firstDate": "2026-07-04",
+      "lastDate": "2026-07-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvnb-meisterschaft-ak14-jungen",
+      "label": "DGV-GVNB Meisterschaft AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12826"
+      ],
+      "firstDate": "2026-07-04",
+      "lastDate": "2026-07-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvnb-meisterschaft-ak14-madchen",
+      "label": "DGV-GVNB Meisterschaft AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12827"
+      ],
+      "firstDate": "2026-07-04",
+      "lastDate": "2026-07-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvnb-meisterschaft-ak16-18-madchen",
+      "label": "DGV-GVNB Meisterschaft AK16/18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12828"
+      ],
+      "firstDate": "2026-07-04",
+      "lastDate": "2026-07-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvnb-meisterschaft-ak16-18-jungen",
+      "label": "DGV-GVNB Meisterschaft AK16/18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12829"
       ],
       "firstDate": "2026-07-04",
       "lastDate": "2026-07-04",
@@ -76070,50 +76195,6 @@
       ],
       "firstDate": "2025-05-02",
       "lastDate": "2025-05-02",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-gvnb-1-ak16-18-jungen",
-      "label": "DGV-GVNB 1. AK16/18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10965"
-      ],
-      "firstDate": "2025-04-26",
-      "lastDate": "2025-04-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-gvnb-1-ak16-18-madchen",
-      "label": "DGV-GVNB 1. AK16/18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10966"
-      ],
-      "firstDate": "2025-04-26",
-      "lastDate": "2025-04-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-gvnb-1-ak14-madchen",
-      "label": "DGV-GVNB 1. AK14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11045"
-      ],
-      "firstDate": "2025-04-26",
-      "lastDate": "2025-04-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-gvnb-1-ak14-jungen",
-      "label": "DGV-GVNB 1. AK14 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11047"
-      ],
-      "firstDate": "2025-04-26",
-      "lastDate": "2025-04-26",
       "editionsCount": 1
     },
     {
