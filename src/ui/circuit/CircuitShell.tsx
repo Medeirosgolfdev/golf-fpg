@@ -42,6 +42,7 @@ import MatchplayView from "./MatchplayView";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
+import { monthLabel } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -1114,6 +1115,21 @@ function CircuitSidebar({
     : config.grouping === "source-year" ? "source"
     : "none";
 
+  // "month-year": bucket 2º nível por mês (chave YYYY-MM da data do torneio) em
+  // vez de por ano. `bk` ordena os blocos (desc); `label` é o cabeçalho ("Mai
+  // 2026"). Nos restantes modos o bucket é o ano (comportamento original).
+  const monthMode = config.grouping === "month-year";
+  const bucketOf = useCallback((e: CircuitEntry): { bk: string; label: string } => {
+    if (monthMode) {
+      const dk = entryDateKey(e); // YYYYMMDD ("00000000" = sem data)
+      if (dk === "00000000") return { bk: "0000-00", label: "Sem data" };
+      const ym = `${dk.slice(0, 4)}-${dk.slice(4, 6)}`;
+      return { bk: ym, label: monthLabel(ym) };
+    }
+    const y = e.year;
+    return { bk: y == null ? "0000" : String(y), label: y == null ? "Sem data" : String(y) };
+  }, [monthMode]);
+
   const groups = useMemo(() => {
     const byL1 = new Map<string, CircuitEntry[]>();
     for (const e of entries) {
@@ -1132,14 +1148,22 @@ function CircuitSidebar({
     } else {
       keys = keys.sort();
     }
-    // Ordenação por data (mais recente primeiro) dentro de cada ano — ver
+    // Ordenação por data (mais recente primeiro) dentro de cada bucket — ver
     // entryDateKey/entriesByDateDesc (partilhados com o default de selecção).
     return keys.map(k => {
       const items = byL1.get(k)!;
-      const years = [...new Set(items.map(e => e.year))].sort((a, b) => (b ?? -1) - (a ?? -1));
-      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y).sort(entriesByDateDesc) })) };
+      const byBucket = new Map<string, { label: string; items: CircuitEntry[] }>();
+      for (const e of items) {
+        const { bk, label } = bucketOf(e);
+        if (!byBucket.has(bk)) byBucket.set(bk, { label, items: [] });
+        byBucket.get(bk)!.items.push(e);
+      }
+      const buckets = [...byBucket.entries()]
+        .sort((a, b) => b[0].localeCompare(a[0]))
+        .map(([bk, v]) => ({ bk, label: v.label, items: v.items.sort(entriesByDateDesc) }));
+      return { key: k, buckets };
     });
-  }, [entries, l1Mode, config.seriesOrder]);
+  }, [entries, l1Mode, config.seriesOrder, bucketOf]);
 
   return (
     <>
@@ -1155,10 +1179,10 @@ function CircuitSidebar({
               {g.key}
             </SidebarSectionTitle>
           )}
-          {g.years.map(({ year, items }) => (
-            <React.Fragment key={String(year)}>
+          {g.buckets.map(({ bk, label, items }) => (
+            <React.Fragment key={bk}>
               <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color, color: config.textColor ?? "#fff" }}>
-                {year ?? "Sem data"}
+                {label}
               </div>
               {items.map(e => {
                 const active = e.id === curId;

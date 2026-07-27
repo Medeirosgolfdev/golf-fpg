@@ -30,8 +30,13 @@ export interface CircuitRenderFullExtras {
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */
 export type CircuitSectionKind = "results" | "inscritos" | "draw" | "matchplay";
 
-/** Modo de agrupamento da sidebar. */
-type CircuitGrouping = "year" | "series-year" | "source-year";
+/** Modo de agrupamento da sidebar.
+ *  - "year": um bloco por ano (default).
+ *  - "series-year" / "source-year": 1º nível por série/fonte, 2º por ano.
+ *  - "month-year": um bloco por MÊS ("Mai 2026"), sem 1º nível — usado pela
+ *    FPGPage no separador "Todos" (os torneios FPG chegam a dezenas por ano, o
+ *    mês é a granularidade útil). O bucket sai da data do torneio, não só do ano. */
+type CircuitGrouping = "year" | "series-year" | "source-year" | "month-year";
 
 /** Toggles rápidos da toolbar (subconjunto activado por página via config). */
 export type CircuitToggle =
