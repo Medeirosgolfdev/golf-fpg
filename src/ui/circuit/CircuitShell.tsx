@@ -479,9 +479,16 @@ export interface CircuitShellProps {
    *  infoView passa a ser controlado pela página (URL) em vez de estado interno. */
   selectedInfo?: string | null;
   onSelectInfo?: (key: string | null) => void;
+  /** Divisão (escalão) seleccionada, resolvida pela página a partir da URL. Só
+   *  tem efeito com `onSelectDivision` — aí a divisão activa passa a ser
+   *  controlada pela página (para deep-links por escalão, ex.: FPG, onde cada
+   *  escalão é um tcode próprio no URL). Sem `onSelectDivision` a divisão activa
+   *  é estado interno (comportamento das restantes páginas). */
+  selectedDivKey?: string;
+  onSelectDivision?: (entry: CircuitEntry, div: CircuitDivision) => void;
 }
 
-export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo }: CircuitShellProps) {
+export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo, selectedDivKey, onSelectDivision }: CircuitShellProps) {
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -626,15 +633,32 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const divsLoading = !!cur && curDivisions.length === 0 && loadingId === cur.id;
 
   // ── Divisão (escalão) activa ────────────────────────────────────────
+  // Controlada pela página quando há `onSelectDivision` (deep-link por escalão —
+  // FPG); caso contrário estado interno (mesmo padrão de `infoView`).
+  const divControlled = !!onSelectDivision;
   const [divKey, setDivKey] = useState<string | null>(null);
+  const effDivKey = divControlled ? (selectedDivKey ?? null) : divKey;
+  const selectDiv = useCallback((entry: CircuitEntry, d: CircuitDivision) => {
+    if (divControlled) onSelectDivision!(entry, d);
+    else setDivKey(d.key);
+  }, [divControlled, onSelectDivision]);
   const curDiv = useMemo(() => {
     if (!cur || curDivisions.length === 0) return null;
-    const byKey = divKey ? curDivisions.find(d => d.key === divKey) : null;
+    const byKey = effDivKey ? curDivisions.find(d => d.key === effDivKey) : null;
     if (byKey) return byKey;
     return curDivisions.find(d => d.hasManuel) ?? curDivisions[0] ?? null;
-  }, [cur, curDivisions, divKey]);
-  // Reset divisão ao mudar de torneio.
-  useEffect(() => { setDivKey(null); }, [curId]);
+  }, [cur, curDivisions, effDivKey]);
+  // Reset divisão ao mudar de torneio (só no modo interno).
+  useEffect(() => { if (!divControlled) setDivKey(null); }, [curId, divControlled]);
+  // Deep-link da divisão default: quando a página controla mas o URL ainda não
+  // aponta ao escalão mostrado (aterragem no grupo sem escalão, ou escalão
+  // stale), reflectir o escalão activo no URL. Só dispara quando divergem — a
+  // página deve guardar o navigate com um teste de location (evita loop).
+  useEffect(() => {
+    if (divControlled && cur && curDiv && curDiv.key !== selectedDivKey) {
+      onSelectDivision!(cur, curDiv);
+    }
+  }, [divControlled, cur, curDiv, selectedDivKey, onSelectDivision]);
 
   // ── Secção activa ───────────────────────────────────────────────────
   const sections = useMemo(() => (curDiv ? divisionSections(curDiv) : []), [curDiv]);
@@ -943,7 +967,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         <button
                           key={d.key}
                           className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                          onClick={() => setDivKey(d.key)}
+                          onClick={() => selectDiv(cur, d)}
                         >
                           {d.tabLabel || d.escalao}
                           {nP > 0 && (
