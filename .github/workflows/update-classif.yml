@@ -107,7 +107,8 @@ jobs:
       # gerado pelo update-data.yml, ordenado por nº de nossos desc). Cap por
       # run (--limit) para não estourar o timeout; o merge é aditivo e o scope
       # encolhe a cada semana à medida que os torneios ficam scrapeados.
-      # Escreve em pull-torneios006.json (a FPGPage lê 000..NNN automaticamente).
+      # Escreve no ficheiro-cauda (pull-torneios-tail.cjs) para manter ~120
+      # torneios por ficheiro; roda para o índice seguinte quando enche.
       - name: Scrapar torneios recentes com muitos dos nossos (>5)
         id: scrape_recent
         if: github.event_name == 'schedule' || github.event.inputs.tclub == ''
@@ -119,8 +120,10 @@ jobs:
             echo "exit_code=2" >> $GITHUB_OUTPUT
             exit 0
           fi
+          OUT_RECENT=$(node scripts/pull-torneios-tail.cjs)
+          echo "Ficheiro-cauda para novos torneios: $OUT_RECENT"
           node scripts/scrape-classif-node.js --scope "$SCOPE" --limit 80 \
-            --out public/data/pull-torneios006.json --concurrency 2
+            --out "$OUT_RECENT" --concurrency 2
           EC=$?
           echo "exit_code=$EC" >> $GITHUB_OUTPUT
           if [ "$EC" = "1" ]; then echo "⚠ scrape de recentes falhou (não aborta o workflow)"; fi
@@ -139,7 +142,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios002.json' }}"
-          git add "$OUT" public/data/pull-torneios006.json public/data/fpg-tournaments-tracking.json
+          # glob cobre o ficheiro-cauda (seja 006, 007, ...) + o $OUT (002).
+          git add "$OUT" public/data/pull-torneios*.json public/data/fpg-tournaments-tracking.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."
