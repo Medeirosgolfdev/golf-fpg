@@ -52,6 +52,16 @@ const FLIGHT_CACHE  = path.join(ROOT, 'data-archive', 'uskids-rich-flight-cache.
 const RESULTS_PATH  = path.join(ROOT, 'public', 'data', 'uskids-results.json');
 const RUN_SUMMARY   = path.join(ROOT, 'data-archive', 'uskids-rich-run-summary.json');
 
+// ── Orçamento de tempo ───────────────────────
+// O run completo (Fase 2: milhares de torneios × tee-times paginados) não cabe
+// no limite de 6h do GitHub Actions → o job era cancelado a meio e NADA era
+// committado (nem a cache aquecida), recomeçando a frio todas as semanas.
+// Com um prazo, o script pára graciosamente, grava a cache + ficheiros feitos e
+// sai com exit 0 para o step de commit persistir o progresso; --since-days 14
+// faz as semanas seguintes continuarem de onde ficaram até apanhar o atraso.
+let DEADLINE = Infinity;
+const pastDeadline = () => Date.now() > DEADLINE;
+
 // ── Config ───────────────────────────────────
 const API         = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
 const UA          = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
@@ -385,15 +395,18 @@ async function fetchMemberCareers(mids, concurrency = 4) {
   // Worker pool
   const workers = [];
   let i = 0;
+  let stoppedEarly = false;
   for (let w = 0; w < concurrency; w++) {
     workers.push((async () => {
       while (i < arr.length) {
+        if (pastDeadline()) { stoppedEarly = true; break; }
         const mid = arr[i++];
         await processOne(mid);
       }
     })());
   }
   await Promise.all(workers);
+  if (stoppedEarly) console.log(`  ⏱️ prazo atingido — ${done}/${total} carreiras (${total - done} adiadas p/ próximo run)`);
   return careers;
 }
 
@@ -404,6 +417,13 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
   let done = 0;
 
   for (const tcode of tcodes) {
+    // Prazo atingido: gravar a cache aquecida até aqui e parar. Os tcodes já
+    // cacheados continuam a servir; os restantes ficam para o próximo run.
+    if (pastDeadline()) {
+      saveFlightCache(flightCache);
+      console.log(`  ⏱️ prazo atingido — ${done}/${tcodes.length} torneios enriquecidos (cache gravada; resto no próximo run)`);
+      break;
+    }
     done++;
     const ageGroups = tcodeAgeMap.get(tcode);
     const cached = flightCache.torneios[String(tcode)];
@@ -753,6 +773,7 @@ function parseArgs(argv) {
     limit:         null,          // máx N players (smoke test)
     discoveryOnly: false,         // só descobre novos mids, não escreve players
     forceFetchAll: false,         // re-fetch TODOS os mids do slim (ignora skip-existing)
+    maxRuntimeMin: 0,             // prazo de execução em minutos (0 = sem limite)
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -765,6 +786,7 @@ function parseArgs(argv) {
       case '--limit':        args.limit = parseInt(argv[++i], 10); break;
       case '--discovery-only': args.discoveryOnly = true; break;
       case '--force-fetch-all': args.forceFetchAll = true; break;
+      case '--max-runtime-min': args.maxRuntimeMin = parseFloat(argv[++i]) || 0; break;
       case '--help': case '-h':
         console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 40).join('\n'));
         process.exit(0);
@@ -800,12 +822,15 @@ function writePlayerIfChanged(mid, newData) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
 
+  if (args.maxRuntimeMin > 0) DEADLINE = Date.now() + args.maxRuntimeMin * 60000;
+
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Rich Players (Node-puro)');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log(`    sinceDays=${args.sinceDays} | concurrency=${args.concurrency} | forceRebuild=${args.forceRebuild}`);
   if (args.players) console.log(`    players explícitos: ${args.players.size}`);
   if (args.limit)   console.log(`    limit: ${args.limit}`);
+  if (args.maxRuntimeMin > 0) console.log(`    ⏱️ prazo: ${args.maxRuntimeMin} min`);
   console.log('══════════════════════════════════════');
 
   // 1. Determinar lista alvo de memberIDs
