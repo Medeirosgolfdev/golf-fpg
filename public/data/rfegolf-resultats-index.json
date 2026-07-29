@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-27T07:46:58.239Z",
+  "generatedAt": "2026-07-29T16:51:54.101Z",
   "source": "scripts/build-rfegolf-index.js",
-  "total": 3073,
-  "totalCompetitions": 3073,
+  "total": 3089,
+  "totalCompetitions": 3089,
   "skipped": 3,
   "byYear": {
     "2017": 1,
@@ -14,7 +14,7 @@
     "2023": 267,
     "2024": 275,
     "2025": 342,
-    "2026": 1850,
+    "2026": 1866,
     "2027": 3
   },
   "byCategory": {
@@ -34,7 +34,7 @@
   },
   "bySource": {
     "rfegolf": 530,
-    "nextcaddy": 2241,
+    "nextcaddy": 2257,
     "livegolfscoring": 281,
     "golfdirecto": 21
   },
@@ -69,7 +69,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:50.000Z"
+      "scrapedAt": "2026-07-29T16:50:28.792Z"
     },
     {
       "source": "rfegolf",
@@ -85,7 +85,7 @@
       "dateEnd": "06/08/2027",
       "dateStartIso": "2027-08-05",
       "dateEndIso": "2027-08-06",
-      "course": "GOLF CLUB DE SAN SEBASTIAN Dirección CALLE CHALET BORDAGAIN S",
+      "course": "GOLF CLUB DE SAN SEBASTIAN Dirección CARRETERA JEREZ A ARCOS",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -101,7 +101,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:45.003Z"
+      "scrapedAt": "2026-07-29T16:50:23.823Z"
     },
     {
       "source": "rfegolf",
@@ -133,7 +133,85 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:49.980Z"
+      "scrapedAt": "2026-07-29T16:50:27.123Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72627,
+      "tourId": 72627,
+      "file": "72627.json",
+      "filePath": "nextcaddy/72627.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "dateStartIso": "2026-12-27",
+      "dateEndIso": "2026-12-27",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:01.758Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72626,
+      "tourId": 72626,
+      "file": "72626.json",
+      "filePath": "nextcaddy/72626.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-12-27",
+      "dateEnd": "2026-12-27",
+      "dateStartIso": "2026-12-27",
+      "dateEndIso": "2026-12-27",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Medal Play (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:01.525Z"
     },
     {
       "source": "nextcaddy",
@@ -1761,6 +1839,45 @@
     },
     {
       "source": "nextcaddy",
+      "id": 72658,
+      "tourId": 72658,
+      "file": "72658.json",
+      "filePath": "nextcaddy/72658.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-11-20",
+      "dateEnd": "2026-11-20",
+      "dateStartIso": "2026-11-20",
+      "dateEndIso": "2026-11-20",
+      "course": "Sherry Golf Jerez",
+      "courseCode": "AMC3",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:01.284Z"
+    },
+    {
+      "source": "nextcaddy",
       "id": 67810,
       "tourId": 67810,
       "file": "67810.json",
@@ -2418,7 +2535,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:29.876Z"
+      "scrapedAt": "2026-07-29T16:50:12.144Z"
     },
     {
       "source": "nextcaddy",
@@ -3197,7 +3314,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:33.485Z"
+      "scrapedAt": "2026-07-29T16:50:14.013Z"
     },
     {
       "source": "nextcaddy",
@@ -4840,7 +4957,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:34.583Z"
+      "scrapedAt": "2026-07-29T16:50:16.479Z"
     },
     {
       "source": "nextcaddy",
@@ -5973,7 +6090,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:29.581Z"
+      "scrapedAt": "2026-07-29T16:50:10.710Z"
     },
     {
       "source": "nextcaddy",
@@ -7013,7 +7130,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:30.691Z"
+      "scrapedAt": "2026-07-29T16:50:11.059Z"
     },
     {
       "source": "nextcaddy",
@@ -9217,7 +9334,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:42.446Z"
+      "scrapedAt": "2026-07-29T16:50:21.589Z"
     },
     {
       "source": "nextcaddy",
@@ -9877,11 +9994,89 @@
         "bajas": 0,
         "invitados": 0,
         "noAdmitidos": 0,
+        "provisional": 15
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:14.377Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72615,
+      "tourId": 72615,
+      "file": "72615.json",
+      "filePath": "nextcaddy/72615.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-09-02",
+      "dateEnd": "2026-09-02",
+      "dateStartIso": "2026-09-02",
+      "dateEndIso": "2026-09-02",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
         "provisional": 0
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:35.251Z"
+      "scrapedAt": "2026-07-29T16:51:01.013Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72614,
+      "tourId": 72614,
+      "file": "72614.json",
+      "filePath": "nextcaddy/72614.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-09-02",
+      "dateEnd": "2026-09-02",
+      "dateStartIso": "2026-09-02",
+      "dateEndIso": "2026-09-02",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Medal Play (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:00.771Z"
     },
     {
       "source": "nextcaddy",
@@ -9985,17 +10180,96 @@
       "style": "Stroke Play",
       "hcpLimitMen": 4.5,
       "hcpLimitWomen": null,
+      "hasPt": true,
       "counts": {
         "admitidos": 0,
         "reservas": 0,
         "bajas": 0,
         "invitados": 0,
         "noAdmitidos": 0,
-        "provisional": 79
+        "provisional": 90
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:30.322Z"
+      "scrapedAt": "2026-07-29T16:50:11.209Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72613,
+      "tourId": 72613,
+      "file": "72613.json",
+      "filePath": "nextcaddy/72613.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-08-31",
+      "dateEnd": "2026-08-31",
+      "dateStartIso": "2026-08-31",
+      "dateEndIso": "2026-08-31",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:00.570Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72612,
+      "tourId": 72612,
+      "file": "72612.json",
+      "filePath": "nextcaddy/72612.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-08-31",
+      "dateEnd": "2026-08-31",
+      "dateStartIso": "2026-08-31",
+      "dateEndIso": "2026-08-31",
+      "course": null,
+      "courseCode": "MAJC",
+      "organizer": null,
+      "federation": null,
+      "format": "Medal Play (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 3,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:00.345Z"
     },
     {
       "source": "nextcaddy",
@@ -10306,11 +10580,11 @@
         "bajas": 0,
         "invitados": 0,
         "noAdmitidos": 0,
-        "provisional": 0
+        "provisional": 60
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:31.677Z"
+      "scrapedAt": "2026-07-29T16:50:15.106Z"
     },
     {
       "source": "nextcaddy",
@@ -10350,6 +10624,46 @@
       "leaderboardPlayers": 0,
       "roster": [],
       "scrapedAt": "2026-06-24T14:58:19.882Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72623,
+      "tourId": 72623,
+      "file": "72623.json",
+      "filePath": "nextcaddy/72623.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-08-26",
+      "dateEnd": "2026-08-26",
+      "dateStartIso": "2026-08-26",
+      "dateEndIso": "2026-08-26",
+      "course": "Sherry Golf Jerez",
+      "courseCode": "AMC3",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "caballeros",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 16,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:51:00.116Z"
     },
     {
       "source": "nextcaddy",
@@ -10507,6 +10821,47 @@
       "leaderboardPlayers": 0,
       "roster": [],
       "scrapedAt": "2026-06-24T14:58:19.470Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72595,
+      "tourId": 72595,
+      "file": "72595.json",
+      "filePath": "nextcaddy/72595.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-08-22",
+      "dateEnd": "2026-08-22",
+      "dateStartIso": "2026-08-22",
+      "dateEndIso": "2026-08-22",
+      "course": null,
+      "courseCode": "GROS",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "INFANTIL",
+        "Caballeros",
+        "Señoras",
+        "Junior",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 16,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:59.802Z"
     },
     {
       "source": "nextcaddy",
@@ -10837,7 +11192,7 @@
       "dateEnd": "20/08/2026",
       "dateStartIso": "2026-08-18",
       "dateEndIso": "2026-08-20",
-      "course": "GOLF Dirección AUTOVIA A",
+      "course": "GOLF Dirección GLORIETA DEL ZAUDÍN Y PUERTA DE LA MARISMA EN TOMARES",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -10853,7 +11208,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:29.729Z"
+      "scrapedAt": "2026-07-29T16:50:08.697Z"
     },
     {
       "source": "nextcaddy",
@@ -11479,7 +11834,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:41.521Z"
+      "scrapedAt": "2026-07-29T16:50:22.162Z"
     },
     {
       "source": "nextcaddy",
@@ -11805,6 +12160,46 @@
     },
     {
       "source": "nextcaddy",
+      "id": 72634,
+      "tourId": 72634,
+      "file": "72634.json",
+      "filePath": "nextcaddy/72634.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-08-07",
+      "dateEnd": "2026-08-07",
+      "dateStartIso": "2026-08-07",
+      "dateEndIso": "2026-08-07",
+      "course": "Sherry Golf Jerez",
+      "courseCode": "AMC3",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Junior",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:59.498Z"
+    },
+    {
+      "source": "nextcaddy",
       "id": 71565,
       "tourId": 71565,
       "file": "71565.json",
@@ -11951,7 +12346,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:46.290Z"
+      "scrapedAt": "2026-07-29T16:50:25.220Z"
     },
     {
       "source": "rfegolf",
@@ -11983,7 +12378,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:46.466Z"
+      "scrapedAt": "2026-07-29T16:50:25.402Z"
     },
     {
       "source": "rfegolf",
@@ -12015,7 +12410,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:45.362Z"
+      "scrapedAt": "2026-07-29T16:50:24.622Z"
     },
     {
       "source": "rfegolf",
@@ -12047,7 +12442,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:45.960Z"
+      "scrapedAt": "2026-07-29T16:50:24.416Z"
     },
     {
       "source": "rfegolf",
@@ -12079,7 +12474,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:44.662Z"
+      "scrapedAt": "2026-07-29T16:50:23.421Z"
     },
     {
       "source": "rfegolf",
@@ -12111,7 +12506,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:44.756Z"
+      "scrapedAt": "2026-07-29T16:50:24.772Z"
     },
     {
       "source": "nextcaddy",
@@ -12224,7 +12619,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:44.656Z"
+      "scrapedAt": "2026-07-29T16:50:23.370Z"
     },
     {
       "source": "rfegolf",
@@ -12256,7 +12651,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:44.442Z"
+      "scrapedAt": "2026-07-29T16:50:22.955Z"
     },
     {
       "source": "rfegolf",
@@ -12272,7 +12667,7 @@
       "dateEnd": "08/08/2026",
       "dateStartIso": "2026-08-06",
       "dateEndIso": "2026-08-08",
-      "course": "Golf entre el",
+      "course": "Club de Golf Zaudín",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -12288,7 +12683,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:30.926Z"
+      "scrapedAt": "2026-07-29T16:50:10.750Z"
     },
     {
       "source": "nextcaddy",
@@ -12619,7 +13014,7 @@
       "dateEnd": "06/08/2026",
       "dateStartIso": "2026-08-04",
       "dateEndIso": "2026-08-06",
-      "course": "GOLF CLUB CALATAYUD Dirección CALLE Sierra de Armantes",
+      "course": "GOLF Dirección AUTOVIA A",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -12635,7 +13030,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:29.681Z"
+      "scrapedAt": "2026-07-29T16:50:10.944Z"
     },
     {
       "source": "nextcaddy",
@@ -13463,6 +13858,123 @@
     },
     {
       "source": "nextcaddy",
+      "id": 72661,
+      "tourId": 72661,
+      "file": "72661.json",
+      "filePath": "nextcaddy/72661.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-07-30",
+      "dateEnd": "2026-07-30",
+      "dateStartIso": "2026-07-30",
+      "dateEndIso": "2026-07-30",
+      "course": "Sherry Golf Jerez",
+      "courseCode": "AMC3",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 54,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:58.938Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72641,
+      "tourId": 72641,
+      "file": "72641.json",
+      "filePath": "nextcaddy/72641.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-07-30",
+      "dateEnd": "2026-07-30",
+      "dateStartIso": "2026-07-30",
+      "dateEndIso": "2026-07-30",
+      "course": "Miraflores Golf",
+      "courseCode": "AM76",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Señoras  Caballer",
+      "categories": [
+        "Señoras",
+        "Caballeros",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:59.274Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72635,
+      "tourId": 72635,
+      "file": "72635.json",
+      "filePath": "nextcaddy/72635.json",
+      "name": "",
+      "year": 2026,
+      "category": null,
+      "sex": "M",
+      "dateStart": "2026-07-30",
+      "dateEnd": "2026-07-30",
+      "dateStartIso": "2026-07-30",
+      "dateEndIso": "2026-07-30",
+      "course": "Villa Nueva Golf Resort",
+      "courseCode": "AMD5",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Senio",
+      "categories": [
+        "Caballeros",
+        "Senior Masculino",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 13,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:59.104Z"
+    },
+    {
+      "source": "nextcaddy",
       "id": 72564,
       "tourId": 72564,
       "file": "72564.json",
@@ -13657,6 +14169,122 @@
       "leaderboardPlayers": 0,
       "roster": [],
       "scrapedAt": "2026-06-24T14:58:10.204Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72600,
+      "tourId": 72600,
+      "file": "72600.json",
+      "filePath": "nextcaddy/72600.json",
+      "name": "LADIES DAY KICK THROW 2907",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-07-29",
+      "dateEnd": "2026-07-29",
+      "dateStartIso": "2026-07-29",
+      "dateEndIso": "2026-07-29",
+      "course": "Miraflores Golf",
+      "courseCode": "AM76",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Señoras Facebook",
+      "categories": [
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 14,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:58.579Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72603,
+      "tourId": 72603,
+      "file": "72603.json",
+      "filePath": "nextcaddy/72603.json",
+      "name": "T.  MAYOR/MENOR 9 HOYOS 28-07-26",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-07-28",
+      "dateEnd": "2026-07-28",
+      "dateStartIso": "2026-07-28",
+      "dateEndIso": "2026-07-28",
+      "course": "Real Club de Golf Vista Hermosa",
+      "courseCode": "AM05",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros 13 Año",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 88,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:58.394Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 72602,
+      "tourId": 72602,
+      "file": "72602.json",
+      "filePath": "nextcaddy/72602.json",
+      "name": "T.  MAYOR/MENOR 18 HOYOS DMB 28-07-26",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "2026-07-28",
+      "dateEnd": "2026-07-28",
+      "dateStartIso": "2026-07-28",
+      "dateEndIso": "2026-07-28",
+      "course": "Real Club de Golf Vista Hermosa",
+      "courseCode": "AM05",
+      "organizer": null,
+      "federation": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 52,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-07-29T16:50:57.765Z"
     },
     {
       "source": "nextcaddy",
@@ -14737,7 +15365,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:14.562Z"
+      "scrapedAt": "2026-07-29T16:50:58.376Z"
     },
     {
       "source": "nextcaddy",
@@ -15001,12 +15629,12 @@
       "name": "Campeonato de Europa Sub 16 2026",
       "year": 2026,
       "category": "Sub-16",
-      "sex": "Mixto",
+      "sex": null,
       "dateStart": "23/07/2026",
       "dateEnd": "25/07/2026",
       "dateStartIso": "2026-07-23",
       "dateEndIso": "2026-07-25",
-      "course": "Golf entre el",
+      "course": "Golf Club Calatayud",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -15022,7 +15650,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:29.065Z"
+      "scrapedAt": "2026-07-29T16:50:11.930Z"
     },
     {
       "source": "nextcaddy",
@@ -16804,7 +17432,7 @@
       "name": "Internacional de República Checa Sub 18 2026",
       "year": 2026,
       "category": "Sub-18",
-      "sex": "Mixto",
+      "sex": null,
       "dateStart": "16/07/2026",
       "dateEnd": "18/07/2026",
       "dateStartIso": "2026-07-16",
@@ -16825,7 +17453,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:43.621Z"
+      "scrapedAt": "2026-07-29T16:50:22.709Z"
     },
     {
       "source": "nextcaddy",
@@ -17109,7 +17737,7 @@
       "leaderboardPlayers": 0,
       "nRounds": 1,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:50.682Z"
+      "scrapedAt": "2026-07-29T16:50:29.688Z"
     },
     {
       "source": "nextcaddy",
@@ -17148,7 +17776,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:13.434Z"
+      "scrapedAt": "2026-07-29T16:50:56.948Z"
     },
     {
       "source": "nextcaddy",
@@ -17187,7 +17815,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:13.008Z"
+      "scrapedAt": "2026-07-29T16:50:56.362Z"
     },
     {
       "source": "nextcaddy",
@@ -17384,7 +18012,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:28.439Z"
+      "scrapedAt": "2026-07-29T16:50:11.445Z"
     },
     {
       "source": "nextcaddy",
@@ -20275,7 +20903,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:43.753Z"
+      "scrapedAt": "2026-07-29T16:50:23.141Z"
     },
     {
       "source": "rfegolf",
@@ -20291,7 +20919,7 @@
       "dateEnd": "11/07/2026",
       "dateStartIso": "2026-07-07",
       "dateEndIso": "2026-07-11",
-      "course": "Golf entre el",
+      "course": "Club de Golf Zaudín",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play + Match Play",
@@ -20307,7 +20935,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:27.952Z"
+      "scrapedAt": "2026-07-29T16:50:09.286Z"
     },
     {
       "source": "nextcaddy",
@@ -21282,7 +21910,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:13.486Z"
+      "scrapedAt": "2026-07-29T16:50:56.979Z"
     },
     {
       "source": "nextcaddy",
@@ -22358,7 +22986,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:12.277Z"
+      "scrapedAt": "2026-07-29T16:50:55.475Z"
     },
     {
       "source": "nextcaddy",
@@ -26449,7 +27077,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:12.481Z"
+      "scrapedAt": "2026-07-29T16:50:55.686Z"
     },
     {
       "source": "nextcaddy",
@@ -27079,7 +27707,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:11.741Z"
+      "scrapedAt": "2026-07-29T16:50:55.106Z"
     },
     {
       "source": "nextcaddy",
@@ -27365,7 +27993,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:11.326Z"
+      "scrapedAt": "2026-07-29T16:50:54.247Z"
     },
     {
       "source": "nextcaddy",
@@ -30439,7 +31067,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:11.699Z"
+      "scrapedAt": "2026-07-29T16:50:54.816Z"
     },
     {
       "source": "nextcaddy",
@@ -30479,7 +31107,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:10.728Z"
+      "scrapedAt": "2026-07-29T16:50:53.558Z"
     },
     {
       "source": "nextcaddy",
@@ -30517,7 +31145,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:10.564Z"
+      "scrapedAt": "2026-07-29T16:50:53.613Z"
     },
     {
       "source": "nextcaddy",
@@ -33163,7 +33791,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:09.996Z"
+      "scrapedAt": "2026-07-29T16:50:52.644Z"
     },
     {
       "source": "nextcaddy",
@@ -33565,7 +34193,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:09.019Z"
+      "scrapedAt": "2026-07-29T16:50:51.492Z"
     },
     {
       "source": "nextcaddy",
@@ -33603,7 +34231,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:09.259Z"
+      "scrapedAt": "2026-07-29T16:50:51.806Z"
     },
     {
       "source": "nextcaddy",
@@ -33642,7 +34270,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:08.443Z"
+      "scrapedAt": "2026-07-29T16:50:50.938Z"
     },
     {
       "source": "nextcaddy",
@@ -33859,7 +34487,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:08.937Z"
+      "scrapedAt": "2026-07-29T16:50:51.444Z"
     },
     {
       "source": "nextcaddy",
@@ -37545,7 +38173,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:08.323Z"
+      "scrapedAt": "2026-07-29T16:50:50.560Z"
     },
     {
       "source": "nextcaddy",
@@ -38706,7 +39334,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:08.072Z"
+      "scrapedAt": "2026-07-29T16:50:50.538Z"
     },
     {
       "source": "nextcaddy",
@@ -39488,7 +40116,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:07.125Z"
+      "scrapedAt": "2026-07-29T16:50:49.295Z"
     },
     {
       "source": "nextcaddy",
@@ -39616,7 +40244,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:07.871Z"
+      "scrapedAt": "2026-07-29T16:50:50.295Z"
     },
     {
       "source": "nextcaddy",
@@ -42832,7 +43460,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:06.962Z"
+      "scrapedAt": "2026-07-29T16:50:49.125Z"
     },
     {
       "source": "nextcaddy",
@@ -44406,7 +45034,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:07.732Z"
+      "scrapedAt": "2026-07-29T16:50:50.041Z"
     },
     {
       "source": "nextcaddy",
@@ -44524,7 +45152,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:06.461Z"
+      "scrapedAt": "2026-07-29T16:50:48.443Z"
     },
     {
       "source": "nextcaddy",
@@ -44996,7 +45624,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:06.053Z"
+      "scrapedAt": "2026-07-29T16:50:47.916Z"
     },
     {
       "source": "nextcaddy",
@@ -46735,7 +47363,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:05.603Z"
+      "scrapedAt": "2026-07-29T16:50:47.610Z"
     },
     {
       "source": "nextcaddy",
@@ -48927,7 +49555,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:05.115Z"
+      "scrapedAt": "2026-07-29T16:50:46.889Z"
     },
     {
       "source": "nextcaddy",
@@ -50069,7 +50697,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:04.696Z"
+      "scrapedAt": "2026-07-29T16:50:46.464Z"
     },
     {
       "source": "nextcaddy",
@@ -50271,7 +50899,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:04.690Z"
+      "scrapedAt": "2026-07-29T16:50:46.460Z"
     },
     {
       "source": "nextcaddy",
@@ -50414,7 +51042,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:04.152Z"
+      "scrapedAt": "2026-07-29T16:50:45.689Z"
     },
     {
       "source": "nextcaddy",
@@ -52928,7 +53556,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:03.910Z"
+      "scrapedAt": "2026-07-29T16:50:45.527Z"
     },
     {
       "source": "nextcaddy",
@@ -52967,7 +53595,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:03.621Z"
+      "scrapedAt": "2026-07-29T16:50:45.119Z"
     },
     {
       "source": "nextcaddy",
@@ -53831,7 +54459,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:03.594Z"
+      "scrapedAt": "2026-07-29T16:50:45.069Z"
     },
     {
       "source": "nextcaddy",
@@ -55148,7 +55776,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:03.256Z"
+      "scrapedAt": "2026-07-29T16:50:44.629Z"
     },
     {
       "source": "nextcaddy",
@@ -55522,7 +56150,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:02.671Z"
+      "scrapedAt": "2026-07-29T16:50:43.975Z"
     },
     {
       "source": "nextcaddy",
@@ -57756,7 +58384,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:02.451Z"
+      "scrapedAt": "2026-07-29T16:50:43.784Z"
     },
     {
       "source": "nextcaddy",
@@ -57833,7 +58461,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:01.999Z"
+      "scrapedAt": "2026-07-29T16:50:43.055Z"
     },
     {
       "source": "nextcaddy",
@@ -58229,7 +58857,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:01.830Z"
+      "scrapedAt": "2026-07-29T16:50:43.046Z"
     },
     {
       "source": "nextcaddy",
@@ -58726,7 +59354,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:01.449Z"
+      "scrapedAt": "2026-07-29T16:50:42.491Z"
     },
     {
       "source": "nextcaddy",
@@ -59370,7 +59998,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:00.540Z"
+      "scrapedAt": "2026-07-29T16:50:41.505Z"
     },
     {
       "source": "livegolfscoring",
@@ -66224,7 +66852,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:46:00.473Z"
+      "scrapedAt": "2026-07-29T16:50:41.324Z"
     },
     {
       "source": "nextcaddy",
@@ -67551,7 +68179,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:59.554Z"
+      "scrapedAt": "2026-07-29T16:50:40.392Z"
     },
     {
       "source": "nextcaddy",
@@ -70220,7 +70848,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:59.684Z"
+      "scrapedAt": "2026-07-29T16:50:40.486Z"
     },
     {
       "source": "nextcaddy",
@@ -70697,7 +71325,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:59.329Z"
+      "scrapedAt": "2026-07-29T16:50:39.984Z"
     },
     {
       "source": "nextcaddy",
@@ -71450,7 +72078,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:58.973Z"
+      "scrapedAt": "2026-07-29T16:50:39.583Z"
     },
     {
       "source": "nextcaddy",
@@ -80466,7 +81094,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:58.369Z"
+      "scrapedAt": "2026-07-29T16:50:39.001Z"
     },
     {
       "source": "nextcaddy",
@@ -81266,7 +81894,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:58.355Z"
+      "scrapedAt": "2026-07-29T16:50:39.048Z"
     },
     {
       "source": "nextcaddy",
@@ -82588,7 +83216,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:57.586Z"
+      "scrapedAt": "2026-07-29T16:50:37.875Z"
     },
     {
       "source": "nextcaddy",
@@ -89056,7 +89684,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:57.304Z"
+      "scrapedAt": "2026-07-29T16:50:37.842Z"
     },
     {
       "source": "nextcaddy",
@@ -89996,7 +90624,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:56.929Z"
+      "scrapedAt": "2026-07-29T16:50:37.088Z"
     },
     {
       "source": "nextcaddy",
@@ -94226,7 +94854,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:56.491Z"
+      "scrapedAt": "2026-07-29T16:50:36.621Z"
     },
     {
       "source": "nextcaddy",
@@ -95080,7 +95708,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:56.476Z"
+      "scrapedAt": "2026-07-29T16:50:36.648Z"
     },
     {
       "source": "nextcaddy",
@@ -97600,7 +98228,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:56.148Z"
+      "scrapedAt": "2026-07-29T16:50:36.096Z"
     },
     {
       "source": "nextcaddy",
@@ -101715,7 +102343,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:55.633Z"
+      "scrapedAt": "2026-07-29T16:50:35.642Z"
     },
     {
       "source": "nextcaddy",
@@ -103598,7 +104226,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:55.444Z"
+      "scrapedAt": "2026-07-29T16:50:35.398Z"
     },
     {
       "source": "nextcaddy",
@@ -108329,7 +108957,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:54.687Z"
+      "scrapedAt": "2026-07-29T16:50:34.478Z"
     },
     {
       "source": "nextcaddy",
@@ -108368,7 +108996,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:54.379Z"
+      "scrapedAt": "2026-07-29T16:50:34.115Z"
     },
     {
       "source": "nextcaddy",
@@ -109487,7 +110115,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:54.181Z"
+      "scrapedAt": "2026-07-29T16:50:33.871Z"
     },
     {
       "source": "nextcaddy",
@@ -109532,7 +110160,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:54.222Z"
+      "scrapedAt": "2026-07-29T16:50:33.846Z"
     },
     {
       "source": "nextcaddy",
@@ -181895,7 +182523,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-27T07:45:31.760Z"
+      "scrapedAt": "2026-07-29T16:50:11.944Z"
     },
     {
       "source": "rfegolf",
