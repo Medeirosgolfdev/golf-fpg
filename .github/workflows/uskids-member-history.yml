@@ -41,21 +41,24 @@ jobs:
           git add -A 'data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git diff --cached --quiet && exit 0
-          git fetch origin main
-          git merge origin/main --no-edit --strategy-option=ours
-          git add -A 'data-archive/uskids-member-history-*.json'
-          git add public/data/uskids-member-history-slim.json
+          # Committar ANTES de qualquer merge: com alterações staged mas ainda
+          # não committed, um fast-forward de origin/main que toque nos mesmos
+          # ficheiros aborta ("local changes would be overwritten") e o
+          # -X ours nem chega a aplicar-se — aconteceu a 2026-07-29 quando o
+          # refresh-all fez push a meio deste run.
           git commit -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
+          # Push robusto: fetch + merge -X ours (os ficheiros gerados neste run
+          # ganham a conflitos) + retry, para sobreviver a pushes concorrentes
+          # de outros workflows. Merge em vez de rebase: num rebase o -X ours
+          # inverte de sentido e os conflitos nos JSON gerados encravavam.
           PUSH_OK=0
           for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+            git fetch origin main
+            if git merge origin/main --no-edit --strategy-option=ours && git push; then
               PUSH_OK=1
               break
             fi
-            git rebase --abort 2>/dev/null || true
+            git merge --abort 2>/dev/null || true
             echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
             sleep $((i * 5))
           done
