@@ -46,7 +46,15 @@ const KEEP_NON_JUVENILE = argFlag("--keep-non-juvenile");
 const DELAY_MS = parseInt(argVal("--delay", "300"), 10);
 
 /* ── HTTP helper ────────────────────────────────────────────────────────── */
-function httpGet(urlStr) {
+// Erros de certificado que o catgolf.com serve INTERMITENTEMENTE (edge node com
+// cadeia incompleta) — provocavam falhas esporádicas do workflow Espanha inteiro.
+const TLS_ERR = new Set([
+  "SELF_SIGNED_CERT_IN_CHAIN", "DEPTH_ZERO_SELF_SIGNED_CERT",
+  "UNABLE_TO_VERIFY_LEAF_SIGNATURE", "UNABLE_TO_GET_ISSUER_CERT_LOCALLY",
+  "CERT_HAS_EXPIRED", "ERR_TLS_CERT_ALTNAME_INVALID",
+]);
+
+function httpGetOnce(urlStr, { insecure = false } = {}) {
   return new Promise((resolve, reject) => {
     const url = new URL(urlStr);
     const isHttps = url.protocol === "https:";
@@ -63,12 +71,13 @@ function httpGet(urlStr) {
       },
       agent: isHttps ? HTTPS_AGENT : HTTP_AGENT,
       timeout: 30000,
+      ...(insecure ? { rejectUnauthorized: false } : {}),
     }, (res) => {
       // Follow redirect
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         const loc = res.headers.location.startsWith("http") ? res.headers.location : (BASE + res.headers.location);
         res.resume();
-        return httpGet(loc).then(resolve, reject);
+        return httpGet(loc, { insecure }).then(resolve, reject);
       }
       const chunks = [];
       res.on("data", (c) => chunks.push(c));
@@ -80,6 +89,29 @@ function httpGet(urlStr) {
     req.on("error", reject);
     req.end();
   });
+}
+
+// Retry a erros transitórios (rede/TLS). Como o erro de certificado é
+// intermitente e isto é um scrape público read-only, o último recurso é uma
+// tentativa sem verificação TLS — melhor degradar do que derrubar o workflow.
+async function httpGet(urlStr, opts = {}) {
+  const MAX = 3;
+  let lastErr;
+  for (let i = 0; i < MAX; i++) {
+    try {
+      return await httpGetOnce(urlStr, opts);
+    } catch (e) {
+      lastErr = e;
+      const code = e.code || "";
+      if (i < MAX - 1) { await sleep(500 * (i + 1)); continue; }
+      // Última tentativa esgotada: se foi erro de certificado, degradar para insecure.
+      if (!opts.insecure && TLS_ERR.has(code)) {
+        console.error(`[disc] ⚠ erro de certificado (${code}) em ${urlStr} — a repetir sem verificação TLS`);
+        try { return await httpGetOnce(urlStr, { ...opts, insecure: true }); } catch (e2) { lastErr = e2; }
+      }
+    }
+  }
+  throw lastErr;
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

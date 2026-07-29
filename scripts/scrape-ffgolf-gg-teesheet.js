@@ -223,7 +223,8 @@ async function scrapeOne(meta) {
       return ini && ini <= hoje && (!fim || fim >= hoje);
     });
   }
-  if (!list.length) { console.error("❌ Nenhum torneio para processar"); process.exit(1); }
+  // Sem torneios a decorrer (modo --live) é o caso normal do cron diário → exit 2 (nada a fazer), não erro.
+  if (!list.length) { console.error("ℹ Nenhum torneio para processar (nada a fazer)"); process.exit(2); }
 
   console.log(`🇫🇷 FFG tee sheet (GolfGenius) — ${list.length} torneio(s)\n`);
   let ok = 0, err = 0;
