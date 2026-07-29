@@ -37,12 +37,17 @@ on:
         options: ['false', 'true']
 
   schedule:
-    # Minuto Hora Dia Mês DiaSemana (UTC) — 20:00 UTC à Quarta (3).
+    # Minuto Hora Dia Mês DiaSemana (UTC) — 17:00 UTC à Quarta (3).
     # FALLBACK tardio: corre depois da janela do refresh diário de cookies
     # (que acontece de manhã/início de tarde local). O trigger primário é a
     # cascata em scripts/run-cookie-refresh.bat. NÃO voltar a pôr de manhã
     # (05:00 UTC corria ANTES do refresh → cookies de ~46h → HTTP 500).
-    - cron: '0 20 * * 3'
+    # NÃO voltar a pôr às 20:00: com o delay do GitHub o run caía ~21-22h UTC
+    # e o scoring.datagolf.pt devolve HTTP 500 sistemático nessa janela
+    # nocturna — 7/7 runs agendados falharam (17 Jun a 29 Jul 2026), com os
+    # MESMOS cookies a funcionar de manhã/tarde no mesmo dia. 17:00 UTC
+    # (18:00 Lisboa) fica depois do refresh e fora da janela má.
+    - cron: '0 17 * * 3'
 
 permissions:
   contents: write
