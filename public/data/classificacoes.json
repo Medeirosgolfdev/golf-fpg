@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-27T04:20:21.847Z",
+  "generated": "2026-07-30T18:32:36.371Z",
   "year": "2026",
   "source": "build-classificacoes.js",
   "anchors": [
@@ -18,6 +18,567 @@
   ],
   "maxJuniorAge": 21,
   "tournaments": [
+    {
+      "name": "Amendoeira World Kids Golfe 2026 Sub 14",
+      "ccode": "179",
+      "tcode": "10605",
+      "date": "2026-07-29",
+      "campo": "Faldo Course",
+      "clube": "179",
+      "circuit": "tour",
+      "series": "tour",
+      "region": "outro",
+      "escalao": "Sub 14",
+      "num": 1,
+      "rounds": 3,
+      "playerCount": 19,
+      "players": [
+        {
+          "scoreId": "14941",
+          "pos": 1,
+          "name": "Salvador Ivo de Carvalho",
+          "grossTotal": 152,
+          "toPar": 8,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.9,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "43968",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-01-23"
+        },
+        {
+          "scoreId": "14938",
+          "pos": 2,
+          "name": "William Gao",
+          "grossTotal": 154,
+          "toPar": 10,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.3,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 73,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "51524",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "USA",
+          "_dob": "2012-11-14"
+        },
+        {
+          "scoreId": "14936",
+          "pos": 3,
+          "name": "Nuno Palmares Jr.",
+          "grossTotal": 149,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.4,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 73,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "49124",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-04-28"
+        },
+        {
+          "scoreId": "14937",
+          "pos": 4,
+          "name": "João Rocha",
+          "grossTotal": 150,
+          "toPar": 6,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 3.8,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "48297",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-09-02"
+        },
+        {
+          "scoreId": "14942",
+          "pos": 5,
+          "name": "Finn Gordon",
+          "grossTotal": 156,
+          "toPar": 12,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.4,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 79,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "55269",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "NED",
+          "_dob": "2012-09-25"
+        },
+        {
+          "scoreId": "14943",
+          "pos": 6,
+          "name": "Seb Toft",
+          "grossTotal": 153,
+          "toPar": 9,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.7,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "57291",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "UK",
+          "_dob": "2012-11-29"
+        },
+        {
+          "scoreId": "14947",
+          "pos": 7,
+          "name": "Tomás Lima Pinto",
+          "grossTotal": 161,
+          "toPar": 17,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 11.1,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 80,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "46037",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-04-18"
+        },
+        {
+          "scoreId": "14946",
+          "pos": 8,
+          "name": "Martim Moreira",
+          "grossTotal": 164,
+          "toPar": 20,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 11.1,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 83,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "42985",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-02-16"
+        },
+        {
+          "scoreId": "14939",
+          "pos": 9,
+          "name": "Francisco Saraiva",
+          "grossTotal": 164,
+          "toPar": 20,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.6,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 83,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "39097",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-04-20"
+        },
+        {
+          "scoreId": "14944",
+          "pos": 10,
+          "name": "Catarina Sousa Conceição",
+          "grossTotal": 166,
+          "toPar": 22,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.6,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 84,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            },
+            {
+              "round": 2,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "48794",
+          "escalao": "Sub 14",
+          "sex": "F",
+          "club": "POR",
+          "_dob": "2012-08-11"
+        },
+        {
+          "scoreId": "14940",
+          "pos": 11,
+          "name": "João Balixa",
+          "grossTotal": 167,
+          "toPar": 23,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.7,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 84,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 83,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "46038",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-08-10"
+        },
+        {
+          "scoreId": "14945",
+          "pos": 12,
+          "name": "José Silva",
+          "grossTotal": 168,
+          "toPar": 24,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 8.4,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 86,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "54845",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2012-04-03"
+        },
+        {
+          "scoreId": "14949",
+          "pos": 13,
+          "name": "Carlotta Balzer",
+          "grossTotal": 173,
+          "toPar": 29,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 17.8,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 88,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            },
+            {
+              "round": 2,
+              "gross": 85,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "50628",
+          "escalao": "Sub 14",
+          "sex": "F",
+          "club": "POR",
+          "_dob": "2012-10-03"
+        },
+        {
+          "scoreId": "14948",
+          "pos": 14,
+          "name": "Catarina Valério",
+          "grossTotal": 176,
+          "toPar": 32,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 15.3,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 88,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            },
+            {
+              "round": 2,
+              "gross": 88,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "46873",
+          "escalao": "Sub 14",
+          "sex": "F",
+          "club": "POR",
+          "_dob": "2012-07-24"
+        },
+        {
+          "scoreId": "14950",
+          "pos": 15,
+          "name": "Sophie Zhou",
+          "grossTotal": 187,
+          "toPar": 43,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 24.2,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 93,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            },
+            {
+              "round": 2,
+              "gross": 94,
+              "parTotal": 72,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "56845",
+          "escalao": "Sub 14",
+          "sex": "F",
+          "club": "USA",
+          "_dob": "2012-05-23"
+        },
+        {
+          "scoreId": "14952",
+          "pos": 17,
+          "name": "Thomas Blake Maia",
+          "grossTotal": 231,
+          "toPar": 87,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 29.4,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 112,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 119,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "50189",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2013-03-10"
+        },
+        {
+          "scoreId": "14953",
+          "pos": 18,
+          "name": "Vicente Fernandes Fernandes",
+          "grossTotal": 233,
+          "toPar": 89,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 36,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 118,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 115,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "50349",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "POR",
+          "_dob": "2013-10-07"
+        },
+        {
+          "scoreId": "14951",
+          "pos": 19,
+          "name": "Harri Tiuleniev",
+          "grossTotal": 238,
+          "toPar": 94,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 28.6,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 125,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 113,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "56984",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "UKR",
+          "_dob": "2012-11-07"
+        }
+      ],
+      "_anchors": [
+        "49124"
+      ],
+      "_sourceFile": "pull-torneios002.json"
+    },
     {
       "name": "VII Solverde Players Championship",
       "ccode": "912",
