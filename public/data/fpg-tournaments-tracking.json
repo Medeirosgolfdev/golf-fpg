@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-07-30T17:44:37.319Z",
+  "lastUpdated": "2026-07-30T18:05:20.310Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-07-30",
   "summary": {
     "total": 1725,
-    "complete": 774,
+    "complete": 775,
     "in_progress": 5,
     "future": 8,
     "stale": 6,
     "excluded": 930,
     "missing_admissions": 0,
     "missing_classif": 0,
-    "missing_scorecards": 1,
+    "missing_scorecards": 0,
     "missing_draws": 1,
     "unknown": 0
   },
@@ -672,12 +672,12 @@
       "has_classif": true,
       "player_count": 16,
       "players_with_scorecards": 12,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 12,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 0.75,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 0.75,
       "has_manuel": false,
-      "status": "missing_scorecards"
+      "status": "complete"
     },
     {
       "ccode": "000",
