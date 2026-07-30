@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-30T17:30:51.953Z",
-  "total": 1177,
+  "scrapedAt": "2026-07-30T17:44:32.718Z",
+  "total": 1178,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -368839,6 +368839,134 @@
                   "nome": "Rodrigo Cruz",
                   "fed": "58020",
                   "clube": "POR"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "179",
+      "tcode": "10607",
+      "name": "Amendoeira World Kids Golfe 2026 Sub 21",
+      "date": "2026-07-29",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Amendoeira World Kids Golfe 2026 Sub 21",
+        "date": "2026-07-29",
+        "totalInscritos": 4,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10607",
+        "ccode": "179",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "39701",
+            "nome": "João Crasi Alves",
+            "clube": "Vilamoura, C. G",
+            "hcp": -0.2,
+            "vacf": null,
+            "registo": "2026/07/20 13:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": null,
+            "nome": "Javier Anez",
+            "clube": "Espanha",
+            "hcp": 2.2,
+            "vacf": null,
+            "registo": "2026/07/20 13:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": null,
+            "nome": "Tiago Porfirio",
+            "clube": "Portugal",
+            "hcp": 0,
+            "vacf": null,
+            "registo": "2026/07/20 14:04",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "50594",
+            "nome": "Nicolas Rebossio Insua",
+            "clube": "Amendoeira",
+            "hcp": 0.6,
+            "vacf": null,
+            "registo": "2026/07/20 15:24",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-07-29",
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Tiago Porfirio",
+                  "fed": null,
+                  "clube": "POR"
+                },
+                {
+                  "nome": "Javier Anez",
+                  "fed": null,
+                  "clube": "ESP"
+                },
+                {
+                  "nome": "Nicolas Rebossio Insua",
+                  "fed": null,
+                  "clube": "ESP"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": null,
+          "date": "2026-07-30",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Nicolas Rebossio Insua",
+                  "fed": null,
+                  "clube": "ESP"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "name": null,
+          "date": "2026-07-31",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Nicolas Rebossio Insua",
+                  "fed": "50594",
+                  "clube": "ESP"
                 }
               ]
             }
