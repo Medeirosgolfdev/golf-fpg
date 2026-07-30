@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-30T20:37:39.392Z",
+  "generatedAt": "2026-07-30T21:00:24.907Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -48217,6 +48217,18 @@
       "editionsCount": 2
     },
     {
+      "id": "gjgl-berlin-juniors-international",
+      "label": "Berlin Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-berlin-juniors-international-2025-germany",
+        "gjgl-berlin-juniors-international-2026-germany"
+      ],
+      "firstDate": "2025-08-12",
+      "lastDate": "2026-07-28",
+      "editionsCount": 2
+    },
+    {
       "id": "gjgl-danish-junior-internationals",
       "label": "Danish Junior Internationals",
       "sourceId": "gjgl",
@@ -73498,17 +73510,6 @@
       "editionsCount": 1
     },
     {
-      "id": "gjgl-berlin-juniors-international",
-      "label": "Berlin Juniors International",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-berlin-juniors-international-2025-germany"
-      ],
-      "firstDate": "2025-08-12",
-      "lastDate": "2025-08-12",
-      "editionsCount": 1
-    },
-    {
       "id": "gjgl-bogogno-international-junior-open",
       "label": "Bogogno International Junior Open",
       "sourceId": "gjgl",
@@ -73781,6 +73782,17 @@
       ],
       "firstDate": "2026-03-29",
       "lastDate": "2026-03-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-mulheim-junior-open",
+      "label": "GJG Mülheim Junior Open",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-mulheim-junior-open-2026-germany"
+      ],
+      "firstDate": "2026-07-28",
+      "lastDate": "2026-07-28",
       "editionsCount": 1
     },
     {
