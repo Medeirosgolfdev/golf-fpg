@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T16:40:22.389Z",
+  "generatedAt": "2026-07-30T18:07:20.244Z",
   "source": "/competiciones-comite",
   "comite": null,
   "year": null,
@@ -7,7 +7,7 @@
   "club": null,
   "provincia": null,
   "filter": null,
-  "total": 1732,
+  "total": 1736,
   "tours": [
     {
       "tourId": 67162,
@@ -3118,6 +3118,14 @@
       "name": "II Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
       "date": "14 mar 2026",
       "rounds": null,
+      "clubCode": "SACE",
+      "year": 2026
+    },
+    {
+      "tourId": 68669,
+      "name": "II Paralelo Sub25 SACE",
+      "date": "14 mar 2026",
+      "rounds": 2,
       "clubCode": null,
       "year": 2026
     },
@@ -3127,14 +3135,6 @@
       "date": "14 mar 2026",
       "rounds": 2,
       "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 68669,
-      "name": "II Paralelo Sub25 SACE",
-      "date": "14 mar 2026",
-      "rounds": 2,
-      "clubCode": "CLM",
       "year": 2026
     },
     {
@@ -5194,18 +5194,18 @@
       "year": 2026
     },
     {
-      "tourId": 69630,
-      "name": "Torneo Fairplay Infantil y Cadete",
-      "date": "18 abr 2026",
-      "rounds": null,
-      "clubCode": "SACE",
-      "year": 2026
-    },
-    {
       "tourId": 66868,
       "name": "Campeonato de Andalucía Masculino P&P",
       "date": "18 abr 2026",
       "rounds": 3,
+      "clubCode": "SACE",
+      "year": 2026
+    },
+    {
+      "tourId": 69630,
+      "name": "Torneo Fairplay Infantil y Cadete",
+      "date": "18 abr 2026",
+      "rounds": null,
       "clubCode": "SACE",
       "year": 2026
     },
@@ -7410,16 +7410,16 @@
       "year": 2026
     },
     {
-      "tourId": 68720,
-      "name": "Campeonato de Las Palmas de P&P",
+      "tourId": 67780,
+      "name": "Campeonato de Madrid Benjamín",
       "date": "23 may 2026",
       "rounds": 2,
       "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 67780,
-      "name": "Campeonato de Madrid Benjamín",
+      "tourId": 68720,
+      "name": "Campeonato de Las Palmas de P&P",
       "date": "23 may 2026",
       "rounds": 2,
       "clubCode": null,
@@ -10330,19 +10330,19 @@
       "year": 2026
     },
     {
-      "tourId": 72207,
-      "name": "Campeonato Andalucía 2ª Categoría",
-      "date": "11 jul 2026",
-      "rounds": 2,
-      "clubCode": "SACE",
-      "year": 2026
-    },
-    {
       "tourId": 72072,
       "name": "Campeonato de Andalucía Benjamín P&P",
       "date": "11 jul 2026",
       "rounds": 2,
       "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72207,
+      "name": "Campeonato Andalucía 2ª Categoría",
+      "date": "11 jul 2026",
+      "rounds": 2,
+      "clubCode": "SACE",
       "year": 2026
     },
     {
@@ -11270,7 +11270,7 @@
       "name": "DANESES GOLF 30/7",
       "date": "30 jul 2026",
       "rounds": null,
-      "clubCode": "WAGR",
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -11286,7 +11286,7 @@
       "name": "Sherry International Golf Group (SIGG) - Viernes 31 Julio 2026 (Grupo privado)",
       "date": "31 jul 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "XLI",
       "year": 2026
     },
     {
@@ -11294,6 +11294,14 @@
       "name": "XLI TROFEO COLOMBINO",
       "date": "31 jul 2026",
       "rounds": 2,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72670,
+      "name": "4º Gran Premio Volvo Surauto 31-07-26",
+      "date": "31 jul 2026",
+      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
@@ -11318,7 +11326,23 @@
       "name": "Circuito Corporate 2026 (Inscripción turno mañana y tarde)",
       "date": "01 ago 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "TIRO",
+      "year": 2026
+    },
+    {
+      "tourId": 72682,
+      "name": "Circuito Corporate 2026 (TIRO 8:30H)",
+      "date": "01 ago 2026",
+      "rounds": null,
+      "clubCode": "TIRO",
+      "year": 2026
+    },
+    {
+      "tourId": 72683,
+      "name": "Circuito Corporate 2026 (TIRO 15:30H)",
+      "date": "01 ago 2026",
+      "rounds": null,
+      "clubCode": "SACE",
       "year": 2026
     },
     {
@@ -11362,6 +11386,14 @@
       "year": 2026
     },
     {
+      "tourId": 72671,
+      "name": "4º Gran Premio Volvo Surauto 01-08-26",
+      "date": "01 ago 2026",
+      "rounds": null,
+      "clubCode": "RACE",
+      "year": 2026
+    },
+    {
       "tourId": 67759,
       "name": "Torneo de Golf Adaptado \"RACE\"",
       "date": "02 ago 2026",
@@ -11374,7 +11406,7 @@
       "name": "VII Tanger Cup - Campeonato Familia Solís (Grupo Privado)",
       "date": "02 ago 2026",
       "rounds": null,
-      "clubCode": "POO",
+      "clubCode": "POOL",
       "year": 2026
     },
     {
@@ -12210,6 +12242,14 @@
       "year": 2026
     },
     {
+      "tourId": 72226,
+      "name": "Final Autonómica 5ª Categoría",
+      "date": "13 sep 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 68597,
       "name": "VI Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
       "date": "13 sep 2026",
@@ -12220,14 +12260,6 @@
     {
       "tourId": 68598,
       "name": "VI Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Las Palmeras Golf",
-      "date": "13 sep 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 72226,
-      "name": "Final Autonómica 5ª Categoría",
       "date": "13 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -12834,19 +12866,19 @@
       "year": 2026
     },
     {
-      "tourId": 67809,
-      "name": "Torneo Senior Pitch & Putt \"C.D. Juan Antonio Samaranch\"",
+      "tourId": 67967,
+      "name": "Torneo Senior Damas \"Lomas-Bosque\"",
       "date": "08 oct 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 67967,
-      "name": "Torneo Senior Damas \"Lomas-Bosque\"",
+      "tourId": 67809,
+      "name": "Torneo Senior Pitch & Putt \"C.D. Juan Antonio Samaranch\"",
       "date": "08 oct 2026",
       "rounds": null,
-      "clubCode": "SACE",
+      "clubCode": null,
       "year": 2026
     },
     {
