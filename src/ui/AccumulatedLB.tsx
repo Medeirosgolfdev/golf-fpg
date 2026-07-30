@@ -58,6 +58,7 @@ export function AccumulatedLB({
           si: rs.si,
           courseRating: rs.courseRating,
           slope: rs.slope,
+          pcc: rs.pcc ?? p.pcc,
           nholes: rs.pars?.length,
           grossTotal: rs.gross,
         };

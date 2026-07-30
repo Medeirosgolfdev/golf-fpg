@@ -51,6 +51,7 @@ export function AllRoundsScorecardLB({
         si: rs.si,
         courseRating: rs.courseRating,
         slope: rs.slope,
+        pcc: rs.pcc ?? player.pcc,
         nholes: rs.pars?.length,
         grossTotal: gross,
       };

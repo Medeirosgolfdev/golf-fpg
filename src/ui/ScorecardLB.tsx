@@ -193,6 +193,7 @@ export function ScorecardLB({
         si: p.si?.length ? p.si : rs0.si,
         courseRating: p.courseRating ?? rs0.courseRating,
         slope: p.slope ?? rs0.slope,
+        pcc: p.pcc ?? rs0.pcc,
         nholes: p.nholes ?? rs0.pars?.length,
       });
     }
