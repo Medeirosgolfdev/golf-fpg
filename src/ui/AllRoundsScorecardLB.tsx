@@ -51,6 +51,10 @@ export function AllRoundsScorecardLB({
         si: rs.si,
         courseRating: rs.courseRating,
         slope: rs.slope,
+        // ⚠ PCC é POR RONDA (por dia de jogo) — nunca cair no do jogador, que
+        // vem da R1 via normalizePlayer: aplicava o PCC do dia 1 aos dias
+        // seguintes ainda sem PCC publicado (visto no Amendoeira 2026 R2).
+        pcc: rs.pcc,
         nholes: rs.pars?.length,
         grossTotal: gross,
       };

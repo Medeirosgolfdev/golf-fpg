@@ -42,6 +42,8 @@ interface Player {
   course?: string;
   courseRating?: number;
   slope?: number;
+  /** PCC oficial da FPG (−1..+3) — entra no SD: (113/slope)×(AGS − CR − PCC). */
+  pcc?: number;
   teeName?: string;
   nholes?: number;
   parTotal?: number;
@@ -129,13 +131,13 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
     // 2) AGS calculation (needs SI data)
     else if (cr && slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
       const adjGross = calcAGS(scores, parArr, si, cr, slope, p.hcpExact, nh);
-      const rawSD = (113 / slope) * (adjGross - cr);
+      const rawSD = (113 / slope) * (adjGross - cr - (p.pcc ?? 0));
       sd18 = is9 ? rawSD + expectedSD9(p.hcpExact) : rawSD;
       sdSource = "ags";
     }
     // 3) Raw fallback (no SI)
     else if (cr && slope) {
-      const rawSD = (113 / slope) * (g - cr);
+      const rawSD = (113 / slope) * (g - cr - (p.pcc ?? 0));
       if (is9 && p.hcpExact != null) {
         sd18 = rawSD + expectedSD9(p.hcpExact);
       } else if (!is9) {
