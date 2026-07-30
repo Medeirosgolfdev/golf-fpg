@@ -145,12 +145,14 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     live: false,  // evento já disputado (Maio 2026) — inscrições encerradas
   })),
 
-  // ── Amendoeira Clube de Golfe — torneio futuro, 3 escalões (2026) ────
-  // Nome/data/campo vêm do scrape (fpg-admissions-draws.json); para já só
-  // há draw publicado. tournAdmissions: ccode=179, tcodes 10604-10606.
+  // ── Amendoeira Clube de Golfe — World Kids Golfe, 5 escalões (2026) ──
+  // Nome/data/campo vêm do scrape (fpg-admissions-draws.json).
+  // tournAdmissions: ccode=179, tcodes 10603-10607.
+  { ccode: "179", tcode: "10603" },
   { ccode: "179", tcode: "10604" },
   { ccode: "179", tcode: "10605" },
   { ccode: "179", tcode: "10606" },
+  { ccode: "179", tcode: "10607" },
 
   // ── VIII Miramar Internacional Open U25 — 19-21 Ago 2026 (CGM, ccode 003) ──
   // Inscritos scraped MANUALMENTE das páginas do clube (cgm.pt), NÃO da FPG.
