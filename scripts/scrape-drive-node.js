@@ -240,6 +240,16 @@ function extractHoleData(rec) {
   return { scores, pars, si, meters };
 }
 
+/** PCC oficial da volta (campo `cba` do ScoreCard, −1..+3). O site usa-o no
+ *  SD: (113/slope)×(AGS − CR − PCC). Só emitido quando ≠ 0 para não inchar
+ *  os JSON (ausente = 0 no cálculo). */
+function extractPcc(rec) {
+  const v = rec.cba ?? rec.pcc;
+  if (v == null) return {};
+  const n = Number(v);
+  return Number.isFinite(n) && n !== 0 ? { pcc: n } : {};
+}
+
 function parseTournament(raw, circuit) {
   const desc = raw.description || "";
   const cc = raw.club_code || "";
@@ -453,6 +463,7 @@ function writeIfChanged(filepath, newObj) {
               p.roundScores.push({
                 round: idx + 1, gross: sc.gross_total,
                 scores: hd.scores, pars: hd.pars, si: hd.si, meters: hd.meters,
+                ...extractPcc(sc),
                 courseRating: sc.course_rating, slope: sc.slope,
                 teeName: sc.tee_name, teeColorId: sc.tee_color_id,
               });
@@ -471,6 +482,7 @@ function writeIfChanged(filepath, newObj) {
             p.roundScores.push({
               round: 1, gross: sc.gross_total,
               scores: hd.scores, pars: hd.pars, si: hd.si, meters: hd.meters,
+              ...extractPcc(sc),
               courseRating: sc.course_rating, slope: sc.slope,
               teeName: sc.tee_name, teeColorId: sc.tee_color_id,
             });

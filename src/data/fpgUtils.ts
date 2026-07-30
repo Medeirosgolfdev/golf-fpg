@@ -360,22 +360,26 @@ export function computeSD(p: Player): SDResult {
   const slope = p.slope;
   const hcp = p.hcpExact;
   const gross = numGross(p);
+  // PCC oficial da FPG (−1..+3): SD = (113/slope)×(AGS − CR − PCC). Sem ele
+  // a tabela divergia do SD oficial exactamente por (113/slope)×PCC — caso
+  // Amendoeira 2026 (PCC −1): tabela 6.3 vs oficial 7.3.
+  const pcc = typeof p.pcc === "number" ? p.pcc : 0;
   if (!cr || !slope || gross == null || isNaN(gross)) return { sd: null, source: null };
   // ⚠ O score differential WHS PODE ser negativo (volta abaixo do Course Rating).
   // Antes havia `Math.max(0, …)` que achatava tudo o que fosse < CR a 0.0 — um
   // gross −5 vs CR e um gross =CR davam ambos "0.0", indistinguíveis. Removido.
   if (hcp != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
     const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nh);
-    const raw = (113 / slope) * (ags - cr);
+    const raw = (113 / slope) * (ags - cr - pcc);
     const sd = is9 ? raw + expectedSD9(hcp) : raw;
     return { sd: Math.round(sd * 10) / 10, source: "ags" };
   }
   if (!is9) {
-    const sd = Math.round((113 / slope) * (gross - cr) * 10) / 10;
+    const sd = Math.round((113 / slope) * (gross - cr - pcc) * 10) / 10;
     return { sd, source: "raw" };
   }
   if (hcp != null) {
-    const raw = (113 / slope) * (gross - cr);
+    const raw = (113 / slope) * (gross - cr - pcc);
     const sd = Math.round((raw + expectedSD9(hcp)) * 10) / 10;
     return { sd, source: "raw" };
   }
@@ -490,6 +494,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
         toPar: rs.gross - parT,
         scores: rs.scores, par: rs.pars, si: rs.si, meters: rs.meters,
         courseRating: rs.courseRating, slope: rs.slope, teeName: rs.teeName,
+        pcc: rs.pcc,
         startHole: rs.startHole,
         roundScores: [rs],
       }));

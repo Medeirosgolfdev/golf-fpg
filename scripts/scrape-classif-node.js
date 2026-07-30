@@ -259,6 +259,16 @@ function extractHoleData(rec) {
   return { scores, pars, si, meters };
 }
 
+/** PCC oficial da volta (campo `cba` do ScoreCard, −1..+3). O site usa-o no
+ *  SD: (113/slope)×(AGS − CR − PCC). Só emitido quando ≠ 0 para não inchar
+ *  os JSON (ausente = 0 no cálculo). */
+function extractPcc(rec) {
+  const v = rec.cba ?? rec.pcc;
+  if (v == null) return {};
+  const n = Number(v);
+  return Number.isFinite(n) && n !== 0 ? { pcc: n } : {};
+}
+
 /* ── Tournament parser (igual ao pull-torneios.js browser) ──────────────── */
 const regionMap = {
   "982": "madeira", "983": "acores", "984": "acores",
@@ -396,7 +406,7 @@ async function processOne(spec, idx, total) {
         recs.forEach((sc, i) => {
           const hd = extractHoleData(sc);
           p.roundScores.push({
-            round: i + 1, gross: sc.gross_total, ...hd,
+            round: i + 1, gross: sc.gross_total, ...hd, ...extractPcc(sc),
             courseRating: sc.course_rating, slope: sc.slope,
             teeName: sc.tee_name, teeColorId: sc.tee_color_id,
           });
@@ -413,7 +423,7 @@ async function processOne(spec, idx, total) {
           p.parTotal = sc.par_total; p.nholes = sc.nholes; p.course = sc.course_description;
         }
         p.roundScores.push({
-          round: 1, gross: sc.gross_total, ...hd,
+          round: 1, gross: sc.gross_total, ...hd, ...extractPcc(sc),
           courseRating: sc.course_rating, slope: sc.slope,
           teeName: sc.tee_name, teeColorId: sc.tee_color_id,
         });
