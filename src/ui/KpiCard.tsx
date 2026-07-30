@@ -33,6 +33,9 @@ interface KpiCardProps {
   /** Variação numérica — linha colorida (negativo=verde, positivo=vermelho). */
   delta?: number | null;
   deltaLabel?: string;
+  /** Preenche o cartão inteiro (fundo tingido + borda + valor colorido):
+   *  "good" (verde) ou "danger" (vermelho). Ignorado se null. */
+  fill?: "good" | "danger" | null;
   /** Percentagem 0–1 mostrada como sub-linha. */
   pct?: number;
   /** Tamanho do valor: "sm" (16px) | "md" (22px, padrão) | "lg" (28px). */
@@ -57,24 +60,34 @@ const SIZE_CLASS: Record<string, string> = {
 
 export default function KpiCard({
   label, value, sub, color, tip, delta, deltaLabel, pct,
-  size = "md", accentBorder, align, className, style, labelStyle,
+  size = "md", accentBorder, align, className, style, labelStyle, fill,
 }: KpiCardProps) {
   const valClass = SIZE_CLASS[size] || "kpi-val";
   const dColor = delta == null ? undefined
     : delta < -0.05 ? "var(--color-good)"
     : delta > 0.05 ? "var(--color-danger)"
     : "var(--text-3)";
+  const fillColor = fill === "good" ? "var(--color-good)"
+    : fill === "danger" ? "var(--color-danger)" : null;
+  const fillStyle: React.CSSProperties | null = fillColor ? {
+    background: fill === "good" ? "var(--color-good-alpha)" : "var(--color-danger-alpha)",
+    borderColor: fillColor,
+  } : null;
   const rootStyle: React.CSSProperties = {
     ...(accentBorder ? { borderLeft: `4px solid ${accentBorder}` } : null),
     ...(align === "center" ? { alignItems: "center", textAlign: "center" } : null),
+    ...fillStyle,
     ...style,
   };
+  // Quando o cartão é preenchido, o valor herda a cor do preenchimento
+  // (a menos que uma cor explícita seja passada).
+  const valColor = color ?? fillColor ?? undefined;
   return (
     <div className={`kpi${className ? " " + className : ""}`} style={rootStyle}>
       <div className="kpi-lbl" style={labelStyle}>
         {label}{tip && <span className="kpi-info ml-4" title={tip}>ℹ</span>}
       </div>
-      <div className={valClass} style={color ? { color } : undefined}>{value}</div>
+      <div className={valClass} style={valColor ? { color: valColor } : undefined}>{value}</div>
       {delta != null && (
         <div className="kpi-delta" style={{ color: dColor }}>
           {delta > 0 ? "+" : ""}{delta.toFixed(1)} {deltaLabel ?? "vs média"}
