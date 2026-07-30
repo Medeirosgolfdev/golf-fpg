@@ -58,7 +58,8 @@ export function AccumulatedLB({
           si: rs.si,
           courseRating: rs.courseRating,
           slope: rs.slope,
-          pcc: rs.pcc ?? p.pcc,
+          // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
+          pcc: rs.pcc,
           nholes: rs.pars?.length,
           grossTotal: rs.gross,
         };

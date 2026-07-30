@@ -59,7 +59,8 @@ function DriveAllRoundsScorecardLB({
       const rdPars = rs.pars?.length ? rs.pars : ref.pars;
       const rdSi = rs.si?.length ? rs.si : ref.si;
 
-      const pcc = rs.pcc ?? player.pcc ?? 0;
+      // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
+      const pcc = rs.pcc ?? 0;
       if (cr && slope && hcp != null && rdSi.length >= rdNh && capped.length >= rdNh && rdPars.length >= rdNh) {
         const ags = calcAGS(capped, rdPars, rdSi, cr, slope, hcp, rdNh);
         const rawSD = (113 / slope) * (ags - cr - pcc);
