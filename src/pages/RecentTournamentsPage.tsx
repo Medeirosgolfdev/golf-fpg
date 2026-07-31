@@ -28,6 +28,7 @@ import type { Tournament } from "../data/fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { EscLookup } from "../utils/playerUtils";
 import { cachedFetchJson } from "../data/fetchCache";
+import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, normalizePlayer } from "../utils/playerUtils";
 import { norm, fmtDate, fpgScoringUrl } from "../utils/format";
@@ -83,7 +84,7 @@ function TournDetailBlock({ t, escLookup, playersDB }: {
         ⓘ Classificação e scorecards reconstruídos das voltas WHS dos jogadores que seguimos —
         a posição é <b>entre os nossos</b>, não a oficial do torneio.
       </div>
-      <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB} />
+      <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgOmRankingTabs(t)} />
     </div>
   );
 }
