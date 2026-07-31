@@ -52,9 +52,11 @@ interface OmJuniorData {
 export interface OmHit { catKey: string; label: string; pos: number; pts: number; isJunior: boolean; }
 export const OM_CAT_ORDER = ["junior", "homens", "senhoras", "seniores", "superSeniores"];
 const CAT_SHORT: Record<string, string> = { junior: "Jr", homens: "H", senhoras: "S", seniores: "Sen", superSeniores: "SSen" };
+// Tons de cinzento (não cores) — a categoria lê-se do texto (Jr/H/S/Sen/SSen);
+// rampa de escuro→claro, com o Júnior (o nosso ranking) mais escuro para destacar.
 const CAT_COLOR: Record<string, { bg: string; fg: string }> = {
-  junior: { bg: "#a16207", fg: "#fff" }, homens: { bg: "#1e40af", fg: "#fff" }, senhoras: { bg: "#9d174d", fg: "#fff" },
-  seniores: { bg: "#166534", fg: "#fff" }, superSeniores: { bg: "#6b21a8", fg: "#fff" },
+  junior: { bg: "#374151", fg: "#fff" }, homens: { bg: "#4b5563", fg: "#fff" }, senhoras: { bg: "#6b7280", fg: "#fff" },
+  seniores: { bg: "#9ca3af", fg: "#111827" }, superSeniores: { bg: "#d1d5db", fg: "#111827" },
 };
 
 /** Constrói um Map (fed E nome-normalizado → OmHit) a partir do om-cgss-junior.json. */
@@ -151,22 +153,43 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
     return () => { alive = false; };
   }, []);
 
-  const { sortKey, sortDir, toggleSort } = useSort<"rank" | "name" | "played" | "total">("rank", "asc", { total: "desc", played: "desc" });
+  const { sortKey, sortDir, toggleSort } = useSort<"rank" | "name" | "played" | "total" | "here">("rank", "asc", { total: "desc", played: "desc", here: "desc" });
+
+  // Esta prova está nos events do JSON? (tcode) → define a DATA "até à qual" se
+  // mostra a classificação. Prova passada: contam só as provas com data ≤ a
+  // desta (o estado da OM logo APÓS este torneio). Prova futura / ainda sem
+  // resultados (não está nos events): classificação cumulativa ATUAL.
+  const thisEvent = data?.events.find(e => String(e.tcode) === String(tournament.tcode));
+  const asOf = thisEvent?.date || null;
+  const scoredFeds = new Set((thisEvent?.juniors ?? []).map(j => j.fed));
+
+  // Standings até à data (asOf). `herePts`/`herePos` = o que cada jogador ganhou
+  // NESTA prova (0/null se não pontuou aqui).
+  const standings = useMemo(() => {
+    const list = (data?.ranking ?? []).map(p => {
+      const evs = asOf ? p.events.filter(e => e.date <= asOf) : p.events;
+      const total = asOf ? evs.reduce((s, e) => s + e.pts, 0) : p.total;
+      const te = thisEvent ? evs.find(e => String(e.tcode) === String(thisEvent.tcode)) : undefined;
+      return { ...p, events: evs, total, played: evs.length, herePts: te?.pts ?? 0, herePos: te?.pos ?? null };
+    }).filter(p => p.total > 0);
+    list.sort((a, b) => b.total - a.total || (a.lastResult ?? 99) - (b.lastResult ?? 99) || a.name.localeCompare(b.name));
+    let rk = 0, prev: number | null = null, seen = 0;
+    for (const p of list) { seen++; if (prev === null || p.total !== prev) { rk = seen; prev = p.total; } p.rank = rk; }
+    return list;
+  }, [data, asOf, thisEvent]);
+
   const rows = useMemo(() => {
-    const r = [...(data?.ranking ?? [])];
+    const r = [...standings];
     const dir = sortDir === "asc" ? 1 : -1;
     r.sort((a, b) => {
       if (sortKey === "name") return dir * a.name.localeCompare(b.name);
       if (sortKey === "played") return dir * (a.played - b.played) || a.rank - b.rank;
       if (sortKey === "total") return dir * (a.total - b.total) || a.rank - b.rank;
+      if (sortKey === "here") return dir * (a.herePts - b.herePts) || a.rank - b.rank;
       return dir * (a.rank - b.rank); // "rank"
     });
     return r;
-  }, [data, sortKey, sortDir]);
-
-  // esta prova já pontuou? (tcode nos events do JSON)
-  const thisEvent = data?.events.find(e => String(e.tcode) === String(tournament.tcode));
-  const scoredFeds = new Set((thisEvent?.juniors ?? []).map(j => j.fed));
+  }, [standings, sortKey, sortDir]);
 
   const links = data?.officialAdultRankings;
   const linkRow: Array<{ label: string; href?: string; internal?: boolean }> = [
@@ -239,10 +262,12 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           })()}
 
           <div className="fs-12 p-muted" style={{ marginBottom: 6 }}>
-            <strong>Categoria Júnior</strong> (0-18, sem distinção de género) — {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} juniores CGSS elegíveis (Sub-18 e abaixo)` : ""} · {data.events.length} provas até agora.
+            <strong>Categoria Júnior</strong> (0-18) — {asOf
+              ? <>classificação <strong>logo após esta prova</strong> ({asOf.split("-").reverse().join("/")}) · {rows.length} pontuadores</>
+              : <>classificação <strong>atual</strong> · {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} elegíveis (Sub-18 e abaixo)` : ""}</>}
             {thisEvent
-              ? <> Nesta prova pontuaram {thisEvent.nJuniors} juniores.</>
-              : <> Esta prova ainda não pontuou (sem resultados).</>}
+              ? (thisEvent.nJuniors > 0 ? <> · nesta prova pontuaram {thisEvent.nJuniors} juniores.</> : <> · esta prova não teve juniores a pontuar.</>)
+              : <> · esta prova ainda não pontuou (sem resultados).</>}
           </div>
           <div style={{ overflowX: "auto" }}>
             <table className="player-list-table om-rank-table" style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -251,6 +276,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                   <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
                   <th style={{ textAlign: "left" }}>Clube</th>
+                  {asOf && <SortableHdr k="here" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Pontos ganhos NESTA prova">Neste torneio</SortableHdr>}
                   <SortableHdr k="played" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Provas jogadas">Prov.</SortableHdr>
                   <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Pontos</SortableHdr>
                   <th style={{ textAlign: "left" }}>Detalhe</th>
@@ -268,6 +294,13 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         {p.name}{!p.canWin && <span className="p-muted" title="Não-CGSS: aparece no ranking mas não pode ganhar a OM (regulamento)."> *</span>}
                       </td>
                       <td style={{ textAlign: "left" }} className="p-muted fs-12">{p.club}</td>
+                      {asOf && (
+                        <td style={{ textAlign: "center", whiteSpace: "nowrap" }} className="fs-12">
+                          {p.herePos
+                            ? <><b>{p.herePos}º</b> <span style={{ color: "var(--accent)", fontWeight: 700 }}>+{p.herePts}</span></>
+                            : <span className="p-muted">—</span>}
+                        </td>
+                      )}
                       <td style={{ textAlign: "center" }}>{p.played}</td>
                       <td style={{ textAlign: "center", fontWeight: 700 }}>{p.total}</td>
                       <td style={{ textAlign: "left" }} className="fs-11 p-muted">

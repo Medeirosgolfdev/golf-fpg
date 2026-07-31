@@ -11,7 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -154,6 +154,7 @@ export default function DrawTab({
 }: Props) {
   const hc = hideCols || {};
   const showOm = !!(omLookup && omLookup.size);
+  const [omFilter, setOmFilter] = useState<string | null>(null); // categoria OM a filtrar (null = todas)
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const fedHcp = useFedHcp();
@@ -430,6 +431,15 @@ export default function DrawTab({
     });
   }, [flat, sortKey, sortDir, omLookup]);
 
+  // Filtro por categoria da Ordem de Mérito (mostra só os jogadores de uma OM).
+  const visibleSorted = useMemo(() => {
+    if (!omFilter) return sorted;
+    return sorted.filter(p => {
+      const hit = lookupOm(omLookup, p.fed, p.nome);
+      return omFilter === "none" ? !hit : hit?.catKey === omFilter;
+    });
+  }, [sorted, omFilter, omLookup]);
+
   // Mapa de cor de fundo por GRUPO (cicla uma paleta pastel pela ordem dos
   // flights em `draw.groups`). Identifica visualmente cada grupo mesmo quando
   // (a) é um shotgun — todos os grupos à mesma hora, distintos só pelo buraco —
@@ -459,10 +469,10 @@ export default function DrawTab({
     // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
     const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
     const GROUP_BORDER = "3px solid var(--text-3)";
-    return sorted.map((p, i) => {
+    return visibleSorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const age = ageAtDate(p.dob, effDate || undefined);
-      const isFirstOfGroup = groupingActive && i > 0 && sorted[i - 1].groupIdx !== p.groupIdx;
+      const isFirstOfGroup = groupingActive && i > 0 && visibleSorted[i - 1].groupIdx !== p.groupIdx;
       const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
       const bStyle = borderTop ? { borderTop } : undefined;
       return {
@@ -536,7 +546,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [sorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
+  }, [visibleSorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -589,7 +599,7 @@ export default function DrawTab({
     <>
       <div className="detail-toolbar">
         <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
-        <span className="muted fs-12">{(draw.groups || []).length} flights · {total} jogadores</span>
+        <span className="muted fs-12">{(draw.groups || []).length} flights · {omFilter ? `${visibleSorted.length}/${total}` : total} jogadores</span>
         {draw.date && <span className="muted fs-12">· {draw.date}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
@@ -598,6 +608,26 @@ export default function DrawTab({
           </a>
         )}
       </div>
+      {showOm && (
+        <div className="detail-toolbar" style={{ gap: 6, flexWrap: "wrap" }}>
+          <span className="muted fs-11">Ordem de Mérito:</span>
+          {([{ k: null, l: "Todas" }, { k: "junior", l: "Júnior" }, { k: "homens", l: "Homens" }, { k: "senhoras", l: "Senhoras" }, { k: "seniores", l: "Seniores" }, { k: "superSeniores", l: "Super Sen." }, { k: "none", l: "Sem OM" }] as { k: string | null; l: string }[]).map(o => {
+            const active = omFilter === o.k;
+            return (
+              <button key={o.l} type="button" onClick={() => setOmFilter(o.k)}
+                className="p p-sm" style={{
+                  cursor: "pointer",
+                  background: active ? "var(--accent)" : "var(--bg-1)",
+                  color: active ? "#fff" : "var(--text-1)",
+                  borderColor: active ? "var(--accent)" : "var(--border)",
+                  fontWeight: active ? 700 : 400,
+                }}>
+                {o.l}
+              </button>
+            );
+          })}
+        </div>
+      )}
       {isEstimated && (
         <div className="fs-12 fw-600" style={{
           padding: "8px 14px", margin: "6px 12px",
