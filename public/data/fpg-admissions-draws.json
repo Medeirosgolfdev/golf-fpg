@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-07-30T17:44:32.718Z",
-  "total": 1178,
+  "scrapedAt": "2026-07-31T20:58:04.250Z",
+  "total": 1179,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -368973,6 +368973,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "90071",
+      "name": "Torneio CGSS RALI 2026",
+      "date": "2026-08-01",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "003",
