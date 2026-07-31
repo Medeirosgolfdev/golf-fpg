@@ -111,10 +111,25 @@ const NAME2FED = new Map();
     NAME2FED.get(n).push({ fed: String(p.federation_code), by: birthYear(p.birthdate), club: p.acronym, gender: p.gender, name: p.name });
   }
 })();
-function resolvePlayer(name) {
+/** Resolve o federado de um jogador da classificação, desambiguando por CLUBE
+ *  e IDADE (ambos vêm da própria classificação da prova — autoritativos).
+ *  ⚠ Nomes comuns têm colisões: "Manuel Gouveia" existe no Santo da Serra
+ *  (2011) E no Palheiro (2021, 5 anos). Escolher "o mais novo" apanhava o bebé
+ *  errado. Preferimos o federado com o MESMO clube; em empate, a idade mais
+ *  próxima da que a prova indica. */
+function resolvePlayerByNameClub(name, club, age) {
   const a = NAME2FED.get(norm(name));
-  if (!a) return null;
-  return a.length === 1 ? a[0] : a.slice().sort((x, y) => (y.by || 0) - (x.by || 0))[0]; // ambíguo → o mais novo (júnior)
+  if (!a || !a.length) return null;
+  if (a.length === 1) return a[0];
+  const nclub = norm(club);
+  const sameClub = nclub ? a.filter(p => norm(p.club) === nclub) : [];
+  const pool = sameClub.length ? sameClub : a;
+  if (pool.length === 1) return pool[0];
+  if (Number.isFinite(age) && age > 0) {
+    return pool.slice().sort((x, y) =>
+      Math.abs((YEAR - (x.by || 0)) - age) - Math.abs((YEAR - (y.by || 0)) - age))[0];
+  }
+  return pool[0];
 }
 
 /* ── HTTP ── */
@@ -219,11 +234,19 @@ async function tournamentsLST(startIndex) {
     if (error) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): ${error}`); ev.juniors = []; continue; }
     const juniors = [];
     for (const r of records) {
-      const info = resolvePlayer(r.player_name);
       const gross = Number(r.gross_total);
-      if (info && info.by && (YEAR - info.by) <= MAX_JUNIOR_AGE && Number.isFinite(gross) && gross > 0) {
-        juniors.push({ fed: info.fed, name: info.name, club: info.club, gender: info.gender, gross });
-      }
+      const age = Number(r.player_age);                     // idade da PROVA (autoritativa)
+      const club = (r.player_club_description || "").trim(); // clube da PROVA
+      if (!(Number.isFinite(gross) && gross > 0)) continue;
+      if (!(Number.isFinite(age) && age > 0 && age <= MAX_JUNIOR_AGE)) continue; // júnior por idade da prova
+      const info = resolvePlayerByNameClub(r.player_name, club, age);
+      juniors.push({
+        fed: info ? info.fed : `anon:${norm(r.player_name)}|${norm(club)}`,
+        name: info ? info.name : r.player_name,
+        club: club || (info ? info.club : ""),
+        gender: r.player_gender || (info ? info.gender : null),
+        gross,
+      });
     }
     juniors.sort((a, b) => a.gross - b.gross);
     let pos = 0, prev = null, seen = 0;
