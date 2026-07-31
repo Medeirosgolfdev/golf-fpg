@@ -38,7 +38,11 @@ import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pa
  */
 interface EditionAlias { match: RegExp; canon: string; deriveEscFromName?: boolean }
 const EDITION_ALIASES: EditionAlias[] = [
-  { match: /\bworld kids golfe?\b/, canon: "world kids golf", deriveEscFromName: true },
+  // World Kids @ Amendoeira (ccode 179) — o nome variou muito entre anos:
+  //   2024 "World Kids Golf 2024 Under N" · 2025 "Amendoeira World Kids Sub N"
+  //   (sem "Golf") · 2026 "Amendoeira World Kids Golfe 2026 Sub N" · e há uma
+  //   gralha na fonte ("World Kis Sub 14"). Casar só por "World Ki(d)s".
+  { match: /\bworld ki[dt]?s\b/, canon: "world kids golf", deriveEscFromName: true },
 ];
 function editionAliasFor(rawFamKey: string | null): EditionAlias | null {
   if (!rawFamKey) return null;
