@@ -24,6 +24,7 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
+import { norm } from "../../utils/format";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -34,11 +35,72 @@ interface OmRankingRow {
   events: OmEventRef[];
 }
 interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; pos: number; pts: number }[]; }
+interface OmAdultRow { name: string; fed: string; pos: number; pts: number; }
 interface OmJuniorData {
   generated: string; season: number; title: string; subtitle: string;
+  points?: Record<Level, Record<string, number>>;
+  bands?: Record<Level, Record<string, number>>;
   officialAdultRankings: { homens: string; senhoras: string; seniores: string; superSeniores: string };
+  adultLabels?: Record<string, string>;
+  adultRankings?: Record<string, OmAdultRow[]>;
   events: OmEvent[];
   ranking: OmRankingRow[];
+}
+
+/* ── Lookup jogador → categoria OM (as 5 categorias), para a coluna do draw ── */
+export interface OmHit { catKey: string; label: string; pos: number; pts: number; isJunior: boolean; }
+export const OM_CAT_ORDER = ["junior", "homens", "senhoras", "seniores", "superSeniores"];
+const CAT_SHORT: Record<string, string> = { junior: "Jr", homens: "H", senhoras: "S", seniores: "Sen", superSeniores: "SSen" };
+const CAT_COLOR: Record<string, { bg: string; fg: string }> = {
+  junior: { bg: "#a16207", fg: "#fff" }, homens: { bg: "#1e40af", fg: "#fff" }, senhoras: { bg: "#9d174d", fg: "#fff" },
+  seniores: { bg: "#166534", fg: "#fff" }, superSeniores: { bg: "#6b21a8", fg: "#fff" },
+};
+
+/** Constrói um Map (fed E nome-normalizado → OmHit) a partir do om-cgss-junior.json. */
+export function buildOmLookup(data: OmJuniorData | null): Map<string, OmHit> {
+  const m = new Map<string, OmHit>();
+  if (!data) return m;
+  const add = (k: string, hit: OmHit) => { if (k && !m.has(k)) m.set(k, hit); };
+  for (const r of data.ranking || []) {                         // júnior primeiro
+    const hit: OmHit = { catKey: "junior", label: "Júnior", pos: r.rank, pts: r.total, isJunior: true };
+    add("fed:" + r.fed, hit); add("nm:" + norm(r.name), hit);
+  }
+  for (const [key, list] of Object.entries(data.adultRankings || {})) {
+    const label = data.adultLabels?.[key] || key;
+    for (const r of list) {
+      const hit: OmHit = { catKey: key, label, pos: r.pos, pts: r.pts, isJunior: false };
+      add("fed:" + r.fed, hit); add("nm:" + norm(r.name), hit);
+    }
+  }
+  return m;
+}
+/** Resolve o OmHit de um jogador (por fed, senão por nome normalizado). */
+export function lookupOm(m: Map<string, OmHit> | null | undefined, fed?: string | null, name?: string | null): OmHit | null {
+  if (!m) return null;
+  if (fed && m.has("fed:" + fed)) return m.get("fed:" + fed)!;
+  if (name && m.has("nm:" + norm(name))) return m.get("nm:" + norm(name))!;
+  return null;
+}
+/** Carrega o om-cgss-junior.json (lazy, cacheado). `enabled` liga o fetch. */
+export function useOmData(enabled: boolean): OmJuniorData | null {
+  const [data, setData] = useState<OmJuniorData | null>(null);
+  useEffect(() => {
+    if (!enabled) return;
+    let alive = true;
+    cachedFetchJson<OmJuniorData>("/data/om-cgss-junior.json").then(d => { if (alive) setData(d); }).catch(() => {});
+    return () => { alive = false; };
+  }, [enabled]);
+  return data;
+}
+/** Badge da categoria OM (usado na coluna do draw). */
+export function OmCatBadge({ hit }: { hit: OmHit }) {
+  const c = CAT_COLOR[hit.catKey] || { bg: "#555", fg: "#fff" };
+  return (
+    <span className="p p-sm" style={{ background: c.bg, color: c.fg, borderColor: "transparent" }}
+      title={`Ordem de Mérito · ${hit.label} — ${hit.pos}º (${hit.pts} pts)`}>
+      {CAT_SHORT[hit.catKey] || hit.label} {hit.pos}º
+    </span>
+  );
 }
 
 /* ── Classificador de nível OM por nome (do regulamento) ──
@@ -149,6 +211,32 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
 
       {data && (
         <>
+          {/* Pontos em JOGO nesta prova (a mesma escala do nível para todas as
+              categorias) — o que cada posição vale para a OM neste torneio. */}
+          {(() => {
+            const lvlPts = (data.points?.[level] || {}) as Record<string, number>;
+            const bands = (data.bands?.[level] || {}) as Record<string, number>;
+            const ladder: Array<{ pos: string; pts: number }> = [];
+            for (let p = 1; p <= 10; p++) if (lvlPts[p] != null) ladder.push({ pos: `${p}º`, pts: lvlPts[p] });
+            if (bands["11-15"] != null) ladder.push({ pos: "11-15º", pts: bands["11-15"] });
+            if (bands["16-20"] != null) ladder.push({ pos: "16-20º", pts: bands["16-20"] });
+            if (!ladder.length) return null;
+            return (
+              <div style={{ marginBottom: 12, padding: "8px 10px", background: "var(--accent-light)", borderRadius: 8 }}>
+                <div className="fs-12" style={{ marginBottom: 6 }}>
+                  🎯 <strong>Pontos em jogo nesta prova</strong> — {LEVEL_LABEL[level]} (por posição em cada categoria):
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {ladder.map(l => (
+                    <span key={l.pos} className="p p-sm" style={{ background: "var(--bg-1)", borderColor: "var(--accent)" }}>
+                      {l.pos} <strong style={{ color: "var(--accent)" }}>{l.pts}</strong>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
           <div className="fs-12 p-muted" style={{ marginBottom: 6 }}>
             <strong>Categoria Júnior</strong> (0-18, sem distinção de género) — {rows.length} jogadores · {data.events.length} provas até agora.
             {thisEvent

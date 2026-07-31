@@ -24,7 +24,7 @@ import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
   ClubePill, ManuelPill, OmPill,
 } from "../../ui/PillBadge";
-import { omLevelOf } from "./fpgOmRanking";
+import { omLevelOf, useOmData, buildOmLookup } from "./fpgOmRanking";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
 import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
@@ -220,6 +220,13 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
     () => (isDrawTab ? buildDrawResults(tournament.players, drawRoundNum) : undefined),
     [isDrawTab, drawRoundNum, tournament],
   );
+
+  // Ordem de Mérito CGSS — nos torneios do clube (ccode 007) carregamos o
+  // om-cgss-junior.json (que traz o roster das 5 categorias) e passamos um
+  // lookup ao DrawTab, que ganha a coluna "OM".
+  const isCgss = String(tournament.ccode ?? "").padStart(3, "0") === "007";
+  const omData = useOmData(isCgss);
+  const omLookup = useMemo(() => buildOmLookup(omData), [omData]);
 
   // curT só é relevante para round/resumo tabs (lógica existente)
   const expandedIdxForCurT = isResumoTab
@@ -491,6 +498,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             admissions={effAdmissions}
             results={drawResults}
             hideCols={drawHideCols}
+            omLookup={omLookup}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />;
         if (isCombined)

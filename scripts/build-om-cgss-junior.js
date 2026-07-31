@@ -164,10 +164,12 @@ async function tournamentsLST(startIndex) {
   console.log("[om-junior] a derivar provas da OM adulta oficial…");
   const omEvents = new Map(); // key `${desc}|${date}` → {desc,date,levelVotes,cats}
   const officialLinks = {};
+  const adultRankings = {}; // key → [{name,fed,pos,pts}] (roster para a coluna do draw)
   for (const rk of ADULT_RANKINGS) {
     officialLinks[rk.key] = rankingUrl(rk.code);
     const cls = await rankLST("RankingsClassifLST", { Club: CLUB, Rk_Code: rk.code });
     if (cls.error) { console.warn(`[om-junior]   ${rk.code}: ${cls.error}`); continue; }
+    adultRankings[rk.key] = cls.records.map(p => ({ name: p.name, fed: String(p.federated_code), pos: p.rk_pos, pts: p.points_real }));
     for (const p of cls.records) {
       const det = await rankLST("RankingsPlayersLST", { Club: CLUB, Rk_Code: rk.code, fed_code: p.federated_code });
       for (const d of det.records) {
@@ -259,6 +261,8 @@ async function tournamentsLST(startIndex) {
     method: "Júnior≤18; posição por gross na categoria; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
     points: PTS, bands: BAND,
     officialAdultRankings: officialLinks,
+    adultLabels: { homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." },
+    adultRankings, // roster das 4 categorias adultas (para a coluna OM do draw)
     events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [] })),
     ranking,
   };
