@@ -117,7 +117,11 @@ export function buildFeaturedSynthetic(ft: FeaturedTournament, ad: FpgTournament
     circuit: "tour",
     series: ft.series ?? "jovens",
     region: ft.region ?? null,
-    escalao: ft.escalao ?? inferEscalao(ad.name || ""),
+    // Honrar `escalao: null` EXPLÍCITO (torneio multi-escalão, sem tab única) —
+    // só inferir quando a config OMITE o campo. Com `??`, o null colapsava para o
+    // inferido: o Miramar U25 ("...U25") saía "Sub 25" e a tab "Edições anteriores"
+    // deixava de casar com a edição anterior (10564), que não tem escalão ("—").
+    escalao: ft.escalao !== undefined ? ft.escalao : inferEscalao(ad.name || ""),
     num: 1,
     rounds: ft.rounds ?? (drawRounds || (ad.admissions as any)?.rounds || 1),
     playerCount,
