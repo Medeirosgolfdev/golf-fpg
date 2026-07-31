@@ -101,35 +101,41 @@ function birthYear(b) {
   if (String(b).includes("Date(")) { const m = /Date\((\d+)/.exec(b); if (m) return new Date(+m[1]).getUTCFullYear(); }
   const m = /(\d{4})/.exec(b); return m ? +m[1] : null;
 }
-const NAME2FED = new Map();
-(function loadFederados() {
-  const fp = path.join(REPO, "public", "data", "federados.json");
-  const players = JSON.parse(fs.readFileSync(fp, "utf8")).players || [];
+/* ── Roster CGSS júnior = pool de "potenciais pontuadores" da OM ──
+ * O que a /jogadores mostra com o filtro Santo da Serra + Sub-18 e abaixo:
+ * todos os federados com homeclub CGSS e idade ≤ 18 (nascidos ≥ ano−18).
+ * Ancorar aqui (em vez de casar nomes contra TODOS os federados) elimina as
+ * colisões de nome — um homónimo de outro clube nunca entra, porque só as
+ * entradas do roster contam. */
+const CGSS_CLUB = "santo da serra";
+const roster = [];                 // [{fed,name,by,age,esc,gender}]
+const rosterByName = new Map();    // normName → [rosterEntry]  (array: homonímias raras)
+(function loadRoster() {
+  const players = JSON.parse(fs.readFileSync(path.join(REPO, "public", "data", "federados.json"), "utf8")).players || [];
   for (const p of players) {
+    if (!norm(p.acronym).includes(CGSS_CLUB)) continue;
+    const by = birthYear(p.birthdate);
+    if (!by || (YEAR - by) > MAX_JUNIOR_AGE) continue;
+    const e = { fed: String(p.federation_code), name: p.name, by, age: YEAR - by, esc: p.age_level || null, gender: p.gender || null };
+    roster.push(e);
     const n = norm(p.name);
-    if (!NAME2FED.has(n)) NAME2FED.set(n, []);
-    NAME2FED.get(n).push({ fed: String(p.federation_code), by: birthYear(p.birthdate), club: p.acronym, gender: p.gender, name: p.name });
+    if (!rosterByName.has(n)) rosterByName.set(n, []);
+    rosterByName.get(n).push(e);
   }
+  roster.sort((a, b) => a.age - b.age || a.name.localeCompare(b.name));
 })();
-/** Resolve o federado de um jogador da classificação, desambiguando por CLUBE
- *  e IDADE (ambos vêm da própria classificação da prova — autoritativos).
- *  ⚠ Nomes comuns têm colisões: "Manuel Gouveia" existe no Santo da Serra
- *  (2011) E no Palheiro (2021, 5 anos). Escolher "o mais novo" apanhava o bebé
- *  errado. Preferimos o federado com o MESMO clube; em empate, a idade mais
- *  próxima da que a prova indica. */
-function resolvePlayerByNameClub(name, club, age) {
-  const a = NAME2FED.get(norm(name));
-  if (!a || !a.length) return null;
-  if (a.length === 1) return a[0];
-  const nclub = norm(club);
-  const sameClub = nclub ? a.filter(p => norm(p.club) === nclub) : [];
-  const pool = sameClub.length ? sameClub : a;
-  if (pool.length === 1) return pool[0];
-  if (Number.isFinite(age) && age > 0) {
-    return pool.slice().sort((x, y) =>
-      Math.abs((YEAR - (x.by || 0)) - age) - Math.abs((YEAR - (y.by || 0)) - age))[0];
-  }
-  return pool[0];
+
+/** Casa um jogador do campo → entrada do roster CGSS (ou null). Guarda: só casa
+ *  entradas cujo CLUBE na prova é o CGSS, para um namesake de outro clube nunca
+ *  ser atribuído a um júnior do roster. */
+function matchRoster(fieldName, fieldClub, fieldAge) {
+  if (!norm(fieldClub).includes(CGSS_CLUB)) return null;
+  const arr = rosterByName.get(norm(fieldName));
+  if (!arr || !arr.length) return null;
+  if (arr.length === 1) return arr[0];
+  if (Number.isFinite(fieldAge) && fieldAge > 0)
+    return arr.slice().sort((a, b) => Math.abs(a.age - fieldAge) - Math.abs(b.age - fieldAge))[0];
+  return arr[0];
 }
 
 /* ── HTTP ── */
@@ -235,18 +241,11 @@ async function tournamentsLST(startIndex) {
     const juniors = [];
     for (const r of records) {
       const gross = Number(r.gross_total);
-      const age = Number(r.player_age);                     // idade da PROVA (autoritativa)
-      const club = (r.player_club_description || "").trim(); // clube da PROVA
       if (!(Number.isFinite(gross) && gross > 0)) continue;
-      if (!(Number.isFinite(age) && age > 0 && age <= MAX_JUNIOR_AGE)) continue; // júnior por idade da prova
-      const info = resolvePlayerByNameClub(r.player_name, club, age);
-      juniors.push({
-        fed: info ? info.fed : `anon:${norm(r.player_name)}|${norm(club)}`,
-        name: info ? info.name : r.player_name,
-        club: club || (info ? info.club : ""),
-        gender: r.player_gender || (info ? info.gender : null),
-        gross,
-      });
+      // Só juniores do ROSTER CGSS (com o clube da prova a bater no CGSS).
+      const e = matchRoster(r.player_name, r.player_club_description, Number(r.player_age));
+      if (!e) continue;
+      juniors.push({ fed: e.fed, name: e.name, club: "Santo da Serra", gender: e.gender, gross });
     }
     juniors.sort((a, b) => a.gross - b.gross);
     let pos = 0, prev = null, seen = 0;
@@ -281,11 +280,13 @@ async function tournamentsLST(startIndex) {
     subtitle: `by NOS Madeira · categoria Júnior (0-${MAX_JUNIOR_AGE}, sem distinção de género)`,
     regulamento: "docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf",
     source: "scoring.datagolf.pt (derivado das OMs adultas oficiais + ClassifLST por prova)",
-    method: "Júnior≤18; posição por gross na categoria; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
+    method: "Pool = roster CGSS Sub-18 e abaixo (federados, homeclub CGSS). Em cada prova, posição por gross entre os juniores do roster presentes; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
     points: PTS, bands: BAND,
     officialAdultRankings: officialLinks,
     adultLabels: { homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." },
     adultRankings, // roster das 4 categorias adultas (para a coluna OM do draw)
+    eligibleCount: roster.length,
+    eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
     events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [] })),
     ranking,
   };
