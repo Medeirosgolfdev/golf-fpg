@@ -3,13 +3,13 @@
     {
       "source": "/data/(.*).json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=600" }
       ]
     },
     {
       "source": "/player-stats.json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=600" }
       ]
     },
     {
@@ -21,7 +21,7 @@
     {
       "source": "/(.*).json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=600" }
       ]
     },
     {
