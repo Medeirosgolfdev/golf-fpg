@@ -56,6 +56,11 @@ const PILL_MANUEL: CSSProperties = {
   background: C.pillManuelBg, color: C.pillManuelFg, borderColor: C.pillManuelBd,
 };
 
+/** Ordem de Mérito CGSS (dourado/medalha) */
+const PILL_OM: CSSProperties = {
+  background: "#a16207", color: "#fff", borderColor: "transparent",
+};
+
 /** Accent lateral da sidebar por série/tipo */
 export const SIDEBAR_ACCENT: Record<string, string> = {
   sserra:    C.sidebarSserra,
@@ -247,6 +252,13 @@ export function JuniorPill() {
 /** ★ Manuel */
 export function ManuelPill() {
   return <span className="p p-sm" style={PILL_MANUEL}>★ Manuel</span>;
+}
+
+/** Ordem de Mérito CGSS — marca torneios que contam para a OM do clube.
+ *  `level` (A/B/C) vai só no tooltip; o pill mostra "OM". */
+export function OmPill({ level }: { level?: string | null }) {
+  const t = level ? `Conta para a Ordem de Mérito CGSS · Nível ${level}` : "Conta para a Ordem de Mérito CGSS";
+  return <span className="p p-sm p-tourn" style={PILL_OM} title={t}>OM{level ? `·${level}` : ""}</span>;
 }
 
 /** Clube organizador */

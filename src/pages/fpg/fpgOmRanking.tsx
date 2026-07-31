@@ -65,7 +65,7 @@ const OM_LEVELS: Array<{ rx: RegExp; level: Level }> = [
   { rx: /\bcarnaval\b/i, level: "C" },
 ];
 /** Nível OM de um torneio, ou null se não conta. Só CGSS (ccode 007). */
-function omLevelOf(t: Tournament): Level | null {
+export function omLevelOf(t: Tournament): Level | null {
   // ccode pode vir "7" ou "007" conforme a fonte — normalizar a 3 dígitos.
   if (String(t.ccode ?? "").padStart(3, "0") !== "007") return null;
   const name = t.name || "";

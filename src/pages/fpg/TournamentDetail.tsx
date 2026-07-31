@@ -22,8 +22,9 @@ import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
-  ClubePill, ManuelPill,
+  ClubePill, ManuelPill, OmPill,
 } from "../../ui/PillBadge";
+import { omLevelOf } from "./fpgOmRanking";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
 import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
@@ -379,6 +380,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
             {tournament.ccode === SSERRA_CCODE && <SserraPill />}
             {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
+            {omLevelOf(tournament) && <OmPill level={omLevelOf(tournament)} />}
             {tournamentHasManuel(tournament) && <ManuelPill />}
           </span>
 
