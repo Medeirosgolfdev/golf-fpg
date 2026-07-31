@@ -40,6 +40,7 @@ interface OmJuniorData {
   generated: string; season: number; title: string; subtitle: string;
   points?: Record<Level, Record<string, number>>;
   bands?: Record<Level, Record<string, number>>;
+  eligibleCount?: number;
   officialAdultRankings: { homens: string; senhoras: string; seniores: string; superSeniores: string };
   adultLabels?: Record<string, string>;
   adultRankings?: Record<string, OmAdultRow[]>;
@@ -238,7 +239,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           })()}
 
           <div className="fs-12 p-muted" style={{ marginBottom: 6 }}>
-            <strong>Categoria Júnior</strong> (0-18, sem distinção de género) — {rows.length} jogadores · {data.events.length} provas até agora.
+            <strong>Categoria Júnior</strong> (0-18, sem distinção de género) — {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} juniores CGSS elegíveis (Sub-18 e abaixo)` : ""} · {data.events.length} provas até agora.
             {thisEvent
               ? <> Nesta prova pontuaram {thisEvent.nJuniors} juniores.</>
               : <> Esta prova ainda não pontuou (sem resultados).</>}
