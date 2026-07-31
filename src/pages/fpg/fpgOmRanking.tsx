@@ -44,12 +44,13 @@ interface OmJuniorData {
   officialAdultRankings: { homens: string; senhoras: string; seniores: string; superSeniores: string };
   adultLabels?: Record<string, string>;
   adultRankings?: Record<string, OmAdultRow[]>;
+  omMembers?: Record<string, string>; // fed → catKey (todos os sócios CGSS, para o pill do escalão sem pontos)
   events: OmEvent[];
   ranking: OmRankingRow[];
 }
 
 /* ── Lookup jogador → categoria OM (as 5 categorias), para a coluna do draw ── */
-export interface OmHit { catKey: string; label: string; pos: number; pts: number; isJunior: boolean; }
+export interface OmHit { catKey: string; label: string; pos: number; pts: number; isJunior: boolean; eligible?: boolean; }
 export const OM_CAT_ORDER = ["junior", "homens", "senhoras", "seniores", "superSeniores"];
 const CAT_SHORT: Record<string, string> = { junior: "Jr", homens: "H", senhoras: "S", seniores: "Sen", superSeniores: "SSen" };
 // Tons de cinzento (não cores) — a categoria lê-se do texto (Jr/H/S/Sen/SSen);
@@ -75,6 +76,13 @@ export function buildOmLookup(data: OmJuniorData | null): Map<string, OmHit> {
       add("fed:" + r.fed, hit); add("nm:" + norm(r.name), hit);
     }
   }
+  // Sócios CGSS que ainda NÃO pontuaram: dão na mesma o pill da categoria do seu
+  // escalão (vão pontuar ao jogar). Só por fed (sem nome); nunca sobrepõe um
+  // pontuador (add() ignora chaves já presentes).
+  const CAT_LABEL: Record<string, string> = { junior: "Júnior", homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." };
+  for (const [fed, catKey] of Object.entries(data.omMembers || {})) {
+    add("fed:" + fed, { catKey, label: CAT_LABEL[catKey] || catKey, pos: 0, pts: 0, isJunior: catKey === "junior", eligible: true });
+  }
   return m;
 }
 /** Resolve o OmHit de um jogador (por fed, senão por nome normalizado). */
@@ -98,6 +106,15 @@ export function useOmData(enabled: boolean): OmJuniorData | null {
 /** Badge da categoria OM (usado na coluna do draw). */
 export function OmCatBadge({ hit }: { hit: OmHit }) {
   const c = CAT_COLOR[hit.catKey] || { bg: "#555", fg: "#fff" };
+  // Sócio elegível ainda sem pontos: só o escalão, estilo tracejado (pontua ao jogar).
+  if (hit.eligible) {
+    return (
+      <span className="p p-sm" style={{ background: "transparent", color: "var(--text-2)", border: "1px dashed var(--text-3)" }}
+        title={`Ordem de Mérito · ${hit.label} — sócio CGSS elegível, ainda sem pontos (pontua ao jogar)`}>
+        {CAT_SHORT[hit.catKey] || hit.label}
+      </span>
+    );
+  }
   return (
     <span className="p p-sm" style={{ background: c.bg, color: c.fg, borderColor: "transparent" }}
       title={`Ordem de Mérito · ${hit.label} — ${hit.pos}º (${hit.pts} pts)`}>
