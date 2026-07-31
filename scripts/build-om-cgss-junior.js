@@ -108,15 +108,31 @@ function birthYear(b) {
  * colisões de nome — um homónimo de outro clube nunca entra, porque só as
  * entradas do roster contam. */
 const CGSS_CLUB = "santo da serra";
-const roster = [];                 // [{fed,name,by,age,esc,gender}]
+const roster = [];                 // [{fed,name,by,age,esc,gender}] — só ≤18 (categoria Júnior)
 const rosterByName = new Map();    // normName → [rosterEntry]  (array: homonímias raras)
+const omMembers = {};              // fed → catKey — TODOS os sócios CGSS, por categoria (mesmo sem pontos)
+
+/** Categoria da OM de um sócio CGSS pelo escalão etário + sexo (regulamento):
+ *  Júnior 0-18 · Senhoras F 19+ · Homens M 19-49 · Seniores M 50-69 · Super Sen. M 70+. */
+function omCategoryOf(age, gender) {
+  if (age == null) return null;
+  if (age <= MAX_JUNIOR_AGE) return "junior";
+  if (norm(gender) === "f") return "senhoras";
+  if (age <= 49) return "homens";
+  if (age <= 69) return "seniores";
+  return "superSeniores";
+}
 (function loadRoster() {
   const players = JSON.parse(fs.readFileSync(path.join(REPO, "public", "data", "federados.json"), "utf8")).players || [];
   for (const p of players) {
     if (!norm(p.acronym).includes(CGSS_CLUB)) continue;
     const by = birthYear(p.birthdate);
-    if (!by || (YEAR - by) > MAX_JUNIOR_AGE) continue;
-    const e = { fed: String(p.federation_code), name: p.name, by, age: YEAR - by, esc: p.age_level || null, gender: p.gender || null };
+    if (!by) continue;
+    const age = YEAR - by;
+    const cat = omCategoryOf(age, p.gender);
+    if (cat) omMembers[String(p.federation_code)] = cat;   // pill do escalão, mesmo sem pontos
+    if (age > MAX_JUNIOR_AGE) continue;                     // roster júnior = só ≤18
+    const e = { fed: String(p.federation_code), name: p.name, by, age, esc: p.age_level || null, gender: p.gender || null };
     roster.push(e);
     const n = norm(p.name);
     if (!rosterByName.has(n)) rosterByName.set(n, []);
@@ -285,6 +301,7 @@ async function tournamentsLST(startIndex) {
     officialAdultRankings: officialLinks,
     adultLabels: { homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." },
     adultRankings, // roster das 4 categorias adultas (para a coluna OM do draw)
+    omMembers,     // fed → categoria OM de TODOS os sócios CGSS (dá o pill do escalão mesmo sem pontos)
     eligibleCount: roster.length,
     eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
     events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [] })),
