@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-31T15:36:43.297Z",
+  "generated": "2026-07-31T15:51:22.046Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
@@ -944,9 +944,9 @@
           "pts": 20
         },
         {
-          "fed": "60277",
+          "fed": "41124",
           "name": "Manuel Gouveia",
-          "club": "Palheiro",
+          "club": "Santo da Serra",
           "gross": 101,
           "pos": 3,
           "pts": 18
@@ -971,9 +971,9 @@
           "pts": 15
         },
         {
-          "fed": "60277",
+          "fed": "41124",
           "name": "Manuel Gouveia",
-          "club": "Palheiro",
+          "club": "Santo da Serra",
           "gross": 86,
           "pos": 2,
           "pts": 12
@@ -997,7 +997,7 @@
       "date": "2026-05-22",
       "level": "B",
       "course": "Santo da Serra - Machico-Desertas",
-      "nJuniors": 3,
+      "nJuniors": 2,
       "juniors": [
         {
           "fed": "40990",
@@ -1008,20 +1008,12 @@
           "pts": 20
         },
         {
-          "fed": "45869",
-          "name": "Francisco Rodrigues",
-          "club": "Belas",
-          "gross": 87,
-          "pos": 2,
-          "pts": 16
-        },
-        {
           "fed": "41130",
           "name": "Vasco Leal Gouveia",
           "club": "Santo da Serra",
           "gross": 102,
-          "pos": 3,
-          "pts": 14
+          "pos": 2,
+          "pts": 16
         }
       ]
     }
@@ -1096,11 +1088,11 @@
       "rank": 1
     },
     {
-      "fed": "60277",
+      "fed": "41124",
       "name": "Manuel Gouveia",
-      "club": "Palheiro",
+      "club": "Santo da Serra",
       "gender": "M",
-      "canWin": false,
+      "canWin": true,
       "events": [
         {
           "tcode": "10986",
@@ -1130,11 +1122,11 @@
       "rank": 3
     },
     {
-      "fed": "45869",
-      "name": "Francisco Rodrigues",
-      "club": "Belas",
+      "fed": "41130",
+      "name": "Vasco Leal Gouveia",
+      "club": "Santo da Serra",
       "gender": "M",
-      "canWin": false,
+      "canWin": true,
       "events": [
         {
           "tcode": "11025",
@@ -1143,7 +1135,7 @@
           "date": "2026-05-22",
           "level": "B",
           "pos": 2,
-          "gross": 87,
+          "gross": 102,
           "pts": 16
         }
       ],
@@ -1178,30 +1170,6 @@
       "rank": 5
     },
     {
-      "fed": "41130",
-      "name": "Vasco Leal Gouveia",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "11025",
-          "ccode": "007",
-          "name": "Torneio NOS EMPRESAS CGSS 2026",
-          "date": "2026-05-22",
-          "level": "B",
-          "pos": 3,
-          "gross": 102,
-          "pts": 14
-        }
-      ],
-      "total": 14,
-      "played": 1,
-      "bestDrop3": 0,
-      "lastResult": 3,
-      "rank": 6
-    },
-    {
       "fed": "52393",
       "name": "Mateus Penucho",
       "club": "Santo da Serra",
@@ -1223,7 +1191,7 @@
       "played": 1,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 7
+      "rank": 6
     }
   ]
 }
