@@ -66,6 +66,13 @@ import {
 import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
+import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
+
+/** Junta o tab da Ordem de Mérito (CGSS) aos tabs de "Edições anteriores". */
+function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0]) {
+  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t) ?? [])];
+  return tabs.length ? tabs : undefined;
+}
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig } from "../ui/circuit/types";
 import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
@@ -2043,7 +2050,7 @@ function Content() {
       const t = d.results!;
       d.renderFull = () => (
         <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgPastEditionsTabs(editionsIndex, t)} />
+          extraTabs={fpgExtraTabs(editionsIndex, t)} />
       );
     }
     return ents;
@@ -2598,7 +2605,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, _t as any)} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2872,7 +2879,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, curJovens)} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>

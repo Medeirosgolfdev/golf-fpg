@@ -1,0 +1,277 @@
+#!/usr/bin/env node
+/**
+ * build-om-cgss-junior.js — Ordem de Mérito JÚNIOR do CG Santo da Serra 2026.
+ *
+ * A FPG publica as 4 Ordens de Mérito adultas do CGSS (Homens/Senhoras/Seniores/
+ * Super Seniores) em scoring.datagolf.pt, mas **não publica a categoria Júnior**
+ * (0-18, sem distinção de género). Este script constrói-a segundo o
+ * "Regulamento Ordens de Mérito CGSS 2026 by NOS Madeira"
+ * (docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf).
+ *
+ * ── Como se auto-mantém ──
+ * A lista de provas que contam (e o seu NÍVEL A/B/C) é DERIVADA das próprias
+ * OMs adultas oficiais: percorre-se o detalhe (RankingsPlayersLST) das 4
+ * categorias e recolhe-se o conjunto {prova, data, nível}. O nível sai do par
+ * (posição → pontos) confrontado com a tabela do regulamento. Assim, quando a
+ * Comissão Técnica acrescenta um torneio à OM, a categoria Júnior acompanha
+ * sozinha — sem lista hardcoded. (Os "Torneios Juniores exclusivos" são de 9
+ * buracos e, por decisão do clube, NÃO contam — e como os adultos não os jogam,
+ * nunca entram por esta via.)
+ *
+ * ── Cálculo (regulamento) ──
+ *   · Júnior = idade ≤ 18 à data da prova (nascido ≥ ano−18).
+ *   · Em cada prova, ordenam-se os juniores por GROSS (empates partilham lugar;
+ *     sem cartão/NR não pontua) → posição na categoria júnior.
+ *   · Pontos pela tabela Nível×Posição (A/B/C).
+ *   · Total = soma das provas. (Regra 7.1: no ranking FINAL descontam-se as 3
+ *     piores pontuações — só relevante no fim da época; replicamos o site, que
+ *     soma tudo até lá. `bestDrop3` fica calculado à parte para o fecho.)
+ *   · Só sócios com homeclub CGSS podem GANHAR (rule 1) — os restantes aparecem
+ *     no ranking mas levam `canWin:false` (igual às OMs adultas, que listam
+ *     Palheiro/Exército/etc.).
+ *   · Desempate 1º (rule 4): melhor resultado na última prova; depois HCP WHS
+ *     mais baixo. Aplicado só como ordenação secundária.
+ *
+ * Fonte de dados: scoring.datagolf.pt (cookies DATAGOLF_SCORING_COOKIES /
+ * api/.scoring-datagolf-cookies.json). Sem esses cookies não corre.
+ *
+ * OUTPUT: public/data/om-cgss-junior.json
+ * EXIT: 0 = escrito/atualizado · 2 = sem alterações · 1 = erro
+ */
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const { writeJsonAtomic } = require("./lib/atomic-write");
+
+const REPO = path.resolve(__dirname, "..");
+const OUT = path.join(REPO, "public", "data", "om-cgss-junior.json");
+const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+const BASE = "https://scoring.datagolf.pt/pt";
+const CLUB = "007";                 // CG Santo da Serra
+const ACK = "8428ACK987";
+const YEAR = parseInt(argVal("--year", "2026"), 10);
+const YY = String(YEAR % 100).padStart(2, "0");
+const MAX_JUNIOR_AGE = 18;
+
+function argVal(f, d) { const i = process.argv.indexOf(f); return i >= 0 ? process.argv[i + 1] : d; }
+
+/* Ordens de Mérito adultas oficiais (para derivar provas+nível e para os links). */
+const ADULT_RANKINGS = [
+  { code: `OMCGSSH${YY}`,    key: "homens",        label: "Homens" },
+  { code: `OMCGSSL${YY}`,    key: "senhoras",      label: "Senhoras" },
+  { code: `OMCGSSsen${YY}`,  key: "seniores",      label: "Seniores" },
+  { code: `OMCGSSspsn${YY}`, key: "superSeniores", label: "Super Seniores" },
+];
+const rankingUrl = code => `https://scoring.datagolf.pt/pt/rankings_classif.aspx?ccode=${CLUB}&ranking=${code}`;
+
+/* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
+const PTS = {
+  A: { 1:25,2:20,3:18,4:14,5:13,6:10,7:9,8:8,9:7,10:6 },
+  B: { 1:20,2:16,3:14,4:11,5:10,6:8,7:7,8:6,9:5,10:4 },
+  C: { 1:15,2:12,3:10,4:8,5:7,6:6,7:5,8:4,9:3,10:2 },
+};
+const BAND = { A: { "11-15":3, "16-20":1 }, B: { "11-15":2, "16-20":1 }, C: { "11-15":1, "16-20":1 } };
+function points(level, pos) {
+  if (!level || !pos) return 0;
+  if (PTS[level][pos] != null) return PTS[level][pos];
+  if (pos >= 11 && pos <= 15) return BAND[level]["11-15"];
+  if (pos >= 16 && pos <= 20) return BAND[level]["16-20"];
+  return 0;
+}
+/** Nível compatível com um par (posição, pontos) — para inferir o nível da prova. */
+function levelsFor(pos, pts) {
+  const out = [];
+  for (const lv of ["A", "B", "C"]) if (points(lv, pos) === pts && pts > 0) out.push(lv);
+  return out;
+}
+
+/* ── cookies ── */
+function loadCookie() {
+  if (process.env.DATAGOLF_SCORING_COOKIES) return process.env.DATAGOLF_SCORING_COOKIES;
+  const fp = path.join(REPO, "api", ".scoring-datagolf-cookies.json");
+  if (fs.existsSync(fp)) { const j = JSON.parse(fs.readFileSync(fp, "utf8")); return j.cookieHeader || j.cookie || ""; }
+  return "";
+}
+const COOKIE = loadCookie();
+
+/* ── federados: nome → dob/clube/género (para identificar juniores) ── */
+const norm = s => (s || "").toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
+function birthYear(b) {
+  if (!b) return null;
+  if (String(b).includes("Date(")) { const m = /Date\((\d+)/.exec(b); if (m) return new Date(+m[1]).getUTCFullYear(); }
+  const m = /(\d{4})/.exec(b); return m ? +m[1] : null;
+}
+const NAME2FED = new Map();
+(function loadFederados() {
+  const fp = path.join(REPO, "public", "data", "federados.json");
+  const players = JSON.parse(fs.readFileSync(fp, "utf8")).players || [];
+  for (const p of players) {
+    const n = norm(p.name);
+    if (!NAME2FED.has(n)) NAME2FED.set(n, []);
+    NAME2FED.get(n).push({ fed: String(p.federation_code), by: birthYear(p.birthdate), club: p.acronym, gender: p.gender, name: p.name });
+  }
+})();
+function resolvePlayer(name) {
+  const a = NAME2FED.get(norm(name));
+  if (!a) return null;
+  return a.length === 1 ? a[0] : a.slice().sort((x, y) => (y.by || 0) - (x.by || 0))[0]; // ambíguo → o mais novo (júnior)
+}
+
+/* ── HTTP ── */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const isoDate = s => { const m = /Date\((\d+)/.exec(s || ""); return m ? new Date(+m[1]).toISOString().slice(0, 10) : (s || null); };
+
+async function warmupClassif(tc) {
+  try { const r = await fetch(`${BASE}/linkpage.aspx?page=classif&club=${CLUB}&tourn=${tc}&ack=${ACK}`, { headers: { "User-Agent": UA, Cookie: COOKIE, Referer: "https://scoring.datagolf.pt/" }, redirect: "follow" }); await r.text(); } catch {}
+}
+async function pageMethod(pageAsp, method, params, referer) {
+  const qs = new URLSearchParams(params).toString();
+  const r = await fetch(`${BASE}/${pageAsp}/${method}?${qs}`, {
+    method: "POST",
+    headers: {
+      "User-Agent": UA, Cookie: COOKIE, "Content-Type": "application/json; charset=utf-8",
+      "X-Requested-With": "XMLHttpRequest", "Accept": "application/json, text/javascript, */*; q=0.01",
+      "Origin": "https://scoring.datagolf.pt", "Referer": referer || `${BASE}/tournaments.aspx`,
+    },
+    body: JSON.stringify(params),
+  });
+  if (!r.ok) return { error: `http-${r.status}`, records: [] };
+  const j = await r.json(); const d = j.d || j;
+  if (d.Result !== "OK") return { error: d.Message || d.Result, records: [] };
+  return { records: d.Records || [], total: d.TotalRecordCount };
+}
+const rankLST = (method, params) => pageMethod("rankings_classif.aspx", method, { jtStartIndex: "0", jtPageSize: "500", ...params }, `${BASE}/linkpage.aspx?page=rankingresult&club=${CLUB}&ranking=${params.Rk_Code}&ack=${ACK}`);
+async function classifLST(tc) {
+  await warmupClassif(tc);
+  const body = { Classi:"1", tclub:CLUB, tcode:String(tc), classiforder:"1", classiftype:"I", classifroundtype:"D",
+    scoringtype:"1", round:"1", members:"0", playertypes:"0", gender:"0", minagemen:"0", maxagemen:"999",
+    minageladies:"0", maxageladies:"999", minhcp:"-8", maxhcp:"99", idfilter:"-1",
+    jtStartIndex:"0", jtPageSize:"400", jtSorting:"score_id DESC" };
+  return pageMethod("classif.aspx", "ClassifLST", body, `${BASE}/classif.aspx?ccode=${CLUB}&tcode=${tc}`);
+}
+async function tournamentsLST(startIndex) {
+  // pageSize ≤ 100 obrigatório (≥200 → HTTP 500)
+  const body = { ClubCode: CLUB, dtIni: `${YEAR}-01-01`, dtFim: `${YEAR}-12-31`, CourseName: "", TournCode: "", TournName: "",
+    jtStartIndex: String(startIndex), jtPageSize: "50", jtSorting: "started_at DESC" };
+  return pageMethod("tournaments.aspx", "TournamentsLST", body, `${BASE}/tournaments.aspx`);
+}
+
+/* ── main ── */
+(async () => {
+  if (!COOKIE) { console.error("[om-junior] sem cookies (DATAGOLF_SCORING_COOKIES / api/.scoring-datagolf-cookies.json)"); process.exit(1); }
+
+  // 1. Derivar provas OM + nível a partir das OMs adultas oficiais.
+  console.log("[om-junior] a derivar provas da OM adulta oficial…");
+  const omEvents = new Map(); // key `${desc}|${date}` → {desc,date,levelVotes,cats}
+  const officialLinks = {};
+  for (const rk of ADULT_RANKINGS) {
+    officialLinks[rk.key] = rankingUrl(rk.code);
+    const cls = await rankLST("RankingsClassifLST", { Club: CLUB, Rk_Code: rk.code });
+    if (cls.error) { console.warn(`[om-junior]   ${rk.code}: ${cls.error}`); continue; }
+    for (const p of cls.records) {
+      const det = await rankLST("RankingsPlayersLST", { Club: CLUB, Rk_Code: rk.code, fed_code: p.federated_code });
+      for (const d of det.records) {
+        const desc = (d.tournament_desc || "").trim();
+        const date = isoDate(d.tourn_date);
+        const key = `${norm(desc)}|${date}`;
+        if (!omEvents.has(key)) omEvents.set(key, { desc, date, votes: { A:0,B:0,C:0 } });
+        const lv = levelsFor(d.rk_pos, d.rank_points);
+        if (lv.length === 1) omEvents.get(key).votes[lv[0]]++;
+      }
+      await sleep(12);
+    }
+    console.log(`[om-junior]   ${rk.code}: ${cls.records.length} jogadores`);
+  }
+  const events = [...omEvents.values()].map(e => {
+    const level = ["A","B","C"].sort((a,b) => e.votes[b] - e.votes[a])[0];
+    const decided = e.votes.A || e.votes.B || e.votes.C;
+    return { desc: e.desc, date: e.date, level: decided ? level : null };
+  }).filter(e => e.level).sort((a,b) => (a.date||"").localeCompare(b.date||""));
+  console.log(`[om-junior] ${events.length} provas OM (níveis derivados).`);
+
+  // 2. Mapear cada prova → tcode real via TournamentsLST(007).
+  const tourns = [];
+  for (let si = 0, total = Infinity; si < total; si += 50) {
+    const { records, total: t, error } = await tournamentsLST(si);
+    if (error) { console.warn(`[om-junior] TournamentsLST @${si}: ${error}`); break; }
+    total = t || records.length; tourns.push(...records);
+    if (!records.length) break;
+  }
+  // ⚠ O record do TournamentsLST usa `description` (não `name`) e `course_description`.
+  const tName = t => t.description || t.name || "";
+  const byKey = new Map();
+  for (const t of tourns) byKey.set(`${norm(tName(t))}|${isoDate(t.started_at)}`, t);
+  for (const ev of events) {
+    const t = byKey.get(`${norm(ev.desc)}|${ev.date}`) || tourns.find(x => norm(tName(x)) === norm(ev.desc));
+    ev.tcode = t ? String(t.code) : null;
+    ev.ccode = t ? String(t.club_code || CLUB).padStart(3, "0") : CLUB;
+    ev.course = t ? (t.course_description || null) : null;
+  }
+  const playable = events.filter(e => e.tcode);
+  console.log(`[om-junior] ${playable.length}/${events.length} provas mapeadas a tcode real.`);
+
+  // 3. Para cada prova: campo → juniores → posição por gross → pontos.
+  const players = new Map(); // fed → registo
+  for (const ev of playable) {
+    const { records, error } = await classifLST(ev.tcode);
+    if (error) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): ${error}`); ev.juniors = []; continue; }
+    const juniors = [];
+    for (const r of records) {
+      const info = resolvePlayer(r.player_name);
+      const gross = Number(r.gross_total);
+      if (info && info.by && (YEAR - info.by) <= MAX_JUNIOR_AGE && Number.isFinite(gross) && gross > 0) {
+        juniors.push({ fed: info.fed, name: info.name, club: info.club, gender: info.gender, gross });
+      }
+    }
+    juniors.sort((a, b) => a.gross - b.gross);
+    let pos = 0, prev = null, seen = 0;
+    for (const jp of juniors) {
+      seen++; if (prev === null || jp.gross !== prev) { pos = seen; prev = jp.gross; }
+      jp.pos = pos; jp.pts = points(ev.level, pos);
+      if (!players.has(jp.fed)) players.set(jp.fed, { fed: jp.fed, name: jp.name, club: jp.club, gender: jp.gender, canWin: /santo da serra/i.test(jp.club || ""), events: [], total: 0 });
+      const rp = players.get(jp.fed);
+      rp.events.push({ tcode: ev.tcode, ccode: ev.ccode, name: ev.desc, date: ev.date, level: ev.level, pos, gross: jp.gross, pts: jp.pts });
+      rp.total += jp.pts;
+    }
+    ev.juniors = juniors.map(j => ({ fed: j.fed, name: j.name, club: j.club, gross: j.gross, pos: j.pos, pts: j.pts }));
+    console.log(`[om-junior]   ${ev.date} ${ev.desc} [${ev.level}] → ${juniors.length} juniores`);
+  }
+
+  // 4. Ranking + desempate (rule 4). bestDrop3 para o fecho de época.
+  const lastEventDate = playable.reduce((m, e) => e.date > m ? e.date : m, "");
+  const ranking = [...players.values()].map(p => {
+    const scores = p.events.map(e => e.pts).sort((a, b) => a - b);
+    const bestDrop3 = scores.slice(3).reduce((a, b) => a + b, 0); // total sem as 3 piores
+    const lastEv = p.events.find(e => e.date === lastEventDate);
+    return { ...p, played: p.events.length, bestDrop3, lastResult: lastEv ? lastEv.pos : null };
+  }).sort((a, b) => b.total - a.total || (a.lastResult || 99) - (b.lastResult || 99) || a.name.localeCompare(b.name));
+  // posição com empates partilhados
+  let rpos = 0, rprev = null, rseen = 0;
+  for (const p of ranking) { rseen++; if (rprev === null || p.total !== rprev) { rpos = rseen; rprev = p.total; } p.rank = rpos; }
+
+  const out = {
+    generated: new Date().toISOString(),
+    season: YEAR,
+    title: "Ordem de Mérito Júnior — CG Santo da Serra",
+    subtitle: `by NOS Madeira · categoria Júnior (0-${MAX_JUNIOR_AGE}, sem distinção de género)`,
+    regulamento: "docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf",
+    source: "scoring.datagolf.pt (derivado das OMs adultas oficiais + ClassifLST por prova)",
+    method: "Júnior≤18; posição por gross na categoria; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
+    points: PTS, bands: BAND,
+    officialAdultRankings: officialLinks,
+    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [] })),
+    ranking,
+  };
+
+  // escrita só-se-mudou (ignora `generated`)
+  let changed = true;
+  if (fs.existsSync(OUT)) {
+    try { const prev = JSON.parse(fs.readFileSync(OUT, "utf8")); const a = { ...prev, generated: 0 }, b = { ...out, generated: 0 }; changed = JSON.stringify(a) !== JSON.stringify(b); } catch {}
+  }
+  if (!changed) { console.log("[om-junior] sem alterações — não escrevo."); process.exit(2); }
+  writeJsonAtomic(OUT, out);
+  console.log(`[om-junior] ✓ ${OUT} — ${ranking.length} juniores, ${playable.length} provas.`);
+  const man = ranking.find(p => p.fed === "52884"), mar = ranking.find(p => p.fed === "40990");
+  if (man) console.log(`[om-junior]   Manuel: ${man.total} pts (${man.played} provas), ${man.rank}º`);
+  if (man && mar) console.log(`[om-junior]   Manuel×Maria Câmara: ${man.total} vs ${mar.total} ${man.total === mar.total ? "(empate ✓)" : ""}`);
+})().catch(e => { console.error("[om-junior] ERRO:", e); process.exit(1); });
