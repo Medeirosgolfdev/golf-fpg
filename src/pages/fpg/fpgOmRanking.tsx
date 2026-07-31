@@ -158,6 +158,27 @@ export function omLevelOf(t: Tournament): Level | null {
 
 const LEVEL_LABEL: Record<Level, string> = { A: "Nível A (Major)", B: "Nível B", C: "Nível C" };
 
+/* ── Calendário oficial das provas NOMEADAS no regulamento (13 provas) ──
+   Serve para saber quantas provas da época já contam e quais ainda faltam.
+   A Carnaval NÃO está aqui (não é nomeada no regulamento — foi acrescentada
+   pela Comissão Técnica, regra 5); as provas juniores exclusivas de 9 buracos
+   também não contam. Cada entrada casa por regex contra o nome do torneio. */
+const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp }> = [
+  { name: "Troféu João Sousa", level: "A", rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i },
+  { name: "Taça do Clube", level: "A", rx: /\bta[cç]a\s+do\s+clube\b/i },
+  { name: "Taça Presidente", level: "A", rx: /\bta[cç]a\s+presidente\b/i },
+  { name: "Torneio da Restauração", level: "A", rx: /\brestaura[cç][aã]o\b/i },
+  { name: "Torneio NOS Empresas", level: "B", rx: /\bnos\s+empresas\b/i },
+  { name: "Torneio Barbeito Madeira", level: "B", rx: /\bbarbeito\b/i },
+  { name: "Torneio de Inverno", level: "C", rx: /\binverno\b/i },
+  { name: "Torneio de Primavera", level: "C", rx: /\bprimavera\b/i },
+  { name: "Torneio de Páscoa", level: "C", rx: /\bp[aá]scoa\b/i },
+  { name: "Torneio de Outono", level: "C", rx: /\boutono\b/i },
+  { name: "Torneio de São Martinho", level: "C", rx: /\bs[aã]o\s+martinho\b/i },
+  { name: "Rali", level: "C", rx: /\brali\b/i },
+  { name: "Summer", level: "C", rx: /\bsummer\b/i },
+];
+
 /* ── A tab ── */
 function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Level }) {
   const [data, setData] = useState<OmJuniorData | null>(null);
@@ -170,7 +191,9 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
     return () => { alive = false; };
   }, []);
 
-  const { sortKey, sortDir, toggleSort } = useSort<"rank" | "name" | "played" | "total" | "here">("rank", "asc", { total: "desc", played: "desc", here: "desc" });
+  // Chaves de ordenação: fixas ("rank"|"name"|"played"|"total") + dinâmicas por
+  // torneio ("ev:{tcode}", ordena pela posição nesse torneio, 1º primeiro).
+  const { sortKey, sortDir, toggleSort } = useSort<string>("rank", "asc", { total: "desc", played: "desc" });
 
   // Esta prova está nos events do JSON? (tcode) → define a DATA "até à qual" se
   // mostra a classificação. Prova passada: contam só as provas com data ≤ a
@@ -178,7 +201,6 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
   // resultados (não está nos events): classificação cumulativa ATUAL.
   const thisEvent = data?.events.find(e => String(e.tcode) === String(tournament.tcode));
   const asOf = thisEvent?.date || null;
-  const scoredFeds = new Set((thisEvent?.juniors ?? []).map(j => j.fed));
 
   // Standings até à data (asOf). `herePts`/`herePos` = o que cada jogador ganhou
   // NESTA prova (0/null se não pontuou aqui).
@@ -195,14 +217,34 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
     return list;
   }, [data, asOf, thisEvent]);
 
+  // Colunas da matriz = torneios que já contam até esta prova (data ≤ asOf),
+  // por ordem de data. Prova futura (asOf null) → todos os já disputados.
+  const eventCols = useMemo(() => {
+    const evs = asOf ? (data?.events ?? []).filter(e => e.date <= asOf) : (data?.events ?? []);
+    return [...evs].sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  }, [data, asOf]);
+
+  // Provas do calendário oficial (regulamento) ainda por contar.
+  const missing = useMemo(
+    () => (data ? OM_CALENDAR.filter(c => !(data.events ?? []).some(e => c.rx.test(e.name))) : []),
+    [data]
+  );
+
   const rows = useMemo(() => {
     const r = [...standings];
     const dir = sortDir === "asc" ? 1 : -1;
+    const posInEvent = (p: typeof standings[number], tc: string) => {
+      const e = p.events.find(x => String(x.tcode) === tc);
+      return e ? e.pos : Infinity; // quem não jogou vai para o fim
+    };
     r.sort((a, b) => {
       if (sortKey === "name") return dir * a.name.localeCompare(b.name);
       if (sortKey === "played") return dir * (a.played - b.played) || a.rank - b.rank;
       if (sortKey === "total") return dir * (a.total - b.total) || a.rank - b.rank;
-      if (sortKey === "here") return dir * (a.herePts - b.herePts) || a.rank - b.rank;
+      if (sortKey.startsWith("ev:")) {
+        const tc = sortKey.slice(3);
+        return dir * (posInEvent(a, tc) - posInEvent(b, tc)) || a.rank - b.rank;
+      }
       return dir * (a.rank - b.rank); // "rank"
     });
     return r;
@@ -286,53 +328,96 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
               ? (thisEvent.nJuniors > 0 ? <> · nesta prova pontuaram {thisEvent.nJuniors} juniores.</> : <> · esta prova não teve juniores a pontuar.</>)
               : <> · esta prova ainda não pontuou (sem resultados).</>}
           </div>
+          {/* Matriz: uma coluna por torneio já disputado (data crescente); a
+              célula é a posição do jogador nesse torneio (+ pontos). A coluna
+              desta prova (se já pontuou) fica realçada. */}
           <div style={{ overflowX: "auto" }}>
             <table className="player-list-table om-rank-table" style={{ fontVariantNumeric: "tabular-nums" }}>
               <thead>
                 <tr>
                   <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
-                  <th style={{ textAlign: "left" }}>Clube</th>
-                  {asOf && <SortableHdr k="here" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Pontos ganhos NESTA prova">Neste torneio</SortableHdr>}
-                  <SortableHdr k="played" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Provas jogadas">Prov.</SortableHdr>
                   <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Pontos</SortableHdr>
-                  <th style={{ textAlign: "left" }}>Detalhe</th>
+                  <SortableHdr k="played" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Provas jogadas">Prov.</SortableHdr>
+                  {eventCols.map(ev => {
+                    const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
+                    return (
+                      <SortableHdr key={ev.tcode} k={`ev:${ev.tcode}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
+                        title={`${ev.name} — ${ev.date.split("-").reverse().join("/")} — ${LEVEL_LABEL[ev.level]}${isHere ? " (esta prova)" : ""}`}
+                        style={{ textAlign: "center", ...(isHere ? { background: "var(--accent-light)" } : {}) }}>
+                        <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15 }}>
+                          <span>{shortEv(ev.name)}</span>
+                          <span className="fs-11 p-muted">({ev.level})</span>
+                        </span>
+                      </SortableHdr>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
                 {rows.map(p => {
                   const isMan = p.fed === MANUEL_FED;
-                  const scoredHere = scoredFeds.has(p.fed);
                   return (
-                    <tr key={p.fed} className={isMan ? "row-manuel" : undefined}
-                      style={scoredHere && !isMan ? { background: "var(--bg-info-subtle)" } : undefined}>
+                    <tr key={p.fed} className={isMan ? "row-manuel" : undefined}>
                       <td style={{ textAlign: "center", fontWeight: 700 }}>{p.rank}</td>
                       <td style={{ textAlign: "left", fontWeight: isMan ? 700 : undefined }}>
                         {p.name}{!p.canWin && <span className="p-muted" title="Não-CGSS: aparece no ranking mas não pode ganhar a OM (regulamento)."> *</span>}
+                        <div className="p-muted fs-11">{p.club}</div>
                       </td>
-                      <td style={{ textAlign: "left" }} className="p-muted fs-12">{p.club}</td>
-                      {asOf && (
-                        <td style={{ textAlign: "center", whiteSpace: "nowrap" }} className="fs-12">
-                          {p.herePos
-                            ? <><b>{p.herePos}º</b> <span style={{ color: "var(--accent)", fontWeight: 700 }}>+{p.herePts}</span></>
-                            : <span className="p-muted">—</span>}
-                        </td>
-                      )}
-                      <td style={{ textAlign: "center" }}>{p.played}</td>
                       <td style={{ textAlign: "center", fontWeight: 700 }}>{p.total}</td>
-                      <td style={{ textAlign: "left" }} className="fs-11 p-muted">
-                        {p.events.map((e, i) => (
-                          <span key={i} title={`${e.name} — ${e.date} — gross ${e.gross}`} style={{ whiteSpace: "nowrap", marginRight: 8 }}>
-                            {shortEv(e.name)} <b>({e.level})</b> {e.pos}º={e.pts}
-                          </span>
-                        ))}
-                      </td>
+                      <td style={{ textAlign: "center" }}>{p.played}</td>
+                      {eventCols.map(ev => {
+                        const e = p.events.find(x => String(x.tcode) === String(ev.tcode));
+                        const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
+                        return (
+                          <td key={ev.tcode} className="fs-12"
+                            style={{ textAlign: "center", whiteSpace: "nowrap", ...(isHere ? { background: "var(--bg-info-subtle)" } : {}) }}
+                            title={e ? `${ev.name}: ${e.pos}º · gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
+                            {e
+                              ? <><b>{e.pos}º</b> <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 700 }}>{e.pts}</span></>
+                              : <span className="p-muted">—</span>}
+                          </td>
+                        );
+                      })}
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
+          {/* Torneios do calendário oficial ainda por contar (13 provas nomeadas
+              no regulamento; a Carnaval foi acrescentada pela Comissão e os
+              juniores exclusivos de 9 buracos não contam). */}
+          {missing.length > 0 && (
+            <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-1)", border: "1px solid var(--border)", borderRadius: 8 }}>
+              <div className="fs-12" style={{ marginBottom: 6 }}>
+                📅 <strong>Torneios em falta</strong> — {missing.length} de {OM_CALENDAR.length} provas nomeadas ainda por contar
+                {" "}({OM_CALENDAR.length - missing.length} já contam):
+              </div>
+              {(["A", "B", "C"] as Level[]).map(lv => {
+                const items = missing.filter(m => m.level === lv);
+                if (!items.length) return null;
+                return (
+                  <div key={lv} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6, marginBottom: 4 }}>
+                    <span className="fs-11 p-muted" style={{ minWidth: 78 }}>{LEVEL_LABEL[lv]}:</span>
+                    {items.map(m => {
+                      const isThis = m.rx.test(tournament.name || "");
+                      return (
+                        <span key={m.name} className="p p-sm"
+                          style={isThis ? { background: "var(--accent-light)", borderColor: "var(--accent)", fontWeight: 700 } : undefined}
+                          title={isThis ? "É esta prova (ainda sem resultados publicados)." : undefined}>
+                          {m.name}{isThis ? " ← esta prova" : ""}
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
+                Além destas, os torneios juniores exclusivos (9 buracos) não contam. A época fecha a 14 Nov 2026 (regra 8).
+              </div>
+            </div>
+          )}
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova por <strong>gross</strong> entre os juniores (empates partilham; sem cartão não pontua).
