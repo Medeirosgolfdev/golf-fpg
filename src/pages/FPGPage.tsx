@@ -1634,6 +1634,13 @@ function Content() {
     //   só aparece uma por (ccode/tcode) na sidebar e nos tabs de escalão.
     const dedupMap = new Map<string, Tournament>();
     const keyOf = (t: Tournament) => (t.ccode || "") + "/" + String(t.tcode || "");
+    // Um torneio FEATURED já jogado cujos resultados vivem em pull-torneios
+    // (ex: Amendoeira World Kids 2026) entra em `jovensTournaments` como
+    // sintético (players:[], só inscrições/draws) E em `tournaments` com os
+    // resultados reais. Sem preferir o que tem resultados, o tab Jovens mostrava
+    // a ficha vazia. `hasResults` distingue os dois.
+    const hasResults = (t: Tournament) =>
+      (t.players || []).some(p => (p.roundScores?.length ?? 0) > 0 || p.grossTotal != null);
     for (const j of jovensTournaments) {
       const k = keyOf(j);
       if (!dedupMap.has(k)) dedupMap.set(k, j);
@@ -1657,7 +1664,18 @@ function Content() {
       if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
       if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
       const k = keyOf(t);
-      if (!dedupMap.has(k)) dedupMap.set(k, t);
+      const existing = dedupMap.get(k);
+      if (!existing) { dedupMap.set(k, t); continue; }
+      // Resultados reais (pull-torneios) suplantam o sintético admissions-only
+      // — herdando as inscrições/draws/links que só o sintético traz.
+      if (hasResults(t) && !hasResults(existing)) {
+        dedupMap.set(k, {
+          ...t,
+          _admissions: (existing as any)._admissions ?? (t as any)._admissions,
+          _draws: (existing as any)._draws ?? (t as any)._draws,
+          extraLinks: (existing as any).extraLinks ?? (t as any).extraLinks,
+        } as Tournament);
+      }
     }
     const combined = [...dedupMap.values()];
 
