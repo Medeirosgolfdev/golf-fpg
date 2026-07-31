@@ -23,6 +23,7 @@ import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 
 interface Props {
   draw: FpgDraw;
@@ -50,9 +51,13 @@ interface Props {
   /** Esconde colunas que não se aplicam à fonte (ex: GolfGenius/internacional
    *  não expõe FED/HCP/Nasc.). Default: mostra todas. */
   hideCols?: { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean };
+  /** Lookup fed/nome → categoria da Ordem de Mérito CGSS (buildOmLookup). Quando
+   *  presente e não-vazio, o draw ganha uma coluna "OM" com a categoria+posição
+   *  de cada inscrito. */
+  omLookup?: Map<string, OmHit>;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross" | "om";
 
 /** Registo de resultado de uma ronda usado para cruzar com o draw. */
 export type DrawResult = { gross: number; toPar: number | null };
@@ -145,14 +150,15 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl, results, hideCols,
+  admissions, fpgUrl, results, hideCols, omLookup,
 }: Props) {
   const hc = hideCols || {};
+  const showOm = !!(omLookup && omLookup.size);
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const fedHcp = useFedHcp();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", { om: "desc" });
 
   // Snapshot temporal de HCP — HCP do evento, capturado das admissões.
   // Usado como fonte autoritativa quando o draw em si não traz `hcp` por jogador.
@@ -415,10 +421,14 @@ export default function DrawTab({
         case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
         case "toPar":  v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
         case "gross":  v = (a.gross || INF) - (b.gross || INF); break;
+        case "om": {
+          const oa = lookupOm(omLookup, a.fed, a.nome), ob = lookupOm(omLookup, b.fed, b.nome);
+          v = (oa ? oa.pts : -1) - (ob ? ob.pts : -1); break;
+        }
       }
       return mult * v;
     });
-  }, [flat, sortKey, sortDir]);
+  }, [flat, sortKey, sortDir, omLookup]);
 
   // Mapa de cor de fundo por GRUPO (cicla uma paleta pastel pela ordem dos
   // flights em `draw.groups`). Identifica visualmente cada grupo mesmo quando
@@ -478,6 +488,12 @@ export default function DrawTab({
         ),
         prefixCells: (
           <>
+            {showOm && (() => {
+              const hit = lookupOm(omLookup, p.fed, p.nome);
+              return <td style={{ padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
+                {hit ? <OmCatBadge hit={hit} /> : <span className="muted">–</span>}
+              </td>;
+            })()}
             {!hc.esc && (
               <td className="lb-esc" style={bStyle}>
                 {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
@@ -547,6 +563,7 @@ export default function DrawTab({
 
   const prefixHeaderCells = (
     <>
+      {showOm && <SortableHdr k="om" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }} title="Categoria na Ordem de Mérito CGSS">OM</SortableHdr>}
       {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>}
