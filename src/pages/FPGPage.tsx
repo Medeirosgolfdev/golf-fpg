@@ -1641,6 +1641,10 @@ function Content() {
     // a ficha vazia. `hasResults` distingue os dois.
     const hasResults = (t: Tournament) =>
       (t.players || []).some(p => (p.roundScores?.length ?? 0) > 0 || p.grossTotal != null);
+    // Nº de rondas com scorecard — entre duas versões REAIS do mesmo torneio
+    // (ex: pull-torneios002 com 2 rondas vs ...006 com 3), ganha a mais completa.
+    const roundCount = (t: Tournament) =>
+      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
     for (const j of jovensTournaments) {
       const k = keyOf(j);
       if (!dedupMap.has(k)) dedupMap.set(k, j);
@@ -1666,9 +1670,10 @@ function Content() {
       const k = keyOf(t);
       const existing = dedupMap.get(k);
       if (!existing) { dedupMap.set(k, t); continue; }
-      // Resultados reais (pull-torneios) suplantam o sintético admissions-only
-      // — herdando as inscrições/draws/links que só o sintético traz.
-      if (hasResults(t) && !hasResults(existing)) {
+      // Resultados reais (pull-torneios) suplantam o sintético admissions-only;
+      // e entre duas versões reais, ganha a MAIS COMPLETA (mais rondas). Em ambos
+      // os casos herda as inscrições/draws/links que só o sintético/versão antiga traz.
+      if ((hasResults(t) && !hasResults(existing)) || roundCount(t) > roundCount(existing)) {
         dedupMap.set(k, {
           ...t,
           _admissions: (existing as any)._admissions ?? (t as any)._admissions,
@@ -1735,9 +1740,17 @@ function Content() {
   const displayList = useMemo(() => {
     const dedupMap = new Map<string, Tournament>();
     const keyOf = (t: Tournament) => (t.ccode || "?") + "/" + String(t.tcode ?? "?");
+    // Nº de rondas com scorecard de um torneio — para escolher a versão MAIS
+    // COMPLETA quando o mesmo (ccode/tcode) existe em 2 ficheiros pull-torneios.
+    // ⚠ Aconteceu com o Amendoeira World Kids 2026: um scrape parcial (2 rondas)
+    // ficou em pull-torneios002.json e os finais (3 rondas) em ...006.json; como
+    // o 002 carrega primeiro, a versão de 2 rondas ganhava e a R3 saía vazia.
+    const roundCount = (t: Tournament) =>
+      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
     for (const t of tournaments) {
       const k = keyOf(t);
-      if (!dedupMap.has(k)) dedupMap.set(k, t);
+      const ex = dedupMap.get(k);
+      if (!ex || roundCount(t) > roundCount(ex)) dedupMap.set(k, t);
     }
     for (const j of jovensTournaments) {
       const k = keyOf(j);
