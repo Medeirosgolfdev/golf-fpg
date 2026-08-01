@@ -64,6 +64,20 @@ const ADULT_RANKINGS = [
 ];
 const rankingUrl = code => `https://scoring.datagolf.pt/pt/rankings_classif.aspx?ccode=${CLUB}&ranking=${code}`;
 
+/* ── Provas OM já DISPUTADAS mas ainda NÃO lançadas nas OMs adultas oficiais ──
+ * O build deriva a lista de provas (e o nível) das OMs adultas. Quando uma prova
+ * acaba de ser jogada, o clube ainda não a lançou lá — mas os resultados já
+ * existem no scoring. Estas entradas incluem-na JÁ, com o nível pelo regulamento
+ * (a mesma tabela que a UI usa em OM_LEVELS/OM_CALENDAR, fpgOmRanking.tsx). Só é
+ * preciso {tcode, level}: nome/data/campo vêm da própria TournamentsLST por
+ * tcode. Assim que a prova entrar nas OMs adultas, o passo 2 mapeia o MESMO
+ * tcode e o guard de dedup evita duplicar (a versão derivada ganha). Remover a
+ * entrada aqui é então opcional (o dedup trata; fica só como documentação).
+ *   RALI 2026 (007/11050) = Nível C (regulamento). */
+const PENDING_EVENTS = [
+  { tcode: "11050", level: "C" },
+];
+
 /* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
 const PTS = {
   A: { 1:25,2:20,3:18,4:14,5:13,6:10,7:9,8:8,9:7,10:6 },
@@ -249,6 +263,22 @@ async function tournamentsLST(startIndex) {
   const playable = events.filter(e => e.tcode);
   console.log(`[om-junior] ${playable.length}/${events.length} provas mapeadas a tcode real.`);
 
+  // 2b. Juntar as provas PENDENTES (já jogadas, ainda não nas OMs adultas).
+  // Metadados vêm da TournamentsLST por tcode; nível pelo regulamento. Dedup por
+  // tcode: se o passo 2 já mapeou esta prova (= já entrou na OM adulta), salta-se.
+  for (const pe of PENDING_EVENTS) {
+    if (playable.some(e => String(e.tcode) === String(pe.tcode))) continue;
+    const t = tourns.find(x => String(x.code) === String(pe.tcode));
+    if (!t) { console.warn(`[om-junior] pendente t${pe.tcode}: não está na TournamentsLST(${CLUB}) — ignorada`); continue; }
+    playable.push({
+      desc: tName(t), date: isoDate(t.started_at), level: pe.level,
+      tcode: String(pe.tcode), ccode: String(t.club_code || CLUB).padStart(3, "0"),
+      course: t.course_description || null, pending: true,
+    });
+    console.log(`[om-junior] + prova pendente (ainda não na OM adulta): "${tName(t)}" [${pe.level}] t${pe.tcode} ${isoDate(t.started_at)}`);
+  }
+  playable.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+
   // 3. Para cada prova: campo → juniores → posição por gross → pontos.
   const players = new Map(); // fed → registo
   for (const ev of playable) {
@@ -304,7 +334,7 @@ async function tournamentsLST(startIndex) {
     omMembers,     // fed → categoria OM de TODOS os sócios CGSS (dá o pill do escalão mesmo sem pontos)
     eligibleCount: roster.length,
     eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
-    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [] })),
+    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
     ranking,
   };
 
