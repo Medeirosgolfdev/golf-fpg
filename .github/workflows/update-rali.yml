@@ -1,8 +1,10 @@
 name: Resultados Torneio CGSS RALI 2026
 
-# Publica os resultados do "Torneio CGSS RALI 2026" (Santo da Serra, ccode 007)
-# assim que a FPG os publicar no scoring.datagolf.pt. Substitui a entrada
-# só-draw (tcode placeholder 90071) pelos resultados reais.
+# Publica os resultados do "Torneio CGSS RALI 2026" (Santo da Serra, ccode 007,
+# tcode REAL fixo 11050) assim que a FPG os publicar. Vai directo às
+# classificações (SEM TournamentsLST) e tenta os dois hosts gémeos
+# (scoring.datagolf.pt e scoring.fpg.pt) até um devolver resultados. Substitui a
+# entrada só-draw (tcode placeholder 90071) pelos resultados reais.
 #
 # Corre:
 #  - Automaticamente a 1 de Agosto (15:00/17:00/19:00 UTC = 16:00/18:00/20:00
@@ -15,12 +17,14 @@ name: Resultados Torneio CGSS RALI 2026
 #   removido. Em anos futuros a cron dispara na mesma mas sai sempre exit 2 (o
 #   script está fixo à data 2026-08-01), por isso não faz mal deixá-lo.
 #
-# Requer o GitHub Secret DATAGOLF_SCORING_COOKIES (o mesmo do update-classif).
+# Requer os GitHub Secrets DATAGOLF_SCORING_COOKIES (scoring.datagolf.pt, o mesmo
+# do update-classif) e FPG_ADMISSIONS_COOKIES (scoring.fpg.pt, o mesmo do
+# update-fpg-admissions-draws). Basta um deles autenticar para haver resultados.
 on:
   workflow_dispatch:
     inputs:
       tcode:
-        description: 'tcode REAL do RALI 2026 (opcional; vazio = descoberta automática por nome+data).'
+        description: 'tcode do RALI 2026 (opcional; vazio = usa o tcode fixo conhecido 11050).'
         required: false
         default: ''
   schedule:
@@ -71,6 +75,7 @@ jobs:
           exit 0
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+          FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
 
       - name: Commit e push (se houve resultados)
         if: steps.scrape.outputs.exit_code == '0'
