@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-07-31T20:58:07.054Z",
+  "geradoEm": "2026-08-01T20:44:23.191Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -616,35 +616,47 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-90071",
+      "torneioId": "007-11050",
       "torneioNome": "Torneio CGSS RALI 2026",
       "data": "2026-08-01",
       "ronda": 1,
       "teeTime": "09:30",
       "startHole": 10,
       "campo": "Santo da Serra - Machico-Desertas",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
       "companheiros": [
         {
           "nome": "Marcelo Abreu de Freitas",
           "fed": "43406",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 91,
+            "toPar": 19
+          }
         },
         {
           "nome": "Manuel Medeiros",
           "fed": "54907",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 98,
+            "toPar": 26
+          }
         },
         {
           "nome": "Lara Vieira",
           "fed": "2218",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
         }
       ]
     },

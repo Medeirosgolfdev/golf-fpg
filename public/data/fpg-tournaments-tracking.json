@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-07-31T20:58:09.664Z",
+  "lastUpdated": "2026-08-01T20:44:24.379Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-07-31",
+  "today": "2026-08-01",
   "summary": {
     "total": 1731,
-    "complete": 780,
-    "in_progress": 5,
-    "future": 9,
+    "complete": 784,
+    "in_progress": 1,
+    "future": 8,
     "stale": 6,
     "excluded": 930,
     "missing_admissions": 0,
     "missing_classif": 0,
-    "missing_scorecards": 0,
+    "missing_scorecards": 1,
     "missing_draws": 1,
     "unknown": 0
   },
@@ -340,7 +340,7 @@
     },
     {
       "ccode": "007",
-      "tcode": "90071",
+      "tcode": "11050",
       "name": "Torneio CGSS RALI 2026",
       "date": "2026-08-01",
       "rounds": 1,
@@ -350,14 +350,14 @@
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
       "has_classif": true,
-      "player_count": 71,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
+      "player_count": 74,
+      "players_with_scorecards": 71,
+      "players_with_full_scorecards": 71,
       "scorecards_source": "pull-torneios001.json",
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
-      "has_manuel": false,
-      "status": "future"
+      "scorecards_ratio": 0.959,
+      "full_scorecards_ratio": 0.959,
+      "has_manuel": true,
+      "status": "in_progress"
     },
     {
       "ccode": "179",
@@ -378,7 +378,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 0.917,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "179",
@@ -399,7 +399,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "179",
@@ -420,7 +420,7 @@
       "scorecards_ratio": 0.944,
       "full_scorecards_ratio": 0.944,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "179",
@@ -441,7 +441,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "179",
@@ -462,7 +462,7 @@
       "scorecards_ratio": 0.333,
       "full_scorecards_ratio": 0.333,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_scorecards"
     },
     {
       "ccode": "000",
