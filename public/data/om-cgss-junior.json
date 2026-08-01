@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-31T16:39:32.519Z",
+  "generated": "2026-08-01T17:47:37.653Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
@@ -1777,9 +1777,105 @@
           "pts": 16
         }
       ]
+    },
+    {
+      "tcode": "11050",
+      "ccode": "007",
+      "name": "Torneio CGSS RALI 2026",
+      "date": "2026-07-31",
+      "level": "C",
+      "course": "Santo da Serra - Machico-Desertas",
+      "nJuniors": 5,
+      "juniors": [
+        {
+          "fed": "52884",
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "gross": 78,
+          "pos": 1,
+          "pts": 15
+        },
+        {
+          "fed": "52393",
+          "name": "Mateus Penucho",
+          "club": "Santo da Serra",
+          "gross": 81,
+          "pos": 2,
+          "pts": 12
+        },
+        {
+          "fed": "41108",
+          "name": "Martim Lima",
+          "club": "Santo da Serra",
+          "gross": 90,
+          "pos": 3,
+          "pts": 10
+        },
+        {
+          "fed": "50398",
+          "name": "Gonçalo Gouveia",
+          "club": "Santo da Serra",
+          "gross": 93,
+          "pos": 4,
+          "pts": 8
+        },
+        {
+          "fed": "41124",
+          "name": "Manuel Gouveia",
+          "club": "Santo da Serra",
+          "gross": 97,
+          "pos": 5,
+          "pts": 7
+        }
+      ],
+      "pending": true
     }
   ],
   "ranking": [
+    {
+      "fed": "52884",
+      "name": "Manuel Goulartt Medeiros",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10983",
+          "ccode": "007",
+          "name": "Torneio de Inverno CGSS",
+          "date": "2026-01-17",
+          "level": "C",
+          "pos": 1,
+          "gross": 92,
+          "pts": 15
+        },
+        {
+          "tcode": "10986",
+          "ccode": "007",
+          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+          "date": "2026-01-24",
+          "level": "A",
+          "pos": 1,
+          "gross": 82,
+          "pts": 25
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-07-31",
+          "level": "C",
+          "pos": 1,
+          "gross": 78,
+          "pts": 15
+        }
+      ],
+      "total": 55,
+      "played": 3,
+      "bestDrop3": 0,
+      "lastResult": 1,
+      "rank": 1
+    },
     {
       "fed": "40990",
       "name": "Maria Câmara",
@@ -1811,42 +1907,8 @@
       "total": 40,
       "played": 2,
       "bestDrop3": 0,
-      "lastResult": 1,
-      "rank": 1
-    },
-    {
-      "fed": "52884",
-      "name": "Manuel Goulartt Medeiros",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10983",
-          "ccode": "007",
-          "name": "Torneio de Inverno CGSS",
-          "date": "2026-01-17",
-          "level": "C",
-          "pos": 1,
-          "gross": 92,
-          "pts": 15
-        },
-        {
-          "tcode": "10986",
-          "ccode": "007",
-          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
-          "date": "2026-01-24",
-          "level": "A",
-          "pos": 1,
-          "gross": 82,
-          "pts": 25
-        }
-      ],
-      "total": 40,
-      "played": 2,
-      "bestDrop3": 0,
       "lastResult": null,
-      "rank": 1
+      "rank": 2
     },
     {
       "fed": "41124",
@@ -1874,13 +1936,91 @@
           "pos": 2,
           "gross": 86,
           "pts": 12
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-07-31",
+          "level": "C",
+          "pos": 5,
+          "gross": 97,
+          "pts": 7
         }
       ],
-      "total": 30,
+      "total": 37,
+      "played": 3,
+      "bestDrop3": 0,
+      "lastResult": 5,
+      "rank": 3
+    },
+    {
+      "fed": "41108",
+      "name": "Martim Lima",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10994",
+          "ccode": "007",
+          "name": "Torneio de Carnaval CGSS 2026",
+          "date": "2026-02-14",
+          "level": "C",
+          "pos": 1,
+          "gross": 83,
+          "pts": 15
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-07-31",
+          "level": "C",
+          "pos": 3,
+          "gross": 90,
+          "pts": 10
+        }
+      ],
+      "total": 25,
       "played": 2,
       "bestDrop3": 0,
-      "lastResult": null,
-      "rank": 3
+      "lastResult": 3,
+      "rank": 4
+    },
+    {
+      "fed": "52393",
+      "name": "Mateus Penucho",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10983",
+          "ccode": "007",
+          "name": "Torneio de Inverno CGSS",
+          "date": "2026-01-17",
+          "level": "C",
+          "pos": 2,
+          "gross": 99,
+          "pts": 12
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-07-31",
+          "level": "C",
+          "pos": 2,
+          "gross": 81,
+          "pts": 12
+        }
+      ],
+      "total": 24,
+      "played": 2,
+      "bestDrop3": 0,
+      "lastResult": 2,
+      "rank": 5
     },
     {
       "fed": "41130",
@@ -1903,56 +2043,32 @@
       "total": 16,
       "played": 1,
       "bestDrop3": 0,
-      "lastResult": 2,
-      "rank": 4
-    },
-    {
-      "fed": "41108",
-      "name": "Martim Lima",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10994",
-          "ccode": "007",
-          "name": "Torneio de Carnaval CGSS 2026",
-          "date": "2026-02-14",
-          "level": "C",
-          "pos": 1,
-          "gross": 83,
-          "pts": 15
-        }
-      ],
-      "total": 15,
-      "played": 1,
-      "bestDrop3": 0,
-      "lastResult": null,
-      "rank": 5
-    },
-    {
-      "fed": "52393",
-      "name": "Mateus Penucho",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10983",
-          "ccode": "007",
-          "name": "Torneio de Inverno CGSS",
-          "date": "2026-01-17",
-          "level": "C",
-          "pos": 2,
-          "gross": 99,
-          "pts": 12
-        }
-      ],
-      "total": 12,
-      "played": 1,
-      "bestDrop3": 0,
       "lastResult": null,
       "rank": 6
+    },
+    {
+      "fed": "50398",
+      "name": "Gonçalo Gouveia",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-07-31",
+          "level": "C",
+          "pos": 4,
+          "gross": 93,
+          "pts": 8
+        }
+      ],
+      "total": 8,
+      "played": 1,
+      "bestDrop3": 0,
+      "lastResult": 4,
+      "rank": 7
     }
   ]
 }
