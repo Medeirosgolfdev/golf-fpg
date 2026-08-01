@@ -20,6 +20,10 @@
  *      "sítio": ccode 007 → tab Santo da Serra). Remove duplicados.
  *   4. Re-chaveia o draw em cgss-draws-manual.json de 90071 → tcode real, para
  *      a tab "Draw R1" continuar a aparecer ao lado dos resultados.
+ *   5. Re-chaveia a entrada em fpg-admissions-draws.json de 90071 → tcode real
+ *      (a "casca" que fazia o torneio aparecer na sidebar). Sem isto,
+ *      /FPG/torneio/007-90071 continuava a resolver como órfão só-draw, em vez
+ *      de tudo casar em /FPG/torneio/007-{real}.
  *
  * PROTECÇÃO DE DADOS: nunca grava se a resposta não for 200, se o corpo contiver
  * "Server Error", ou se o parsing devolver 0 jogadores com score. Um ficheiro
@@ -47,6 +51,7 @@ const { loadCookieHeader } = require("./lib/cookies");
 const REPO = path.resolve(__dirname, "..");
 const PULL = path.join(REPO, "public", "data", "pull-torneios001.json");
 const CGSS = path.join(REPO, "public", "data", "cgss-draws-manual.json");
+const ADM = path.join(REPO, "public", "data", "fpg-admissions-draws.json");
 
 const CCODE = "007";
 const PLACEHOLDER_TCODE = "90071";
@@ -406,6 +411,25 @@ function writeAtomic(file, obj) {
     }
   } catch (e) {
     console.warn(`[rali] aviso: falhou re-chavear cgss-draws-manual.json: ${e.message}`);
+  }
+
+  // 5) re-chavear a "casca" de admissions/draws (a entrada que faz o torneio
+  //    aparecer na sidebar) 90071 → tcode real. Sem isto, /FPG/torneio/007-90071
+  //    continuava a resolver como órfão só-draw, ao lado do 007-{real} com
+  //    resultados. Re-chavear (em vez de apagar) mantém o padrão dos RALI
+  //    anteriores (10777/10921), que têm a casca no seu tcode real.
+  try {
+    const adm = JSON.parse(fs.readFileSync(ADM, "utf8"));
+    const entry = (adm.tournaments || []).find(t => String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER_TCODE);
+    if (entry) {
+      adm.tournaments = adm.tournaments.filter(t => !(String(t.ccode) === CCODE && String(t.tcode) === TCODE));
+      entry.tcode = TCODE;
+      if (typeof adm.total === "number") adm.total = adm.tournaments.length;
+      writeAtomic(ADM, adm);
+      console.log(`[rali] fpg-admissions-draws.json: casca re-chaveada ${PLACEHOLDER_TCODE} → ${TCODE}.`);
+    }
+  } catch (e) {
+    console.warn(`[rali] aviso: falhou re-chavear fpg-admissions-draws.json: ${e.message}`);
   }
 
   console.log("[rali] ✓ Concluído. Verificar em /FPG (filtro Santo da Serra) e commitar public/data/.");
