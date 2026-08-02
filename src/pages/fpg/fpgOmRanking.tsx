@@ -421,7 +421,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova por <strong>gross</strong> entre os juniores (empates partilham; sem cartão não pontua).
-            Provisório — no fecho da época (3 Nov) descontam-se as 3 piores pontuações (regra 7.1); desempate no 1º pelo
+            Provisório — no fecho da época (14 Nov) descontam-se as 3 piores pontuações (regra 7.1); desempate no 1º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
           </p>
