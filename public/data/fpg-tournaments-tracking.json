@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-08-01T20:44:24.379Z",
+  "lastUpdated": "2026-08-02T04:31:35.124Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-08-01",
+  "today": "2026-08-02",
   "summary": {
     "total": 1731,
-    "complete": 784,
-    "in_progress": 1,
+    "complete": 785,
+    "in_progress": 0,
     "future": 8,
     "stale": 6,
     "excluded": 930,
@@ -357,7 +357,7 @@
       "scorecards_ratio": 0.959,
       "full_scorecards_ratio": 0.959,
       "has_manuel": true,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "179",
@@ -458,7 +458,7 @@
       "player_count": 3,
       "players_with_scorecards": 1,
       "players_with_full_scorecards": 1,
-      "scorecards_source": "pull-torneios006.json",
+      "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 0.333,
       "full_scorecards_ratio": 0.333,
       "has_manuel": false,
