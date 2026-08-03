@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-30T18:07:20.244Z",
+  "generatedAt": "2026-08-03T07:12:33.574Z",
   "source": "/competiciones-comite",
   "comite": null,
   "year": null,
@@ -7,7 +7,7 @@
   "club": null,
   "provincia": null,
   "filter": null,
-  "total": 1736,
+  "total": 1748,
   "tours": [
     {
       "tourId": 67162,
@@ -62,6 +62,14 @@
       "name": "TORNEO ROSCO DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
+      "clubCode": "ROSC",
+      "year": 2026
+    },
+    {
+      "tourId": 67191,
+      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
+      "date": "03 ene 2026",
+      "rounds": null,
       "clubCode": "REYES",
       "year": 2026
     },
@@ -76,14 +84,6 @@
     {
       "tourId": 67080,
       "name": "TORNEO DE REYES \"PADRES E HIJOS\" 9 HOYOS",
-      "date": "03 ene 2026",
-      "rounds": null,
-      "clubCode": "ROSC",
-      "year": 2026
-    },
-    {
-      "tourId": 67191,
-      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
       "clubCode": "LOS",
@@ -3586,16 +3586,16 @@
       "year": 2026
     },
     {
-      "tourId": 69226,
-      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
+      "tourId": 69356,
+      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": "ZONAL",
       "year": 2026
     },
     {
-      "tourId": 69356,
-      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
+      "tourId": 69226,
+      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": null,
@@ -6418,16 +6418,16 @@
       "year": 2026
     },
     {
-      "tourId": 70668,
-      "name": "torneo privado somontes",
+      "tourId": 67923,
+      "name": "IV Torneo RKN Damas y Caballeros · Turno de Mañana 9:30 · Turno de Tarde 12:30",
       "date": "09 may 2026",
       "rounds": null,
-      "clubCode": "RKN",
+      "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 67923,
-      "name": "IV Torneo RKN Damas y Caballeros · Turno de Mañana 9:30 · Turno de Tarde 12:30",
+      "tourId": 70668,
+      "name": "torneo privado somontes",
       "date": "09 may 2026",
       "rounds": null,
       "clubCode": null,
@@ -7446,20 +7446,20 @@
       "name": "IV Torneo RKN Alumnos · Turno de Mañana 9:30 · Turno de Tarde 12:30",
       "date": "23 may 2026",
       "rounds": null,
-      "clubCode": "ZOF",
-      "year": 2026
-    },
-    {
-      "tourId": 70907,
-      "name": "VI Torneo ZOF - Sábado 23 Mayo 2026 (Grupo privado)",
-      "date": "23 may 2026",
-      "rounds": null,
       "clubCode": null,
       "year": 2026
     },
     {
       "tourId": 70561,
       "name": "5ª Prueba Ranking y Series Roll Up Sherry Golf 2026 (Alternativa Sábado)",
+      "date": "23 may 2026",
+      "rounds": null,
+      "clubCode": "ZOF",
+      "year": 2026
+    },
+    {
+      "tourId": 70907,
+      "name": "VI Torneo ZOF - Sábado 23 Mayo 2026 (Grupo privado)",
       "date": "23 may 2026",
       "rounds": null,
       "clubCode": "LOS",
@@ -8514,16 +8514,16 @@
       "year": 2026
     },
     {
-      "tourId": 71489,
-      "name": "Torneo GOLFEANDO Parejas Four Ball - 10 Junio 2026 (Grupo privado)",
+      "tourId": 71308,
+      "name": "4ª Serie Roll Up Sherry Golf 2026",
       "date": "10 jun 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
     },
     {
-      "tourId": 71308,
-      "name": "4ª Serie Roll Up Sherry Golf 2026",
+      "tourId": 71489,
+      "name": "Torneo GOLFEANDO Parejas Four Ball - 10 Junio 2026 (Grupo privado)",
       "date": "10 jun 2026",
       "rounds": null,
       "clubCode": "RACE",
@@ -11331,7 +11331,15 @@
     },
     {
       "tourId": 72682,
-      "name": "Circuito Corporate 2026 (TIRO 8:30H)",
+      "name": "Circuito Corporate 2026 clasificaciones (TIRO 8:30H y tiro 15:30)",
+      "date": "01 ago 2026",
+      "rounds": null,
+      "clubCode": "LOS",
+      "year": 2026
+    },
+    {
+      "tourId": 72700,
+      "name": "LOS GALLOS 01/08",
       "date": "01 ago 2026",
       "rounds": null,
       "clubCode": "TIRO",
@@ -11390,6 +11398,22 @@
       "name": "4º Gran Premio Volvo Surauto 01-08-26",
       "date": "01 ago 2026",
       "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72695,
+      "name": "Sat Comp 01/08",
+      "date": "01 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72699,
+      "name": "AMIGOSMIRAFLORES",
+      "date": "01 ago 2026",
+      "rounds": null,
       "clubCode": "RACE",
       "year": 2026
     },
@@ -11422,7 +11446,7 @@
       "name": "I Open Srixon/Cleveland by Alfredo García Heredia",
       "date": "02 ago 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "RACE",
       "year": 2026
     },
     {
@@ -11438,12 +11462,36 @@
       "name": "VI Gross Open (Grupo Privado)",
       "date": "03 ago 2026",
       "rounds": null,
-      "clubCode": "CADIZ",
+      "clubCode": "III",
       "year": 2026
     },
     {
       "tourId": 71417,
-      "name": "II INVITATIONAL JJ CADIZ CLASSIC GASTRONOMY GOLF TOURNAMENT (TORNEO PRIVADO)",
+      "name": "III INVITATIONAL JJ CADIZ CLASSIC GASTRONOMY GOLF TOURNAMENT (TORNEO PRIVADO)",
+      "date": "03 ago 2026",
+      "rounds": null,
+      "clubCode": "VOBS",
+      "year": 2026
+    },
+    {
+      "tourId": 72744,
+      "name": "VOBS COMPETITION",
+      "date": "03 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72740,
+      "name": "RS CORPORATE FINANCE",
+      "date": "03 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72741,
+      "name": "PEÑA EL GATILLO",
       "date": "03 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11490,8 +11538,40 @@
       "year": 2026
     },
     {
+      "tourId": 72742,
+      "name": "IX Torneo Escafandra (Equipos) - Grupo Privado",
+      "date": "04 ago 2026",
+      "rounds": null,
+      "clubCode": "XXIV",
+      "year": 2026
+    },
+    {
+      "tourId": 72709,
+      "name": "XXIV TORNEO MARTES DE AGOSTO (PRIVADO)",
+      "date": "04 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72745,
+      "name": "MensDay 04/08",
+      "date": "04 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
       "tourId": 72461,
       "name": "VI Open de Golf Playa Canalla Miércoles Tiro 15:30 (Grupo Privado)",
+      "date": "05 ago 2026",
+      "rounds": null,
+      "clubCode": "SIGG",
+      "year": 2026
+    },
+    {
+      "tourId": 72725,
+      "name": "Sherry International Golf Group (SIGG) - Viernes 5 Agosto 2026 (Grupo privado)",
       "date": "05 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11510,12 +11590,28 @@
       "name": "VI Open de Golf Playa Canalla Jueves Tiro 9:00 (Grupo Privado)",
       "date": "06 ago 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "GUSTO",
       "year": 2026
     },
     {
       "tourId": 72485,
       "name": "CIRCUITO GASTRONOMICO GUSTO DEL SUR",
+      "date": "06 ago 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72701,
+      "name": "LIGA EXPRESS JORNADA 7 (MAÑANA 09:30)",
+      "date": "06 ago 2026",
+      "rounds": null,
+      "clubCode": "LIGA",
+      "year": 2026
+    },
+    {
+      "tourId": 72704,
+      "name": "LIGA EXPRESS JORNADA 7 (TARDE 18:00)",
       "date": "06 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11540,6 +11636,14 @@
     {
       "tourId": 72634,
       "name": "Torneo Torresalada 2026 (Grupo privado)",
+      "date": "07 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72737,
+      "name": "summer mixed interclub 2026",
       "date": "07 ago 2026",
       "rounds": null,
       "clubCode": "COPA",
@@ -11686,12 +11790,20 @@
       "name": "XXIII Murrys Cup (Grupo Privado)",
       "date": "13 ago 2026",
       "rounds": null,
-      "clubCode": null,
+      "clubCode": "PRIV",
       "year": 2026
     },
     {
       "tourId": 72343,
       "name": "TORNEO VINOLENTO (TORNEO PRIVADO)",
+      "date": "13 ago 2026",
+      "rounds": null,
+      "clubCode": "TOUR",
+      "year": 2026
+    },
+    {
+      "tourId": 72726,
+      "name": "TOUR DE VERANO HOLIDAY GOLF",
       "date": "13 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -11994,35 +12106,11 @@
       "year": 2026
     },
     {
-      "tourId": 70376,
-      "name": "Skull Cup Chapter IV. Jueves 3/9/2026. Tiro 15:30",
-      "date": "03 sep 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
       "tourId": 61192,
       "name": "Match Play Sub 16",
       "date": "04 sep 2026",
       "rounds": 3,
       "clubCode": "SACE",
-      "year": 2026
-    },
-    {
-      "tourId": 70377,
-      "name": "Skull Cup Chapter IV. Viernes 4/9/2026. Tiro 9:00",
-      "date": "04 sep 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 70378,
-      "name": "Skull Cup Chapter IV. Viernes 4/9/2026. Tiro 15:30",
-      "date": "04 sep 2026",
-      "rounds": null,
-      "clubCode": null,
       "year": 2026
     },
     {
@@ -12047,14 +12135,6 @@
       "date": "05 sep 2026",
       "rounds": 2,
       "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 70379,
-      "name": "Skull Cup Chapter IV. Sábado 5/9/2026. Tiro 9:00",
-      "date": "05 sep 2026",
-      "rounds": null,
-      "clubCode": "FINAL",
       "year": 2026
     },
     {
@@ -12179,7 +12259,7 @@
     },
     {
       "tourId": 68251,
-      "name": "Torneo Fun&Golf \"Golf Park\"",
+      "name": "Torneo Fun&Golf \"Golf Park\" (Tiro 10:00)",
       "date": "12 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -12191,6 +12271,22 @@
       "date": "12 sep 2026",
       "rounds": 2,
       "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72706,
+      "name": "Torneo Fun&Golf \"Golf Park\" (Tiro 12:00)",
+      "date": "12 sep 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 72707,
+      "name": "Torneo Fun&Golf \"Golf Park\" (Tiro 14:00)",
+      "date": "12 sep 2026",
+      "rounds": null,
+      "clubCode": "RKN",
       "year": 2026
     },
     {
