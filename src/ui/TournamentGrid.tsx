@@ -11,6 +11,7 @@ import { useSort } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
+import { useCompareSelection } from "./useCompareSelection";
 import EmptyState from "./EmptyState";
 import { escPillCls } from "../utils/playerUtils";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
@@ -171,7 +172,15 @@ function TournamentGrid({
 
   const shortDate = shortDateSlash;
 
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
+   * A posição mostrada vem do ranking COMPLETO (não renumera ao filtrar). */
+  const compareSel = useCompareSelection<string>();
+  const compareRows = compareSel.filter(sorted, (p) => p.fed);
+  const gridPos = new Map(sorted.map((p, i) => [p.fed, i + 1]));
+
   return (
+    <>
+    {compareSel.bar}
     <CrossSeasonTable
       identityHeaders={
         <>
@@ -346,7 +355,7 @@ function TournamentGrid({
         </>
       }
     >
-      {sorted.map((p, idx) => {
+      {compareRows.map((p) => {
         const escalao = escalaoDeRow(p);
         const cls = escPillCls(escalao);
         return (
@@ -355,7 +364,10 @@ function TournamentGrid({
             className={"pointer" + (isManuel(p) ? " row-manuel" : "")}
             onClick={() => onPlayerClick(p.fed)}
           >
-            <td className="cs-pos sticky-col-0">{idx + 1}</td>
+            <td className="cs-pos sticky-col-0" style={{ whiteSpace: "nowrap" }}>
+              {compareSel.checkbox(p.fed)}
+              {gridPos.get(p.fed)}
+            </td>
             <td className="cs-name sticky-col-1">
               <TournPName
                 name={p.name}
@@ -424,6 +436,7 @@ function TournamentGrid({
         </tr>
       )}
     </CrossSeasonTable>
+    </>
   );
 }
 

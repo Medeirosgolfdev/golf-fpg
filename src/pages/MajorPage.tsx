@@ -23,7 +23,8 @@ import MatchplayView from "../ui/circuit/MatchplayView";
 import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
-import { gf, normPaisDisplay } from "../utils/flagUtils";
+import { gf, normPaisDisplay, isPtCountry } from "../utils/flagUtils";
+import { normName } from "../utils/normName";
 import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "./FPGPage";
 import type { FpgDraw } from "../data/nacional2026Loader";
 import { TournamentDetail } from "./fpg/TournamentDetail";
@@ -278,7 +279,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string): FPGTour
       par,
       roundScores: rounds,
       _roundsPlayed: rounds.length || p.roundGross.length,
-      _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
+      _isPortuguese: isPtCountry(p.country),
     } as FPGPlayer;
   });
   return { name, tcode: `job-${name}`, date: "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
@@ -325,17 +326,29 @@ const FM_DRAW_HIDE_COLS = { esc: true, fed: true, hcp: true, tee: true, nasc: tr
  *  consome via `tournament._draws`. Preenche `clube` com o país do jogador
  *  (cruzando o nome com o leaderboard), já que o tee sheet só traz o nome. */
 function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlayer[]): Record<string, FpgDraw> {
-  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
+  // normName partilhado (tira diacríticos): tee sheet e leaderboard divergem na
+  // grafia — com um lowercase simples os acentos falhavam o match exactamente
+  // nos nomes PT ("João" no leaderboard vs "Joao" no tee sheet).
+  const norm = normName;
   const countryByName = new Map<string, string>();
+  const ptByName = new Set<string>();
   for (const p of players) {
-    if (p.name && p.country) countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
+    if (!p.name || !p.country) continue;
+    countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
+    // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
+    if (isPtCountry(p.country)) ptByName.add(norm(p.name));
   }
   return Object.fromEntries(Object.entries(draws).map(([rn, info]) => [rn, {
     groups: (info.groups || []).map((g) => ({
       teeTime: g.time || "",
       startHole: g.startHole ?? null,
       tee: null,
-      players: g.players.map((p) => ({ nome: p.name, clube: countryByName.get(norm(p.name)) ?? null, tee: p.tee ?? null })),
+      players: g.players.map((p) => ({
+        nome: p.name,
+        clube: countryByName.get(norm(p.name)) ?? null,
+        tee: p.tee ?? null,
+        ...(ptByName.has(norm(p.name)) ? { isPortuguese: true } : {}),
+      })),
     })),
   } as FpgDraw]));
 }
@@ -420,7 +433,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       playerCount: all.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0)).length,
       divisionCount: divisions.length,
       hasManuel: all.some((p) => isM(p.name)),
-      hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),
+      hasPt: all.some((p) => isPtCountry(p.country) || isM(p.name)),
       divisions,
     };
   });
@@ -489,7 +502,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       playerCount: all.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0)).length,
       divisionCount: divisions.length,
       hasManuel: all.some((p) => isM(p.name)),
-      hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),
+      hasPt: all.some((p) => isPtCountry(p.country) || isM(p.name)),
       divisions,
     };
   });
@@ -526,7 +539,7 @@ function buildJobEntries(files: JobFile[]): CircuitEntry[] {
       playerCount: all.filter((p) => p.total != null).length,
       divisionCount: divisions.length,
       hasManuel: all.some((p) => isM(p.name)),
-      hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),
+      hasPt: all.some((p) => isPtCountry(p.country) || isM(p.name)),
       divisions,
     };
   });

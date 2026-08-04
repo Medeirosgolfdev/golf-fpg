@@ -320,7 +320,11 @@ async function scrapeLeaderboard(v2tid, opts = {}) {
     return pa - pb || (a.total ?? 999) - (b.total ?? 999);
   });
   const year = parseInt((evRounds[0]?.date || '').slice(0, 4), 10) || null;
-  return { name: ev.name || `FSGA ${v2tid}`, year, nRounds: evRounds.length, players };
+  // Datas das rondas (ISO) — alimentam o startDate/endDate do JobFile, que o
+  // catálogo MAJOR prefere a derivar das voltas dos jogadores (num evento por
+  // começar não há voltas nenhumas e o torneio ficava SEM data na sidebar).
+  const roundDates = evRounds.map((r) => r.date).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d || ''));
+  return { name: ev.name || `FSGA ${v2tid}`, year, nRounds: evRounds.length, players, roundDates };
 }
 
 // ─── Scrape de UMA divisão (v2tid) ──────────────────────────────────────────
@@ -418,7 +422,7 @@ async function scrapeDivision(v2tid, label, opts = {}) {
     meters: null, si: null, teeName: null,   // sem leagueId → sem metros/SI
     players: lb.players,
   };
-  return { division, name: lb.name, year: lb.year, courseNames: [...courseNames] };
+  return { division, name: lb.name, year: lb.year, courseNames: [...courseNames], roundDates: lb.roundDates || [] };
 }
 
 // ─── Scrape completo de uma edição (várias divisões) ────────────────────────
@@ -428,17 +432,23 @@ async function scrapeEdition(ed, opts = {}) {
   console.log(`🏌️  ${ed.name || 'FSGA'} — ${divSpecs.length} divisão(ões)`);
   const divisions = [];
   const courseNames = new Set();
+  const allDates = [];
   let name = ed.name || null, year = ed.year || null;
   for (const d of divSpecs) {
     const res = await scrapeDivision(d.v2tid, d.label, opts);
     divisions.push(res.division);
     res.courseNames.forEach((c) => courseNames.add(c));
+    allDates.push(...(res.roundDates || []));
     if (!name) name = res.name;
     if (!year) year = res.year;
   }
+  // startDate/endDate do evento = min/max das datas de ronda de TODAS as
+  // divisões (ISO ordena lexicograficamente). O catálogo MAJOR usa-os directos.
+  allDates.sort();
   return {
     tournament: name,
     year,
+    ...(allDates.length ? { startDate: allDates[0], endDate: allDates[allDates.length - 1] } : {}),
     source: `${GG}/v2tournaments/${divSpecs[0].v2tid}`,
     course: courseNamesLabel([...courseNames]),
     divisions,
@@ -453,7 +463,10 @@ function courseNamesLabel(courseNames) {
   // "Castle Hume - World Championship") → listar os dois, não só o primeiro.
   const bases = [...new Set(courseNames.map((c) => c.replace(/\([^)]*\)/g, '').split(' - ')[0].trim()).filter(Boolean))];
   if (bases.length > 1) return bases.join(' & ');
-  const base = courseNames[0].split(' - ')[0].replace(/\([^)]*\)/g, '').trim();
+  // ⚠ Tirar os parênteses ANTES do split (mesma ordem da linha `bases`): em
+  // "Porters Park (Reid Trophy - Men)" o split primeiro cortava a meio do
+  // parêntese e o campo saía "Porters Park (Reid Trophy".
+  const base = bases[0] || courseNames[0].replace(/\([^)]*\)/g, '').trim();
   const layouts = [...new Set(courseNames.map((c) => {
     const m = c.replace(/\([^)]*\)/g, '').split(' - ')[1] || '';
     return m.replace(/course/i, '').trim();

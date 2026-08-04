@@ -1,5 +1,6 @@
 ﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
+import { useCompareSelection } from "./useCompareSelection";
 import { normLoose } from "../utils/normName";
 import { fmtHcp, medal } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -455,6 +456,12 @@ export function MultiRoundLeaderboard({
     );
   }, [filteredComplete, filteredCut, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
 
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
+   * Chave = key da linha ou, sem ela, o nome (o render usa o mesmo fallback). */
+  const compareSel = useCompareSelection<string | number>();
+  const compareKey = (row: MultiRoundRow) => row.key || row.name;
+  const visibleSorted = compareSel.filter(sorted, compareKey);
+
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
     if (!sortable) return <th className={className}>{children}</th>;
     return (
@@ -471,6 +478,7 @@ export function MultiRoundLeaderboard({
       {filterable && (
         <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} playersDB={playersDB} />
       )}
+      {compareSel.bar}
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb sc-lb-lbd" + (isMulti ? " sc-lb-multi" : "")}>
           <thead>
@@ -533,7 +541,7 @@ export function MultiRoundLeaderboard({
             </tr>
           </thead>
           <tbody>
-            {sorted.map((row, idx) => {
+            {visibleSorted.map((row, idx) => {
               const tp = row.toPar != null ? row.toPar : (row.gross ?? 0) - (row.parTotal ?? 0);
               const isInc = row.isIncomplete && !row.isWD && !row.isCut;  // ronda ainda por jogar
               const isWD  = !!row.isWD;                     // desistiu
@@ -543,7 +551,7 @@ export function MultiRoundLeaderboard({
               const mdl = !isInc && !isWD && !isCut && dp != null ? medal(dp) : null;
               const showPos = !isInc && !isWD && !isCut && (
                 sortable && sortKey === "pos"
-                  ? (idx === 0 || dp !== sorted[idx - 1]._pos)
+                  ? (idx === 0 || dp !== visibleSorted[idx - 1]._pos)
                   : true
               );
               const rowBg = row.isHighlighted ? "var(--bg-success-subtle)"
@@ -560,7 +568,8 @@ export function MultiRoundLeaderboard({
                 <tr key={row.key || row.name + idx}
                   className={rowCls}
                   style={(isInc || isWD || isCut) ? { background: rowBg, opacity: isWD ? 0.55 : isCut ? 0.85 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
-                  <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
+                  <td className="lb-pos sticky-col-0" style={{ ...(row.isHighlighted ? {} : { background: stickyBg }), whiteSpace: "nowrap" }}>
+                    {compareSel.checkbox(compareKey(row))}
                     {isWD
                       ? <WdBadge />
                       : isCut

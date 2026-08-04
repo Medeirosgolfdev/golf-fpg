@@ -32,6 +32,7 @@ import { fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { tpColor } from "./tournamentPrimitives";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { useCompareSelection } from "./useCompareSelection";
 
 export interface ScorecardRow {
   key: string | number;
@@ -143,6 +144,9 @@ export function ScorecardLeaderboard({
 
   const afterScorecardHeaders = postScorecardHeaderCells;
 
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ── */
+  const cmp = useCompareSelection<string | number>();
+
   /* ── Sorting interno ── */
   const { sortKey: intSortKey, sortDir: intSortDir, toggleSort: intToggle } = useSort<SCSortKey>("pos", "asc");
 
@@ -184,6 +188,8 @@ export function ScorecardLeaderboard({
     });
   }, [rows, sortable, intSortKey, intSortDir]);
 
+  const visibleRows = cmp.filter(sortedRows, r => r.key);
+
   const handleSortPos   = sortable ? () => intToggle("pos")   : onSortPos;
   const handleSortName  = sortable ? () => intToggle("name")  : onSortName;
   const handleSortToPar = sortable ? () => intToggle("toPar") : onSortToPar;
@@ -214,6 +220,8 @@ export function ScorecardLeaderboard({
       )}
 
       {filterBar}
+
+      {cmp.bar}
 
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
@@ -371,7 +379,7 @@ export function ScorecardLeaderboard({
             </tr>
           </thead>
           <tbody>
-            {sortedRows.map(row => {
+            {visibleRows.map(row => {
               const sticky = row.stickyBg || "var(--bg-card,#fff)";
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
@@ -395,7 +403,10 @@ export function ScorecardLeaderboard({
               const afterScorecard = row.postScorecardCells;
               return (
                 <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
-                  <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>
+                  <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop, whiteSpace: "nowrap" }}>
+                    {cmp.checkbox(row.key)}
+                    {row.pos}
+                  </td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
                   {row.prefixCells}
                   {!hideTotals && (

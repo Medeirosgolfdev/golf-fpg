@@ -5,6 +5,7 @@ import { fmtDateShort, fmtHcp, escalaoAtDate } from "../utils/format";
 import { escPillCls } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
+import { useCompareSelection } from "./useCompareSelection";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { isDNS } from "./driveUtils";
@@ -521,9 +522,17 @@ export function ResumoTable(props: {
     return headers;
   }, [visibleSorted, expandedGroups]);
 
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
+   * A posição mostrada vem do ranking COMPLETO (não renumera ao filtrar). */
+  const compareSel = useCompareSelection<string>();
+  const compareRows = compareSel.filter(sortedRows, r => r.pKey);
+  const seasonPos = new Map(sortedRows.map((r, i) => [r.pKey, i + 1]));
+
   if (!sorted.length) return <div className="muted ta-c p-24">Sem torneios.</div>;
 
   return (
+    <>
+    {compareSel.bar}
     <CrossSeasonTable
       identityHeaders={
         <>
@@ -784,11 +793,14 @@ export function ResumoTable(props: {
         </>
       }
     >
-      {sortedRows.map((row, idx) => {
+      {compareRows.map((row) => {
         const cls = escPillCls(row.escalao);
         return (
           <tr key={row.pKey} className={isManuel(row) ? "row-manuel" : undefined}>
-            <td className="cs-pos sticky-col-0">{idx + 1}</td>
+            <td className="cs-pos sticky-col-0" style={{ whiteSpace: "nowrap" }}>
+              {compareSel.checkbox(row.pKey)}
+              {seasonPos.get(row.pKey)}
+            </td>
             <td className="cs-name sticky-col-1">
               <PName
                 name={row.name}
@@ -909,5 +921,6 @@ export function ResumoTable(props: {
         );
       })}
     </CrossSeasonTable>
+    </>
   );
 }

@@ -266,3 +266,11 @@ export const FL: Record<string, string> = Object.fromEntries(
 export function gf(country: string): string {
   return FL[country] ?? flag(country);
 }
+
+/** Conterrâneo? Aceita nome ("Portugal") ou código ISO ("PT"/"PRT"/"POR") —
+ *  espelha o `isPtCountry` do build-major-catalog.js. Para o destaque
+ *  `.row-portuguese` obrigatório em todas as tabelas internacionais. */
+export function isPtCountry(c: string | null | undefined): boolean {
+  const s = String(c || "").trim();
+  return /portugal/i.test(s) || /^(pt|prt|por)$/i.test(s);
+}
