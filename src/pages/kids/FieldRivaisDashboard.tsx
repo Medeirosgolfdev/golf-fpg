@@ -19,6 +19,7 @@ import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes
 import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
+import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
@@ -2217,6 +2218,13 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
   };
   const arrow = (k: SortKey) => sortKey === k ? (sortDir === "asc" ? " ↑" : " ↓") : "";
 
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
+   * Aqui cada linha é uma POSIÇÃO (cada coluna-edição tem o jogador que lá
+   * ficou) → seleccionar linhas compara "o que foi preciso para o nº X"
+   * entre edições. ⚠ Hook ANTES do early-return (regra dos hooks). */
+  const compareSel = useCompareSelection<number>();
+  const visibleRows = compareSel.filter(sortedRows, r => r.rank);
+
   if (!data) {
     return (
       <div className="muted p-16">
@@ -2235,6 +2243,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
           {data.baseName} {String.fromCharCode(0xb7)} {data.ageGroup} {String.fromCharCode(0xb7)} {data.editions.length} edi{data.editions.length === 1 ? "ção" : "ções"}
         </span>
       </div>
+      {compareSel.bar}
       <div style={{ overflowX: "auto" }}>
       <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "max-content" }}>
         <thead>
@@ -2320,7 +2329,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
           </tr>
         </thead>
         <tbody>
-          {sortedRows.map((row) => {
+          {visibleRows.map((row) => {
             const pos = row.rank;
             const firstEd = data.editions[0];
             const firstEntry = firstEd?.ranked[row.idx];
@@ -2332,6 +2341,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             return (
               <tr key={pos} style={{ borderBottom: "1px solid var(--border-light)", opacity: isIE ? 0.75 : 1 }}>
                 <td style={{ padding: "4px 8px", fontWeight: 700, color: medalFg, textAlign: "center", position: "sticky", left: 0, background: medal || "var(--bg)", zIndex: "var(--z-base)", whiteSpace: "nowrap" }}>
+                  {compareSel.checkbox(row.rank)}
                   {displayPos != null
                     ? `#${displayPos}`
                     : (
