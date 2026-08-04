@@ -187,6 +187,29 @@ function parseRoster(html) {
 const nameKey = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
+/** "Tue, August  6" (label de ronda do tee sheet) + ano → "2026-08-06".
+ *  `anchorIso` (data ISO fiável do v2, quando existe) escolhe o ANO que deixa a
+ *  data mais perto da âncora — um evento 30/Dez→02/Jan tem rondas em dois anos
+ *  civis e carimbar todas com `year` invertia startDate/endDate. Sem ano nem
+ *  âncora (evento no scope antes da R1 abrir), cai no ano corrente. */
+const US_MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+function usDateToIso(label, year, anchorIso) {
+  const m = /([a-z]{3})[a-z]*\.?\s+(\d{1,2})/i.exec(label || '');
+  if (!m) return null;
+  const mo = US_MONTHS[m[1].toLowerCase()];
+  if (!mo) return null;
+  const y0 = year || (anchorIso ? +anchorIso.slice(0, 4) : new Date().getUTCFullYear());
+  const mk = (y) => `${y}-${String(mo).padStart(2, '0')}-${String(+m[2]).padStart(2, '0')}`;
+  if (!anchorIso) return mk(y0);
+  let best = null, bestD = Infinity;
+  for (const y of [y0 - 1, y0, y0 + 1]) {
+    const iso = mk(y);
+    const d = Math.abs(new Date(iso) - new Date(anchorIso));
+    if (d < bestD) { bestD = d; best = iso; }
+  }
+  return best;
+}
+
 /**
  * Roster da página "List of Players" (widget `players`) → [{ name, club, countryName }].
  * É a ÚNICA fonte de país + clube por jogador em eventos England-Golf: o
@@ -229,6 +252,16 @@ async function fetchTeeSheets(lid, teePageId) {
   const rounds = opts.length ? opts : [{ url: null, label: 'Round 1' }];
   const byDiv = new Map();
   const countries = new Map();
+  // Datas de TODAS as rondas competitivas do <select> (ex: "Round 3 (Thu,
+  // August  6)") — o v2tournaments só lista as rondas JÁ jogadas, por isso num
+  // evento a decorrer o endDate vinha curto (a R3 só existe aqui).
+  // ⚠ Escolher o parêntese COM mês: labels tipo "Round 4 (If Necessary) (Sun,
+  // June 8)" têm um parêntese descritivo antes da data.
+  const MONTH_RX = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i;
+  const roundDateLabels = rounds
+    .filter((r) => !/practice/i.test(r.label))
+    .map((r) => [...r.label.matchAll(/\(([^)]+)\)/g)].map((m) => m[1]).find((s) => MONTH_RX.test(s)))
+    .filter(Boolean);
   for (let i = 0; i < rounds.length; i++) {
     const r = rounds[i];
     if (/practice/i.test(r.label)) continue;   // draw de ronda de treino não interessa
@@ -257,7 +290,7 @@ async function fetchTeeSheets(lid, teePageId) {
     }
     await new Promise((res) => setTimeout(res, 300));
   }
-  return { draws: byDiv, countries };
+  return { draws: byDiv, countries, roundDateLabels };
 }
 
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
@@ -363,6 +396,14 @@ function mergeWithDisk(file, out) {
   try { prev = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return { kept: 0, restored: 0 }; }
   if (!Array.isArray(prev.divisions)) return { kept: 0, restored: 0 };
 
+  // Datas só ALARGAM face ao disco: num hiccup do fetchTeeSheets (try/catch no
+  // runOne) o run perdia a R3 do <select> e o endDate encolhia — e o sameAsDisk
+  // committava a regressão. `--no-merge` é o escape hatch (ex: ronda cancelada
+  // que ficou no select e deixou um endDate fantasma).
+  const dts = [prev.startDate, prev.endDate, out.startDate, out.endDate]
+    .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d || '')).sort();
+  if (dts.length) { out.startDate = dts[0]; out.endDate = dts[dts.length - 1]; }
+
   const pKey = (p) => p.detailId || p.name;
   const prevByDiv = new Map(prev.divisions.map((dv) => [dv.division, new Map((dv.players || []).map((p) => [pKey(p), p]))]));
   let kept = 0, restored = 0;
@@ -462,7 +503,13 @@ async function runOne(opts) {
   // nunca a R1, que não tem ronda anterior de onde inferir emparelhamentos.
   if (teePageId && lid && !opts.skipTeeSheets) {
     try {
-      const { draws, countries } = await fetchTeeSheets(lid, teePageId);
+      const { draws, countries, roundDateLabels } = await fetchTeeSheets(lid, teePageId);
+      // Datas do tee sheet FUNDIDAS com as do v2 (min/max): num evento a
+      // decorrer o v2 só tem as rondas jogadas e o endDate ficava curto.
+      const anchor = out.startDate || out.endDate || null;
+      const teeDates = (roundDateLabels || []).map((s) => usDateToIso(s, out.year, anchor)).filter(Boolean);
+      const allDates = [...teeDates, out.startDate, out.endDate].filter(Boolean).sort();
+      if (allDates.length) { out.startDate = allDates[0]; out.endDate = allDates[allDates.length - 1]; }
       let n = 0;
       for (const dv of out.divisions) {
         let d = draws.get(dv.division);

@@ -13,8 +13,9 @@
 
 import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
-import { MANUEL_FED } from "../constants/manuel";
+import { MANUEL_FED, isManuelByName } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
+import { KidsLink } from "./KidsLink";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
@@ -232,6 +233,7 @@ export default function DrawTab({
       escHist: string | null;
       gross: number;
       toPar: number | null;
+      isPortuguese: boolean;
     }> = [];
     let idx = 0;
     // Heurística: o scraper do draw às vezes mete o fed no campo `clube` (só dígitos 4-6 chars).
@@ -389,6 +391,10 @@ export default function DrawTab({
           escHist,
           gross: res?.gross ?? 0,
           toPar: res?.toPar ?? null,
+          // Draws internacionais (MAJOR): conterrâneos vêm marcados na fonte
+          // (`fmDrawsToFpg`) → `.row-portuguese`. Nos draws FPG o campo não
+          // existe (todos são PT — destacar todos não distinguiria nada).
+          isPortuguese: !!(p as { isPortuguese?: boolean }).isPortuguese,
         });
       }
     }
@@ -462,7 +468,9 @@ export default function DrawTab({
     const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
     const GROUP_BORDER = "3px solid var(--text-3)";
     return visibleSorted.map((p, i) => {
-      const manuel = p.fed === MANUEL_FED;
+      // Por fed (FPG) OU por nome: nos draws MAJOR (fmDrawsToFpg) não há fed
+      // nenhum (playersDB vazio) e o Manuel ficava sem .row-manuel/estrela.
+      const manuel = p.fed === MANUEL_FED || isManuelByName(p.nome);
       const age = ageAtDate(p.dob, effDate || undefined);
       const isFirstOfGroup = groupingActive && i > 0 && visibleSorted[i - 1].groupIdx !== p.groupIdx;
       const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
@@ -474,6 +482,7 @@ export default function DrawTab({
         toPar: p.toPar,
         scores: [],
         isManuel: manuel,
+        isPortuguese: !manuel && p.isPortuguese,
         sortPos: p.pos,
         sortName: p.nome,
         borderTop,
@@ -481,12 +490,19 @@ export default function DrawTab({
         // fed/nome no playersDB). NÃO adicionar aqui uma CountryFlag por cima —
         // senão os estrangeiros ficam com a bandeira a dobrar.
         nameContent: (
-          <TournPName
-            name={p.nome}
-            fed={p.fed || undefined}
-            playersDB={playersDB}
-            highlight={manuel}
-          />
+          <span className="inline-flex items-center">
+            <TournPName
+              name={p.nome}
+              fed={p.fed || undefined}
+              playersDB={playersDB}
+              highlight={manuel}
+            />
+            {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).
+                Sem duplicação com a seta do próprio TournPName (kidsHash):
+                quem tem kidsHash no playersDB (FPGPage) NÃO fornece o ctx, e
+                quem fornece o ctx passa playersDB sem kidsHash. */}
+            <KidsLink nome={p.nome} />
+          </span>
         ),
         prefixCells: (
           <>
