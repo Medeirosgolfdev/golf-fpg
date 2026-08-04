@@ -26,12 +26,13 @@
  *  – ±Par tem border-left espessa (2px) via CSS.
  *  – SD e estatísticas vêm APÓS o scorecard (postScorecardCells).
  */
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { tpColor } from "./tournamentPrimitives";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { useCompareSelection } from "./useCompareSelection";
 
 export interface ScorecardRow {
   key: string | number;
@@ -143,20 +144,8 @@ export function ScorecardLeaderboard({
 
   const afterScorecardHeaders = postScorecardHeaderCells;
 
-  /* ── Selecção para comparação ──
-   * Checkbox na célula # de cada linha; com ≥1 seleccionado aparece a barra
-   * "Comparar" que filtra a tabela aos escolhidos (para pôr lado a lado os
-   * scorecards de 2-3 jogadores num field de 140). Estado local à tabela —
-   * cada ronda/tab compara a sua. A ordenação continua a aplicar-se. */
-  const [selected, setSelected] = useState<Set<string | number>>(new Set());
-  const [compareOn, setCompareOn] = useState(false);
-  const toggleSelected = (key: string | number) => setSelected(prev => {
-    const next = new Set(prev);
-    if (next.has(key)) next.delete(key); else next.add(key);
-    if (next.size === 0) setCompareOn(false);
-    return next;
-  });
-  const clearSelected = () => { setSelected(new Set()); setCompareOn(false); };
+  /* ── Selecção para comparação (hook partilhado da família de tabelas) ── */
+  const cmp = useCompareSelection<string | number>();
 
   /* ── Sorting interno ── */
   const { sortKey: intSortKey, sortDir: intSortDir, toggleSort: intToggle } = useSort<SCSortKey>("pos", "asc");
@@ -199,9 +188,7 @@ export function ScorecardLeaderboard({
     });
   }, [rows, sortable, intSortKey, intSortDir]);
 
-  const visibleRows = compareOn && selected.size > 0
-    ? sortedRows.filter(r => selected.has(r.key))
-    : sortedRows;
+  const visibleRows = cmp.filter(sortedRows, r => r.key);
 
   const handleSortPos   = sortable ? () => intToggle("pos")   : onSortPos;
   const handleSortName  = sortable ? () => intToggle("name")  : onSortName;
@@ -234,29 +221,7 @@ export function ScorecardLeaderboard({
 
       {filterBar}
 
-      {selected.size > 0 && (
-        <div className="lb-info-line" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <span
-            className={"tab-under" + (compareOn ? " active" : "")}
-            onClick={() => setCompareOn(v => !v)}
-            style={{ cursor: "pointer", fontWeight: 700 }}
-            title="Mostrar só os jogadores seleccionados (lado a lado)"
-          >
-            ⚖️ Comparar seleccionados ({selected.size})
-          </span>
-          <span
-            onClick={clearSelected}
-            className="muted"
-            style={{ cursor: "pointer" }}
-            title="Limpar selecção"
-          >
-            ✕ limpar
-          </span>
-          {!compareOn && (
-            <span className="muted fs-10">marca ☑ nas linhas e activa para ver só esses</span>
-          )}
-        </div>
-      )}
+      {cmp.bar}
 
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
@@ -439,13 +404,7 @@ export function ScorecardLeaderboard({
               return (
                 <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
                   <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop, whiteSpace: "nowrap" }}>
-                    <input
-                      type="checkbox"
-                      checked={selected.has(row.key)}
-                      onChange={() => toggleSelected(row.key)}
-                      title="Seleccionar para comparar"
-                      style={{ marginRight: 3, verticalAlign: "middle", cursor: "pointer" }}
-                    />
+                    {cmp.checkbox(row.key)}
                     {row.pos}
                   </td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
