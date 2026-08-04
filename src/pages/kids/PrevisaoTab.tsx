@@ -443,6 +443,9 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
         <details className="card" open>
           <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
             🏆 Estimativa de score — {field.editions.length} edi{field.editions.length === 1 ? "ção" : "ções"} anterior{field.editions.length === 1 ? "" : "es"}
+            {field.formatLabel && (
+              <span className="muted fw-400 fs-11">{"  ·  estimativa sobre "}{field.nCounted} no formato {field.formatLabel}</span>
+            )}
           </summary>
           <div className="kpis" style={{ margin: "8px 0 12px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
             {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parPerRound * field.nRoundsTypical) : undefined} />}
@@ -475,9 +478,16 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             </tr></thead>
             <tbody>
               {field.editions.map(e => (
-                <tr key={e.tcode}>
+                <tr
+                  key={e.tcode}
+                  style={e.counted ? undefined : { opacity: 0.5 }}
+                  title={e.counted ? undefined : `Formato ${e.nRounds}×${e.holesPerRound} ≠ ${field.formatLabel} — fora da estimativa`}
+                >
                   <td>{e.year}</td>
-                  <td className="r">{e.nRounds}</td>
+                  <td className="r">
+                    {e.nRounds}
+                    {!e.counted && <span style={{ color: "var(--color-danger)" }} title={`Formato diferente (${e.nRounds}×${e.holesPerRound}) — não conta`}> ⚠</span>}
+                  </td>
                   <td className="r">{e.winner}</td>
                   <td className="r">{e.top10 ?? "–"}</td>
                   <td className="r">{e.median}</td>
@@ -487,7 +497,14 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             </tbody>
           </table>
           <p className="muted fs-11" style={{ margin: "6px 0 0" }}>
-            Scores totais das edições passadas deste torneio+escalão (member-history USKids). "Manuel ≈" aplica o desempenho dele por tipo de buraco a este campo.
+            Scores totais das edições passadas deste torneio+escalão (member-history USKids).{" "}
+            {field.formatLabel && (
+              <>A estimativa usa só as {field.nCounted} edi{field.nCounted === 1 ? "ção" : "ções"} no formato {field.formatLabel} (mesmo nº de voltas × buracos)
+              {field.nExcluded > 0
+                ? `; ${field.nExcluded} com formato diferente fica${field.nExcluded === 1 ? "" : "m"} de fora (a cinzento, ⚠)`
+                : ""}. Top-10 só conta com field ≥ 10. </>
+            )}
+            "Manuel ≈" aplica o desempenho dele por tipo de buraco a este campo.
           </p>
         </details>
       )}

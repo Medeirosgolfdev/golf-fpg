@@ -249,8 +249,10 @@ interface MHSlimLite {
 interface FieldTorneioLite { t: number; name: string }
 
 interface EditionScore {
-  year: string; tcode: string; nRounds: number; parPerRound: number;
+  year: string; tcode: string; nRounds: number; holesPerRound: number; parPerRound: number;
   winner: number; top10: number | null; median: number; field: number;
+  /** true = mesmo formato (rondas × buracos) da referência → entra na estimativa */
+  counted: boolean;
 }
 export interface FieldEstimate {
   editions: EditionScore[];
@@ -259,13 +261,20 @@ export interface FieldEstimate {
   avgMedian: number | null;
   parPerRound: number | null;
   nRoundsTypical: number | null;
+  holesPerRoundTypical: number | null;
+  /** ex: "3×18" — formato de referência usado na estimativa */
+  formatLabel: string | null;
+  /** nº de edições que entram na estimativa (mesmo formato) */
+  nCounted: number;
+  /** nº de edições excluídas por terem formato diferente */
+  nExcluded: number;
 }
 
 const MIN_FIELD = 4;
 const MIN_GROSS_18 = 55, MIN_GROSS_9 = 28;
 
 export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite | null, escalaoNome: string): FieldEstimate {
-  const empty: FieldEstimate = { editions: [], avgWinner: null, avgTop10: null, avgMedian: null, parPerRound: null, nRoundsTypical: null };
+  const empty: FieldEstimate = { editions: [], avgWinner: null, avgTop10: null, avgMedian: null, parPerRound: null, nRoundsTypical: null, holesPerRoundTypical: null, formatLabel: null, nCounted: 0, nExcluded: 0 };
   if (!mh || !torneio) return empty;
   const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
   if (!baseName) return empty;
@@ -306,28 +315,53 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
 
     const median = totals[Math.floor((totals.length - 1) / 2)];
     editions.push({
-      year: ym[1], tcode, nRounds: nRoundsMax,
+      year: ym[1], tcode, nRounds: nRoundsMax, holesPerRound: hpr,
       parPerRound,
       winner: totals[0],
-      top10: totals.length >= 10 ? totals[9] : (totals[totals.length - 1] ?? null),
+      // só há "top-10" quando o field chega a 10; senão o 10.º lugar não existe
+      // (usar o último classificado inflacionava a estimativa em fields pequenos)
+      top10: totals.length >= 10 ? totals[9] : null,
       median,
       field: totals.length,
+      counted: false, // definido abaixo, após conhecer o formato de referência
     });
   }
   editions.sort((a, b) => b.year.localeCompare(a.year));
   if (editions.length === 0) return empty;
 
+  // ── Proteção anti-enviesamento (rondas × buracos) ──────────────────────────
+  // Edições encurtadas (chuva → 2 voltas em vez de 3) ou com voltas de 9 buracos
+  // têm totais numa escala diferente e distorciam as médias (uma edição de 2×18
+  // "vencia" com ~145). Só entram na estimativa as edições no MESMO formato. O
+  // formato de referência é o mais frequente entre as edições, com desempate a
+  // favor da mais recente (melhor palpite para a próxima edição).
+  const fmtKey = (e: EditionScore) => `${e.nRounds}x${e.holesPerRound}`;
+  const freq = new Map<string, number>();
+  for (const e of editions) freq.set(fmtKey(e), (freq.get(fmtKey(e)) || 0) + 1);
+  let modalKey = fmtKey(editions[0]);
+  let modalCount = -1;
+  for (const e of editions) { // editions ordenadas por ano desc → empate fica com a mais recente
+    const c = freq.get(fmtKey(e)) as number;
+    if (c > modalCount) { modalCount = c; modalKey = fmtKey(e); }
+  }
+  for (const e of editions) e.counted = fmtKey(e) === modalKey;
+  const counted = editions.filter(e => e.counted);
+
   const mean = (xs: number[]) => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length) : null;
-  const avgWinner = mean(editions.map(e => e.winner));
-  const avgTop10 = mean(editions.filter(e => e.top10 != null).map(e => e.top10 as number));
-  const avgMedian = mean(editions.map(e => e.median));
-  // par/rondas tipicos = da edicao mais recente com par valido
-  const ref = editions.find(e => e.parPerRound > 0) || editions[0];
+  const avgWinner = mean(counted.map(e => e.winner));
+  const avgTop10 = mean(counted.filter(e => e.top10 != null).map(e => e.top10 as number));
+  const avgMedian = mean(counted.map(e => e.median));
+  // par/rondas tipicos = da edicao contada mais recente com par valido
+  const ref = counted.find(e => e.parPerRound > 0) || counted[0];
   return {
     editions,
     avgWinner, avgTop10, avgMedian,
     parPerRound: ref.parPerRound || null,
     nRoundsTypical: ref.nRounds || null,
+    holesPerRoundTypical: ref.holesPerRound || null,
+    formatLabel: `${ref.nRounds}×${ref.holesPerRound}`,
+    nCounted: counted.length,
+    nExcluded: editions.length - counted.length,
   };
 }
 
