@@ -405,12 +405,20 @@ function mergeWithDisk(file, out) {
   if (dts.length) { out.startDate = dts[0]; out.endDate = dts[dts.length - 1]; }
 
   const pKey = (p) => p.detailId || p.name;
-  const prevByDiv = new Map(prev.divisions.map((dv) => [dv.division, new Map((dv.players || []).map((p) => [pKey(p), p]))]));
+  const prevByDiv = new Map(prev.divisions.map((dv) => [dv.division, { div: dv, players: new Map((dv.players || []).map((p) => [pKey(p), p])) }]));
   let kept = 0, restored = 0;
 
   for (const dv of out.divisions) {
-    const old = prevByDiv.get(dv.division);
-    if (!old) continue;
+    const prevEntry = prevByDiv.get(dv.division);
+    if (!prevEntry) continue;
+    // Metadados CURADOS À MÃO da divisão (metros/SI/tee do cartão oficial em
+    // papel — o GG público não os expõe, logo o scrape novo traz sempre null)
+    // sobrevivem ao re-scrape. Se um dia o motor os extrair, o valor novo
+    // (não-null) ganha na mesma.
+    for (const k of ['meters', 'si', 'teeName', 'courseRating', 'slope']) {
+      if (dv[k] == null && prevEntry.div[k] != null) dv[k] = prevEntry.div[k];
+    }
+    const old = prevEntry.players;
     for (const p of dv.players) {
       const o = old.get(pKey(p));
       if (!o || !Array.isArray(o.rounds) || !o.rounds.length) continue;
