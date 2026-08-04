@@ -11,7 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -24,6 +24,7 @@ import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 
 interface Props {
   draw: FpgDraw;
@@ -51,9 +52,13 @@ interface Props {
   /** Esconde colunas que não se aplicam à fonte (ex: GolfGenius/internacional
    *  não expõe FED/HCP/Nasc.). Default: mostra todas. */
   hideCols?: { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean };
+  /** Lookup fed/nome → categoria da Ordem de Mérito CGSS (buildOmLookup). Quando
+   *  presente e não-vazio, o draw ganha uma coluna "OM" com a categoria+posição
+   *  de cada inscrito. */
+  omLookup?: Map<string, OmHit>;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross" | "om";
 
 /** Registo de resultado de uma ronda usado para cruzar com o draw. */
 export type DrawResult = { gross: number; toPar: number | null };
@@ -137,14 +142,16 @@ const TEE_TIME_PALETTE = [
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl, results, hideCols,
+  admissions, fpgUrl, results, hideCols, omLookup,
 }: Props) {
   const hc = hideCols || {};
+  const showOm = !!(omLookup && omLookup.size);
+  const [omFilter, setOmFilter] = useState<string | null>(null); // categoria OM a filtrar (null = todas)
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const fedHcp = useFedHcp();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", { om: "desc" });
 
   // Snapshot temporal de HCP — HCP do evento, capturado das admissões.
   // Usado como fonte autoritativa quando o draw em si não traz `hcp` por jogador.
@@ -407,10 +414,23 @@ export default function DrawTab({
         case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
         case "toPar":  v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
         case "gross":  v = (a.gross || INF) - (b.gross || INF); break;
+        case "om": {
+          const oa = lookupOm(omLookup, a.fed, a.nome), ob = lookupOm(omLookup, b.fed, b.nome);
+          v = (oa ? oa.pts : -1) - (ob ? ob.pts : -1); break;
+        }
       }
       return mult * v;
     });
-  }, [flat, sortKey, sortDir]);
+  }, [flat, sortKey, sortDir, omLookup]);
+
+  // Filtro por categoria da Ordem de Mérito (mostra só os jogadores de uma OM).
+  const visibleSorted = useMemo(() => {
+    if (!omFilter) return sorted;
+    return sorted.filter(p => {
+      const hit = lookupOm(omLookup, p.fed, p.nome);
+      return omFilter === "none" ? !hit : hit?.catKey === omFilter;
+    });
+  }, [sorted, omFilter, omLookup]);
 
   // Mapa de cor de fundo por GRUPO (cicla uma paleta pastel pela ordem dos
   // flights em `draw.groups`). Identifica visualmente cada grupo mesmo quando
@@ -441,10 +461,10 @@ export default function DrawTab({
     // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
     const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
     const GROUP_BORDER = "3px solid var(--text-3)";
-    return sorted.map((p, i) => {
+    return visibleSorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const age = ageAtDate(p.dob, effDate || undefined);
-      const isFirstOfGroup = groupingActive && i > 0 && sorted[i - 1].groupIdx !== p.groupIdx;
+      const isFirstOfGroup = groupingActive && i > 0 && visibleSorted[i - 1].groupIdx !== p.groupIdx;
       const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
       const bStyle = borderTop ? { borderTop } : undefined;
       return {
@@ -470,6 +490,12 @@ export default function DrawTab({
         ),
         prefixCells: (
           <>
+            {showOm && (() => {
+              const hit = lookupOm(omLookup, p.fed, p.nome);
+              return <td style={{ padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
+                {hit ? <OmCatBadge hit={hit} /> : <span className="muted">–</span>}
+              </td>;
+            })()}
             {!hc.esc && (
               <td className="lb-esc" style={bStyle}>
                 {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
@@ -512,7 +538,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [sorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
+  }, [visibleSorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -539,6 +565,7 @@ export default function DrawTab({
 
   const prefixHeaderCells = (
     <>
+      {showOm && <SortableHdr k="om" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }} title="Categoria na Ordem de Mérito CGSS">OM</SortableHdr>}
       {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>}
@@ -564,7 +591,7 @@ export default function DrawTab({
     <>
       <div className="detail-toolbar">
         <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
-        <span className="muted fs-12">{(draw.groups || []).length} flights · {total} jogadores</span>
+        <span className="muted fs-12">{(draw.groups || []).length} flights · {omFilter ? `${visibleSorted.length}/${total}` : total} jogadores</span>
         {draw.date && <span className="muted fs-12">· {draw.date}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
@@ -573,6 +600,26 @@ export default function DrawTab({
           </a>
         )}
       </div>
+      {showOm && (
+        <div className="detail-toolbar" style={{ gap: 6, flexWrap: "wrap" }}>
+          <span className="muted fs-11">Ordem de Mérito:</span>
+          {([{ k: null, l: "Todas" }, { k: "junior", l: "Júnior" }, { k: "homens", l: "Homens" }, { k: "senhoras", l: "Senhoras" }, { k: "seniores", l: "Seniores" }, { k: "superSeniores", l: "Super Sen." }, { k: "none", l: "Sem OM" }] as { k: string | null; l: string }[]).map(o => {
+            const active = omFilter === o.k;
+            return (
+              <button key={o.l} type="button" onClick={() => setOmFilter(o.k)}
+                className="p p-sm" style={{
+                  cursor: "pointer",
+                  background: active ? "var(--accent)" : "var(--bg-1)",
+                  color: active ? "#fff" : "var(--text-1)",
+                  borderColor: active ? "var(--accent)" : "var(--border)",
+                  fontWeight: active ? 700 : 400,
+                }}>
+                {o.l}
+              </button>
+            );
+          })}
+        </div>
+      )}
       {isEstimated && (
         <div className="fs-12 fw-600" style={{
           padding: "8px 14px", margin: "6px 12px",

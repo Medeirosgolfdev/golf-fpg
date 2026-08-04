@@ -1,0 +1,86 @@
+name: Actualizar Ordem de Mérito Júnior CGSS
+
+# Reconstrói o ranking da categoria JÚNIOR (0-18) das Ordens de Mérito do
+# CG Santo da Serra — a única categoria que a FPG não publica.
+# scripts/build-om-cgss-junior.js deriva as provas + nível das OMs adultas
+# oficiais e filtra os juniores de cada prova (ver cabeçalho do script).
+#
+# Corre 1×/semana (Domingo à noite, depois dos scrapes de torneios) e a pedido.
+#
+# Requer GitHub Secret:
+#   DATAGOLF_SCORING_COOKIES — cookie header de scoring.datagolf.pt
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Época (ano) a construir'
+        required: false
+        default: '2026'
+  schedule:
+    # Domingo 22:30 UTC — depois de update-drive (21:00) e update-classif.
+    - cron: '30 22 * * 0'
+
+permissions:
+  contents: write
+
+jobs:
+  build-om-junior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Construir Ordem de Mérito Júnior
+        id: build
+        run: |
+          set +e
+          node scripts/build-om-cgss-junior.js --year "${{ github.event.inputs.year || '2026' }}"
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = escrito/alterado → commit · 2 = sem alterações → skip · 1 = erro
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ build falhou (cookies expirados?) — ver logs"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem alterações — a saltar o commit"
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      - name: Commit e push (se houver alterações)
+        if: steps.build.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/om-cgss-junior.json
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: Ordem de Mérito Júnior CGSS ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1; break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          [ "$PUSH_OK" = "1" ] || { echo "❌ Push falhou após 5 tentativas"; exit 1; }
+          echo "✓ Ordem de Mérito Júnior actualizada"

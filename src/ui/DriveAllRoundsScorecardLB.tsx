@@ -59,12 +59,14 @@ function DriveAllRoundsScorecardLB({
       const rdPars = rs.pars?.length ? rs.pars : ref.pars;
       const rdSi = rs.si?.length ? rs.si : ref.si;
 
+      // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
+      const pcc = rs.pcc ?? 0;
       if (cr && slope && hcp != null && rdSi.length >= rdNh && capped.length >= rdNh && rdPars.length >= rdNh) {
         const ags = calcAGS(capped, rdPars, rdSi, cr, slope, hcp, rdNh);
-        const rawSD = (113 / slope) * (ags - cr);
+        const rawSD = (113 / slope) * (ags - cr - pcc);
         return Math.round((rdIs9 ? rawSD + expectedSD9(hcp) : rawSD) * 10) / 10;
       } else if (cr && slope) {
-        const rawSD = (113 / slope) * (gross - cr);
+        const rawSD = (113 / slope) * (gross - cr - pcc);
         if (rdIs9 && hcp != null) return Math.round((rawSD + expectedSD9(hcp)) * 10) / 10;
         if (!rdIs9) return Math.round(rawSD * 10) / 10;
       }

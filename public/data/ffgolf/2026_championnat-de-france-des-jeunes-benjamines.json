@@ -9,7 +9,7 @@
   "gg_page": "12899945350558692293",
   "gg_league": "12899945278819316404",
   "stats_page": null,
-  "scrapedAt": "2026-07-25T21:09:04.336Z",
+  "scrapedAt": "2026-08-03T21:21:15.965Z",
   "course": {
     "name": "Golf du Gouverneur (Le Breuil CFJ 2026)",
     "tee": "Golf du Gouverneur - Le Breuil CFJ 2026",
@@ -6458,6 +6458,7 @@
     "year": 2026,
     "format": "KnockOut",
     "parentCompetitionId": null,
+    "startDate": "2026-07-23",
     "endDate": "2026-07-25",
     "flights": [
       {
@@ -6471,7 +6472,7 @@
           {
             "number": 1,
             "name": "1/16e de Finale",
-            "date": null,
+            "date": "2026-07-23",
             "matches": [
               {
                 "teamMatchId": null,
@@ -8814,7 +8815,7 @@
           {
             "number": 2,
             "name": "1/8e de Finale",
-            "date": null,
+            "date": "2026-07-24",
             "matches": [
               {
                 "teamMatchId": null,
@@ -9989,7 +9990,7 @@
           {
             "number": 3,
             "name": "1/4 de Finale",
-            "date": null,
+            "date": "2026-07-24",
             "matches": [
               {
                 "teamMatchId": null,
@@ -10586,7 +10587,7 @@
                 "teamMatchId": null,
                 "matchNo": 1,
                 "startTime": "8:18",
-                "result": null,
+                "result": "1 up",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -10612,7 +10613,7 @@
                 "teamMatchId": null,
                 "matchNo": 2,
                 "startTime": "8:27",
-                "result": null,
+                "result": "2 & 1",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -10635,10 +10636,43 @@
                 "games": []
               }
             ]
+          },
+          {
+            "number": 5,
+            "name": "Finale",
+            "date": "2026-07-25",
+            "matches": [
+              {
+                "teamMatchId": null,
+                "matchNo": 1,
+                "startTime": "12:48",
+                "result": null,
+                "isSettled": true,
+                "isStarted": true,
+                "home": {
+                  "teamId": null,
+                  "name": "LEBLOND Eléna",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "away": {
+                  "teamId": null,
+                  "name": "GOUYON Jade",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "winner": "away",
+                "games": []
+              }
+            ]
           }
         ]
       }
     ],
-    "scrapedAt": "2026-07-25T07:38:00.473Z"
+    "scrapedAt": "2026-08-03T06:31:56.457Z"
   }
 }

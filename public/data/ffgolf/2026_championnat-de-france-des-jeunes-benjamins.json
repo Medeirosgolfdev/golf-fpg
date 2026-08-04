@@ -9,7 +9,7 @@
   "gg_page": "12899929137493357503",
   "gg_league": "12899929048708330163",
   "stats_page": null,
-  "scrapedAt": "2026-07-25T21:10:12.923Z",
+  "scrapedAt": "2026-08-03T21:22:28.491Z",
   "course": {
     "name": "Golf du Gouverneur (Le Breuil CFJ 2026)",
     "tee": "Golf du Gouverneur - Le Breuil CFJ 2026",
@@ -7730,6 +7730,7 @@
     "year": 2026,
     "format": "KnockOut",
     "parentCompetitionId": null,
+    "startDate": "2026-07-23",
     "endDate": "2026-07-25",
     "flights": [
       {
@@ -7737,13 +7738,13 @@
         "name": "CFJ BENJAMINS - MATCH-PLAY",
         "format": "KnockOut",
         "parentId": null,
-        "isCompleted": false,
+        "isCompleted": true,
         "source": "https://www.golfgenius.com/pages/12899929137493357503",
         "rounds": [
           {
             "number": 1,
             "name": "1/16e de Finale",
-            "date": null,
+            "date": "2026-07-23",
             "matches": [
               {
                 "teamMatchId": null,
@@ -10086,7 +10087,7 @@
           {
             "number": 2,
             "name": "1/8e de Finale",
-            "date": null,
+            "date": "2026-07-24",
             "matches": [
               {
                 "teamMatchId": null,
@@ -11261,7 +11262,7 @@
           {
             "number": 3,
             "name": "1/4 de Finale",
-            "date": null,
+            "date": "2026-07-24",
             "matches": [
               {
                 "teamMatchId": null,
@@ -11859,7 +11860,7 @@
                 "matchNo": 1,
                 "startTime": "8:00",
                 "result": null,
-                "isSettled": false,
+                "isSettled": true,
                 "isStarted": true,
                 "home": {
                   "teamId": null,
@@ -11877,14 +11878,14 @@
                   "points": null,
                   "isLead": false
                 },
-                "winner": null,
+                "winner": "away",
                 "games": []
               },
               {
                 "teamMatchId": null,
                 "matchNo": 2,
                 "startTime": "8:09",
-                "result": null,
+                "result": "6 & 5",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -11907,10 +11908,43 @@
                 "games": []
               }
             ]
+          },
+          {
+            "number": 5,
+            "name": "Finale",
+            "date": "2026-07-25",
+            "matches": [
+              {
+                "teamMatchId": null,
+                "matchNo": 1,
+                "startTime": "12:30",
+                "result": null,
+                "isSettled": true,
+                "isStarted": true,
+                "home": {
+                  "teamId": null,
+                  "name": "FRANCILLON Thibaut",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "away": {
+                  "teamId": null,
+                  "name": "RAMSAMY Sunil",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "winner": "away",
+                "games": []
+              }
+            ]
           }
         ]
       }
     ],
-    "scrapedAt": "2026-07-25T07:40:36.836Z"
+    "scrapedAt": "2026-08-03T06:34:50.166Z"
   }
 }

@@ -42,6 +42,7 @@ import MatchplayView from "./MatchplayView";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
+import { monthLabel } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -478,9 +479,24 @@ export interface CircuitShellProps {
    *  infoView passa a ser controlado pela página (URL) em vez de estado interno. */
   selectedInfo?: string | null;
   onSelectInfo?: (key: string | null) => void;
+  /** Divisão (escalão) seleccionada, resolvida pela página a partir da URL. Só
+   *  tem efeito com `onSelectDivision` — aí a divisão activa passa a ser
+   *  controlada pela página (para deep-links por escalão, ex.: FPG, onde cada
+   *  escalão é um tcode próprio no URL). Sem `onSelectDivision` a divisão activa
+   *  é estado interno (comportamento das restantes páginas). */
+  selectedDivKey?: string;
+  onSelectDivision?: (entry: CircuitEntry, div: CircuitDivision) => void;
+  /** Render custom do item da sidebar. Quando fornecido, a `CircuitSidebar` usa-o
+   *  em vez do card interno — a página assume TODO o item (pills, click, href),
+   *  recebendo `active` e o `onSelect` do shell (para preservar fecho-mobile +
+   *  selecção interna). Usado pela FPG para reutilizar o `TournSidebarItem` e ter
+   *  paridade total com o render clássico. Sem esta prop, o card default é usado
+   *  (comportamento das restantes páginas). O agrupamento/divisórias da sidebar
+   *  continuam a ser do shell. */
+  renderSidebarItem?: (entry: CircuitEntry, ctx: { active: boolean; onSelect: () => void }) => React.ReactNode;
 }
 
-export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo }: CircuitShellProps) {
+export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo, selectedDivKey, onSelectDivision, renderSidebarItem }: CircuitShellProps) {
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -625,15 +641,32 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const divsLoading = !!cur && curDivisions.length === 0 && loadingId === cur.id;
 
   // ── Divisão (escalão) activa ────────────────────────────────────────
+  // Controlada pela página quando há `onSelectDivision` (deep-link por escalão —
+  // FPG); caso contrário estado interno (mesmo padrão de `infoView`).
+  const divControlled = !!onSelectDivision;
   const [divKey, setDivKey] = useState<string | null>(null);
+  const effDivKey = divControlled ? (selectedDivKey ?? null) : divKey;
+  const selectDiv = useCallback((entry: CircuitEntry, d: CircuitDivision) => {
+    if (divControlled) onSelectDivision!(entry, d);
+    else setDivKey(d.key);
+  }, [divControlled, onSelectDivision]);
   const curDiv = useMemo(() => {
     if (!cur || curDivisions.length === 0) return null;
-    const byKey = divKey ? curDivisions.find(d => d.key === divKey) : null;
+    const byKey = effDivKey ? curDivisions.find(d => d.key === effDivKey) : null;
     if (byKey) return byKey;
     return curDivisions.find(d => d.hasManuel) ?? curDivisions[0] ?? null;
-  }, [cur, curDivisions, divKey]);
-  // Reset divisão ao mudar de torneio.
-  useEffect(() => { setDivKey(null); }, [curId]);
+  }, [cur, curDivisions, effDivKey]);
+  // Reset divisão ao mudar de torneio (só no modo interno).
+  useEffect(() => { if (!divControlled) setDivKey(null); }, [curId, divControlled]);
+  // Deep-link da divisão default: quando a página controla mas o URL ainda não
+  // aponta ao escalão mostrado (aterragem no grupo sem escalão, ou escalão
+  // stale), reflectir o escalão activo no URL. Só dispara quando divergem — a
+  // página deve guardar o navigate com um teste de location (evita loop).
+  useEffect(() => {
+    if (divControlled && cur && curDiv && curDiv.key !== selectedDivKey) {
+      onSelectDivision!(cur, curDiv);
+    }
+  }, [divControlled, cur, curDiv, selectedDivKey, onSelectDivision]);
 
   // ── Secção activa ───────────────────────────────────────────────────
   const sections = useMemo(() => (curDiv ? divisionSections(curDiv) : []), [curDiv]);
@@ -652,10 +685,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     setSearch(""); setFYear("all"); setFEsc("all"); setFSex("all"); setFSource("all");
     setFLiga("all"); setFIntl(false); setToggles(new Set());
   };
-
-  if (loading) {
-    return <div className="tourn-layout"><LoadingState message={config.loadingMessage ?? "A carregar…"} /></div>;
-  }
 
   // ── Leaderboard com toggles aplicados ───────────────────────────────
   const resultsTourn = curDiv?.results
@@ -787,6 +816,14 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
   const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0) || (curDiv?.links && curDiv.links.length > 0)));
 
+  // Early-return de loading DEPOIS de todos os hooks (rules of hooks): o shell
+  // pode ser montado com loading=true e transitar para false enquanto montado
+  // (ex.: FPGPage passa loading={loading}). Se ficasse antes de useSearchParams
+  // & co., a contagem de hooks mudaria na transição → crash "order of Hooks".
+  if (loading) {
+    return <div className="tourn-layout"><LoadingState message={config.loadingMessage ?? "A carregar…"} /></div>;
+  }
+
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
       <div className="tourn-layout">
@@ -916,6 +953,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               config={config}
               curId={cur?.id ?? null}
               onSelect={selectEntry}
+              renderItem={renderSidebarItem}
             />
           </div>
 
@@ -942,7 +980,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         <button
                           key={d.key}
                           className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                          onClick={() => setDivKey(d.key)}
+                          onClick={() => selectDiv(cur, d)}
                         >
                           {d.tabLabel || d.escalao}
                           {nP > 0 && (
@@ -1102,17 +1140,33 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 // ── Sidebar (agrupamento por ano / série / fonte) ─────────────────────
 
 function CircuitSidebar({
-  entries, config, curId, onSelect,
+  entries, config, curId, onSelect, renderItem,
 }: {
   entries: CircuitEntry[];
   config: CircuitConfig;
   curId: string | null;
   onSelect: (e: CircuitEntry) => void;
+  renderItem?: (entry: CircuitEntry, ctx: { active: boolean; onSelect: () => void }) => React.ReactNode;
 }) {
   // Agrupamento de 1º nível (none | série | fonte).
   const l1Mode = config.grouping === "series-year" ? "series"
     : config.grouping === "source-year" ? "source"
     : "none";
+
+  // "month-year": bucket 2º nível por mês (chave YYYY-MM da data do torneio) em
+  // vez de por ano. `bk` ordena os blocos (desc); `label` é o cabeçalho ("Mai
+  // 2026"). Nos restantes modos o bucket é o ano (comportamento original).
+  const monthMode = config.grouping === "month-year";
+  const bucketOf = useCallback((e: CircuitEntry): { bk: string; label: string } => {
+    if (monthMode) {
+      const dk = entryDateKey(e); // YYYYMMDD ("00000000" = sem data)
+      if (dk === "00000000") return { bk: "0000-00", label: "Sem data" };
+      const ym = `${dk.slice(0, 4)}-${dk.slice(4, 6)}`;
+      return { bk: ym, label: monthLabel(ym) };
+    }
+    const y = e.year;
+    return { bk: y == null ? "0000" : String(y), label: y == null ? "Sem data" : String(y) };
+  }, [monthMode]);
 
   const groups = useMemo(() => {
     const byL1 = new Map<string, CircuitEntry[]>();
@@ -1132,14 +1186,22 @@ function CircuitSidebar({
     } else {
       keys = keys.sort();
     }
-    // Ordenação por data (mais recente primeiro) dentro de cada ano — ver
+    // Ordenação por data (mais recente primeiro) dentro de cada bucket — ver
     // entryDateKey/entriesByDateDesc (partilhados com o default de selecção).
     return keys.map(k => {
       const items = byL1.get(k)!;
-      const years = [...new Set(items.map(e => e.year))].sort((a, b) => (b ?? -1) - (a ?? -1));
-      return { key: k, years: years.map(y => ({ year: y, items: items.filter(e => e.year === y).sort(entriesByDateDesc) })) };
+      const byBucket = new Map<string, { label: string; items: CircuitEntry[] }>();
+      for (const e of items) {
+        const { bk, label } = bucketOf(e);
+        if (!byBucket.has(bk)) byBucket.set(bk, { label, items: [] });
+        byBucket.get(bk)!.items.push(e);
+      }
+      const buckets = [...byBucket.entries()]
+        .sort((a, b) => b[0].localeCompare(a[0]))
+        .map(([bk, v]) => ({ bk, label: v.label, items: v.items.sort(entriesByDateDesc) }));
+      return { key: k, buckets };
     });
-  }, [entries, l1Mode, config.seriesOrder]);
+  }, [entries, l1Mode, config.seriesOrder, bucketOf]);
 
   return (
     <>
@@ -1155,13 +1217,16 @@ function CircuitSidebar({
               {g.key}
             </SidebarSectionTitle>
           )}
-          {g.years.map(({ year, items }) => (
-            <React.Fragment key={String(year)}>
-              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color, color: config.textColor ?? "#fff" }}>
-                {year ?? "Sem data"}
+          {g.buckets.map(({ bk, label, items }) => (
+            <React.Fragment key={bk}>
+              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color ?? "var(--color-good-dark)", color: config.textColor ?? "#fff" }}>
+                {label}
               </div>
               {items.map(e => {
                 const active = e.id === curId;
+                // Render custom (FPG reutiliza o TournSidebarItem) — assume o item
+                // inteiro; o shell só fornece `active` + o seu `onSelect`.
+                if (renderItem) return <React.Fragment key={e.id}>{renderItem(e, { active, onSelect: () => onSelect(e) })}</React.Fragment>;
                 const nP = entryPlayerCount(e);
                 const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
                 const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;

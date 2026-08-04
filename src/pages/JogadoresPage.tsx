@@ -983,7 +983,11 @@ function PlayerKpiStrip({ data, currentHcp, roundsThisYear }: {
   return (
     <div className="jog-kpi-strip">
       <UiKpiCard size="sm" label="Índice" value={currentHcp != null ? currentHcp.toFixed(1) : "—"}
-        delta={k.idxDelta} deltaLabel="em 12m" />
+        delta={k.idxDelta} deltaLabel="em 12m"
+        fill={k.idxDelta == null ? null
+          : k.idxDelta < -0.05 ? "good"   /* índice desceu → melhorou → verde */
+          : k.idxDelta > 0.05 ? "danger"  /* índice subiu → piorou → vermelho */
+          : null} />
       <UiKpiCard size="sm" label="Voltas" value={k.totalRounds} sub={`${k.totalCourses} campos`} />
       <UiKpiCard size="sm" label={`Rondas ${curY}`} value={roundsThisYear}
         sub={k.roundsPrevYear > 0 ? `vs ${k.roundsPrevYear} em ${curY - 1}` : undefined} />

@@ -152,6 +152,7 @@ export function normalizePlayer(p: any): any {
     meters: p.meters || r1?.meters,
     courseRating: p.courseRating ?? r1?.courseRating,
     slope: p.slope ?? r1?.slope,
+    pcc: p.pcc ?? r1?.pcc,
     teeName: p.teeName || r1?.teeName,
   };
 }

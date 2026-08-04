@@ -18,16 +18,55 @@ import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
 
-/** Chave de agrupamento de edições: clube + família do nome. */
+/**
+ * Aliases CURADOS de edições que mudaram de nome/rótulo entre anos. A heurística
+ * automática (`tournamentFamilyKey`) não liga edições rebaptizadas — ex.: "World
+ * Kids Golf 2024 Under 14" (ccode 179) e "Amendoeira World Kids Golfe 2026 Sub 14"
+ * dão family keys diferentes (prefixo "Amendoeira" + "Golf"/"Golfe" + "Under"/"Sub").
+ *
+ * Cada regra:
+ *  - `match` (testado contra o family key CRU) → colapsa para um `canon`
+ *    ESCALÃO-INDEPENDENTE partilhado por todas as edições/escalões do evento;
+ *  - `deriveEscFromName` → quando a fonte não traz escalão (as provas de 2024
+ *    têm `escalao` vazio), deriva-o do nome no formato "Sub N" para casar com o
+ *    `matchDivision` (que separa os escalões dentro da família).
+ *
+ * ⚠ Só afecta a tab de edições anteriores da FPGPage — NÃO mexe no
+ * `tournamentFamilyKey` global (usado por England/FFG/RFEG/MAJOR). Derivar
+ * escalão do nome GLOBALMENTE re-partiria o Miramar U25 (o "U25" do nome daria
+ * "Sub 25" e deixava de casar com a edição anterior sem escalão).
+ */
+interface EditionAlias { match: RegExp; canon: string; deriveEscFromName?: boolean }
+const EDITION_ALIASES: EditionAlias[] = [
+  // World Kids @ Amendoeira (ccode 179) — o nome variou muito entre anos:
+  //   2024 "World Kids Golf 2024 Under N" · 2025 "Amendoeira World Kids Sub N"
+  //   (sem "Golf") · 2026 "Amendoeira World Kids Golfe 2026 Sub N" · e há uma
+  //   gralha na fonte ("World Kis Sub 14"). Casar só por "World Ki(d)s".
+  { match: /\bworld ki[dt]?s\b/, canon: "world kids golf", deriveEscFromName: true },
+];
+function editionAliasFor(rawFamKey: string | null): EditionAlias | null {
+  if (!rawFamKey) return null;
+  return EDITION_ALIASES.find(a => a.match.test(rawFamKey)) ?? null;
+}
+/** Escalão "Sub N" a partir do nome ("Under 14"/"U14"/"Sub 14" → "Sub 14";
+ *  "Under 16/18" → "Sub 16"). Usado só para eventos com `deriveEscFromName`. */
+function escFromName(name?: string | null): string | null {
+  const m = String(name || "").match(/\b(?:sub|under|u)[\s\-_]?(\d{1,2})\b/i);
+  return m ? `Sub ${m[1]}` : null;
+}
+
+/** Chave de agrupamento de edições: clube + família do nome (com aliases curados). */
 function editionKey(t: Tournament): string | null {
-  const fam = tournamentFamilyKey(t.name);
-  if (!fam) return null;
+  const raw = tournamentFamilyKey(t.name);
+  if (!raw) return null;
+  const fam = editionAliasFor(raw)?.canon ?? raw;
   return `${t.ccode || "?"}|${fam}`;
 }
 
 /** Converte um torneio FPG numa `CircuitEntry` (uma coluna = uma edição). */
 function toEntry(t: Tournament): CircuitEntry {
-  const esc = t.escalao || "—";
+  const alias = editionAliasFor(tournamentFamilyKey(t.name));
+  const esc = t.escalao || (alias?.deriveEscFromName ? escFromName(t.name) : null) || "—";
   const div: CircuitDivision = { key: "d", escalao: esc, tabLabel: esc, results: t };
   return {
     id: `${t.ccode}-${t.tcode}`,

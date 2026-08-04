@@ -132,6 +132,9 @@ function cleanTournName(raw) {
   // sufixos de dia/ronda: " D3", " R2", " - Dia 2", " Dia 2", " (Volta 3)", " V3"
   s = s.replace(/\s*[-–]?\s*(dia|volta|round|ronda|day)\s*\d+\s*$/i, "");
   s = s.replace(/\s+[DRV]\d+\s*$/i, "");
+  // Gralhas conhecidas da fonte FPG (WHS) — reaparecem a cada scrape dos
+  // jogadores, por isso normalizam-se aqui (durável entre rebuilds).
+  s = s.replace(/\bWorld Kis\b/g, "World Kids");
   return s.trim();
 }
 

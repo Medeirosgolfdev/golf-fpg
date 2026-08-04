@@ -3,8 +3,13 @@
 /**
  * fetch-uskids-draws.js
  *
- * Descarrega o DRAW (pairings/tee times) de torneios USKids onde o Manuel
- * está inscrito, no escalão dele e nos escalões adjacentes (±1 idade).
+ * Descarrega o DRAW (pairings/tee times) de torneios USKids em 3 fontes:
+ *   1. Manuel inscrito (field.json) — escalão dele + adjacentes ±1.
+ *   2. Histórico onde o Manuel jogou (member-history/results) — dele + ±1.
+ *   3. Escalão do Manuel em provas que ele NÃO jogou (uskids-results.json) —
+ *      só o escalão exacto dele, calculado pela data. Assim o draw do escalão
+ *      do Manuel aparece mesmo quando ele salta a prova (ex: t=21666 Boys 12).
+ *      Desligável com --skip-sem-manuel.
  *
  * Corre no fim do workflow uskids-results.yml.
  *
@@ -107,6 +112,50 @@ function historicosManuel() {
     }
   } catch { /* results pode não existir */ }
   return [...out.values()];
+}
+
+// ── Escalão do Manuel por data (espelho de escalaoManuelParaData em manuel.ts) ──
+// month 0-indexed (Abril = 3). Conta o aniversário (29 Abr) para o off-by-one.
+const MANUEL_DOB = { year: 2014, month: 3, day: 29 };
+function escalaoManuelDeData(dateStr) {
+  if (!dateStr) return null;
+  let dt;
+  if (String(dateStr).includes('/')) {
+    const [m, d, y] = String(dateStr).split('/').map(Number);
+    dt = new Date(y, m - 1, d);
+  } else {
+    dt = new Date(dateStr);
+  }
+  if (isNaN(dt.getTime())) return null;
+  const anoT = dt.getFullYear();
+  const aniversario = new Date(anoT, MANUEL_DOB.month, MANUEL_DOB.day);
+  return anoT - MANUEL_DOB.year - (dt < aniversario ? 1 : 0);
+}
+
+/**
+ * Fonte 3: torneios do uskids-results.json onde o escalão do Manuel (calculado
+ * pela data) EXISTE, mesmo que ele não tenha jogado. Permite mostrar o draw do
+ * escalão dele em provas que ele saltou (ex: t=21666 Veteran Qualifier, Boys 12).
+ * Cada entry: { t, idadeManuel, name, date_inicio, date_fim }.
+ */
+function resultadosComEscalaoManuel() {
+  const out = [];
+  try {
+    const results = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
+    for (const t of results.resultados || []) {
+      const idade = escalaoManuelDeData(t.date_inicio || t.date);
+      if (idade == null) continue;
+      const existe = (t.escaloes || []).some(e =>
+        (e.nome || e.age_group) === `Boys ${idade}` || idadeDoEscalao(e.nome) === idade);
+      if (!existe) continue;
+      out.push({
+        t: t.t, idadeManuel: idade, name: t.name,
+        date_inicio: t.date_inicio || t.date,
+        date_fim: t.date_fim || t.date_inicio || t.date,
+      });
+    }
+  } catch { /* results pode não existir */ }
+  return out;
 }
 
 /** Janela em dias antes do torneio para começar a tentar descarregar o draw. */
@@ -313,7 +362,7 @@ async function fetchFlightRound(page, fid, ronda, totalEstim) {
  * signupanytime, para torneios PASSADOS que já não estão no field.json.
  * `idadeManuel` = idade do escalão do Manuel neste torneio (ex: 12 → "Boys 12").
  */
-function alvosDoMeta(meta, idadeManuel) {
+function alvosDoMeta(meta, idadeManuel, opts = {}) {
   const ageGroups = meta.age_groups || {};
   const flights   = meta.flights    || {};
   const flightPorNome = {}; // "Boys 11" → { fid, age_group, inscritos }
@@ -323,7 +372,10 @@ function alvosDoMeta(meta, idadeManuel) {
     flightPorNome[ag.name] = { fid: parseInt(fid, 10), age_group: parseInt(f.age_group, 10), inscritos: f.registered || 60 };
   }
   const alvos = [];
-  const nomes = [`Boys ${idadeManuel}`, `Boys ${idadeManuel - 1}`, `Boys ${idadeManuel + 1}`];
+  // exactOnly: só o escalão do Manuel (Fonte 3 — provas sem ele). Caso normal: ±1.
+  const nomes = opts.exactOnly
+    ? [`Boys ${idadeManuel}`]
+    : [`Boys ${idadeManuel}`, `Boys ${idadeManuel - 1}`, `Boys ${idadeManuel + 1}`];
   nomes.forEach((nome, i) => {
     const f = flightPorNome[nome];
     if (!f) return;
@@ -335,7 +387,7 @@ function alvosDoMeta(meta, idadeManuel) {
 // ── Processar um torneio completo ────────────────────────────────────────
 // `spec` = { torneio, alvos } (via field.json) OU { torneio, idadeManuel } (histórico).
 async function processarTorneio(page, spec) {
-  const { torneio, idadeManuel } = spec;
+  const { torneio, idadeManuel, soExato } = spec;
   let { alvos } = spec;
   const ax = torneio.ax || 1129;
   console.log(`\n▶ ${torneio.name} (t=${torneio.t}) — ${diasAte(torneio.date_inicio)}d`);
@@ -355,7 +407,7 @@ async function processarTorneio(page, spec) {
 
   // Histórico: descobrir alvos a partir do meta (o field.json já não os tem)
   if (!alvos && idadeManuel != null) {
-    alvos = alvosDoMeta(meta, idadeManuel);
+    alvos = alvosDoMeta(meta, idadeManuel, { exactOnly: soExato });
     if (!alvos.length) { console.warn(`  ✗ Escalão "Boys ${idadeManuel}" não encontrado nos flights — saltar.`); return null; }
     console.log(`  alvos: ${alvos.map(a => (a.is_manuel ? '★' : '·') + a.nome).join(', ')}`);
   }
@@ -470,6 +522,28 @@ async function main() {
       n++;
     }
     console.log(`\n   Histórico: ${hist.length} torneios do Manuel, ${n} por scrapar${forceHistorico ? ' (--force-historico)' : ''}.`);
+  }
+
+  // ── Fonte 3: escalão do Manuel em provas que ele NÃO jogou (pedido 2026-07-29) ──
+  // Todos os torneios do uskids-results.json onde "Boys {idade do Manuel}" existe.
+  // Só o escalão exacto dele (soExato) — "pelo menos o escalão do Manuel".
+  const skipSemManuel = process.argv.includes('--skip-sem-manuel');
+  if (!skipHistorico && !skipSemManuel) {
+    const alvo3 = resultadosComEscalaoManuel();
+    const idsJa = new Set(aProcessar.map(x => x.torneio.t));
+    let n3 = 0;
+    for (const r of alvo3) {
+      if (idsJa.has(r.t)) continue;                          // já vai via field/histórico
+      if (jaTemDraw.has(r.t) && !forceHistorico) continue;   // já tem draw → não re-scrapa
+      aProcessar.push({
+        torneio: { t: r.t, name: r.name, date_inicio: r.date_inicio, date_fim: r.date_fim },
+        idadeManuel: r.idadeManuel,
+        soExato: true,
+      });
+      console.log(`   ➕ sem-Manuel t=${r.t} ${r.name} (Boys ${r.idadeManuel})`);
+      n3++;
+    }
+    console.log(`\n   Escalão do Manuel s/ participação: ${alvo3.length} candidatos, ${n3} por scrapar.`);
   }
 
   if (!aProcessar.length) {

@@ -58,6 +58,7 @@ export default function AdmissionsTab({
   const players = admissions.players || [];
   const confirmedCount = admissions.totalInscritos ?? players.filter(p => p.status === "confirmed").length;
   const reservasCount = admissions.reservas ?? players.filter(p => p.status === "reserva").length;
+  const desistentesCount = players.filter(p => p.status === "desistente").length;
   const term = norm(q);
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
 
@@ -113,10 +114,13 @@ export default function AdmissionsTab({
   const sorted = useMemo(() => {
     const INF = 9999;
     const mult = sortDir === "asc" ? 1 : -1;
-    // Posição absoluta: confirmed 1..N, reservas N+1..N+M (para sort por "pos")
+    // Posição absoluta: confirmed 1..N, reservas N+1.., desistentes por último.
     const nConf = filtered.filter(p => p.status === "confirmed").length;
+    const nRes = filtered.filter(p => p.status === "reserva").length;
     const absPos = (p: typeof filtered[number]) =>
-      p.status === "confirmed" ? (p.pos ?? INF) : nConf + (p.pos ?? INF);
+      p.status === "confirmed" ? (p.pos ?? INF)
+        : p.status === "reserva" ? nConf + (p.pos ?? INF)
+        : nConf + nRes + (p.pos ?? INF);
     return [...filtered].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
@@ -139,31 +143,41 @@ export default function AdmissionsTab({
     // Posição contínua: confirmed 1..N, reservas N+1..N+M. Mostra números únicos
     // mesmo quando confirmed e reservas aparecem misturadas por sort custom.
     const nConf = sorted.filter(p => p.status === "confirmed").length;
+    const nRes = sorted.filter(p => p.status === "reserva").length;
     return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const isReserva = p.status === "reserva";
+      const isDesist = p.status === "desistente";
+      const desinscritoEm = (p as any).desinscritoEm as string | undefined;
       const age = ageAtDate(p._dob, date || undefined);
-      const displayPos = isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
+      // Desistentes não ocupam número de posição (a inscrição foi anulada);
+      // confirmed 1..N, reservas N+1.., desistentes fora da numeração.
+      const numPos = isDesist ? null : isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
+      const nameNode = (
+        // A bandeira é desenhada pelo TournPName (lookup country via playersDB).
+        // NÃO adicionar CountryFlag aqui — senão estrangeiros ficam com bandeira a dobrar.
+        <TournPName
+          name={p._nomeFormatted || "–"}
+          fed={p.fed || undefined}
+          playersDB={playersDB}
+          highlight={manuel}
+        />
+      );
       return {
         key: `${p.fed ?? p.nome}-${i}`,
-        pos: displayPos,
+        pos: isDesist ? <span className="muted">–</span> : numPos,
         gross: 0,
         toPar: null,
         scores: [],
         isManuel: manuel,
-        sortPos: displayPos,
+        sortPos: numPos ?? (nConf + nRes + (p.pos ?? i + 1)),
         sortName: p._nomeFormatted,
-        rowBg: !manuel && isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
-        nameContent: (
-          // A bandeira é desenhada pelo TournPName (lookup country via playersDB).
-          // NÃO adicionar CountryFlag aqui — senão estrangeiros ficam com bandeira a dobrar.
-          <TournPName
-            name={p._nomeFormatted || "–"}
-            fed={p.fed || undefined}
-            playersDB={playersDB}
-            highlight={manuel}
-          />
-        ),
+        rowBg: manuel ? undefined
+          : isDesist ? "color-mix(in srgb, var(--text-muted) 10%, transparent)"
+          : isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
+        nameContent: isDesist
+          ? <span style={{ textDecoration: "line-through", opacity: 0.6 }}>{nameNode}</span>
+          : nameNode,
         prefixCells: (
           <>
             <td className="lb-esc">
@@ -197,7 +211,11 @@ export default function AdmissionsTab({
               {p.dataInscricao || "–"}
             </td>
             <td style={{ padding: "6px 8px", textAlign: "center" }}>
-              {isReserva
+              {isDesist
+                ? <span
+                    title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
+                    style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
+                : isReserva
                 ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
@@ -243,7 +261,7 @@ export default function AdmissionsTab({
       <input className="input" value={q} onChange={e => setQ(e.target.value)}
         placeholder="Nome, clube, nº fed..." style={{ maxWidth: 240 }} />
       <span className="muted fs-12">
-        {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}
+        {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}
       </span>
       {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
       <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>

@@ -27,6 +27,10 @@ on:
         description: 'Máx N players (smoke test). Vazio = sem limite.'
         required: false
         default: ''
+      max_runtime_min:
+        description: 'Prazo de execução em minutos (o script pára e grava progresso antes do limite de 6h). 0 = sem limite.'
+        required: false
+        default: '300'
 
 permissions:
   contents: write
@@ -53,6 +57,7 @@ jobs:
         run: |
           ARGS="--since-days ${{ github.event.inputs.since_days || '14' }}"
           ARGS="$ARGS --concurrency ${{ github.event.inputs.concurrency || '4' }}"
+          ARGS="$ARGS --max-runtime-min ${{ github.event.inputs.max_runtime_min || '300' }}"
           if [ -n "${{ github.event.inputs.players }}" ]; then
             ARGS="$ARGS --players ${{ github.event.inputs.players }}"
           fi
@@ -82,7 +87,10 @@ jobs:
           exit 0
 
       - name: Commit se houve alterações
-        if: steps.scrape.outputs.exit_code == '0'
+        # Corre em exit 0 (progresso) E exit 2 (sem novos players): mesmo sem
+        # ficheiros novos, a cache aquecida da Fase 2 pode ter avançado e deve
+        # ser committada. O guard `git diff --cached --quiet` no-opa se nada mudou.
+        if: steps.scrape.outputs.exit_code != '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

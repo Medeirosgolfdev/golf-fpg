@@ -30,13 +30,9 @@ const SOURCE_FILES = [
   "jovens_2024.json",
   "jovens_2025.json",
   "jovens_2026.json",
-  "pull-torneios000.json",
-  "pull-torneios001.json",
-  "pull-torneios002.json",
-  "pull-torneios003.json",
-  "pull-torneios004.json",
-  "pull-torneios005.json",
-  "pull-torneios006.json",
+  // Todos os pull-torneios00N.json por ordem crescente — robusto à rotação
+  // ~120/ficheiro (apanha 007, 008, ... sem editar esta lista).
+  ...fs.readdirSync(DATA_DIR).filter((f) => /^pull-torneios\d{3}\.json$/.test(f)).sort(),
 ];
 
 function isCampeonatoNacionalJovens(name) {

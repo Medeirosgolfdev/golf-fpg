@@ -9,7 +9,7 @@
   "gg_page": "12891806910545703850",
   "gg_league": "12891806821458686569",
   "stats_page": null,
-  "scrapedAt": "2026-07-25T21:12:11.082Z",
+  "scrapedAt": "2026-08-03T21:24:39.664Z",
   "course": {
     "name": "Golf du Gouverneur (Montaplan)",
     "tee": "Jaunes",
@@ -12534,7 +12534,7 @@
                 "teamMatchId": null,
                 "matchNo": 1,
                 "startTime": "8:18",
-                "result": null,
+                "result": "3 & 2",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -12559,8 +12559,8 @@
                     "matchNo": 1,
                     "order": 1,
                     "format": "single",
-                    "result": null,
-                    "playedHoles": 5,
+                    "result": "3 & 2",
+                    "playedHoles": 18,
                     "startTime": "8:18",
                     "isFinal": false,
                     "home": {
@@ -12569,7 +12569,7 @@
                       "players": [
                         "GALLE Theophile"
                       ],
-                      "result": "",
+                      "result": "3 & 2",
                       "won": true
                     },
                     "away": {
@@ -12610,67 +12610,67 @@
                       {
                         "hole": 6,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 7,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 8,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 9,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 10,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 11,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 12,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 13,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 14,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 15,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 16,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 17,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 18,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       }
                     ]
                   }
@@ -12680,7 +12680,7 @@
                 "teamMatchId": null,
                 "matchNo": 2,
                 "startTime": "8:27",
-                "result": null,
+                "result": "3 & 2",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -12705,8 +12705,8 @@
                     "matchNo": 2,
                     "order": 1,
                     "format": "single",
-                    "result": null,
-                    "playedHoles": 5,
+                    "result": "3 & 2",
+                    "playedHoles": 18,
                     "startTime": "8:27",
                     "isFinal": false,
                     "home": {
@@ -12715,7 +12715,7 @@
                       "players": [
                         "ROLLAND Arthur"
                       ],
-                      "result": "",
+                      "result": "3 & 2",
                       "won": true
                     },
                     "away": {
@@ -12756,67 +12756,220 @@
                       {
                         "hole": 6,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 7,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 8,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 9,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 10,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 11,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 12,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 13,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 14,
                         "par": null,
-                        "status": null
+                        "status": "1UP"
                       },
                       {
                         "hole": 15,
                         "par": null,
-                        "status": null
+                        "status": "2UP"
                       },
                       {
                         "hole": 16,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 17,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 18,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "number": 5,
+            "name": "Finale",
+            "date": "2026-07-25",
+            "matches": [
+              {
+                "teamMatchId": null,
+                "matchNo": 1,
+                "startTime": "12:57",
+                "result": null,
+                "isSettled": true,
+                "isStarted": true,
+                "home": {
+                  "teamId": null,
+                  "name": "GALLE Theophile",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "away": {
+                  "teamId": null,
+                  "name": "ROLLAND Arthur",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "winner": "home",
+                "games": [
+                  {
+                    "matchNo": 1,
+                    "order": 1,
+                    "format": "single",
+                    "result": null,
+                    "playedHoles": 18,
+                    "startTime": "12:57",
+                    "isFinal": false,
+                    "home": {
+                      "teamId": null,
+                      "name": "GALLE Theophile",
+                      "players": [
+                        "GALLE Theophile"
+                      ],
+                      "result": "",
+                      "won": true
+                    },
+                    "away": {
+                      "teamId": null,
+                      "name": "ROLLAND Arthur",
+                      "players": [
+                        "ROLLAND Arthur"
+                      ],
+                      "result": "",
+                      "won": false
+                    },
+                    "holes": [
+                      {
+                        "hole": 1,
+                        "par": null,
+                        "status": "A/S"
+                      },
+                      {
+                        "hole": 2,
+                        "par": null,
+                        "status": "A/S"
+                      },
+                      {
+                        "hole": 3,
+                        "par": null,
+                        "status": "A/S"
+                      },
+                      {
+                        "hole": 4,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 5,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 6,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 7,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 8,
+                        "par": null,
+                        "status": "2UP"
+                      },
+                      {
+                        "hole": 9,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 10,
+                        "par": null,
+                        "status": "4UP"
+                      },
+                      {
+                        "hole": 11,
+                        "par": null,
+                        "status": "4UP"
+                      },
+                      {
+                        "hole": 12,
+                        "par": null,
+                        "status": "4UP"
+                      },
+                      {
+                        "hole": 13,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 14,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 15,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 16,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 17,
+                        "par": null,
+                        "status": "3UP"
+                      },
+                      {
+                        "hole": 18,
+                        "par": null,
+                        "status": "3UP"
                       }
                     ]
                   }
@@ -12827,6 +12980,6 @@
         ]
       }
     ],
-    "scrapedAt": "2026-07-25T07:45:57.379Z"
+    "scrapedAt": "2026-08-03T06:40:39.809Z"
   }
 }

@@ -21,7 +21,11 @@ export interface FpgAdmissionPlayer {
   hcp: number | null;
   vac: number | null;
   dataInscricao: string | null;  // "YYYY/MM/DD HH:MM"
-  status: "confirmed" | "reserva";
+  status: "confirmed" | "reserva" | "desistente";
+  /** Data em que o jogador se desinscreveu (só quando status === "desistente").
+   *  Guardamos o registo em vez de o apagar da lista — a inscrição fica visível
+   *  marcada como "desistiu" para manter o histórico. Formato "YYYY-MM-DD". */
+  desinscritoEm?: string | null;
   // Overrides opcionais por jogador — usados por fontes não-FPG (ex.: NextCaddy/
   // España) que não passam por playersDB/federados.json. Quando ausentes (FPG),
   // o AdmissionsTab cai no comportamento normal (hooks de country/dob, tee por escalão).
@@ -132,7 +136,7 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     hcp: p.hcp ?? null,
     vac: p.vac ?? p.vacf ?? null,
     dataInscricao: p.dataInscricao ?? p.registo ?? null,
-    status: p.status === "reserva" ? "reserva" : "confirmed",
+    status: p.status === "reserva" ? "reserva" : p.status === "desistente" ? "desistente" : "confirmed",
     // Overrides opcionais por jogador — preservar quando existem (senão a coluna
     // TEE e os enriquecimentos de fontes não-FPG desapareciam aqui). `tee` é
     // aceite como alias antigo de `teeName`.
@@ -140,6 +144,7 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     ...(p.dob ? { dob: p.dob } : {}),
     ...(p.country ? { country: p.country } : {}),
     ...(p.escalao ? { escalao: p.escalao } : {}),
+    ...(p.desinscritoEm ? { desinscritoEm: p.desinscritoEm } : {}),
   };
 }
 

@@ -117,7 +117,11 @@ export function buildFeaturedSynthetic(ft: FeaturedTournament, ad: FpgTournament
     circuit: "tour",
     series: ft.series ?? "jovens",
     region: ft.region ?? null,
-    escalao: ft.escalao ?? inferEscalao(ad.name || ""),
+    // Honrar `escalao: null` EXPLÍCITO (torneio multi-escalão, sem tab única) —
+    // só inferir quando a config OMITE o campo. Com `??`, o null colapsava para o
+    // inferido: o Miramar U25 ("...U25") saía "Sub 25" e a tab "Edições anteriores"
+    // deixava de casar com a edição anterior (10564), que não tem escalão ("—").
+    escalao: ft.escalao !== undefined ? ft.escalao : inferEscalao(ad.name || ""),
     num: 1,
     rounds: ft.rounds ?? (drawRounds || (ad.admissions as any)?.rounds || 1),
     playerCount,
@@ -145,12 +149,14 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     live: false,  // evento já disputado (Maio 2026) — inscrições encerradas
   })),
 
-  // ── Amendoeira Clube de Golfe — torneio futuro, 3 escalões (2026) ────
-  // Nome/data/campo vêm do scrape (fpg-admissions-draws.json); para já só
-  // há draw publicado. tournAdmissions: ccode=179, tcodes 10604-10606.
+  // ── Amendoeira Clube de Golfe — World Kids Golfe, 5 escalões (2026) ──
+  // Nome/data/campo vêm do scrape (fpg-admissions-draws.json).
+  // tournAdmissions: ccode=179, tcodes 10603-10607.
+  { ccode: "179", tcode: "10603" },
   { ccode: "179", tcode: "10604" },
   { ccode: "179", tcode: "10605" },
   { ccode: "179", tcode: "10606" },
+  { ccode: "179", tcode: "10607" },
 
   // ── VIII Miramar Internacional Open U25 — 19-21 Ago 2026 (CGM, ccode 003) ──
   // Inscritos scraped MANUALMENTE das páginas do clube (cgm.pt), NÃO da FPG.

@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-07-25T20:44:52.121Z",
+  "geradoEm": "2026-08-02T20:47:06.142Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 137,
-  "totalCompanheirosUnicos": 166,
+  "totalRondas": 138,
+  "totalCompanheirosUnicos": 168,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 125,
-      "rondasComDraw": 112,
-      "torneiosJogados": 94,
-      "torneiosComDraw": 88,
+      "rondasJogadas": 126,
+      "rondasComDraw": 113,
+      "torneiosJogados": 95,
+      "torneiosComDraw": 89,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "007-11050",
+          "nome": "Torneio CGSS RALI 2026",
+          "data": "2026-08-01",
+          "rondas": 1
+        },
         {
           "torneioId": "982-10238",
           "nome": "Final Drive Challenge Madeira-Palheiro-Sub 12",
@@ -601,9 +607,9 @@
       ]
     },
     "uskids": {
-      "rondasJogadas": 14,
+      "rondasJogadas": 110,
       "rondasComDraw": 14,
-      "torneiosJogados": 6,
+      "torneiosJogados": 53,
       "torneiosComDraw": 6
     },
     "intl": {
@@ -614,6 +620,52 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-11050",
+      "torneioNome": "Torneio CGSS RALI 2026",
+      "data": "2026-08-01",
+      "ronda": 1,
+      "teeTime": "09:30",
+      "startHole": 10,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
+      "companheiros": [
+        {
+          "nome": "Marcelo Abreu de Freitas",
+          "fed": "43406",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 91,
+            "toPar": 19
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 98,
+            "toPar": 26
+          }
+        },
+        {
+          "nome": "Lara Vieira",
+          "fed": "2218",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "982-10238",

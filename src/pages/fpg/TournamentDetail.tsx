@@ -22,8 +22,9 @@ import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
-  ClubePill, ManuelPill,
+  ClubePill, ManuelPill, OmPill,
 } from "../../ui/PillBadge";
+import { omLevelOf, useOmData, buildOmLookup } from "./fpgOmRanking";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
 import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
@@ -55,7 +56,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const featured = FEATURED_TOURNAMENTS.find(
     f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode));
   const syntheticAdm = (tournament as any)._sourceFile === "fpg-admissions-draws.json";
-  const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds;
+  // Inscrições já encerradas no último scrape → não vale a pena ir ao live
+  // (a lista não muda mais e a FPG deixa de a servir): evita fetches inúteis.
+  const admissionsClosed = /fechad|encerrad/i.test(admissions?.status || "");
+  const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds && !admissionsClosed;
   const live = useLiveAdmissions(tournament.ccode, tournament.tcode, liveEnabled);
   const liveActive = live.status === "live" && live.players.length > 0;
   const effAdmissions = useMemo(() => (liveActive
@@ -217,6 +221,13 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
     [isDrawTab, drawRoundNum, tournament],
   );
 
+  // Ordem de Mérito CGSS — nos torneios do clube (ccode 007) carregamos o
+  // om-cgss-junior.json (que traz o roster das 5 categorias) e passamos um
+  // lookup ao DrawTab, que ganha a coluna "OM".
+  const isCgss = String(tournament.ccode ?? "").padStart(3, "0") === "007";
+  const omData = useOmData(isCgss);
+  const omLookup = useMemo(() => buildOmLookup(omData), [omData]);
+
   // curT só é relevante para round/resumo tabs (lógica existente)
   const expandedIdxForCurT = isResumoTab
     ? expanded.findIndex((e: any) => e._isTotal)
@@ -376,6 +387,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
             {tournament.ccode === SSERRA_CCODE && <SserraPill />}
             {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
+            {omLevelOf(tournament) && <OmPill level={omLevelOf(tournament)} />}
             {tournamentHasManuel(tournament) && <ManuelPill />}
           </span>
 
@@ -486,6 +498,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             admissions={effAdmissions}
             results={drawResults}
             hideCols={drawHideCols}
+            omLookup={omLookup}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />;
         if (isCombined)

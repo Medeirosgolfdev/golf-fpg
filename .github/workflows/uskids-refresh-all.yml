@@ -1,10 +1,13 @@
 name: USKids Refresh All
 on:
   schedule:
-    # Dia 1 de cada mês às 17:00 UTC (30 min depois do daily das 16:30 para
-    # evitar colisões). Re-fetch completo de todos os memberIDs em cache —
-    # apanha torneios que jogadores conhecidos jogaram fora dos ALL_TCODES.
-    - cron: '0 17 1 * *'
+    # Segunda-feira às 09:00 UTC. Semanal (era mensal — ficávamos muito
+    # desfasados). Janela escolhida ENTRE o field (07:00) e o results (16:00)
+    # e longe do incremental das 16:30 (que dura ~2h40m, até ~19:10) e do
+    # rich das 02:00 — evita sobreposição no git push. É um re-fetch COMPLETO
+    # de todos os memberIDs em cache (apanha torneios jogados fora dos
+    # ALL_TCODES), por isso não precisa de correr depois do diário.
+    - cron: '0 9 * * 1'
   workflow_dispatch:
     inputs:
       reason:
@@ -52,14 +55,12 @@ jobs:
           git add -A 'data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git diff --cached --quiet && exit 0
-          git fetch origin main
-          git merge origin/main --no-edit --strategy-option=ours
-          git add -A 'data-archive/uskids-member-history-*.json'
-          git add public/data/uskids-member-history-slim.json
           git commit -m "data: refresh-all USKids histórico [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
+          # Push robusto: COMMIT primeiro, depois pull --rebase --autostash em
+          # cada tentativa. O autostash guarda ficheiros não-committados (caches,
+          # run-summaries que o fetch toca) durante o rebase — sem isto, o antigo
+          # `git merge origin/main` falhava com "local changes would be
+          # overwritten by merge" e derrubava o workflow (caso 2026-07-01).
           PUSH_OK=0
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then

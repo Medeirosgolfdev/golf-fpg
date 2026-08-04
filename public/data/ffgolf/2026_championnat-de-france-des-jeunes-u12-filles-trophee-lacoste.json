@@ -9,7 +9,7 @@
   "gg_page": "12891799518135235492",
   "gg_league": "12891799427437605480",
   "stats_page": null,
-  "scrapedAt": "2026-07-25T21:11:00.943Z",
+  "scrapedAt": "2026-08-03T21:23:21.428Z",
   "course": {
     "name": "Golf du Gouverneur (Montaplan CFJ 2026)",
     "tee": "Golf du Gouverneur - Montaplan CFJ 2026",
@@ -5841,6 +5841,7 @@
     "year": 2026,
     "format": "KnockOut",
     "parentCompetitionId": null,
+    "startDate": "2026-07-22",
     "endDate": "2026-07-25",
     "flights": [
       {
@@ -5854,7 +5855,7 @@
           {
             "number": 1,
             "name": "1/16e de Finale",
-            "date": null,
+            "date": "2026-07-22",
             "matches": [
               {
                 "teamMatchId": null,
@@ -8197,7 +8198,7 @@
           {
             "number": 2,
             "name": "1/8e de Finale",
-            "date": null,
+            "date": "2026-07-23",
             "matches": [
               {
                 "teamMatchId": null,
@@ -9372,7 +9373,7 @@
           {
             "number": 3,
             "name": "1/4 de Finale",
-            "date": null,
+            "date": "2026-07-24",
             "matches": [
               {
                 "teamMatchId": null,
@@ -9969,7 +9970,7 @@
                 "teamMatchId": null,
                 "matchNo": 1,
                 "startTime": "8:00",
-                "result": null,
+                "result": "6 & 5",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -9994,8 +9995,8 @@
                     "matchNo": 1,
                     "order": 1,
                     "format": "single",
-                    "result": null,
-                    "playedHoles": 9,
+                    "result": "6 & 5",
+                    "playedHoles": 18,
                     "startTime": "8:00",
                     "isFinal": false,
                     "home": {
@@ -10004,7 +10005,7 @@
                       "players": [
                         "CHATEL Colette"
                       ],
-                      "result": "",
+                      "result": "6 & 5",
                       "won": true
                     },
                     "away": {
@@ -10065,47 +10066,47 @@
                       {
                         "hole": 10,
                         "par": null,
-                        "status": null
+                        "status": "5UP"
                       },
                       {
                         "hole": 11,
                         "par": null,
-                        "status": null
+                        "status": "5UP"
                       },
                       {
                         "hole": 12,
                         "par": null,
-                        "status": null
+                        "status": "5UP"
                       },
                       {
                         "hole": 13,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 14,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 15,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 16,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 17,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 18,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       }
                     ]
                   }
@@ -10115,7 +10116,7 @@
                 "teamMatchId": null,
                 "matchNo": 2,
                 "startTime": "8:09",
-                "result": null,
+                "result": "7 & 6",
                 "isSettled": true,
                 "isStarted": true,
                 "home": {
@@ -10140,8 +10141,8 @@
                     "matchNo": 2,
                     "order": 1,
                     "format": "single",
-                    "result": null,
-                    "playedHoles": 8,
+                    "result": "7 & 6",
+                    "playedHoles": 18,
                     "startTime": "8:09",
                     "isFinal": false,
                     "home": {
@@ -10150,7 +10151,7 @@
                       "players": [
                         "DETTINGER Eden"
                       ],
-                      "result": "",
+                      "result": "7 & 6",
                       "won": true
                     },
                     "away": {
@@ -10206,37 +10207,190 @@
                       {
                         "hole": 9,
                         "par": null,
-                        "status": null
+                        "status": "3UP"
                       },
                       {
                         "hole": 10,
                         "par": null,
-                        "status": null
+                        "status": "4UP"
                       },
                       {
                         "hole": 11,
                         "par": null,
-                        "status": null
+                        "status": "5UP"
                       },
                       {
                         "hole": 12,
                         "par": null,
-                        "status": null
+                        "status": "6UP"
                       },
                       {
                         "hole": 13,
                         "par": null,
-                        "status": null
+                        "status": "7UP"
                       },
                       {
                         "hole": 14,
                         "par": null,
-                        "status": null
+                        "status": "7UP"
                       },
                       {
                         "hole": 15,
                         "par": null,
-                        "status": null
+                        "status": "7UP"
+                      },
+                      {
+                        "hole": 16,
+                        "par": null,
+                        "status": "7UP"
+                      },
+                      {
+                        "hole": 17,
+                        "par": null,
+                        "status": "7UP"
+                      },
+                      {
+                        "hole": 18,
+                        "par": null,
+                        "status": "7UP"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "number": 5,
+            "name": "Finale",
+            "date": "2026-07-25",
+            "matches": [
+              {
+                "teamMatchId": null,
+                "matchNo": 1,
+                "startTime": "12:39",
+                "result": null,
+                "isSettled": true,
+                "isStarted": true,
+                "home": {
+                  "teamId": null,
+                  "name": "CHATEL Colette",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "away": {
+                  "teamId": null,
+                  "name": "DETTINGER Eden",
+                  "iso": null,
+                  "country": null,
+                  "points": null,
+                  "isLead": false
+                },
+                "winner": "away",
+                "games": [
+                  {
+                    "matchNo": 1,
+                    "order": 1,
+                    "format": "single",
+                    "result": null,
+                    "playedHoles": 15,
+                    "startTime": "12:39",
+                    "isFinal": false,
+                    "home": {
+                      "teamId": null,
+                      "name": "CHATEL Colette",
+                      "players": [
+                        "CHATEL Colette"
+                      ],
+                      "result": "",
+                      "won": false
+                    },
+                    "away": {
+                      "teamId": null,
+                      "name": "DETTINGER Eden",
+                      "players": [
+                        "DETTINGER Eden"
+                      ],
+                      "result": "",
+                      "won": true
+                    },
+                    "holes": [
+                      {
+                        "hole": 1,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 2,
+                        "par": null,
+                        "status": "1UP"
+                      },
+                      {
+                        "hole": 3,
+                        "par": null,
+                        "status": "A/S"
+                      },
+                      {
+                        "hole": 4,
+                        "par": null,
+                        "status": "1DN"
+                      },
+                      {
+                        "hole": 5,
+                        "par": null,
+                        "status": "1DN"
+                      },
+                      {
+                        "hole": 6,
+                        "par": null,
+                        "status": "2DN"
+                      },
+                      {
+                        "hole": 7,
+                        "par": null,
+                        "status": "3DN"
+                      },
+                      {
+                        "hole": 8,
+                        "par": null,
+                        "status": "4DN"
+                      },
+                      {
+                        "hole": 9,
+                        "par": null,
+                        "status": "3DN"
+                      },
+                      {
+                        "hole": 10,
+                        "par": null,
+                        "status": "3DN"
+                      },
+                      {
+                        "hole": 11,
+                        "par": null,
+                        "status": "3DN"
+                      },
+                      {
+                        "hole": 12,
+                        "par": null,
+                        "status": "4DN"
+                      },
+                      {
+                        "hole": 13,
+                        "par": null,
+                        "status": "5DN"
+                      },
+                      {
+                        "hole": 14,
+                        "par": null,
+                        "status": "4DN"
+                      },
+                      {
+                        "hole": 15,
+                        "par": null,
+                        "status": "4DN"
                       },
                       {
                         "hole": 16,
@@ -10262,6 +10416,6 @@
         ]
       }
     ],
-    "scrapedAt": "2026-07-25T07:43:17.341Z"
+    "scrapedAt": "2026-08-03T06:37:38.671Z"
   }
 }

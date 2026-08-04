@@ -14,7 +14,7 @@
  *   • Tabs por ronda (R1, R2, ... + Acumulado para multi-ronda)
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
@@ -27,7 +27,7 @@ import ExtLink from "../ui/ExternalLink";
 import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { monthLabel, tournamentUrl, parseTournKey, fmtDateShort } from "../utils/format";
+import { tournamentUrl, parseTournKey, fmtDateShort } from "../utils/format";
 import {
   isManuel,
   type PlayersDB,
@@ -66,6 +66,16 @@ import {
 import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
+import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
+
+/** Junta o tab da Ordem de Mérito (CGSS) aos tabs de "Edições anteriores". */
+function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0]) {
+  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t) ?? [])];
+  return tabs.length ? tabs : undefined;
+}
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitConfig } from "../ui/circuit/types";
+import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT
@@ -854,6 +864,9 @@ function Content() {
     if (!filterManuel) sp.set("manuel", "0"); else sp.delete("manuel");
     // search
     if (searchQuery.trim()) sp.set("q", searchQuery.trim()); else sp.delete("q");
+    // Normaliza links antigos: `shell` já não faz nada (o CircuitShell é o
+    // default das vistas de torneios), por isso remove-se do URL.
+    sp.delete("shell");
     if (sp.toString() !== searchParams.toString()) {
       setSearchParams(sp, { replace: true });
     }
@@ -1621,6 +1634,17 @@ function Content() {
     //   só aparece uma por (ccode/tcode) na sidebar e nos tabs de escalão.
     const dedupMap = new Map<string, Tournament>();
     const keyOf = (t: Tournament) => (t.ccode || "") + "/" + String(t.tcode || "");
+    // Um torneio FEATURED já jogado cujos resultados vivem em pull-torneios
+    // (ex: Amendoeira World Kids 2026) entra em `jovensTournaments` como
+    // sintético (players:[], só inscrições/draws) E em `tournaments` com os
+    // resultados reais. Sem preferir o que tem resultados, o tab Jovens mostrava
+    // a ficha vazia. `hasResults` distingue os dois.
+    const hasResults = (t: Tournament) =>
+      (t.players || []).some(p => (p.roundScores?.length ?? 0) > 0 || p.grossTotal != null);
+    // Nº de rondas com scorecard — entre duas versões REAIS do mesmo torneio
+    // (ex: pull-torneios002 com 2 rondas vs ...006 com 3), ganha a mais completa.
+    const roundCount = (t: Tournament) =>
+      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
     for (const j of jovensTournaments) {
       const k = keyOf(j);
       if (!dedupMap.has(k)) dedupMap.set(k, j);
@@ -1644,7 +1668,19 @@ function Content() {
       if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
       if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
       const k = keyOf(t);
-      if (!dedupMap.has(k)) dedupMap.set(k, t);
+      const existing = dedupMap.get(k);
+      if (!existing) { dedupMap.set(k, t); continue; }
+      // Resultados reais (pull-torneios) suplantam o sintético admissions-only;
+      // e entre duas versões reais, ganha a MAIS COMPLETA (mais rondas). Em ambos
+      // os casos herda as inscrições/draws/links que só o sintético/versão antiga traz.
+      if ((hasResults(t) && !hasResults(existing)) || roundCount(t) > roundCount(existing)) {
+        dedupMap.set(k, {
+          ...t,
+          _admissions: (existing as any)._admissions ?? (t as any)._admissions,
+          _draws: (existing as any)._draws ?? (t as any)._draws,
+          extraLinks: (existing as any).extraLinks ?? (t as any).extraLinks,
+        } as Tournament);
+      }
     }
     const combined = [...dedupMap.values()];
 
@@ -1704,9 +1740,17 @@ function Content() {
   const displayList = useMemo(() => {
     const dedupMap = new Map<string, Tournament>();
     const keyOf = (t: Tournament) => (t.ccode || "?") + "/" + String(t.tcode ?? "?");
+    // Nº de rondas com scorecard de um torneio — para escolher a versão MAIS
+    // COMPLETA quando o mesmo (ccode/tcode) existe em 2 ficheiros pull-torneios.
+    // ⚠ Aconteceu com o Amendoeira World Kids 2026: um scrape parcial (2 rondas)
+    // ficou em pull-torneios002.json e os finais (3 rondas) em ...006.json; como
+    // o 002 carrega primeiro, a versão de 2 rondas ganhava e a R3 saía vazia.
+    const roundCount = (t: Tournament) =>
+      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
     for (const t of tournaments) {
       const k = keyOf(t);
-      if (!dedupMap.has(k)) dedupMap.set(k, t);
+      const ex = dedupMap.get(k);
+      if (!ex || roundCount(t) > roundCount(ex)) dedupMap.set(k, t);
     }
     for (const j of jovensTournaments) {
       const k = keyOf(j);
@@ -1937,7 +1981,6 @@ function Content() {
     return out;
   }, [displayList]);
   const activeYear = yearFilter ?? null;
-  const inYear = (t: Tournament) => yearMatchesFilter((t.date || "").substring(0, 4), activeYear);
 
   // Event-groups globais — os mesmos torneios agrupados por (date+ccode) com
   // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",
@@ -1955,35 +1998,6 @@ function Content() {
     ),
     [displayList]
   );
-
-  /** Map rápido (ccode/tcode) → EventGroup que o contém. Permite descobrir o
-   *  grupo do `cur` activo em O(1) para renderizar os tabs de escalão. */
-  const eventGroupByKey = useMemo(() => {
-    const m = new Map<string, EventGroup>();
-    for (const g of allEventGroups) {
-      for (const e of g.entries) {
-        m.set((e.ccode || "?") + "/" + String(e.tcode ?? "?"), g);
-      }
-    }
-    return m;
-  }, [allEventGroups]);
-
-  // Agrupamento por mês — todos os torneios (pull + clubes + jovens) — alimenta o tab "Todos"
-  const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
-    const g: Record<string, EventGroup[]> = {};
-    for (const eg of allEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const key = eg.date ? eg.date.substring(0, 7) : "?";
-      if (!g[key]) g[key] = [];
-      g[key].push(eg);
-    }
-    return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allEventGroups, filterManuel, activeYear, searchTerm]);
 
   // Lista PJA (modo circuito) — apenas torneios com "PJA" no nome ou
   // registados em TOURN_PILLS como PJA. Exclui SSerra (tab próprio).
@@ -2043,23 +2057,6 @@ function Content() {
 
   const pjaEventGroups = useMemo(() => buildEventGroups(pjaList), [pjaList]);
 
-  const pjaByYear = useMemo(() => {
-    const byYear: Record<string, EventGroup[]> = {};
-    for (const eg of pjaEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const yr = eg.date ? eg.date.substring(0, 4) : "?";
-      if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(eg);
-    }
-    const years = Object.keys(byYear).sort().reverse();
-    return { byYear, years };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pjaEventGroups, activeYear, filterManuel, searchTerm]);
-
   // ── Santo da Serra ──
   const santoList = useMemo(
     () => displayList.filter(t => t.ccode === SSERRA_CCODE),
@@ -2067,57 +2064,125 @@ function Content() {
   );
   const santoEventGroups = useMemo(() => buildEventGroups(santoList), [santoList]);
 
-  const santoByYear = useMemo(() => {
-    const byYear: Record<string, EventGroup[]> = {};
-    for (const eg of santoEventGroups) {
-      if (!eg.entries.some(inYear)) continue;
-      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
-      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
-      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
-      if (!eg.entries.some(matchesSearch)) continue;
-      const yr = eg.date ? eg.date.substring(0, 4) : "?";
-      if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(eg);
+  // ── Vista de Torneios via CircuitShell (Todos / Santo da Serra / PJA) ──
+  // As três vistas de torneios usam o shell partilhado (mesmo componente de
+  // /rfeg, /drive, /major, …). Não afecta Clubes / Jovens / rankings (que têm
+  // UI própria mais abaixo). O detalhe é delegado ao TournamentDetail da FPG.
+  const shellGroups = seriesFilter === "santo" ? santoEventGroups
+    : seriesFilter === "" ? allEventGroups
+    : pjaEventGroups;
+  const shellEntries = useMemo(() => {
+    const ents = buildFpgEntries(shellGroups);
+    // Anexa o render do detalhe (delegado ao TournamentDetail da FPG, que tem
+    // escLookup/playersDB em runtime) — mesmo padrão do DrivePage. As tabs
+    // "Edições anteriores" vêm do índice próprio da FPG (fpgPastEditionsTabs),
+    // não do mecanismo do shell — por isso a config não define editionKey.
+    for (const e of ents) for (const d of e.divisions ?? []) {
+      const t = d.results!;
+      d.renderFull = () => (
+        <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
+          extraTabs={fpgExtraTabs(editionsIndex, t)} />
+      );
     }
-    const years = Object.keys(byYear).sort().reverse();
-    return { byYear, years };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [santoEventGroups, activeYear, filterManuel, searchTerm]);
+    return ents;
+  }, [shellGroups, escLookup, playersDB, editionsIndex]);
 
-  /** Encontra o índice de um torneio em displayList por (ccode, tcode) — NÃO
-   *  por referência, porque buildEventGroups pode embrulhar entradas em novos
-   *  objectos para injectar o escalão inferido (quebra a igualdade `===`). */
-  const findInDisplayList = (t: Tournament): number =>
-    displayList.findIndex(d => d.ccode === t.ccode && d.tcode === t.tcode);
+  // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão). Um membro pode ter
+  // tcode sintético "A+B" (multi-dia); o URL canónico usa só o 1º tcode, por isso
+  // o match parte o "+".
+  const shellSel = useMemo(() => {
+    const empty = { id: undefined as string | undefined, divKey: undefined as string | undefined };
+    if (!params.tkey) return empty;
+    const parsed = parseTournKey(params.tkey);
+    if (!parsed) return empty;
+    const matches = (memberKey: string) => {
+      const mp = parseTournKey(memberKey);
+      if (!mp || String(mp.ccode) !== String(parsed.ccode)) return false;
+      const mt = String(mp.tcode ?? "");
+      return mt === String(parsed.tcode) || mt.split("+").includes(String(parsed.tcode));
+    };
+    for (const e of shellEntries) {
+      const d = e.divisions?.find(dv => matches(dv.key));
+      if (d) return { id: e.id, divKey: d.key };
+    }
+    return empty;
+  }, [params.tkey, shellEntries]);
+
+  // Navega o URL para o tcode canónico (ccode-firstTcode) de uma divisão,
+  // PRESERVANDO a query (ex.: ?manuel=0). Remove `tab` para o shell reescrever a
+  // aba do novo torneio.
+  const shellNavToDiv = useCallback((divKey: string, replace: boolean) => {
+    const p = parseTournKey(divKey);
+    if (!p) return;
+    const firstTcode = String(p.tcode ?? "").split("+")[0];
+    const path = tournamentUrl("FPG", p.ccode, firstTcode);
+    if (!path) return;
+    const sp = new URLSearchParams(location.search);
+    sp.delete("tab");
+    const search = sp.toString();
+    const target = search ? `${path}?${search}` : path;
+    if (location.pathname + location.search !== target) navigate(target, { replace });
+  }, [location.pathname, location.search, navigate]);
+
+  const shellConfig: CircuitConfig = {
+    ...FPG_CONFIG,
+    grouping: seriesFilter === "" ? "month-year" : "year",
+    title: seriesFilter === "santo" ? "⛳ Santo da Serra"
+      : seriesFilter === "" ? "🇵🇹 FPG — Todos" : "🏆 PJA",
+  };
+  const shellView = (
+    <CircuitShell
+      entries={shellEntries}
+      config={shellConfig}
+      loading={loading}
+      selectedId={shellSel.id}
+      selectedDivKey={shellSel.divKey}
+      onSelectEntry={(e) => {
+        const rep = fpgRepDivision(e.divisions ?? []);
+        if (rep) shellNavToDiv(rep.key, true);
+      }}
+      onSelectDivision={(_e, d) => shellNavToDiv(d.key, true)}
+      // Paridade total da sidebar: reusa o MESMO TournSidebarItem do render
+      // clássico (pills NACIONAL/JUNIOR/9H/SSerra/Clube, 🔗 por-tcode, FileBadge
+      // da fonte, contagem de inscritos), mas com click/href do shell.
+      // O grupo vem por id (= EventGroup.key).
+      renderSidebarItem={(entry, { active, onSelect }) => {
+        const g = shellGroups.find(gr => gr.key === entry.id);
+        if (!g) return null;
+        const first = g.entries[0];
+        const firstTcode = (first?.tcode || "").split("+")[0];
+        const path = first?.ccode && firstTcode ? tournamentUrl("FPG", first.ccode, firstTcode) : undefined;
+        let href = path;
+        if (path) {
+          const sp = new URLSearchParams(location.search);
+          sp.delete("tab");
+          const s = sp.toString();
+          href = s ? `${path}?${s}` : path;
+        }
+        return renderSidebarItem(g, { onClick: onSelect, href, isActive: active });
+      }}
+    />
+  );
+
+  // Vistas de torneios servidas pelo CircuitShell (Todos/Santo/PJA). O shell traz
+  // a sua própria pesquisa + toggle de sidebar, por isso os equivalentes da
+  // toolbar exterior são escondidos aqui (evita chrome duplicado). Clubes/Jovens
+  // (master-detail próprio) e os modos Ranking/Classificações mantêm-nos.
+  const shellTorneios = navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens";
 
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
    *    pills agregados de todas as entradas; clique vai à entrada activa
    *    se `cur` já pertence ao grupo, senão vai à primeira entrada. */
-  function renderSidebarItem(g: EventGroup) {
+  function renderSidebarItem(g: EventGroup, opts: { onClick: () => void; href?: string; isActive: boolean }) {
     const isMulti = g.entries.length > 1;
-    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa).
+    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa) —
+    // é dela que sai o campo/tcode/players do `tData`.
     const activeEntryIdx = cur
       ? g.entries.findIndex(e => e.ccode === cur.ccode && e.tcode === cur.tcode)
       : -1;
     const activeEntry = activeEntryIdx >= 0 ? g.entries[activeEntryIdx] : g.entries[0];
-    const idx = findInDisplayList(activeEntry);
-    const isActive = activeEntryIdx >= 0 && selected === idx;
-
-    const handleClick = () => {
-      if (idx >= 0) setSelected(idx);
-      md.onSelect();
-      // Navegar imediatamente para a URL do torneio escolhido. Sem isto, o
-      // state→URL effect pode ficar bloqueado pelo guard anti-loop (params.tkey
-      // diferente do novo cur → SKIPPED) e o user fica preso na URL antiga.
-      if (activeEntry && activeEntry.ccode && activeEntry.tcode) {
-        const target = tournamentUrl("FPG", activeEntry.ccode, activeEntry.tcode);
-        if (target && location.pathname !== target) {
-          navigate(target, { replace: true });
-        }
-      }
-    };
 
     // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
     const allTcodes = g.entries.flatMap(e => (e.tcode || "").split("+"));
@@ -2158,18 +2223,16 @@ function Content() {
       pill: pillVal,
       _manuelInscrito: g.entries.some(tournamentHasManuel),
     };
-    // Deep-link canónico — o TournSidebarItem vira <a href>. Para sintéticos
-    // com tcode "A+B" usa o primeiro tcode no URL (parseTournKey match ambos).
-    const firstTcode = (activeEntry.tcode || "").split("+")[0];
-    const href = (activeEntry.ccode && firstTcode) ? tournamentUrl("FPG", activeEntry.ccode, firstTcode) : undefined;
+    // `opts` (click/href/isActive) vem do CircuitSidebar: o click navega
+    // preservando a query e o href é o deep-link canónico (ccode-firstTcode).
     return (
       <TournSidebarItem
         key={(activeEntry._isSynthetic ? "synth_" : "") + keyTcodes + "_" + g.date}
         t={tData}
-        isActive={isActive}
-        onClick={handleClick}
+        isActive={opts.isActive}
+        onClick={opts.onClick}
         extraPills={extraPills}
-        href={href}
+        href={opts.href}
       />
     );
   }
@@ -2183,14 +2246,18 @@ function Content() {
 
         {/* Linha 1: toda numa linha scrollável */}
         <Toolbar>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+          {/* Toggle exterior escondido nas vistas do shell (o shell tem o seu). */}
+          {!shellTorneios && <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />}
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
-          {!loading && (<>
+          {/* Pesquisa exterior: nos modos Ranking/Classificações filtra jogadores;
+              em Clubes/Jovens filtra a lista. Nas vistas do shell (Torneios) é o
+              shell que pesquisa, por isso esconde-se aqui. */}
+          {!loading && !shellTorneios && (<>
             <ToolbarSep />
             {/* Search unificado — mesmo local e tamanho em todos os modos.
-                Filtra torneios em modo Torneios, jogadores em modo Ranking PJA,
-                etc. O valor é partilhado (searchQuery). */}
+                Filtra jogadores em Ranking PJA, a lista em Clubes/Jovens, etc.
+                O valor é partilhado (searchQuery). */}
             <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
               <span aria-hidden="true" style={{
                 position: "absolute", left: 8, fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none",
@@ -2253,7 +2320,53 @@ function Content() {
                 {label}
               </button>
             ))}
-            {navMode === "torneios" && availYears.length > 1 && (<>
+            {/* Tabs de série (Todos/JOVENS/CLUBES/STO/PJA) — na MESMA barra, a
+                seguir ao mode-switcher (antes ficavam numa 2ª linha). Só em modo
+                Torneios. */}
+            {navMode === "torneios" && (<>
+              <ToolbarSep />
+              {([
+                { key: "",        label: "Todos" },
+                { key: "jovens",  label: "🏆 JOVENS" },
+                { key: "clubes",  label: "🏅 CLUBES" },
+                { key: "santo",   label: "⛳ STO" },
+                { key: "circuit", label: "🏆 PJA" },
+              ] as const).map(({ key, label }) => {
+                const active = seriesFilter === key;
+                const st = active
+                  ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
+                  : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
+                  : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
+                  : { flexShrink: 0 }
+                  : { flexShrink: 0 };
+                const urlSeg = FILTER_TO_URL[key];
+                const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
+                return (
+                  <a key={key} href={href}
+                    className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+                    onClick={e => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        setSeriesFilter(key);
+                        setJovensShowInscricoes(false);
+                        // Preserva a query (ex.: ?manuel=0); remove `tab` (é por-torneio).
+                        const _sp = new URLSearchParams(location.search);
+                        _sp.delete("tab");
+                        const _s = _sp.toString();
+                        navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
+                      }
+                    }}
+                    style={st}>
+                    {label}
+                  </a>
+                );
+              })}
+            </>)}
+            {/* Pills de ano + ★Manuel exteriores: nas vistas do shell (Torneios)
+                o CircuitShell já os tem, por isso escondem-se aqui para um
+                cabeçalho limpo (estilo /ffg). Clubes/Jovens mantêm-nos (filtram
+                a lista master-detail própria). */}
+            {!shellTorneios && navMode === "torneios" && availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
@@ -2283,21 +2396,18 @@ function Content() {
             {loading
               ? <span className="muted fs-11 shrink-0"  style={{ fontStyle: "italic" }}>{loadingMsg}</span>
               : <>
-                  {navMode === "torneios" && (() => {
-                    const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
-                                : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
-                                : seriesFilter === "clubes"  ? clubesList.length
+                  {/* Contadores exteriores só nos modos SEM shell (Clubes/Jovens)
+                      — nas vistas do shell o próprio CircuitShell mostra a
+                      contagem, e estes dependiam dos filtros de ano/Manuel que
+                      foram escondidos. */}
+                  {!shellTorneios && navMode === "torneios" && (() => {
+                    const count = seriesFilter === "clubes"  ? clubesList.length
                                 : seriesFilter === "jovens"  ? jovensGroups.length
-                                : monthKeys.reduce((s, k) => s + (monthGroups[k]?.length ?? 0), 0);  // "Todos" respeita search + year + manuel
+                                : 0;
                     return <span className="chip shrink-0" title={searchTerm ? `Com filtro "${searchQuery}"` : undefined}>
                       {count} torneio{count !== 1 ? "s" : ""}{searchTerm ? " ✓" : ""}
                     </span>;
                   })()}
-                  {seriesFilter !== "santo" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && navMode === "torneios" && (
-                    <span className="chip" style={{ flexShrink: 0, marginLeft: 4, background: "var(--bg-hover)" }}>
-                      {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
-                    </span>
-                  )}
                 </>
             }
           </>)}
@@ -2312,53 +2422,6 @@ function Content() {
             <div id="pja-toolbar-slot" style={{ display: "contents" }} />
           </>}
         </Toolbar>
-
-        {/* Linha 2: filtros de série — wrap em mobile */}
-        {!loading && navMode === "torneios" && (
-          <div style={{
-            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
-            padding: "4px 12px 6px",
-            overflowX: md.isMobile ? "visible" : "auto",
-            flexWrap: md.isMobile ? "wrap" : "nowrap",
-            rowGap: md.isMobile ? 4 : undefined,
-            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
-            borderTop: "1px solid var(--border-light)",
-          }}>
-            {([
-              { key: "",        label: "Todos" },
-              { key: "jovens",  label: "🏆 JOVENS" },
-              { key: "clubes",  label: "🏅 CLUBES" },
-              { key: "santo",   label: "⛳ STO" },
-              { key: "circuit", label: "🏆 PJA" },
-            ] as const).map(({ key, label }) => {
-              const active = seriesFilter === key;
-              const st = active
-                ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
-                : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
-                : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
-                : { flexShrink: 0 }
-                : { flexShrink: 0 };
-              const urlSeg = FILTER_TO_URL[key];
-              const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
-              return (
-                <a key={key}
-                  href={href}
-                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-                  onClick={e => {
-                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                      e.preventDefault();
-                      setSeriesFilter(key);
-                      setJovensShowInscricoes(false);
-                      navigate(urlSeg ? `/FPG/${urlSeg}` : "/FPG");
-                    }
-                  }}
-                  style={st}>
-                  {label}
-                </a>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {error && (
@@ -2367,143 +2430,8 @@ function Content() {
         </div>
       )}
 
-      {/* Master-detail (modos "month" e "circuit") */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && (
-      <div className="master-detail">
-        {/* Sidebar */}
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-          {loading && displayList.length === 0 && (
-            <LoadingState size="sm" message="A carregar…" />
-          )}
-
-          {seriesFilter === ""
-            ? monthKeys.map(gk => (
-                <React.Fragment key={gk}>
-                  <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
-                  {monthGroups[gk].map(eg => renderSidebarItem(eg))}
-                </React.Fragment>
-              ))
-            : seriesFilter === "santo"
-              ? santoByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
-                : santoByYear.years.map(yr => {
-                    const items = santoByYear.byYear[yr];  // já filtrado no useMemo
-                    if (items.length === 0) return null;
-                    return (
-                      <React.Fragment key={yr}>
-                        <div className="sidebar-section-title-dark">⛳ Santo da Serra {yr}</div>
-                        {items.map(eg => renderSidebarItem(eg))}
-                      </React.Fragment>
-                    );
-                  })
-              : pjaByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
-                : pjaByYear.years.map(yr => (
-                    <React.Fragment key={yr}>
-                      <div className="sidebar-section-title-dark">🏆 {yr}</div>
-                      {pjaByYear.byYear[yr].map(eg => renderSidebarItem(eg))}
-                    </React.Fragment>
-                  ))
-          }
-        </div>
-
-        {/* Detail */}
-        <div className="course-detail" ref={md.detailRef}>
-          {/* Deep-link em curso: URL tem /FPG/torneio/{tkey} mas `cur` ainda
-              não corresponde (displayList incompleto — pull-torneios,
-              pjaExtra, jovens estão a carregar). Mostra "A carregar..." em
-              vez do torneio errado, evitando que o utilizador veja várias
-              páginas diferentes a piscar até o match ser encontrado.
-              Aceita tcode sintético "A+B" quando o URL pede apenas "A". */}
-          {(() => {
-            // Torneios de clubes em MATCH PLAY (ex: Regional 2026, 059/10685):
-            // a FPG não publica classificação stroke (o pull-torneios traz 0
-            // jogadores) — os resultados reais (pontos + H2H + scorecards)
-            // vivem na vista /FPG/clubes. Redireccionar em vez de mostrar um
-            // detalhe vazio.
-            if (params.tkey && CLUBES_TEAM_FORMAT[params.tkey]?.matchPlay) {
-              return <Navigate to="/FPG/clubes" replace />;
-            }
-            // Resolver torneio DIRECTAMENTE pela URL (find por ccode/tcode).
-            // Evita problemas com displayList[selected] stale durante async.
-            const tShow = (() => {
-              if (!params.tkey) return cur;
-              const parsed = parseTournKey(params.tkey);
-              if (!parsed) return cur;
-              return displayList.find(t => {
-                if (String(t.ccode) !== String(parsed.ccode)) return false;
-                const tt = String(t.tcode ?? "");
-                if (tt === String(parsed.tcode)) return true;
-                if (tt.split("+").includes(String(parsed.tcode))) return true;
-                return false;
-              });
-            })();
-            if (params.tkey && !tShow) {
-              return <LoadingState size="sm" message={`A carregar torneio ${params.tkey}…`} />;
-            }
-            if (!tShow) {
-              return !loading && <div className="center-msg muted">Selecciona um torneio</div>;
-            }
-            const curGroup = eventGroupByKey.get((tShow.ccode || "?") + "/" + String(tShow.tcode ?? "?"));
-            const showTabs = curGroup && curGroup.entries.length > 1;
-            return (
-              <>
-                {showTabs && (
-                  // Botões de escalão alinhados à esquerda com o título (sem indent
-                  // extra) e sem linha divisória. `gap` trata o espaçamento entre
-                  // botões (e entre linhas ao quebrar); o padding-bottom dá o mesmo
-                  // espaço acima do título que o que existe abaixo (título → sub).
-                  <div style={{ display: "flex", gap: 6, padding: "0 0 6px", flexWrap: "wrap" }}>
-                    {curGroup!.entries.map((e) => {
-                      const active = e.ccode === tShow.ccode && e.tcode === tShow.tcode;
-                      // Quando as entradas do grupo não têm escalão (ex: "3º Torneio
-                      // Academia Junior - 18 buracos" / "- 9 buracos"), derivar o
-                      // label da tab a partir do sufixo que distingue cada entrada do
-                      // nome comum do grupo (curGroup.name já vem sem o sufixo).
-                      const _gNm = curGroup!.name || "";
-                      const _suffix = _gNm && e.name && e.name.toLowerCase().startsWith(_gNm.toLowerCase())
-                        ? e.name.slice(_gNm.length).replace(/^[\s\-–:·]+/, "").trim()
-                        : "";
-                      // Fallback de data (dd/mm) para grupos multi-data sem
-                      // escalão nem sufixo distintivo (ex.: "Circuito Junior" em
-                      // várias datas) — senão as sub-tabs ficavam com o nome
-                      // repetido. Só relevante quando há tabs (entries.length>1).
-                      const _dm = e.date && e.date.length >= 10
-                        ? `${e.date.slice(8, 10)}/${e.date.slice(5, 7)}` : "";
-                      const label = (e as any)._tabLabel
-                        ?? e.escalao
-                        ?? (_suffix || _dm || (e.name && e.name.length <= 20 ? e.name : "Esc"));
-                      const nJog = e.playerCount || e.players.length;
-                      const entryIdx = findInDisplayList(e);
-                      return (
-                        <button key={e.tcode + "_" + e.date}
-                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                          onClick={() => {
-                            if (entryIdx >= 0) setSelected(entryIdx);
-                            // Navegar imediatamente — state→URL pode estar bloqueado por guard anti-loop
-                            if (e.ccode && e.tcode) {
-                              const target = tournamentUrl("FPG", e.ccode, e.tcode);
-                              if (target && location.pathname !== target) navigate(target, { replace: true });
-                            }
-                          }}>
-                          {label}
-                          {nJog > 0 && (
-                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
-                              ({nJog} jog)
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                <TournamentDetail tournament={tShow} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, tShow)} />
-              </>
-            );
-          })()}
-        </div>
-      </div>
-      )}
+      {/* Torneios (Todos / Santo da Serra / PJA) — vista via CircuitShell */}
+      {shellTorneios && shellView}
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
       {navMode === "torneios" && seriesFilter === "clubes" && (
@@ -2708,7 +2636,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, _t as any)} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2982,7 +2910,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgPastEditionsTabs(editionsIndex, curJovens)} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>
