@@ -368993,16 +368993,26 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado).",
+      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente).",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25",
         "date": "2026-08-19",
         "status": "Inscrições em curso",
-        "totalInscritos": 30,
+        "totalInscritos": 35,
         "reservas": 0,
         "players": [
           {
             "pos": 1,
+            "fed": "46480",
+            "nome": "Afonso de Sousa Pinto",
+            "clube": "Oporto",
+            "hcp": 6.5,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
             "fed": "46309",
             "nome": "Afonso Silva Pinto",
             "clube": "Miramar",
@@ -369012,7 +369022,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 2,
+            "pos": 3,
             "fed": "40473",
             "nome": "André Von Hafe",
             "clube": "Estela",
@@ -369022,7 +369032,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 3,
+            "pos": 4,
             "fed": "40992",
             "nome": "António Maria Cavalinhos",
             "clube": "Miramar",
@@ -369032,7 +369042,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 4,
+            "pos": 5,
             "fed": "46297",
             "nome": "Camila Pazos",
             "clube": "Miramar",
@@ -369042,7 +369052,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 5,
+            "pos": 6,
             "fed": "44821",
             "nome": "Dinis Seabra",
             "clube": "Oporto",
@@ -369052,7 +369062,27 @@
             "status": "confirmed"
           },
           {
-            "pos": 6,
+            "pos": 7,
+            "fed": "56632",
+            "nome": "Diogo Guilherme",
+            "clube": "Oporto",
+            "hcp": 11.1,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "35874",
+            "nome": "Diogo Marques Lopes",
+            "clube": "Citynorte",
+            "hcp": 7,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
             "fed": "34186",
             "nome": "Diogo Silva Pinto Rocha",
             "clube": "Oporto",
@@ -369062,7 +369092,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 7,
+            "pos": 10,
             "fed": "51182",
             "nome": "Eduardo Rocha Ferreira",
             "clube": "Miramar",
@@ -369072,7 +369102,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 8,
+            "pos": 11,
             "fed": "46437",
             "nome": "Eva Silva",
             "clube": "Oporto",
@@ -369082,7 +369112,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 9,
+            "pos": 12,
             "fed": "40981",
             "nome": "Francisca Ferreira da Costa",
             "clube": "Miramar",
@@ -369092,7 +369122,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 10,
+            "pos": 13,
             "fed": "46299",
             "nome": "Francisco Nunes (jr)",
             "clube": "Miramar",
@@ -369102,7 +369132,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 11,
+            "pos": 14,
             "fed": "51074",
             "nome": "Gaspard Maes",
             "clube": "Miramar",
@@ -369112,7 +369142,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 12,
+            "pos": 15,
             "fed": "53646",
             "nome": "Henrique Pereira",
             "clube": "Miramar",
@@ -369122,7 +369152,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 13,
+            "pos": 16,
             "fed": "46038",
             "nome": "João Balixa",
             "clube": "Miramar",
@@ -369132,7 +369162,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 14,
+            "pos": 17,
             "fed": "40645",
             "nome": "João Santos",
             "clube": "PXO Clube",
@@ -369142,7 +369172,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 15,
+            "pos": 18,
             "fed": "43732",
             "nome": "João Setúbal",
             "clube": "Quinta do Peru",
@@ -369152,7 +369182,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 16,
+            "pos": 19,
             "fed": "38718",
             "nome": "Jorge Barbosa",
             "clube": "Braga",
@@ -369162,7 +369192,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 17,
+            "pos": 20,
             "fed": "48705",
             "nome": "Jorge Xavier Graça Silva",
             "clube": "Oporto",
@@ -369172,7 +369202,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 18,
+            "pos": 21,
             "fed": "53645",
             "nome": "José Maria Pereira",
             "clube": "Miramar",
@@ -369182,7 +369212,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 19,
+            "pos": 22,
             "fed": "45393",
             "nome": "Laura Santos",
             "clube": "PXO Clube",
@@ -369192,7 +369222,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 20,
+            "pos": 23,
             "fed": "54475",
             "nome": "Maksim Mutalapov",
             "clube": "Oporto",
@@ -369202,7 +369232,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 21,
+            "pos": 24,
             "fed": "52884",
             "nome": "Manuel Goulartt Medeiros",
             "clube": "Santo da Serra",
@@ -369212,7 +369242,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 22,
+            "pos": 25,
+            "fed": "57884",
+            "nome": "Manuel Pontes Carneiro",
+            "clube": "Miramar",
+            "hcp": 21,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 26,
             "fed": "46310",
             "nome": "Margarida Silva Pinto",
             "clube": "Miramar",
@@ -369222,7 +369262,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 23,
+            "pos": 27,
             "fed": "46482",
             "nome": "Maria Cunha",
             "clube": "Palheiro",
@@ -369232,7 +369272,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 24,
+            "pos": 28,
+            "fed": "26974",
+            "nome": "Marlon Neto-Bradley",
+            "clube": "Miramar",
+            "hcp": 1.1,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 29,
             "fed": "41609",
             "nome": "Martim Sousa de Morais",
             "clube": "Belas",
@@ -369242,7 +369292,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 25,
+            "pos": 30,
             "fed": "52487",
             "nome": "Miguel Teles de Menezes",
             "clube": "Oporto",
@@ -369252,7 +369302,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 26,
+            "pos": 31,
             "fed": "46296",
             "nome": "Raul Pazos (jr)",
             "clube": "Miramar",
@@ -369262,7 +369312,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 27,
+            "pos": 32,
             "fed": "49085",
             "nome": "Ricardo Castro Ferreira",
             "clube": "Estoril",
@@ -369272,7 +369322,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 28,
+            "pos": 33,
             "fed": "51180",
             "nome": "Ricardo Rocha Ferreira",
             "clube": "Miramar",
@@ -369282,7 +369332,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 29,
+            "pos": 34,
             "fed": "35849",
             "nome": "Tomás Afonso Araujo",
             "clube": "Miramar",
@@ -369292,7 +369342,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 30,
+            "pos": 35,
             "fed": "46311",
             "nome": "Tomás Rente",
             "clube": "Miramar",
@@ -369314,7 +369364,7 @@
           }
         ],
         "_liveUpdatedAt": null,
-        "_source": "cgm.pt (scrape manual 2026-07-31)"
+        "_source": "cgm.pt (scrape manual 2026-08-04)"
       },
       "draws": {}
     },
@@ -369325,12 +369375,12 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu.",
+      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25 - Sub 10",
         "date": "2026-08-19",
         "status": "Inscrições em curso",
-        "totalInscritos": 10,
+        "totalInscritos": 11,
         "reservas": 0,
         "players": [
           {
@@ -369345,6 +369395,16 @@
           },
           {
             "pos": 2,
+            "fed": "53685",
+            "nome": "Bruno Neto Lichuck",
+            "clube": "Miramar",
+            "hcp": 32.1,
+            "vac": null,
+            "dataInscricao": "2026/08/04 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
             "fed": "51980",
             "nome": "Diego Braga",
             "clube": "Miramar",
@@ -369354,7 +369414,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 3,
+            "pos": 4,
             "fed": "52713",
             "nome": "Francisco Lopes",
             "clube": "Vale Pisão",
@@ -369364,7 +369424,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 4,
+            "pos": 5,
             "fed": "59252",
             "nome": "Gastão Thomaz Medeiros",
             "clube": "Santo da Serra",
@@ -369374,7 +369434,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 5,
+            "pos": 6,
             "fed": "51176",
             "nome": "Henrique Monção",
             "clube": "Miramar",
@@ -369384,7 +369444,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 6,
+            "pos": 7,
             "fed": "54330",
             "nome": "Lucas Pereira Amorim",
             "clube": "Oporto",
@@ -369394,7 +369454,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 7,
+            "pos": 8,
             "fed": "52815",
             "nome": "Manuel Dias",
             "clube": "Braga",
@@ -369404,7 +369464,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 8,
+            "pos": 9,
             "fed": "58864",
             "nome": "Mikhail Khontulev",
             "clube": "Estoril",
@@ -369414,7 +369474,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 9,
+            "pos": 10,
             "fed": "56641",
             "nome": "Rafael Paço",
             "clube": "Oporto",
@@ -369424,7 +369484,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 10,
+            "pos": 11,
             "fed": "58549",
             "nome": "Tom Georges",
             "clube": "Miramar",
@@ -369435,7 +369495,7 @@
           }
         ],
         "_liveUpdatedAt": null,
-        "_source": "cgm.pt (scrape manual 2026-07-31)"
+        "_source": "cgm.pt (scrape manual 2026-08-04)"
       },
       "draws": {}
     },
