@@ -23,7 +23,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 
-export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "egr";
+export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "egr";
 
 const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uskids", label: "USKids" },
@@ -42,6 +42,7 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uaworlds", label: "UA Worlds" },
   { key: "mexnacional", label: "México" },
   { key: "coc", label: "Champion of Champions" },
+  { key: "reidtrophy", label: "Reid Trophy" },
   { key: "icopa", label: "Bobby Díaz" },
   { key: "interzonas", label: "Interzonas" },
   { key: "avtrophy", label: "BEL U14" },

@@ -274,6 +274,9 @@ const GG_SOURCES = [
   // ano já é coluna própria).
   { prefix: "uaworlds_", source: "uaworlds", series: "UA Worlds", name: (f, y) => (f.tournament || `UA Worlds ${y}`).replace(/^d{4}s+/, ""), course: (f) => f.course || undefined, union: true },
   { prefix: "coc_", source: "coc", series: "CoC", name: (f, y) => (f.tournament || `Champion of Champions ${y}`).replace(/^\d{4}\s+/, ""), course: (f) => f.course || undefined, union: true },
+  // preField: o scraper semeia o campo (roster + tee sheets) ANTES de haver
+  // scores → listar o torneio logo que haja draws publicados, não só scores.
+  { prefix: "reidtrophy_", source: "reidtrophy", series: "Reid Trophy", name: (f, y) => f.tournament ? `${f.tournament} ${y}` : `Reid Trophy ${y}`, course: (f) => f.course || "Porters Park", union: true, preField: true },
   { prefix: "icopa_", source: "icopa", series: "Bobby Díaz", name: (f, y) => f.tournament || `Bobby Díaz ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "interzonas_", source: "interzonas", series: "Interzonas", name: (f, y) => f.tournament || `Interzonas ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "avtrophy_", source: "avtrophy", series: "BEL U14", name: (f, y) => f.tournament || `BEL U14 ${y}`, course: (f) => f.course || undefined, union: true },
@@ -299,7 +302,14 @@ function buildGgJob() {
       const players = f.divisions.flatMap((dv) => dv.players || []);
       // playerCount: "union" (total OU rondas com scores) para fm/gg em curso;
       // só `total != null` para o JOB (espelha buildJobEntries).
-      const valid = players.filter((p) => (p.total != null) || (src.union && hasScores(p)));
+      let valid = players.filter((p) => (p.total != null) || (src.union && hasScores(p)));
+      const scored = valid;
+      // preField: fontes cujo scraper semeia o campo pré-torneio (roster + tee
+      // sheets) → o torneio lista-se logo que os draws estão publicados, com o
+      // playerCount = inscritos (senão só aparecia após os primeiros scores).
+      if (valid.length === 0 && src.preField && f.divisions.some((dv) => dv.draws && Object.keys(dv.draws).length)) {
+        valid = players;
+      }
       // Torneio ainda sem campo/scores (ex: evento futuro por começar) → não listar.
       if (valid.length === 0) continue;
       entries.push({
@@ -322,7 +332,9 @@ function buildGgJob() {
         hasPt: players.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
         escalao: f.divisions.length === 1 ? f.divisions[0].division : undefined,
       });
-      addVet(`${src.source}:${year}`, src.source, year, valid);
+      // Veteranos só com quem tem SCORES — um campo semeado (preField) ainda
+      // não jogou e não deve contar como "presença" no índice.
+      addVet(`${src.source}:${year}`, src.source, year, scored);
     }
   }
 }

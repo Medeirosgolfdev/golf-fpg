@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T10:00:44.039Z",
+  "generatedAt": "2026-08-04T11:12:43.332Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -2074,6 +2074,44 @@
       "editionsCount": 28
     },
     {
+      "id": "uskids-royal-kunia-country-club",
+      "label": "Royal Kunia Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-5770",
+        "uskids-11443",
+        "uskids-4071",
+        "uskids-4977",
+        "uskids-11442",
+        "uskids-5769",
+        "uskids-8239",
+        "uskids-10493",
+        "uskids-15684",
+        "uskids-15686",
+        "uskids-15687",
+        "uskids-18243",
+        "uskids-18247",
+        "uskids-10491",
+        "uskids-16949",
+        "uskids-16953",
+        "uskids-18245",
+        "uskids-19454",
+        "uskids-19457",
+        "uskids-19458",
+        "uskids-20997",
+        "uskids-22407",
+        "uskids-16951",
+        "uskids-16952",
+        "uskids-14499",
+        "uskids-20996",
+        "uskids-22404",
+        "uskids-22410"
+      ],
+      "firstDate": "2017-06-04",
+      "lastDate": "2026-07-05",
+      "editionsCount": 28
+    },
+    {
       "id": "uskids-mountain-view-golf-course",
       "label": "Mountain View Golf Course",
       "sourceId": "uskids",
@@ -2395,41 +2433,6 @@
       "editionsCount": 25
     },
     {
-      "id": "uskids-royal-kunia-country-club",
-      "label": "Royal Kunia Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-5770",
-        "uskids-11443",
-        "uskids-4071",
-        "uskids-4977",
-        "uskids-11442",
-        "uskids-5769",
-        "uskids-8239",
-        "uskids-10493",
-        "uskids-15684",
-        "uskids-15686",
-        "uskids-15687",
-        "uskids-18243",
-        "uskids-18247",
-        "uskids-10491",
-        "uskids-16949",
-        "uskids-16953",
-        "uskids-18245",
-        "uskids-19454",
-        "uskids-19457",
-        "uskids-19458",
-        "uskids-20997",
-        "uskids-22407",
-        "uskids-16951",
-        "uskids-16952",
-        "uskids-14499"
-      ],
-      "firstDate": "2017-06-04",
-      "lastDate": "2026-06-07",
-      "editionsCount": 25
-    },
-    {
       "id": "uskids-dos-lagos-golf-club",
       "label": "Dos Lagos Golf Club",
       "sourceId": "uskids",
@@ -2456,9 +2459,9 @@
         "uskids-21815",
         "uskids-21816",
         "uskids-17679",
+        "uskids-20456",
         "uskids-22819",
-        "uskids-17677",
-        "uskids-20456"
+        "uskids-17677"
       ],
       "firstDate": "2016-10-30",
       "lastDate": "2026-07-11",
@@ -4215,6 +4218,35 @@
       "editionsCount": 19
     },
     {
+      "id": "uskids-club-campestre-de-aguascalientes",
+      "label": "Club Campestre de Aguascalientes",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-12323",
+        "uskids-12330",
+        "uskids-13459",
+        "uskids-13461",
+        "uskids-14982",
+        "uskids-17358",
+        "uskids-17362",
+        "uskids-18349",
+        "uskids-18350",
+        "uskids-18351",
+        "uskids-17360",
+        "uskids-19819",
+        "uskids-19820",
+        "uskids-19821",
+        "uskids-22074",
+        "uskids-22075",
+        "uskids-22076",
+        "uskids-22078",
+        "uskids-19822"
+      ],
+      "firstDate": "2022-05-21",
+      "lastDate": "2026-06-07",
+      "editionsCount": 19
+    },
+    {
       "id": "uskids-micke-grove-golf-links",
       "label": "Micke Grove Golf Links",
       "sourceId": "uskids",
@@ -4998,9 +5030,9 @@
         "uskids-18704",
         "uskids-20101",
         "uskids-20103",
+        "uskids-12309",
         "uskids-13447",
         "uskids-14870",
-        "uskids-12309",
         "uskids-17429"
       ],
       "firstDate": "2021-05-24",
@@ -5032,33 +5064,6 @@
       ],
       "firstDate": "2022-04-30",
       "lastDate": "2025-10-05",
-      "editionsCount": 17
-    },
-    {
-      "id": "uskids-club-campestre-de-aguascalientes",
-      "label": "Club Campestre de Aguascalientes",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-12323",
-        "uskids-12330",
-        "uskids-13459",
-        "uskids-13461",
-        "uskids-14982",
-        "uskids-17358",
-        "uskids-17362",
-        "uskids-18349",
-        "uskids-18350",
-        "uskids-18351",
-        "uskids-17360",
-        "uskids-19819",
-        "uskids-19820",
-        "uskids-19822",
-        "uskids-22075",
-        "uskids-22076",
-        "uskids-22078"
-      ],
-      "firstDate": "2022-05-21",
-      "lastDate": "2026-06-07",
       "editionsCount": 17
     },
     {
@@ -8613,6 +8618,28 @@
       "editionsCount": 12
     },
     {
+      "id": "uskids-maui-nui-golf-club",
+      "label": "Maui Nui Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10931",
+        "uskids-12110",
+        "uskids-13016",
+        "uskids-15426",
+        "uskids-18727",
+        "uskids-6523",
+        "uskids-12106",
+        "uskids-10083",
+        "uskids-22298",
+        "uskids-22299",
+        "uskids-16408",
+        "uskids-16406"
+      ],
+      "firstDate": "2018-10-27",
+      "lastDate": "2026-05-17",
+      "editionsCount": 12
+    },
+    {
       "id": "uskids-windsor-golf-hotel-country-club",
       "label": "Windsor Golf Hotel & Country Club",
       "sourceId": "uskids",
@@ -8632,6 +8659,50 @@
       ],
       "firstDate": "2022-11-27",
       "lastDate": "2026-03-08",
+      "editionsCount": 12
+    },
+    {
+      "id": "uskids-club-campestre-cordobes",
+      "label": "Club Campestre Cordobes",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10712",
+        "uskids-10716",
+        "uskids-11421",
+        "uskids-13414",
+        "uskids-16467",
+        "uskids-13416",
+        "uskids-14831",
+        "uskids-18174",
+        "uskids-19827",
+        "uskids-20928",
+        "uskids-22743",
+        "uskids-22744"
+      ],
+      "firstDate": "2021-07-18",
+      "lastDate": "2026-07-05",
+      "editionsCount": 12
+    },
+    {
+      "id": "uskids-club-de-golf-pulgas-pandas",
+      "label": "Club de Golf Pulgas Pandas",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-12328",
+        "uskids-13611",
+        "uskids-13612",
+        "uskids-14983",
+        "uskids-17359",
+        "uskids-17361",
+        "uskids-17363",
+        "uskids-18352",
+        "uskids-18353",
+        "uskids-19818",
+        "uskids-22092",
+        "uskids-22093"
+      ],
+      "firstDate": "2022-05-15",
+      "lastDate": "2026-05-24",
       "editionsCount": 12
     },
     {
@@ -9685,27 +9756,6 @@
       "editionsCount": 11
     },
     {
-      "id": "uskids-maui-nui-golf-club",
-      "label": "Maui Nui Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10931",
-        "uskids-12110",
-        "uskids-13016",
-        "uskids-15426",
-        "uskids-18727",
-        "uskids-6523",
-        "uskids-12106",
-        "uskids-10083",
-        "uskids-22298",
-        "uskids-22299",
-        "uskids-16408"
-      ],
-      "firstDate": "2018-10-27",
-      "lastDate": "2026-05-17",
-      "editionsCount": 11
-    },
-    {
       "id": "uskids-dodge-riverside-golf-club",
       "label": "Dodge Riverside Golf Club",
       "sourceId": "uskids",
@@ -9808,48 +9858,6 @@
       ],
       "firstDate": "2024-01-27",
       "lastDate": "2025-11-23",
-      "editionsCount": 11
-    },
-    {
-      "id": "uskids-club-campestre-cordobes",
-      "label": "Club Campestre Cordobes",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10712",
-        "uskids-10716",
-        "uskids-11421",
-        "uskids-13414",
-        "uskids-16467",
-        "uskids-13416",
-        "uskids-14831",
-        "uskids-18174",
-        "uskids-19827",
-        "uskids-20928",
-        "uskids-22743"
-      ],
-      "firstDate": "2021-07-18",
-      "lastDate": "2026-06-28",
-      "editionsCount": 11
-    },
-    {
-      "id": "uskids-club-de-golf-pulgas-pandas",
-      "label": "Club de Golf Pulgas Pandas",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-12328",
-        "uskids-13611",
-        "uskids-13612",
-        "uskids-14983",
-        "uskids-17359",
-        "uskids-17361",
-        "uskids-17363",
-        "uskids-18352",
-        "uskids-18353",
-        "uskids-22092",
-        "uskids-22093"
-      ],
-      "firstDate": "2022-05-15",
-      "lastDate": "2026-05-24",
       "editionsCount": 11
     },
     {
@@ -13683,10 +13691,10 @@
         "uskids-8759",
         "uskids-11151",
         "uskids-13091",
+        "uskids-17155",
         "uskids-15088",
         "uskids-19737",
-        "uskids-15098",
-        "uskids-17155"
+        "uskids-15098"
       ],
       "firstDate": "2019-09-22",
       "lastDate": "2025-06-19",
@@ -18186,8 +18194,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -21359,6 +21367,22 @@
       "editionsCount": 6
     },
     {
+      "id": "uskids-club-campestre-de-aguascalientes-tour-championship",
+      "label": "Club Campestre de Aguascalientes (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-12331",
+        "uskids-13463",
+        "uskids-17364",
+        "uskids-18354",
+        "uskids-19824",
+        "uskids-22079"
+      ],
+      "firstDate": "2022-06-05",
+      "lastDate": "2026-07-05",
+      "editionsCount": 6
+    },
+    {
       "id": "uskids-club-de-golf-campestre-de-morelia",
       "label": "Club de Golf Campestre de Morelia",
       "sourceId": "uskids",
@@ -21372,6 +21396,22 @@
       ],
       "firstDate": "2023-02-11",
       "lastDate": "2026-07-03",
+      "editionsCount": 6
+    },
+    {
+      "id": "uskids-club-campestre-de-leon",
+      "label": "Club Campestre de Leon",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11575",
+        "uskids-10964",
+        "uskids-19761",
+        "uskids-19764",
+        "uskids-20989",
+        "uskids-20993"
+      ],
+      "firstDate": "2021-09-05",
+      "lastDate": "2026-02-08",
       "editionsCount": 6
     },
     {
@@ -21942,6 +21982,21 @@
       ],
       "firstDate": "2014-08-08",
       "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
+      "id": "uskids-the-greens-at-nutters-chapel",
+      "label": "The Greens At Nutters Chapel",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-1509",
+        "uskids-2414",
+        "uskids-14083",
+        "uskids-17548",
+        "uskids-22637"
+      ],
+      "firstDate": "2015-08-10",
+      "lastDate": "2026-06-27",
       "editionsCount": 5
     },
     {
@@ -24765,6 +24820,21 @@
       "editionsCount": 5
     },
     {
+      "id": "uskids-club-de-golf-santa-margarita",
+      "label": "Club de Golf Santa Margarita",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-14426",
+        "uskids-11094",
+        "uskids-19763",
+        "uskids-12384",
+        "uskids-20994"
+      ],
+      "firstDate": "2021-09-26",
+      "lastDate": "2026-02-15",
+      "editionsCount": 5
+    },
+    {
       "id": "uskids-kemer-country-club",
       "label": "Kemer Country Club",
       "sourceId": "uskids",
@@ -24822,21 +24892,6 @@
       ],
       "firstDate": "2024-06-09",
       "lastDate": "2026-01-17",
-      "editionsCount": 5
-    },
-    {
-      "id": "uskids-club-campestre-de-aguascalientes-tour-championship",
-      "label": "Club Campestre de Aguascalientes (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-12331",
-        "uskids-13463",
-        "uskids-17364",
-        "uskids-18354",
-        "uskids-19824"
-      ],
-      "firstDate": "2022-06-05",
-      "lastDate": "2025-08-31",
       "editionsCount": 5
     },
     {
@@ -25684,20 +25739,6 @@
       ],
       "firstDate": "2023-07-09",
       "lastDate": "2026-07-05",
-      "editionsCount": 4
-    },
-    {
-      "id": "uskids-the-greens-at-nutters-chapel",
-      "label": "The Greens At Nutters Chapel",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-1509",
-        "uskids-2414",
-        "uskids-14083",
-        "uskids-17548"
-      ],
-      "firstDate": "2015-08-10",
-      "lastDate": "2024-10-12",
       "editionsCount": 4
     },
     {
@@ -27722,8 +27763,8 @@
       "sourceId": "uskids",
       "tournamentIds": [
         "uskids-3074",
-        "uskids-22152",
         "uskids-19843",
+        "uskids-22152",
         "uskids-20801"
       ],
       "firstDate": "2016-11-13",
@@ -29019,6 +29060,20 @@
       "editionsCount": 4
     },
     {
+      "id": "uskids-montgomery-local-parent-child",
+      "label": "Montgomery Local Parent/Child",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-8093",
+        "uskids-12569",
+        "uskids-13665",
+        "uskids-22902"
+      ],
+      "firstDate": "2019-11-16",
+      "lastDate": "2026-07-18",
+      "editionsCount": 4
+    },
+    {
       "id": "uskids-club-de-golf-las-aves",
       "label": "Club de Golf Las Aves",
       "sourceId": "uskids",
@@ -29170,20 +29225,6 @@
       ],
       "firstDate": "2022-08-28",
       "lastDate": "2024-10-30",
-      "editionsCount": 4
-    },
-    {
-      "id": "uskids-club-de-golf-santa-margarita",
-      "label": "Club de Golf Santa Margarita",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-14426",
-        "uskids-11094",
-        "uskids-19763",
-        "uskids-12384"
-      ],
-      "firstDate": "2021-09-26",
-      "lastDate": "2025-08-24",
       "editionsCount": 4
     },
     {
@@ -29425,20 +29466,6 @@
       "editionsCount": 4
     },
     {
-      "id": "uskids-club-campestre-de-leon",
-      "label": "Club Campestre de Leon",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11575",
-        "uskids-10964",
-        "uskids-19761",
-        "uskids-19764"
-      ],
-      "firstDate": "2021-09-05",
-      "lastDate": "2025-07-06",
-      "editionsCount": 4
-    },
-    {
       "id": "uskids-parana-country-club-tour-championship",
       "label": "Parana Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -29464,6 +29491,20 @@
       ],
       "firstDate": "2022-06-05",
       "lastDate": "2024-03-17",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-club-de-golf-la-hacienda-de-leon",
+      "label": "Club de Golf La Hacienda de León",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19765",
+        "uskids-19762",
+        "uskids-20990",
+        "uskids-20991"
+      ],
+      "firstDate": "2025-06-15",
+      "lastDate": "2026-01-11",
       "editionsCount": 4
     },
     {
@@ -29660,6 +29701,20 @@
       ],
       "firstDate": "2025-10-11",
       "lastDate": "2026-05-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-la-providencia-country-club",
+      "label": "La Providencia Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20498",
+        "uskids-20503",
+        "uskids-21552",
+        "uskids-20499"
+      ],
+      "firstDate": "2025-09-14",
+      "lastDate": "2026-04-03",
       "editionsCount": 4
     },
     {
@@ -34323,6 +34378,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-ka-anapali-golf-resort-kai-course",
+      "label": "Ka'anapali Golf Resort - Kai Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18729",
+        "uskids-18730",
+        "uskids-20733"
+      ],
+      "firstDate": "2025-05-17",
+      "lastDate": "2025-11-11",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-teen-series-at-maui-nui-hi",
       "label": "Teen Series at Maui Nui (HI)",
       "sourceId": "uskids",
@@ -35628,8 +35696,8 @@
       "sourceId": "uskids",
       "tournamentIds": [
         "uskids-22154",
-        "uskids-20805",
-        "uskids-21216"
+        "uskids-21216",
+        "uskids-20805"
       ],
       "firstDate": "2025-10-18",
       "lastDate": "2026-04-26",
@@ -35685,19 +35753,6 @@
       ],
       "firstDate": "2022-09-25",
       "lastDate": "2023-10-01",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-montgomery-local-parent-child",
-      "label": "Montgomery Local Parent/Child",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-8093",
-        "uskids-12569",
-        "uskids-13665"
-      ],
-      "firstDate": "2019-11-16",
-      "lastDate": "2023-02-25",
       "editionsCount": 3
     },
     {
@@ -36179,6 +36234,19 @@
       ],
       "firstDate": "2022-06-15",
       "lastDate": "2023-06-14",
+      "editionsCount": 3
+    },
+    {
+      "id": "uskids-360-ewa-beach-golf-club",
+      "label": "360 Ewa Beach Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20998",
+        "uskids-22408",
+        "uskids-22405"
+      ],
+      "firstDate": "2025-12-28",
+      "lastDate": "2026-06-14",
       "editionsCount": 3
     },
     {
@@ -37092,16 +37160,16 @@
       "editionsCount": 3
     },
     {
-      "id": "uskids-la-providencia-country-club",
-      "label": "La Providencia Country Club",
+      "id": "uskids-beijing-country-golf-club-b-f-course",
+      "label": "Beijing Country Golf Club - B/F Course",
       "sourceId": "uskids",
       "tournamentIds": [
-        "uskids-20498",
-        "uskids-20503",
-        "uskids-21552"
+        "uskids-20434",
+        "uskids-20432",
+        "uskids-20433"
       ],
-      "firstDate": "2025-11-21",
-      "lastDate": "2026-04-03",
+      "firstDate": "2025-09-20",
+      "lastDate": "2025-10-01",
       "editionsCount": 3
     },
     {
@@ -43321,18 +43389,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-ka-anapali-golf-resort-kai-course",
-      "label": "Ka'anapali Golf Resort - Kai Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18729",
-        "uskids-18730"
-      ],
-      "firstDate": "2025-05-17",
-      "lastDate": "2025-05-18",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-wailea-golf-club-blue-tour-championship",
       "label": "Wailea Golf Club - Blue (Tour Championship)",
       "sourceId": "uskids",
@@ -46297,18 +46353,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-360-ewa-beach-golf-club",
-      "label": "360 Ewa Beach Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20998",
-        "uskids-22408"
-      ],
-      "firstDate": "2025-12-28",
-      "lastDate": "2026-06-14",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-golfclub-worthsee",
       "label": "Golfclub Wörthsee",
       "sourceId": "uskids",
@@ -46606,6 +46650,18 @@
       ],
       "firstDate": "2022-09-11",
       "lastDate": "2023-02-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-mississippi-state-university-golf-course",
+      "label": "Mississippi State University Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15997",
+        "uskids-20213"
+      ],
+      "firstDate": "2024-03-10",
+      "lastDate": "2025-10-12",
       "editionsCount": 2
     },
     {
@@ -47314,18 +47370,6 @@
       ],
       "firstDate": "2024-04-20",
       "lastDate": "2024-07-21",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-club-de-golf-la-hacienda-de-leon",
-      "label": "Club de Golf La Hacienda de León",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19765",
-        "uskids-19762"
-      ],
-      "firstDate": "2025-06-15",
-      "lastDate": "2025-07-13",
       "editionsCount": 2
     },
     {
@@ -48070,6 +48114,66 @@
       ],
       "firstDate": "2026-06-22",
       "lastDate": "2026-06-23",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-nansha-golf-club-valley-course",
+      "label": "Nansha Golf Club - Valley Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20583",
+        "uskids-20584"
+      ],
+      "firstDate": "2025-09-13",
+      "lastDate": "2025-09-14",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-beijing-reignwood-pine-valley-golf-club-nicklaus-course",
+      "label": "Beijing Reignwood Pine Valley Golf Club - Nicklaus Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20430",
+        "uskids-20431"
+      ],
+      "firstDate": "2025-08-23",
+      "lastDate": "2025-08-24",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-san-sebastian-club-de-golf",
+      "label": "San Sebastián Club de Golf",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20502",
+        "uskids-21551"
+      ],
+      "firstDate": "2025-11-16",
+      "lastDate": "2026-03-01",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-estancias-golf-club",
+      "label": "Estancias Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21555",
+        "uskids-20500"
+      ],
+      "firstDate": "2025-10-19",
+      "lastDate": "2026-05-03",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-nansha-golf-club-lake-course",
+      "label": "Nansha Golf Club - Lake Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22100",
+        "uskids-22101"
+      ],
+      "firstDate": "2026-04-04",
+      "lastDate": "2026-04-05",
       "editionsCount": 2
     },
     {
@@ -67626,6 +67730,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-club-de-golf-la-hacienda",
+      "label": "Club de Golf La Hacienda",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22025"
+      ],
+      "firstDate": "2026-05-06",
+      "lastDate": "2026-05-06",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-los-serranos-golf-club",
       "label": "Los Serranos Golf Club",
       "sourceId": "uskids",
@@ -67997,17 +68112,6 @@
       ],
       "firstDate": "2022-07-23",
       "lastDate": "2022-07-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-mississippi-state-university-golf-course",
-      "label": "Mississippi State University Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15997"
-      ],
-      "firstDate": "2024-03-10",
-      "lastDate": "2024-03-10",
       "editionsCount": 1
     },
     {
@@ -69914,17 +70018,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-club-de-golf-la-hacienda",
-      "label": "Club de Golf La Hacienda",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-22025"
-      ],
-      "firstDate": "2026-05-06",
-      "lastDate": "2026-05-06",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-club-de-golf-malinalco-tour-championship",
       "label": "Club de Golf Malinalco (Tour Championship)",
       "sourceId": "uskids",
@@ -71344,6 +71437,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-the-links-at-riverlakes-ranch",
+      "label": "The Links at Riverlakes Ranch",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21215"
+      ],
+      "firstDate": "2026-01-24",
+      "lastDate": "2026-01-24",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-sungarden-golf-club",
       "label": "SunGarden Golf Club",
       "sourceId": "uskids",
@@ -71605,6 +71709,28 @@
       ],
       "firstDate": "2026-05-10",
       "lastDate": "2026-05-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-the-links-at-gettysburg",
+      "label": "The Links at Gettysburg",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22598"
+      ],
+      "firstDate": "2026-06-05",
+      "lastDate": "2026-06-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-carroll-valley-at-liberty-mountain-resort",
+      "label": "Carroll Valley At Liberty Mountain Resort",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22603"
+      ],
+      "firstDate": "2026-08-03",
+      "lastDate": "2026-08-03",
       "editionsCount": 1
     },
     {
@@ -71894,17 +72020,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-the-links-at-riverlakes-ranch",
-      "label": "The Links at Riverlakes Ranch",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-21215"
-      ],
-      "firstDate": "2026-01-24",
-      "lastDate": "2026-01-24",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-club-karibana-cartagena-tour-championship",
       "label": "Club Karibana - Cartagena (Tour Championship)",
       "sourceId": "uskids",
@@ -72015,6 +72130,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-ka-anapali-golf-resort-kai-course-tour-championship",
+      "label": "Ka'anapali Golf Resort - Kai Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22303"
+      ],
+      "firstDate": "2026-06-21",
+      "lastDate": "2026-06-21",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-the-bridges-at-tartan-pines-tour-championship",
       "label": "The Bridges at Tartan Pines (Tour Championship)",
       "sourceId": "uskids",
@@ -72023,6 +72149,17 @@
       ],
       "firstDate": "2025-08-02",
       "lastDate": "2025-08-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-marina-vallarta-club-de-golf",
+      "label": "Marina Vallarta Club de Golf",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19998"
+      ],
+      "firstDate": "2025-08-17",
+      "lastDate": "2025-08-17",
       "editionsCount": 1
     },
     {
@@ -72078,6 +72215,17 @@
       ],
       "firstDate": "2024-09-01",
       "lastDate": "2024-09-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-el-bosque-country-club-tour-championship",
+      "label": "El Bosque Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20995"
+      ],
+      "firstDate": "2026-02-22",
+      "lastDate": "2026-02-22",
       "editionsCount": 1
     },
     {
@@ -72290,25 +72438,25 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-the-links-at-gettysburg",
-      "label": "The Links at Gettysburg",
+      "id": "uskids-mililani-golf-club",
+      "label": "Mililani Golf Club",
       "sourceId": "uskids",
       "tournamentIds": [
-        "uskids-22598"
+        "uskids-22409"
       ],
-      "firstDate": "2026-06-05",
-      "lastDate": "2026-06-05",
+      "firstDate": "2026-06-28",
+      "lastDate": "2026-06-28",
       "editionsCount": 1
     },
     {
-      "id": "uskids-san-sebastian-club-de-golf",
-      "label": "San Sebastián Club de Golf",
+      "id": "uskids-pearl-country-club-tour-championship",
+      "label": "Pearl Country Club (Tour Championship)",
       "sourceId": "uskids",
       "tournamentIds": [
-        "uskids-20502"
+        "uskids-22411"
       ],
-      "firstDate": "2025-11-16",
-      "lastDate": "2025-11-16",
+      "firstDate": "2026-07-14",
+      "lastDate": "2026-07-14",
       "editionsCount": 1
     },
     {
@@ -72334,17 +72482,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-estancias-golf-club",
-      "label": "Estancias Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-21555"
-      ],
-      "firstDate": "2026-05-03",
-      "lastDate": "2026-05-03",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-club-campos-de-golf-las-praderas-de-lujan-tour-championship",
       "label": "Club Campos de Golf Las Praderas de Luján (Tour Championship)",
       "sourceId": "uskids",
@@ -72353,6 +72490,17 @@
       ],
       "firstDate": "2026-06-07",
       "lastDate": "2026-06-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-beijing-country-golf-club-b-f-course-tour-championship",
+      "label": "Beijing Country Golf Club - B/F Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20435"
+      ],
+      "firstDate": "2025-10-02",
+      "lastDate": "2025-10-02",
       "editionsCount": 1
     },
     {
@@ -72408,6 +72556,28 @@
       ],
       "firstDate": "2025-10-18",
       "lastDate": "2025-10-18",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-fremont-hills-country-club",
+      "label": "Fremont Hills Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21769"
+      ],
+      "firstDate": "2026-03-15",
+      "lastDate": "2026-03-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-hidden-valley-golf-links",
+      "label": "Hidden Valley Golf Links",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21771"
+      ],
+      "firstDate": "2026-04-19",
+      "lastDate": "2026-04-19",
       "editionsCount": 1
     },
     {
@@ -74157,6 +74327,17 @@
       ],
       "firstDate": "2026-04-17",
       "lastDate": "2026-04-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "reidtrophy",
+      "label": "Reid Trophy",
+      "sourceId": "reidtrophy",
+      "tournamentIds": [
+        "reidtrophy-reidtrophy_2026"
+      ],
+      "firstDate": "2026-01-01",
+      "lastDate": "2026-01-01",
       "editionsCount": 1
     },
     {

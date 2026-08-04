@@ -12,6 +12,13 @@
   ],
   "events": [
     {
+      "slug": "reidtrophy",
+      "url": "https://www.golfgenius.com/pages/5640376",
+      "rosterPage": "5640368",
+      "country": "none",
+      "note": "Reid Trophy 2026 (English Boys' U14 Open Amateur) — Porters Park, 4-6 Ago 2026. ⚠ A página oficial pages/5640367 é a landing (iframe England Golf, sem leagueId); o leaderboard vive em pages/5640376 e a lista de jogadores (país+clube — o leaderboard não traz afiliação) em pages/5640368 (rosterPage). Tee sheets auto-descobertos (pages/5640373). country:none → país vem do roster, não do default US. Edições 2023-25 vivem em /england (england_reid-trophy-*.json, scraper Playwright sem cron)."
+    },
+    {
       "slug": "coc",
       "url": "https://www.golfgenius.com/pages/12114827382448210411",
       "country": "none",

@@ -46,6 +46,7 @@ const SLUG_OVERRIDES = [
   { re: /under armour|summer national championship/i, slug: 'uajt', name: 'The Junior Tour Powered by Under Armour — Summer National Championship' },
   { re: /campeonato nacional infantil juvenil/i,       slug: 'mexnacional', name: 'Campeonato Nacional Infantil Juvenil (México)' },
   { re: /champion of champions/i,                      slug: 'coc', name: '“Champion of Champions” World Championship' },
+  { re: /reid trophy/i,                                slug: 'reidtrophy', name: 'Reid Trophy (English Boys’ U14 Open Amateur)' },
 ];
 
 // O <title> do GG traz entidades HTML (&#39; nas aspas de 'Champion of Champions').
@@ -117,29 +118,44 @@ const txt = (h) => (h || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ')
   .replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n))
   .replace(/\s+/g, ' ').trim();
 
-/** Uma ronda de tee sheet → [{ time, players:[{name, country, division}] }]. */
+/**
+ * Uma ronda de tee sheet → [{ time, startHole, players:[{name, country, division}] }].
+ * Suporta os DOIS layouts de coluna do GG sem assumir a largura do bloco:
+ *   - `[Hora, Jogadores]`            (México / CoC / UA)
+ *   - `[Hora, Buraco, Jogadores]`    (England Golf — Reid Trophy)
+ * Estratégia: localizar as células que contêm `players_portrait` e, para cada
+ * uma, ler a HORA (célula com relógio) e o BURACO de saída (célula com só um
+ * inteiro) do bloco de células que a antecede. Antes assumia pares fixos (hora,
+ * jogadores) e no layout de 3 colunas lia o buraco ("1") como se fosse a hora.
+ */
 function parseTeeSheet(html) {
   const groups = [];
   const seen = new Set();
+  const TIME_RE = /\b\d{1,2}:\d{2}\s*(?:[ap]\.?\s*m\.?)?/i;
   for (const tm of html.matchAll(/<table[^>]*by_tee_times_table[\s\S]*?<\/table>/gi)) {
     for (const rm of tm[0].matchAll(/<tr[^>]*search_rows[^>]*>([\s\S]*?)<\/tr>/gi)) {
       const cells = [...rm[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((c) => c[1]);
-      // Cada linha traz DUAS colunas de (hora, jogadores) lado a lado.
-      for (let i = 0; i + 1 < cells.length; i += 2) {
-        const time = txt(cells[i]);
-        if (!/\d/.test(time)) continue;
-        const players = cells[i + 1].split(/players_portrait/).slice(1).map((chunk) => {
+      let blockStart = 0;   // início do bloco (hora/buraco) da group corrente
+      for (let j = 0; j < cells.length; j++) {
+        if (!/players_portrait/.test(cells[j])) continue;
+        const prefix = cells.slice(blockStart, j).map((c) => txt(c));
+        blockStart = j + 1;
+        let time = prefix.find((c) => TIME_RE.test(c)) || prefix.find((c) => /\d/.test(c)) || '';
+        const tm2 = time.match(TIME_RE); if (tm2) time = tm2[0].replace(/\s+/g, ' ').trim();
+        let startHole = null;
+        for (const c of prefix) { const hm = c.match(/^\s*(\d{1,2})\s*$/); if (hm && c !== time) { startHole = +hm[1]; break; } }
+        const players = cells[j].split(/players_portrait/).slice(1).map((chunk) => {
           const name = txt(chunk.split('<span')[0]).replace(/^'>\s*/, '').trim();
           const country = txt((chunk.match(/affiliation_portrait'>([\s\S]*?)<\/span>/) || [])[1] || '');
           const division = txt((chunk.match(/answer_text'>([\s\S]*?)<\/div>/) || [])[1] || '');
           return { name, country: country || null, division: division || null };
         }).filter((p) => p.name);
-        if (!players.length) continue;
+        if (!players.length || !time) continue;
         // A tabela repete as linhas em variantes hidden-xs/visible-xs.
-        const key = `${time}|${players[0].name}`;
+        const key = `${time}|${startHole}|${players[0].name}`;
         if (seen.has(key)) continue;
         seen.add(key);
-        groups.push({ time, players });
+        groups.push({ time, startHole, players });
       }
     }
   }
@@ -172,6 +188,34 @@ const nameKey = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 /**
+ * Roster da página "List of Players" (widget `players`) → [{ name, club, countryName }].
+ * É a ÚNICA fonte de país + clube por jogador em eventos England-Golf: o
+ * leaderboard v2 não traz afiliação nenhuma e a tabela é `Handle | Home Club |
+ * Country`. Também alimenta o campo pré-torneio (jogadores ainda sem score).
+ * Mapeia as colunas pelos rótulos do cabeçalho (não por posição fixa).
+ */
+async function fetchRoster(lid, rosterPageId) {
+  const html = await ggGet(`${GG}/leagues/${lid}/widgets/players?page_id=${rosterPageId}`);
+  const th = [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((m) => txt(m[1]).toLowerCase());
+  const iName = Math.max(0, th.findIndex((h) => /handle|name|player/.test(h)));
+  const iClub = th.findIndex((h) => /club/.test(h));
+  const iCountry = th.findIndex((h) => /country|nation/.test(h));
+  const tbody = (html.match(/<tbody[\s\S]*?<\/tbody>/i) || [null])[0] || html;
+  const out = [];
+  for (const rm of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const tds = [...rm[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((c) => txt(c[1]));
+    const name = tds[iName];
+    if (!name) continue;
+    out.push({
+      name: normalizeName(name),
+      club: iClub >= 0 ? (tds[iClub] || null) : null,
+      countryName: iCountry >= 0 ? (tds[iCountry] || null) : null,
+    });
+  }
+  return out;
+}
+
+/**
  * Draws por DIVISÃO + países por jogador, a partir da página de tee sheets.
  * Os dois vêm do MESMO widget (cada evento publica um ou outro), por isso são
  * lidos numa só passagem.
@@ -187,24 +231,29 @@ async function fetchTeeSheets(lid, teePageId) {
   const countries = new Map();
   for (let i = 0; i < rounds.length; i++) {
     const r = rounds[i];
+    if (/practice/i.test(r.label)) continue;   // draw de ronda de treino não interessa
     const html = r.url ? await ggGet(GG + r.url) : first;
     for (const p of parseRoster(html)) {
       if (p.country && !countries.has(nameKey(p.name))) countries.set(nameKey(p.name), p.country);
     }
     const groups = parseTeeSheet(html);
     if (!groups.length) { await new Promise((res) => setTimeout(res, 300)); continue; }
-    const roundNum = (r.label.match(/round\s+(\d+)/i) || [, String(i + 1)])[1];
+    const rNum = (r.label.match(/round\s+(\d+)/i) || [, String(i + 1)])[1];
     const date = (r.label.match(/\(([^)]+)\)/) || [])[1] || undefined;
+    const mkRound = (gs) => ({
+      round: Number(rNum), label: r.label, date,
+      groups: gs.map((g) => ({ time: g.time, startHole: g.startHole ?? null, players: g.players.map((p) => ({ name: p.name })) })),
+    });
+    // Draw completo da ronda sob __ALL__ — fallback p/ eventos de 1 divisão, cujo
+    // tee sheet não etiqueta escalão nenhum nos jogadores.
+    if (!byDiv.has('__ALL__')) byDiv.set('__ALL__', {});
+    byDiv.get('__ALL__')[rNum] = mkRound(groups);
     // Um flight pode juntar escalões diferentes → o grupo entra no draw de
     // TODAS as divisões representadas (é assim que o miúdo vê com quem joga).
     const divs = new Set(groups.flatMap((g) => g.players.map((p) => p.division).filter(Boolean)));
     for (const dv of divs) {
       if (!byDiv.has(dv)) byDiv.set(dv, {});
-      const mine = groups.filter((g) => g.players.some((p) => p.division === dv));
-      byDiv.get(dv)[roundNum] = {
-        round: Number(roundNum), label: r.label, date,
-        groups: mine.map((g) => ({ time: g.time, startHole: null, players: g.players.map((p) => ({ name: p.name })) })),
-      };
+      byDiv.get(dv)[rNum] = mkRound(groups.filter((g) => g.players.some((p) => p.division === dv)));
     }
     await new Promise((res) => setTimeout(res, 300));
   }
@@ -230,6 +279,14 @@ async function discoverDivisions(pageUrl, leagueOverride) {
       return null;
     })()
     || null;
+  // Página "List of Players" (roster) — link da navegação "List of Players".
+  // Fonte de país + clube por jogador (o leaderboard England-Golf não os traz).
+  const rosterPageId = (() => {
+    for (const m of pageHtml.matchAll(/<a[^>]+href="[^"]*\/pages\/(\d+)"[^>]*>([\s\S]{0,150}?)<\/a>/g)) {
+      if (/list\s*of\s*players/i.test(m[2].replace(/<[^>]+>/g, ' '))) return m[1];
+    }
+    return null;
+  })();
   if (!lid) throw new Error(`leagueId não encontrado (página 100% JS?). Passar --league {id}. Título: "${title}"`);
 
   const widget = await ggGet(`${GG}/leagues/${lid}/widgets/tournament_results?page_id=${pid}`);
@@ -242,7 +299,7 @@ async function discoverDivisions(pageUrl, leagueOverride) {
   if (!opts.length) {
     const v2 = (widget.match(/v2tournaments\/(\d+)/) || [])[1];
     if (!v2) throw new Error('sem opções de ronda nem v2tid no widget');
-    return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2 }] };
+    return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2 }], teePageId, rosterPageId };
   }
 
   // Caso "uma vista, várias divisões" (Champion of Champions): o <select> só
@@ -265,7 +322,7 @@ async function discoverDivisions(pageUrl, leagueOverride) {
       }
       divisions.sort((a, b) => divSortKey(a.label) - divSortKey(b.label));
       console.log(`   ${divisions.length} divisão(ões) na mesma vista: ${divisions.map((d) => d.label).join(' · ')}`);
-      return { title, lid, divisions, teePageId };
+      return { title, lid, divisions, teePageId, rosterPageId };
     }
   }
 
@@ -288,7 +345,7 @@ async function discoverDivisions(pageUrl, leagueOverride) {
     if (!v2) { console.log(`   ⚠ ${base}: sem v2tid (opção ${o.val}) — saltado`); continue; }
     divisions.push({ label: base, v2tid: v2 });
   }
-  return { title, lid, divisions, teePageId };
+  return { title, lid, divisions, teePageId, rosterPageId };
 }
 
 /**
@@ -351,7 +408,7 @@ async function runOne(opts) {
     skipScorecards = false, profiles = false, noMerge = false,
   } = opts;
 
-  let title, divisions, source, lid = leagueOverride, teePageId = null;
+  let title, divisions, source, lid = leagueOverride, teePageId = null, rosterPageId = opts.rosterPage || null;
   if (v2Arg) {
     // Aceita `id,id,...` (labels genéricos) ou `Label=id,Label=id,...` (curado,
     // ex: divisões México "Varonil 18=4582829,Femenil 18=4582833,…").
@@ -368,6 +425,7 @@ async function runOne(opts) {
     const disc = await discoverDivisions(pageUrl, leagueOverride);
     title = disc.title; divisions = disc.divisions; source = pageUrl;
     lid = disc.lid; teePageId = disc.teePageId;
+    rosterPageId = rosterPageId || disc.rosterPageId;   // scope override > auto-descoberto
     if (!divisions.length) throw new Error('nenhuma divisão descoberta');
   } else {
     throw new Error('sem pageUrl nem --v2tids');
@@ -407,7 +465,9 @@ async function runOne(opts) {
       const { draws, countries } = await fetchTeeSheets(lid, teePageId);
       let n = 0;
       for (const dv of out.divisions) {
-        const d = draws.get(dv.division);
+        let d = draws.get(dv.division);
+        // Evento de 1 divisão: o tee sheet não etiqueta escalão → usa o draw completo.
+        if ((!d || !Object.keys(d).length) && out.divisions.length === 1) d = draws.get('__ALL__');
         if (d && Object.keys(d).length) { dv.draws = d; n++; }
       }
       if (n) console.log(`   🕘 tee sheets: draws reais em ${n}/${out.divisions.length} divisão(ões)`);
@@ -426,6 +486,47 @@ async function runOne(opts) {
         if (nc) console.log(`   🌍 roster: país corrigido em ${nc} jogador(es) (leaderboard sem afiliação)`);
       }
     } catch (e) { console.log(`   ⚠ tee sheets indisponíveis: ${e.message}`); }
+  }
+
+  // Roster (país + clube por jogador) da página "List of Players". Em eventos
+  // England-Golf o leaderboard v2 não traz afiliação nenhuma; sem isto os
+  // jogadores ficavam todos sem bandeira. E ANTES de haver scores, semeia o
+  // campo (jogadores sem ronda) para o torneio já aparecer com os inscritos +
+  // tee times, em vez de um ficheiro de 0 jogadores.
+  if (rosterPageId && lid) {
+    try {
+      const roster = await fetchRoster(lid, rosterPageId);
+      if (roster.length) {
+        const byName = new Map(roster.map((r) => [nameKey(r.name), r]));
+        for (const dv of out.divisions) for (const p of dv.players) {
+          const r = byName.get(nameKey(p.name));
+          if (!r) continue;
+          if (r.club && !p.club) p.club = r.club;
+          if (r.countryName) {
+            if (!p.location) p.location = r.countryName;
+            const iso = inferCountry(r.countryName, null);
+            if (iso && (p.country == null || p.country === 'US')) p.country = iso;
+          }
+        }
+        // Semear só faz sentido num evento de 1 divisão (todos os inscritos são dela).
+        if (out.divisions.length === 1) {
+          const dv = out.divisions[0];
+          const have = new Set(dv.players.map((p) => nameKey(p.name)));
+          let seeded = 0;
+          for (const r of roster) {
+            if (have.has(nameKey(r.name))) continue;
+            dv.players.push({
+              pos: '', name: r.name,
+              country: r.countryName ? inferCountry(r.countryName, null) : null,
+              location: r.countryName || '', club: r.club || null,
+              toPar: null, total: null, roundGross: [], rounds: [],
+            });
+            seeded++;
+          }
+          if (seeded) console.log(`   👥 roster: +${seeded} inscrito(s) ainda sem score (campo pré-torneio) → ${dv.players.length} jogadores`);
+        }
+      }
+    } catch (e) { console.log(`   ⚠ roster indisponível: ${e.message}`); }
   }
 
   const yearKey = out.year || 'x';
@@ -468,7 +569,7 @@ async function main() {
         nameOverride: e.name || null, slugOverride: e.slug || null,
         yearOverride: e.year ? parseInt(e.year, 10) : null, countryDefault: e.country || null,
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
-        skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets,
+        skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -476,6 +577,7 @@ async function main() {
       pageUrl, v2Arg, leagueOverride: getArg('--league'), nameOverride: getArg('--name'),
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
       countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets,
+      rosterPage: getArg('--roster-page'),
     }];
   } else {
     console.error('Uso: node scripts/scrape-golfgenius-node.js <pageUrl> [--league id] [--v2tids a,b] [--name] [--slug] [--year] [--country XX] [--skip-scorecards]');

@@ -41,6 +41,7 @@ const SOURCES = [
   { id: "uaworlds", label: "The Junior Tour (Under Armour) — World Championship", load: () => require("./sources/uaworlds") },
   { id: "mexnacional", label: "Nacional Infantil Juvenil (México)", load: () => require("./sources/mexnacional") },
   { id: "coc", label: "Champion of Champions World Championship", load: () => require("./sources/coc") },
+  { id: "reidtrophy", label: "Reid Trophy (English Boys' U14)", load: () => require("./sources/reidtrophy") },
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
   { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
   { id: "avtrophy", label: "Belgian Intl U14 (Albert Vermeiren)", load: () => require("./sources/avtrophy") },

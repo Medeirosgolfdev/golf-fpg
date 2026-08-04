@@ -33,6 +33,11 @@ on:
   schedule:
     # Minuto Hora Dia Mês DiaSemana (UTC)
     - cron: '0 22 * * *'
+    # Reid Trophy 2026 (Porters Park, 4-6 Ago) — updates intradiários durante a
+    # prova (amigos do Manuel no field). Sem alterações → exit 2 → sem commit.
+    # Pode remover-se depois de 2026-08-06 (senão volta a disparar em Ago 2027,
+    # inofensivo mas inútil).
+    - cron: '0 9,12,15,18 4-6 8 *'
 
 permissions:
   contents: write
