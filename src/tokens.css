@@ -235,6 +235,14 @@
   --chart-9:   #c2410c;   /* ferrugem */
   --chart-10:  #6366f1;   /* índigo */
 
+  /* Variantes claras das 4 primeiras séries — fundos de série (cards/células
+   * de comparação). Mesmos hex dos --bg-*-strong correspondentes, mas com
+   * token próprio: um ajuste aos pills semânticos não deve mexer nos charts. */
+  --chart-1-light: #dcfce7;
+  --chart-2-light: #dbeafe;
+  --chart-3-light: #fee2e2;
+  --chart-4-light: #fef3c7;
+
 
   /* ── 9. Performance tiers (histograma gross vs par) ────────── */
   --tier-exceptional:  #0d9488;   /* teal */

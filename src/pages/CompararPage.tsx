@@ -32,8 +32,9 @@ import { C } from "../utils/colors";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
-// Variantes claras (fundos de série). TODO: mover para colors.ts quando houver tokens -light dedicados.
-const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
+// Variantes claras (fundos de série) — tokens --chart-N-light dedicados (só usados
+// em inline styles do DOM, por isso var() chega; sem espelho em colors.ts).
+const COLORS_LIGHT = ["var(--chart-1-light)", "var(--chart-2-light)", "var(--chart-3-light)", "var(--chart-4-light)"];
 
 interface Slot {
   fed: string; player: Player;
