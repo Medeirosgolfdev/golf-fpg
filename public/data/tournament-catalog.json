@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T18:39:20.898Z",
+  "generatedAt": "2026-08-05T18:49:42.802Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -1186,6 +1186,56 @@
       ],
       "firstDate": "2024-02-20",
       "lastDate": "2026-02-25",
+      "editionsCount": 40
+    },
+    {
+      "id": "estonian-junior-tour",
+      "label": "Estonian Junior Tour",
+      "sourceId": "ejt",
+      "tournamentIds": [
+        "ejt-ejt1_2021",
+        "ejt-ejt1_2022",
+        "ejt-ejt1_2023",
+        "ejt-ejt1_2024",
+        "ejt-ejt1_2025",
+        "ejt-ejt1_2026",
+        "ejt-ejt2_2021",
+        "ejt-ejt2_2022",
+        "ejt-ejt2_2023",
+        "ejt-ejt2_2024",
+        "ejt-ejt2_2025",
+        "ejt-ejt2_2026",
+        "ejt-ejt3_2021",
+        "ejt-ejt3_2022",
+        "ejt-ejt3_2023",
+        "ejt-ejt3_2024",
+        "ejt-ejt3_2025",
+        "ejt-ejt3_2026",
+        "ejt-ejt4_2021",
+        "ejt-ejt4_2022",
+        "ejt-ejt4_2023",
+        "ejt-ejt4_2024",
+        "ejt-ejt4_2025",
+        "ejt-ejt4_2026",
+        "ejt-ejt5_2021",
+        "ejt-ejt5_2022",
+        "ejt-ejt5_2023",
+        "ejt-ejt5_2024",
+        "ejt-ejt5_2025",
+        "ejt-ejt5_2026",
+        "ejt-ejt6_2021",
+        "ejt-ejt6_2022",
+        "ejt-ejt6_2023",
+        "ejt-ejt6_2024",
+        "ejt-ejt6_2025",
+        "ejt-ejt6_2026",
+        "ejt-ejt7_2021",
+        "ejt-ejt7_2022",
+        "ejt-ejt7_2023",
+        "ejt-ejt7_2025"
+      ],
+      "firstDate": "2021-06-14",
+      "lastDate": "2026-08-24",
       "editionsCount": 40
     },
     {
@@ -21430,22 +21480,6 @@
       ],
       "firstDate": "2021-09-05",
       "lastDate": "2026-02-08",
-      "editionsCount": 6
-    },
-    {
-      "id": "estonian-junior-tour",
-      "label": "Estonian Junior Tour",
-      "sourceId": "ejt",
-      "tournamentIds": [
-        "ejt-ejt1_2026",
-        "ejt-ejt2_2026",
-        "ejt-ejt3_2026",
-        "ejt-ejt4_2026",
-        "ejt-ejt5_2026",
-        "ejt-ejt6_2026"
-      ],
-      "firstDate": "2026-06-01",
-      "lastDate": "2026-08-24",
       "editionsCount": 6
     },
     {
