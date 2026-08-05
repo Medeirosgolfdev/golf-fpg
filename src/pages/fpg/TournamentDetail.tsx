@@ -132,6 +132,11 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
         }
         out.push({ key: `round:${i}`, label: (rondas[i] as any)._roundLabel || `R${roundNum}` });
       }
+      // Draws de rondas FUTURAS ainda sem scores (ex: Draw R3 publicado na
+      // véspera com R1-R2 jogadas — Reid Trophy) — o loop acima só intercala
+      // draws de rondas que JÁ têm dados. O ramo de 1 ronda já fazia isto.
+      const futureDrawsMulti = [...drawsByRound.keys()].filter(r => r > rondas.length).sort((a, b) => a - b);
+      for (const r of futureDrawsMulti) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
       out.push({ key: "scorecards", label: COMBINED_TAB });
       // Tab "Análise Aroeira II" — só para o PJA Aroeira Masters 2026 (029/10543)
