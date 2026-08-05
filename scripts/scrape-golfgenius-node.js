@@ -86,8 +86,13 @@ function divisionBase(label) {
 function isFinalRound(label) { return /final\s+round/i.test(label); }
 function roundNum(label) { const m = label.match(/round\s+(\d+)/i); return m ? +m[1] : (isFinalRound(label) ? 999 : 0); }
 // Label que só identifica a RONDA ("Round 3 (Thu, July 23)") — nenhuma divisão.
+// ⚠ Tirar os parênteses ANTES de decidir: "Round 1 (Tue, August 4)" não batia
+// no regex e cada ronda virava uma DIVISÃO falsa (Reid Trophy 2026, quando o
+// GG acrescentou o <select> de rondas a meio da prova — o ficheiro ficou com
+// "Round 1"/"Round 2" como escalões, cada um com o leaderboard inteiro).
 function isRoundOnlyLabel(label) {
-  const base = divisionBase(label);
+  const noParen = (label || '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  const base = divisionBase(noParen);
   return !base || /^(final\s+round|round\s+\d+)$/i.test(base);
 }
 
@@ -342,6 +347,12 @@ async function discoverDivisions(pageUrl, leagueOverride) {
   // ("54 Hole World Championship - Under 12 Boys" → "Under 12 Boys").
   if (opts.every((o) => isRoundOnlyLabel(o.label))) {
     const v2s = [...new Set([...widget.matchAll(/v2tournaments\/(\d+)/g)].map((m) => m[1]))];
+    // Divisão ÚNICA com <select> de rondas (England Golf — Reid Trophy): o
+    // widget base já é o leaderboard agregado do evento inteiro. Sem isto o
+    // código caía no agrupamento por label e cada ronda virava uma divisão.
+    if (v2s.length === 1) {
+      return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2s[0] }], teePageId, rosterPageId };
+    }
     if (v2s.length > 1) {
       const divisions = [];
       for (const v2 of v2s) {
