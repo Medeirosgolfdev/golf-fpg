@@ -780,8 +780,13 @@ function MajorContent() {
       config={config}
       selectedId={selectedId}
       onSelectEntry={(e) => {
-        const [src, yr] = e.id.split(":");
-        navigate(`/major/${src}/${yr}`);
+        // Ids têm 2 segmentos ("ejo:2026") ou 3 nas etapas multi-evento do
+        // Estonian Junior Tour ("ejt:2026:3"). Partir SÓ na primeira ":" e
+        // manter o resto no segmento :year do URL (/major/ejt/2026:3) — split
+        // em [src, yr] perdia a etapa e todas as etapas do ano caíam no mesmo
+        // URL (só dava para abrir a default).
+        const i = e.id.indexOf(":");
+        navigate(`/major/${e.id.slice(0, i)}/${e.id.slice(i + 1)}`);
       }}
     />
   );

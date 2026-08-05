@@ -53,9 +53,13 @@ type SK = "rank" | "name" | "country" | "tournaments" | "years" | "seriesCount";
 const PAGE = 100;
 
 /** "doral:2025" → { source:"doral", year:2025 } */
-function splitEntry(id: string): { source: string; year: number } {
-  const i = id.lastIndexOf(":");
-  return { source: id.slice(0, i), year: Number(id.slice(i + 1)) };
+function splitEntry(id: string): { source: string; year: string } {
+  // Partir na PRIMEIRA ":" — as etapas do Estonian Junior Tour têm 3 segmentos
+  // ("ejt:2021:4"): com lastIndexOf a fonte saía "ejt:2021" (label/cor falhavam)
+  // e o link /major/ejt:2021/4 não abria nada. O "ano" fica "2021:4" — é o que
+  // o URL /major/:source/:year espera agora (etapa incluída).
+  const i = id.indexOf(":");
+  return { source: id.slice(0, i), year: id.slice(i + 1) };
 }
 
 export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {} }: Props) {
@@ -242,9 +246,9 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                                       border: `1px solid ${sourceColors[source] ?? "var(--border, #d1d5db)"}`,
                                       color: "var(--text)", whiteSpace: "nowrap",
                                     }}
-                                    title={`Abrir ${srcLabel(source)} ${year}`}
+                                    title={`Abrir ${srcLabel(source)} ${year.replace(":", " — etapa ")}`}
                                   >
-                                    {srcLabel(source)} <b>{year}</b>
+                                    {srcLabel(source)} <b>{year.replace(":", " #")}</b>
                                   </Link>
                                 );
                               })}
