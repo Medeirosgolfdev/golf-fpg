@@ -38,6 +38,7 @@ const INT_MIN = -2147483648; // sentinela GolfBox para "sem valor"
 const SLUG_OVERRIDES = [
   { re: /albert vermeiren|boys & girls u14|boys and girls u14/i, slug: 'avtrophy', name: 'Belgian International Golf Championship U14 — Albert Vermeiren Trophy' },
   { re: /young masters/i, slug: 'eym', name: 'European Young Masters' },
+  { re: /estonian junior open/i, slug: 'ejo', name: 'Estonian Junior Open' },
 ];
 
 function slugify(s) {
@@ -112,8 +113,15 @@ function parseGbDate(s) {
 /** Nome de divisão a partir do nome da classe + escalão do torneio.
  *  "Boys Class" + "U14" → "Boys U14"; "Girls Class" → "Girls U14". */
 function divisionLabel(className, ageTag) {
-  const gender = /girl/i.test(className) ? 'Girls' : /boy/i.test(className) ? 'Boys' : className.replace(/\s*class$/i, '').trim();
-  return ageTag ? `${gender} ${ageTag}` : gender;
+  const cleaned = (className || '').replace(/\s*class$/i, '').trim();
+  const isG = /girl/i.test(cleaned), isB = /boy/i.test(cleaned);
+  if (!isG && !isB) return cleaned;
+  // Escalão da PRÓPRIA classe ("Boys U21", "Boys U21/U18" — eventos multi-escalão
+  // tipo Estonian Junior Open) ganha ao escalão do nome do torneio (ageTag).
+  const own = /\bU\s?-?\s?(\d{1,2}(?:\s*\/\s*U\s?-?\s?\d{1,2})?)\b/i.exec(cleaned);
+  const tag = own ? `U${own[1].replace(/\s+/g, '')}` : ageTag;
+  const gender = isG ? 'Girls' : 'Boys';
+  return tag ? `${gender} ${tag}` : gender;
 }
 
 /** Extrai o escalão ("U14"/"U16"/…) do nome do torneio, se existir. */
@@ -292,8 +300,12 @@ async function scrapeOne(compId, opts = {}) {
   catch (e) { console.log(`   ⚠ GetInfo falhou (${e.message}) — sem CR/Slope`); }
 
   // Classes de jogadores (ignora TeamClass — a MajorPage é individual).
+  // `classRe` (scope/--classes) restringe por nome de classe — para eventos que
+  // publicam vistas sobrepostas dos mesmos jogadores (EJO: escalão + EMV + combinadas).
+  const classRe = opts.classRe ? new RegExp(opts.classRe, 'i') : null;
   const playerClasses = (Array.isArray(cd.Classes) ? cd.Classes : [])
-    .filter((c) => (c.ClassType || 'PlayerClass') === 'PlayerClass');
+    .filter((c) => (c.ClassType || 'PlayerClass') === 'PlayerClass')
+    .filter((c) => !classRe || classRe.test(c.Name || ''));
   if (!playerClasses.length) throw new Error('nenhuma PlayerClass encontrada em CompetitionData.Classes');
 
   const divisions = [];
@@ -355,7 +367,7 @@ async function main() {
       .map((a) => (a.match(/competition\/(\d+)/) || a.match(/(\d{5,})/) || [])[1])
       .filter(Boolean);
     const yr = getArg('--year') ? parseInt(getArg('--year'), 10) : null;
-    targets = ids.map((competitionId) => ({ competitionId, slug: getArg('--slug'), name: getArg('--name'), year: yr }));
+    targets = ids.map((competitionId) => ({ competitionId, slug: getArg('--slug'), name: getArg('--name'), year: yr, classRe: getArg('--classes') }));
   }
   if (!targets.length) {
     console.error('Uso:');

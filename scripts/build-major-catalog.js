@@ -287,6 +287,8 @@ const GG_SOURCES = [
   { prefix: "eatc_", source: "eatc", series: "ETC Men", name: (f, y) => f.tournament || `ETC Men ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "eatc2_", source: "eatc2", series: "ETC Men 2", name: (f, y) => f.tournament || `ETC Men 2 ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "eym_", source: "eym", series: "Young Masters", name: (f, y) => f.tournament || `European Young Masters ${y}`, course: (f) => f.course || undefined, union: true },
+  // Estonian Junior Open (Estonian Golf Association, GolfBox) — Boys/Girls U12-U21.
+  { prefix: "ejo_", source: "ejo", series: "EST Jr Open", name: (f, y) => f.tournament || `Estonian Junior Open ${y}`, course: (f) => f.course || undefined, union: true },
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);

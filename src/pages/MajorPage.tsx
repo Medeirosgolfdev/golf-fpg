@@ -138,7 +138,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 export interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
@@ -148,13 +148,14 @@ const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 
 // showRatings: fontes que trazem HCP + Course Rating/Slope (ex: GolfBox) mostram
 // as colunas HCP e SD; as GolfGenius (sem esses dados) mantêm-nas escondidas para
-// não exibir colunas vazias.
-export function jobScorecardOptions(opts?: { showRatings?: boolean }): ScorecardOptions {
+// não exibir colunas vazias. showAges: coluna IDADE (idade no ano do torneio,
+// via `birthYear` do GolfBox → `_age`) — ligar só em fontes com birthYear.
+export function jobScorecardOptions(opts?: { showRatings?: boolean; showAges?: boolean }): ScorecardOptions {
   const hide = !opts?.showRatings;
-  return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País" };
+  return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País", showAge: !!opts?.showAges };
 }
 
-export function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
+export function jobDivisionToTournament(div: JobDivision, name: string, year?: number): FPGTournament {
   // Incluir quem tem total OU rondas com scores — em torneios a DECORRER o
   // GolfGenius ainda não publica o `total` agregado (fica null), mas há já
   // scorecards por ronda que queremos mostrar.
@@ -271,6 +272,9 @@ export function jobDivisionToTournament(div: JobDivision, name: string): FPGTour
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
       hcpExact: p.hcp ?? undefined,
+      // Idade no ano do torneio (coluna IDADE via options.showAge) — o GolfBox
+      // publica o ano de nascimento, não a DOB completa, logo é idade year-based.
+      _age: year && p.birthYear ? year - p.birthYear : null,
       grossTotal,
       toPar,
       nholes: holes,
@@ -447,9 +451,9 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
  *  TournamentDetail com tabs flat intercaladas (Draw R{n} · R{n} · Resumo ·
  *  Scorecards) — mesma apresentação dos restantes MAJORS. A ordem das divisões
  *  é preservada do ficheiro (não ordenada por idade). */
-function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean; matchplay?: MatchplayFile }): CircuitEntry[] {
+function buildGgJobEntries(files: JobFile[], opts: { source: string; series: string; linkLabel?: string; showRatings?: boolean; showAges?: boolean; matchplay?: MatchplayFile }): CircuitEntry[] {
   const linkLabel = opts.linkLabel ?? "Resultados GolfGenius";
-  const scOpts = withKidsLink(jobScorecardOptions({ showRatings: opts.showRatings }));
+  const scOpts = withKidsLink(jobScorecardOptions({ showRatings: opts.showRatings, showAges: opts.showAges }));
   return files.map((f): CircuitEntry => {
     // Match play (brackets ETC) — tab extra no TournamentDetail da edição certa.
     const mp = opts.matchplay && opts.matchplay.year === f.year ? opts.matchplay : null;
@@ -458,7 +462,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       const label = dv.division || opts.series;
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
       const hasEvo = !!evo && evo.size > 0;
-      const results = jobDivisionToTournament(dv, label);
+      const results = jobDivisionToTournament(dv, label, f.year);
       tagEvo(results, evo);
       if (dv.draws && Object.keys(dv.draws).length) {
         (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
@@ -551,8 +555,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
@@ -670,6 +674,9 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
   eatc2: { file: (y) => `/data/eatc2_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "eatc2", series: "ETC Men 2", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
   // European Young Masters (EGA, GolfBox) — U16, 2M+2F por país; PT tem equipa.
   eym: { file: (y) => `/data/eym_${y}.json`, build: (f, mp) => buildGgJobEntries(f, { source: "eym", series: "Young Masters", linkLabel: "Livescoring GolfBox", showRatings: true, matchplay: mp }) },
+  // Estonian Junior Open (Estonian Golf Association, GolfBox) — Boys/Girls U12-U21.
+  // showAges: o GolfBox traz o ano de nascimento de todos → coluna IDADE.
+  ejo: { file: (y) => `/data/ejo_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "ejo", series: "EST Jr Open", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão
