@@ -51,6 +51,10 @@ interface PRow {
   fed?: string;
   hcp: number | null;
   esc: string;
+  /** Idade no ano do torneio (player._age, ex: GolfBox) — coluna IDADE. */
+  age: number | null;
+  /** DOB completa quando a fonte a traz — tooltip da coluna IDADE. */
+  dob: string | null;
   teeName?: string;
   rds: (RdData | null)[];
   total: number | null;
@@ -69,6 +73,8 @@ interface FlatRow {
   fed?: string;
   hcp: number | null;
   esc: string;
+  age: number | null;
+  dob: string | null;
   teeName?: string;
   rd: RdData;
   ri: number;
@@ -298,6 +304,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         fed: (p as any).fed || p.fedCode,
         hcp: p.hcpExact ?? null,
         esc: resolveEscFn ? resolveEscFn(p) : "",
+        age: (p as any)._age ?? null,
+        dob: (p as any).dob ?? null,
         teeName: p.teeName,
         rds,
         total,
@@ -362,6 +370,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           fed: (p as any).fed || p.fedCode,
           hcp: p.hcpExact ?? null,
           esc: resolveEscFn ? resolveEscFn(p) : "",
+          age: (p as any)._age ?? null,
+          dob: (p as any).dob ?? null,
           teeName: p.teeName,
           rd,
           ri,
@@ -442,6 +452,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
             : (b.teeName || "").localeCompare(a.teeName || "", "pt");
         case "hcp":
           return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+        case "age":
+          return sortDir === "asc" ? (a.age ?? INF) - (b.age ?? INF) : (b.age ?? INF) - (a.age ?? INF);
         default:
           return 0;
       }
@@ -498,6 +510,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
             : (b.teeName || "").localeCompare(a.teeName || "", "pt");
         case "hcp":
           return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+        case "age":
+          return sortDir === "asc" ? (a.age ?? INF) - (b.age ?? INF) : (b.age ?? INF) - (a.age ?? INF);
         default:
           return 0;
       }

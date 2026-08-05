@@ -138,7 +138,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; divisions: JobDivision[]; }
@@ -272,9 +272,13 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
       hcpExact: p.hcp ?? undefined,
-      // Idade no ano do torneio (coluna IDADE via options.showAge) — o GolfBox
-      // publica o ano de nascimento, não a DOB completa, logo é idade year-based.
+      // Idade no ano do torneio (coluna IDADE via options.showAge) — year-based
+      // via birthYear, presente em todas as fontes GolfBox.
       _age: year && p.birthYear ? year - p.birthYear : null,
+      // DOB completa quando a fonte a traz (GolfBox via GetPlayers `entries`) —
+      // alimenta o tooltip da coluna IDADE e as colunas Nasc./Idade do Resumo
+      // (o AccumulatedLB lê `(p as any).dob`).
+      dob: p.dob ?? undefined,
       grossTotal,
       toPar,
       nholes: holes,

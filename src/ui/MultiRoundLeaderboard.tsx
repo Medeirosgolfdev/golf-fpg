@@ -2,7 +2,7 @@
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
 import { normLoose } from "../utils/normName";
-import { fmtHcp, medal } from "../utils/format";
+import { fmtHcp, medal, fmtDobPt } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
@@ -623,7 +623,7 @@ export function MultiRoundLeaderboard({
                     // Preferir a idade pré-calculada pelo adapter (row.age) → CONSISTENTE
                     // com as tabs R1/R2/R3. Só recalcular por dob se o adapter não a deu.
                     const age = row.age != null ? row.age : ageAt(dob, tournamentDate);
-                    return <td className="lb-esc" title={yr != null ? `Nascido em ${dob}` : undefined}>
+                    return <td className="lb-esc" title={yr != null ? `Nascido a ${fmtDobPt(dob)}` : undefined}>
                       {age != null
                         ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
                         : <span className="muted">–</span>}

@@ -126,6 +126,13 @@ export function fmtDateShort(s: string): string {
   return `${day}/${m}`;
 }
 
+/** DOB "2016-09-28" (ISO) → "28/09/2016". Datas noutro formato passam como vieram. */
+export function fmtDobPt(dob?: string | null): string | null {
+  if (!dob) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(dob.trim());
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : dob;
+}
+
 /** Data "17 Mar 2026" (dia sem zero à esquerda, mês abreviado PT, ano) a partir de ISO. */
 export function fmtDayMonthYear(iso: string): string {
   if (!iso) return "";

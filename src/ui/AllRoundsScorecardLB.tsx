@@ -11,7 +11,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
 import { resolveEsc, computeSD } from "../data/fpgUtils";
 import { scClass } from "../utils/scoreDisplay";
-import { fmtToPar, fmtHcp, abreviarNome, medal } from "../utils/format";
+import { fmtToPar, fmtHcp, abreviarNome, medal, fmtDobPt } from "../utils/format";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
@@ -38,6 +38,7 @@ export function AllRoundsScorecardLB({
 }) {
   const hideHCP = options?.hideHCP ?? false;
   const hideSD = options?.hideSD ?? false;
+  const showAge = options?.showAge ?? false;
   const startHole = options?.startHole ?? 1;
   const nameDecorator = options?.nameDecorator;
 
@@ -156,7 +157,17 @@ export function AllRoundsScorecardLB({
   }
 
   const postCols = (hideSD ? 0 : 1) + 4; // SD(opcional) 🦅 🐦 Par ■
-  const headerSpan = 2 + (hideHCP ? 0 : 1) + 1;
+  const headerSpan = 2 + (showAge ? 1 : 0) + (hideHCP ? 0 : 1) + 1;
+
+  /** Pill de idade (coluna IDADE) — tooltip com a DOB completa quando existe. */
+  function AgePill({ age, dob }: { age: number | null; dob: string | null }) {
+    if (age == null || age < 0) return <span className="muted">–</span>;
+    const d = fmtDobPt(dob);
+    return (
+      <span className="p p-sm" title={d ? `Nascido a ${d}` : undefined}
+        style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: d ? "help" : undefined }}>{age}a</span>
+    );
+  }
 
   if (!tournament.players.length) return <EmptyState size="sm" message="Sem dados." />;
 
@@ -382,6 +393,9 @@ export function AllRoundsScorecardLB({
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
+              {showAge && (
+                <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-age">IDADE</SortableHdr>
+              )}
               <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Tee</SortableHdr>
               {!hideHCP && (
                 <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
@@ -452,6 +466,11 @@ export function AllRoundsScorecardLB({
                                 <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>
                               )}
                             </td>
+                            {showAge && (
+                              <td className="lb-age" style={{ borderTop: bTop, textAlign: "center" }}>
+                                {isFirstRd ? <AgePill age={row.age} dob={row.dob} /> : ""}
+                              </td>
+                            )}
                             <td className="lb-club" style={{ borderTop: bTop }}>
                               {isFirstRd ? <TeeLabel tee={row.teeName} /> : ""}
                             </td>
@@ -501,6 +520,7 @@ export function AllRoundsScorecardLB({
                             )
                           : row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
                       </td>
+                      {showAge && <td className="lb-age" style={{ textAlign: "center" }}><AgePill age={row.age} dob={row.dob} /></td>}
                       <td className="lb-club"><TeeLabel tee={row.teeName} /></td>
                       {!hideHCP && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
                       <td className="lb-tee fw-600 fs-10 c-muted">{row.rdLabel}</td>

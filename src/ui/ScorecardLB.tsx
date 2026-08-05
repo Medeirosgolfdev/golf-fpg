@@ -12,7 +12,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
 import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
-import { fmtHcp, ageAtDate } from "../utils/format";
+import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -498,13 +498,16 @@ export function ScorecardLB({
       prefixCells: (
         <>
           {showAge_ && (
-            // Coluna IDADE (separada de ESC, sortable por número)
+            // Coluna IDADE (separada de ESC, sortable por número). Tooltip com a
+            // DOB completa quando a fonte a traz (ex: GolfBox via GetPlayers).
             <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
               {(() => {
                 const age = (p as any)._age as (number | null | undefined);
                 if (age == null || age < 0) return <span className="muted">–</span>;
+                const dob = fmtDobPt((p as any).dob);
                 return (
-                  <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
+                  <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}
+                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
                 );
               })()}
             </td>
