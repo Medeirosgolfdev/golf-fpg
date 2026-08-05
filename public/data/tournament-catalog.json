@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T18:30:02.582Z",
+  "generatedAt": "2026-08-05T18:39:20.898Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -21430,6 +21430,22 @@
       ],
       "firstDate": "2021-09-05",
       "lastDate": "2026-02-08",
+      "editionsCount": 6
+    },
+    {
+      "id": "estonian-junior-tour",
+      "label": "Estonian Junior Tour",
+      "sourceId": "ejt",
+      "tournamentIds": [
+        "ejt-ejt1_2026",
+        "ejt-ejt2_2026",
+        "ejt-ejt3_2026",
+        "ejt-ejt4_2026",
+        "ejt-ejt5_2026",
+        "ejt-ejt6_2026"
+      ],
+      "firstDate": "2026-06-01",
+      "lastDate": "2026-08-24",
       "editionsCount": 6
     },
     {
