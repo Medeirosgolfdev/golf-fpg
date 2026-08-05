@@ -24,6 +24,7 @@ import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, m
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
 import { gf, normPaisDisplay, isPtCountry } from "../utils/flagUtils";
+import { ageAtDate } from "../utils/format";
 import { normName } from "../utils/normName";
 import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "./FPGPage";
 import type { FpgDraw } from "../data/nacional2026Loader";
@@ -141,21 +142,21 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
-export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; divisions: JobDivision[]; }
+export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; startDate?: string | null; endDate?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
 const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 
 // showRatings: fontes que trazem HCP + Course Rating/Slope (ex: GolfBox) mostram
 // as colunas HCP e SD; as GolfGenius (sem esses dados) mantêm-nas escondidas para
-// não exibir colunas vazias. showAges: coluna IDADE (idade no ano do torneio,
-// via `birthYear` do GolfBox → `_age`) — ligar só em fontes com birthYear.
+// não exibir colunas vazias. showAges: coluna IDADE (idade À DATA do torneio via
+// dob+startDate; fallback ano − birthYear) — ligar só em fontes com birthYear.
 export function jobScorecardOptions(opts?: { showRatings?: boolean; showAges?: boolean }): ScorecardOptions {
   const hide = !opts?.showRatings;
   return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País", showAge: !!opts?.showAges };
 }
 
-export function jobDivisionToTournament(div: JobDivision, name: string, year?: number): FPGTournament {
+export function jobDivisionToTournament(div: JobDivision, name: string, year?: number, date?: string | null): FPGTournament {
   // Incluir quem tem total OU rondas com scores — em torneios a DECORRER o
   // GolfGenius ainda não publica o `total` agregado (fica null), mas há já
   // scorecards por ronda que queremos mostrar.
@@ -272,9 +273,11 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
       hcpExact: p.hcp ?? undefined,
-      // Idade no ano do torneio (coluna IDADE via options.showAge) — year-based
-      // via birthYear, presente em todas as fontes GolfBox.
-      _age: year && p.birthYear ? year - p.birthYear : null,
+      // Idade À DATA DO TORNEIO quando há DOB completa + data (GolfBox traz as
+      // duas) — um miúdo nascido a 22/10/2007 num torneio de Julho de 2026 tem
+      // 18 anos, não 19. Fallback year-based (ano − birthYear) sem DOB/data.
+      _age: (p.dob && date ? ageAtDate(p.dob, date) : null)
+        ?? (year && p.birthYear ? year - p.birthYear : null),
       // DOB completa quando a fonte a traz (GolfBox via GetPlayers `entries`) —
       // alimenta o tooltip da coluna IDADE e as colunas Nasc./Idade do Resumo
       // (o AccumulatedLB lê `(p as any).dob`).
@@ -290,7 +293,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       _isPortuguese: isPtCountry(p.country),
     } as FPGPlayer;
   });
-  return { name, tcode: `job-${name}`, date: "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
+  return { name, tcode: `job-${name}`, date: date || "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
 }
 
 
@@ -383,7 +386,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       const label = dv.division; // FM: usar o nome do age group directamente ("10 and Under", "11 & 12", …)
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division);
       const hasEvo = !!evo && evo.size > 0;
-      const results = jobDivisionToTournament(dv, label);
+      const results = jobDivisionToTournament(dv, label, f.year, f.startDate);
       tagEvo(results, evo);
       // Anexar os draws ao torneio → o TournamentDetail monta as tabs flat
       // intercaladas (Draw R1 · R1 · Draw R2 · R2 · … · Resumo · Scorecards).
@@ -466,7 +469,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       const label = dv.division || opts.series;
       const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division || opts.series);
       const hasEvo = !!evo && evo.size > 0;
-      const results = jobDivisionToTournament(dv, label, f.year);
+      const results = jobDivisionToTournament(dv, label, f.year, f.startDate);
       tagEvo(results, evo);
       if (dv.draws && Object.keys(dv.draws).length) {
         (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
@@ -524,7 +527,7 @@ function buildJobEntries(files: JobFile[]): CircuitEntry[] {
       const label = JOB_DIV_LABELS[i] || dv.division;
       const { evo, evoYear } = jobEvoFor(f, files, i, (d, idx) => JOB_DIV_LABELS[idx] || d.division);
       const hasEvo = !!evo && evo.size > 0;
-      const results = jobDivisionToTournament(dv, label);
+      const results = jobDivisionToTournament(dv, label, f.year, f.startDate);
       tagEvo(results, evo);
       return {
         key: `d${i}`,
