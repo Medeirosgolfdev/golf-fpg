@@ -141,7 +141,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
-export interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
+export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
 const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
@@ -496,7 +496,9 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
     });
     const all = f.divisions.flatMap((d) => d.players);
     return {
-      id: `${opts.source}:${f.year}`,
+      // Circuitos multi-evento/ano (Estonian Junior Tour): o id ganha o nº da
+      // etapa (`f.stop`) — tem de bater com o id do build-major-catalog.js.
+      id: f.stop ? `${opts.source}:${f.year}:${f.stop}` : `${opts.source}:${f.year}`,
       year: f.year,
       name: f.tournament || `${opts.series} ${f.year}`,
       course: f.course || undefined,
@@ -555,13 +557,18 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
   // às divisões do IntlTournView (trailing-tab) E às `renderFull` (via extras).
-  editionKey: (entry) => entry.source || null,
+  // "Edições anteriores" = mesma prova ao longo dos anos. No Estonian Junior
+  // Tour (multi-etapa) a "mesma prova" é a MESMA ETAPA (nº no id `ejt:ano:n`) —
+  // sem isto as 6 etapas de um ano contavam como 6 "edições".
+  editionKey: (entry) => (entry.source === "ejt" ? `ejt:${entry.id.split(":")[2] ?? ""}` : entry.source || null),
+  // Tab "Época": as etapas do MESMO ANO do circuito (só faz sentido no ejt).
+  seasonKey: (entry) => (entry.source === "ejt" ? "ejt" : null),
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
   // Tab "✈️ Internacionalizações" (menu ⓘ Info): ranking de jogadores por nº de
@@ -649,7 +656,7 @@ async function loadDoralDivisions(year: number): Promise<CircuitDivision[]> {
 
 /** Fontes GolfGenius/JobFile (1 ficheiro por ano). Cada uma reusa o seu builder.
  *  A evolução (`jobEvoFor`) só precisa do ano anterior → carregamos [ano-1, ano]. */
-const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (files: JobFile[], mp?: MatchplayFile) => CircuitEntry[] }> = {
+const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: number) => string[]; build: (files: JobFile[], mp?: MatchplayFile) => CircuitEntry[] }> = {
   job: { file: (y) => `/data/orangebowl_${y}.json`, build: buildJobEntries },
   fm: { file: (y) => `/data/ftm_fm_${y}.json`, build: buildFmEntries },
   fsga: { file: (y) => `/data/fsga_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "fsga", series: "FSGA" }) },
@@ -677,6 +684,10 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; build: (file
   // Estonian Junior Open (Estonian Golf Association, GolfBox) — Boys/Girls U12-U21.
   // showAges: o GolfBox traz o ano de nascimento de todos → coluna IDADE.
   ejo: { file: (y) => `/data/ejo_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "ejo", series: "EST Jr Open", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
+  // Estonian Junior Tour — circuito de 6 etapas/ano (U9-U21), 1 ficheiro por
+  // etapa (`files`); os ids levam o nº da etapa (f.stop) e a tab "Época" junta
+  // as etapas do ano via seasonKey.
+  ejt: { file: (y) => `/data/ejt1_${y}.json`, files: (y) => [1, 2, 3, 4, 5, 6].map((n) => `/data/ejt${n}_${y}.json`), build: (f) => buildGgJobEntries(f, { source: "ejt", series: "EST Jr Tour", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão
@@ -694,8 +705,8 @@ function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision
       // Match play (brackets de equipas) — ficheiro irmão das fontes ETC; entra
       // no build para o TournamentDetail ganhar a tab "Match Play" (extraTabs).
       const [files, mp] = await Promise.all([
-        Promise.all([cat.year - 1, cat.year].map((y) =>
-          cachedFetchJson<JobFile>(gg.file(y)).catch(() => null),
+        Promise.all((gg.files ? gg.files(cat.year) : [cat.year - 1, cat.year].map((y) => gg.file(y))).map((p) =>
+          cachedFetchJson<JobFile>(p).catch(() => null),
         )).then((fs) => fs.filter((f): f is JobFile => !!f && Array.isArray(f.divisions))),
         GOLFBOX_MATCHPLAY_SOURCES.has(cat.source)
           ? cachedFetchJson<MatchplayFile>(`/data/${cat.source}_matchplay_${cat.year}.json`).catch(() => null)

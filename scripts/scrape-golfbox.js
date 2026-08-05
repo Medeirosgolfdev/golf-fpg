@@ -332,6 +332,9 @@ async function scrapeOne(compId, opts = {}) {
   const out = {
     tournament: name,
     year,
+    // Nº da etapa em circuitos multi-evento/ano (ex: Estonian Junior Tour) —
+    // vem do scope e entra no id do catálogo/MajorPage (`{source}:{ano}:{stop}`).
+    ...(opts.stop ? { stop: Number(opts.stop) } : {}),
     startDate: startDate || undefined,
     endDate: endDate || undefined,
     source: sourceUrl,
