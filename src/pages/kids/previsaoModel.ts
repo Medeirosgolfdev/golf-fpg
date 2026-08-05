@@ -251,8 +251,10 @@ interface FieldTorneioLite { t: number; name: string }
 interface EditionScore {
   year: string; tcode: string; nRounds: number; holesPerRound: number; parPerRound: number;
   winner: number; top10: number | null; median: number; field: number;
-  /** true = mesmo formato (rondas × buracos) da referência → entra na estimativa */
+  /** true = entra na estimativa (formato de referência + field suficiente) */
   counted: boolean;
+  /** motivo da exclusão, quando counted=false */
+  exclReason: "format" | "field" | null;
 }
 export interface FieldEstimate {
   editions: EditionScore[];
@@ -264,17 +266,24 @@ export interface FieldEstimate {
   holesPerRoundTypical: number | null;
   /** ex: "3×18" — formato de referência usado na estimativa */
   formatLabel: string | null;
-  /** nº de edições que entram na estimativa (mesmo formato) */
+  /** nº de edições que entram na estimativa */
   nCounted: number;
-  /** nº de edições excluídas por terem formato diferente */
+  /** nº de edições excluídas (total) */
   nExcluded: number;
+  /** excluídas por formato diferente (rondas × buracos) */
+  nExcludedFormat: number;
+  /** excluídas por field pequeno (amostra pouco fiável) */
+  nExcludedField: number;
+  /** field mínimo aplicado (null se não chegou a filtrar por field) */
+  minField: number | null;
 }
 
-const MIN_FIELD = 4;
+const MIN_FIELD = 4;             // mínimo para a edição sequer aparecer na tabela
+const MIN_FIELD_ESTIMATE = 10;   // mínimo para a edição CONTAR na estimativa (amostra fiável)
 const MIN_GROSS_18 = 55, MIN_GROSS_9 = 28;
 
 export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite | null, escalaoNome: string): FieldEstimate {
-  const empty: FieldEstimate = { editions: [], avgWinner: null, avgTop10: null, avgMedian: null, parPerRound: null, nRoundsTypical: null, holesPerRoundTypical: null, formatLabel: null, nCounted: 0, nExcluded: 0 };
+  const empty: FieldEstimate = { editions: [], avgWinner: null, avgTop10: null, avgMedian: null, parPerRound: null, nRoundsTypical: null, holesPerRoundTypical: null, formatLabel: null, nCounted: 0, nExcluded: 0, nExcludedFormat: 0, nExcludedField: 0, minField: null };
   if (!mh || !torneio) return empty;
   const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
   if (!baseName) return empty;
@@ -323,7 +332,7 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
       top10: totals.length >= 10 ? totals[9] : null,
       median,
       field: totals.length,
-      counted: false, // definido abaixo, após conhecer o formato de referência
+      counted: false, exclReason: null, // definidos abaixo, após conhecer a referência
     });
   }
   editions.sort((a, b) => b.year.localeCompare(a.year));
@@ -344,8 +353,25 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
     const c = freq.get(fmtKey(e)) as number;
     if (c > modalCount) { modalCount = c; modalKey = fmtKey(e); }
   }
-  for (const e of editions) e.counted = fmtKey(e) === modalKey;
-  const counted = editions.filter(e => e.counted);
+  const sameFormat = editions.filter(e => fmtKey(e) === modalKey);
+
+  // ── 2.º filtro: field pequeno ──────────────────────────────────────────────
+  // Edições com poucos jogadores (tipicamente os primeiros anos do torneio) são
+  // amostras ruidosas e sistematicamente mais altas (campos fracos/jovens) — um
+  // "vencedor" de 5 jogadores não diz o que é preciso para ganhar hoje. Só entram
+  // as que têm field ≥ MIN_FIELD_ESTIMATE. Se NENHUMA no formato chegar lá, não
+  // filtramos por field (torneio pequeno) — antes uma estimativa fraca que nenhuma.
+  const reliable = sameFormat.filter(e => e.field >= MIN_FIELD_ESTIMATE);
+  const fieldGuardApplied = reliable.length > 0;
+  const counted = fieldGuardApplied ? reliable : sameFormat;
+  const countedSet = new Set(counted);
+  let nExcludedFormat = 0, nExcludedField = 0;
+  for (const e of editions) {
+    e.counted = countedSet.has(e);
+    if (e.counted) { e.exclReason = null; continue; }
+    e.exclReason = fmtKey(e) !== modalKey ? "format" : "field";
+    if (e.exclReason === "format") nExcludedFormat++; else nExcludedField++;
+  }
 
   const mean = (xs: number[]) => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length) : null;
   const avgWinner = mean(counted.map(e => e.winner));
@@ -362,6 +388,8 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
     formatLabel: `${ref.nRounds}×${ref.holesPerRound}`,
     nCounted: counted.length,
     nExcluded: editions.length - counted.length,
+    nExcludedFormat, nExcludedField,
+    minField: fieldGuardApplied ? MIN_FIELD_ESTIMATE : null,
   };
 }
 

@@ -116,13 +116,18 @@ export function AllRoundsScorecardLB({
     const nF9 = playedN(0, 9), nB9 = !is9 ? playedN(9, 18) : 0;
     return (
       <>
-        {scores.slice(0, 9).map((sc, i) => (
+        {/* ⚠ Iterar pelo Nº DE BURACOS, não pelo array de scores: um jogador
+         *  que não terminou pode trazer menos entradas que nh — com
+         *  .slice().map() a linha emitia menos <td> e as colunas deslizavam. */}
+        {Array.from({ length: Math.min(9, nh) }, (_, i) => {
+          const sc = scores[i] ?? null;
+          return (
           <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
             <span className={"sc-score " + scClass(sc, pars[i] ?? par[i])}>
               {sc || ""}
             </span>
           </td>
-        ))}
+        );})}
         <td className="lb-halftot" title={nF9 > 0 && nF9 < 9 ? `Parcial — ${nF9} de 9 buracos` : undefined}>
           {f9 || "–"}{nF9 > 0 && <span className="fs-10 c-text-3">
             {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && ` ·${nF9}b`}
@@ -130,13 +135,15 @@ export function AllRoundsScorecardLB({
         </td>
         {!is9 && (
           <>
-            {scores.slice(9, 18).map((sc, i) => (
+            {Array.from({ length: Math.min(9, nh - 9) }, (_, i) => {
+              const sc = scores[9 + i] ?? null;
+              return (
               <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
                 <span className={"sc-score " + scClass(sc, pars[9 + i] ?? par[9 + i])}>
                   {sc || ""}
                 </span>
               </td>
-            ))}
+            );})}
             <td className="lb-halftot" title={nB9 > 0 && nB9 < 9 ? `Parcial — ${nB9} de 9 buracos` : undefined}>
               {b9 || "–"}{nB9 > 0 && <span className="fs-10 c-text-3">
                 {" "}({fmtToPar(b9 - rpB9)}){nB9 < 9 && ` ·${nB9}b`}

@@ -2563,6 +2563,13 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Coluna posição */
 .sc-lb .lb-pos { width: 28px; font-weight: 800; font-size: var(--fs-11); color: var(--text-3); }
 
+/* Tabelas com checkbox de comparação (useCompareSelection) na coluna #:
+   a célula precisa de mais largura e a coluna sticky do nome desloca-se —
+   senão o número da posição fica escondido debaixo da coluna Jogador. */
+.sc-lb.has-cmp .lb-pos,
+.cs-table.has-cmp .cs-pos { width: 48px; min-width: 48px; }
+table.has-cmp .sticky-col-1 { left: 48px; }
+
 /* Coluna nome — shadow substitui border-right */
 .sc-lb .lb-name { text-align: left; padding-left: 8px; white-space: nowrap;
   min-width: 130px; }
