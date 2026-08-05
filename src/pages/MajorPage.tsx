@@ -687,7 +687,7 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: 
   // Estonian Junior Tour — circuito de 6 etapas/ano (U9-U21), 1 ficheiro por
   // etapa (`files`); os ids levam o nº da etapa (f.stop) e a tab "Época" junta
   // as etapas do ano via seasonKey.
-  ejt: { file: (y) => `/data/ejt1_${y}.json`, files: (y) => [1, 2, 3, 4, 5, 6].map((n) => `/data/ejt${n}_${y}.json`), build: (f) => buildGgJobEntries(f, { source: "ejt", series: "EST Jr Tour", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
+  ejt: { file: (y) => `/data/ejt1_${y}.json`, files: (y) => [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/data/ejt${n}_${y}.json`), build: (f) => buildGgJobEntries(f, { source: "ejt", series: "EST Jr Tour", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão
