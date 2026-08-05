@@ -2611,8 +2611,9 @@ export function RFEGPageLegacy() {
  * ncToFPGTournament/lgsToFPGTournament/rfegolfToFPGTournament/fcgToFPGTournament).
  * Carregamento LAZY do detalhe por torneio (centenas no índice).
  * RFEGPageLegacy fica preservada acima como referência até validação.
- * TODO: Categorías/Federaciones (special views) e Draw (NC horarios) — ver
- *       docs/circuit-shell-CONTINUAR.md.
+ * Categorías/Federaciones vivem como specialItems (menu INFO do shell) e o
+ * Draw NC/LGS entra como abas "Draw R{n}" via roundDraws — paridade completa
+ * com a legacy.
  * ════════════════════════════════════════════════════════════════════ */
 
 function rfegSex(s: string | null | undefined): CircuitSex | undefined {
