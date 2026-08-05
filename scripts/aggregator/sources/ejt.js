@@ -5,8 +5,10 @@
  * etapas/ano por campos estónios. Lê ejt{n}_YYYY.json (1 ficheiro POR ETAPA,
  * JobFile do scrape-golfbox.js) — o sourceKey é o nome do ficheiro, por isso
  * cada etapa entra como torneio próprio sem código extra. Divisões "Boys U9"…
- * "Girls U21" → sexo M/F + idade MÁXIMA. Fonte FRACA (nome+país): o GolfBox
- * expõe ANO de nascimento (→ dobRange) mas não a data completa.
+ * "Girls U21" → sexo M/F + idade MÁXIMA. Os ficheiros trazem `dob` COMPLETA
+ * (PlayersHandler/GetPlayers via opção `entries` do scraper) → matching por
+ * nome+DOB. Etapas FUTURAS têm roster de inscritos (0 voltas) — o util
+ * jobfile.js NÃO os transforma em participações (guarda roster).
  * Scraper: scrape-golfbox.js (entradas "ejt1"…"ejt6" em scripts/golfbox-scope.json).
  */
 const { buildJobfileSource, parseSexAge } = require("../util/jobfile");

@@ -217,6 +217,11 @@ function buildJobfileSource(opts) {
         }
 
         const { pos: parsedPos, status } = classifyPos(pl.pos);
+        // Roster pré-torneio (ex: etapas futuras do Estonian Junior Tour — o
+        // scraper semeia o field dos inscritos): 0 voltas, sem total, sem
+        // posição nem token WD/DQ. Não é uma participação — o jogador segue
+        // só como entidade (players[], com dob/club como evidência de match).
+        if (rounds.length === 0 && pl.total == null && parsedPos == null && status === "OK") continue;
         results.push({
           playerSourceKey: key,
           playerName: cleanName,

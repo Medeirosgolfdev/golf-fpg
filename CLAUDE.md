@@ -795,6 +795,19 @@ GolfGenius, com CR/Slope + HCP + ano de nascimento (`showRatings: true` na
 `MajorPage`). Usa a `PlayerClass` "Individual" (ignora a `TeamClass`) → leaderboard
 individual, com o `team` de cada jogador guardado.
 
+**Inscritos + DOB completa (`entries: true` no scope / `--entries`, 2026-08-05):**
+`PlayersHandler/GetPlayers/CompetitionId/{id}` responde para provas passadas E
+futuras (medido 2021→2026) e traz o que o leaderboard não tem: **DOB completa**
+(o leaderboard só dá o ano), clube e HCP (formato ×10000; `EntryStatus` 0 =
+inscrito, 1 = jogou — muda quando a prova acontece; `Entries` vive DENTRO de
+`Classes.C{id}`, não no top-level). O scraper usa-o para (1) enriquecer os
+jogadores do leaderboard com `dob`/clube → matching FORTE nome+DOB no agregador
+(ejo/ejt, como o fcg), e (2) em provas FUTURAS (leaderboard vazio) semear a
+divisão com o ROSTER de inscritos (0 voltas) — o `util/jobfile.js` tem uma
+guarda que NÃO os transforma em participações, e o catálogo MAJOR ignora-os
+(sem scores). O kids2 `/next-t` consome esses rosters via `JOBFILE_INTL`
+(FieldRivaisDashboard) — etapas EJT futuras aparecem com o field inscrito.
+
 **Automação:** as competições vivem em `scripts/golfbox-scope.json`; o
 `update-golfbox.yml` (cron diário 21:00 UTC + `workflow_dispatch`) scrapa TODO o
 scope, regenera juniores + **`major-catalog.json`** e committa. Adicionar um evento

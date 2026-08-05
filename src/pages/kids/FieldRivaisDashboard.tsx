@@ -312,6 +312,13 @@ const JOBFILE_INTL: JobIntlDef[] = [
   { neg: -1002, path: "/data/avtrophy_2026.json",   name: "AV Trophy U14 2026",      dateUS: "7/2/2026" },
   { neg: -1003, path: "/data/orangebowl_2026.json", name: "Junior Orange Bowl 2026", dateUS: "12/27/2026" },
   { neg: -1004, path: "/data/fsga_2026.json",       name: "FSGA Boys' Junior 2026",  dateUS: "6/23/2026" },
+  // Estonian Junior Tour 2026 — etapas por jogar (GolfBox). Antes da prova o
+  // ficheiro traz o ROSTER de inscritos (scrape-golfbox.js `entries`); depois,
+  // o cron update-golfbox substitui-o pelos resultados — a entrada continua
+  // válida nos dois estados.
+  { neg: -1005, path: "/data/ejt4_2026.json", name: "Estonian Jr Tour 2026 IV (Saaremaa)",     dateUS: "8/11/2026" },
+  { neg: -1006, path: "/data/ejt5_2026.json", name: "Estonian Jr Tour 2026 V (Otepää)",        dateUS: "8/19/2026" },
+  { neg: -1007, path: "/data/ejt6_2026.json", name: "Estonian Jr Tour 2026 FINAL (Pärnu Bay)", dateUS: "8/24/2026" },
 ];
 
 // Próximos torneios (UP) — onde os rivais podem aparecer inscritos.
