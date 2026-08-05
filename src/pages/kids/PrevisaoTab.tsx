@@ -171,6 +171,14 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   const predGross = calc ? Math.round(calc.playsToIndex) : null;
   const predMedia = expPerRound != null ? Math.round(expPerRound) : null;
 
+  // Projecção de torneio do Manuel: a sua volta a JOGAR AO ÍNDICE (forma
+  // competitiva), não a volta média da época (que inclui treino/casual e ficava
+  // alta). Usa o plays-to-index do campo (predGross); se o campo não tiver
+  // CR/Slope, cai na volta média do perfil.
+  const manuelPerRound = predGross ?? predMedia;
+  const manuelBasis: "índice" | "média" = predGross != null ? "índice" : "média";
+  const manuelTot = (manuelPerRound != null && field.nRoundsTypical != null) ? manuelPerRound * field.nRoundsTypical : null;
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       {resolved.note && (
@@ -444,26 +452,29 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
             🏆 Estimativa de score — {field.editions.length} edi{field.editions.length === 1 ? "ção" : "ções"} anterior{field.editions.length === 1 ? "" : "es"}
             {field.formatLabel && (
-              <span className="muted fw-400 fs-11">{"  ·  estimativa sobre "}{field.nCounted} no formato {field.formatLabel}</span>
+              <span className="muted fw-400 fs-11">{"  ·  estimativa sobre "}{field.nCounted} fiáve{field.nCounted === 1 ? "l" : "is"} ({field.formatLabel}{field.minField ? `, field ≥ ${field.minField}` : ""})</span>
             )}
           </summary>
           <div className="kpis" style={{ margin: "8px 0 12px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
             {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parPerRound * field.nRoundsTypical) : undefined} />}
             {field.avgTop10 != null && <KpiCard label="Top-10 ≈" value={field.avgTop10} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgTop10 - field.parPerRound * field.nRoundsTypical) : undefined} />}
             {field.avgMedian != null && <KpiCard label="Mediana ≈" value={field.avgMedian} />}
-            {expPerRound != null && field.nRoundsTypical != null && (
-              <KpiCard label="Manuel ≈ (torneio)" value={Math.round(expPerRound * field.nRoundsTypical)} color="var(--accent)" sub={`${Math.round(expPerRound)}/volta`} />
+            {manuelTot != null && manuelPerRound != null && (
+              <KpiCard label="Manuel ≈ (torneio)" value={manuelTot} color="var(--accent)" sub={`${manuelPerRound}/volta · ${manuelBasis === "índice" ? "ao índice" : "volta média"}`} />
             )}
           </div>
-          {expPerRound != null && field.nRoundsTypical != null && field.avgWinner != null && (
+          {manuelTot != null && field.nRoundsTypical != null && field.avgWinner != null && (
             <p className="muted fs-12" style={{ margin: 0 }}>
               {(() => {
-                const tot = Math.round(expPerRound * field.nRoundsTypical);
+                const tot = manuelTot;
                 const dWin = tot - field.avgWinner;
                 const dTop = field.avgTop10 != null ? tot - field.avgTop10 : null;
-                return <>Estimativa do Manuel ≈ <strong>{tot}</strong> ({field.nRoundsTypical} voltas).{" "}
-                  {dWin <= 0 ? "Em forma, está em prova pela vitória." : `Faltam ~${dWin} pancadas para a média de vencedor`}
-                  {dTop != null ? (dTop <= 0 ? " e já dentro do top-10 típico." : `; ~${dTop} para o top-10 típico.`) : "."}</>;
+                const dMed = field.avgMedian != null ? tot - field.avgMedian : null;
+                const parts: string[] = [];
+                parts.push(dWin <= 0 ? "em prova pela vitória" : `faltam ~${dWin} para a média de vencedor`);
+                if (dTop != null) parts.push(dTop <= 0 ? "dentro do top-10 típico" : `~${dTop} para o top-10`);
+                if (dMed != null && dMed !== 0) parts.push(dMed < 0 ? `${-dMed} abaixo da mediana` : `${dMed} acima da mediana`);
+                return <>Estimativa do Manuel ≈ <strong>{tot}</strong> ({field.nRoundsTypical} voltas, {manuelBasis === "índice" ? "ao índice" : "volta média"}): {parts.join(" · ")}.</>;
               })()}
             </p>
           )}
@@ -477,34 +488,46 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
               <th className="r">Field</th>
             </tr></thead>
             <tbody>
-              {field.editions.map(e => (
-                <tr
-                  key={e.tcode}
-                  style={e.counted ? undefined : { opacity: 0.5 }}
-                  title={e.counted ? undefined : `Formato ${e.nRounds}×${e.holesPerRound} ≠ ${field.formatLabel} — fora da estimativa`}
-                >
+              {field.editions.map(e => {
+                const rowTitle = e.exclReason === "format"
+                  ? `Formato ${e.nRounds}×${e.holesPerRound} ≠ ${field.formatLabel} — fora da estimativa`
+                  : e.exclReason === "field"
+                  ? `Field pequeno (${e.field}${field.minField ? " < " + field.minField : ""}) — amostra pouco fiável, fora da estimativa`
+                  : undefined;
+                return (
+                <tr key={e.tcode} style={e.counted ? undefined : { opacity: 0.5 }} title={rowTitle}>
                   <td>{e.year}</td>
                   <td className="r">
                     {e.nRounds}
-                    {!e.counted && <span style={{ color: "var(--color-danger)" }} title={`Formato diferente (${e.nRounds}×${e.holesPerRound}) — não conta`}> ⚠</span>}
+                    {e.exclReason === "format" && <span style={{ color: "var(--color-danger)" }} title={`Formato diferente (${e.nRounds}×${e.holesPerRound}) — não conta`}> ⚠</span>}
                   </td>
                   <td className="r">{e.winner}</td>
                   <td className="r">{e.top10 ?? "–"}</td>
                   <td className="r">{e.median}</td>
-                  <td className="r">{e.field}</td>
+                  <td className="r">
+                    {e.field}
+                    {e.exclReason === "field" && <span style={{ color: "var(--color-danger)" }} title={`Field pequeno — não conta`}> ⚠</span>}
+                  </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
           <p className="muted fs-11" style={{ margin: "6px 0 0" }}>
             Scores totais das edições passadas deste torneio+escalão (member-history USKids).{" "}
             {field.formatLabel && (
-              <>A estimativa usa só as {field.nCounted} edi{field.nCounted === 1 ? "ção" : "ções"} no formato {field.formatLabel} (mesmo nº de voltas × buracos)
-              {field.nExcluded > 0
-                ? `; ${field.nExcluded} com formato diferente fica${field.nExcluded === 1 ? "" : "m"} de fora (a cinzento, ⚠)`
-                : ""}. Top-10 só conta com field ≥ 10. </>
+              <>A estimativa usa só as {field.nCounted} edi{field.nCounted === 1 ? "ção" : "ções"} fiáve{field.nCounted === 1 ? "l" : "is"} — mesmo formato ({field.formatLabel}, nº de voltas × buracos)
+              {field.minField ? ` e field ≥ ${field.minField}` : ""}.
+              {(field.nExcludedFormat > 0 || field.nExcludedField > 0) && (
+                <>{" "}Fora (a cinzento, ⚠):{" "}
+                  {[
+                    field.nExcludedFormat > 0 ? `${field.nExcludedFormat} de formato diferente` : null,
+                    field.nExcludedField > 0 ? `${field.nExcludedField} com field pequeno` : null,
+                  ].filter(Boolean).join(" e ")}.</>
+              )}
+              {" "}Top-10 só conta com field ≥ 10. </>
             )}
-            "Manuel ≈" aplica o desempenho dele por tipo de buraco a este campo.
+            "Manuel ≈" projeta-o {manuelBasis === "índice" ? `a jogar ao índice neste campo (${manuelPerRound}/volta × ${field.nRoundsTypical}) — a forma competitiva, não a média da época` : "pela sua volta média neste campo"}.
           </p>
         </details>
       )}
