@@ -607,27 +607,38 @@ export function MultiRoundLeaderboard({
                     }
                     return <span className="muted">–</span>;
                   })()}</td>}
-                  {showBirthYear && (() => {
+                  {(showBirthYear || showAge) && (() => {
                     const dob = dobOf(row);
                     const yr = birthYearOf(dob);
-                    const age = ageAt(dob, tournamentDate);
-                    return <td className="lb-esc" title={age != null ? `${age} anos à data do torneio` : undefined}>
-                      {yr != null
-                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{yr}</span>
-                        : <span className="muted">–</span>}
-                    </td>;
-                  })()}
-                  {showAge && (() => {
-                    const dob = dobOf(row);
-                    const yr = birthYearOf(dob);
+                    // ⚠ "X anos à data do torneio" SÓ quando há data real do torneio.
+                    // Sem ela o ageAt caía em HOJE e o tooltip contradizia o pill
+                    // (pill "19a" = idade no ano do torneio, tooltip "18 anos" = hoje).
+                    const hasTDate = !!(tournamentDate && !isNaN(+new Date(tournamentDate)));
+                    const ageReal = hasTDate ? ageAt(dob, tournamentDate) : null;
+                    // Tooltip COMPLETO (DOB + idade) nas DUAS colunas — o utilizador
+                    // pousa o rato numa qualquer e recebe a informação toda.
+                    const tip = [
+                      yr != null ? `Nascido a ${fmtDobPt(dob)}` : null,
+                      ageReal != null ? `${ageReal} anos à data do torneio` : null,
+                    ].filter(Boolean).join(" · ") || undefined;
                     // Preferir a idade pré-calculada pelo adapter (row.age) → CONSISTENTE
                     // com as tabs R1/R2/R3. Só recalcular por dob se o adapter não a deu.
-                    const age = row.age != null ? row.age : ageAt(dob, tournamentDate);
-                    return <td className="lb-esc" title={yr != null ? `Nascido a ${fmtDobPt(dob)}` : undefined}>
-                      {age != null
-                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
-                        : <span className="muted">–</span>}
-                    </td>;
+                    const age = row.age != null ? row.age : ageReal;
+                    const pill = (v: React.ReactNode) => (
+                      <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{v}</span>
+                    );
+                    return <>
+                      {showBirthYear && (
+                        <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
+                          {yr != null ? pill(yr) : <span className="muted">–</span>}
+                        </td>
+                      )}
+                      {showAge && (
+                        <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
+                          {age != null ? pill(`${age}a`) : <span className="muted">–</span>}
+                        </td>
+                      )}
+                    </>;
                   })()}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
                   {showClub && (() => {
