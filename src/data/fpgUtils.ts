@@ -375,6 +375,16 @@ export function computeSD(p: Player): SDResult {
   // Amendoeira 2026 (PCC −1): tabela 6.3 vs oficial 7.3.
   const pcc = typeof p.pcc === "number" ? p.pcc : 0;
   if (!cr || !slope || gross == null || isNaN(gross)) return { sd: null, source: null };
+  // ⚠ Volta A DECORRER: cartão hole-by-hole com buracos por jogar (a zero ou
+  // array curto) e gross igual à soma dos jogados → um SD sobre 5 buracos não
+  // significa nada (dava −22.2 — caso Alexander Eikner, EJO 2026 R1). Se o
+  // gross é MAIOR que a soma, o cartão é que está truncado na fonte (volta
+  // completa) e o SD mantém-se — mesma convenção do isFullRound
+  // (PastEditionsTable). Sem cartão nenhum (0 buracos visíveis) também se
+  // mantém: o gross oficial de uma volta fechada continua a valer.
+  const playedHoles = scores.filter((v) => v > 0).length;
+  const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+  if (playedHoles > 0 && playedHoles < nh && gross <= playedSum) return { sd: null, source: null };
   // ⚠ O score differential WHS PODE ser negativo (volta abaixo do Course Rating).
   // Antes havia `Math.max(0, …)` que achatava tudo o que fosse < CR a 0.0 — um
   // gross −5 vs CR e um gross =CR davam ambos "0.0", indistinguíveis. Removido.

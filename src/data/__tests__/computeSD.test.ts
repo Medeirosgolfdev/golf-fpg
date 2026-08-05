@@ -57,3 +57,43 @@ describe("computeSD — PCC", () => {
     expect(sd).toBe(5.4);
   });
 });
+
+describe("computeSD — volta incompleta (a decorrer)", () => {
+  it("5 buracos jogados, gross = soma dos jogados → sd null (caso Eikner, EJO 2026 R1)", () => {
+    const scores = [9, 9, 10, 9, 9, ...Array(13).fill(0)]; // 5 buracos, soma 46
+    const { sd, source } = computeSD(basePlayer({
+      scores, par: par18, nholes: 18, grossTotal: 46, toPar: null as any,
+      courseRating: 70.2, slope: 128,
+    }));
+    expect(sd).toBeNull();
+    expect(source).toBeNull();
+  });
+
+  it("array curto (5 entradas) com gross = soma → sd null", () => {
+    const { sd } = computeSD(basePlayer({
+      scores: [9, 9, 10, 9, 9], par: par18, nholes: 18, grossTotal: 46,
+      courseRating: 70.2, slope: 128,
+    }));
+    expect(sd).toBeNull();
+  });
+
+  it("cartão truncado na fonte (gross > soma dos visíveis) mantém o SD", () => {
+    // 17 buracos visíveis somam 68, gross oficial 72 → fillBlankHoles infere o
+    // buraco em falta e a volta conta como completa.
+    const scores = [...Array(17).fill(4), 0];
+    const { sd } = computeSD(basePlayer({
+      scores, par: par18, nholes: 18, grossTotal: 72,
+      courseRating: 65.1, slope: 123,
+    }));
+    expect(sd).toBe(6.3);
+  });
+
+  it("sem cartão hole-by-hole (só gross) mantém o SD raw", () => {
+    const { sd, source } = computeSD(basePlayer({
+      scores: [], par: par18, nholes: 18, grossTotal: 72,
+      courseRating: 65.1, slope: 123,
+    }));
+    expect(source).toBe("raw");
+    expect(sd).toBe(6.3);
+  });
+});
