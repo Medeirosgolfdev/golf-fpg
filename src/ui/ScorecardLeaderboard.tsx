@@ -224,7 +224,7 @@ export function ScorecardLeaderboard({
       {cmp.bar}
 
       <div className="bjgt-chart-scroll">
-        <table className={"sc-lb" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
+        <table className={"sc-lb has-cmp" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
           <thead>
             {/* Linhas de metros por tee — uma por cada tee distinto, NÃO sticky */}
             {showScorecard && validTeeMeters.map(tm => {
@@ -416,7 +416,12 @@ export function ScorecardLeaderboard({
                     </>
                   )}
                   {showScorecard && <>
-                    {scores.slice(0, 9).map((sc, i) => {
+                    {/* ⚠ Iterar pelo Nº DE BURACOS, não pelo array de scores: um
+                     *  jogador que não terminou (WD a meio) pode trazer menos
+                     *  entradas que nh — com .slice().map() a linha emitia menos
+                     *  <td> que o cabeçalho e todas as colunas deslizavam. */}
+                    {Array.from({ length: Math.min(9, nh) }, (_, i) => {
+                      const sc = scores[i] ?? null;
                       // Só realçar saídas FORA do buraco padrão (1ª coluna): hole 10 etc.
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + i) === row.startHole;
                       return (
@@ -432,7 +437,8 @@ export function ScorecardLeaderboard({
                         {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && <span title={`${nF9} de 9 buracos`}> ·{nF9}b</span>}
                       </span>}
                     </td>
-                    {!is9 && scores.slice(9, 18).map((sc, i) => {
+                    {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => {
+                      const sc = scores[9 + i] ?? null;
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + 9 + i) === row.startHole;
                       return (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}

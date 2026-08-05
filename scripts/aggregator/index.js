@@ -52,6 +52,8 @@ const SOURCES = [
   { id: "eatc", label: "European Amateur Team Championship", load: () => require("./sources/eatc") },
   { id: "eatc2", label: "European Amateur Team Champ Div. 2", load: () => require("./sources/eatc2") },
   { id: "eym", label: "European Young Masters (EGA)", load: () => require("./sources/eym") },
+  { id: "ejo", label: "Estonian Junior Open", load: () => require("./sources/ejo") },
+  { id: "ejt", label: "Estonian Junior Tour", load: () => require("./sources/ejt") },
   { id: "egr", label: "European Golf Rankings", load: () => require("./sources/egr") },
 ];
 

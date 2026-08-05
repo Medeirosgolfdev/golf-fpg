@@ -182,6 +182,7 @@ function TournamentGrid({
     <>
     {compareSel.bar}
     <CrossSeasonTable
+      className="has-cmp"
       identityHeaders={
         <>
           <CSortTh k="name" s={sortKey} d={sortDir} on={handleSort} className="cs-pos sticky-col-0">

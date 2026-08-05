@@ -287,6 +287,12 @@ const GG_SOURCES = [
   { prefix: "eatc_", source: "eatc", series: "ETC Men", name: (f, y) => f.tournament || `ETC Men ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "eatc2_", source: "eatc2", series: "ETC Men 2", name: (f, y) => f.tournament || `ETC Men 2 ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "eym_", source: "eym", series: "Young Masters", name: (f, y) => f.tournament || `European Young Masters ${y}`, course: (f) => f.course || undefined, union: true },
+  // Estonian Junior Open (Estonian Golf Association, GolfBox) — Boys/Girls U12-U21.
+  { prefix: "ejo_", source: "ejo", series: "EST Jr Open", name: (f, y) => f.tournament || `Estonian Junior Open ${y}`, course: (f) => f.course || undefined, union: true },
+  // Estonian Junior Tour — circuito de 6 etapas/ano (multi-evento): 1 ficheiro
+  // por etapa (ejt{n}_{ano}.json) e o id ganha o nº da etapa (`ejt:{ano}:{n}`,
+  // lido do f.stop que o scraper escreve a partir do scope).
+  ...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ prefix: `ejt${n}_`, source: "ejt", stop: n, series: "EST Jr Tour", name: (f, y) => f.tournament || `Estonian Junior Tour ${y} — ${n}`, course: (f) => f.course || undefined, union: true })),
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);
@@ -312,8 +318,11 @@ function buildGgJob() {
       }
       // Torneio ainda sem campo/scores (ex: evento futuro por começar) → não listar.
       if (valid.length === 0) continue;
+      // Circuitos multi-evento/ano (Estonian Junior Tour): id com o nº da etapa.
+      const stop = Number(f.stop) || src.stop || null;
+      const entryId = stop ? `${src.source}:${year}:${stop}` : `${src.source}:${year}`;
       entries.push({
-        id: `${src.source}:${year}`,
+        id: entryId,
         source: src.source,
         series: src.series,
         year,
@@ -334,7 +343,7 @@ function buildGgJob() {
       });
       // Veteranos só com quem tem SCORES — um campo semeado (preField) ainda
       // não jogou e não deve contar como "presença" no índice.
-      addVet(`${src.source}:${year}`, src.source, year, scored);
+      addVet(entryId, src.source, year, scored);
     }
   }
 }

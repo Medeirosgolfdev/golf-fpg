@@ -778,6 +778,8 @@ formatos de output e dois caminhos de scrape:
 | **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2025.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
 | **'Champion of Champions' World Championship** | GolfGenius (pages) | `pages/12114827382448210411` (2026) | **`scrape-golfgenius-node.js --scope`** | `coc_{2023,2024,2025,2026}.json` (JobFile, 8-10 divisões) | ✅ ligado (source `coc`) — cron `update-golfgenius.yml` |
 | **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
+| **Estonian Junior Open** (Estonian Golf Association; o campeonato nacional EMV corre DENTRO do Open) | GolfBox | comp 2026 `5417057` (2025 `4931278`, 2024 `4393974`, … até 2013 — ver golf.ee/voistlused/estonian-junior-open) | `scrape-golfbox.js` (`classRe` no scope filtra as classes sobrepostas EMV/combinadas) | `ejo_{2019..2026}.json` (JobFile, 10 divisões Boys/Girls U12-U21, CR/Slope+HCP+birthYear 100%) | ✅ ligado (source `ejo`, `showAges: true` → coluna IDADE) — 2026 no scope do cron |
+| **Estonian Junior Tour** (circuito EGA estónio, 5-7 etapas/ano U9-U21 + o EJO como major do circuito) | GolfBox | comps 2026: `5417113` (EGCC, 1 Jun) · `5417123` (White Beach, 29 Jun) · `5417127` (Rae, 21 Jul) · `5417128` (Saaremaa, 11 Ago) · `5417129` (Otepää, 19 Ago) · `5417080` (FINAL Pärnu Bay, 24-25 Ago). **Histórico 2021-2025 (34 provas)**: IDs descobertos via `OrderOfMeritsHandler/GetOrderOfMerit/OrderOfMeritId/{id}` (os OoMs por categoria listam as provas da época; IDs dos OoMs na página golf.ee/voistlused/estonian-junior-tour) | `scrape-golfbox.js` — **1º circuito MULTI-EVENTO/ano**: 1 ficheiro por etapa, `stop` no scope → id `ejt:{ano}:{n}` (catálogo + MajorPage, range 1-8); `classRe` filtra as vistas HCP-Stroke/Scratch (e as LAT de 2023 — jogadores letões confirmados presentes nas classes por escalão) | `ejt{1..7}_{2021..2026}.json` (JobFile, 8 divisões Boys/Girls U9-U21) | ✅ ligado (source `ejt`, showAges) — 6 etapas 2026 no scope do cron (futuras dormentes até terem scores); histórico scrapeado ad-hoc (não está no scope — nunca muda); tab "Época" (`seasonKey`) junta as etapas do ano, "Edições anteriores" compara a MESMA etapa entre anos |
 | **EGA — European Boys' Team Championship, Div. 2** | GolfBox | `ega-golf.ch/…#/competition/5731554/leaderboard` | `scrape-golfbox.js` | `ebtc2_2026.json` (JobFile) | ✅ ligado (source `ebtc2`) — começa 7 Jul 2026 |
 | **EGA — European Girls' Team Championship (U18)** | GolfBox | `ega-golf.ch/…#/competition/5478100/` | `scrape-golfbox.js` | `egtc_2026.json` (JobFile) | ✅ ligado (source `egtc`) — U18, GCC Zürich; começa 7 Jul 2026 |
 | **FCG Callaway World Championship** | BlueGolf | `fcg.bluegolf.com/bluegolf/fcg26/event/fcg268/` (+`fcg25/…/fcg251`) | ~~scrape-bluegolf.js~~ | `fcg268_{cat}.json` (formato bluegolf) | ⛔ BlueGolf descontinuado 2026-07-09 (pedido nominal p/ parar automação) — só via manual/permissão |
@@ -792,6 +794,19 @@ pelo `competitionId` e escreve um JobFile `{slug}_{ano}.json` — mesmo formato 
 GolfGenius, com CR/Slope + HCP + ano de nascimento (`showRatings: true` na
 `MajorPage`). Usa a `PlayerClass` "Individual" (ignora a `TeamClass`) → leaderboard
 individual, com o `team` de cada jogador guardado.
+
+**Inscritos + DOB completa (`entries: true` no scope / `--entries`, 2026-08-05):**
+`PlayersHandler/GetPlayers/CompetitionId/{id}` responde para provas passadas E
+futuras (medido 2021→2026) e traz o que o leaderboard não tem: **DOB completa**
+(o leaderboard só dá o ano), clube e HCP (formato ×10000; `EntryStatus` 0 =
+inscrito, 1 = jogou — muda quando a prova acontece; `Entries` vive DENTRO de
+`Classes.C{id}`, não no top-level). O scraper usa-o para (1) enriquecer os
+jogadores do leaderboard com `dob`/clube → matching FORTE nome+DOB no agregador
+(ejo/ejt, como o fcg), e (2) em provas FUTURAS (leaderboard vazio) semear a
+divisão com o ROSTER de inscritos (0 voltas) — o `util/jobfile.js` tem uma
+guarda que NÃO os transforma em participações, e o catálogo MAJOR ignora-os
+(sem scores). O kids2 `/next-t` consome esses rosters via `JOBFILE_INTL`
+(FieldRivaisDashboard) — etapas EJT futuras aparecem com o field inscrito.
 
 **Automação:** as competições vivem em `scripts/golfbox-scope.json`; o
 `update-golfbox.yml` (cron diário 21:00 UTC + `workflow_dispatch`) scrapa TODO o

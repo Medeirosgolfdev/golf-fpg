@@ -52,7 +52,7 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
       // a checkbox não pode disparar o click da linha.
       onClick={(e) => e.stopPropagation()}
       title="Seleccionar para comparar"
-      style={{ marginRight: 3, verticalAlign: "middle", cursor: "pointer" }}
+      style={{ marginRight: 6, verticalAlign: "middle", cursor: "pointer" }}
     />
   );
 

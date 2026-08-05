@@ -85,6 +85,8 @@ const SOURCE_COLORS: Record<string, string> = {
   egtc:   "var(--source-egtc)",
   elg:    "var(--source-elg)",
   eym:    "var(--source-eym)",
+  ejo:    "var(--source-ejo)",
+  ejt:    "var(--source-ejt)",
   egr:    "var(--source-egr)",
 };
 
@@ -95,7 +97,7 @@ const SOURCE_LABELS: Record<string, string> = {
   fsga: "FSGA", uajt: "Under Armour", uaworlds: "UA Worlds", mexnacional: "México", coc: "Champion of Champions", reidtrophy: "Reid Trophy",
   icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14",
   job: "JOB", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies",
-  eym: "Young Masters", egr: "EGR",
+  eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", egr: "EGR",
 };
 
 export default function EvolutionChart({ data, junior, filterTids }: Props) {

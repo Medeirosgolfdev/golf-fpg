@@ -106,6 +106,10 @@ interface CrossSeasonTableProps {
   /** Número de colunas após a sticky-col-0 (#) ocupadas pelos identity headers.
    *  Default = 5 (Jogador / Fed / Esc / Clube / HCP). PJARankingView usa 3 (Jogador / Esc / Clube). */
   identityColSpan?: number;
+  /** Classe extra na <table>. Callers com checkbox de comparação na coluna #
+   *  (ResumoTable, TournamentGrid) passam "has-cmp" para alargar a coluna e
+   *  deslocar a sticky do nome (senão o nº da posição fica tapado). */
+  className?: string;
 }
 
 /* ── Componente ─────────────────────────────────────────────────────────────*/
@@ -117,10 +121,11 @@ export function CrossSeasonTable({
   summarySubHeaders,
   children,
   identityColSpan = 5,
+  className,
 }: CrossSeasonTableProps) {
   return (
     <div className="bjgt-chart-scroll">
-      <table className="cs-table">
+      <table className={"cs-table" + (className ? " " + className : "")}>
         <thead>
           {/* Linha 1 — cabeçalhos de grupo */}
           <tr className="cs-grp-row">

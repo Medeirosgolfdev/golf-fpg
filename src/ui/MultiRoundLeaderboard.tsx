@@ -480,7 +480,7 @@ export function MultiRoundLeaderboard({
       )}
       {compareSel.bar}
       <div className="bjgt-chart-scroll">
-        <table className={"sc-lb sc-lb-lbd" + (isMulti ? " sc-lb-multi" : "")}>
+        <table className={"sc-lb sc-lb-lbd has-cmp" + (isMulti ? " sc-lb-multi" : "")}>
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
