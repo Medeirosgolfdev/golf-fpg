@@ -338,6 +338,21 @@ async function tournamentsLST(startIndex) {
     ranking,
   };
 
+  // ── PROTECÇÃO DE DADOS ──────────────────────────────────────────────────
+  // Nunca sobrescrever um om-cgss-junior.json bom por um vazio. Se a derivação
+  // falhou em bloco (cookies scoring.datagolf.pt expirados / servidor a devolver
+  // HTTP 500 em tudo → 0 provas, 0 juniores) mas já existe um ficheiro com
+  // ranking, preservar o antigo e sair com ERRO (1) — NÃO é "sem alterações".
+  // Sem isto, um run com cookies expirados (incl. o cron semanal) apagava a OM.
+  if (playable.length === 0 || ranking.length === 0) {
+    let prevN = 0;
+    if (fs.existsSync(OUT)) { try { prevN = (JSON.parse(fs.readFileSync(OUT, "utf8")).ranking || []).length; } catch {} }
+    if (prevN > 0) {
+      console.error(`[om-junior] ERRO: resultado vazio (${playable.length} provas, ${ranking.length} juniores) — provável cookies expirados / HTTP 500 no scoring.datagolf.pt. O ficheiro actual tem ${prevN} juniores; NÃO sobrescrevo. (exit 1)`);
+      process.exit(1);
+    }
+  }
+
   // escrita só-se-mudou (ignora `generated`)
   let changed = true;
   if (fs.existsSync(OUT)) {
