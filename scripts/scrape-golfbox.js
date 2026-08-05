@@ -84,6 +84,44 @@ const getLeaderboard = (id, classId) =>
   fetchJsonp(`${HOST}/Handlers/LeaderboardHandler/GetLeaderboard/CompetitionId/${id}/ClassId/${classId}/RoundNumber/0/language/${LCID}/?callback=x`);
 const getInfo = (id) =>
   fetchJsonp(`${HOST}/Handlers/InfoHandler/GetInfo/CompetitionId/${id}/language/${LCID}/?callback=x`);
+const getPlayers = (id) =>
+  fetchJsonp(`${HOST}/Handlers/PlayersHandler/GetPlayers/CompetitionId/${id}/?callback=x`);
+
+/** Inscritos (PlayersHandler/GetPlayers) — responde para provas passadas E
+ *  futuras (medido: 2021→2026) e traz o que o leaderboard NÃO tem: DOB
+ *  COMPLETA (o leaderboard só dá o ano), clube e HCP à data da inscrição.
+ *  Usos: enriquecer os jogadores do leaderboard com dob/clube e, em provas
+ *  futuras (leaderboard vazio), semear o field da divisão (roster de
+ *  inscritos). Só entradas confirmadas (EntryStatus 0, fora da reserve list). */
+function parseEntries(data) {
+  const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const byClass = new Map(), byName = new Map();
+  // Formato: Classes.C{classId} → { ClassId, ClassType, Entries: {E{id}: entry} }.
+  for (const cls of Object.values((data && data.Classes) || {})) {
+    const cid = cls && cls.ClassId;
+    for (const e of Object.values((cls && cls.Entries) || {})) {
+      // EntryStatus: 0 = inscrito (prova futura), 1 = jogou (medido em provas
+      // passadas — o estado muda quando a prova acontece). Reserve list fora.
+      if (![0, 1].includes(e.EntryStatus) || (e.ReserveListNo || 0) > 0) continue;
+      const d = /^(\d{4})(\d{2})(\d{2})T/.exec(e.BirthDate || '');
+      const rec = {
+        name: `${e.FirstName || ''} ${e.LastName || ''}`.trim(),
+        country: e.Nationality || null,
+        club: e.ClubName || null,
+        birthYear: Number.isFinite(e.BirthYear) && e.BirthYear > 1900 ? e.BirthYear : null,
+        dob: d && d[1] > '1900' ? `${d[1]}-${d[2]}-${d[3]}` : null,
+        hcp: e.HCP != null && e.HCP !== '' && isFinite(+e.HCP) ? +e.HCP / 10000 : null,
+      };
+      if (!rec.name) continue;
+      if (Number.isFinite(cid) && cid > 0) {
+        if (!byClass.has(cid)) byClass.set(cid, []);
+        byClass.get(cid).push(rec);
+      }
+      byName.set(norm(rec.name), rec);
+    }
+  }
+  return { byClass, byName, norm };
+}
 
 /** Course Rating + Slope por campo e por sexo (do InfoHandler/GetInfo).
  *  As Courses do GetInfo vêm keyed `C{courseID}T{tee}`, cada uma com
@@ -299,6 +337,14 @@ async function scrapeOne(compId, opts = {}) {
   try { ratingsByCourse = parseRatings(await getInfo(compId)); }
   catch (e) { console.log(`   ⚠ GetInfo falhou (${e.message}) — sem CR/Slope`); }
 
+  // Inscritos (opt-in `entries` no scope / --entries): dob+clube por jogador e
+  // roster das divisões ainda sem leaderboard (provas futuras).
+  let entries = null;
+  if (opts.entries) {
+    try { entries = parseEntries(await getPlayers(compId)); }
+    catch (e) { console.log(`   ⚠ GetPlayers falhou (${e.message}) — sem inscritos`); }
+  }
+
   // Classes de jogadores (ignora TeamClass — a MajorPage é individual).
   // `classRe` (scope/--classes) restringe por nome de classe — para eventos que
   // publicam vistas sobrepostas dos mesmos jogadores (EJO: escalão + EMV + combinadas).
@@ -320,8 +366,25 @@ async function scrapeOne(compId, opts = {}) {
       courseName = (cc[0] && cc[0].Name) || (Object.values(lb.Courses || {})[0] || {}).Name || null;
     }
     const dv = buildDivision(clsObj, lb.Courses || {}, ageTag, sourceUrl, ratingsByCourse);
+    let extra = '';
+    if (entries) {
+      // Enriquecimento: dob (o leaderboard só tem o ano) + clube em falta.
+      let enr = 0;
+      for (const p of dv.players) {
+        const rec = entries.byName.get(entries.norm(p.name));
+        if (!rec) continue;
+        if (rec.dob) { p.dob = rec.dob; enr++; }
+        if (rec.club && !p.club) p.club = rec.club;
+      }
+      // Prova futura (leaderboard vazio) → semear o field com os inscritos.
+      if (dv.players.length === 0) {
+        const roster = entries.byClass.get(c.Id) || [];
+        dv.players = roster.map((r) => ({ pos: '', name: r.name, country: r.country, club: r.club, birthYear: r.birthYear, dob: r.dob, hcp: r.hcp, toPar: null, total: null, roundGross: [], rounds: [] }));
+        if (roster.length) extra = `, ${roster.length} inscritos (roster pré-torneio)`;
+      } else if (enr) extra = `, ${enr} c/ dob`;
+    }
     const nSc = dv.players.filter((p) => (p.rounds || []).some((r) => (r.scores || []).length)).length;
-    console.log(`${dv.players.length} jogadores (${nSc} com scorecard, ${Object.keys(dv.draws || {}).length} rondas de draw)`);
+    console.log(`${dv.players.length} jogadores (${nSc} com scorecard, ${Object.keys(dv.draws || {}).length} rondas de draw${extra})`);
     divisions.push(dv);
   }
 
@@ -370,7 +433,7 @@ async function main() {
       .map((a) => (a.match(/competition\/(\d+)/) || a.match(/(\d{5,})/) || [])[1])
       .filter(Boolean);
     const yr = getArg('--year') ? parseInt(getArg('--year'), 10) : null;
-    targets = ids.map((competitionId) => ({ competitionId, slug: getArg('--slug'), name: getArg('--name'), year: yr, classRe: getArg('--classes') }));
+    targets = ids.map((competitionId) => ({ competitionId, slug: getArg('--slug'), name: getArg('--name'), year: yr, classRe: getArg('--classes'), entries: args.includes('--entries') }));
   }
   if (!targets.length) {
     console.error('Uso:');
