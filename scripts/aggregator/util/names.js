@@ -170,6 +170,30 @@ const COUNTRY_TO_ISO2 = {
   JAM: "JM", JAMAICA: "JM",
   LVA: "LV", LATVIA: "LV",
   ZWE: "ZW", ZIMBABWE: "ZW",
+  // Báltico / Europa de Leste / Nórdicos — chegam pelo GolfBox (Estonian Junior
+  // Open/Tour, EGA Team Champs). Sem isto 3.368 entradas estónias ficavam com
+  // país null no canónico (medido 2026-08-05).
+  EST: "EE", ESTONIA: "EE",
+  LTU: "LT", LITHUANIA: "LT",
+  UKR: "UA", UKRAINE: "UA",
+  HUN: "HU", HUNGARY: "HU",
+  MLT: "MT", MALTA: "MT",
+  GRC: "GR", GRE: "GR", GREECE: "GR",
+  BGR: "BG", BUL: "BG", BULGARIA: "BG",
+  SVK: "SK", SLOVAKIA: "SK",
+  SVN: "SI", SLOVENIA: "SI",
+  HRV: "HR", CROATIA: "HR",
+  ROU: "RO", ROMANIA: "RO",
+  SRB: "RS", SERBIA: "RS",
+  ISL: "IS", ICELAND: "IS",
+  LUX: "LU", LUXEMBOURG: "LU",
+  TUR: "TR", TURKEY: "TR", TURKIYE: "TR",
+  ISR: "IL", ISRAEL: "IL",
+  JEY: "JE", JERSEY: "JE",
+  ALA: "AX", ALAND: "AX", ALANDISLANDS: "AX",
+  // O GolfBox estónio usa "EN" para ingleses — não é ISO2 real; → GB (mesma
+  // regra dos ENGLAND/GB-ENG acima: nunca separar as nações do Reino Unido).
+  EN: "GB",
   // Nações do Reino Unido → GB. ⚠ NÃO usar "GB-ENG"/"GB-SCT" aqui: o ISO2 é a
   // chave de identidade das fontes fracas (nome+país) e as outras fontes dizem
   // "GB" — separar as nações criava um duplicado por cada miúdo inglês.
@@ -196,6 +220,11 @@ const COUNTRY_NAME = {
   SV: "El Salvador", HN: "Honduras", NI: "Nicaragua", EC: "Ecuador",
   BO: "Bolivia", UY: "Uruguay", BB: "Barbados", BS: "Bahamas",
   JM: "Jamaica", LV: "Latvia", ZW: "Zimbabwe",
+  EE: "Estonia", LT: "Lithuania", UA: "Ukraine", HU: "Hungary",
+  MT: "Malta", GR: "Greece", BG: "Bulgaria", SK: "Slovakia",
+  SI: "Slovenia", HR: "Croatia", RO: "Romania", RS: "Serbia",
+  IS: "Iceland", LU: "Luxembourg", TR: "Türkiye", IL: "Israel",
+  JE: "Jersey", AX: "Åland Islands",
 };
 
 function countryToIso2(s) {
