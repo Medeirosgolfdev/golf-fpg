@@ -23,6 +23,43 @@ const SOURCE_ID = "uskids";
 const SOURCE_LABEL = "USKids Golf";
 
 /** Extracts series ID from tournament name (strips year, normalizes). */
+/**
+ * ±par HONESTO para flights que jogam 9 buracos num torneio de 18 (Boys 7&U /
+ * Boys 8): o cálculo antigo (par do torneio × nº de rondas) dava −69 a um
+ * 2×9H de gross 75 (caso Marcus Karim, British Kids 2021). Regra por ronda:
+ *  - com scorecard (strokes[18], zeros = não jogado) CONSISTENTE (Σ==gross):
+ *    par da ronda = Σ do par dos buracos JOGADOS (parArr também pode ter zeros
+ *    nos não jogados — armadilha USKids conhecida). Ronda parcial sem parArr
+ *    utilizável → ±par = null (nunca fabricar).
+ *  - gross > Σ strokes = cartão truncado NA FONTE (volta completa) → par cheio.
+ *  - sem strokes → par cheio (sem sinal de 9H).
+ * Convenção do projecto: tp só quando dá para calcular com confiança.
+ */
+function computeToPar(rounds, parArr, parPerRound, totalGross) {
+  if (totalGross == null || !rounds.length) return null;
+  const pars = Array.isArray(parArr) ? parArr : null;
+  const fullPar = pars ? pars.reduce((a, b) => a + (b > 0 ? b : 0), 0) : (parPerRound || 0);
+  if (!fullPar) return null;
+  let parSum = 0;
+  for (const r of rounds) {
+    if (r.gross == null) continue;
+    const strokes = Array.isArray(r.strokes) ? r.strokes : null;
+    const playedIdx = strokes ? strokes.map((s, i) => (s > 0 ? i : -1)).filter((i) => i >= 0) : [];
+    const sumStrokes = playedIdx.reduce((a, i) => a + strokes[i], 0);
+    const nFull = pars ? pars.filter((p) => p > 0).length : 18;
+    if (strokes && playedIdx.length > 0 && playedIdx.length < nFull && sumStrokes === r.gross) {
+      // Ronda parcial genuína (9H): par dos buracos jogados.
+      if (!pars) return null;
+      const played = playedIdx.reduce((a, i) => a + (pars[i] > 0 ? pars[i] : 0), 0);
+      if (played <= 0) return null;
+      parSum += played;
+    } else {
+      parSum += fullPar;
+    }
+  }
+  return parSum > 0 ? totalGross - parSum : null;
+}
+
 function seriesFromName(name) {
   if (!name) return { id: null, label: null };
   let s = String(name);
@@ -231,15 +268,9 @@ async function load(opts) {
       }
       rounds.sort((a, b) => a.round - b.round);
       const totalGross = rounds.reduce((acc, r) => (r.gross != null ? acc + r.gross : acc), 0) || null;
-      const toPar = totalGross != null && t.parTotal ? totalGross - (t.parTotal * rounds.length) / Math.max(1, rounds.length / rounds.length) : null;
-      // toPar usa par do FLIGHT (mais correcto que par do torneio).
-      // Slim só tem par a nível de torneio — wrong para multi-flight tournaments.
-      let toParCalc = null;
-      const parPerRound = flight.totalPar || t.parTotal;
-      if (parPerRound && rounds.length) {
-        const grossSum = rounds.reduce((acc, r) => acc + (r.gross || 0), 0);
-        toParCalc = grossSum - parPerRound * rounds.length;
-      }
+      // toPar honesto: par dos buracos JOGADOS (ver computeToPar) — os escalões
+      // mais novos jogam 9 buracos num torneio de 18 e o par×rondas dava −69.
+      const toParCalc = computeToPar(rounds, flight.par, flight.totalPar || t.parTotal, totalGross);
       flight.results.push({
         playerSourceKey: String(memberId),
         playerName: displayName(p.name || ""),
@@ -356,10 +387,7 @@ async function load(opts) {
         if (existingNames.has(normNameKey(acc.name))) continue;
         acc.rounds.sort((a, b) => a.round - b.round);
         const grossSum = acc.rounds.reduce((s, r) => s + (r.gross || 0), 0);
-        const parPerRound = flight.totalPar || t.parTotal;
-        const toParCalc = parPerRound && acc.rounds.length
-          ? grossSum - parPerRound * acc.rounds.length
-          : null;
+        const toParCalc = computeToPar(acc.rounds, flight.par, flight.totalPar || t.parTotal, grossSum || null);
         // Tentar resolver memberId via playersByNameCountry (do slim).
         // Sem isto, o identity matcher dropa o result (linha 290 do matcher exige playerSourceKey).
         const cc = perPlayerCountry.get(acc.name) || null;
@@ -438,4 +466,4 @@ async function load(opts) {
   };
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, computeToPar };

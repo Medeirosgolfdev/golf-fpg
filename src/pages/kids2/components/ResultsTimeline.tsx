@@ -394,8 +394,20 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           })()}
           <ScoringPill tournament={r.tournament} flight={r.flight} />
           {(() => {
+            // 9H também pelas voltas do PRÓPRIO jogador: escalões novos jogam
+            // 9 buracos num torneio cuja meta é de 18 (British Kids 2021, Boys
+            // 7&U) — o holesPerRound/par do flight não o denunciam. Guarda de
+            // cartão truncado: só conta como 9H se Σ strokes == gross (um
+            // cartão de 18 truncado na fonte tem gross MAIOR que a soma).
+            const rds = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number");
+            const nineByStrokes = rds.length > 0 && rds.every((rd) => {
+              if (!Array.isArray(rd.strokes)) return false;
+              const played = rd.strokes.filter((s) => s > 0);
+              return played.length > 0 && played.length <= 9 && played.reduce((a, b) => a + b, 0) === rd.gross;
+            });
             const is9 = r.tournament.holesPerRound === 9 ||
-              (Array.isArray(r.flight.par) && r.flight.par.filter((p) => p > 0).length === 9);
+              (Array.isArray(r.flight.par) && r.flight.par.filter((p) => p > 0).length === 9) ||
+              nineByStrokes;
             return is9 ? <NineHPill /> : null;
           })()}
           {categorizedLinks.map((l) => (
