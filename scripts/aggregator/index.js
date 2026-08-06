@@ -126,6 +126,22 @@ async function main() {
     process.exit(1);
   }
 
+  // 2b. Dedup genérico EGR: eventos que já vêm de uma fonte dedicada (roster
+  //     overlap + janela de datas) saem ANTES do matcher — a fonte rica ganha.
+  //     Complementa a whitelist regex do próprio adapter egr.js.
+  {
+    const { dedupeEgrTournaments } = require("./util/egr-dedup");
+    const { dropped } = dedupeEgrTournaments(rawSources);
+    if (dropped.length) {
+      step("Dedup EGR vs fontes dedicadas");
+      const bySrc = {};
+      for (const d of dropped) bySrc[d.coveredBy] = (bySrc[d.coveredBy] || 0) + 1;
+      sub(`${dropped.length} evento(s) EGR removido(s): ${Object.entries(bySrc).map(([k, v]) => `${k}×${v}`).join(" · ")}`);
+      if (process.env.DEBUG) for (const d of dropped) sub(`  · ${d.egrName} → ${d.coveredBy}: ${d.coveredByName} (sh=${d.shared}, egr%=${d.ovEgr})`);
+      console.log("");
+    }
+  }
+
   // 3. Identity matcher
   step("Identity matcher");
   let matchResult;
