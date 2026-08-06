@@ -45,7 +45,6 @@ const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
 const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
-const KIDSPage = lazy(() => import("./pages/KIDSPage"));
 const KIDS2Page = lazy(() => import("./pages/KIDS2Page"));
 const KIDS2ScoutView = lazy(() => import("./pages/kids2/ScoutView"));
 const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"));
@@ -405,13 +404,13 @@ export default function App() {
                 <Route path="/bjgt-legacy/:fed?" element={<Navigate to="/major" replace />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 {/* Migração para KIDS2 (2026-05): /kids → /kids2 com hash preservado.
-                    A página legacy KIDSPage continua disponível em /kids-legacy para
-                    consulta enquanto se ajustam edge-cases; pode ser removida quando
-                    estiver claro que ninguém depende dela. */}
+                    KIDSPage legacy REMOVIDA 2026-08-06 (sunset): a paridade vive no
+                    kids2 — H2H detalhada no MatchupVsManuel; Previsão/Campo/Scorecards
+                    históricos no FieldRivaisDashboard em /kids2/next-t. */}
                 <Route path="/kids" element={<KidsRedirect to="/kids2" />} />
                 <Route path="/kids/next-t" element={<KidsRedirect to="/kids2/next-t" />} />
-                <Route path="/kids-legacy" element={<KIDSPage />} />
-                <Route path="/kids-legacy/next-t" element={<KIDSPage />} />
+                <Route path="/kids-legacy" element={<KidsRedirect to="/kids2" />} />
+                <Route path="/kids-legacy/next-t" element={<KidsRedirect to="/kids2/next-t" />} />
                 <Route path="/kids2" element={<KIDS2Page />} />
                 <Route path="/kids2/next-t" element={<KIDS2NextTournaments />} />
                 <Route path="/kids2/scout/:tid" element={<KIDS2ScoutView />} />

@@ -2,17 +2,21 @@
  * kids2/components/MatchupVsManuel.tsx
  *
  * Confronto vs Manuel — sem cor verde de "Manuel". Stats + tabela com troféus.
+ *
+ * Paridade com a tabela H2H detalhada do /kids-legacy (2026-08-06, sunset):
+ * ±par por lado, coluna Resultado (venceu/empate) com tinte de linha, Dif.
+ * preferindo ±par (robusto a WD/menos rondas), e KPIs de médias de posição.
  */
 
 import React from "react";
-import type { CanonicalData, Junior } from "../data";
-import { getSharedTournamentIds, getResultInTournament } from "../data";
+import type { CanonicalData, Junior, Flight, Result, Tournament } from "../data";
+import { getSharedTournamentIds } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { tpColor } from "../../../ui/tournamentPrimitives";
-import { MONTHS_PT } from "../../../utils/format";
+import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 
-type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff";
+type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
 interface Props {
   data: CanonicalData;
@@ -20,60 +24,93 @@ interface Props {
   manuel: Junior;
 }
 
+interface Row {
+  t: Tournament;
+  flight: Flight;
+  rJ: Result;
+  rM: Result;
+  /** Dif. junior−Manuel: ±par quando ambos têm toPar (robusto a nº de rondas
+   *  diferente, ex: WD), senão gross; null quando falta dos dois lados. */
+  diff: number | null;
+  /** -1 junior venceu · 0 empate · 1 Manuel venceu · null sem posições. */
+  outcome: number | null;
+}
+
+/** Flight do torneio onde AMBOS jogaram. Não usar getResultInTournament de
+ *  cada lado: um jogador pode aparecer em 2 flights do mesmo torneio (England
+ *  cross-trophy) e o primeiro flight de um não é necessariamente o partilhado. */
+function findSharedFlight(t: Tournament, junior: Junior, manuel: Junior): { flight: Flight; rJ: Result; rM: Result } | null {
+  for (const f of t.flights) {
+    const rJ = f.results.find((x) => x.juniorId === junior.id);
+    if (!rJ) continue;
+    const rM = f.results.find((x) => x.juniorId === manuel.id);
+    if (rM) return { flight: f, rJ, rM };
+  }
+  return null;
+}
+
 export default function MatchupVsManuel({ data, junior, manuel }: Props) {
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("date", "desc", {
     date: "desc", name: "asc", flight: "asc",
-    jGross: "asc", jPos: "asc", mGross: "asc", mPos: "asc", diff: "asc",
+    jGross: "asc", jPos: "asc", mGross: "asc", mPos: "asc", diff: "asc", result: "asc",
   });
 
   const sharedIds = getSharedTournamentIds(junior, manuel);
   if (sharedIds.length === 0) return null;
 
-  // ⚠ IMPORTANTE: torneios USKids/USKids-completos podem ter MÚLTIPLOS flights
-  // (Boys 11 + Boys 12) sob o mesmo tournamentId. Se Rafael jogou B12 e Manuel
-  // jogou B11, NÃO é confronto — escalões diferentes. Filtrar para apenas
-  // pares onde ambos estiveram no MESMO flight (flightKey igual).
   const rows = sharedIds.map((tid) => {
     const t = data.tournamentById.get(tid);
     if (!t) return null;
-    const rJ = getResultInTournament(junior, t);
-    const rM = getResultInTournament(manuel, t);
-    if (!rJ || !rM) return null;
-    // Se rJ e rM estão em flights diferentes (escalões diferentes), saltar.
-    if (rJ.flight.flightKey !== rM.flight.flightKey) return null;
-    const diff = (rJ.result.totalGross ?? 0) - (rM.result.totalGross ?? 0);
-    return { t, rJ, rM, diff };
-  }).filter(Boolean) as Array<{ t: any; rJ: any; rM: any; diff: number }>;
+    // Confronto real = mesmo flight (Boys 11 vs Boys 12 no mesmo torneio não conta).
+    const shared = findSharedFlight(t, junior, manuel);
+    if (!shared) return null;
+    const { flight, rJ, rM } = shared;
+    const diff = rJ.toPar != null && rM.toPar != null ? rJ.toPar - rM.toPar
+      : rJ.totalGross != null && rM.totalGross != null ? rJ.totalGross - rM.totalGross
+      : null;
+    const outcome = typeof rJ.pos === "number" && typeof rM.pos === "number"
+      ? (rJ.pos < rM.pos ? -1 : rJ.pos > rM.pos ? 1 : 0)
+      : null;
+    return { t, flight, rJ, rM, diff, outcome } as Row;
+  }).filter(Boolean) as Row[];
 
   if (rows.length === 0) return null;
 
+  const firstName = junior.canonicalName.split(" ")[0];
   let wins = 0, losses = 0, draws = 0;
-  let diffSum = 0, worst = 0;
+  const diffs: number[] = [];
+  let posJSum = 0, posMSum = 0, posN = 0;
+  let worst: number | null = null;
   for (const r of rows) {
-    const pJ = r.rJ.result.pos, pM = r.rM.result.pos;
-    if (typeof pJ === "number" && typeof pM === "number") {
-      if (pJ < pM) wins++;
-      else if (pJ > pM) losses++;
-      else draws++;
+    if (r.outcome === -1) wins++;
+    else if (r.outcome === 1) losses++;
+    else if (r.outcome === 0) draws++;
+    if (r.diff != null) {
+      diffs.push(r.diff);
+      if (worst == null || Math.abs(r.diff) > Math.abs(worst)) worst = r.diff;
     }
-    diffSum += r.diff;
-    if (Math.abs(r.diff) > Math.abs(worst)) worst = r.diff;
+    if (typeof r.rJ.pos === "number" && typeof r.rM.pos === "number") {
+      posJSum += r.rJ.pos; posMSum += r.rM.pos; posN++;
+    }
   }
-  const avgDiff = rows.length > 0 ? (diffSum / rows.length) : 0;
+  const avgDiff = diffs.length ? diffs.reduce((a, b) => a + b, 0) / diffs.length : null;
+  const avgPosJ = posN ? Math.round(posJSum / posN) : null;
+  const avgPosM = posN ? Math.round(posMSum / posN) : null;
 
   // Ordenação aplicada antes do render
   const sortedRows = [...rows].sort((a, b) => {
     const mul = sortDir === "asc" ? 1 : -1;
-    const getVal = (r: typeof a, key: SortKey): string | number => {
+    const getVal = (r: Row, key: SortKey): string | number => {
       switch (key) {
         case "date": return r.t.date || "";
-        case "name": return (r.t.name || r.t.shortName || r.t.id || "").toLowerCase();
-        case "flight": return r.rJ.flight.label || "";
-        case "jGross": return r.rJ.result.totalGross ?? Number.POSITIVE_INFINITY;
-        case "jPos": return typeof r.rJ.result.pos === "number" ? r.rJ.result.pos : Number.POSITIVE_INFINITY;
-        case "mGross": return r.rM.result.totalGross ?? Number.POSITIVE_INFINITY;
-        case "mPos": return typeof r.rM.result.pos === "number" ? r.rM.result.pos : Number.POSITIVE_INFINITY;
-        case "diff": return r.diff;
+        case "name": return (r.t.name || r.t.id || "").toLowerCase();
+        case "flight": return r.flight.label || "";
+        case "jGross": return r.rJ.totalGross ?? Number.POSITIVE_INFINITY;
+        case "jPos": return typeof r.rJ.pos === "number" ? r.rJ.pos : Number.POSITIVE_INFINITY;
+        case "mGross": return r.rM.totalGross ?? Number.POSITIVE_INFINITY;
+        case "mPos": return typeof r.rM.pos === "number" ? r.rM.pos : Number.POSITIVE_INFINITY;
+        case "diff": return r.diff ?? Number.POSITIVE_INFINITY;
+        case "result": return r.outcome ?? Number.POSITIVE_INFINITY;
       }
     };
     const va = getVal(a, sortKey);
@@ -94,13 +131,18 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
           Confronto com Manuel
         </h3>
+        {avgPosJ != null && avgPosM != null && (
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginLeft: "auto" }}>
+            Avg: {firstName} {avgPosJ}º · Manuel {avgPosM}º
+          </span>
+        )}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 12 }}>
         <Stat value={String(rows.length)} label="encontros" />
-        <Stat value={`${wins}–${losses}`} label="vitórias / derrotas" />
-        <Stat value={fmtDiff(avgDiff)} label="diff médio" />
-        <Stat value={fmtDiff(worst)} label="pior margem" />
+        <Stat value={draws > 0 ? `${wins}–${losses}–${draws}` : `${wins}–${losses}`} label={draws > 0 ? "V / D / E" : "vitórias / derrotas"} />
+        <Stat value={avgDiff != null ? fmtDiff(avgDiff) : "—"} label="dif. média (±par)" />
+        <Stat value={worst != null ? fmtDiff(worst) : "—"} label="pior margem" />
       </div>
 
       <table className="dtable">
@@ -109,34 +151,45 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
             <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
             <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
-            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</SortableHdr>
+            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>{firstName}</SortableHdr>
             <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Pos</SortableHdr>
             <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "right" }}>Manuel</SortableHdr>
             <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>diff</SortableHdr>
+            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Dif.</SortableHdr>
+            <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Resultado</SortableHdr>
           </tr>
         </thead>
         <tbody>
           {sortedRows.map((r, i) => (
-            <tr key={i}>
+            <tr key={i} style={{
+              background: r.outcome === -1 ? "rgba(22,163,74,.04)" : r.outcome === 1 ? "rgba(220,38,38,.04)" : undefined,
+            }}>
               <td>{fmtDateShort(r.t.date)}</td>
               <td>
-                {r.t.name || r.t.shortName || r.t.id}
+                {r.t.name || r.t.id}
                 {r.t.links?.[0]?.url && (
                   <a href={r.t.links[0].url} target="_blank" rel="noreferrer" style={{ marginLeft: 4, color: "var(--color-info)" }}>↗</a>
                 )}
               </td>
-              <td style={{ color: "var(--text-3)" }}>{r.rJ.flight.label}</td>
+              <td style={{ color: "var(--text-3)" }}>{r.flight.label}</td>
               <td style={{ textAlign: "right" }}>
-                <RoundsCell result={r.rJ.result} />
+                <RoundsCell result={r.rJ} />
+                <ToParTag tp={r.rJ.toPar} />
               </td>
-              <td style={{ textAlign: "center" }}><PosTrophy pos={r.rJ.result.pos} /></td>
+              <td style={{ textAlign: "center" }}><PosTrophy pos={r.rJ.pos} /></td>
               <td style={{ ...tdManuel, textAlign: "right" }}>
-                <RoundsCell result={r.rM.result} />
+                <RoundsCell result={r.rM} />
+                <ToParTag tp={r.rM.toPar} />
               </td>
-              <td style={{ ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
-              <td style={{ textAlign: "right", fontWeight: 700, color: tpColor(r.diff) ?? "var(--text-3)" }}>
-                {fmtDiff(r.diff)}
+              <td style={{ ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.pos} /></td>
+              <td style={{ textAlign: "right", fontWeight: 700, color: r.diff != null ? (tpColor(r.diff) ?? "var(--text-3)") : "var(--text-3)" }}>
+                {r.diff != null ? fmtDiff(r.diff) : "—"}
+              </td>
+              <td style={{
+                textAlign: "right", fontWeight: 700, fontSize: "var(--fs-11)",
+                color: r.outcome === -1 ? "var(--color-good-dark)" : r.outcome === 1 ? "var(--color-danger-vivid)" : "var(--text-3)",
+              }}>
+                {r.outcome === -1 ? `${firstName} venceu` : r.outcome === 1 ? "Manuel venceu" : r.outcome === 0 ? "empate" : "—"}
               </td>
             </tr>
           ))}
@@ -163,11 +216,20 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function RoundsCell({ result }: { result: any }) {
+function ToParTag({ tp }: { tp: number | null | undefined }) {
+  if (tp == null) return null;
+  return (
+    <span style={{ fontSize: "var(--fs-10)", marginLeft: 4, color: tp <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+      ({fmtToPar(tp)})
+    </span>
+  );
+}
+
+function RoundsCell({ result }: { result: Result }) {
   if (!result.rounds?.length) {
     return <>{result.totalGross != null ? String(result.totalGross) : "—"}</>;
   }
-  const grosses = result.rounds.map((r: any) => r.gross).filter((g: any) => typeof g === "number");
+  const grosses = result.rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
   if (!grosses.length) {
     return <>{result.totalGross != null ? String(result.totalGross) : "—"}</>;
   }
@@ -180,7 +242,7 @@ function RoundsCell({ result }: { result: any }) {
   );
 }
 
-function PosTrophy({ pos }: { pos: any }) {
+function PosTrophy({ pos }: { pos: number | null | undefined }) {
   if (typeof pos !== "number") return <span style={{ color: "var(--text-3)" }}>—</span>;
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";

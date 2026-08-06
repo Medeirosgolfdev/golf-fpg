@@ -64,7 +64,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/torneios-recentes` (+ `/:key`) | RecentTournamentsPage | recent-tournaments.json — torneios recentes reconstruídos das voltas WHS dos nossos jogadores (utilidade, fora da NavBar); detalhe reutiliza `TournamentDetail` |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-40).json, uskids-field.json |
-| `/kids-legacy` (`/kids` → redirect `/kids2`) | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
+| — (`/kids` e `/kids-legacy` → redirect `/kids2`) | KIDSPage REMOVIDA 2026-08-06 (sunset — ver "Páginas legadas") | — |
 | `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/` |
 | `/FPG` (`/diversos` → redirect `/FPG`) | FPGPage | pull-torneiosNNN.json |
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
@@ -83,7 +83,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 
-> **Páginas legadas** — estado 2026-07-02: `/bjgt-legacy` e `/doral-legacy` foram **removidas** (redirect → `/major`, que tem paridade total via CircuitShell; BJGTPage.tsx/DORALPage.tsx sobrevivem como módulos de dados+componentes ricos consumidos pela MajorPage). `/kids-legacy` (KIDSPage) **mantém-se** — o sunset está BLOQUEADO até o kids2 ganhar paridade em 4 funcionalidades exclusivas do legado: **(1)** tabela H2H detalhada (`kids/H2HSortableTable.tsx` — kids2 só tem o resumo MatchupVsManuel), **(2)** Previsão WHS (`kids/PrevisaoTab.tsx` + `previsaoModel.ts`, simulador de handicap p/ torneios futuros), **(3)** Course Tab (`kids/CourseTab.tsx`, tees+CR/Slope por escalão), **(4)** tab de scorecards históricos (`kids/HistoricScorecardsTab.tsx`). Nota: `kids/FieldRivaisDashboard.tsx` é importado pelo PRÓPRIO kids2 (`kids2/NextTournaments.tsx`) — não é código legado puro.
+> **Páginas legadas** — `/bjgt-legacy` e `/doral-legacy` foram **removidas** 2026-07-02 (redirect → `/major`, que tem paridade total via CircuitShell; BJGTPage.tsx/DORALPage.tsx sobrevivem como módulos de dados+componentes ricos consumidos pela MajorPage). **`/kids-legacy` (KIDSPage) foi REMOVIDA em 2026-08-06** (sunset; redirect → `/kids2`). As 4 funcionalidades que bloqueavam o sunset resolveram-se assim: **(1)** tabela H2H detalhada → o `kids2/components/MatchupVsManuel.tsx` foi elevado à paridade (±par por lado, coluna Resultado c/ tinte, Dif. em ±par, médias de posição; e corrigidos 2 bugs: `totalGross ?? 0` a poluir médias e confrontos perdidos quando um jogador está em 2 flights do mesmo torneio, caso England cross-trophy); **(2-4)** Previsão WHS, Course Tab e Scorecards históricos NUNCA foram exclusivas — vivem no `kids/FieldRivaisDashboard.tsx`, que o kids2 renderiza em `/kids2/next-t` (tabs `?tab=previsao|campo|scorecards`). Apagados: `KIDSPage.tsx` + cadeia legacy-only (`kids/RivalDetail`, `RivalCharts`, `H2HSortableTable`, `RivaisSidebar`, `AnaliseSection`, `MemberHistTable`, `TournScorecard`, `courseScorecards`, `dobInference`, `tournDef`, `types`). **Mantêm-se** em `src/pages/kids/`: `FieldRivaisDashboard.tsx` + `CourseTab`/`PrevisaoTab`/`previsaoModel`/`HistoricScorecardsTab` (partilhados com o kids2). O array manual `D` da KIDSPage morreu com ela (a armadilha D vs TG_D ficou resolvida).
 >
 > **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas deliberadamente NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. **Decisão 2026-07-02: os dados actuais NÃO são úteis/fiáveis — só ligar a rota quando houver uma fonte de dados boa e fiável.** Até lá fica desligada de propósito; não é bug.
 >
@@ -144,7 +144,7 @@ sem torneios nenhuns. Aconteceu a 2026-07-23.
 
 ## KIDSdataLoader — Arquitectura do loader de rivais
 
-O `KIDSdataLoader.ts` é o loader central da KIDSPage. Exporta `buildAutoRivals()`, `normName()`, `getScorecards()`, `uskTournNames` (Map) e `uskFieldSizes` (Map).
+O `KIDSdataLoader.ts` era o loader central da KIDSPage (removida 2026-08-06); hoje o consumidor principal é o `kids2/NextTournaments.tsx` (`buildAutoRivals` → `FieldRivaisDashboard`). Exporta `buildAutoRivals()`, `normName()`, `getScorecards()`, `uskTournNames` (Map) e `uskFieldSizes` (Map).
 
 ### 3 Fases de carregamento
 
@@ -1589,7 +1589,7 @@ Pivot por jogador (vs por torneio): cada miúdo num só ficheiro com a carreira 
 
 Schema deliberadamente fala SI/par/yards a partir do `GetMemberTournamentResults` (que devolve `t_pars` / `t_yards` no nível torneio), e os campos ricos (tee marker + ronda detalhada) a partir do `GetPlayerTeeTimes` quando o `pid` consegue ser matched via fingerprint. Quando o fingerprint falha (rondas degeneradas tipo `[0,0,...]`), `pid: null` e os campos ricos ficam `null` — o resto da entrada continua válido.
 
-### uskids-member-history.json (formato original, usado por KIDSPage H2H)
+### uskids-member-history.json (formato original — fonte do build-slim)
 
 ```
 { gerado_em, torneios: Record<tcode, {name, ...}>,
@@ -1713,7 +1713,7 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | uskids_torneios_completos(1-40).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
-| uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
+| uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + kids/FieldRivaisDashboard (tabs Scores/Scorecards/Campo/Previsão) |
 | uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
 | uskids-rich-flight-cache.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — cache (tcode → flights/players) para a pipeline rica |
 | uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
@@ -3103,7 +3103,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Dados
 
-- **`KIDSPage.D` vs `TabelaGlobal.TG_D` NÃO são cópias** (avaliado 2026-07-02) — os dois arrays manuais de rivais partilham as primeiras ~14 linhas mas foram curados INDEPENDENTEMENTE e divergem de propósito (países, torneios e até homónimos distintos: "Maxime Vervaet" Spain/B12-13 vs Belgium/B10-11, "Nicolas Pape" Thailand/BRJGT vs France/WJGC). **Não tentar fundir sem curadoria manual** — uma fusão automática corrompe dados. A duplicação resolve-se naturalmente quando o /kids-legacy for removido (o `D` desaparece com a KIDSPage).
+- **`TabelaGlobal.TG_D`** — array manual de rivais curado independentemente (o gémeo `KIDSPage.D` desapareceu com o sunset da KIDSPage em 2026-08-06). Continua a ter homónimos distintos de propósito ("Maxime Vervaet" Spain/B12-13 vs Belgium/B10-11) — não "corrigir" contra outras fontes sem curadoria manual.
 - **Epochs `/Date(ms)/` da FPG = meia-noite em hora de LISBOA** (corrigido no pipeline 2026-07-02) — no horário de verão (UTC+1) o epoch é 23:00 UTC do dia anterior. Formatar com getters locais numa máquina UTC (GitHub Actions) ou com `toISOString()` em qualquer máquina dá **−1 dia** para datas de fim-Março a fim-Outubro. Fix em `lib/helpers.js`: `getPlayedAt` prefere as strings (`hcp_dateStr`/`score_dateStr`) e os fallbacks de epoch passam por `lisbonCivilDay()` (Intl em `Europe/Lisbon` → meia-noite UTC); `fmtDate` usa getters UTC. ✅ Scripts em `scripts/` corrigidos 2026-07-07 — usam agora `lisbonCivilDayStr()` (variante string do `lisbonCivilDay`, exportada de `lib/helpers.js`) sobre os epochs `started_at`: `scrape-classif-node`, `scrape-drive-node`, `scrape-jovens-node`, `scrape-crj-madeira-historico`. Os `pairings-build` (`normIsoDate`), `scrape-federados-node` (`parseNetDate` p/ birthdates) e `scrape-fpg-admissions-draws-node` (`dotNetToIsoDate`) já tinham sido corrigidos antes. `enrich-players.js:197` é seguro (o `dateSort` já vem de `getPlayedAt`→`lisbonCivilDay` = meia-noite UTC do dia civil). Os `new Date().toISOString().slice(0,10)` restantes são marcadores "hoje"/"lastUpdated" (não epochs FPG) — inofensivos.
 - **scrape-drive-aquapor-v6 bug R1=R2** — v6 usava API que ignora `classifround`. v7 usa `classifAgregate.aspx/ScoreCard` — corrigido.
 - **ScorecardLeaderboard par vazio** — se `par[]` chegar vazio, `nh=0`, slice→[], soma=0. Fix: `const nhRef = par.length || (is9 ? 9 : 18)`.
@@ -3119,7 +3119,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 ### Ambiente
 
 - **iOS copy-paste** — copiar código no mobile substitui aspas rectas por aspas tipográficas curvas → rebenta esbuild. Descarregar ficheiros do desktop.
-- **Cross-page linking** — `↗ Kids` links em USKIDSPage abrem `/kids#EncodedPlayerName` em novo tab; KIDSPage lê `location.hash` para auto-seleccionar.
+- **Cross-page linking** — `↗ Kids` links em USKIDSPage abrem `/kids#EncodedPlayerName` em novo tab; `/kids` redirige para `/kids2` preservando o hash, e o KIDS2Page resolve-o (`resolveToId`: id canónico → memberId → fed → normName/aliases).
 
 ---
 
@@ -3127,7 +3127,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 | Ficheiro | Papel |
 |----------|-------|
-| `KIDSPage.tsx` | Página de tracking de rivais internacionais (3061 linhas) |
+| `kids/FieldRivaisDashboard.tsx` | Dashboard de field/rivais USKids (tabs Jogadores/Scores/Scorecards/Campo/Previsão/Scout) — renderizado em `/kids2/next-t`; a KIDSPage legacy foi removida 2026-08-06 |
 | `KIDSdataLoader.ts` | Loader central: 3 fases, todos os JSON internacionais (1144 linhas) |
 | `USKIDSPage.tsx` | Resultados USKids com links cruzados para Kids |
 | `FPGPage.tsx` | Dados da federação portuguesa |
