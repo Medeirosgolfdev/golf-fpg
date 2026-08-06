@@ -322,7 +322,8 @@ export default function HeroIdentity({ data, junior }: Props) {
 
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        // 5 colunas quando há card EGR — os 5 cartões cabem numa linha só.
+        gridTemplateColumns: `repeat(${egr ? 5 : 4}, 1fr)`,
         gap: 10,
         marginTop: 16,
       }}>

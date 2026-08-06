@@ -396,20 +396,28 @@ async function scrapeEvents(opts) {
   const errors = results.filter((r) => r && r.error);
   if (errors.length) console.warn(`  ⚠ ${errors.length} eventos com erro`);
 
-  // 4. Índice.
+  // 4. Índice — MERGE com o existente, não substituir: cada run só enumera os
+  //    anos pedidos, e substituir o índice inteiro apagava a meta (datas!) dos
+  //    eventos dos OUTROS anos — o build-egr-events-list ficava sem startDate
+  //    para 753/754 eventos e o dedup EGR do agregador (que ancora por data)
+  //    desligava-se em silêncio. Aconteceu 2026-08-06 com um run --year 2024.
+  const idxFile = path.join(EGR_DIR, "egr-events-index.json");
+  const prevIdx = fs.existsSync(idxFile) ? JSON.parse(fs.readFileSync(idxFile, "utf8")) : null;
+  const merged = new Map((prevIdx?.events || []).map((e) => [String(e.id), e]));
+  for (const e of archive) merged.set(String(e.id), e);
   const index = {
     generated_at: new Date().toISOString(),
-    years: opts.years,
+    years: [...new Set([...(prevIdx?.years || []), ...opts.years])].sort(),
     maxAge: opts.allAges ? null : opts.maxAge,
-    totalArchive: archive.length,
+    totalArchive: merged.size,
     totalTargets: targets.length,
     scraped, skipped,
-    events: archive.map((e) => ({
+    events: [...merged.values()].map((e) => ({
       ...e,
       scraped: fs.existsSync(path.join(EVENTS_DIR, `egr_${e.id}.json`)),
     })),
   };
-  writeJsonAtomic(path.join(EGR_DIR, "egr-events-index.json"), index);
+  writeJsonAtomic(idxFile, index);
   console.log(`  ✔ ${scraped} eventos escritos, ${skipped} saltados. Índice: public/data/egr/egr-events-index.json`);
 
   buildPlayerEventsRollup();

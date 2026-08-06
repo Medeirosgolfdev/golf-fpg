@@ -38,6 +38,22 @@ function isPt(c) {
   return /portugal/i.test(s) || /^(pt|prt|por)$/i.test(s);
 }
 
+/** Data do PRÓPRIO ficheiro do evento ("Thursday, 06. Feb 25" / "3. Jan") →
+ *  ISO. Fallback quando o índice não tem a meta do evento — o índice só
+ *  enumera os anos do último run e sem isto 753/754 eventos ficavam sem data
+ *  (bug 2026-08-06: timeline do kids2 toda a "—" e dedup EGR desligado). */
+const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+function rawToIso(raw, year) {
+  const m = /(\d{1,2})\.?\s+([A-Za-z]{3,})\.?\s*(\d{2,4})?/.exec(String(raw || ""));
+  if (!m) return null;
+  const mon = MONTHS[m[2].slice(0, 3).toLowerCase()];
+  if (!mon) return null;
+  let y = m[3] ? parseInt(m[3], 10) : (year || null);
+  if (y != null && y < 100) y += 2000;
+  if (!y) return null;
+  return `${y}-${String(mon).padStart(2, "0")}-${String(parseInt(m[1], 10)).padStart(2, "0")}`;
+}
+
 function main() {
   const idx = JSON.parse(fs.readFileSync(INDEX, "utf8"));
   const metaById = new Map();
@@ -62,8 +78,8 @@ function main() {
       ageNum: e.ageNum ?? meta.ageNum ?? null,
       sex: e.sex || null,
       country: e.country || meta.country || "",       // país anfitrião
-      startDate: meta.startDate || null,
-      endDate: meta.endDate || null,
+      startDate: meta.startDate || rawToIso(e.startDateRaw, e.year ?? meta.year) || null,
+      endDate: meta.endDate || rawToIso(e.endDateRaw, e.year ?? meta.year) || null,
       year: e.year ?? meta.year ?? null,
       egrPoints: e.egrPointsPool ?? meta.egrPoints ?? null,
       cr: e.cr ?? null,
