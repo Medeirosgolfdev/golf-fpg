@@ -47,12 +47,21 @@ function computeToPar(rounds, parArr, parPerRound, totalGross) {
     const playedIdx = strokes ? strokes.map((s, i) => (s > 0 ? i : -1)).filter((i) => i >= 0) : [];
     const sumStrokes = playedIdx.reduce((a, i) => a + strokes[i], 0);
     const nFull = pars ? pars.filter((p) => p > 0).length : 18;
+    // Gross fisicamente impossível (< 2 pancadas/buraco) = lixo da fonte
+    // (caso Ohio State Inv. 2022: rondas "18/0" com totais de 9H num evento
+    // de 18) → não fabricar ±par.
+    if (r.gross < (playedIdx.length || nFull) * 2) return null;
     if (strokes && playedIdx.length > 0 && playedIdx.length < nFull && sumStrokes === r.gross) {
       // Ronda parcial genuína (9H): par dos buracos jogados.
       if (!pars) return null;
       const played = playedIdx.reduce((a, i) => a + (pars[i] > 0 ? pars[i] : 0), 0);
       if (played <= 0) return null;
       parSum += played;
+    } else if (strokes && playedIdx.length > 0 && r.gross < sumStrokes) {
+      // gross MENOR que a soma dos buracos visíveis é impossível num cartão
+      // truncado — dados incoerentes da fonte (Local Tour com sentinelas −1 e
+      // gross que não bate, ex: soma 39 vs gross 30) → não fabricar ±par.
+      return null;
     } else {
       parSum += fullPar;
     }

@@ -155,16 +155,24 @@ function load() {
         existing.club = pl.club;
       }
       const rounds = [pl.r1, pl.r2, pl.r3, pl.r4]
-        .map((g, i) => ({ round: i + 1, gross: typeof g === "number" ? g : null }))
+        .map((g, i) => ({ round: i + 1, gross: typeof g === "number" && g > 0 ? g : null }))
         .filter((r) => r.gross != null);
       const total = typeof pl.total === "number" ? pl.total : null;
+      // O EGR só publica o par de 18 buracos; rondas com gross < 75% do par
+      // são quase de certeza de 9 buracos (escalões novos dos tours suíços/
+      // dinamarqueses) — ±par com par de 18 dava −46/−56 fantasma.
+      const roundsLookFull = rounds.length > 0 && (par == null || rounds.every((r) => r.gross >= par * 0.75));
       results.push({
         playerSourceKey: key,
         playerName,
         pos: typeof pl.posNum === "number" ? pl.posNum : null,
         status: rounds.length ? "OK" : "DNS",
         totalGross: total,
-        toPar: total != null && par != null && nR > 0 ? total - par * nR : null,
+        // ±par sobre as rondas DO JOGADOR — com o nR do evento, quem jogou 2
+        // de 3 rondas (WD) ficava com par×3 e um −68 fantasma (caso Enea
+        // Fischer, Swiss Junior Tour Limpachtal 2025). E só quando as rondas
+        // parecem de 18 buracos (roundsLookFull).
+        toPar: total != null && par != null && roundsLookFull ? total - par * rounds.length : null,
         rounds,
       });
     }

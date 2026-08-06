@@ -50,6 +50,20 @@ describe("computeToPar", () => {
     expect(computeToPar(rounds, par9, null, 41)).toBe(41 - 36);
   });
 
+  it("gross MENOR que a soma dos strokes (dados incoerentes, Local Tour) → null", () => {
+    // Caso real Golf Le Vigne: 9 buracos somam 39 mas o gross diz 30, resto −1.
+    const s = [6, 5, 4, 6, 5, 5, 3, 4, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1]; // Σ jogados 42... usar 39
+    const s39 = [6, 4, 5, 3, 4, 5, 2, 7, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+    expect(computeToPar([{ round: 1, gross: 30, strokes: s39 }], PAR18, 72, 30)).toBeNull();
+    expect(computeToPar([{ round: 1, gross: 30, strokes: s }], PAR18, 72, 30)).toBeNull();
+  });
+
+  it("gross fisicamente impossível (< 2/buraco — caso Ohio 2022) → null", () => {
+    const s18 = PAR18.map(() => 2); // 18 jogados, soma 36
+    expect(computeToPar([{ round: 1, gross: 33, strokes: s18 }], PAR18, 72, 33)).toBeNull();
+    expect(computeToPar([{ round: 1, gross: 30 }], PAR18, 72, 30)).toBeNull(); // sem strokes, gross de 9H num evento 18
+  });
+
   it("sem par nenhum → null; sem gross → null", () => {
     expect(computeToPar([{ round: 1, gross: 42 }], null, null, 42)).toBeNull();
     expect(computeToPar([], PAR18, 72, null)).toBeNull();
