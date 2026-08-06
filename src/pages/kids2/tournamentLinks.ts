@@ -13,7 +13,7 @@
 import type { Tournament } from "./data";
 
 export interface CategorizedLink {
-  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "avtrophy" | "other";
+  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "avtrophy" | "optimist" | "other";
   label: string;
   url: string;
   /** CSS var-name para cor (já existe em tokens.css). */
@@ -27,6 +27,9 @@ const DOMAIN_MAP: Array<{ test: RegExp; key: CategorizedLink["key"]; label: stri
   { test: /tournaments\.uskidsgolf\.com/i, key: "sat", label: "USKids", colorVar: "--source-uskids" },
   { test: /scoring\.fpg\.pt|scoring\.datagolf\.pt|my\.fpg\.pt/i, key: "fpg", label: "FPG", colorVar: "--source-fpg" },
   { test: /eg-[a-z0-9-]*\.golfgenius\.com/i, key: "england", label: "England Golf", colorVar: "--source-england" },
+  // tndm-* = microsites do Optimist Intl (Trump National Doral Miami) — tem de
+  // vir ANTES do matcher genérico golfgenius→doral.
+  { test: /tndm-[a-z0-9-]*\.golfgenius\.com|optimistphase/i, key: "optimist", label: "Optimist Intl", colorVar: "--source-optimist" },
   { test: /golfgenius\.com/i,       key: "doral",   label: "GolfGenius", colorVar: "--source-doral" },
   { test: /golfdirecto\.com/i,      key: "fcg",     label: "GolfDirecto", colorVar: "--source-fcg" },
   { test: /globaljuniorgolflive\.com/i, key: "gjgl", label: "GJGL",    colorVar: "--source-gjgl" },
@@ -59,7 +62,7 @@ export function categorizeTournamentLinks(tournament: Tournament): CategorizedLi
   }
   // Ordem fixa preferida (USKids primeiro, FPG ao meio, outros depois)
   const order: Record<CategorizedLink["key"], number> = {
-    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, avtrophy: 10, other: 99,
+    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, avtrophy: 10, optimist: 11, other: 99,
   };
   out.sort((a, b) => order[a.key] - order[b.key]);
   return out;

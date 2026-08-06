@@ -154,7 +154,7 @@ function collectLinks(divisions, seriesLabel) {
  *   adultos em torneios "open"/seniores; jogadores sem birthYear passam sempre).
  */
 function buildJobfileSource(opts) {
-  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null } = opts;
+  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false } = opts;
 
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
@@ -183,7 +183,13 @@ function buildJobfileSource(opts) {
         // de nome no MESMO ano e discrimina homónimos de anos diferentes, sem
         // fabricar uma DOB exacta falsa. Só quando não há dob completa.
         const birthYear = Number.isInteger(pl.birthYear) && pl.birthYear > 1900 ? pl.birthYear : null;
-        const dobRange = !dob && birthYear ? { lo: `${birthYear}-01-01`, hi: `${birthYear}-12-31` } : null;
+        // gradYear (HS class of, roster Optimist) → nascimento ≈ grad−19..grad−18;
+        // range de 2 anos, mais fraco que o birthYear anual mas ainda discrimina
+        // homónimos de coortes afastadas. Só com opts.dobRangeFromGrad e sem
+        // evidência melhor.
+        const grad = dobRangeFromGrad && Number.isInteger(pl.gradYear) && pl.gradYear > 2000 && pl.gradYear < 2050 ? pl.gradYear : null;
+        const dobRange = !dob && birthYear ? { lo: `${birthYear}-01-01`, hi: `${birthYear}-12-31` }
+          : !dob && grad ? { lo: `${grad - 19}-01-01`, hi: `${grad - 18}-12-31` } : null;
         // Chave forte por GolfGenius id (único por jogador×divisão); resultados
         // só contam se o jogador estiver em players[] (invariante do matcher).
         const key = pl.detailId ? `${sourceId}-${pl.detailId}` : `${cleanName.toLowerCase()}|${iso || ""}`;

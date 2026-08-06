@@ -100,17 +100,23 @@ const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-S
 // Default "US" (as afiliações FSGA/UA são cidades americanas), mas eventos
 // mundiais passam `null` — no CoC 2023 o GG não publica afiliação NENHUMA e
 // carimbar 243 miúdos de 40 países como americanos seria pior que não saber.
+// Lookup case-insensitive: o roster Optimist escreve os países em CAIXA ALTA
+// por extenso ("UNITED STATES OF AMERICA", "SOUTH AFRICA") — com o lookup
+// exacto caíam todos no fallback e a edição de 2024 ficou sem países.
+const COUNTRY_MAP_LC = Object.fromEntries(Object.entries(COUNTRY_MAP).map(([k, v]) => [k.toLowerCase(), v]));
+const countryLookup = (s) => (s ? COUNTRY_MAP_LC[s.toLowerCase()] || null : null);
 function inferCountry(affiliation, fallback = 'US') {
   if (!affiliation) return fallback;
   // Afiliações FSGA são cidades (ex: "Ponte Vedra Beach (2026)"). Só marcamos
   // país estrangeiro quando a afiliação inteira, ou o último segmento após
   // ", ", é um país conhecido ("Hong Kong, China" bate como um todo).
   const clean = affiliation.replace(/\s*\(\d{4}\)\s*$/, '').trim();
-  if (COUNTRY_MAP[clean]) return COUNTRY_MAP[clean];
+  const whole = countryLookup(clean);
+  if (whole) return whole;
   const parts = clean.split(', ');
   const last  = parts[parts.length - 1].trim();
   if (US_STATES.has(last)) return 'US';
-  return COUNTRY_MAP[last] || fallback;
+  return countryLookup(last) || fallback;
 }
 
 function parseToPar(str) {

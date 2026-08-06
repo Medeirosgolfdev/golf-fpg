@@ -564,18 +564,20 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f", optimist: "#d4a017" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
   // às divisões do IntlTournView (trailing-tab) E às `renderFull` (via extras).
-  // "Edições anteriores" = mesma prova ao longo dos anos. No Estonian Junior
-  // Tour (multi-etapa) a "mesma prova" é a MESMA ETAPA (nº no id `ejt:ano:n`) —
-  // sem isto as 6 etapas de um ano contavam como 6 "edições".
-  editionKey: (entry) => (entry.source === "ejt" ? `ejt:${entry.id.split(":")[2] ?? ""}` : entry.source || null),
-  // Tab "Época": as etapas do MESMO ANO do circuito (só faz sentido no ejt).
-  seasonKey: (entry) => (entry.source === "ejt" ? "ejt" : null),
+  // "Edições anteriores" = mesma prova ao longo dos anos. Nos multi-etapa/fase
+  // (Estonian Junior Tour, Optimist Phase 1-3) a "mesma prova" é a MESMA
+  // etapa/fase (nº no id `{src}:ano:n`) — sem isto as etapas de um ano
+  // contavam como N "edições".
+  editionKey: (entry) => (entry.source === "ejt" || entry.source === "optimist"
+    ? `${entry.source}:${entry.id.split(":")[2] ?? ""}` : entry.source || null),
+  // Tab "Época": as etapas/fases do MESMO ANO do circuito.
+  seasonKey: (entry) => (entry.source === "ejt" || entry.source === "optimist" ? entry.source : null),
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
   // Tab "✈️ Internacionalizações" (menu ⓘ Info): ranking de jogadores por nº de
@@ -695,6 +697,9 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: 
   // etapa (`files`); os ids levam o nº da etapa (f.stop) e a tab "Época" junta
   // as etapas do ano via seasonKey.
   ejt: { file: (y) => `/data/ejt1_${y}.json`, files: (y) => [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/data/ejt${n}_${y}.json`), build: (f) => buildGgJobEntries(f, { source: "ejt", series: "EST Jr Tour", linkLabel: "Livescoring GolfBox", showRatings: true, showAges: true }) },
+  // Optimist Intl Junior Championship — 3 fases por ano (Phase 1 = Boys 10-13 +
+  // Girls 10-12, o escalão do Manuel), ficheiros optimist{1..3}_{ano}.json.
+  optimist: { file: (y) => `/data/optimist1_${y}.json`, files: (y) => [1, 2, 3].map((n) => `/data/optimist${n}_${y}.json`), build: (f) => buildGgJobEntries(f, { source: "optimist", series: "Optimist Intl", linkLabel: "GolfGenius" }) },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão

@@ -225,19 +225,30 @@ function usDateToIso(label, year, anchorIso) {
 async function fetchRoster(lid, rosterPageId) {
   const html = await ggGet(`${GG}/leagues/${lid}/widgets/players?page_id=${rosterPageId}`);
   const th = [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((m) => txt(m[1]).toLowerCase());
+  // Dois formatos de tabela: England = "Handle | Home Club | Country" (nome numa
+  // coluna só); Optimist = "Last Name | First Name | Graduation Year | Country"
+  // (nome partido em duas) — juntar First+Last senão o nome nunca casa com o
+  // leaderboard e o país fica por aplicar.
+  const iLast = th.findIndex((h) => /last\s*name/.test(h));
+  const iFirst = th.findIndex((h) => /first\s*name/.test(h));
   const iName = Math.max(0, th.findIndex((h) => /handle|name|player/.test(h)));
   const iClub = th.findIndex((h) => /club/.test(h));
   const iCountry = th.findIndex((h) => /country|nation/.test(h));
+  const iGrad = th.findIndex((h) => /grad/.test(h));
   const tbody = (html.match(/<tbody[\s\S]*?<\/tbody>/i) || [null])[0] || html;
   const out = [];
   for (const rm of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
     const tds = [...rm[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((c) => txt(c[1]));
-    const name = tds[iName];
+    const name = iLast >= 0 && iFirst >= 0
+      ? [tds[iFirst], tds[iLast]].filter(Boolean).join(' ')
+      : tds[iName];
     if (!name) continue;
+    const grad = iGrad >= 0 ? parseInt(tds[iGrad], 10) : NaN;
     out.push({
       name: normalizeName(name),
       club: iClub >= 0 ? (tds[iClub] || null) : null,
       countryName: iCountry >= 0 ? (tds[iCountry] || null) : null,
+      gradYear: Number.isFinite(grad) && grad > 2000 && grad < 2050 ? grad : null,
     });
   }
   return out;
@@ -317,11 +328,13 @@ async function discoverDivisions(pageUrl, leagueOverride) {
       return null;
     })()
     || null;
-  // Página "List of Players" (roster) — link da navegação "List of Players".
-  // Fonte de país + clube por jogador (o leaderboard England-Golf não os traz).
+  // Página "List of Players" (roster) — link da navegação "List of Players"
+  // (England) ou só "Players" (Optimist). Fonte de país + clube por jogador
+  // (o leaderboard v2 não traz afiliação nesses eventos).
   const rosterPageId = (() => {
     for (const m of pageHtml.matchAll(/<a[^>]+href="[^"]*\/pages\/(\d+)"[^>]*>([\s\S]{0,150}?)<\/a>/g)) {
-      if (/list\s*of\s*players/i.test(m[2].replace(/<[^>]+>/g, ' '))) return m[1];
+      const label = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (/^(list\s*of\s*)?players$/i.test(label) || /list\s*of\s*players/i.test(label)) return m[1];
     }
     return null;
   })();
@@ -509,6 +522,10 @@ async function runOne(opts) {
   });
   out.source = source;
   if (nameOverride) out.tournament = nameOverride;
+  // Nº de etapa/fase (eventos multi-ficheiro por ano, ex: Optimist Phase 1-3):
+  // vai para o JobFile como `stop` → id `{source}:{ano}:{stop}` no catálogo e
+  // na MajorPage (mesmo mecanismo do EJT golfbox).
+  if (opts.stop != null) out.stop = Number(opts.stop) || null;
 
   // País por defeito (ex: México → MX): o inferCountry do motor cai em "US"
   // quando a afiliação é só um clube sem país. Substitui esse fallback pelo país
@@ -568,6 +585,7 @@ async function runOne(opts) {
           const r = byName.get(nameKey(p.name));
           if (!r) continue;
           if (r.club && !p.club) p.club = r.club;
+          if (r.gradYear && p.gradYear == null) p.gradYear = r.gradYear;
           if (r.countryName) {
             if (!p.location) p.location = r.countryName;
             const iso = inferCountry(r.countryName, null);
@@ -636,6 +654,7 @@ async function main() {
         yearOverride: e.year ? parseInt(e.year, 10) : null, countryDefault: e.country || null,
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
         skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null,
+        stop: e.stop != null ? e.stop : null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -643,7 +662,7 @@ async function main() {
       pageUrl, v2Arg, leagueOverride: getArg('--league'), nameOverride: getArg('--name'),
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
       countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets,
-      rosterPage: getArg('--roster-page'),
+      rosterPage: getArg('--roster-page'), stop: getArg('--stop'),
     }];
   } else {
     console.error('Uso: node scripts/scrape-golfgenius-node.js <pageUrl> [--league id] [--v2tids a,b] [--name] [--slug] [--year] [--country XX] [--skip-scorecards]');

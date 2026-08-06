@@ -293,6 +293,9 @@ const GG_SOURCES = [
   // por etapa (ejt{n}_{ano}.json) e o id ganha o nº da etapa (`ejt:{ano}:{n}`,
   // lido do f.stop que o scraper escreve a partir do scope).
   ...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ prefix: `ejt${n}_`, source: "ejt", stop: n, series: "EST Jr Tour", name: (f, y) => f.tournament || `Estonian Junior Tour ${y} — ${n}`, course: (f) => f.course || undefined, union: true })),
+  // Optimist Intl Junior Championship (GolfGenius) — 3 fases/ano por escalões
+  // (optimist{n}_{ano}.json, id `optimist:{ano}:{n}` via f.stop, como o ejt).
+  ...[1, 2, 3].map((n) => ({ prefix: `optimist${n}_`, source: "optimist", stop: n, series: "Optimist Intl", name: (f, y) => f.tournament || `Optimist Intl Junior Championship ${y} — Phase ${n}`, course: (f) => f.course || undefined, union: true })),
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);
