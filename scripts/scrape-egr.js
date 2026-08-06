@@ -367,6 +367,10 @@ async function scrapeEvents(opts) {
     if (opts.allAges) return true;
     return e.ageNum != null && e.ageNum <= opts.maxAge;
   });
+  // --ids em modo events = backfill pontual: só esses eventos do archive
+  // (ignora o filtro de idade — o id foi escolhido à mão). Ex: o R&A Junior
+  // Open 2024 (9730), fora dos anos default.
+  if (opts.ids && opts.ids.length) targets = archive.filter((e) => opts.ids.includes(String(e.id)));
   if (opts.limit) targets = targets.slice(0, opts.limit);
   console.log(`  → ${targets.length} eventos alvo (${opts.allAges ? "todos os escalões" : `<= U${opts.maxAge}`})`);
 
