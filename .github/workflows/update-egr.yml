@@ -58,6 +58,7 @@ jobs:
           echo "▸ eventos";        node scripts/scrape-egr.js --events --year 2025 --year 2026 $SKIP
           echo "▸ roster GolfBox"; node scripts/scrape-egr-sources.js
           echo "▸ índice eventos"; node scripts/build-egr-events-list.js
+          echo "▸ rank slim";      node scripts/build-egr-rank-slim.js
           # Nenhum destes é fatal (exit 2 = sem novidades). Erros reais aparecem nos logs.
           exit 0
 

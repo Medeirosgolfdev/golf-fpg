@@ -7,7 +7,7 @@
  * Sem qualquer indicador de sexo (sem SexBadge, sem Unicode ♂/♀).
  */
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { CanonicalData, Junior, Tournament, RankingEntry } from "../data";
 import { computeTier, computeRanking, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
@@ -15,6 +15,7 @@ import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
+import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
@@ -24,7 +25,47 @@ const SOURCE_FLAGS: Record<string, string> = {
   RFEG: flagOf("Spain"),
   FFG: flagOf("France"),
   México: flagOf("Mexico"),
+  EGR: "🇪🇺",
 };
+
+/* ── EGR (European Golf Rankings) — card com Avg-to-CR + posição ──────────
+ * Lookup lazy de egr-rank-slim.json (gerado por build-egr-rank-slim.js a
+ * partir do ranking EGR): [id, sexo, rankSex, pontos, avgToCR, avgScore,
+ * eventos, birthYear]. Match por nome normalizado (tokens ordenados — a MESMA
+ * normalização do builder) + ISO do país; fallback nome-só quando único. */
+type EgrSlimEntry = [string, string | null, number | null, number | null, number | null, number | null, number | null, number | null];
+interface EgrSlimFile { players: Record<string, EgrSlimEntry>; byName: Record<string, EgrSlimEntry> }
+
+export function egrNameKey(s: string): string {
+  return String(s || "")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[.,'\-]/g, " ")
+    .split(/\s+/).filter(Boolean).sort().join(" ");
+}
+
+function useEgrRank(junior: Junior): EgrSlimEntry | null {
+  const [db, setDb] = useState<EgrSlimFile | null>(null);
+  useEffect(() => {
+    cachedFetchJson<EgrSlimFile>("/data/egr-rank-slim.json").then((d) => { if (d?.players) setDb(d); }).catch(() => {});
+  }, []);
+  return useMemo(() => {
+    if (!db) return null;
+    const names = [junior.canonicalName, ...(junior.aliases || [])].filter(Boolean);
+    const isos = [junior.nationality, junior.country].filter((c): c is string => !!c && c.length === 2);
+    for (const n of names) {
+      const nk = egrNameKey(n);
+      for (const iso of isos) {
+        const hit = db.players[`${nk}|${iso.toUpperCase()}`];
+        if (hit) return hit;
+      }
+    }
+    for (const n of names) {
+      const hit = db.byName[egrNameKey(n)];
+      if (hit) return hit;
+    }
+    return null;
+  }, [db, junior]);
+}
 
 /** Conta TODAS as rondas válidas (com gross numérico) do junior em todas as
  *  fontes — incluindo 9H. Usado no pill global "N rondas" do hero.
@@ -54,6 +95,7 @@ export default function HeroIdentity({ data, junior }: Props) {
   const isManuel = data.manuel?.id === junior.id;
   const country = junior.country || junior.nationality || "";
   const flagEmoji = flagOf(country);
+  const egr = useEgrRank(junior);
 
   const variants = (junior.aliases || []).filter((a) => a && a !== junior.canonicalName);
 
@@ -331,6 +373,21 @@ export default function HeroIdentity({ data, junior }: Props) {
             ].filter(Boolean).join(" · ")}
             historical={junior.sources.ffgolf?.historicalLicenses}
             historicalLabel={(h: any) => `antiga ${typeof h === "string" ? h : h.lic}`}
+          />
+        )}
+        {/* EGR (European Golf Rankings): Avg-to-CR (nível normalizado pelo
+            Course Rating) + posição europeia por sexo + pontos, com link para
+            a ficha EGR do jogador. Só aparece quando há match no ranking. */}
+        {egr && (
+          <FedCard
+            label="EGR"
+            value={egr[4] != null ? `${egr[4].toFixed(1)} vs CR` : `${egr[3] ?? "?"} pts`}
+            subtitle={[
+              egr[2] != null ? `#${egr[2]} Europa${egr[1] ? ` (${egr[1]})` : ""}` : null,
+              egr[3] != null ? `${Math.round(egr[3])} pts` : null,
+              egr[6] != null ? `${egr[6]} prova${egr[6] === 1 ? "" : "s"}` : null,
+            ].filter(Boolean).join(" · ")}
+            linkTo={`/egr/jogador/${egr[0]}`}
           />
         )}
       </div>
