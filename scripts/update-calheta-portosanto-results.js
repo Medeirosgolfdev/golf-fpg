@@ -73,7 +73,12 @@ const PS = {
   ccode: "183",
   date: "2026-08-08",
   probeTcodes: ["10179", "10180", "10181"],
-  fallbackName: "Torneio Porto Santo Golfe (2026-08-08)",
+  // Confirmado pelo draw oficial (Draw Oficial PXO.pdf, 2026-08-07): é o
+  // "Torneio José Rosado", Porto Santo Golfe, 56 jogadores, shotgun 08:30.
+  // O draw + stub _drawOnly já estão em cgss-draws-manual.json e
+  // pull-torneios002.json com a chave REAL 183/10179 (sem placeholder).
+  fallbackName: "Torneio José Rosado",
+  campo: "Porto Santo Golfe",
 };
 
 const args = process.argv.slice(2);
@@ -484,7 +489,7 @@ async function jobPortoSanto() {
   for (const host of HOSTS) {
     for (const tcode of candidates) {
       const r = await scrapeTournament(host, PS.ccode, tcode,
-        meta || { name: PS.fallbackName, date: PS.date, campo: "Porto Santo Golfe" });
+        meta || { name: PS.fallbackName, date: PS.date, campo: PS.campo });
       if (r.ok && r.tournament && anyResults(r.tournament.players)) { scraped = r.tournament; break; }
       await sleep(200);
     }
@@ -507,6 +512,18 @@ async function jobPortoSanto() {
   if (typeof pull.totalTournaments === "number") pull.totalTournaments = pull.tournaments.length;
   writeAtomic(PULL_PS, pull);
   console.log(`[wknd] pull-torneios002.json: 183/${scraped.tcode} gravado.`);
+
+  // draw curado do 183/10179 deixa de ser draw-only (a tab Draw fica ao lado
+  // dos resultados; a chave já é a real, não há re-chaveamento)
+  try {
+    const cgss = JSON.parse(fs.readFileSync(CGSS, "utf8"));
+    const entry = cgss.tournaments.find(t => String(t.ccode) === PS.ccode && String(t.tcode) === scraped.tcode);
+    if (entry && entry.drawOnly) {
+      entry.drawOnly = false;
+      writeAtomic(CGSS, cgss);
+      console.log(`[wknd] cgss-draws-manual.json: 183/${scraped.tcode} drawOnly=false.`);
+    }
+  } catch (e) { console.warn(`[wknd] aviso: flip drawOnly 183 falhou: ${e.message}`); }
   return true;
 }
 
