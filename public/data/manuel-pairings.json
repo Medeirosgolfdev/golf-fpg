@@ -1,24 +1,24 @@
 {
-  "geradoEm": "2026-08-02T20:47:06.142Z",
+  "geradoEm": "2026-08-07T20:36:09.345Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 138,
-  "totalCompanheirosUnicos": 168,
+  "totalRondas": 139,
+  "totalCompanheirosUnicos": 170,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 126,
-      "rondasComDraw": 113,
+      "rondasJogadas": 127,
+      "rondasComDraw": 114,
       "torneiosJogados": 95,
-      "torneiosComDraw": 89,
+      "torneiosComDraw": 90,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11050",
           "nome": "Torneio CGSS RALI 2026",
           "data": "2026-08-01",
-          "rondas": 1
+          "rondas": 2
         },
         {
           "torneioId": "982-10238",
@@ -620,6 +620,40 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "183-10179",
+      "torneioNome": "Torneio José Rosado",
+      "data": "2026-08-08",
+      "ronda": 1,
+      "teeTime": "08:30",
+      "startHole": 18,
+      "campo": "Porto Santo Golfe",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Wolfgang Leifken",
+          "fed": "46293",
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "SOUSA,Roberto",
+          "fed": "41820",
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "007-11050",
