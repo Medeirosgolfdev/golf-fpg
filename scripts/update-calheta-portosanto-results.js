@@ -533,6 +533,17 @@ async function jobPortoSanto() {
   if (!ONLY || ONLY === "calheta") { attempted++; if (await jobCalheta()) updated++; }
   if (!ONLY || ONLY === "portosanto") { attempted++; if (await jobPortoSanto()) updated++; }
   if (updated === 0) { console.log("[wknd] Nenhum torneio actualizado (resultados ainda não publicados). exit 2"); process.exit(2); }
+
+  // Reconciliar os fedCodes dos draws curados com os federated_code oficiais
+  // dos scorecards acabados de gravar (os feds dos draws vêm de match por nome
+  // do PDF e podem estar errados — caso João Rocha "Internacional" 2026-08-07).
+  if (!DRY) {
+    try {
+      const { reconcileDrawFeds } = require("./reconcile-draw-feds");
+      console.log("[wknd] a reconciliar fedCodes dos draws com os resultados…");
+      reconcileDrawFeds({});
+    } catch (e) { console.warn(`[wknd] aviso: reconciliação de feds falhou: ${e.message}`); }
+  }
   console.log(`[wknd] ✓ ${updated}/${attempted} torneio(s) actualizado(s). Verificar /FPG e commitar public/data/.`);
   process.exit(0);
 })().catch(e => { console.error("[wknd] ERRO:", e.message); process.exit(1); });
