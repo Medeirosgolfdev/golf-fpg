@@ -1,10 +1,12 @@
 {
   "_comment": [
     "Eventos GolfGenius mantidos pelo cron (update-golfgenius.yml).",
-    "O cron corre TODAS as entradas activas; como o scraper só escreve o ficheiro",
-    "quando o conteúdo muda (ignorando o `scrapedAt`), as edições passadas dão",
-    "sempre 'sem alterações' e não geram commit. Se o custo de tempo incomodar,",
-    "pôr `disabled: true` nas edições encerradas.",
+    "⚠ O scraper re-fetcha TODOS os leaderboards+scorecards de cada entrada em",
+    "cada run (a detecção 'sem alterações' é só à escrita) — por isso as edições",
+    "ENCERRADAS levam `disabled: true` (o run de 2026-08-06 estourou o timeout de",
+    "90 min com o scope todo activo: ~85 min de scrape, e o commit ficou por",
+    "fazer). Para re-scrapar uma edição encerrada a pedido: workflow_dispatch com",
+    "o slug — `--slug` explícito INCLUI as entradas disabled.",
     "Campos: url | v2tids, slug, name, year, league, country, skipScorecards,",
     "profiles, disabled, note. `slug` fixa o nome do ficheiro {slug}_{ano}.json.",
     "`country: none` = não assumir país nenhum quando a afiliação não o diz",
@@ -28,12 +30,14 @@
       "slug": "coc",
       "url": "https://www.golfgenius.com/pages/10999123520230801498",
       "country": "none",
+      "disabled": true,
       "note": "CoC 2025 (encerrado) — microsite mpg-coc25.golfgenius.com."
     },
     {
       "slug": "coc",
       "url": "https://www.golfgenius.com/pages/10007590223342485762",
       "country": "none",
+      "disabled": true,
       "note": "CoC 2024 (encerrado) — microsite mpg-coc24.golfgenius.com."
     },
     {
@@ -44,22 +48,26 @@
     {
       "slug": "uaworlds",
       "url": "https://www.golfgenius.com/pages/11799217134574271767",
+      "disabled": true,
       "note": "UA Worlds 2025 (encerrado)."
     },
     {
       "slug": "uaworlds",
       "url": "https://www.golfgenius.com/pages/10655424539804073435",
+      "disabled": true,
       "note": "UA Worlds 2024 (encerrado)."
     },
     {
       "slug": "uaworlds",
       "url": "https://www.golfgenius.com/pages/9662851979847695495",
+      "disabled": true,
       "note": "UA Worlds 2023 (encerrado)."
     },
     {
       "slug": "coc",
       "url": "https://www.golfgenius.com/pages/8989257390612300246",
       "country": "none",
+      "disabled": true,
       "note": "CoC 2023 (encerrado) — ggid/cocwc23. ⚠ Esta edição não publica afiliação nenhuma no GG → jogadores ficam sem país (é o que a fonte tem). 2020-2022 não estão no GolfGenius; o site oficial só lista os campeões."
     },
     {
@@ -71,12 +79,14 @@
       "slug": "uajt",
       "url": "https://www.golfgenius.com/pages/11790047666455477519",
       "league": "11741273592975883584",
+      "disabled": true,
       "note": "UA Summer National 2025 (encerrado). page+league do iframe da página do ano."
     },
     {
       "slug": "uajt",
       "url": "https://www.golfgenius.com/pages/10700052846776188336",
       "league": "10655302228128070903",
+      "disabled": true,
       "note": "UA Summer National 2024 (encerrado)."
     },
     {
@@ -85,7 +95,7 @@
       "year": 2026,
       "stop": 1,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2026 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "note": "Optimist Intl Junior Championship 2026 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta)."
     },
     {
       "slug": "optimist2",
@@ -93,7 +103,7 @@
       "year": 2026,
       "stop": 2,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2026 — Phase 2 (Boys 14-15 + Girls 13-14) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "note": "Optimist Intl Junior Championship 2026 — Phase 2 (Boys 14-15 + Girls 13-14) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta)."
     },
     {
       "slug": "optimist3",
@@ -101,7 +111,7 @@
       "year": 2026,
       "stop": 3,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2026 — Phase 3 (Boys 16-18 + Girls 15-18) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "note": "Optimist Intl Junior Championship 2026 — Phase 3 (Boys 16-18 + Girls 15-18) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta)."
     },
     {
       "slug": "optimist1",
@@ -109,7 +119,8 @@
       "year": 2025,
       "stop": 1,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2025 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2025 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — Trump National Doral (encerrado)."
     },
     {
       "slug": "optimist2",
@@ -117,7 +128,8 @@
       "year": 2025,
       "stop": 2,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2025 — Phase 2 (Boys 14-15 + Girls 13-14) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2025 — Phase 2 (Boys 14-15 + Girls 13-14) — Trump National Doral (encerrado)."
     },
     {
       "slug": "optimist3",
@@ -125,7 +137,8 @@
       "year": 2025,
       "stop": 3,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2025 — Phase 3 (Boys 16-18 + Girls 15-18) — Trump National Doral. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2025 — Phase 3 (Boys 16-18 + Girls 15-18) — Trump National Doral (encerrado)."
     },
     {
       "slug": "optimist1",
@@ -133,7 +146,8 @@
       "year": 2024,
       "stop": 1,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2024 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2024 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — PGA National (encerrado)."
     },
     {
       "slug": "optimist2",
@@ -141,7 +155,8 @@
       "year": 2024,
       "stop": 2,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2024 — Phase 2 (Boys 14-15 + Girls 13-14) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2024 — Phase 2 (Boys 14-15 + Girls 13-14) — PGA National (encerrado)."
     },
     {
       "slug": "optimist3",
@@ -149,7 +164,8 @@
       "year": 2024,
       "stop": 3,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2024 — Phase 3 (Boys 16-18 + Girls 15-18) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2024 — Phase 3 (Boys 16-18 + Girls 15-18) — PGA National (encerrado)."
     },
     {
       "slug": "optimist1",
@@ -157,7 +173,8 @@
       "year": 2023,
       "stop": 1,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2023 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2023 — Phase 1 (Boys 10-11, 12-13 + Girls 10-12) — PGA National (encerrado)."
     },
     {
       "slug": "optimist2",
@@ -165,7 +182,8 @@
       "year": 2023,
       "stop": 2,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2023 — Phase 2 (Boys 14-15 + Girls 13-14) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2023 — Phase 2 (Boys 14-15 + Girls 13-14) — PGA National (encerrado)."
     },
     {
       "slug": "optimist3",
@@ -173,7 +191,8 @@
       "year": 2023,
       "stop": 3,
       "country": "none",
-      "note": "Optimist Intl Junior Championship 2023 — Phase 3 (Boys 16-18 + Girls 15-18) — PGA National. País+gradYear vêm do roster (página Players, auto-descoberta). Edições encerradas dão sempre exit 2."
+      "disabled": true,
+      "note": "Optimist Intl Junior Championship 2023 — Phase 3 (Boys 16-18 + Girls 15-18) — PGA National (encerrado). ⚠ Vista agregada sem divisões (o GG de 2023 não tem select — fica 1 flight)."
     }
   ]
 }
