@@ -1,10 +1,17 @@
 name: Actualizar GolfGenius
 
 # Scraper genérico de eventos GolfGenius (Node puro — o GG devolve 403 a browsers
-# automatizados mas responde a `fetch`). Lê scripts/golfgenius-scope.json (só a
-# edição EM CURSO de cada série) e reescreve os JobFiles em
-# public/data/{slug}_{ano}.json. Se algum mudou, regenera de seguida os canónicos
-# do kids2 (juniors.json + shards) e o catálogo MAJOR.
+# automatizados mas responde a `fetch`). Lê scripts/golfgenius-scope.json e
+# reescreve os JobFiles em public/data/{slug}_{ano}.json. Se algum mudou,
+# regenera de seguida os canónicos do kids2 (juniors.json + shards) e o
+# catálogo MAJOR.
+#
+# ⚠ O cron só corre as entradas SEM `disabled: true` — as edições encerradas
+# ficam disabled porque o scraper re-fetcha todos os scorecards em cada run
+# (o cron de 2026-08-06 estourou o timeout de 90 min com o scope todo activo:
+# ~85 min de scrape e o commit ficou por fazer — a R3 do Reid Trophy não foi
+# publicada). Para re-scrapar uma edição encerrada: dispatch com o `slug`
+# (o --slug explícito INCLUI as entradas disabled).
 #
 # GolfGenius público → SEM secrets/cookies.
 #
@@ -21,7 +28,7 @@ on:
   workflow_dispatch:
     inputs:
       slug:
-        description: 'Correr só este slug do scope (vazio = todos)'
+        description: 'Correr só este slug do scope, incluindo entradas disabled (vazio = todas as activas)'
         required: false
         default: ''
         type: string

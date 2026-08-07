@@ -645,9 +645,11 @@ async function main() {
   let jobs;
   if (scopeFile) {
     const scope = JSON.parse(fs.readFileSync(path.isAbsolute(scopeFile) ? scopeFile : path.join(process.cwd(), scopeFile), 'utf8'));
-    const only = getArg('--slug');   // --scope + --slug = correr só esse evento
+    // --scope + --slug = correr só esse evento (inclui entradas `disabled` —
+    // é o escape hatch para re-scrapar uma edição encerrada a pedido).
+    const only = getArg('--slug');
     jobs = (Array.isArray(scope) ? scope : scope.events || [])
-      .filter((e) => !e.disabled && (!only || e.slug === only))
+      .filter((e) => (only ? e.slug === only : !e.disabled))
       .map((e) => ({
         pageUrl: e.url || null, v2Arg: e.v2tids || null, leagueOverride: e.league || null,
         nameOverride: e.name || null, slugOverride: e.slug || null,
