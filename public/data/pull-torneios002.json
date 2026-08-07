@@ -1,7 +1,7 @@
 {
   "lastUpdated": "02/08/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
-  "totalTournaments": 72,
+  "totalTournaments": 73,
   "totalPlayers": 2379,
   "totalScorecards": 2268,
   "tournaments": [
@@ -426340,6 +426340,17 @@
           "roundScores": []
         }
       ]
+    },
+    {
+      "name": "Torneio José Rosado",
+      "ccode": "183",
+      "tcode": "10179",
+      "date": "2026-08-08",
+      "campo": "Porto Santo Golfe",
+      "rounds": 1,
+      "playerCount": 56,
+      "_drawOnly": true,
+      "players": []
     }
   ]
 }
