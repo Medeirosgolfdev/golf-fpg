@@ -1,16 +1,16 @@
 {
-  "lastUpdated": "2026-08-07T20:36:11.435Z",
+  "lastUpdated": "2026-08-08T13:31:26.512Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-08-07",
+  "today": "2026-08-08",
   "summary": {
     "total": 1735,
     "complete": 785,
     "in_progress": 2,
-    "future": 10,
+    "future": 8,
     "stale": 6,
     "excluded": 930,
     "missing_admissions": 0,
-    "missing_classif": 0,
+    "missing_classif": 2,
     "missing_scorecards": 1,
     "missing_draws": 1,
     "unknown": 0
@@ -303,7 +303,7 @@
       "date": "2026-08-19",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 38,
+      "admissions_count": 43,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
@@ -324,7 +324,7 @@
       "date": "2026-08-19",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 11,
+      "admissions_count": 13,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
@@ -357,11 +357,11 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "future"
+      "status": "in_progress"
     },
     {
-      "ccode": "183",
-      "tcode": "10179",
+      "ccode": "920",
+      "tcode": "10088",
       "name": "Torneio José Rosado",
       "date": "2026-08-08",
       "rounds": 1,
@@ -371,14 +371,14 @@
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
       "has_classif": true,
-      "player_count": 56,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
+      "player_count": 52,
+      "players_with_scorecards": 52,
+      "players_with_full_scorecards": 52,
       "scorecards_source": "pull-torneios002.json",
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
-      "has_manuel": false,
-      "status": "future"
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
+      "has_manuel": true,
+      "status": "in_progress"
     },
     {
       "ccode": "080",
@@ -399,7 +399,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "080",
@@ -420,7 +420,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "007",
