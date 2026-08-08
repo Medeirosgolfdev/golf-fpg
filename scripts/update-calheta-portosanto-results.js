@@ -16,14 +16,14 @@
  *     draw em cgss-draws-manual.json e a casca em fpg-admissions-draws.json
  *     (mesmos passos do update-rali-2026-results.js).
  *
- *  B) Torneio do Porto Santo Golfe (ccode 183) — tcode em princípio 10179
- *     (o 10178 foi o "VIII aniversário PXO" de 2026-08-01; os tcodes do 183
- *     são sequenciais por data). Sem draw prévio (o clube não publica).
- *       1. Descoberta primária: TournamentsLST ClubCode 183 (nome/data reais).
- *       2. Fallback: sondar 10179/10180/10181 e aceitar o primeiro com
- *          resultados (qualquer resultado nestes tcodes é novo — estão acima
- *          do máximo conhecido).
- *     Resultado entra em pull-torneios002.json (onde vivem os outros 183).
+ *  B) Torneio do Porto Santo Golfe — a hipótese inicial 183/10179 estava
+ *     ERRADA: os resultados saíram em ccode 920 / tcode 10088 (o mesmo ccode
+ *     920 do José Rosado 2024, tcode 10077 — o clube alterna entre os dois
+ *     códigos). Corrigido 2026-08-08: draw re-chaveado em cgss-draws-manual e
+ *     resultados scrapados para pull-torneios002.json na chave 920/10088.
+ *       1. Descoberta primária: TournamentsLST ClubCode 920 (nome/data reais).
+ *       2. Fallback: sondar o tcode conhecido 10088.
+ *     Resultado entra em pull-torneios002.json (onde vivem os outros 183/920).
  *
  * PROTECÇÃO DE DADOS: nunca grava com resposta não-200, corpo "Server Error"
  * ou 0 jogadores com score. Entradas boas nunca são substituídas por vazio.
@@ -70,13 +70,13 @@ const CV = {
   minPlayers: 80,
 };
 const PS = {
-  ccode: "183",
+  ccode: "920",
   date: "2026-08-08",
-  probeTcodes: ["10179", "10180", "10181"],
-  // Confirmado pelo draw oficial (Draw Oficial PXO.pdf, 2026-08-07): é o
-  // "Torneio José Rosado", Porto Santo Golfe, 56 jogadores, shotgun 08:30.
-  // O draw + stub _drawOnly já estão em cgss-draws-manual.json e
-  // pull-torneios002.json com a chave REAL 183/10179 (sem placeholder).
+  probeTcodes: ["10088"],
+  // Chave REAL confirmada nos resultados publicados (2026-08-08): 920/10088
+  // — a sondagem sequencial 183/10179 falhou porque o clube publicou no ccode
+  // 920 (como o José Rosado 2024, 920/10077). Draw (Draw Oficial PXO.pdf):
+  // 56 jogadores, shotgun 08:30, em cgss-draws-manual.json já na chave real.
   fallbackName: "Torneio José Rosado",
   campo: "Porto Santo Golfe",
 };

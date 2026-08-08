@@ -55,12 +55,21 @@ function escFromName(name?: string | null): string | null {
   return m ? `Sub ${m[1]}` : null;
 }
 
+/**
+ * ccodes ALTERNATIVOS do mesmo organizador. O Porto Santo Golfe publica ora sob
+ * 183 ora sob 920 (medido: José Rosado 2024 = 920/10077, 2025 = 183/10142,
+ * 2026 = 920/10088 — o mesmo torneio, mesmo campo). Sem esta fusão cada ccode
+ * ficava singleton e a tab de edições nunca aparecia nesses torneios.
+ */
+const CCODE_ALIASES: Record<string, string> = { "920": "183" };
+
 /** Chave de agrupamento de edições: clube + família do nome (com aliases curados). */
 function editionKey(t: Tournament): string | null {
   const raw = tournamentFamilyKey(t.name);
   if (!raw) return null;
   const fam = editionAliasFor(raw)?.canon ?? raw;
-  return `${t.ccode || "?"}|${fam}`;
+  const cc = CCODE_ALIASES[String(t.ccode)] ?? t.ccode;
+  return `${cc || "?"}|${fam}`;
 }
 
 /** Converte um torneio FPG numa `CircuitEntry` (uma coluna = uma edição). */
