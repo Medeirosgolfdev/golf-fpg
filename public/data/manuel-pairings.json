@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-07T20:36:09.345Z",
+  "geradoEm": "2026-08-08T20:20:37.217Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -622,35 +622,47 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "183-10179",
+      "torneioId": "920-10088",
       "torneioNome": "Torneio José Rosado",
       "data": "2026-08-08",
       "ronda": 1,
       "teeTime": "08:30",
       "startHole": 18,
       "campo": "Porto Santo Golfe",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 87,
+        "toPar": 15
+      },
       "companheiros": [
         {
           "nome": "Manuel Medeiros",
           "fed": "54907",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 108,
+            "toPar": 36
+          }
         },
         {
           "nome": "Wolfgang Leifken",
           "fed": "46293",
           "clube": "PXO Clube",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 103,
+            "toPar": 31
+          }
         },
         {
           "nome": "SOUSA,Roberto",
           "fed": "41820",
           "clube": "PXO Clube",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 101,
+            "toPar": 29
+          }
         }
       ]
     },
