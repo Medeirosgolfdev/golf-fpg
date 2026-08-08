@@ -89,6 +89,9 @@ function reconcileDrawFeds(opts = {}) {
           if (cur !== r) {
             changes.push({ tourn: `${t.ccode}/${t.tcode} ${t.name}`, nome: p.nome, de: cur, para: r });
             p.fed = r;
+            // os resultados provaram que o jogador TEM federação — levantar a
+            // marca de visitante (que bloqueia o match por nome na DrawTab)
+            if (p.noFed) delete p.noFed;
           }
         }
       }

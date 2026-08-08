@@ -226,6 +226,8 @@ export default function DrawTab({
       nome: string;
       clube: string;
       fed: string | null;
+      /** true = visitante sem federação FPG (draw curado) — proíbe lookups por nome. */
+      noFed: boolean;
       hcp: number | null;
       hcpCurrent: boolean;
       dob?: string;
@@ -317,17 +319,22 @@ export default function DrawTab({
         //      internacional registado na FPG)
         //   4. Match por nome no playersDB (players.json) — pode ter `intl:...`
         const pFed = (p as any).fed as string | null | undefined;
+        // `noFed: true` no draw curado = jogador SEM federação FPG (visitante,
+        // ex: clube "Internacional") — proíbe o fallback de match por nome, que
+        // atribuía o fed de um homónimo federado (caso João Rocha, Calheta Viva
+        // 2026: visitante a herdar o fed do júnior do Estoril).
+        const noFed = (p as any).noFed === true;
         let fed: string | null = pFed && String(pFed).trim() ? String(pFed).trim() : null;
         let clubeRaw = p.clube || "";
-        if (!fed && looksLikeFed(clubeRaw)) {
+        if (!fed && !noFed && looksLikeFed(clubeRaw)) {
           // fed vindo da própria folha do draw (autoritativo) → usar e limpar clube
           fed = clubeRaw.trim();
           clubeRaw = "";
         }
-        if (!fed) {
+        if (!fed && !noFed) {
           fed = admFedByName.get(norm(p.nome)) || admFedByName.get(norm(nomeFormatted)) || null;
         }
-        if (!fed) {
+        if (!fed && !noFed) {
           const candidates = nameToFeds.get(norm(p.nome)) || nameToFeds.get(norm(nomeFormatted)) || [];
           fed = pickBestFed(candidates);
         }
@@ -384,6 +391,7 @@ export default function DrawTab({
           nome: nomeFormatted,
           clube,
           fed,
+          noFed,
           hcp,
           hcpCurrent,
           dob,
@@ -491,17 +499,21 @@ export default function DrawTab({
         // senão os estrangeiros ficam com a bandeira a dobrar.
         nameContent: (
           <span className="inline-flex items-center">
+            {/* `noFed` (visitante sem federação FPG) suprime TAMBÉM os lookups
+                por nome do TournPName (sex/kidsHash/country do playersDB) e o
+                KidsLink — senão o visitante herdava o perfil/links de um
+                homónimo federado (caso João Rocha, Calheta Viva 2026). */}
             <TournPName
               name={p.nome}
               fed={p.fed || undefined}
-              playersDB={playersDB}
+              playersDB={p.noFed ? undefined : playersDB}
               highlight={manuel}
             />
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).
                 Sem duplicação com a seta do próprio TournPName (kidsHash):
                 quem tem kidsHash no playersDB (FPGPage) NÃO fornece o ctx, e
                 quem fornece o ctx passa playersDB sem kidsHash. */}
-            <KidsLink nome={p.nome} />
+            {!p.noFed && <KidsLink nome={p.nome} />}
           </span>
         ),
         prefixCells: (
