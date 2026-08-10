@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-09T21:38:16.337Z",
+  "generatedAt": "2026-08-10T06:59:55.004Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -523,6 +523,10 @@
         "rfeg-nc72161_infantil_hcp",
         "rfeg-nc72162_infantil_hcp",
         "rfeg-nc72529_junior_hcp",
+        "rfeg-nc72748_infantil_hcp",
+        "rfeg-nc72749_infantil_hcp",
+        "rfeg-nc72750_infantil_hcp",
+        "rfeg-nc72886_junior_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -530,8 +534,8 @@
         "rfeg-rfeg15361_cadete_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-07-24",
-      "editionsCount": 521
+      "lastDate": "2026-08-09",
+      "editionsCount": 525
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -926,11 +930,13 @@
         "rfeg-rfeg16192_alevin_m",
         "rfeg-rfeg16193_alevin_f",
         "rfeg-rfeg16194_benjamin_m",
-        "rfeg-rfeg16195_benjamin_f"
+        "rfeg-rfeg16195_benjamin_f",
+        "rfeg-rfeg16225_benjamin_m",
+        "rfeg-rfeg16226_benjamin_f"
       ],
       "firstDate": "2021-03-18",
-      "lastDate": "2026-06-26",
-      "editionsCount": 64
+      "lastDate": "2026-08-06",
+      "editionsCount": 66
     },
     {
       "id": "uskids-laurel-island-links",
@@ -48480,6 +48486,18 @@
       "editionsCount": 2
     },
     {
+      "id": "gjgl-german-international-youth-trophy",
+      "label": "German International Youth Trophy",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-german-international-youth-trophy-2025-germany",
+        "gjgl-german-international-youth-trophy-2026-germany"
+      ],
+      "firstDate": "2025-08-05",
+      "lastDate": "2026-08-10",
+      "editionsCount": 2
+    },
+    {
       "id": "gjgl-gjg-grand-final-qualifier",
       "label": "GJG Grand Final Qualifier",
       "sourceId": "gjgl",
@@ -74056,17 +74074,6 @@
       ],
       "firstDate": "2026-03-01",
       "lastDate": "2026-03-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-german-international-youth-trophy",
-      "label": "German International Youth Trophy",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-german-international-youth-trophy-2025-germany"
-      ],
-      "firstDate": "2025-08-05",
-      "lastDate": "2025-08-05",
       "editionsCount": 1
     },
     {
