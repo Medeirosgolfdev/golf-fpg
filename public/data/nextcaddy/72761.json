@@ -1,0 +1,812 @@
+{
+  "tourId": 72761,
+  "url": "https://www.nextcaddy.com/tour/72761",
+  "scrapedAt": "2026-08-10T05:45:09.612Z",
+  "meta": {
+    "name": "www 05/08",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-08-05",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-05",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Martin Schmier",
+          "licencia": "AM76086891",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2375881
+        },
+        {
+          "pos": 2,
+          "name": "Allan Watts",
+          "licencia": "AM76168571",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2375880
+        },
+        {
+          "pos": 3,
+          "name": "Marc Antoine Enlart",
+          "licencia": "AM76965471",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2375882
+        },
+        {
+          "pos": 4,
+          "name": "Paul Barrett",
+          "licencia": "AM76943935",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2375879
+        },
+        {
+          "pos": 5,
+          "name": "Michael Partridge",
+          "licencia": "AM76951885",
+          "hcp": 8.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2375873
+        },
+        {
+          "pos": 6,
+          "name": "Roberts Coombes",
+          "licencia": "AM76964782",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2375891
+        },
+        {
+          "pos": 7,
+          "name": "Olli-Pekka Vilianen",
+          "licencia": "AM76482058",
+          "hcp": 13,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375890
+        },
+        {
+          "pos": 8,
+          "name": "Michael De Rijk",
+          "licencia": "AM76898521",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2375876
+        },
+        {
+          "pos": 9,
+          "name": "Garry Miller",
+          "licencia": "AM76473524",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2375875
+        },
+        {
+          "pos": 10,
+          "name": "Nicolaas Hakman",
+          "licencia": "AM76202985",
+          "hcp": 28.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2375886
+        },
+        {
+          "pos": 11,
+          "name": "Philip Orr",
+          "licencia": "AM76937266",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2375874
+        },
+        {
+          "pos": 12,
+          "name": "Juergen Hoffmann",
+          "licencia": "AM76194918",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2375885
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 12
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Michael Partridge",
+      "licencia": "AM76951885",
+      "hcp": 8.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Philip Orr",
+      "licencia": "AM76937266",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Garry Miller",
+      "licencia": "AM76473524",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Michael De Rijk",
+      "licencia": "AM76898521",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Paul Barrett",
+      "licencia": "AM76943935",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Allan Watts",
+      "licencia": "AM76168571",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Martin Schmier",
+      "licencia": "AM76086891",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Marc Antoine Enlart",
+      "licencia": "AM76965471",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Juergen Hoffmann",
+      "licencia": "AM76194918",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Nicolaas Hakman",
+      "licencia": "AM76202985",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Olli-Pekka Vilianen",
+      "licencia": "AM76482058",
+      "hcp": 13,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Roberts Coombes",
+      "licencia": "AM76964782",
+      "hcp": 16.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161338,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            40
+          ],
+          [
+            "Birdie",
+            6
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            80
+          ],
+          [
+            "Peor",
+            66
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161339,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            12
+          ],
+          [
+            "2",
+            19
+          ],
+          [
+            "3",
+            11
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            17
+          ],
+          [
+            "6",
+            14
+          ],
+          [
+            "7",
+            21
+          ],
+          [
+            "8",
+            9
+          ],
+          [
+            "9",
+            9
+          ],
+          [
+            "10",
+            13
+          ],
+          [
+            "11",
+            12
+          ],
+          [
+            "12",
+            16
+          ],
+          [
+            "13",
+            10
+          ],
+          [
+            "14",
+            11
+          ],
+          [
+            "15",
+            16
+          ],
+          [
+            "16",
+            4
+          ],
+          [
+            "17",
+            9
+          ],
+          [
+            "18",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161340,
+        "datos": [
+          [
+            "Hoyo",
+            "MARTIN SCHMIER",
+            "ALLAN   WATTS ",
+            "MARC ANTOINE ENLART"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 12",
+            1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161341,
+        "datos": [
+          [
+            "Hoyo",
+            "MARTIN SCHMIER",
+            "ALLAN   WATTS ",
+            "MARC ANTOINE ENLART"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -2,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77970
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barnes Franco, Manuel",
+          "holeNumber": 2,
+          "createdAt": "15/02/26 09:14:43"
+        },
+        {
+          "playerName": "Scholtis Noceto, Leandro Guillermo",
+          "holeNumber": 1,
+          "createdAt": "15/02/26 09:22:47"
+        },
+        {
+          "playerName": "Sierra Galan, Antonio",
+          "holeNumber": 1,
+          "createdAt": "15/02/26 09:26:18"
+        },
+        {
+          "playerName": "Lista Rivero, Manuel",
+          "holeNumber": 2,
+          "createdAt": "15/02/26 09:42:25"
+        },
+        {
+          "playerName": "De-Bernardi Ojuel, Luis",
+          "holeNumber": 4,
+          "createdAt": "15/02/26 09:47:02"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 4,
+          "createdAt": "15/02/26 09:59:50"
+        },
+        {
+          "playerName": "Rojas Sanchez-Arjona, Jose Miguel",
+          "holeNumber": 1,
+          "createdAt": "15/02/26 10:03:30"
+        },
+        {
+          "playerName": "Scholtis Noceto, Leandro Guillermo",
+          "holeNumber": 5,
+          "createdAt": "15/02/26 10:17:15"
+        },
+        {
+          "playerName": "Barroso Martinez, Francisco Javier",
+          "holeNumber": 5,
+          "createdAt": "15/02/26 10:17:37"
+        },
+        {
+          "playerName": "Barroso Martinez, Francisco Javier",
+          "holeNumber": 6,
+          "createdAt": "15/02/26 10:30:13"
+        },
+        {
+          "playerName": "Moreno Perez, Fernando",
+          "holeNumber": 8,
+          "createdAt": "15/02/26 11:03:19"
+        },
+        {
+          "playerName": "De-Bernardi Ojuel, Luis",
+          "holeNumber": 9,
+          "createdAt": "15/02/26 11:08:14"
+        },
+        {
+          "playerName": "Acosta Ruiz, Nerea",
+          "holeNumber": 9,
+          "createdAt": "15/02/26 11:08:55"
+        },
+        {
+          "playerName": "Guerra Dominguez, Victor",
+          "holeNumber": 10,
+          "createdAt": "15/02/26 11:16:15"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 7,
+          "createdAt": "15/02/26 11:23:18"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 9,
+          "createdAt": "15/02/26 11:23:18"
+        },
+        {
+          "playerName": "Lista Rivero, Andres",
+          "holeNumber": 12,
+          "createdAt": "15/02/26 11:32:14"
+        },
+        {
+          "playerName": "Barnes Franco, Manuel",
+          "holeNumber": 11,
+          "createdAt": "15/02/26 11:47:55"
+        },
+        {
+          "playerName": "Cordero Gomez, Sergio Alejandro",
+          "holeNumber": 12,
+          "createdAt": "15/02/26 11:54:10"
+        },
+        {
+          "playerName": "Scholtis Noceto, Leandro Guillermo",
+          "holeNumber": 10,
+          "createdAt": "15/02/26 11:55:09"
+        },
+        {
+          "playerName": "Cordero Gomez, Sergio Alejandro",
+          "holeNumber": 13,
+          "createdAt": "15/02/26 12:04:08"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 12,
+          "createdAt": "15/02/26 12:31:10"
+        },
+        {
+          "playerName": "Scholtis Noceto, Leandro Guillermo",
+          "holeNumber": 13,
+          "createdAt": "15/02/26 12:48:06"
+        },
+        {
+          "playerName": "Moreno Perez, Fernando",
+          "holeNumber": 16,
+          "createdAt": "15/02/26 12:48:14"
+        },
+        {
+          "playerName": "Rosa Gonzalez-Zayas, Manuel De La",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 12:51:29"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 12:58:32"
+        },
+        {
+          "playerName": "Wangen Llanza, Thomas",
+          "holeNumber": 18,
+          "createdAt": "15/02/26 13:41:02"
+        },
+        {
+          "playerName": "Guerra Dominguez, Victor",
+          "holeNumber": 2,
+          "createdAt": "15/02/26 13:44:33"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-08-10T05:45:55.829Z"
+}

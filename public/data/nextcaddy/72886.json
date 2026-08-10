@@ -1,0 +1,659 @@
+{
+  "tourId": 72886,
+  "url": "https://www.nextcaddy.com/tour/72886",
+  "scrapedAt": "2026-08-10T05:46:56.454Z",
+  "meta": {
+    "name": "Equipo de Competición Junior Sherry Golf - Domingo 9 Agosto",
+    "organizer": null,
+    "course": "Sherry Golf Jerez",
+    "courseCode": "AMC3",
+    "dateStart": "2026-08-09",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Junior",
+      "Caballeros",
+      "Señoras",
+      "Cadete Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-09",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      321,
+      348,
+      435,
+      138,
+      483,
+      287,
+      127,
+      363,
+      353,
+      303,
+      464,
+      128,
+      365,
+      117,
+      361,
+      230,
+      423,
+      345
+    ],
+    "parTotal": 72
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Santiago De La Calle Liniers",
+          "licencia": "AM05926562",
+          "hcp": 18.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2379068,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                5,
+                7,
+                3,
+                null,
+                3,
+                5,
+                null,
+                5,
+                4
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Juan Romero Bernal",
+          "licencia": "AMC3965804",
+          "hcp": 4.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2379066,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                7,
+                4,
+                2,
+                4,
+                5,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 76,
+              "meters": [
+                363,
+                384,
+                477,
+                156,
+                498,
+                319,
+                150,
+                399,
+                390,
+                333,
+                497,
+                159,
+                424,
+                127,
+                382,
+                240,
+                449,
+                413
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Ana De La Lastra Olalquiaga",
+          "licencia": "CM02991157",
+          "hcp": 40.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2379435,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                8,
+                5,
+                null,
+                5,
+                4,
+                7,
+                6,
+                7,
+                7,
+                5,
+                8,
+                5,
+                5,
+                4,
+                null,
+                6
+              ],
+              "total": null,
+              "meters": [
+                269,
+                305,
+                384,
+                114,
+                459,
+                221,
+                111,
+                296,
+                318,
+                242,
+                428,
+                96,
+                328,
+                105,
+                296,
+                200,
+                375,
+                323
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Martin Serrano Rodriguez",
+          "licencia": "AM05953564",
+          "hcp": 9.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2379095,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                7,
+                5,
+                7,
+                6,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 86,
+              "meters": [
+                363,
+                384,
+                477,
+                156,
+                498,
+                319,
+                150,
+                399,
+                390,
+                333,
+                497,
+                159,
+                424,
+                127,
+                382,
+                240,
+                449,
+                413
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Fernando De Liniers Lopez",
+          "licencia": "MM17075747",
+          "hcp": 18.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2379064,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                5,
+                3,
+                6,
+                6,
+                4,
+                7,
+                4,
+                5,
+                null,
+                5,
+                4
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Bruno Mateos Alvarez",
+          "licencia": "AMC3965228",
+          "hcp": 5.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2379139,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                4,
+                5,
+                4,
+                5,
+                5,
+                5,
+                5
+              ],
+              "total": 84,
+              "meters": [
+                363,
+                384,
+                477,
+                156,
+                498,
+                319,
+                150,
+                399,
+                390,
+                333,
+                497,
+                159,
+                424,
+                127,
+                382,
+                240,
+                449,
+                413
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Ricardo Araque Bedoya",
+          "licencia": "AM05931376",
+          "hcp": 27.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2379452,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                7,
+                4,
+                5,
+                4,
+                4,
+                5,
+                5,
+                7,
+                8,
+                5,
+                7,
+                6,
+                null,
+                6,
+                null,
+                7
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Jaime Bel Freire",
+          "licencia": "AM02529806",
+          "hcp": 30.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2379444,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                null,
+                4,
+                7,
+                null,
+                4,
+                null,
+                7,
+                7,
+                7,
+                5,
+                7,
+                null,
+                null,
+                6,
+                null,
+                7
+              ],
+              "total": null,
+              "meters": [
+                321,
+                348,
+                435,
+                138,
+                483,
+                287,
+                127,
+                363,
+                353,
+                303,
+                464,
+                128,
+                365,
+                117,
+                361,
+                230,
+                423,
+                345
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando De Liniers Lopez",
+      "licencia": "MM17075747",
+      "hcp": 18.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Santiago De La Calle Liniers",
+      "licencia": "AM05926562",
+      "hcp": 18.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Jaime Bel Freire",
+      "licencia": "AM02529806",
+      "hcp": 30.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Ricardo Araque Bedoya",
+      "licencia": "AM05931376",
+      "hcp": 27.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Juan Romero Bernal",
+      "licencia": "AMC3965804",
+      "hcp": 4.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Martin Serrano Rodriguez",
+      "licencia": "AM05953564",
+      "hcp": 9.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Bruno Mateos Alvarez",
+      "licencia": "AMC3965228",
+      "hcp": 5.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Ana De La Lastra Olalquiaga",
+      "licencia": "CM02991157",
+      "hcp": 40.6,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78097
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-08-10T05:45:56.771Z"
+}
