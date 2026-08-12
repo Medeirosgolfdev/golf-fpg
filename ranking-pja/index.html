@@ -92,31 +92,17 @@
   <footer>Ranking não-oficial gerado automaticamente · clicar num torneio abre a classificação oficial na Federação Portuguesa de Golfe</footer>
 </div>
 
-<script>
-/* ===== Motor PJA 2026 v2 ===== */
+<script type="module">
+/* ===== Motor PJA 2026 v2 =====
+   As REGRAS (elegibilidade, classificação, multiplicadores, pontos) vêm da
+   fonte única ./pja-rules.mjs — o MESMO ficheiro que a app principal
+   (golf-fpg.vercel.app) importa. Alterar regras lá; aqui só vive o motor de
+   agregação e a UI. */
+import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore } from "./pja-rules.mjs";
 (function (global) {
   "use strict";
   var YEAR="2026";
-  var GF_TCODES=new Set(["10005","10019"]);
-  var TOURN_MULTIPLIER={"10444":1.75};
-  var TOURN_PILLS_PJA=new Set(["10444","10492","10036","10260","10019"]);
-  function pjaPts(tp,m){return Math.max(0,25-tp)*m;}
-  function isGF(t){var tc=String(t.tcode||"");if(GF_TCODES.has(tc))return true;return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name||"");}
-  function getMult(t){var tc=String(t.tcode||"");if(TOURN_MULTIPLIER[tc]!==undefined)return TOURN_MULTIPLIER[tc];if(isGF(t))return 1.5;return 1.0;}
-  function classify(t){var n=t.name||"",tc=String(t.tcode||"");
-    if(/greatgolf/i.test(n)){if(tc==="10294")return "GG_MAIN";if(tc==="10295")return "GG_U14";if(tc==="10296")return "GG_U12";return "PJA_EXCL";}
-    if(/Circuito\s+Aquapor/i.test(n))return "AQUAPOR";
-    if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return "DT";
-    return "PJA_EXCL";}
-  function isPJA(t){var n=t.name||"",y=(t.date||"").slice(0,4);
-    if(/PJA/i.test(n))return true;
-    if(String(t.tcode||"").split("+").some(function(tc){return TOURN_PILLS_PJA.has(tc);}))return true;
-    if(y>="2026"){if(/greatgolf.*junior/i.test(n))return true;if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return true;if(/Circuito\s+Aquapor/i.test(n))return true;
-      /* Amendoeira World Kids Golfe (ccode 179, tcodes 10603-10607 em 2026, um por
-         escalão). Match por nome — a FPG reutiliza os tcodes 10604-10606 no Clube
-         de Belas 2025, por isso não entram em TOURN_PILLS_PJA. */
-      if(/Amendoeira\s+World\s+Kids/i.test(n))return true;}
-    return false;}
+  var isGF=isGFTournament, getMult=getTournMultiplier, classify=classifyPJAEvent, isPJA=isPJACore;
   function escalaoAtDate(dob){if(!dob)return null;var an=parseInt(String(dob).slice(0,4));if(isNaN(an))return null;var i=2026-an;if(i<0)return null;
     if(i<=10)return "Sub-10";if(i<=12)return "Sub-12";if(i<=14)return "Sub-14";if(i<=16)return "Sub-16";if(i<=18)return "Sub-18";if(i<=24)return "Sub-21+";return "Sénior";}
   function clubShort(db){if(!db)return "";var c=db.club;if(!c)return "";return typeof c==="object"?(c.short||c.long||""):String(c);}

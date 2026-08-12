@@ -7,6 +7,7 @@
  *  - Carregar pull-torneios*.json (DATA_BASE_URL, dataUrl, FileMeta, DriveData)
  */
 import type { Tournament } from "../../data/fpgTypes";
+import { PJA_TCODES } from "../../../ranking-pja/pja-rules.mjs";
 
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
@@ -36,15 +37,13 @@ export function yearMatchesFilter(year: string | undefined | null, filter: strin
 
 /**
  * Mapa tcode → pill de torneio.
- * Adicionar aqui novos torneios conforme necessário.
+ * Os tcodes PJA vêm da fonte única `ranking-pja/pja-rules.mjs` (partilhada
+ * com a página standalone ranking-pja.vercel.app) — adicionar novos LÁ, com
+ * o comentário de auditoria ao lado. Pills de outros tipos entram aqui.
  */
-export const TOURN_PILLS: Record<string, TournPill> = {
-  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST (Royal Óbidos, 2025-02-01)
-  "10492": "PJA",   // Aroeira Master by Details (Fev 2025)
-  "10036": "PJA",   // Ribagolfe Oaks Masters 2025
-  "10260": "PJA",   // Greatgolf Junior Open w/ Luis Figo Foundation (Vilamoura Millennium, 2025-03-02) — confirmado oficial PJA pelo Excel da comissão técnica
-  "10019": "PJA",   // Race to Dunas G. Final (Comporta Dunas, 2025-11-29) — Grande Final 2025
-};
+export const TOURN_PILLS: Record<string, TournPill> = Object.fromEntries(
+  [...PJA_TCODES].map(tc => [tc, "PJA" as const]),
+);
 
 
 /** Links extra (regulamento, página oficial do evento, etc.) por torneio,
