@@ -99,6 +99,7 @@
    (golf-fpg.vercel.app) importa. Alterar regras lá; aqui só vive o motor de
    agregação e a UI. */
 import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore } from "./pja-rules.mjs";
+window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a correr
 (function (global) {
   "use strict";
   var YEAR="2026";
@@ -258,6 +259,18 @@ import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore
     document.getElementById("upd").textContent="Última atualização da página: "+new Date().toLocaleString("pt-PT");
   });
 })();
+</script>
+<script>
+/* Watchdog (script clássico, corre mesmo que o módulo falhe): se o módulo
+   não arrancar — ex. edge com deploy a meio a dar 404 no pja-rules.mjs, ou
+   browser sem suporte a modules — não deixar a página presa em "A carregar";
+   mostrar erro accionável com botão de recarregar. */
+setTimeout(function () {
+  if (window.__pjaBooted) return;
+  var el = document.getElementById("content");
+  if (el) el.innerHTML = '<div class="status">Não foi possível carregar o motor do ranking. ' +
+    '<a href="#" onclick="location.reload(true);return false" style="color:var(--link)">Tocar aqui para tentar de novo</a>.</div>';
+}, 8000);
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

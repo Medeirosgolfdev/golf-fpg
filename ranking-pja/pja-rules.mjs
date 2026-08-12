@@ -87,7 +87,8 @@ export function isPJACore(t) {
   const name = t.name || "";
   const year = (t.date || "").slice(0, 4);
   if (/PJA/i.test(name)) return true;
-  const tcodes = String(t.tcode ?? "").split("+").filter(Boolean);
+  // (sem `??` de propósito — o ficheiro corre cru em browsers antigos)
+  const tcodes = String(t.tcode == null ? "" : t.tcode).split("+").filter(Boolean);
   if (tcodes.some((tc) => PJA_TCODES.has(tc))) return true;
   if (year >= "2026") {
     if (/greatgolf.*junior/i.test(name)) return true;
