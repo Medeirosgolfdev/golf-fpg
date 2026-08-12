@@ -60,6 +60,7 @@ import {
   DATA_MAX, PRE_2020_KEY, yearMatchesFilter, dataUrl,
   TOURN_PILLS, type TournPill, type FileMeta, type DriveData,
 } from "./fpg/constants";
+import { isPJACore } from "../../ranking-pja/pja-rules.mjs";
 import {
   type SeriesKey, URL_TO_FILTER, URL_TO_NAV, NAV_TO_URL, FILTER_TO_URL, INSCRITOS_SHORTCUTS,
 } from "./fpg/routes";
@@ -2027,23 +2028,9 @@ function Content() {
         // Torneios manuais marcados explicitamente como PJA
         if ((t as any)._manual && (t as any)._origin === "PJA") return true;
         if (t.ccode === SSERRA_CCODE) return false;
-        const year = (t.date || "").slice(0, 4);
-        const name = t.name || "";
-        if (/PJA/i.test(name)) return true;
-        const tcodes = t.tcode?.split("+") || [];
-        if (tcodes.some(tc => TOURN_PILLS[tc] === "PJA")) return true;
-        if (year >= "2026") {
-          if (/greatgolf.*junior/i.test(name)) return true;
-          if (/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name)) return true;
-          if (/Circuito\s+Aquapor/i.test(name)) return true;
-          // Amendoeira World Kids Golfe (ccode 179, tcodes 10603-10607 em 2026,
-          // um por escalão) conta para o ranking PJA. Match por nome (não por
-          // TOURN_PILLS: a FPG reutiliza os tcodes 10604-10606 no Clube de
-          // Belas 2025). A edição 2025 fica fora (ranking 2025 é o legacy
-          // confirmado contra o Excel da comissão técnica).
-          if (/Amendoeira\s+World\s+Kids/i.test(name)) return true;
-        }
-        return false;
+        // Regras partilhadas com a página standalone ranking-pja.vercel.app —
+        // fonte única em ranking-pja/pja-rules.mjs (alterar as regras LÁ).
+        return isPJACore(t);
       };
       // Combinar displayList (pull-torneios) + drive/aquapor mensais,
       // deduplicando por tcode+ccode+date.

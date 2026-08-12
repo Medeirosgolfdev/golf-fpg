@@ -11,6 +11,9 @@ import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { escalaoAtDate, shortDateSlash } from "../utils/format";
 import type { Tournament } from "../data/fpgTypes";
+import {
+  pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent,
+} from "../../ranking-pja/pja-rules.mjs";
 
 /* ─────────────────────────────────────────────
    RANKING PJA
@@ -39,25 +42,9 @@ import type { Tournament } from "../data/fpgTypes";
    os jogadores dos torneios PJA exclusivos, sem as regras especiais.
    ───────────────────────────────────────────── */
 
-/** Classificação de um torneio para o ranking PJA. */
-type PJAEventType = "DT" | "AQUAPOR" | "GG_MAIN" | "GG_U14" | "GG_U12" | "PJA_EXCL";
-
-function classifyPJAEvent(t: Tournament): PJAEventType | null {
-  const name = t.name || "";
-  const tcode = String(t.tcode || "");
-  // Greatgolf tcodes 2026 (nome + tcode para evitar colisões com Drive Challenge)
-  if (/greatgolf/i.test(name)) {
-    if (tcode === "10294") return "GG_MAIN";
-    if (tcode === "10295") return "GG_U14";
-    if (tcode === "10296") return "GG_U12";
-    // Greatgolf noutros anos (ex. 10260 em 2025) — tratar como exclusivo
-    return "PJA_EXCL";
-  }
-  if (/Circuito\s+Aquapor/i.test(name)) return "AQUAPOR";
-  if (/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name)) return "DT";
-  // Senão: torneio exclusivo PJA (já passou o filtro PJA em FPGPage)
-  return "PJA_EXCL";
-}
+/* Classificação de torneios, multiplicadores e pontos vêm da FONTE ÚNICA
+   partilhada com a página standalone ranking-pja.vercel.app:
+   `ranking-pja/pja-rules.mjs`. Alterar regras LÁ, nunca aqui. */
 
 interface PJARound {
   roundKey: string;
@@ -134,32 +121,6 @@ interface PJAPRow {
 const BEST_SD_N = 8;
 const MIN_SD_ROUNDS = 4;
 
-function pjaPts(toPar: number, mult: number): number {
-  return Math.max(0, 25 - toPar) * mult;
-}
-
-/** Multiplicadores especiais por tcode — decisões da comissão técnica PJA
- *  que se sobrepõem ao standard (1.0) e à Grande Final (1.5).
- *
- *  Como adicionar: chave = tcode (string), valor = multiplicador.
- *  Documentar SEMPRE a razão no comentário ao lado para auditoria futura. */
-const TOURN_MULTIPLIER: Record<string, number> = {
-  // Royal Óbidos AT&T Pebble Beach Pro-Am — 2025-02-01 (ccode 152, tcode 10444):
-  // multiplicador x1.75 decidido pela comissão técnica PJA porque o torneio
-  // anterior do calendário foi cancelado, sendo este compensado com pontuação
-  // mais alta para não prejudicar quem participou.
-  "10444": 1.75,
-};
-
-/** Devolve o multiplicador a aplicar a um torneio para o ranking PJA.
- *  Prioridade: TOURN_MULTIPLIER (especial) → Grande Final (1.5) → standard (1.0). */
-function getTournMultiplier(t: Tournament): number {
-  const tcode = String(t.tcode || "");
-  if (TOURN_MULTIPLIER[tcode] !== undefined) return TOURN_MULTIPLIER[tcode];
-  if (isGFTournament(t)) return 1.5;
-  return 1.0;
-}
-
 /** Chave única de um torneio na tabela.
  *  ⚠ TEM de incluir o ccode: a FPG reutiliza tcodes entre clubes, e sem ele
  *  duas provas do mesmo dia colapsavam na MESMA coluna — o cabeçalho ficava com
@@ -172,21 +133,6 @@ function tournKeyOf(t: Tournament): string {
 
 function fmtPts(pts: number): string {
   return pts % 1 === 0 ? String(pts) : pts.toFixed(1);
-}
-
-/** tcodes conhecidos das Grandes Finais PJA. Whitelist preferencial — o nome
- *  varia: "PJA TOUR Grand Final" (2024 = 10005), "Race to Dunas G. Final"
- *  (2025 = 10019), etc. */
-const GF_TCODES = new Set<string>(["10005", "10019"]);
-
-function isGFTournament(t: Tournament): boolean {
-  // Preferir whitelist por tcode (preciso e estável)
-  const tcode = String(t.tcode || "");
-  if (GF_TCODES.has(tcode)) return true;
-  // Fallback: nome com "Grand Final" ou "Grande Final" ou "G. Final"
-  // (NÃO apanhar /dunas/ por si só — havia bug 2026-04-28 onde "PJA Race to
-  // Dunas" 2025 era marcado como GF erradamente.)
-  return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name || "");
 }
 
 /** Decompõe o nome de um torneio em {circuito, local}. Exemplos:

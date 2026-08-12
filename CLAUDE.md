@@ -2984,6 +2984,36 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 
 ---
 
+## Ranking PJA — página standalone + fonte única de regras (2026-08-12)
+
+**`ranking-pja.vercel.app` NÃO é a app principal** — é uma página standalone
+(`ranking-pja/index.html`, HTML único com motor inline) num 2º projecto Vercel
+(`ranking-pja`, root directory = `ranking-pja/`) do MESMO repo. Ambos os
+projectos fazem deploy a cada push no `main`. A página busca os dados via
+rewrite `/data/* → golf-fpg.vercel.app/data/*` (ver `ranking-pja/vercel.json`).
+
+**As REGRAS do ranking (elegibilidade, classificação DT/Aquapor/GG, GF,
+multiplicadores, pontos) vivem numa fonte ÚNICA: `ranking-pja/pja-rules.mjs`**
+(ESM puro sem dependências, tipos em `pja-rules.d.mts`), consumida por:
+- `src/pages/FPGPage.tsx` — `isPJACore()` no filtro do `pjaRankingList` (o
+  wrapper local só acrescenta `_manual`/`_origin === "PJA"` e a exclusão SSerra);
+- `src/ui/PJARankingView.tsx` — `classifyPJAEvent`/`isGFTournament`/
+  `getTournMultiplier`/`pjaPts`;
+- `src/pages/fpg/constants.ts` — `TOURN_PILLS` deriva de `PJA_TCODES`;
+- `ranking-pja/index.html` — importa via `<script type="module">` (same-origin,
+  a pasta é o root do projecto).
+
+⚠ **Alterar regras do ranking SEMPRE em `pja-rules.mjs`** — nunca duplicar nos
+consumidores (aconteceu 2026-08-12: o Amendoeira World Kids foi adicionado só
+à FPGPage e a standalone ficou sem ele). Testes: `src/data/__tests__/pjaRules.test.ts`.
+⚠ **`PJA_TCODES` é match por tcode SEM ccode** — não adicionar tcodes que a FPG
+reutilize (ex: 10604-10606 = Amendoeira 2026 E Clube de Belas 2025 → o
+Amendoeira entra por NOME em `isPJACore`, não por tcode).
+O que fica FORA da fonte única: `shortTournName` (apresentação, cada superfície
+tem a sua) e o motor de agregação/UI de cada lado.
+
+---
+
 ## Convenções de código
 
 ### CSS e cores
