@@ -226,6 +226,12 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
     const circuito = regiao ? `DT${num} ${regiao}` : `DT${num}`;
     return { circuito, local: local || (campo || "") };
   }
+  // Amendoeira World Kids — "Amendoeira World Kids Golfe 2026 Sub 14" → "World Kids Sub 14"
+  const wk = n.match(/Amendoeira\s+World\s+Kids(?:\s+Golfe?)?(?:\s+\d{4})?\s*(Sub[\d\s/–-]*)?/i);
+  if (wk) {
+    const sub = (wk[1] || "").replace(/\s+/g, " ").trim();
+    return { circuito: sub ? `World Kids ${sub}` : "World Kids", local: campo || "Amendoeira" };
+  }
   // PJA exclusivo ou fallback
   const pjaMatch = n.match(/^PJA\s+(.+)$/i);
   if (pjaMatch) return { circuito: "PJA", local: pjaMatch[1].trim() };
