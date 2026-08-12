@@ -111,7 +111,11 @@
   function isPJA(t){var n=t.name||"",y=(t.date||"").slice(0,4);
     if(/PJA/i.test(n))return true;
     if(String(t.tcode||"").split("+").some(function(tc){return TOURN_PILLS_PJA.has(tc);}))return true;
-    if(y>="2026"){if(/greatgolf.*junior/i.test(n))return true;if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return true;if(/Circuito\s+Aquapor/i.test(n))return true;}
+    if(y>="2026"){if(/greatgolf.*junior/i.test(n))return true;if(/Drive\s+Tour/i.test(n)&&!/Challenge/i.test(n))return true;if(/Circuito\s+Aquapor/i.test(n))return true;
+      /* Amendoeira World Kids Golfe (ccode 179, tcodes 10603-10607 em 2026, um por
+         escalão). Match por nome — a FPG reutiliza os tcodes 10604-10606 no Clube
+         de Belas 2025, por isso não entram em TOURN_PILLS_PJA. */
+      if(/Amendoeira\s+World\s+Kids/i.test(n))return true;}
     return false;}
   function escalaoAtDate(dob){if(!dob)return null;var an=parseInt(String(dob).slice(0,4));if(isNaN(an))return null;var i=2026-an;if(i<0)return null;
     if(i<=10)return "Sub-10";if(i<=12)return "Sub-12";if(i<=14)return "Sub-14";if(i<=16)return "Sub-16";if(i<=18)return "Sub-18";if(i<=24)return "Sub-21+";return "Sénior";}
@@ -125,6 +129,8 @@
       var regiao="",local="";if(parts.length>=2){regiao=parts[0];local=parts.slice(1).join(" · ");}else if(parts.length===1){local=parts[0];}
       if(/terceira/i.test(regiao)||/terceira/i.test(rest)){regiao=regiao||"Açores";if(!local)local="Terceira";}
       return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
+    var wk=n.match(/Amendoeira\s+World\s+Kids(?:\s+Golfe?)?(?:\s+\d{4})?\s*(Sub[\d\s\/–-]*)?/i);
+    if(wk){var sub=(wk[1]||"").replace(/\s+/g," ").trim();return {circuito:sub?("World Kids "+sub):"World Kids",local:campo||"Amendoeira"};}
     if(/PJA/i.test(n)){var loc=(campo&&campo.trim())?campo.replace(/\s{2,}/g," ").trim():n.replace(/PJA/ig,"").replace(/\bmasters?\b/ig,"").replace(/20\d\d/g,"").replace(/\s{2,}/g," ").trim();return {circuito:"PJA",local:loc};}
     return {circuito:n,local:campo||""};}
   function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);
