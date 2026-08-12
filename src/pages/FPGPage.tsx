@@ -2036,6 +2036,12 @@ function Content() {
           if (/greatgolf.*junior/i.test(name)) return true;
           if (/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name)) return true;
           if (/Circuito\s+Aquapor/i.test(name)) return true;
+          // Amendoeira World Kids Golfe (ccode 179, tcodes 10603-10607 em 2026,
+          // um por escalão) conta para o ranking PJA. Match por nome (não por
+          // TOURN_PILLS: a FPG reutiliza os tcodes 10604-10606 no Clube de
+          // Belas 2025). A edição 2025 fica fora (ranking 2025 é o legacy
+          // confirmado contra o Excel da comissão técnica).
+          if (/Amendoeira\s+World\s+Kids/i.test(name)) return true;
         }
         return false;
       };
