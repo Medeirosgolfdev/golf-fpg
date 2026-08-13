@@ -400,6 +400,11 @@ function extractUskidsPairings(uskidsDraws, scoreIdx) {
         for (const e of lb) if (e.nome) lbByName.set(normName(e.nome), e);
         for (const grp of ron.grupos || []) {
           const jogadores = grp.jogadores || [];
+          // Placeholder de draw por publicar: o signupanytime devolve o field
+          // INTEIRO num único "grupo 0" com tee_time default (08:00) enquanto o
+          // draw da ronda não sai (visto no Venice Open 2026 R2/R3: 31 jogadores
+          // num grupo). Um grupo real USKids tem 3-4 jogadores — ignorar dumps.
+          if (jogadores.length > 5) continue;
           const manuelIdx = jogadores.findIndex(j => isManuel(j.nome));
           if (manuelIdx === -1) continue;
           const companheiros = jogadores.map((j, i) => {
