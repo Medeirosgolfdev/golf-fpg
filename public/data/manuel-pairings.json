@@ -1,12 +1,12 @@
 {
-  "geradoEm": "2026-08-13T11:37:00.387Z",
+  "geradoEm": "2026-08-13T12:50:19.324Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 141,
-  "totalCompanheirosUnicos": 172,
+  "totalRondas": 144,
+  "totalCompanheirosUnicos": 175,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 128,
@@ -620,10 +620,10 @@
       "torneiosSemDrawDetalhe": []
     },
     "intl": {
-      "rondasJogadas": 12,
-      "rondasComDraw": 12,
-      "torneiosJogados": 5,
-      "torneiosComDraw": 5
+      "rondasJogadas": 15,
+      "rondasComDraw": 15,
+      "torneiosJogados": 7,
+      "torneiosComDraw": 7
     }
   },
   "rondas": [
@@ -671,6 +671,34 @@
           "fed": null,
           "clube": null,
           "pais": "CH",
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "usk-22243-pr",
+      "torneioNome": "Venice Open 2026 — Practice Round",
+      "data": "2026-08-12",
+      "ronda": 0,
+      "teeTime": null,
+      "startHole": null,
+      "campo": null,
+      "fonte": "manual (conhecidos do circuito — practice round)",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Alfie Skinner",
+          "fed": null,
+          "clube": null,
+          "pais": "GB-ENG",
+          "score": null
+        },
+        {
+          "nome": "Emile Cuanalo",
+          "fed": null,
+          "clube": null,
+          "pais": "GB-ENG",
           "score": null
         }
       ]
@@ -1644,6 +1672,27 @@
       ]
     },
     {
+      "circuito": "Intl",
+      "torneioId": "usk-21080-pr",
+      "torneioNome": "Marco Simone Invitational 2026 — Practice Round",
+      "data": "2026-03-13",
+      "ronda": 0,
+      "teeTime": null,
+      "startHole": null,
+      "campo": "Marco Simone Golf & Country Club",
+      "fonte": "manual (practice round)",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Tymur Volodymyrenko",
+          "fed": null,
+          "clube": null,
+          "pais": "CH",
+          "score": null
+        }
+      ]
+    },
+    {
       "circuito": "FPG",
       "torneioId": "982-10223",
       "torneioNome": "3º Torn.Drive Challenge Madeira-Stº da Serra-Sub12",
@@ -1823,6 +1872,27 @@
             "gross": 75,
             "toPar": 3
           }
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "wjgc26-pr",
+      "torneioNome": "Daily Mail World Junior Golf Championship 2026 — Practice Round",
+      "data": "2026-02-24",
+      "ronda": 0,
+      "teeTime": null,
+      "startHole": null,
+      "campo": "Villa Padierna - Flamingos GC",
+      "fonte": "manual (practice round)",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Miroslavs Bogdanovs",
+          "fed": null,
+          "clube": null,
+          "pais": "ES",
+          "score": null
         }
       ]
     },
