@@ -507,7 +507,8 @@ function buildIntlPairingsFromOverrides(overrides) {
   if (!overrides || !Array.isArray(overrides.intl)) return [];
   return overrides.intl.map(ov => {
     const src = ov.scoreSource ? loadIntlScoreSource(ov.scoreSource) : null;
-    const rondaNum = Number(ov.ronda) || 1;
+    // ronda 0 = practice round (o "|| 1" antigo transformava-a em R1)
+    const rondaNum = ov.ronda != null && !isNaN(Number(ov.ronda)) ? Number(ov.ronda) : 1;
     // score do Manuel (procurar pelo nome)
     let manuelScore = ov.manuelScore || null;
     if (!manuelScore && src) {
@@ -716,18 +717,56 @@ function main() {
     .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
     .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
 
-  // Cobertura USKids: contar via uskids-draws (rondas onde Manuel aparece, contando overrides)
+  // Cobertura USKids — SÓ torneios que o Manuel JOGOU. O uskids-draws.json
+  // inclui de propósito escalões `is_manuel` de provas que ele NÃO jogou
+  // (State Invitationals etc., capturadas para o tracker de rivais — fonte 3
+  // do fetch-uskids-draws.js); contá-las no denominador dava um card de
+  // cobertura alarmista e enganador na /draws ("20%"). Universo honesto:
+  //   member-history-slim (carreira dele) ∪ torneios com pairing extraído
+  //   (cobre provas a decorrer que ainda não entraram no member-history).
+  // Provas antigas fora deste universo ficam fora de propósito: os tee times
+  // USKids são efémeros (sem backfill possível) — não são "draws em falta".
   const uskidsTotal = uskidsPairings.length;
-  // Total esperado: somar todas as rondas onde esc.is_manuel === true
-  let uskidsRondasEsperadas = 0;
-  const uskidsTorneiosEsperados = new Set();
-  for (const t of uskidsDraws.torneios || []) {
-    for (const esc of t.escaloes || []) {
-      if (!esc.is_manuel) continue;
-      uskidsRondasEsperadas += (esc.rondas || []).length;
-      uskidsTorneiosEsperados.add(String(t.t));
+  const slim = readJSON(path.join(DATA, "uskids-member-history-slim.json"));
+  const mhTorneios = new Map(); // tcode → { nome, data, rondas jogadas }
+  if (slim && slim.jogadores) {
+    for (const mid of MANUEL_USKIDS_IDS) {
+      const p = slim.jogadores[mid];
+      if (!p) continue;
+      for (const [tc, tt] of Object.entries(p.torneios || {})) {
+        const meta = (slim.torneios || {})[tc] || {};
+        const nR = Object.keys(tt.rounds || {}).length;
+        const prev = mhTorneios.get(tc);
+        if (!prev || nR > prev.rondas) {
+          mhTorneios.set(tc, { nome: meta.name || tc, data: normIsoDate(meta.startDate) || null, rondas: nR });
+        }
+      }
     }
   }
+  const uskPairingsByT = new Map(); // tcode → nº rondas com draw
+  for (const r of uskidsPairings) {
+    const tc = r.torneioId.replace(/^usk-/, "");
+    uskPairingsByT.set(tc, (uskPairingsByT.get(tc) || 0) + 1);
+  }
+  const uskUniverse = new Set([...mhTorneios.keys(), ...uskPairingsByT.keys()]);
+  let uskidsRondasEsperadas = 0;
+  const uskidsSemDrawDetalhe = [];
+  for (const tc of uskUniverse) {
+    const played = mhTorneios.get(tc);
+    const comDraw = uskPairingsByT.get(tc) || 0;
+    uskidsRondasEsperadas += Math.max(played ? played.rondas : 0, comDraw);
+    if (comDraw === 0 && played) {
+      const dt = (uskidsDraws.torneios || []).find(x => String(x.t) === tc);
+      uskidsSemDrawDetalhe.push({
+        torneioId: `usk-${tc}`,
+        nome: (dt && dt.name) || played.nome,
+        data: normIsoDate(dt && dt.date_inicio) || played.data,
+        rondas: played.rondas,
+      });
+    }
+  }
+  uskidsSemDrawDetalhe.sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+  const uskidsTorneiosEsperados = uskUniverse;
 
   const cobertura = {
     fpg: {
@@ -745,7 +784,8 @@ function main() {
       rondasJogadas: uskidsRondasEsperadas,
       rondasComDraw: uskidsTotal,
       torneiosJogados: uskidsTorneiosEsperados.size,
-      torneiosComDraw: new Set(uskidsPairings.map(r => r.torneioId)).size,
+      torneiosComDraw: uskPairingsByT.size,
+      torneiosSemDrawDetalhe: uskidsSemDrawDetalhe,
     },
     intl: {
       rondasJogadas: intlPairings.length,

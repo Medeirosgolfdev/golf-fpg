@@ -1,198 +1,287 @@
 {
-  "_doc": "Overrides manuais para injectar o Manuel em grupos onde foi WD/IE OU em torneios internacionais sem scrape automático (Bluegolf bloqueado por CAPTCHA, GolfGenius client-rendered). Aplicado por pairings-build.js após extracção dos draws originais.",
-
-  "uskids": [
+ "_doc": "Overrides manuais para injectar o Manuel em grupos onde foi WD/IE OU em torneios internacionais sem scrape automático (Bluegolf bloqueado por CAPTCHA, GolfGenius client-rendered). Aplicado por pairings-build.js após extracção dos draws originais.",
+ "uskids": [
+  {
+   "t": "21080",
+   "ageGroup": "Boys 11",
+   "ronda": 1,
+   "group_number": 3,
+   "razao": "Manuel marcado IE (não confirmou scorecard R1). Jogou neste grupo conforme draw publicado.",
+   "manuel_inject": true,
+   "_companheiros_originais": [
+    "Edoardo Lemonnier (IT)",
+    "Zachary Blayney (GB)"
+   ]
+  },
+  {
+   "t": "21080",
+   "ageGroup": "Boys 11",
+   "ronda": 2,
+   "group_number": 1,
+   "razao": "Manuel marcado IE — jogou neste grupo conforme draw publicado.",
+   "manuel_inject": true,
+   "_companheiros_originais": [
+    "Luke Arnao (US)",
+    "Noah Lobelius (SE)"
+   ]
+  }
+ ],
+ "intl": [
+  {
+   "torneioId": "wjgc25",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2025",
+   "data": "2025-02-19",
+   "ronda": 1,
+   "teeTime": "09:45",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt251",
+   "scoreSource": "wjgc_2025_b1011.json",
+   "companheiros": [
     {
-      "t": "21080",
-      "ageGroup": "Boys 11",
-      "ronda": 1,
-      "group_number": 3,
-      "razao": "Manuel marcado IE (não confirmou scorecard R1). Jogou neste grupo conforme draw publicado.",
-      "manuel_inject": true,
-      "_companheiros_originais": ["Edoardo Lemonnier (IT)", "Zachary Blayney (GB)"]
+     "nome": "Yorick De Hek",
+     "pais": "NL"
     },
     {
-      "t": "21080",
-      "ageGroup": "Boys 11",
-      "ronda": 2,
-      "group_number": 1,
-      "razao": "Manuel marcado IE — jogou neste grupo conforme draw publicado.",
-      "manuel_inject": true,
-      "_companheiros_originais": ["Luke Arnao (US)", "Noah Lobelius (SE)"]
+     "nome": "Christian Chepishev",
+     "pais": "BG"
     }
-  ],
-
-  "intl": [
+   ]
+  },
+  {
+   "torneioId": "wjgc25",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2025",
+   "data": "2025-02-20",
+   "ronda": 2,
+   "teeTime": "10:12",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt251",
+   "scoreSource": "wjgc_2025_b1011.json",
+   "companheiros": [
     {
-      "torneioId": "wjgc25",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2025",
-      "data": "2025-02-19",
-      "ronda": 1,
-      "teeTime": "09:45",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt251",
-      "scoreSource": "wjgc_2025_b1011.json",
-      "companheiros": [
-        { "nome": "Yorick De Hek", "pais": "NL" },
-        { "nome": "Christian Chepishev", "pais": "BG" }
-      ]
+     "nome": "Alexis Beringer",
+     "pais": "CH"
     },
     {
-      "torneioId": "wjgc25",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2025",
-      "data": "2025-02-20",
-      "ronda": 2,
-      "teeTime": "10:12",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt251",
-      "scoreSource": "wjgc_2025_b1011.json",
-      "companheiros": [
-        { "nome": "Alexis Beringer", "pais": "CH" },
-        { "nome": "Theodore Dausse", "pais": "FR" }
-      ]
-    },
-    {
-      "torneioId": "wjgc25",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2025",
-      "data": "2025-02-21",
-      "ronda": 3,
-      "teeTime": "10:57",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt251",
-      "scoreSource": "wjgc_2025_b1011.json",
-      "companheiros": [
-        { "nome": "Miroslavs Bogdanovs", "pais": "ES" },
-        { "nome": "Victor Canot Januel", "pais": "FR" }
-      ]
-    },
-
-    {
-      "torneioId": "wjgc26",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2026",
-      "data": "2026-02-25",
-      "ronda": 1,
-      "teeTime": "11:00",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt2537",
-      "scoreSource": "wjgc_2026_b1011.json",
-      "companheiros": [
-        { "nome": "Diego Gross Paneque", "pais": "ES" },
-        { "nome": "William Harran", "pais": "CH" }
-      ]
-    },
-    {
-      "torneioId": "wjgc26",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2026",
-      "data": "2026-02-26",
-      "ronda": 2,
-      "teeTime": "08:28",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt2537",
-      "scoreSource": "wjgc_2026_b1011.json",
-      "companheiros": [
-        { "nome": "Dmitrii Elchaninov", "pais": "RU" },
-        { "nome": "William Harran", "pais": "CH" }
-      ]
-    },
-    {
-      "torneioId": "wjgc26",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2026",
-      "data": "2026-02-27",
-      "ronda": 3,
-      "teeTime": "11:40",
-      "startHole": 1,
-      "campo": "Villa Padierna - Flamingos GC",
-      "fonte": "brjgt.bluegolf.com/brjgt2537",
-      "scoreSource": "wjgc_2026_b1011.json",
-      "companheiros": [
-        { "nome": "Sean Wilding", "pais": "TH" },
-        { "nome": "Henry Bucys", "pais": "GB-ENG" }
-      ]
-    },
-
-    {
-      "torneioId": "eu_open_wagr25",
-      "torneioNome": "European Open WAGR 2025",
-      "data": "2025-08-11",
-      "ronda": 1,
-      "teeTime": "11:50",
-      "startHole": 1,
-      "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
-      "fonte": "brjgt.bluegolf.com/brjgt2512",
-      "scoreSource": "eowagr25_contest21.json",
-      "companheiros": [
-        { "nome": "Zachary Blayney", "pais": "GB" },
-        { "nome": "Maxwell Ip", "pais": "NL" }
-      ]
-    },
-    {
-      "torneioId": "eu_open_wagr25",
-      "torneioNome": "European Open WAGR 2025",
-      "data": "2025-08-12",
-      "ronda": 2,
-      "teeTime": "11:59",
-      "startHole": 1,
-      "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
-      "fonte": "brjgt.bluegolf.com/brjgt2512",
-      "scoreSource": "eowagr25_contest21.json",
-      "companheiros": [
-        { "nome": "Henry Liechti", "pais": "" },
-        { "nome": "Hajira Marfleet", "pais": "" }
-      ]
-    },
-    {
-      "torneioId": "eu_open_wagr25",
-      "torneioNome": "European Open WAGR 2025",
-      "data": "2025-08-13",
-      "ronda": 3,
-      "teeTime": "12:12",
-      "startHole": 1,
-      "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
-      "fonte": "brjgt.bluegolf.com/brjgt2512",
-      "scoreSource": "eowagr25_contest21.json",
-      "companheiros": [
-        { "nome": "Yorick De Hek", "pais": "NL" },
-        { "nome": "Maxwell Ip", "pais": "NL" }
-      ]
-    },
-
-    {
-      "torneioId": "doral25",
-      "torneioNome": "First Tee Miami Doral Jr. Classic 2025 — Boys 10-11",
-      "data": "2025-12-18",
-      "ronda": 1,
-      "teeTime": "08:50",
-      "startHole": 1,
-      "campo": "Trump National Doral - Golden Palm",
-      "fonte": "2025firstteemiamidoraljrclassic.golfgenius.com",
-      "scoreSource": "ftm_doral_2025.json",
-      "companheiros": [
-        { "nome": "Luis Maier", "pais": "" },
-        { "nome": "Matteo Mair", "pais": "" },
-        { "nome": "Nathan Khera", "pais": "" }
-      ]
-    },
-    {
-      "torneioId": "doral25",
-      "torneioNome": "First Tee Miami Doral Jr. Classic 2025 — Boys 10-11",
-      "data": "2025-12-19",
-      "ronda": 2,
-      "teeTime": "07:40",
-      "startHole": 1,
-      "campo": "Trump National Doral - Golden Palm",
-      "fonte": "2025firstteemiamidoraljrclassic.golfgenius.com",
-      "scoreSource": "ftm_doral_2025.json",
-      "_nota": "Final Round — grupos reagrupados por posição",
-      "companheiros": [
-        { "nome": "Pedro Restrepo", "pais": "" },
-        { "nome": "Daniel Candon", "pais": "" },
-        { "nome": "William Murphy", "pais": "" }
-      ]
+     "nome": "Theodore Dausse",
+     "pais": "FR"
     }
-  ]
+   ]
+  },
+  {
+   "torneioId": "wjgc25",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2025",
+   "data": "2025-02-21",
+   "ronda": 3,
+   "teeTime": "10:57",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt251",
+   "scoreSource": "wjgc_2025_b1011.json",
+   "companheiros": [
+    {
+     "nome": "Miroslavs Bogdanovs",
+     "pais": "ES"
+    },
+    {
+     "nome": "Victor Canot Januel",
+     "pais": "FR"
+    }
+   ]
+  },
+  {
+   "torneioId": "wjgc26",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2026",
+   "data": "2026-02-25",
+   "ronda": 1,
+   "teeTime": "11:00",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt2537",
+   "scoreSource": "wjgc_2026_b1011.json",
+   "companheiros": [
+    {
+     "nome": "Diego Gross Paneque",
+     "pais": "ES"
+    },
+    {
+     "nome": "William Harran",
+     "pais": "CH"
+    }
+   ]
+  },
+  {
+   "torneioId": "wjgc26",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2026",
+   "data": "2026-02-26",
+   "ronda": 2,
+   "teeTime": "08:28",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt2537",
+   "scoreSource": "wjgc_2026_b1011.json",
+   "companheiros": [
+    {
+     "nome": "Dmitrii Elchaninov",
+     "pais": "RU"
+    },
+    {
+     "nome": "William Harran",
+     "pais": "CH"
+    }
+   ]
+  },
+  {
+   "torneioId": "wjgc26",
+   "torneioNome": "Daily Mail World Junior Golf Championship 2026",
+   "data": "2026-02-27",
+   "ronda": 3,
+   "teeTime": "11:40",
+   "startHole": 1,
+   "campo": "Villa Padierna - Flamingos GC",
+   "fonte": "brjgt.bluegolf.com/brjgt2537",
+   "scoreSource": "wjgc_2026_b1011.json",
+   "companheiros": [
+    {
+     "nome": "Sean Wilding",
+     "pais": "TH"
+    },
+    {
+     "nome": "Henry Bucys",
+     "pais": "GB-ENG"
+    }
+   ]
+  },
+  {
+   "torneioId": "eu_open_wagr25",
+   "torneioNome": "European Open WAGR 2025",
+   "data": "2025-08-11",
+   "ronda": 1,
+   "teeTime": "11:50",
+   "startHole": 1,
+   "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
+   "fonte": "brjgt.bluegolf.com/brjgt2512",
+   "scoreSource": "eowagr25_contest21.json",
+   "companheiros": [
+    {
+     "nome": "Zachary Blayney",
+     "pais": "GB"
+    },
+    {
+     "nome": "Maxwell Ip",
+     "pais": "NL"
+    }
+   ]
+  },
+  {
+   "torneioId": "eu_open_wagr25",
+   "torneioNome": "European Open WAGR 2025",
+   "data": "2025-08-12",
+   "ronda": 2,
+   "teeTime": "11:59",
+   "startHole": 1,
+   "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
+   "fonte": "brjgt.bluegolf.com/brjgt2512",
+   "scoreSource": "eowagr25_contest21.json",
+   "companheiros": [
+    {
+     "nome": "Henry Liechti",
+     "pais": ""
+    },
+    {
+     "nome": "Hajira Marfleet",
+     "pais": ""
+    }
+   ]
+  },
+  {
+   "torneioId": "eu_open_wagr25",
+   "torneioNome": "European Open WAGR 2025",
+   "data": "2025-08-13",
+   "ronda": 3,
+   "teeTime": "12:12",
+   "startHole": 1,
+   "campo": "Le Touquet GC - La Forêt (Le Touquet, FR)",
+   "fonte": "brjgt.bluegolf.com/brjgt2512",
+   "scoreSource": "eowagr25_contest21.json",
+   "companheiros": [
+    {
+     "nome": "Yorick De Hek",
+     "pais": "NL"
+    },
+    {
+     "nome": "Maxwell Ip",
+     "pais": "NL"
+    }
+   ]
+  },
+  {
+   "torneioId": "doral25",
+   "torneioNome": "First Tee Miami Doral Jr. Classic 2025 — Boys 10-11",
+   "data": "2025-12-18",
+   "ronda": 1,
+   "teeTime": "08:50",
+   "startHole": 1,
+   "campo": "Trump National Doral - Golden Palm",
+   "fonte": "2025firstteemiamidoraljrclassic.golfgenius.com",
+   "scoreSource": "ftm_doral_2025.json",
+   "companheiros": [
+    {
+     "nome": "Luis Maier",
+     "pais": ""
+    },
+    {
+     "nome": "Matteo Mair",
+     "pais": ""
+    },
+    {
+     "nome": "Nathan Khera",
+     "pais": ""
+    }
+   ]
+  },
+  {
+   "torneioId": "doral25",
+   "torneioNome": "First Tee Miami Doral Jr. Classic 2025 — Boys 10-11",
+   "data": "2025-12-19",
+   "ronda": 2,
+   "teeTime": "07:40",
+   "startHole": 1,
+   "campo": "Trump National Doral - Golden Palm",
+   "fonte": "2025firstteemiamidoraljrclassic.golfgenius.com",
+   "scoreSource": "ftm_doral_2025.json",
+   "_nota": "Final Round — grupos reagrupados por posição",
+   "companheiros": [
+    {
+     "nome": "Pedro Restrepo",
+     "pais": ""
+    },
+    {
+     "nome": "Daniel Candon",
+     "pais": ""
+    },
+    {
+     "nome": "William Murphy",
+     "pais": ""
+    }
+   ]
+  },
+  {
+   "torneioId": "usk-22243-pr",
+   "torneioNome": "Venice Open 2026 — Practice Round",
+   "data": "2026-08-12",
+   "ronda": 0,
+   "teeTime": "08:30",
+   "startHole": null,
+   "campo": null,
+   "fonte": "manual (practice round, sem draw oficial)",
+   "companheiros": [
+    {
+     "nome": "Maximilien Demole",
+     "pais": "CH"
+    }
+   ]
+  }
+ ]
 }

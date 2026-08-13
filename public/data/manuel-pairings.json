@@ -1,11 +1,11 @@
 {
-  "geradoEm": "2026-08-13T11:25:58.704Z",
+  "geradoEm": "2026-08-13T11:37:00.387Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 140,
+  "totalRondas": 141,
   "totalCompanheirosUnicos": 172,
   "cobertura": {
     "fpg": {
@@ -613,16 +613,17 @@
       ]
     },
     "uskids": {
-      "rondasJogadas": 117,
+      "rondasJogadas": 15,
       "rondasComDraw": 15,
-      "torneiosJogados": 56,
-      "torneiosComDraw": 7
+      "torneiosJogados": 7,
+      "torneiosComDraw": 7,
+      "torneiosSemDrawDetalhe": []
     },
     "intl": {
-      "rondasJogadas": 11,
-      "rondasComDraw": 11,
-      "torneiosJogados": 4,
-      "torneiosComDraw": 4
+      "rondasJogadas": 12,
+      "rondasComDraw": 12,
+      "torneiosJogados": 5,
+      "torneiosComDraw": 5
     }
   },
   "rondas": [
@@ -649,6 +650,27 @@
           "fed": null,
           "clube": null,
           "pais": "AE",
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "usk-22243-pr",
+      "torneioNome": "Venice Open 2026 — Practice Round",
+      "data": "2026-08-12",
+      "ronda": 0,
+      "teeTime": "08:30",
+      "startHole": null,
+      "campo": null,
+      "fonte": "manual (practice round, sem draw oficial)",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Maximilien Demole",
+          "fed": null,
+          "clube": null,
+          "pais": "CH",
           "score": null
         }
       ]

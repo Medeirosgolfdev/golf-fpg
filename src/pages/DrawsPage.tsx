@@ -227,6 +227,7 @@ function escRank(esc: string | null): number {
 
 // Pill de ronda — usa as cores globais do projecto (PILL_ROUND: 2R cyan, 3R
 // vermelho, 4R violeta). Rondas sem cor global (R1) ficam neutras.
+// Ronda 0 = practice round (overrides manuais) → "PR".
 function RondaPill({ n }: { n: number }) {
   const style = PILL_ROUND[n];
   return (
@@ -234,7 +235,7 @@ function RondaPill({ n }: { n: number }) {
       className="p p-sm p-tourn"
       style={style ?? { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}
     >
-      R{n}
+      {n === 0 ? "PR" : `R${n}`}
     </span>
   );
 }
@@ -809,6 +810,20 @@ export default function DrawsPage() {
             ⚠ {covTab.rondasJogadas - covTab.rondasComDraw} rondas em{" "}
             {covTab.torneiosJogados - covTab.torneiosComDraw} torneios sem draw scrapado
             (maioritariamente clubes regionais fora do scope de <code>fpg-admissions-draws</code>).
+          </div>
+        )}
+
+        {/* Aviso no Internacional — SÓ quando há torneios DO MANUEL sem draw.
+            A cobertura USKids é calculada em pairings-build.js apenas sobre
+            torneios que ele jogou (provas de rivais que ele não jogou ficam
+            fora do denominador), por isso normalmente esta lista está vazia. */}
+        {data && tab === "Intl" && (data.cobertura?.uskids?.torneiosSemDrawDetalhe?.length ?? 0) > 0 && (
+          <div className="notice notice-warn">
+            ⚠ Torneios USKids do Manuel sem draw capturado:{" "}
+            {data.cobertura!.uskids.torneiosSemDrawDetalhe!
+              .map(t => `${t.nome}${t.data ? ` (${fmtDateShort(t.data)})` : ""}`)
+              .join(", ")}
+            . Os tee times USKids são efémeros — só se capturam durante a prova.
           </div>
         )}
 
