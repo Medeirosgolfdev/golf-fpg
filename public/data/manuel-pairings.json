@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-13T13:12:11.773Z",
+  "geradoEm": "2026-08-13T17:22:15.893Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -636,21 +636,30 @@
       "teeTime": "12:44",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 74,
+        "toPar": 2
+      },
       "companheiros": [
         {
           "nome": "Federico  Bertolino",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
         },
         {
           "nome": "Nikash Mansharamani",
           "fed": null,
           "clube": null,
           "pais": "AE",
-          "score": null
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
         }
       ]
     },
