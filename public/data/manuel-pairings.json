@@ -1,12 +1,12 @@
 {
-  "geradoEm": "2026-08-13T17:27:34.290Z",
+  "geradoEm": "2026-08-13T18:10:17.714Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 144,
-  "totalCompanheirosUnicos": 175,
+  "totalRondas": 145,
+  "totalCompanheirosUnicos": 176,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 128,
@@ -613,8 +613,8 @@
       ]
     },
     "uskids": {
-      "rondasJogadas": 15,
-      "rondasComDraw": 15,
+      "rondasJogadas": 16,
+      "rondasComDraw": 16,
       "torneiosJogados": 7,
       "torneiosComDraw": 7,
       "torneiosSemDrawDetalhe": []
@@ -642,16 +642,6 @@
       },
       "companheiros": [
         {
-          "nome": "Federico  Bertolino",
-          "fed": null,
-          "clube": null,
-          "pais": "IT",
-          "score": {
-            "gross": 74,
-            "toPar": 2
-          }
-        },
-        {
           "nome": "Nikash Mansharamani",
           "fed": null,
           "clube": null,
@@ -660,6 +650,43 @@
             "gross": 84,
             "toPar": 12
           }
+        },
+        {
+          "nome": "Federico  Bertolino",
+          "fed": null,
+          "clube": null,
+          "pais": "IT",
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "USKids",
+      "torneioId": "usk-22243",
+      "torneioNome": "Venice Open 2026",
+      "data": "2026-08-13",
+      "ronda": 2,
+      "teeTime": "09:03",
+      "startHole": 1,
+      "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "ENEKO DE ORMAECHEA PLANS",
+          "fed": null,
+          "clube": null,
+          "pais": "ES",
+          "score": null
+        },
+        {
+          "nome": "Federico  Bertolino",
+          "fed": null,
+          "clube": null,
+          "pais": "IT",
+          "score": null
         }
       ]
     },
