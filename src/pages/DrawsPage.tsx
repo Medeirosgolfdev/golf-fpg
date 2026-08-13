@@ -228,14 +228,16 @@ function escRank(esc: string | null): number {
 // Pill de ronda — usa as cores globais do projecto (PILL_ROUND: 2R cyan, 3R
 // vermelho, 4R violeta). Rondas sem cor global (R1) ficam neutras.
 // Ronda 0 = practice round (overrides manuais) → "PR".
+// Ronda -1 = conhecido sem ronda jogada (entrada "Unknown" dos overrides) → "—".
 function RondaPill({ n }: { n: number }) {
   const style = PILL_ROUND[n];
   return (
     <span
       className="p p-sm p-tourn"
+      title={n < 0 ? "Conhecido — nunca jogaram juntos (sem ronda registada)" : undefined}
       style={style ?? { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}
     >
-      {n === 0 ? "PR" : `R${n}`}
+      {n < 0 ? "—" : n === 0 ? "PR" : `R${n}`}
     </span>
   );
 }
@@ -709,11 +711,13 @@ export default function DrawsPage() {
     return { com, sem, skip, skipCcodes };
   }, [data]);
 
-  // Contagens por tab (FPG + Intl, onde Intl junta USKids+Intl)
+  // Contagens por tab (FPG + Intl, onde Intl junta USKids+Intl).
+  // Registos "conhecidos" (ronda -1, sem ronda jogada) não contam como rondas.
   const contagensTab = useMemo(() => {
     if (!data) return { FPG: 0, Intl: 0 };
     let fpg = 0, intl = 0;
     for (const r of data.rondas) {
+      if (r.ronda < 0) continue;
       if (r.circuito === "FPG") fpg++;
       else intl++;
     }

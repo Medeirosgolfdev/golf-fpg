@@ -787,12 +787,18 @@ function main() {
       torneiosComDraw: uskPairingsByT.size,
       torneiosSemDrawDetalhe: uskidsSemDrawDetalhe,
     },
-    intl: {
-      rondasJogadas: intlPairings.length,
-      rondasComDraw: intlPairings.length,
-      torneiosJogados: new Set(intlPairings.map(r => r.torneioId)).size,
-      torneiosComDraw: new Set(intlPairings.map(r => r.torneioId)).size,
-    },
+    // Registos "conhecidos" (ronda -1 — jogadores que o Manuel conhece mas com
+    // quem nunca jogou; entrada Unknown nos overrides) ficam FORA da cobertura:
+    // não são rondas jogadas nem draws.
+    intl: (() => {
+      const reais = intlPairings.filter(r => r.ronda >= 0);
+      return {
+        rondasJogadas: reais.length,
+        rondasComDraw: reais.length,
+        torneiosJogados: new Set(reais.map(r => r.torneioId)).size,
+        torneiosComDraw: new Set(reais.map(r => r.torneioId)).size,
+      };
+    })(),
   };
 
   const out = {

@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-13T12:50:19.324Z",
+  "geradoEm": "2026-08-13T13:12:11.773Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -620,8 +620,8 @@
       "torneiosSemDrawDetalhe": []
     },
     "intl": {
-      "rondasJogadas": 15,
-      "rondasComDraw": 15,
+      "rondasJogadas": 14,
+      "rondasComDraw": 14,
       "torneiosJogados": 7,
       "torneiosComDraw": 7
     }
@@ -671,34 +671,6 @@
           "fed": null,
           "clube": null,
           "pais": "CH",
-          "score": null
-        }
-      ]
-    },
-    {
-      "circuito": "Intl",
-      "torneioId": "usk-22243-pr",
-      "torneioNome": "Venice Open 2026 — Practice Round",
-      "data": "2026-08-12",
-      "ronda": 0,
-      "teeTime": null,
-      "startHole": null,
-      "campo": null,
-      "fonte": "manual (conhecidos do circuito — practice round)",
-      "manuelScore": null,
-      "companheiros": [
-        {
-          "nome": "Alfie Skinner",
-          "fed": null,
-          "clube": null,
-          "pais": "GB-ENG",
-          "score": null
-        },
-        {
-          "nome": "Emile Cuanalo",
-          "fed": null,
-          "clube": null,
-          "pais": "GB-ENG",
           "score": null
         }
       ]
@@ -5742,6 +5714,34 @@
             "gross": 48,
             "toPar": 12
           }
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "unknown-conhecidos",
+      "torneioNome": "Unknown — conhecidos do circuito",
+      "data": null,
+      "ronda": -1,
+      "teeTime": null,
+      "startHole": null,
+      "campo": null,
+      "fonte": "manual (conhecidos — nunca jogaram juntos; registo sem ronda)",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Alfie Skinner",
+          "fed": null,
+          "clube": null,
+          "pais": "GB-ENG",
+          "score": null
+        },
+        {
+          "nome": "Emile Cuanalo",
+          "fed": null,
+          "clube": null,
+          "pais": "GB-ENG",
+          "score": null
         }
       ]
     }
