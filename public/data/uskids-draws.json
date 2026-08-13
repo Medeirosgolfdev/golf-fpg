@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-08-12T17:02:41.407Z",
+  "gerado_em": "2026-08-13T17:01:26.889Z",
   "manuel_focus": true,
   "janela_dias_antes": 3,
   "torneios": [
@@ -23488,7 +23488,7 @@
                   "jogadores": [
                     {
                       "nome": "Alfie Skinner",
-                      "pais": "GB-ENG",
+                      "pais": "WLS",
                       "cidade": "Tredegar, BGW"
                     },
                     {
@@ -23585,7 +23585,7 @@
                   "jogadores": [
                     {
                       "nome": "Alfie Skinner",
-                      "pais": "GB-ENG",
+                      "pais": "WLS",
                       "cidade": "Tredegar, BGW"
                     },
                     {
@@ -23753,7 +23753,7 @@
                   "jogadores": [
                     {
                       "nome": "Alfie Skinner",
-                      "pais": "GB-ENG",
+                      "pais": "WLS",
                       "cidade": "Tredegar, BGW"
                     },
                     {
@@ -24079,8 +24079,26 @@
               "ronda": 2,
               "grupos": [
                 {
-                  "group_number": 0,
-                  "tee_time": "08:00",
+                  "group_number": 1,
+                  "tee_time": "12:35",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Michael Spivak",
+                      "pais": "IT",
+                      "cidade": "Brienno"
+                    },
+                    {
+                      "nome": "Zhicheng  Lin",
+                      "pais": "BW",
+                      "cidade": "Gaborone"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 2,
+                  "tee_time": "12:44",
                   "start_hole": 1,
                   "course": "",
                   "jogadores": [
@@ -24090,79 +24108,22 @@
                       "cidade": "Bucuresti, B"
                     },
                     {
-                      "nome": "Dominik Klepacki",
-                      "pais": "PL",
-                      "cidade": "Wroclaw, DO"
-                    },
-                    {
-                      "nome": "Edoardo Lemonnier",
-                      "pais": "IT",
-                      "cidade": "Roma, RM"
-                    },
-                    {
-                      "nome": "Francesco Monosi",
-                      "pais": "IT",
-                      "cidade": "Padova, PD"
-                    },
-                    {
-                      "nome": "Henry Liechti",
-                      "pais": "CH",
-                      "cidade": "Genève"
-                    },
-                    {
-                      "nome": "Julian Stangassinger",
-                      "pais": "DE",
-                      "cidade": "München, BY"
-                    },
-                    {
                       "nome": "Julius Schmitz",
                       "pais": "DE",
                       "cidade": "Golf Resort Heitlinger Tiefenbach, BW"
-                    },
-                    {
-                      "nome": "Kevin Canton",
-                      "pais": "IT",
-                      "cidade": "Grumolo Delle Abbadesse, VI"
-                    },
+                    }
+                  ]
+                },
+                {
+                  "group_number": 3,
+                  "tee_time": "12:53",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
                     {
                       "nome": "Ludovico Manca",
                       "pais": "IT",
                       "cidade": "Lainate, MI"
-                    },
-                    {
-                      "nome": "Michael Spivak",
-                      "pais": "IT",
-                      "cidade": "Brienno"
-                    },
-                    {
-                      "nome": "Patrizio Mannoni",
-                      "pais": "IT",
-                      "cidade": "Abano Terme, PD"
-                    },
-                    {
-                      "nome": "Pietro Nalin",
-                      "pais": "IT",
-                      "cidade": "Noventa Padovana, PD"
-                    },
-                    {
-                      "nome": "Raphael Siniscalco",
-                      "pais": "IT",
-                      "cidade": "Roma, RM"
-                    },
-                    {
-                      "nome": "Teodor Georgiev",
-                      "pais": "BG",
-                      "cidade": "Sofia, 23"
-                    },
-                    {
-                      "nome": "Umberto Risso",
-                      "pais": "IT",
-                      "cidade": "Genova, GE"
-                    },
-                    {
-                      "nome": "Valentin  Nogier",
-                      "pais": "FR",
-                      "cidade": "AUBENAS, A07"
                     },
                     {
                       "nome": "Victor Hardy",
@@ -24173,11 +24134,98 @@
                       "nome": "Zeb Notice",
                       "pais": "US",
                       "cidade": "Garland , TX"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 4,
+                  "tee_time": "13:02",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Francesco Monosi",
+                      "pais": "IT",
+                      "cidade": "Padova, PD"
                     },
                     {
-                      "nome": "Zhicheng  Lin",
-                      "pais": "BW",
-                      "cidade": "Gaborone"
+                      "nome": "Patrizio Mannoni",
+                      "pais": "IT",
+                      "cidade": "Abano Terme, PD"
+                    },
+                    {
+                      "nome": "Teodor Georgiev",
+                      "pais": "BG",
+                      "cidade": "Sofia, 23"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 5,
+                  "tee_time": "13:11",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Henry Liechti",
+                      "pais": "CH",
+                      "cidade": "Genève"
+                    },
+                    {
+                      "nome": "Kevin Canton",
+                      "pais": "IT",
+                      "cidade": "Grumolo Delle Abbadesse, VI"
+                    },
+                    {
+                      "nome": "Pietro Nalin",
+                      "pais": "IT",
+                      "cidade": "Noventa Padovana, PD"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 6,
+                  "tee_time": "13:20",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Edoardo Lemonnier",
+                      "pais": "IT",
+                      "cidade": "Roma, RM"
+                    },
+                    {
+                      "nome": "Julian Stangassinger",
+                      "pais": "DE",
+                      "cidade": "München, BY"
+                    },
+                    {
+                      "nome": "Raphael Siniscalco",
+                      "pais": "IT",
+                      "cidade": "Roma, RM"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 7,
+                  "tee_time": "13:29",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Dominik Klepacki",
+                      "pais": "PL",
+                      "cidade": "Wroclaw, DO"
+                    },
+                    {
+                      "nome": "Umberto Risso",
+                      "pais": "IT",
+                      "cidade": "Genova, GE"
+                    },
+                    {
+                      "nome": "Valentin  Nogier",
+                      "pais": "FR",
+                      "cidade": "AUBENAS, A07"
                     }
                   ]
                 }
@@ -24465,8 +24513,72 @@
               "ronda": 2,
               "grupos": [
                 {
-                  "group_number": 0,
-                  "tee_time": "08:00",
+                  "group_number": 1,
+                  "tee_time": "09:03",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Francesco Faelli",
+                      "pais": "IT",
+                      "cidade": "Milan, MI"
+                    },
+                    {
+                      "nome": "Valentin Kosi",
+                      "pais": "AT",
+                      "cidade": "Gallizien, KAR"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 2,
+                  "tee_time": "09:12",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Deniz Kaya",
+                      "pais": "TR",
+                      "cidade": "Antalya, ANT"
+                    },
+                    {
+                      "nome": "Leonardo  Lugli",
+                      "pais": "IT",
+                      "cidade": "Genova, GE"
+                    },
+                    {
+                      "nome": "Moritz Kindermann",
+                      "pais": "DE",
+                      "cidade": "Regensburg , BY"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 3,
+                  "tee_time": "09:21",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Cristian Tedeschi",
+                      "pais": "IT",
+                      "cidade": "Bologna, BO"
+                    },
+                    {
+                      "nome": "Gabriele Poggetti",
+                      "pais": "IT",
+                      "cidade": "Cecina, LI"
+                    },
+                    {
+                      "nome": "Gregorio Botta",
+                      "pais": "IT",
+                      "cidade": "Bussolengo, VR"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 4,
+                  "tee_time": "09:30",
                   "start_hole": 1,
                   "course": "",
                   "jogadores": [
@@ -24476,39 +24588,27 @@
                       "cidade": "Eyup, IST"
                     },
                     {
+                      "nome": "Lenny Valenti Pujolar Spielmann",
+                      "pais": "IT",
+                      "cidade": "Torreglia, PD"
+                    },
+                    {
+                      "nome": "Tim Bezlaj",
+                      "pais": "SI",
+                      "cidade": "Ljubljana"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 5,
+                  "tee_time": "09:39",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
                       "nome": "Borut Hocevar",
                       "pais": "SI",
                       "cidade": "Ljubljana"
-                    },
-                    {
-                      "nome": "Cristian Tedeschi",
-                      "pais": "IT",
-                      "cidade": "Bologna, BO"
-                    },
-                    {
-                      "nome": "Deniz Kaya",
-                      "pais": "TR",
-                      "cidade": "Antalya, ANT"
-                    },
-                    {
-                      "nome": "Francesco Faelli",
-                      "pais": "IT",
-                      "cidade": "Milan, MI"
-                    },
-                    {
-                      "nome": "Gabriele Poggetti",
-                      "pais": "IT",
-                      "cidade": "Cecina, LI"
-                    },
-                    {
-                      "nome": "Georg Tushev",
-                      "pais": "BG",
-                      "cidade": "Sofia"
-                    },
-                    {
-                      "nome": "Gregorio Botta",
-                      "pais": "IT",
-                      "cidade": "Bussolengo, VR"
                     },
                     {
                       "nome": "GREGORIO COLOMBI",
@@ -24516,24 +24616,22 @@
                       "cidade": "LIVORNO, LI"
                     },
                     {
-                      "nome": "Lenny Valenti Pujolar Spielmann",
-                      "pais": "IT",
-                      "cidade": "Torreglia, PD"
-                    },
-                    {
-                      "nome": "Leonardo  Lugli",
-                      "pais": "IT",
-                      "cidade": "Genova, GE"
-                    },
+                      "nome": "Seyran Pogosyan",
+                      "pais": "AE",
+                      "cidade": "Ras Al Khaimah, RK"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 6,
+                  "tee_time": "09:48",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
                     {
                       "nome": "LUDOVICO REBONATO",
                       "pais": "IT",
                       "cidade": "Montecchia, PD"
-                    },
-                    {
-                      "nome": "Luigi Conconi",
-                      "pais": "IT",
-                      "cidade": "Milano, MI"
                     },
                     {
                       "nome": "Matteo Landmann",
@@ -24541,34 +24639,32 @@
                       "cidade": "Bad Homburg, HE"
                     },
                     {
-                      "nome": "Moritz Kindermann",
-                      "pais": "DE",
-                      "cidade": "Regensburg , BY"
+                      "nome": "Tommaso Gizzi",
+                      "pais": "IT",
+                      "cidade": "Palaia, PI"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 7,
+                  "tee_time": "09:57",
+                  "start_hole": 1,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Georg Tushev",
+                      "pais": "BG",
+                      "cidade": "Sofia"
                     },
                     {
-                      "nome": "Seyran Pogosyan",
-                      "pais": "AE",
-                      "cidade": "Ras Al Khaimah, RK"
-                    },
-                    {
-                      "nome": "Tim Bezlaj",
-                      "pais": "SI",
-                      "cidade": "Ljubljana"
+                      "nome": "Luigi Conconi",
+                      "pais": "IT",
+                      "cidade": "Milano, MI"
                     },
                     {
                       "nome": "Tommaso Falla",
                       "pais": "IT",
                       "cidade": "Pollone, BI"
-                    },
-                    {
-                      "nome": "Tommaso Gizzi",
-                      "pais": "IT",
-                      "cidade": "Palaia, PI"
-                    },
-                    {
-                      "nome": "Valentin Kosi",
-                      "pais": "AT",
-                      "cidade": "Gallizien, KAR"
                     }
                   ]
                 }
@@ -24690,7 +24786,7 @@
           ]
         }
       ],
-      "ultima_atualizacao": "2026-08-12T17:02:40.976Z"
+      "ultima_atualizacao": "2026-08-13T17:01:26.462Z"
     }
   ]
 }
