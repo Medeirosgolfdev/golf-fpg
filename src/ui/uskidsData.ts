@@ -174,6 +174,29 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
     2103: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260], cr: 64.4, slope: 107 },
     2102: { campo: "Terre Dei Consoli Golf Club", tee: "Championship Course", par: [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4], metros: [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260], cr: 62.5, slope: 105 },
   },
+  // ── Venice Open 2026 – mesmo venue/tees Longleaf de 2025 ─────────
+  // Par/metros REAIS dos results 2026 (signupanytime). CR/Slope reutilizados do
+  // PDF oficial 2025 SÓ onde o tee/distância coincide exactamente: Boys 12
+  // WR 5657y, Frassanelle M 6291y / F 5428y. Novidade 2026: TODOS os 9-12
+  // jogam o White/Red (em 2025 o B10 jogava Red/Green e o B9 Green/White) —
+  // o B10 subiu para o tee do B11 (5044y → 64.8/111); B9/Girls 10 jogam um
+  // tee WR de 4206y sem rating publicado e as Girls 11/12 o tee 4 masculino
+  // sem rating feminino → sem cr/slope (SD "—", nunca inventar ratings).
+  // 9H Galzignano sem SSS → fora do lookup (SD "—").
+  22243: {
+    2105: { campo: "Golf Club Della Montecchia - White/Red", tee: "White+Red (Tee 5)", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [401,144,300,310,280,330,128,290,390, 304,150,410,280,283,310,310,144,410], cr: 67.6, slope: 118 },
+    2104: { campo: "Golf Club Della Montecchia - White/Red", tee: "White+Red (Tee 4)", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,144,262,266,280,289,128,290,350, 255,122,330,230,265,283,290,115,325], cr: 64.8, slope: 111 },
+    2103: { campo: "Golf Club Della Montecchia - White/Red", tee: "White+Red (Tee 4)", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,144,262,266,280,289,128,290,350, 255,122,330,230,265,283,290,115,325], cr: 64.8, slope: 111 },
+    2102: { campo: "Golf Club Della Montecchia - White/Red", tee: "Boys 9", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [300,110,225,230,210,230,95,215,290, 210,115,294,204,235,252,258,85,289] },
+    2111: { campo: "Golf Club Frassanelle", tee: "Boys 15-18", par: [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5], metros: [320,490,298,350,160,470,325,169,283, 479,150,255,385,357,146,310,326,479], cr: 70.7, slope: 129 },
+    2114: { campo: "Golf Club Frassanelle", tee: "Boys 13", par: [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5], metros: [320,490,298,350,160,470,325,169,283, 479,150,255,385,357,146,310,326,479], cr: 70.7, slope: 129 },
+    2115: { campo: "Golf Club Frassanelle", tee: "Boys 14", par: [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5], metros: [320,490,298,350,160,470,325,169,283, 479,150,255,385,357,146,310,326,479], cr: 70.7, slope: 129 },
+    2112: { campo: "Golf Club Frassanelle", tee: "Girls 15-18", par: [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5], metros: [287,399,269,302,146,410,300,133,250, 427,126,234,333,315,105,257,277,395], cr: 71.7, slope: 126 },
+    2121: { campo: "Golf Club Frassanelle", tee: "Girls 13-14", par: [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5], metros: [287,399,269,302,146,410,300,133,250, 427,126,234,333,315,105,257,277,395], cr: 71.7, slope: 126 },
+    2118: { campo: "Golf Club Della Montecchia - White/Red", tee: "Girls 10", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [300,110,225,230,210,230,95,215,290, 210,115,294,204,235,252,258,85,289] },
+    2119: { campo: "Golf Club Della Montecchia - White/Red", tee: "Girls 11", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,144,262,266,280,289,128,290,350, 255,122,330,230,265,283,290,115,325] },
+    2120: { campo: "Golf Club Della Montecchia - White/Red", tee: "Girls 12", par: [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], metros: [389,144,262,266,280,289,128,290,350, 255,122,330,230,265,283,290,115,325] },
+  },
   // ── Venice Open 2025 – Golf Della Montecchia (Boys/Girls 9-12) + Frassanelle (13-18) ─
   // CR/Slope OFICIAIS do PDF USKids "COURSE RATING & SLOPE" (venice_open_2025_
   // course_rating_slope.pdf). 9H (Boys 8/7&U, Girls 9/8&U) sem SSS → SD "—".
