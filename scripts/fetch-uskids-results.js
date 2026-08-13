@@ -271,6 +271,7 @@ async function buscarJogadores(page, fid, ronda, total_inscritos) {
       const jogadores = Object.values(d.flight_players || {})
         .filter(j => j.status === 1)
         .map(j => {
+          const temRonda = !!(j.rounds && j.rounds[String(ronda)]);
           const rd = j.rounds?.[String(ronda)] || {};
           const strokes = (rd.strokes || []).filter((_, i) => i < (rd.num_holes || 18));
           return {
@@ -279,7 +280,11 @@ async function buscarJogadores(page, fid, ronda, total_inscritos) {
             cidade:     j.place || '',
             tee:        j.teeMarkerName || '',
             pontos:     j.points   || 0,
-            score:      rd.num_strokes || j.score || 0,
+            // j.score é o total corrente do TORNEIO — só serve de fallback quando
+            // a API nem sequer traz o objecto da ronda. Com a ronda presente e
+            // num_strokes=0 (por jogar), usar j.score duplicava a R1 nas R2/R3
+            // dos torneios a decorrer (visto no Venice Open 2026-08-13).
+            score:      temRonda ? (rd.num_strokes || 0) : (j.score || 0),
             buracos:    rd.num_holes   || strokes.length || 0,
             start_hole: rd.start_hole  || 1,
             start_time: rd.start_time  || '',
