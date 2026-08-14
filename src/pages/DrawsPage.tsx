@@ -507,6 +507,7 @@ export default function DrawsPage() {
   const [inativos, setInativos] = useState<PlayerLite[]>([]);
   const [fedAll, setFedAll] = useState<PlayerLite[]>([]);
   const [escFilter, setEscFilter] = useState<Set<string>>(new Set());
+  const [anoFilter, setAnoFilter] = useState<Set<string>>(new Set());
   const [q, setQ] = useState("");
   const [erro, setErro] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("FPG");
@@ -620,21 +621,53 @@ export default function DrawsPage() {
   // Agregação por companheiro
   const linhas = useMemo(() => aggregateCompanions(rondasFiltradas, lookups), [rondasFiltradas, lookups]);
 
-  // Filtro por escalão (toggle pills) + pesquisa de texto (torneio/campo/jogador/clube)
+  // Anos presentes (para o filtro por ano), do mais recente ao mais antigo
+  const anosPresentes = useMemo(() => {
+    const s = new Set<string>();
+    for (const l of linhas) for (const r of l.rondas) { const y = r.data?.slice(0, 4); if (y) s.add(y); }
+    return [...s].sort((a, b) => b.localeCompare(a));
+  }, [linhas]);
+
+  // Filtro por escalão + ano + pesquisa de texto (torneio/campo/jogador/clube).
+  // Quando o termo casa um TORNEIO/CAMPO (ou há filtro de ano activo), restringe
+  // também as rondas mostradas dentro de cada companheiro — não mostra as 7 se só
+  // 2 são do "miramar" que se procurou. Se o termo só casa a identidade do
+  // jogador (nome/clube/país), mantém todas as rondas dele.
   const linhasFiltradas = useMemo(() => {
-    let base = escFilter.size === 0 ? linhas : linhas.filter(r => escFilter.has(r.escalao || "—"));
     const term = norm(q.trim());
-    if (term) {
-      base = base.filter(r =>
-        norm(r.nome).includes(term) ||
-        norm(r.clube || "").includes(term) ||
-        norm(r.pais || "").includes(term) ||
-        // "com quem joguei em tal torneio/campo" — casa contra qualquer ronda partilhada
-        r.rondas.some(rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term)),
+    const anos = anoFilter;
+    const out: CompanionRow[] = [];
+    for (const r of linhas) {
+      if (escFilter.size > 0 && !escFilter.has(r.escalao || "—")) continue;
+
+      const idMatch = !term
+        || norm(r.nome).includes(term)
+        || norm(r.clube || "").includes(term)
+        || norm(r.pais || "").includes(term);
+      const termHitsTourn = !!term && r.rondas.some(
+        rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term),
       );
+      // Inclusão do companheiro: com termo activo, tem de casar identidade OU torneio
+      if (term && !idMatch && !termHitsTourn) continue;
+
+      let rondas = r.rondas;
+      if (anos.size > 0) rondas = rondas.filter(rd => { const y = rd.data?.slice(0, 4); return !!y && anos.has(y); });
+      if (termHitsTourn) rondas = rondas.filter(rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term));
+      if (rondas.length === 0) continue;
+
+      if (rondas.length === r.rondas.length) { out.push(r); continue; }
+      // Recomputa agregados a partir do subconjunto visível
+      const datas = rondas.map(x => x.data).filter(Boolean) as string[];
+      out.push({
+        ...r,
+        rondas,
+        vezes: rondas.length,
+        ultimaData: datas.length ? datas.reduce((a, b) => (a > b ? a : b)) : null,
+        primeiraData: datas.length ? datas.reduce((a, b) => (a < b ? a : b)) : null,
+      });
     }
-    return base;
-  }, [linhas, escFilter, q]);
+    return out;
+  }, [linhas, escFilter, anoFilter, q]);
 
   // Ordenação
   const linhasOrdenadas = useMemo(() => {
@@ -870,6 +903,43 @@ export default function DrawsPage() {
           </div>
         )}
 
+        {/* Filtro por ano */}
+        {data && linhas.length > 0 && anosPresentes.length > 1 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+            <span className="h-xs" style={{ margin: 0, marginRight: 2 }}>Ano:</span>
+            {anosPresentes.map(y => {
+              const active = anoFilter.has(y);
+              return (
+                <button
+                  key={y}
+                  type="button"
+                  onClick={() => setAnoFilter(prev => {
+                    const next = new Set(prev);
+                    next.has(y) ? next.delete(y) : next.add(y);
+                    return next;
+                  })}
+                  className="p p-sm"
+                  style={{
+                    cursor: "pointer",
+                    fontVariantNumeric: "tabular-nums",
+                    border: active ? "1.5px solid var(--accent)" : "1.5px solid var(--border)",
+                    background: active ? "var(--accent-light)" : "transparent",
+                    color: active ? "var(--accent)" : "var(--text-2)",
+                    fontWeight: active ? 700 : 600,
+                  }}
+                >
+                  {y}
+                </button>
+              );
+            })}
+            {anoFilter.size > 0 && (
+              <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setAnoFilter(new Set())}>
+                limpar
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Filtro por escalão */}
         {data && linhas.length > 0 && escaloesPresentes.length > 1 && (
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
@@ -942,9 +1012,9 @@ export default function DrawsPage() {
               </thead>
               <tbody>
                 {linhasOrdenadas.map((row) => {
-                  // Ao pesquisar, auto-expande os resultados para se ver logo
-                  // a(s) ronda(s) partilhada(s) sem ter de clicar em cada um.
-                  const open = q.trim() !== "" || expanded.has(row.key);
+                  // Ao pesquisar (ou filtrar por ano), auto-expande os resultados
+                  // para se ver logo a(s) ronda(s) partilhada(s) sem clicar em cada um.
+                  const open = q.trim() !== "" || anoFilter.size > 0 || expanded.has(row.key);
                   const rank = rankByVezes.get(row.key) || 0;
                   const medal = MEDALS[rank];
                   return (
