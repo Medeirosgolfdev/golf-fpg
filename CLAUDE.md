@@ -258,7 +258,7 @@ mitarjeta os traz).
 2. Token `--source-{id}` em `tokens.css` + `SOURCE_COLORS`/`SOURCE_LABELS` no `kids2/components/EvolutionChart.tsx`.
 3. Matcher de domínio em `kids2/tournamentLinks.ts` (nota: `eg-*.golfgenius.com` → england tem de vir ANTES do matcher genérico `golfgenius.com` → doral).
 4. Paths de trigger no `build-juniors.yml`.
-5. Sanity: Manuel×Dmitrii = **6 confrontos** (EC26, Venice25, QDL25, EOWAGR LTQ25, WJGC25, WJGC26).
+5. Sanity: Manuel×Dmitrii = **7 confrontos** (EC26, Venice25, Venice26, QDL25, EOWAGR LTQ25, WJGC25, WJGC26).
 
 ### Limpeza de duplicados — `scripts/find-junior-duplicates.js` (2026-07-08)
 
@@ -316,7 +316,12 @@ Outputs: `reports/duplicate-candidates.{json,html}` + `proposed-merges.json`
 (gitignored). O HTML é o fluxo de revisão dos restantes: cada card tem 2
 snippets prontos a copiar — ✅ mesma pessoa → `forceMerge`; ❌ pessoas
 diferentes → **`notDuplicates`** (lista no `juniors-overrides.json`, formato
-`{sourceKeys:[a,b], reason}`) que suprime a sugestão em runs futuros. Ciclo:
+`{sourceKeys:[a,b], reason}`) que suprime a sugestão em runs futuros **e, desde
+2026-08-14, é também um VETO no identity-matcher** (o `tryUnion` recusa juntar
+grupos que ponham um par listado na mesma entidade; `forceMerge` explícito
+continua a ganhar) — usado para desfazer fusões automáticas de homónimos, ex:
+o "Luis Maier" do Doral ≠ Luis Maier DE do USKids (confirmado pelo próprio:
+há 3 miúdos DE com este nome no mesmo escalão). Ciclo:
 `aggregator/index.js` → detector → rever HTML → colar overrides → repetir.
 Pares já cobertos por `forceMerge`/`notDuplicates` nunca são re-sugeridos.
 Testes: `scripts/find-junior-duplicates.test.js` (vitest apanha

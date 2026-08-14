@@ -64,6 +64,27 @@ function resolve(rawSources, overrides) {
     if (typeof e.raw.sourceKey === "string" && e.raw.sourceKey.startsWith("anon|")) return false;
     return true;
   }
+  // notDuplicates (overrides) — pares de entityKeys que NUNCA podem ser
+  // fundidos pelo matching automático (homónimos confirmados manualmente,
+  // ex: o Luis Maier do Doral ≠ Luis Maier do USKids — há 3 miúdos DE com o
+  // mesmo nome no mesmo escalão). Um forceMerge explícito (opts.force)
+  // continua a ganhar. Até 2026-08-14 esta lista só suprimia sugestões do
+  // find-junior-duplicates; agora também trava o matcher.
+  const notDupByKey = new Map(); // entityKey → Set<entityKey proibidos>
+  for (const rule of overrides?.notDuplicates || []) {
+    const keys = Array.isArray(rule.sourceKeys) ? rule.sourceKeys : [];
+    for (let i = 0; i < keys.length; i++) {
+      for (let j = i + 1; j < keys.length; j++) {
+        let sa = notDupByKey.get(keys[i]);
+        if (!sa) { sa = new Set(); notDupByKey.set(keys[i], sa); }
+        sa.add(keys[j]);
+        let sb = notDupByKey.get(keys[j]);
+        if (!sb) { sb = new Set(); notDupByKey.set(keys[j], sb); }
+        sb.add(keys[i]);
+      }
+    }
+  }
+
   const parent = new Map();
   // groupEntities: root → Entity[] (todas as entidades do grupo)
   const groupEntities = new Map();
@@ -90,6 +111,17 @@ function resolve(rawSources, overrides) {
     const ea = groupEntities.get(ra) || [];
     const eb = groupEntities.get(rb) || [];
     const combined = ea.concat(eb);
+    if (!opts.force && notDupByKey.size) {
+      // Veto notDuplicates: se juntar os grupos poria no mesmo junior um par
+      // proibido, recusar o merge.
+      const [small, big] = ea.length <= eb.length ? [ea, eb] : [eb, ea];
+      const bigKeys = new Set(big.map((e) => e.entityKey));
+      for (const e of small) {
+        const forb = notDupByKey.get(e.entityKey);
+        if (!forb) continue;
+        for (const f of forb) if (bigKeys.has(f)) return false;
+      }
+    }
     if (!opts.force) {
       const strongBySource = new Map();
       for (const e of combined) {
@@ -234,7 +266,8 @@ function resolve(rawSources, overrides) {
       }
     }
   }
-  // forceSplit: ainda não implementado.
+  // forceSplit: ainda não implementado (para separar pares que o matching
+  // automático une, usar notDuplicates — aplicado como veto no tryUnion).
 
   // ────────────────────────────────────────────────────────────────────
   // 6. Materialize juniors: group entities by root
