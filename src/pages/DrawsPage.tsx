@@ -108,6 +108,7 @@ interface CompanionRow {
     data: string | null;
     torneioNome: string;
     torneioId: string;
+    campo: string | null;
     ronda: number;
     circuito: "FPG" | "USKids" | "Intl";
     manuelScore: Score;
@@ -312,6 +313,7 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
         data: r.data,
         torneioNome: r.torneioNome,
         torneioId: r.torneioId,
+        campo: r.campo,
         ronda: r.ronda,
         circuito: r.circuito,
         manuelScore: r.manuelScore,
@@ -505,6 +507,7 @@ export default function DrawsPage() {
   const [inativos, setInativos] = useState<PlayerLite[]>([]);
   const [fedAll, setFedAll] = useState<PlayerLite[]>([]);
   const [escFilter, setEscFilter] = useState<Set<string>>(new Set());
+  const [q, setQ] = useState("");
   const [erro, setErro] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("FPG");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -617,11 +620,21 @@ export default function DrawsPage() {
   // Agregação por companheiro
   const linhas = useMemo(() => aggregateCompanions(rondasFiltradas, lookups), [rondasFiltradas, lookups]);
 
-  // Filtro por escalão (toggle pills)
+  // Filtro por escalão (toggle pills) + pesquisa de texto (torneio/campo/jogador/clube)
   const linhasFiltradas = useMemo(() => {
-    if (escFilter.size === 0) return linhas;
-    return linhas.filter(r => escFilter.has(r.escalao || "—"));
-  }, [linhas, escFilter]);
+    let base = escFilter.size === 0 ? linhas : linhas.filter(r => escFilter.has(r.escalao || "—"));
+    const term = norm(q.trim());
+    if (term) {
+      base = base.filter(r =>
+        norm(r.nome).includes(term) ||
+        norm(r.clube || "").includes(term) ||
+        norm(r.pais || "").includes(term) ||
+        // "com quem joguei em tal torneio/campo" — casa contra qualquer ronda partilhada
+        r.rondas.some(rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term)),
+      );
+    }
+    return base;
+  }, [linhas, escFilter, q]);
 
   // Ordenação
   const linhasOrdenadas = useMemo(() => {
@@ -805,7 +818,9 @@ export default function DrawsPage() {
         )}
 
         {data && linhasOrdenadas.length === 0 && (
-          <EmptyState message="Sem dados para este torneio." />
+          <EmptyState message={q.trim()
+            ? `Nenhum companheiro encontrado para "${q.trim()}".`
+            : "Sem dados para este torneio."} />
         )}
 
         {/* Aviso de rondas sem draw scrapado (só FPG) */}
@@ -828,6 +843,30 @@ export default function DrawsPage() {
               .map(t => `${t.nome}${t.data ? ` (${fmtDateShort(t.data)})` : ""}`)
               .join(", ")}
             . Os tee times USKids são efémeros — só se capturam durante a prova.
+          </div>
+        )}
+
+        {/* Pesquisa — por torneio, campo, jogador ou clube */}
+        {data && linhas.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+            <input
+              className="input"
+              value={q}
+              onChange={e => setQ(e.target.value)}
+              placeholder="Pesquisar por torneio, campo, jogador ou clube…"
+              aria-label="Pesquisar companheiros por torneio, campo, jogador ou clube"
+              style={{ maxWidth: 340, flex: "1 1 240px" }}
+            />
+            {q.trim() && (
+              <>
+                <span className="muted fs-12" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  {linhasOrdenadas.length} {linhasOrdenadas.length === 1 ? "companheiro" : "companheiros"}
+                </span>
+                <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setQ("")}>
+                  limpar
+                </button>
+              </>
+            )}
           </div>
         )}
 
@@ -903,7 +942,9 @@ export default function DrawsPage() {
               </thead>
               <tbody>
                 {linhasOrdenadas.map((row) => {
-                  const open = expanded.has(row.key);
+                  // Ao pesquisar, auto-expande os resultados para se ver logo
+                  // a(s) ronda(s) partilhada(s) sem ter de clicar em cada um.
+                  const open = q.trim() !== "" || expanded.has(row.key);
                   const rank = rankByVezes.get(row.key) || 0;
                   const medal = MEDALS[rank];
                   return (
@@ -1008,6 +1049,9 @@ export default function DrawsPage() {
                                         <Link to={`/FPG/torneio/${r.torneioId}`} className="courseLink">{r.torneioNome}</Link>
                                       ) : (
                                         r.torneioNome
+                                      )}
+                                      {r.campo && (
+                                        <span className="muted" style={{ fontSize: "var(--fs-11)", marginLeft: 6 }}>· {r.campo}</span>
                                       )}
                                     </span>
                                     <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
