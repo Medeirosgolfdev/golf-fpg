@@ -640,6 +640,50 @@ Workflow: `update-federados.yml` (Quarta 05:00 UTC). Secret: `DATAGOLF_SCORING_C
 
 ---
 
+## Enriquecimento de rondas internacionais — MÉTODO ÚNICO (2026-08-14)
+
+Rondas de torneios internacionais chegam da FPG **sem metros**, com campo
+genérico ("INTERNACIONAL", nome sem combo) e tee por cor ("VERMELHAS"). O
+enriquecimento é SEMPRE **full-bake** no `melhorias.json` da **RAIZ** (a UI
+importa-o directamente em `App.tsx`; o antigo `public/data/melhorias.json` era
+órfão e foi eliminado 2026-08-14) — entrada por scoreId com
+`whs.course_description` + `scorecard {course_description, tee_name, par_1..18,
+meters_1..18, course_rating?, slope?}`. Gerado por **`scripts/enrich-intl-round.js`**
+(nunca escrever entradas à mão):
+
+```bash
+# Fonte USKids: TEES_LOOKUP (src/ui/uskidsData.ts, curado dos PDFs oficiais) com
+# fallback par+yards do uskids-results.json (yards×0.9144, guarda _yards)
+node scripts/enrich-intl-round.js --scores 4333809,4333833,4333835 --uskids 21795:2105 --course "Val d'Europe"
+# Fonte cópia: outra entrada do melhorias (D2/D3 a partir do D1; mesmo tee físico noutro ano)
+node scripts/enrich-intl-round.js --scores 4213116 --copy-from 3946427 --tee "Boys 10-11"
+# Depois, sempre:
+node pipeline.js --skip-import 52884 && npm test && npm run build
+```
+
+Flags: `--course`/`--tee` sobrepõem os da fonte (default: campo/tee do lookup);
+`--nota`/`--pill`/`--group`/`--link`; `--comment "..."` cria a linha `_comment_*`
+antes de entradas novas; `--dry-run`. Entradas existentes são FUNDIDAS (notas,
+links, pill, campos extra preservados). O ficheiro é editado por splice textual
+(⚠ nunca re-serializar o JSON inteiro: o JS reordena as chaves numéricas para a
+frente dos `_comment_*`; e o ficheiro é CRLF).
+
+Checklist para um torneio internacional novo:
+1. Garantir o evento no `TEES_LOOKUP` (`src/ui/uskidsData.ts`): par/metros dos
+   results oficiais + CR/Slope **só do PDF USKids "SSS & SLOPE"** (nunca
+   inventar; sem PDF → sem cr/slope e a coluna SD do /uskids fica "—").
+2. scoreIds das rondas: `output/{fed}/analysis/data.json` (campo + data).
+3. Correr o script (1 comando por evento/tee) + regenerar + testar.
+
+⚠ **Não usar `MANUEL_AWAY_TEE` para casos novos** — é um override por CAMPO e
+parte quando o mesmo campo tem tees diferentes por ano (Montecchia: 2025 Boys 11
+vs 2026 Boys 12). O runtime (`resolvePlayedMeters`/`resolvePlayedSI` na
+JogadoresPage) mantém-se como fallback para rondas ainda não tratadas. Estado
+2026-08-14: TODOS os internacionais do Manuel até ao Venice Open 2026 estão
+full-bake (Padierna/Le Touquet/Doral/Venice 25+26/Paris/Glen/Marco Simone).
+
+---
+
 ## Scripts — USKids (Playwright)
 
 **fetch-uskids-results.js** — Scorecards completos + par/yards reais por buraco. Torneios em curso: atualiza auto. Históricos configurados no array `HISTORICOS`.
