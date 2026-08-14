@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-14T13:02:18.811Z",
+  "geradoEm": "2026-08-14T13:27:43.326Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -672,21 +672,30 @@
       "teeTime": "09:03",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 82,
+        "toPar": 10
+      },
       "companheiros": [
         {
           "nome": "ENEKO DE ORMAECHEA PLANS",
           "fed": null,
           "clube": null,
           "pais": "ES",
-          "score": null
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
         },
         {
           "nome": "Federico  Bertolino",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 73,
+            "toPar": 1
+          }
         }
       ]
     },
