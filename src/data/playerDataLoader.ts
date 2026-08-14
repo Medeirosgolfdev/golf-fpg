@@ -381,12 +381,19 @@ function recomputeECForAllCourses(
         }
       }
 
-      // 2) best: min de g[i] entre as rondas com valor > 0
+      // 2) best: min de g[i] entre as rondas com valor > 0.
+      //    O par de cada buraco do eclético é o da PRÓPRIA volta do best: o
+      //    mesmo tee pode ser jogado com pares diferentes entre edições (a
+      //    organização pode alterar o par de um buraco — ex. Padierna hole 10
+      //    par 4 em 2025, par 5 em 2026). Com o "primeiro par encontrado", um
+      //    birdie feito no ano do par 4 aparecia como eagle no eclético.
+      const parBestArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
       const wins: Record<string, number> = {};
       for (let i = 0; i < ROW_SIZE; i++) {
         if (parArr[i] == null) continue;
         let best: number | null = null;
         let from: EclecticHole["from"] = null;
+        let parOfBest: number | null = null;
         for (const r of b.rounds) {
           const h = holes[r.scoreId]!;
           const g = h.g?.[i];
@@ -395,10 +402,12 @@ function recomputeECForAllCourses(
           if (best == null || v < best) {
             best = v;
             from = { scoreId: r.scoreId, date: r.date };
+            parOfBest = h.p?.[i] != null ? Number(h.p[i]) : null;
           }
         }
         bestArr[i] = best;
         fromArr[i] = from;
+        parBestArr[i] = parOfBest;
         if (from) wins[from.scoreId] = (wins[from.scoreId] || 0) + 1;
       }
 
@@ -414,7 +423,7 @@ function recomputeECForAllCourses(
         holesArr.push({
           h: pos + 1,
           best: bestArr[pos],
-          par: parArr[pos],
+          par: parBestArr[pos] ?? parArr[pos],
           from: fromArr[pos],
         });
       }
