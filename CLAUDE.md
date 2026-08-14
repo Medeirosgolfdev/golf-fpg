@@ -662,6 +662,10 @@ node pipeline.js --skip-import 52884 && npm test && npm run build
 ```
 
 Flags: `--course`/`--tee` sobrepõem os da fonte (default: campo/tee do lookup);
+`--par n,n,...` sobrepõe o par da fonte — para quando a ORGANIZAÇÃO joga o campo
+com par diferente do homologado (caso real: WJGC 2026 jogou o Flamingos par-71
+como par 72 no buraco 10 "para não haver tantos bogeys"; a FPG manteve 71 no
+WHS — o site mostra o par do TORNEIO, o SD da FPG não muda);
 `--nota`/`--pill`/`--group`/`--link`; `--comment "..."` cria a linha `_comment_*`
 antes de entradas novas; `--dry-run`. Entradas existentes são FUNDIDAS (notas,
 links, pill, campos extra preservados). O ficheiro é editado por splice textual

@@ -33,9 +33,12 @@
  *     --tee "Boys 10-11" --nota "D3 (27-02-2026) – ..."
  *
  * Flags: --fed (default 52884) · --course/--tee (default: os da fonte) ·
- *   --pill (default INTL em entradas novas) · --group · --nota (só entradas
- *   novas ou com --force-nota) · --link <url resultados> · --comment "<texto>"
- *   (linha _comment_* antes da primeira entrada nova) · --dry-run
+ *   --par n,n,... (override do par da fonte — para quando a ORGANIZAÇÃO joga o
+ *   campo com par diferente do homologado, ex.: WJGC 2026 jogou o Flamingos
+ *   par-71 como par 72 no buraco 10) · --pill (default INTL em entradas novas) ·
+ *   --group · --nota (só entradas novas ou com --force-nota) · --link <url
+ *   resultados> · --comment "<texto>" (linha _comment_* antes da primeira
+ *   entrada nova) · --dry-run
  *
  * Depois de correr: node pipeline.js --skip-import <fed> && npm test && npm run build
  */
@@ -58,6 +61,7 @@ function parseArgs(argv) {
     else if (k === "--fed") a.fed = next();
     else if (k === "--course") a.course = next();
     else if (k === "--tee") a.tee = next();
+    else if (k === "--par") a.par = next().split(",").map((s) => Number(s.trim()));
     else if (k === "--pill") a.pill = next();
     else if (k === "--group") a.group = next();
     else if (k === "--nota") a.nota = next();
@@ -209,6 +213,15 @@ function main() {
   let txt = fs.readFileSync(MELHORIAS, "utf8");
   const melhorias = JSON.parse(txt);
   const src = a.uskids ? sourceFromUskids(a.uskids) : sourceFromEntry(melhorias, a.fed, a.copyFrom);
+  if (a.par) {
+    if (a.par.length !== src.par.length || a.par.some((v) => !Number.isInteger(v) || v < 3 || v > 6)) {
+      console.error(`--par inválido (esperado ${src.par.length} valores 3-6)`); process.exit(1);
+    }
+    const difs = a.par.map((v, i) => (v !== src.par[i] ? `${i + 1}: ${src.par[i]}→${v}` : null)).filter(Boolean);
+    console.log(`--par override (${difs.length ? difs.join(", ") : "igual à fonte"})`);
+    src.par = a.par;
+    src.fonte += " + par override da organização";
+  }
 
   const nHoles = src.par.length;
   if (nHoles !== src.meters.length) { console.error(`par (${nHoles}) e metros (${src.meters.length}) com tamanhos diferentes`); process.exit(1); }
