@@ -108,6 +108,7 @@ interface CompanionRow {
     data: string | null;
     torneioNome: string;
     torneioId: string;
+    campo: string | null;
     ronda: number;
     circuito: "FPG" | "USKids" | "Intl";
     manuelScore: Score;
@@ -115,8 +116,37 @@ interface CompanionRow {
   }>;
 }
 
+// Vista por torneio: 1 cartão por torneio, com o grupo do Manuel em cada dia/ronda.
+interface TournDayMember {
+  nome: string;
+  fed: string | null;
+  clube: string | null;
+  pais: string | null;
+  escalao: string | null;
+  score: Score;
+}
+interface TournDay {
+  ronda: number;
+  data: string | null;
+  campo: string | null;
+  teeTime: string | null;
+  startHole: number | null;
+  manuelScore: Score;
+  grupo: TournDayMember[];
+}
+interface TournView {
+  torneioId: string;
+  nome: string;
+  circuito: "FPG" | "USKids" | "Intl";
+  campo: string | null;
+  dataMin: string | null;
+  dataMax: string | null;
+  dias: TournDay[];
+}
+
 // Tabs do UI: FPG (portugueses) vs Intl (USKids + Bluegolf/GolfGenius/etc.)
 type Tab = "FPG" | "Intl";
+type ViewMode = "companheiro" | "torneio";
 type SortKey = "nome" | "escalao" | "clube" | "vezes" | "ultima";
 
 // Link externo para tee times num site que não expõe API (Bluegolf/GolfGenius)
@@ -312,6 +342,7 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
         data: r.data,
         torneioNome: r.torneioNome,
         torneioId: r.torneioId,
+        campo: r.campo,
         ronda: r.ronda,
         circuito: r.circuito,
         manuelScore: r.manuelScore,
@@ -498,6 +529,121 @@ function TorneiosList({
   );
 }
 
+// Nome de um membro do grupo → link (FPG: /jogadores/{fed}; senão ficha kids2)
+function GroupMemberLink({ nome, fed }: { nome: string; fed: string | null }) {
+  const to = fed ? `/jogadores/${fed}` : kidsUrl({ name: nome });
+  return <Link to={to} className="tourn-pname-link">{nome}</Link>;
+}
+
+// Info de saída de um dia: hora de tee + buraco de partida (quando ≠ 1)
+function teeInfo(d: TournDay): string | null {
+  const bits: string[] = [];
+  if (d.teeTime) bits.push(`🕐 ${d.teeTime}`);
+  if (d.startHole != null && d.startHole !== 1) bits.push(`buraco ${d.startHole}`);
+  return bits.length ? bits.join(" · ") : null;
+}
+
+// ── Vista por torneio ─────────────────────────────────────────────────
+// 1 cartão por torneio; dentro, o grupo do Manuel em cada dia/ronda.
+function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {torneios.map((t) => {
+        const isFpg = t.circuito === "FPG" && t.torneioId.includes("-");
+        const rangeData = t.dataMin && t.dataMax && t.dataMin !== t.dataMax
+          ? `${fmtDateShort(t.dataMin)} – ${fmtDateShort(t.dataMax)}`
+          : fmtDateShort(t.dataMax || t.dataMin);
+        return (
+          <div key={t.torneioId} className="card" style={{ margin: 0, padding: 14 }}>
+            {/* Cabeçalho do torneio */}
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
+              <CircuitBadge circuitos={new Set([t.circuito])} />
+              <h3 style={{ margin: 0, fontSize: "var(--fs-16)", fontWeight: 700 }}>
+                {isFpg ? (
+                  <Link to={linkTorneioFPG(t.torneioId)} className="courseLink">{t.nome}</Link>
+                ) : t.nome}
+              </h3>
+            </div>
+            <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 10, fontVariantNumeric: "tabular-nums" }}>
+              {rangeData}
+              {t.campo && <span> · {t.campo}</span>}
+              <span> · {t.dias.length} {t.dias.length === 1 ? "dia" : "dias"}</span>
+            </div>
+
+            {/* Um bloco por dia/ronda com o grupo do Manuel */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+              {t.dias.map((d, di) => {
+                const info = teeInfo(d);
+                return (
+                  <div
+                    key={di}
+                    style={{
+                      flex: "1 1 260px",
+                      minWidth: 0,
+                      background: "var(--bg-card)",
+                      border: "1px solid var(--border-light)",
+                      borderRadius: "var(--radius)",
+                      padding: "8px 10px",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+                      <RondaPill n={d.ronda} />
+                      <span className="muted" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums" }}>
+                        {fmtDateShort(d.data)}
+                      </span>
+                      {info && (
+                        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>{info}</span>
+                      )}
+                    </div>
+                    {/* Grupo: Manuel primeiro (destacado), depois os companheiros */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ flex: 1, minWidth: 0, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          Manuel Medeiros
+                        </span>
+                        <span style={{ fontWeight: 700, fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>
+                          {fmtScore(d.manuelScore)}
+                        </span>
+                      </div>
+                      {d.grupo.map((g, gi) => {
+                        const dot = h2hDot(d.manuelScore, g.score);
+                        return (
+                          <div key={gi} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              <GroupMemberLink nome={g.nome} fed={g.fed} />
+                              {g.escalao && (
+                                <span className="muted" style={{ fontSize: "var(--fs-11)", marginLeft: 6 }}>{g.escalao}</span>
+                              )}
+                              {!g.fed && g.pais && FLAG[g.pais] && (
+                                <span style={{ marginLeft: 4 }}>{FLAG[g.pais]}</span>
+                              )}
+                            </span>
+                            {dot && (
+                              <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
+                            )}
+                            <span className="muted" style={{ fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>
+                              {fmtScore(g.score)}
+                            </span>
+                          </div>
+                        );
+                      })}
+                      {d.grupo.length === 0 && (
+                        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>
+                          {q.trim() ? "Sem companheiros neste dia para a pesquisa." : "Sem companheiros registados neste dia."}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function DrawsPage() {
   const [data, setData] = useState<PairingsFile | null>(null);
   const [intlLinks, setIntlLinks] = useState<IntlLink[]>([]);
@@ -505,8 +651,11 @@ export default function DrawsPage() {
   const [inativos, setInativos] = useState<PlayerLite[]>([]);
   const [fedAll, setFedAll] = useState<PlayerLite[]>([]);
   const [escFilter, setEscFilter] = useState<Set<string>>(new Set());
+  const [anoFilter, setAnoFilter] = useState<Set<string>>(new Set());
+  const [q, setQ] = useState("");
   const [erro, setErro] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("FPG");
+  const [viewMode, setViewMode] = useState<ViewMode>("companheiro");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("vezes", "desc", {
     nome: "asc",
@@ -617,11 +766,109 @@ export default function DrawsPage() {
   // Agregação por companheiro
   const linhas = useMemo(() => aggregateCompanions(rondasFiltradas, lookups), [rondasFiltradas, lookups]);
 
-  // Filtro por escalão (toggle pills)
+  // Anos presentes (para o filtro por ano), do mais recente ao mais antigo
+  const anosPresentes = useMemo(() => {
+    const s = new Set<string>();
+    for (const l of linhas) for (const r of l.rondas) { const y = r.data?.slice(0, 4); if (y) s.add(y); }
+    return [...s].sort((a, b) => b.localeCompare(a));
+  }, [linhas]);
+
+  // Filtro por escalão + ano + pesquisa de texto (torneio/campo/jogador/clube).
+  // Quando o termo casa um TORNEIO/CAMPO (ou há filtro de ano activo), restringe
+  // também as rondas mostradas dentro de cada companheiro — não mostra as 7 se só
+  // 2 são do "miramar" que se procurou. Se o termo só casa a identidade do
+  // jogador (nome/clube/país), mantém todas as rondas dele.
   const linhasFiltradas = useMemo(() => {
-    if (escFilter.size === 0) return linhas;
-    return linhas.filter(r => escFilter.has(r.escalao || "—"));
-  }, [linhas, escFilter]);
+    const term = norm(q.trim());
+    const anos = anoFilter;
+    const out: CompanionRow[] = [];
+    for (const r of linhas) {
+      if (escFilter.size > 0 && !escFilter.has(r.escalao || "—")) continue;
+
+      const idMatch = !term
+        || norm(r.nome).includes(term)
+        || norm(r.clube || "").includes(term)
+        || norm(r.pais || "").includes(term);
+      const termHitsTourn = !!term && r.rondas.some(
+        rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term),
+      );
+      // Inclusão do companheiro: com termo activo, tem de casar identidade OU torneio
+      if (term && !idMatch && !termHitsTourn) continue;
+
+      let rondas = r.rondas;
+      if (anos.size > 0) rondas = rondas.filter(rd => { const y = rd.data?.slice(0, 4); return !!y && anos.has(y); });
+      if (termHitsTourn) rondas = rondas.filter(rd => norm(rd.torneioNome).includes(term) || norm(rd.campo || "").includes(term));
+      if (rondas.length === 0) continue;
+
+      if (rondas.length === r.rondas.length) { out.push(r); continue; }
+      // Recomputa agregados a partir do subconjunto visível
+      const datas = rondas.map(x => x.data).filter(Boolean) as string[];
+      out.push({
+        ...r,
+        rondas,
+        vezes: rondas.length,
+        ultimaData: datas.length ? datas.reduce((a, b) => (a > b ? a : b)) : null,
+        primeiraData: datas.length ? datas.reduce((a, b) => (a < b ? a : b)) : null,
+      });
+    }
+    return out;
+  }, [linhas, escFilter, anoFilter, q]);
+
+  // ── Vista por torneio ──────────────────────────────────────────────
+  // Re-pivota as mesmas rondas: 1 cartão por torneio, e dentro dele o grupo
+  // do Manuel em cada dia/ronda (cada Round já traz os companheiros do flight
+  // + teeTime + startHole). Respeita o tab, o filtro de ano e a pesquisa.
+  const torneiosView = useMemo<TournView[]>(() => {
+    const term = norm(q.trim());
+    const anos = anoFilter;
+    const byT = new Map<string, Round[]>();
+    for (const r of rondasFiltradas) {
+      if (r.ronda < 0) continue; // "conhecido" sem ronda jogada não é um dia de draw
+      if (anos.size > 0) { const y = r.data?.slice(0, 4); if (!(y && anos.has(y))) continue; }
+      const a = byT.get(r.torneioId) || [];
+      a.push(r);
+      byT.set(r.torneioId, a);
+    }
+    const out: TournView[] = [];
+    for (const [tid, rs] of byT) {
+      const dias: TournDay[] = rs
+        .slice()
+        .sort((a, b) => (a.ronda - b.ronda) || (a.data || "").localeCompare(b.data || ""))
+        .map(r => ({
+          ronda: r.ronda,
+          data: r.data,
+          campo: r.campo,
+          teeTime: r.teeTime,
+          startHole: r.startHole,
+          manuelScore: r.manuelScore,
+          grupo: r.companheiros.map(c => {
+            const id = resolveCompanion(c, lookups);
+            const esc = escalaoAtDate(id.dob, r.data) || MANUAL_ESCALAO[norm(id.nome)] || null;
+            return { nome: id.nome, fed: id.fed, clube: c.clube, pais: c.pais, escalao: esc, score: c.score };
+          }),
+        }));
+      const nome = rs[0].torneioNome;
+      const datas = rs.map(x => x.data).filter(Boolean) as string[];
+      const view: TournView = {
+        torneioId: tid,
+        nome,
+        circuito: rs[0].circuito,
+        campo: rs.find(x => x.campo)?.campo || null,
+        dataMin: datas.length ? datas.reduce((a, b) => (a < b ? a : b)) : null,
+        dataMax: datas.length ? datas.reduce((a, b) => (a > b ? a : b)) : null,
+        dias,
+      };
+      if (term) {
+        const hit = norm(nome).includes(term)
+          || norm(view.campo || "").includes(term)
+          || dias.some(d => d.grupo.some(g => norm(g.nome).includes(term) || norm(g.clube || "").includes(term)));
+        if (!hit) continue;
+      }
+      out.push(view);
+    }
+    out.sort((a, b) => (b.dataMax || "").localeCompare(a.dataMax || ""));
+    return out;
+  }, [rondasFiltradas, lookups, anoFilter, q]);
 
   // Ordenação
   const linhasOrdenadas = useMemo(() => {
@@ -792,6 +1039,22 @@ export default function DrawsPage() {
         ))}
       </div>
 
+      {/* Vista — por companheiro (default) ou por torneio (draws por dia) */}
+      <div className="segmented-toggle mb-16" role="tablist" aria-label="Vista">
+        {(["companheiro", "torneio"] as ViewMode[]).map((v) => (
+          <button
+            key={v}
+            type="button"
+            role="tab"
+            aria-selected={viewMode === v}
+            className={`seg-btn${viewMode === v ? " active" : ""}`}
+            onClick={() => setViewMode(v)}
+          >
+            <span className="seg-label">{v === "companheiro" ? "👥 Por companheiro" : "🏆 Por torneio"}</span>
+          </button>
+        ))}
+      </div>
+
       {/* Conteúdo */}
       <div>
         {erro && (
@@ -804,8 +1067,10 @@ export default function DrawsPage() {
           <LoadingState size="sm" message="A carregar pairings…" />
         )}
 
-        {data && linhasOrdenadas.length === 0 && (
-          <EmptyState message="Sem dados para este torneio." />
+        {data && (viewMode === "companheiro" ? linhasOrdenadas.length === 0 : torneiosView.length === 0) && (
+          <EmptyState message={q.trim()
+            ? `Nenhum ${viewMode === "companheiro" ? "companheiro" : "torneio"} encontrado para "${q.trim()}".`
+            : "Sem dados para este circuito."} />
         )}
 
         {/* Aviso de rondas sem draw scrapado (só FPG) */}
@@ -831,8 +1096,71 @@ export default function DrawsPage() {
           </div>
         )}
 
-        {/* Filtro por escalão */}
-        {data && linhas.length > 0 && escaloesPresentes.length > 1 && (
+        {/* Pesquisa — por torneio, campo, jogador ou clube */}
+        {data && linhas.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+            <input
+              className="input"
+              value={q}
+              onChange={e => setQ(e.target.value)}
+              placeholder="Pesquisar por torneio, campo, jogador ou clube…"
+              aria-label="Pesquisar companheiros por torneio, campo, jogador ou clube"
+              style={{ maxWidth: 340, flex: "1 1 240px" }}
+            />
+            {q.trim() && (
+              <>
+                <span className="muted fs-12" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  {viewMode === "companheiro"
+                    ? `${linhasOrdenadas.length} ${linhasOrdenadas.length === 1 ? "companheiro" : "companheiros"}`
+                    : `${torneiosView.length} ${torneiosView.length === 1 ? "torneio" : "torneios"}`}
+                </span>
+                <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setQ("")}>
+                  limpar
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Filtro por ano */}
+        {data && linhas.length > 0 && anosPresentes.length > 1 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+            <span className="h-xs" style={{ margin: 0, marginRight: 2 }}>Ano:</span>
+            {anosPresentes.map(y => {
+              const active = anoFilter.has(y);
+              return (
+                <button
+                  key={y}
+                  type="button"
+                  onClick={() => setAnoFilter(prev => {
+                    const next = new Set(prev);
+                    next.has(y) ? next.delete(y) : next.add(y);
+                    return next;
+                  })}
+                  className="p p-sm"
+                  style={{
+                    cursor: "pointer",
+                    fontVariantNumeric: "tabular-nums",
+                    border: active ? "1.5px solid var(--accent)" : "1.5px solid var(--border)",
+                    background: active ? "var(--accent-light)" : "transparent",
+                    color: active ? "var(--accent)" : "var(--text-2)",
+                    fontWeight: active ? 700 : 600,
+                  }}
+                >
+                  {y}
+                </button>
+              );
+            })}
+            {anoFilter.size > 0 && (
+              <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setAnoFilter(new Set())}>
+                limpar
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Filtro por escalão — só na vista por companheiro */}
+        {data && viewMode === "companheiro" && linhas.length > 0 && escaloesPresentes.length > 1 && (
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
             <span className="h-xs" style={{ margin: 0, marginRight: 2 }}>Escalão:</span>
             {escaloesPresentes.map(e => {
@@ -868,7 +1196,11 @@ export default function DrawsPage() {
           </div>
         )}
 
-        {data && linhasOrdenadas.length > 0 && (
+        {data && viewMode === "torneio" && torneiosView.length > 0 && (
+          <TorneiosView torneios={torneiosView} q={q} />
+        )}
+
+        {data && viewMode === "companheiro" && linhasOrdenadas.length > 0 && (
           <div style={{
             display: tab === "FPG" ? "flex" : "block",
             gap: 16,
@@ -903,7 +1235,9 @@ export default function DrawsPage() {
               </thead>
               <tbody>
                 {linhasOrdenadas.map((row) => {
-                  const open = expanded.has(row.key);
+                  // Ao pesquisar (ou filtrar por ano), auto-expande os resultados
+                  // para se ver logo a(s) ronda(s) partilhada(s) sem clicar em cada um.
+                  const open = q.trim() !== "" || anoFilter.size > 0 || expanded.has(row.key);
                   const rank = rankByVezes.get(row.key) || 0;
                   const medal = MEDALS[rank];
                   return (
@@ -1008,6 +1342,9 @@ export default function DrawsPage() {
                                         <Link to={`/FPG/torneio/${r.torneioId}`} className="courseLink">{r.torneioNome}</Link>
                                       ) : (
                                         r.torneioNome
+                                      )}
+                                      {r.campo && (
+                                        <span className="muted" style={{ fontSize: "var(--fs-11)", marginLeft: 6 }}>· {r.campo}</span>
                                       )}
                                     </span>
                                     <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
