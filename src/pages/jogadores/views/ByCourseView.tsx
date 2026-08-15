@@ -1,15 +1,17 @@
 /**
  * src/pages/jogadores/views/ByCourseView.tsx
  *
- * Vistas "Por campo" e "Análise por campo": tabela de campos com linha
- * expansível (eclectic, hole stats, resumo por tee, rondas + scorecards).
+ * Vista "⛳ Campos": tabela de campos com linha expansível SEMPRE rica
+ * (eclectic, hole stats, evolução, rondas + scorecards). A antiga dualidade
+ * "Por campo" simples vs "Análise por campo" foi consolidada em 2026-08-15
+ * (a TeeSummaryTable do modo simples morreu — o EclecticSection já cobre o
+ * resumo por tee); o deep-link legado ?view=by_course_analysis mapeia aqui.
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { PlayerPageData, CourseData, RoundData } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
-import { numSafe, meanArr, minArr } from "../../../utils/mathUtils";
-import { fmtStb, sdClassByHcp } from "../../../utils/scoreDisplay";
+import { fmtStb } from "../../../utils/scoreDisplay";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { HoleBadge, GrossCell, SdCell, CountPill, RoundNumericCells } from "../../../ui/tableCells";
@@ -25,88 +27,8 @@ import { EventInfo, effectivePill } from "../eventInfo";
 import { scHostStyle, type CourseSort } from "../shared";
 import CoursePerformanceSection from "./CoursePerformanceSection";
 
-/* ─── Tee Summary Table (compact, for simple by_course view) ─── */
-function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
-  const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "melhor" | "media_gr" | "media_stb" | "media_sd">("rondas", "desc", {
-    melhor: "asc", media_gr: "asc", media_sd: "asc", media_stb: "desc",
-  });
-
-  const tees = useMemo(() => {
-    const map: Record<string, { tee: string; count: number; gross: number[]; stb: number[]; sd: number[]; hi: (number | null)[] }> = {};
-    rounds.forEach(r => {
-      const tk = normKey(r.tee || "?");
-      if (!map[tk]) map[tk] = { tee: r.tee || "?", count: 0, gross: [], stb: [], sd: [], hi: [] };
-      map[tk].count++;
-      const g = numSafe(r.gross);
-      if (g != null && g > 30) map[tk].gross.push(g);
-      const s = numSafe(r.stb);
-      if (s != null) map[tk].stb.push(s);
-      const d = numSafe(r.sd);
-      if (d != null) map[tk].sd.push(d);
-      map[tk].hi.push(r.hi != null ? Number(r.hi) : null);
-    });
-    let result = Object.values(map);
-    const dir = sortDir === "asc" ? 1 : -1;
-    result.sort((a, b) => {
-      let av: number, bv: number;
-      switch (sortKey) {
-        case "rondas": av = a.count; bv = b.count; break;
-        case "melhor": av = minArr(a.gross) ?? 999; bv = minArr(b.gross) ?? 999; break;
-        case "media_gr": av = meanArr(a.gross) ?? 0; bv = meanArr(b.gross) ?? 0; break;
-        case "media_stb": av = meanArr(a.stb) ?? 0; bv = meanArr(b.stb) ?? 0; break;
-        case "media_sd": av = meanArr(a.sd) ?? 0; bv = meanArr(b.sd) ?? 0; break;
-        default: av = a.count; bv = b.count;
-      }
-      return dir * (av - bv);
-    });
-    return result;
-  }, [rounds, sortKey, sortDir]);
-
-  if (tees.length <= 1) return null; // No point showing if only 1 tee
-
-  return (
-    <div className="mb-10">
-      <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <table className="dtable ec-summary" style={{ marginBottom: 0 }}>
-        <thead>
-          <tr>
-            <th>Tee</th>
-            <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
-            <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Melhor</SortableHdr>
-            <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Gr.</SortableHdr>
-            <SortableHdr k="media_stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Stb</SortableHdr>
-            <SortableHdr k="media_sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média SD</SortableHdr>
-          </tr>
-        </thead>
-        <tbody>
-          {tees.map(t => {
-            const avgG = meanArr(t.gross);
-            const minG = minArr(t.gross);
-            const avgStb = meanArr(t.stb);
-            const avgSd = meanArr(t.sd);
-            return (
-              <tr key={t.tee}>
-                <td><TeePill name={t.tee} /></td>
-                <td className="r fw-600">{t.count}</td>
-                <td className="r fw-600 cb-par-ok">{minG ?? "–"}</td>
-                <td className="r fw-600">{avgG?.toFixed(1) ?? "–"}</td>
-                <td className="r fw-600">{avgStb?.toFixed(1) ?? "–"}</td>
-                <td className="r">{avgSd != null ? (
-                  <span className={`p p-sm p-${sdClassByHcp(avgSd, meanArr(t.hi) ?? null)}`}>
-                    {avgSd.toFixed(1)}
-                  </span>
-                ) : "–"}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId }: {
-  course: CourseData; data: PlayerPageData; isAnalysis: boolean;
+function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
+  course: CourseData; data: PlayerPageData;
   openScorecard: (id: string) => void; openScorecardId: string | null;
 }) {
   const [open, setOpen] = useState(false);
@@ -126,16 +48,16 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
   const holeStats = data.HOLE_STATS[courseKey] || {};
   const courseLinkKey = findCourseKey(course.course);
 
-  // Na análise por campo, auto-seleccionar o tee com mais voltas quando se abre o detalhe
-  // (caso o utilizador ainda não tenha feito escolha explícita). Assim os gráficos aparecem
-  // logo, em vez de exigir um clique prévio.
+  // Auto-seleccionar o tee com mais voltas quando se abre o detalhe (caso o
+  // utilizador ainda não tenha feito escolha explícita). Assim os gráficos
+  // aparecem logo, em vez de exigir um clique prévio.
   useEffect(() => {
-    if (!open || !isAnalysis || activeTee) return;
+    if (!open || activeTee) return;
     const keys = Object.keys(holeStats);
     if (keys.length === 0) return;
     const best = keys.reduce((a, b) => ((holeStats[a]?.nRounds ?? 0) >= (holeStats[b]?.nRounds ?? 0) ? a : b));
     setActiveTee(best);
-  }, [open, isAnalysis, activeTee, holeStats]);
+  }, [open, activeTee, holeStats]);
 
   // Handler de clique manual num tee — só muda o filtro (sem scroll automático).
   // Toggle: clicar no tee já activo limpa o filtro.
@@ -183,36 +105,30 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 rotatedCount={countRotatedRounds(course.rounds, data.HOLES as Record<string, { _rotated?: number }>)}
                 totalRounds={course.rounds.length}
               />
-              {isAnalysis && (
-                <>
-                  {/* Eclectic */}
-                  {ecList.length > 0 && (
-                    <EclecticSection ecList={ecList} ecDet={ecDet}
-                      courseRounds={course.rounds} holesData={data.HOLES}
-                      activeTee={activeTee} onSelectTee={handleSelectTee} />
-                  )}
-                  {/* Hole Stats for active tee (logo a seguir ao Eclético, por ser o detalhe do tee seleccionado) */}
-                  {activeTee && holeStats[activeTee] && (
-                    <div id="hole-stats-section">
-                      <HoleStatsSection stats={holeStats[activeTee]} />
-                    </div>
-                  )}
-                  {/* Course Performance Analysis (agnóstico ao tee seleccionado) */}
-                  <CoursePerformanceSection rounds={roundsView} />
-                </>
+              {/* Eclectic */}
+              {ecList.length > 0 && (
+                <EclecticSection ecList={ecList} ecDet={ecDet}
+                  courseRounds={course.rounds} holesData={data.HOLES}
+                  activeTee={activeTee} onSelectTee={handleSelectTee} />
               )}
-              {/* Tee Summary — só no modo não-análise (no modo análise o EclecticSection já cobre) */}
-              {!isAnalysis && <TeeSummaryTable rounds={course.rounds} />}
-              {/* Rounds table — no modo análise com tee activo, as rondas com scorecard já aparecem no
-                  bloco do Eclético (com HCP/Stb/SD à direita). Aqui mostramos apenas rondas SEM scorecard
-                  (para não perder dados) e todas as rondas no modo não-análise ou sem tee seleccionado. */}
+              {/* Hole Stats for active tee (logo a seguir ao Eclético, por ser o detalhe do tee seleccionado) */}
+              {activeTee && holeStats[activeTee] && (
+                <div id="hole-stats-section">
+                  <HoleStatsSection stats={holeStats[activeTee]} />
+                </div>
+              )}
+              {/* Course Performance Analysis (agnóstico ao tee seleccionado) */}
+              <CoursePerformanceSection rounds={roundsView} />
+              {/* Rounds table — com tee activo, as rondas com scorecard já aparecem no
+                  bloco do Eclético (com HCP/Stb/SD à direita). Aqui mostramos apenas rondas SEM
+                  scorecard (para não perder dados) e todas as rondas sem tee seleccionado. */}
               {(() => {
                 const hasCardIds = new Set(
-                  isAnalysis && activeTee
+                  activeTee
                     ? course.rounds.filter(r => normKey(r.tee || "") === activeTee && data.HOLES[r.scoreId]).map(r => r.scoreId)
                     : []
                 );
-                const rowsToShow = isAnalysis && activeTee
+                const rowsToShow = activeTee
                   ? roundsView.filter(r => !hasCardIds.has(r.scoreId))
                   : roundsView;
                 if (rowsToShow.length === 0) return null;
@@ -221,7 +137,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                     rows={rowsToShow}
                     data={data}
                     courseName={course.course}
-                    note={isAnalysis && activeTee ? "Rondas sem scorecard detalhado neste tee:" : null}
+                    note={activeTee ? "Rondas sem scorecard detalhado neste tee:" : null}
                     openScorecardId={openScorecardId}
                     openScorecard={openScorecard}
                   />
@@ -344,8 +260,8 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
   );
 }
 
-export default function ByCourseView({ data, search, sort, isAnalysis }: {
-  data: PlayerPageData; search: string; sort: CourseSort; isAnalysis: boolean;
+export default function ByCourseView({ data, search, sort }: {
+  data: PlayerPageData; search: string; sort: CourseSort;
 }) {
   const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
   type ColKey = "course" | "voltas" | "ultima" | "gross" | "stb" | "sd";
@@ -430,7 +346,7 @@ export default function ByCourseView({ data, search, sort, isAnalysis }: {
                 remontava as linhas e perdia o estado aberto/tee seleccionado. */}
             {list.map(c => (
               <ByCourseRow key={c.course} course={c} data={data}
-                isAnalysis={isAnalysis} openScorecard={setOpenScorecardId} openScorecardId={openScorecardId} />
+                openScorecard={setOpenScorecardId} openScorecardId={openScorecardId} />
             ))}
           </tbody>
         </table>

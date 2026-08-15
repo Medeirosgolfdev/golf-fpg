@@ -24,8 +24,9 @@ import FederadoRoundsTable, { type RoundExtra } from "./FederadoRoundsTable";
 import {
   FEDERADO_SECTIONS, FEDERADO_TECHNICAL_FIELDS,
   FEDERADO_FIELD_LABELS, FEDERADO_FIELD_DESCRIPTIONS,
-  formatFedValue, KV,
+  formatFedValue, KV, normalizeAgeLabel,
 } from "./federadoFields";
+import IdentityPills from "./IdentityPills";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross). A tabela mostra no
  *  máximo 200 rondas; sem tecto, um federado veterano com 400+ rondas WHS
@@ -189,7 +190,21 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               </>
             }
             sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}
-          />
+          >
+            {/* Linha de identidade partilhada com o PlayerDetail — os 2 mundos
+                do detalhe abrem com os mesmos pills. */}
+            <div style={{ marginTop: 6 }}>
+              <IdentityPills
+                fed={f.federation_code}
+                sex={f.gender}
+                dob={f.birthdate}
+                escalao={f.age_level ? normalizeAgeLabel(f.age_level) : null}
+                club={f.acronym || f.club_name || null}
+                countryPrefix={f.country_prefix}
+                country={f.country}
+              />
+            </div>
+          </DetailHeader>
         </div>
       </div>
       {(() => {

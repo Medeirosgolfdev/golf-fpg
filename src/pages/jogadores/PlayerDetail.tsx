@@ -1,9 +1,12 @@
 /**
  * src/pages/jogadores/PlayerDetail.tsx
  *
- * Detalhe rico de um jogador "Nossos" (data.json local): header com pills +
- * KPI strip + selector de vistas (Por campo / Análise por campo / Por data /
- * Por torneio / Análises) e as vistas especiais ?view=federado e ?view=pp.
+ * Detalhe rico de um jogador "Nossos" (data.json local): header com pills
+ * de identidade (IdentityPills, partilhados com o FederadoOnlyDetail) + KPI
+ * strip + dropdown de vistas consolidado em 3 (🗓 Rondas com agrupamento
+ * Data|Torneio · ⛳ Campos · 📊 Análises) e as vistas especiais
+ * ?view=federado e ?view=pp. Deep-links legados (?view=by_tournament /
+ * by_course_analysis) continuam válidos — mapeiam para o bucket respectivo.
  */
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -15,11 +18,11 @@ import { loadFederados, type FederadoRaw, type MergedPlayer } from "../../data/f
 import { loadFederadosPP, ppForFed, hasRealPPHcp, ppPlayerUrl, type FederadoPP } from "../../data/federadosPPLoader";
 import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../../utils/playedDistance";
 import { acesFromHoleScores } from "../../utils/aces";
-import { escCls, clubLong } from "../../utils/playerUtils";
-import SexBadge from "../../ui/SexBadge";
+import { clubLong } from "../../utils/playerUtils";
 import LoadingState from "../../ui/LoadingState";
 import { ByTournamentView } from "../../ui/ByTournamentView";
 import PPHistoryView from "./PPHistoryView";
+import IdentityPills from "./IdentityPills";
 import FederadoOnlyDetail from "./FederadoOnlyDetail";
 import { syntheticFederadoFromPlayer } from "./syntheticFederado";
 import PlayerKpiStrip from "./PlayerKpiStrip";
@@ -181,6 +184,13 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
   const latestHcp = data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
   const meta = data?.META;
 
+  /* Bucket do dropdown consolidado (3 opções): as vistas legadas mapeiam para
+     o seu bucket — by_tournament → Rondas, by_course_analysis → Campos. */
+  const viewBucket: "by_date" | "by_course" | "analysis" =
+    view === "by_tournament" ? "by_date"
+    : view === "by_course_analysis" ? "by_course"
+    : view;
+
   // Vista "como federado": renderiza FederadoOnlyDetail com um _federadoRaw
   // sintético (Nossos não têm um real). Útil para ver a ficha base FPG +
   // rondas WHS live em tempo real, sem o overlay rico de análise.
@@ -251,8 +261,18 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               )}
             </div>
             <div className="dh-statline">
-            <div className="jog-pills">
-              <span className="p p-fed">#{selected.fed}</span>
+            {/* Identidade partilhada com o FederadoOnlyDetail (IdentityPills);
+                pills específicos deste mundo (P&P, tags, aces) via children.
+                HCP, campos, voltas e rondas do ano saíram dos pills — são KPI. */}
+            <IdentityPills
+              fed={selected.fed}
+              sex={selected.sex}
+              dob={selected.dob}
+              escalao={selected.escalao ? (meta?.escalao || selected.escalao) : null}
+              club={meta?.club || clubLong(selected) || null}
+              countryPrefix={(selected as unknown as MergedPlayer)._federadoRaw?.country_prefix}
+              country={(selected as unknown as MergedPlayer)._federadoRaw?.country}
+            >
               {pp && hasRealPPHcp(pp) && (
                 <span
                   className="p"
@@ -261,14 +281,9 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   style={{ cursor: "pointer", background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}
                 >🏑 P&amp;P {pp.hcp}</span>
               )}
-              <SexBadge sex={selected.sex} size="md" />
-              {selected.dob && <span className="p p-birth" title={`Data de nascimento: ${selected.dob.split("-").reverse().join("/")}`}>{selected.dob.slice(0, 4)}</span>}
-              {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
-              {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
               {selected.tags?.filter(t => t !== "no-priority").map(t => (
                 <span key={t} className="p p-outline">{t}</span>
               ))}
-              {/* HCP, campos, voltas e rondas do ano saíram dos pills — agora são KPI. */}
               {pp && (pp.roundsYear || 0) > 0 && (
                 <span className="p p-outline" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
                   P&amp;P: {pp.roundsYear} em {curYear}
@@ -285,7 +300,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   🕳️ {aces.length} hole-in-one
                 </span>
               )}
-            </div>
+            </IdentityPills>
             {data && <PlayerKpiStrip data={data} currentHcp={latestHcp} roundsThisYear={roundsThisYear} />}
             </div>
           </div>
@@ -294,15 +309,34 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               <div className="pa-controls-left">
                 <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
                   onChange={e => setCourseSearch(e.target.value)} />
-                <select className="select" value={view}
+                {/* Consolidação 5→3 (2026-08-15): Rondas funde "Por data" +
+                    "Por torneio" (agrupamento no segmented ao lado); Campos
+                    absorve a "Análise por campo" (o detalhe expandido mostra
+                    sempre a análise rica). Deep-links legados (?view=
+                    by_tournament / by_course_analysis) continuam válidos. */}
+                <select className="select" value={viewBucket}
                   onChange={e => setView(e.target.value as ViewKey)}>
-                  <option value="by_course">Por campo</option>
-                  <option value="by_course_analysis">Análise por campo</option>
-                  <option value="by_date">Por data</option>
-                  <option value="by_tournament">Por torneio</option>
-                  <option value="analysis">Análises</option>
+                  <option value="by_date">🗓 Rondas</option>
+                  <option value="by_course">⛳ Campos</option>
+                  <option value="analysis">📊 Análises</option>
                 </select>
-                {(view === "by_course" || view === "by_course_analysis") && (
+                {viewBucket === "by_date" && (
+                  <div className="segmented-toggle" role="tablist" aria-label="Agrupamento das rondas">
+                    <button role="tab" aria-selected={view !== "by_tournament"}
+                      className={`seg-btn ${view !== "by_tournament" ? "active" : ""}`}
+                      onClick={() => setView("by_date")}
+                      title="Todas as rondas por ordem cronológica">
+                      <span className="seg-label">Data</span>
+                    </button>
+                    <button role="tab" aria-selected={view === "by_tournament"}
+                      className={`seg-btn ${view === "by_tournament" ? "active" : ""}`}
+                      onClick={() => setView("by_tournament")}
+                      title="Rondas agrupadas por torneio (multi-ronda junto)">
+                      <span className="seg-label">Torneio</span>
+                    </button>
+                  </div>
+                )}
+                {viewBucket === "by_course" && (
                   <select className="select" value={courseSort}
                     onChange={e => setCourseSort(e.target.value as CourseSort)}>
                     <option value="last_desc">Mais recente</option>
@@ -323,11 +357,11 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
         <div className="player-embed-error">Não foi possível carregar: {error}</div>
       ) : (
         <>
-          {/* View content */}
+          {/* View content — Campos é sempre a versão rica (a antiga "Análise
+              por campo"); o deep-link legado by_course_analysis cai aqui. */}
           <div className="pa-content">
-            {(view === "by_course" || view === "by_course_analysis") && (
-              <ByCourseView data={data} search={courseSearch} sort={courseSort}
-                isAnalysis={view === "by_course_analysis"} />
+            {viewBucket === "by_course" && (
+              <ByCourseView data={data} search={courseSearch} sort={courseSort} />
             )}
             {view === "by_date" && (
               <ByDateView data={data} search={courseSearch} />
