@@ -263,10 +263,10 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   lado a lado era confuso; o link externo vive na vista P&P. */}
               <PlayerExtLinks fed={selected.fed} includePP={!pp} />
             </div>
-            <div className="dh-statline">
-            {/* Identidade partilhada com o FederadoOnlyDetail (IdentityPills);
-                pills específicos deste mundo (P&P, tags, aces) via children.
-                HCP, campos, voltas e rondas do ano saíram dos pills — são KPI. */}
+            {/* Identidade e KPIs em linhas SEPARADAS e fixas (2026-08-15: no
+                mesmo flex-wrap fundiam-se numa linha única quando não havia
+                foto). O handicap P&P vive nos KPIs, ao lado do índice normal
+                — é um handicap, não um facto de cadastro. */}
             <IdentityPills
               fed={selected.fed}
               sex={selected.sex}
@@ -276,17 +276,6 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               countryPrefix={(selected as unknown as MergedPlayer)._federadoRaw?.country_prefix}
               country={(selected as unknown as MergedPlayer)._federadoRaw?.country}
             >
-              {/* Handicap P&P como pill de identidade PURA — sem emoji nem cor
-                  (2026-08-15, pedido da utilizadora); o clique continua a abrir
-                  a vista P&P. */}
-              {pp && hasRealPPHcp(pp) && (
-                <span
-                  className="p p-ident"
-                  onClick={() => setPpView(true)}
-                  title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-                  style={{ cursor: "pointer" }}
-                >P&amp;P {pp.hcp}</span>
-              )}
               {selected.tags?.filter(t => t !== "no-priority").map(t => (
                 <span key={t} className="p p-ident">{t}</span>
               ))}
@@ -309,8 +298,11 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                 </span>
               )}
             </IdentityPills>
-            {data && <PlayerKpiStrip data={data} currentHcp={latestHcp} roundsThisYear={roundsThisYear} />}
-            </div>
+            {data && (
+              <PlayerKpiStrip data={data} currentHcp={latestHcp} roundsThisYear={roundsThisYear}
+                ppHcp={pp && hasRealPPHcp(pp) ? pp.hcp : null}
+                onPpClick={() => setPpView(true)} />
+            )}
           </div>
           <div className="dh-right">
             {data && (

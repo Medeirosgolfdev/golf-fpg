@@ -10,8 +10,12 @@ import type { PlayerPageData, RoundData } from "../../data/playerDataLoader";
 import { numSafe, meanArr } from "../../utils/mathUtils";
 import UiKpiCard from "../../ui/KpiCard";
 
-export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear }: {
+export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp, onPpClick }: {
   data: PlayerPageData; currentHcp: number | null; roundsThisYear: number;
+  /** Handicap Pitch & Putt — mostrado ao LADO do índice normal (é um
+   *  handicap, não um facto de cadastro). Clique abre a vista P&P. */
+  ppHcp?: number | string | null;
+  onPpClick?: () => void;
 }) {
   const k = useMemo(() => {
     const arr: (RoundData & { course: string })[] = [];
@@ -41,6 +45,13 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear }: {
           : k.idxDelta < -0.05 ? "good"   /* índice desceu → melhorou → verde */
           : k.idxDelta > 0.05 ? "danger"  /* índice subiu → piorou → vermelho */
           : null} />
+      {ppHcp != null && (
+        <span onClick={onPpClick}
+          style={{ display: "inline-flex", cursor: onPpClick ? "pointer" : undefined }}
+          title="Handicap Pitch & Putt — clica para ver o histórico P&P">
+          <UiKpiCard size="sm" label="P&P" value={ppHcp} sub="pitch & putt" />
+        </span>
+      )}
       <UiKpiCard size="sm" label="Voltas" value={k.totalRounds} sub={`${k.totalCourses} campos`} />
       <UiKpiCard size="sm" label={`Rondas ${curY}`} value={roundsThisYear}
         sub={k.roundsPrevYear > 0 ? `vs ${k.roundsPrevYear} em ${curY - 1}` : undefined} />

@@ -873,9 +873,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-lastupd { font-size: 9.5px; color: var(--text-3); white-space: nowrap; }
 /* pills + KPI fluem na mesma linha (KPI logo a seguir aos pills, a preencher
    o meio que estava vazio — sem margin-auto, agrupados). */
-.dh-statline { display: flex; align-items: center; gap: 4px 10px; flex-wrap: wrap; }
-.dh-statline .jog-pills { margin: 0; }
-.dh-statline .jog-kpi-strip { margin: 0; }
+/* .dh-statline REMOVIDO 2026-08-15 — juntava identidade+KPIs num flex-wrap
+   e sem foto fundiam-se numa linha única; agora são filhos directos do
+   .dh-idblock (coluna), cada um na sua linha. */
+.dh-idblock .jog-pills { margin: 0; }
+.dh-idblock .jog-kpi-strip { margin: 0; }
 @media (max-width: 700px) {
   .dh-top { flex-wrap: wrap; }
   .dh-right { align-items: flex-start; width: 100%; }
