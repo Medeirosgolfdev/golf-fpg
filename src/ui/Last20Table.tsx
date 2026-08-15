@@ -62,7 +62,7 @@ function EventInfo({ name, origin }: {
 
 const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden", width: "fit-content", maxWidth: "calc(100% - 16px)" };
 
-export function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
+export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
   best8: Map<string, number>;
@@ -114,8 +114,10 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }
   const shProps = { sortKey, sortDir, onSort: toggleSort };
 
   return (
-    <div className="card">
-      <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>
+    // bare = já vive dentro de um CollapseCard com título próprio (AnalysisView)
+    // — sem cartão-dentro-de-cartão nem título duplicado; a legenda mantém-se.
+    <div className={bare ? undefined : "card"}>
+      {!bare && <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>}
       <div className="muted mb-8 fs-11">
         <b>WHS#</b> = posição na janela WHS (só rondas com SD contam) · ★ = top-8 SDs · <b>*</b> = Stableford normalizado 9B→18B · <span style={{ opacity: 0.45 }}>Esbatido</span> = fora da janela · Clica nos cabeçalhos para ordenar
       </div>

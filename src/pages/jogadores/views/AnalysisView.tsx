@@ -101,8 +101,35 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
   return (
     <div className="an-wrap">
 
-      {/* ── KPIs ── */}
-      <CollapseCard title="Indicadores" icon="📊" defaultOpen={true}>
+      {/* ═══ Hierarquia da vista (2026-08-15, pedido da utilizadora): o
+          PRINCIPAL é a janela WHS — as 20 rondas de onde saem os 8 SDs do
+          handicap — e o simulador de rondas. Vêm primeiro e ABERTOS; os
+          indicadores derivados e a comparação ficam recolhidos abaixo. ═══ */}
+
+      {/* ── 1. Janela WHS — as 20 rondas do handicap (com o detalhe do
+             cálculo em cima, para a ligação índice ← 8 melhores ser óbvia) ── */}
+      <CollapseCard title="Janela WHS — as 20 rondas do handicap" icon="📋" defaultOpen={true}>
+        {data.HCP_INFO?.current != null && (
+          <div className="fs-12 mb-8" style={{ color: "var(--text-2)" }}>
+            O índice <b>{Number(data.HCP_INFO.current).toFixed(1)}</b> é a média dos{" "}
+            <b>{data.HCP_INFO.qtyCalc || 8} melhores</b> Score Differentials (marcados com ★)
+            das últimas <b>{data.HCP_INFO.qtyScores ?? 20}</b> rondas com SD — cada ronda nova
+            empurra a mais antiga para fora da janela.
+          </div>
+        )}
+        <div className="mb-12">
+          <WHSDetail hcp={data.HCP_INFO} bare />
+        </div>
+        <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
+      </CollapseCard>
+
+      {/* ── 2. Simulador de rondas ("e se…?") ── */}
+      <CollapseCard title="Simulador de rondas" icon="🎯" defaultOpen={true}>
+        <RoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
+      </CollapseCard>
+
+      {/* ── 3+. Indicadores derivados — recolhidos ── */}
+      <CollapseCard title="Indicadores de forma" icon="📊" defaultOpen={false}>
         <div className="flex-wrap" style={{ display: "flex", gap: 10 }}>
           <KPICard title="SD Médio · Últ. 5" val={sdLast5?.toFixed(1) ?? null}
             delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
@@ -136,7 +163,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
       </CollapseCard>
 
       {/* ── Histogram + Trajectory + Records ── */}
-      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={true}>
+      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={false}>
         <div className="an-grid3" style={{ marginBottom: 0 }}>
           <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
           <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
@@ -144,23 +171,11 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
         </div>
       </CollapseCard>
 
-      {/* ── WHS Detail ── */}
-      <CollapseCard title="Handicap — Detalhe WHS" icon="🏌️" defaultOpen={false}>
-        <WHSDetail hcp={data.HCP_INFO} bare />
-      </CollapseCard>
-
-      {/* ── Round Simulator (SD + Próxima Ronda combinados) ── */}
-      <CollapseCard title="Simulador de Rondas" icon="🎯" defaultOpen={false}>
-        <RoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
-      </CollapseCard>
-
-      {/* ── Last 20 Table ── */}
-      <CollapseCard title="Janela WHS — Últimas Rondas" icon="📋" defaultOpen={false}>
-        <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
-      </CollapseCard>
-
-      {/* ── Cross Analysis ── */}
-      <CollapseCard title="Análise por Campo" icon="🗺️" defaultOpen={false}>
+      {/* ── Cross Analysis — comparação com os OUTROS jogadores do mesmo
+          escalão (CROSS_DATA), não análise de campos. O título antigo
+          "Análise por Campo" 🗺️ era um desalinhamento histórico do monólito
+          (corrigido 2026-08-15 — a análise por campo vive na vista ⛳ Campos). */}
+      <CollapseCard title="Comparação por escalão" icon="🆚" defaultOpen={false}>
         <CrossAnalysis data={data} bare />
       </CollapseCard>
 
