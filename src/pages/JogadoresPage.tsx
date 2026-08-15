@@ -107,10 +107,19 @@ export default function JogadoresPage() {
   const [showStats, setShowStats] = useState(initialState.showStats);
   const [drillDown, setDrillDown] = useState<{ type: "club" | "age"; key: string } | null>(null);
   const [hcpBinDrill, setHcpBinDrill] = useState<string | null>(null);
-  const MAX_SIDEBAR_ITEMS = 2000;  // era 500 — subido 2026-04-15 para permitir encontrar jogadores com nomes comuns sem refinar filtros
-  // Escalões jovens (Sub-*) — quando o filtro só tem jovens, levantamos o cap
-  // porque são poucos e o user quer ver todos sem ter de refinar mais
+  // Escalões jovens (Sub-*) — filtro rápido 🧒 + KPI por escalão na sidebar
   const isJuvenilFilter = filters.escalaoFilter.size > 0 && [...filters.escalaoFilter].every(e => /^Sub-?\s*\d+$/i.test(e));
+
+  /* ── Rendering progressivo da sidebar (2026-08-15) ─────────────
+     Substitui o cap fixo MAX_SIDEBAR_ITEMS=2000 (que ESCONDIA jogadores além
+     do limite): renderiza SIDEBAR_CHUNK itens e um sentinel IntersectionObserver
+     carrega mais ao aproximar do fundo — todos os ~15k ficam alcançáveis com
+     DOM inicial pequeno. Sem react-window de propósito: os cartões têm altura
+     variável (pills fazem wrap) e o site não usa virtualização em lado nenhum. */
+  const SIDEBAR_CHUNK = 300;
+  const [sidebarVisible, setSidebarVisible] = useState(SIDEBAR_CHUNK);
+  const sidebarRef = React.useRef<HTMLDivElement | null>(null);
+  const sentinelRef = React.useRef<HTMLDivElement | null>(null);
 
   const [federadosError, setFederadosError] = useState<string | null>(null);
 
@@ -310,6 +319,23 @@ export default function JogadoresPage() {
     { path: "/data/federados-pp.json", status: ppMap.size > 0 ? "loaded" : "loading", count: ppMap.size || undefined },
   ], [federados, federadosError, statsDb, ppMap]);
 
+  /* Reset do rendering progressivo quando a lista muda (filtro/pesquisa). */
+  useEffect(() => { setSidebarVisible(SIDEBAR_CHUNK); }, [filtered]);
+
+  /* Sentinel: ao chegar perto do fundo da sidebar, carrega mais um chunk. */
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const obs = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) {
+        setSidebarVisible(c => Math.min(c + SIDEBAR_CHUNK, filtered.length));
+      }
+    }, { root: sidebarRef.current, rootMargin: "600px" });
+    obs.observe(sentinel);
+    return () => obs.disconnect();
+    // sidebarVisible nas deps: o sentinel remonta a cada chunk carregado.
+  }, [filtered.length, sidebarVisible]);
+
   // Ranking positions based on HCP (global, not filtered)
   const rankings = useMemo(() => {
     const withHcp = allPlayers
@@ -395,12 +421,7 @@ export default function JogadoresPage() {
       />
 
       <div className="master-detail">
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-          {viewMode === "todos" && !isJuvenilFilter && filtered.length > MAX_SIDEBAR_ITEMS && (
-            <div className="muted fs-10 p-8 ta-c" style={{ borderBottom: "1px solid var(--border)" }}>
-              A mostrar os primeiros {MAX_SIDEBAR_ITEMS} de {filtered.length.toLocaleString("pt-PT")} — refine os filtros para ver mais
-            </div>
-          )}
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`} ref={sidebarRef}>
           {viewMode === "todos" && isJuvenilFilter && (() => {
             // KPI por escalão jovem — contagem total e por sexo
             const jovensOrdem = ESCALOES_JOVENS;
@@ -417,7 +438,7 @@ export default function JogadoresPage() {
             return (
               <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)", padding: "6px 8px" }}>
                 <div className="muted fs-10" style={{ marginBottom: 4 }}>
-                  🧒 {filtered.length.toLocaleString("pt-PT")} jogadores jovens — todos visíveis
+                  🧒 {filtered.length.toLocaleString("pt-PT")} jogadores jovens
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(90px, 1fr))", gap: 4 }}>
                   {jovensOrdem.map(esc => {
@@ -439,7 +460,7 @@ export default function JogadoresPage() {
               </div>
             );
           })()}
-          {filtered.slice(0, viewMode === "todos" && !isJuvenilFilter ? MAX_SIDEBAR_ITEMS : filtered.length).map(p => {
+          {filtered.slice(0, sidebarVisible).map(p => {
             const isActive = selected?.fed === p.fed;
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
@@ -486,6 +507,11 @@ export default function JogadoresPage() {
               />
             );
           })}
+          {sidebarVisible < filtered.length && (
+            <div ref={sentinelRef} className="muted fs-10 p-8 ta-c">
+              ⏳ {sidebarVisible.toLocaleString("pt-PT")} de {filtered.length.toLocaleString("pt-PT")} — a carregar mais ao descer…
+            </div>
+          )}
           {filtered.length === 0 && <EmptyState size="sm" message="Nenhum jogador encontrado" />}
         </div>
 

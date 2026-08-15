@@ -366,6 +366,7 @@ export default function JogadoresToolbar({
                   onClick={toggleSortDir}
                   title={filters.sortDir === "asc" ? "Ordem crescente (clica para inverter)" : "Ordem decrescente (clica para inverter)"}
                   aria-label={filters.sortDir === "asc" ? "Ordem crescente" : "Ordem decrescente"}
+                  style={{ whiteSpace: "nowrap", flexShrink: 0 }}
                 >
                   {filters.sortDir === "asc" ? "↑ asc" : "↓ desc"}
                 </button>
