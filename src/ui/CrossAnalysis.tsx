@@ -47,7 +47,7 @@ function CommonCourses({ players }: {
   );
 }
 
-export function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boolean }) {
+export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boolean }) {
   const keys = Object.keys(data.CROSS_DATA);
   const [activeEsc, setActiveEsc] = useState<string>("");
   const [sexFilter, setSexFilter] = useState("all");
@@ -107,8 +107,10 @@ export function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bar
   const curYear = new Date().getFullYear();
 
   return (
-    <div className="card mt-24">
-      <div className="h-xs fs-18 mb-16">📊 Cross-Análise por Escalão</div>
+    // bare = já vive dentro de um CollapseCard com título próprio (AnalysisView)
+    // — sem cartão-dentro-de-cartão nem título duplicado.
+    <div className={bare ? undefined : "card mt-24"}>
+      {!bare && <div className="h-xs fs-18 mb-16">📊 Cross-Análise por Escalão</div>}
       {/* Tabs */}
       <div className="escalao-pills jog-cross-wrap">
         {escalaos.map(esc => (

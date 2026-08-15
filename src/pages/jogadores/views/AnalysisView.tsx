@@ -159,8 +159,11 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
         <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
       </CollapseCard>
 
-      {/* ── Cross Analysis ── */}
-      <CollapseCard title="Análise por Campo" icon="🗺️" defaultOpen={false}>
+      {/* ── Cross Analysis — comparação com os OUTROS jogadores do mesmo
+          escalão (CROSS_DATA), não análise de campos. O título antigo
+          "Análise por Campo" 🗺️ era um desalinhamento histórico do monólito
+          (corrigido 2026-08-15 — a análise por campo vive na vista ⛳ Campos). */}
+      <CollapseCard title="Comparação por escalão" icon="🆚" defaultOpen={false}>
         <CrossAnalysis data={data} bare />
       </CollapseCard>
 
