@@ -154,12 +154,12 @@ export default function JogadoresToolbar({
             type="search"
             value={filters.q}
             onChange={e => update({ q: e.target.value })}
-            placeholder="nome, clube, nº federado…"
+            placeholder="nome, clube, nº fed…"
             aria-label="Pesquisar jogadores"
             style={{
               fontSize: "var(--fs-12)",
               padding: "4px 22px 4px 24px",
-              width: 200,
+              width: 180,
               border: "1px solid var(--border)",
               borderRadius: 5,
               background: "var(--bg-card)",
@@ -263,9 +263,10 @@ export default function JogadoresToolbar({
             ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
           </button>
         )}
-        <Counter ml="auto">{filteredCount} jogadores</Counter>
         {/* ⓘ Info — páginas relacionadas (padrão CircuitShell). Rotas internas
-            navegam na SPA; só a página estática abre em novo tab. */}
+            navegam na SPA; só a página estática abre em novo tab. Vive ANTES
+            do contador para o elemento na borda direita (scroll) ser o chip
+            compacto e não um select meio-cortado. */}
         <select
           className="input"
           value=""
@@ -285,6 +286,11 @@ export default function JogadoresToolbar({
           <option value="/jogadores-por-ano">📅 Jogadores por ano</option>
           <option value="/torneios-recentes">🏆 Torneios recentes</option>
         </select>
+        {/* Contador compacto (só o número + 🏌️) — é o elemento na borda do
+            scroll horizontal; a versão longa "N jogadores" cortava a meio. */}
+        <Counter ml="auto" title={`${filteredCount.toLocaleString("pt-PT")} jogadores na lista`}>
+          {filteredCount.toLocaleString("pt-PT")} 🏌️
+        </Counter>
       </Toolbar>
 
       {/* ── Painel secundário (linha 2) — filtros raros + preferências ── */}

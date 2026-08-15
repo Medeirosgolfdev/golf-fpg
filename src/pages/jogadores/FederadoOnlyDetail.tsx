@@ -11,7 +11,6 @@ import type { MergedPlayer } from "../../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../../data/datagolfClient";
 import { FILE_PLAYER_DATA } from "../../data/dataRegistry";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import { gf } from "../../utils/flagUtils";
 import { canonicalCourseName } from "../../utils/courseAliases";
 import EmptyState from "../../ui/EmptyState";
@@ -26,7 +25,7 @@ import {
   FEDERADO_FIELD_LABELS, FEDERADO_FIELD_DESCRIPTIONS,
   formatFedValue, KV, normalizeAgeLabel,
 } from "./federadoFields";
-import IdentityPills from "./IdentityPills";
+import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -167,27 +166,10 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               <>
                 {showFlag && <span className="mr-8">{gf(f.country_prefix)}</span>}
                 {f.name}
-                <a
-                  href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${f.federation_code}`}
-                  target="_blank" rel="noopener noreferrer"
-                  title="Ver ficha WHS no FPG Scoring"
-                  style={{ marginLeft: 8, fontSize: "var(--fs-14)", color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-                  onClick={e => e.stopPropagation()}
-                >🔗</a>
-                <a
-                  href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${f.federation_code}`}
-                  target="_blank" rel="noopener noreferrer"
-                  title="Ver ficha WHS no My FPG"
-                  style={{ marginLeft: 4, fontSize: "var(--fs-14)", color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-                  onClick={e => e.stopPropagation()}
-                >🔗</a>
-                <a
-                  href={ppPlayerUrl(f.federation_code)}
-                  target="_blank" rel="noopener noreferrer"
-                  title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)"
-                  style={{ marginLeft: 4, fontSize: "var(--fs-14)", textDecoration: "none", verticalAlign: "middle" }}
-                  onClick={e => e.stopPropagation()}
-                >🏑</a>
+                {/* Pill-links externos — mesmos do PlayerDetail (PlayerExtLinks) */}
+                <span style={{ display: "inline-flex", gap: 4, marginLeft: 10, verticalAlign: "middle" }}>
+                  <PlayerExtLinks fed={f.federation_code} />
+                </span>
               </>
             }
             sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}

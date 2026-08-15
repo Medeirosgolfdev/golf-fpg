@@ -15,14 +15,14 @@ import { useAppContext } from "../../context/AppContext";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 import { usePlayerData } from "../../data/usePlayerData";
 import { loadFederados, type FederadoRaw, type MergedPlayer } from "../../data/federadosLoader";
-import { loadFederadosPP, ppForFed, hasRealPPHcp, ppPlayerUrl, type FederadoPP } from "../../data/federadosPPLoader";
+import { loadFederadosPP, ppForFed, hasRealPPHcp, type FederadoPP } from "../../data/federadosPPLoader";
 import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../../utils/playedDistance";
 import { acesFromHoleScores } from "../../utils/aces";
 import { clubLong } from "../../utils/playerUtils";
 import LoadingState from "../../ui/LoadingState";
 import { ByTournamentView } from "../../ui/ByTournamentView";
 import PPHistoryView from "./PPHistoryView";
-import IdentityPills from "./IdentityPills";
+import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import FederadoOnlyDetail from "./FederadoOnlyDetail";
 import { syntheticFederadoFromPlayer } from "./syntheticFederado";
 import PlayerKpiStrip from "./PlayerKpiStrip";
@@ -245,11 +245,6 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               alt=""
               onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
           )}
-          <div className="dh-iconcol">
-            <a href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`} target="_blank" rel="noopener noreferrer" title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>🔗</a>
-            <a href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${selected.fed}`} target="_blank" rel="noopener noreferrer" title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>🔗</a>
-            <a href={ppPlayerUrl(selected.fed)} target="_blank" rel="noopener noreferrer" title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑</a>
-          </div>
           <div className="dh-idblock">
             <div className="dh-nameline">
               <h2 className="detail-title">{selected.name}</h2>
@@ -259,6 +254,9 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                 <button className="dh-mode-btn" onClick={() => setPpView(true)}
                   title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
               )}
+              {/* Links externos como pill-links (padrão DrivePage) — a antiga
+                  coluna de ícones 🔗 flutuava solta à esquerda do nome. */}
+              <PlayerExtLinks fed={selected.fed} />
             </div>
             <div className="dh-statline">
             {/* Identidade partilhada com o FederadoOnlyDetail (IdentityPills);

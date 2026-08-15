@@ -7,10 +7,39 @@
  * nascimento · escalão · clube, seguidos dos pills específicos de cada mundo
  * via children (P&P, tags, aces, …).
  */
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { escCls } from "../../utils/playerUtils";
 import { gf } from "../../utils/flagUtils";
+import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import SexBadge from "../../ui/SexBadge";
+
+/* Pill-link externo — mesmo estilo do "🏆 Rankings FPG" da DrivePage. */
+const EXT_LINK_STYLE: CSSProperties = {
+  textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)",
+  border: "1px solid var(--border)", whiteSpace: "nowrap",
+};
+
+/** Links externos da ficha do jogador (FPG Scoring · My FPG · P&P) como
+ *  pill-links — substituem a antiga coluna de ícones 🔗 solta à esquerda do
+ *  nome (dh-iconcol). Partilhados pelos 2 mundos do detalhe. */
+export function PlayerExtLinks({ fed }: { fed: string }) {
+  return (
+    <>
+      <a className="p p-sm" style={EXT_LINK_STYLE}
+        href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`}
+        target="_blank" rel="noopener noreferrer"
+        title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>FPG ↗</a>
+      <a className="p p-sm" style={EXT_LINK_STYLE}
+        href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${fed}`}
+        target="_blank" rel="noopener noreferrer"
+        title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</a>
+      <a className="p p-sm" style={EXT_LINK_STYLE}
+        href={ppPlayerUrl(fed)}
+        target="_blank" rel="noopener noreferrer"
+        title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑 P&amp;P ↗</a>
+    </>
+  );
+}
 
 export default function IdentityPills({ fed, sex, dob, escalao, club, countryPrefix, country, children }: {
   fed: string;
