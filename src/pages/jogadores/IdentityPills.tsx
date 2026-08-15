@@ -7,40 +7,32 @@
  * nascimento · escalão · clube, seguidos dos pills específicos de cada mundo
  * via children (P&P, tags, aces, …).
  */
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { escCls } from "../../utils/playerUtils";
 import { gf } from "../../utils/flagUtils";
 import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import SexBadge from "../../ui/SexBadge";
 
-/* Pill-link externo — mesmo estilo do "🏆 Rankings FPG" da DrivePage. */
-const EXT_LINK_STYLE: CSSProperties = {
-  textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)",
-  border: "1px solid var(--border)", whiteSpace: "nowrap",
-};
-
 /** Links externos da ficha do jogador (FPG Scoring · My FPG · P&P) como
- *  pill-links — substituem a antiga coluna de ícones 🔗 solta à esquerda do
- *  nome (dh-iconcol). Partilhados pelos 2 mundos do detalhe. */
+ *  TEXT-LINKS discretos (.dh-link) — o cromo de acções não compete com os
+ *  dados (2026-08-15). Partilhados pelos 2 mundos do detalhe. `includePP:
+ *  false` quando o mundo já tem botão P&P próprio (evita duplicado). */
 export function PlayerExtLinks({ fed, includePP = true }: { fed: string; includePP?: boolean }) {
-  // Mesmo tamanho das restantes pills do cabeçalho (sem p-sm) — todas as
-  // pills partilham padding/fonte/raio (2026-08-15). `includePP: false`
-  // quando o mundo já tem botão P&P próprio (evita o duplicado na linha).
   return (
     <>
-      <a className="p" style={EXT_LINK_STYLE}
+      <a className="dh-link"
         href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>FPG ↗</a>
-      <a className="p" style={EXT_LINK_STYLE}
+      <a className="dh-link"
         href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${fed}`}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</a>
       {includePP && (
-        <a className="p" style={EXT_LINK_STYLE}
+        <a className="dh-link"
           href={ppPlayerUrl(fed)}
           target="_blank" rel="noopener noreferrer"
-          title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑 P&amp;P ↗</a>
+          title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>P&amp;P ↗</a>
       )}
     </>
   );

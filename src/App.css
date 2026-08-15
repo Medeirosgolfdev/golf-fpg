@@ -824,20 +824,29 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-iconcol { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
 .dh-iconcol a { font-size: var(--fs-12); line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
 .dh-iconcol a:hover { background: var(--bg-hover); }
-.dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
 .dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 /* Cabeçalho COMPACTO (2026-08-15): o nome não precisa de fs-24 — o destaque
    visual pertence aos dados (índice/KPIs), não ao título. */
 .dh-nameline .detail-title { margin: 0; font-size: var(--fs-20); }
-/* Linha de botões/links por baixo do nome (Vista federado · FPG ↗ · My FPG ↗ · P&P ↗) */
-.dh-btnline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-/* ── MÉTRICA ÚNICA das linhas do cabeçalho (medido 2026-08-15: o botão dava
-   19px [line-height normal], os links 21.4px [borda 1px] e as pills 22.5px
-   [borda 1.5px] — três alturas na mesma zona). TUDO o que vive na linha de
-   botões e na linha de identidade partilha a MESMA caixa: 22px de altura,
-   mesma fonte, mesmo padding, borda de 1px e o raio das pills. ── */
+/* ── Linha de ACÇÕES por baixo do nome — text-links discretos, SEM caixas
+   (2026-08-15): o cromo não compete com os dados; as caixas ficam para a
+   identidade (pills) e para os KPIs (cards). ── */
+.dh-btnline { display: flex; align-items: center; gap: 2px 14px; flex-wrap: wrap; }
 .dh-btnline .dh-mode-btn,
-.dh-btnline .p,
+.dh-btnline .dh-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 20px; padding: 0;
+  background: transparent; border: none; border-radius: 0;
+  font-size: var(--fs-11); font-weight: 600;
+  color: var(--accent); text-decoration: none;
+  cursor: pointer; white-space: nowrap;
+}
+.dh-btnline .dh-mode-btn:hover,
+.dh-btnline .dh-link:hover { text-decoration: underline; background: transparent; }
+/* ── MÉTRICA ÚNICA da linha de identidade (medido 2026-08-15: havia três
+   alturas na mesma zona). Todas as pills partilham a MESMA caixa: 22px,
+   mesma fonte, mesmo padding, borda de 1px e o raio das pills. ── */
 .jog-pills .p,
 .jog-pills .sex-badge-pill {
   box-sizing: border-box;
