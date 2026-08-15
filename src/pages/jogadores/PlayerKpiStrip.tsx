@@ -35,7 +35,7 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear }: {
   const curY = new Date().getFullYear();
   return (
     <div className="jog-kpi-strip">
-      <UiKpiCard size="sm" label="Índice" value={currentHcp != null ? currentHcp.toFixed(1) : "—"}
+      <UiKpiCard size="sm" className="kpi-hero" label="Índice" value={currentHcp != null ? currentHcp.toFixed(1) : "—"}
         delta={k.idxDelta} deltaLabel="em 12m"
         fill={k.idxDelta == null ? null
           : k.idxDelta < -0.05 ? "good"   /* índice desceu → melhorou → verde */

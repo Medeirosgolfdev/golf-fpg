@@ -816,14 +816,17 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* ── Hero bar reorganizada — foto à esquerda · ícones empilhados · nome+pills
    ao lado · controlos + "Últ. act." (pequena) à direita · KPI compactos abaixo.
    Objectivo: organização clara e pouco espaço vertical. ── */
-.dh-top { display: flex; align-items: center; gap: 14px; }
+.dh-top { display: flex; align-items: center; gap: 10px; }
+/* A foto mantém o tamanho — a utilizadora gosta de a ver (2026-08-15). */
 .dh-photo { width: 88px; height: 110px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: var(--shadow-sm); }
 .dh-iconcol { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
 .dh-iconcol a { font-size: var(--fs-12); line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
 .dh-iconcol a:hover { background: var(--bg-hover); }
-.dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.dh-nameline .detail-title { margin: 0; }
+/* Cabeçalho COMPACTO (2026-08-15): o nome não precisa de fs-24 — o destaque
+   visual pertence aos dados (índice/KPIs), não ao título. */
+.dh-nameline .detail-title { margin: 0; font-size: var(--fs-20); }
 /* Linha de botões/links por baixo do nome (Vista federado · FPG ↗ · My FPG ↗ · P&P ↗) */
 .dh-btnline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
@@ -833,10 +836,14 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-right .pa-controls-left { flex-direction: column; align-items: stretch; gap: 6px; width: 190px; }
 .dh-right .pa-controls-left .input,
 .dh-right .pa-controls-left .select { width: 100%; }
+/* Segmented (Data|Torneio) com a MESMA largura dos selects da coluna:
+   ocupa os 190px e cada opção leva metade, com o nome centrado. */
+.dh-right .pa-controls-left .segmented-toggle { display: flex; width: 100%; }
+.dh-right .pa-controls-left .segmented-toggle .seg-btn { flex: 1 1 0; }
 .dh-lastupd { font-size: 9.5px; color: var(--text-3); white-space: nowrap; }
 /* pills + KPI fluem na mesma linha (KPI logo a seguir aos pills, a preencher
    o meio que estava vazio — sem margin-auto, agrupados). */
-.dh-statline { display: flex; align-items: center; gap: 6px 14px; flex-wrap: wrap; }
+.dh-statline { display: flex; align-items: center; gap: 4px 10px; flex-wrap: wrap; }
 .dh-statline .jog-pills { margin: 0; }
 .dh-statline .jog-kpi-strip { margin: 0; }
 @media (max-width: 700px) {
@@ -1107,11 +1114,26 @@ tr.cross-current { background: var(--bg-success); }
 
 /* KPIs do jogador integrados no cabeçalho (.detail-header) — chips compactos.
    Poupam o espaço vertical que a faixa separada ocupava acima das tabelas. */
-.jog-kpi-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
-.jog-kpi-strip .kpi { padding: 5px 11px; min-width: 0; gap: 0; }
-.jog-kpi-strip .kpi-lbl { font-size: var(--fs-9); }
-.jog-kpi-strip .kpi-val { font-size: var(--fs-16); }
-.jog-kpi-strip .kpi-sub { font-size: var(--fs-10); }
+/* KPIs do cabeçalho do jogador — formato HORIZONTAL magro (2026-08-15):
+   valor grande à esquerda, rótulo + contexto empilhados minúsculos à direita.
+   Ocupa ~metade da altura dos cartões verticais e põe o olho no NÚMERO. */
+.jog-kpi-strip { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.jog-kpi-strip .kpi {
+  padding: 3px 9px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 7px;
+  row-gap: 0;
+  align-content: center;
+  align-items: center;
+}
+.jog-kpi-strip .kpi-val { grid-column: 1; grid-row: 1 / span 2; font-size: var(--fs-17); line-height: 1.05; }
+.jog-kpi-strip .kpi-lbl { grid-column: 2; grid-row: 1; font-size: var(--fs-9); line-height: 1.15; align-self: end; }
+.jog-kpi-strip .kpi-delta,
+.jog-kpi-strip .kpi-sub { grid-column: 2; grid-row: 2; font-size: 9px; line-height: 1.15; align-self: start; }
+/* O Índice é O número da página — maior que os restantes. */
+.jog-kpi-strip .kpi-hero .kpi-val { font-size: var(--fs-22); font-weight: 800; }
 
 /* ─── Course Performance Analysis ─── */
 /* courseAnalysis → .card (unified) */
