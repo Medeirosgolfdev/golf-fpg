@@ -14,3 +14,19 @@ export const ESCALOES_JOVENS = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18"
 /** Ordem completa de escalões FPG (hífen, jovens → seniores).
  *  Usado por JogadoresPage + JogadoresPorAnoPage. */
 export const ESC_ORDER_FULL = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21", "Sub-24", "Absoluto", "MidAmateur", "Sénior", "SuperSenior", "Outros"];
+
+/** Escalões "seniores" no sentido da JogadoresPage (ocultos por defeito no
+ *  tracking júnior). NÃO inclui Sub-24 (ainda é escalão jovem alargado). */
+export const ESCALOES_SENIORES = ["Absoluto", "MidAmateur", "Sénior", "SuperSenior"];
+
+const ESCALOES_SENIORES_SET = new Set(ESCALOES_SENIORES);
+
+export function isSeniorEscalao(esc: string | null | undefined): boolean {
+  return esc != null && ESCALOES_SENIORES_SET.has(esc);
+}
+
+/** Coerção de escalão inválido/vazio para "Absoluto" — a mesma regra do merge
+ *  players×federados (mergePlayersWithFederados) aplicada aos fallbacks. */
+export function coerceEscalao(esc: string | null | undefined): string {
+  return (!esc || esc === "?" || esc === "Outros") ? "Absoluto" : esc;
+}
