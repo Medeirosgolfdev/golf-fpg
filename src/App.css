@@ -825,10 +825,10 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-iconcol a { font-size: var(--fs-12); line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
 .dh-iconcol a:hover { background: var(--bg-hover); }
 .dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
-.dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-/* Cabeçalho COMPACTO (2026-08-15): o nome não precisa de fs-24 — o destaque
-   visual pertence aos dados (índice/KPIs), não ao título. */
-.dh-nameline .detail-title { margin: 0; font-size: var(--fs-20); }
+/* Nome + acções na mesma linha; os links quebram para baixo em ecrãs
+   estreitos (flex-wrap). O gap maior separa o título do grupo de acções. */
+.dh-nameline { display: flex; align-items: center; gap: 6px 16px; flex-wrap: wrap; }
+.dh-nameline .detail-title { margin: 0; font-size: var(--fs-22); }
 /* ── Linha de ACÇÕES por baixo do nome — text-links discretos, SEM caixas
    (2026-08-15): o cromo não compete com os dados; as caixas ficam para a
    identidade (pills) e para os KPIs (cards). ── */

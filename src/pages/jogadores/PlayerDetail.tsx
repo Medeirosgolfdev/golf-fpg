@@ -246,22 +246,22 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
           )}
           <div className="dh-idblock">
+            {/* Nome + acções na MESMA linha (2026-08-15, pedido da utilizadora)
+                — os text-links são discretos e cabem ao lado do título; em
+                ecrãs estreitos o flex-wrap quebra-os para baixo. */}
             <div className="dh-nameline">
               <h2 className="detail-title">{selected.name}</h2>
-            </div>
-            {/* Botões numa linha própria POR BAIXO do nome (pedido 2026-08-15)
-                — o nome respira e os botões não empurram o título. */}
-            <div className="dh-btnline">
-              <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
-                title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
-              {pp && (
-                <button className="dh-mode-btn" onClick={() => setPpView(true)}
-                  title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
-              )}
-              {/* Links externos como pill-links (padrão DrivePage). Sem o link
-                  P&P externo quando o botão P&P interno existe — dois "🏑 P&P"
-                  lado a lado era confuso; o link externo vive na vista P&P. */}
-              <PlayerExtLinks fed={selected.fed} includePP={!pp} />
+              <div className="dh-btnline">
+                <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
+                  title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
+                {pp && (
+                  <button className="dh-mode-btn" onClick={() => setPpView(true)}
+                    title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
+                )}
+                {/* Sem o link P&P externo quando o botão P&P interno existe —
+                    dois "P&P" lado a lado era confuso; o link vive na vista P&P. */}
+                <PlayerExtLinks fed={selected.fed} includePP={!pp} />
+              </div>
             </div>
             {/* Identidade e KPIs em linhas SEPARADAS e fixas (2026-08-15: no
                 mesmo flex-wrap fundiam-se numa linha única quando não havia
