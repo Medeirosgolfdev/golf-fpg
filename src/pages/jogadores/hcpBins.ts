@@ -7,6 +7,8 @@
  * de ranges no HcpBinDrillCard — esta é a fonte única.
  */
 
+import { HCP_UNESTABLISHED_THRESHOLD } from "./filterPlayers";
+
 export const HCP_BINS = ["plus", "0-5", "5-10", "10-15", "15-20", "20-30", "30+"] as const;
 export type HcpBin = (typeof HCP_BINS)[number];
 
@@ -33,5 +35,13 @@ export function hcpBinRange(bin: string): { min: number; max: number; label: str
   if (bin === "10-15") return { min: 10, max: 15, label: "HCP 10 a 14.9" };
   if (bin === "15-20") return { min: 15, max: 20, label: "HCP 15 a 19.9" };
   if (bin === "20-30") return { min: 20, max: 30, label: "HCP 20 a 29.9" };
-  return { min: 30, max: Infinity, label: "HCP 30+" };
+  // Tecto = 54 (WHS cap): valores ≥54 (incl. 99) são placeholders de HI não
+  // estabelecido — ficam fora de TODAS as estatísticas de HCP (mesma regra do
+  // HcpPill da sidebar, consistente entre bins, drill-down e agregados).
+  return { min: 30, max: HCP_UNESTABLISHED_THRESHOLD, label: "HCP 30+" };
+}
+
+/** HCP válido para estatísticas (exclui placeholders ≥54/99). */
+export function isCountableHcp(h: number | null | undefined): h is number {
+  return h != null && isFinite(h) && h < HCP_UNESTABLISHED_THRESHOLD;
 }

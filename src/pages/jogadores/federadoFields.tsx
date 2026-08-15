@@ -129,6 +129,10 @@ const STATUS_DANGER_PILL: React.CSSProperties = {
 
 export function normalizeAgeLabel(s: string): string {
   // "SUB12" → "Sub-12" · "SUB-14" → "Sub-14" · mantém "Absoluto", "Sénior", etc.
+  // ⚠ NÃO usar normalizeAgeLevel (federadosLoader) aqui: essa é a normalização
+  // de NEGÓCIO (MidAmateur→Absoluto, default→Absoluto) para filtros/merge;
+  // esta é só COSMÉTICA — a ficha de cadastro mostra o valor cru da FPG,
+  // apenas com o rename SUB* → Sub-*.
   const m = s.match(/^sub[-\s]?(\d{1,2})$/i);
   return m ? `Sub-${m[1]}` : s;
 }

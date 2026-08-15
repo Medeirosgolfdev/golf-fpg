@@ -21,7 +21,7 @@
  *     só com SD calculado, diferenças vs FPG
  */
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { norm, shortDate } from "../utils/format";
 import { gf } from "../utils/flagUtils";
@@ -47,6 +47,7 @@ import { EscPill } from "../ui/PillBadge";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import { FilterField, ToggleChip } from "../ui/FilterField";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -721,33 +722,5 @@ export default function JogadoresListPage() {
   );
 }
 
-/* ── Sub-componentes ─────────────────────────────────────────── */
-function FilterField({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div className="filter-field">
-      <div className="filter-label">{label}</div>
-      {children}
-    </div>
-  );
-}
-
-function ToggleChip({ checked, onChange, label }: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label: string;
-}) {
-  return (
-    <button
-      onClick={() => onChange(!checked)}
-      className="btn-pill"
-      style={{
-        background: checked ? "var(--accent)" : "var(--bg-card)",
-        color: checked ? "#fff" : "var(--text)",
-        borderColor: checked ? "var(--accent)" : "var(--border)",
-        fontSize: "var(--fs-12)",
-      }}
-    >
-      {label}
-    </button>
-  );
-}
+/* FilterField/ToggleChip promovidos a src/ui/FilterField.tsx (2026-08-15) —
+   partilhados com a toolbar da JogadoresPage. */

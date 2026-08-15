@@ -73,6 +73,9 @@ export interface FilterContext {
   viewMode: ViewMode;
   statsDb: PlayerStatsDb;
   ppMap: Map<string, FederadoPP>;
+  /** Índice de pesquisa pré-calculado (buildSearchIndex) — opcional mas
+   *  recomendado para listas grandes (modo TODOS). */
+  searchIndex?: SearchIndex;
 }
 
 /** Haystack de pesquisa — nome, clube, escalão, fed, região e tags. */
@@ -80,13 +83,23 @@ export function searchHaystack(p: ListPlayer): string {
   return norm([p.name, clubShort(p as unknown as Player), p.escalao, p.fed, p.region, ...(p.tags || [])].join(" "));
 }
 
+/** Índice fed → haystack, pré-calculado UMA vez por lista (a página memoiza
+ *  sobre allPlayers). Sem ele, cada keystroke reconstruía o haystack (norm/NFKD
+ *  sobre 6 campos) 2× por jogador × ~15k jogadores (filtered + countByEscalao). */
+export type SearchIndex = Map<string, string>;
+export function buildSearchIndex(list: ListPlayer[]): SearchIndex {
+  const m: SearchIndex = new Map();
+  for (const p of list) m.set(p.fed, searchHaystack(p));
+  return m;
+}
+
 /** Pesquisa multi-palavra: todas as palavras têm de aparecer no haystack. */
-export function applySearch<T extends ListPlayer>(list: T[], q: string): T[] {
+export function applySearch<T extends ListPlayer>(list: T[], q: string, index?: SearchIndex): T[] {
   const qq = norm(q);
   if (!qq) return list;
   const words = qq.split(/\s+/).filter(Boolean);
   return list.filter(p => {
-    const haystack = searchHaystack(p);
+    const haystack = index?.get(p.fed) ?? searchHaystack(p);
     return words.every(w => haystack.includes(w));
   });
 }
@@ -116,9 +129,9 @@ export function isActivePlayer(p: ListPlayer, ps: PlayerStats | undefined): bool
 
 /** Contagem por escalão para as pills da toolbar — aplica APENAS pesquisa,
  *  sexo, região e hidden (os outros filtros não afectam as contagens). */
-export function countByEscalao(list: ListPlayer[], f: Pick<JogadoresFilterState, "q" | "sexFilter" | "regionFilter">): Record<string, number> {
+export function countByEscalao(list: ListPlayer[], f: Pick<JogadoresFilterState, "q" | "sexFilter" | "regionFilter">, index?: SearchIndex): Record<string, number> {
   const map: Record<string, number> = {};
-  let l = applySearch(list, f.q);
+  let l = applySearch(list, f.q, index);
   if (f.sexFilter !== "ALL") l = l.filter(p => p.sex === f.sexFilter);
   if (f.regionFilter !== "ALL") l = l.filter(p => p.region === f.regionFilter);
   l = l.filter(p => !p.tags?.includes("hidden"));
@@ -185,8 +198,8 @@ export function countActiveFilters(f: JogadoresFilterState): number {
 export function filterAndSortPlayers<T extends ListPlayer>(
   allPlayers: T[], f: JogadoresFilterState, ctx: FilterContext,
 ): T[] {
-  const { viewMode, statsDb, ppMap } = ctx;
-  let list = applySearch(allPlayers, f.q);
+  const { viewMode, statsDb, ppMap, searchIndex } = ctx;
+  let list = applySearch(allPlayers, f.q, searchIndex);
   if (f.sexFilter !== "ALL") list = list.filter(p => p.sex === f.sexFilter);
   // Ocultar seniores por defeito (Absoluto/MidAmateur/Sénior/SuperSenior)
   // — só aplica quando não há filtro de escalão activo (senão respeitamos a escolha explícita)

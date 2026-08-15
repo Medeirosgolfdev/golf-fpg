@@ -9,7 +9,7 @@ import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
 import { gf } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import EmptyState from "../../ui/EmptyState";
-import { HCP_BINS, emptyHcpBins, hcpBinKey } from "./hcpBins";
+import { HCP_BINS, emptyHcpBins, hcpBinKey, isCountableHcp } from "./hcpBins";
 import { barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
 
@@ -36,7 +36,8 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
   for (const p of filtered) {
     const isM = p.sex === "M"; const isF = p.sex === "F";
     if (isM) male++; else if (isF) female++;
-    if (p.hcp != null && p.hcp !== 99) {
+    // Excluir placeholders ≥54/99 (HI não estabelecido) — antes só excluía 99.
+    if (isCountableHcp(p.hcp)) {
       withHcp++; totalHcp += p.hcp;
       const k = hcpBinKey(p.hcp);
       if (isM) hcpBins[k].m++; else if (isF) hcpBins[k].f++;
@@ -64,7 +65,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
   const maxHcpBin = Math.max(...Object.values(hcpBins).map(v => v.m + v.f), 1);
 
   const topBest = [...filtered]
-    .filter(p => p.hcp != null && p.hcp !== 99)
+    .filter(p => isCountableHcp(p.hcp))
     .sort((a, b) => (a.hcp as number) - (b.hcp as number))
     .slice(0, 10);
 

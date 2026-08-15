@@ -13,25 +13,27 @@
  *   - Cadastro/live: jogadores/FederadoOnlyDetail.tsx
  *   - Painéis stats: jogadores/FederadosStatsPanel.tsx + FilteredStatsCard.tsx
  */
-import React, { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { loadFederados, federadoToPlayer, mergePlayersWithFederados, loadInativosStats, type FederadoRaw, type MergedPlayer, type InativosStats } from "../data/federadosLoader";
+import { loadFederados, federadoToPlayer, mergePlayersWithFederados, normalizeAgeLevel, type FederadoRaw, type MergedPlayer } from "../data/federadosLoader";
 import { loadFederadosPP, getPPByFed, hasRealPPHcp, type FederadoPP } from "../data/federadosPPLoader";
-import { coerceEscalao, ESC_ORDER_FULL as ESC_ORDER, ESCALOES_JOVENS } from "../constants/escaloes";
+import { coerceEscalao, isSeniorEscalao, ESC_ORDER_FULL as ESC_ORDER, ESCALOES_JOVENS } from "../constants/escaloes";
 import { clubShort } from "../utils/playerUtils";
 import { buildCourseKeyMap, setCourseKeyMap } from "../ui/jogadoresHelpers";
 import SexBadge from "../ui/SexBadge";
 import EmptyState from "../ui/EmptyState";
+import type { DataSource } from "../ui/DataSources";
 import { useJogadoresFilters } from "./jogadores/useJogadoresFilters";
 import {
-  filterAndSortPlayers, countByEscalao, computeHcpStatsByEscalao,
-  NEW_DAYS, type ViewMode,
+  filterAndSortPlayers, countByEscalao, computeHcpStatsByEscalao, buildSearchIndex,
+  NEW_DAYS, type ViewMode, type JogadoresFilterState,
 } from "./jogadores/filterPlayers";
-import JogadoresToolbar from "./jogadores/JogadoresToolbar";
+import { readFiltersFromParams, writeFiltersToParams, hasFilterParams, loadPrefs, savePrefs } from "./jogadores/filtersUrl";
+import JogadoresToolbar, { type ToolbarCounts } from "./jogadores/JogadoresToolbar";
 import PlayerSidebarItem, { type PlayerSidebarPlayer } from "./jogadores/PlayerSidebarItem";
 import PlayerDetail from "./jogadores/PlayerDetail";
 import FederadoOnlyDetail from "./jogadores/FederadoOnlyDetail";
@@ -67,8 +69,27 @@ export default function JogadoresPage() {
     }
   };
 
+  /* ── Estado inicial: URL partilhado > preferências (localStorage) > default.
+     Mesmo padrão da SimuladorPage: lê-se UMA vez no arranque (initializers);
+     depois um único efeito espelha estado → query params com replace.
+     FILTROS são partilháveis (URL); viewMode/seniores/⭐ são PREFERÊNCIAS
+     (localStorage), sobrepostas pelo URL quando um link partilhado as traz. */
+  const [initialState] = useState(() => {
+    const params = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+    const prefs = loadPrefs();
+    const base: Partial<JogadoresFilterState> = {};
+    if (prefs.includeSeniors != null) base.includeSeniors = prefs.includeSeniors;
+    if (prefs.prioritizeJuniors != null) base.prioritizeJuniors = prefs.prioritizeJuniors;
+    const fromUrl = hasFilterParams(params) ? readFiltersFromParams(params) : { patch: {}, viewMode: undefined };
+    return {
+      filters: { ...base, ...fromUrl.patch },
+      viewMode: (fromUrl.viewMode ?? prefs.viewMode ?? "todos") as ViewMode,
+      showStats: params.get("stats") === "1",
+    };
+  });
+
   /* ── Filtros (estado + lógica pura em jogadores/filterPlayers.ts) ── */
-  const filtersApi = useJogadoresFilters(clearSelection);
+  const filtersApi = useJogadoresFilters(clearSelection, initialState.filters);
   const { filters, activeFiltersCount } = filtersApi;
   const rankingMode = filters.sortKey === "ranking";
 
@@ -76,27 +97,37 @@ export default function JogadoresPage() {
   // Default "todos" — garante que qualquer link externo para um federado (ex. do
   // DrawTab/AdmissionsTab) é encontrado, mesmo que o jogador não esteja nos 261
   // curados de players.json. O user pode alternar para "Nossos" na toolbar.
-  const [viewMode, setViewMode] = useState<ViewMode>("todos");
+  const [viewMode, setViewMode] = useState<ViewMode>(initialState.viewMode);
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
   const [loadingFeds, setLoadingFeds] = useState(false);
   // Pitch & Putt: mapa fed → registo P&P (federados-pp.json) + filtro "só P&P".
   const [ppMap, setPpMap] = useState<Map<string, FederadoPP>>(new Map());
-  const [showStats, setShowStats] = useState(false);
+  const [showStats, setShowStats] = useState(initialState.showStats);
   const [drillDown, setDrillDown] = useState<{ type: "club" | "age"; key: string } | null>(null);
   const [hcpBinDrill, setHcpBinDrill] = useState<string | null>(null);
-  const [inativosStats, setInativosStats] = useState<InativosStats | null>(null);
   const MAX_SIDEBAR_ITEMS = 2000;  // era 500 — subido 2026-04-15 para permitir encontrar jogadores com nomes comuns sem refinar filtros
   // Escalões jovens (Sub-*) — quando o filtro só tem jovens, levantamos o cap
   // porque são poucos e o user quer ver todos sem ter de refinar mais
   const isJuvenilFilter = filters.escalaoFilter.size > 0 && [...filters.escalaoFilter].every(e => /^Sub-?\s*\d+$/i.test(e));
 
-  useEffect(() => {
-    if (showStats && !inativosStats) {
-      loadInativosStats().then(setInativosStats).catch(err => console.error("[inativos]", err));
-    }
-  }, [showStats, inativosStats]);
-
   const [federadosError, setFederadosError] = useState<string | null>(null);
+
+  /* ── Espelho estado → URL + preferências → localStorage ─────────
+     Regra da casa (FPGPage): escrever só não-defaults sobre uma CÓPIA dos
+     searchParams actuais (preserva ?view= do PlayerDetail), comparar antes
+     de setSearchParams, replace SEMPRE (não polui o histórico). */
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    const sp = new URLSearchParams(searchParams);
+    writeFiltersToParams(filters, viewMode, sp);
+    if (showStats && viewMode === "todos") sp.set("stats", "1");
+    else sp.delete("stats");
+    if (sp.toString() !== searchParams.toString()) setSearchParams(sp, { replace: true });
+    savePrefs({ viewMode, includeSeniors: filters.includeSeniors, prioritizeJuniors: filters.prioritizeJuniors });
+    // deps SEM searchParams: o guard de comparação evita loops e cada render
+    // fecha sobre a versão fresca (padrão FPGPage/Simulador).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters, viewMode, showStats]);
 
   useEffect(() => {
     // Carrega federados em ambos os modos (nossos + todos) para enriquecimento
@@ -147,16 +178,28 @@ export default function JogadoresPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlFed]);
 
-  /* Helper: select player and update URL */
-  const selectPlayer = (fed: string | null) => {
+  /* Helper: select player and update URL. Preserva a query de filtros
+     (partilhável desde a Fase 2) e apaga só o ?view= — a vista é por-jogador,
+     como o ?tab= por-torneio da FPGPage. */
+  const selectPlayer = useCallback((fed: string | null) => {
     setSelectedFed(fed);
+    const sp = new URLSearchParams(window.location.search);
+    sp.delete("view");
+    const qs = sp.toString();
+    const suffix = qs ? `?${qs}` : "";
     if (fed) {
       internalNav.current = true;
-      navigate(`/jogadores/${fed}`, { replace: true });
+      navigate(`/jogadores/${fed}${suffix}`, { replace: true });
     } else {
-      navigate("/jogadores", { replace: true });
+      navigate(`/jogadores${suffix}`, { replace: true });
     }
-  };
+  }, [navigate]);
+
+  /* Callback ESTÁVEL para os itens da sidebar (React.memo depende disto). */
+  const handleSidebarSelect = useCallback((fed: string) => {
+    selectPlayer(fed);
+    md.onSelect();
+  }, [selectPlayer, md.onSelect]);
 
   // Populate course key map for course links
   useEffect(() => {
@@ -222,17 +265,42 @@ export default function JogadoresPage() {
     return computeGlobalStats(federados);
   }, [federados, viewMode]);
 
+  /* Índice de pesquisa (fed → haystack) — calculado 1× por lista; sem ele
+     cada keystroke reconstruía o haystack de ~15k jogadores 2× (filtered +
+     escalaoCountMap). */
+  const searchIndex = useMemo(() => buildSearchIndex(allPlayers), [allPlayers]);
+
   /* Contagens por escalão para as pills da toolbar (reage a pesquisa/sexo/região). */
   const escalaoCountMap = useMemo(
-    () => countByEscalao(allPlayers, { q: filters.q, sexFilter: filters.sexFilter, regionFilter: filters.regionFilter }),
-    [allPlayers, filters.q, filters.sexFilter, filters.regionFilter],
+    () => countByEscalao(allPlayers, { q: filters.q, sexFilter: filters.sexFilter, regionFilter: filters.regionFilter }, searchIndex),
+    [allPlayers, filters.q, filters.sexFilter, filters.regionFilter, searchIndex],
   );
 
   /* Lista filtrada + ordenada da sidebar — lógica pura em filterPlayers.ts. */
   const filtered = useMemo(
-    () => filterAndSortPlayers(allPlayers, filters, { viewMode, statsDb, ppMap }),
-    [allPlayers, filters, viewMode, statsDb, ppMap],
+    () => filterAndSortPlayers(allPlayers, filters, { viewMode, statsDb, ppMap, searchIndex }),
+    [allPlayers, filters, viewMode, statsDb, ppMap, searchIndex],
   );
+
+  /* Contagens da toolbar — memoizadas aqui para a toolbar não varrer 15k
+     jogadores em cada render (era inline no JSX). */
+  const toolbarCounts = useMemo<ToolbarCounts>(() => ({
+    nossosTotal: Object.keys(players).length,
+    nossosNonSenior: Object.values(players).filter(p => !isSeniorEscalao(coerceEscalao(p.escalao))).length,
+    todosTotal: federados ? federados.length : null,
+    // MESMA normalização que a sidebar (federadoToPlayer → normalizeAgeLevel):
+    // Senior→Sénior, SuperSenior→Sénior, MidAmateur→Absoluto.
+    todosNonSenior: federados ? federados.filter(f => !isSeniorEscalao(normalizeAgeLevel(f.age_level))).length : null,
+    newCount: allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length,
+    ppCount: ppMap.size > 0 ? allPlayers.filter(p => hasRealPPHcp(ppMap.get(p.fed))).length : 0,
+  }), [players, federados, allPlayers, statsDb, ppMap]);
+
+  /* Proveniência dos dados (DataSourcesChip — padrão FPG/Drive/KIDS2). */
+  const dataSources = useMemo<DataSource[]>(() => [
+    { path: "/data/federados.json", status: federadosError ? "error" : federados ? "loaded" : "loading", count: federados?.length, error: federadosError ?? undefined },
+    { path: "/data/player-stats.json", status: Object.keys(statsDb).length > 0 ? "loaded" : "loading", count: Object.keys(statsDb).length || undefined },
+    { path: "/data/federados-pp.json", status: ppMap.size > 0 ? "loaded" : "loading", count: ppMap.size || undefined },
+  ], [federados, federadosError, statsDb, ppMap]);
 
   // Ranking positions based on HCP (global, not filtered)
   const rankings = useMemo(() => {
@@ -299,21 +367,21 @@ export default function JogadoresPage() {
           if (m === "todos") setFederadosError(null);
           setViewMode(m);
         }}
-        players={players}
-        federados={federados}
+        showStats={showStats}
+        onSetShowStats={v => {
+          setShowStats(v);
+          if (!v) { setDrillDown(null); setHcpBinDrill(null); }
+        }}
+        counts={toolbarCounts}
+        dataSources={dataSources}
         loadingFeds={loadingFeds}
         federadosError={federadosError}
-        allPlayers={allPlayers}
-        statsDb={statsDb}
-        ppMap={ppMap}
         escaloes={escaloes}
         escalaoCountMap={escalaoCountMap}
         regions={regions}
         clubOptions={clubOptions}
         isJuvenilFilter={isJuvenilFilter}
         filteredCount={filtered.length}
-        showStats={showStats}
-        onToggleStats={() => setShowStats(s => !s)}
         sidebarOpen={md.open}
         onToggleSidebar={md.toggle}
       />
@@ -339,7 +407,7 @@ export default function JogadoresPage() {
               }
             }
             return (
-              <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle, rgba(59,130,246,0.05))", padding: "6px 8px" }}>
+              <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)", padding: "6px 8px" }}>
                 <div className="muted fs-10" style={{ marginBottom: 4 }}>
                   🧒 {filtered.length.toLocaleString("pt-PT")} jogadores jovens — todos visíveis
                 </div>
@@ -348,7 +416,7 @@ export default function JogadoresPage() {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg, white)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
+                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg-card)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
                         <div className="fw-700">{esc}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                           <b>{s.total}</b>
@@ -406,13 +474,7 @@ export default function JogadoresPage() {
                 roundsTotal={roundsTotal}
                 roundsCurrentYear={roundsCurrentYear}
                 ppHcp={(() => { const r = ppMap.get(p.fed); return hasRealPPHcp(r) ? r!.hcp : null; })()}
-                onClick={e => {
-                  if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                    e.preventDefault();
-                    selectPlayer(p.fed);
-                    md.onSelect();
-                  }
-                }}
+                onSelect={handleSidebarSelect}
               />
             );
           })}
@@ -423,7 +485,6 @@ export default function JogadoresPage() {
           {showStats && viewMode === "todos" && globalStats ? (
             <FederadosStatsPanel
               stats={globalStats}
-              inativosStats={inativosStats}
               drillDown={drillDown}
               onDrillDown={setDrillDown}
               hcpBinDrill={hcpBinDrill}

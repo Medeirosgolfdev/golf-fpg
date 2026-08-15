@@ -58,8 +58,10 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
       return ((Number(va) || 0) - (Number(vb) || 0)) * dir;
     });
     return arr;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rounds, sortKey, sortDir]);
+    // extraMap nas deps: o parent preenche-o progressivamente (flush a cada 5
+    // scorecards cria um Map novo) — sem isto, ordenar por Tee/Gross durante o
+    // batch ficava com a ordem calculada sobre o mapa antigo (tudo 999/"").
+  }, [rounds, sortKey, sortDir, extraMap]);
 
   // Contagem de rondas que NÃO temos em local
   // Ignorar registos administrativos (ajustes de HCP) que têm id=0/null/undefined — não são rondas jogadas

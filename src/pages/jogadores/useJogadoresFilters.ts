@@ -47,14 +47,17 @@ export interface JogadoresFiltersApi {
   toggleSortDir: () => void;
   toggleEscalao: (esc: string) => void;
   clearEscalao: () => void;
-  /** "✕ Limpar": repõe todos os filtros; mantém ordenação e includeSeniors;
-   *  desliga o pin (volta à ordem alfabética pura). */
+  /** "✕ Limpar": repõe os FILTROS contados no badge; preserva ordenação e as
+   *  preferências (👴 includeSeniors, ⭐ prioritizeJuniors — persistidas em
+   *  localStorage desde a Fase 2, não são filtros). */
   clearAllFilters: () => void;
   activeFiltersCount: number;
 }
 
-export function useJogadoresFilters(beforeChange?: () => void): JogadoresFiltersApi {
-  const [filters, setFilters] = useState<JogadoresFilterState>(makeDefaults);
+export function useJogadoresFilters(beforeChange?: () => void, initial?: Partial<JogadoresFilterState>): JogadoresFiltersApi {
+  // `initial` vem do arranque da página (URL partilhado > localStorage) — ver
+  // filtersUrl.ts. Lido uma única vez no initializer, como no Simulador.
+  const [filters, setFilters] = useState<JogadoresFilterState>(() => ({ ...makeDefaults(), ...initial }));
 
   const update = (patch: Partial<JogadoresFilterState>) => {
     beforeChange?.();
@@ -90,8 +93,11 @@ export function useJogadoresFilters(beforeChange?: () => void): JogadoresFilters
       ...makeDefaults(),
       sortKey: f.sortKey,
       sortDir: f.sortDir,
+      // Preferências (não contam no badge do Limpar) ficam como estão —
+      // antes da Fase 2 o Limpar desligava o ⭐ em silêncio, incoerente com
+      // o badge que nunca o contou.
       includeSeniors: f.includeSeniors,
-      prioritizeJuniors: false, // volta à ordem alfabética pura
+      prioritizeJuniors: f.prioritizeJuniors,
     }));
   };
 

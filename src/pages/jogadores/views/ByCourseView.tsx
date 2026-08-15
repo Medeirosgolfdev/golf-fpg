@@ -217,34 +217,14 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                   : roundsView;
                 if (rowsToShow.length === 0) return null;
                 return (
-              <div className="mt-8">
-                {isAnalysis && activeTee && (
-                  <div className="muted fs-11 mb-4">Rondas sem scorecard detalhado neste tee:</div>
-                )}
-                <table className="dt-compact">
-                  <colgroup>
-                    <col className="col-p12" /><col className="col-p19" /><col className="col-p7" /><col className="col-p8" />
-                    <col className="col-p15" /><col className="col-p10" /><col className="col-p12" />
-                    <col className="col-p9" /><col className="col-p8" />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th>Data</th><th>Prova</th><th className="r">Bur.</th><th className="r">HCP</th>
-                      <th>Tee</th><th className="r">Dist.</th><th className="r">Gross</th>
-                      <th className="r">Stb</th><th className="r">SD</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rowsToShow.map(r => {
-                      return (
-                        <RoundRow key={r.scoreId} r={r} data={data} courseName={course.course}
-                          isOpen={openScorecardId === r.scoreId}
-                          onToggle={() => openScorecard(openScorecardId === r.scoreId ? "" : r.scoreId)} />
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+                  <CourseRoundsTable
+                    rows={rowsToShow}
+                    data={data}
+                    courseName={course.course}
+                    note={isAnalysis && activeTee ? "Rondas sem scorecard detalhado neste tee:" : null}
+                    openScorecardId={openScorecardId}
+                    openScorecard={openScorecard}
+                  />
                 );
               })()}
             </div>
@@ -252,6 +232,68 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
         </tr>
       )}
     </>
+  );
+}
+
+/* ─── Tabela de rondas dentro do detalhe do campo (ordenável — regra do projecto) ─── */
+type CourseRoundsSortKey = "date" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd";
+
+function CourseRoundsTable({ rows, data, courseName, note, openScorecardId, openScorecard }: {
+  rows: RoundData[]; data: PlayerPageData; courseName: string; note: string | null;
+  openScorecardId: string | null; openScorecard: (id: string) => void;
+}) {
+  const { sortKey, sortDir, toggleSort } = useSort<CourseRoundsSortKey>("date", "desc", {
+    gross: "asc", sd: "asc", hcp: "asc", meters: "desc", stb: "desc", holes: "desc",
+  });
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...rows].sort((a, b) => {
+      switch (sortKey) {
+        case "date": return dir * (a.dateSort - b.dateSort);
+        case "event": return dir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "holes": return dir * (a.holeCount - b.holeCount);
+        case "hcp": return dir * ((a.hi ?? 999) - (b.hi ?? 999));
+        case "tee": return dir * (a.tee || "").localeCompare(b.tee || "");
+        case "meters": return dir * ((a.meters ?? 0) - (b.meters ?? 0));
+        case "gross": return dir * ((a.gross ?? 999) - (b.gross ?? 999));
+        case "stb": return dir * ((a.stb ?? -999) - (b.stb ?? -999));
+        case "sd": return dir * ((a.sd ?? 999) - (b.sd ?? 999));
+        default: return dir * (a.dateSort - b.dateSort);
+      }
+    });
+  }, [rows, sortKey, sortDir]);
+
+  return (
+    <div className="mt-8">
+      {note && <div className="muted fs-11 mb-4">{note}</div>}
+      <table className="dt-compact">
+        <colgroup>
+          <col className="col-p12" /><col className="col-p19" /><col className="col-p7" /><col className="col-p8" />
+          <col className="col-p15" /><col className="col-p10" /><col className="col-p12" />
+          <col className="col-p9" /><col className="col-p8" />
+        </colgroup>
+        <thead>
+          <tr>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
+            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
+            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist.</SortableHdr>
+            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
+            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map(r => (
+            <RoundRow key={r.scoreId} r={r} data={data} courseName={courseName}
+              isOpen={openScorecardId === r.scoreId}
+              onToggle={() => openScorecard(openScorecardId === r.scoreId ? "" : r.scoreId)} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -384,8 +426,10 @@ export default function ByCourseView({ data, search, sort, isAnalysis }: {
             </tr>
           </thead>
           <tbody>
-            {list.map((c, i) => (
-              <ByCourseRow key={c.course + i} course={c} data={data}
+            {/* key = nome do campo (único em DATA) — com o índice na key, reordenar
+                remontava as linhas e perdia o estado aberto/tee seleccionado. */}
+            {list.map(c => (
+              <ByCourseRow key={c.course} course={c} data={data}
                 isAnalysis={isAnalysis} openScorecard={setOpenScorecardId} openScorecardId={openScorecardId} />
             ))}
           </tbody>

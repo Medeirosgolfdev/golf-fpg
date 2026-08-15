@@ -28,7 +28,7 @@ export type PlayerSidebarPlayer = {
 
 /** Sep — pequena linha separadora entre blocos do cartão */
 const PlayerSidebarSep = () => (
-  <div style={{ height: "0.5px", background: "var(--border-light, rgba(0,0,0,.08))", margin: "4px 0" }} />
+  <div style={{ height: "0.5px", background: "var(--border-light)", margin: "4px 0" }} />
 );
 
 /** Pill HCP com 3 níveis de destaque relativamente ao escalão:
@@ -146,12 +146,14 @@ type PlayerSidebarItemProps = {
   roundsCurrentYear?: number | null;
   /** Handicap Pitch & Putt (mundo paralelo) — null se não tiver. */
   ppHcp?: number | null;
-  onClick: (e: React.MouseEvent) => void;
+  /** Seleccionar o jogador (callback ESTÁVEL do parent — o item trata os
+   *  modifier-keys internamente para o React.memo ser efectivo). */
+  onSelect: (fed: string) => void;
 };
 
-export default function PlayerSidebarItem({
+function PlayerSidebarItemInner({
   p, isActive, displayClub, displayEscalao, displayHcp, rank, rankingMode, isNewRound,
-  escHcps, roundsTotal, roundsCurrentYear, ppHcp, onClick,
+  escHcps, roundsTotal, roundsCurrentYear, ppHcp, onSelect,
 }: PlayerSidebarItemProps) {
   const pm = p;
   const isFedsOnly = pm._source === "feds";
@@ -180,7 +182,7 @@ export default function PlayerSidebarItem({
     escKey === "sub24" ? "var(--esc-sub24-bg)" :
     null;
   const accent =
-    isNacional ? "var(--color-good-dark, var(--color-good-dark))" :
+    isNacional ? "var(--color-good-dark)" :
     isPja      ? SIDEBAR_ACCENT.pja :
     isOrphan   ? "var(--color-warn)" :
     escBg      ??
@@ -193,7 +195,14 @@ export default function PlayerSidebarItem({
     <a
       href={`/jogadores/${p.fed}`}
       className={`course-item ${isActive ? "active" : ""}`}
-      onClick={onClick}
+      onClick={e => {
+        // Click simples selecciona; Ctrl/Cmd/Shift/middle deixa o <a> abrir
+        // em nova aba (padrão TournSidebarItem).
+        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+          e.preventDefault();
+          onSelect(p.fed);
+        }
+      }}
       style={{
         borderLeft: `4px solid ${accent}`,
         paddingLeft: 10,
@@ -234,7 +243,7 @@ export default function PlayerSidebarItem({
         <HcpPill hcp={displayHcp} escHcps={escHcps} />
         {ppHcp != null && (
           <span className="p p-sm" title={`Handicap Pitch & Putt: ${ppHcp}`}
-            style={{ background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}>
+            style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
             🏑 {ppHcp}
           </span>
         )}
@@ -250,7 +259,7 @@ export default function PlayerSidebarItem({
           {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
               Usado para ordenação por defeito. */}
           {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
-            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark, var(--color-good-dark))", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
           )}
           {/* Total — também do data.json. */}
           {(roundsTotal != null && roundsTotal > 0) && (
@@ -266,3 +275,9 @@ export default function PlayerSidebarItem({
     </a>
   );
 }
+
+/** React.memo: com até 2000 itens na sidebar, cada keystroke re-renderizava
+ *  todos. Com o onSelect estável (useCallback no parent) e as restantes props
+ *  primitivas/estáveis, só os itens cujo estado muda re-renderizam. */
+const PlayerSidebarItem = React.memo(PlayerSidebarItemInner);
+export default PlayerSidebarItem;

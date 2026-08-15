@@ -258,7 +258,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   className="p"
                   onClick={() => setPpView(true)}
                   title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-                  style={{ cursor: "pointer", background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}
+                  style={{ cursor: "pointer", background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}
                 >🏑 P&amp;P {pp.hcp}</span>
               )}
               <SexBadge sex={selected.sex} size="md" />
@@ -277,7 +277,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               {aces.length > 0 && (
                 <span
                   className="p"
-                  style={{ background: "var(--score-eagle, var(--color-amber))", color: "#fff", border: "1px solid var(--score-eagle, var(--color-amber))" }}
+                  style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}

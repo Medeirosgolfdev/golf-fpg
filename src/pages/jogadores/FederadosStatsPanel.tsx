@@ -7,12 +7,12 @@
  * corpo da página antes da extracção de 2026-08-15).
  */
 import React from "react";
-import type { FederadoRaw, InativosStats } from "../../data/federadosLoader";
+import type { FederadoRaw } from "../../data/federadosLoader";
 import { gf } from "../../utils/flagUtils";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
-import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange } from "./hcpBins";
+import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
 import { COL_M, COL_F, barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 
 export interface GlobalStats {
@@ -66,7 +66,9 @@ export function computeGlobalStats(federados: FederadoRaw[]): GlobalStats {
     }
     if ((f.rounds_current_year || 0) > 0) activeThisYear++;
     if (f.player_type_id === 2 || f.player_type === "Profissional") pros++;
-    if (f.hcp_exact != null) {
+    // "Com HCP válido" exclui placeholders ≥54/99 (HI não estabelecido) —
+    // mesma regra do HcpPill da sidebar; senão a média/bins vinham inflados.
+    if (isCountableHcp(f.hcp_exact)) {
       withHcp++;
       totalHcp += f.hcp_exact;
       const k = hcpBinKey(f.hcp_exact);
@@ -82,7 +84,7 @@ export function computeGlobalStats(federados: FederadoRaw[]): GlobalStats {
     .map(([code, c]) => [code, { ...c, count: c.m + c.f }] as [string, typeof c & { count: number }])
     .sort((a, b) => b[1].count - a[1].count);
   const topBestHcp = [...federados]
-    .filter(f => f.hcp_exact != null)
+    .filter(f => isCountableHcp(f.hcp_exact))
     .sort((a, b) => (a.hcp_exact as number) - (b.hcp_exact as number))
     .slice(0, 20);
   const avgHcp = withHcp > 0 ? totalHcp / withHcp : 0;
@@ -163,9 +165,8 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
   );
 }
 
-export default function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, onDrillDown, hcpBinDrill, onHcpBinDrill, federados, onClose, onPickPlayer }: {
+export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcpBinDrill, onHcpBinDrill, federados, onClose, onPickPlayer }: {
   stats: GlobalStats;
-  inativosStats: InativosStats | null;
   drillDown: { type: "club" | "age"; key: string } | null;
   onDrillDown: (d: { type: "club" | "age"; key: string } | null) => void;
   hcpBinDrill: string | null;
@@ -383,9 +384,9 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
 }) {
   const binRange = hcpBinRange(bin);
 
+  // isCountableHcp já exclui os placeholders (≥54/99); o range 30+ tem tecto 54.
   const inBin = federados.filter(f =>
-    f.hcp_exact != null &&
-    f.hcp_exact !== 99 &&
+    isCountableHcp(f.hcp_exact) &&
     f.hcp_exact >= binRange.min &&
     f.hcp_exact < binRange.max
   );

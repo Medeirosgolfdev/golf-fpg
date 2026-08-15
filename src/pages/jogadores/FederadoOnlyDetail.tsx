@@ -6,10 +6,11 @@
  * Cadastro FPG completo + KPIs de actividade + rondas WHS live via
  * /api/datagolf, com modal de scorecard hole-by-hole.
  */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState, type ReactNode } from "react";
 import type { MergedPlayer } from "../../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../../data/datagolfClient";
+import { FILE_PLAYER_DATA } from "../../data/dataRegistry";
+import { cachedFetchJson } from "../../data/fetchCache";
 import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import { gf } from "../../utils/flagUtils";
 import { canonicalCourseName } from "../../utils/courseAliases";
@@ -26,10 +27,18 @@ import {
   formatFedValue, KV,
 } from "./federadoFields";
 
+/** Máximo de scorecards a enriquecer no batch (tee/gross). A tabela mostra no
+ *  máximo 200 rondas; sem tecto, um federado veterano com 400+ rondas WHS
+ *  disparava 400+ POSTs ao /api/datagolf só para linhas nunca renderizadas. */
+const SCORECARD_BATCH_MAX = 250;
+
 export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string } }) {
-  const f = player._federadoRaw;
-  if (!f) return <EmptyState message="Sem dados disponíveis" />;
-  const showFlag = f.country_prefix && f.country_prefix !== "PT" && !f.country_prefix.startsWith("@");
+  // ⚠ Hooks SEMPRE antes de qualquer return — `f` pode em teoria faltar
+  // (o early-return de EmptyState vive depois dos hooks, com guards `fedCode`
+  // dentro dos efeitos), senão a ordem de hooks mudava entre renders.
+  const f = player._federadoRaw ?? null;
+  const fedCode = f?.federation_code ?? "";
+  const showFlag = f && f.country_prefix && f.country_prefix !== "PT" && !f.country_prefix.startsWith("@");
 
   /* ── Rondas em tempo real via /api/datagolf ── */
   const [liveRounds, setLiveRounds] = useState<WhsRound[] | null>(null);
@@ -58,24 +67,25 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
   const [localIds, setLocalIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
+    if (!fedCode) return;
     let cancelled = false;
     setLoadingLive(true);
     setLiveError(null);
     setLiveRounds(null);
     setExtraMap(new Map());
-    getPlayerHistory(f.federation_code)
+    getPlayerHistory(fedCode)
       .then(rounds => { if (!cancelled) setLiveRounds(rounds); })
       .catch(err => { if (!cancelled) setLiveError(String(err?.message || err)); })
       .finally(() => { if (!cancelled) setLoadingLive(false); });
     return () => { cancelled = true; };
-  }, [f.federation_code]);
+  }, [fedCode]);
 
   /* Batch-fetch scorecards para extrair tee + gross (concurrency ~3) */
   useEffect(() => {
     if (!liveRounds || liveRounds.length === 0) return;
     let cancelled = false;
     const map = new Map<number, RoundExtra>();
-    const queue = [...liveRounds];
+    const queue = liveRounds.slice(0, SCORECARD_BATCH_MAX);
     let running = 0;
     const CONC = 3;
 
@@ -114,13 +124,15 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
   useEffect(() => {
     let cancelled = false;
     setLocalIds(new Set());
-    const fed = f.federation_code;
+    const fed = fedCode;
     if (!fed) return;
     (async () => {
       try {
-        const resp = await fetch(`/${fed}/analysis/data.json`);
-        if (!resp.ok) return;
-        const json = await resp.json();
+        // cachedFetchJson: partilha cache com o resto da app (a "vista
+        // federado" de um Nosso já descarregou este data.json) e devolve
+        // null em 404 (federado sem análise local — o caso normal aqui).
+        const json = await cachedFetchJson<{ HOLES?: Record<string, unknown> }>(FILE_PLAYER_DATA(fed));
+        if (!json) return;
         // HOLES keys are scoreId strings; DATA[].rounds[].scoreId too
         const ids = new Set<number>();
         if (json.HOLES) {
@@ -133,7 +145,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
       } catch { /* no local data available — OK */ }
     })();
     return () => { cancelled = true; };
-  }, [f.federation_code]);
+  }, [fedCode]);
+
+  if (!f) return <EmptyState message="Sem dados disponíveis" />;
 
   return (
     <div className="p-16">

@@ -64,7 +64,7 @@ export function MFColumn({ m, f, barHeight, width = "85%", minWidth, shadow }: {
     <div style={{
       width, minWidth, display: "flex", flexDirection: "column",
       borderRadius: "3px 3px 0 0", overflow: "hidden",
-      boxShadow: shadow ? "0 1px 2px rgba(0,0,0,0.08)" : undefined,
+      boxShadow: shadow ? "0 1px 2px var(--overlay-black-08)" : undefined,
     }}>
       {f > 0 && <div title={`${f} Feminino`} style={{ height: fHeight, background: COL_F, minHeight: 2 }} />}
       {m > 0 && <div title={`${m} Masculino`} style={{ height: mHeight, background: COL_M, minHeight: 2 }} />}
