@@ -491,7 +491,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg" style={{ tableLayout: "fixed" }}>
+        <table className="dtable-lg dtable-dense" style={{ tableLayout: "fixed" }}>
           <colgroup>
             <col style={{ width: "108px" }} /><col style={{ width: "64px" }} />
             <col /><col /><col style={{ width: "72px" }} />

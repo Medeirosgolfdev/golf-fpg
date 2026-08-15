@@ -79,12 +79,12 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
         const ddmm = dateStr.split("-").reverse().join("-"); // YYYY-MM-DD → DD-MM-YYYY
         const tee = extraMap?.get(r.id)?.tee || "";
         const isMissing = !!r.id && !!localIds && localIds.size > 0 && !localIds.has(r.id);
+        // scoreId no tooltip (não numa 2ª linha — duplicava a altura da linha).
         return (
-          <>
+          <span title={r.id ? `score #${r.id}` : undefined}>
             <TeeDate date={ddmm} tee={tee} />
             {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: "var(--fs-10)" }} title="Não temos esta ronda em local">●</span>}
-            {r.id ? <div className="muted fs-10">#{r.id}</div> : null}
-          </>
+          </span>
         );
       },
     },
@@ -146,6 +146,7 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
       )}
       <ListaTabela
         noCard
+        dense
         columns={columns}
         rows={sorted.slice(0, 200)}
         rowKey={r => `${r.id}-${r.score_dateStr}-${(r.tournament_description || "").slice(0, 12)}`}

@@ -226,11 +226,10 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
     <>
       <tr className="roundRow" onClick={r.hasCard ? onToggle : undefined}
           style={{ cursor: r.hasCard ? "pointer" : "default" }}>
-        <td>
+        <td title={`score #${r.scoreId}`}>
           {r.hasCard
             ? <a href="#" onClick={e => { e.preventDefault(); onToggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
             : <TeeDate date={r.date} tee={r.tee || ""} />}
-          <div className="muted fs-10">#{r.scoreId}</div>
         </td>
         <td className="col-prova" onClick={e => e.stopPropagation()}>
           <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r, courseName)} links={r._links}
@@ -323,7 +322,7 @@ export default function ByCourseView({ data, search, sort }: {
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-roomy" style={{ tableLayout: "fixed" }}>
+        <table className="dtable-lg dtable-roomy dtable-dense" style={{ tableLayout: "fixed" }}>
           <colgroup>
             <col style={{ width: "72px" }} /><col /><col style={{ width: "72px" }} />
             <col style={{ width: "44px" }} /><col style={{ width: "46px" }} /><col style={{ width: "92px" }} />

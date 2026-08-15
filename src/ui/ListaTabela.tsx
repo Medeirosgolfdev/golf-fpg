@@ -45,11 +45,13 @@ interface ListaTabelaProps<T> {
   footer?: React.ReactNode;
   /** Sem o wrapper .card (quando a tabela já vive dentro de um card). */
   noCard?: boolean;
+  /** Linhas densas (.dtable-dense — padding vertical reduzido, aspecto clean). */
+  dense?: boolean;
 }
 
 export default function ListaTabela<T>({
   columns, rows, rowKey, sortKey, sortDir, onSort, minWidth,
-  expandedKey, onRowClick, rowClassName, renderExpanded, separatorBefore, footer, noCard,
+  expandedKey, onRowClick, rowClassName, renderExpanded, separatorBefore, footer, noCard, dense,
 }: ListaTabelaProps<T>) {
   const hasWidths = columns.some(c => c.width);
   const tableStyle: React.CSSProperties = {};
@@ -57,7 +59,7 @@ export default function ListaTabela<T>({
   if (hasWidths) tableStyle.tableLayout = "fixed";
   const inner = (
     <div className="scroll-x">
-        <table className="dtable-lg" style={tableStyle}>
+        <table className={`dtable-lg${dense ? " dtable-dense" : ""}`} style={tableStyle}>
           {hasWidths && (
             <colgroup>
               {columns.map(c => <col key={c.key} style={c.width ? { width: c.width } : undefined} />)}

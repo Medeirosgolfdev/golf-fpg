@@ -60,6 +60,9 @@ html, body, #root {
 .dtable-lg .r { text-align: right; }
 .dtable-lg .roundRow { cursor: pointer; transition: background 0.15s; }
 .dtable-lg .roundRow:hover { background: var(--bg-hover); }
+/* Variante densa (2026-08-15) — linhas finas para tabelas de rondas (prop
+   `dense` do ListaTabela). Aspecto clean: menos padding vertical. */
+.dtable-dense th, .dtable-dense td { padding-top: 3px; padding-bottom: 3px; }
 .dtable-lg .tourn-pname { font-weight: 700; }
 .dtable-lg .tourn-pname.tourn-pname-link { color: var(--link-color); }
 
@@ -1039,9 +1042,11 @@ tr.cross-current { background: var(--bg-success); }
 .pa-content .dtable-lg th { padding: 7px 10px; }
 .pa-content .dtable-lg td { padding: 7px 10px; }
 /* by_course tem 1 linha por célula → linhas mais altas p/ igualar by_date/federado */
-.pa-content .dtable-lg.dtable-roomy td { padding-top: 10px; padding-bottom: 10px; }
+/* 2026-08-15: o padding vertical de 10px do .dtable-roomy saiu (linhas gordas)
+   — a classe fica só pelo min-width (ver regra mais abaixo); a densidade vem
+   do .dtable-dense. */
 .pa-content .dtable, .pa-content .dt-compact, .pa-content .sc-table-modern { font-size: var(--fs-12); }
-.pa-content .dt-compact th, .pa-content .dt-compact td { padding: 8px 10px; }
+.pa-content .dt-compact th, .pa-content .dt-compact td { padding: 5px 10px; }
 
 /* ─── Enquadramento do detalhe de cada campo/torneio (2026-07-06) ──────────────
    O painel expandido ganha respiração e a tabela de rondas passa a ler-se como um

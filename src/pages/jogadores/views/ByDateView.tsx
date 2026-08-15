@@ -63,10 +63,12 @@ export default function ByDateView({ data, search }: {
   }, [data, search, sortKey, sortDir]);
 
   const columns: ListaColuna<RoundData & { course: string }>[] = [
+    // scoreId saiu da 2ª linha da célula (duplicava a altura de TODAS as
+    // linhas) — vive agora no tooltip da data (aspecto clean, 2026-08-15).
     { key: "date", label: "Data", width: "68px", sortable: true, render: r => (
-      <><TeeDate date={r.date} tee={r.tee || ""} /><div className="muted fs-10">#{r.scoreId}</div></>
+      <span title={`score #${r.scoreId}`}><TeeDate date={r.date} tee={r.tee || ""} /></span>
     ) },
-    { key: "course", label: "Campo", width: "150px", sortable: true, render: r => <CourseLink name={r.course} /> },
+    { key: "course", label: "Campo", width: "190px", sortable: true, render: r => <CourseLink name={r.course} /> },
     { key: "event", label: "Prova", sortable: true, cellClassName: "col-prova", render: r => (
       <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
         fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} />
@@ -83,6 +85,7 @@ export default function ByDateView({ data, search }: {
   return (
     <>
       <ListaTabela
+        dense
         columns={columns}
         rows={all}
         rowKey={r => r.scoreId}
