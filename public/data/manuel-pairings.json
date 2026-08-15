@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-14T20:26:32.724Z",
+  "geradoEm": "2026-08-15T20:15:20.346Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -708,21 +708,30 @@
       "teeTime": "13:21",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 77,
+        "toPar": 5
+      },
       "companheiros": [
         {
           "nome": "Amadeo Grassl",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
         },
         {
           "nome": "SEBASTIANO GIACOBBI",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         }
       ]
     },
