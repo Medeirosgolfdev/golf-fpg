@@ -829,7 +829,21 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-nameline .detail-title { margin: 0; font-size: var(--fs-20); }
 /* Linha de botões/links por baixo do nome (Vista federado · FPG ↗ · My FPG ↗ · P&P ↗) */
 .dh-btnline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
+/* Linha de identidade CALMA — texto com separadores "·" em vez de pills
+   coloridas: no cabeçalho a atenção pertence aos KPIs, não ao cadastro. */
+.jog-pills-quiet { gap: 0 8px; }
+.jog-pills-quiet .ip-item {
+  font-size: var(--fs-12); font-weight: 500; color: var(--text-2);
+  white-space: nowrap; line-height: 1.4;
+}
+.jog-pills-quiet .ip-item:not(:first-child)::before {
+  content: "·"; margin-right: 8px; color: var(--text-4); font-weight: 400;
+}
+.jog-pills-quiet .ip-fed { font-weight: 700; color: var(--text); }
+.jog-pills-quiet .ip-esc { font-weight: 700; }
+/* Mesmo raio das pills (--radius-pill) — os botões e os pill-links da linha
+   partilham a MESMA forma (a mistura 10px/4px destoava, 2026-08-15). */
+.dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-pill); cursor: pointer; color: var(--text-2); white-space: nowrap; }
 .dh-mode-btn:hover { background: var(--bg-hover); }
 .dh-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
 /* Controlos empilhados: pesquisa / dropdown(s) / data = linhas separadas. */

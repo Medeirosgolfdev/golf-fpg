@@ -1,6 +1,6 @@
 ﻿import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
-import { norm, fmtToPar, fmtSign } from "../utils/format";
+import { norm, fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
@@ -12,6 +12,26 @@ import { ScorecardTable } from "./ScorecardTable";
 import { CourseLink } from "./jogadoresHelpers";
 
 type RoundExt = RoundData & { course: string };
+
+/** Intervalo de datas legível numa só linha (datas DD-MM-YYYY):
+ *  mesmo mês → "13–14 Ago 2026" · meses ≠ → "30 Ago – 2 Set 2026" ·
+ *  anos ≠ → "30 Dez 2025 – 2 Jan 2026" · 1 dia → "13 Ago 2026". */
+function fmtDateRange(start: string, end: string): string {
+  const parse = (s: string): [number, number, number] | null => {
+    const m = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s);
+    return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
+  };
+  const a = parse(start), b = parse(end);
+  if (!a && !b) return end || start;
+  if (!a || !b || (start === end)) {
+    const d = (b || a)!;
+    return `${d[0]} ${MONTHS_PT[d[1] - 1] || d[1]} ${d[2]}`;
+  }
+  const [d1, m1, y1] = a, [d2, m2, y2] = b;
+  if (y1 !== y2) return `${d1} ${MONTHS_PT[m1 - 1]} ${y1} – ${d2} ${MONTHS_PT[m2 - 1]} ${y2}`;
+  if (m1 !== m2) return `${d1} ${MONTHS_PT[m1 - 1]} – ${d2} ${MONTHS_PT[m2 - 1]} ${y2}`;
+  return `${d1}–${d2} ${MONTHS_PT[m2 - 1]} ${y2}`;
+}
 
 function TournRoundRow({ r, idx: _idx, data }: {
   r: RoundExt; idx: number; data: PlayerPageData;
@@ -512,7 +532,6 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
             {sortedItems.map((it, idx) => {
               const start = it.rounds[0]?.date || "";
               const end = it.rounds[it.rounds.length - 1]?.date || "";
-              const hasRange = !!(start && end && start !== end);
               const isOpen = openIdx === idx;
               const best = eventBest(it.rounds);
               const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
@@ -521,15 +540,8 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
               return (
                 <React.Fragment key={idx}>
                   <tr>
-                    <td style={{ color: "var(--text-2)", fontVariantNumeric: "tabular-nums", lineHeight: 1.25 }}>
-                      {hasRange ? (
-                        <>
-                          <div className="fs-11">{start}</div>
-                          <div className="fs-11 muted">→ {end}</div>
-                        </>
-                      ) : (
-                        <div className="fs-11">{end || start}</div>
-                      )}
+                    <td style={{ color: "var(--text-2)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                      <span className="fs-11">{fmtDateRange(start, end)}</span>
                     </td>
                     <td className="r"><CountPill count={it.rounds.length} tee={repTee} /></td>
                     <td>

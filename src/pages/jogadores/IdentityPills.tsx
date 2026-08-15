@@ -53,22 +53,31 @@ export default function IdentityPills({ fed, sex, dob, escalao, club, countryPre
   children?: ReactNode;
 }) {
   const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
+  // Linha de identidade CALMA (2026-08-15, pedido da utilizadora): texto com
+  // separadores "·" em vez de um arco-íris de pills — no cabeçalho a atenção
+  // pertence aos KPIs (índice), não ao cadastro. O escalão mantém a cor da
+  // casa mas como texto. Extras (children) continuam pills discretas.
   return (
-    <div className="jog-pills">
-      <span className="p p-fed">#{fed}</span>
-      {(sex === "M" || sex === "F") && <SexBadge sex={sex} size="md" />}
+    <div className="jog-pills jog-pills-quiet">
+      <span className="ip-item ip-fed">#{fed}</span>
+      {(sex === "M" || sex === "F") && <SexBadge sex={sex} size="sm" />}
       {showFlag && (
-        <span className="p p-sm p-muted" title={country || countryPrefix!}>
+        <span className="ip-item" title={country || countryPrefix!}>
           {gf(countryPrefix!)} {countryPrefix}
         </span>
       )}
       {dob && (
-        <span className="p p-birth" title={`Data de nascimento: ${dob.split("-").reverse().join("/")}`}>
+        <span className="ip-item" title={`Data de nascimento: ${dob.split("-").reverse().join("/")}`}>
           {dob.slice(0, 4)}
         </span>
       )}
-      {escalao && <span className={`p p-${escCls(escalao)}`}>{escalao}</span>}
-      {club && <span className="p p-club">{club}</span>}
+      {escalao && (
+        <span className="ip-item ip-esc"
+          style={{ color: `var(--esc-${escCls(escalao)}-fg, var(--text-2))` }}>
+          {escalao}
+        </span>
+      )}
+      {club && <span className="ip-item">{club}</span>}
       {children}
     </div>
   );
