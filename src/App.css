@@ -768,7 +768,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  padding: 2px 8px;
  font-size: var(--fs-11);
  font-weight: 600;
- border-radius: var(--radius);
+ /* MESMO raio das restantes pills (--radius-pill) — tinha var(--radius) 6px
+    e destoava na linha de identidade (2026-08-15). */
+ border-radius: var(--radius-pill);
  border: 1.5px solid transparent;
  white-space: nowrap;
  vertical-align: middle;

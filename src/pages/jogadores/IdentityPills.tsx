@@ -23,17 +23,19 @@ const EXT_LINK_STYLE: CSSProperties = {
  *  pill-links — substituem a antiga coluna de ícones 🔗 solta à esquerda do
  *  nome (dh-iconcol). Partilhados pelos 2 mundos do detalhe. */
 export function PlayerExtLinks({ fed }: { fed: string }) {
+  // Mesmo tamanho das restantes pills do cabeçalho (sem p-sm) — todas as
+  // pills partilham padding/fonte/raio (2026-08-15).
   return (
     <>
-      <a className="p p-sm" style={EXT_LINK_STYLE}
+      <a className="p" style={EXT_LINK_STYLE}
         href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>FPG ↗</a>
-      <a className="p p-sm" style={EXT_LINK_STYLE}
+      <a className="p" style={EXT_LINK_STYLE}
         href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${fed}`}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</a>
-      <a className="p p-sm" style={EXT_LINK_STYLE}
+      <a className="p" style={EXT_LINK_STYLE}
         href={ppPlayerUrl(fed)}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑 P&amp;P ↗</a>
