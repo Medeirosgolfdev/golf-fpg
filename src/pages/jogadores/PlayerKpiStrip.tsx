@@ -48,7 +48,7 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp
       {ppHcp != null && (
         /* Cor P&P da sidebar (--badge-pp) em transparência — mesmo padrão
            do fill verde do índice (--color-good-alpha). */
-        <UiKpiCard size="sm" label="P&P" value={ppHcp} sub="pitch & putt"
+        <UiKpiCard size="sm" className="kpi-hero" label="P&P" value={ppHcp} sub="pitch & putt"
           color="var(--badge-pp)"
           onClick={onPpClick}
           title="Handicap Pitch & Putt — clica para ver o histórico P&P"
