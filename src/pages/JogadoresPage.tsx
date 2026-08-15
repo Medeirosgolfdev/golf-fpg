@@ -54,6 +54,8 @@ export default function JogadoresPage() {
 
   /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
   const internalNav = React.useRef(false);
+  /* Ref: o efeito de sync urlFed já correu uma vez (mount)? */
+  const urlFedMountedRef = React.useRef(false);
 
   /* Helper — limpa APENAS o estado de selecção (mostra FilteredStatsCard).
      A URL fica como está (ex: /jogadores/52884) — é tratada como "última
@@ -168,13 +170,19 @@ export default function JogadoresPage() {
   useEffect(() => {
     if (urlFed) {
       setSelectedFed(urlFed);
-      if (!internalNav.current && players[urlFed]) {
-        // Só limpar a pesquisa quando o fed pertence a Nossos — evita
-        // resetar o filtro do user em navegações externas para feds desconhecidos.
-        filtersApi.update({ q: "" });
+      // Só limpar a pesquisa quando o fed pertence a Nossos — evita resetar
+      // o filtro do user em navegações externas para feds desconhecidos.
+      // ⚠ updateSilent (NÃO update): o beforeChange/clearSelection iria
+      // deseleccionar o jogador acabado de seleccionar (o setSelectedFed(null)
+      // ficava em fila DEPOIS do setSelectedFed(urlFed)).
+      // ⚠ Saltar o primeiro run (mount): com filtros no URL desde a Fase 2,
+      // um link partilhado /jogadores/{fed}?q=… chegaria aqui e perderia o q.
+      if (!internalNav.current && players[urlFed] && urlFedMountedRef.current) {
+        filtersApi.updateSilent({ q: "" });
       }
       internalNav.current = false;
     }
+    urlFedMountedRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlFed]);
 

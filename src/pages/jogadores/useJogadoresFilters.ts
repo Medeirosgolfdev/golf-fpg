@@ -42,6 +42,10 @@ export interface JogadoresFiltersApi {
   filters: JogadoresFilterState;
   /** Altera filtros (chama beforeChange primeiro — limpa a selecção). */
   update: (patch: Partial<JogadoresFilterState>) => void;
+  /** Altera filtros SEM disparar beforeChange — para sincronizações internas
+   *  (ex: limpar a pesquisa ao navegar externamente para um jogador, que NÃO
+   *  deve deseleccionar o jogador acabado de seleccionar). */
+  updateSilent: (patch: Partial<JogadoresFilterState>) => void;
   /** Altera a ordenação SEM limpar a selecção. */
   updateSort: (sortKey: SortKey, sortDir: "asc" | "desc") => void;
   toggleSortDir: () => void;
@@ -61,6 +65,10 @@ export function useJogadoresFilters(beforeChange?: () => void, initial?: Partial
 
   const update = (patch: Partial<JogadoresFilterState>) => {
     beforeChange?.();
+    setFilters(f => ({ ...f, ...patch }));
+  };
+
+  const updateSilent = (patch: Partial<JogadoresFilterState>) => {
     setFilters(f => ({ ...f, ...patch }));
   };
 
@@ -103,5 +111,5 @@ export function useJogadoresFilters(beforeChange?: () => void, initial?: Partial
 
   const activeFiltersCount = useMemo(() => countActiveFilters(filters), [filters]);
 
-  return { filters, update, updateSort, toggleSortDir, toggleEscalao, clearEscalao, clearAllFilters, activeFiltersCount };
+  return { filters, update, updateSilent, updateSort, toggleSortDir, toggleEscalao, clearEscalao, clearAllFilters, activeFiltersCount };
 }

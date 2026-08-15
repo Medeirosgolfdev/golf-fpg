@@ -28,10 +28,11 @@ import {
 } from "./federadoFields";
 import IdentityPills from "./IdentityPills";
 
-/** Máximo de scorecards a enriquecer no batch (tee/gross). A tabela mostra no
- *  máximo 200 rondas; sem tecto, um federado veterano com 400+ rondas WHS
- *  disparava 400+ POSTs ao /api/datagolf só para linhas nunca renderizadas. */
-const SCORECARD_BATCH_MAX = 250;
+/** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
+ *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
+ *  400+ rondas WHS disparava 400+ POSTs ao /api/datagolf para linhas nunca
+ *  renderizadas. */
+const SCORECARD_BATCH_MAX = 200;
 
 export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string } }) {
   // ⚠ Hooks SEMPRE antes de qualquer return — `f` pode em teoria faltar

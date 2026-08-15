@@ -459,7 +459,8 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
   const byCountry: Record<string, number> = {};
   for (const f of members) {
     if (f.gender === "M") male++; else if (f.gender === "F") female++;
-    if (f.hcp_exact != null) { withHcp++; totalHcp += f.hcp_exact; }
+    // Mesma regra dos restantes painéis: placeholders ≥54/99 fora das stats.
+    if (isCountableHcp(f.hcp_exact)) { withHcp++; totalHcp += f.hcp_exact; }
     if ((f.rounds_current_year || 0) > 0) active++;
     if (f.player_type_id === 2) pros++;
     if (drillDown.type === "club") byAge[f.age_level] = (byAge[f.age_level] || 0) + 1;
@@ -471,7 +472,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
     byCountry[f.country_prefix || "?"] = (byCountry[f.country_prefix || "?"] || 0) + 1;
   }
   const avgHcp = withHcp > 0 ? totalHcp / withHcp : 0;
-  const best = [...members].filter(f => f.hcp_exact != null).sort((a, b) => (a.hcp_exact as number) - (b.hcp_exact as number)).slice(0, 10);
+  const best = [...members].filter(f => isCountableHcp(f.hcp_exact)).sort((a, b) => (a.hcp_exact as number) - (b.hcp_exact as number)).slice(0, 10);
   const topClubsDrill = drillDown.type === "age"
     ? Object.entries(byClub).sort((a, b) => b[1].count - a[1].count).slice(0, 10)
     : [];
