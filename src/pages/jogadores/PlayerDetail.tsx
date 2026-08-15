@@ -255,12 +255,14 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   · Vista P&P · P&P ↗ — cada vista interna seguida do seu par
                   externo com seta. */}
               <div className="dh-btnline">
+                {/* Sem emojis nos botões de vista (2026-08-15) — texto limpo
+                    como os links externos ao lado. */}
                 <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
-                  title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
+                  title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">Vista federado</button>
                 <PlayerExtLinks fed={selected.fed} includePP={false} />
                 {pp && (
                   <button className="dh-mode-btn" onClick={() => setPpView(true)}
-                    title="Ver histórico Pitch & Putt dentro da app (cartões P&P descarregados)">🏑 Vista P&amp;P</button>
+                    title="Ver histórico Pitch & Putt dentro da app (cartões P&P descarregados)">Vista P&amp;P</button>
                 )}
                 <PPExtLink fed={selected.fed} />
               </div>
