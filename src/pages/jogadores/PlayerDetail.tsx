@@ -22,7 +22,7 @@ import { clubLong } from "../../utils/playerUtils";
 import LoadingState from "../../ui/LoadingState";
 import { ByTournamentView } from "../../ui/ByTournamentView";
 import PPHistoryView from "./PPHistoryView";
-import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
+import IdentityPills, { PlayerExtLinks, PPExtLink } from "./IdentityPills";
 import FederadoOnlyDetail from "./FederadoOnlyDetail";
 import { syntheticFederadoFromPlayer } from "./syntheticFederado";
 import PlayerKpiStrip from "./PlayerKpiStrip";
@@ -251,16 +251,18 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                 ecrãs estreitos o flex-wrap quebra-os para baixo. */}
             <div className="dh-nameline">
               <h2 className="detail-title">{selected.name}</h2>
+              {/* Ordem pedida (2026-08-15): Vista federado · FPG ↗ · My FPG ↗
+                  · Vista P&P · P&P ↗ — cada vista interna seguida do seu par
+                  externo com seta. */}
               <div className="dh-btnline">
                 <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
                   title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
+                <PlayerExtLinks fed={selected.fed} includePP={false} />
                 {pp && (
                   <button className="dh-mode-btn" onClick={() => setPpView(true)}
-                    title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
+                    title="Ver histórico Pitch & Putt dentro da app (cartões P&P descarregados)">🏑 Vista P&amp;P</button>
                 )}
-                {/* Sem o link P&P externo quando o botão P&P interno existe —
-                    dois "P&P" lado a lado era confuso; o link vive na vista P&P. */}
-                <PlayerExtLinks fed={selected.fed} includePP={!pp} />
+                <PPExtLink fed={selected.fed} />
               </div>
             </div>
             {/* Identidade e KPIs em linhas SEPARADAS e fixas (2026-08-15: no
