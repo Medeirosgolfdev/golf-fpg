@@ -831,11 +831,32 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-nameline .detail-title { margin: 0; font-size: var(--fs-20); }
 /* Linha de botões/links por baixo do nome (Vista federado · FPG ↗ · My FPG ↗ · P&P ↗) */
 .dh-btnline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+/* ── MÉTRICA ÚNICA das linhas do cabeçalho (medido 2026-08-15: o botão dava
+   19px [line-height normal], os links 21.4px [borda 1px] e as pills 22.5px
+   [borda 1.5px] — três alturas na mesma zona). TUDO o que vive na linha de
+   botões e na linha de identidade partilha a MESMA caixa: 22px de altura,
+   mesma fonte, mesmo padding, borda de 1px e o raio das pills. ── */
+.dh-btnline .dh-mode-btn,
+.dh-btnline .p,
+.jog-pills .p,
+.jog-pills .sex-badge-pill {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  font-size: var(--fs-11);
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 1px 9px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--radius-pill);
+}
 /* Linha de identidade UNIFORME — cada dado é uma pill individual mas todas
    com a MESMA forma discreta (fundo muted, mesmo raio): dados distintos e
    com presença, sem arco-íris a disputar atenção com os KPIs. */
 .p-ident { background: var(--bg-muted); color: var(--text-2); border: 1px solid var(--border); }
-.p-ident.ip-fed { font-weight: 700; color: var(--text); }
+.jog-pills .p-ident.ip-fed { font-weight: 700; color: var(--text); }
 /* Mesmo raio das pills (--radius-pill) — os botões e os pill-links da linha
    partilham a MESMA forma (a mistura 10px/4px destoava, 2026-08-15). */
 .dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-pill); cursor: pointer; color: var(--text-2); white-space: nowrap; }
