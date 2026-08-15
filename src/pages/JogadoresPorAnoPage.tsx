@@ -39,8 +39,8 @@ import type { PlayerClub } from "../data/types";
 /* ─────────────────────────────────────────────────────────────── */
 
 import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
+import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/filterPlayers";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
-const HCP_UNESTABLISHED = 54;
 const CURRENT_YEAR = new Date().getFullYear();
 
 type Source = "both" | "players" | "feds";

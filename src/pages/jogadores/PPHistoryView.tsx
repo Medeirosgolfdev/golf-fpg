@@ -17,6 +17,7 @@ import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { scClass, fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { numSafe } from "../../utils/mathUtils";
 import { GrossCell as GrossDeltaCell } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
@@ -24,11 +25,8 @@ import LoadingState from "../../ui/LoadingState";
 
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
 
-function toNum(v: unknown): number | null {
-  if (v == null || v === "") return null;
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-}
+/* toNum local removido 2026-08-15 — numSafe (utils/mathUtils) é idêntico. */
+const toNum = numSafe;
 
 function Scorecard({ r }: { r: PPRound }) {
   const sc = r.scorecard;
@@ -156,7 +154,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
           🏑 Pitch &amp; Putt — {name || hist.name || `#${fed}`}
         </h3>
         {hist.index != null && (
-          <span className="p" style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+          <span className="p" style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
             Index P&amp;P {hist.index}
           </span>
         )}
