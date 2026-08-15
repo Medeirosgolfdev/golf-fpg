@@ -1,5 +1,5 @@
 {
-  "_note": "Gerado por merge-courses.js. Carregado pelo extract-courses.js.",
+  "_note": "Gerado por merge-courses.js e mantido à mão. Carregado pelo extract-courses.js. Auditado por scripts/audit-courses.js.",
   "aliases": {
     "evian resort golf club france": "evian resort golf club",
     "golf chantilly": "golf de chantilly",
@@ -176,7 +176,16 @@
     "golf val deurope": "golf paris val deurope red blue",
     "golf paris val d europe disneyland red blue": "golf paris val deurope red blue",
     "val d europe": "golf paris val deurope red blue",
-    "val deurope": "golf paris val deurope red blue"
+    "val deurope": "golf paris val deurope red blue",
+    "golf della montecchia": "golf della montecchia white red",
+    "clube val de rois": "val de rois",
+    "club de golf val de rois": "val de rois",
+    "glen golf course": "glen golf club",
+    "super bock ladies open at vidago palace": "vidago palace",
+    "meis": "campo de golf meis",
+    "colbert hills golf course": "colbert hills",
+    "copa r c g sotogrande": "club de golf sotogrande cadiz",
+    "toya golf country wroclaw": "toya golf country club wroclaw"
   },
   "nameOverrides": {
     "away-albert-vermeiren-trophy-royal-waterloo-g-c": "Royal Waterloo Golf Club - Belgium",
@@ -279,7 +288,12 @@
     "away-troia": "Troia Golf",
     "away-venice-junior-open-frassanele-golf-club": "Venice Open",
     "away-vierumakki-golf-course-cooke-course": "Vierumakki",
-    "away-vilamoura-the-old-course": "Vilamoura - Old Course"
+    "away-vilamoura-the-old-course": "Vilamoura - Old Course",
+    "away-golf-della-montecchia-white-red": "Golf Della Montecchia - White/Red",
+    "away-val-de-rois": "Val de Rois",
+    "away-glen-golf-club": "Glen Golf Club",
+    "away-campo-de-golf-meis": "Campo de Golf Meis",
+    "away-colbert-hills": "Colbert Hills"
   },
   "skipped": [
     "away-isla-canela|||away-isla-canela-links",
@@ -611,7 +625,41 @@
     "away-woodhall-spa-golf-course-hotchkin": "Inglaterra"
   },
   "blacklist": [
+    "1 puntuable zonal de galicia asturias",
+    "belgian international golf championship for boys",
+    "campeonato absoluto aberto ciudad de leon",
+    "campeonato andalucia individuales almerimar",
+    "campeonato andalucia sub 16",
+    "campeonato andalucia sub 16 y sub 18 mas y femen",
+    "campeonato andalucia sub 18",
+    "campeonato de galicia sub 14",
+    "campeonato internacional de andalucia sub18 e sub1",
+    "campionato internazionale d italia maschile",
+    "circuito infantil sevilha",
+    "cognizant cup finnish international junior champ",
+    "copa de andalucia femenina",
+    "copa de andalucia masculina",
+    "copa s m el rey alcanada",
+    "copa sm el rey",
+    "daily mail world junior golf championship d2",
+    "european boys team championship",
+    "european boys team championship div 2",
+    "european girls team championship",
+    "european ladies team championship",
+    "european young masters",
+    "gadget golf trophy",
+    "golf resort kaskada",
+    "internacional",
+    "internacional de franca sub 14",
+    "internationaux de france u14 challenge alexis go",
+    "junior cup 12 17 ans",
     "none",
-    "internacional"
+    "open amateur champioship",
+    "open championship scottish girls u16 loretto",
+    "portustewart golf cup",
+    "royal dornoch championship golf course escocia",
+    "royal lytham st annes championship course",
+    "sothwind golf dining",
+    "st andrews links trophy"
   ]
 }

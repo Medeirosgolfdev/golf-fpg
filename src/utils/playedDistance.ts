@@ -62,6 +62,24 @@ export function resolvePlayedTee(
     const t = tees.find((t) => norm(t.teeName) === norm(teeName));
     if (t) return t;
   }
+  // 2b. Marcação por escalão com prefixo de circuito.
+  //     A FPG grava a marcação como o circuito a nomeia ("Boys 12"), mas o
+  //     catálogo do campo guarda-a com prefixo ("USKids Boys 12"). Sem isto a
+  //     ronda fica sem metros. O override curado por campo não resolve, porque
+  //     é um valor só: o mesmo campo é jogado de Boys 11 num ano e Boys 12 no
+  //     seguinte, à medida que o jogador cresce.
+  //     Só para nomes com 2+ palavras, para não casar cores — "Vermelhas"
+  //     nunca deve apanhar "Vermelhas Femininas".
+  if (teeName) {
+    const want = norm(teeName);
+    if (want.split(" ").length >= 2) {
+      const t = tees.find((t) => {
+        const have = norm(t.teeName);
+        return have !== want && have.endsWith(` ${want}`);
+      });
+      if (t) return t;
+    }
+  }
   // 3. Cor do tee
   if (teeName) {
     const hex = teeGroupHex(teeName, null);

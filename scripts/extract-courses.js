@@ -203,6 +203,26 @@ function shouldExclude(courseNorm) {
   return masterNames.has(canonical);
 }
 
+/**
+ * Segunda barreira, sobre o nome FINAL (depois do nameOverride).
+ *
+ * O `nameOverride` reaponta a entrada para o nome canónico de um campo que já
+ * existe no master (ex: `away-oceanico-faldo` → "Faldo Course"), mas o
+ * `shouldExclude` acima só vê o nome ORIGINAL do cartão ("Oceanico Faldo"),
+ * que não casa com nada no master. Resultado: o campo entrava no away já com o
+ * nome do campo do master e passava a existir duas vezes — com os tees-ruído
+ * do scorecard (um por cada CR/Slope histórico) a competir com os tees
+ * oficiais. Era o caso de 13 campos, incluindo a Aroeira No.2 com 48 tees.
+ *
+ * Se o nome final for um campo do master, a entrada away é uma sombra: o
+ * master é a fonte de verdade e esta entrada não deve ser criada.
+ */
+function shouldExcludeByOverride(courseKey) {
+  const override = nameOverridesMap[courseKey];
+  if (!override) return false;
+  return shouldExclude(norm(override));
+}
+
 /* ── 3. Carregar melhorias.json para país ── */
 
 const countryMap = {}; // norm(courseName) -> país
@@ -282,6 +302,7 @@ if (fs.existsSync(outputRoot)) {
           if (shouldExclude(canonicalNorm)) continue;
 
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
+          if (shouldExcludeByOverride(courseKey)) continue;
           // teeKey único por configuração real (nome + ratings)
           const teeKey = `${teeName}|${cr}|${slope}`;
 
@@ -315,6 +336,10 @@ if (fs.existsSync(outputRoot)) {
               teeColorId: rec.tee_color_id || null,
             });
           }
+          // Contar quantas rondas usaram esta combinação nome+CR+Slope: a mais
+          // frequente é a marcação real do campo, as outras são ruído histórico.
+          const _t = entry.tees.get(teeKey);
+          _t.seen = (_t.seen || 0) + 1;
         }
       } catch {}
     }
@@ -353,6 +378,7 @@ if (fs.existsSync(melhoriasPath)) {
         if (shouldExclude(canonicalNorm)) continue;
 
         const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
+        if (shouldExcludeByOverride(courseKey)) continue;
 
         if (!courseMap.has(courseKey)) {
           const displayName = nameOverridesMap[courseKey] || titleCase(campo) || campo;
@@ -391,6 +417,10 @@ if (fs.existsSync(melhoriasPath)) {
             teeColorId: null,
           });
         }
+        // Contar quantas rondas usaram esta combinação nome+CR+Slope: a mais
+        // frequente é a marcação real do campo, as outras são ruído histórico.
+        const _t = entry.tees.get(teeKey);
+        _t.seen = (_t.seen || 0) + 1;
       }
     }
   } catch {}
@@ -457,6 +487,7 @@ if (fs.existsSync(outputRoot)) {
           if (shouldExclude(canonicalNorm)) continue;
 
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
+          if (shouldExcludeByOverride(courseKey)) continue;
           const isoDate   = toIsoDate(r.date);
 
           // Guardar TODAS as rondas do jogador neste campo (não só a mais
@@ -526,11 +557,43 @@ if (fs.existsSync(outPath)) {
   } catch { /* ignorar — sem ficheiro anterior válido */ }
 }
 
+/**
+ * Colapsa as variantes de um mesmo tee físico numa só.
+ *
+ * O `teeKey` é `nome|CR|Slope`, por isso cada re-rating histórico do campo
+ * criava um tee novo: a Aroeira No.2 chegou a ter 48 tees para 6 marcações e o
+ * Ribagolfe 37. É histórico de rondas a fazer-se passar por especificação do
+ * campo — a página de campos mostrava treze "VERMELHAS" diferentes.
+ *
+ * Uma marcação é identificada por (nome, nº de buracos). O nº de buracos entra
+ * na chave porque o mesmo nome tem ratings de 9 e de 18 buracos, que não se
+ * podem misturar. Entre variantes ganha a mais vista — a marcação em vigor, já
+ * que é a que aparece em mais cartões; a desempatar, a que traz mais buracos
+ * com distância.
+ */
+function collapseTees(tees) {
+  const byMarking = new Map();
+  const withDist = t => t.holes.filter(h => h.distance).length;
+
+  for (const [, t] of tees) {
+    const key = `${norm(t.teeName)}|${t.holes.length}`;
+    const prev = byMarking.get(key);
+    if (!prev) { byMarking.set(key, t); continue; }
+
+    const better = (t.seen || 0) !== (prev.seen || 0)
+      ? (t.seen || 0) > (prev.seen || 0)
+      : withDist(t) > withDist(prev);
+    if (better) byMarking.set(key, t);
+  }
+
+  return byMarking;
+}
+
 for (const [courseKey, { name, country, tees }] of courseMap) {
   const teeArr = [];
   let idx = 0;
 
-  for (const [, t] of tees) {
+  for (const [, t] of collapseTees(tees)) {
     const n         = t.holes.length;
     const is18      = n === 18;
     const parTotal  = sumHoles(t.holes, 1,  18, "par");

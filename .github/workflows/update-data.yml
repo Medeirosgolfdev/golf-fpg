@@ -108,6 +108,14 @@ jobs:
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
           node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
 
+      # Trava de qualidade do catálogo de campos. Ao contrário dos passos acima,
+      # esta FALHA o run de propósito: se um cartão novo voltar a criar campos
+      # duplicados, torneios registados como campos ou tees a mais, queremos
+      # saber antes de o commit entrar. Descer os tectos em BASELINE à medida
+      # que se limpa — nunca subir para calar o aviso.
+      - name: Auditar catálogo de campos
+        run: node scripts/audit-courses.js
+
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
       # Para reprocessar TODOS os jogadores (caso muito raro): correr manualmente
