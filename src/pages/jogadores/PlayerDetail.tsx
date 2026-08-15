@@ -276,16 +276,16 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               countryPrefix={(selected as unknown as MergedPlayer)._federadoRaw?.country_prefix}
               country={(selected as unknown as MergedPlayer)._federadoRaw?.country}
             >
-              {/* Extras DISCRETOS (2026-08-15): mesma pill neutra da identidade
-                  — o emoji carrega o sinal; as cores fortes (badge-pp escuro,
-                  laranja eagle) disputavam atenção com os KPIs. */}
+              {/* Handicap P&P como pill de identidade PURA — sem emoji nem cor
+                  (2026-08-15, pedido da utilizadora); o clique continua a abrir
+                  a vista P&P. */}
               {pp && hasRealPPHcp(pp) && (
                 <span
                   className="p p-ident"
                   onClick={() => setPpView(true)}
                   title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
                   style={{ cursor: "pointer" }}
-                >🏑 P&amp;P {pp.hcp}</span>
+                >P&amp;P {pp.hcp}</span>
               )}
               {selected.tags?.filter(t => t !== "no-priority").map(t => (
                 <span key={t} className="p p-ident">{t}</span>
@@ -295,9 +295,12 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   P&amp;P: {pp.roundsYear} em {curYear}
                 </span>
               )}
+              {/* Hole-in-one é uma CONQUISTA — mantém o destaque âmbar
+                  (2026-08-15, a utilizadora quer a cor de volta). */}
               {aces.length > 0 && (
                 <span
-                  className="p p-ident"
+                  className="p"
+                  style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}
