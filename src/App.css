@@ -1155,13 +1155,31 @@ tr.cross-current { background: var(--bg-success); }
 
 /* KPIs do jogador integrados no cabeçalho (.detail-header) — chips compactos.
    Poupam o espaço vertical que a faixa separada ocupava acima das tabelas. */
-/* KPIs do cabeçalho do jogador — formato HORIZONTAL magro (2026-08-15):
-   valor grande à esquerda, rótulo + contexto empilhados minúsculos à direita.
-   Ocupa ~metade da altura dos cartões verticais e põe o olho no NÚMERO. */
-.jog-kpi-strip { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+/* KPIs do cabeçalho do jogador — BANDA ÚNICA de estatísticas (2026-08-15):
+   em vez de 6 cartões soltos a flutuar (fragmentação), um só contentor com
+   divisórias finas internas — o padrão dos perfis desportivos. Dentro de
+   cada célula: valor grande à esquerda, rótulo+contexto minúsculos à direita.
+   As células dos handicaps (Índice verde, P&P teal) mantêm o fundo tintado
+   via inline style (fill/background) — dentro da banda lêem-se como acentos. */
+.jog-kpi-strip {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  width: fit-content;
+}
 .jog-kpi-strip .kpi {
-  padding: 3px 9px;
+  padding: 5px 13px;
   min-width: 0;
+  border: none;          /* a caixa é da banda, não da célula */
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 7px;
@@ -1169,6 +1187,7 @@ tr.cross-current { background: var(--bg-success); }
   align-content: center;
   align-items: center;
 }
+.jog-kpi-strip .kpi + .kpi { border-left: 1px solid var(--border-light); }
 .jog-kpi-strip .kpi-val { grid-column: 1; grid-row: 1 / span 2; font-size: var(--fs-17); line-height: 1.05; }
 .jog-kpi-strip .kpi-lbl { grid-column: 2; grid-row: 1; font-size: var(--fs-9); line-height: 1.15; align-self: end; }
 .jog-kpi-strip .kpi-delta,

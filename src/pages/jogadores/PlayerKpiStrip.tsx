@@ -46,15 +46,13 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp
           : k.idxDelta > 0.05 ? "danger"  /* índice subiu → piorou → vermelho */
           : null} />
       {ppHcp != null && (
-        <span onClick={onPpClick}
-          style={{ display: "inline-flex", cursor: onPpClick ? "pointer" : undefined }}
-          title="Handicap Pitch & Putt — clica para ver o histórico P&P">
-          {/* Cor P&P da sidebar (--badge-pp) em transparência — mesmo padrão
-              do fill verde do índice (--color-good-alpha). */}
-          <UiKpiCard size="sm" label="P&P" value={ppHcp} sub="pitch & putt"
-            color="var(--badge-pp)"
-            style={{ background: "var(--badge-pp-alpha)", borderColor: "var(--badge-pp)" }} />
-        </span>
+        /* Cor P&P da sidebar (--badge-pp) em transparência — mesmo padrão
+           do fill verde do índice (--color-good-alpha). */
+        <UiKpiCard size="sm" label="P&P" value={ppHcp} sub="pitch & putt"
+          color="var(--badge-pp)"
+          onClick={onPpClick}
+          title="Handicap Pitch & Putt — clica para ver o histórico P&P"
+          style={{ background: "var(--badge-pp-alpha)" }} />
       )}
       <UiKpiCard size="sm" label="Voltas" value={k.totalRounds} sub={`${k.totalCourses} campos`} />
       <UiKpiCard size="sm" label={`Rondas ${curY}`} value={roundsThisYear}

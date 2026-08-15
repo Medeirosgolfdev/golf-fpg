@@ -50,6 +50,10 @@ interface KpiCardProps {
   style?: React.CSSProperties;
   /** Style inline no kpi-lbl */
   labelStyle?: React.CSSProperties;
+  /** Clique no cartão inteiro (ex: KPI P&P abre a vista P&P). */
+  onClick?: () => void;
+  /** Tooltip nativo no elemento raiz. */
+  title?: string;
 }
 
 const SIZE_CLASS: Record<string, string> = {
@@ -61,6 +65,7 @@ const SIZE_CLASS: Record<string, string> = {
 export default function KpiCard({
   label, value, sub, color, tip, delta, deltaLabel, pct,
   size = "md", accentBorder, align, className, style, labelStyle, fill,
+  onClick, title,
 }: KpiCardProps) {
   const valClass = SIZE_CLASS[size] || "kpi-val";
   const dColor = delta == null ? undefined
@@ -83,7 +88,9 @@ export default function KpiCard({
   // (a menos que uma cor explícita seja passada).
   const valColor = color ?? fillColor ?? undefined;
   return (
-    <div className={`kpi${className ? " " + className : ""}`} style={rootStyle}>
+    <div className={`kpi${className ? " " + className : ""}`}
+      style={onClick ? { ...rootStyle, cursor: "pointer" } : rootStyle}
+      onClick={onClick} title={title}>
       <div className="kpi-lbl" style={labelStyle}>
         {label}{tip && <span className="kpi-info ml-4" title={tip}>ℹ</span>}
       </div>
