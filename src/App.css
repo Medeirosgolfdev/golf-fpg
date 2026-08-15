@@ -836,7 +836,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
    com presença, sem arco-íris a disputar atenção com os KPIs. */
 .p-ident { background: var(--bg-muted); color: var(--text-2); border: 1px solid var(--border); }
 .p-ident.ip-fed { font-weight: 700; color: var(--text); }
-.p-ident.ip-esc { font-weight: 700; }
 /* Mesmo raio das pills (--radius-pill) — os botões e os pill-links da linha
    partilham a MESMA forma (a mistura 10px/4px destoava, 2026-08-15). */
 .dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-pill); cursor: pointer; color: var(--text-2); white-space: nowrap; }

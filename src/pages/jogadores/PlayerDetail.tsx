@@ -258,8 +258,10 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                 <button className="dh-mode-btn" onClick={() => setPpView(true)}
                   title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
               )}
-              {/* Links externos como pill-links (padrão DrivePage) */}
-              <PlayerExtLinks fed={selected.fed} />
+              {/* Links externos como pill-links (padrão DrivePage). Sem o link
+                  P&P externo quando o botão P&P interno existe — dois "🏑 P&P"
+                  lado a lado era confuso; o link externo vive na vista P&P. */}
+              <PlayerExtLinks fed={selected.fed} includePP={!pp} />
             </div>
             <div className="dh-statline">
             {/* Identidade partilhada com o FederadoOnlyDetail (IdentityPills);
@@ -274,26 +276,28 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               countryPrefix={(selected as unknown as MergedPlayer)._federadoRaw?.country_prefix}
               country={(selected as unknown as MergedPlayer)._federadoRaw?.country}
             >
+              {/* Extras DISCRETOS (2026-08-15): mesma pill neutra da identidade
+                  — o emoji carrega o sinal; as cores fortes (badge-pp escuro,
+                  laranja eagle) disputavam atenção com os KPIs. */}
               {pp && hasRealPPHcp(pp) && (
                 <span
-                  className="p"
+                  className="p p-ident"
                   onClick={() => setPpView(true)}
                   title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-                  style={{ cursor: "pointer", background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}
+                  style={{ cursor: "pointer" }}
                 >🏑 P&amp;P {pp.hcp}</span>
               )}
               {selected.tags?.filter(t => t !== "no-priority").map(t => (
-                <span key={t} className="p p-outline">{t}</span>
+                <span key={t} className="p p-ident">{t}</span>
               ))}
               {pp && (pp.roundsYear || 0) > 0 && (
-                <span className="p p-outline" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
+                <span className="p p-ident" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
                   P&amp;P: {pp.roundsYear} em {curYear}
                 </span>
               )}
               {aces.length > 0 && (
                 <span
-                  className="p"
-                  style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
+                  className="p p-ident"
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}

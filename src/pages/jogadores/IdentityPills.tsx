@@ -22,9 +22,10 @@ const EXT_LINK_STYLE: CSSProperties = {
 /** Links externos da ficha do jogador (FPG Scoring · My FPG · P&P) como
  *  pill-links — substituem a antiga coluna de ícones 🔗 solta à esquerda do
  *  nome (dh-iconcol). Partilhados pelos 2 mundos do detalhe. */
-export function PlayerExtLinks({ fed }: { fed: string }) {
+export function PlayerExtLinks({ fed, includePP = true }: { fed: string; includePP?: boolean }) {
   // Mesmo tamanho das restantes pills do cabeçalho (sem p-sm) — todas as
-  // pills partilham padding/fonte/raio (2026-08-15).
+  // pills partilham padding/fonte/raio (2026-08-15). `includePP: false`
+  // quando o mundo já tem botão P&P próprio (evita o duplicado na linha).
   return (
     <>
       <a className="p" style={EXT_LINK_STYLE}
@@ -35,10 +36,12 @@ export function PlayerExtLinks({ fed }: { fed: string }) {
         href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${fed}`}
         target="_blank" rel="noopener noreferrer"
         title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</a>
-      <a className="p" style={EXT_LINK_STYLE}
-        href={ppPlayerUrl(fed)}
-        target="_blank" rel="noopener noreferrer"
-        title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑 P&amp;P ↗</a>
+      {includePP && (
+        <a className="p" style={EXT_LINK_STYLE}
+          href={ppPlayerUrl(fed)}
+          target="_blank" rel="noopener noreferrer"
+          title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑 P&amp;P ↗</a>
+      )}
     </>
   );
 }
@@ -74,12 +77,9 @@ export default function IdentityPills({ fed, sex, dob, escalao, club, countryPre
           {dob.slice(0, 4)}
         </span>
       )}
-      {escalao && (
-        <span className="p p-ident ip-esc"
-          style={{ color: `var(--esc-${escCls(escalao)}-fg, var(--text-2))` }}>
-          {escalao}
-        </span>
-      )}
+      {/* Escalão com a pill COLORIDA da casa — a mesma da sidebar (não
+          inventar variantes: o utilizador cruza as duas constantemente). */}
+      {escalao && <span className={`p p-${escCls(escalao)}`}>{escalao}</span>}
       {club && <span className="p p-ident">{club}</span>}
       {children}
     </div>
