@@ -824,6 +824,8 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dh-nameline .detail-title { margin: 0; }
+/* Linha de botões/links por baixo do nome (Vista federado · FPG ↗ · My FPG ↗ · P&P ↗) */
+.dh-btnline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
 .dh-mode-btn:hover { background: var(--bg-hover); }
 .dh-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }

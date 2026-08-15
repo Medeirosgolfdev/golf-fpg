@@ -166,14 +166,15 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               <>
                 {showFlag && <span className="mr-8">{gf(f.country_prefix)}</span>}
                 {f.name}
-                {/* Pill-links externos — mesmos do PlayerDetail (PlayerExtLinks) */}
-                <span style={{ display: "inline-flex", gap: 4, marginLeft: 10, verticalAlign: "middle" }}>
-                  <PlayerExtLinks fed={f.federation_code} />
-                </span>
               </>
             }
             sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}
           >
+            {/* Pill-links externos POR BAIXO do nome — mesma linha de botões
+                do PlayerDetail (dh-btnline). */}
+            <div className="dh-btnline" style={{ marginTop: 6 }}>
+              <PlayerExtLinks fed={f.federation_code} />
+            </div>
             {/* Linha de identidade partilhada com o PlayerDetail — os 2 mundos
                 do detalhe abrem com os mesmos pills. */}
             <div style={{ marginTop: 6 }}>

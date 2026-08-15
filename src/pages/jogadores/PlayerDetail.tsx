@@ -248,14 +248,17 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
           <div className="dh-idblock">
             <div className="dh-nameline">
               <h2 className="detail-title">{selected.name}</h2>
+            </div>
+            {/* Botões numa linha própria POR BAIXO do nome (pedido 2026-08-15)
+                — o nome respira e os botões não empurram o título. */}
+            <div className="dh-btnline">
               <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
                 title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
               {pp && (
                 <button className="dh-mode-btn" onClick={() => setPpView(true)}
                   title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
               )}
-              {/* Links externos como pill-links (padrão DrivePage) — a antiga
-                  coluna de ícones 🔗 flutuava solta à esquerda do nome. */}
+              {/* Links externos como pill-links (padrão DrivePage) */}
               <PlayerExtLinks fed={selected.fed} />
             </div>
             <div className="dh-statline">
