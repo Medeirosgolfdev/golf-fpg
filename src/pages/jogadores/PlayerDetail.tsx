@@ -298,7 +298,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}
                 >
-                  🕳️ {aces.length} hole-in-one
+                  🕳️ {aces.length} HiO
                 </span>
               )}
             </IdentityPills>
