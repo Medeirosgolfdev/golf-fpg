@@ -1162,16 +1162,19 @@ tr.cross-current { background: var(--bg-success); }
    As células dos handicaps (Índice verde, P&P teal) mantêm o fundo tintado
    via inline style (fill/background) — dentro da banda lêem-se como acentos. */
 .jog-kpi-strip {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0;
+  /* Grid com colunas 1fr: TODAS as células com a MESMA largura (a da mais
+     larga). Em mobile (≤700px) passa a 3 colunas por linha, com divisórias
+     horizontais entre linhas. */
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   margin-top: 2px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-card);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  width: fit-content;
+  max-width: 100%;
 }
 .jog-kpi-strip .kpi {
   padding: 5px 13px;
@@ -1180,6 +1183,11 @@ tr.cross-current { background: var(--bg-success); }
   border-radius: 0;
   background: transparent;
   box-shadow: none;
+  /* Divisórias: cada célula desenha a SUA borda esquerda/topo, deslocada
+     -1px — na 1ª coluna/linha fica por baixo da borda da banda (overflow
+     hidden clipa), nas restantes é a linha divisória. */
+  border-left: 1px solid var(--border-light);
+  margin-left: -1px;
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 7px;
@@ -1187,7 +1195,19 @@ tr.cross-current { background: var(--bg-success); }
   align-content: center;
   align-items: center;
 }
-.jog-kpi-strip .kpi + .kpi { border-left: 1px solid var(--border-light); }
+@media (max-width: 700px) {
+  .jog-kpi-strip {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-columns: unset;
+    width: 100%;
+  }
+  .jog-kpi-strip .kpi {
+    border-top: 1px solid var(--border-light);
+    margin-top: -1px;
+    padding: 5px 10px;
+  }
+}
 .jog-kpi-strip .kpi-val { grid-column: 1; grid-row: 1 / span 2; font-size: var(--fs-17); line-height: 1.05; }
 .jog-kpi-strip .kpi-lbl { grid-column: 2; grid-row: 1; font-size: var(--fs-9); line-height: 1.15; align-self: end; }
 .jog-kpi-strip .kpi-delta,
