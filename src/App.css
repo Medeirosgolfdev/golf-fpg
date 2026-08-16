@@ -1201,6 +1201,9 @@ tr.cross-current { background: var(--bg-success); }
   row-gap: 0;
   align-content: center;
   align-items: center;
+  /* Sem stretch dos tracks auto — numa célula expandida (span 2/3 em
+     mobile) o rótulo ia parar ao centro. */
+  justify-content: start;
 }
 @media (max-width: 700px) {
   .jog-kpi-strip {
@@ -1214,6 +1217,11 @@ tr.cross-current { background: var(--bg-success); }
     margin-top: -1px;
     padding: 5px 10px;
   }
+  /* Última linha incompleta (ex: 5 células em grelha de 3): a última célula
+     expande-se para preencher a linha — sem buraco sem bordas no canto
+     (faltavam as divisórias sob a 3ª coluna e à direita da última célula). */
+  .jog-kpi-strip .kpi:last-child:nth-child(3n - 1) { grid-column: span 2; }
+  .jog-kpi-strip .kpi:last-child:nth-child(3n - 2) { grid-column: span 3; }
 }
 .jog-kpi-strip .kpi-val { grid-column: 1; grid-row: 1 / span 2; font-size: var(--fs-17); line-height: 1.05; }
 .jog-kpi-strip .kpi-lbl { grid-column: 2; grid-row: 1; font-size: var(--fs-9); line-height: 1.15; align-self: end; }
