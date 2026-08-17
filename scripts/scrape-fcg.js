@@ -349,6 +349,14 @@ async function main() {
   games = Array.from(new Set(games));
 
   if (games.length === 0) {
+    // Distinguir "não me disseste o que scrapar" de "o scope existe mas está
+    // vazio" — o segundo é um estado normal (fonte degradada, ver a guarda do
+    // discover-fcg-scope.js) e imprimir o usage aqui mandava uma pista errada
+    // para os logs do workflow.
+    if (SCOPE_FILE) {
+      console.log(`[fcg] scope ${SCOPE_FILE} sem jogos — nada para scrapar.`);
+      process.exit(2);
+    }
     console.error("Usage: scrape-fcg.js --game <ID> | --games <ID1,ID2> | --scope <file>");
     process.exit(2);
   }

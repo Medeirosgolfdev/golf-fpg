@@ -114,11 +114,23 @@ jobs:
           fi
 
       # ── Descoberta de scopes (regenera scripts/{fcg,nextcaddy}-scope*.json) ──
+      # Exit 2 = o catgolf.com respondeu degradado (0 torneios) e a guarda do
+      # script preservou o scope anterior. Não é erro: o scrape a seguir usa o
+      # scope bom que já lá estava. Só exit 1 é que é falha a sério.
       - name: Discovery FCG (catgolf.com → fcg-scope.json)
         id: disc_fcg
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
-        run: node scripts/discover-fcg-scope.js --years "$FCG_YEARS"
+        run: |
+          set +e
+          node scripts/discover-fcg-scope.js --years "$FCG_YEARS"
+          CODE=$?
+          set -e
+          if [ "$CODE" = "2" ]; then
+            echo "ℹ️  catgolf.com degradado — scope FCG anterior preservado."
+            exit 0
+          fi
+          exit $CODE
 
       - name: Discovery NextCaddy (→ nextcaddy-scope-all.json)
         id: disc_nc
@@ -199,7 +211,16 @@ jobs:
             echo "fcg-scope.json não existe — a saltar (discovery FCG falhou?)"
             exit 0
           fi
+          # Exit 2 = scope sem jogos ou nada de novo — não é erro.
+          set +e
           node scripts/scrape-fcg.js --scope scripts/fcg-scope.json --concurrency 3 $SKIP_FLAG
+          CODE=$?
+          set -e
+          if [ "$CODE" = "2" ]; then
+            echo "ℹ️  FCG sem novidades."
+            exit 0
+          fi
+          exit $CODE
 
       # ── Enrichment + index + lookups (rápidos, não usam rede excepto enrich-lgs-dates) ──
       - name: Enrich LGS dates

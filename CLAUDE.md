@@ -2471,6 +2471,31 @@ validado server-side. **Não replicável de Node puro.**
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
 | **`daily-digest.yml`** | ✅ Novo 2026-08-17 | `scripts/build-run-digest.js` + `send-digest-issue.js` | Diário 07:30 UTC | **Resumo por email** do que os scrapers trouxeram nas últimas 24h. Sem secrets. Ver secção própria abaixo. |
 
+### ⚠ FCG (catgolf.com) — guarda anti-overwrite do scope (2026-08-17)
+
+O `catgolf.com` serve **intermitentemente** um edge node com certificado
+self-signed. O `discover-fcg-scope.js` já degradava para uma tentativa sem
+verificação TLS (melhor do que derrubar o workflow), mas essa resposta vem por
+vezes **HTTP 200 com uma página SEM a lista de torneios** → `0 tournaments
+listed` → gravava um `scripts/fcg-scope.json` VAZIO por cima do bom, committava-o,
+e o `scrape-fcg.js` a seguir ficava sem jogos e falhava o `update-spain.yml`
+inteiro. Aconteceu a **2026-07-20, 2026-07-27 e 2026-08-17** — o run de 17-08
+apagou um scope de 27 torneios / 25 games / 43 inscritos.
+
+Resolvido com a mesma política do `scrape-federados-node.js` (recusar gravar
+zero registos):
+
+- `discover-fcg-scope.js` **recusa** gravar se a descoberta der 0 torneios com
+  um scope não-vazio em disco, ou se perder **>50%** dos torneios. Preserva o
+  ficheiro anterior e sai com **exit 2** (= sem novidades utilizáveis, não é
+  erro). `--force` ignora a guarda (para quebras legítimas, ex: mudar `--years`).
+- `scrape-fcg.js` com um scope existente mas vazio imprime "nada para scrapar"
+  e sai 2, em vez do texto de *usage* — que nos logs do workflow mandava uma
+  pista errada (parecia erro de invocação).
+- Os dois passos do `update-spain.yml` traduzem **exit 2 → sucesso**. Resultado
+  prático: quando o catgolf está degradado, o scrape usa o scope bom que já lá
+  estava e o workflow fica **verde**, em vez de vermelho com dados destruídos.
+
 ## Resumo por email das actualizações — `daily-digest.yml` (2026-08-17)
 
 Um email por dia com o que os scrapers trouxeram:
