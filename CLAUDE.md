@@ -2469,6 +2469,95 @@ validado server-side. **Não replicável de Node puro.**
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
 | **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
+| **`daily-digest.yml`** | ✅ Novo 2026-08-17 | `scripts/build-run-digest.js` + `send-digest-issue.js` | Diário 07:30 UTC | **Resumo por email** do que os scrapers trouxeram nas últimas 24h. Sem secrets. Ver secção própria abaixo. |
+
+## Resumo por email das actualizações — `daily-digest.yml` (2026-08-17)
+
+Um email por dia com o que os scrapers trouxeram:
+
+```
+Novo torneio Grand Prix Jeunes em França — 2 escalões:
+  escalão POUSSINS, vencedor Victor Canot Januel
+Novo torneio Campeonato de España Sub 16 em Espanha, escalão Cadete M, vencedor …
+Manuel Goulartt Medeiros tem 2 scorecards novos; participou em Campeonato Nacional Sub-12
+Joana Sousa tem 4 scorecards novos; por via de EDS
+```
+
+**Sem secrets nenhuns:** o email sai como **issue** (o GitHub notifica o dono do
+repo — o corpo menciona `@Medeirosgolfdev` para garantir a notificação mesmo com
+subscrição "Participating and @mentions") e a issue é **fechada logo a seguir**,
+porque a notificação sai na criação e assim a lista de issues fica limpa. Basta
+o `GITHUB_TOKEN` do próprio workflow (`permissions: issues: write`).
+
+### ⚠ O resumo sai do HISTÓRICO DO GIT, não de passos nos workflows de dados
+
+`build-run-digest.js --since "24 hours ago"` resolve a base da janela
+(`git rev-list -1 --before`) e faz **um diff** entre esse commit e o `HEAD`.
+Consequências deliberadas:
+
+- **Nenhum dos ~20 workflows de dados foi tocado** (excepto o `update-data.yml`,
+  e só para o aviso imediato) — zero risco de partir os pipelines que trazem os
+  dados, que é o que interessa.
+- Se um workflow falhar a meio, a janela do dia seguinte apanha na mesma o que
+  ficou commitado.
+- O `daily-digest.yml` precisa de `fetch-depth: 0` no checkout — com o clone
+  raso o `rev-list --before` não encontra a base.
+
+O outro modo (default, sem `--since`) lê a **árvore de trabalho** contra o HEAD
+e serve o aviso imediato: corre ANTES do commit, porque depois do push o
+`git pull --rebase` traz commits de outros workflows e o diff deixaria de ser só
+daquele run.
+
+### Como sabe o que é novo
+
+| O quê | Como |
+|---|---|
+| Torneios | `scripts/lib/digest-extract.js` — routing por **FORMA** do JSON (`detectFormat`), não por caminho: lgs · rfegMicrosite · nextcaddy · fcg · ffgResultats · jobfile · flatPlayers · fpgPull · uskidsResults. Uma fonte nova entra sozinha; só o rótulo país/circuito vem do caminho (`SOURCES`). |
+| Vencedor | `winnerOf` — o `pos 1` (aceita `"T1"`, `classement`, `rankingPosition`); sentinelas ≥900 fora. Sem 1º classificado a prova ainda não entra. |
+| Escalão | O rótulo REAL da fonte ("Handicap Alevin Femenino", "1ère Série Messieurs", "Under 12 Boys"); só sem rótulo é que se infere do nome (`inferEscalao`). |
+| Federados | `diffWhs` por **`score_id`** (não `id` — ver "score_id ≠ id"); a frase distingue `Torn`/`Intern` (→ "participou em X") de `EDS`/`Indiv`/`Import` (→ "por via de EDS"). |
+
+### Três filtros que evitam um email ilegível
+
+1. **Só fontes conhecidas** — ficheiros que não batem em `SOURCES` (agregados e
+   derivados: `recent-tournaments`, `juniors-tournaments*`, `*-rivals`, `*-slim`,
+   catálogos) são saltados. Sem isto cada torneio saía 2-3× com rótulos
+   diferentes, porque os derivados republicam o que a fonte primária já trouxe.
+2. **Dedup global** por `torneio|escalão|vencedor` — a mesma prova chega por mais
+   do que um caminho (ex: microsite RFEG + LiveGolfScoring).
+3. **Só golfe de jovens** (`isJuniorish`, desligável com `--all`) — as mesmas
+   fontes trazem agarradas as competições sociais de clube ("MENS DAY 11/8",
+   "Competição Mensal", "Mid-Amateur"). Medido no histórico real: 39 derivados
+   + 8 provas de adultos ignorados numa janela de 24h.
+
+### Armadilhas resolvidas (todas com caso real)
+
+- **`\b` não fecha depois de vogal acentuada** (o `\w` do JS é só `[A-Za-z0-9_]`):
+  o catalão escreve **BENJAMÍ**/**ALEVÍ** sem `-n` e os padrões falhavam. Idem
+  `(?!\d)` em vez de `\b` depois do número, porque a FFG cola o sexo ao escalão
+  ("u12G", "u12F").
+- **FCG: `game.name` é a JORNADA**, a prova está em `game.tournament.name` —
+  senão o email anunciava dezenas de torneios chamados "Jornada 1".
+- **FFG: o nome junto vem "APELIDO Nome"** sem vírgula (impossível de desfazer
+  depois) → usar `namePrenom`/`nameNom` quando existem.
+- **Alguns scrapers guardam o SLUG no campo do nome** (`ffgolf/2026_*.json` traz
+  "championnat-de-france-des-jeunes-benjamines") → `prettyTournamentName`.
+- **RFEG microsite:** preferir o bloco "Clasificación final" a uma jornada
+  isolada — o vencedor de uma jornada não é o vencedor da prova.
+
+### Comandos
+
+```bash
+node scripts/build-run-digest.js --since "24 hours ago" --source diario --print
+node scripts/build-run-digest.js --since "7 days ago" --print --all   # inclui adultos
+node scripts/build-run-digest.js --source federados --only-players --out /tmp/d.json
+node scripts/send-digest-issue.js --file /tmp/d.json --dry-run        # ver o email
+```
+
+`workflow_dispatch` do `daily-digest.yml` aceita `since`, `dry_run` e
+`include_all`. Testes: `scripts/lib/digest-extract.test.js` (36).
+Ambos os scripts engolem os próprios erros — **o resumo nunca pode falhar um
+workflow de dados**.
 
 **IP-binding em Actions:** `scoring.datagolf.pt` CONFIRMADO não IP-bound
 (teste via hotspot 4G). `my.fpg.pt` CONFIRMADO não IP-bound (teste cross-IP

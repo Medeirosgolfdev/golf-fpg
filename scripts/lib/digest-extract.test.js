@@ -1,0 +1,318 @@
+/**
+ * Testes da extracção do resumo diário (scripts/lib/digest-extract.js).
+ * Os fixtures são fatias reduzidas dos formatos REAIS do repo — quando uma
+ * fonte mudar de forma, é aqui que rebenta primeiro.
+ */
+
+import { describe, it, expect } from "vitest";
+import {
+  displayName,
+  prettyTournamentName,
+  inferEscalao,
+  isJuniorish,
+  sourceInfo,
+  detectFormat,
+  winnerOf,
+  extractTournaments,
+  diffTournaments,
+  diffWhs,
+  describePlayerRounds,
+} from "./digest-extract.js";
+
+describe("displayName", () => {
+  it("desfaz 'APELIDO, Nome' em caixa alta (RFEG/LGS)", () => {
+    expect(displayName("FERNANDEZ GARCIA-POGGIO, Cayetana")).toBe("Cayetana Fernandez Garcia-Poggio");
+  });
+  it("converte ALL CAPS sem vírgula para Title Case", () => {
+    expect(displayName("MIGUEL ANGEL LUQUE")).toBe("Miguel Angel Luque");
+  });
+  it("deixa nomes já bem escritos em paz", () => {
+    expect(displayName("Manuel Medeiros")).toBe("Manuel Medeiros");
+  });
+  it("não parte nomes com duas vírgulas (não é 'apelido, nome')", () => {
+    expect(displayName("Smith, John, Jr")).toBe("Smith, John, Jr");
+  });
+  it("aguenta vazio/null", () => {
+    expect(displayName(null)).toBe("");
+  });
+});
+
+describe("inferEscalao", () => {
+  it("reconhece as nomenclaturas das várias federações", () => {
+    expect(inferEscalao("Campeonato de España Sub 16 Masculino")).toBe("Sub-16");
+    expect(inferEscalao("Under 12 Boys")).toBe("Sub-12");
+    expect(inferEscalao("10 and Under")).toBe("Sub-10");
+    expect(inferEscalao("Handicap Alevin Femenino")).toBe("Alevín");
+    expect(inferEscalao("BENJAMÍ MASCULÍ")).toBe("Benjamim");
+    expect(inferEscalao("Campeonato Infantil")).toBe("Infantil");
+  });
+  it("devolve null quando não há sinal de idade", () => {
+    expect(inferEscalao("Campeonato de España Mid-Amateur")).toBeNull();
+    expect(inferEscalao("")).toBeNull();
+  });
+});
+
+describe("prettyTournamentName", () => {
+  it("desdobra o slug que alguns scrapers guardam como nome", () => {
+    expect(prettyTournamentName("championnat-de-france-des-jeunes-benjamines"))
+      .toBe("Championnat De France Des Jeunes Benjamines");
+  });
+  it("não mexe em nomes a sério", () => {
+    expect(prettyTournamentName("Grand Prix Jeunes")).toBe("Grand Prix Jeunes");
+    expect(prettyTournamentName("Trofeo Alevín - Madrid")).toBe("Trofeo Alevín - Madrid");
+  });
+});
+
+describe("isJuniorish", () => {
+  it("aceita provas de jovens em qualquer das federações", () => {
+    expect(isJuniorish("Grand Prix Jeunes", "POUSSINS")).toBe(true);
+    expect(isJuniorish("Campeonato de España Sub 16")).toBe(true);
+    expect(isJuniorish("III Liguilla Benjamín", "Handicap Alevin Femenino")).toBe(true);
+    expect(isJuniorish("Champion of Champions", "Under 12 Boys")).toBe(true);
+    expect(isJuniorish("Grand Prix", "u12G")).toBe(true);
+  });
+  it("recusa competições sociais/de adultos", () => {
+    expect(isJuniorish("MENS DAY 11/8", "Handicap General")).toBe(false);
+    expect(isJuniorish("Competição Mensal")).toBe(false);
+    expect(isJuniorish("Campeonato de España Mid-Amateur")).toBe(false);
+    expect(isJuniorish("")).toBe(false);
+  });
+});
+
+describe("sourceInfo", () => {
+  it("rotula país e circuito a partir do caminho", () => {
+    expect(sourceInfo("public/data/nextcaddy/48161.json").country).toBe("Espanha");
+    expect(sourceInfo("public/data/ffgolf-resultats/01-00-x.json").country).toBe("França");
+    expect(sourceInfo("public/data/drive-data-2026-07.json").country).toBe("Portugal");
+  });
+  it("não explode em caminhos desconhecidos", () => {
+    expect(sourceInfo("public/data/qualquer-coisa.json").source).toBe("Outros");
+  });
+});
+
+describe("winnerOf", () => {
+  it("escolhe o pos 1", () => {
+    expect(winnerOf([{ name: "B", pos: 2 }, { name: "A", pos: 1 }]).name).toBe("A");
+  });
+  it("devolve null se ninguém está em 1º (prova por acabar)", () => {
+    expect(winnerOf([{ name: "B", pos: 2 }, { name: "C", pos: 3 }])).toBeNull();
+  });
+  it("ignora sentinelas de 'sem classificação' (pos ≥ 900)", () => {
+    expect(winnerOf([{ name: "X", pos: 999 }])).toBeNull();
+  });
+  it("aceita pos como string ('1', 'T1')", () => {
+    expect(winnerOf([{ name: "A", pos: "T1" }]).name).toBe("A");
+  });
+});
+
+/* ── Fixtures por formato ───────────────────────────────────────────────── */
+
+const LGS = {
+  meta: { name: "Campeonato de España Sub 16", dateIso: "2026-05-02" },
+  classification: [
+    { name: "JIMENEZ ROMERO, Sergio", pos: 1, total: 210 },
+    { name: "HAO, Jorge", pos: 2, total: 212 },
+  ],
+};
+
+const NEXTCADDY = {
+  tourId: 48161,
+  meta: { name: "III Liguilla Benjamín", dateStart: "2026-03-01" },
+  leaderboard: [
+    { category: 1, categoryName: "Handicap Alevin Femenino", players: [{ pos: 1, name: "Daniela Pascual Calleja" }] },
+    { category: 2, categoryName: "Handicap Benjamin Masculino", players: [{ pos: 1, name: "Pablo Herguedas Sanz" }] },
+  ],
+};
+
+const FCG = {
+  gameId: "abc",
+  game: {
+    name: "Jornada 1",
+    scheduleStartDate: "2026-05-16T07:00:00.000Z",
+    tournament: { name: "CAMPIONAT DE CATALUNYA BENJAMÍ 2026", isSingleGame: false },
+  },
+  categories: [
+    {
+      _id: "c1",
+      name: "BENJAMÍ MASCULÍ",
+      players: [
+        { firstName: "NIL", surname: "CARRERA COSTA", view: { acc: { rankingPosition: 1 } } },
+        { firstName: "PAU", surname: "SOLE", view: { acc: { rankingPosition: 2 } } },
+      ],
+    },
+  ],
+};
+
+const FFG = {
+  trnId: "1500190711",
+  name: "Championnat de France U14",
+  date: "31/03/2026",
+  details: {
+    series: [
+      {
+        serieId: "11",
+        label: "1ère Série Messieurs",
+        players: [
+          { classement: "1", pos: 1, name: "HYEST Hugo", nameNom: "HYEST", namePrenom: "Hugo" },
+          { classement: "2", pos: 2, name: "DUPONT Luc", nameNom: "DUPONT", namePrenom: "Luc" },
+        ],
+      },
+    ],
+  },
+};
+
+const JOBFILE = {
+  tournament: "2026 Champion of Champions",
+  year: 2026,
+  startDate: "2026-07-23",
+  divisions: [{ division: "Under 12 Boys", players: [{ pos: "1", name: "Theo Oderinde" }] }],
+};
+
+const FPG_PULL = {
+  tournaments: [
+    {
+      name: "1º Torn. Drive Challenge Açores - Sub 14",
+      ccode: "988", tcode: "10212", date: "2026-07-04", escalao: "Sub 14",
+      players: [{ pos: 1, name: "Guilherme Matos", grossTotal: 53 }],
+    },
+  ],
+};
+
+describe("detectFormat", () => {
+  it("distingue os formatos das várias fontes", () => {
+    expect(detectFormat(LGS)).toBe("lgs");
+    expect(detectFormat(NEXTCADDY)).toBe("nextcaddy");
+    expect(detectFormat(FCG)).toBe("fcg");
+    expect(detectFormat(FFG)).toBe("ffgResultats");
+    expect(detectFormat(JOBFILE)).toBe("jobfile");
+    expect(detectFormat(FPG_PULL)).toBe("fpgPull");
+    expect(detectFormat({ qualquer: "coisa" })).toBe("unknown");
+    expect(detectFormat(null)).toBe("unknown");
+  });
+});
+
+describe("extractTournaments", () => {
+  it("LGS — nome, vencedor e data", () => {
+    const [r] = extractTournaments(LGS, "public/data/rfegolf-livegolfscoring/1.json");
+    expect(r.tournament).toBe("Campeonato de España Sub 16");
+    expect(r.winner).toBe("Sergio Jimenez Romero");
+    expect(r.country).toBe("Espanha");
+    expect(r.date).toBe("2026-05-02");
+  });
+
+  it("NextCaddy — uma entrada por categoria", () => {
+    const rows = extractTournaments(NEXTCADDY, "public/data/nextcaddy/48161.json");
+    expect(rows).toHaveLength(2);
+    expect(rows.map((r) => r.category)).toEqual(["Handicap Alevin Femenino", "Handicap Benjamin Masculino"]);
+  });
+
+  it("FCG — usa a PROVA, não a jornada, como nome do torneio", () => {
+    const [r] = extractTournaments(FCG, "public/data/fcg/abc.json");
+    expect(r.tournament).toBe("CAMPIONAT DE CATALUNYA BENJAMÍ 2026");
+    expect(r.round).toBe("Jornada 1");
+    expect(r.winner).toBe("Nil Carrera Costa");
+  });
+
+  it("FFG — nome pelas partes prenom/nom, não pela string colada", () => {
+    const [r] = extractTournaments(FFG, "public/data/ffgolf-resultats/01-00-x.json");
+    expect(r.winner).toBe("Hugo Hyest");
+    expect(r.category).toBe("1ère Série Messieurs");
+    expect(r.date).toBe("2026-03-31");
+  });
+
+  it("JobFile — uma entrada por divisão", () => {
+    const [r] = extractTournaments(JOBFILE, "public/data/coc_2026.json");
+    expect(r.category).toBe("Under 12 Boys");
+    expect(r.winner).toBe("Theo Oderinde");
+  });
+
+  it("fpg-pull — escalão vem do campo escalao", () => {
+    const [r] = extractTournaments(FPG_PULL, "public/data/drive-data-2026-07.json");
+    expect(r.category).toBe("Sub 14");
+    expect(r.winner).toBe("Guilherme Matos");
+    expect(r.country).toBe("Portugal");
+  });
+
+  it("prova sem vencedor ainda não entra no resumo", () => {
+    const semVencedor = { meta: { name: "X" }, classification: [{ name: "A", pos: 2 }] };
+    expect(extractTournaments(semVencedor, "public/data/rfegolf-livegolfscoring/2.json")).toEqual([]);
+  });
+
+  it("formato desconhecido devolve [] em vez de rebentar", () => {
+    expect(extractTournaments({ lixo: true }, "public/data/x.json")).toEqual([]);
+  });
+});
+
+describe("diffTournaments", () => {
+  it("só anuncia o que ganhou vencedor desde a versão anterior", () => {
+    const antes = { tourId: 1, meta: { name: "T" }, leaderboard: [
+      { category: 1, categoryName: "Alevín", players: [{ pos: 1, name: "A" }] },
+      { category: 2, categoryName: "Infantil", players: [{ pos: 2, name: "B" }] },
+    ] };
+    const depois = { tourId: 1, meta: { name: "T" }, leaderboard: [
+      { category: 1, categoryName: "Alevín", players: [{ pos: 1, name: "A" }] },
+      { category: 2, categoryName: "Infantil", players: [{ pos: 1, name: "C" }] },
+    ] };
+    const novos = diffTournaments(antes, depois, "public/data/nextcaddy/1.json");
+    expect(novos).toHaveLength(1);
+    expect(novos[0].winner).toBe("C");
+  });
+
+  it("ficheiro novo (sem versão anterior) entra todo", () => {
+    expect(diffTournaments(null, NEXTCADDY, "public/data/nextcaddy/48161.json")).toHaveLength(2);
+  });
+
+  it("ficheiro tocado sem novidade não anuncia nada", () => {
+    expect(diffTournaments(NEXTCADDY, NEXTCADDY, "public/data/nextcaddy/48161.json")).toEqual([]);
+  });
+});
+
+describe("diffWhs", () => {
+  const antigas = [{ score_id: 100, tourn_name: "A", score_origin: "Torn", hcp_dateStr: "2026-01-01" }];
+  const novas = [
+    { score_id: 100, tourn_name: "A", score_origin: "Torn", hcp_dateStr: "2026-01-01" },
+    { score_id: 101, tourn_name: "Nacional Sub-12 D1", score_origin: "Torn", hcp_dateStr: "2026-08-15", holes: 18, sgd: 9 },
+    { score_id: 102, tourn_name: "", score_origin: "EDS", hcp_dateStr: "2026-08-16" },
+  ];
+
+  it("apanha só as voltas com score_id novo", () => {
+    const d = diffWhs(antigas, novas);
+    expect(d.map((r) => r.scoreId)).toEqual(["102", "101"]); // mais recentes primeiro
+  });
+
+  it("jogador sem histórico anterior conta todas", () => {
+    expect(diffWhs(null, novas)).toHaveLength(3);
+  });
+
+  it("ignora registos sem score_id", () => {
+    expect(diffWhs([], [{ tourn_name: "sem id" }])).toEqual([]);
+  });
+});
+
+describe("describePlayerRounds", () => {
+  it("frase de torneio", () => {
+    const r = diffWhs([], [
+      { score_id: 1, tourn_name: "Campeonato Nacional D1", score_origin: "Torn", hcp_dateStr: "2026-08-15" },
+      { score_id: 2, tourn_name: "Campeonato Nacional D2", score_origin: "Torn", hcp_dateStr: "2026-08-16" },
+    ]);
+    expect(describePlayerRounds("Manuel Medeiros", r))
+      .toBe("Manuel Medeiros tem 2 scorecards novos; participou em Campeonato Nacional");
+  });
+
+  it("frase de EDS", () => {
+    const r = diffWhs([], [
+      { score_id: 1, score_origin: "EDS", hcp_dateStr: "2026-08-15" },
+      { score_id: 2, score_origin: "EDS", hcp_dateStr: "2026-08-16" },
+    ]);
+    expect(describePlayerRounds("Joana Sousa", r)).toBe("Joana Sousa tem 2 scorecards novos; por via de EDS");
+  });
+
+  it("singular quando é só uma volta", () => {
+    const r = diffWhs([], [{ score_id: 1, tourn_name: "Drive Tour", score_origin: "Torn" }]);
+    expect(describePlayerRounds("X", r)).toBe("X tem 1 scorecard novo; participou em Drive Tour");
+  });
+
+  it("sem voltas novas devolve null", () => {
+    expect(describePlayerRounds("X", [])).toBeNull();
+  });
+});
