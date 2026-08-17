@@ -16,6 +16,8 @@ import {
   extractTournaments,
   diffTournaments,
   diffWhs,
+  diffFederados,
+  describeFederado,
   describePlayerRounds,
 } from "./digest-extract.js";
 
@@ -286,6 +288,68 @@ describe("diffWhs", () => {
 
   it("ignora registos sem score_id", () => {
     expect(diffWhs([], [{ tourn_name: "sem id" }])).toEqual([]);
+  });
+});
+
+describe("diffFederados", () => {
+  const fed = (code, name, esc, extra = {}) => ({
+    federation_code: code, name, age_level: esc, gender: "M",
+    acronym: "RIO", admission_date: "2026-08-10", ...extra,
+  });
+  const antes = {
+    generated: "2026-08-05T23:25:40.264Z",
+    players: [fed("1", "Ana Costa", "SUB14"), fed("2", "Rui Pinto", "MidAmateur")],
+  };
+  const agora = {
+    generated: "2026-08-14T18:00:00.000Z",
+    players: [
+      fed("1", "Ana Costa", "SUB14"),
+      fed("3", "Duarte Rodrigues", "SUB12"),
+      fed("4", "Velho Sócio", "Senior", { admission_date: "2015-03-01" }),
+    ],
+  };
+
+  it("apanha quem entrou e quem saiu", () => {
+    const d = diffFederados(antes, agora);
+    expect(d.entrou.map((e) => e.name)).toEqual(["Duarte Rodrigues", "Velho Sócio"]);
+    expect(d.saiu.map((e) => e.name)).toEqual(["Rui Pinto"]);
+  });
+
+  it("marca REENTRADA quem tem inscrição anterior ao snapshot passado", () => {
+    const d = diffFederados(antes, agora);
+    expect(d.entrou.find((e) => e.name === "Duarte Rodrigues").reentrada).toBe(false);
+    expect(d.entrou.find((e) => e.name === "Velho Sócio").reentrada).toBe(true);
+  });
+
+  it("marca os juniores e ordena-os do escalão mais novo para o mais velho", () => {
+    const d = diffFederados(antes, agora);
+    expect(d.entrou[0].junior).toBe(true);   // SUB12 primeiro
+    expect(d.entrou[1].junior).toBe(false);  // Senior depois
+  });
+
+  it("um ficheiro vazio NÃO gera milhares de saídas", () => {
+    // Guarda contra um scrape falhado: sem isto um federados.json truncado
+    // anunciava o país inteiro a deixar de ser federado.
+    expect(diffFederados(antes, { players: [] })).toEqual({ entrou: [], saiu: [] });
+    expect(diffFederados(null, agora)).toEqual({ entrou: [], saiu: [] });
+  });
+});
+
+describe("describeFederado", () => {
+  const base = {
+    name: "Duarte Rodrigues", escalao: "SUB14", sexo: "M",
+    club: "RIO", admissao: "2026-08-10", reentrada: false, junior: true,
+  };
+  it("entrada", () => {
+    expect(describeFederado(base)).toBe("Duarte Rodrigues — SUB14 (M), RIO · entrou em 2026-08-10");
+  });
+  it("reentrada", () => {
+    expect(describeFederado({ ...base, reentrada: true, admissao: "2023-08-28" }))
+      .toBe("Duarte Rodrigues — SUB14 (M), RIO · reentrada (inscrição de 2023-08-28)");
+  });
+  it("saída usa a admissão para dizer há quanto tempo era federado", () => {
+    expect(describeFederado({ ...base, admissao: "2008-04-03" }, "saiu"))
+      .toBe("Duarte Rodrigues — SUB14 (M), RIO · era federado desde 2008-04-03");
   });
 });
 

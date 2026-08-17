@@ -156,6 +156,7 @@ function playerName(fed) {
 function collect() {
   const tournaments = [];
   const players = [];
+  const federados = { entrou: [], saiu: [] };
   const derived = [];
   let filesSeen = 0;
   let filesSkipped = 0;
@@ -174,6 +175,22 @@ function collect() {
       if (rondas.length) {
         const fed = mFed[1];
         players.push({ fed, name: playerName(fed), nNew: rondas.length, rounds: rondas.slice(0, 8) });
+      }
+      filesSeen++;
+      continue;
+    }
+
+    // ── Cadastro: quem entrou/saiu da lista de federados activos ──
+    // Tratado ANTES do filtro de fontes conhecidas — o federados.json não é um
+    // ficheiro de resultados, é o cadastro da FPG.
+    if (rel === "public/data/federados.json") {
+      if (ONLY_TOURNAMENTS) continue;
+      const novo = readNew(rel);
+      const antigo = readOld(rel, isNew);
+      if (novo && antigo) {
+        const d = X.diffFederados(antigo, novo);
+        federados.entrou.push(...d.entrou);
+        federados.saiu.push(...d.saiu);
       }
       filesSeen++;
       continue;
@@ -223,6 +240,7 @@ function collect() {
   return {
     tournaments: deduped,
     players,
+    federados,
     filesSeen,
     filesSkipped,
     derivedSkipped: derived.length,
@@ -273,6 +291,7 @@ function groupByTournament(rows) {
 function renderMarkdown(digest) {
   const out = [];
   const { tournaments, players } = digest;
+  const federados = digest.federados || { entrou: [], saiu: [] };
 
   if (tournaments.length) {
     // Agrupar por circuito para o email não ser uma parede de linhas soltas
@@ -305,13 +324,52 @@ function renderMarkdown(digest) {
     out.push("");
   }
 
+  if (federados.entrou.length || federados.saiu.length) {
+    const nE = federados.entrou.length;
+    const nS = federados.saiu.length;
+    const cab = [];
+    if (nE) cab.push(`${nE} ${nE === 1 ? "entrou" : "entraram"}`);
+    if (nS) cab.push(`${nS} ${nS === 1 ? "saiu" : "saíram"}`);
+    out.push(`### 🪪 Cadastro FPG (${cab.join(", ")})`, "");
+
+    if (nE) {
+      // Juniores um a um (é o que interessa); adultos só contados por escalão,
+      // senão uma semana de Agosto despejava 97 linhas de MidAmateur/Senior.
+      const juniores = federados.entrou.filter((e) => e.junior);
+      const adultos = federados.entrou.filter((e) => !e.junior);
+      if (juniores.length) {
+        out.push(`**Novos juniores (${juniores.length})**`, "");
+        for (const e of juniores.slice(0, MAX_PER_SOURCE)) out.push(`- ${X.describeFederado(e)}`);
+        if (juniores.length > MAX_PER_SOURCE) out.push(`- _… e mais ${juniores.length - MAX_PER_SOURCE}_`);
+        out.push("");
+      }
+      if (adultos.length) {
+        const porEsc = new Map();
+        for (const e of adultos) {
+          const k = e.escalao || "(sem escalão)";
+          porEsc.set(k, (porEsc.get(k) || 0) + 1);
+        }
+        const resumo = [...porEsc.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(" · ");
+        out.push(`_Mais ${adultos.length} adultos: ${resumo}._`, "");
+      }
+    }
+
+    if (nS) {
+      // Sempre todos: sair da lista de activos é raro e vale sempre a pena ver.
+      out.push(`**Deixaram de ser federados (${nS})**`, "");
+      for (const e of federados.saiu.slice(0, MAX_PER_SOURCE)) out.push(`- ${X.describeFederado(e, "saiu")}`);
+      if (nS > MAX_PER_SOURCE) out.push(`- _… e mais ${nS - MAX_PER_SOURCE}_`);
+      out.push("");
+    }
+  }
+
   return out.join("\n").trim();
 }
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
 
 function main() {
-  const { tournaments, players, filesSeen, filesSkipped, derivedSkipped, adultosSkipped } = collect();
+  const { tournaments, players, federados, filesSeen, filesSkipped, derivedSkipped, adultosSkipped } = collect();
 
   const digest = {
     source: SOURCE,
@@ -324,6 +382,8 @@ function main() {
     counts: {
       tournaments: tournaments.length,
       players: players.length,
+      federadosEntrou: federados.entrou.length,
+      federadosSaiu: federados.saiu.length,
       filesSeen,
       filesSkipped,
       derivedSkipped,
@@ -331,10 +391,11 @@ function main() {
     },
     tournaments,
     players,
+    federados,
   };
   digest.markdown = renderMarkdown(digest);
 
-  if (!tournaments.length && !players.length) {
+  if (!tournaments.length && !players.length && !federados.entrou.length && !federados.saiu.length) {
     console.log(`[digest] ${SOURCE}: sem novidades (${filesSeen} ficheiros analisados, ${derivedSkipped} derivados e ${adultosSkipped} provas de adultos ignorados).`);
     return;
   }

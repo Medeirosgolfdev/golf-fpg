@@ -530,9 +530,95 @@ function describePlayerRounds(playerName, rounds) {
   return `${playerName} tem ${plural}${parts.length ? "; " + parts.join("; ") : ""}`;
 }
 
+/* ── Federados (public/data/federados.json) ─────────────────────────────── */
+
+// O ficheiro é {players: [...]} com FedStat=9 (activos). Quem entra aparece na
+// lista nova; quem deixa de ser federado desaparece dela.
+function fedPlayers(d) {
+  if (!d) return [];
+  if (Array.isArray(d)) return d;
+  return Array.isArray(d.players) ? d.players : [];
+}
+
+function fedEntry(p, opts) {
+  const esc = (p.age_level || "").trim() || null;
+  const admissao = p.admission_date || null;
+  // ⚠ Um federado com admission_date ANTERIOR ao snapshot passado, mas ausente
+  // dele, não é novo — é uma REENTRADA (estava inactivo e voltou). Caso real:
+  // "Antonio Ferreira", inscrito em 2023-08-28, reapareceu na lista de Agosto/26.
+  const reentrada = Boolean(
+    admissao && opts && opts.previousSnapshot && admissao < String(opts.previousSnapshot).slice(0, 10),
+  );
+  return {
+    fed: String(p.federation_code || "").trim(),
+    name: displayName(String(p.name || "").trim()),
+    club: p.acronym || p.club_name || null,
+    escalao: esc,
+    sexo: p.gender || null,
+    nascimento: p.birthdate || null,
+    admissao,
+    reentrada,
+    junior: /^sub/i.test(esc || ""),
+  };
+}
+
+/**
+ * Quem entrou e quem saiu da lista de federados activos entre dois snapshots.
+ * `previousSnapshot` (o campo `generated` do ficheiro antigo) serve para
+ * distinguir admissões novas de reentradas.
+ */
+function diffFederados(oldJson, newJson) {
+  const antes = fedPlayers(oldJson);
+  const agora = fedPlayers(newJson);
+  if (!antes.length || !agora.length) return { entrou: [], saiu: [] };
+
+  const prevSnapshot = (oldJson && oldJson.generated) || null;
+  const codeOf = (p) => String(p.federation_code || "").trim();
+  const mAntes = new Map(antes.map((p) => [codeOf(p), p]).filter(([k]) => k));
+  const mAgora = new Map(agora.map((p) => [codeOf(p), p]).filter(([k]) => k));
+
+  const entrou = [];
+  for (const [k, p] of mAgora) if (!mAntes.has(k)) entrou.push(fedEntry(p, { previousSnapshot: prevSnapshot }));
+  const saiu = [];
+  for (const [k, p] of mAntes) if (!mAgora.has(k)) saiu.push(fedEntry(p, {}));
+
+  // Juniores primeiro e, dentro deles, do mais novo para o mais velho — é o
+  // que interessa a um site de golfe júnior.
+  const escN = (e) => {
+    const m = /^sub[\s-]?(\d{1,2})/i.exec(e.escalao || "");
+    return m ? parseInt(m[1], 10) : 99;
+  };
+  const ord = (a, b) => escN(a) - escN(b) || String(a.name).localeCompare(String(b.name), "pt");
+  entrou.sort(ord);
+  saiu.sort(ord);
+  return { entrou, saiu };
+}
+
+/**
+ * "Duarte Rodrigues — SUB14 (M), RIO · entrou em 2026-08-10"
+ * Com modo "saiu": "… · era federado desde 2008-04-03" (a data de admissão diz
+ * há quanto tempo lá estava, que é a informação útil numa saída).
+ */
+function describeFederado(e, modo) {
+  const bits = [];
+  if (e.escalao) bits.push(e.sexo ? `${e.escalao} (${e.sexo})` : e.escalao);
+  if (e.club) bits.push(e.club);
+  let s = `${e.name}${bits.length ? " — " + bits.join(", ") : ""}`;
+  if (modo === "saiu") {
+    if (e.admissao) s += ` · era federado desde ${e.admissao}`;
+  } else if (e.reentrada) {
+    s += ` · reentrada (inscrição de ${e.admissao})`;
+  } else if (e.admissao) {
+    s += ` · entrou em ${e.admissao}`;
+  }
+  return s;
+}
+
 module.exports = {
   displayName,
   prettyTournamentName,
+  diffFederados,
+  describeFederado,
   inferEscalao,
   isJuniorish,
   categoryLabel,

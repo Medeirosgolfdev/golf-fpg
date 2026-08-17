@@ -2541,6 +2541,27 @@ daquele run.
 | Vencedor | `winnerOf` — o `pos 1` (aceita `"T1"`, `classement`, `rankingPosition`); sentinelas ≥900 fora. Sem 1º classificado a prova ainda não entra. |
 | Escalão | O rótulo REAL da fonte ("Handicap Alevin Femenino", "1ère Série Messieurs", "Under 12 Boys"); só sem rótulo é que se infere do nome (`inferEscalao`). |
 | Federados | `diffWhs` por **`score_id`** (não `id` — ver "score_id ≠ id"); a frase distingue `Torn`/`Intern` (→ "participou em X") de `EDS`/`Indiv`/`Import` (→ "por via de EDS"). |
+| Cadastro FPG | `diffFederados` sobre o `federados.json` (FedStat=9): quem entrou e quem saiu da lista de activos. Tratado ANTES do filtro de fontes conhecidas — não é um ficheiro de resultados. |
+
+### Cadastro FPG — novos federados e saídas
+
+O `federados.json` (~17,7k activos, refrescado pelo `update-federados.yml`) é
+comparado entre os dois extremos da janela. Medido no diff real 05→14 Ago:
+**113 entraram, 2 saíram**.
+
+- **Juniores um a um, adultos só contados.** Dos 113, só 16 eram SUB*; listar os
+  outros 97 despejava linhas de MidAmateur/Senior que ninguém lê. Os adultos
+  saem numa linha de contagem por escalão. Juniores ordenados do escalão mais
+  novo para o mais velho.
+- **REENTRADA ≠ novo federado.** Quem aparece na lista nova com uma
+  `admission_date` ANTERIOR ao snapshot passado não é novo — estava inactivo e
+  voltou (caso real: "Antonio Ferreira", inscrito em 2023-08-28, reapareceu em
+  Agosto/26). São 3 dos 16 juniores dessa janela.
+- **As saídas aparecem sempre todas** (são raras) e mostram a data de admissão
+  ("era federado desde 2008-04-03"), que diz há quanto tempo lá estavam.
+- ⚠ **Guarda:** se qualquer dos lados vier vazio, `diffFederados` devolve
+  `{entrou:[],saiu:[]}`. Sem isto um scrape falhado (o `federados.json` já veio
+  com 0 registos a 2026-08-12) anunciava o país inteiro a deixar de ser federado.
 
 ### Três filtros que evitam um email ilegível
 
