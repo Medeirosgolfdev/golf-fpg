@@ -139,7 +139,445 @@
       "nivel": "B"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "19:00",
+          "tee": 1,
+          "name": "Javier Enrile Corsini",
+          "hcp": 18.8,
+          "ins": "2379639",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 1,
+          "name": "Pablo Enrile Olleros",
+          "hcp": 25.1,
+          "ins": "2379640",
+          "jid": "78096",
+          "nivel": "C"
+        },
+        {
+          "time": "19:00",
+          "tee": 1,
+          "name": "F. Javier Vazquez De Padura",
+          "hcp": 22.2,
+          "ins": "2382504",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 1,
+          "name": "Beltran Hurtado De Amezaga Vazquez De Padura",
+          "hcp": 29.1,
+          "ins": "2382505",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 2,
+          "name": "Maria Ines Peña Albizu",
+          "hcp": 36,
+          "ins": "2382884",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 2,
+          "name": "Claudia Hurtado De Amezaga Vazquez De Padura",
+          "hcp": 42,
+          "ins": "2382885",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 2,
+          "name": "Javier Hurtado De Amezaga Vazquez De Padura",
+          "hcp": 27.2,
+          "ins": "2384490",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 2,
+          "name": "Ines Allende Vazquez De Padura",
+          "hcp": 42,
+          "ins": "2384491",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 3,
+          "name": "Mercedes Satrustegui Carvajal",
+          "hcp": 24.8,
+          "ins": "2381553",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 3,
+          "name": "Ignacio Mallo Satrustegui",
+          "hcp": 27.1,
+          "ins": "2381554",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 3,
+          "name": "Nicolas Mallo Satrustegui",
+          "hcp": 13.1,
+          "ins": "2381348",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 3,
+          "name": "Mercedes Martinez Torres",
+          "hcp": 48,
+          "ins": "2381347",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 4,
+          "name": "Bruno De Las Barcenas Soto",
+          "hcp": 12.3,
+          "ins": "2382283",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 4,
+          "name": "Jaime De Las Bárcenas Sánchez",
+          "hcp": 54,
+          "ins": "2382284",
+          "jid": "78096",
+          "nivel": "B"
+        },
+        {
+          "time": "19:00",
+          "tee": 4,
+          "name": "Sol Sanchez Blanco",
+          "hcp": 32.8,
+          "ins": "2382290",
+          "jid": "78096",
+          "nivel": "M"
+        },
+        {
+          "time": "19:00",
+          "tee": 4,
+          "name": "Gadea De Las Bárcenas Sánchez",
+          "hcp": 54,
+          "ins": "2382291",
+          "jid": "78096",
+          "nivel": "A"
+        },
+        {
+          "time": "19:00",
+          "tee": 5,
+          "name": "Javier Enrile Mora-Figueroa",
+          "hcp": 16.9,
+          "ins": "2379025",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 5,
+          "name": "Ignacio Enrile Merry Del Val",
+          "hcp": 48,
+          "ins": "2379026",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 5,
+          "name": "Borja Enrile Merry Del Val",
+          "hcp": 48,
+          "ins": "2379027",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 5,
+          "name": "Ines Enrile Merry Del Val",
+          "hcp": 48,
+          "ins": "2379028",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 6,
+          "name": "Lucas Allende Vazquez De Padura",
+          "hcp": 22.4,
+          "ins": "2382893",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 6,
+          "name": "Maria Vazquez De Padura Peña",
+          "hcp": 36,
+          "ins": "2382894",
+          "jid": "78096",
+          "nivel": "M"
+        },
+        {
+          "time": "19:00",
+          "tee": 6,
+          "name": "Francisco Javier De Juan Valero",
+          "hcp": 4,
+          "ins": "2384863",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 6,
+          "name": "Maria Enrile Merry Del Val",
+          "hcp": 23.2,
+          "ins": "2384864",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 7,
+          "name": "Pablo Enrile Mora-Figueroa",
+          "hcp": 6.7,
+          "ins": "2379646",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 7,
+          "name": "Isabela Enrile Ruiz De Salazar",
+          "hcp": 54,
+          "ins": "2379645",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 7,
+          "name": "Alfonso Enrile Olleros",
+          "hcp": 38.7,
+          "ins": "2379642",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 7,
+          "name": "Casilda Enrile Olleros",
+          "hcp": 48,
+          "ins": "2379641",
+          "jid": "78096",
+          "nivel": "J"
+        },
+        {
+          "time": "19:00",
+          "tee": 8,
+          "name": "Javier Domenech Merry Del Val",
+          "hcp": 25.8,
+          "ins": "2384191",
+          "jid": "78096",
+          "nivel": "C"
+        },
+        {
+          "time": "19:00",
+          "tee": 8,
+          "name": "Micaela Domenech Merry Del Val",
+          "hcp": 42.7,
+          "ins": "2384190",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:00",
+          "tee": 8,
+          "name": "Maria Merry Del Val Mariategui",
+          "hcp": 22,
+          "ins": "2384193",
+          "jid": "78096",
+          "nivel": "M"
+        },
+        {
+          "time": "19:00",
+          "tee": 8,
+          "name": "Victor Domenech Merry Del Val",
+          "hcp": 54,
+          "ins": "2384194",
+          "jid": "78096",
+          "nivel": "C"
+        },
+        {
+          "time": "19:00",
+          "tee": 9,
+          "name": "Francisco Javier De Juan Uriarte",
+          "hcp": 15.7,
+          "ins": "2383644",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 9,
+          "name": "Cristina De Juan Valero",
+          "hcp": 53.2,
+          "ins": "2383645",
+          "jid": "78096",
+          "nivel": "C"
+        },
+        {
+          "time": "19:00",
+          "tee": 9,
+          "name": "Jose Luis Mallo De Vargas",
+          "hcp": 12.6,
+          "ins": "2381549",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:00",
+          "tee": 9,
+          "name": "Juan Mallo Satrustegui",
+          "hcp": 48,
+          "ins": "2381550",
+          "jid": "78096",
+          "nivel": "A"
+        },
+        {
+          "time": "19:10",
+          "tee": 3,
+          "name": "Pedro Enrile Mora-Figueroa",
+          "hcp": 16,
+          "ins": "2383794",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:10",
+          "tee": 3,
+          "name": "Pedro Enrile Ruiz De Salazar",
+          "hcp": 40.6,
+          "ins": "2383795",
+          "jid": "78096",
+          "nivel": "C"
+        },
+        {
+          "time": "19:10",
+          "tee": 3,
+          "name": "Miguel Lopez De Carrizosa Mora-Figueroa",
+          "hcp": 28.1,
+          "ins": "2384747",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:10",
+          "tee": 3,
+          "name": "Miguel Lopez De Carrizosa Domecq",
+          "hcp": 36,
+          "ins": "2384748",
+          "jid": "78096",
+          "nivel": "I"
+        },
+        {
+          "time": "19:10",
+          "tee": 5,
+          "name": "Borja Garay Gomez-A.",
+          "hcp": 9.5,
+          "ins": "2379470",
+          "jid": "78096",
+          "nivel": "M"
+        },
+        {
+          "time": "19:10",
+          "tee": 5,
+          "name": "Borja Garay Olleros",
+          "hcp": 54,
+          "ins": "2379469",
+          "jid": "78096",
+          "nivel": "B"
+        },
+        {
+          "time": "19:10",
+          "tee": 5,
+          "name": "Jeronimo Olleros Vazquez",
+          "hcp": 22.5,
+          "ins": "2379650",
+          "jid": "78096",
+          "nivel": "M"
+        },
+        {
+          "time": "19:10",
+          "tee": 5,
+          "name": "Amalia Olleros Alcocer",
+          "hcp": 34,
+          "ins": "2379651",
+          "jid": "78096",
+          "nivel": "B"
+        },
+        {
+          "time": "19:10",
+          "tee": 8,
+          "name": "Victor Domenech Ibañez-Martin",
+          "hcp": 28.2,
+          "ins": "2384188",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:10",
+          "tee": 8,
+          "name": "Alvaro Domenech Merry Del Val",
+          "hcp": 54,
+          "ins": "2384189",
+          "jid": "78096",
+          "nivel": "A"
+        },
+        {
+          "time": "19:10",
+          "tee": 8,
+          "name": "Diego De Elejabeitia Rodriguez",
+          "hcp": 14.5,
+          "ins": "2379032",
+          "jid": "78096",
+          "nivel": "S"
+        },
+        {
+          "time": "19:10",
+          "tee": 8,
+          "name": "Diego Elejabeitia Silva",
+          "hcp": 36,
+          "ins": "2379033",
+          "jid": "78096",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -170,5 +608,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-08-10T05:45:56.730Z"
+  "horariosScrapedAt": "2026-08-17T04:58:02.054Z"
 }

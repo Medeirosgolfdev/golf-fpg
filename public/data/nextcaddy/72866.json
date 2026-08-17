@@ -34,7 +34,67 @@
       "nivel": "S"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "18:00",
+          "tee": 10,
+          "name": "Mario Justel Gomez",
+          "hcp": 15.9,
+          "ins": "2381114",
+          "jid": "78077",
+          "nivel": "S"
+        },
+        {
+          "time": "18:00",
+          "tee": 10,
+          "name": "Rafael Nuñez Gomez",
+          "hcp": 16.5,
+          "ins": "2381313",
+          "jid": "78077",
+          "nivel": "M"
+        },
+        {
+          "time": "18:00",
+          "tee": 10,
+          "name": "Miguel Macias Becerra",
+          "hcp": 19,
+          "ins": "2384076",
+          "jid": "78077",
+          "nivel": "S"
+        },
+        {
+          "time": "18:10",
+          "tee": 10,
+          "name": "Fernando Sampedro Abascal",
+          "hcp": 25.1,
+          "ins": "2381082",
+          "jid": "78077",
+          "nivel": "S"
+        },
+        {
+          "time": "18:10",
+          "tee": 10,
+          "name": "Miguel Angel Vazquez Cantillo",
+          "hcp": 27.3,
+          "ins": "2381341",
+          "jid": "78077",
+          "nivel": "S"
+        },
+        {
+          "time": "18:10",
+          "tee": 10,
+          "name": "Rafael Fernandez Barroso",
+          "hcp": 36.7,
+          "ins": "2384098",
+          "jid": "78077",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -66,5 +126,5 @@
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/706666071_72866-liga-expres-jornada-8-tarde-18-00.pdf"
   ],
-  "horariosScrapedAt": "2026-08-10T05:45:56.552Z"
+  "horariosScrapedAt": "2026-08-17T04:58:01.616Z"
 }
