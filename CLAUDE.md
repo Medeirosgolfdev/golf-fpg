@@ -2540,7 +2540,7 @@ daquele run.
 | Torneios | `scripts/lib/digest-extract.js` — routing por **FORMA** do JSON (`detectFormat`), não por caminho: lgs · rfegMicrosite · nextcaddy · fcg · ffgResultats · jobfile · flatPlayers · fpgPull · uskidsResults. Uma fonte nova entra sozinha; só o rótulo país/circuito vem do caminho (`SOURCES`). |
 | Vencedor | `winnerOf` — o `pos 1` (aceita `"T1"`, `classement`, `rankingPosition`); sentinelas ≥900 fora. Sem 1º classificado a prova ainda não entra. |
 | Escalão | O rótulo REAL da fonte ("Handicap Alevin Femenino", "1ère Série Messieurs", "Under 12 Boys"); só sem rótulo é que se infere do nome (`inferEscalao`). |
-| Federados | `diffWhs` por **`score_id`** (não `id` — ver "score_id ≠ id"); a frase distingue `Torn`/`Intern` (→ "participou em X") de `EDS`/`Indiv`/`Import` (→ "por via de EDS"). |
+| Federados | `diffWhs` por **`score_id`** (não `id` — ver "score_id ≠ id"); a frase distingue `Torn`/`Intern` (→ "participou em X") de `EDS`/`Indiv`/`Import` (→ "por via de EDS"). ⚠ **Actos administrativos fora** — ver abaixo. |
 | Cadastro FPG | `diffFederados` sobre o `federados.json` (FedStat=9): quem entrou e quem saiu da lista de activos. Tratado ANTES do filtro de fontes conhecidas — não é um ficheiro de resultados. |
 
 ### Cadastro FPG — novos federados e saídas
@@ -2568,6 +2568,25 @@ comparado entre os dois extremos da janela. Medido no diff real 05→14 Ago:
 - ⚠ **Guarda:** se qualquer dos lados vier vazio, `diffFederados` devolve
   `{entrou:[],saiu:[]}`. Sem isto um scrape falhado (o `federados.json` já veio
   com 0 registos a 2026-08-12) anunciava o país inteiro a deixar de ser federado.
+
+### ⚠ Nem toda a linha do WHS é uma volta jogada (2026-08-17)
+
+A FPG regista no histórico WHS **actos administrativos** com
+`score_origin: "Torn"` — "Atribuição Inicial WHS", "Transferencia de Clube",
+"Atribuição Inicial de Handicap", "Alteração Tipo de Jogador"… São **1105
+linhas** no repo. Sem os filtrar, o resumo anunciava *"Fulano tem 1 scorecard
+novo; participou em Transferencia de Clube"*. O `isAdminAct` do
+`digest-extract.js` deita-os fora (mesma armadilha que o
+`build-recent-tournaments.js` já tratava com o tcode `000000000`).
+
+⚠ **`score_id` vem a 0 nesses registos** — 639 dos 640 que têm valor. É
+sentinela, não um ID: usá-lo como chave de dedup fazia 639 registos diferentes
+colidirem no mesmo `"0"` e só o primeiro passava. O `roundKey` só aceita
+`score_id > 0`; sem ID real, a chave é `data|evento|campo`.
+
+Descoberto a investigar um caso concreto: o federado 60382 entrou com índice
+**4.7** e a única coisa no WHS dele era a "Atribuição Inicial WHS" (o índice foi
+**atribuído**, não jogado) mais uma volta de treino.
 
 ### Três filtros que evitam um email ilegível
 

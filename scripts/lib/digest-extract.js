@@ -481,6 +481,27 @@ function roundInfo(r) {
   };
 }
 
+// ⚠ Nem toda a linha do WHS é uma volta jogada: a FPG regista ali actos
+// ADMINISTRATIVOS (atribuição inicial de índice, transferência de clube,
+// alteração de tipo de jogador) com `score_origin: "Torn"`. Sem os filtrar, o
+// resumo anunciava "participou em Transferencia de Clube" como se fosse uma
+// prova. Medido no repo: 1105 destas linhas. Mesma armadilha que o
+// build-recent-tournaments.js já trata.
+const ADMIN_ACT_RX = /atribui[çc][ãa]?o|transfer[êe]ncia|altera[çc][ãa]o/i;
+
+function isAdminAct(r) {
+  return ADMIN_ACT_RX.test(String((r && r.tourn_name) || ""));
+}
+
+// ⚠ `score_id` vem a 0 nesses actos (639 dos 640 com valor) — é sentinela, não
+// um ID. Usá-lo como chave fazia 639 registos diferentes colidirem no mesmo "0".
+// Quando não há ID real, a chave é composta por data + evento + campo.
+function roundKey(r) {
+  const id = r.score_id;
+  if (id != null && Number(id) > 0) return `id:${id}`;
+  return `k:${r.hcp_dateStr || r.score_dateStr || ""}|${r.tourn_name || ""}|${r.course_description || ""}`;
+}
+
 /**
  * Voltas novas de um federado: presentes no whs.json novo e ausentes do antigo.
  * Chave = score_id (o `id` é da entrada WHS e muda; ver CLAUDE.md "score_id ≠ id").
@@ -488,13 +509,16 @@ function roundInfo(r) {
 function diffWhs(oldRounds, newRounds) {
   const seen = new Set(
     (Array.isArray(oldRounds) ? oldRounds : [])
-      .map((r) => (r && r.score_id != null ? String(r.score_id) : null))
-      .filter(Boolean),
+      .filter((r) => r && !isAdminAct(r))
+      .map(roundKey),
   );
   const out = [];
   for (const r of Array.isArray(newRounds) ? newRounds : []) {
-    if (!r || r.score_id == null) continue;
-    if (seen.has(String(r.score_id))) continue;
+    if (!r) continue;
+    if (isAdminAct(r)) continue;      // acto administrativo, não é scorecard
+    const k = roundKey(r);
+    if (seen.has(k)) continue;
+    seen.add(k);                       // evita repetir a mesma volta sem ID
     out.push(roundInfo(r));
   }
   // Mais recentes primeiro

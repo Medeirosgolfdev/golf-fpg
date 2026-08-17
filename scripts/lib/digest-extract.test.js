@@ -286,8 +286,31 @@ describe("diffWhs", () => {
     expect(diffWhs(null, novas)).toHaveLength(3);
   });
 
-  it("ignora registos sem score_id", () => {
-    expect(diffWhs([], [{ tourn_name: "sem id" }])).toEqual([]);
+  it("volta sem score_id conta na mesma (chave por data+evento+campo)", () => {
+    const r = diffWhs([], [{ tourn_name: "Torneio X", course_description: "Jamor", hcp_dateStr: "2026-06-13" }]);
+    expect(r).toHaveLength(1);
+  });
+
+  it("IGNORA actos administrativos — não são scorecards", () => {
+    // A FPG regista-os no WHS com score_origin "Torn"; sem este filtro o email
+    // dizia "participou em Transferencia de Clube".
+    const admin = [
+      { score_id: null, tourn_name: "Atribuição Inicial WHS", score_origin: "Torn", hcp_dateStr: "2026-06-09" },
+      { score_id: 0, tourn_name: "Transferencia de Clube", score_origin: "Torn", hcp_dateStr: "2026-02-18" },
+      { score_id: 0, tourn_name: "Alteração Tipo de Jogador", score_origin: "Torn", hcp_dateStr: "2022-09-01" },
+      { score_id: 0, tourn_name: "Atribuição Inicial de Handicap", score_origin: "Torn", hcp_dateStr: "2017-12-31" },
+    ];
+    expect(diffWhs([], admin)).toEqual([]);
+  });
+
+  it("score_id 0 é sentinela, não um ID — dois actos distintos não colidem", () => {
+    // 639 registos no repo partilham score_id 0; com a chave antiga o primeiro
+    // tapava todos os outros.
+    const novas = [
+      { score_id: 0, tourn_name: "Torneio A", course_description: "Jamor", hcp_dateStr: "2026-06-01" },
+      { score_id: 0, tourn_name: "Torneio B", course_description: "Aroeira", hcp_dateStr: "2026-06-02" },
+    ];
+    expect(diffWhs([], novas)).toHaveLength(2);
   });
 });
 
