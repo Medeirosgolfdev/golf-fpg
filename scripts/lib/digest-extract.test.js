@@ -327,6 +327,26 @@ describe("diffFederados", () => {
     expect(d.entrou[1].junior).toBe(false);  // Senior depois
   });
 
+  it("lê o HCP e trata os placeholders da FPG como 'sem HCP'", () => {
+    // A FPG guarda 99 / hcp_status_id 99 em quem ainda não tem índice; o
+    // projecto trata >= 54 como não-estabelecido (isCountableHcp).
+    const novos = {
+      generated: "2026-08-14T18:00:00.000Z",
+      players: [
+        fed("1", "Ana Costa", "SUB14"),
+        fed("5", "Com Indice", "SUB18", { hcp_exact: 41.5, hcp_status_id: 10 }),
+        fed("6", "Sem Indice", "SUB12", { hcp_exact: 99, hcp_status_id: 99 }),
+        fed("7", "Em Formacao", "SUB10", { hcp_exact: 54, hcp_status_id: 10 }),
+        fed("8", "Limite Valido", "SUB16", { hcp_exact: 48.3, hcp_status_id: 10 }),
+      ],
+    };
+    const byName = Object.fromEntries(diffFederados(antes, novos).entrou.map((e) => [e.name, e.hcp]));
+    expect(byName["Com Indice"]).toBe(41.5);
+    expect(byName["Limite Valido"]).toBe(48.3);
+    expect(byName["Sem Indice"]).toBeNull();
+    expect(byName["Em Formacao"]).toBeNull();
+  });
+
   it("um ficheiro vazio NÃO gera milhares de saídas", () => {
     // Guarda contra um scrape falhado: sem isto um federados.json truncado
     // anunciava o país inteiro a deixar de ser federado.
@@ -337,19 +357,23 @@ describe("diffFederados", () => {
 
 describe("describeFederado", () => {
   const base = {
-    name: "Duarte Rodrigues", escalao: "SUB14", sexo: "M",
+    name: "Duarte Rodrigues", escalao: "SUB14", sexo: "M", hcp: null,
     club: "RIO", admissao: "2026-08-10", reentrada: false, junior: true,
   };
-  it("entrada", () => {
-    expect(describeFederado(base)).toBe("Duarte Rodrigues — SUB14 (M), RIO · entrou em 2026-08-10");
+  it("entrada sem HCP (o caso comum num federado novo)", () => {
+    expect(describeFederado(base)).toBe("Duarte Rodrigues — SUB14 (M), RIO · sem HCP · entrou em 2026-08-10");
+  });
+  it("entrada com HCP", () => {
+    expect(describeFederado({ ...base, hcp: 41.5 }))
+      .toBe("Duarte Rodrigues — SUB14 (M), RIO · hcp 41.5 · entrou em 2026-08-10");
   });
   it("reentrada", () => {
-    expect(describeFederado({ ...base, reentrada: true, admissao: "2023-08-28" }))
-      .toBe("Duarte Rodrigues — SUB14 (M), RIO · reentrada (inscrição de 2023-08-28)");
+    expect(describeFederado({ ...base, hcp: 24.4, reentrada: true, admissao: "2023-08-28" }))
+      .toBe("Duarte Rodrigues — SUB14 (M), RIO · hcp 24.4 · reentrada (inscrição de 2023-08-28)");
   });
   it("saída usa a admissão para dizer há quanto tempo era federado", () => {
-    expect(describeFederado({ ...base, admissao: "2008-04-03" }, "saiu"))
-      .toBe("Duarte Rodrigues — SUB14 (M), RIO · era federado desde 2008-04-03");
+    expect(describeFederado({ ...base, hcp: 20, admissao: "2008-04-03" }, "saiu"))
+      .toBe("Duarte Rodrigues — SUB14 (M), RIO · hcp 20 · era federado desde 2008-04-03");
   });
 });
 

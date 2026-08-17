@@ -540,6 +540,19 @@ function fedPlayers(d) {
   return Array.isArray(d.players) ? d.players : [];
 }
 
+// Espelha o HCP_UNESTABLISHED_THRESHOLD de src/pages/jogadores/filterPlayers.ts
+// (`isCountableHcp`: h < 54). A FPG guarda 99 / "Sem HCP" em quem ainda não tem
+// índice — e a maioria dos federados novos está nesse caso (12 dos 16 juniores
+// da janela 05→14 Ago), por isso mostrar "99" seria mentira.
+const HCP_UNESTABLISHED = 54;
+
+function fedHcp(p) {
+  const n = Number(p.hcp_exact);
+  if (!Number.isFinite(n) || n >= HCP_UNESTABLISHED) return null;
+  if (Number(p.hcp_status_id) === 99) return null;
+  return n;
+}
+
 function fedEntry(p, opts) {
   const esc = (p.age_level || "").trim() || null;
   const admissao = p.admission_date || null;
@@ -555,6 +568,7 @@ function fedEntry(p, opts) {
     club: p.acronym || p.club_name || null,
     escalao: esc,
     sexo: p.gender || null,
+    hcp: fedHcp(p),
     nascimento: p.birthdate || null,
     admissao,
     reentrada,
@@ -604,6 +618,9 @@ function describeFederado(e, modo) {
   if (e.escalao) bits.push(e.sexo ? `${e.escalao} (${e.sexo})` : e.escalao);
   if (e.club) bits.push(e.club);
   let s = `${e.name}${bits.length ? " — " + bits.join(", ") : ""}`;
+  // Dizer "sem HCP" em vez de calar: num federado novo isso é informação (ainda
+  // não tem índice), enquanto o silêncio pareceria falha de leitura.
+  s += e.hcp != null ? ` · hcp ${e.hcp}` : " · sem HCP";
   if (modo === "saiu") {
     if (e.admissao) s += ` · era federado desde ${e.admissao}`;
   } else if (e.reentrada) {

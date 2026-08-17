@@ -2559,6 +2559,12 @@ comparado entre os dois extremos da janela. Medido no diff real 05→14 Ago:
   Agosto/26). São 3 dos 16 juniores dessa janela.
 - **As saídas aparecem sempre todas** (são raras) e mostram a data de admissão
   ("era federado desde 2008-04-03"), que diz há quanto tempo lá estavam.
+- **HCP:** `fedHcp` espelha o `HCP_UNESTABLISHED_THRESHOLD = 54` do
+  `src/pages/jogadores/filterPlayers.ts` (`isCountableHcp`: h < 54) e trata
+  também `hcp_status_id === 99`. A FPG guarda **99 / "Sem HCP"** em quem ainda
+  não tem índice — 12 dos 16 juniores da janela 05→14 Ago — logo mostrar "99"
+  seria mentira. Nesses casos a linha diz **"sem HCP"** em vez de calar: num
+  federado novo isso é informação, o silêncio pareceria falha de leitura.
 - ⚠ **Guarda:** se qualquer dos lados vier vazio, `diffFederados` devolve
   `{entrou:[],saiu:[]}`. Sem isto um scrape falhado (o `federados.json` já veio
   com 0 registos a 2026-08-12) anunciava o país inteiro a deixar de ser federado.
