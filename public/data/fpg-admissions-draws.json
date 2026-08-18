@@ -370165,7 +370165,7 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 64 inscritos (53 federados FPG + 11 internacionais sem nº, gravados com fed:null). 21 flights, todos a sair do buraco 1, de 08:00 a 12:56. 19 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 11 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.",
+      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 64 inscritos (53 federados FPG + 11 internacionais sem nº, gravados com fed:null). 21 flights, todos a sair do buraco 1, de 08:00 a 12:56. 19 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 11 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.\n2026-08-18: acrescentado _rfeg.juniorId (= \"r\" + licenca RFEG) e _rfeg.nomeCanonico. O agregador de juniores usa exactamente esse id (juniors.json), logo a ligacao a /kids2/<juniorId> passa a ser deterministica em vez de por nome. Motivo: o cgm.pt publica nomes curtos ou com gralhas — \"Diego Gross\" contra o canonico \"Diego Gross Paneque\", \"Mateo Gonzalez Carrascosa Benitez\" contra \"Gonzalez-Carrascosa\" — e o match por nome falhava em 6 dos 14. Pela licenca resolvem 12; os 2 restantes (Juan Pablo Calvar Fernandez, Rodrigo San Martin Nogueira) nao tem entrada no agregador.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25",
         "date": "2026-08-19",
@@ -370261,7 +370261,9 @@
               "club": "CAMPO DE GOLF DE SALAMANCA",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "r7706912557",
+              "nomeCanonico": "Diana Fraile Herrero"
             }
           },
           {
@@ -370282,7 +370284,9 @@
               "club": "REAL GUADALHORCE CLUB DE GOLF",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rAM15976580",
+              "nomeCanonico": "Diego Gross Paneque"
             }
           },
           {
@@ -370627,7 +370631,9 @@
               "club": "CLUB DE GOLF RIA DE VIGO",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rGC55916976",
+              "nomeCanonico": "Manuel Calvar Fernandez"
             }
           },
           {
@@ -370668,7 +370674,9 @@
               "club": "CLUB DE GOLF ALTORREAL",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rMM06067543",
+              "nomeCanonico": "Mar Parejo Galindo"
             }
           },
           {
@@ -370689,7 +370697,9 @@
               "club": "REAL MONTEALEGRE CLUB DE GOLF",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rGC07958719",
+              "nomeCanonico": "Marcos Casquero Gonzalez"
             }
           },
           {
@@ -370730,7 +370740,9 @@
               "club": "REAL GUADALHORCE CLUB DE GOLF",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rAM15889249",
+              "nomeCanonico": "Maria Marin Fernandez"
             }
           },
           {
@@ -370791,7 +370803,9 @@
               "club": "REAL GUADALHORCE CLUB DE GOLF",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rAM15971016",
+              "nomeCanonico": "Mateo Gonzalez-Carrascosa Benitez"
             }
           },
           {
@@ -370852,7 +370866,9 @@
               "club": "REAL GUADALHORCE CLUB DE GOLF",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rAM15972841",
+              "nomeCanonico": "Ofelia Gonzalez-Carrascosa Benitez"
             }
           },
           {
@@ -370873,7 +370889,9 @@
               "club": "CLUB CHAN DO FENTO (MEIS)",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rGC05944937",
+              "nomeCanonico": "Pedro Alexander Mouriño Abal"
             }
           },
           {
@@ -371099,7 +371117,9 @@
                     "club": "REAL GUADALHORCE CLUB DE GOLF",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rAM15976580",
+                    "nomeCanonico": "Diego Gross Paneque"
                   }
                 }
               ]
@@ -371187,7 +371207,9 @@
                     "club": "CAMPO DE GOLF DE SALAMANCA",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "r7706912557",
+                    "nomeCanonico": "Diana Fraile Herrero"
                   }
                 },
                 {
@@ -371205,7 +371227,9 @@
                     "club": "REAL GUADALHORCE CLUB DE GOLF",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rAM15971016",
+                    "nomeCanonico": "Mateo Gonzalez-Carrascosa Benitez"
                   }
                 }
               ]
@@ -371276,7 +371300,9 @@
                     "club": "CLUB DE GOLF RIA DE VIGO",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rGC55916976",
+                    "nomeCanonico": "Manuel Calvar Fernandez"
                   }
                 },
                 {
@@ -371455,7 +371481,9 @@
                     "club": "REAL MONTEALEGRE CLUB DE GOLF",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rGC07958719",
+                    "nomeCanonico": "Marcos Casquero Gonzalez"
                   }
                 },
                 {
@@ -371494,7 +371522,9 @@
                     "club": "CLUB CHAN DO FENTO (MEIS)",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rGC05944937",
+                    "nomeCanonico": "Pedro Alexander Mouriño Abal"
                   }
                 },
                 {
@@ -371526,7 +371556,9 @@
                     "club": "REAL GUADALHORCE CLUB DE GOLF",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rAM15972841",
+                    "nomeCanonico": "Ofelia Gonzalez-Carrascosa Benitez"
                   }
                 },
                 {
@@ -371607,7 +371639,9 @@
                     "club": "CLUB DE GOLF ALTORREAL",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rMM06067543",
+                    "nomeCanonico": "Mar Parejo Galindo"
                   }
                 }
               ]
@@ -371709,7 +371743,9 @@
                     "club": "REAL GUADALHORCE CLUB DE GOLF",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rAM15889249",
+                    "nomeCanonico": "Maria Marin Fernandez"
                   }
                 }
               ]
@@ -371725,7 +371761,7 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 15 inscritos (12 federados FPG + 3 internacionais sem nº, gravados com fed:null). 5 flights, todos a sair do buraco 1, de 15:30 a 16:10. 0 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte. O Sub-10 joga à tarde, 9 buracos/dia.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 3 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.",
+      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 15 inscritos (12 federados FPG + 3 internacionais sem nº, gravados com fed:null). 5 flights, todos a sair do buraco 1, de 15:30 a 16:10. 0 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte. O Sub-10 joga à tarde, 9 buracos/dia.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 3 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.\n2026-08-18: acrescentado _rfeg.juniorId (= \"r\" + licenca RFEG) e _rfeg.nomeCanonico. O agregador de juniores usa exactamente esse id (juniors.json), logo a ligacao a /kids2/<juniorId> passa a ser deterministica em vez de por nome. Motivo: o cgm.pt publica nomes curtos ou com gralhas — \"Diego Gross\" contra o canonico \"Diego Gross Paneque\", \"Mateo Gonzalez Carrascosa Benitez\" contra \"Gonzalez-Carrascosa\" — e o match por nome falhava em 6 dos 14. Pela licenca resolvem 12; os 2 restantes (Juan Pablo Calvar Fernandez, Rodrigo San Martin Nogueira) nao tem entrada no agregador.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25 - Sub 10",
         "date": "2026-08-19",
@@ -371801,7 +371837,9 @@
               "club": "CLUB DE GOLF ALTORREAL",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rMM06474757",
+              "nomeCanonico": "Guillermo Parejo Galindo"
             }
           },
           {
@@ -371852,7 +371890,9 @@
               "club": "REAL CLUB DE GOLF DE MANISES",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rLV02980817",
+              "nomeCanonico": "Mario Valiente Novella"
             }
           },
           {
@@ -371903,7 +371943,9 @@
               "club": "REAL CLUB DE GOLF DE MANISES",
               "pais": "ESP",
               "fonte": "public/data/spain-players.json (RFEG)",
-              "snapshot": "2026-08-17T04:58:22.670Z"
+              "snapshot": "2026-08-17T04:58:22.670Z",
+              "juniorId": "rLV02169384",
+              "nomeCanonico": "Ruben Valiente Novella"
             }
           },
           {
@@ -371970,7 +372012,9 @@
                     "club": "REAL CLUB DE GOLF DE MANISES",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rLV02980817",
+                    "nomeCanonico": "Mario Valiente Novella"
                   }
                 }
               ]
@@ -372009,7 +372053,9 @@
                     "club": "CLUB DE GOLF ALTORREAL",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rMM06474757",
+                    "nomeCanonico": "Guillermo Parejo Galindo"
                   }
                 }
               ]
@@ -372034,7 +372080,9 @@
                     "club": "REAL CLUB DE GOLF DE MANISES",
                     "pais": "ESP",
                     "fonte": "public/data/spain-players.json (RFEG)",
-                    "snapshot": "2026-08-17T04:58:22.670Z"
+                    "snapshot": "2026-08-17T04:58:22.670Z",
+                    "juniorId": "rLV02169384",
+                    "nomeCanonico": "Ruben Valiente Novella"
                   }
                 },
                 {
