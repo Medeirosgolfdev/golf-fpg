@@ -25,6 +25,7 @@ import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import { displayFed } from "../utils/fedKeys";
 
 interface Props {
   admissions: FpgAdmissions;
@@ -183,7 +184,11 @@ export default function AdmissionsTab({
             <td className="lb-esc">
               {p._escHist ? <EscPill esc={p._escHist} /> : <span className="muted">–</span>}
             </td>
-            <td className="lb-fed">{p.fed || "–"}</td>
+            {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
+                nome — mostrar "–", que e a informacao verdadeira: sem federado.
+                O `fed` cru continua a ir para o TournPName, que precisa dele
+                para o perfil e para o link ↗. */}
+            <td className="lb-fed">{displayFed(p.fed) || "–"}</td>
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
             <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
             <td className="lb-tee">{
