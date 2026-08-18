@@ -370165,7 +370165,7 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 64 inscritos (53 federados FPG + 11 internacionais sem nº, gravados com fed:null). 21 flights, todos a sair do buraco 1, de 08:00 a 12:56. 19 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte.",
+      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 64 inscritos (53 federados FPG + 11 internacionais sem nº, gravados com fed:null). 21 flights, todos a sair do buraco 1, de 08:00 a 12:56. 19 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 11 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25",
         "date": "2026-08-19",
@@ -370248,20 +370248,42 @@
             "fed": null,
             "nome": "Diana Fraile Herrero",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 1.4,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "7706912557",
+              "nome": "FRAILE HERRERO, DIANA",
+              "dob": "2010-09-27",
+              "sex": "F",
+              "hcp": 1.402,
+              "club": "CAMPO DE GOLF DE SALAMANCA",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 9,
             "fed": null,
             "nome": "Diego Gross",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 4.2,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "AM15976580",
+              "nome": "GROSS PANEQUE, DIEGO",
+              "dob": "2015-02-01",
+              "sex": "M",
+              "hcp": 4.2,
+              "club": "REAL GUADALHORCE CLUB DE GOLF",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 10,
@@ -370551,10 +370573,21 @@
             "fed": null,
             "nome": "Juan Pablo Calvar Fernández",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 8.1,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "GC55066066",
+              "nome": "CALVAR FERNANDEZ, JUAN PABLO",
+              "dob": "2009-09-26",
+              "sex": "M",
+              "hcp": 8.1,
+              "club": "CLUB DE GOLF RIA DE VIGO",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 35,
@@ -370581,10 +370614,21 @@
             "fed": null,
             "nome": "Manuel Calvar Fernández",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 6.2,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "GC55916976",
+              "nome": "CALVAR FERNANDEZ, MANUEL",
+              "dob": "2012-05-02",
+              "sex": "M",
+              "hcp": 6.2,
+              "club": "CLUB DE GOLF RIA DE VIGO",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 38,
@@ -370611,20 +370655,42 @@
             "fed": null,
             "nome": "Mar Parejo Galindo",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 18.2,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "MM06067543",
+              "nome": "PAREJO GALINDO, MAR",
+              "dob": "2014-04-26",
+              "sex": "F",
+              "hcp": 18.2,
+              "club": "CLUB DE GOLF ALTORREAL",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 41,
             "fed": null,
             "nome": "Marcos Casquero Gonzalez",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 9.5,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "GC07958719",
+              "nome": "CASQUERO GONZALEZ, MARCOS",
+              "dob": "2012-02-15",
+              "sex": "M",
+              "hcp": 9.5,
+              "club": "REAL MONTEALEGRE CLUB DE GOLF",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 42,
@@ -370651,10 +370717,21 @@
             "fed": null,
             "nome": "Maria Marin Fernandez",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 20.8,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "AM15889249",
+              "nome": "MARIN FERNANDEZ, MARIA",
+              "dob": "2014-03-17",
+              "sex": "F",
+              "hcp": 20.8,
+              "club": "REAL GUADALHORCE CLUB DE GOLF",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 45,
@@ -370701,10 +370778,21 @@
             "fed": null,
             "nome": "Mateo González Carrascosa Benítez",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 6.3,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "AM15971016",
+              "nome": "GONZALEZ-CARRASCOSA BENITEZ, MATEO",
+              "dob": "2014-11-03",
+              "sex": "M",
+              "hcp": 6.3,
+              "club": "REAL GUADALHORCE CLUB DE GOLF",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 50,
@@ -370751,20 +370839,42 @@
             "fed": null,
             "nome": "Ofelia González Carrascosa Beníte Beníte",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 7.5,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "AM15972841",
+              "nome": "GONZALEZ-CARRASCOSA BENITEZ, OFELIA",
+              "dob": "2014-11-03",
+              "sex": "F",
+              "hcp": 7.5,
+              "club": "REAL GUADALHORCE CLUB DE GOLF",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 55,
             "fed": null,
             "nome": "Pedro Alexander Mouriño Abal",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 9.6,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "GC05944937",
+              "nome": "MOURIÑO ABAL, PEDRO ALEXANDER",
+              "dob": "2012-06-07",
+              "sex": "M",
+              "hcp": 9.6,
+              "club": "CLUB CHAN DO FENTO (MEIS)",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 56,
@@ -370822,10 +370932,21 @@
             "fed": null,
             "nome": "Rodrigo San Martín Nogueira",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 8.3,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "GC01917176",
+              "nome": "SAN MARTIN NOGUEIRA, RODRIGO",
+              "dob": "2009-08-29",
+              "sex": "M",
+              "hcp": 8.276,
+              "club": "REAL AERO CLUB DE VIGO",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 61,
@@ -370886,19 +371007,22 @@
                   "nome": "Gaspard Maes",
                   "fed": "51074",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": -1.4
                 },
                 {
                   "nome": "João Setúbal",
                   "fed": "43732",
                   "clube": "Quinta do Peru",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 0.6
                 },
                 {
                   "nome": "Nicolas Rebossio Insua",
                   "fed": "50594",
                   "clube": "Amendoeira",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": -0.1
                 }
               ]
             },
@@ -370911,19 +371035,33 @@
                   "nome": "Tomás Afonso Araujo",
                   "fed": "35849",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 0.1
                 },
                 {
                   "nome": "Rodrigo San Martín Nogueira",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 8.3,
+                  "_rfeg": {
+                    "licencia": "GC01917176",
+                    "nome": "SAN MARTIN NOGUEIRA, RODRIGO",
+                    "dob": "2009-08-29",
+                    "sex": "M",
+                    "hcp": 8.276,
+                    "club": "REAL AERO CLUB DE VIGO",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Francisco Nunes (jr)",
                   "fed": "46299",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 1.4
                 }
               ]
             },
@@ -370936,19 +371074,33 @@
                   "nome": "Jorge Barbosa",
                   "fed": "38718",
                   "clube": "Braga",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 0.5
                 },
                 {
                   "nome": "Marlon Neto-Bradley",
                   "fed": "26974",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 1.1
                 },
                 {
                   "nome": "Diego Gross",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 4.2,
+                  "_rfeg": {
+                    "licencia": "AM15976580",
+                    "nome": "GROSS PANEQUE, DIEGO",
+                    "dob": "2015-02-01",
+                    "sex": "M",
+                    "hcp": 4.2,
+                    "club": "REAL GUADALHORCE CLUB DE GOLF",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -370961,19 +371113,22 @@
                   "nome": "Francisca Ferreira da Costa",
                   "fed": "40981",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 0.4
                 },
                 {
                   "nome": "João Rocha",
                   "fed": "48297",
                   "clube": "Estoril",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 3.5
                 },
                 {
                   "nome": "Laura Santos",
                   "fed": "45393",
                   "clube": "PXO Clube",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 1.6
                 }
               ]
             },
@@ -370986,19 +371141,22 @@
                   "nome": "Martim Sousa de Morais",
                   "fed": "41609",
                   "clube": "Belas",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 4.2
                 },
                 {
                   "nome": "Francisco Saraiva",
                   "fed": "39097",
                   "clube": "Oporto",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 4.3
                 },
                 {
                   "nome": "João Balixa",
                   "fed": "46038",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 4.7
                 }
               ]
             },
@@ -371011,19 +371169,44 @@
                   "nome": "Afonso Silva Pinto",
                   "fed": "46309",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 5.4
                 },
                 {
                   "nome": "Diana Fraile Herrero",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 1.4,
+                  "_rfeg": {
+                    "licencia": "7706912557",
+                    "nome": "FRAILE HERRERO, DIANA",
+                    "dob": "2010-09-27",
+                    "sex": "F",
+                    "hcp": 1.402,
+                    "club": "CAMPO DE GOLF DE SALAMANCA",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Mateo González Carrascosa Benítez",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 6.3,
+                  "_rfeg": {
+                    "licencia": "AM15971016",
+                    "nome": "GONZALEZ-CARRASCOSA BENITEZ, MATEO",
+                    "dob": "2014-11-03",
+                    "sex": "M",
+                    "hcp": 6.3,
+                    "club": "REAL GUADALHORCE CLUB DE GOLF",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -371036,19 +371219,33 @@
                   "nome": "Gabriel Marques Guerreiro",
                   "fed": "43053",
                   "clube": "Estela",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 5.1
                 },
                 {
                   "nome": "Jorge Xavier Graça Silva",
                   "fed": "48705",
                   "clube": "Oporto",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 5.1
                 },
                 {
                   "nome": "Juan Pablo Calvar Fernández",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 8.1,
+                  "_rfeg": {
+                    "licencia": "GC55066066",
+                    "nome": "CALVAR FERNANDEZ, JUAN PABLO",
+                    "dob": "2009-09-26",
+                    "sex": "M",
+                    "hcp": 8.1,
+                    "club": "CLUB DE GOLF RIA DE VIGO",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -371061,19 +371258,33 @@
                   "nome": "João Santos",
                   "fed": "40645",
                   "clube": "PXO Clube",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 4.9
                 },
                 {
                   "nome": "Manuel Calvar Fernández",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 6.2,
+                  "_rfeg": {
+                    "licencia": "GC55916976",
+                    "nome": "CALVAR FERNANDEZ, MANUEL",
+                    "dob": "2012-05-02",
+                    "sex": "M",
+                    "hcp": 6.2,
+                    "club": "CLUB DE GOLF RIA DE VIGO",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Raul Pazos (jr)",
                   "fed": "46296",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 6.3
                 }
               ]
             },
@@ -371086,19 +371297,22 @@
                   "nome": "Camila Pazos",
                   "fed": "46297",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 2.6
                 },
                 {
                   "nome": "Afonso de Sousa Pinto",
                   "fed": "46480",
                   "clube": "Oporto",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 6.5
                 },
                 {
                   "nome": "Manuel Goulartt Medeiros",
                   "fed": "52884",
                   "clube": "Santo da Serra",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 9
                 }
               ]
             },
@@ -371111,19 +371325,22 @@
                   "nome": "Miguel Teles de Menezes",
                   "fed": "52487",
                   "clube": "Oporto",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 5.6
                 },
                 {
                   "nome": "Henrique Pereira",
                   "fed": "53646",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 7.1
                 },
                 {
                   "nome": "Tomás Rente",
                   "fed": "46311",
                   "clube": "Miramar",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 7
                 }
               ]
             },
@@ -371136,19 +371353,22 @@
                   "nome": "Francisco Vilardell Carvalho",
                   "fed": "52856",
                   "clube": "Vale Pisão",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 7.4
                 },
                 {
                   "nome": "Margarida Silva Pinto",
                   "fed": "46310",
                   "clube": "Miramar",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 6.9
                 },
                 {
                   "nome": "Tomás Sarmento de Beires",
                   "fed": "48046",
                   "clube": "Citynorte",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 9.7
                 }
               ]
             },
@@ -371161,19 +371381,22 @@
                   "nome": "Francisco Costa Mendes",
                   "fed": "40318",
                   "clube": "Citynorte",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 6.3
                 },
                 {
                   "nome": "Diogo Marques Lopes",
                   "fed": "35874",
                   "clube": "Citynorte",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 7
                 },
                 {
                   "nome": "Sebastião Soares",
                   "fed": "47341",
                   "clube": "Oporto",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 9
                 }
               ]
             },
@@ -371186,19 +371409,22 @@
                   "nome": "António Maria Cavalinhos",
                   "fed": "40992",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 8.5
                 },
                 {
                   "nome": "Maria Cunha",
                   "fed": "46482",
                   "clube": "Palheiro",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 4.8
                 },
                 {
                   "nome": "André Von Hafe",
                   "fed": "40473",
                   "clube": "Estela",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 10
                 }
               ]
             },
@@ -371211,19 +371437,33 @@
                   "nome": "Afonso Paiva Gonçalves",
                   "fed": "47819",
                   "clube": "Citynorte",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 9.3
                 },
                 {
                   "nome": "Marcos Casquero Gonzalez",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 9.5,
+                  "_rfeg": {
+                    "licencia": "GC07958719",
+                    "nome": "CASQUERO GONZALEZ, MARCOS",
+                    "dob": "2012-02-15",
+                    "sex": "M",
+                    "hcp": 9.5,
+                    "club": "REAL MONTEALEGRE CLUB DE GOLF",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Ricardo Rocha Ferreira",
                   "fed": "51180",
                   "clube": "Miramar",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 11.9
                 }
               ]
             },
@@ -371236,19 +371476,33 @@
                   "nome": "Gonçalo Maia",
                   "fed": "46395",
                   "clube": "Oporto",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 8.3
                 },
                 {
                   "nome": "Pedro Alexander Mouriño Abal",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 9.6,
+                  "_rfeg": {
+                    "licencia": "GC05944937",
+                    "nome": "MOURIÑO ABAL, PEDRO ALEXANDER",
+                    "dob": "2012-06-07",
+                    "sex": "M",
+                    "hcp": 9.6,
+                    "club": "CLUB CHAN DO FENTO (MEIS)",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Diogo Guilherme",
                   "fed": "56632",
                   "clube": "Oporto",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 11.1
                 }
               ]
             },
@@ -371261,19 +371515,33 @@
                   "nome": "Ofelia González Carrascosa Beníte Beníte",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 7.5,
+                  "_rfeg": {
+                    "licencia": "AM15972841",
+                    "nome": "GONZALEZ-CARRASCOSA BENITEZ, OFELIA",
+                    "dob": "2014-11-03",
+                    "sex": "F",
+                    "hcp": 7.5,
+                    "club": "REAL GUADALHORCE CLUB DE GOLF",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Pedro Luís Fernandes",
                   "fed": "52168",
                   "clube": "Citynorte",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 11.1
                 },
                 {
                   "nome": "Miguel Nunes",
                   "fed": "48052",
                   "clube": "Ilha Terceira",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 12.9
                 }
               ]
             },
@@ -371286,19 +371554,22 @@
                   "nome": "João Pedro Quadros",
                   "fed": "45009",
                   "clube": "Ilha Terceira",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 13.8
                 },
                 {
                   "nome": "José Maria Pereira",
                   "fed": "53645",
                   "clube": "Miramar",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 15.5
                 },
                 {
                   "nome": "Eduardo Rocha Ferreira",
                   "fed": "51182",
                   "clube": "Miramar",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 16.8
                 }
               ]
             },
@@ -371311,19 +371582,33 @@
                   "nome": "Guido Martins Gonçalves",
                   "fed": "46414",
                   "clube": "Quinta Lágrimas",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 14.9
                 },
                 {
                   "nome": "Ricardo Ferreira",
                   "fed": "45366",
                   "clube": "Oporto",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 17.3
                 },
                 {
                   "nome": "Mar Parejo Galindo",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 18.2,
+                  "_rfeg": {
+                    "licencia": "MM06067543",
+                    "nome": "PAREJO GALINDO, MAR",
+                    "dob": "2014-04-26",
+                    "sex": "F",
+                    "hcp": 18.2,
+                    "club": "CLUB DE GOLF ALTORREAL",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -371336,19 +371621,22 @@
                   "nome": "Dinis Seabra",
                   "fed": "44821",
                   "clube": "Oporto",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 16.4
                 },
                 {
                   "nome": "Afonso Sousa",
                   "fed": "55301",
                   "clube": "Ilha Terceira",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 16.6
                 },
                 {
                   "nome": "Maksim Mutalapov",
                   "fed": "54475",
                   "clube": "Oporto",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 25.4
                 }
               ]
             },
@@ -371361,19 +371649,22 @@
                   "nome": "Martim Duarte",
                   "fed": "53696",
                   "clube": "Ilha Terceira",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 18.5
                 },
                 {
                   "nome": "Gil Martins Gonçalves",
                   "fed": "46415",
                   "clube": "Quinta Lágrimas",
-                  "tee": "Amarelas"
+                  "tee": "Amarelas",
+                  "hcp": 19
                 },
                 {
                   "nome": "João Couto",
                   "fed": "55914",
                   "clube": "Braga",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 22.9
                 }
               ]
             },
@@ -371386,25 +371677,40 @@
                   "nome": "Nuno Bessa",
                   "fed": "47003",
                   "clube": "Vale Pisão",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 18.3
                 },
                 {
                   "nome": "Manuel Pontes Carneiro",
                   "fed": "57884",
                   "clube": "Miramar",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 21
                 },
                 {
                   "nome": "Martim Costa",
                   "fed": "44891",
                   "clube": "Ilha Terceira",
-                  "tee": "Brancas"
+                  "tee": "Brancas",
+                  "hcp": 24.7
                 },
                 {
                   "nome": "Maria Marin Fernandez",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Vermelhas"
+                  "tee": "Vermelhas",
+                  "hcp": 20.8,
+                  "_rfeg": {
+                    "licencia": "AM15889249",
+                    "nome": "MARIN FERNANDEZ, MARIA",
+                    "dob": "2014-03-17",
+                    "sex": "F",
+                    "hcp": 20.8,
+                    "club": "REAL GUADALHORCE CLUB DE GOLF",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             }
@@ -371419,7 +371725,7 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 15 inscritos (12 federados FPG + 3 internacionais sem nº, gravados com fed:null). 5 flights, todos a sair do buraco 1, de 15:30 a 16:10. 0 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte. O Sub-10 joga à tarde, 9 buracos/dia.",
+      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 15 inscritos (12 federados FPG + 3 internacionais sem nº, gravados com fed:null). 5 flights, todos a sair do buraco 1, de 15:30 a 16:10. 0 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte. O Sub-10 joga à tarde, 9 buracos/dia.\n2026-08-18: os jogadores sem nº de federado FPG (inscritos como \"Internacional\") passam a trazer handicap e identificação da RFEG, em _rfeg {licencia, nome, dob, sex, hcp, club, pais, fonte}. Cruzamento por nome contra public/data/spain-players.json, exigindo candidato ÚNICO — os 3 casaram todos sem ambiguidade. O campo hcp fica arredondado a 1 casa (como os federados); o valor cru da RFEG fica em _rfeg.hcp. Nota: a catEdad da RFEG está desactualizada em vários casos, por isso o escalão deve ser derivado de _rfeg.dob, não dela. O hcp dos federados no draw foi preenchido a partir da lista de inscritos (a tabela do cgm.pt não traz handicap), para o draw ficar coerente entre federados e internacionais. ⚠ As duas colunas de hcp não são do mesmo momento: o dos FEDERADOS é o que a lista de inscrições mostrava na altura da inscrição (ex.: Manuel 9 em Julho, 8.5 hoje), o dos INTERNACIONAIS é o snapshot RFEG de 2026-08-17 (a página do clube não publica handicap para eles). Para comparar handicaps ao mesmo momento, usar players.json / _rfeg.snapshot, não a coluna hcp.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25 - Sub 10",
         "date": "2026-08-19",
@@ -371482,10 +371788,21 @@
             "fed": null,
             "nome": "Guillermo Parejo Galindo",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 26.3,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "MM06474757",
+              "nome": "PAREJO GALINDO, GUILLERMO",
+              "dob": "2017-01-13",
+              "sex": "M",
+              "hcp": 26.3,
+              "club": "CLUB DE GOLF ALTORREAL",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 7,
@@ -371522,10 +371839,21 @@
             "fed": null,
             "nome": "Mario Valiente Novella",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 14.6,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "LV02980817",
+              "nome": "VALIENTE NOVELLA, MARIO",
+              "dob": "2016-03-10",
+              "sex": "M",
+              "hcp": 14.6,
+              "club": "REAL CLUB DE GOLF DE MANISES",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": 11,
@@ -371562,10 +371890,21 @@
             "fed": null,
             "nome": "Ruben Valiente Novella",
             "clube": "Internacional",
-            "hcp": null,
+            "hcp": 27.9,
             "vac": null,
             "dataInscricao": "2026/08/15 00:00",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_rfeg": {
+              "licencia": "LV02169384",
+              "nome": "VALIENTE NOVELLA, RUBEN",
+              "dob": "2018-05-03",
+              "sex": "M",
+              "hcp": 27.9,
+              "club": "REAL CLUB DE GOLF DE MANISES",
+              "pais": "ESP",
+              "fonte": "public/data/spain-players.json (RFEG)",
+              "snapshot": "2026-08-17T04:58:22.670Z"
+            }
           },
           {
             "pos": null,
@@ -371606,19 +371945,33 @@
                   "nome": "Lucas Pereira Amorim",
                   "fed": "54330",
                   "clube": "Oporto",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 11.1
                 },
                 {
                   "nome": "Manuel Dias",
                   "fed": "52815",
                   "clube": "Braga",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 12.5
                 },
                 {
                   "nome": "Mario Valiente Novella",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 14.6,
+                  "_rfeg": {
+                    "licencia": "LV02980817",
+                    "nome": "VALIENTE NOVELLA, MARIO",
+                    "dob": "2016-03-10",
+                    "sex": "M",
+                    "hcp": 14.6,
+                    "club": "REAL CLUB DE GOLF DE MANISES",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -371631,19 +371984,33 @@
                   "nome": "Francisco Lopes",
                   "fed": "52713",
                   "clube": "Vale Pisão",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 21.7
                 },
                 {
                   "nome": "Mikhail Khontulev",
                   "fed": "58864",
                   "clube": "Estoril",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 24.2
                 },
                 {
                   "nome": "Guillermo Parejo Galindo",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 26.3,
+                  "_rfeg": {
+                    "licencia": "MM06474757",
+                    "nome": "PAREJO GALINDO, GUILLERMO",
+                    "dob": "2017-01-13",
+                    "sex": "M",
+                    "hcp": 26.3,
+                    "club": "CLUB DE GOLF ALTORREAL",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 }
               ]
             },
@@ -371656,19 +372023,33 @@
                   "nome": "Ruben Valiente Novella",
                   "fed": null,
                   "clube": "Internacional",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 27.9,
+                  "_rfeg": {
+                    "licencia": "LV02169384",
+                    "nome": "VALIENTE NOVELLA, RUBEN",
+                    "dob": "2018-05-03",
+                    "sex": "M",
+                    "hcp": 27.9,
+                    "club": "REAL CLUB DE GOLF DE MANISES",
+                    "pais": "ESP",
+                    "fonte": "public/data/spain-players.json (RFEG)",
+                    "snapshot": "2026-08-17T04:58:22.670Z"
+                  }
                 },
                 {
                   "nome": "Rafael Paço",
                   "fed": "56641",
                   "clube": "Oporto",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 28.6
                 },
                 {
                   "nome": "Vicente Henrique Rocha",
                   "fed": "59154",
                   "clube": "Ilha Terceira",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 31.4
                 }
               ]
             },
@@ -371681,19 +372062,22 @@
                   "nome": "Bruno Neto Lichuck",
                   "fed": "53685",
                   "clube": "Miramar",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 32.1
                 },
                 {
                   "nome": "Henrique Monção",
                   "fed": "51176",
                   "clube": "Miramar",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 40.8
                 },
                 {
                   "nome": "Diego Braga",
                   "fed": "51980",
                   "clube": "Miramar",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 40.9
                 }
               ]
             },
@@ -371706,19 +372090,22 @@
                   "nome": "Miguel Freitas",
                   "fed": "56604",
                   "clube": "Ilha Terceira",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 41.1
                 },
                 {
                   "nome": "Artur Von Hafe",
                   "fed": "58024",
                   "clube": "RIO",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 49.2
                 },
                 {
                   "nome": "Gastão Thomaz Medeiros",
                   "fed": "59252",
                   "clube": "Santo da Serra",
-                  "tee": "Roxas"
+                  "tee": "Roxas",
+                  "hcp": 54
                 }
               ]
             }
