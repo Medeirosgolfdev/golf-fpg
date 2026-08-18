@@ -1,0 +1,57 @@
+/**
+ * fedKeys.ts — chaves virtuais de jogador
+ *
+ * Nem todos os jogadores têm número de federado português. Para os
+ * internacionais, o `FPGPage` cria entradas VIRTUAIS no `playersDB` a partir
+ * do nome, para que a app os consiga ligar às fontes /kids (USKids, WJGC,
+ * Doral) e mostrar bandeira, escalão e o link ↗:
+ *
+ *   "intl:" + nome  ← kids-links.json      (curado)
+ *   "kids:" + nome  ← kids-tracked-names.json (índice de nomes)
+ *
+ * Essas chaves são identificadores INTERNOS. Servem para procurar no
+ * `playersDB` e para construir links — nunca para mostrar ao utilizador, que
+ * não tem como distinguir `kids:diana_fraile_herrero` de um número de
+ * federado. Uma coluna FED deve mostrar "–": a informação verdadeira é que
+ * este jogador não tem federado, e o slug só a disfarça.
+ *
+ * O `DrawTab` já fazia esta distinção com um helper local; ficou aqui para
+ * ser partilhada com o `AdmissionsTab`, onde faltava.
+ */
+
+/** True se a chave é virtual (derivada do nome), não um nº de federado real. */
+export function isVirtualFed(fed: string | null | undefined): boolean {
+  if (!fed) return false;
+  return fed.startsWith("intl:") || fed.startsWith("kids:");
+}
+
+/**
+ * O nº de federado a MOSTRAR, ou null quando não há um real.
+ * Usar em qualquer célula que apresente o federado ao utilizador.
+ */
+export function displayFed(fed: string | null | undefined): string | null {
+  if (!fed || isVirtualFed(fed)) return null;
+  return fed;
+}
+
+/**
+ * Destino do link ↗ "Ver em Kids".
+ *
+ * Duas formas, por ordem de fiabilidade:
+ *
+ *   1. `juniorId` — id do agregador de juniores (`"r" + licença federativa`).
+ *      Determinístico: vem da licença, não do nome. Rota `/kids2/:juniorId`.
+ *   2. `kidsHash` — resolvido por NOME via kids-tracked-names.json. Falha
+ *      sempre que a fonte escreve o nome de outra maneira: o cgm.pt publica
+ *      "Diego Gross", o agregador tem "Diego Gross Paneque". Rota por hash.
+ *
+ * Preferir sempre o id quando existe.
+ */
+export function kidsHref(
+  juniorId?: string | null,
+  kidsHash?: string | null,
+): string | null {
+  if (juniorId) return `/kids2/${juniorId}`;
+  if (kidsHash) return `/kids2#${kidsHash}`;
+  return null;
+}

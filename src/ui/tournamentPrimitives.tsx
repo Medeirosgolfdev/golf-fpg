@@ -38,6 +38,7 @@ import { flag as flagOf } from "../utils/flagUtils";
 
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
+import { kidsHref } from "../utils/fedKeys";
 export { _MANUEL_FED as MANUEL_FED, isManuel };
 
 /* ─── Formatação to-par ─── */
@@ -158,10 +159,14 @@ export function TournPName({
   highlight,
   maxLen = 26,
   sex: sexProp,
+  juniorId,
 }: {
   name: string;
   fed?: string;
   fedCode?: string;
+  /** Id do agregador de juniores ("r" + licença). Quando existe, o link ↗
+   *  usa-o em vez do kidsHash resolvido por nome — ver kidsHref(). */
+  juniorId?: string;
   playersDB?: PlayersDB;
   highlight?: boolean;
   maxLen?: number;
@@ -200,6 +205,8 @@ export function TournPName({
   const country = directEntry?.country ?? candidates.find(e => e.country)?.country;
   const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;
 
+  const kidsLink = kidsHref(juniorId, kidsHash);
+
   const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
   const inner = (
     <>
@@ -227,9 +234,9 @@ export function TournPName({
   return (
     <>
       {nameEl}
-      {kidsHash && (
+      {kidsLink && (
         <a
-          href={`/kids2#${kidsHash}`}
+          href={kidsLink}
           target="_blank"
           rel="noopener noreferrer"
           title="Ver em Kids"

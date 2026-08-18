@@ -26,6 +26,7 @@ import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard"
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
+import { isVirtualFed } from "../utils/fedKeys";
 
 interface Props {
   draw: FpgDraw;
@@ -243,7 +244,7 @@ export default function DrawTab({
     const looksLikeFed = (s: string | undefined): boolean => !!s && /^\d{4,6}$/.test(s.trim());
 
     // Contexto do torneio usado para desempatar homónimos em `pickBestFed`.
-    const isVirtual = (f: string) => f.startsWith("intl:") || f.startsWith("kids:");
+    const isVirtual = (f: string) => isVirtualFed(f);
     const escCapMatch = (tournamentEscalao || "").match(/Sub\s*(\d+)/i);
     const escCap = escCapMatch ? parseInt(escCapMatch[1], 10) : null;
     const tornYear = effDate ? parseInt(String(effDate).slice(0, 4), 10) : null;
@@ -506,6 +507,7 @@ export default function DrawTab({
             <TournPName
               name={p.nome}
               fed={p.fed || undefined}
+              juniorId={(p as any)._rfeg?.juniorId}
               playersDB={p.noFed ? undefined : playersDB}
               highlight={manuel}
             />
