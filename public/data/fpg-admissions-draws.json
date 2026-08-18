@@ -370165,12 +370165,12 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.",
+      "_note": "Torneio FUTURO criado manualmente 2026-07-22 a partir de https://www.cgm.pt/pt/miramar-internacional-junior-open-u25/ (página do clube, não FPG). 19-21 Ago 2026, 54 buracos (Sub10: 27). O tcode REAL das Classifications (ccode=003) ainda não é conhecido — edições anteriores: 003/10564 (U25) + 003/10565 (Sub10). Substituir o placeholder 90003 aqui e em featuredTournaments.ts quando publicado. dataInscricao = data do snapshot cgm.pt, nao da inscricao real. Tee NAO guardado no JSON: e calculado por escalao+sexo via regra do regulamento (src/utils/teeRegulation.ts MIRAMAR_U25_TEE_RULE) e mostrado como quadradinho de cor. HCP de federados.json. Atualizado 2026-07-24: 24 inscritos (Sub12->Sub25). +Laura Santos 45393, +Martim Sousa de Morais 41609 vs snapshot de 22. O Sub-10 e uma competicao SEPARADA (9 buracos/dia) -> entrada propria ccode 003 tcode 90004. Atualizado 2026-07-27: 26 inscritos. +João Santos 40645 (PXO Clube), +Tomás Rente 46311 (Miramar) vs snapshot de 24; nenhum saiu. Atualizado 2026-07-31: 30 inscritos. +André Von Hafe 40473 (Estela), +Camila Pazos 46297 (Miramar), +Jorge Barbosa 38718 (Braga), +Maksim Mutalapov 54475 (Oporto), +Miguel Teles de Menezes 52487 (Oporto); -Guilherme Grabner Moreira 42205 vs snapshot de 26. Guilherme Grabner Moreira 42205 desistiu (mantido na lista como 'desistiu', nao apagado). Atualizado 2026-08-04: 35 inscritos. +Afonso de Sousa Pinto 46480 (Oporto), +Diogo Guilherme 56632 (Oporto), +Diogo Marques Lopes 35874 (Citynorte), +Manuel Pontes Carneiro 57884 (Miramar), +Marlon Neto-Bradley 26974 (Miramar) vs snapshot de 30; nenhum saiu (Guilherme 42205 continua desistente). Atualizado 2026-08-04 (2): 37 confirmados. +Gabriel Marques Guerreiro 43053 (Estela), +João Couto 55914 (Braga) vs 35. Mikhail Khontulev 58864 (Sub-10) aparece tambem na pagina U25 do clube mas NAO adicionado (decisao: aguardar). Atualizado 2026-08-04 (3): 42 confirmados. +Martim Costa 44891, +Joao Pedro Quadros 45009 (Ilha Terceira), +Ricardo Ferreira 45366, +Sebastiao Soares 47341 (Oporto), +Nicolas Rebossio Insua 50594 (Amendoeira) vs 37. Mikhail Khontulev 58864 ja NAO consta da pagina U25 (fica so no Sub-10). Atualizado 2026-08-04 (4): 44 confirmados. +Miguel Nunes 48052 (Ilha Terceira), +Francisco Vilardell Carvalho 52856 (Vale Pisao) vs 42. Atualizado 2026-08-04 (5): 49 confirmados. +Francisco Costa Mendes 40318, +Afonso Paiva Goncalves 47819, +Pedro Luis Fernandes 52168 (Citynorte), +Joao Rocha 48297 (Estoril), +Martim Duarte 53696, +Afonso Sousa 55301 (Ilha Terceira) vs 44. Eva Silva 46437 SAIU (marcada desistente, mantida na lista). Atualizado 2026-08-04 (6): 50 confirmados. +Gabriel Sardo 37010 (Quinta do Peru), +Guido Martins Goncalves 46414, +Gil Martins Goncalves 46415 (Quinta Lagrimas) vs 49. Saíram (desistente): Diogo Silva Pinto Rocha 34186, Ricardo Castro Ferreira 49085.\n2026-08-15: +2 inscritos (Francisco Saraiva 39097, Nuno Bessa 47003) — cgm.pt\n2026-08-15 (final): inscrições FECHADAS — 53 confirmados. +Gonçalo Maia 46395 (Oporto), +Tomás Sarmento de Beires 48046 (Citynorte); Gabriel Sardo 37010 saiu da página do clube (marcado desistente, mantido na lista). Reconfirmado a 2026-08-17: lista idêntica. Draw publicado no cgm.pt com as marcações atribuídas mas SEM horas de saída nem grupos, por isso draws fica {} — o schema exige teeTime/startHole/groups e inventá-los seria pior que não ter. As marcações publicadas foram confrontadas com MIRAMAR_U25_TEE_RULE (teeRegulation.ts): conferem em 53/53, portanto continua a não ser preciso guardar tee no JSON.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 64 inscritos (53 federados FPG + 11 internacionais sem nº, gravados com fed:null). 21 flights, todos a sair do buraco 1, de 08:00 a 12:56. 19 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25",
         "date": "2026-08-19",
         "status": "Inscrições fechadas",
-        "totalInscritos": 53,
+        "totalInscritos": 64,
         "reservas": 0,
         "players": [
           {
@@ -370245,6 +370245,26 @@
           },
           {
             "pos": 8,
+            "fed": null,
+            "nome": "Diana Fraile Herrero",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": null,
+            "nome": "Diego Gross",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
             "fed": "44821",
             "nome": "Dinis Seabra",
             "clube": "Oporto",
@@ -370254,7 +370274,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 9,
+            "pos": 11,
             "fed": "56632",
             "nome": "Diogo Guilherme",
             "clube": "Oporto",
@@ -370264,7 +370284,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 10,
+            "pos": 12,
             "fed": "35874",
             "nome": "Diogo Marques Lopes",
             "clube": "Citynorte",
@@ -370285,7 +370305,7 @@
             "desinscritoEm": "2026-08-04"
           },
           {
-            "pos": 11,
+            "pos": 13,
             "fed": "51182",
             "nome": "Eduardo Rocha Ferreira",
             "clube": "Miramar",
@@ -370306,7 +370326,7 @@
             "desinscritoEm": "2026-08-04"
           },
           {
-            "pos": 12,
+            "pos": 14,
             "fed": "40981",
             "nome": "Francisca Ferreira da Costa",
             "clube": "Miramar",
@@ -370316,7 +370336,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 13,
+            "pos": 15,
             "fed": "40318",
             "nome": "Francisco Costa Mendes",
             "clube": "Citynorte",
@@ -370326,7 +370346,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 14,
+            "pos": 16,
             "fed": "46299",
             "nome": "Francisco Nunes (jr)",
             "clube": "Miramar",
@@ -370336,7 +370356,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 15,
+            "pos": 17,
             "fed": "39097",
             "nome": "Francisco Saraiva",
             "clube": "Oporto",
@@ -370346,7 +370366,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 16,
+            "pos": 18,
             "fed": "52856",
             "nome": "Francisco Vilardell Carvalho",
             "clube": "Vale Pisão",
@@ -370356,7 +370376,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 17,
+            "pos": 19,
             "fed": "43053",
             "nome": "Gabriel Marques Guerreiro",
             "clube": "Estela",
@@ -370376,7 +370396,7 @@
             "status": "desistente"
           },
           {
-            "pos": 18,
+            "pos": 20,
             "fed": "51074",
             "nome": "Gaspard Maes",
             "clube": "Miramar",
@@ -370386,7 +370406,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 19,
+            "pos": 21,
             "fed": "46415",
             "nome": "Gil Martins Gonçalves",
             "clube": "Quinta Lágrimas",
@@ -370396,7 +370416,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 20,
+            "pos": 22,
             "fed": "46395",
             "nome": "Gonçalo Maia",
             "clube": "Oporto",
@@ -370406,7 +370426,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 21,
+            "pos": 23,
             "fed": "46414",
             "nome": "Guido Martins Gonçalves",
             "clube": "Quinta Lágrimas",
@@ -370427,7 +370447,7 @@
             "desinscritoEm": "2026-07-31"
           },
           {
-            "pos": 22,
+            "pos": 24,
             "fed": "53646",
             "nome": "Henrique Pereira",
             "clube": "Miramar",
@@ -370437,7 +370457,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 23,
+            "pos": 25,
             "fed": "46038",
             "nome": "João Balixa",
             "clube": "Miramar",
@@ -370447,7 +370467,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 24,
+            "pos": 26,
             "fed": "55914",
             "nome": "João Couto",
             "clube": "Braga",
@@ -370457,7 +370477,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 25,
+            "pos": 27,
             "fed": "45009",
             "nome": "João Pedro Quadros",
             "clube": "Ilha Terceira",
@@ -370467,7 +370487,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 26,
+            "pos": 28,
             "fed": "48297",
             "nome": "João Rocha",
             "clube": "Estoril",
@@ -370477,7 +370497,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 27,
+            "pos": 29,
             "fed": "40645",
             "nome": "João Santos",
             "clube": "PXO Clube",
@@ -370487,7 +370507,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 28,
+            "pos": 30,
             "fed": "43732",
             "nome": "João Setúbal",
             "clube": "Quinta do Peru",
@@ -370497,7 +370517,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 29,
+            "pos": 31,
             "fed": "38718",
             "nome": "Jorge Barbosa",
             "clube": "Braga",
@@ -370507,7 +370527,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 30,
+            "pos": 32,
             "fed": "48705",
             "nome": "Jorge Xavier Graça Silva",
             "clube": "Oporto",
@@ -370517,7 +370537,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 31,
+            "pos": 33,
             "fed": "53645",
             "nome": "José Maria Pereira",
             "clube": "Miramar",
@@ -370527,7 +370547,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 32,
+            "pos": 34,
+            "fed": null,
+            "nome": "Juan Pablo Calvar Fernández",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 35,
             "fed": "45393",
             "nome": "Laura Santos",
             "clube": "PXO Clube",
@@ -370537,7 +370567,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 33,
+            "pos": 36,
             "fed": "54475",
             "nome": "Maksim Mutalapov",
             "clube": "Oporto",
@@ -370547,7 +370577,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 34,
+            "pos": 37,
+            "fed": null,
+            "nome": "Manuel Calvar Fernández",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 38,
             "fed": "52884",
             "nome": "Manuel Goulartt Medeiros",
             "clube": "Santo da Serra",
@@ -370557,7 +370597,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 35,
+            "pos": 39,
             "fed": "57884",
             "nome": "Manuel Pontes Carneiro",
             "clube": "Miramar",
@@ -370567,7 +370607,27 @@
             "status": "confirmed"
           },
           {
-            "pos": 36,
+            "pos": 40,
+            "fed": null,
+            "nome": "Mar Parejo Galindo",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 41,
+            "fed": null,
+            "nome": "Marcos Casquero Gonzalez",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 42,
             "fed": "46310",
             "nome": "Margarida Silva Pinto",
             "clube": "Miramar",
@@ -370577,7 +370637,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 37,
+            "pos": 43,
             "fed": "46482",
             "nome": "Maria Cunha",
             "clube": "Palheiro",
@@ -370587,7 +370647,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 38,
+            "pos": 44,
+            "fed": null,
+            "nome": "Maria Marin Fernandez",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 45,
             "fed": "26974",
             "nome": "Marlon Neto-Bradley",
             "clube": "Miramar",
@@ -370597,7 +370667,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 39,
+            "pos": 46,
             "fed": "44891",
             "nome": "Martim Costa",
             "clube": "Ilha Terceira",
@@ -370607,7 +370677,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 40,
+            "pos": 47,
             "fed": "53696",
             "nome": "Martim Duarte",
             "clube": "Ilha Terceira",
@@ -370617,7 +370687,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 41,
+            "pos": 48,
             "fed": "41609",
             "nome": "Martim Sousa de Morais",
             "clube": "Belas",
@@ -370627,7 +370697,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 42,
+            "pos": 49,
+            "fed": null,
+            "nome": "Mateo González Carrascosa Benítez",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 50,
             "fed": "48052",
             "nome": "Miguel Nunes",
             "clube": "Ilha Terceira",
@@ -370637,7 +370717,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 43,
+            "pos": 51,
             "fed": "52487",
             "nome": "Miguel Teles de Menezes",
             "clube": "Oporto",
@@ -370647,7 +370727,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 44,
+            "pos": 52,
             "fed": "50594",
             "nome": "Nicolas Rebossio Insua",
             "clube": "Amendoeira",
@@ -370657,7 +370737,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 45,
+            "pos": 53,
             "fed": "47003",
             "nome": "Nuno Bessa",
             "clube": "Vale Pisão",
@@ -370667,7 +370747,27 @@
             "status": "confirmed"
           },
           {
-            "pos": 46,
+            "pos": 54,
+            "fed": null,
+            "nome": "Ofelia González Carrascosa Beníte Beníte",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 55,
+            "fed": null,
+            "nome": "Pedro Alexander Mouriño Abal",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 56,
             "fed": "52168",
             "nome": "Pedro Luís Fernandes",
             "clube": "Citynorte",
@@ -370677,7 +370777,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 47,
+            "pos": 57,
             "fed": "46296",
             "nome": "Raul Pazos (jr)",
             "clube": "Miramar",
@@ -370698,7 +370798,7 @@
             "desinscritoEm": "2026-08-04"
           },
           {
-            "pos": 48,
+            "pos": 58,
             "fed": "45366",
             "nome": "Ricardo Ferreira",
             "clube": "Oporto",
@@ -370708,7 +370808,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 49,
+            "pos": 59,
             "fed": "51180",
             "nome": "Ricardo Rocha Ferreira",
             "clube": "Miramar",
@@ -370718,7 +370818,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 50,
+            "pos": 60,
+            "fed": null,
+            "nome": "Rodrigo San Martín Nogueira",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 61,
             "fed": "47341",
             "nome": "Sebastião Soares",
             "clube": "Oporto",
@@ -370728,7 +370838,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 51,
+            "pos": 62,
             "fed": "35849",
             "nome": "Tomás Afonso Araujo",
             "clube": "Miramar",
@@ -370738,7 +370848,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 52,
+            "pos": 63,
             "fed": "46311",
             "nome": "Tomás Rente",
             "clube": "Miramar",
@@ -370748,7 +370858,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 53,
+            "pos": 64,
             "fed": "48046",
             "nome": "Tomás Sarmento de Beires",
             "clube": "Citynorte",
@@ -370759,9 +370869,548 @@
           }
         ],
         "_liveUpdatedAt": null,
-        "_source": "cgm.pt (scrape manual 2026-08-15, inscrições fechadas)"
+        "_source": "cgm.pt (scrape manual 2026-08-17: inscrições fechadas + draw D1 publicado)"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "VIII Miramar Internacional Open U25",
+          "date": "2026-08-19",
+          "totalJogadores": 64,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gaspard Maes",
+                  "fed": "51074",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "João Setúbal",
+                  "fed": "43732",
+                  "clube": "Quinta do Peru",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Nicolas Rebossio Insua",
+                  "fed": "50594",
+                  "clube": "Amendoeira",
+                  "tee": "Brancas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:08",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Tomás Afonso Araujo",
+                  "fed": "35849",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Rodrigo San Martín Nogueira",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Francisco Nunes (jr)",
+                  "fed": "46299",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:16",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Jorge Barbosa",
+                  "fed": "38718",
+                  "clube": "Braga",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Marlon Neto-Bradley",
+                  "fed": "26974",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Diego Gross",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:24",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "fed": "40981",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "João Rocha",
+                  "fed": "48297",
+                  "clube": "Estoril",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Laura Santos",
+                  "fed": "45393",
+                  "clube": "PXO Clube",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:32",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Martim Sousa de Morais",
+                  "fed": "41609",
+                  "clube": "Belas",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "fed": "39097",
+                  "clube": "Oporto",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "João Balixa",
+                  "fed": "46038",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Afonso Silva Pinto",
+                  "fed": "46309",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Diana Fraile Herrero",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Mateo González Carrascosa Benítez",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:48",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gabriel Marques Guerreiro",
+                  "fed": "43053",
+                  "clube": "Estela",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "fed": "48705",
+                  "clube": "Oporto",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Juan Pablo Calvar Fernández",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Brancas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:56",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "João Santos",
+                  "fed": "40645",
+                  "clube": "PXO Clube",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Manuel Calvar Fernández",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Raul Pazos (jr)",
+                  "fed": "46296",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:04",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Camila Pazos",
+                  "fed": "46297",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "fed": "46480",
+                  "clube": "Oporto",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "fed": "52884",
+                  "clube": "Santo da Serra",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "fed": "52487",
+                  "clube": "Oporto",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Henrique Pereira",
+                  "fed": "53646",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Tomás Rente",
+                  "fed": "46311",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Francisco Vilardell Carvalho",
+                  "fed": "52856",
+                  "clube": "Vale Pisão",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Margarida Silva Pinto",
+                  "fed": "46310",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "fed": "48046",
+                  "clube": "Citynorte",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:28",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Francisco Costa Mendes",
+                  "fed": "40318",
+                  "clube": "Citynorte",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Diogo Marques Lopes",
+                  "fed": "35874",
+                  "clube": "Citynorte",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "fed": "47341",
+                  "clube": "Oporto",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:36",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "António Maria Cavalinhos",
+                  "fed": "40992",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Maria Cunha",
+                  "fed": "46482",
+                  "clube": "Palheiro",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "fed": "40473",
+                  "clube": "Estela",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "fed": "47819",
+                  "clube": "Citynorte",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Marcos Casquero Gonzalez",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Ricardo Rocha Ferreira",
+                  "fed": "51180",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:08",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Gonçalo Maia",
+                  "fed": "46395",
+                  "clube": "Oporto",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Pedro Alexander Mouriño Abal",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "fed": "56632",
+                  "clube": "Oporto",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:16",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Ofelia González Carrascosa Beníte Beníte",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": "52168",
+                  "clube": "Citynorte",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Miguel Nunes",
+                  "fed": "48052",
+                  "clube": "Ilha Terceira",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:24",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "João Pedro Quadros",
+                  "fed": "45009",
+                  "clube": "Ilha Terceira",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "José Maria Pereira",
+                  "fed": "53645",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "fed": "51182",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:32",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Guido Martins Gonçalves",
+                  "fed": "46414",
+                  "clube": "Quinta Lágrimas",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "fed": "45366",
+                  "clube": "Oporto",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Mar Parejo Galindo",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:40",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Dinis Seabra",
+                  "fed": "44821",
+                  "clube": "Oporto",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Afonso Sousa",
+                  "fed": "55301",
+                  "clube": "Ilha Terceira",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Maksim Mutalapov",
+                  "fed": "54475",
+                  "clube": "Oporto",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:48",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Martim Duarte",
+                  "fed": "53696",
+                  "clube": "Ilha Terceira",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Gil Martins Gonçalves",
+                  "fed": "46415",
+                  "clube": "Quinta Lágrimas",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "João Couto",
+                  "fed": "55914",
+                  "clube": "Braga",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:56",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Nuno Bessa",
+                  "fed": "47003",
+                  "clube": "Vale Pisão",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "fed": "57884",
+                  "clube": "Miramar",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Martim Costa",
+                  "fed": "44891",
+                  "clube": "Ilha Terceira",
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Maria Marin Fernandez",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Vermelhas"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "003",
@@ -370770,12 +371419,12 @@
       "date": "2026-08-19",
       "campo": "Miramar",
       "_manual": true,
-      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.",
+      "_note": "Torneio FUTURO manual 2026-07-24 a partir de https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/ (pagina do clube, nao FPG). Escalao Sub-10, competicao SEPARADA do U25 (jogam 9 buracos/dia, 27 no total; os outros escaloes 18/dia). tcode 90004 = placeholder sintetico; edicao anterior Sub10 = 003/10565. Tee = Roxas (regulamento, calculado por src/utils/teeRegulation.ts). HCP de federados.json. dataInscricao = data do snapshot cgm.pt. Atualizado 2026-07-31: 10 inscritos. +Artur Von Hafe 58024 (RIO), +Gastão Thomaz Medeiros 59252 (Santo da Serra), +Henrique Monção 51176 (Miramar), +Rafael Paço 56641 (Oporto) vs snapshot de 6; nenhum saiu. Atualizado 2026-08-04: 11 inscritos. +Bruno Neto Lichuck 53685 (Miramar) vs snapshot de 10; nenhum saiu. Atualizado 2026-08-04 (2): 13 inscritos. +Miguel Freitas 56604, +Vicente Henrique Rocha 59154 (Ilha Terceira) vs 11.\n2026-08-15 (final): inscrições FECHADAS — 13 confirmados, sem alterações face ao snapshot de 2026-08-04. Reconfirmado a 2026-08-17: lista idêntica.\n2026-08-17: inscrições FECHADAS e draw da ronda 1 publicado no cgm.pt. 15 inscritos (12 federados FPG + 3 internacionais sem nº, gravados com fed:null). 5 flights, todos a sair do buraco 1, de 15:30 a 16:10. 0 flights juntam marcações diferentes, por isso o tee fica por JOGADOR e o do grupo só é preenchido quando é uniforme. ATENÇÃO: os internacionais não têm escalão nem sexo no federados.json, logo a MIRAMAR_U25_TEE_RULE não os consegue calcular — para esses o tee do draw é a única fonte. O Sub-10 joga à tarde, 9 buracos/dia.",
       "admissions": {
         "name": "VIII Miramar Internacional Open U25 - Sub 10",
         "date": "2026-08-19",
         "status": "Inscrições fechadas",
-        "totalInscritos": 13,
+        "totalInscritos": 15,
         "reservas": 0,
         "players": [
           {
@@ -370830,6 +371479,16 @@
           },
           {
             "pos": 6,
+            "fed": null,
+            "nome": "Guillermo Parejo Galindo",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
             "fed": "51176",
             "nome": "Henrique Monção",
             "clube": "Miramar",
@@ -370839,7 +371498,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 7,
+            "pos": 8,
             "fed": "54330",
             "nome": "Lucas Pereira Amorim",
             "clube": "Oporto",
@@ -370849,7 +371508,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 8,
+            "pos": 9,
             "fed": "52815",
             "nome": "Manuel Dias",
             "clube": "Braga",
@@ -370859,7 +371518,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 9,
+            "pos": 10,
+            "fed": null,
+            "nome": "Mario Valiente Novella",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
             "fed": "56604",
             "nome": "Miguel Freitas",
             "clube": "Ilha Terceira",
@@ -370869,7 +371538,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 10,
+            "pos": 12,
             "fed": "58864",
             "nome": "Mikhail Khontulev",
             "clube": "Estoril",
@@ -370879,7 +371548,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 11,
+            "pos": 13,
             "fed": "56641",
             "nome": "Rafael Paço",
             "clube": "Oporto",
@@ -370889,17 +371558,27 @@
             "status": "confirmed"
           },
           {
-            "pos": 12,
+            "pos": 14,
+            "fed": null,
+            "nome": "Ruben Valiente Novella",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": "2026/08/15 00:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
             "fed": "58549",
             "nome": "Tom Georges",
             "clube": "Miramar",
             "hcp": 40.2,
             "vac": null,
             "dataInscricao": "2026/07/24 12:00",
-            "status": "confirmed"
+            "status": "desistente"
           },
           {
-            "pos": 13,
+            "pos": 15,
             "fed": "59154",
             "nome": "Vicente Henrique Rocha",
             "clube": "Ilha Terceira",
@@ -370910,9 +371589,142 @@
           }
         ],
         "_liveUpdatedAt": null,
-        "_source": "cgm.pt (scrape manual 2026-08-15, inscrições fechadas)"
+        "_source": "cgm.pt (scrape manual 2026-08-17: inscrições fechadas + draw D1 publicado)"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "VIII Miramar Internacional Open U25 - Sub 10",
+          "date": "2026-08-19",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "15:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "fed": "54330",
+                  "clube": "Oporto",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Manuel Dias",
+                  "fed": "52815",
+                  "clube": "Braga",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Mario Valiente Novella",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Lopes",
+                  "fed": "52713",
+                  "clube": "Vale Pisão",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": "58864",
+                  "clube": "Estoril",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Guillermo Parejo Galindo",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Ruben Valiente Novella",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Rafael Paço",
+                  "fed": "56641",
+                  "clube": "Oporto",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Vicente Henrique Rocha",
+                  "fed": "59154",
+                  "clube": "Ilha Terceira",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "fed": "53685",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Henrique Monção",
+                  "fed": "51176",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "fed": "51980",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Miguel Freitas",
+                  "fed": "56604",
+                  "clube": "Ilha Terceira",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Artur Von Hafe",
+                  "fed": "58024",
+                  "clube": "RIO",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Gastão Thomaz Medeiros",
+                  "fed": "59252",
+                  "clube": "Santo da Serra",
+                  "tee": "Roxas"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
