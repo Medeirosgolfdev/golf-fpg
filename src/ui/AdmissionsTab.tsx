@@ -160,6 +160,10 @@ export default function AdmissionsTab({
         <TournPName
           name={p._nomeFormatted || "–"}
           fed={p.fed || undefined}
+          // Internacionais: id do agregador vindo da licenca federativa. O
+          // match por nome falha aqui — o clube publica "Diego Gross", o
+          // agregador tem "Diego Gross Paneque".
+          juniorId={(p as any)._rfeg?.juniorId}
           playersDB={playersDB}
           highlight={manuel}
         />

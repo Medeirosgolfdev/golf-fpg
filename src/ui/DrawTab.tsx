@@ -507,6 +507,7 @@ export default function DrawTab({
             <TournPName
               name={p.nome}
               fed={p.fed || undefined}
+              juniorId={(p as any)._rfeg?.juniorId}
               playersDB={p.noFed ? undefined : playersDB}
               highlight={manuel}
             />

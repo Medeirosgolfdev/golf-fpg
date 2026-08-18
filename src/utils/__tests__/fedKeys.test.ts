@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isVirtualFed, displayFed } from "../fedKeys";
+import { isVirtualFed, displayFed, kidsHref } from "../fedKeys";
 
 describe("isVirtualFed", () => {
   it("reconhece as chaves criadas a partir do nome", () => {
@@ -32,5 +32,20 @@ describe("displayFed", () => {
   it("devolve null quando não há federado", () => {
     expect(displayFed(null)).toBeNull();
     expect(displayFed("")).toBeNull();
+  });
+});
+
+describe("kidsHref", () => {
+  it("prefere o id do agregador — a rota que o utilizador conhece", () => {
+    expect(kidsHref("rAM15976580", "diego%20gross")).toBe("/kids2/rAM15976580");
+  });
+
+  it("cai no hash por nome quando não há id", () => {
+    expect(kidsHref(null, "Joe%20Short")).toBe("/kids2#Joe%20Short");
+  });
+
+  it("sem nenhum dos dois não há link", () => {
+    expect(kidsHref(null, null)).toBeNull();
+    expect(kidsHref(undefined, undefined)).toBeNull();
   });
 });
