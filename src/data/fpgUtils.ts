@@ -200,11 +200,15 @@ export function resolveEsc(
 ): string {
   const fed = p.fedCode || (p as any).fed;
   // 1) Cálculo dob + data do torneio (verdade matemática, year-based).
-  //    Dob: playersDB (curado) → federados.json (base completa FPG).
-  if (opts?.tournamentDate && fed) {
+  //    Dob: playersDB (curado) → federados.json (base FPG) → ficha RFEG.
+  //    A condição NÃO exige `fed`: quem não tem federado português (os
+  //    inscritos como "Internacional") ficava fora deste ramo e caía até ao
+  //    fim da função sem escalão. A ficha `_rfeg` — anexada por
+  //    scripts/enrich-intl-players.js — é a única fonte de dob que eles têm.
+  if (opts?.tournamentDate) {
     const dob: string | undefined =
-      (opts.playersDB?.[fed] as any)?.dob ||
-      opts.fedBirthdates?.get(fed);
+      (fed ? ((opts.playersDB?.[fed] as any)?.dob || opts.fedBirthdates?.get(fed)) : undefined) ||
+      ((p as any)._rfeg?.dob as string | undefined);
     if (dob) {
       const calc = escalaoAtDate(dob, opts.tournamentDate);
       if (calc) return calc;
