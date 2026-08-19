@@ -368,8 +368,12 @@ export default function DrawTab({
         const currentHcp = snapshotHcp == null && fed ? (fedHcp.get(fed) ?? null) : null;
         const hcp: number | null = snapshotHcp ?? currentHcp;
         const hcpCurrent = snapshotHcp == null && currentHcp != null;
-        // Dob: playersDB (curado) → federados.json (base FPG) → undefined
-        const dob: string | undefined = bd?.dob || (fed ? fedBirthdates.get(fed) : undefined);
+        // Dob: playersDB (curado) → federados.json (base FPG) → ficha RFEG.
+        // A RFEG entra por ultimo mas e a UNICA fonte para quem nao tem
+        // federado portugues: sem ela os internacionais ficavam sem escalao,
+        // apesar de a data de nascimento estar gravada em _rfeg.
+        const dob: string | undefined =
+          bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
         // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
         // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,

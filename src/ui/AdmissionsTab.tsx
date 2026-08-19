@@ -68,7 +68,11 @@ export default function AdmissionsTab({
     const bd = p.fed && playersDB ? (playersDB[p.fed] as any) : undefined;
     const nomeFormatted = formatPlayerName(p.nome || "");
     // Dob: override do jogador (NextCaddy) → playersDB (curado) → federados.json (FPG)
-    const dob: string | undefined = p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined);
+    // A ficha RFEG (_rfeg) entra por ultimo, mas e a unica fonte de dob/sexo
+    // para quem nao tem federado portugues — sem ela os internacionais ficam
+    // sem escalao e sem marcacao calculada pelo regulamento.
+    const dob: string | undefined =
+      p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob;
     const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
     let clube = p.clube;
     if (!clube && bd) {
@@ -85,6 +89,7 @@ export default function AdmissionsTab({
       ((p as any).sex as "M" | "F" | undefined) ||
       (bd?.sex as "M" | "F" | undefined) ||
       (p.fed ? fedGenders.get(p.fed) : undefined) ||
+      ((p as any)._rfeg?.sex as "M" | "F" | undefined) ||
       tournamentSex;
     const ruleTee = teeRule ? teeRule(parseSubNumber(escHist), sex) : undefined;
     return {
