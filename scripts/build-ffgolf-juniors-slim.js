@@ -25,35 +25,47 @@ function ageGroupOf(label) {
   if (/U\s?10(?!\d)/.test(u) || /POUSSIN/.test(u) || /^POU[FG]?$/.test(u) || /\b10 ANS/.test(u)) return "U10";
   if (/U\s?1[12](?!\d)/.test(u) || /BENJ|BNJ/.test(u) || /^B[FG]$/.test(u) || /\b12 ANS/.test(u)) return "U12";  // Benjamins ≈ U11-U12
   if (/U\s?1[34](?!\d)/.test(u) || /MINIM|MININM/.test(u) || /^M[FG]$/.test(u) || /\b14 ANS/.test(u)) return "U14";  // Minimes ≈ U13-U14
+  if (/U\s?1[56](?!\d)/.test(u) || /CADET/.test(u) || /^C[FG]$/.test(u) || /\b16 ANS/.test(u)) return "U16";  // Cadets ≈ U15-U16
+  if (/U\s?1[78](?!\d)/.test(u) || /\b18 ANS/.test(u)) return "U18";
   return null;
 }
 
-/** Fallback: extrair escalão do nome do torneio quando a label da série
- *  é genérica (ex.: "Simple Stroke play"). Aplica-se a torneios como
- *  "Internationaux U14", "Championnat de France U12", "GP Jeunes U10/U12", etc. */
+/** Fallback: extrair escalão do nome do torneio quando a label da série é
+ *  genérica ("Simple Stroke play", "Messieurs"). Aplica-se a "Internationaux
+ *  U14", "2e Division B U16 Garçons", "Championnat WAGR U18", etc. */
 function ageGroupFromTournName(name) {
   const u = (name || "").toUpperCase();
   if (/\bU10\b/.test(u)) return "U10";
   if (/\bU12\b/.test(u)) return "U12";
   if (/\bU14\b/.test(u)) return "U14";
+  if (/\bU1[56]\b/.test(u)) return "U16";
+  if (/\bU1[78]\b/.test(u)) return "U18";
   if (/BENJAMIN/.test(u)) return "U12";
   if (/MINIME/.test(u)) return "U14";
+  if (/CADET/.test(u)) return "U16";
   return null;
 }
 
-function ageMin(ag) { return ag === "U10" ? 8 : ag === "U12" ? 11 : 13; }
-function ageMax(ag) { return ag === "U10" ? 10 : ag === "U12" ? 12 : 14; }
+const AGE_BOUNDS = { U10: [8, 10], U12: [11, 12], U14: [13, 14], U16: [15, 16], U18: [17, 18] };
+function ageMin(ag) { return AGE_BOUNDS[ag] ? AGE_BOUNDS[ag][0] : null; }
+function ageMax(ag) { return AGE_BOUNDS[ag] ? AGE_BOUNDS[ag][1] : null; }
 
-// Filtro de relevância etária: só mantemos torneios cujos kids tenham hoje
-// no máximo MAX_AGE_TODAY anos (Manuel tem 12 — kids >15 hoje já não competem
-// com ele, podem voltar quando ele for mais velho).
-const TODAY_YEAR = new Date().getFullYear();
-const MAX_AGE_TODAY = 15;
-function minTournYearForAge(ag) {
-  // (today - tournYear) + ageMax(ag) <= MAX_AGE_TODAY
-  // → tournYear >= today - MAX_AGE_TODAY + ageMax(ag)
-  return TODAY_YEAR - MAX_AGE_TODAY + ageMax(ag);
-}
+// ⚠ NÃO filtrar pelo escalão da PROVA (2026-08-19). Tudo o que o
+// scrape-ffgolf-all-jeunes.js traz já é juvenil (GP Jeunes + Championnats +
+// Divisions/Promotions U16 + Internationaux + Evian Juniors Cup), por isso
+// qualquer série do corpus pertence aqui.
+//
+// A versão anterior só deixava passar U10/U12/U14 e ainda cortava provas cujos
+// miúdos "já teriam >15 hoje" (MAX_AGE_TODAY). Confundia a idade do JOGADOR com
+// o escalão da PROVA: um miúdo pode inscrever-se acima do escalão dele (nunca
+// abaixo), e era exactamente esse o caso que se perdia — o Ricardo
+// Castro-Ferreira (PT, fed 49085, n. 2015) jogou a "2e Division B U16 Garçons"
+// de 2026 com 11 anos e a prova nunca chegava ao kids2. Medido antes do fix:
+// 212 provas >=2022 fora do slim, com 12129 participacoes de 2572 juniores que
+// JA eram entidades canonicas do agregador.
+//
+// Séries sem sinal de escalão ficam com ageGroup/ageMin/ageMax null — escalão
+// desconhecido, não "excluído".
 
 function dateIso(dDate) {
   // "DD/MM/YYYY" → "YYYY-MM-DD"
@@ -99,10 +111,8 @@ for (const t of tournaments) {
   const tournNameAg = ageGroupFromTournName(t.name || "");
   for (const s of series) {
     const label = (s.label || "").trim();
+    // null = escalao desconhecido - a serie entra na mesma (ver nota acima)
     const ag = ageGroupOf(label) || tournNameAg;
-    if (!ag) continue;
-    // Filtrar séries cujos kids já passaram a idade Manuel-relevante
-    if ((t.year || 0) < minTournYearForAge(ag)) continue;
 
     const players = [];
     for (const p of (s.players || [])) {

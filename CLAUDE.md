@@ -239,7 +239,7 @@ Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scra
 `scripts/aggregator/index.js` orquestra os adapters de `scripts/aggregator/sources/`
 e escreve `public/data/{juniors,juniors-tournaments*,tournament-catalog}.json`
 (consumidos pelo `KIDS2Page`). Corre no `build-juniors.yml` (push nos paths de
-input + workflow_dispatch). ~14.2k juniores / ~20.5k torneios.
+input + workflow_dispatch). ~30.2k juniores / ~20.8k torneios.
 
 ### Fontes (11 adapters)
 
@@ -259,6 +259,19 @@ input + workflow_dispatch). ~14.2k juniores / ~20.5k torneios.
 seria 2 entidades "fortes" da mesma fonte e o identity-matcher RECUSA o merge
 (invariante de 1 chave forte por fonte). Como fonte fraca separada, funde por
 nome+DOB.
+
+⚠ **O slim FFG não filtra pelo escalão da PROVA** (corrigido 2026-08-19). O
+`build-ffgolf-juniors-slim.js` só deixava passar séries U10/U12/U14 e ainda
+cortava provas cujos miúdos "já teriam >15 hoje" (`MAX_AGE_TODAY`) — confundia a
+idade do JOGADOR com o escalão da PROVA. Um miúdo pode inscrever-se acima do
+escalão dele (nunca abaixo): o Ricardo Castro-Ferreira (PT, fed 49085, n. 2015)
+jogou a "2e Division B U16 Garçons" de 2026 com 11 anos e a prova nunca chegava
+ao kids2. Como o corpus do `scrape-ffgolf-all-jeunes.js` já é 100% juvenil, o
+slim guarda agora TODAS as séries (escalões U10→U18 + `ageGroup: null` quando
+desconhecido): 1129 → 2034 séries, 6,4 → 11,7 MB, +12.1k participações de 2.6k
+juniores que já eram entidades canónicas. **Regra:** se o jogador já existe no
+corpus, todos os resultados dele devem entrar — filtra-se pela idade do miúdo,
+nunca pelo nome do escalão da prova.
 
 ### Regras do identity-matcher que os adapters têm de respeitar
 
