@@ -1,0 +1,125 @@
+name: Scrape Miramar 2026 (resultados)
+
+# Re-scrapa os resultados do Miramar Internacional Open U25 2026 (ccode 003)
+# a PEDIDO — para correr durante a prova (19-21 Ago 2026) quando cada ronda
+# acaba. Escreve os ficheiros standalone que a FPGPage carrega via
+# EXTRA_TOURN_FILES:
+#   public/data/torneio-003-10652.json  (U25, Sub12→Sub25 — 54 buracos)
+#   public/data/torneio-003-10653.json  (Sub-10 — 27 buracos)
+#
+# Fonte: scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=NNNNN
+# via scripts/scrape-classif-node.js (Node puro, warmup linkpage + ClassifLST
+# + ScoreCard). Merge ADITIVO: re-correr a meio de uma ronda nunca apaga
+# buracos já guardados; posição/total/±par vêm sempre do scrape novo.
+#
+# Só faz commit se algum ficheiro mudou (ex: R2 acabou → novos totais).
+#
+# Requer GitHub Secret: DATAGOLF_SCORING_COOKIES (cookie header de
+# scoring.datagolf.pt — os mesmos do update-classif/update-drive).
+on:
+  workflow_dispatch:
+    inputs:
+      tcodes:
+        description: 'tcodes a scrapar (CSV). Default = U25 + Sub-10.'
+        required: false
+        default: '10652,10653'
+      ccode:
+        description: 'ccode do clube.'
+        required: false
+        default: '003'
+      force_commit:
+        description: 'Commit mesmo sem mudanças?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-miramar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrapar cada tcode para o seu ficheiro standalone
+        id: scrape
+        run: |
+          set +e
+          CCODE="${{ github.event.inputs.ccode || '003' }}"
+          TCODES="${{ github.event.inputs.tcodes || '10652,10653' }}"
+          ANY_OK=0
+          ANY_ERR=0
+          IFS=',' read -ra ARR <<< "$TCODES"
+          for TC in "${ARR[@]}"; do
+            TC="$(echo "$TC" | tr -d '[:space:]')"
+            [ -z "$TC" ] && continue
+            OUT="public/data/torneio-${CCODE}-${TC}.json"
+            echo "── Scrape ${CCODE}/${TC} → ${OUT}"
+            node scripts/scrape-classif-node.js --tclub "$CCODE" --tcode "$TC" --out "$OUT"
+            EC=$?
+            echo "  exit=$EC"
+            if [ "$EC" = "1" ]; then ANY_ERR=1; fi
+            if [ "$EC" = "0" ]; then ANY_OK=1; fi
+          done
+          echo "any_ok=$ANY_OK" >> $GITHUB_OUTPUT
+          if [ "$ANY_ERR" = "1" ] && [ "$ANY_OK" = "0" ]; then
+            echo "❌ Todos os scrapes falharam"
+            exit 1
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      - name: Validar ficheiros
+        run: |
+          CCODE="${{ github.event.inputs.ccode || '003' }}"
+          TCODES="${{ github.event.inputs.tcodes || '10652,10653' }}"
+          FILES=""
+          IFS=',' read -ra ARR <<< "$TCODES"
+          for TC in "${ARR[@]}"; do
+            TC="$(echo "$TC" | tr -d '[:space:]')"
+            [ -z "$TC" ] && continue
+            F="public/data/torneio-${CCODE}-${TC}.json"
+            [ -f "$F" ] && FILES="$FILES $F"
+          done
+          [ -n "$FILES" ] && node scripts/validate-data.js $FILES || echo "Sem ficheiros para validar"
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/torneio-*.json
+
+          if git diff --staged --quiet && [ "${{ github.event.inputs.force_commit }}" != "true" ]; then
+            echo "Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: Miramar 2026 resultados ${DATE}" || { echo "Nada para commitar"; exit 0; }
+
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
+            if git push; then echo "✓ push ok"; exit 0; fi
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          echo "❌ Push falhou após 5 tentativas"
+          exit 1
