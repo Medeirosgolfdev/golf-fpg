@@ -226,6 +226,13 @@ async function fetchClassif(tclub, tcode, round) {
   return { records: allRecords, error: null };
 }
 
+/** Par do campo, tirado de qualquer jogador da prova que o traga.
+ *  O par nao varia entre jogadores — so falta em quem nao e federado FPG. */
+function parDoTorneio(t) {
+  for (const p of (t.players || [])) if (typeof p.parTotal === "number") return p.parTotal;
+  return null;
+}
+
 /* ── Scorecards ─────────────────────────────────────────────────────────── */
 async function fetchScorecard(scoreId, tclub, tcode, round) {
   const qs = `score_id=${scoreId}&tclub=${tclub}&tcode=${tcode}&scoringtype=1&classiftype=I&classifround=${round}`;
@@ -435,7 +442,13 @@ async function processOne(spec, idx, total) {
     if (nRounds > 1 && p.roundScores.length > 1) {
       const sumGross = p.roundScores.reduce((s, r) => s + (r.gross || 0), 0);
       p.grossTotal = sumGross;
-      p.toPar = sumGross - ((p.parTotal || 0) * p.roundScores.length);
+      // ⚠ `p.parTotal || 0` era um bug: os jogadores sem federado FPG vêm sem
+      // parTotal, o par virava 0 e o toPar ficava IGUAL ao gross — dai os
+      // "+220" ao lado dos "+4" nas tabelas. O par e do CAMPO, igual para
+      // todos, por isso usa-se o dos outros jogadores da mesma prova; se
+      // ninguem o tiver, toPar fica null (desconhecido), nunca o gross.
+      const parRonda = p.parTotal ?? parDoTorneio(t);
+      p.toPar = parRonda != null ? sumGross - parRonda * p.roundScores.length : null;
     }
     await sleep(DELAY_MS);
   }

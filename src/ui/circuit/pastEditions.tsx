@@ -132,7 +132,10 @@ export function buildPastEditionFromTournament(
     course: meta.course ?? t.campo ?? null,
     url: meta.url ?? null,
     nRounds: Math.max(1, ...players.map((p) => p.rounds.length)),
-    parPerRound: t.players[0]?.parTotal ?? null,
+    // Par da prova: o do PRIMEIRO jogador que o traga, nao o do primeiro da
+    // lista — os jogadores sem federado FPG vem sem parTotal, e se calhasse um
+    // deles em primeiro a edicao inteira ficava sem par.
+    parPerRound: t.players.find((p) => typeof p.parTotal === "number")?.parTotal ?? null,
     players,
   };
 }
