@@ -162,19 +162,16 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // Inscritos scraped MANUALMENTE das páginas do clube (cgm.pt), NÃO da FPG.
   // São DUAS competições distintas com páginas de inscrição separadas:
   //   • U25 (Sub12→Sub25) — 54 buracos (18/dia) — tcode REAL 10652
-  //   • Sub-10           — 27 buracos ( 9/dia) — placeholder tcode 90004
+  //   • Sub-10           — 27 buracos ( 9/dia) — tcode REAL 10653
   // O Sub-10 é separado de propósito (jogam só 9 buracos/dia), por isso NÃO
   // entra na lista do U25.
   //
-  // 2026-08-19: o tcode real do U25 apareceu no live scoring —
-  //   scoring.datagolf.pt/live-pt/Home/ls_classifDisplay?t=10652&c=003
-  // Substituído aqui, no teeRegulation.ts e no fpg-admissions-draws.json.
-  // ⚠ O tcode do Sub-10 continua DESCONHECIDO: sondei 10650/51/53/54/55 e
-  // nenhum responde como o 10652 — não vale a pena adivinhar. Fica 90004 até
-  // aparecer. Edições anteriores foram 10564 (U25) + 10565 (Sub10).
-  // ⚠ `live` fica false até a prova arrancar: a 19-08 de manhã o gate do live
-  // scoring ainda respondia "sem classificação" e a ClassifLST devolvia 0
-  // jogadores. Pôr a true quando houver resultados.
+  // 2026-08-19: os tcodes reais apareceram nas Classifications da FPG —
+  //   scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=10652 (U25)
+  //   scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=10653 (Sub-10)
+  // Substituídos aqui, no teeRegulation.ts e no fpg-admissions-draws.json.
+  // Resultados scraped à parte (torneio-003-10652/10653.json, EXTRA_TOURN_FILES
+  // na FPGPage). Edições anteriores foram 10564 (U25) + 10565 (Sub10).
   {
     ccode: "003",
     tcode: "10652",
@@ -191,7 +188,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   },
   {
     ccode: "003",
-    tcode: "90004",
+    tcode: "10653",
     name: "VIII Miramar Internacional Open U25 — Sub 10",
     escalao: "Sub 10",
     date: "2026-08-19",     // 19-21 Ago 2026, 27 buracos (9/dia)
@@ -201,6 +198,6 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
       { label: "página do torneio (CGM)", url: "https://www.cgm.pt/pt/miramar-internacional-open-u25-sub-10/", icon: "🏌️" },
       { label: "Termos de Competição PDF", url: "https://www.cgm.pt/client/files/0000000001/regulamento-mjo-2026_1461.pdf", icon: "📋" },
     ],
-    live: false,            // sem tcode FPG real — /api/inscricoes daria lixo
+    live: false,            // /api/inscricoes: a prova já decorre, resultados vêm do scrape
   },
 ];

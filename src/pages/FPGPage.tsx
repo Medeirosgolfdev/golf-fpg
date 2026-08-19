@@ -1101,6 +1101,11 @@ function Content() {
           // Camp. Nacional de Profissionais 2026 (ccode 912 / tcode 10225) —
           // scraped à parte porque não veio na numeração pull-torneios.
           "/data/torneio-912-10225.json",
+          // X Miramar Internacional Open U25 2026 (ccode 003) — U25 (10652) +
+          // Sub-10 (10653). Scraped à parte durante a prova (19-21 Ago); fundem
+          // com as entradas de inscrições/draw do fpg-admissions-draws por ccode-tcode.
+          "/data/torneio-003-10652.json",
+          "/data/torneio-003-10653.json",
         ];
         await Promise.all(EXTRA_TOURN_FILES.map(async (url) => {
           try {
@@ -1755,7 +1760,19 @@ function Content() {
     }
     for (const j of jovensTournaments) {
       const k = keyOf(j);
-      if (!dedupMap.has(k)) dedupMap.set(k, j);
+      const ex = dedupMap.get(k);
+      if (!ex) { dedupMap.set(k, j); continue; }
+      // O torneio já veio com resultados (pull-torneios/EXTRA_TOURN_FILES) mas o
+      // synthetic jovem traz as inscrições/draw do fpg-admissions-draws — enxertá-las
+      // na versão com resultados para não perder as tabs Inscrições/Draw (caso do
+      // Miramar U25/Sub-10 2026, cujos resultados foram scraped à parte durante a prova).
+      if ((!(ex as any)._admissions && (j as any)._admissions) || (!(ex as any)._draws && (j as any)._draws)) {
+        dedupMap.set(k, {
+          ...ex,
+          _admissions: (ex as any)._admissions ?? (j as any)._admissions,
+          _draws: (ex as any)._draws ?? (j as any)._draws,
+        } as Tournament);
+      }
     }
     // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
     // e os deep-links usam /drive/torneio/{ccode}-{tcode} (não /FPG/torneio/...).

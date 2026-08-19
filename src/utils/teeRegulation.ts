@@ -63,14 +63,12 @@ export const MIRAMAR_U25_TEE_RULE: TeeRule = (n, sex) => {
 /**
  * Registo de regras por torneio, chaveado por `{ccode}-{tcode}`.
  *
- * O U25 do Miramar já usa o tcode REAL (10652), descoberto no live scoring a
- * 2026-08-19. O do Sub-10 continua a ser o placeholder sintético `90004` —
- * quando aparecer, actualizar aqui EM CONJUNTO com featuredTournaments.ts,
- * fpg-admissions-draws.json e fpg-admissions-scope.json.
+ * O Miramar 2026 já usa os tcodes REAIS descobertos nas Classifications da FPG
+ * a 2026-08-19: U25 = 10652, Sub-10 = 10653.
  */
 const TEE_RULES_BY_TOURNAMENT: Record<string, TeeRule> = {
   "003-10652": MIRAMAR_U25_TEE_RULE, // U25 (Sub12→Sub25) — tcode real
-  "003-90004": MIRAMAR_U25_TEE_RULE, // Sub-10 (competição separada, 9 buracos/dia) → Roxas
+  "003-10653": MIRAMAR_U25_TEE_RULE, // Sub-10 (competição separada, 9 buracos/dia) → Roxas — tcode real
 };
 
 /** Resolve a regra de tees de um torneio (undefined = usar tabela genérica). */
