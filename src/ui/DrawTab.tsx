@@ -15,7 +15,6 @@ import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED, isManuelByName } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
-import { KidsLink } from "./KidsLink";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
@@ -27,6 +26,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
+import { displayFed } from "../utils/fedKeys";
 
 interface Props {
   draw: FpgDraw;
@@ -225,6 +225,7 @@ export default function DrawTab({
       startHole: number | null;
       tee: string | null;
       nome: string;
+      juniorId?: string;
       clube: string;
       fed: string | null;
       /** true = visitante sem federação FPG (draw curado) — proíbe lookups por nome. */
@@ -392,6 +393,10 @@ export default function DrawTab({
           nome: nomeFormatted,
           clube,
           fed,
+          // Id do agregador dos internacionais (_rfeg.juniorId, gravado no
+          // fpg-admissions-draws.json). Sem o copiar para aqui perdia-se: este
+          // objecto e construido de raiz, nao e um spread do original.
+          juniorId: ((p as any)._rfeg?.juniorId as string | undefined) ?? undefined,
           noFed,
           hcp,
           hcpCurrent,
@@ -507,7 +512,7 @@ export default function DrawTab({
             <TournPName
               name={p.nome}
               fed={p.fed || undefined}
-              juniorId={(p as any)._rfeg?.juniorId}
+              juniorId={p.juniorId}
               playersDB={p.noFed ? undefined : playersDB}
               highlight={manuel}
             />
@@ -515,7 +520,9 @@ export default function DrawTab({
                 Sem duplicação com a seta do próprio TournPName (kidsHash):
                 quem tem kidsHash no playersDB (FPGPage) NÃO fornece o ctx, e
                 quem fornece o ctx passa playersDB sem kidsHash. */}
-            {!p.noFed && <KidsLink nome={p.nome} />}
+            {/* A seta ↗ e desenhada pelo proprio TournPName, que agora tambem
+                consulta o KidsLinkCtx. Antes havia aqui um <KidsLink> irmao e
+                as duas apareciam na mesma linha. */}
           </span>
         ),
         prefixCells: (
@@ -531,7 +538,7 @@ export default function DrawTab({
                 {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
               </td>
             )}
-            {!hc.fed && <td className="lb-fed" style={bStyle}>{p.fed || "–"}</td>}
+            {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}
             {!hc.clube && <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>}
             {!hc.hcp && (
               <td className="lb-hcp" style={bStyle}

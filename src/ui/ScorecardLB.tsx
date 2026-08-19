@@ -31,6 +31,7 @@ import {
 import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { displayFed } from "../utils/fedKeys";
 
 /* PName — alias local */
 const PName = ({
@@ -558,7 +559,7 @@ export function ScorecardLB({
               })()}
             </td>
           )}
-          {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
+          {!hideFed && <td className="lb-fed">{displayFed(p.fedCode) || "–"}</td>}
           {!hideClub_ && (() => {
             // Em torneios internacionais (ex: Castro Marim U14), o "clube"
             // é frequentemente um código de país ISO-3 (FRA, ESP, SUI, EST,

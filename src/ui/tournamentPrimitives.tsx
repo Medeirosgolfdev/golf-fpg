@@ -29,6 +29,7 @@
  *   TournPName        — nome clicável do jogador com ícone M/F e estrela Manuel
  */
 
+import { useContext } from "react";
 import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
@@ -38,7 +39,7 @@ import { flag as flagOf } from "../utils/flagUtils";
 
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
-import { kidsHref } from "../utils/fedKeys";
+import { kidsUrl, KidsLinkCtx } from "./KidsLink";
 export { _MANUEL_FED as MANUEL_FED, isManuel };
 
 /* ─── Formatação to-par ─── */
@@ -205,7 +206,20 @@ export function TournPName({
   const country = directEntry?.country ?? candidates.find(e => e.country)?.country;
   const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;
 
-  const kidsLink = kidsHref(juniorId, kidsHash);
+  // ── Seta ↗ para /kids2: UMA so, resolvida aqui ──────────────────────────
+  // Tres origens, por ordem de fiabilidade:
+  //   1. juniorId  — id do agregador ("r"+licenca federativa). Deterministico.
+  //   2. kidsHash  — do playersDB (entradas virtuais kids:/intl: por NOME).
+  //   3. KidsLinkCtx — mapa por nome fornecido pelas paginas de circuito.
+  // A (3) estava a ser desenhada por um <KidsLink> IRMAO nos chamadores, o que
+  // punha DUAS setas na mesma linha quando (2) e (3) resolviam ambas. Passa a
+  // ser resolvida aqui, para haver sempre exactamente uma.
+  const ctxEntry = useContext(KidsLinkCtx).get(normNameLocal(name));
+  const kidsLink =
+    juniorId ? kidsUrl({ id: juniorId })
+    : kidsHash ? `/kids2#${kidsHash}`   // ja vem codificado pelo FPGPage
+    : ctxEntry ? kidsUrl({ id: ctxEntry.id, memberId: ctxEntry.memberId, name: ctxEntry.n })
+    : null;
 
   const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
   const inner = (

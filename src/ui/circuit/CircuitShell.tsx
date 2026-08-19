@@ -44,6 +44,7 @@ import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
 import { monthLabel } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
+import { displayFed } from "../../utils/fedKeys";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
   CircuitSectionKind, CircuitInscritoRow, CircuitDrawGroup,
@@ -350,7 +351,7 @@ function InscritosTable({ rows, dateRef }: { rows: CircuitInscritoRow[]; dateRef
       prefixCells: (
         <>
           {showEsc && <td className="lb-esc">{p.escalao ? <EscPill esc={p.escalao} /> : <span className="muted">–</span>}</td>}
-          {showFed && <td className="lb-fed">{p.fed || "–"}</td>}
+          {showFed && <td className="lb-fed">{displayFed(p.fed) || "–"}</td>}
           {showClub && <td className="lb-club" title={p.club || ""} style={{ textAlign: "left" }}>{p.club || "–"}</td>}
           {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>}
           {showDob && (() => {

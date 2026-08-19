@@ -55,6 +55,7 @@ import {
 } from "./tournamentPrimitives";
 import { toggleArr } from "../utils/mathUtils";
 import { EscPill, ESC_STYLE } from "../ui/PillBadge";
+import { displayFed } from "../utils/fedKeys";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS PÚBLICOS
@@ -640,7 +641,7 @@ export function MultiRoundLeaderboard({
                       )}
                     </>;
                   })()}
-                  {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
+                  {showFed && <td className="lb-fed">{displayFed(row.fed) || "–"}</td>}
                   {showClub && (() => {
                     // Em torneios internacionais o "clube" é frequentemente
                     // um código ISO-3 (FRA, ESP, SUI, EST). Mostrar bandeira

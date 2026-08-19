@@ -33,25 +33,3 @@ export function displayFed(fed: string | null | undefined): string | null {
   if (!fed || isVirtualFed(fed)) return null;
   return fed;
 }
-
-/**
- * Destino do link ↗ "Ver em Kids".
- *
- * Duas formas, por ordem de fiabilidade:
- *
- *   1. `juniorId` — id do agregador de juniores (`"r" + licença federativa`).
- *      Determinístico: vem da licença, não do nome. Rota `/kids2/:juniorId`.
- *   2. `kidsHash` — resolvido por NOME via kids-tracked-names.json. Falha
- *      sempre que a fonte escreve o nome de outra maneira: o cgm.pt publica
- *      "Diego Gross", o agregador tem "Diego Gross Paneque". Rota por hash.
- *
- * Preferir sempre o id quando existe.
- */
-export function kidsHref(
-  juniorId?: string | null,
-  kidsHash?: string | null,
-): string | null {
-  if (juniorId) return `/kids2/${juniorId}`;
-  if (kidsHash) return `/kids2#${kidsHash}`;
-  return null;
-}
