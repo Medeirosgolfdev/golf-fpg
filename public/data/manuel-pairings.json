@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-08-16T20:14:00.872Z",
+  "geradoEm": "2026-08-19T21:46:50.396Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 146,
-  "totalCompanheirosUnicos": 178,
+  "totalRondas": 147,
+  "totalCompanheirosUnicos": 179,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 128,
-      "rondasComDraw": 114,
+      "rondasComDraw": 115,
       "torneiosJogados": 96,
-      "torneiosComDraw": 90,
+      "torneiosComDraw": 91,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "920-10088",
@@ -627,6 +627,42 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "003-10652",
+      "torneioNome": "VIII Miramar Internacional Open U25",
+      "data": "2026-08-19",
+      "ronda": 1,
+      "teeTime": "09:04",
+      "startHole": 1,
+      "campo": "Miramar",
+      "manuelScore": {
+        "gross": 72,
+        "toPar": 2
+      },
+      "companheiros": [
+        {
+          "nome": "Camila Pazos",
+          "fed": "46297",
+          "clube": "Miramar",
+          "pais": null,
+          "score": {
+            "gross": 75,
+            "toPar": 5
+          }
+        },
+        {
+          "nome": "Afonso Pinto",
+          "fed": "46480",
+          "clube": "Oporto",
+          "pais": null,
+          "score": {
+            "gross": 77,
+            "toPar": 7
+          }
+        }
+      ]
+    },
     {
       "circuito": "USKids",
       "torneioId": "usk-22243",

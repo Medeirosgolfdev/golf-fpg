@@ -33,6 +33,18 @@ function readJSON(p) {
 function listFiles(prefix) {
   return fs.readdirSync(DATA).filter(f => f.startsWith(prefix) && f.endsWith(".json")).map(f => path.join(DATA, f));
 }
+// Ficheiros com scores FPG (formato "fpg-pull": {tournaments:[{ccode,tcode,players}]}).
+// Inclui os standalone `torneio-{ccode}-{tcode}.json` — torneios scrapados a parte,
+// fora da numeracao pull-torneios (os mesmos que a FPGPage carrega em
+// EXTRA_TOURN_FILES). Sem eles, os draws desses torneios ficavam sem scores
+// (manuelScore/companheiros a null) no manuel-pairings.json.
+function listFpgScoreFiles() {
+  return [
+    ...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
+    ...listFiles("jovens_"), ...listFiles("clubes_"),
+    ...fs.readdirSync(DATA).filter(f => /^torneio-\d+-\d+\.json$/.test(f)).map(f => path.join(DATA, f)),
+  ];
+}
 function normName(s) {
   if (!s) return "";
   return String(s).normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/\s+/g, " ").trim();
@@ -58,8 +70,7 @@ function normIsoDate(s) {
 
 function buildFpgScoreIndex() {
   const idx = new Map();
-  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
-                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
+  for (const f of listFpgScoreFiles()) {
     const j = readJSON(f);
     if (!j || !Array.isArray(j.tournaments)) continue;
     for (const t of j.tournaments) {
@@ -84,8 +95,7 @@ function buildFpgScoreIndex() {
 // sem fed/dob para confirmar identidade.
 function buildFpgScoreIndexByName() {
   const idx = new Map();
-  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
-                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
+  for (const f of listFpgScoreFiles()) {
     const j = readJSON(f);
     if (!j || !Array.isArray(j.tournaments)) continue;
     for (const t of j.tournaments) {
@@ -117,8 +127,7 @@ function buildFpgClubeIndex(fpg) {
       if (fed && !idx.has(fed) && p.clube) idx.set(fed, String(p.clube).trim());
     }
   }
-  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
-                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
+  for (const f of listFpgScoreFiles()) {
     const j = readJSON(f);
     if (!j || !Array.isArray(j.tournaments)) continue;
     for (const t of j.tournaments) for (const p of t.players || []) {
