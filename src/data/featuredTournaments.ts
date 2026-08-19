@@ -161,18 +161,23 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // ── VIII Miramar Internacional Open U25 — 19-21 Ago 2026 (CGM, ccode 003) ──
   // Inscritos scraped MANUALMENTE das páginas do clube (cgm.pt), NÃO da FPG.
   // São DUAS competições distintas com páginas de inscrição separadas:
-  //   • U25 (Sub12→Sub25) — 54 buracos (18/dia) — placeholder tcode 90003
+  //   • U25 (Sub12→Sub25) — 54 buracos (18/dia) — tcode REAL 10652
   //   • Sub-10           — 27 buracos ( 9/dia) — placeholder tcode 90004
   // O Sub-10 é separado de propósito (jogam só 9 buracos/dia), por isso NÃO
-  // entra na lista do U25. Os tcodes reais das Classifications (ccode=003)
-  // ainda NÃO são conhecidos — edições anteriores: 10564 (U25) + 10565 (Sub10).
-  // "9000x" são placeholders sintéticos (entradas _manual no
-  // fpg-admissions-draws.json, protegidas do cron). Quando a FPG publicar os
-  // tcodes reais: substituir aqui + no fpg-admissions-draws.json + na chave do
-  // teeRegulation.ts, acrescentar ao fpg-admissions-scope.json e pôr live: true.
+  // entra na lista do U25.
+  //
+  // 2026-08-19: o tcode real do U25 apareceu no live scoring —
+  //   scoring.datagolf.pt/live-pt/Home/ls_classifDisplay?t=10652&c=003
+  // Substituído aqui, no teeRegulation.ts e no fpg-admissions-draws.json.
+  // ⚠ O tcode do Sub-10 continua DESCONHECIDO: sondei 10650/51/53/54/55 e
+  // nenhum responde como o 10652 — não vale a pena adivinhar. Fica 90004 até
+  // aparecer. Edições anteriores foram 10564 (U25) + 10565 (Sub10).
+  // ⚠ `live` fica false até a prova arrancar: a 19-08 de manhã o gate do live
+  // scoring ainda respondia "sem classificação" e a ClassifLST devolvia 0
+  // jogadores. Pôr a true quando houver resultados.
   {
     ccode: "003",
-    tcode: "90003",
+    tcode: "10652",
     name: "VIII Miramar Internacional Open U25",
     escalao: null,          // multi-escalão (Sub12→Sub25) — sem tab única
     date: "2026-08-19",     // 19-21 Ago 2026, 54 buracos (18/dia)
