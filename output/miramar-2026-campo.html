@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Os 64 do Miramar</title>
+<meta name="description" content="VIII Miramar Internacional Open U25, 19-21 Agosto 2026: os 64 inscritos, o grupo das vermelhas e o quadro do escalao Sub-12.">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<style>
+  :root {
+    color-scheme: light;
+    --paper:#F4F4F0; --card:#FBFBF8; --ink:#16211F; --ink-2:#565F5B; --ink-3:#868D89;
+    --rule:#DCDCD3; --rule-soft:#E7E7DF;
+    --esp:#00719E; --esp-soft:#00719E22;
+    --fpg:#BE3A2A; --fpg-soft:#BE3A2A22;
+    --f-disp:"Arial Narrow","Helvetica Neue Condensed","Liberation Sans Narrow","Helvetica Neue",Helvetica,sans-serif;
+    --f-body:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --f-data:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper:#15181B; --card:#1C2023; --ink:#ECEDE7; --ink-2:#A3ACA7; --ink-3:#79817D;
+    --rule:#2E3336; --rule-soft:#23282B;
+    --esp:#3F9DD6; --esp-soft:#3F9DD62E; --fpg:#E0644C; --fpg-soft:#E0644C2E;
+  } }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:#15181B; --card:#1C2023; --ink:#ECEDE7; --ink-2:#A3ACA7; --ink-3:#79817D;
+    --rule:#2E3336; --rule-soft:#23282B;
+    --esp:#3F9DD6; --esp-soft:#3F9DD62E; --fpg:#E0644C; --fpg-soft:#E0644C2E;
+  }
+  * { box-sizing:border-box; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--f-body);
+         font-size:17px; line-height:1.62; margin:0; padding:0 20px 96px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:840px; margin:0 auto; }
+  p { margin:0; max-width:66ch; }
+  .lede { font-size:20px; line-height:1.55; }
+  .num { font-family:var(--f-data); font-variant-numeric:tabular-nums; }
+  header { padding:56px 0 30px; border-bottom:2px solid var(--ink); }
+  .label { font-family:var(--f-disp); text-transform:uppercase; letter-spacing:.13em; font-size:12px; font-weight:700; color:var(--ink-3); }
+  h1 { font-family:var(--f-disp); font-size:clamp(44px,11vw,84px); line-height:.92; letter-spacing:-.01em;
+       text-transform:uppercase; font-weight:700; margin:14px 0 0; text-wrap:balance; }
+  .sub { margin-top:16px; color:var(--ink-2); font-size:17px; max-width:60ch; }
+  .stamp { margin-top:20px; display:flex; flex-wrap:wrap; gap:6px 20px; font-family:var(--f-disp);
+           text-transform:uppercase; letter-spacing:.1em; font-size:12px; color:var(--ink-3); }
+  section { margin-top:52px; display:flex; flex-direction:column; gap:20px; }
+  h2 { font-family:var(--f-disp); text-transform:uppercase; letter-spacing:.07em; font-size:15px;
+       font-weight:700; margin:0; padding-bottom:8px; border-bottom:1px solid var(--ink); }
+  .band { display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); }
+  .tile { background:var(--card); padding:16px 14px; display:flex; flex-direction:column; gap:5px; }
+  .tile .k { font-family:var(--f-disp); text-transform:uppercase; letter-spacing:.1em; font-size:11px; color:var(--ink-3); }
+  .tile .v { font-family:var(--f-data); font-variant-numeric:tabular-nums; font-size:25px; line-height:1.05; font-weight:600; letter-spacing:-.02em; }
+  .tile .d { font-size:13.5px; color:var(--ink-2); line-height:1.35; }
+  .scroll { overflow-x:auto; border:1px solid var(--rule); background:var(--card); }
+  table { border-collapse:collapse; width:100%; font-family:var(--f-data); font-variant-numeric:tabular-nums; font-size:13.5px; }
+  caption { caption-side:top; text-align:left; padding:12px 14px 0; font-family:var(--f-disp);
+            text-transform:uppercase; letter-spacing:.09em; font-size:12px; color:var(--ink-3); }
+  th,td { padding:8px 11px; text-align:right; border-bottom:1px solid var(--rule-soft); white-space:nowrap; }
+  th { font-family:var(--f-disp); text-transform:uppercase; letter-spacing:.08em; font-size:11px; font-weight:700;
+       color:var(--ink-3); border-bottom:1px solid var(--rule); background:var(--card); }
+  th:first-child, td:first-child { text-align:left; }
+  tbody tr:last-child td { border-bottom:none; }
+  tr.me td { background:var(--fpg-soft); font-weight:700; }
+  tr.me td:first-child { box-shadow:inset 3px 0 0 var(--fpg); }
+  tr.esp td:first-child { box-shadow:inset 3px 0 0 var(--esp); }
+  .flag { display:inline-block; padding:1px 6px; border-radius:3px; font-family:var(--f-disp); font-size:10.5px;
+          font-weight:700; letter-spacing:.07em; text-transform:uppercase; }
+  .flag.e { background:var(--esp-soft); color:var(--esp); border:1px solid var(--esp); }
+  .flag.p { color:var(--ink-3); }
+  .chart { display:flex; flex-direction:column; gap:10px; }
+  .rows { display:flex; flex-direction:column; gap:4px; }
+  .row { display:grid; grid-template-columns:186px 1fr 44px; gap:11px; align-items:center; }
+  @media (max-width:600px){ .row { grid-template-columns:118px 1fr 40px; } }
+  .who { font-family:var(--f-data); font-size:12px; color:var(--ink-2); text-align:right;
+         overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row.mine .who { color:var(--ink); font-weight:700; }
+  .bar-t { position:relative; height:15px; background:var(--rule-soft); border-radius:0 3px 3px 0; }
+  .bar { position:absolute; left:0; top:0; bottom:0; border-radius:0 3px 3px 0; }
+  .val { font-family:var(--f-data); font-variant-numeric:tabular-nums; font-size:12px; color:var(--ink-2); }
+  .row.mine .val { color:var(--ink); font-weight:700; }
+  ul.pts { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  ul.pts li { display:grid; grid-template-columns:106px 1fr; gap:16px; align-items:start; padding-bottom:14px; border-bottom:1px solid var(--rule-soft); }
+  ul.pts li:last-child { border-bottom:none; padding-bottom:0; }
+  ul.pts .t { font-family:var(--f-disp); text-transform:uppercase; letter-spacing:.08em; font-size:11px; font-weight:700; padding-top:4px; color:var(--ink-3); }
+  ul.pts .t.esp { color:var(--esp); } ul.pts .t.warn { color:var(--fpg); }
+  ul.pts p { max-width:none; font-size:16px; }
+  .callout { border-left:3px solid var(--fpg); background:var(--fpg-soft); padding:16px 18px; display:flex; flex-direction:column; gap:8px; }
+  .callout .label { color:var(--fpg); }
+  .callout.blue { border-left-color:var(--esp); background:var(--esp-soft); }
+  .callout.blue .label { color:var(--esp); }
+  .note { font-size:14.5px; color:var(--ink-2); max-width:68ch; }
+  footer { margin-top:64px; padding-top:22px; border-top:1px solid var(--rule); display:flex; flex-direction:column; gap:10px; }
+  footer p { font-size:13.5px; color:var(--ink-3); max-width:70ch; }
+  footer code { font-family:var(--f-data); font-size:12.5px; color:var(--ink-2); }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+  :focus-visible { outline:2px solid var(--fpg); outline-offset:2px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="label">VIII Miramar Internacional Open U25 · 19–21 Agosto 2026</div>
+    <h1>Os 64 do Miramar</h1>
+    <p class="sub">O campo completo, o grupo das vermelhas onde o Manuel compete, e os dois espanhóis que mudam o quadro.</p>
+    <div class="stamp"><span>Inscrições fechadas</span><span>Draw D1 publicado</span><span>cgm.pt + RFEG · 18-08-2026</span></div>
+  </header>
+
+  <section>
+    <p class="lede">O campo não são 53 jogadores — são <strong>64</strong>. Onze estão inscritos como “Internacional”, sem número de federado português, e ficaram de fora da primeira leitura. Dois deles jogam das vermelhas, no escalão do Manuel, e <strong>ambos têm handicap mais baixo que ele</strong>.</p>
+
+    <div class="band">
+      <div class="tile"><span class="k">Inscritos</span><span class="v">64</span><span class="d">53 FPG + 11 ESP</span></div>
+      <div class="tile"><span class="k">Brancas</span><span class="v">24</span><span class="d">Sub-16 a Absoluto</span></div>
+      <div class="tile"><span class="k">Amarelas</span><span class="v">26</span><span class="d">Sub-14 e Sub-16 F</span></div>
+      <div class="tile"><span class="k">Vermelhas</span><span class="v">14</span><span class="d">o grupo do Manuel</span></div>
+      <div class="tile"><span class="k">Flights</span><span class="v">21</span><span class="d">08:00 às 12:56</span></div>
+    </div>
+    <p class="note">Todos saem do buraco 1. O Sub-10 é competição separada: 15 jogadores, 9 buracos por dia, à tarde.</p>
+  </section>
+
+  <section>
+    <h2>Correções à primeira análise</h2>
+    <ul class="pts">
+      <li><span class="t warn">Errado</span><p><strong>“O Manuel tem o índice mais baixo dos Sub-12.”</strong> Valia só para os federados. Com os espanhóis identificados, é o <strong>terceiro de dez</strong>: Diego Gross joga de 4.2 e Mateo González de 6.3, contra os 8.5 dele.</p></li>
+      <li><span class="t warn">Errado</span><p><strong>“São ambos um ano mais novos.”</strong> Não são. O Manuel nasceu a <strong>29-04-2014</strong>; o Diego é 9 meses mais novo e o Mateo 7. Praticamente a mesma geração — o que os separa é o corte de calendário dos escalões, não idade.</p></li>
+      <li><span class="t">Corrigido</span><p>O grupo das vermelhas tem <strong>14</strong> jogadores, não 10. E o campo tem 64, não 53.</p></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Sub-12 rapazes — o quadro real</h2>
+    <p>Os dez que disputam o escalão do Manuel, por handicap. Barra mais curta é melhor.</p>
+    <div class="chart"><div class="rows" id="rows"></div></div>
+    <p class="note">Os handicaps espanhóis e portugueses são ambos WHS, portanto comparáveis. Os valores usados aqui são os actuais — não os que constam da lista de inscrições, que foram capturados em Julho.</p>
+  </section>
+
+  <section>
+    <h2>Diego Gross — já se cruzaram</h2>
+    <p>Daily Mail World Junior Golf Championship 2026, Villa Padierna Flamingos, divisão Boys 10-11, em Fevereiro. Campo de 38.</p>
+    <div class="scroll">
+      <table>
+        <caption>WJGC 2026 · Flamingos · par 72</caption>
+        <thead><tr><th>Jogador</th><th>D1</th><th>D2</th><th>D3</th><th>Total</th><th>Pos</th></tr></thead>
+        <tbody>
+          <tr class="esp"><td>Diego Gross Paneque <span class="flag e">ESP</span></td><td>76</td><td>75</td><td>81</td><td>232</td><td>9º</td></tr>
+          <tr class="me"><td>Manuel Medeiros</td><td>79</td><td>78</td><td><strong>75</strong></td><td>232</td><td>10º</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout blue">
+      <span class="label">O que isto diz</span>
+      <p><strong>Empatados nos 232.</strong> O desempate deu o 9º ao Diego apesar de o Manuel ter fechado melhor — 75 contra 81 no último dia. Trajetórias opostas: um caiu, o outro subiu. Contra um jogador que hoje joga de 4.2, isso é a melhor referência que temos.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>O grupo das vermelhas — os 14</h2>
+    <div class="scroll">
+      <table>
+        <caption>Todos os que jogam 4778m, par 70</caption>
+        <thead><tr><th>Jogador</th><th>Sexo</th><th>Idade</th><th>HCP</th><th>Voltas 2026</th><th>Últ. 8 SD</th><th>Miramar 18h</th><th>Clube</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+    <p class="note">Dos espanhóis não temos voltas nos nossos dados — só o handicap e a ficha da RFEG. As duas raparigas jogam a mesma distância mas noutro quadro.</p>
+  </section>
+
+  <section>
+    <h2>Vantagem de casa, e o flight</h2>
+    <ul class="pts">
+      <li><span class="t warn">Casa</span><p>Quatro do grupo são sócios do Miramar e conhecem os nove buracos de cor: <strong>Eduardo Rocha Ferreira jogou lá 16 voltas só este ano</strong>, Ricardo 12, José Maria 12. O Manuel tem cinco voltas no campo, todas de Agosto de 2025, nenhuma em 2026.</p></li>
+      <li><span class="t esp">Flight</span><p><strong>O Manuel sai às 09:04, do buraco 1</strong>, com Camila Pazos e Afonso de Sousa Pinto — <strong>ambos de amarelas</strong>, mais 500m de campo. Vai ver bolas a cair muito à frente das dele o dia inteiro. É ruído a que tem de ser indiferente.</p></li>
+      <li><span class="t">Sem história</span><p>Tomás Sarmento de Beires, Miguel Nunes e João Couto nunca jogaram o Miramar. Para eles, como para o Manuel, os nove buracos repetidos são território a aprender no primeiro dia.</p></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><strong>Fontes.</strong> Inscritos e draw: <code>cgm.pt</code>, lido a 17-08-2026. Federados, escalões e handicaps: <code>players.json</code> e <code>output/&lt;fed&gt;/analysis/data.json</code>. Internacionais: <code>public/data/spain-players.json</code> (RFEG, snapshot 17-08-2026), cruzado por nome com exigência de candidato único. Resultados de Flamingos: <code>public/data/wjgc_2026_b1011.json</code>.</p>
+    <p><strong>Ressalva.</strong> A lista de inscrições guarda o handicap do momento da inscrição (o Manuel entrou com 9, hoje está 8.5). Nesta página usam-se os valores actuais. A <code>catEdad</code> da RFEG está desactualizada em vários casos, por isso as idades vêm da data de nascimento.</p>
+    <p><strong>Lacuna conhecida.</strong> O Manuel não consta do ranking EGR e cinco dos internacionais também não. Dos jogadores espanhóis só temos handicap e ficha federativa — nenhuma volta, nenhuma forma recente.</p>
+  </footer>
+</div>
+
+<script>
+  const S12 = [
+    {n:"Diego Gross",                  h:4.2,  o:"ESP", me:false},
+    {n:"Mateo González Carrascosa",    h:6.3,  o:"ESP", me:false},
+    {n:"Manuel Goulartt Medeiros",     h:8.5,  o:"FPG", me:true },
+    {n:"Tomás Sarmento de Beires",     h:9.7,  o:"FPG", me:false},
+    {n:"Ricardo Rocha Ferreira",       h:11.9, o:"FPG", me:false},
+    {n:"Miguel Nunes",                 h:12.9, o:"FPG", me:false},
+    {n:"José Maria Pereira",           h:15.5, o:"FPG", me:false},
+    {n:"Eduardo Rocha Ferreira",       h:15.9, o:"FPG", me:false},
+    {n:"Maksim Mutalapov",             h:20.8, o:"FPG", me:false},
+    {n:"João Couto",                   h:22.3, o:"FPG", me:false},
+  ];
+  const MAXH = 24;
+  document.getElementById("rows").innerHTML = S12.map(p =>
+    '<div class="row' + (p.me ? " mine" : "") + '">' +
+      '<span class="who">' + p.n + '</span>' +
+      '<span class="bar-t"><span class="bar" style="width:' + (p.h / MAXH * 100) + '%;background:var(--' +
+        (p.o === "ESP" ? "esp" : "fpg") + ')"></span></span>' +
+      '<span class="val">' + p.h.toFixed(1) + '</span>' +
+    '</div>').join("");
+
+  const V = [
+    ["Laura Santos","F",14,1.6,"FPG",29,5.4,"7v","PXO Clube"],
+    ["Diego Gross","M",11,4.2,"ESP",null,null,"—","Real Guadalhorce"],
+    ["Margarida Silva Pinto","F",13,6.0,"FPG",35,7.7,"24v (3 em 26)","Miramar"],
+    ["Mateo González Carrascosa","M",11,6.3,"ESP",null,null,"—","Real Guadalhorce"],
+    ["Manuel Goulartt Medeiros","M",12,8.5,"FPG",35,11.1,"5v","Santo da Serra"],
+    ["Tomás Sarmento de Beires","M",11,9.7,"FPG",13,15.6,"nunca","Citynorte"],
+    ["Ricardo Rocha Ferreira","M",10,11.9,"FPG",21,14.9,"15v (12 em 26)","Miramar"],
+    ["Miguel Nunes","M",11,12.9,"FPG",10,16.4,"nunca","Ilha Terceira"],
+    ["José Maria Pereira","M",12,15.5,"FPG",22,17.7,"20v (12 em 26)","Miramar"],
+    ["Eduardo Rocha Ferreira","M",12,15.9,"FPG",25,16.9,"25v (16 em 26)","Miramar"],
+    ["Mar Parejo Galindo","F",12,18.2,"ESP",null,null,"—","CG Altorreal"],
+    ["Maksim Mutalapov","M",11,20.8,"FPG",11,26.4,"1v","Oporto"],
+    ["Maria Marin Fernandez","F",12,20.8,"ESP",null,null,"—","Real Guadalhorce"],
+    ["João Couto","M",11,22.3,"FPG",12,26.4,"nunca","Braga"],
+  ];
+  document.getElementById("tb").innerHTML = V.map(r => {
+    const esp = r[4] === "ESP", me = r[0].startsWith("Manuel Goulartt");
+    return "<tr" + (me ? ' class="me"' : esp ? ' class="esp"' : "") + "><td>" + r[0] +
+      (esp ? ' <span class="flag e">ESP</span>' : "") + "</td><td>" + r[1] + "</td><td>" + r[2] +
+      "</td><td>" + r[3].toFixed(1) + "</td><td>" + (r[5] ?? "—") + "</td><td>" + (r[6] ?? "—") +
+      "</td><td>" + r[7] + "</td><td>" + r[8] + "</td></tr>";
+  }).join("");
+</script>
+
+</body>
+</html>
