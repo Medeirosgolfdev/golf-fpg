@@ -197,14 +197,18 @@ async function resolveTournament(tclub, tcode) {
 }
 
 /* ── Classif list (paginated) ───────────────────────────────────────────── */
-async function fetchClassif(tclub, tcode, round) {
+// roundType: "D" = classificação por DIA (posições de UMA ronda);
+//            "A" = AGREGADA/acumulada (posições do total até à ronda `round`).
+// ⚠ Em multi-ronda TEM de ser "A" para o `pos` bater com o gross acumulado —
+// a "D"/round=1 dá as posições só do 1º dia (ficavam presas à R1).
+async function fetchClassif(tclub, tcode, round, roundType) {
   const allRecords = [];
   let startIndex = 0;
   while (true) {
     const body = {
       Classi: "1",
       tclub: String(tclub), tcode: String(tcode),
-      classiforder: "1", classiftype: "I", classifroundtype: "D",
+      classiforder: "1", classiftype: "I", classifroundtype: roundType || "D",
       scoringtype: "1", round: String(round || 1),
       members: "0", playertypes: "0", gender: "0",
       minagemen: "0", maxagemen: "999",
@@ -373,8 +377,8 @@ async function processOne(spec, idx, total) {
     };
   }
 
-  // 2. classif R1
-  const { records: recs1, error: err1 } = await fetchClassif(t.ccode, t.tcode, 1);
+  // 2. classif R1 (per-dia — descobre jogadores + detecta multi-ronda)
+  const { records: recs1, error: err1 } = await fetchClassif(t.ccode, t.tcode, 1, "D");
   if (err1) { console.warn(`${label} ${t.name}  → erro classif: ${err1}`); return t; }
   if (recs1.length === 0) { console.log(`${label} ${t.name}  → 0 jogadores (futuro?)`); return t; }
 
@@ -385,9 +389,23 @@ async function processOne(spec, idx, total) {
   let nRounds = t.rounds || 1;
   if (nRounds <= 1) {
     await sleep(DELAY_MS);
-    const probe = await fetchClassif(t.ccode, t.tcode, 2);
+    const probe = await fetchClassif(t.ccode, t.tcode, 2, "D");
     if (!probe.error && probe.records.length > 0) {
       nRounds = 2; t.rounds = 2;
+    }
+  }
+
+  // Em multi-ronda, as POSIÇÕES corretas vêm da classificação AGREGADA ("A") —
+  // o fetch inicial usa "D"/round=1 (posições só do 1º dia). Sem isto o `pos`
+  // ficava preso à R1 enquanto o gross já era acumulado (ex: Manuel no Miramar
+  // 2026 aparecia 2º da R1 com o total da R2). Re-mapeia pos/gross/toPar do
+  // agregado; os scorecards (buraco-a-buraco) continuam a vir da secção abaixo.
+  if (nRounds > 1) {
+    await sleep(DELAY_MS);
+    const agg = await fetchClassif(t.ccode, t.tcode, nRounds, "A");
+    if (!agg.error && agg.records.length > 0) {
+      t.players = agg.records.map(mapPlayer);
+      t.playerCount = t.players.length;
     }
   }
 
