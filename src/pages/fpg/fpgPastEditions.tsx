@@ -43,6 +43,21 @@ const EDITION_ALIASES: EditionAlias[] = [
   //   (sem "Golf") · 2026 "Amendoeira World Kids Golfe 2026 Sub N" · e há uma
   //   gralha na fonte ("World Kis Sub 14"). Casar só por "World Ki(d)s".
   { match: /\bworld ki[dt]?s\b/, canon: "world kids golf", deriveEscFromName: true },
+  // Miramar Internacional Open — Sub 10 (ccode 003). O Sub-10 é uma prova
+  // SEPARADA do U25 (9 buracos/dia vs 18) e o nome dela variou todos os anos:
+  //   2024 "Miramar Internacional Open U25 ( Sub10)" → …open u25 sub10
+  //   2025 "Miramar Internacional Open - sub 10"     → …open sub 10   ← sem "u25"
+  //   2026 "X Miramar Internacional Open U25 - Sub10"→ …open u25 sub10
+  // Três family keys para a mesma prova: a edição de 2025 ficava singleton e
+  // não aparecia na tab. Colapsar todas as variantes que mencionem "sub 10".
+  //
+  // ⚠ Deliberadamente SEM deriveEscFromName: o "U25" do nome vem ANTES do
+  // "Sub10", e o escFromName apanha a primeira ocorrência — daria "Sub 25"
+  // ao Sub-10. Não é preciso: as três edições já trazem escalao "Sub 10".
+  //
+  // O U25 não precisa de regra (o family key dele já é estável nos três anos)
+  // e não é afectado por esta: "…open u25" não contém "sub 10".
+  { match: /^miramar internacional open\b.*\bsub\s?10\b/, canon: "miramar internacional open sub 10" },
 ];
 function editionAliasFor(rawFamKey: string | null): EditionAlias | null {
   if (!rawFamKey) return null;
