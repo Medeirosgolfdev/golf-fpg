@@ -10,7 +10,7 @@ import React, { useState, useMemo } from "react";
 import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
+import { numGross, resolveEsc, playerDob, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -536,8 +536,7 @@ export function ScorecardLB({
                 // Sem escalão — tentar idade via DOB (playersDB[fed].dob,
                 // fedBirthdates, ou lookup por nome em playersDB).
                 let dob: string | undefined =
-                  (p.fedCode && playersDB[p.fedCode]?.dob)
-                  || (p.fedCode ? fedBirthdates.get(p.fedCode) : undefined);
+                  playerDob(p, { playersDB, fedBirthdates }) || undefined;
                 if (!dob && p.name) {
                   const norm = normLoose;
                   const nn = norm(p.name);

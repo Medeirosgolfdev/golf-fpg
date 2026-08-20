@@ -7,7 +7,7 @@
 import React, { useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD, playedParTotal } from "../data/fpgUtils";
+import { numGross, resolveEsc, playerDob, computeSD, playedParTotal } from "../data/fpgUtils";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import EmptyState from "./EmptyState";
@@ -43,7 +43,7 @@ export function AccumulatedLB({
   const rows: MRRow[] = useMemo(() => {
     return rawPlayers.map((p) => {
       const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
-      const dob = (p.fedCode && ((playersDB as any)?.[p.fedCode]?.dob || fedBirthdates.get(p.fedCode))) || (p as any).dob || null;
+      const dob = playerDob(p, { playersDB, fedBirthdates });
       const roundScores = p.roundScores || [];
       // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
       // para que jogadores parciais mostrem "–" nas rondas que não jogaram

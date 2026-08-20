@@ -185,6 +185,40 @@ export type TemporalEscLookup = Map<string, Map<string, string>>;
  *  Usar sempre esta função em vez de aceder directamente ao playersDB[fed].escalao ou
  *  ao escLookup global: isso mostraria sempre o escalão ACTUAL, errado para torneios antigos.
  */
+/**
+ * MÉTODO ÚNICO de resolver a data de nascimento de um jogador de torneio.
+ *
+ * Um jogador pode ter dob em quatro sítios, por ordem de fiabilidade:
+ *   1. `playersDB[fed].dob`  — ficha curada (players.json)
+ *   2. `fedBirthdates(fed)`  — federados.json (base FPG completa; cobre Sub-10
+ *                              e novos registos que o players.json não tem)
+ *   3. `p.dob`               — o que o próprio scrape do torneio trouxe
+ *   4. `p._rfeg.dob`         — ficha da federação espanhola, anexada por
+ *                              scripts/enrich-intl-players.js
+ *
+ * A (4) é a ÚNICA fonte para quem joga como "Internacional": não tem número de
+ * federado português, logo (1) e (2) — que são indexadas por `fed` — não têm
+ * por onde lá chegar. Toda a cadeia que começava por exigir `fed` deixava esses
+ * jogadores sem dob, e por arrasto sem ano de nascimento, sem idade e sem
+ * escalão. Usar esta função em vez de remontar a cadeia à mão em cada tabela.
+ */
+export function playerDob(
+  // Tipo ESTRUTURAL (tudo opcional/unknown) de propósito: há várias interfaces
+  // `Player` locais pelas páginas fora, com campos incompatíveis entre si
+  // (ex.: `toPar` string|number numa, number noutra). Só se leem estes quatro.
+  p: { fed?: unknown; fedCode?: unknown; dob?: unknown; _rfeg?: unknown },
+  opts?: { playersDB?: PlayersDB; fedBirthdates?: Map<string, string> },
+): string | null {
+  const any = p as any;
+  const fed: string | undefined = any.fedCode || any.fed || undefined;
+  return (
+    (fed ? ((opts?.playersDB?.[fed] as any)?.dob || opts?.fedBirthdates?.get(fed)) : undefined) ||
+    (any.dob as string | undefined) ||
+    (any._rfeg?.dob as string | undefined) ||
+    null
+  );
+}
+
 export function resolveEsc(
   p: Player,
   escLookup: EscLookup,
@@ -206,9 +240,7 @@ export function resolveEsc(
   //    fim da função sem escalão. A ficha `_rfeg` — anexada por
   //    scripts/enrich-intl-players.js — é a única fonte de dob que eles têm.
   if (opts?.tournamentDate) {
-    const dob: string | undefined =
-      (fed ? ((opts.playersDB?.[fed] as any)?.dob || opts.fedBirthdates?.get(fed)) : undefined) ||
-      ((p as any)._rfeg?.dob as string | undefined);
+    const dob = playerDob(p, opts);
     if (dob) {
       const calc = escalaoAtDate(dob, opts.tournamentDate);
       if (calc) return calc;
