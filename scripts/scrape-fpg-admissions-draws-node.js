@@ -48,7 +48,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { parseAdmissions, parseDraw } = require("./fpg-admissions-draw-parser.js");
+const { parseAdmissions, parseAdmissionsPt, parseDraw } = require("./fpg-admissions-draw-parser.js");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
 /* ── Paths ──────────────────────────────────────────────────────────────── */
@@ -244,14 +244,44 @@ function markSuspect(parsed, expectedDate) {
   return parsed;
 }
 
+/* ── Inscritos PÚBLICOS (sem cookies) ───────────────────────────────────────
+   `scoring-pt.datagolf.pt/scripts/admissions.asp` é o gémeo público da
+   tournAdmissions.aspx: responde a fetch simples, sem cookies e com qualquer
+   um dos acks universais (medido 2026-08-20 nos 4 acks conhecidos, todos com a
+   mesma resposta). Traz menos campos (sem posição de inscrição, data de
+   registo, VAC nem reservas), por isso é FALLBACK e nunca primeira escolha —
+   mas salva o scrape quando as cookies de `scoring.fpg.pt` expiram, que é o
+   estado normal entre refrescos manuais. */
+async function fetchAdmissionsPt(ccode, tcode) {
+  const url = `https://scoring-pt.datagolf.pt/scripts/admissions.asp?club=${ccode}&tourn=${tcode}&LANG_TXT=PT&ack=${ACK_ADMISSIONS}`;
+  try {
+    const res = await fetch(url, { headers: BASE_HEADERS, redirect: "follow" });
+    const html = await res.text();
+    const paramErr = /Param_Errors|Err=999|<title>Param Error/.test(html);
+    return { ok: res.ok, status: res.status, html, paramErr, url };
+  } catch (e) {
+    return { ok: false, error: e.message, url };
+  }
+}
+
 /* ── Scrape uma admissions ──────────────────────────────────────────────── */
 async function scrapeAdmissions(t) {
   const r = await fetchLinkpage(t.ccode, t.tcode, "admissions", null);
-  if (!r.ok || r.paramErr) {
-    return { error: r.paramErr ? "param-errors" : `http-${r.status || "err"}`, players: [] };
+  const primary = (r.ok && !r.paramErr) ? markSuspect(parseAdmissions(r.html), t.date) : null;
+  if (primary && !primary.error && (primary.players?.length ?? 0) > 0) return primary;
+
+  // Caminho autenticado falhou ou veio vazio → tentar o gémeo público.
+  const pt = await fetchAdmissionsPt(t.ccode, t.tcode);
+  if (pt.ok && !pt.paramErr) {
+    const parsedPt = markSuspect(parseAdmissionsPt(pt.html), t.date);
+    if (!parsedPt.error && (parsedPt.players?.length ?? 0) > 0) {
+      console.log(`[adm-draws] fallback admissions.asp (público): ${t.ccode}/${t.tcode} · ${parsedPt.players.length} inscritos`);
+      return parsedPt;
+    }
   }
-  const parsed = parseAdmissions(r.html);
-  return markSuspect(parsed, t.date);
+
+  if (primary) return primary;   // lista vazia legítima (torneio sem inscritos)
+  return { error: r.paramErr ? "param-errors" : `http-${r.status || "err"}`, players: [] };
 }
 
 /* ── Scrape draws — deteta o nº de rondas ───────────────────────────────────
@@ -914,12 +944,19 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     const bestDate = (finalAdm && finalAdm.date)
       || (Object.values(finalDraws || {})[0]?.date)
       || tournament.date;
+    // Campo: as páginas públicas (draw.asp/admissions.asp) publicam-no no bloco
+    // de meta; a FPGPage mostra-o nos torneios injectados só com inscrições.
+    const bestCampo = (finalAdm && finalAdm.campo)
+      || (Object.values(finalDraws || {})[0]?.campo)
+      || prev.campo
+      || null;
     baseIdx.set(key, {
       ccode: tournament.ccode,
       tcode: tournament.tcode,
       name: bestName,
       date: bestDate,
       expectedYear: tournament.expectedYear,
+      ...(bestCampo ? { campo: bestCampo } : {}),
       admissions: finalAdm,
       draws: finalDraws,
     });

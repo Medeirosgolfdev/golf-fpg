@@ -819,6 +819,11 @@ function cleanGroupName(raw: string): string {
     .replace(/\s*\(?\s*escal[aã]o\s+[A-Za-z0-9]+\s*\)?/gi, " ")
     .replace(/\s*-?\s*(Rapazes?|Raparigas?|Masculin[oa]s?|Femininos?|Masc|Fem)\s*$/i, "")
     .replace(/\s*Sub[\s-]*\d+\s*[HMSFR]?\s*$/i, "")
+    // Escalões em notação internacional ("- U12", "-U14", "U21 & U16") — os
+    // torneios de clube do Algarve/Norte usam-na em vez de "Sub N". Sem esta
+    // regra o grupo da sidebar herdava o nome do 1º escalão ("Paul McGinley
+    // Junior Cup 2026 - U12") em vez do nome do evento.
+    .replace(/\s*[-–]?\s*U\s*\d{1,2}(\s*(?:&|e|\/|\+)\s*U?\s*\d{1,2})*\s*[HMSF]?\s*$/i, "")
     .replace(/\s*-?\s*\d+\s*buracos?\s*$/i, "")
     .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
     .replace(/\s*\bR\d+\s*$/i, "")
