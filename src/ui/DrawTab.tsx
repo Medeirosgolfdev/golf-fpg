@@ -26,6 +26,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
+import { escalaoAgeCap, fitsEscalaoAgeCap } from "../data/fpgUtils";
 import { displayFed } from "../utils/fedKeys";
 
 interface Props {
@@ -248,6 +249,10 @@ export default function DrawTab({
     const isVirtual = (f: string) => isVirtualFed(f);
     const escCapMatch = (tournamentEscalao || "").match(/Sub\s*(\d+)/i);
     const escCap = escCapMatch ? parseInt(escCapMatch[1], 10) : null;
+    // Tecto para EXCLUIR homónimos: o maior "Sub N" do rótulo (um "Sub 14-24"
+    // admite os de 24). Separado do `escCap` acima, que serve só para ordenar
+    // preferências entre candidatos e continua a usar o primeiro número.
+    const escCapMax = escalaoAgeCap(tournamentEscalao);
     const tornYear = effDate ? parseInt(String(effDate).slice(0, 4), 10) : null;
 
     // Escolhe o melhor fed entre candidatos com o mesmo nome.
@@ -263,7 +268,26 @@ export default function DrawTab({
     //      Sabrina/Ricardo apareciam com `kids:...` em vez do fed real.
     //   4. Primeiro candidato (preserva ordem de inserção como último
     //      recurso — comportamento antigo).
-    const pickBestFed = (candidates: string[]): string | null => {
+    const dobYearOf = (fed: string): number | null => {
+      const dob = (playersDB as any)?.[fed]?.dob as string | undefined;
+      if (!dob) return null;
+      const y = parseInt(String(dob).slice(0, 4), 10);
+      return Number.isFinite(y) ? y : null;
+    };
+    // Num Sub-12 não há "Absoluto": jogar ACIMA do escalão é permitido, abaixo
+    // não. Um candidato demasiado velho para o tecto do torneio é homónimo, não
+    // a pessoa — e isso vale mesmo quando é o ÚNICO candidato. Era esse o
+    // buraco (2026-08-20, Paul McGinley U12): o `candidates.length === 1`
+    // devolvia sem verificar nada, e o "Luis Mateus" alemão, que a folha da FPG
+    // dá como não federado ("-"), herdava o fed 34417 de um adulto português
+    // homónimo — aparecia no draw do Sub-12 com escalão "Absoluto".
+    // Sem tecto (Absoluto/sénior) ou sem dob, o filtro deixa passar: excluir por
+    // falta de dados apagaria jogadores legítimos.
+    const fitsTournament = (fed: string): boolean =>
+      isVirtual(fed) || fitsEscalaoAgeCap(dobYearOf(fed), escCapMax, tornYear);
+
+    const pickBestFed = (allCandidates: string[]): string | null => {
+      const candidates = allCandidates.filter(fitsTournament);
       if (candidates.length === 0) return null;
       if (candidates.length === 1) return candidates[0];
 

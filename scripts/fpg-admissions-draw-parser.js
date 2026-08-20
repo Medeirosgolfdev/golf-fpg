@@ -225,28 +225,81 @@ function parseDraw(html) {
   const result = {
     name: null,
     date: null,
+    campo: null,
+    clube: null,
     totalJogadores: 0,
     groups: [],
   };
 
-  // Nome e data ficam no primeiro bloco <td align="left">...</td> / <td align="right">...</td>
-  const mName = html.match(/<td[^>]*align=["']left["'][^>]*>([^<]*?)<\/td>\s*<td[^>]*align=["']right["'][^>]*>\s*Federa/i);
-  if (mName) result.name = decodeHTML(mName[1]).trim();
+  // ── Meta (nome, organizador, campo, data) ───────────────────────────────
+  // Bloco de duas colunas no topo da página:
+  //   <td align="left">NOME DO TORNEIO</td><td align="right">ORGANIZADOR</td>
+  //   <td align="left">CAMPO</td>          <td align="right">YYYY-MM-DD</td>
+  // ⚠ Não exigir que o organizador comece por "Federação": os torneios de clube
+  // trazem lá o nome do clube ("Sociedade do Golfe da Quinta do Lago") e o nome
+  // do torneio ficava null — era por isso que os 962/* apareciam na UI como
+  // "Torneio 10084" em vez do nome real.
+  {
+    const pairRe = /<td[^>]*align=["']left["'][^>]*>([\s\S]*?)<\/td>\s*<td[^>]*align=["']right["'][^>]*>([\s\S]*?)<\/td>/gi;
+    let pm;
+    while ((pm = pairRe.exec(html)) !== null) {
+      const left = stripTags(pm[1]);
+      const right = stripTags(pm[2]);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(right)) {
+        if (!result.date) result.date = right;
+        if (!result.campo && left) result.campo = left;
+      } else if (!result.name && left && !/^Jogadores\s+\d+/i.test(right) && !/^(Hora|Tee)$/i.test(left)) {
+        result.name = left;
+        if (right) result.clube = right;
+      }
+    }
+  }
 
-  const mDate = html.match(/<td[^>]*align=["']right["'][^>]*>\s*(\d{4}-\d{2}-\d{2})\s*<\/td>/i);
-  if (mDate) result.date = mDate[1];
+  if (!result.date) {
+    const mDate = html.match(/<td[^>]*align=["']right["'][^>]*>\s*(\d{4}-\d{2}-\d{2})\s*<\/td>/i);
+    if (mDate) result.date = mDate[1];
+  }
 
   const mTotal = html.match(/<td[^>]*align=["']right["'][^>]*>\s*Jogadores\s+(\d+)\s*<\/td>/i);
   if (mTotal) result.totalJogadores = parseInt(mTotal[1], 10);
+
+  // Cores de tee conhecidas da FPG
+  const TEE_COLORS_RE = /^\s*(Brancas?|Azuis|Azul(?:\s+Claro|\s+Escuro)?|Amarelas?|Vermelhas?|Verdes?|Roxas?|Pretas?|Douradas?|Negras?|Laranjas?|Rosas?)\s*$/i;
+
+  /* Ordem das colunas DEPOIS do nome, lida do cabeçalho da tabela.
+     A draw.asp publica cabeçalhos diferentes conforme o torneio:
+       [Hora, Tee, (cor), Jogador, Club/Equipa, V1, Total, To PAR]     (sem fed)
+       [Hora, Tee, (cor), Jogador, Federado, Club/Equipa, HCP Exacto, HCP Jogo]
+     Sem isto, a coluna Federado só era detectada quando trazia dígitos: nos
+     torneios com estrangeiros o "-" (não federado) era lido como CLUBE e a
+     nacionalidade/clube real desaparecia (962/10084, 21 jogadores, 12 com "-"). */
+  function headerLayout() {
+    const trRe2 = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    let hm;
+    while ((hm = trRe2.exec(html)) !== null) {
+      const cells = [];
+      const tdRe2 = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+      let cm;
+      while ((cm = tdRe2.exec(hm[1])) !== null) cells.push(stripTags(cm[1]));
+      const iNome = cells.findIndex(c => /^Jogador/i.test(c));
+      if (iNome < 0 || !cells.some(c => /^Hora$/i.test(c))) continue;
+      const after = [];
+      for (const c of cells.slice(iNome + 1)) {
+        if (/^Federado/i.test(c)) after.push("fed");
+        else if (/Club|Equipa/i.test(c)) after.push("clube");
+        else if (/HCP\s*Exacto/i.test(c)) after.push("hcp");
+        else after.push(null);   // V1/Total/To PAR/HCP Jogo — ignorados
+      }
+      return after;
+    }
+    return null;
+  }
+  const LAYOUT = headerLayout();
 
   // Iterar <tr>s. Cada <tr> tem um bloco de <td> numa linha do draw.
   // A primeira <tr> da tabela é header ("Hora", "Tee", "Jogador", ...) — descartar.
   // Grupos: <tr style="border-top:2pt solid gray"> marca INÍCIO de novo grupo.
   // Primeira <tr> após o header é também início do primeiro grupo (implícito).
-
-  // Cores de tee conhecidas da FPG
-  const TEE_COLORS_RE = /^\s*(Brancas?|Azuis|Azul(?:\s+Claro|\s+Escuro)?|Amarelas?|Vermelhas?|Verdes?|Roxas?|Pretas?|Douradas?|Negras?|Laranjas?|Rosas?)\s*$/i;
-
   const trRe = /<tr([^>]*)>([\s\S]*?)<\/tr>/gi;
   let tm;
   let currentGroup = null;
@@ -271,13 +324,8 @@ function parseDraw(html) {
     }
     if (!/^\d{1,2}:\d{2}$/.test(first)) continue;
 
-    // Detectar estrutura de colunas. A coluna de cor de tee e a coluna
-    // Federado são ambas OPCIONAIS e podem coexistir:
-    //   [Hora, Tee#, (Cor?), Nome, (Fed?), Clube, ...]
-    // Casos vistos em produção:
-    //   A: [Hora, Tee#, Cor, Nome, Clube]            (pré-torneio, sem fed)
-    //   B: [Hora, Tee#, Nome, Fed, Clube]            (sem cor)
-    //   C: [Hora, Tee#, Cor, Nome, Fed, Clube]       (cor + fed — ex: 059/10615)
+    // A coluna de cor de tee é OPCIONAL:
+    //   [Hora, Tee#, (Cor?), Nome, …]
     const maybeColor = (cells[2] || "").trim();
     let teeVal, nomeIdx;
     if (TEE_COLORS_RE.test(maybeColor)) {
@@ -285,14 +333,29 @@ function parseDraw(html) {
     } else {
       teeVal = null; nomeIdx = 2;
     }
-    // A célula imediatamente a seguir ao nome é a coluna Federado se for
-    // numérica (4-6 dígitos); caso contrário é já o clube.
-    let fedIdx = -1, clubeIdx;
-    if (/^\d{4,6}$/.test((cells[nomeIdx + 1] || "").trim())) {
-      fedIdx = nomeIdx + 1;
-      clubeIdx = nomeIdx + 2;
+
+    // Colunas depois do nome: pelo cabeçalho quando existe; senão heurística
+    // (numérico 4-6 dígitos = Federado, "-" = Federado vazio).
+    let fed = null, clube = null, hcp = null;
+    if (LAYOUT) {
+      for (let k = 0; k < LAYOUT.length; k++) {
+        const raw = (cells[nomeIdx + 1 + k] || "").trim();
+        if (LAYOUT[k] === "fed") fed = /^\d{3,6}$/.test(raw) ? raw : null;
+        else if (LAYOUT[k] === "clube") clube = raw && raw !== "-" ? raw : null;
+        else if (LAYOUT[k] === "hcp") hcp = parseHcp(raw);
+      }
     } else {
-      clubeIdx = nomeIdx + 1;
+      const nxt = (cells[nomeIdx + 1] || "").trim();
+      if (/^\d{4,6}$/.test(nxt)) {
+        fed = nxt;
+        clube = cells[nomeIdx + 2] || null;
+      } else if (nxt === "-" && (cells[nomeIdx + 2] || "").trim()) {
+        // "-" na coluna Federado (jogador estrangeiro/não federado)
+        clube = cells[nomeIdx + 2];
+      } else {
+        clube = nxt || null;
+      }
+      if (clube === "-") clube = null;
     }
 
     const startsNewGroup = /border-top:\s*2pt\s+solid/i.test(trAttrs) || isFirstDataRow;
@@ -308,22 +371,85 @@ function parseDraw(html) {
     }
 
     const nome = cells[nomeIdx] || "";
-    const fed = fedIdx >= 0 ? (cells[fedIdx] || "").trim() : "";
-    const clube = cells[clubeIdx] || "";
     if (nome) {
-      currentGroup.players.push({
-        nome,
-        fed: fed || null,
-        clube: clube || null,
-      });
+      const player = { nome, fed: fed || null, clube: clube || null };
+      // Tee próprio quando difere do grupo (flights mistos M/F: as raparigas
+      // saem das Verdes no mesmo grupo dos rapazes das Brancas).
+      if (teeVal && currentGroup.tee && teeVal !== currentGroup.tee) player.tee = teeVal;
+      if (hcp != null) player.hcp = hcp;
+      currentGroup.players.push(player);
     }
   }
 
   return result;
 }
 
+/* ═══════════════════════════════════════════════════════
+   PARSE INSCRITOS (scoring-pt.datagolf.pt/scripts/admissions.asp)
+   ═══════════════════════════════════════════════════════
+   Gémeo PÚBLICO (sem cookies) da tournAdmissions.aspx — mesma família de
+   páginas ASP clássicas da draw.asp, com o mesmo bloco de meta em cima:
+     <td align="left">NOME</td><td align="right">CLUBE</td>
+     <td align="left">CAMPO</td><td align="right">YYYY-MM-DD</td>
+     <td align="right">Jogadores N</td>
+     <table> Jogador | Federado | Club/Equipa | HCP Exacto | HCP Jogo </table>
+
+   Traz MENOS que a tournAdmissions.aspx (não tem posição de inscrição, data de
+   registo, VAC nem reservas — a lista vem ordenada por nome), por isso serve
+   só de FALLBACK quando o caminho autenticado falha. O que traz chega para a
+   FPGPage injectar o torneio (precisa de totalInscritos > 0).
+*/
+function parseAdmissionsPt(html) {
+  if (!html || typeof html !== "string") {
+    return { error: "empty-html" };
+  }
+  // A página de inscritos e a de draw partilham o bloco de meta; reaproveitar
+  // o parseDraw para nome/campo/data/total evita duplicar as regex.
+  const meta = parseDraw(html);
+  const result = {
+    name: meta.name || null,
+    date: meta.date || null,
+    campo: meta.campo || null,
+    clube: meta.clube || null,
+    status: null,
+    totalInscritos: 0,
+    reservas: 0,
+    players: [],
+    _source: "admissions.asp",
+  };
+
+  // Tabela de inscritos: linhas com [Nome, Federado, Club/Equipa, HCP Exacto, HCP Jogo]
+  const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tm;
+  while ((tm = trRe.exec(html)) !== null) {
+    const cells = [];
+    const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+    let dm;
+    while ((dm = tdRe.exec(tm[1])) !== null) cells.push(stripTags(dm[1]));
+    if (cells.length < 4 || cells.length > 6) continue;
+    const [nome, fedRaw, clubeRaw, hcpRaw] = cells;
+    if (!nome || /^Jogador$/i.test(nome) || /^Hora$/i.test(nome)) continue;
+    // Uma linha de jogador tem sempre a coluna Federado (nº ou "-") e um HCP.
+    if (!/^(\d{3,6}|-)$/.test((fedRaw || "").trim())) continue;
+    if (parseHcp(hcpRaw) == null) continue;
+    result.players.push({
+      pos: null,
+      fed: /^\d{3,6}$/.test(fedRaw.trim()) ? fedRaw.trim() : null,
+      nome,
+      clube: clubeRaw && clubeRaw !== "-" ? clubeRaw : null,
+      hcp: parseHcp(hcpRaw),
+      vacf: null,
+      registo: null,
+      status: "confirmed",
+    });
+  }
+  result.totalInscritos = meta.totalJogadores || result.players.length;
+  return result;
+}
+
 module.exports = {
   parseAdmissions,
+  parseAdmissionsPt,
   parseDraw,
   // utils exportados para testes
   _stripTags: stripTags,

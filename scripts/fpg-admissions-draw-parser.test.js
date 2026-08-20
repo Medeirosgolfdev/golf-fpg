@@ -14,7 +14,7 @@ import { createRequire } from "node:module";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
-const { parseAdmissions, parseDraw } = require("./fpg-admissions-draw-parser.js");
+const { parseAdmissions, parseAdmissionsPt, parseDraw } = require("./fpg-admissions-draw-parser.js");
 
 function loadFixture(name) {
   return fs.readFileSync(path.join(__dirname, "__fixtures__", name), "utf8");
@@ -201,5 +201,99 @@ describe("parseAdmissions — torneio com handicap plus (fixture 10880)", () => 
   it("o VAC não é afectado pela regra do plus", () => {
     const sofia = adm.players.find(p => /Sofia Barroso/.test(p.nome || ""));
     expect(sofia.vacf).toBe(70.4);
+  });
+});
+
+/* ─────────────────────────────────────────────────────────────────────────
+   DRAW DE TORNEIO DE CLUBE COM ESTRANGEIROS (962/10084, Quinta do Lago)
+   Três regressões apanhadas neste torneio (2026-08-20):
+     1. Nome do torneio ficava null — a regex exigia que a célula da direita
+        começasse por "Federa(ção)", o que só é verdade nos torneios da FPG.
+     2. O "-" da coluna Federado (jogador não federado) era lido como CLUBE e
+        o país/clube real desaparecia — 12 dos 20 jogadores deste flight.
+     3. Flights com tees mistos (rapazes Brancas + raparigas Verdes) perdiam o
+        tee das raparigas, que ficavam com o do grupo.
+   ───────────────────────────────────────────────────────────────────────── */
+describe("parseDraw — torneio de clube com estrangeiros (962/10084)", () => {
+  const draw = parseDraw(loadFixture("draw-10084-qdl-u12.html"));
+
+  it("extrai nome, campo, clube e data", () => {
+    expect(draw.name).toBe("Paul McGinley Junior Cup 2026 - U12");
+    expect(draw.campo).toBe("Quinta do Lago Norte");
+    expect(draw.clube).toBe("Sociedade do Golfe da Quinta do Lago");
+    expect(draw.date).toBe("2026-08-21");
+    expect(draw.totalJogadores).toBe(20);
+  });
+
+  it("apanha todos os flights e jogadores", () => {
+    expect(draw.groups).toHaveLength(7);
+    const total = draw.groups.reduce((n, g) => n + g.players.length, 0);
+    expect(total).toBe(draw.totalJogadores);
+  });
+
+  it('"-" na coluna Federado → fed null SEM comer o clube', () => {
+    const landon = draw.groups.flatMap(g => g.players).find(p => p.nome === "Landon Binninger");
+    expect(landon.fed).toBe(null);
+    expect(landon.clube).toBe("USA");
+  });
+
+  it("federados mantêm nº e clube", () => {
+    const ricardo = draw.groups[0].players[0];
+    expect(ricardo.nome).toBe("Ricardo Castro Ferreira");
+    expect(ricardo.fed).toBe("49085");
+    expect(ricardo.clube).toBe("POR");
+  });
+
+  it("tee próprio quando o flight tem tees mistos", () => {
+    const g0 = draw.groups[0];
+    expect(g0.tee).toBe("Brancas");
+    const sabrina = g0.players.find(p => /Sabrina/.test(p.nome));
+    expect(sabrina.tee).toBe("Verdes");
+    // quem joga o tee do grupo não leva override
+    expect(g0.players[0].tee).toBeUndefined();
+  });
+
+  it("captura o HCP exacto de cada jogador (com a convenção plus)", () => {
+    expect(draw.groups[0].players[0].hcp).toBe(5.3);
+    const all = draw.groups.flatMap(g => g.players);
+    expect(all.every(p => typeof p.hcp === "number")).toBe(true);
+  });
+});
+
+/* ─────────────────────────────────────────────────────────────────────────
+   INSCRITOS PÚBLICOS (admissions.asp) — fallback sem cookies
+   ───────────────────────────────────────────────────────────────────────── */
+describe("parseAdmissionsPt — inscritos da admissions.asp", () => {
+  const adm = parseAdmissionsPt(loadFixture("admissions-pt-10084-qdl-u12.html"));
+
+  it("extrai meta do torneio", () => {
+    expect(adm.name).toBe("Paul McGinley Junior Cup 2026 - U12");
+    expect(adm.campo).toBe("Quinta do Lago Norte");
+    expect(adm.date).toBe("2026-08-21");
+    expect(adm.totalInscritos).toBe(20);
+    expect(adm._source).toBe("admissions.asp");
+  });
+
+  it("lista todos os inscritos", () => {
+    expect(adm.players).toHaveLength(20);
+    expect(adm.players.every(p => p.status === "confirmed")).toBe(true);
+  });
+
+  it("federado vs não-federado", () => {
+    const joe = adm.players.find(p => p.nome === "Joe Short");
+    expect(joe.fed).toBe("51804");
+    expect(joe.hcp).toBe(7.6);
+    const benji = adm.players.find(p => p.nome === "Benji Botham");
+    expect(benji.fed).toBe(null);
+    expect(benji.clube).toBe("UK");
+  });
+
+  it("campos que esta fonte NÃO tem ficam null (não inventar)", () => {
+    expect(adm.players.every(p => p.pos === null && p.registo === null && p.vacf === null)).toBe(true);
+    expect(adm.reservas).toBe(0);
+  });
+
+  it("aceita HTML vazio sem crashar", () => {
+    expect(parseAdmissionsPt("")).toEqual({ error: "empty-html" });
   });
 });

@@ -8,6 +8,7 @@ import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { useCompareSelection } from "./useCompareSelection";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
+import { playerDob } from "../data/fpgUtils";
 import { isDNS } from "./driveUtils";
 import { tournamentPoints, rankingTotal } from "../constants/drivePoints";
 
@@ -321,11 +322,13 @@ export function ResumoTable(props: {
      *   5) globalEscLookup (actual — último recurso)
      */
     const resolveRowEsc = (p: Player, t: Tournament): string => {
-      if (p.fed && t.date) {
-        // Dob: playersDB (curado) → federados.json (base FPG completa).
-        // Crítico porque players.json não cobre Sub-10 kids nem novos registos
-        // e fica-se preso ao t.escalao genérico para torneios combinados.
-        const dob = (playersDB[p.fed] as any)?.dob || fedBirthdates.get(p.fed);
+      if (t.date) {
+        // Dob via playerDob: playersDB (curado) → federados.json → registo do
+        // torneio → ficha RFEG. Crítico porque players.json não cobre Sub-10
+        // kids nem novos registos e fica-se preso ao t.escalao genérico.
+        // A condição NÃO exige `p.fed`: os "Internacional" não têm federado
+        // português e só têm dob pela ficha RFEG.
+        const dob = playerDob(p, { playersDB, fedBirthdates });
         if (dob) {
           const calc = escalaoAtDate(dob, t.date);
           if (calc) return calc;

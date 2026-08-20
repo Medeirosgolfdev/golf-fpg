@@ -185,6 +185,83 @@ export type TemporalEscLookup = Map<string, Map<string, string>>;
  *  Usar sempre esta função em vez de aceder directamente ao playersDB[fed].escalao ou
  *  ao escLookup global: isso mostraria sempre o escalão ACTUAL, errado para torneios antigos.
  */
+/**
+ * MÉTODO ÚNICO de resolver a data de nascimento de um jogador de torneio.
+ *
+ * Um jogador pode ter dob em quatro sítios, por ordem de fiabilidade:
+ *   1. `playersDB[fed].dob`  — ficha curada (players.json)
+ *   2. `fedBirthdates(fed)`  — federados.json (base FPG completa; cobre Sub-10
+ *                              e novos registos que o players.json não tem)
+ *   3. `p.dob`               — o que o próprio scrape do torneio trouxe
+ *   4. `p._rfeg.dob`         — ficha da federação espanhola, anexada por
+ *                              scripts/enrich-intl-players.js
+ *
+ * A (4) é a ÚNICA fonte para quem joga como "Internacional": não tem número de
+ * federado português, logo (1) e (2) — que são indexadas por `fed` — não têm
+ * por onde lá chegar. Toda a cadeia que começava por exigir `fed` deixava esses
+ * jogadores sem dob, e por arrasto sem ano de nascimento, sem idade e sem
+ * escalão. Usar esta função em vez de remontar a cadeia à mão em cada tabela.
+ */
+export function playerDob(
+  // Tipo ESTRUTURAL (tudo opcional/unknown) de propósito: há várias interfaces
+  // `Player` locais pelas páginas fora, com campos incompatíveis entre si
+  // (ex.: `toPar` string|number numa, number noutra). Só se leem estes quatro.
+  p: { fed?: unknown; fedCode?: unknown; dob?: unknown; _rfeg?: unknown },
+  opts?: { playersDB?: PlayersDB; fedBirthdates?: Map<string, string> },
+): string | null {
+  const any = p as any;
+  const fed: string | undefined = any.fedCode || any.fed || undefined;
+  return (
+    (fed ? ((opts?.playersDB?.[fed] as any)?.dob || opts?.fedBirthdates?.get(fed)) : undefined) ||
+    (any.dob as string | undefined) ||
+    (any._rfeg?.dob as string | undefined) ||
+    null
+  );
+}
+
+/** Idade-tecto de um rótulo de escalão: o MAIOR "Sub N" que lá aparecer.
+ *
+ * "Sub 12" → 12 · "Sub 14-24" → 24 · "Sub 10+12" → 12 · "Absoluto" → null.
+ *
+ * ⚠ O maior, não o primeiro: os torneios combinados ("Sub 14-24") admitem toda
+ * a gama, e um tecto de 14 excluiria os jogadores de 20 anos que lá jogam de
+ * pleno direito.
+ *
+ * `null` = sem tecto conhecido (escalão absoluto, sénior ou label não
+ * reconhecida) — quem consome deve tratar isso como "não dá para filtrar",
+ * nunca como "tecto 0".
+ */
+export function escalaoAgeCap(escalao: string | null | undefined): number | null {
+  const nums = String(escalao || "").match(/sub\s*(\d{1,2})/gi);
+  if (!nums || nums.length === 0) return null;
+  const caps = nums
+    .map(m => parseInt(m.replace(/\D/g, ""), 10))
+    .filter(n => Number.isFinite(n));
+  // Um label como "Sub 14-24" dá só um match ("Sub 14") — apanhar também o
+  // segundo número do intervalo.
+  const range = String(escalao || "").match(/sub\s*\d{1,2}\s*[-–+/]\s*(\d{1,2})/i);
+  if (range) caps.push(parseInt(range[1], 10));
+  return caps.length ? Math.max(...caps) : null;
+}
+
+/** Um jogador nascido em `dobYear` pode estar num torneio com este tecto?
+ *
+ * Regra do golfe juvenil: jogar ACIMA do escalão é permitido (um Sub-10 entra
+ * num Sub-12), jogar ABAIXO não. Logo só a idade máxima é vinculativa.
+ *
+ * Sem tecto, sem ano do torneio ou sem data de nascimento → `true`: não há
+ * como excluir, e excluir por falta de dados apagaria jogadores legítimos.
+ */
+export function fitsEscalaoAgeCap(
+  dobYear: number | null | undefined,
+  ageCap: number | null | undefined,
+  tournamentYear: number | null | undefined,
+): boolean {
+  if (ageCap == null || tournamentYear == null) return true;
+  if (dobYear == null || !Number.isFinite(dobYear)) return true;
+  return tournamentYear - dobYear <= ageCap;
+}
+
 export function resolveEsc(
   p: Player,
   escLookup: EscLookup,
@@ -206,9 +283,7 @@ export function resolveEsc(
   //    fim da função sem escalão. A ficha `_rfeg` — anexada por
   //    scripts/enrich-intl-players.js — é a única fonte de dob que eles têm.
   if (opts?.tournamentDate) {
-    const dob: string | undefined =
-      (fed ? ((opts.playersDB?.[fed] as any)?.dob || opts.fedBirthdates?.get(fed)) : undefined) ||
-      ((p as any)._rfeg?.dob as string | undefined);
+    const dob = playerDob(p, opts);
     if (dob) {
       const calc = escalaoAtDate(dob, opts.tournamentDate);
       if (calc) return calc;
