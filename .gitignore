@@ -10,13 +10,20 @@ lista.txt
 *.bak
 arvore.txt
 reorganizar.ps1
-output/assets/
-output/index.html
-output/cross-stats-cache.json
-# output/data/ é onde `npm run build` (Vite) copia public/data/ — cópia 1:1
-# duplicada (~191 MB). Não deve estar tracked. O output/{fed}/* do scraper FPG
-# fica tracked normalmente porque não casa com este padrão.
-output/data/
+# ── output/ é PARTILHADO: outDir do Vite + output do scraper FPG ──────────
+# `npm run build` escreve para output/ (vite.config.ts) E copia lá para dentro
+# TODO o public/ — index.html, assets/, data/ (~191 MB) e, à raiz, os mesmos
+# ficheiros/pastas que existem em public/ (Logos/, docs/, reports/,
+# player-stats.json, …). Enquanto essas cópias estiveram tracked, correr o
+# build sujava o `git status` com ~144 MB de duplicados de public/ e chegou a
+# entrar lixo em commits de dados.
+# Regra: ignorar TUDO à raiz de output/ e re-incluir só o que é do scraper —
+# os directórios por federado (output/{nfed}/…) e o cache do extract-courses.
+# A fonte de verdade dessas cópias é sempre public/ (é lá que os geradores
+# escrevem: enrich-players.js → public/player-stats.json, etc.).
+/output/*
+!/output/[0-9]*/
+!/output/extract-courses-cache.json
 players.json.backup-*
 tmp/
 

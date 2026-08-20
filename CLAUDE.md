@@ -54,6 +54,25 @@ design-system.html # Referência visual de todos os componentes CSS
 
 > **Pastas retiradas do Git em 2026-06-23 (arrumação)** — `scripts_backup/`, `_archive_2026-*/`, `_probe-tmp/`, `diag-out/`, `outputs/` foram removidas do versionamento (`git rm --cached`, continuam em disco) e adicionadas ao `.gitignore`. Eram backups/temporários sem referência no código. `output/{fed}/*` continua tracked de propósito (output do scraper FPG que alimenta as páginas). Os dois scripts browser-console legados da raiz (`pull-torneios.js`, `scrape-drive-aquapor-v7.js`) foram movidos para `scripts/_archive/browser-console/`.
 
+> **⚠ `output/` é PARTILHADO entre o build e o scraper (arrumado 2026-08-20)** —
+> o `outDir` do Vite é `output/` (`vite.config.ts`), a MESMA pasta onde o
+> scraper FPG escreve `output/{nfed}/…`. Cada `npm run build` copia lá para
+> dentro TODO o `public/`: `index.html`, `assets/`, `data/` (~191 MB) e, à raiz,
+> os mesmos ficheiros e pastas que existem em `public/` (`Logos/`, `docs/`,
+> `reports/`, `logos para outras nupcias/`, `player-stats.json`,
+> `analise-percurso-juniores.html`, …). Essas cópias estavam **tracked** — 423
+> ficheiros / ~144 MB duplicados de `public/` — por isso correr o build em local
+> sujava o `git status` e arriscava entrar lixo nos commits de dados (aconteceu
+> a 2026-08-20). Foram retiradas do versionamento (`git rm --cached`, continuam
+> em disco) e o `.gitignore` passou a ignorar **tudo à raiz de `output/`**,
+> re-incluindo só o que é do scraper: `!/output/[0-9]*/` (os directórios por
+> federado, incluindo os que ainda não existem) e
+> `!/output/extract-courses-cache.json`. **A fonte de verdade destes ficheiros é
+> sempre `public/`** — é lá que os geradores escrevem (`enrich-players.js` →
+> `public/player-stats.json`); o que está em `output/` é resíduo do build.
+> ⚠ Não mover o `outDir` para `dist/` sem confirmar a *Output Directory* do
+> projecto Vercel `golf-fpg` — o deploy de produção depende dela.
+
 ### Páginas (lazy-loaded)
 
 | Rota | Página | Dados |
@@ -473,7 +492,22 @@ Duas páginas públicas são necessárias, em subdomínios diferentes:
 }
 ```
 
-**Parsers Node em `scripts/fpg-admissions-draw-parser.js`** — usados pelos testes (`npm test`). Os scripts browser têm parsers inline equivalentes.
+**Parsers Node em `scripts/fpg-admissions-draw-parser.js`** — `parseAdmissions`
+(tournAdmissions.aspx), `parseAdmissionsPt` (admissions.asp pública) e
+`parseDraw`. Usados pelos testes (`npm test`); os scripts browser têm parsers
+inline equivalentes.
+
+⚠ **O `parseDraw` mapeia as colunas pelo CABEÇALHO da tabela** (2026-08-20). Os
+torneios de clube publicam `Hora | Tee | cor | Jogador | Federado | Club/Equipa
+| HCP Exacto | HCP Jogo`, os da FPG trocam Federado/HCP por `V1 | Total | To
+PAR`. Sem ler o cabeçalho, três coisas partiam-se nos torneios de clube com
+estrangeiros (caso real: 962/10084, 12 dos 20 não federados): o `-` da coluna
+Federado era lido como CLUBE (e o país real desaparecia), o nome do torneio
+ficava `null` (a regex exigia que a célula da direita começasse por "Federa…",
+verdade só nos torneios da FPG — daí os 962/* aparecerem na UI como "Torneio
+10084") e os flights de tees MISTOS perdiam o tee de quem não jogava o tee do
+grupo. Agora cada jogador leva `tee` próprio quando difere do grupo, mais `hcp`
+exacto; `campo` e `clube` saem do bloco de meta.
 
 **Script Node `scripts/scrape-fpg-admissions-draws.js` (legacy)** — existe mas **não funciona**. Servidor FPG rejeita (HTTP 500 ou HTML truncado) mesmo com cookies capturados de Chrome 90. Mantido como referência dos URLs e da tentativa; **usar sempre o fluxo browser acima**.
 
@@ -2223,8 +2257,31 @@ FPG_URL_2 = scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=000&tourn=
 
 Cada um usa os seus próprios cookies (`.fpg-admissions-cookies.json` e `.scoring-datagolf-cookies.json` respectivamente).
 
+#### ✅ `scripts/admissions.asp` + `scripts/draw.asp` são PÚBLICOS (sem cookies) — 2026-08-20
+
+Correcção ao "dead end" abaixo: com o **`ack` na query string**, as duas páginas
+ASP clássicas do `scoring-pt.datagolf.pt` respondem a `fetch` puro, **sem
+cookies nenhuns** (o redirect para `datalinkpt.html` só acontece sem `ack`).
+Qualquer um dos acks universais serve — medidos os 4 conhecidos
+(`XH256YF450`, `8428ACK987`, `XH256YF45T`, `MN0JF0I697`) no mesmo torneio, todos
+com resposta idêntica.
+
+```
+https://scoring-pt.datagolf.pt/scripts/admissions.asp?club={ccode}&tourn={tcode}&LANG_TXT=PT&ack=XH256YF450
+https://scoring-pt.datagolf.pt/scripts/draw.asp?club={ccode}&tourn={tcode}&round_number={n}&ack=XH256YF450
+```
+
+Traz **menos** que a `tournAdmissions.aspx` autenticada (sem posição de
+inscrição, data de registo, VAC nem reservas — a lista vem por ordem alfabética),
+por isso é **fallback, nunca primeira escolha**: o `scrapeAdmissions` do
+`scrape-fpg-admissions-draws-node.js` só lá vai quando o linkpage falha ou
+devolve lista vazia (`parseAdmissionsPt`, log `fallback admissions.asp
+(público)`). Vale ouro porque é exactamente o que salva o scrape enquanto as
+cookies de `scoring.fpg.pt` estão expiradas — que é o estado normal entre
+refrescos manuais.
+
 **Dead ends confirmados no mesmo probe (não voltar a testar):**
-- `scoring-pt.datagolf.pt/scripts/admissions.asp` — redirect para `datalinkpt.html` que é página-frame com iframes. Dados não estão no HTML inicial. Não vale o esforço.
+- ~~`scoring-pt.datagolf.pt/scripts/admissions.asp`~~ — **RESOLVIDO 2026-08-20**, ver acima (faltava o `ack`).
 - `scoring-pt.datagolf.pt/scripts/tournAdmissions.asp` — HTTP 404 (path não existe).
 - `golf-portugal.pt/api/tournaments/{tcode}/admissions` e variantes — HTTP 404. O proxy não expõe admissions, só WHS/scorecards por jogador.
 

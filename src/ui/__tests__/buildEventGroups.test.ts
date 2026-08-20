@@ -292,3 +292,38 @@ describe("buildEventGroups — fusão de edições (opts.mergeEditions)", () => 
     expect(g).toHaveLength(2);
   });
 });
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Escalões em notação internacional ("U12", "U21 & U16")
+   Os torneios de clube (Quinta do Lago, Greatgolf) não usam "Sub N" — sem a
+   regra correspondente no cleanGroupName, o grupo da sidebar herdava o nome do
+   PRIMEIRO escalão ("Paul McGinley Junior Cup 2026 - U12") em vez do nome do
+   evento.
+   ───────────────────────────────────────────────────────────────────────── */
+describe("buildEventGroups — escalões em notação U-N", () => {
+  const mcginley = () => [
+    mkT({ name: "Paul McGinley Junior Cup 2026 - U18 & U16", date: "2026-08-21", ccode: "962", campo: "Quinta do Lago Norte", tcode: "10082", escalao: "Sub 18" }),
+    mkT({ name: "Paul McGinley Junior Cup 2026 - U14", date: "2026-08-21", ccode: "962", campo: "Quinta do Lago Norte", tcode: "10083", escalao: "Sub 14" }),
+    mkT({ name: "Paul McGinley Junior Cup 2026 - U12", date: "2026-08-21", ccode: "962", campo: "Quinta do Lago Norte", tcode: "10084", escalao: "Sub 12" }),
+  ];
+
+  it("os 3 escalões do mesmo dia/clube → 1 grupo", () => {
+    const g = buildEventGroups(mcginley());
+    expect(g).toHaveLength(1);
+    expect(g[0].entries).toHaveLength(3);
+  });
+
+  it("nome do grupo sem o sufixo de escalão", () => {
+    const g = buildEventGroups(mcginley());
+    expect(g[0].name).toBe("Paul McGinley Junior Cup 2026");
+  });
+
+  it("também apanha o formato colado do Quinta do Lago Junior Open", () => {
+    const g = buildEventGroups([
+      mkT({ name: "Quinta do Lago Junior Open 2025 - U21 & U16", date: "2025-12-29", ccode: "962", campo: "Quinta do Lago Norte", tcode: "10078" }),
+      mkT({ name: "Quinta do Lago Junior Open 2025 - U10", date: "2025-12-29", ccode: "962", campo: "Quinta do Lago Norte", tcode: "10081" }),
+    ]);
+    expect(g).toHaveLength(1);
+    expect(g[0].name).toBe("Quinta do Lago Junior Open 2025");
+  });
+});
