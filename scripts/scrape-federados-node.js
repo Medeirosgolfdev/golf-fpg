@@ -171,19 +171,30 @@ async function main() {
 
   while (page < maxPages) {
     const startIndex = page * pageSize;
+    // O scoring.datagolf.pt atira HTTP 500 esporádicos (é por isso que o
+    // scripts/lib/fpg-http.js também tem retry a 500). Com uma só repetição a
+    // 2s, um soluço do servidor na PRIMEIRA página abortava o run inteiro com
+    // 0 registos — foi o que aconteceu a 2026-08-20. Três tentativas com
+    // espera crescente distinguem melhor o soluço da sessão morta; se forem
+    // mesmo cookies expirados, todas falham e o run acaba na mesma (só ~8s
+    // mais tarde), com a guarda dos 0 registos a impedir a gravação.
+    const RETRY_WAITS_MS = [2000, 6000];
     let data;
-    try {
-      data = await fetchPage(cookieHeader, startIndex, pageSize);
-    } catch (e) {
-      console.warn(`  Falha na página ${page} (${startIndex}): ${e.message} — retry em 2s`);
-      await new Promise(r => setTimeout(r, 2000));
+    for (let attempt = 0; ; attempt++) {
       try {
         data = await fetchPage(cookieHeader, startIndex, pageSize);
-      } catch (e2) {
-        console.error(`  Falha dupla na página ${page}: ${e2.message} — abortar com ${all.length} recolhidos.`);
         break;
+      } catch (e) {
+        const wait = RETRY_WAITS_MS[attempt];
+        if (wait == null) {
+          console.error(`  Falha em ${RETRY_WAITS_MS.length + 1} tentativas na página ${page}: ${e.message} — abortar com ${all.length} recolhidos.`);
+          break;
+        }
+        console.warn(`  Falha na página ${page} (${startIndex}): ${e.message} — retry em ${wait / 1000}s`);
+        await new Promise(r => setTimeout(r, wait));
       }
     }
+    if (!data) break;
     total = data.total;
     if (!data.records.length) break;
 
