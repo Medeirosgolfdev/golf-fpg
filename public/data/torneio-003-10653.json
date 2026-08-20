@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "19/08/2026",
+  "lastUpdated": "20/08/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
   "totalTournaments": 1,
   "totalPlayers": 15,
@@ -25,8 +25,8 @@
           "pos": 1,
           "name": "Lucas Pereira Amorim",
           "club": "Oporto",
-          "grossTotal": 28,
-          "toPar": -7,
+          "grossTotal": 65,
+          "toPar": -5,
           "hcpExact": 11.1,
           "hcpPlay": 0,
           "fedCode": "54330",
@@ -89,6 +89,58 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 37,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                6,
+                4,
+                4
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
@@ -97,8 +149,8 @@
           "pos": 2,
           "name": "Mario Valiente Novella",
           "club": "Internacional",
-          "grossTotal": 34,
-          "toPar": -1,
+          "grossTotal": 68,
+          "toPar": -2,
           "hcpExact": 11.9,
           "hcpPlay": 0,
           "fedCode": null,
@@ -161,29 +213,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 34,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                2,
+                4,
+                4,
+                6,
+                4
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
-          ],
-          "_rfeg": {
-            "licencia": "LV02980817",
-            "nome": "VALIENTE NOVELLA, MARIO",
-            "dob": "2016-03-10",
-            "sex": "M",
-            "hcp": 14.6,
-            "club": "REAL CLUB DE GOLF DE MANISES",
-            "pais": "ESP",
-            "fonte": "public/data/spain-players.json (RFEG)",
-            "snapshot": "2026-08-17T04:58:22.670Z",
-            "juniorId": "rLV02980817",
-            "nomeCanonico": "Mario Valiente Novella"
-          }
+          ]
         },
         {
           "scoreId": "29521",
           "pos": 3,
           "name": "Manuel Dias",
           "club": "Braga",
-          "grossTotal": 36,
-          "toPar": 1,
+          "grossTotal": 73,
+          "toPar": 3,
           "hcpExact": 11.9,
           "hcpPlay": 0,
           "fedCode": "52815",
@@ -246,6 +337,58 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 37,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
@@ -254,8 +397,8 @@
           "pos": 4,
           "name": "Mikhail Khontulev",
           "club": "Estoril",
-          "grossTotal": 37,
-          "toPar": 2,
+          "grossTotal": 74,
+          "toPar": 4,
           "hcpExact": 24.2,
           "hcpPlay": 5,
           "fedCode": "58864",
@@ -318,40 +461,20 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
-            }
-          ]
-        },
-        {
-          "scoreId": "29723",
-          "pos": 5,
-          "name": "Francisco Lopes",
-          "club": "Vale Pisão",
-          "grossTotal": 40,
-          "toPar": 5,
-          "hcpExact": 21.7,
-          "hcpPlay": 4,
-          "fedCode": "52713",
-          "courseRating": 29.7,
-          "slope": 98,
-          "teeName": "ROXAS",
-          "teeColorId": 90,
-          "parTotal": 35,
-          "nholes": 9,
-          "course": "Miramar",
-          "roundScores": [
+            },
             {
-              "round": 1,
-              "gross": 40,
+              "round": 2,
+              "gross": 37,
               "scores": [
+                3,
                 4,
                 4,
-                6,
                 5,
+                2,
                 4,
-                6,
-                4,
-                4,
-                3
+                5,
+                5,
+                5
               ],
               "pars": [
                 4,
@@ -395,10 +518,10 @@
         },
         {
           "scoreId": "29783",
-          "pos": 6,
+          "pos": 5,
           "name": "Rafael Paço",
           "club": "Oporto",
-          "grossTotal": 41,
+          "grossTotal": 76,
           "toPar": 6,
           "hcpExact": 28.1,
           "hcpPlay": 7,
@@ -462,16 +585,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 35,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
         {
           "scoreId": "29948",
-          "pos": 7,
+          "pos": 6,
           "name": "Ruben Valiente Novella",
           "club": "Internacional",
-          "grossTotal": 41,
-          "toPar": 6,
+          "grossTotal": 78,
+          "toPar": 8,
           "hcpExact": 26.1,
           "hcpPlay": 6,
           "fedCode": null,
@@ -534,29 +709,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 37,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                6,
+                4
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
-          ],
-          "_rfeg": {
-            "licencia": "LV02169384",
-            "nome": "VALIENTE NOVELLA, RUBEN",
-            "dob": "2018-05-03",
-            "sex": "M",
-            "hcp": 27.9,
-            "club": "REAL CLUB DE GOLF DE MANISES",
-            "pais": "ESP",
-            "fonte": "public/data/spain-players.json (RFEG)",
-            "snapshot": "2026-08-17T04:58:22.670Z",
-            "juniorId": "rLV02169384",
-            "nomeCanonico": "Ruben Valiente Novella"
-          }
+          ]
         },
         {
           "scoreId": "29838",
-          "pos": 8,
+          "pos": 7,
           "name": "Guillermo Parejo Galindo",
           "club": "Internacional",
-          "grossTotal": 42,
-          "toPar": 7,
+          "grossTotal": 76,
+          "toPar": 6,
           "hcpExact": 26,
           "hcpPlay": 6,
           "fedCode": null,
@@ -619,29 +833,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 34,
+              "scores": [
+                2,
+                3,
+                4,
+                4,
+                2,
+                5,
+                3,
+                5,
+                6
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
-          ],
-          "_rfeg": {
-            "licencia": "MM06474757",
-            "nome": "PAREJO GALINDO, GUILLERMO",
-            "dob": "2017-01-13",
-            "sex": "M",
-            "hcp": 26.3,
-            "club": "CLUB DE GOLF ALTORREAL",
-            "pais": "ESP",
-            "fonte": "public/data/spain-players.json (RFEG)",
-            "snapshot": "2026-08-17T04:58:22.670Z",
-            "juniorId": "rMM06474757",
-            "nomeCanonico": "Guillermo Parejo Galindo"
-          }
+          ]
         },
         {
           "scoreId": "29833",
-          "pos": 9,
+          "pos": 8,
           "name": "Bruno Neto Lichuck",
           "club": "Miramar",
-          "grossTotal": 42,
-          "toPar": 7,
+          "grossTotal": 84,
+          "toPar": 14,
           "hcpExact": 30.8,
           "hcpPlay": 8,
           "fedCode": "53685",
@@ -704,16 +957,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 42,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                7,
+                4,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
         {
           "scoreId": "29879",
-          "pos": 10,
+          "pos": 9,
           "name": "Miguel Freitas",
           "club": "Ilha Terceira",
-          "grossTotal": 43,
-          "toPar": 8,
+          "grossTotal": 85,
+          "toPar": 15,
           "hcpExact": 41.1,
           "hcpPlay": 12,
           "fedCode": "56604",
@@ -776,16 +1081,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 42,
+              "scores": [
+                5,
+                4,
+                4,
+                5,
+                5,
+                5,
+                5,
+                4,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
         {
           "scoreId": "29777",
-          "pos": 11,
+          "pos": 10,
           "name": "Henrique Monção",
           "club": "Miramar",
-          "grossTotal": 43,
-          "toPar": 8,
+          "grossTotal": 87,
+          "toPar": 17,
           "hcpExact": 39.9,
           "hcpPlay": 11,
           "fedCode": "51176",
@@ -848,16 +1205,68 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 44,
+              "scores": [
+                6,
+                4,
+                5,
+                5,
+                4,
+                7,
+                4,
+                4,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
         {
           "scoreId": "29760",
-          "pos": 12,
+          "pos": 11,
           "name": "Diego Braga",
           "club": "Miramar",
-          "grossTotal": 43,
-          "toPar": 8,
+          "grossTotal": 87,
+          "toPar": 17,
           "hcpExact": 40.6,
           "hcpPlay": 12,
           "fedCode": "51980",
@@ -920,6 +1329,182 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 44,
+              "scores": [
+                4,
+                5,
+                5,
+                5,
+                3,
+                7,
+                5,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
+            }
+          ]
+        },
+        {
+          "scoreId": "29723",
+          "pos": 12,
+          "name": "Francisco Lopes",
+          "club": "Vale Pisão",
+          "grossTotal": 86,
+          "toPar": 16,
+          "hcpExact": 21.7,
+          "hcpPlay": 4,
+          "fedCode": "52713",
+          "courseRating": 29.7,
+          "slope": 98,
+          "teeName": "ROXAS",
+          "teeColorId": 90,
+          "parTotal": 35,
+          "nholes": 9,
+          "course": "Miramar",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 43,
+              "scores": [
+                4,
+                4,
+                6,
+                5,
+                4,
+                6,
+                4,
+                7,
+                3
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 43,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                2,
+                7,
+                8,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
@@ -928,8 +1513,8 @@
           "pos": 13,
           "name": "Vicente Henrique Rocha",
           "club": "Ilha Terceira",
-          "grossTotal": 45,
-          "toPar": 10,
+          "grossTotal": 88,
+          "toPar": 18,
           "hcpExact": 30.1,
           "hcpPlay": 7,
           "fedCode": "59154",
@@ -992,6 +1577,58 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 43,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                3,
+                6,
+                7,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
@@ -1000,8 +1637,8 @@
           "pos": 14,
           "name": "Artur Von Hafe",
           "club": "RIO",
-          "grossTotal": 54,
-          "toPar": 19,
+          "grossTotal": 107,
+          "toPar": 37,
           "hcpExact": 49.2,
           "hcpPlay": 15,
           "fedCode": "58024",
@@ -1064,6 +1701,58 @@
               "slope": 98,
               "teeName": "ROXAS",
               "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 53,
+              "scores": [
+                5,
+                5,
+                6,
+                5,
+                4,
+                7,
+                7,
+                6,
+                8
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
             }
           ]
         },
@@ -1072,8 +1761,8 @@
           "pos": 15,
           "name": "Gastão Thomaz Medeiros",
           "club": "Santo da Serra",
-          "grossTotal": 72,
-          "toPar": 37,
+          "grossTotal": 140,
+          "toPar": 70,
           "hcpExact": 54,
           "hcpPlay": 17,
           "fedCode": "59252",
@@ -1098,6 +1787,58 @@
                 7,
                 9,
                 9
+              ],
+              "pars": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "si": [
+                7,
+                3,
+                2,
+                5,
+                8,
+                6,
+                9,
+                4,
+                1
+              ],
+              "meters": [
+                151,
+                94,
+                181,
+                179,
+                69,
+                183,
+                146,
+                238,
+                161
+              ],
+              "courseRating": 29.7,
+              "slope": 98,
+              "teeName": "ROXAS",
+              "teeColorId": 90
+            },
+            {
+              "round": 2,
+              "gross": 68,
+              "scores": [
+                8,
+                5,
+                7,
+                10,
+                7,
+                7,
+                10,
+                6,
+                8
               ],
               "pars": [
                 4,
