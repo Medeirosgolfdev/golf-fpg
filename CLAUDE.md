@@ -54,6 +54,25 @@ design-system.html # Referência visual de todos os componentes CSS
 
 > **Pastas retiradas do Git em 2026-06-23 (arrumação)** — `scripts_backup/`, `_archive_2026-*/`, `_probe-tmp/`, `diag-out/`, `outputs/` foram removidas do versionamento (`git rm --cached`, continuam em disco) e adicionadas ao `.gitignore`. Eram backups/temporários sem referência no código. `output/{fed}/*` continua tracked de propósito (output do scraper FPG que alimenta as páginas). Os dois scripts browser-console legados da raiz (`pull-torneios.js`, `scrape-drive-aquapor-v7.js`) foram movidos para `scripts/_archive/browser-console/`.
 
+> **⚠ `output/` é PARTILHADO entre o build e o scraper (arrumado 2026-08-20)** —
+> o `outDir` do Vite é `output/` (`vite.config.ts`), a MESMA pasta onde o
+> scraper FPG escreve `output/{nfed}/…`. Cada `npm run build` copia lá para
+> dentro TODO o `public/`: `index.html`, `assets/`, `data/` (~191 MB) e, à raiz,
+> os mesmos ficheiros e pastas que existem em `public/` (`Logos/`, `docs/`,
+> `reports/`, `logos para outras nupcias/`, `player-stats.json`,
+> `analise-percurso-juniores.html`, …). Essas cópias estavam **tracked** — 423
+> ficheiros / ~144 MB duplicados de `public/` — por isso correr o build em local
+> sujava o `git status` e arriscava entrar lixo nos commits de dados (aconteceu
+> a 2026-08-20). Foram retiradas do versionamento (`git rm --cached`, continuam
+> em disco) e o `.gitignore` passou a ignorar **tudo à raiz de `output/`**,
+> re-incluindo só o que é do scraper: `!/output/[0-9]*/` (os directórios por
+> federado, incluindo os que ainda não existem) e
+> `!/output/extract-courses-cache.json`. **A fonte de verdade destes ficheiros é
+> sempre `public/`** — é lá que os geradores escrevem (`enrich-players.js` →
+> `public/player-stats.json`); o que está em `output/` é resíduo do build.
+> ⚠ Não mover o `outDir` para `dist/` sem confirmar a *Output Directory* do
+> projecto Vercel `golf-fpg` — o deploy de produção depende dela.
+
 ### Páginas (lazy-loaded)
 
 | Rota | Página | Dados |
