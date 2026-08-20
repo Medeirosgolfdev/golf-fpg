@@ -34,6 +34,13 @@ import { teeRuleFor } from "../../utils/teeRegulation";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 
+/** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
+ *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
+function dedupLinks(links: Array<{ label: string; url: string; icon?: string }>) {
+  const seen = new Set<string>();
+  return links.filter(l => !seen.has(l.url) && seen.add(l.url));
+}
+
 function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols, hideHeader }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"]; hideHeader?: boolean }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
@@ -357,8 +364,18 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
                 )
             }
             {/* Links extra específicos do torneio — regulamento, página do
-                clube/evento, etc. Carregados de Tournament.extraLinks. */}
-            {[...(tournament.extraLinks || []), ...(TOURNAMENT_EXTRA_LINKS[`${tournament.ccode}-${tournament.tcode}`] || [])].map((lnk) => (
+                clube/evento, etc. Três fontes, deduplicadas por URL:
+                  1. Tournament.extraLinks (enxertado do synthetic FEATURED)
+                  2. a config FEATURED directamente — fallback obrigatório: quando
+                     os resultados reais chegam, a versão com resultados ganha o
+                     dedup e pode não trazer extraLinks; sem este fallback os
+                     links do clube desapareciam a meio da prova
+                  3. TOURNAMENT_EXTRA_LINKS (mapa avulso em fpg/constants.ts) */}
+            {dedupLinks([
+              ...(tournament.extraLinks || []),
+              ...(featured?.extraLinks || []),
+              ...(TOURNAMENT_EXTRA_LINKS[`${tournament.ccode}-${tournament.tcode}`] || []),
+            ]).map((lnk) => (
               <a key={lnk.url} href={lnk.url}
                 target="_blank" rel="noopener noreferrer"
                 title={lnk.label}

@@ -1766,11 +1766,17 @@ function Content() {
       // synthetic jovem traz as inscrições/draw do fpg-admissions-draws — enxertá-las
       // na versão com resultados para não perder as tabs Inscrições/Draw (caso do
       // Miramar U25/Sub-10 2026, cujos resultados foram scraped à parte durante a prova).
-      if ((!(ex as any)._admissions && (j as any)._admissions) || (!(ex as any)._draws && (j as any)._draws)) {
+      // `extraLinks` (página do clube, regulamento) vem da config FEATURED e só
+      // existe no synthetic: sem o enxerto, os links do clube DESAPARECIAM do
+      // cabeçalho assim que os primeiros resultados eram scraped.
+      if ((!(ex as any)._admissions && (j as any)._admissions)
+          || (!(ex as any)._draws && (j as any)._draws)
+          || (!(ex as any).extraLinks?.length && (j as any).extraLinks?.length)) {
         dedupMap.set(k, {
           ...ex,
           _admissions: (ex as any)._admissions ?? (j as any)._admissions,
           _draws: (ex as any)._draws ?? (j as any)._draws,
+          extraLinks: (ex as any).extraLinks?.length ? (ex as any).extraLinks : (j as any).extraLinks,
         } as Tournament);
       }
     }
