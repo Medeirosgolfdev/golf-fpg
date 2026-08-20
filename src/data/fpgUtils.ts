@@ -219,6 +219,49 @@ export function playerDob(
   );
 }
 
+/** Idade-tecto de um rótulo de escalão: o MAIOR "Sub N" que lá aparecer.
+ *
+ * "Sub 12" → 12 · "Sub 14-24" → 24 · "Sub 10+12" → 12 · "Absoluto" → null.
+ *
+ * ⚠ O maior, não o primeiro: os torneios combinados ("Sub 14-24") admitem toda
+ * a gama, e um tecto de 14 excluiria os jogadores de 20 anos que lá jogam de
+ * pleno direito.
+ *
+ * `null` = sem tecto conhecido (escalão absoluto, sénior ou label não
+ * reconhecida) — quem consome deve tratar isso como "não dá para filtrar",
+ * nunca como "tecto 0".
+ */
+export function escalaoAgeCap(escalao: string | null | undefined): number | null {
+  const nums = String(escalao || "").match(/sub\s*(\d{1,2})/gi);
+  if (!nums || nums.length === 0) return null;
+  const caps = nums
+    .map(m => parseInt(m.replace(/\D/g, ""), 10))
+    .filter(n => Number.isFinite(n));
+  // Um label como "Sub 14-24" dá só um match ("Sub 14") — apanhar também o
+  // segundo número do intervalo.
+  const range = String(escalao || "").match(/sub\s*\d{1,2}\s*[-–+/]\s*(\d{1,2})/i);
+  if (range) caps.push(parseInt(range[1], 10));
+  return caps.length ? Math.max(...caps) : null;
+}
+
+/** Um jogador nascido em `dobYear` pode estar num torneio com este tecto?
+ *
+ * Regra do golfe juvenil: jogar ACIMA do escalão é permitido (um Sub-10 entra
+ * num Sub-12), jogar ABAIXO não. Logo só a idade máxima é vinculativa.
+ *
+ * Sem tecto, sem ano do torneio ou sem data de nascimento → `true`: não há
+ * como excluir, e excluir por falta de dados apagaria jogadores legítimos.
+ */
+export function fitsEscalaoAgeCap(
+  dobYear: number | null | undefined,
+  ageCap: number | null | undefined,
+  tournamentYear: number | null | undefined,
+): boolean {
+  if (ageCap == null || tournamentYear == null) return true;
+  if (dobYear == null || !Number.isFinite(dobYear)) return true;
+  return tournamentYear - dobYear <= ageCap;
+}
+
 export function resolveEsc(
   p: Player,
   escLookup: EscLookup,
