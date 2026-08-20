@@ -55,15 +55,20 @@ jobs:
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
         run: node scripts/test-fpg-admissions-auth.js
 
+      # ⚠ Testar contra "success", NUNCA contra "failure": um passo que não
+      # chegou a correr tem outcome "skipped", e com o teste ao contrário o
+      # resumo dava "✓ os 3 conjuntos estão válidos" sem ter validado nada
+      # (visto a 2026-08-20 num run cancelado no checkout — os 3 testes
+      # skipped e o resumo verde).
       - name: Resumo
         if: always()
         run: |
           FAILED=""
-          [ "${{ steps.fpg.outcome }}"        = "failure" ] && FAILED="$FAILED FPG_COOKIES(my.fpg.pt)"
-          [ "${{ steps.datagolf.outcome }}"   = "failure" ] && FAILED="$FAILED DATAGOLF_SCORING_COOKIES(scoring.datagolf.pt)"
-          [ "${{ steps.admissions.outcome }}" = "failure" ] && FAILED="$FAILED FPG_ADMISSIONS_COOKIES(scoring.fpg.pt)"
+          [ "${{ steps.fpg.outcome }}"        != "success" ] && FAILED="$FAILED FPG_COOKIES(my.fpg.pt):${{ steps.fpg.outcome }}"
+          [ "${{ steps.datagolf.outcome }}"   != "success" ] && FAILED="$FAILED DATAGOLF_SCORING_COOKIES(scoring.datagolf.pt):${{ steps.datagolf.outcome }}"
+          [ "${{ steps.admissions.outcome }}" != "success" ] && FAILED="$FAILED FPG_ADMISSIONS_COOKIES(scoring.fpg.pt):${{ steps.admissions.outcome }}"
           if [ -n "$FAILED" ]; then
-            echo "❌ Cookies expirados/inválidos:$FAILED"
+            echo "❌ Cookies expirados/inválidos (ou teste não corrido):$FAILED"
             echo ""
             echo "Refrescar antes de Sexta à noite (janela de scrapes):"
             echo "  1. Chrome 90 → login/navegar nos sites afectados"
