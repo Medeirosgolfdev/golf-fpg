@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-08-19T21:46:50.396Z",
+  "geradoEm": "2026-08-21T10:25:01.948Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 147,
-  "totalCompanheirosUnicos": 179,
+  "totalRondas": 149,
+  "totalCompanheirosUnicos": 182,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 128,
-      "rondasComDraw": 115,
-      "torneiosJogados": 96,
+      "rondasJogadas": 130,
+      "rondasComDraw": 117,
+      "torneiosJogados": 97,
       "torneiosComDraw": 91,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "003-10652",
+          "nome": "X Miramar Internacional Open U25",
+          "data": "2026-08-19",
+          "rondas": 2
+        },
         {
           "torneioId": "920-10088",
           "nome": "Torneio José Rosado",
@@ -660,6 +666,69 @@
             "gross": 77,
             "toPar": 7
           }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "003-10652",
+      "torneioNome": "VIII Miramar Internacional Open U25",
+      "data": "2026-08-19",
+      "ronda": 2,
+      "teeTime": "08:00",
+      "startHole": 1,
+      "campo": "Miramar",
+      "manuelScore": {
+        "gross": 75,
+        "toPar": 5
+      },
+      "companheiros": [
+        {
+          "nome": "João Setúbal",
+          "fed": "43732",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": {
+            "gross": 67,
+            "toPar": -3
+          }
+        },
+        {
+          "nome": "Nicolas Rebossio Insua",
+          "fed": "50594",
+          "clube": "Amendoeira",
+          "pais": null,
+          "score": {
+            "gross": 79,
+            "toPar": 9
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "003-10652",
+      "torneioNome": "VIII Miramar Internacional Open U25",
+      "data": "2026-08-19",
+      "ronda": 3,
+      "teeTime": "13:10",
+      "startHole": 1,
+      "campo": "Miramar",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "João Rocha",
+          "fed": "48297",
+          "clube": "Estoril",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "João Balixa",
+          "fed": "46038",
+          "clube": "Miramar",
+          "pais": null,
+          "score": null
         }
       ]
     },
@@ -2326,7 +2395,7 @@
       "ronda": 1,
       "teeTime": "09:52",
       "startHole": 10,
-      "campo": null,
+      "campo": "Quinta do Lago Laranjal",
       "manuelScore": {
         "gross": 90,
         "toPar": 18
@@ -2345,7 +2414,7 @@
         {
           "nome": "George Campbell",
           "fed": null,
-          "clube": "-",
+          "clube": "IRL",
           "pais": null,
           "score": {
             "gross": 99,
