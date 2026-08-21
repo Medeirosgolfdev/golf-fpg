@@ -126,6 +126,37 @@ function extractCells(rowHtml: string): string[] {
   return cells
 }
 
+/* Parser da admissions.asp PÚBLICA (scoring-pt.datagolf.pt).
+   Colunas [Nome, Federado, Clube/Equipa, HCP Exacto, HCP Jogo] — sem posição
+   de inscrição, VAC, data de registo nem reservas (lista alfabética).
+   Espelha parseAdmissionsPt() de scripts/fpg-admissions-draw-parser.js. */
+function parseAdmissionsPtTable(html: string, logPrefix: string): Jogador[] {
+  const jogadores: Jogador[] = []
+  const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi
+  let tm: RegExpExecArray | null
+  while ((tm = trRe.exec(html)) !== null) {
+    const cells: string[] = []
+    const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi
+    let dm: RegExpExecArray | null
+    while ((dm = tdRe.exec(tm[1])) !== null) cells.push(stripTags(dm[1]))
+    if (cells.length < 4 || cells.length > 6) continue
+    const [nome, fedRaw, clubeRaw, hcpRaw] = cells
+    if (!nome || /^Jogador$/i.test(nome) || /^Hora$/i.test(nome)) continue
+    if (!/^(\d{3,6}|-)$/.test((fedRaw ?? '').trim())) continue
+    if (parseHcp(hcpRaw) == null) continue
+    jogadores.push({
+      fed:   /^\d{3,6}$/.test(fedRaw.trim()) ? fedRaw.trim() : null,
+      nome,
+      clube: clubeRaw && clubeRaw !== '-' ? clubeRaw : '',
+      hcp:   parseHcp(hcpRaw),
+      vac:   null,
+      dataInscricao: null,
+    })
+  }
+  console.log(logPrefix + ' -> ' + jogadores.length + ' inscritos (admissions.asp pública)')
+  return jogadores
+}
+
 function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
   const jogadores: Jogador[] = []
   const clean = html
@@ -636,7 +667,7 @@ export default defineConfig({
           // servidor rejeita cookies de subdomínio errado). NUNCA sem cookies (500
           // por falta de sessão ASP.NET). A experiência "cross-subdomain via SSO"
           // foi testada 2026-04-17 → 2026-04-22 e é conclusivamente inviável.
-          type Attempt = { url: string; headers: Record<string, string>; label: string; warmup?: boolean }
+          type Attempt = { url: string; headers: Record<string, string>; label: string; warmup?: boolean; parser?: 'pt'; lastResort?: boolean }
           const attempts: Attempt[] = []
           if (cookieFpg)      attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg },      label: 'fpg+cookie' })
           if (cookieDatagolf) attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieDatagolf }, label: 'datagolf+cookie' })
@@ -652,6 +683,20 @@ export default defineConfig({
             url: 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=' + ccode + '&tcode=' + tcode,
             headers: { ...baseHeaders, Cookie: cookieDatagolf, Referer: 'https://scoring.datagolf.pt/' },
             label: 'datagolf+directo', warmup: true,
+          })
+          // 4) admissions.asp PÚBLICA — SEM cookies. É a única fonte que serve
+          //    ccodes de CLUBE: as três anteriores só respondem ao ccode a que a
+          //    sessão do servidor está presa (na prática 000, o do gateway do
+          //    refresh-all-cookies) e devolvem "Param Error" para todos os
+          //    outros — medido em 12 clubes distintos, incl. torneios que já
+          //    tinham sido scrapados com sucesso. Com o `ack` na query string
+          //    responde a fetch puro (CLAUDE.md 2026-08-20). Traz menos campos,
+          //    por isso é último recurso e só corre se nada mais deu inscritos.
+          attempts.push({
+            url: 'https://scoring-pt.datagolf.pt/scripts/admissions.asp?club=' + ccode +
+                 '&tourn=' + tcode + '&LANG_TXT=PT&ack=XH256YF450',
+            headers: baseHeaders,
+            label: 'publico+admissions.asp', parser: 'pt', lastResort: true,
           })
 
           // Tentar todos os URLs e FUNDIR resultados (deduplicar por fed code).
@@ -679,7 +724,7 @@ export default defineConfig({
             // O fallback directo só serve para salvar o caso em que o linkpage
             // não cobre o ccode; se as fontes anteriores já deram inscritos,
             // poupa-se o warmup + pedido extra.
-            if (att.warmup && merged.size > 0) continue
+            if ((att.warmup || att.lastResort) && merged.size > 0) continue
             console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] ' + att.url)
             try {
               if (att.warmup && !dgWarmupDone) {
@@ -704,7 +749,9 @@ export default defineConfig({
               if (!r.ok) { diag.note = 'http-nao-ok'; diagnostics.push(diag); continue }
               if (paramErr) { diag.note = 'param-errors'; diagnostics.push(diag); continue }
               if (!bestStatus) { bestStatus = r.status; bestHtml = txt }
-              const parsed = parseAdmissionsTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
+              const parsed = att.parser === 'pt'
+                ? parseAdmissionsPtTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
+                : parseAdmissionsTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
               parsedByLabel[att.label] = parsed.length
               diag.parsed = parsed.length
               let uniqueContrib = 0

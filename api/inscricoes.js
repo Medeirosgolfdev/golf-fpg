@@ -166,6 +166,39 @@ function extractCells(rowHtml) {
   return cells;
 }
 
+/* Parser da admissions.asp PÚBLICA (scoring-pt.datagolf.pt).
+ * Formato diferente da tournAdmissions.aspx: colunas
+ * [Nome, Federado, Clube/Equipa, HCP Exacto, HCP Jogo], sem posição de
+ * inscrição, data de registo, VAC nem reservas (lista por ordem alfabética).
+ * Espelha parseAdmissionsPt() de scripts/fpg-admissions-draw-parser.js,
+ * devolvendo já a forma que o handler usa. */
+function parseAdmissionsPtTable(html) {
+  const jogadores = [];
+  const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tm;
+  while ((tm = trRe.exec(html)) !== null) {
+    const cells = [];
+    const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+    let dm;
+    while ((dm = tdRe.exec(tm[1])) !== null) cells.push(stripTags(dm[1]));
+    if (cells.length < 4 || cells.length > 6) continue;
+    const [nome, fedRaw, clubeRaw, hcpRaw] = cells;
+    if (!nome || /^Jogador$/i.test(nome) || /^Hora$/i.test(nome)) continue;
+    // Uma linha de jogador tem sempre a coluna Federado (nº ou "-") e um HCP.
+    if (!/^(\d{3,6}|-)$/.test((fedRaw || "").trim())) continue;
+    if (parseHcp(hcpRaw) == null) continue;
+    jogadores.push({
+      fed:  /^\d{3,6}$/.test(fedRaw.trim()) ? fedRaw.trim() : null,
+      nome,
+      clube: clubeRaw && clubeRaw !== "-" ? clubeRaw : null,
+      hcp:  parseHcp(hcpRaw),
+      vac:  null,
+      dataInscricao: null,
+    });
+  }
+  return jogadores;
+}
+
 function parseAdmissionsTable(html) {
   const jogadores = [];
   const clean = html
@@ -342,14 +375,33 @@ async function fetchAdmissionsHTML(ccode, tcode) {
       if (r.ok && html && !/Param_Errors|Err=999/.test(html)) {
         return { ok: true, html, status: r.status, via: "datagolf-directo" };
       }
-      return { ok: false, html, status: r.status, via: "datagolf-directo" };
     } catch (e) {
       console.error("[inscricoes] erro datagolf directo:", e.message);
-      return { ok: false, html: "", status: 0, via: "error", error: e.message };
     }
   }
 
-  return { ok: false, html: "", status: 0, via: "sem-fallback-datagolf" };
+  // Tentativa 4: admissions.asp PUBLICA (scoring-pt.datagolf.pt) - SEM cookies.
+  // Ultimo recurso, mas o unico que serve os ccodes de CLUBE: o linkpage.aspx
+  // e o tournAdmissions.aspx so respondem ao ccode a que a sessao do servidor
+  // esta presa (na pratica 000, o do gateway), devolvendo "Param Error" para
+  // todos os outros - medido em 12 clubes distintos. Com o `ack` na query
+  // string esta pagina responde a fetch puro (ver CLAUDE.md 2026-08-20).
+  // Traz menos campos (sem pos/VAC/data de registo/reservas), dai ser a ultima.
+  try {
+    const urlPt = "https://scoring-pt.datagolf.pt/scripts/admissions.asp?club=" + ccode +
+                  "&tourn=" + tcode + "&LANG_TXT=PT&ack=XH256YF450";
+    const r = await fetch(urlPt, { headers: baseHeaders, redirect: "follow" });
+    const html = await r.text();
+    console.log("[inscricoes] " + ccode + "/" + tcode + " [publico admissions.asp] HTTP=" + r.status + " len=" + html.length);
+    // Sem `ack` valido a pagina redirecciona para datalinkpt.html (frameset vazio).
+    if (r.ok && html && !/datalinkpt\.html/.test(r.url) && !/Param_Errors|Err=999/.test(html)) {
+      return { ok: true, html, status: r.status, via: "publico-asp", format: "pt" };
+    }
+  } catch (e) {
+    console.error("[inscricoes] erro admissions.asp publico:", e.message);
+  }
+
+  return { ok: false, html: "", status: 0, via: "todas-as-fontes-falharam" };
 }
 
 // ═════════════════════════════════════════════════════════════════════
@@ -386,7 +438,9 @@ export default async function handler(req, res) {
       });
     }
 
-    const jogadores = parseAdmissionsTable(result.html);
+    const jogadores = result.format === "pt"
+      ? parseAdmissionsPtTable(result.html)
+      : parseAdmissionsTable(result.html);
     console.log("[inscricoes] " + ccode + "/" + tcode + " -> " + jogadores.length + " inscritos (via " + result.via + ")");
 
     res.setHeader("Cache-Control", "no-cache");
