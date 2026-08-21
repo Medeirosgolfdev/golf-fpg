@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-21T10:25:01.948Z",
+  "geradoEm": "2026-08-21T20:20:36.170Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -714,21 +714,30 @@
       "teeTime": "13:10",
       "startHole": 1,
       "campo": "Miramar",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 81,
+        "toPar": 11
+      },
       "companheiros": [
         {
           "nome": "João Rocha",
           "fed": "48297",
           "clube": "Estoril",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 74,
+            "toPar": 4
+          }
         },
         {
           "nome": "João Balixa",
           "fed": "46038",
           "clube": "Miramar",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 76,
+            "toPar": 6
+          }
         }
       ]
     },
