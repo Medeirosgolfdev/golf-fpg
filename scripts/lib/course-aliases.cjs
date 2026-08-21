@@ -78,6 +78,11 @@ const COURSE_NAME_ALIASES = {
   "porto santo": "Porto Santo Golfe",
   "santo estevão": "Santo Estevão Golf",
   "santo estevao": "Santo Estevão Golf",
+  // ── NOVO 2026-08-20 — Oeiras remodelado, renomeado "Oeiras Green Valley" ──
+  // A FPG continua a escrever "Oeiras" no campo das voltas (638 voltas nossas,
+  // 124 jogadores); sem este alias o rename do master orfanava-as todas.
+  "oeiras": "Oeiras Green Valley",
+  "oeiras golf": "Oeiras Green Valley",
   // ── NOVO 2026-07-07 — Paris Invitational (Golf Val d'Europe Disneyland) ──
   // Apenas para variantes de "GOLF VAL D'EUROPE" — NÃO fazer alias para "INTERNACIONAL"
   // porque esse é genérico para TODOS os torneios internacionais

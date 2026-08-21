@@ -114,6 +114,13 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "454golf du médoc": "Golf du Médoc",
   "pga catalunya resort, spain": "PGA Catalunya Resort",
 
+  // ── NOVO 2026-08-20 — Oeiras remodelado e renomeado "Oeiras Green Valley" ──
+  // A FPG continua a escrever só "Oeiras" no campo das voltas; sem o alias, o
+  // rename no master-courses.json orfanava as 638 voltas nossas (124 jogadores).
+  // Espelhado em scripts/lib/course-aliases.cjs.
+  "oeiras": "Oeiras Green Valley",
+  "oeiras golf": "Oeiras Green Valley",
+
   // ── NOVO 2026-07-07 — Paris Invitational (Golf Val d'Europe Disneyland) ──
   // Apenas para variantes de "GOLF VAL D'EUROPE" — NÃO fazer alias para "INTERNACIONAL"
   // porque esse é genérico para TODOS os torneios internacionais
