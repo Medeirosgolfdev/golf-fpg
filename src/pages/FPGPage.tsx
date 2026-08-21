@@ -1106,6 +1106,12 @@ function Content() {
           // com as entradas de inscrições/draw do fpg-admissions-draws por ccode-tcode.
           "/data/torneio-003-10652.json",
           "/data/torneio-003-10653.json",
+          // Paul McGinley Junior Cup 2026 (ccode 962) — U18&U16 (10082), U14
+          // (10083), U12 (10084). Scraped à parte; fundem com as inscrições/draw
+          // do fpg-admissions-draws por ccode-tcode.
+          "/data/torneio-962-10082.json",
+          "/data/torneio-962-10083.json",
+          "/data/torneio-962-10084.json",
         ];
         await Promise.all(EXTRA_TOURN_FILES.map(async (url) => {
           try {

@@ -1,32 +1,32 @@
-name: Scrape Miramar 2026 (resultados)
+name: Scrape torneios juvenis a pedido (Miramar / McGinley)
 
-# Re-scrapa os resultados do Miramar Internacional Open U25 2026 (ccode 003)
-# a PEDIDO — para correr durante a prova (19-21 Ago 2026) quando cada ronda
-# acaba. Escreve os ficheiros standalone que a FPGPage carrega via
-# EXTRA_TOURN_FILES:
-#   public/data/torneio-003-10652.json  (U25, Sub12→Sub25 — 54 buracos)
-#   public/data/torneio-003-10653.json  (Sub-10 — 27 buracos)
+# Re-scrapa a PEDIDO os resultados de torneios juvenis que decorrem em vários
+# dias, para correr quando cada ronda acaba. Escreve os ficheiros standalone
+# que a FPGPage carrega via EXTRA_TOURN_FILES (public/data/torneio-{ccode}-{tcode}.json):
 #
-# Fonte: scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=NNNNN
-# via scripts/scrape-classif-node.js (Node puro, warmup linkpage + ClassifLST
-# + ScoreCard). Merge ADITIVO: re-correr a meio de uma ronda nunca apaga
-# buracos já guardados; posição/total/±par vêm sempre do scrape novo.
+#   003/10652  Miramar Internacional Open U25 2026 (U25, 54 buracos)   [terminado]
+#   003/10653  Miramar Internacional Open U25 2026 (Sub-10, 27 buracos) [terminado]
+#   962/10082  Paul McGinley Junior Cup 2026 — U18 & U16 (2 rondas)
+#   962/10083  Paul McGinley Junior Cup 2026 — U14      (2 rondas)
+#   962/10084  Paul McGinley Junior Cup 2026 — U12      (2 rondas)
 #
-# Só faz commit se algum ficheiro mudou (ex: R2 acabou → novos totais).
+# Fonte: scoring.datagolf.pt/pt/Classifications.aspx?ccode=CCC&tcode=NNNNN via
+# scripts/scrape-classif-node.js (Node puro, warmup linkpage + ClassifLST +
+# ScoreCard). Merge ADITIVO: re-correr a meio de uma ronda nunca apaga buracos
+# já guardados; posição/total/±par vêm sempre do scrape novo. Torneios já
+# terminados que se re-scrapem não mudam → não geram commit.
+#
+# Só faz commit se algum ficheiro mudou (ex: a R2 acabou → novos totais).
 #
 # Requer GitHub Secret: DATAGOLF_SCORING_COOKIES (cookie header de
 # scoring.datagolf.pt — os mesmos do update-classif/update-drive).
 on:
   workflow_dispatch:
     inputs:
-      tcodes:
-        description: 'tcodes a scrapar (CSV). Default = U25 + Sub-10.'
+      pairs:
+        description: 'Pares ccode:tcode a scrapar (CSV). Default = Miramar + McGinley 2026.'
         required: false
-        default: '10652,10653'
-      ccode:
-        description: 'ccode do clube.'
-        required: false
-        default: '003'
+        default: '003:10652,003:10653,962:10082,962:10083,962:10084'
       force_commit:
         description: 'Commit mesmo sem mudanças?'
         required: false
@@ -38,9 +38,9 @@ permissions:
   contents: write
 
 jobs:
-  scrape-miramar:
+  scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - name: Checkout
@@ -57,18 +57,21 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Scrapar cada tcode para o seu ficheiro standalone
+      - name: Scrapar cada par ccode:tcode para o seu ficheiro standalone
         id: scrape
         run: |
           set +e
-          CCODE="${{ github.event.inputs.ccode || '003' }}"
-          TCODES="${{ github.event.inputs.tcodes || '10652,10653' }}"
+          PAIRS="${{ github.event.inputs.pairs || '003:10652,003:10653,962:10082,962:10083,962:10084' }}"
           ANY_OK=0
           ANY_ERR=0
-          IFS=',' read -ra ARR <<< "$TCODES"
-          for TC in "${ARR[@]}"; do
-            TC="$(echo "$TC" | tr -d '[:space:]')"
-            [ -z "$TC" ] && continue
+          FILES=""
+          IFS=',' read -ra ARR <<< "$PAIRS"
+          for PAIR in "${ARR[@]}"; do
+            PAIR="$(echo "$PAIR" | tr -d '[:space:]')"
+            [ -z "$PAIR" ] && continue
+            CCODE="${PAIR%%:*}"
+            TC="${PAIR##*:}"
+            [ -z "$CCODE" ] || [ -z "$TC" ] || [ "$CCODE" = "$TC" ] && { echo "⚠ par inválido: $PAIR (usar ccode:tcode)"; continue; }
             OUT="public/data/torneio-${CCODE}-${TC}.json"
             echo "── Scrape ${CCODE}/${TC} → ${OUT}"
             node scripts/scrape-classif-node.js --tclub "$CCODE" --tcode "$TC" --out "$OUT"
@@ -76,8 +79,10 @@ jobs:
             echo "  exit=$EC"
             if [ "$EC" = "1" ]; then ANY_ERR=1; fi
             if [ "$EC" = "0" ]; then ANY_OK=1; fi
+            [ -f "$OUT" ] && FILES="$FILES $OUT"
           done
           echo "any_ok=$ANY_OK" >> $GITHUB_OUTPUT
+          echo "files=$FILES" >> $GITHUB_OUTPUT
           if [ "$ANY_ERR" = "1" ] && [ "$ANY_OK" = "0" ]; then
             echo "❌ Todos os scrapes falharam"
             exit 1
@@ -88,16 +93,7 @@ jobs:
 
       - name: Validar ficheiros
         run: |
-          CCODE="${{ github.event.inputs.ccode || '003' }}"
-          TCODES="${{ github.event.inputs.tcodes || '10652,10653' }}"
-          FILES=""
-          IFS=',' read -ra ARR <<< "$TCODES"
-          for TC in "${ARR[@]}"; do
-            TC="$(echo "$TC" | tr -d '[:space:]')"
-            [ -z "$TC" ] && continue
-            F="public/data/torneio-${CCODE}-${TC}.json"
-            [ -f "$F" ] && FILES="$FILES $F"
-          done
+          FILES="${{ steps.scrape.outputs.files }}"
           [ -n "$FILES" ] && node scripts/validate-data.js $FILES || echo "Sem ficheiros para validar"
 
       - name: Commit e push (se houver mudanças)
@@ -113,7 +109,7 @@ jobs:
           fi
 
           DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m "data: Miramar 2026 resultados ${DATE}" || { echo "Nada para commitar"; exit 0; }
+          git commit -m "data: resultados torneios juvenis ${DATE}" || { echo "Nada para commitar"; exit 0; }
 
           for i in 1 2 3 4 5; do
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
