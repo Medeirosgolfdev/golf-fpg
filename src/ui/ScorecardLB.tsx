@@ -538,12 +538,20 @@ export function ScorecardLB({
                 let dob: string | undefined =
                   playerDob(p, { playersDB, fedBirthdates }) || undefined;
                 if (!dob && p.name) {
+                  // ⚠ Match por NOME é arriscado: um homónimo sénior era cruzado
+                  // com o miúdo inscrito (ex: "Luis Mateus" 47a no Sub-12). Só
+                  // aceitar candidato ÚNICO e de idade JUVENIL plausível (≤25,
+                  // cobre até ao U25); vários juvenis = ambíguo → não mostrar.
                   const norm = normLoose;
                   const nn = norm(p.name);
+                  const juniorDobs: string[] = [];
                   for (const k in playersDB) {
                     const e = (playersDB as any)[k];
-                    if (e?.dob && e?.name && norm(e.name) === nn) { dob = e.dob; break; }
+                    if (!e?.dob || !e?.name || norm(e.name) !== nn) continue;
+                    const a = ageAtDate(e.dob, tournament.date);
+                    if (a != null && a >= 0 && a <= 25) juniorDobs.push(e.dob);
                   }
+                  if (juniorDobs.length === 1) dob = juniorDobs[0];
                 }
                 const age = ageAtDate(dob, tournament.date);
                 if (age != null && age >= 0 && age < 100) {
