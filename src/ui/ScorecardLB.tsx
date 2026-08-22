@@ -540,8 +540,15 @@ export function ScorecardLB({
                 if (!dob && p.name) {
                   // ⚠ Match por NOME é arriscado: um homónimo sénior era cruzado
                   // com o miúdo inscrito (ex: "Luis Mateus" 47a no Sub-12). Só
-                  // aceitar candidato ÚNICO e de idade JUVENIL plausível (≤25,
-                  // cobre até ao U25); vários juvenis = ambíguo → não mostrar.
+                  // aceitar candidato ÚNICO e de idade plausível PARA ESTE
+                  // torneio — tecto = escalão da prova (Sub N / U N / Under N),
+                  // com +1 de margem para aniversários no limite; vários
+                  // candidatos válidos = ambíguo → não mostrar.
+                  const capNums = `${tournament.escalao || ""} ${tournament.name || ""}`
+                    .match(/\b(?:sub|under|u)\s*(\d{1,2})\b/gi)
+                    ?.map(m => parseInt(m.replace(/\D/g, ""), 10))
+                    .filter(n => Number.isFinite(n)) || [];
+                  const ageCap = capNums.length ? Math.max(...capNums) + 1 : 25;
                   const norm = normLoose;
                   const nn = norm(p.name);
                   const juniorDobs: string[] = [];
@@ -549,7 +556,7 @@ export function ScorecardLB({
                     const e = (playersDB as any)[k];
                     if (!e?.dob || !e?.name || norm(e.name) !== nn) continue;
                     const a = ageAtDate(e.dob, tournament.date);
-                    if (a != null && a >= 0 && a <= 25) juniorDobs.push(e.dob);
+                    if (a != null && a >= 0 && a <= ageCap) juniorDobs.push(e.dob);
                   }
                   if (juniorDobs.length === 1) dob = juniorDobs[0];
                 }
