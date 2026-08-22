@@ -91,6 +91,14 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      # O scraper regenera o ficheiro do zero e os jogadores "Internacional"
+      # (sem federado FPG) vêm sem dob/sexo → sem escalão. Este passo volta a
+      # anexar a ficha RFEG (_rfeg com dob/sexo) por nome, senão os espanhóis
+      # do Miramar ficam sem escalão nos resultados a cada re-scrape.
+      - name: Enriquecer internacionais (ficha RFEG)
+        if: steps.scrape.outputs.files != ''
+        run: node scripts/enrich-intl-players.js ${{ steps.scrape.outputs.files }} || echo "enrich falhou (não aborta)"
+
       - name: Validar ficheiros
         run: |
           FILES="${{ steps.scrape.outputs.files }}"
