@@ -12,6 +12,7 @@ const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const { extrairAncoras, fundirAncoras, aplicarDatasInscricao } = require('./lib/uskids-reg-dates');
+const { criarPlano, proximoIntervalo, aplicarResultado } = require('./lib/uskids-scan-plan');
 
 // ── Filtros de descoberta ─────────────────────
 const KEYWORDS_INCLUIR = [
@@ -63,12 +64,10 @@ const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase()
 // Os tcodes do signupanytime são sequenciais por criação, mas só uma fatia
 // pertence à conta internacional (ax=1129) — daí os buracos. Medido 2026-08-23:
 // na zona viva (t>=23061) o maior buraco real é de 15 tcodes; abaixo do topo
-// conhecido há buracos de 600+ (21610→22243). Por isso a fronteira pode parar
-// cedo, mas a zona já conhecida tem de ser varrida por inteiro.
+// conhecido há buracos de 600+ (21610→22243). A zona já conhecida é varrida por
+// inteiro (Passagem A) e a fronteira segue o plano de scan-plan.js, que nunca
+// desiste definitivamente num buraco.
 const SCAN_CONCURRENCY   = 5;    // pedidos GetMeta em paralelo
-const BLOCK              = 60;   // tcodes por bloco na fronteira
-const EMPTY_BLOCKS_LIMIT = 4;    // 4 blocos vazios seguidos (240 tcodes) = fim
-const T_FRONTEIRA_MAX    = 4000; // tecto de segurança acima do maior t conhecido
 const DELAY_SCAN   = 60;
 const DELAY_FETCH  = 400;
 // Redescobrir se cache tiver mais de 3 dias
@@ -298,30 +297,46 @@ async function metaTournament(t) {
       });
       clearTimeout(to);
       if (!r.ok) throw new Error('HTTP ' + r.status);
-      const j = await r.json();
+      // ⚠ Um tcode que não existe responde HTTP 200 com CORPO VAZIO. Chamar
+      // r.json() aí lança, e tratar essa excepção como falha de rede faz cada
+      // tcode inexistente custar 3 tentativas × 12 s — a varredura da fronteira
+      // (toda ela vazia, por definição) deixava de acabar em tempo útil.
+      const txt = (await r.text()).trim();
+      if (!txt) return null;                    // não existe
+      let j;
+      try { j = JSON.parse(txt); } catch { return null; }   // lixo ⇒ não existe
       return j?.tournament?.name ? j.tournament : null;
     } catch {
       clearTimeout(to);
-      if (attempt === 3) return null;
+      // ⚠ Ao fim das tentativas devolvemos ERRO, não null: um tcode que não
+      // responde NÃO é um tcode vazio. Confundir os dois faz uma falha de rede
+      // parecer o fim da fronteira e trunca a varredura em silêncio.
+      if (attempt === 3) return ERRO;
       await sleep(400 * attempt);
     }
   }
-  return null;
+  return ERRO;
 }
 
+/** Sentinela: o tcode não respondeu (≠ o tcode não existe). */
+const ERRO = Symbol('erro-rede');
+
 /** Varre [de..ate] em paralelo. `registar(t, tournament)` decide o que guardar.
- *  Devolve { total, ultimoT } contando TODOS os torneios existentes (mesmo os
- *  não-internacionais) — é isso que diz se a fronteira ainda tem vida. */
+ *  Devolve { total, ultimoT, erros } contando TODOS os torneios existentes
+ *  (mesmo os não-internacionais) — é isso que diz se a fronteira tem vida.
+ *  Um intervalo com erros a mais é repetido uma vez antes de contar como vazio. */
 async function varrerIntervalo(de, ate, registar) {
   const ts = [];
   for (let t = de; t <= ate; t++) ts.push(t);
   const achados = [];
+  let erros = 0;
   let i = 0;
   async function worker() {
     while (i < ts.length) {
       const t  = ts[i++];
       const tn = await metaTournament(t);
-      if (tn) achados.push([t, tn]);
+      if (tn === ERRO) erros++;
+      else if (tn) achados.push([t, tn]);
       await sleep(DELAY_SCAN);
     }
   }
@@ -329,7 +344,25 @@ async function varrerIntervalo(de, ate, registar) {
   achados.sort((a, b) => a[0] - b[0]);
   let ultimoT = 0;
   for (const [t, tn] of achados) { ultimoT = t; registar(t, tn); }
-  return { total: achados.length, ultimoT };
+  return { total: achados.length, ultimoT, erros };
+}
+
+/** Fracção de tcodes que não responderam a partir da qual o intervalo não é de
+ *  confiança — é repetido antes de poder contar como vazio. */
+const ERRO_TOLERADO = 0.25;
+
+/** varrerIntervalo com uma repetição quando a rede estragou o intervalo. */
+async function varrerIntervaloFiavel(de, ate, registar) {
+  let r = await varrerIntervalo(de, ate, registar);
+  const n = ate - de + 1;
+  if (r.total === 0 && r.erros > n * ERRO_TOLERADO) {
+    console.warn(`   ⚠️  t=${de}…${ate}: ${r.erros}/${n} sem resposta — a repetir`);
+    await sleep(2000);
+    const r2 = await varrerIntervalo(de, ate, registar);
+    r = { total: r2.total, ultimoT: r2.ultimoT, erros: r.erros + r2.erros,
+          degradado: r2.total === 0 && r2.erros > n * ERRO_TOLERADO };
+  }
+  return r;
 }
 
 // ─────────────────────────────────────────────
@@ -394,18 +427,41 @@ async function descobrirTorneios() {
   }
 
   // ── Passagem B: fronteira (acima do maior t conhecido) ───────────────────
-  // Aqui os tcodes são densos (maior buraco real medido: 15), por isso parar ao
-  // fim de EMPTY_BLOCKS_LIMIT blocos seguidos sem NENHUM torneio é seguro.
-  const tCapB = tKnownMax + T_FRONTEIRA_MAX;
-  console.log(`   ⏩ Passagem B: t=${tKnownMax + 1}… (pára após ${BLOCK * EMPTY_BLOCKS_LIMIT} tcodes seguidos vazios; tecto t=${tCapB})`);
-  let vazios = 0, fronteira = tKnownMax;
-  for (let t = tKnownMax + 1; t <= tCapB && vazios < EMPTY_BLOCKS_LIMIT; t += BLOCK) {
-    const r = await varrerIntervalo(t, Math.min(t + BLOCK - 1, tCapB), registar);
-    if (r.total) { vazios = 0; fronteira = r.ultimoT; }
-    else vazios++;
+  // A paragem NUNCA é definitiva — ver scripts/lib/uskids-scan-plan.js. A rede
+  // densa segue o último tcode vivo (margem dinâmica) e, se um buraco absurdo a
+  // interromper, as sondas de salto procuram vida muito mais à frente e a densa
+  // retoma. Só termina quando as sondas esgotam o alcance sem achar nada.
+  let plano = criarPlano({ inicio: tKnownMax + 1 });
+  console.log(`   ⏩ Passagem B: t=${tKnownMax + 1}… (densa até últimoVivo+${plano.margemDensa}, sondas até +${plano.tectoSonda})`);
+  // Disjuntor: com o servidor em baixo cada intervalo custa minutos e a
+  // varredura comeria a corrida inteira (incl. a Fase 2, que é o que alimenta a
+  // página). Ao fim de DEGRADADOS_SEGUIDOS abandona-se a fronteira — mas o
+  // motivo fica 'rede-degradada', NÃO 'fronteira-esgotada': é uma corrida
+  // falhada, não uma fronteira que acabou, e o canário grita por causa disso.
+  const DEGRADADOS_SEGUIDOS = 3;
+  let degradados = 0, seguidos = 0, abortou = false;
+  for (;;) {
+    const iv = proximoIntervalo(plano);
+    if (!iv) break;
+    const r = await varrerIntervaloFiavel(iv.de, iv.ate, registar);
+    if (r.degradado) { degradados++; seguidos++; } else seguidos = 0;
+    if (seguidos >= DEGRADADOS_SEGUIDOS) {
+      console.warn(`   ⛔ ${seguidos} intervalos seguidos sem resposta — fronteira abandonada nesta corrida`);
+      abortou = true;
+      break;
+    }
+    plano = aplicarResultado(plano, iv, r);
   }
-  cache.varredura_max_t = Math.max(tKnownMax, fronteira);
-  console.log(`   📡 Fronteira: último tcode vivo t=${cache.varredura_max_t}`);
+  cache.varredura_max_t = Math.max(tKnownMax, plano.ultimoVivo);
+  cache.varredura = {
+    fim: abortou ? 'rede-degradada' : plano.motivo,
+    blocos: plano.blocosDensos, sondas: plano.sondas,
+    retomas: plano.retomas, intervalos_degradados: degradados,
+  };
+  console.log(`   📡 Fronteira: último tcode vivo t=${cache.varredura_max_t}` +
+              ` (${plano.blocosDensos} blocos, ${plano.sondas} sondas` +
+              `${plano.retomas ? `, ${plano.retomas} retomas após buraco` : ''}` +
+              `${degradados ? `, ⚠️ ${degradados} intervalos degradados` : ''})`);
 
   const activos = [...conhecidos.values()]
     .filter(t => diasAte(t.date_inicio) >= -30)
@@ -426,10 +482,30 @@ async function descobrirTorneios() {
     console.log(`   📌 Âncora próxima corrida: t=${cache.ultimo_t + 1} (torneio mais antigo dos próximos 60d)`);
   }
 
+  // ── Canário ─────────────────────────────────────────────────────────────
+  // A avaria de 2026 durou 7 semanas porque NADA gritou: o workflow ficava
+  // verde a descobrir zero torneios. Estes dois carimbos são o que torna uma
+  // paragem visível — o passo "Canário" do uskids-field.yml falha o job (e o
+  // GitHub manda email) quando ficam estagnados.
+  const hojeISO = new Date().toISOString().slice(0, 10);
+  // Arrancar o contador na primeira corrida: sem carimbo inicial,
+  // dias_sem_descoberta ficaria null para sempre até haver um torneio novo —
+  // e o canário nunca dispararia se a varredura partisse já a seguir.
+  if (encontrados > 0 || !cache.ultima_descoberta) cache.ultima_descoberta = hojeISO;
+  if (cache.varredura_max_t > (cache.fronteira_max_t_visto || 0)) {
+    cache.fronteira_max_t_visto = cache.varredura_max_t;
+    cache.fronteira_avancou_em  = hojeISO;
+  }
+  const idade = (d) => d ? Math.floor((Date.parse(hojeISO) - Date.parse(d)) / 86400000) : null;
+  cache.dias_sem_descoberta = idade(cache.ultima_descoberta);
+  cache.dias_sem_avanco     = idade(cache.fronteira_avancou_em);
+
   fs.mkdirSync(DIR, { recursive: true });
   fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
 
-  console.log(`   ✓ ${activos.length} torneios (${encontrados} novos)\n`);
+  console.log(`   ✓ ${activos.length} torneios (${encontrados} novos)`);
+  console.log(`   🐤 Canário: ${cache.dias_sem_descoberta ?? '?'}d sem torneios novos · ` +
+              `${cache.dias_sem_avanco ?? '?'}d sem a fronteira avançar\n`);
   return activos;
 }
 

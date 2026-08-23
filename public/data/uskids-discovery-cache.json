@@ -299,6 +299,17 @@
       "fee_18": "265.00"
     }
   ],
-  "gerado_em": "2026-08-23T12:04:16.304Z",
-  "varredura_max_t": 23588
+  "gerado_em": "2026-08-23T23:18:14.412Z",
+  "varredura_max_t": 23588,
+  "varredura": {
+    "fim": "fronteira-esgotada",
+    "blocos": 25,
+    "sondas": 74,
+    "retomas": 0,
+    "intervalos_degradados": 0
+  },
+  "fronteira_max_t_visto": 23588,
+  "fronteira_avancou_em": "2026-08-23",
+  "dias_sem_descoberta": null,
+  "dias_sem_avanco": 0
 }

@@ -48,3 +48,25 @@ jobs:
             echo "❌ Push falhou após 5 tentativas"
             exit 1
           fi
+      # Canário: a avaria de 2026 passou 7 semanas despercebida porque o
+      # workflow ficava VERDE a descobrir zero torneios. Falhar aqui faz o
+      # GitHub mandar email. Limiares largos de propósito — isto avisa que a
+      # varredura parou, não que houve uma semana fraca.
+      - name: Canário — a descoberta continua viva?
+        run: |
+          node -e '
+            const c = require("./public/data/uskids-discovery-cache.json");
+            const d = c.dias_sem_descoberta, a = c.dias_sem_avanco;
+            console.log(`sem torneios novos: ${d}d | sem a fronteira avançar: ${a}d | último tcode vivo: ${c.varredura_max_t}`);
+            console.log(`varredura: ${JSON.stringify(c.varredura || {})}`);
+            const erros = [];
+            if (d != null && d > 30) erros.push(`${d} dias sem descobrir um torneio novo`);
+            if (a != null && a > 21) erros.push(`${a} dias sem a fronteira de tcodes avançar`);
+            if (c.varredura && c.varredura.fim === "rede-degradada")
+              erros.push("a fronteira foi abandonada por falta de resposta do servidor");
+            else if (c.varredura && c.varredura.intervalos_degradados >= 2)
+              erros.push(`${c.varredura.intervalos_degradados} intervalos sem resposta (rede degradada)`);
+            if (!erros.length) { console.log("OK"); process.exit(0); }
+            console.log(`::error::USKids: a varredura pode estar parada — ${erros.join("; ")}. Ver a secção da varredura de tcodes no CLAUDE.md.`);
+            process.exit(1);
+          '

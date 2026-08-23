@@ -826,9 +826,41 @@ desde 6 de Julho** (o site ficou preso em Outubro). Por cima disso havia um
 
 - **Passagem A** — âncora → maior tcode conhecido: varrida **por inteiro, sem
   paragem antecipada** (é onde estão os buracos gigantes).
-- **Passagem B** — acima do maior conhecido: pára ao fim de `BLOCK ×
-  EMPTY_BLOCKS_LIMIT` = 240 tcodes seguidos vazios (o maior buraco REAL medido
-  nessa zona é 15). Tecto relativo `+T_FRONTEIRA_MAX`, nunca absoluto.
+- **Passagem B** — acima do maior conhecido: segue o plano de
+  `scripts/lib/uskids-scan-plan.js` (9 testes), que **nunca desiste
+  definitivamente num buraco**. Duas redes: (1) varredura **densa com margem
+  dinâmica** — varre tudo até `últimoVivo + 1500`, e como a margem conta a
+  partir do último tcode VIVO, cada torneio encontrado empurra o fim para a
+  frente (enquanto houver vida a varredura não acaba); (2) **sondas de salto** —
+  janelas de 20 tcodes de 250 em 250 até `últimoVivo + 20000`, para o caso de um
+  buraco absurdo: se alguma acha vida, a densa RETOMA a partir dela. Só termina
+  quando as sondas esgotam o alcance sem nada. Nunca há tecto absoluto.
+
+⚠ **Um tcode que não responde NÃO é um tcode vazio.** `metaTournament` devolve o
+sentinela `ERRO` (≠ `null`) ao fim das tentativas, e `varrerIntervaloFiavel`
+repete qualquer intervalo que venha vazio com >25% de erros. Sem isto uma falha
+de rede passageira parece o fim da fronteira e trunca a varredura em silêncio —
+a mesma classe de avaria, por outra porta. Um **disjuntor** (3 intervalos
+degradados seguidos) abandona a fronteira e marca `fim: 'rede-degradada'` — não
+`fronteira-esgotada` — para o canário gritar e a Fase 2 ainda correr.
+
+⚠ **Um tcode inexistente responde HTTP 200 com CORPO VAZIO.** Chamar `r.json()`
+nesse corpo lança, e classificar essa excepção como falha de rede fazia cada
+tcode inexistente custar 3 tentativas × 12 s — a fronteira, que por definição
+acaba em milhares de tcodes vazios, deixava de ser varrível em tempo útil
+(medido: 60/60 "sem resposta" num servidor que respondia perfeitamente). Ler
+`r.text()` primeiro e tratar vazio/lixo como "não existe".
+
+**🐤 Canário — a defesa que faltava.** A avaria durou 7 semanas porque o
+workflow ficava VERDE a descobrir zero torneios. A cache guarda agora
+`ultima_descoberta` / `dias_sem_descoberta` e `fronteira_avancou_em` /
+`dias_sem_avanco` (o maior tcode vivo alguma vez visto), mais o diagnóstico da
+varredura (`varredura: {fim, blocos, sondas, retomas, intervalos_degradados}`).
+O passo **"Canário"** do `uskids-field.yml` corre DEPOIS do commit (para os
+dados nunca se perderem por causa do alarme) e **falha o job** — logo o GitHub
+manda email — com >30d sem torneios novos, >21d sem a fronteira avançar, ou >3
+intervalos degradados. Limiares largos de propósito: isto avisa que a varredura
+parou, não que houve uma semana fraca.
 - `GetMeta` por **`fetch` directo** (`metaTournament`, sem browser — a API é
   pública server-side), concorrência 5. É o que torna viável varrer ~2000
   tcodes/dia; com `page.goto` cada tcode custava ~3,2 s. A Fase 2 continua no
