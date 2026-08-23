@@ -51,6 +51,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # resumo por email de cada run (issue → notificação do GitHub)
 
 jobs:
   update-federados:
@@ -96,6 +97,35 @@ jobs:
           exit 0
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      # ── Resumo por email deste run ─────────────────────────────────────
+      # Corre ANTES do commit de propósito: o resumo lê o diff da ÁRVORE DE
+      # TRABALHO (federados.json novo vs. o do HEAD), que é exactamente o que
+      # este run produziu. Depois do commit o `git pull --rebase` do push traz
+      # commits de outros workflows e o diff deixaria de ser só nosso.
+      # `--only-players` limita o âmbito aos nossos federados + cadastro FPG
+      # (o bloco do federados.json corre antes desse filtro) — aqui não há mais
+      # nada a mudar, mas evita apanhar lixo se um dia houver.
+      # Nunca falha o workflow: os scripts engolem os próprios erros e o passo
+      # é continue-on-error — os dados é que interessam, o email é extra.
+      - name: Resumo por email (quem entrou/saiu do cadastro)
+        if: steps.scrape.outputs.exit_code == '0' && github.event.inputs.check_only != 'true'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          node scripts/build-run-digest.js \
+            --source cadastro \
+            --only-players \
+            --out /tmp/digest-cadastro.json
+          if [ -f /tmp/digest-cadastro.json ]; then
+            node scripts/send-digest-issue.js \
+              --file /tmp/digest-cadastro.json \
+              --title "🪪 Federados — $(date -u +'%Y-%m-%d %H:%M') UTC"
+          else
+            echo "ℹ️  Sem entradas/saídas no cadastro — sem email."
+          fi
 
       - name: Commit e push (se houve alterações)
         if: steps.scrape.outputs.exit_code == '0' && github.event.inputs.check_only != 'true'

@@ -41,6 +41,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # aviso imediato de scorecards novos (resumo por email)
 
 jobs:
   update:
@@ -112,6 +113,32 @@ jobs:
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
       # Para reprocessar TODOS os jogadores (caso muito raro): correr manualmente
       # `node pipeline.js --skip-import --all` localmente e committar.
+
+      # ── Aviso imediato: scorecards novos dos nossos federados ──────────
+      # Corre ANTES do commit de propósito: o resumo lê o diff da ÁRVORE DE
+      # TRABALHO, que é exactamente o que este run produziu. Depois do commit
+      # o `git pull --rebase` do push traria commits de outros workflows e o
+      # diff deixaria de ser só nosso.
+      # Nunca falha o workflow (os scripts engolem os próprios erros) — os
+      # dados é que interessam, o email é extra.
+      - name: Aviso imediato de scorecards novos (email)
+        if: steps.scrape.outputs.exit_code == '0'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          node scripts/build-run-digest.js \
+            --source federados \
+            --only-players \
+            --out /tmp/digest-federados.json
+          if [ -f /tmp/digest-federados.json ]; then
+            node scripts/send-digest-issue.js \
+              --file /tmp/digest-federados.json \
+              --title "⛳ Scorecards novos — $(date -u +'%Y-%m-%d %H:%M') UTC"
+          else
+            echo "ℹ️  Sem scorecards novos — sem aviso."
+          fi
 
       - name: Commit e push (se houve novidades)
         if: steps.scrape.outputs.exit_code == '0'

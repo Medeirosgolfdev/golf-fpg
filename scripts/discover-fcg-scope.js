@@ -44,6 +44,12 @@ const CLI_YEARS = argVal("--years", "2024,2025,2026");
 const CLI_SLUG = argVal("--slug", null);
 const KEEP_NON_JUVENILE = argFlag("--keep-non-juvenile");
 const DELAY_MS = parseInt(argVal("--delay", "300"), 10);
+const FORCE = argFlag("--force"); // ignora a guarda anti-overwrite
+
+/** Scope actualmente em disco (para a guarda anti-overwrite). */
+function readPrevScope() {
+  try { return JSON.parse(fs.readFileSync(SCOPE_OUT, "utf8")); } catch { return null; }
+}
 
 /* ── HTTP helper ────────────────────────────────────────────────────────── */
 // Erros de certificado que o catgolf.com serve INTERMITENTEMENTE (edge node com
@@ -300,6 +306,33 @@ async function main() {
     totalInscritos: final.reduce((acc, t) => acc + (t.inscritos||[]).length, 0),
     tournaments: final,
   };
+
+  // ── Guarda anti-overwrite ────────────────────────────────────────────────
+  // ⚠ O catgolf.com serve INTERMITENTEMENTE um edge node com certificado
+  // self-signed; o retry inseguro traz HTTP 200 mas com uma página SEM a lista
+  // de torneios. Sem esta guarda o resultado era gravar um scope VAZIO por cima
+  // do bom, committá-lo, e o scrape-fcg.js a seguir ficava sem jogos e falhava
+  // o workflow inteiro (aconteceu 2026-07-20, 2026-07-27 e 2026-08-17, tendo o
+  // run de 17-08 apagado um scope de 27 torneios / 25 games).
+  // Mesma política do scrape-federados-node.js: recusar gravar zero registos ou
+  // uma perda grande, preservando o ficheiro anterior.
+  const prev = readPrevScope();
+  if (prev && !FORCE) {
+    const before = prev.totalTournaments || (prev.tournaments || []).length;
+    if (before > 0 && final.length === 0) {
+      console.error(`[disc] ✗ Descoberta devolveu 0 torneios mas o scope actual tem ${before} — RECUSO gravar.`);
+      console.error("[disc]   Provável falha do catgolf.com (edge com certificado inválido a servir página sem lista).");
+      console.error("[disc]   O scope anterior fica intacto e o scrape a seguir usa-o. Forçar: --force");
+      process.exitCode = 2; // 2 = sem novidades utilizáveis, NÃO é erro
+      return;
+    }
+    if (before > 0 && final.length < before * 0.5) {
+      console.error(`[disc] ✗ Descoberta caiu de ${before} para ${final.length} torneios (>50% de perda) — RECUSO gravar.`);
+      console.error("[disc]   Se a quebra for legítima (ex: mudança de anos no --years), correr com --force");
+      process.exitCode = 2;
+      return;
+    }
+  }
 
   fs.writeFileSync(SCOPE_OUT, JSON.stringify(out, null, 2));
   console.log(`[disc] wrote ${path.relative(REPO, SCOPE_OUT)} ─ ${final.length} tournaments, ${totalGames} games, ${out.totalImaster} imaster IDs, ${out.totalInscritos} inscritos`);

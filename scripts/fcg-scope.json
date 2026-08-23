@@ -1,14 +1,1154 @@
 {
-  "generatedAt": "2026-08-17T04:46:52.872Z",
+  "generatedAt": "2026-08-17T08:33:54.380Z",
   "source": "scripts/discover-fcg-scope.js",
   "years": [
     "2025",
     "2026"
   ],
   "keepNonJuvenile": false,
-  "totalTournaments": 0,
-  "totalGames": 0,
+  "totalTournaments": 27,
+  "totalGames": 25,
   "totalImaster": 0,
-  "totalInscritos": 0,
-  "tournaments": []
+  "totalInscritos": 43,
+  "tournaments": [
+    {
+      "slug": "campionat-de-catalunya-dobles-2025-2025-01-25",
+      "title": "CAMPIONAT DE CATALUNYA DOBLES 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67584aa81d0390d2bc725c66",
+          "sections": [
+            "ranking/entry",
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": [
+            "67584aa81d0390d2bc725c9b",
+            "67584aa81d0390d2bc725c9e"
+          ]
+        },
+        {
+          "gameId": "675adcab5ce8ddb33f5fb90d",
+          "sections": [
+            "tee-times"
+          ],
+          "hintCategories": [
+            "67584aa81d0390d2bc725c9b"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "25-01-2025",
+      "dateIso": "2025-01-25",
+      "name": "CAMPIONAT DE CATALUNYA DOBLES 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-dobles-2025-2025-01-25",
+      "juvenile": true
+    },
+    {
+      "slug": "i-puntuable-zonal-juvenil-rfeg-masculi-2025-2025-02-01",
+      "title": "I PUNTUABLE ZONAL JUVENIL RFEG MASCUL&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "6787922548269479c6315a32",
+          "sections": [
+            "tee-times"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "01-02-2025",
+      "dateIso": "2025-02-01",
+      "name": "I PUNTUABLE ZONAL JUVENIL RFEG MASCUL&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/i-puntuable-zonal-juvenil-rfeg-masculi-2025-2025-02-01",
+      "juvenile": true
+    },
+    {
+      "slug": "i-puntuable-zonal-juvenil-rfeg-femeni-2025-2025-02-01",
+      "title": "I PUNTUABLE ZONAL JUVENIL RFEG FEMEN&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67604efaac677e17ac049cab",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "01-02-2025",
+      "dateIso": "2025-02-01",
+      "name": "I PUNTUABLE ZONAL JUVENIL RFEG FEMEN&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/i-puntuable-zonal-juvenil-rfeg-femeni-2025-2025-02-01",
+      "juvenile": true
+    },
+    {
+      "slug": "ii-puntuable-zonal-juvenil-rfeg-femeni-2025-2025-03-01",
+      "title": "II PUNTUABLE ZONAL JUVENIL RFEG FEMEN&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67a2111a67edb43b19085615",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "01-03-2025",
+      "dateIso": "2025-03-01",
+      "name": "II PUNTUABLE ZONAL JUVENIL RFEG FEMEN&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/ii-puntuable-zonal-juvenil-rfeg-femeni-2025-2025-03-01",
+      "juvenile": true
+    },
+    {
+      "slug": "ii-puntuable-zonal-juvenil-rfeg-masculi-2025-2025-03-01",
+      "title": "II PUNTUABLE ZONAL JUVENIL RFEG MASCUL&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67a20894d61687af2b262b0d",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "01-03-2025",
+      "dateIso": "2025-03-01",
+      "name": "II PUNTUABLE ZONAL JUVENIL RFEG MASCUL&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/ii-puntuable-zonal-juvenil-rfeg-masculi-2025-2025-03-01",
+      "juvenile": true
+    },
+    {
+      "slug": "copa-catalunya-femenina-2025-wagr-2025-05-16",
+      "title": "COPA CATALUNYA FEMENINA 2025 (WAGR)",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "681c8efbdfbc8a5102cf1034",
+          "sections": [
+            "ranking/entry",
+            "tee-times"
+          ],
+          "hintCategories": [
+            "681c8efbdfbc8a5102cf1071"
+          ]
+        },
+        {
+          "gameId": "67d8551c3a3b87514f7b5dfe",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "16-05-2025",
+      "dateIso": "2025-05-16",
+      "name": "COPA CATALUNYA FEMENINA 2025 (WAGR)",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/copa-catalunya-femenina-2025-wagr-2025-05-16",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-234-femeni-2025-2025-05-17",
+      "title": "CAMPIONAT DE CATALUNYA 2&ordf;3&ordf;4&ordf; FEMEN&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67fccbaafcae015791d5d43b",
+          "sections": [
+            "ranking/entry",
+            "summary"
+          ],
+          "hintCategories": [
+            "67fccbaafcae015791d5d479",
+            "67fccbaafcae015791d5d47c",
+            "67fccbaafcae015791d5d47f"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "17-05-2025",
+      "dateIso": "2025-05-17",
+      "name": "CAMPIONAT DE CATALUNYA 2&ordf;3&ordf;4&ordf; FEMEN&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-234-femeni-2025-2025-05-17",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-234-masculi-2025-2025-05-17",
+      "title": "CAMPIONAT DE CATALUNYA 2&ordf;3&ordf;4&ordf; MASCUL&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "67fccfa5fcae0157910ce88c",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "17-05-2025",
+      "dateIso": "2025-05-17",
+      "name": "CAMPIONAT DE CATALUNYA 2&ordf;3&ordf;4&ordf; MASCUL&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-234-masculi-2025-2025-05-17",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-infantil-alevi-i-benjami-2025-2025-05-24",
+      "title": "CAMPIONAT DE CATALUNYA INFANTIL, ALEV&Iacute; I BENJAM&Iacute; 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "6809f9d7523b9365e3b183c3",
+          "sections": [
+            "ranking/entry",
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": [
+            "6809f9d7523b9365e3b18400"
+          ]
+        },
+        {
+          "gameId": "680a4a31523b9365e346a9b8",
+          "sections": [
+            "ranking/entry",
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": [
+            "680a4a31523b9365e346a9f5"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "24-05-2025",
+      "dateIso": "2025-05-24",
+      "name": "CAMPIONAT DE CATALUNYA INFANTIL, ALEV&Iacute; I BENJAM&Iacute; 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-infantil-alevi-i-benjami-2025-2025-05-24",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-absolut-wagr-2025-2025-07-11",
+      "title": "CAMPIONAT DE CATALUNYA ABSOLUT (WAGR) 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "68484ff0604e76aef7c5e0cf",
+          "sections": [
+            "ranking/entry",
+            "summary"
+          ],
+          "hintCategories": [
+            "68484ff0604e76aef7c5e10d",
+            "68484ff0604e76aef7c5e110"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "11-07-2025",
+      "dateIso": "2025-07-11",
+      "name": "CAMPIONAT DE CATALUNYA ABSOLUT (WAGR) 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-absolut-wagr-2025-2025-07-11",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-match-play-sub-18-2025-2025-09-20",
+      "title": "CAMPIONAT DE CATALUNYA MATCH PLAY SUB-18 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD"
+      ],
+      "games": [
+        {
+          "gameId": "68aee61aac5ab10a416dbbc6",
+          "sections": [
+            "booking",
+            "entries"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "20-09-2025",
+      "dateIso": "2025-09-20",
+      "name": "CAMPIONAT DE CATALUNYA MATCH PLAY SUB-18 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-match-play-sub-18-2025-2025-09-20",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-match-play-sub-14-2025-2025-09-20",
+      "title": "CAMPIONAT DE CATALUNYA MATCH PLAY SUB-14 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "68aeeb70ac5ab10a41701260",
+          "sections": [
+            "booking",
+            "entries"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "20-09-2025",
+      "dateIso": "2025-09-20",
+      "name": "CAMPIONAT DE CATALUNYA MATCH PLAY SUB-14 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-match-play-sub-14-2025-2025-09-20",
+      "juvenile": true
+    },
+    {
+      "slug": "copa-catalunya-5-categoria-2025-2025-09-27",
+      "title": "COPA CATALUNYA 5&ordf; CATEGORIA 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "68b039a3ac5ab10a41cba4f2",
+          "sections": [
+            "ranking/entry",
+            "tee-times"
+          ],
+          "hintCategories": [
+            "68b039a3ac5ab10a41cba530",
+            "68d2a6837ec8f72f0206defd"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "27-09-2025",
+      "dateIso": "2025-09-27",
+      "name": "COPA CATALUNYA 5&ordf; CATEGORIA 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/copa-catalunya-5-categoria-2025-2025-09-27",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-sub-18-i-sub-16-wagr-2025-2025-10-17",
+      "title": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "68d1364d931cf6a0b6eebc02",
+          "sections": [
+            "ranking/entry",
+            "entries"
+          ],
+          "hintCategories": [
+            "68d1364d931cf6a0b6eebc41",
+            "68d1364d931cf6a0b6eebc44",
+            "68d1364d931cf6a0b6eebc47",
+            "68d1364d931cf6a0b6eebc4a"
+          ]
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "17-10-2025",
+      "dateIso": "2025-10-17",
+      "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-sub-18-i-sub-16-wagr-2025-2025-10-17",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-interclubs-infantil-2025-2025-11-01",
+      "title": "CAMPIONAT DE CATALUNYA INTERCLUBS INFANTIL 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "01-11-2025",
+      "dateIso": "2025-11-01",
+      "name": "CAMPIONAT DE CATALUNYA INTERCLUBS INFANTIL 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-interclubs-infantil-2025-2025-11-01",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-interclubs-absolut-2025-2025-11-29",
+      "title": "CAMPIONAT DE CATALUNYA INTERCLUBS ABSOLUT 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "29-11-2025",
+      "dateIso": "2025-11-29",
+      "name": "CAMPIONAT DE CATALUNYA INTERCLUBS ABSOLUT 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-interclubs-absolut-2025-2025-11-29",
+      "juvenile": true
+    },
+    {
+      "slug": "final-catalunya-promeses-2025-2025-12-13",
+      "title": "FINAL CATALUNYA PROMESES 2025",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [
+        {
+          "name": "Jaime Casas Nepomuceno",
+          "license": "CB01966531",
+          "registeredAt": "2025-11-22 07:57:44"
+        },
+        {
+          "name": "Jan Valero Calvo",
+          "license": "CB05949691",
+          "registeredAt": "2025-11-22 15:35:24"
+        },
+        {
+          "name": "Roberto Izquierdo Ruiz",
+          "license": "CB64917116",
+          "registeredAt": "2025-11-22 16:42:41"
+        },
+        {
+          "name": "Biel Domenech Mateo",
+          "license": "CB23985582",
+          "registeredAt": "2025-11-22 23:12:38"
+        },
+        {
+          "name": "Pau Esteban Ortega",
+          "license": "CB08984406",
+          "registeredAt": "2025-11-24 16:34:22"
+        },
+        {
+          "name": "Neus Macia Gonzalez",
+          "license": "CB08995391",
+          "registeredAt": "2025-11-25 03:48:46"
+        },
+        {
+          "name": "Sergi Macia Gonzalez",
+          "license": "CB08066953",
+          "registeredAt": "2025-11-25 03:49:15"
+        },
+        {
+          "name": "Hernan Bertos Solans",
+          "license": "CB08417119",
+          "registeredAt": "2025-11-27 18:26:59"
+        },
+        {
+          "name": "Marti Fuentes Piulachs",
+          "license": "CB64996149",
+          "registeredAt": "2025-11-30 22:10:11"
+        },
+        {
+          "name": "Ermon Marques Luque",
+          "license": "CB19250164",
+          "registeredAt": "2025-12-01 11:27:36"
+        },
+        {
+          "name": "Marina Bruna Mamina",
+          "license": "CB05493758",
+          "registeredAt": "2025-12-01 11:55:24"
+        },
+        {
+          "name": "Nicole Martinez Balastegui",
+          "license": "CB52495271",
+          "registeredAt": "2025-12-01 13:20:55"
+        },
+        {
+          "name": "Pol Martinez Balastegui",
+          "license": "CB52495277",
+          "registeredAt": "2025-12-01 13:21:23"
+        },
+        {
+          "name": "Roger Viladomiu Dobarro",
+          "license": "CB64939123",
+          "registeredAt": "2025-12-02 20:36:37"
+        },
+        {
+          "name": "Joaquin Martinez Pawloff",
+          "license": "CB64050510",
+          "registeredAt": "2025-12-02 20:41:08"
+        },
+        {
+          "name": "Rosa Moreno Miquel",
+          "license": "CB23050390",
+          "registeredAt": "2025-12-04 19:43:42"
+        },
+        {
+          "name": "Lola Romera Escobedo",
+          "license": "CB23067751",
+          "registeredAt": "2025-12-05 06:46:12"
+        },
+        {
+          "name": "Nicolas Cardona Genova",
+          "license": "CB04186292",
+          "registeredAt": "2025-12-05 13:01:49"
+        },
+        {
+          "name": "Pablo Cardona Genova",
+          "license": "CB04186269",
+          "registeredAt": "2025-12-05 13:02:36"
+        },
+        {
+          "name": "Maria Fatas Vicente",
+          "license": "CB18473704",
+          "registeredAt": "2025-12-05 13:12:39"
+        },
+        {
+          "name": "Pol Morales Llado",
+          "license": "CB69485389",
+          "registeredAt": "2025-12-05 13:48:12"
+        },
+        {
+          "name": "Marc Rodriguez Castilla",
+          "license": "CB64350599",
+          "registeredAt": "2025-12-05 13:50:04"
+        },
+        {
+          "name": "Mert Gungor",
+          "license": "CB23951934",
+          "registeredAt": "2025-12-05 17:13:38"
+        },
+        {
+          "name": "Siyu Cheng",
+          "license": "CB04375663",
+          "registeredAt": "2025-12-05 17:43:31"
+        },
+        {
+          "name": "Giulio Lezzi Borovkov",
+          "license": "CB04349414",
+          "registeredAt": "2025-12-05 19:23:56"
+        },
+        {
+          "name": "Marc Gil Montecelo",
+          "license": "CB22974521",
+          "registeredAt": "2025-12-06 17:46:52"
+        },
+        {
+          "name": "Jaume Pollina Pareja",
+          "license": "CB35376666",
+          "registeredAt": "2025-12-06 18:06:19"
+        },
+        {
+          "name": "Carla Roma Abellan",
+          "license": "CBB1377099",
+          "registeredAt": "2025-12-06 18:13:33"
+        },
+        {
+          "name": "Paula Albadalejo Lugo",
+          "license": "CB08971024",
+          "registeredAt": "2025-12-06 20:24:43"
+        },
+        {
+          "name": "Carla Alonso Cabrera",
+          "license": "CB08085395",
+          "registeredAt": "2025-12-06 23:03:23"
+        },
+        {
+          "name": "Ana Pina Aura",
+          "license": "CBB1095103",
+          "registeredAt": "2025-12-07 00:11:49"
+        },
+        {
+          "name": "Marc Escayola Granados",
+          "license": "CB23883128",
+          "registeredAt": "2025-12-07 02:13:21"
+        },
+        {
+          "name": "Maria Gutierrez Prades",
+          "license": "CB23481125",
+          "registeredAt": "2025-12-07 20:00:13"
+        },
+        {
+          "name": "Stepan Gritsun",
+          "license": "CB44905406",
+          "registeredAt": "2025-12-07 20:07:05"
+        },
+        {
+          "name": "Nil Capella Sanso",
+          "license": "CB64375193",
+          "registeredAt": "2025-12-08 19:04:26"
+        },
+        {
+          "name": "Nicholas O&#039;loghlen Regany",
+          "license": "CB22940045",
+          "registeredAt": "2025-12-08 19:08:26"
+        },
+        {
+          "name": "Xavi Tomas Perez",
+          "license": "CB23001960",
+          "registeredAt": "2025-12-08 21:56:40"
+        },
+        {
+          "name": "Miguel Gorina Blasco",
+          "license": "CB64479117",
+          "registeredAt": "2025-12-08 22:36:05"
+        },
+        {
+          "name": "Artur Serrat Maso",
+          "license": "CB05063323",
+          "registeredAt": "2025-12-09 11:29:40"
+        },
+        {
+          "name": "Lizaveta Tsarova",
+          "license": "CB00183040",
+          "registeredAt": "2025-12-09 17:53:24"
+        },
+        {
+          "name": "Arseni Zhukevich Zhukevich",
+          "license": "CB00487417",
+          "registeredAt": "2025-12-09 21:27:02"
+        },
+        {
+          "name": "Ramon Vila Laurinenko",
+          "license": "CB35410770",
+          "registeredAt": "2025-12-10 10:53:51"
+        },
+        {
+          "name": "Aleix Gadea Sanvicente",
+          "license": "CB65496336",
+          "registeredAt": "2025-12-10 11:54:49"
+        }
+      ],
+      "dateRaw": "13-12-2025",
+      "dateIso": "2025-12-13",
+      "name": "FINAL CATALUNYA PROMESES 2025",
+      "year": 2025,
+      "url": "https://www.catgolf.com/ca/campionats/final-catalunya-promeses-2025-2025-12-13",
+      "juvenile": true
+    },
+    {
+      "slug": "i-puntuable-zonal-juvenil-rfeg-2026-2026-01-31",
+      "title": "I PUNTUABLE ZONAL JUVENIL RFEG 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "694bd804d6b8a9e4130d9459",
+          "sections": [
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": []
+        },
+        {
+          "gameId": "694be249d6b8a9e413da6946",
+          "sections": [
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": []
+        },
+        {
+          "gameId": "697dc8e26609fc834e3cf4cf",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        },
+        {
+          "gameId": "697dcb926609fc834e57f1a3",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "31-01-2026",
+      "dateIso": "2026-01-31",
+      "name": "I PUNTUABLE ZONAL JUVENIL RFEG 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/i-puntuable-zonal-juvenil-rfeg-2026-2026-01-31",
+      "juvenile": true
+    },
+    {
+      "slug": "ii-puntuable-zonal-juvenil-rfeg-2026-2026-04-18",
+      "title": "II PUNTUABLE ZONAL JUVENIL RFEG 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "69bc03d58369e10820b8a511",
+          "sections": [
+            "tee-times",
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "18-04-2026",
+      "dateIso": "2026-04-18",
+      "name": "II PUNTUABLE ZONAL JUVENIL RFEG 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/ii-puntuable-zonal-juvenil-rfeg-2026-2026-04-18",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-infantil-alevi-i-benjami-2026-2026-05-16",
+      "title": "CAMPIONAT DE CATALUNYA INFANTIL, ALEV&Iacute; I BENJAM&Iacute; 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "69e7837119dbb562774fed8d",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        },
+        {
+          "gameId": "69e787be19dbb56277141e37",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "16-05-2026",
+      "dateIso": "2026-05-16",
+      "name": "CAMPIONAT DE CATALUNYA INFANTIL, ALEV&Iacute; I BENJAM&Iacute; 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-infantil-alevi-i-benjami-2026-2026-05-16",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-dobles-2026-absolut-i-senior-2026-07-04",
+      "title": "CAMPIONAT DE CATALUNYA DOBLES 2026 (Absolut i S&egrave;nior)",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "04-07-2026",
+      "dateIso": "2026-07-04",
+      "name": "CAMPIONAT DE CATALUNYA DOBLES 2026 (Absolut i S&egrave;nior)",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-dobles-2026-absolut-i-senior-2026-07-04",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-absolut-i-2-categoria-2026-wagr-2026-07-10",
+      "title": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; CATEGORIA 2026 (WAGR)",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [
+        {
+          "gameId": "6a3942b58d083930fdb08210",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "10-07-2026",
+      "dateIso": "2026-07-10",
+      "name": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; CATEGORIA 2026 (WAGR)",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-absolut-i-2-categoria-2026-wagr-2026-07-10",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-3a-i-4a-categoria-2026-2026-07-18",
+      "title": "CAMPIONAT DE CATALUNYA 3a I 4a CATEGORIA 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "18-07-2026",
+      "dateIso": "2026-07-18",
+      "name": "CAMPIONAT DE CATALUNYA 3a I 4a CATEGORIA 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-3a-i-4a-categoria-2026-2026-07-18",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-matchplay-sub-1816141210-2026-2026-09-19",
+      "title": "CAMPIONAT DE CATALUNYA MATCHPLAY SUB-18/16/14/12/10 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "19-09-2026",
+      "dateIso": "2026-09-19",
+      "name": "CAMPIONAT DE CATALUNYA MATCHPLAY SUB-18/16/14/12/10 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-matchplay-sub-1816141210-2026-2026-09-19",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-sub-18-i-sub-16-wagr-2026-2026-10-02",
+      "title": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "CAD",
+        "INF",
+        "ALV"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "02-10-2026",
+      "dateIso": "2026-10-02",
+      "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-sub-18-i-sub-16-wagr-2026-2026-10-02",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-interclubs-infantil-2026-2026-10-31",
+      "title": "CAMPIONAT DE CATALUNYA INTERCLUBS INFANTIL 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "31-10-2026",
+      "dateIso": "2026-10-31",
+      "name": "CAMPIONAT DE CATALUNYA INTERCLUBS INFANTIL 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-interclubs-infantil-2026-2026-10-31",
+      "juvenile": true
+    },
+    {
+      "slug": "campionat-de-catalunya-interclubs-absolut-2026-2026-11-28",
+      "title": "CAMPIONAT DE CATALUNYA INTERCLUBS ABSOLUT 2026",
+      "organizer": null,
+      "sede": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "modalitat": null,
+      "tipus": null,
+      "agePills": [
+        "SNR",
+        "MYR",
+        "CAD",
+        "INF",
+        "ALV",
+        "BNJ"
+      ],
+      "games": [],
+      "imasterIds": [],
+      "inscritos": [],
+      "dateRaw": "28-11-2026",
+      "dateIso": "2026-11-28",
+      "name": "CAMPIONAT DE CATALUNYA INTERCLUBS ABSOLUT 2026",
+      "year": 2026,
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-interclubs-absolut-2026-2026-11-28",
+      "juvenile": true
+    }
+  ]
 }

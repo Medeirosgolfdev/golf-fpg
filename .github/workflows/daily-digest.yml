@@ -1,0 +1,85 @@
+name: Resumo diário de dados (email)
+
+# Um email por dia com o que os scrapers trouxeram nas últimas 24h:
+#   "Novo torneio X em Espanha, escalão Alevín, vencedor Y"
+#   "Fulano tem 2 scorecards novos; participou em Z"
+#
+# O resumo é calculado a partir do HISTÓRICO DO GIT (diff entre o repo de há
+# 24h e o actual), não de passos espalhados pelos ~20 workflows de dados. Duas
+# vantagens: nenhum workflow de dados é tocado (zero risco para os pipelines) e,
+# se um deles falhar a meio, a janela do dia seguinte apanha na mesma o que foi
+# commitado.
+#
+# O email sai como issue (o GitHub notifica o dono) e a issue é fechada logo a
+# seguir — assim não são precisos secrets de SMTP nenhuns.
+
+on:
+  schedule:
+    # 07:30 UTC — depois da janela nocturna de scrapes (FFG 02-03h, Espanha 04h,
+    # EGR 07h) e antes do dia começar em Lisboa.
+    - cron: '30 7 * * *'
+  workflow_dispatch:
+    inputs:
+      since:
+        description: 'Janela a resumir (ex: "24 hours ago", "7 days ago")'
+        type: string
+        default: '24 hours ago'
+      dry_run:
+        description: 'Só mostrar o email nos logs, sem criar issue'
+        type: boolean
+        default: false
+      include_all:
+        description: 'Incluir também provas de adultos/sociais'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: daily-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # O resumo compara o repo de há 24h com o actual — sem histórico
+          # completo o `git rev-list --before` não encontra a base da janela.
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Construir resumo
+        run: |
+          SINCE="${{ inputs.since || '24 hours ago' }}"
+          EXTRA=""
+          [ "${{ inputs.include_all }}" = "true" ] && EXTRA="--all"
+          mkdir -p reports/digests/pending
+          node scripts/build-run-digest.js \
+            --since "$SINCE" \
+            --source diario \
+            --out reports/digests/pending/diario.json \
+            $EXTRA
+
+      - name: Enviar email (issue)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          if [ ! -f reports/digests/pending/diario.json ]; then
+            echo "ℹ️  Sem novidades nas últimas 24h — sem email."
+            exit 0
+          fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            node scripts/send-digest-issue.js --file reports/digests/pending/diario.json --dry-run
+          else
+            node scripts/send-digest-issue.js --file reports/digests/pending/diario.json
+          fi
