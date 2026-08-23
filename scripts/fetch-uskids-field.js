@@ -11,6 +11,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
+const { extrairAncoras, fundirAncoras, aplicarDatasInscricao } = require('./lib/uskids-reg-dates');
 
 // ── Filtros de descoberta ─────────────────────
 const KEYWORDS_INCLUIR = [
@@ -22,9 +23,14 @@ const KEYWORDS_INCLUIR = [
   'andaluz', 'andalusia', 'sevilla', 'marbella', 'sotogrande', 'valderrama',
   'european', 'australian', 'canadian', 'african',
   'panama', 'vallarta', 'jekyll', 'nordic', 'al hamra',
-  'fazenda boa vista',
+  'fazenda boa vista', 'azata', 'holiday classic',
   'championship', 'invitational', 'masters', 'open',
 ];
+// Vencem TUDO (incluindo INCLUIR_FORTE): variantes pais/filhos de torneios que
+// de outra forma entravam pelo nome do evento principal ("Holiday Classic
+// Parent/Child 2026", "European Championship Parent/Child"). Era isto que
+// obrigava a listar cada uma à mão em FORCAR_EXCLUIR.
+const KEYWORDS_EXCLUIR_SEMPRE = ['parent/child', 'parent child'];
 const KEYWORDS_EXCLUIR = [
   'tour championship', 'parent/child', 'parent', 'qualifier',
   'van horn', 'teen series', 'teen championship', 'world teen',
@@ -53,9 +59,17 @@ const FORCAR_EXCLUIR  = new Set([
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
 const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
-const T_MAX        = 23000;
-const MISS_LIMIT   = 100;
-const DELAY_SCAN   = 120;
+// ── Varredura de tcodes (Fase 1) ─────────────────────
+// Os tcodes do signupanytime são sequenciais por criação, mas só uma fatia
+// pertence à conta internacional (ax=1129) — daí os buracos. Medido 2026-08-23:
+// na zona viva (t>=23061) o maior buraco real é de 15 tcodes; abaixo do topo
+// conhecido há buracos de 600+ (21610→22243). Por isso a fronteira pode parar
+// cedo, mas a zona já conhecida tem de ser varrida por inteiro.
+const SCAN_CONCURRENCY   = 5;    // pedidos GetMeta em paralelo
+const BLOCK              = 60;   // tcodes por bloco na fronteira
+const EMPTY_BLOCKS_LIMIT = 4;    // 4 blocos vazios seguidos (240 tcodes) = fim
+const T_FRONTEIRA_MAX    = 4000; // tecto de segurança acima do maior t conhecido
+const DELAY_SCAN   = 60;
 const DELAY_FETCH  = 400;
 // Redescobrir se cache tiver mais de 3 dias
 const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corrida
@@ -63,10 +77,12 @@ const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corri
 const DIR        = path.join(__dirname, '..', 'public', 'data');
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
 const OUTPUT     = path.join(DIR, 'uskids-field.json');
+const ANCHORS    = path.join(DIR, 'uskids-pid-anchors.json');
 
 const IFRAME_URL = (t, ax = 1129) =>
   `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${ax}&t=${t}`;
 const API = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
+const UA  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 
 // ─────────────────────────────────────────────
 // UTILITÁRIOS
@@ -76,6 +92,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 function ehInternacional(name) {
   const n = name.toLowerCase();
+  if (KEYWORDS_EXCLUIR_SEMPRE.some(k => n.includes(k))) return false;
   // KEYWORDS_INCLUIR tem prioridade — se bater, inclui sempre (exceto FORCAR_EXCLUIR)
   // KEYWORDS_EXCLUIR só actua quando nenhum keyword de include bate exactamente
   const temInclude = KEYWORDS_INCLUIR.some(k => n.includes(k));
@@ -90,7 +107,7 @@ function ehInternacional(name) {
     'irish open', 'paris invitational',
     'andaluz', 'andalusia', 'sevilla', 'marbella', 'sotogrande', 'valderrama',
     'panama', 'vallarta', 'jekyll', 'nordic', 'al hamra',
-    'fazenda boa vista',
+    'fazenda boa vista', 'azata', 'holiday classic',
     'state invitational', 'state championship', 'state open',
   ];
   if (INCLUIR_FORTE.some(k => n.includes(k))) return true;
@@ -121,13 +138,22 @@ function cacheDesactualizada() {
   } catch { return true; }
 }
 
+/** ⚠ O `pid` (chave do flight_players) é um auto-incremento GLOBAL da tabela de
+ *  inscrições do signupanytime, não um índice do flight: ordena-se sempre pela
+ *  ordem real de inscrição (verificado 2026-08-23 contra os nossos firstSeen no
+ *  Belgium Invitational — 7/7 na ordem certa, de 15 Mai a 5 Ago). É a ÚNICA
+ *  pista sobre quando cada miúdo se inscreveu: a API não publica data de
+ *  inscrição em lado nenhum (GetPlayerTeeTimes só dá nome/país/cidade/tee, e
+ *  não há op= de registos — testados 9). Guardá-lo permite datar por
+ *  interpolação (ver estimarDatasInscricao). */
 function parsearJogadores(flightPlayers) {
-  return Object.values(flightPlayers || {})
-    .filter(p => p.status === 1)
-    .map(p => ({
+  return Object.entries(flightPlayers || {})
+    .filter(([, p]) => p.status === 1)
+    .map(([pid, p]) => ({
       nome:   `${p.first || ''} ${p.last || ''}`.trim(),
       pais:   (p.country || '').toUpperCase(),
       cidade: p.place || '',
+      pid:    Number(pid) || null,
     }))
     .sort((a, b) => a.nome.localeCompare(b.nome));
 }
@@ -253,80 +279,133 @@ async function pageJSON(page, url) {
   }, url);
 }
 
+/** GetMeta por HTTP directo (sem browser) — a API do signupanytime é pública
+ *  server-side. É ~15× mais rápido que um page.goto por tcode, o que torna
+ *  viável varrer milhares de tcodes por corrida. Devolve o objecto tournament
+ *  ou null quando o tcode não existe. */
+async function metaTournament(t) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const ctl = new AbortController();
+    const to  = setTimeout(() => ctl.abort(), 12000);
+    try {
+      const r = await fetch(`${API}?op=GetMeta&t=${t}`, {
+        headers: {
+          'User-Agent': UA,
+          'Accept':     'application/json, text/javascript, */*; q=0.01',
+          'Referer':    IFRAME_URL(t),
+        },
+        signal: ctl.signal,
+      });
+      clearTimeout(to);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      return j?.tournament?.name ? j.tournament : null;
+    } catch {
+      clearTimeout(to);
+      if (attempt === 3) return null;
+      await sleep(400 * attempt);
+    }
+  }
+  return null;
+}
+
+/** Varre [de..ate] em paralelo. `registar(t, tournament)` decide o que guardar.
+ *  Devolve { total, ultimoT } contando TODOS os torneios existentes (mesmo os
+ *  não-internacionais) — é isso que diz se a fronteira ainda tem vida. */
+async function varrerIntervalo(de, ate, registar) {
+  const ts = [];
+  for (let t = de; t <= ate; t++) ts.push(t);
+  const achados = [];
+  let i = 0;
+  async function worker() {
+    while (i < ts.length) {
+      const t  = ts[i++];
+      const tn = await metaTournament(t);
+      if (tn) achados.push([t, tn]);
+      await sleep(DELAY_SCAN);
+    }
+  }
+  await Promise.all(Array.from({ length: SCAN_CONCURRENCY }, worker));
+  achados.sort((a, b) => a[0] - b[0]);
+  let ultimoT = 0;
+  for (const [t, tn] of achados) { ultimoT = t; registar(t, tn); }
+  return { total: achados.length, ultimoT };
+}
+
 // ─────────────────────────────────────────────
 // FASE 1: DESCOBERTA
 // ─────────────────────────────────────────────
 
-async function descobrirTorneios(page) {
+async function descobrirTorneios() {
   console.log('\n🔍 FASE 1 — Descoberta');
 
-  let cache = { ultimo_t: 21079, torneios: [], gerado_em: null };
+  let cache = { ultimo_t: 21079, varredura_max_t: 0, torneios: [], gerado_em: null };
   if (fs.existsSync(CACHE_PATH)) {
     try { cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')); } catch {}
   }
 
-  const tInicio    = cache.ultimo_t + 1;
   // Filtrar logo à entrada: remove excluídos de runs anteriores
   const conhecidos = new Map(
     cache.torneios
       .filter(t => !FORCAR_EXCLUIR.has(t.t) && (FORCAR_INCLUIR.has(t.t) || ehInternacional(t.name)))
       .map(t => [t.t, t])
   );
-  let misses = 0, encontrados = 0;
+  let encontrados = 0;
 
-  // Garantir que todos os FORCAR_INCLUIR estão na cache (mesmo que já passaram na varredura)
-  for (const t of FORCAR_INCLUIR) {
+  const guardar = (t, tn) => {
+    conhecidos.set(t, {
+      t, name: tn.name.trim(),
+      date_inicio: tn.start_date, date_fim: tn.end_date,
+      rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
+    });
+  };
+
+  /** Chamado para CADA tcode que existe (internacional ou não). Filtra e regista. */
+  const registar = (t, tn) => {
+    const nome    = tn.name.trim();
+    const incluir = !FORCAR_EXCLUIR.has(t) && (FORCAR_INCLUIR.has(t) || ehInternacional(nome));
+    if (!incluir || diasAte(tn.start_date) < -30) return;
     if (!conhecidos.has(t)) {
-      try {
-        console.log(`   🔍 A forçar t=${t}...`);
-        const metaP = esperarGetMeta(page, t, 8000);
-        await page.goto(IFRAME_URL(t), { waitUntil: 'domcontentloaded', timeout: 10000 });
-        const meta = await metaP;
-        const tn = meta?.tournament;
-        if (tn?.name) {
-          conhecidos.set(t, {
-            t, name: tn.name.trim(),
-            date_inicio: tn.start_date, date_fim: tn.end_date,
-            rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
-          });
-          console.log(`   ✅ Forçado: t=${t} ${tn.name}`);
-          encontrados++;
-        }
-        await sleep(DELAY_SCAN);
-      } catch (e) { console.warn(`   ⚠️ Falhou t=${t}: ${e.message}`); }
+      console.log(`  ✅ NOVO  t=${t}  ${tn.start_date}  ${nome}`);
+      encontrados++;
     }
+    guardar(t, tn);
+  };
+
+  // Garantir que todos os FORCAR_INCLUIR estão na cache
+  for (const t of FORCAR_INCLUIR) {
+    if (conhecidos.has(t)) continue;
+    const tn = await metaTournament(t);
+    if (tn) { guardar(t, tn); console.log(`   ✅ Forçado: t=${t} ${tn.name.trim()}`); }
+    else console.warn(`   ⚠️  Forçado t=${t} sem meta`);
   }
 
-  console.log(`   Desde t=${tInicio} | conhecidos: ${conhecidos.size}`);
+  const tKnownMax = Math.max(0, cache.varredura_max_t || 0, ...conhecidos.keys());
 
-  for (let t = tInicio; t <= T_MAX && misses < MISS_LIMIT; t++) {
-    try {
-      const metaP = esperarGetMeta(page, t, 8000);
-      await page.goto(IFRAME_URL(t), { waitUntil: 'domcontentloaded', timeout: 10000 });
-      const meta = await metaP;
-      const tn = meta?.tournament;
-      if (!tn?.name) { misses++; await sleep(DELAY_SCAN); continue; }
-      misses = 0;
-
-      const nome    = tn.name.trim();
-      const incluir = !FORCAR_EXCLUIR.has(t) && (FORCAR_INCLUIR.has(t) || ehInternacional(nome));
-      const futuro  = diasAte(tn.start_date) >= -30;
-
-      if (incluir && futuro) {
-        if (!conhecidos.has(t)) {
-          console.log(`  ✅ NOVO  t=${t}  ${tn.start_date}  ${nome}`);
-          encontrados++;
-        }
-        conhecidos.set(t, {
-          t, name: nome,
-          date_inicio: tn.start_date, date_fim: tn.end_date,
-          rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
-        });
-      }
-      cache.ultimo_t = t;
-    } catch { misses++; }
-    await sleep(DELAY_SCAN);
+  // ── Passagem A: zona já conhecida (âncora → maior t conhecido) ───────────
+  // Sem paragem antecipada. Entre torneios conhecidos há buracos enormes de
+  // tcodes de outras contas (21610→22243 = 632 vazios): era aí que a varredura
+  // antiga morria ao fim de 100 misses e nunca mais descobria nada (último
+  // torneio novo: 6 Jul 2026).
+  const tStartA = (cache.ultimo_t || 0) + 1;
+  if (tStartA <= tKnownMax) {
+    console.log(`   ↻ Passagem A: t=${tStartA}…${tKnownMax} (zona conhecida, varrida por inteiro)`);
+    await varrerIntervalo(tStartA, tKnownMax, registar);
   }
+
+  // ── Passagem B: fronteira (acima do maior t conhecido) ───────────────────
+  // Aqui os tcodes são densos (maior buraco real medido: 15), por isso parar ao
+  // fim de EMPTY_BLOCKS_LIMIT blocos seguidos sem NENHUM torneio é seguro.
+  const tCapB = tKnownMax + T_FRONTEIRA_MAX;
+  console.log(`   ⏩ Passagem B: t=${tKnownMax + 1}… (pára após ${BLOCK * EMPTY_BLOCKS_LIMIT} tcodes seguidos vazios; tecto t=${tCapB})`);
+  let vazios = 0, fronteira = tKnownMax;
+  for (let t = tKnownMax + 1; t <= tCapB && vazios < EMPTY_BLOCKS_LIMIT; t += BLOCK) {
+    const r = await varrerIntervalo(t, Math.min(t + BLOCK - 1, tCapB), registar);
+    if (r.total) { vazios = 0; fronteira = r.ultimoT; }
+    else vazios++;
+  }
+  cache.varredura_max_t = Math.max(tKnownMax, fronteira);
+  console.log(`   📡 Fronteira: último tcode vivo t=${cache.varredura_max_t}`);
 
   const activos = [...conhecidos.values()]
     .filter(t => diasAte(t.date_inicio) >= -30)
@@ -337,7 +416,6 @@ async function descobrirTorneios(page) {
 
   // Âncora: t mais baixo entre torneios com data >= hoje - 60 dias
   // Assim na próxima varredura começa de um ponto sensato e não perde inserções tardias
-  const hoje = new Date().toISOString().slice(0, 10);
   const dataAncora = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
   const tRelevantes = activos
     .filter(t => (parsearDataISO(t.date_inicio) ?? '') >= dataAncora)
@@ -487,7 +565,7 @@ async function main() {
           } catch {}
         }
       }
-      torneios = await descobrirTorneios(page);
+      torneios = await descobrirTorneios();
     } else {
       const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
       torneios = cache.torneios || [];
@@ -509,6 +587,23 @@ async function main() {
 
     // Aplicar firstSeen a todos os jogadores
     aplicarFirstSeen(resultados, prevMap);
+
+    // Datar as inscrições pelo pid (ver scripts/lib/uskids-reg-dates.js).
+    // As âncoras acumulam-se entre corridas: cada jogador que aparece num
+    // torneio que já seguíamos data um ponto da escala global de pids, e é
+    // dessa escala que sai a data dos torneios acabados de descobrir — onde o
+    // firstSeen diria "hoje" para o campo inteiro.
+    let ancoras = [];
+    try { ancoras = JSON.parse(fs.readFileSync(ANCHORS, 'utf8')).ancoras || []; } catch {}
+    ancoras = fundirAncoras(ancoras, extrairAncoras(resultados));
+    const st = aplicarDatasInscricao(resultados, ancoras);
+    fs.writeFileSync(ANCHORS, JSON.stringify({
+      gerado_em: new Date().toISOString(), total: ancoras.length, ancoras,
+    }, null, 2), 'utf8');
+    console.log(`
+📅 Datas de inscrição: ${st.obs} observadas · ${st.est} estimadas` +
+                `${st.fora ? ` (${st.fora} fora do intervalo calibrado)` : ''}` +
+                `${st.sem ? ` · ${st.sem} sem data` : ''} — ${ancoras.length} âncoras`);
 
     fs.mkdirSync(DIR, { recursive: true });
     fs.writeFileSync(OUTPUT, JSON.stringify({

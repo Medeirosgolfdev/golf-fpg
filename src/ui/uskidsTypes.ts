@@ -24,6 +24,12 @@ interface Jogador {
   pais: string;
   cidade: string;
   firstSeen?: string;
+  /** pid do signupanytime — auto-incremento global da tabela de inscrições. */
+  pid?: number | null;
+  /** Dia da inscrição: observado por nós ou estimado pelo pid (ver regObs). */
+  regDia?: string;
+  /** true = data observada; false = estimada por interpolação do pid. */
+  regObs?: boolean;
 }
 
 interface PaisContagem {

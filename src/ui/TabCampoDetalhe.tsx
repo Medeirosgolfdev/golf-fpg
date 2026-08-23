@@ -11,6 +11,20 @@ import {
   badgeVagas, fmtTs, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
 
+/** Dias desde a inscrição de um jogador.
+ *  Prefere `regDia` — o dia de inscrição vindo do `pid` do signupanytime (ver
+ *  scripts/lib/uskids-reg-dates.js) — e só cai no `firstSeen` (dia em que o
+ *  NOSSO scraper o viu) quando não há data reconstruída. Num torneio acabado de
+ *  descobrir o firstSeen é hoje para o campo inteiro, o que fazia parecer que
+ *  se tinham inscrito todos no mesmo dia. */
+function diasDesdeInscricao(j: { regDia?: string; firstSeen?: string }): number | null {
+  const d = j.regDia || j.firstSeen;
+  if (!d) return null;
+  const ms = Date.parse(j.regDia ? `${j.regDia}T00:00:00Z` : d);
+  if (Number.isNaN(ms)) return null;
+  return Math.max(0, Math.floor((Date.now() - ms) / 86400_000));
+}
+
 /** Devolve o elemento ↗ com link para a página Kids do jogador.
  *  Usa memberId quando disponível (resolve antes dos 45 ficheiros carregarem). */
 export function KidsLink({ nome }: { nome: string }) {
@@ -179,7 +193,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
               const man = e.age_group === escalaoM && /boys/i.test(e.nome);
-              const novos7d = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 7 * 86400_000).length;
+              const novos7d = (e.jogadores || []).filter(j => diasDesdeInscricao(j) !== null && diasDesdeInscricao(j)! < 7).length;
               return (
                 <div key={e.age_group} className="card" style={{
                   background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
@@ -225,7 +239,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         const isM = isManuel(j.nome);
                         const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
                         const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
-                        const daysSinceReg = j.firstSeen ? Math.floor((Date.now() - new Date(j.firstSeen).getTime()) / 86400_000) : null;
+                        const daysSinceReg = diasDesdeInscricao(j);
                         const showDaysPill = daysSinceReg != null && daysSinceReg <= 25;
                         // Resultados nos 2 anos anteriores neste mesmo torneio
                         const prevResults = arEntry
@@ -248,7 +262,9 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               {isM ? "★ " : ""}{displayName(j.nome)}
                               {showDaysPill && !isM && (() => {
                                 const d = daysSinceReg!;
-                                const label = d === 0 ? "hoje" : `${d}d`;
+                                // "~" marca a data reconstruída pelo pid (estimativa), não observada
+                                const est = j.regDia != null && j.regObs === false;
+                                const label = `${est ? "~" : ""}${d === 0 ? "hoje" : `${d}d`}`;
                                 // Degradê: 0d=100%, 10d=60%, 25d=20%
                                 const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
                                 const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
@@ -257,7 +273,9 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                   background: bg, color: fg,
                                   border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
                                   padding: "0 4px", borderRadius: 6, marginLeft: 3, lineHeight: "14px",
-                                }} title={`Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${j.firstSeen?.slice(0,10)})`}>{label}</span>;
+                                }} title={j.regDia && j.regObs === false
+                                  ? `Inscrição estimada: ~${j.regDia} (há ${d} dia${d !== 1 ? "s" : ""}) — data reconstruída pela ordem de inscrição, a USKids não a publica`
+                                  : `Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${(j.regDia || j.firstSeen || "").slice(0,10)})`}>{label}</span>;
                               })()}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>

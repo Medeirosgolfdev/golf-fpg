@@ -32,7 +32,7 @@ import type { UskidsDrawsData } from "../ui/uskidsTypes"; // pairings (Draw R{n}
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
 // ─────────────────────────────────────────────
-interface Jogador      { nome: string; pais: string; cidade: string; firstSeen?: string; }
+interface Jogador      { nome: string; pais: string; cidade: string; firstSeen?: string; pid?: number | null; regDia?: string; regObs?: boolean; }
 interface PaisContagem { pais: string; n: number; }
 interface Escalao {
   age_group: number; nome: string; genero: string | null;

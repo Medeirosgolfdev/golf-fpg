@@ -9,7 +9,7 @@ jobs:
   update:
     name: ⛳ Descoberta + Inscritos
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,11 +25,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
+          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json public/data/uskids-pid-anchors.json
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours
-          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
+          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json public/data/uskids-pid-anchors.json
           git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           # Push robusto: retry com pull --rebase em cada tentativa.
           # Em runs manuais (sem o cron offset) podemos colidir com outro

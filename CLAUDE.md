@@ -805,10 +805,78 @@ Workflow: `update-uskids-rich-players.yml` (Seg 02:00 UTC, depois do member-hist
 node scripts/build-member-history-slim.js
 ```
 
-**fetch-uskids-field.js** — Corre 1x/dia. Descobre novos torneios + inscritos.
+**fetch-uskids-field.js** — Corre 1x/dia (`uskids-field.yml`, 07:00 UTC). Fase 1
+descobre torneios novos (→ `uskids-discovery-cache.json`), Fase 2 recolhe
+inscritos por escalão (→ `uskids-field.json`). O `fetch-uskids-results.js` lê a
+MESMA cache para saber que torneios estão em curso — descoberta partida = sem
+resultados também.
 ```bash
 node fetch-uskids-field.js
+node fetch-uskids-field.js --force-discovery   # ignora a cache
 ```
+
+⚠ **A varredura de tcodes tem de ser em DUAS passagens (corrigido 2026-08-23).**
+Os tcodes do signupanytime são sequenciais por criação mas só uma fatia pertence
+à conta internacional (`ax=1129`) — o resto devolve `GetMeta` sem torneio. A
+versão antiga começava na âncora (`ultimo_t+1`) e parava ao fim de **100 tcodes
+seguidos vazios**; entre 21610 e o torneio conhecido seguinte (22243) há **632
+vazios**, por isso morria sempre a ~21710 e **não descobria um torneio novo
+desde 6 de Julho** (o site ficou preso em Outubro). Por cima disso havia um
+`T_MAX = 23000` fixo, com os tcodes vivos já em ~23590. Agora:
+
+- **Passagem A** — âncora → maior tcode conhecido: varrida **por inteiro, sem
+  paragem antecipada** (é onde estão os buracos gigantes).
+- **Passagem B** — acima do maior conhecido: pára ao fim de `BLOCK ×
+  EMPTY_BLOCKS_LIMIT` = 240 tcodes seguidos vazios (o maior buraco REAL medido
+  nessa zona é 15). Tecto relativo `+T_FRONTEIRA_MAX`, nunca absoluto.
+- `GetMeta` por **`fetch` directo** (`metaTournament`, sem browser — a API é
+  pública server-side), concorrência 5. É o que torna viável varrer ~2000
+  tcodes/dia; com `page.goto` cada tcode custava ~3,2 s. A Fase 2 continua no
+  browser.
+- A cache guarda `varredura_max_t` (último tcode vivo visto) — na corrida
+  seguinte a Passagem A já cobre tudo o que foi varrido antes.
+
+Primeira corrida com a correcção: **8 torneios novos** (Spanish Open 20 Nov,
+South American Championship 31 Out, Australian Challenge 21 Set, Mexico
+Invitational 12 Dez, Indian Championship 22 Dez, Florida Winter State 5 Dez,
+Antalya Turkish Open 30 Jan 2027, Circolo Golf Venezia 3 Out).
+
+### Datas de inscrição USKids — reconstruídas pelo `pid` (2026-08-23)
+
+**A API não publica data de inscrição.** `GetPlayerTeeTimes` devolve
+nome/país/cidade/tee/status e mais nada, e não existe `op=` de registos
+(testados 9 nomes plausíveis — todos HTTP 200 com corpo vazio). Até aqui a UI
+mostrava o `firstSeen`, que é só o dia em que o NOSSO scraper viu o jogador —
+por isso num torneio acabado de descobrir o campo inteiro aparecia como
+"inscrito hoje".
+
+O que dá para usar é o **`pid`** (chave do `flight_players`): um auto-incremento
+**global** da tabela de inscrições do signupanytime, que ordena sempre pela
+ordem real de inscrição. Verificado duas vezes: 7/7 na ordem certa contra os
+nossos `firstSeen` no Belgium Invitational (15 Mai → 5 Ago), e o William Clarke
+com pids **consecutivos** (1813945/1813946) em dois torneios diferentes — as
+duas inscrições feitas ao mesmo tempo.
+
+`scripts/lib/uskids-reg-dates.js` (13 testes) transforma isso em datas:
+- **Âncoras** = jogadores que apareceram DEPOIS de já seguirmos o torneio (aí o
+  `firstSeen` é a data real ±1 dia). Acumulam-se entre corridas em
+  `public/data/uskids-pid-anchors.json` (636 na primeira passagem).
+- Tudo o resto sai por **interpolação linear** entre as âncoras à volta;
+  `estimarDia` marca `fora: true` quando extrapola fora do intervalo calibrado.
+- Cada jogador ganha `regDia` + `regObs` (true = observado, false = estimado). A
+  UI (`TabCampoDetalhe`) prefere `regDia` e prefixa a pill com **`~`** quando é
+  estimativa; o tooltip di-lo por extenso.
+
+⚠ **O `firstSeen` do primeiro dia de monitorização NÃO serve de âncora** — essa
+gente já lá estava inscrita antes de o torneio entrar no radar. Usá-la
+carimbaria centenas de inscrições antigas com o dia em que começámos a olhar,
+que é exactamente o erro que esta datação corrige.
+
+⚠ **`KEYWORDS_EXCLUIR_SEMPRE` vence o `INCLUIR_FORTE`.** As variantes
+`Parent/Child` herdam o nome do evento principal ("Holiday Classic Parent/Child
+2026") e o `INCLUIR_FORTE` ignora o `KEYWORDS_EXCLUIR` — era por isso que cada
+uma tinha de ser listada à mão em `FORCAR_EXCLUIR` (4 entradas). A guarda corre
+ANTES de tudo e resolve a classe inteira.
 
 **fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133])`.
 
