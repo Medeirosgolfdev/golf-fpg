@@ -1,0 +1,1455 @@
+{
+  "tourId": 73150,
+  "url": "https://www.nextcaddy.com/tour/73150",
+  "scrapedAt": "2026-08-24T05:00:36.675Z",
+  "meta": {
+    "name": "LIGA PARES 3 23-08-2026",
+    "organizer": null,
+    "course": "Alhaurín Golf Hotel & Resort",
+    "courseCode": "AM22",
+    "dateStart": "2026-08-23",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Junior",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-23",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      13,
+      15,
+      11,
+      17,
+      7,
+      9,
+      1,
+      5,
+      3,
+      14,
+      16,
+      12,
+      18,
+      8,
+      10,
+      2,
+      6,
+      4
+    ],
+    "meters": [
+      94,
+      92,
+      78,
+      63,
+      74,
+      46,
+      76,
+      74,
+      99,
+      94,
+      92,
+      78,
+      63,
+      74,
+      46,
+      76,
+      74,
+      99
+    ],
+    "parTotal": 54
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Caballeros Masculino",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Guillermo Alvarez Martin",
+          "licencia": "AM22171907",
+          "hcp": 41.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2389833,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                3,
+                3,
+                3,
+                3,
+                2,
+                3,
+                3,
+                3,
+                7,
+                3,
+                4,
+                4,
+                3,
+                4,
+                3,
+                6
+              ],
+              "total": 68,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Salvador Criado",
+          "licencia": "EXX1465527",
+          "hcp": 13,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2389837,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                4,
+                3,
+                3,
+                3,
+                2,
+                2,
+                3,
+                3,
+                4,
+                2,
+                3,
+                3,
+                3,
+                3,
+                3,
+                3
+              ],
+              "total": 56,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Salvador Villalobos Clavijo",
+          "licencia": "AMB5891481",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2389732,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "RON HOOFT",
+          "licencia": "TAM2200928",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2389835,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                4,
+                5,
+                6,
+                3,
+                3,
+                4,
+                3,
+                3,
+                6,
+                3,
+                2,
+                6
+              ],
+              "total": 68,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Robbert Van Steenwijk",
+          "licencia": "AM22528997",
+          "hcp": 20.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2389825,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                2,
+                3,
+                4,
+                3,
+                3,
+                2,
+                5,
+                5,
+                4,
+                3,
+                4,
+                4,
+                6,
+                5,
+                4,
+                3,
+                3
+              ],
+              "total": 67,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Miguel Garcia Bravo",
+          "licencia": "AM22941675",
+          "hcp": 18.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2389734,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                null,
+                4,
+                3,
+                3,
+                3,
+                3,
+                null,
+                4,
+                3,
+                4,
+                3,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Fernandez Gonzalez",
+          "licencia": "AM74605832",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2389823,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                3,
+                3,
+                6,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                5,
+                4,
+                3,
+                2,
+                4
+              ],
+              "total": 67,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Juan Porras Sanchez",
+          "licencia": "AM57090772",
+          "hcp": 8.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2389834,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                3,
+                4,
+                3,
+                null,
+                4,
+                4,
+                3,
+                3,
+                4,
+                3,
+                3,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Gareth Greenwood",
+          "licencia": "EXX1911938",
+          "hcp": 28,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2389724,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                4,
+                null,
+                7,
+                4,
+                4,
+                6,
+                4,
+                3,
+                2,
+                4,
+                3,
+                3,
+                6,
+                3,
+                5
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Juan Antonio Rey González",
+          "licencia": "AM22526190",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2389836,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                null,
+                3,
+                4,
+                4,
+                null,
+                4,
+                5,
+                null,
+                null,
+                null,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Dennis Mollart",
+          "licencia": "TAM2235795",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2389828,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                6,
+                4,
+                6,
+                3,
+                6,
+                4,
+                6,
+                6,
+                6,
+                3,
+                6,
+                5,
+                4,
+                4,
+                6,
+                4
+              ],
+              "total": 89,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 12,
+          "name": "MIGUEL ANGEL CEBALLOS",
+          "licencia": "TAM2219947",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2389819,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                4,
+                4,
+                4,
+                6,
+                5,
+                4,
+                6,
+                4,
+                6,
+                6,
+                4,
+                4,
+                6,
+                5,
+                6,
+                6
+              ],
+              "total": 89,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 13,
+          "name": "Guillermo Sebastian Ponsetti",
+          "licencia": "AMD2889209",
+          "hcp": 33.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2389730,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                null,
+                null,
+                5,
+                5,
+                4,
+                5,
+                null,
+                null,
+                5,
+                5,
+                null,
+                5,
+                null,
+                null,
+                4,
+                3,
+                4
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 14,
+          "name": "Christian Abraham De Jong",
+          "licencia": "AM22009956",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2389824,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                4,
+                5,
+                5,
+                6,
+                4,
+                null,
+                5,
+                null,
+                6,
+                5,
+                6,
+                5,
+                null,
+                5,
+                null,
+                5,
+                5
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Junior",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Garcia Bonilla",
+          "licencia": "AM83081516",
+          "hcp": 44.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2389735,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                6,
+                3,
+                4,
+                5,
+                7,
+                4,
+                4,
+                4,
+                3,
+                2,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 76,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ivan Criado Palomo",
+          "licencia": "AM22060192",
+          "hcp": 42.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2389731,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                4,
+                4,
+                null,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                5,
+                null
+              ],
+              "total": null,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Hugo Alexander Greenwood",
+          "licencia": "AM22519745",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2389725,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                4,
+                4,
+                5,
+                7,
+                7,
+                6,
+                5,
+                5,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                6,
+                4,
+                5
+              ],
+              "total": 97,
+              "meters": [
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99,
+                94,
+                92,
+                78,
+                63,
+                74,
+                46,
+                76,
+                74,
+                99
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Caballeros Masculino",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Handicap Individual Junior",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Gareth Greenwood",
+      "licencia": "EXX1911938",
+      "hcp": 28,
+      "nivel": "M"
+    },
+    {
+      "orden": 2,
+      "name": "Guillermo Sebastian Ponsetti",
+      "licencia": "AMD2889209",
+      "hcp": 33.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Salvador Villalobos Clavijo",
+      "licencia": "AMB5891481",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Miguel Garcia Bravo",
+      "licencia": "AM22941675",
+      "hcp": 18.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "MIGUEL ANGEL CEBALLOS",
+      "licencia": "TAM2219947",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Fernandez Gonzalez",
+      "licencia": "AM74605832",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Christian Abraham De Jong",
+      "licencia": "AM22009956",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Robbert Van Steenwijk",
+      "licencia": "AM22528997",
+      "hcp": 20.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Dennis Mollart",
+      "licencia": "TAM2235795",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Guillermo Alvarez Martin",
+      "licencia": "AM22171907",
+      "hcp": 41.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Porras Sanchez",
+      "licencia": "AM57090772",
+      "hcp": 8.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "RON HOOFT",
+      "licencia": "TAM2200928",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Juan Antonio Rey González",
+      "licencia": "AM22526190",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Salvador Criado",
+      "licencia": "EXX1465527",
+      "hcp": 13,
+      "nivel": "M"
+    },
+    {
+      "orden": 1,
+      "name": "Hugo Alexander Greenwood",
+      "licencia": "AM22519745",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Ivan Criado Palomo",
+      "licencia": "AM22060192",
+      "hcp": 42.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Garcia Bonilla",
+      "licencia": "AM83081516",
+      "hcp": 44.2,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Salvador Criado",
+          "hcp": 13,
+          "ins": "2389837",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Salvador Villalobos Clavijo",
+          "hcp": 27.3,
+          "ins": "2389732",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Ivan Criado Palomo",
+          "hcp": 42.9,
+          "ins": "2389731",
+          "jid": "78368",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Robbert Van Steenwijk",
+          "hcp": 20.8,
+          "ins": "2389825",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Christian Abraham De Jong",
+          "hcp": 29,
+          "ins": "2389824",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Guillermo Alvarez Martin",
+          "hcp": 41.5,
+          "ins": "2389833",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Dennis Mollart",
+          "hcp": 28,
+          "ins": "2389828",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "RON HOOFT",
+          "hcp": 28,
+          "ins": "2389835",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Francisco Miguel Garcia Bravo",
+          "hcp": 18.6,
+          "ins": "2389734",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Gareth Greenwood",
+          "hcp": 28,
+          "ins": "2389724",
+          "jid": "78368",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Francisco Garcia Bonilla",
+          "hcp": 44.2,
+          "ins": "2389735",
+          "jid": "78368",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Hugo Alexander Greenwood",
+          "hcp": 54,
+          "ins": "2389725",
+          "jid": "78368",
+          "nivel": "B"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Alvaro Fernandez Gonzalez",
+          "hcp": 18.6,
+          "ins": "2389823",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Guillermo Sebastian Ponsetti",
+          "hcp": 33.6,
+          "ins": "2389730",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Juan Porras Sanchez",
+          "hcp": 8.8,
+          "ins": "2389834",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Juan Antonio Rey González",
+          "hcp": 36,
+          "ins": "2389836",
+          "jid": "78368",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "MIGUEL ANGEL CEBALLOS",
+          "hcp": 28,
+          "ins": "2389819",
+          "jid": "78368",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78368
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Larmande  Diaz, Martin",
+          "holeNumber": 4,
+          "createdAt": "11/04/26 15:39:47"
+        },
+        {
+          "playerName": "Seisdedos Barbi, Iñigo",
+          "holeNumber": 8,
+          "createdAt": "11/04/26 15:40:28"
+        },
+        {
+          "playerName": "Paradinas Pizarro, Nicolas",
+          "holeNumber": 2,
+          "createdAt": "11/04/26 15:43:16"
+        },
+        {
+          "playerName": "Martinez De Murguia Garcia, Manuel",
+          "holeNumber": 8,
+          "createdAt": "11/04/26 15:32:36"
+        },
+        {
+          "playerName": "Bustamante Anderez, Iñigo",
+          "holeNumber": 5,
+          "createdAt": "11/04/26 15:35:25"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3081179696_73150-liga-pares-3-23-08-2026.pdf"
+  ]
+}

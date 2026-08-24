@@ -35,7 +35,76 @@
       "nivel": "Mid"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Fernando Garay Gross",
+          "hcp": 4.7,
+          "ins": "2385844",
+          "jid": "78094",
+          "nivel": "C"
+        },
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Fernando Garay Gomez Arroyo",
+          "hcp": 9.4,
+          "ins": "2385837",
+          "jid": "78094",
+          "nivel": "M"
+        },
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Jaime Garay Gross",
+          "hcp": 9.4,
+          "ins": "2385841",
+          "jid": "78094",
+          "nivel": "C"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Borja Garay Gomez-A.",
+          "hcp": 9.5,
+          "ins": "2385843",
+          "jid": "78094",
+          "nivel": "M"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Pablo Enrile Olleros",
+          "hcp": 25.1,
+          "ins": "2386854",
+          "jid": "78094",
+          "nivel": "C"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Jose Martinez-Rasilla Morales-Arce",
+          "hcp": 28.1,
+          "ins": "2379059",
+          "jid": "78094",
+          "nivel": "M"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Alfonso Enrile Olleros",
+          "hcp": 36,
+          "ins": "2386914",
+          "jid": "78094",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -66,5 +135,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-08-17T04:58:01.713Z"
+  "horariosScrapedAt": "2026-08-24T05:00:22.835Z"
 }

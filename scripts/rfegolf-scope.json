@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-17T04:56:34.194Z",
+  "generatedAt": "2026-08-24T04:58:45.094Z",
   "range": "15500-17200",
   "minYear": 2021,
   "totalProbed": 1701,
-  "totalExisting": 598,
-  "totalJuvenil": 529,
+  "totalExisting": 599,
+  "totalJuvenil": 530,
   "byYear": {
     "2019": 30,
     "2020": 14,
@@ -13,7 +13,7 @@
     "2023": 68,
     "2024": 71,
     "2025": 62,
-    "2026": 66,
+    "2026": 67,
     "2027": 3
   },
   "byCategory": {
@@ -21,7 +21,7 @@
     "Juvenil": 159,
     "Infantil": 64,
     "Sub-16": 50,
-    "Junior": 35,
+    "Junior": 36,
     "Sub-18": 71,
     "Alevín": 34,
     "Cadete": 20,
@@ -6217,6 +6217,15 @@
       "year": 2027,
       "category": "Sub-18",
       "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16252,
+      "exists": true,
+      "name": "Junior Vagliano Trophy 2026",
+      "year": 2026,
+      "category": "Junior",
+      "sex": null,
       "juvenil": true
     }
   ]
