@@ -1,8 +1,179 @@
 {
-  "generatedAt": "2026-08-24T02:51:04.793Z",
+  "generatedAt": "2026-08-24T03:08:16.065Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1236,
+  "total": 1239,
   "tournaments": [
+    {
+      "file": "03-03-2601444105.json",
+      "trnId": "2601444105",
+      "partKey": "010c1eb639cf4fa0e33f1479f5f99077",
+      "name": "GRAND PRIX JEUNES DE PERIGUEUX 2026",
+      "formule": "Simple",
+      "date": "22/08/2026",
+      "dateIso": "2026-08-22",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "03",
+      "seriesCount": 6,
+      "totalPlayers": 145,
+      "course": "Perigueux",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12 G",
+          "players": 54
+        },
+        {
+          "serieId": "113",
+          "label": "U14 G",
+          "players": 42
+        },
+        {
+          "serieId": "117",
+          "label": "U16 G",
+          "players": 9
+        },
+        {
+          "serieId": "211",
+          "label": "U12 F",
+          "players": 21
+        },
+        {
+          "serieId": "215",
+          "label": "U14 F",
+          "players": 16
+        },
+        {
+          "serieId": "219",
+          "label": "U16 F",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "03"
+      ]
+    },
+    {
+      "file": "03-07-2601452087.json",
+      "trnId": "2601452087",
+      "partKey": "84f9da03f61e79e2d4754a574eb5fb22",
+      "name": "GPJ de la Ligue - Hardelot",
+      "formule": "Simple",
+      "date": "22/08/2026",
+      "dateIso": "2026-08-22",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 6,
+      "totalPlayers": 142,
+      "course": "Les Dunes",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 49
+        },
+        {
+          "serieId": "113",
+          "label": "U14G",
+          "players": 44
+        },
+        {
+          "serieId": "119",
+          "label": "U16G",
+          "players": 18
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 18
+        },
+        {
+          "serieId": "215",
+          "label": "U14F",
+          "players": 5
+        },
+        {
+          "serieId": "217",
+          "label": "U16F",
+          "players": 8
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "07"
+      ]
+    },
+    {
+      "file": "03-11-2601463024.json",
+      "trnId": "2601463024",
+      "partKey": "576077d9b5a1f81a09eab14196e46810",
+      "name": "Grand Prix Jeunes \"Golf de Baden GMVA\" 2026",
+      "formule": "Simple",
+      "date": "19/08/2026",
+      "dateIso": "2026-08-19",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "11",
+      "seriesCount": 6,
+      "totalPlayers": 100,
+      "course": "Baden",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U16 F",
+          "players": 2
+        },
+        {
+          "serieId": "111",
+          "label": "U16 G",
+          "players": 9
+        },
+        {
+          "serieId": "115",
+          "label": "U14 G",
+          "players": 24
+        },
+        {
+          "serieId": "119",
+          "label": "U12 G",
+          "players": 42
+        },
+        {
+          "serieId": "213",
+          "label": "U14 F",
+          "players": 12
+        },
+        {
+          "serieId": "217",
+          "label": "U12 F",
+          "players": 11
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "11"
+      ]
+    },
     {
       "file": "03-02-2601462841.json",
       "trnId": "2601462841",
