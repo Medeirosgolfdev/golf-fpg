@@ -43,12 +43,19 @@
 
 const fs   = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 
 // ── Paths ────────────────────────────────────
 const ROOT          = path.join(__dirname, '..');
 const SLIM_PATH     = path.join(ROOT, 'public', 'data', 'uskids-member-history-slim.json');
 const OUT_DIR       = path.join(ROOT, 'data-archive', 'uskids-rich-players');
-const FLIGHT_CACHE  = path.join(ROOT, 'data-archive', 'uskids-rich-flight-cache.json');
+// A cache é GZIPADA (2505 torneios de meta+flights crus dão ~84 MB em JSON e
+// cresciam ~20 MB/semana). Em claro passou os 100 MB do GitHub a 17 Ago 2026 e
+// o push era REJEITADO — com ele ia abaixo o commit inteiro, incluindo as
+// fichas dos jogadores desse run. Gzipada são ~8 MB e o histórico do repo
+// deixa de levar um blob de 100+ MB por semana. Custo: ~1 s por checkpoint.
+const FLIGHT_CACHE  = path.join(ROOT, 'data-archive', 'uskids-rich-flight-cache.json.gz');
+const FLIGHT_CACHE_LEGACY = path.join(ROOT, 'data-archive', 'uskids-rich-flight-cache.json');
 const RESULTS_PATH  = path.join(ROOT, 'public', 'data', 'uskids-results.json');
 const RUN_SUMMARY   = path.join(ROOT, 'data-archive', 'uskids-rich-run-summary.json');
 
@@ -201,9 +208,18 @@ async function getPlayerTeeTimes(tcode, fid, round, pageNum) {
 
 // ── Cache helpers ────────────────────────────
 function loadFlightCache() {
-  if (!fs.existsSync(FLIGHT_CACHE)) return { gerado_em: null, torneios: {} };
+  // .gz é a fonte de verdade; o .json em claro só é lido para migrar caches
+  // antigas (o primeiro save grava .gz e apaga o .json).
+  const src = fs.existsSync(FLIGHT_CACHE) ? FLIGHT_CACHE
+            : fs.existsSync(FLIGHT_CACHE_LEGACY) ? FLIGHT_CACHE_LEGACY
+            : null;
+  if (!src) return { gerado_em: null, torneios: {} };
   try {
-    return JSON.parse(fs.readFileSync(FLIGHT_CACHE, 'utf8'));
+    const raw = fs.readFileSync(src);
+    const txt = src === FLIGHT_CACHE ? zlib.gunzipSync(raw).toString('utf8')
+                                     : raw.toString('utf8');
+    if (src === FLIGHT_CACHE_LEGACY) console.log('  ↻ a migrar flight-cache legada (.json → .json.gz)');
+    return JSON.parse(txt);
   } catch (e) {
     console.warn(`  ⚠️ flight-cache ilegível (${e.message}) — vai re-descobrir`);
     return { gerado_em: null, torneios: {} };
@@ -213,7 +229,12 @@ function loadFlightCache() {
 function saveFlightCache(fc) {
   fc.gerado_em = new Date().toISOString();
   fs.mkdirSync(path.dirname(FLIGHT_CACHE), { recursive: true });
-  fs.writeFileSync(FLIGHT_CACHE, JSON.stringify(fc), 'utf8');
+  // tmp+rename: a cache é gravada de 10 em 10 torneios e um run interrompido a
+  // meio da escrita deixaria um .gz truncado (= re-descobrir tudo do zero).
+  const tmp = `${FLIGHT_CACHE}.tmp`;
+  fs.writeFileSync(tmp, zlib.gzipSync(Buffer.from(JSON.stringify(fc), 'utf8')));
+  fs.renameSync(tmp, FLIGHT_CACHE);
+  if (fs.existsSync(FLIGHT_CACHE_LEGACY)) fs.rmSync(FLIGHT_CACHE_LEGACY);
 }
 
 function loadSlimMids() {
@@ -959,7 +980,7 @@ async function main() {
   console.log('\n══════════════════════════════════════');
   console.log(`✅  ${written} ficheiros escritos (${unchanged} sem alterações)`);
   console.log(`    Output: data-archive/uskids-rich-players/`);
-  console.log(`    Cache:  data-archive/uskids-rich-flight-cache.json`);
+  console.log(`    Cache:  data-archive/uskids-rich-flight-cache.json.gz`);
   console.log('══════════════════════════════════════');
 
   process.exit(written === 0 ? 2 : 0);

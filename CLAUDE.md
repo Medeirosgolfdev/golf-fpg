@@ -787,7 +787,7 @@ Output: `data-archive/uskids-member-history.json` (ficheiro único)
 
 **fetch-uskids-rich-players-node.js** — **Node puro** (sem Playwright). Pipeline RICA por jogador (não por torneio). Para cada memberID no slim + novos descobertos: `GetMemberTournamentResults` → cruza para `(tcode, age_group)` → `GetMeta` (cached) → `GetPlayerTeeTimes` (cached) → escreve `data-archive/uskids-rich-players/{memberID}.json` com TODOS os campos da API (teeMarkerName, teeMarkerColor, startHole, startTime, groupNumber, playerNumber, status, points, handicap, place, etc.). **Sem filtros TOP-N nem MAX_AGE_TODAY** — carreira completa.
 
-Cache separada do member-history: `uskids-rich-flight-cache.json` (re-fetch só se torneio ≤15d). Skip-existing por `lastUpdated` (default `--since-days 14`). Matching memberID→pid local via fingerprint de strokes (mesmas salvaguardas `MIN_FINGERPRINT_HOLES=6`, `MIN_FINGERPRINT_DISTINCT=3` do member-history). Exit code 2 = sem novidades.
+Cache separada do member-history: `uskids-rich-flight-cache.json.gz` (re-fetch só se torneio ≤15d). **É gzipada de propósito** (2026-08-24): em claro são ~84 MB a crescer ~20 MB/semana e passou os **100 MB** do GitHub a 17 Ago — o push era rejeitado e, como o commit era ÚNICO, levava atrás as fichas dos jogadores desse run (2 segundas-feiras seguidas, ~10h de scrape perdidas). Gzipada dá ~8 MB e o histórico do repo deixa de levar um blob de 100+ MB por semana. O `loadFlightCache` ainda lê um `.json` legado para migrar; o primeiro save grava o `.gz` e apaga-o. ⚠ O workflow faz **dois commits com pushes separados** (fichas primeiro, cache depois) — um ficheiro problemático nunca mais pode custar os dados novos. Skip-existing por `lastUpdated` (default `--since-days 14`). Matching memberID→pid local via fingerprint de strokes (mesmas salvaguardas `MIN_FINGERPRINT_HOLES=6`, `MIN_FINGERPRINT_DISTINCT=3` do member-history). Exit code 2 = sem novidades.
 
 ```bash
 node scripts/fetch-uskids-rich-players-node.js                    # default (skip-existing 14d)
@@ -1959,7 +1959,7 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + kids/FieldRivaisDashboard (tabs Scores/Scorecards/Campo/Previsão) |
 | uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
-| uskids-rich-flight-cache.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — cache (tcode → flights/players) para a pipeline rica |
+| uskids-rich-flight-cache.json.gz | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — cache (tcode → flights/players) para a pipeline rica; **gzipada** (em claro passava o limite de 100 MB do GitHub) |
 | uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
