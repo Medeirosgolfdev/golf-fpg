@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Galzignano Terme , PD",
   "ageGroup": "Girls 13-14",
-  "lastUpdated": "2026-07-29T21:56:49.559Z",
+  "lastUpdated": "2026-08-24T14:11:49.397Z",
   "totalTorneios": 12,
   "torneios": {
     "11824": {
@@ -1121,8 +1121,8 @@
       "ageGroup": "Girls 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 3,
+      "totalStrokes": 236,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1133,7 +1133,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            4,
+            3,
+            8,
+            4,
+            3,
+            3,
+            6,
+            3,
+            5,
+            4,
+            5,
+            5,
+            5,
+            4,
+            5
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            5,
+            5,
+            5,
+            3,
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            2,
+            4,
+            5,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4,
+            6,
+            3,
+            4,
+            4,
+            5,
+            2,
+            4,
+            5,
+            6
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     }
   }
 }

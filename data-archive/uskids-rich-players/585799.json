@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Fayetteville, NC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-07-29T21:56:48.974Z",
+  "lastUpdated": "2026-08-24T14:11:47.714Z",
   "totalTorneios": 33,
   "torneios": {
     "18081": {
@@ -1107,7 +1107,7 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -1132,7 +1132,7 @@
           ],
           "numStrokes": 46,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -3078,9 +3078,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 41,
+      "points": 40,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3090,7 +3090,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            6,
+            3,
+            5,
+            4,
+            5,
+            3,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Eagle Ridge Golf "
+        }
+      }
     }
   }
 }

@@ -1,10 +1,10 @@
 {
   "memberID": "619638",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Lauren Stone",
+  "country": "US",
+  "place": "Greensboro , NC",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-07-29T21:56:49.395Z",
+  "lastUpdated": "2026-08-24T14:11:48.935Z",
   "totalTorneios": 37,
   "torneios": {
     "16841": {
@@ -739,7 +739,7 @@
           ],
           "numStrokes": 42,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -764,7 +764,7 @@
           ],
           "numStrokes": 51,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -789,7 +789,7 @@
           ],
           "numStrokes": 46,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2735,8 +2735,8 @@
       "ageGroup": "Girls 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 53,
+      "totalStrokes": 120,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2750,15 +2750,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            4,
+            6,
+            3,
+            4,
+            5,
+            4,
             0,
             0,
             0,
@@ -2769,9 +2769,59 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 39,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            3,
+            3,
+            5,
+            4,
+            5,
+            7,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
+        },
+        "3": {
+          "strokes": [
+            4,
+            5,
+            4,
+            3,
+            6,
+            4,
+            5,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -3101,6 +3151,98 @@
         }
       }
     },
+    "22287": {
+      "tcode": "22287",
+      "name": "Oak Hollow Golf Course (Tour Championship)",
+      "type": " Piedmont Triad, NC Local Tour",
+      "startDate": "8/9/2026",
+      "endDate": "8/9/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        186,
+        296,
+        204,
+        110,
+        260,
+        216,
+        101,
+        237,
+        197,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 1,
+      "totalStrokes": 42,
+      "points": 60,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            6,
+            3,
+            5,
+            4,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Oak Hollow Golf Course"
+        }
+      }
+    },
     "23010": {
       "tcode": "23010",
       "name": "Gillespie Park Golf Course",
@@ -3282,98 +3424,6 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "Sapona Country Club"
-        }
-      }
-    },
-    "23013": {
-      "tcode": "23013",
-      "name": "Blair Park Golf Course",
-      "type": " Piedmont Triad, NC Local Tour",
-      "startDate": "9/27/2026",
-      "endDate": "9/27/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        4,
-        5,
-        3,
-        4,
-        4,
-        4,
-        4,
-        3,
-        5
-      ],
-      "yards": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        165,
-        290,
-        95,
-        225,
-        214,
-        183,
-        222,
-        114,
-        296
-      ],
-      "flightCourses": {},
-      "ageGroup": "Girls 9-10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {
-        "1": {
-          "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Blair Park Golf Course"
         }
       }
     },

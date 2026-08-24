@@ -1,10 +1,10 @@
 {
   "memberID": "656996",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Greta Spindler",
+  "country": "DE",
+  "place": "Hamburg , HH",
   "ageGroup": "Girls 13-14",
-  "lastUpdated": "2026-07-29T21:56:49.559Z",
+  "lastUpdated": "2026-08-24T14:11:49.399Z",
   "totalTorneios": 6,
   "torneios": {
     "21795": {
@@ -569,8 +569,8 @@
       "ageGroup": "Girls 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 8,
+      "totalStrokes": 283,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -581,7 +581,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            6,
+            5,
+            5,
+            4,
+            6,
+            6,
+            5,
+            4,
+            6,
+            5,
+            5,
+            5,
+            6,
+            6,
+            4,
+            6,
+            8
+          ],
+          "numStrokes": 98,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            6,
+            4,
+            6,
+            6,
+            4,
+            5,
+            5,
+            6,
+            3,
+            6,
+            6,
+            6
+          ],
+          "numStrokes": 89,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            7,
+            5,
+            5,
+            4,
+            7,
+            7,
+            3,
+            4,
+            5,
+            4,
+            6,
+            6,
+            6,
+            4,
+            6,
+            7,
+            6
+          ],
+          "numStrokes": 96,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     }
   }
 }

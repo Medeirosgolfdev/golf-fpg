@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Trento, TN",
   "ageGroup": "Girls 15-18",
-  "lastUpdated": "2026-07-29T21:56:49.559Z",
+  "lastUpdated": "2026-08-24T14:11:49.399Z",
   "totalTorneios": 6,
   "torneios": {
     "11827": {
@@ -884,8 +884,8 @@
       "ageGroup": "Girls 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 219,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -896,7 +896,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            3,
+            4,
+            3,
+            5,
+            6,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            3,
+            6
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            3,
+            6,
+            3,
+            6,
+            4,
+            3,
+            4,
+            6,
+            3,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            3,
+            4,
+            5,
+            3,
+            3,
+            5,
+            4,
+            2,
+            4,
+            3,
+            5
+          ],
+          "numStrokes": 70,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     }
   }
 }

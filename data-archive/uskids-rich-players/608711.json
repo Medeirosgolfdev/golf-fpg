@@ -2,9 +2,9 @@
   "memberID": "608711",
   "name": "Cole Kreutzer",
   "country": "US",
-  "place": "Mount Pleasant, SC",
+  "place": "Mount Pleasant , SC",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:49.171Z",
+  "lastUpdated": "2026-08-24T14:11:48.308Z",
   "totalTorneios": 58,
   "torneios": {
     "15835": {
@@ -3576,22 +3576,65 @@
         147,
         290
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4
+          ],
+          "lengths": [
+            318,
+            135,
+            233,
+            238,
+            303,
+            136,
+            365,
+            302,
+            380,
+            280,
+            431,
+            376,
+            134,
+            306,
+            198,
+            239,
+            147,
+            290
+          ]
+        }
+      },
       "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
+      "flightId": "260610",
+      "pid": "1580185",
       "place": 1,
       "totalStrokes": 43,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "status": 1,
+      "teeMarkerName": "Tee 4",
+      "teeMarkerColor": "Red",
+      "handicap": "",
+      "driverLength": "",
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -3616,7 +3659,53 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Summerville Country Club"
+          "course": "Summerville Country Club",
+          "startHole": 10,
+          "startTime": "07:30",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "275495",
+          "pars": [
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4
+          ],
+          "yards": [
+            318,
+            135,
+            233,
+            238,
+            303,
+            136,
+            365,
+            302,
+            380,
+            280,
+            431,
+            376,
+            134,
+            306,
+            198,
+            239,
+            147,
+            290
+          ]
         }
       }
     },
@@ -4678,7 +4767,7 @@
           ],
           "numStrokes": 86,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -4703,7 +4792,7 @@
           ],
           "numStrokes": 92,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -5311,9 +5400,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 80,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5323,7 +5412,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            5,
+            6,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Yeamans Hall Club"
+        }
+      }
     },
     "22432": {
       "tcode": "22432",
@@ -5377,9 +5492,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 82,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5389,7 +5504,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            7,
+            5,
+            4,
+            3,
+            4,
+            5,
+            5,
+            3,
+            5,
+            5,
+            8,
+            4,
+            3,
+            5,
+            4,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Crowfield Golf Club"
+        }
+      }
     }
   }
 }

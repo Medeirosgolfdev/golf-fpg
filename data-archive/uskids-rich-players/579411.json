@@ -1,11 +1,11 @@
 {
   "memberID": "579411",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Kyrie Maryniuk",
+  "country": "US",
+  "place": "Greenville, SC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-07-29T21:56:48.887Z",
-  "totalTorneios": 70,
+  "lastUpdated": "2026-08-24T14:11:47.463Z",
+  "totalTorneios": 69,
   "torneios": {
     "12743": {
       "tcode": "12743",
@@ -699,9 +699,52 @@
         130,
         110
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3
+          ],
+          "lengths": [
+            160,
+            62,
+            140,
+            115,
+            195,
+            130,
+            70,
+            125,
+            215,
+            225,
+            120,
+            190,
+            130,
+            83,
+            125,
+            115,
+            130,
+            110
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
+      "flightId": "186437",
       "pid": null,
       "place": 0,
       "totalStrokes": 0,
@@ -739,7 +782,47 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Charleston National Golf Club"
+          "course": "Charleston National Golf Club",
+          "pars": [
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3
+          ],
+          "yards": [
+            160,
+            62,
+            140,
+            115,
+            195,
+            130,
+            70,
+            125,
+            215,
+            225,
+            120,
+            190,
+            130,
+            83,
+            125,
+            115,
+            130,
+            110
+          ]
         }
       }
     },
@@ -1067,22 +1150,65 @@
         110,
         150
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4
+          ],
+          "lengths": [
+            155,
+            205,
+            130,
+            80,
+            140,
+            190,
+            125,
+            50,
+            125,
+            200,
+            65,
+            125,
+            140,
+            55,
+            210,
+            160,
+            110,
+            150
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "186493",
+      "pid": "1158488",
       "place": 1,
       "totalStrokes": 43,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -1107,7 +1233,53 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Charleston Municipal Golf Course"
+          "course": "Charleston Municipal Golf Course",
+          "startHole": 1,
+          "startTime": "12:54",
+          "groupNumber": 3,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "198194",
+          "pars": [
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4
+          ],
+          "yards": [
+            155,
+            205,
+            130,
+            80,
+            140,
+            190,
+            125,
+            50,
+            125,
+            200,
+            65,
+            125,
+            140,
+            55,
+            210,
+            160,
+            110,
+            150
+          ]
         }
       }
     },
@@ -2612,7 +2784,7 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
@@ -2637,7 +2809,7 @@
           ],
           "numStrokes": 36,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -4401,7 +4573,7 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -4426,7 +4598,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -6300,7 +6472,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Crowfield Golf Club"
+        }
+      }
     },
     "22736": {
       "tcode": "22736",
@@ -6366,7 +6564,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seville Golf and Country Club"
+        }
+      }
     },
     "22737": {
       "tcode": "22737",
@@ -6432,7 +6656,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Apache Wells Country Club"
+        }
+      }
     },
     "22738": {
       "tcode": "22738",
@@ -6547,72 +6797,6 @@
         280,
         385,
         128
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 9",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
-    "22740": {
-      "tcode": "22740",
-      "name": "Sun City Country Club",
-      "type": " Phoenix Local Tour",
-      "startDate": "11/1/2026",
-      "endDate": "11/1/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        4,
-        4,
-        5,
-        3,
-        4,
-        5,
-        3,
-        4,
-        4,
-        5,
-        3,
-        4,
-        4,
-        4,
-        5,
-        4,
-        3,
-        4
-      ],
-      "yards": [
-        250,
-        260,
-        385,
-        88,
-        257,
-        355,
-        95,
-        233,
-        239,
-        362,
-        120,
-        249,
-        256,
-        242,
-        356,
-        265,
-        107,
-        235
       ],
       "flightCourses": {},
       "ageGroup": "Boys 9",

@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Perugia, PG",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:49.266Z",
+  "lastUpdated": "2026-08-24T14:11:48.673Z",
   "totalTorneios": 9,
   "torneios": {
     "20175": {
@@ -999,15 +999,15 @@
         0
       ],
       "yards": [
-        183,
-        179,
+        190,
+        185,
         265,
-        99,
-        332,
-        171,
-        319,
-        109,
-        107,
+        100,
+        340,
+        180,
+        320,
+        110,
+        110,
         0,
         0,
         0,
@@ -1022,8 +1022,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 17,
+      "totalStrokes": 159,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1034,7 +1034,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            6,
+            6,
+            4,
+            9,
+            3,
+            8,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 52,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            8,
+            8,
+            9,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 51,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            4,
+            7,
+            5,
+            5,
+            7,
+            5,
+            9,
+            10,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 56,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "MX",
   "place": "Monterrey, NLE",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:48.822Z",
+  "lastUpdated": "2026-08-24T14:11:47.278Z",
   "totalTorneios": 42,
   "torneios": {
     "11592": {
@@ -4179,9 +4179,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 82,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4191,7 +4191,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            5,
+            4,
+            2,
+            6,
+            5,
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            6,
+            4,
+            6
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Club de Golf la Herradura"
+        }
+      }
     },
     "22619": {
       "tcode": "22619",
@@ -4257,7 +4283,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Club de Golf Valle Alto"
+        }
+      }
     }
   }
 }

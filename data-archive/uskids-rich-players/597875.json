@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Hudson, OH",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:49.094Z",
-  "totalTorneios": 94,
+  "lastUpdated": "2026-08-24T14:11:48.073Z",
+  "totalTorneios": 93,
   "torneios": {
     "14627": {
       "tcode": "14627",
@@ -6540,8 +6540,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 45,
+      "totalStrokes": 123,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6555,15 +6555,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            5,
+            4,
+            5,
+            6,
+            4,
+            6,
+            4,
             0,
             0,
             0,
@@ -6574,21 +6574,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            5,
+            3,
+            5,
+            5,
+            5,
+            5,
+            5,
             0,
             0,
             0,
@@ -6599,21 +6599,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            4,
+            5,
+            6,
+            5,
+            6,
+            4,
             0,
             0,
             0,
@@ -6624,8 +6624,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 41,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         }
       }
@@ -8216,7 +8216,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seaview Golf Club - Bay Course"
+        }
+      }
     },
     "23106": {
       "tcode": "23106",
@@ -8226,15 +8252,53 @@
       "endDate": "8/9/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        250,
+        70,
+        225,
+        265,
+        235,
+        225,
+        225,
+        70,
+        235,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 38,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8244,7 +8308,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            3,
+            4,
+            5,
+            5,
+            6,
+            4,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Windmill Lakes Golf Club"
+        }
+      }
     },
     "23107": {
       "tcode": "23107",
@@ -8298,9 +8388,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8310,7 +8400,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Shawnee Hills Golf Course"
+        }
+      }
     },
     "23108": {
       "tcode": "23108",
@@ -8376,7 +8492,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Brook Golf Course "
+        }
+      }
     },
     "23109": {
       "tcode": "23109",
@@ -8442,7 +8584,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Tannenhauf Golf Club, Inc."
+        }
+      }
     },
     "23110": {
       "tcode": "23110",
@@ -8508,73 +8676,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23111": {
-      "tcode": "23111",
-      "name": "Mill Creek Park Golf Course - North Course ",
-      "type": " Cleveland Local Tour",
-      "startDate": "9/20/2026",
-      "endDate": "9/20/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        4,
-        4,
-        3,
-        5,
-        4,
-        4,
-        5,
-        3,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "yards": [
-        200,
-        225,
-        78,
-        274,
-        228,
-        225,
-        272,
-        65,
-        235,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Big Met Golf Course"
+        }
+      }
     },
     "23112": {
       "tcode": "23112",

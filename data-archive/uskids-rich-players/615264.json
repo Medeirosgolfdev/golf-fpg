@@ -4,7 +4,7 @@
   "country": null,
   "place": null,
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-07-29T21:56:49.208Z",
+  "lastUpdated": "2026-08-24T14:11:48.431Z",
   "totalTorneios": 31,
   "torneios": {
     "18124": {
@@ -2852,9 +2852,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 9,
+      "totalStrokes": 49,
+      "points": 2,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2864,7 +2864,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            5,
+            7,
+            5,
+            7,
+            3,
+            6,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 49,
+          "numHoles": 9,
+          "course": "Dos Lagos Golf Club"
+        }
+      }
     },
     "22706": {
       "tcode": "22706",
@@ -2918,9 +2944,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 7,
+      "totalStrokes": 48,
+      "points": 6,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2930,7 +2956,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            4,
+            6,
+            5,
+            6,
+            4,
+            7,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 48,
+          "numHoles": 9,
+          "course": "Dos Lagos Golf Club"
+        }
+      }
     }
   }
 }

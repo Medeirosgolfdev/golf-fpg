@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Spokane Valley, WA",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-07-29T21:56:48.879Z",
+  "lastUpdated": "2026-08-24T14:11:47.442Z",
   "totalTorneios": 82,
   "torneios": {
     "12147": {
@@ -7795,9 +7795,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 80,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7807,7 +7807,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            5,
+            3,
+            6,
+            3,
+            4,
+            5,
+            4,
+            6,
+            3,
+            4,
+            5,
+            4,
+            5,
+            5,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Twin Lakes Golf Course"
+        }
+      }
     },
     "22517": {
       "tcode": "22517",
@@ -7873,7 +7899,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Liberty Lake Golf Course "
+        }
+      }
     }
   }
 }

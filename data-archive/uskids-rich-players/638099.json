@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Raleigh, NC",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:49.265Z",
+  "lastUpdated": "2026-08-24T14:11:48.667Z",
   "totalTorneios": 23,
   "torneios": {
     "19704": {
@@ -2133,9 +2133,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 40,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2145,7 +2145,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            4,
+            3,
+            5,
+            7,
+            5,
+            2,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Eagle Ridge Golf "
+        }
+      }
     }
   }
 }

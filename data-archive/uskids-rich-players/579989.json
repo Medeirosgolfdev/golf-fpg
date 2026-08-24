@@ -4,7 +4,7 @@
   "country": "GB",
   "place": "Bexhill",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-07-29T21:56:48.896Z",
+  "lastUpdated": "2026-08-24T14:11:47.491Z",
   "totalTorneios": 42,
   "torneios": {
     "12251": {
@@ -331,9 +331,94 @@
         289,
         229
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5,
+            4
+          ],
+          "lengths": [
+            210,
+            221,
+            217,
+            324,
+            94,
+            257,
+            98,
+            168,
+            224,
+            219,
+            84,
+            201,
+            224,
+            278,
+            217,
+            92,
+            289,
+            229
+          ]
+        },
+        "2": {
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5,
+            4
+          ],
+          "lengths": [
+            210,
+            221,
+            217,
+            324,
+            94,
+            257,
+            98,
+            168,
+            224,
+            223,
+            96,
+            205,
+            225,
+            307,
+            219,
+            109,
+            297,
+            232
+          ]
+        }
+      },
       "ageGroup": "Boys 9",
-      "flightId": null,
+      "flightId": "175020",
       "pid": null,
       "place": 0,
       "totalStrokes": 0,
@@ -371,7 +456,47 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Woodhall Spa Golf Course - Bracken"
+          "course": "Woodhall Spa Golf Course - Bracken",
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5,
+            4
+          ],
+          "yards": [
+            210,
+            221,
+            217,
+            324,
+            94,
+            257,
+            98,
+            168,
+            224,
+            219,
+            84,
+            201,
+            224,
+            278,
+            217,
+            92,
+            289,
+            229
+          ]
         },
         "2": {
           "strokes": [
@@ -396,7 +521,47 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Woodhall Spa Golf Course - Bracken"
+          "course": "Woodhall Spa Golf Course - Bracken",
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5,
+            4
+          ],
+          "yards": [
+            210,
+            221,
+            217,
+            324,
+            94,
+            257,
+            98,
+            168,
+            224,
+            223,
+            96,
+            205,
+            225,
+            307,
+            219,
+            109,
+            297,
+            232
+          ]
         }
       }
     },
@@ -4320,7 +4485,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Vale Resort - Wales National Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Vale Resort - Wales National Course"
+        }
+      }
     }
   }
 }

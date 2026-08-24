@@ -1,10 +1,10 @@
 {
   "memberID": "622460",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Riva Ferjanic",
+  "country": "SI",
+  "place": "Celje",
   "ageGroup": "Girls 8 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.553Z",
+  "lastUpdated": "2026-08-24T14:11:49.376Z",
   "totalTorneios": 1,
   "torneios": {
     "22243": {
@@ -59,8 +59,8 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 125,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -71,7 +71,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            3,
+            6,
+            6,
+            9,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            5,
+            4,
+            5,
+            4,
+            6,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            5,
+            5,
+            4,
+            4,
+            4,
+            4,
+            6,
+            5,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     }
   }
 }

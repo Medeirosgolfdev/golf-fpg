@@ -3,9 +3,9 @@
   "name": null,
   "country": null,
   "place": null,
-  "ageGroup": "Girls 8",
-  "lastUpdated": "2026-07-29T21:56:49.569Z",
-  "totalTorneios": 3,
+  "ageGroup": "Girls 9-10",
+  "lastUpdated": "2026-08-24T14:11:49.402Z",
+  "totalTorneios": 4,
   "torneios": {
     "20932": {
       "tcode": "20932",
@@ -304,7 +304,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -329,9 +329,75 @@
           ],
           "numStrokes": 53,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
+    },
+    "23430": {
+      "tcode": "23430",
+      "name": "Mexico Invitational 2026",
+      "type": "International Championships",
+      "startDate": "12/12/2026",
+      "endDate": "12/13/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        202,
+        229,
+        103,
+        280,
+        231,
+        236,
+        238,
+        106,
+        250,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

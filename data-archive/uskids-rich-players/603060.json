@@ -1,11 +1,11 @@
 {
   "memberID": "603060",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Emma Corpuz",
+  "country": "US",
+  "place": "Spring Lake, NC",
   "ageGroup": "Girls 10",
-  "lastUpdated": "2026-07-29T21:56:49.406Z",
-  "totalTorneios": 82,
+  "lastUpdated": "2026-08-24T14:11:48.966Z",
+  "totalTorneios": 83,
   "torneios": {
     "15266": {
       "tcode": "15266",
@@ -2905,7 +2905,7 @@
           ],
           "numStrokes": 36,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -2930,7 +2930,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -2955,7 +2955,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -3139,7 +3139,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -3164,7 +3164,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -6774,8 +6774,8 @@
       "ageGroup": "Girls 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 52,
+      "totalStrokes": 237,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6789,77 +6789,77 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            5,
+            3,
+            5,
+            5,
+            5,
+            4,
+            6,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            5,
+            5,
+            5,
+            3
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 80,
+          "numHoles": 18,
           "course": "Quail Ridge"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            3,
+            5,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            5,
+            6,
+            6,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 80,
+          "numHoles": 18,
           "course": "Quail Ridge"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            2,
+            6,
+            3,
+            4,
+            6,
+            5,
+            5,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 77,
+          "numHoles": 18,
           "course": "Quail Ridge"
         }
       }
@@ -7975,6 +7975,72 @@
           "course": "TPC Myrtle Beach "
         }
       }
+    },
+    "23049": {
+      "tcode": "23049",
+      "name": "2026 Girls Invitational - Longleaf (NC)",
+      "type": "Girls Invitationals",
+      "startDate": "11/14/2026",
+      "endDate": "11/15/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        3,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5,
+        4,
+        4
+      ],
+      "yards": [
+        281,
+        260,
+        102,
+        95,
+        364,
+        121,
+        238,
+        340,
+        220,
+        218,
+        104,
+        277,
+        257,
+        332,
+        246,
+        323,
+        241,
+        241
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

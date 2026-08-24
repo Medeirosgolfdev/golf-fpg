@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Knoxville, TN",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.302Z",
-  "totalTorneios": 27,
+  "lastUpdated": "2026-08-24T14:11:48.610Z",
+  "totalTorneios": 28,
   "torneios": {
     "19040": {
       "tcode": "19040",
@@ -1439,8 +1439,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 25,
+      "totalStrokes": 118,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1454,15 +1454,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            5,
+            5,
+            4,
+            6,
+            4,
+            3,
             0,
             0,
             0,
@@ -1473,21 +1473,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            10,
             0,
             0,
             0,
@@ -1498,21 +1498,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            5,
+            3,
+            4,
+            5,
+            5,
+            3,
+            3,
             0,
             0,
             0,
@@ -1523,9 +1523,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2403,7 +2403,7 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -2428,7 +2428,124 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
+        }
+      }
+    },
+    "22394": {
+      "tcode": "22394",
+      "name": "2026 Michigan State Invitational",
+      "type": "State Championships",
+      "startDate": "8/10/2026",
+      "endDate": "8/11/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        3,
+        4,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        200,
+        60,
+        150,
+        53,
+        165,
+        190,
+        145,
+        140,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 6 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 2,
+      "totalStrokes": 85,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            9,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "The Fortress Golf Club"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            4,
+            6,
+            7,
+            4,
+            5,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "The Fortress Golf Club"
         }
       }
     },

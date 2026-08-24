@@ -4,8 +4,8 @@
   "country": null,
   "place": null,
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:48.523Z",
-  "totalTorneios": 77,
+  "lastUpdated": "2026-08-24T14:11:46.389Z",
+  "totalTorneios": 79,
   "torneios": {
     "13514": {
       "tcode": "13514",
@@ -3507,7 +3507,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
@@ -3532,7 +3532,7 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -7274,6 +7274,98 @@
         }
       }
     },
+    "22386": {
+      "tcode": "22386",
+      "name": "Balcones Country Club (Tour Championship)",
+      "type": " Austin Local Tour",
+      "startDate": "8/10/2026",
+      "endDate": "8/10/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        4,
+        4,
+        5,
+        3,
+        5,
+        3,
+        5,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        210,
+        218,
+        203,
+        310,
+        90,
+        300,
+        90,
+        310,
+        85,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8",
+      "flightId": null,
+      "pid": null,
+      "place": 2,
+      "totalStrokes": 43,
+      "points": 35,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            5,
+            3,
+            6,
+            5,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Balcones Country Club"
+        }
+      }
+    },
     "22387": {
       "tcode": "22387",
       "name": "Hancock Park Golf Course",
@@ -7363,6 +7455,98 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "Hancock Park Golf Course"
+        }
+      }
+    },
+    "22448": {
+      "tcode": "22448",
+      "name": "2026 Texas - Fall State Invitational",
+      "type": "State Championships",
+      "startDate": "9/12/2026",
+      "endDate": "9/13/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        3,
+        4,
+        3,
+        4,
+        5,
+        4,
+        5,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        245,
+        206,
+        250,
+        115,
+        350,
+        105,
+        177,
+        250,
+        250,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hyatt Hill Country - Lakes"
         }
       }
     }

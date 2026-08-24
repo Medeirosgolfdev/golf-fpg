@@ -4,7 +4,7 @@
   "country": "UK",
   "place": "Southampton, Hampshire",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:49.154Z",
+  "lastUpdated": "2026-08-24T14:11:48.256Z",
   "totalTorneios": 9,
   "torneios": {
     "15605": {
@@ -801,15 +801,53 @@
       "endDate": "8/23/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        4,
+        4,
+        3,
+        5,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4
+      ],
+      "yards": [
+        289,
+        277,
+        300,
+        138,
+        373,
+        401,
+        139,
+        303,
+        257,
+        298,
+        372,
+        111,
+        255,
+        290,
+        400,
+        326,
+        150,
+        285
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 92,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -819,7 +857,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            4,
+            7,
+            6,
+            4,
+            5,
+            5,
+            6,
+            7,
+            4,
+            5,
+            6,
+            5,
+            5,
+            3,
+            5
+          ],
+          "numStrokes": 92,
+          "numHoles": 18,
+          "course": "Durbanville Golf Club"
+        }
+      }
     }
   }
 }

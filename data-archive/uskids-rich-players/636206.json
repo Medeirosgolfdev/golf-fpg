@@ -1,10 +1,10 @@
 {
   "memberID": "636206",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Slade  Middlebrook",
+  "country": "US",
+  "place": "Granbury , TX",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-07-29T21:56:49.302Z",
+  "lastUpdated": "2026-08-24T14:11:48.657Z",
   "totalTorneios": 39,
   "torneios": {
     "19428": {
@@ -2660,8 +2660,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 17,
+      "totalStrokes": 115,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2675,15 +2675,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            4,
+            4,
+            7,
+            4,
+            5,
+            3,
+            4,
             0,
             0,
             0,
@@ -2694,21 +2694,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 39,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            4,
+            7,
+            4,
+            5,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -2719,21 +2719,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            3,
+            3,
+            3,
+            5,
+            5,
+            5,
+            2,
+            4,
             0,
             0,
             0,
@@ -2744,9 +2744,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -3048,7 +3048,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hyatt Hill Country - Lakes"
+        }
+      }
     },
     "22960": {
       "tcode": "22960",
@@ -3058,15 +3084,53 @@
       "endDate": "8/22/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        260,
+        172,
+        85,
+        239,
+        210,
+        80,
+        249,
+        165,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 9,
+      "totalStrokes": 51,
+      "points": 2,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3076,7 +3140,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            7,
+            6,
+            6,
+            7,
+            6,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 51,
+          "numHoles": 9,
+          "course": "Cedar Crest Golf Course"
+        }
+      }
     },
     "22961": {
       "tcode": "22961",
@@ -3142,7 +3232,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Oak Hollow Golf Course "
+        }
+      }
     },
     "22962": {
       "tcode": "22962",
@@ -3208,7 +3324,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "WestRidge Golf Course"
+        }
+      }
     },
     "22963": {
       "tcode": "22963",

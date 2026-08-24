@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Chandler, AZ",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:48.941Z",
+  "lastUpdated": "2026-08-24T14:11:47.616Z",
   "totalTorneios": 77,
   "torneios": {
     "12756": {
@@ -6487,15 +6487,53 @@
       "endDate": "8/23/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        257,
+        260,
+        91,
+        400,
+        319,
+        128,
+        391,
+        303,
+        284,
+        272,
+        392,
+        277,
+        295,
+        141,
+        302,
+        290,
+        112,
+        379
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -6505,7 +6543,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            5,
+            6,
+            2,
+            5,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Desert Springs Golf Course"
+        }
+      }
     },
     "22736": {
       "tcode": "22736",
@@ -6571,7 +6635,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seville Golf and Country Club"
+        }
+      }
     },
     "22737": {
       "tcode": "22737",
@@ -6637,7 +6727,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Apache Wells Country Club"
+        }
+      }
     },
     "22738": {
       "tcode": "22738",

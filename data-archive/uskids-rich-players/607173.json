@@ -4,7 +4,7 @@
   "country": "FR",
   "place": "Antibes, A06",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-07-29T21:56:49.160Z",
+  "lastUpdated": "2026-08-24T14:11:48.273Z",
   "totalTorneios": 43,
   "torneios": {
     "15673": {
@@ -3931,8 +3931,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 22,
+      "totalStrokes": 248,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3943,7 +3943,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            3,
+            7,
+            4,
+            2,
+            4,
+            6,
+            2,
+            5,
+            4,
+            6,
+            3,
+            4,
+            5,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            5,
+            5,
+            4,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            6,
+            5,
+            6,
+            6,
+            5,
+            8,
+            6
+          ],
+          "numStrokes": 91,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            6,
+            5,
+            4,
+            4,
+            6,
+            3,
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            3,
+            6,
+            4,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     },
     "22524": {
       "tcode": "22524",
@@ -3997,8 +4073,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 37,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4009,7 +4085,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Golf Club Della Montecchia "
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Camas, WA",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:49.566Z",
-  "totalTorneios": 18,
+  "lastUpdated": "2026-08-24T14:11:48.675Z",
+  "totalTorneios": 19,
   "torneios": {
     "19795": {
       "tcode": "19795",
@@ -1684,7 +1684,7 @@
           ],
           "numStrokes": 78,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -1709,9 +1709,75 @@
           ],
           "numStrokes": 83,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
+    },
+    "23420": {
+      "tcode": "23420",
+      "name": "Monterey Challenge 2026",
+      "type": "Regional Championships",
+      "startDate": "11/7/2026",
+      "endDate": "11/8/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        4,
+        3,
+        4,
+        5,
+        5,
+        3,
+        3,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5
+      ],
+      "yards": [
+        463,
+        298,
+        124,
+        264,
+        361,
+        357,
+        129,
+        104,
+        337,
+        333,
+        112,
+        317,
+        124,
+        341,
+        330,
+        477,
+        345,
+        402
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

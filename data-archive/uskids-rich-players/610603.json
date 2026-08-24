@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Brookfield, WI",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:49.184Z",
-  "totalTorneios": 38,
+  "lastUpdated": "2026-08-24T14:11:48.349Z",
+  "totalTorneios": 40,
   "torneios": {
     "16032": {
       "tcode": "16032",
@@ -3114,7 +3114,7 @@
           ],
           "numStrokes": 81,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -3139,7 +3139,7 @@
           ],
           "numStrokes": 75,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -3602,6 +3602,164 @@
           "course": "Ledges Golf Course"
         }
       }
+    },
+    "22605": {
+      "tcode": "22605",
+      "name": "Seaview Open 2026",
+      "type": "Regional Championships",
+      "startDate": "9/5/2026",
+      "endDate": "9/6/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        5,
+        4,
+        3,
+        4,
+        4,
+        3,
+        3,
+        5,
+        5
+      ],
+      "yards": [
+        314,
+        460,
+        154,
+        331,
+        328,
+        121,
+        309,
+        307,
+        431,
+        401,
+        291,
+        133,
+        296,
+        353,
+        138,
+        105,
+        428,
+        449
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seaview Golf Club - Pines Course"
+        }
+      }
+    },
+    "22831": {
+      "tcode": "22831",
+      "name": "2026 Kansas State Invitational",
+      "type": "State Championships",
+      "startDate": "10/24/2026",
+      "endDate": "10/25/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

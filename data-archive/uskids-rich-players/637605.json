@@ -4,7 +4,7 @@
   "country": "CH",
   "place": "Montreux, VD",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-07-29T21:56:49.264Z",
+  "lastUpdated": "2026-08-24T14:11:48.660Z",
   "totalTorneios": 11,
   "torneios": {
     "21382": {
@@ -822,15 +822,15 @@
         0
       ],
       "yards": [
-        183,
-        179,
+        190,
+        185,
         265,
-        99,
-        332,
-        171,
-        319,
-        109,
-        107,
+        100,
+        340,
+        180,
+        320,
+        110,
+        110,
         0,
         0,
         0,
@@ -845,8 +845,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 11,
+      "totalStrokes": 128,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -857,7 +857,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            6,
+            5,
+            5,
+            4,
+            6,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            7,
+            4,
+            5,
+            6,
+            5,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 45,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            4,
+            4,
+            8,
+            3,
+            6,
+            4,
+            5,
+            5,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     },
     "23003": {
       "tcode": "23003",
@@ -923,7 +999,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golf de Saint-Clair"
+        }
+      }
     },
     "23004": {
       "tcode": "23004",
@@ -989,7 +1091,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golf de Saint-Clair"
+        }
+      }
     }
   }
 }

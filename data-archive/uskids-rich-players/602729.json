@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Las Vegas, NV",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-07-29T21:56:49.135Z",
+  "lastUpdated": "2026-08-24T14:11:48.196Z",
   "totalTorneios": 41,
   "torneios": {
     "15000": {
@@ -3754,15 +3754,53 @@
       "endDate": "8/16/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        391,
+        481,
+        309,
+        131,
+        374,
+        151,
+        357,
+        402,
+        383,
+        356,
+        133,
+        383,
+        493,
+        387,
+        148,
+        348,
+        521,
+        384
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 82,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3772,7 +3810,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            4,
+            4,
+            4,
+            5,
+            3,
+            7,
+            4,
+            3,
+            5,
+            5,
+            6,
+            3,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Angel Park Golf Club - Mountain Course "
+        }
+      }
     },
     "22947": {
       "tcode": "22947",
@@ -3827,7 +3891,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 81,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3838,7 +3902,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            5,
+            5,
+            3,
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            6,
+            6,
+            5,
+            4,
+            5
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Las Vegas Golf Club"
+        }
+      }
     },
     "22948": {
       "tcode": "22948",

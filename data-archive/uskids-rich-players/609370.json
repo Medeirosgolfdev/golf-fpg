@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Peoria, AZ",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:49.175Z",
+  "lastUpdated": "2026-08-24T14:11:48.324Z",
   "totalTorneios": 59,
   "torneios": {
     "15910": {
@@ -4924,15 +4924,53 @@
       "endDate": "8/23/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        257,
+        260,
+        91,
+        400,
+        319,
+        128,
+        391,
+        303,
+        284,
+        272,
+        392,
+        277,
+        295,
+        141,
+        302,
+        290,
+        112,
+        379
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 39,
+      "points": 7,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4942,7 +4980,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            2,
+            6,
+            5,
+            4,
+            5,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 39,
+          "numHoles": 9,
+          "course": "Desert Springs Golf Course"
+        }
+      }
     },
     "22736": {
       "tcode": "22736",
@@ -5008,7 +5072,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seville Golf and Country Club"
+        }
+      }
     },
     "22738": {
       "tcode": "22738",

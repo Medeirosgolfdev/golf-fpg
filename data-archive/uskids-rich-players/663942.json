@@ -1,10 +1,10 @@
 {
   "memberID": "663942",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Maximilian Jakob Mosser",
+  "country": "AT",
+  "place": "Klagenfurt, KAR",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-07-29T21:56:49.553Z",
+  "lastUpdated": "2026-08-24T14:11:48.712Z",
   "totalTorneios": 1,
   "torneios": {
     "22243": {
@@ -59,8 +59,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 212,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -71,7 +71,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            2,
+            4,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            3,
+            5,
+            5
+          ],
+          "numStrokes": 70,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            3,
+            5,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            5
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     }
   }
 }

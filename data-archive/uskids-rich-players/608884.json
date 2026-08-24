@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Raleigh , NC",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:49.172Z",
-  "totalTorneios": 36,
+  "lastUpdated": "2026-08-24T14:11:48.311Z",
+  "totalTorneios": 37,
   "torneios": {
     "16356": {
       "tcode": "16356",
@@ -789,7 +789,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -814,7 +814,7 @@
           ],
           "numStrokes": 15,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2208,8 +2208,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 23,
+      "totalStrokes": 118,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2223,15 +2223,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            6,
+            4,
+            5,
+            4,
+            6,
+            6,
             0,
             0,
             0,
@@ -2242,21 +2242,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            5,
+            2,
+            4,
+            4,
+            3,
+            7,
+            4,
             0,
             0,
             0,
@@ -2267,21 +2267,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 37,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            3,
+            3,
+            6,
+            5,
+            6,
+            5,
             0,
             0,
             0,
@@ -2292,8 +2292,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 39,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         }
       }
@@ -3055,7 +3055,7 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -3080,7 +3080,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -3148,7 +3148,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Seaview Golf Club - Bay Course"
+        }
+      }
     },
     "22608": {
       "tcode": "22608",
@@ -3334,72 +3360,6 @@
         }
       }
     },
-    "22612": {
-      "tcode": "22612",
-      "name": "Eagle Ridge Golf (Tour Championship)",
-      "type": " Raleigh Local Tour",
-      "startDate": "8/20/2026",
-      "endDate": "8/20/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        4,
-        3,
-        4,
-        3,
-        5,
-        4,
-        5,
-        3,
-        5,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "yards": [
-        220,
-        90,
-        210,
-        111,
-        279,
-        210,
-        292,
-        103,
-        285,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
     "22986": {
       "tcode": "22986",
       "name": "PGA Golf Club Invitational 2026",
@@ -3465,6 +3425,164 @@
       "isCaptain": null,
       "isNewPlayer": null,
       "rounds": {}
+    },
+    "23318": {
+      "tcode": "23318",
+      "name": "Colonial Williamsburg Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "11/7/2026",
+      "endDate": "11/8/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        3,
+        4,
+        4,
+        4,
+        5,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        186,
+        102,
+        220,
+        182,
+        230,
+        287,
+        205,
+        72,
+        306
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
+    "23491": {
+      "tcode": "23491",
+      "name": "Longleaf Golf & Family Club",
+      "type": " Sandhills, NC Local Tour",
+      "startDate": "8/30/2026",
+      "endDate": "8/30/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        3,
+        3,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5,
+        3,
+        4
+      ],
+      "yards": [
+        343,
+        260,
+        130,
+        118,
+        345,
+        121,
+        238,
+        340,
+        220,
+        216,
+        104,
+        277,
+        257,
+        332,
+        246,
+        318,
+        110,
+        241
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     }
   }
 }

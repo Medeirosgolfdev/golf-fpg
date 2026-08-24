@@ -3,9 +3,9 @@
   "name": "Julia Jaworska",
   "country": "PL",
   "place": "Skórzewo, WP",
-  "ageGroup": "Girls 10",
-  "lastUpdated": "2026-07-29T21:56:49.285Z",
-  "totalTorneios": 27,
+  "ageGroup": "Girls 9-10",
+  "lastUpdated": "2026-08-24T14:11:48.750Z",
+  "totalTorneios": 29,
   "torneios": {
     "17800": {
       "tcode": "17800",
@@ -580,7 +580,7 @@
           ],
           "numStrokes": 44,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -605,7 +605,7 @@
           ],
           "numStrokes": 44,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -630,7 +630,7 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2665,6 +2665,100 @@
           "course": "Berliner Golf & Country Club Motzener See e.V."
         }
       }
+    },
+    "22858": {
+      "tcode": "22858",
+      "name": "German Masters 2026",
+      "type": "International Championships",
+      "startDate": "10/3/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        255,
+        203,
+        184,
+        103,
+        199,
+        275,
+        94,
+        203,
+        189,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
+    "23132": {
+      "tcode": "23132",
+      "name": "Spanish Open 2026",
+      "type": "International Championships",
+      "startDate": "11/20/2026",
+      "endDate": "11/22/2026",
+      "totalRounds": 3,
+      "holesPerRound": 9,
+      "par": [],
+      "yards": [],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

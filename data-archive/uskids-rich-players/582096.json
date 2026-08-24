@@ -1,10 +1,10 @@
 {
   "memberID": "582096",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Preslee Roberts",
+  "country": "US",
+  "place": "Wesley Chapel , FL",
   "ageGroup": "Girls 8 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.349Z",
+  "lastUpdated": "2026-08-24T14:11:48.805Z",
   "totalTorneios": 32,
   "torneios": {
     "19181": {
@@ -55,22 +55,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            125,
+            135,
+            125,
+            200,
+            90,
+            200,
+            135,
+            70,
+            140,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "246831",
+      "pid": "1525668",
       "place": 3,
       "totalStrokes": 57,
       "points": 15,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "**",
       "rounds": {
         "1": {
           "strokes": [
@@ -95,7 +138,53 @@
           ],
           "numStrokes": 57,
           "numHoles": 9,
-          "course": "Candler Hills Golf Club"
+          "course": "Candler Hills Golf Club",
+          "startHole": 1,
+          "startTime": "15:02",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "261135",
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            125,
+            135,
+            125,
+            200,
+            90,
+            200,
+            135,
+            70,
+            140,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1991,8 +2080,8 @@
       "ageGroup": "Girls 7 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 31,
+      "totalStrokes": 142,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2006,15 +2095,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            4,
+            5,
+            6,
+            6,
+            6,
+            6,
+            7,
+            5,
             0,
             0,
             0,
@@ -2025,21 +2114,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 50,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            6,
+            5,
+            5,
+            7,
+            3,
+            6,
+            7,
+            4,
             0,
             0,
             0,
@@ -2050,21 +2139,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 48,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            5,
+            4,
+            5,
+            4,
+            5,
+            6,
+            5,
             0,
             0,
             0,
@@ -2075,9 +2164,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -2593,9 +2682,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 46,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2605,7 +2694,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            5,
+            4,
+            7,
+            4,
+            7,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 46,
+          "numHoles": 9,
+          "course": "Stone Creek Golf Club"
+        }
+      }
     },
     "22662": {
       "tcode": "22662",
@@ -2659,9 +2774,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 44,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2671,7 +2786,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            7,
+            4,
+            4,
+            6,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Ocala Golf Club"
+        }
+      }
     },
     "22663": {
       "tcode": "22663",
@@ -2725,9 +2866,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 41,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2737,7 +2878,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Harbor Hills Country Club"
+        }
+      }
     },
     "22664": {
       "tcode": "22664",
@@ -2803,7 +2970,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Candler Hills Golf Club"
+        }
+      }
     },
     "22665": {
       "tcode": "22665",
@@ -2869,7 +3062,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Continental Country Club"
+        }
+      }
     }
   }
 }

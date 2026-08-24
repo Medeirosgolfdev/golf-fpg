@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Fort Lauderdale, FL",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:48.467Z",
-  "totalTorneios": 46,
+  "lastUpdated": "2026-08-24T14:11:46.219Z",
+  "totalTorneios": 47,
   "torneios": {
     "8826": {
       "tcode": "8826",
@@ -55,22 +55,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            200,
+            75,
+            115,
+            135,
+            125,
+            140,
+            190,
+            120,
+            60,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "107045",
+      "pid": "673529",
       "place": 3,
       "totalStrokes": 44,
       "points": 12.33,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "**",
       "rounds": {
         "1": {
           "strokes": [
@@ -95,7 +138,53 @@
           ],
           "numStrokes": 44,
           "numHoles": 9,
-          "course": "Indian Spring Country Club"
+          "course": "Indian Spring Country Club",
+          "startHole": 1,
+          "startTime": "13:41",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "115557",
+          "pars": [
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            200,
+            75,
+            115,
+            135,
+            125,
+            140,
+            190,
+            120,
+            60,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -4086,7 +4175,7 @@
           ],
           "numStrokes": 73,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -4111,7 +4200,7 @@
           ],
           "numStrokes": 77,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -4337,7 +4426,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Normandy Shores Golf Course"
+        }
+      }
     },
     "23061": {
       "tcode": "23061",
@@ -4518,6 +4633,72 @@
         440,
         130,
         355
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
+    "23064": {
+      "tcode": "23064",
+      "name": "Country Club of Coral Springs (Tour Championship)",
+      "type": " Miami Local Tour",
+      "startDate": "10/25/2026",
+      "endDate": "10/25/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        3,
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        3,
+        5,
+        4,
+        4
+      ],
+      "yards": [
+        425,
+        140,
+        495,
+        350,
+        340,
+        419,
+        125,
+        350,
+        131,
+        271,
+        140,
+        330,
+        350,
+        420,
+        142,
+        415,
+        330,
+        300
       ],
       "flightCourses": {},
       "ageGroup": "Boys 12",

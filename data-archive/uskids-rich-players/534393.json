@@ -1,10 +1,10 @@
 {
   "memberID": "534393",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Lachlan King",
+  "country": "US",
+  "place": "Basking Ridge, NJ",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-07-29T21:56:48.068Z",
+  "lastUpdated": "2026-08-24T14:11:45.000Z",
   "totalTorneios": 21,
   "torneios": {
     "9457": {
@@ -239,22 +239,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            3,
+            5,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            235,
+            111,
+            280,
+            200,
+            210,
+            270,
+            225,
+            90,
+            205,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
+      "flightId": "115242",
+      "pid": "669892",
       "place": 3,
       "totalStrokes": 46,
       "points": 13.5,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -279,7 +322,53 @@
           ],
           "numStrokes": 46,
           "numHoles": 9,
-          "course": "The Shawnee Inn & Golf Resort"
+          "course": "The Shawnee Inn & Golf Resort",
+          "startHole": 1,
+          "startTime": "08:42",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "124003",
+          "pars": [
+            4,
+            3,
+            5,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            235,
+            111,
+            280,
+            200,
+            210,
+            270,
+            225,
+            90,
+            205,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1015,7 +1104,7 @@
           ],
           "numStrokes": 73,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
@@ -1040,7 +1129,7 @@
           ],
           "numStrokes": 76,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },

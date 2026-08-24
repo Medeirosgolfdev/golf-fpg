@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Knoxville, TN",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.561Z",
+  "lastUpdated": "2026-08-24T14:11:48.691Z",
   "totalTorneios": 19,
   "torneios": {
     "20852": {
@@ -1132,7 +1132,7 @@
           ],
           "numStrokes": 35,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -1157,7 +1157,7 @@
           ],
           "numStrokes": 35,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -1225,7 +1225,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hyatt Hill Country - Lakes"
+        }
+      }
     },
     "22501": {
       "tcode": "22501",
@@ -1647,9 +1673,9 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 35,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1659,7 +1685,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            4,
+            3,
+            6,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
+          "course": "Mill Creek Golf Club"
+        }
+      }
     },
     "23127": {
       "tcode": "23127",
@@ -1690,8 +1742,8 @@
         0
       ],
       "yards": [
-        210,
-        75,
+        200,
+        76,
         128,
         130,
         132,
@@ -1713,9 +1765,9 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 32,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1725,7 +1777,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            4,
+            3,
+            3,
+            4,
+            2,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 32,
+          "numHoles": 9,
+          "course": "Crystal Falls Golf Club"
+        }
+      }
     }
   }
 }

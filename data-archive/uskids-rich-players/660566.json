@@ -1,10 +1,10 @@
 {
   "memberID": "660566",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Liam Ianassi",
+  "country": "IT",
+  "place": "Bologna, BO",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:49.547Z",
+  "lastUpdated": "2026-08-24T14:11:48.711Z",
   "totalTorneios": 6,
   "torneios": {
     "21716": {
@@ -496,15 +496,15 @@
         0
       ],
       "yards": [
-        183,
-        179,
+        190,
+        185,
         265,
-        99,
-        332,
-        171,
-        319,
-        109,
-        107,
+        100,
+        340,
+        180,
+        320,
+        110,
+        110,
         0,
         0,
         0,
@@ -519,8 +519,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 18,
+      "totalStrokes": 162,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -531,7 +531,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            5,
+            7,
+            7,
+            7,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 50,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            8,
+            5,
+            8,
+            5,
+            7,
+            9,
+            6,
+            5,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 56,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            5,
+            5,
+            8,
+            4,
+            7,
+            7,
+            10,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 56,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     }
   }
 }

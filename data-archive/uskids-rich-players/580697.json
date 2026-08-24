@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Spokane Valley, WA",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-07-29T21:56:48.909Z",
-  "totalTorneios": 77,
+  "lastUpdated": "2026-08-24T14:11:47.527Z",
+  "totalTorneios": 78,
   "torneios": {
     "12154": {
       "tcode": "12154",
@@ -7678,6 +7678,98 @@
         }
       }
     },
+    "22517": {
+      "tcode": "22517",
+      "name": "Liberty Lake Golf Course ",
+      "type": " Spokane Local Tour",
+      "startDate": "8/30/2026",
+      "endDate": "8/30/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        5,
+        4,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        388,
+        445,
+        200,
+        373,
+        463,
+        429,
+        175,
+        539,
+        436,
+        406,
+        186,
+        544,
+        384,
+        411,
+        344,
+        130,
+        424,
+        330
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 15-18",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Liberty Lake Golf Course "
+        }
+      }
+    },
     "22523": {
       "tcode": "22523",
       "name": "Teen Series at Wine Valley (WA)",
@@ -7730,8 +7822,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 24,
+      "totalStrokes": 156,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -7742,7 +7834,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            4,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Wine Valley Golf Course"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            5,
+            4,
+            5,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            6,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Wine Valley Golf Course"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Troutman, NC",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:49.204Z",
-  "totalTorneios": 57,
+  "lastUpdated": "2026-08-24T14:11:48.419Z",
+  "totalTorneios": 58,
   "torneios": {
     "16644": {
       "tcode": "16644",
@@ -4653,7 +4653,7 @@
           ],
           "numStrokes": 74,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -5286,6 +5286,98 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
+      "place": 2,
+      "totalStrokes": 41,
+      "points": 40,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            6,
+            4,
+            4,
+            5,
+            6,
+            3,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Oak Hollow Golf Course"
+        }
+      }
+    },
+    "23010": {
+      "tcode": "23010",
+      "name": "Gillespie Park Golf Course",
+      "type": " Piedmont Triad, NC Local Tour",
+      "startDate": "8/30/2026",
+      "endDate": "8/30/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        3,
+        5,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        259,
+        274,
+        355,
+        108,
+        204,
+        260,
+        301,
+        135,
+        347,
+        257,
+        274,
+        355,
+        108,
+        204,
+        305,
+        278,
+        135,
+        347
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -5298,7 +5390,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gillespie Park Golf Course"
+        }
+      }
     }
   }
 }

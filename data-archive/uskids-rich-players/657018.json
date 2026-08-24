@@ -1,10 +1,10 @@
 {
   "memberID": "657018",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Nepomuk Gottschaller",
+  "country": "DE",
+  "place": "Neuoetting, BY",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-07-29T21:56:49.553Z",
+  "lastUpdated": "2026-08-24T14:11:48.709Z",
   "totalTorneios": 5,
   "torneios": {
     "22138": {
@@ -427,8 +427,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 11,
+      "totalStrokes": 228,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -439,7 +439,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            5,
+            3,
+            3,
+            5,
+            4,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            3,
+            5
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            5,
+            5,
+            6,
+            5,
+            3,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            6,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        },
+        "3": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            5,
+            2,
+            3,
+            4,
+            6,
+            5
+          ],
+          "numStrokes": 73,
+          "numHoles": 18,
+          "course": "Golf Club Frassanelle"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": null,
   "place": null,
   "ageGroup": "Girls 11-12",
-  "lastUpdated": "2026-07-29T21:56:49.619Z",
+  "lastUpdated": "2026-08-24T14:11:49.531Z",
   "totalTorneios": 26,
   "torneios": {
     "16936": {
@@ -2233,9 +2233,9 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 8,
+      "totalStrokes": 80,
+      "points": 4,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2245,7 +2245,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            5,
+            3,
+            4,
+            5,
+            4,
+            6,
+            5,
+            5,
+            2,
+            4,
+            4,
+            6,
+            5,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Coyote Creek Golf Club"
+        }
+      }
     },
     "22907": {
       "tcode": "22907",
@@ -2264,7 +2290,7 @@
         4,
         3,
         4,
-        5,
+        4,
         4,
         5,
         4,
@@ -2273,7 +2299,7 @@
         3,
         4,
         4,
-        4
+        5
       ],
       "yards": [
         287,
@@ -2284,7 +2310,7 @@
         270,
         110,
         240,
-        320,
+        260,
         260,
         335,
         240,
@@ -2293,14 +2319,14 @@
         116,
         270,
         235,
-        265
+        350
       ],
       "flightCourses": {},
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 14,
+      "totalStrokes": 86,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2311,7 +2337,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            4,
+            4,
+            4,
+            6,
+            3,
+            6,
+            6,
+            5,
+            7,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            6
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "The Club at Moffett Field"
+        }
+      }
     },
     "22908": {
       "tcode": "22908",
@@ -2366,7 +2418,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 84,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2377,7 +2429,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            7,
+            6,
+            5,
+            6,
+            4,
+            3,
+            4
+          ],
+          "numStrokes": 84,
+          "numHoles": 18,
+          "course": "Shoreline Golf Links"
+        }
+      }
     },
     "22910": {
       "tcode": "22910",
@@ -2443,7 +2521,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Baylands Golf Links"
+        }
+      }
     }
   }
 }

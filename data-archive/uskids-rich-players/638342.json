@@ -4,7 +4,7 @@
   "country": "IE",
   "place": "Banagher , OF",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:49.265Z",
+  "lastUpdated": "2026-08-24T14:11:48.666Z",
   "totalTorneios": 14,
   "torneios": {
     "18978": {
@@ -1219,15 +1219,53 @@
       "endDate": "8/10/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        400,
+        150,
+        380,
+        420,
+        150,
+        370,
+        460,
+        150,
+        350,
+        170,
+        480,
+        330,
+        360,
+        170,
+        330,
+        380,
+        460,
+        370
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 81,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1237,7 +1275,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            7,
+            3,
+            4,
+            5,
+            4,
+            4,
+            3,
+            6,
+            4,
+            4,
+            4,
+            5,
+            6,
+            3,
+            5
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Headfort Golf Club - Old Course"
+        }
+      }
     },
     "22185": {
       "tcode": "22185",
@@ -1291,9 +1355,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 5,
+      "totalStrokes": 86,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1303,7 +1367,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            4,
+            5,
+            5,
+            6,
+            4,
+            6,
+            4,
+            4,
+            5,
+            7,
+            4,
+            4,
+            6,
+            4,
+            4,
+            3,
+            5
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Blainroe Golf Club"
+        }
+      }
     }
   }
 }

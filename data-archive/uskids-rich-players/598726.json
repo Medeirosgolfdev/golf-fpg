@@ -4,8 +4,8 @@
   "country": "IE",
   "place": "Dublin 22, DB",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:49.102Z",
-  "totalTorneios": 32,
+  "lastUpdated": "2026-08-24T14:11:48.099Z",
+  "totalTorneios": 33,
   "torneios": {
     "17284": {
       "tcode": "17284",
@@ -2563,7 +2563,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Lough Erne Resort - Castle Hume Course"
+        }
+      }
     },
     "22918": {
       "tcode": "22918",
@@ -3024,6 +3050,34 @@
           "course": "Lurgan Golf Club"
         }
       }
+    },
+    "23132": {
+      "tcode": "23132",
+      "name": "Spanish Open 2026",
+      "type": "International Championships",
+      "startDate": "11/20/2026",
+      "endDate": "11/22/2026",
+      "totalRounds": 3,
+      "holesPerRound": 18,
+      "par": [],
+      "yards": [],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

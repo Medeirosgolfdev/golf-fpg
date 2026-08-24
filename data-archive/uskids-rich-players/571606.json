@@ -4,7 +4,7 @@
   "country": "US",
   "place": "New Albany, OH",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:48.766Z",
+  "lastUpdated": "2026-08-24T14:11:47.110Z",
   "totalTorneios": 84,
   "torneios": {
     "11851": {
@@ -3900,7 +3900,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
@@ -3925,7 +3925,7 @@
           ],
           "numStrokes": 35,
           "numHoles": 9,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -7853,9 +7853,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 43,
+      "points": 17.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7865,7 +7865,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            7,
+            4,
+            5,
+            4,
+            4,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "The Summit Club at Armonk"
+        }
+      }
     },
     "22546": {
       "tcode": "22546",
@@ -7919,9 +7945,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 41,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7931,7 +7957,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            4,
+            5,
+            6,
+            4,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "The Summit Club at Armonk"
+        }
+      }
     }
   }
 }

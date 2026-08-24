@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Miami, FL",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-07-29T21:56:49.048Z",
-  "totalTorneios": 51,
+  "lastUpdated": "2026-08-24T14:11:47.936Z",
+  "totalTorneios": 50,
   "torneios": {
     "13595": {
       "tcode": "13595",
@@ -4373,72 +4373,6 @@
         }
       }
     },
-    "22585": {
-      "tcode": "22585",
-      "name": "Teen Series at PGA Golf Club (FL)",
-      "type": "Teen Series",
-      "startDate": "8/29/2026",
-      "endDate": "8/30/2026",
-      "totalRounds": 2,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        4,
-        4,
-        5,
-        3,
-        5,
-        3,
-        4,
-        4,
-        3,
-        4,
-        3,
-        5,
-        4,
-        5,
-        3,
-        5,
-        4
-      ],
-      "yards": [
-        398,
-        396,
-        379,
-        450,
-        160,
-        506,
-        166,
-        368,
-        370,
-        157,
-        379,
-        160,
-        500,
-        372,
-        450,
-        170,
-        506,
-        370
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 12-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
     "23059": {
       "tcode": "23059",
       "name": "Redland Golf & Country Club",
@@ -4491,9 +4425,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 7,
+      "totalStrokes": 90,
+      "points": 5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4503,7 +4437,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            2,
+            5,
+            4,
+            6,
+            4,
+            7,
+            6,
+            5,
+            5,
+            6,
+            6,
+            5,
+            4,
+            5,
+            6
+          ],
+          "numStrokes": 90,
+          "numHoles": 18,
+          "course": "Redland Golf & Country Club"
+        }
+      }
     },
     "23060": {
       "tcode": "23060",
@@ -4569,7 +4529,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Normandy Shores Golf Course"
+        }
+      }
     },
     "23061": {
       "tcode": "23061",

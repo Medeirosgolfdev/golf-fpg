@@ -1,10 +1,10 @@
 {
   "memberID": "607258",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Matilde Rovatti",
+  "country": "IT",
+  "place": "Verona, VR",
   "ageGroup": "Girls 11",
-  "lastUpdated": "2026-07-29T21:56:49.557Z",
+  "lastUpdated": "2026-08-24T14:11:49.392Z",
   "totalTorneios": 8,
   "torneios": {
     "15327": {
@@ -568,6 +568,15 @@
       "totalRounds": 3,
       "holesPerRound": 18,
       "par": [
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
         4,
         3,
         5,
@@ -576,18 +585,18 @@
         4,
         4,
         3,
-        5,
-        4,
-        5,
-        4,
-        3,
-        4,
-        3,
-        4,
-        5,
-        4
+        5
       ],
       "yards": [
+        425,
+        158,
+        286,
+        291,
+        306,
+        316,
+        140,
+        317,
+        383,
         279,
         133,
         361,
@@ -596,23 +605,14 @@
         310,
         317,
         126,
-        355,
-        287,
-        383,
-        314,
-        131,
-        273,
-        113,
-        267,
-        372,
-        273
+        355
       ],
       "flightCourses": {},
       "ageGroup": "Girls 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 15,
+      "totalStrokes": 280,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -623,7 +623,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            7,
+            5,
+            5,
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            7,
+            5,
+            7,
+            6,
+            5,
+            4,
+            4,
+            8
+          ],
+          "numStrokes": 93,
+          "numHoles": 18,
+          "course": "Golf Club Della Montecchia - White/Red"
+        },
+        "2": {
+          "strokes": [
+            6,
+            4,
+            5,
+            5,
+            4,
+            5,
+            3,
+            8,
+            6,
+            5,
+            4,
+            5,
+            6,
+            6,
+            5,
+            8,
+            5,
+            5
+          ],
+          "numStrokes": 95,
+          "numHoles": 18,
+          "course": "Golf Club Della Montecchia - White/Red"
+        },
+        "3": {
+          "strokes": [
+            7,
+            3,
+            5,
+            4,
+            5,
+            7,
+            4,
+            5,
+            8,
+            5,
+            4,
+            7,
+            5,
+            4,
+            5,
+            6,
+            3,
+            5
+          ],
+          "numStrokes": 92,
+          "numHoles": 18,
+          "course": "Golf Club Della Montecchia - White/Red"
+        }
+      }
     },
     "22524": {
       "tcode": "22524",
@@ -677,8 +753,8 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 5,
+      "totalStrokes": 38,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -689,7 +765,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Golf Club Della Montecchia "
+        }
+      }
     }
   }
 }

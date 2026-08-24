@@ -1,10 +1,10 @@
 {
   "memberID": "645475",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Daria Suslonov",
+  "country": "DE",
+  "place": "Berlin",
   "ageGroup": "Girls 8 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.553Z",
+  "lastUpdated": "2026-08-24T14:11:49.377Z",
   "totalTorneios": 7,
   "torneios": {
     "20001": {
@@ -611,8 +611,8 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 6,
+      "totalStrokes": 142,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -623,7 +623,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            6,
+            6,
+            4,
+            6,
+            5,
+            6,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 45,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            5,
+            6,
+            6,
+            4,
+            7,
+            7,
+            6,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 49,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            6,
+            6,
+            4,
+            4,
+            7,
+            6,
+            5,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 48,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     }
   }
 }

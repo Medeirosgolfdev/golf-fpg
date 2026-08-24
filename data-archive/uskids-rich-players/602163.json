@@ -1,11 +1,11 @@
 {
   "memberID": "602163",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Ellie Echeverria",
+  "country": "US",
+  "place": "Roseville, CA",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-07-29T21:56:49.617Z",
-  "totalTorneios": 97,
+  "lastUpdated": "2026-08-24T14:11:49.528Z",
+  "totalTorneios": 98,
   "torneios": {
     "15067": {
       "tcode": "15067",
@@ -883,22 +883,65 @@
         150,
         120
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4
+          ],
+          "lengths": [
+            148,
+            150,
+            140,
+            54,
+            200,
+            60,
+            180,
+            150,
+            120,
+            150,
+            200,
+            140,
+            130,
+            70,
+            190,
+            60,
+            150,
+            120
+          ]
+        }
+      },
       "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "205511",
+      "pid": "1284824",
       "place": 5,
       "totalStrokes": 51,
       "points": 10,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -923,7 +966,53 @@
           ],
           "numStrokes": 51,
           "numHoles": 9,
-          "course": "Micke Grove Golf Links"
+          "course": "Micke Grove Golf Links",
+          "startHole": 1,
+          "startTime": "13:36",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "218078",
+          "pars": [
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4
+          ],
+          "yards": [
+            148,
+            150,
+            140,
+            54,
+            200,
+            60,
+            180,
+            150,
+            120,
+            150,
+            200,
+            140,
+            130,
+            70,
+            190,
+            60,
+            150,
+            120
+          ]
         }
       }
     },
@@ -1067,22 +1156,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            240,
+            60,
+            220,
+            125,
+            65,
+            110,
+            250,
+            140,
+            70,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "205581",
+      "pid": "1284826",
       "place": 5,
       "totalStrokes": 49,
       "points": 10,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -1107,7 +1239,53 @@
           ],
           "numStrokes": 49,
           "numHoles": 9,
-          "course": "Swenson Park Golf Club"
+          "course": "Swenson Park Golf Club",
+          "startHole": 1,
+          "startTime": "14:09",
+          "groupNumber": 2,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "218148",
+          "pars": [
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            240,
+            60,
+            220,
+            125,
+            65,
+            110,
+            250,
+            140,
+            70,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -3156,7 +3334,7 @@
           ],
           "numStrokes": 45,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -3181,7 +3359,7 @@
           ],
           "numStrokes": 46,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -3206,7 +3384,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -8283,7 +8461,7 @@
         0,
         0,
         208,
-        105,
+        104,
         217,
         300,
         109,
@@ -8297,7 +8475,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 37,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8308,7 +8486,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            3,
+            3,
+            5,
+            3,
+            5,
+            4,
+            5,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Haggin Oaks Golf Complex"
+        }
+      }
     },
     "22759": {
       "tcode": "22759",
@@ -8374,7 +8578,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Bartley Cavanaugh Golf Course"
+        }
+      }
     },
     "22760": {
       "tcode": "22760",
@@ -8440,7 +8670,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Haggin Oaks Golf Complex"
+        }
+      }
     },
     "22761": {
       "tcode": "22761",
@@ -8623,6 +8879,98 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "Bing Maloney Golf Course"
+        }
+      }
+    },
+    "22925": {
+      "tcode": "22925",
+      "name": "Paradise Valley Golf Course",
+      "type": " East Bay, CA Local Tour",
+      "startDate": "9/19/2026",
+      "endDate": "9/19/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4,
+        4
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        300,
+        230,
+        88,
+        240,
+        200,
+        95,
+        280,
+        195,
+        190
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Paradise Valley Golf Course"
         }
       }
     },

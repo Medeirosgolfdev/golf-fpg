@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Las Vegas, NV",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:49.135Z",
+  "lastUpdated": "2026-08-24T14:11:48.198Z",
   "totalTorneios": 81,
   "torneios": {
     "15001": {
@@ -6818,7 +6818,7 @@
           ],
           "numStrokes": 81,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -6843,7 +6843,7 @@
           ],
           "numStrokes": 78,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -6965,9 +6965,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 76,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -6977,7 +6977,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            6,
+            3,
+            5,
+            6,
+            3,
+            2,
+            4,
+            6,
+            3,
+            4,
+            5,
+            5,
+            4,
+            3,
+            6,
+            3
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Painted Desert Golf Club"
+        }
+      }
     },
     "22945": {
       "tcode": "22945",
@@ -6987,15 +7013,53 @@
       "endDate": "8/16/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        353,
+        436,
+        246,
+        118,
+        316,
+        151,
+        329,
+        331,
+        375,
+        316,
+        100,
+        341,
+        405,
+        327,
+        148,
+        331,
+        496,
+        345
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 86,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7005,7 +7069,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            5,
+            4,
+            5,
+            5,
+            4,
+            4,
+            6,
+            5,
+            3,
+            5,
+            5,
+            5,
+            3,
+            5,
+            6,
+            5
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Angel Park Golf Club - Mountain Course "
+        }
+      }
     },
     "22947": {
       "tcode": "22947",
@@ -7071,7 +7161,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Las Vegas Golf Club"
+        }
+      }
     },
     "22948": {
       "tcode": "22948",

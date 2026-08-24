@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Colorado Springs, CO",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-07-29T21:56:49.217Z",
+  "lastUpdated": "2026-08-24T14:11:48.463Z",
   "totalTorneios": 28,
   "torneios": {
     "16635": {
@@ -2668,9 +2668,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 44,
+      "points": 22,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2680,7 +2680,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            7,
+            3,
+            4,
+            5,
+            5,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Thorncreek Golf Course"
+        }
+      }
     }
   }
 }

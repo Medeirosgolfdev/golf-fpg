@@ -1,10 +1,10 @@
 {
   "memberID": "572430",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Casper Gruters",
+  "country": "US",
+  "place": "Sarasota, FL",
   "ageGroup": "Girls 10",
-  "lastUpdated": "2026-07-29T21:56:49.410Z",
+  "lastUpdated": "2026-08-24T14:11:48.979Z",
   "totalTorneios": 31,
   "torneios": {
     "12652": {
@@ -55,22 +55,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            140,
+            80,
+            130,
+            200,
+            110,
+            70,
+            140,
+            200,
+            130,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "159085",
+      "pid": "982838",
       "place": 10,
       "totalStrokes": 72,
       "points": 1,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "**",
       "rounds": {
         "1": {
           "strokes": [
@@ -95,7 +138,53 @@
           ],
           "numStrokes": 72,
           "numHoles": 9,
-          "course": "Stoneybrook Golf & Country Club"
+          "course": "Stoneybrook Golf & Country Club",
+          "startHole": 1,
+          "startTime": "13:44",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "169748",
+          "pars": [
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            140,
+            80,
+            130,
+            200,
+            110,
+            70,
+            140,
+            200,
+            130,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -371,7 +460,7 @@
           ],
           "numStrokes": 49,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -856,7 +945,7 @@
           ],
           "numStrokes": 49,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -881,7 +970,7 @@
           ],
           "numStrokes": 52,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -906,7 +995,7 @@
           ],
           "numStrokes": 52,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -998,7 +1087,7 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2141,8 +2230,8 @@
       "ageGroup": "Girls 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 97,
+      "totalStrokes": 271,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2156,27 +2245,77 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            4,
+            5,
+            6,
+            5,
+            4,
+            5,
+            3,
+            5,
+            6,
+            6,
+            5,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Quail Ridge"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            6,
+            5,
+            5,
+            4,
+            5,
+            6,
+            5,
+            3,
+            4,
+            7,
+            7,
+            6,
+            6,
+            5,
+            5
+          ],
+          "numStrokes": 92,
+          "numHoles": 18,
+          "course": "Quail Ridge"
+        },
+        "3": {
+          "strokes": [
+            9,
+            6,
+            5,
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            4,
+            4,
+            4,
+            5,
+            7,
+            5,
+            6,
+            5,
+            5
+          ],
+          "numStrokes": 93,
+          "numHoles": 18,
           "course": "Quail Ridge"
         }
       }
@@ -2269,7 +2408,7 @@
           ],
           "numStrokes": 82,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Chapel Hill, NC",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:48.944Z",
+  "lastUpdated": "2026-08-24T14:11:47.624Z",
   "totalTorneios": 89,
   "torneios": {
     "12583": {
@@ -1383,7 +1383,7 @@
           ],
           "numStrokes": 79,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -2104,22 +2104,107 @@
         358,
         219
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4
+          ],
+          "lengths": [
+            360,
+            213,
+            85,
+            335,
+            219,
+            229,
+            194,
+            104,
+            210,
+            180,
+            210,
+            118,
+            199,
+            109,
+            351,
+            207,
+            358,
+            219
+          ]
+        },
+        "2": {
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4
+          ],
+          "lengths": [
+            360,
+            213,
+            85,
+            335,
+            219,
+            229,
+            194,
+            104,
+            210,
+            180,
+            210,
+            118,
+            199,
+            109,
+            351,
+            207,
+            358,
+            219
+          ]
+        }
+      },
       "ageGroup": "Boys 9",
-      "flightId": null,
-      "pid": null,
+      "flightId": "182997",
+      "pid": "1140717",
       "place": 8,
       "totalStrokes": 176,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -2144,7 +2229,53 @@
           ],
           "numStrokes": 89,
           "numHoles": 18,
-          "course": "Ford's Colony (Blackheath)"
+          "course": "Ford's Colony (Blackheath)",
+          "startHole": 1,
+          "startTime": "11:04",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "194539",
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4
+          ],
+          "yards": [
+            360,
+            213,
+            85,
+            335,
+            219,
+            229,
+            194,
+            104,
+            210,
+            180,
+            210,
+            118,
+            199,
+            109,
+            351,
+            207,
+            358,
+            219
+          ]
         },
         "2": {
           "strokes": [
@@ -2169,7 +2300,53 @@
           ],
           "numStrokes": 87,
           "numHoles": 18,
-          "course": "Ford's Colony (Blackheath)"
+          "course": "Ford's Colony (Blackheath)",
+          "startHole": 1,
+          "startTime": "11:47",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "194540",
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4
+          ],
+          "yards": [
+            360,
+            213,
+            85,
+            335,
+            219,
+            229,
+            194,
+            104,
+            210,
+            180,
+            210,
+            118,
+            199,
+            109,
+            351,
+            207,
+            358,
+            219
+          ]
         }
       }
     },
@@ -4508,7 +4685,7 @@
           ],
           "numStrokes": 81,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -8212,7 +8389,7 @@
           ],
           "numStrokes": 78,
           "numHoles": 18,
-          "course": "Longleaf"
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -8845,9 +9022,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 39,
+      "points": 40,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8857,7 +9034,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            3,
+            7,
+            4,
+            5,
+            3,
+            4,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "numStrokes": 30,
+          "numHoles": 18,
+          "course": "Eagle Ridge Golf "
+        }
+      }
     }
   }
 }

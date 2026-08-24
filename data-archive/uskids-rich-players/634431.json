@@ -3,8 +3,8 @@
   "name": "Foster Scott",
   "country": "US",
   "place": "Spring Hill, TN",
-  "ageGroup": "Boys 11",
-  "lastUpdated": "2026-07-29T21:56:49.261Z",
+  "ageGroup": "Boys 12",
+  "lastUpdated": "2026-08-24T14:11:48.644Z",
   "totalTorneios": 25,
   "torneios": {
     "19044": {
@@ -2152,7 +2152,7 @@
           ],
           "numStrokes": 76,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -2177,7 +2177,7 @@
           ],
           "numStrokes": 74,
           "numHoles": 18,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2251,8 +2251,8 @@
       "tcode": "23065",
       "name": "Towhee Golf Club",
       "type": " Nashville Local Tour",
-      "startDate": "8/9/2026",
-      "endDate": "8/9/2026",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
       "par": [
@@ -2311,7 +2311,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Towhee Golf Club"
+        }
+      }
     },
     "23066": {
       "tcode": "23066",
@@ -2365,9 +2391,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 79,
+      "points": 11,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2377,7 +2403,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            6,
+            3,
+            6,
+            3,
+            6,
+            4,
+            5,
+            5,
+            2,
+            5,
+            4
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Long Hollow Golf Course"
+        }
+      }
     }
   }
 }

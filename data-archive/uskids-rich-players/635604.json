@@ -4,7 +4,7 @@
   "country": "DE",
   "place": "Bad Homburg, HE",
   "ageGroup": "Boys 7 & Under",
-  "lastUpdated": "2026-07-29T21:56:49.263Z",
+  "lastUpdated": "2026-08-24T14:11:48.652Z",
   "totalTorneios": 5,
   "torneios": {
     "19418": {
@@ -502,8 +502,8 @@
       "ageGroup": "Boys 7 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 129,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -514,7 +514,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            9,
+            2,
+            5,
+            4,
+            6,
+            8,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 46,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            5,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            4,
+            5,
+            4,
+            3,
+            6,
+            7,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     }
   }
 }

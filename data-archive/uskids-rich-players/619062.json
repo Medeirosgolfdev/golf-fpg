@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Tega Cay, SC",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-07-29T21:56:49.224Z",
-  "totalTorneios": 70,
+  "lastUpdated": "2026-08-24T14:11:48.491Z",
+  "totalTorneios": 71,
   "torneios": {
     "17265": {
       "tcode": "17265",
@@ -1868,7 +1868,7 @@
           ],
           "numStrokes": 44,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -1893,7 +1893,7 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -6063,6 +6063,98 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
+      "place": 1,
+      "totalStrokes": 43,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            4,
+            4,
+            4,
+            6,
+            5,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Yeamans Hall Club"
+        }
+      }
+    },
+    "22986": {
+      "tcode": "22986",
+      "name": "PGA Golf Club Invitational 2026",
+      "type": "Regional Championships",
+      "startDate": "10/10/2026",
+      "endDate": "10/11/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        4,
+        5,
+        3,
+        5,
+        3,
+        4,
+        4,
+        3,
+        4,
+        3,
+        5,
+        4,
+        5,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        261,
+        252,
+        248,
+        339,
+        111,
+        410,
+        125,
+        275,
+        265,
+        102,
+        285,
+        128,
+        429,
+        270,
+        389,
+        114,
+        428,
+        271
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -6141,7 +6233,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gillespie Park Golf Course"
+        }
+      }
     },
     "23011": {
       "tcode": "23011",
@@ -6207,14 +6325,40 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sapona Country Club"
+        }
+      }
     },
     "23012": {
       "tcode": "23012",
       "name": "The Valley Golf Course ",
       "type": " Piedmont Triad, NC Local Tour",
-      "startDate": "9/20/2026",
-      "endDate": "9/20/2026",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [

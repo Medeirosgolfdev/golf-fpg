@@ -1,10 +1,10 @@
 {
   "memberID": "645890",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Rebeca Bot",
+  "country": "RO",
+  "place": "Cluj-Napoca, CJ",
   "ageGroup": "Girls 9",
-  "lastUpdated": "2026-07-29T21:56:49.554Z",
+  "lastUpdated": "2026-08-24T14:11:49.380Z",
   "totalTorneios": 22,
   "torneios": {
     "20832": {
@@ -1600,15 +1600,15 @@
         0
       ],
       "yards": [
-        183,
-        179,
+        190,
+        185,
         265,
-        99,
-        332,
-        171,
-        319,
-        109,
-        107,
+        100,
+        340,
+        180,
+        320,
+        110,
+        110,
         0,
         0,
         0,
@@ -1623,8 +1623,8 @@
       "ageGroup": "Girls 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 11,
+      "totalStrokes": 132,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1635,7 +1635,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            5,
+            3,
+            5,
+            4,
+            6,
+            5,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            7,
+            8,
+            7,
+            3,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 45,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        },
+        "3": {
+          "strokes": [
+            4,
+            5,
+            7,
+            3,
+            8,
+            4,
+            5,
+            5,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Galzignano Terme Spa & Golf Resort"
+        }
+      }
     },
     "22324": {
       "tcode": "22324",
@@ -1873,9 +1949,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 46,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1885,7 +1961,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            8,
+            4,
+            6,
+            5,
+            4,
+            3,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 46,
+          "numHoles": 9,
+          "course": "Botaniq Máriavölgyi Golf Klub"
+        }
+      }
     },
     "22329": {
       "tcode": "22329",
@@ -1939,9 +2041,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 56,
+      "points": 60,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1951,7 +2053,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            6,
+            4,
+            5,
+            8,
+            9,
+            7,
+            4,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 56,
+          "numHoles": 9,
+          "course": "Botaniq Máriavölgyi Golf Klub"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "ES",
   "place": "Sevilla, SV",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-07-29T21:56:49.257Z",
-  "totalTorneios": 8,
+  "lastUpdated": "2026-08-24T14:11:48.625Z",
+  "totalTorneios": 9,
   "torneios": {
     "18978": {
       "tcode": "18978",
@@ -408,15 +408,53 @@
       "endDate": "8/10/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        400,
+        150,
+        380,
+        420,
+        150,
+        370,
+        460,
+        150,
+        350,
+        170,
+        480,
+        330,
+        360,
+        170,
+        330,
+        380,
+        460,
+        370
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 7,
+      "totalStrokes": 89,
+      "points": 6,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -426,7 +464,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            3,
+            6,
+            9,
+            4,
+            4,
+            5,
+            2,
+            6,
+            4,
+            6,
+            6,
+            4,
+            4,
+            5,
+            5,
+            4,
+            6
+          ],
+          "numStrokes": 89,
+          "numHoles": 18,
+          "course": "Headfort Golf Club - Old Course"
+        }
+      }
     },
     "22185": {
       "tcode": "22185",
@@ -480,9 +544,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 83,
+      "points": 24,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -492,7 +556,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            7,
+            5,
+            4,
+            4,
+            4,
+            4,
+            6,
+            5,
+            5,
+            6,
+            3,
+            2,
+            6,
+            3,
+            5
+          ],
+          "numStrokes": 83,
+          "numHoles": 18,
+          "course": "Blainroe Golf Club"
+        }
+      }
     },
     "22917": {
       "tcode": "22917",
@@ -558,7 +648,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Lough Erne Resort - Castle Hume Course"
+        }
+      }
+    },
+    "22918": {
+      "tcode": "22918",
+      "name": "Greenacres Golf Centre",
+      "type": " North of Ireland (NIR) Local Tour",
+      "startDate": "9/6/2026",
+      "endDate": "9/6/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4,
+        5,
+        4,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        248,
+        352,
+        160,
+        313,
+        331,
+        147,
+        405,
+        341,
+        406,
+        380,
+        143,
+        396,
+        151,
+        338,
+        280,
+        210,
+        338,
+        470
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Greenacres Golf Centre"
+        }
+      }
     },
     "22920": {
       "tcode": "22920",
@@ -624,7 +832,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Foyle Golf Centre"
+        }
+      }
     }
   }
 }

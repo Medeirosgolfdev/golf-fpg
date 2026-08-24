@@ -1,11 +1,11 @@
 {
   "memberID": "620629",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Ali Kennedy",
+  "country": "US",
+  "place": "White Pine , TN",
   "ageGroup": "Girls 9",
-  "lastUpdated": "2026-07-29T21:56:49.377Z",
-  "totalTorneios": 30,
+  "lastUpdated": "2026-08-24T14:11:48.886Z",
+  "totalTorneios": 31,
   "torneios": {
     "17437": {
       "tcode": "17437",
@@ -331,22 +331,65 @@
         140,
         200
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            5
+          ],
+          "lengths": [
+            180,
+            160,
+            60,
+            190,
+            140,
+            130,
+            60,
+            140,
+            150,
+            150,
+            70,
+            140,
+            150,
+            130,
+            200,
+            70,
+            140,
+            200
+          ]
+        }
+      },
       "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "223510",
+      "pid": "1414735",
       "place": 2,
       "totalStrokes": 40,
       "points": 40,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -371,7 +414,53 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Myakka Pines Golf Club"
+          "course": "Myakka Pines Golf Club",
+          "startHole": 1,
+          "startTime": "14:52",
+          "groupNumber": 3,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "236876",
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            5
+          ],
+          "yards": [
+            180,
+            160,
+            60,
+            190,
+            140,
+            130,
+            60,
+            140,
+            150,
+            150,
+            70,
+            140,
+            150,
+            130,
+            200,
+            70,
+            140,
+            200
+          ]
         }
       }
     },
@@ -580,7 +669,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -605,7 +694,7 @@
           ],
           "numStrokes": 36,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "3": {
           "strokes": [
@@ -630,7 +719,7 @@
           ],
           "numStrokes": 36,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -1299,7 +1388,7 @@
           ],
           "numStrokes": 34,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -1324,7 +1413,7 @@
           ],
           "numStrokes": 16,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
     },
@@ -2500,8 +2589,8 @@
       "ageGroup": "Girls 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 104,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2515,15 +2604,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -2534,21 +2623,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 34,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5,
+            4,
             0,
             0,
             0,
@@ -2559,21 +2648,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            3,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -2584,9 +2673,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Longleaf G&FC"
+          "numStrokes": 34,
+          "numHoles": 9,
+          "course": "Longleaf (Front)"
         }
       }
     },
@@ -3213,7 +3302,7 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         },
         "2": {
           "strokes": [
@@ -3238,9 +3327,75 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Longleaf G&FC"
+          "course": "Longleaf (Back)"
         }
       }
+    },
+    "23318": {
+      "tcode": "23318",
+      "name": "Colonial Williamsburg Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "11/7/2026",
+      "endDate": "11/8/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        3,
+        4,
+        4,
+        4,
+        5,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        186,
+        102,
+        220,
+        182,
+        230,
+        287,
+        205,
+        72,
+        306
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

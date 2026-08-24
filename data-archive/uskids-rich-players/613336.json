@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Southlake, TX",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-07-29T21:56:49.200Z",
+  "lastUpdated": "2026-08-24T14:11:48.402Z",
   "totalTorneios": 64,
   "torneios": {
     "16434": {
@@ -4466,8 +4466,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 69,
+      "totalStrokes": 127,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4481,15 +4481,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            5,
+            4,
+            5,
+            6,
+            5,
+            5,
+            5,
             0,
             0,
             0,
@@ -4500,21 +4500,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 45,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            4,
+            3,
+            6,
+            5,
+            5,
+            5,
+            4,
             0,
             0,
             0,
@@ -4525,21 +4525,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         },
         "3": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            3,
+            5,
+            7,
+            6,
+            6,
+            4,
             0,
             0,
             0,
@@ -4550,8 +4550,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Mid Pines (Back)"
         }
       }
@@ -5076,7 +5076,7 @@
       "ageGroup": "Boys 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
+      "place": 23,
       "totalStrokes": 35,
       "points": 0,
       "status": null,
@@ -5542,15 +5542,53 @@
       "endDate": "8/22/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        310,
+        218,
+        85,
+        303,
+        222,
+        103,
+        298,
+        185,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 43,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5560,7 +5598,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            3,
+            7,
+            5,
+            4,
+            5,
+            7,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Cedar Crest Golf Course"
+        }
+      }
     },
     "22961": {
       "tcode": "22961",
@@ -5626,7 +5690,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Oak Hollow Golf Course "
+        }
+      }
     },
     "22962": {
       "tcode": "22962",
@@ -5692,7 +5782,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "WestRidge Golf Course"
+        }
+      }
     },
     "22963": {
       "tcode": "22963",
