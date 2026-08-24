@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-23T23:24:19.917Z",
+  "generatedAt": "2026-08-24T06:10:37.055Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -527,6 +527,7 @@
         "rfeg-nc72749_infantil_hcp",
         "rfeg-nc72750_infantil_hcp",
         "rfeg-nc72886_junior_hcp",
+        "rfeg-nc73150_junior_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -534,14 +535,16 @@
         "rfeg-rfeg15361_cadete_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-08-09",
-      "editionsCount": 525
+      "lastDate": "2026-08-23",
+      "editionsCount": 526
     },
     {
       "id": "ffgolf-gp-jeunes",
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601444105",
+        "ffgolf-2601463024",
         "ffgolf-2601462841",
         "ffgolf-2601462020",
         "ffgolf-2601432264",
@@ -843,8 +846,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-08-12",
-      "editionsCount": 299
+      "lastDate": "2026-08-22",
+      "editionsCount": 301
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -49160,6 +49163,18 @@
       "editionsCount": 2
     },
     {
+      "id": "gjgl-bang-golf-city-juniors-international-cologne",
+      "label": "Bang Golf City Juniors International Cologne",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-bang-golf-city-juniors-international-cologne-2025-germany",
+        "gjgl-bang-golf-city-juniors-international-cologne-2026-germany"
+      ],
+      "firstDate": "2025-08-21",
+      "lastDate": "2026-08-20",
+      "editionsCount": 2
+    },
+    {
       "id": "gjgl-berlin-juniors-international",
       "label": "Berlin Juniors International",
       "sourceId": "gjgl",
@@ -73837,6 +73852,17 @@
       "editionsCount": 1
     },
     {
+      "id": "ffgolf-gpj-de-la-ligue-hardelot",
+      "label": "GPJ de la Ligue - Hardelot",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601452087"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
       "id": "ffgolf-cfj-benjamins",
       "label": "CFJ  - Benjamins",
       "sourceId": "ffgolf",
@@ -75047,17 +75073,6 @@
       "editionsCount": 1
     },
     {
-      "id": "gjgl-bang-golf-city-juniors-international-cologne",
-      "label": "Bang Golf City Juniors International Cologne",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-bang-golf-city-juniors-international-cologne-2025-germany"
-      ],
-      "firstDate": "2025-08-21",
-      "lastDate": "2025-08-21",
-      "editionsCount": 1
-    },
-    {
       "id": "gjgl-bang-golf-city-juniors-international-munich",
       "label": "Bang Golf City Juniors International Munich",
       "sourceId": "gjgl",
@@ -75176,6 +75191,17 @@
       ],
       "firstDate": "2026-04-06",
       "lastDate": "2026-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "gjgl-gjg-dortmund-juniors-international",
+      "label": "GJG Dortmund Juniors International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-dortmund-juniors-international-2026-germany"
+      ],
+      "firstDate": "2026-08-17",
+      "lastDate": "2026-08-17",
       "editionsCount": 1
     },
     {
