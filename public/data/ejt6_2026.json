@@ -73,137 +73,11 @@
       ],
       "teeName": "Tee 6143m",
       "metersTotal": 6143,
-      "courseRating": 70.2,
-      "slope": 131,
+      "courseRating": 65.4,
+      "slope": 119,
       "players": [
         {
           "pos": "1",
-          "name": "Kaspar Urh Jamnik",
-          "country": "EE",
-          "club": "Tartu Golfiklubi",
-          "birthYear": 2007,
-          "hcp": -1.7,
-          "team": null,
-          "detailId": "gb49585749",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            34
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                2,
-                5,
-                3,
-                4,
-                3,
-                4,
-                4,
-                5,
-                7,
-                4,
-                6,
-                5,
-                3,
-                3,
-                3,
-                3,
-                6
-              ],
-              "f9": 34,
-              "b9": 40,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                3,
-                4,
-                3,
-                4,
-                4,
-                4,
-                4,
-                4
-              ],
-              "f9": 34,
-              "gross": 34,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2007-10-22"
-        },
-        {
-          "pos": "2",
-          "name": "Kaur-Mattias Kuuskme",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2009,
-          "hcp": -0.1,
-          "team": null,
-          "detailId": "gb49733560",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            73,
-            36
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                3,
-                5,
-                4,
-                3,
-                5,
-                4,
-                5,
-                5,
-                6,
-                2,
-                4,
-                5,
-                2,
-                4,
-                4,
-                2,
-                5
-              ],
-              "f9": 39,
-              "b9": 34,
-              "gross": 73,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                4,
-                4,
-                4,
-                5,
-                4
-              ],
-              "f9": 36,
-              "gross": 36,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2009-01-07"
-        },
-        {
-          "pos": "3",
           "name": "Hart Oskar Aoveer",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -215,7 +89,9 @@
           "total": null,
           "roundGross": [
             70,
-            40
+            40,
+            67,
+            32
           ],
           "rounds": [
             {
@@ -261,12 +137,165 @@
               "f9": 40,
               "gross": 40,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                4,
+                2,
+                6,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                2,
+                2,
+                4
+              ],
+              "f9": 34,
+              "b9": 33,
+              "gross": 67,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                2,
+                4,
+                3,
+                3,
+                4,
+                3,
+                3,
+                5
+              ],
+              "f9": 32,
+              "gross": 32,
+              "startingHole": 10
             }
           ],
           "dob": "2008-04-01"
         },
         {
-          "pos": "4",
+          "pos": "2",
+          "name": "Kaspar Urh Jamnik",
+          "country": "EE",
+          "club": "Tartu Golfiklubi",
+          "birthYear": 2007,
+          "hcp": -1.7,
+          "team": null,
+          "detailId": "gb49585749",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            74,
+            34,
+            77,
+            33
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                2,
+                5,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                7,
+                4,
+                6,
+                5,
+                3,
+                3,
+                3,
+                3,
+                6
+              ],
+              "f9": 34,
+              "b9": 40,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 34,
+              "gross": 34,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                6,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 40,
+              "gross": 77,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 33,
+              "gross": 33,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2007-10-22"
+        },
+        {
+          "pos": "3",
           "name": "Robin Udodov",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -278,7 +307,9 @@
           "total": null,
           "roundGross": [
             71,
-            41
+            41,
+            73,
+            36
           ],
           "rounds": [
             {
@@ -324,24 +355,179 @@
               "f9": 41,
               "gross": 41,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                5,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 35,
+              "b9": 38,
+              "gross": 73,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                5,
+                4,
+                3,
+                3,
+                3,
+                4,
+                3,
+                6
+              ],
+              "f9": 36,
+              "gross": 36,
+              "startingHole": 10
             }
           ],
           "dob": "2006-11-23"
         },
         {
-          "pos": "5",
-          "name": "Henri Lätt",
+          "pos": "4",
+          "name": "Kaur-Mattias Kuuskme",
           "country": "EE",
-          "club": "Niitvälja Golf",
+          "club": "Rae Golfiklubi",
           "birthYear": 2009,
-          "hcp": 3.5,
+          "hcp": -0.1,
           "team": null,
-          "detailId": "gb49727356",
+          "detailId": "gb49733560",
           "toPar": null,
           "total": null,
           "roundGross": [
-            74,
-            42
+            73,
+            36,
+            90,
+            31
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                5,
+                5,
+                6,
+                2,
+                4,
+                5,
+                2,
+                4,
+                4,
+                2,
+                5
+              ],
+              "f9": 39,
+              "b9": 34,
+              "gross": 73,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4
+              ],
+              "f9": 36,
+              "gross": 36,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                5,
+                3,
+                5,
+                5,
+                5,
+                4,
+                6,
+                5,
+                7,
+                6,
+                4,
+                5,
+                4,
+                5,
+                3,
+                7
+              ],
+              "f9": 44,
+              "b9": 46,
+              "gross": 90,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                3,
+                2,
+                3
+              ],
+              "f9": 31,
+              "gross": 31,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2009-01-07"
+        },
+        {
+          "pos": "5",
+          "name": "Arthur Marti Animägi",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2009,
+          "hcp": 1.5,
+          "team": null,
+          "detailId": "gb49820380",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            77,
+            40,
+            76,
+            38
           ],
           "rounds": [
             {
@@ -351,48 +537,92 @@
                 3,
                 5,
                 4,
-                4,
-                4,
-                4,
+                5,
                 5,
                 4,
-                7,
-                4,
-                4,
                 5,
-                4,
+                5,
+                6,
                 3,
+                4,
+                4,
+                4,
+                4,
+                4,
                 2,
-                3,
-                5
+                6
               ],
-              "f9": 37,
+              "f9": 40,
               "b9": 37,
-              "gross": 74,
+              "gross": 77,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
-                6,
+                7,
+                2,
+                5,
                 3,
                 6,
+                5,
                 4,
                 4,
-                4,
-                4,
+                4
+              ],
+              "f9": 40,
+              "gross": 40,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
                 6,
+                3,
+                5,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
                 5
               ],
-              "f9": 42,
-              "gross": 42,
-              "startingHole": 1
+              "f9": 39,
+              "b9": 37,
+              "gross": 76,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
             }
           ],
-          "dob": "2009-10-13"
+          "dob": "2009-07-07"
         },
         {
-          "pos": "T6",
+          "pos": "6",
           "name": "Rassel Orumägi",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -404,7 +634,9 @@
           "total": null,
           "roundGross": [
             77,
-            40
+            40,
+            80,
+            37
           ],
           "rounds": [
             {
@@ -450,24 +682,70 @@
               "f9": 40,
               "gross": 40,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                4,
+                6,
+                5,
+                4,
+                4,
+                7,
+                3,
+                4,
+                4,
+                2,
+                4,
+                6,
+                2,
+                6
+              ],
+              "f9": 42,
+              "b9": 38,
+              "gross": 80,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                3,
+                4,
+                4,
+                2,
+                6
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 10
             }
           ],
           "dob": "2008-07-04"
         },
         {
-          "pos": "T6",
-          "name": "Arthur Marti Animägi",
+          "pos": "7",
+          "name": "Henri Lätt",
           "country": "EE",
-          "club": "Estonian Golf & Country Club",
+          "club": "Niitvälja Golf",
           "birthYear": 2009,
-          "hcp": 1.5,
+          "hcp": 3.5,
           "team": null,
-          "detailId": "gb49820380",
+          "detailId": "gb49727356",
           "toPar": null,
           "total": null,
           "roundGross": [
-            77,
-            40
+            74,
+            42,
+            80,
+            39
           ],
           "rounds": [
             {
@@ -477,45 +755,89 @@
                 3,
                 5,
                 4,
-                5,
-                5,
+                4,
+                4,
                 4,
                 5,
+                4,
+                7,
+                4,
+                4,
                 5,
-                6,
+                4,
                 3,
-                4,
-                4,
-                4,
-                4,
-                4,
                 2,
-                6
+                3,
+                5
               ],
-              "f9": 40,
+              "f9": 37,
               "b9": 37,
-              "gross": 77,
+              "gross": 74,
               "startingHole": 1
             },
             {
               "day": 2,
               "scores": [
-                7,
-                2,
-                5,
+                6,
                 3,
                 6,
-                5,
                 4,
                 4,
-                4
+                4,
+                4,
+                6,
+                5
               ],
-              "f9": 40,
-              "gross": 40,
+              "f9": 42,
+              "gross": 42,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                3,
+                6,
+                3,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                3,
+                4,
+                4,
+                2,
+                4,
+                3,
+                4,
+                6
+              ],
+              "f9": 44,
+              "b9": 36,
+              "gross": 80,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5,
+                6
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 10
             }
           ],
-          "dob": "2009-07-07"
+          "dob": "2009-10-13"
         },
         {
           "pos": "8",
@@ -530,7 +852,9 @@
           "total": null,
           "roundGross": [
             80,
-            43
+            43,
+            87,
+            40
           ],
           "rounds": [
             {
@@ -576,6 +900,50 @@
               "f9": 43,
               "gross": 43,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                5,
+                5,
+                4,
+                7,
+                4,
+                4,
+                5,
+                6,
+                6,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                7
+              ],
+              "f9": 47,
+              "b9": 40,
+              "gross": 87,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                6
+              ],
+              "f9": 40,
+              "gross": 40,
+              "startingHole": 10
             }
           ],
           "dob": "2009-06-16"
@@ -593,7 +961,9 @@
           "total": null,
           "roundGross": [
             82,
-            43
+            43,
+            85,
+            45
           ],
           "rounds": [
             {
@@ -639,6 +1009,50 @@
               "f9": 43,
               "gross": 43,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                5,
+                6,
+                4,
+                6,
+                5,
+                5,
+                4,
+                5,
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                6
+              ],
+              "f9": 45,
+              "b9": 40,
+              "gross": 85,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                5,
+                4,
+                4,
+                5,
+                6,
+                6,
+                4,
+                6
+              ],
+              "f9": 45,
+              "gross": 45,
+              "startingHole": 10
             }
           ],
           "dob": "2007-05-22"
@@ -656,7 +1070,9 @@
           "total": null,
           "roundGross": [
             81,
-            45
+            45,
+            90,
+            42
           ],
           "rounds": [
             {
@@ -702,6 +1118,50 @@
               "f9": 45,
               "gross": 45,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                8,
+                3,
+                4,
+                6,
+                5,
+                6,
+                5,
+                5,
+                5,
+                5,
+                5,
+                4,
+                5,
+                5,
+                5,
+                5
+              ],
+              "f9": 46,
+              "b9": 44,
+              "gross": 90,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                3,
+                7,
+                5,
+                3,
+                4,
+                4,
+                4,
+                6
+              ],
+              "f9": 42,
+              "gross": 42,
+              "startingHole": 10
             }
           ],
           "dob": "2006-03-02"
@@ -752,10 +1212,10 @@
                   "name": "Kaur-Mattias Kuuskme"
                 },
                 {
-                  "name": "Henri Lätt"
+                  "name": "Arthur Marti Animägi"
                 },
                 {
-                  "name": "Arthur Marti Animägi"
+                  "name": "Henri Lätt"
                 }
               ]
             }
@@ -805,10 +1265,116 @@
                   "name": "Kaur-Mattias Kuuskme"
                 },
                 {
-                  "name": "Henri Lätt"
+                  "name": "Arthur Marti Animägi"
                 },
                 {
+                  "name": "Henri Lätt"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "round": 3,
+          "groups": [
+            {
+              "time": "08:18",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Leo Rollis"
+                },
+                {
+                  "name": "Mark Anton Meriniit"
+                },
+                {
+                  "name": "Sten-Erik Tarvis"
+                }
+              ]
+            },
+            {
+              "time": "08:27",
+              "startHole": 10,
+              "players": [
+                {
                   "name": "Arthur Marti Animägi"
+                },
+                {
+                  "name": "Rassel Orumägi"
+                },
+                {
+                  "name": "Henri Lätt"
+                }
+              ]
+            },
+            {
+              "time": "08:36",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hart Oskar Aoveer"
+                },
+                {
+                  "name": "Kaspar Urh Jamnik"
+                },
+                {
+                  "name": "Robin Udodov"
+                },
+                {
+                  "name": "Kaur-Mattias Kuuskme"
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "round": 4,
+          "groups": [
+            {
+              "time": "13:48",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Leo Rollis"
+                },
+                {
+                  "name": "Mark Anton Meriniit"
+                },
+                {
+                  "name": "Sten-Erik Tarvis"
+                }
+              ]
+            },
+            {
+              "time": "13:57",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Arthur Marti Animägi"
+                },
+                {
+                  "name": "Rassel Orumägi"
+                },
+                {
+                  "name": "Henri Lätt"
+                }
+              ]
+            },
+            {
+              "time": "14:06",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hart Oskar Aoveer"
+                },
+                {
+                  "name": "Kaspar Urh Jamnik"
+                },
+                {
+                  "name": "Robin Udodov"
+                },
+                {
+                  "name": "Kaur-Mattias Kuuskme"
                 }
               ]
             }
@@ -898,7 +1464,9 @@
           "total": null,
           "roundGross": [
             69,
-            37
+            37,
+            77,
+            36
           ],
           "rounds": [
             {
@@ -944,75 +1512,56 @@
               "f9": 37,
               "gross": 37,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                6,
+                5,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5
+              ],
+              "f9": 40,
+              "b9": 37,
+              "gross": 77,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                2,
+                5,
+                4,
+                4,
+                5
+              ],
+              "f9": 36,
+              "gross": 36,
+              "startingHole": 10
             }
           ],
           "dob": "2009-08-05"
         },
         {
           "pos": "2",
-          "name": "Kirke Kiige",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2009,
-          "hcp": -3.2,
-          "team": null,
-          "detailId": "gb49672860",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            75,
-            39
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                3,
-                5,
-                5,
-                4,
-                4,
-                5,
-                4,
-                4,
-                6,
-                3,
-                5,
-                4,
-                3,
-                5,
-                4,
-                2,
-                4
-              ],
-              "f9": 39,
-              "b9": 36,
-              "gross": 75,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                7,
-                3,
-                6,
-                2,
-                5,
-                4,
-                5,
-                3,
-                4
-              ],
-              "f9": 39,
-              "gross": 39,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2009-07-14"
-        },
-        {
-          "pos": "3",
           "name": "Danielle Truusa",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -1024,7 +1573,9 @@
           "total": null,
           "roundGross": [
             77,
-            40
+            40,
+            71,
+            32
           ],
           "rounds": [
             {
@@ -1070,9 +1621,162 @@
               "f9": 40,
               "gross": 40,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                2,
+                6,
+                3,
+                4,
+                4,
+                5,
+                3,
+                5,
+                6,
+                3,
+                4,
+                3,
+                2,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 37,
+              "b9": 34,
+              "gross": 71,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                3,
+                3,
+                3,
+                3,
+                3,
+                4,
+                3,
+                4
+              ],
+              "f9": 32,
+              "gross": 32,
+              "startingHole": 10
             }
           ],
           "dob": "2006-09-15"
+        },
+        {
+          "pos": "3",
+          "name": "Kirke Kiige",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2009,
+          "hcp": -3.2,
+          "team": null,
+          "detailId": "gb49672860",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            75,
+            39,
+            75,
+            35
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                2,
+                4
+              ],
+              "f9": 39,
+              "b9": 36,
+              "gross": 75,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                3,
+                6,
+                2,
+                5,
+                4,
+                5,
+                3,
+                4
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                7,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                5,
+                3,
+                3,
+                4,
+                3,
+                5,
+                3,
+                3,
+                5
+              ],
+              "f9": 41,
+              "b9": 34,
+              "gross": 75,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2009-07-14"
         },
         {
           "pos": "4",
@@ -1087,7 +1791,9 @@
           "total": null,
           "roundGross": [
             79,
-            40
+            40,
+            79,
+            38
           ],
           "rounds": [
             {
@@ -1133,6 +1839,50 @@
               "f9": 40,
               "gross": 40,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                6,
+                5,
+                4,
+                6,
+                3,
+                4,
+                5,
+                3,
+                5
+              ],
+              "f9": 38,
+              "b9": 41,
+              "gross": 79,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
             }
           ],
           "dob": "2008-09-12"
@@ -1150,7 +1900,9 @@
           "total": null,
           "roundGross": [
             82,
-            41
+            41,
+            83,
+            42
           ],
           "rounds": [
             {
@@ -1196,6 +1948,50 @@
               "f9": 41,
               "gross": 41,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                7,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                7,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 44,
+              "b9": 39,
+              "gross": 83,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                6,
+                5
+              ],
+              "f9": 42,
+              "gross": 42,
+              "startingHole": 10
             }
           ],
           "dob": "2007-11-11"
@@ -1213,7 +2009,9 @@
           "total": null,
           "roundGross": [
             93,
-            47
+            47,
+            87,
+            43
           ],
           "rounds": [
             {
@@ -1259,6 +2057,50 @@
               "f9": 47,
               "gross": 47,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                7,
+                3,
+                5,
+                5,
+                5,
+                6,
+                4,
+                4,
+                6
+              ],
+              "f9": 42,
+              "b9": 45,
+              "gross": 87,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                5,
+                5,
+                5,
+                4,
+                6
+              ],
+              "f9": 43,
+              "gross": 43,
+              "startingHole": 10
             }
           ],
           "dob": "2009-11-16"
@@ -1334,6 +2176,76 @@
               ]
             }
           ]
+        },
+        "3": {
+          "round": 3,
+          "groups": [
+            {
+              "time": "08:00",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Roosi Ristal"
+                },
+                {
+                  "name": "Annika Kalvet"
+                },
+                {
+                  "name": "Keira Olivia Markvardt"
+                }
+              ]
+            },
+            {
+              "time": "08:09",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Iiris Mätas"
+                },
+                {
+                  "name": "Danielle Truusa"
+                },
+                {
+                  "name": "Kirke Kiige"
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "round": 4,
+          "groups": [
+            {
+              "time": "13:30",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Roosi Ristal"
+                },
+                {
+                  "name": "Annika Kalvet"
+                },
+                {
+                  "name": "Keira Olivia Markvardt"
+                }
+              ]
+            },
+            {
+              "time": "13:39",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Iiris Mätas"
+                },
+                {
+                  "name": "Danielle Truusa"
+                },
+                {
+                  "name": "Kirke Kiige"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -1403,74 +2315,11 @@
       ],
       "teeName": "Tee 5578m",
       "metersTotal": 5578,
-      "courseRating": 70.2,
-      "slope": 131,
+      "courseRating": 65.4,
+      "slope": 119,
       "players": [
         {
           "pos": "1",
-          "name": "William Pikki",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2010,
-          "hcp": 3.3,
-          "team": null,
-          "detailId": "gb49750531",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            35
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                3,
-                6,
-                3,
-                4,
-                4,
-                5,
-                6,
-                5,
-                6,
-                3,
-                4,
-                4,
-                4,
-                3,
-                3,
-                2,
-                4
-              ],
-              "f9": 41,
-              "b9": 33,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                3,
-                5,
-                3,
-                3,
-                4,
-                5,
-                4,
-                4
-              ],
-              "f9": 35,
-              "gross": 35,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-11-24"
-        },
-        {
-          "pos": "2",
           "name": "Karl Konrad Ranna",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -1482,7 +2331,9 @@
           "total": null,
           "roundGross": [
             75,
-            36
+            36,
+            70,
+            38
           ],
           "rounds": [
             {
@@ -1528,9 +2379,162 @@
               "f9": 36,
               "gross": 36,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                3,
+                4,
+                5,
+                2,
+                4,
+                5,
+                3,
+                5
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
             }
           ],
           "dob": "2010-08-18"
+        },
+        {
+          "pos": "2",
+          "name": "William Pikki",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2010,
+          "hcp": 3.3,
+          "team": null,
+          "detailId": "gb49750531",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            74,
+            35,
+            78,
+            36
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                3,
+                4,
+                4,
+                5,
+                6,
+                5,
+                6,
+                3,
+                4,
+                4,
+                4,
+                3,
+                3,
+                2,
+                4
+              ],
+              "f9": 41,
+              "b9": 33,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                7,
+                3,
+                6,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                7
+              ],
+              "f9": 41,
+              "b9": 37,
+              "gross": 78,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                5
+              ],
+              "f9": 36,
+              "gross": 36,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2010-11-24"
         },
         {
           "pos": "3",
@@ -1545,7 +2549,9 @@
           "total": null,
           "roundGross": [
             73,
-            39
+            39,
+            75,
+            37
           ],
           "rounds": [
             {
@@ -1591,201 +2597,56 @@
               "f9": 39,
               "gross": 39,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5,
+                3,
+                3,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 39,
+              "b9": 36,
+              "gross": 75,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                3,
+                4,
+                5,
+                4,
+                4,
+                3,
+                3,
+                5
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 10
             }
           ],
           "dob": "2010-11-13"
         },
         {
           "pos": "4",
-          "name": "Kris Kuusk",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2012,
-          "hcp": 1.7,
-          "team": null,
-          "detailId": "gb49790452",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            74,
-            39
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                3,
-                7,
-                4,
-                5,
-                4,
-                5,
-                5,
-                4,
-                5,
-                2,
-                3,
-                4,
-                2,
-                3,
-                3,
-                3,
-                6
-              ],
-              "f9": 43,
-              "b9": 31,
-              "gross": 74,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                4,
-                5,
-                5,
-                4,
-                4
-              ],
-              "f9": 39,
-              "gross": 39,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2012-08-23"
-        },
-        {
-          "pos": "5",
-          "name": "Lui Saat",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2013,
-          "hcp": 4.5,
-          "team": null,
-          "detailId": "gb49615991",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            77,
-            37
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                3,
-                5,
-                3,
-                4,
-                5,
-                6,
-                4,
-                4,
-                6,
-                4,
-                5,
-                3,
-                3,
-                4,
-                3,
-                3,
-                6
-              ],
-              "f9": 40,
-              "b9": 37,
-              "gross": 77,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                3,
-                6,
-                3,
-                5,
-                4,
-                4,
-                4,
-                4
-              ],
-              "f9": 37,
-              "gross": 37,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2013-02-23"
-        },
-        {
-          "pos": "6",
-          "name": "Kermo Sikaste",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2011,
-          "hcp": 4.9,
-          "team": null,
-          "detailId": "gb49665210",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            78,
-            37
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                3,
-                6,
-                4,
-                4,
-                4,
-                5,
-                4,
-                4,
-                5,
-                4,
-                5,
-                4,
-                4,
-                4,
-                5,
-                3,
-                5
-              ],
-              "f9": 39,
-              "b9": 39,
-              "gross": 78,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                3,
-                5,
-                3,
-                5,
-                4,
-                4,
-                4,
-                4
-              ],
-              "f9": 37,
-              "gross": 37,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2011-02-02"
-        },
-        {
-          "pos": "7",
           "name": "Hans Christian Kibus",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -1797,7 +2658,9 @@
           "total": null,
           "roundGross": [
             79,
-            39
+            39,
+            74,
+            35
           ],
           "rounds": [
             {
@@ -1843,12 +2706,492 @@
               "f9": 39,
               "gross": 39,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                6,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                5,
+                3,
+                6
+              ],
+              "f9": 38,
+              "b9": 36,
+              "gross": 74,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 10
             }
           ],
           "dob": "2012-08-07"
         },
         {
-          "pos": "T8",
+          "pos": "5",
+          "name": "Kris Kuusk",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2012,
+          "hcp": 1.7,
+          "team": null,
+          "detailId": "gb49790452",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            74,
+            39,
+            80,
+            35
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                7,
+                4,
+                5,
+                4,
+                5,
+                5,
+                4,
+                5,
+                2,
+                3,
+                4,
+                2,
+                3,
+                3,
+                3,
+                6
+              ],
+              "f9": 43,
+              "b9": 31,
+              "gross": 74,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                4,
+                4
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                6,
+                4,
+                6,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                3,
+                3,
+                5,
+                3,
+                6
+              ],
+              "f9": 42,
+              "b9": 38,
+              "gross": 80,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                2,
+                5,
+                5,
+                3,
+                4
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2012-08-23"
+        },
+        {
+          "pos": "T6",
+          "name": "Robert Uusküla",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2013,
+          "hcp": 6,
+          "team": null,
+          "detailId": "gb49717426",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            81,
+            39,
+            76,
+            35
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                2,
+                5,
+                4,
+                5,
+                5,
+                5,
+                4,
+                4,
+                7,
+                4,
+                5,
+                5,
+                3,
+                5,
+                5,
+                3,
+                5
+              ],
+              "f9": 39,
+              "b9": 42,
+              "gross": 81,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                5,
+                4,
+                5,
+                4,
+                5
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                6,
+                4,
+                7,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 43,
+              "b9": 33,
+              "gross": 76,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2013-10-01"
+        },
+        {
+          "pos": "T6",
+          "name": "Kermo Sikaste",
+          "country": "EE",
+          "club": "Rae Golfiklubi",
+          "birthYear": 2011,
+          "hcp": 4.9,
+          "team": null,
+          "detailId": "gb49665210",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            78,
+            37,
+            76,
+            40
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5
+              ],
+              "f9": 39,
+              "b9": 39,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                6,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                6
+              ],
+              "f9": 41,
+              "b9": 35,
+              "gross": 76,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 40,
+              "gross": 40,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2011-02-02"
+        },
+        {
+          "pos": "T6",
+          "name": "Lui Saat",
+          "country": "EE",
+          "club": "Rae Golfiklubi",
+          "birthYear": 2013,
+          "hcp": 4.5,
+          "team": null,
+          "detailId": "gb49615991",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            77,
+            37,
+            82,
+            35
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                4,
+                5,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                3,
+                6
+              ],
+              "f9": 40,
+              "b9": 37,
+              "gross": 77,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                3,
+                6,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                3,
+                6,
+                3,
+                4,
+                6,
+                6,
+                4,
+                4,
+                6,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                5
+              ],
+              "f9": 43,
+              "b9": 39,
+              "gross": 82,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
+                5
+              ],
+              "f9": 35,
+              "gross": 35,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2013-02-23"
+        },
+        {
+          "pos": "9",
           "name": "Roberts Augusts Dombrovskis",
           "country": "LV",
           "club": "Ozo Golf Club",
@@ -1860,6 +3203,8 @@
           "total": null,
           "roundGross": [
             80,
+            39,
+            77,
             39
           ],
           "rounds": [
@@ -1906,12 +3251,56 @@
               "f9": 39,
               "gross": 39,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                6,
+                3,
+                5,
+                5,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                5,
+                3,
+                5
+              ],
+              "f9": 41,
+              "b9": 36,
+              "gross": 77,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 10
             }
           ],
           "dob": "2011-12-23"
         },
         {
-          "pos": "T8",
+          "pos": "10",
           "name": "Maximilian Tavaste",
           "country": "EE",
           "club": "Niitvälja Golf",
@@ -1923,7 +3312,9 @@
           "total": null,
           "roundGross": [
             76,
-            43
+            43,
+            79,
+            38
           ],
           "rounds": [
             {
@@ -1969,12 +3360,56 @@
               "f9": 43,
               "gross": 43,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                7,
+                4,
+                4,
+                6,
+                5,
+                3,
+                3,
+                6,
+                3,
+                5,
+                5,
+                3,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 41,
+              "b9": 38,
+              "gross": 79,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                6
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
             }
           ],
           "dob": "2010-11-15"
         },
         {
-          "pos": "T10",
+          "pos": "11",
           "name": "Enso Saar",
           "country": "EE",
           "club": "Otepää Golf & Country Club",
@@ -1986,7 +3421,9 @@
           "total": null,
           "roundGross": [
             82,
-            38
+            38,
+            78,
+            41
           ],
           "rounds": [
             {
@@ -2032,327 +3469,56 @@
               "f9": 38,
               "gross": 38,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                7,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "f9": 39,
+              "b9": 39,
+              "gross": 78,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 10
             }
           ],
           "dob": "2012-04-30"
         },
         {
-          "pos": "T10",
-          "name": "Robert Uusküla",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2013,
-          "hcp": 6,
-          "team": null,
-          "detailId": "gb49717426",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            81,
-            39
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                2,
-                5,
-                4,
-                5,
-                5,
-                5,
-                4,
-                4,
-                7,
-                4,
-                5,
-                5,
-                3,
-                5,
-                5,
-                3,
-                5
-              ],
-              "f9": 39,
-              "b9": 42,
-              "gross": 81,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                3,
-                5,
-                3,
-                5,
-                4,
-                5,
-                4,
-                5
-              ],
-              "f9": 39,
-              "gross": 39,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2013-10-01"
-        },
-        {
           "pos": "12",
-          "name": "Harold Manfred Vilberg",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2010,
-          "hcp": 8.3,
-          "team": null,
-          "detailId": "gb49823650",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            82,
-            41
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                7,
-                3,
-                6,
-                4,
-                5,
-                5,
-                5,
-                4,
-                5,
-                6,
-                3,
-                4,
-                3,
-                3,
-                4,
-                4,
-                5,
-                6
-              ],
-              "f9": 44,
-              "b9": 38,
-              "gross": 82,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                7,
-                3,
-                6,
-                3,
-                5,
-                5,
-                4,
-                3,
-                5
-              ],
-              "f9": 41,
-              "gross": 41,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-09-01"
-        },
-        {
-          "pos": "13",
-          "name": "Franz Vendelin",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2010,
-          "hcp": 6.7,
-          "team": null,
-          "detailId": "gb49625592",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            83,
-            43
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                3,
-                5,
-                4,
-                9,
-                4,
-                7,
-                4,
-                4,
-                5,
-                3,
-                3,
-                4,
-                4,
-                6,
-                3,
-                4,
-                5
-              ],
-              "f9": 46,
-              "b9": 37,
-              "gross": 83,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                3,
-                7,
-                3,
-                6,
-                5,
-                5,
-                3,
-                6
-              ],
-              "f9": 43,
-              "gross": 43,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-10-21"
-        },
-        {
-          "pos": "14",
-          "name": "Patrik Sebastian Karilaid",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2010,
-          "hcp": 5.9,
-          "team": null,
-          "detailId": "gb49485072",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            86,
-            42
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                7,
-                3,
-                6,
-                5,
-                5,
-                4,
-                5,
-                8,
-                7,
-                7,
-                3,
-                4,
-                3,
-                3,
-                3,
-                4,
-                5,
-                4
-              ],
-              "f9": 50,
-              "b9": 36,
-              "gross": 86,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                6,
-                4,
-                5,
-                4,
-                5,
-                4,
-                5
-              ],
-              "f9": 42,
-              "gross": 42,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-08-28"
-        },
-        {
-          "pos": "T15",
-          "name": "Platon Oja",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2010,
-          "hcp": 7.3,
-          "team": null,
-          "detailId": "gb49374081",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            89,
-            41
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                4,
-                8,
-                5,
-                5,
-                6,
-                6,
-                4,
-                3,
-                5,
-                4,
-                6,
-                6,
-                4,
-                3,
-                4,
-                3,
-                7
-              ],
-              "f9": 47,
-              "b9": 42,
-              "gross": 89,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                6,
-                3,
-                5,
-                3,
-                8,
-                4,
-                4,
-                4,
-                4
-              ],
-              "f9": 41,
-              "gross": 41,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-12-19"
-        },
-        {
-          "pos": "T15",
           "name": "Oliver Virkebau",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -2364,7 +3530,9 @@
           "total": null,
           "roundGross": [
             83,
-            47
+            47,
+            86,
+            38
           ],
           "rounds": [
             {
@@ -2410,12 +3578,383 @@
               "f9": 47,
               "gross": 47,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                8,
+                4,
+                7,
+                4,
+                5,
+                4,
+                5,
+                5,
+                5,
+                5,
+                3,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 47,
+              "b9": 39,
+              "gross": 86,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                6
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
             }
           ],
           "dob": "2013-08-24"
         },
         {
-          "pos": "T17",
+          "pos": "13",
+          "name": "Harold Manfred Vilberg",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2010,
+          "hcp": 8.3,
+          "team": null,
+          "detailId": "gb49823650",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            82,
+            41,
+            87,
+            46
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                7,
+                3,
+                6,
+                4,
+                5,
+                5,
+                5,
+                4,
+                5,
+                6,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                5,
+                6
+              ],
+              "f9": 44,
+              "b9": 38,
+              "gross": 82,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                3,
+                6,
+                3,
+                5,
+                5,
+                4,
+                3,
+                5
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                5,
+                4,
+                5,
+                6,
+                5,
+                5,
+                3,
+                7,
+                5,
+                7,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5
+              ],
+              "f9": 42,
+              "b9": 45,
+              "gross": 87,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                8,
+                5,
+                4,
+                5,
+                3,
+                7,
+                3,
+                5
+              ],
+              "f9": 46,
+              "gross": 46,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2010-09-01"
+        },
+        {
+          "pos": "14",
+          "name": "Franz Vendelin",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2010,
+          "hcp": 6.7,
+          "team": null,
+          "detailId": "gb49625592",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            83,
+            43,
+            86,
+            45
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                5,
+                4,
+                9,
+                4,
+                7,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                4,
+                6,
+                3,
+                4,
+                5
+              ],
+              "f9": 46,
+              "b9": 37,
+              "gross": 83,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                7,
+                3,
+                6,
+                5,
+                5,
+                3,
+                6
+              ],
+              "f9": 43,
+              "gross": 43,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                4,
+                4,
+                5,
+                6,
+                5,
+                6,
+                6,
+                4,
+                5,
+                5,
+                5,
+                4,
+                3,
+                6,
+                4,
+                3,
+                5
+              ],
+              "f9": 46,
+              "b9": 40,
+              "gross": 86,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                5,
+                5,
+                4,
+                5,
+                5,
+                5,
+                4,
+                5
+              ],
+              "f9": 45,
+              "gross": 45,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2010-10-21"
+        },
+        {
+          "pos": "15",
+          "name": "Platon Oja",
+          "country": "EE",
+          "club": "Rae Golfiklubi",
+          "birthYear": 2010,
+          "hcp": 7.3,
+          "team": null,
+          "detailId": "gb49374081",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            89,
+            41,
+            81,
+            48
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                4,
+                8,
+                5,
+                5,
+                6,
+                6,
+                4,
+                3,
+                5,
+                4,
+                6,
+                6,
+                4,
+                3,
+                4,
+                3,
+                7
+              ],
+              "f9": 47,
+              "b9": 42,
+              "gross": 89,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                8,
+                4,
+                4,
+                4,
+                4
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                3,
+                5,
+                3,
+                5,
+                5,
+                4,
+                5,
+                6,
+                7,
+                4,
+                4,
+                4,
+                3,
+                6,
+                4,
+                2,
+                4
+              ],
+              "f9": 43,
+              "b9": 38,
+              "gross": 81,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                4,
+                6,
+                5,
+                2,
+                7,
+                4,
+                4,
+                9
+              ],
+              "f9": 48,
+              "gross": 48,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2010-12-19"
+        },
+        {
+          "pos": "16",
           "name": "Hugo Erik Pääsuke",
           "country": "EE",
           "club": "Niitvälja Golf",
@@ -2427,6 +3966,8 @@
           "total": null,
           "roundGross": [
             90,
+            43,
+            88,
             43
           ],
           "rounds": [
@@ -2473,138 +4014,56 @@
               "f9": 43,
               "gross": 43,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                7,
+                5,
+                5,
+                5,
+                5,
+                6,
+                4,
+                5,
+                5,
+                4,
+                6,
+                4,
+                4,
+                5
+              ],
+              "f9": 45,
+              "b9": 43,
+              "gross": 88,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                6,
+                3,
+                4,
+                6,
+                3,
+                7
+              ],
+              "f9": 43,
+              "gross": 43,
+              "startingHole": 10
             }
           ],
           "dob": "2012-08-23"
         },
         {
-          "pos": "T17",
-          "name": "Oliver Christensen",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2012,
-          "hcp": 13.4,
-          "team": null,
-          "detailId": "gb49433614",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            90,
-            43
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                7,
-                4,
-                6,
-                4,
-                5,
-                4,
-                5,
-                5,
-                5,
-                7,
-                5,
-                5,
-                5,
-                4,
-                4,
-                6,
-                2,
-                7
-              ],
-              "f9": 45,
-              "b9": 45,
-              "gross": 90,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                6,
-                3,
-                5,
-                3,
-                6,
-                5,
-                6,
-                5,
-                4
-              ],
-              "f9": 43,
-              "gross": 43,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2012-11-16"
-        },
-        {
-          "pos": "19",
-          "name": "Johannes Sepp",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2011,
-          "hcp": 12.4,
-          "team": null,
-          "detailId": "gb49713064",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            88,
-            46
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                4,
-                5,
-                7,
-                5,
-                5,
-                5,
-                6,
-                5,
-                5,
-                7,
-                5,
-                5,
-                4,
-                4,
-                3,
-                5,
-                3,
-                5
-              ],
-              "f9": 47,
-              "b9": 41,
-              "gross": 88,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                6,
-                4,
-                6,
-                4,
-                4,
-                5,
-                6,
-                4,
-                7
-              ],
-              "f9": 46,
-              "gross": 46,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2011-03-06"
-        },
-        {
-          "pos": "20",
+          "pos": "17",
           "name": "Gregor Järvekülg",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -2616,7 +4075,9 @@
           "total": null,
           "roundGross": [
             90,
-            45
+            45,
+            92,
+            39
           ],
           "rounds": [
             {
@@ -2662,75 +4123,56 @@
               "f9": 45,
               "gross": 45,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                5,
+                5,
+                6,
+                5,
+                3,
+                6,
+                6,
+                7,
+                6,
+                5,
+                5,
+                6,
+                4,
+                3,
+                5,
+                4,
+                6
+              ],
+              "f9": 48,
+              "b9": 44,
+              "gross": 92,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 10
             }
           ],
           "dob": "2011-01-21"
         },
         {
-          "pos": "21",
-          "name": "Kaarel Kalvet",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2010,
-          "hcp": 14.6,
-          "team": null,
-          "detailId": "gb49537809",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            91,
-            45
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                8,
-                4,
-                6,
-                4,
-                6,
-                5,
-                6,
-                5,
-                4,
-                6,
-                4,
-                6,
-                4,
-                4,
-                3,
-                4,
-                5,
-                7
-              ],
-              "f9": 48,
-              "b9": 43,
-              "gross": 91,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                4,
-                3,
-                7,
-                4,
-                6,
-                5,
-                5,
-                5,
-                6
-              ],
-              "f9": 45,
-              "gross": 45,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2010-02-27"
-        },
-        {
-          "pos": "T22",
+          "pos": "T18",
           "name": "Harri Raukas",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -2742,7 +4184,9 @@
           "total": null,
           "roundGross": [
             93,
-            46
+            46,
+            86,
+            43
           ],
           "rounds": [
             {
@@ -2788,51 +4232,206 @@
               "f9": 46,
               "gross": 46,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                6,
+                4,
+                5,
+                5,
+                7,
+                5,
+                6,
+                4,
+                5,
+                4,
+                3,
+                5,
+                3,
+                5
+              ],
+              "f9": 46,
+              "b9": 40,
+              "gross": 86,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                4,
+                6,
+                4,
+                4,
+                5,
+                4,
+                6
+              ],
+              "f9": 43,
+              "gross": 43,
+              "startingHole": 10
             }
           ],
           "dob": "2012-10-04"
         },
         {
-          "pos": "T22",
-          "name": "Frederik Kaldoja",
+          "pos": "T18",
+          "name": "Oliver Christensen",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
-          "birthYear": 2013,
-          "hcp": 19.4,
+          "birthYear": 2012,
+          "hcp": 13.4,
           "team": null,
-          "detailId": "gb49513323",
+          "detailId": "gb49433614",
           "toPar": null,
           "total": null,
           "roundGross": [
-            89,
-            50
+            90,
+            43,
+            95,
+            40
           ],
           "rounds": [
             {
               "day": 1,
               "scores": [
-                6,
-                3,
-                7,
-                6,
                 7,
                 4,
+                6,
                 4,
                 5,
+                4,
+                5,
+                5,
+                5,
+                7,
+                5,
+                5,
+                5,
+                4,
+                4,
                 6,
+                2,
+                7
+              ],
+              "f9": 45,
+              "b9": 45,
+              "gross": 90,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                3,
                 5,
                 3,
                 6,
                 5,
+                6,
+                5,
+                4
+              ],
+              "f9": 43,
+              "gross": 43,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
                 4,
+                7,
+                3,
+                6,
+                5,
+                7,
                 6,
                 4,
+                7,
+                4,
+                4,
+                8,
+                3,
+                6,
+                4,
+                4,
+                6
+              ],
+              "f9": 49,
+              "b9": 46,
+              "gross": 95,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                6
+              ],
+              "f9": 40,
+              "gross": 40,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2012-11-16"
+        },
+        {
+          "pos": "T18",
+          "name": "Johannes Sepp",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2011,
+          "hcp": 12.4,
+          "team": null,
+          "detailId": "gb49713064",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            88,
+            46,
+            93,
+            41
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                7,
+                5,
+                5,
+                5,
+                6,
+                5,
+                5,
+                7,
+                5,
+                5,
+                4,
+                4,
+                3,
+                5,
                 3,
                 5
               ],
-              "f9": 48,
+              "f9": 47,
               "b9": 41,
-              "gross": 89,
+              "gross": 88,
               "startingHole": 1
             },
             {
@@ -2840,23 +4439,67 @@
               "scores": [
                 6,
                 4,
+                6,
+                4,
+                4,
+                5,
+                6,
+                4,
+                7
+              ],
+              "f9": 46,
+              "gross": 46,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
                 7,
                 5,
                 6,
-                6,
+                5,
+                7,
+                3,
+                5,
                 6,
                 5,
+                5,
+                5,
+                5,
+                4,
+                4,
+                8,
+                5,
+                3,
                 5
               ],
-              "f9": 50,
-              "gross": 50,
-              "startingHole": 1
+              "f9": 49,
+              "b9": 44,
+              "gross": 93,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                5,
+                2,
+                4,
+                5,
+                6,
+                4,
+                5
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 10
             }
           ],
-          "dob": "2013-05-21"
+          "dob": "2011-03-06"
         },
         {
-          "pos": "24",
+          "pos": "T21",
           "name": "Henri Virula",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -2868,7 +4511,9 @@
           "total": null,
           "roundGross": [
             96,
-            45
+            45,
+            89,
+            39
           ],
           "rounds": [
             {
@@ -2914,51 +4559,97 @@
               "f9": 45,
               "gross": 45,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                5,
+                7,
+                5,
+                6,
+                5,
+                7,
+                4,
+                4,
+                6,
+                5,
+                5,
+                4,
+                4,
+                5
+              ],
+              "f9": 45,
+              "b9": 44,
+              "gross": 89,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                9,
+                4,
+                4,
+                5,
+                2,
+                3,
+                5,
+                3,
+                4
+              ],
+              "f9": 39,
+              "gross": 39,
+              "startingHole": 10
             }
           ],
           "dob": "2012-09-25"
         },
         {
-          "pos": "T25",
-          "name": "Loit Leis",
+          "pos": "T21",
+          "name": "Patrik Sebastian Karilaid",
           "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2012,
-          "hcp": 22.6,
+          "club": "Niitvälja Golf",
+          "birthYear": 2010,
+          "hcp": 5.9,
           "team": null,
-          "detailId": "gb49644449",
+          "detailId": "gb49485072",
           "toPar": null,
           "total": null,
           "roundGross": [
-            95,
-            47
+            86,
+            42,
+            96,
+            45
           ],
           "rounds": [
             {
               "day": 1,
               "scores": [
-                8,
+                7,
                 3,
-                6,
-                3,
-                6,
-                4,
                 6,
                 5,
-                6,
                 5,
                 4,
                 5,
                 8,
+                7,
+                7,
+                3,
+                4,
+                3,
+                3,
+                3,
+                4,
                 5,
-                4,
-                6,
-                4,
-                7
+                4
               ],
-              "f9": 47,
-              "b9": 48,
-              "gross": 95,
+              "f9": 50,
+              "b9": 36,
+              "gross": 86,
               "startingHole": 1
             },
             {
@@ -2966,86 +4657,67 @@
               "scores": [
                 5,
                 4,
-                8,
-                3,
+                6,
                 4,
-                4,
-                7,
                 5,
-                7
+                4,
+                5,
+                4,
+                5
               ],
-              "f9": 47,
-              "gross": 47,
+              "f9": 42,
+              "gross": 42,
               "startingHole": 1
-            }
-          ],
-          "dob": "2012-07-14"
-        },
-        {
-          "pos": "T25",
-          "name": "Kenneth Järvekülg",
-          "country": "EE",
-          "club": "Valgeranna Golfiklubi",
-          "birthYear": 2011,
-          "hcp": 20.5,
-          "team": null,
-          "detailId": "gb49800970",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            94,
-            48
-          ],
-          "rounds": [
+            },
             {
-              "day": 1,
+              "day": 3,
               "scores": [
-                6,
-                3,
-                11,
+                8,
                 4,
                 6,
-                5,
-                6,
-                5,
+                4,
                 6,
                 7,
-                3,
-                5,
                 6,
-                3,
-                3,
                 5,
+                7,
+                6,
+                4,
+                5,
+                5,
+                4,
+                6,
+                4,
+                3,
+                6
+              ],
+              "f9": 53,
+              "b9": 43,
+              "gross": 96,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                4,
+                5,
+                5,
+                4,
+                4,
+                6,
                 4,
                 6
               ],
-              "f9": 52,
-              "b9": 42,
-              "gross": 94,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                7,
-                3,
-                6,
-                5,
-                6,
-                7,
-                5
-              ],
-              "f9": 48,
-              "gross": 48,
-              "startingHole": 1
+              "f9": 45,
+              "gross": 45,
+              "startingHole": 10
             }
           ],
-          "dob": "2011-01-21"
+          "dob": "2010-08-28"
         },
         {
-          "pos": "27",
+          "pos": "T23",
           "name": "Oliver Saarne",
           "country": "EE",
           "club": "Niitvälja Golf",
@@ -3057,7 +4729,9 @@
           "total": null,
           "roundGross": [
             98,
-            49
+            49,
+            89,
+            41
           ],
           "rounds": [
             {
@@ -3103,12 +4777,383 @@
               "f9": 49,
               "gross": 49,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                5,
+                5,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                3,
+                6,
+                6,
+                4,
+                4,
+                5,
+                5,
+                6
+              ],
+              "f9": 44,
+              "b9": 45,
+              "gross": 89,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 10
             }
           ],
           "dob": "2011-05-20"
         },
         {
-          "pos": "28",
+          "pos": "T23",
+          "name": "Loit Leis",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2012,
+          "hcp": 22.6,
+          "team": null,
+          "detailId": "gb49644449",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            95,
+            47,
+            91,
+            44
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                8,
+                3,
+                6,
+                3,
+                6,
+                4,
+                6,
+                5,
+                6,
+                5,
+                4,
+                5,
+                8,
+                5,
+                4,
+                6,
+                4,
+                7
+              ],
+              "f9": 47,
+              "b9": 48,
+              "gross": 95,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                8,
+                3,
+                4,
+                4,
+                7,
+                5,
+                7
+              ],
+              "f9": 47,
+              "gross": 47,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                7,
+                6,
+                4,
+                4,
+                4,
+                7,
+                5,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                8
+              ],
+              "f9": 45,
+              "b9": 46,
+              "gross": 91,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                5,
+                4,
+                5,
+                4,
+                6,
+                5,
+                3,
+                7
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2012-07-14"
+        },
+        {
+          "pos": "T23",
+          "name": "Frederik Kaldoja",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2013,
+          "hcp": 19.4,
+          "team": null,
+          "detailId": "gb49513323",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            89,
+            50,
+            97,
+            41
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                7,
+                6,
+                7,
+                4,
+                4,
+                5,
+                6,
+                5,
+                3,
+                6,
+                5,
+                4,
+                6,
+                4,
+                3,
+                5
+              ],
+              "f9": 48,
+              "b9": 41,
+              "gross": 89,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                4,
+                7,
+                5,
+                6,
+                6,
+                6,
+                5,
+                5
+              ],
+              "f9": 50,
+              "gross": 50,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                6,
+                4,
+                7,
+                5,
+                5,
+                4,
+                5,
+                10,
+                5,
+                6,
+                7,
+                3,
+                4,
+                4,
+                4,
+                7
+              ],
+              "f9": 47,
+              "b9": 50,
+              "gross": 97,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2013-05-21"
+        },
+        {
+          "pos": "26",
+          "name": "Kaarel Kalvet",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2010,
+          "hcp": 14.6,
+          "team": null,
+          "detailId": "gb49537809",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            91,
+            45,
+            96,
+            49
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                8,
+                4,
+                6,
+                4,
+                6,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4,
+                6,
+                4,
+                4,
+                3,
+                4,
+                5,
+                7
+              ],
+              "f9": 48,
+              "b9": 43,
+              "gross": 91,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                3,
+                7,
+                4,
+                6,
+                5,
+                5,
+                5,
+                6
+              ],
+              "f9": 45,
+              "gross": 45,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                6,
+                5,
+                5,
+                5,
+                6,
+                5,
+                3,
+                8,
+                5,
+                6,
+                5,
+                3,
+                6,
+                6,
+                4,
+                7
+              ],
+              "f9": 46,
+              "b9": 50,
+              "gross": 96,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                8,
+                5,
+                5,
+                5,
+                3,
+                5,
+                6,
+                4,
+                8
+              ],
+              "f9": 49,
+              "gross": 49,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2010-02-27"
+        },
+        {
+          "pos": "27",
           "name": "Richard Deemant",
           "country": "EE",
           "club": "Niitvälja Golf",
@@ -3120,7 +5165,9 @@
           "total": null,
           "roundGross": [
             99,
-            52
+            52,
+            93,
+            48
           ],
           "rounds": [
             {
@@ -3166,9 +5213,162 @@
               "f9": 52,
               "gross": 52,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                3,
+                6,
+                5,
+                4,
+                4,
+                7,
+                5,
+                6,
+                7,
+                5,
+                6,
+                5,
+                4,
+                5,
+                5,
+                4,
+                5
+              ],
+              "f9": 47,
+              "b9": 46,
+              "gross": 93,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                6,
+                5,
+                5,
+                3,
+                4,
+                7,
+                3,
+                8
+              ],
+              "f9": 48,
+              "gross": 48,
+              "startingHole": 10
             }
           ],
           "dob": "2011-01-02"
+        },
+        {
+          "pos": "28",
+          "name": "Kenneth Järvekülg",
+          "country": "EE",
+          "club": "Valgeranna Golfiklubi",
+          "birthYear": 2011,
+          "hcp": 20.5,
+          "team": null,
+          "detailId": "gb49800970",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            94,
+            48,
+            107,
+            44
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                11,
+                4,
+                6,
+                5,
+                6,
+                5,
+                6,
+                7,
+                3,
+                5,
+                6,
+                3,
+                3,
+                5,
+                4,
+                6
+              ],
+              "f9": 52,
+              "b9": 42,
+              "gross": 94,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                7,
+                3,
+                6,
+                5,
+                6,
+                7,
+                5
+              ],
+              "f9": 48,
+              "gross": 48,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                8,
+                4,
+                9,
+                6,
+                7,
+                5,
+                7,
+                4,
+                4,
+                9,
+                6,
+                6,
+                5,
+                5,
+                4,
+                4,
+                5,
+                9
+              ],
+              "f9": 54,
+              "b9": 53,
+              "gross": 107,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                5,
+                6,
+                4,
+                6
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2011-01-21"
         },
         {
           "pos": "29",
@@ -3183,7 +5383,9 @@
           "total": null,
           "roundGross": [
             109,
-            52
+            52,
+            115,
+            46
           ],
           "rounds": [
             {
@@ -3229,6 +5431,50 @@
               "f9": 52,
               "gross": 52,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                9,
+                4,
+                7,
+                7,
+                6,
+                6,
+                7,
+                8,
+                5,
+                6,
+                4,
+                7,
+                7,
+                7,
+                4,
+                10
+              ],
+              "f9": 57,
+              "b9": 58,
+              "gross": 115,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                5,
+                5,
+                6,
+                4,
+                5,
+                5,
+                3,
+                6
+              ],
+              "f9": 46,
+              "gross": 46,
+              "startingHole": 10
             }
           ],
           "dob": "2012-09-13"
@@ -3246,7 +5492,9 @@
           "total": null,
           "roundGross": [
             125,
-            61
+            61,
+            106,
+            45
           ],
           "rounds": [
             {
@@ -3292,6 +5540,50 @@
               "f9": 61,
               "gross": 61,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                8,
+                5,
+                8,
+                5,
+                6,
+                6,
+                6,
+                7,
+                6,
+                10,
+                3,
+                6,
+                4,
+                4,
+                5,
+                6,
+                5,
+                6
+              ],
+              "f9": 57,
+              "b9": 49,
+              "gross": 106,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                6,
+                6,
+                5,
+                4,
+                3,
+                6,
+                4,
+                4,
+                7
+              ],
+              "f9": 45,
+              "gross": 45,
+              "startingHole": 10
             }
           ],
           "dob": "2013-02-24"
@@ -3339,10 +5631,10 @@
                   "name": "Loit Leis"
                 },
                 {
-                  "name": "Kenneth Järvekülg"
+                  "name": "Richard Deemant"
                 },
                 {
-                  "name": "Richard Deemant"
+                  "name": "Kenneth Järvekülg"
                 },
                 {
                   "name": "Martin Pedari"
@@ -3360,10 +5652,10 @@
                   "name": "Oliver Christensen"
                 },
                 {
-                  "name": "Kaarel Kalvet"
+                  "name": "Oliver Saarne"
                 },
                 {
-                  "name": "Oliver Saarne"
+                  "name": "Kaarel Kalvet"
                 }
               ]
             },
@@ -3390,10 +5682,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "William Pikki"
+                  "name": "Karl Konrad Ranna"
                 },
                 {
-                  "name": "Karl Konrad Ranna"
+                  "name": "William Pikki"
                 },
                 {
                   "name": "Enso Saar"
@@ -3429,10 +5721,10 @@
                   "name": "Hans Christian Kibus"
                 },
                 {
-                  "name": "Roberts Augusts Dombrovskis"
+                  "name": "Robert Uusküla"
                 },
                 {
-                  "name": "Robert Uusküla"
+                  "name": "Roberts Augusts Dombrovskis"
                 },
                 {
                   "name": "Patrik Sebastian Karilaid"
@@ -3450,10 +5742,10 @@
                   "name": "Kris Kuusk"
                 },
                 {
-                  "name": "Lui Saat"
+                  "name": "Kermo Sikaste"
                 },
                 {
-                  "name": "Kermo Sikaste"
+                  "name": "Lui Saat"
                 }
               ]
             }
@@ -3485,10 +5777,10 @@
                   "name": "Loit Leis"
                 },
                 {
-                  "name": "Kenneth Järvekülg"
+                  "name": "Richard Deemant"
                 },
                 {
-                  "name": "Richard Deemant"
+                  "name": "Kenneth Järvekülg"
                 },
                 {
                   "name": "Martin Pedari"
@@ -3506,10 +5798,10 @@
                   "name": "Oliver Christensen"
                 },
                 {
-                  "name": "Kaarel Kalvet"
+                  "name": "Oliver Saarne"
                 },
                 {
-                  "name": "Oliver Saarne"
+                  "name": "Kaarel Kalvet"
                 }
               ]
             },
@@ -3536,10 +5828,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "William Pikki"
+                  "name": "Karl Konrad Ranna"
                 },
                 {
-                  "name": "Karl Konrad Ranna"
+                  "name": "William Pikki"
                 },
                 {
                   "name": "Enso Saar"
@@ -3575,10 +5867,10 @@
                   "name": "Hans Christian Kibus"
                 },
                 {
-                  "name": "Roberts Augusts Dombrovskis"
+                  "name": "Robert Uusküla"
                 },
                 {
-                  "name": "Robert Uusküla"
+                  "name": "Roberts Augusts Dombrovskis"
                 },
                 {
                   "name": "Patrik Sebastian Karilaid"
@@ -3596,10 +5888,296 @@
                   "name": "Kris Kuusk"
                 },
                 {
+                  "name": "Kermo Sikaste"
+                },
+                {
                   "name": "Lui Saat"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "round": 3,
+          "groups": [
+            {
+              "time": "09:18",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Richard Deemant"
+                },
+                {
+                  "name": "Aaron Reimo"
+                },
+                {
+                  "name": "Martin Pedari"
+                }
+              ]
+            },
+            {
+              "time": "09:27",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Oliver Saarne"
+                },
+                {
+                  "name": "Loit Leis"
+                },
+                {
+                  "name": "Kenneth Järvekülg"
+                }
+              ]
+            },
+            {
+              "time": "09:36",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Harri Raukas"
+                },
+                {
+                  "name": "Henri Virula"
+                },
+                {
+                  "name": "Frederik Kaldoja"
+                },
+                {
+                  "name": "Kaarel Kalvet"
+                }
+              ]
+            },
+            {
+              "time": "09:45",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hugo Erik Pääsuke"
+                },
+                {
+                  "name": "Gregor Järvekülg"
+                },
+                {
+                  "name": "Oliver Christensen"
+                },
+                {
+                  "name": "Johannes Sepp"
+                }
+              ]
+            },
+            {
+              "time": "09:54",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Oliver Virkebau"
+                },
+                {
+                  "name": "Franz Vendelin"
+                },
+                {
+                  "name": "Platon Oja"
+                },
+                {
+                  "name": "Patrik Sebastian Karilaid"
+                }
+              ]
+            },
+            {
+              "time": "10:03",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Robert Uusküla"
+                },
+                {
+                  "name": "Maximilian Tavaste"
+                },
+                {
+                  "name": "Enso Saar"
+                },
+                {
+                  "name": "Harold Manfred Vilberg"
+                }
+              ]
+            },
+            {
+              "time": "10:12",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hans Christian Kibus"
                 },
                 {
                   "name": "Kermo Sikaste"
+                },
+                {
+                  "name": "Lui Saat"
+                },
+                {
+                  "name": "Roberts Augusts Dombrovskis"
+                }
+              ]
+            },
+            {
+              "time": "10:21",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Karl Konrad Ranna"
+                },
+                {
+                  "name": "William Pikki"
+                },
+                {
+                  "name": "Aleksander Kraag"
+                },
+                {
+                  "name": "Kris Kuusk"
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "round": 4,
+          "groups": [
+            {
+              "time": "14:48",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Richard Deemant"
+                },
+                {
+                  "name": "Aaron Reimo"
+                },
+                {
+                  "name": "Martin Pedari"
+                }
+              ]
+            },
+            {
+              "time": "14:57",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Oliver Saarne"
+                },
+                {
+                  "name": "Loit Leis"
+                },
+                {
+                  "name": "Kenneth Järvekülg"
+                }
+              ]
+            },
+            {
+              "time": "15:06",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Harri Raukas"
+                },
+                {
+                  "name": "Henri Virula"
+                },
+                {
+                  "name": "Frederik Kaldoja"
+                },
+                {
+                  "name": "Kaarel Kalvet"
+                }
+              ]
+            },
+            {
+              "time": "15:15",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hugo Erik Pääsuke"
+                },
+                {
+                  "name": "Gregor Järvekülg"
+                },
+                {
+                  "name": "Oliver Christensen"
+                },
+                {
+                  "name": "Johannes Sepp"
+                }
+              ]
+            },
+            {
+              "time": "15:24",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Oliver Virkebau"
+                },
+                {
+                  "name": "Franz Vendelin"
+                },
+                {
+                  "name": "Platon Oja"
+                },
+                {
+                  "name": "Patrik Sebastian Karilaid"
+                }
+              ]
+            },
+            {
+              "time": "15:33",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Robert Uusküla"
+                },
+                {
+                  "name": "Maximilian Tavaste"
+                },
+                {
+                  "name": "Enso Saar"
+                },
+                {
+                  "name": "Harold Manfred Vilberg"
+                }
+              ]
+            },
+            {
+              "time": "15:42",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hans Christian Kibus"
+                },
+                {
+                  "name": "Kermo Sikaste"
+                },
+                {
+                  "name": "Lui Saat"
+                },
+                {
+                  "name": "Roberts Augusts Dombrovskis"
+                }
+              ]
+            },
+            {
+              "time": "15:51",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Karl Konrad Ranna"
+                },
+                {
+                  "name": "William Pikki"
+                },
+                {
+                  "name": "Aleksander Kraag"
+                },
+                {
+                  "name": "Kris Kuusk"
                 }
               ]
             }
@@ -3689,7 +6267,9 @@
           "total": null,
           "roundGross": [
             66,
-            35
+            35,
+            66,
+            31
           ],
           "rounds": [
             {
@@ -3735,12 +6315,165 @@
               "f9": 35,
               "gross": 35,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                2,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                3,
+                2,
+                4
+              ],
+              "f9": 34,
+              "b9": 32,
+              "gross": 66,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                3,
+                3,
+                4,
+                3,
+                4
+              ],
+              "f9": 31,
+              "gross": 31,
+              "startingHole": 10
             }
           ],
           "dob": "2010-07-09"
         },
         {
-          "pos": "T2",
+          "pos": "2",
+          "name": "Getrin Vahtra",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2012,
+          "hcp": 3.6,
+          "team": null,
+          "detailId": "gb49801950",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            78,
+            38,
+            75,
+            36
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                7,
+                3,
+                5,
+                3,
+                4,
+                6
+              ],
+              "f9": 37,
+              "b9": 41,
+              "gross": 78,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                4,
+                3,
+                5,
+                5,
+                4
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "f9": 37,
+              "b9": 38,
+              "gross": 75,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                5
+              ],
+              "f9": 36,
+              "gross": 36,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2012-11-05"
+        },
+        {
+          "pos": "3",
           "name": "Brenda Paalberg",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -3751,6 +6484,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
+            79,
+            37,
             79,
             37
           ],
@@ -3798,72 +6533,53 @@
               "f9": 37,
               "gross": 37,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                5,
+                4,
+                6,
+                2,
+                6,
+                5,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "f9": 41,
+              "b9": 38,
+              "gross": 79,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 10
             }
           ],
           "dob": "2012-09-13"
-        },
-        {
-          "pos": "T2",
-          "name": "Getrin Vahtra",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2012,
-          "hcp": 3.6,
-          "team": null,
-          "detailId": "gb49801950",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            78,
-            38
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                6,
-                3,
-                5,
-                3,
-                5,
-                4,
-                3,
-                4,
-                4,
-                5,
-                4,
-                4,
-                7,
-                3,
-                5,
-                3,
-                4,
-                6
-              ],
-              "f9": 37,
-              "b9": 41,
-              "gross": 78,
-              "startingHole": 1
-            },
-            {
-              "day": 2,
-              "scores": [
-                5,
-                4,
-                5,
-                3,
-                4,
-                3,
-                5,
-                5,
-                4
-              ],
-              "f9": 38,
-              "gross": 38,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2012-11-05"
         },
         {
           "pos": "4",
@@ -3878,7 +6594,9 @@
           "total": null,
           "roundGross": [
             81,
-            40
+            40,
+            77,
+            37
           ],
           "rounds": [
             {
@@ -3924,6 +6642,50 @@
               "f9": 40,
               "gross": 40,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                3,
+                6,
+                3,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                6
+              ],
+              "f9": 41,
+              "b9": 36,
+              "gross": 77,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 37,
+              "gross": 37,
+              "startingHole": 10
             }
           ],
           "dob": "2011-11-09"
@@ -3941,7 +6703,9 @@
           "total": null,
           "roundGross": [
             81,
-            45
+            45,
+            84,
+            42
           ],
           "rounds": [
             {
@@ -3987,6 +6751,50 @@
               "f9": 45,
               "gross": 45,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                4,
+                6,
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4,
+                5,
+                4,
+                5
+              ],
+              "f9": 43,
+              "b9": 41,
+              "gross": 84,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                5,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                6
+              ],
+              "f9": 42,
+              "gross": 42,
+              "startingHole": 10
             }
           ],
           "dob": "2012-04-04"
@@ -4004,7 +6812,9 @@
           "total": null,
           "roundGross": [
             82,
-            54
+            54,
+            97,
+            44
           ],
           "rounds": [
             {
@@ -4050,6 +6860,50 @@
               "f9": 54,
               "gross": 54,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                6,
+                7,
+                4,
+                6,
+                6,
+                7,
+                5,
+                5,
+                6,
+                4,
+                4,
+                5,
+                4,
+                5,
+                6,
+                3,
+                8
+              ],
+              "f9": 52,
+              "b9": 45,
+              "gross": 97,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                5,
+                4,
+                6,
+                4,
+                4,
+                7
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
             }
           ],
           "dob": "2011-07-01"
@@ -4067,7 +6921,9 @@
           "total": null,
           "roundGross": [
             94,
-            50
+            50,
+            97,
+            44
           ],
           "rounds": [
             {
@@ -4113,6 +6969,50 @@
               "f9": 50,
               "gross": 50,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                7,
+                6,
+                6,
+                6,
+                4,
+                5,
+                6,
+                7,
+                7,
+                7,
+                5,
+                6,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "f9": 54,
+              "b9": 43,
+              "gross": 97,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                5,
+                3,
+                8,
+                4,
+                4,
+                6
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
             }
           ],
           "dob": "2013-12-31"
@@ -4130,7 +7030,9 @@
           "total": null,
           "roundGross": [
             95,
-            52
+            52,
+            100,
+            44
           ],
           "rounds": [
             {
@@ -4176,6 +7078,50 @@
               "f9": 52,
               "gross": 52,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                6,
+                4,
+                9,
+                6,
+                7,
+                4,
+                5,
+                7,
+                5,
+                6,
+                6,
+                6,
+                5,
+                2,
+                4,
+                6,
+                5,
+                7
+              ],
+              "f9": 53,
+              "b9": 47,
+              "gross": 100,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                7,
+                5,
+                6,
+                5,
+                4,
+                4,
+                4,
+                3,
+                6
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
             }
           ],
           "dob": "2011-01-21"
@@ -4192,6 +7138,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
+            104,
+            44,
             104,
             44
           ],
@@ -4239,6 +7187,50 @@
               "f9": 44,
               "gross": 44,
               "startingHole": 1
+            },
+            {
+              "day": 3,
+              "scores": [
+                10,
+                6,
+                6,
+                3,
+                5,
+                6,
+                7,
+                5,
+                5,
+                8,
+                4,
+                5,
+                5,
+                5,
+                6,
+                5,
+                6,
+                7
+              ],
+              "f9": 53,
+              "b9": 51,
+              "gross": 104,
+              "startingHole": 10
+            },
+            {
+              "day": 4,
+              "scores": [
+                5,
+                5,
+                6,
+                5,
+                4,
+                4,
+                5,
+                4,
+                6
+              ],
+              "f9": 44,
+              "gross": 44,
+              "startingHole": 10
             }
           ],
           "dob": "2012-08-23"
@@ -4318,10 +7310,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Brenda Paalberg"
+                  "name": "Getrin Vahtra"
                 },
                 {
-                  "name": "Getrin Vahtra"
+                  "name": "Brenda Paalberg"
                 },
                 {
                   "name": "Loore Filipjev"
@@ -4374,13 +7366,113 @@
               "startHole": 1,
               "players": [
                 {
+                  "name": "Getrin Vahtra"
+                },
+                {
                   "name": "Brenda Paalberg"
+                },
+                {
+                  "name": "Loore Filipjev"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "round": 3,
+          "groups": [
+            {
+              "time": "08:51",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Nora Linda Pääsuke"
+                },
+                {
+                  "name": "Linda Kalamees"
+                },
+                {
+                  "name": "Adele Kompus"
+                }
+              ]
+            },
+            {
+              "time": "09:00",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Nora Marleen Animägi"
+                },
+                {
+                  "name": "Loore Filipjev"
+                },
+                {
+                  "name": "Arabella Alliksoo"
+                }
+              ]
+            },
+            {
+              "time": "09:09",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Kristella Sikk"
                 },
                 {
                   "name": "Getrin Vahtra"
                 },
                 {
+                  "name": "Brenda Paalberg"
+                }
+              ]
+            }
+          ]
+        },
+        "4": {
+          "round": 4,
+          "groups": [
+            {
+              "time": "14:21",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Nora Linda Pääsuke"
+                },
+                {
+                  "name": "Linda Kalamees"
+                },
+                {
+                  "name": "Adele Kompus"
+                }
+              ]
+            },
+            {
+              "time": "14:30",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Nora Marleen Animägi"
+                },
+                {
                   "name": "Loore Filipjev"
+                },
+                {
+                  "name": "Arabella Alliksoo"
+                }
+              ]
+            },
+            {
+              "time": "14:39",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Kristella Sikk"
+                },
+                {
+                  "name": "Getrin Vahtra"
+                },
+                {
+                  "name": "Brenda Paalberg"
                 }
               ]
             }
@@ -4454,56 +7546,11 @@
       ],
       "teeName": "Tee 4682m",
       "metersTotal": 4682,
-      "courseRating": 70.2,
-      "slope": 131,
+      "courseRating": 65.4,
+      "slope": 119,
       "players": [
         {
           "pos": "1",
-          "name": "Mathias Lepp",
-          "country": "EE",
-          "club": "Saaremaa Golf & Country Club",
-          "birthYear": 2015,
-          "hcp": 15.6,
-          "team": null,
-          "detailId": "gb49528580",
-          "toPar": 8,
-          "total": 80,
-          "roundGross": [
-            80
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                3,
-                7,
-                4,
-                4,
-                6,
-                5,
-                4,
-                4,
-                5,
-                3,
-                5,
-                3,
-                4,
-                3,
-                3,
-                5,
-                7
-              ],
-              "f9": 42,
-              "b9": 38,
-              "gross": 80,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2015-07-21"
-        },
-        {
-          "pos": "2",
           "name": "Albert Järvekülg",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -4511,10 +7558,11 @@
           "hcp": 12.1,
           "team": null,
           "detailId": "gb49720863",
-          "toPar": 9,
-          "total": 81,
+          "toPar": 15,
+          "total": 159,
           "roundGross": [
-            81
+            81,
+            78
           ],
           "rounds": [
             {
@@ -4543,9 +7591,109 @@
               "b9": 38,
               "gross": 81,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                3,
+                6,
+                3,
+                3,
+                3,
+                6,
+                4,
+                4,
+                6,
+                3,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                5
+              ],
+              "f9": 38,
+              "b9": 40,
+              "gross": 78,
+              "startingHole": 10
             }
           ],
           "dob": "2015-11-07"
+        },
+        {
+          "pos": "2",
+          "name": "Mathias Lepp",
+          "country": "EE",
+          "club": "Saaremaa Golf & Country Club",
+          "birthYear": 2015,
+          "hcp": 15.6,
+          "team": null,
+          "detailId": "gb49528580",
+          "toPar": 19,
+          "total": 163,
+          "roundGross": [
+            80,
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                3,
+                7,
+                4,
+                4,
+                6,
+                5,
+                4,
+                4,
+                5,
+                3,
+                5,
+                3,
+                4,
+                3,
+                3,
+                5,
+                7
+              ],
+              "f9": 42,
+              "b9": 38,
+              "gross": 80,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                8,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                7,
+                6,
+                6,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 40,
+              "b9": 43,
+              "gross": 83,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2015-07-21"
         },
         {
           "pos": "3",
@@ -4556,10 +7704,11 @@
           "hcp": 12.4,
           "team": null,
           "detailId": "gb49652298",
-          "toPar": 17,
-          "total": 89,
+          "toPar": 26,
+          "total": 170,
           "roundGross": [
-            89
+            89,
+            81
           ],
           "rounds": [
             {
@@ -4588,57 +7737,39 @@
               "b9": 43,
               "gross": 89,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                2,
+                5,
+                4,
+                7,
+                4,
+                6,
+                4,
+                3,
+                7,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4
+              ],
+              "f9": 41,
+              "b9": 40,
+              "gross": 81,
+              "startingHole": 10
             }
           ],
           "dob": "2016-01-10"
         },
         {
           "pos": "4",
-          "name": "Andreas Rebecchi",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2015,
-          "hcp": 17.1,
-          "team": null,
-          "detailId": "gb49360113",
-          "toPar": 18,
-          "total": 90,
-          "roundGross": [
-            90
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                9,
-                4,
-                5,
-                4,
-                5,
-                5,
-                6,
-                5,
-                6,
-                6,
-                5,
-                7,
-                5,
-                4,
-                3,
-                3,
-                3,
-                5
-              ],
-              "f9": 49,
-              "b9": 41,
-              "gross": 90,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2015-03-23"
-        },
-        {
-          "pos": "T5",
           "name": "Markus Kivi",
           "country": "EE",
           "club": "Niitvälja Golf",
@@ -4646,10 +7777,11 @@
           "hcp": 15.2,
           "team": null,
           "detailId": "gb49424478",
-          "toPar": 19,
-          "total": 91,
+          "toPar": 28,
+          "total": 172,
           "roundGross": [
-            91
+            91,
+            81
           ],
           "rounds": [
             {
@@ -4678,12 +7810,39 @@
               "b9": 41,
               "gross": 91,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6
+              ],
+              "f9": 43,
+              "b9": 38,
+              "gross": 81,
+              "startingHole": 10
             }
           ],
           "dob": "2014-12-23"
         },
         {
-          "pos": "T5",
+          "pos": "5",
           "name": "Georg Andreas Tšernjavski",
           "country": "EE",
           "club": "Otepää Golf & Country Club",
@@ -4691,10 +7850,11 @@
           "hcp": 11.7,
           "team": null,
           "detailId": "gb49756735",
-          "toPar": 19,
-          "total": 91,
+          "toPar": 33,
+          "total": 177,
           "roundGross": [
-            91
+            91,
+            86
           ],
           "rounds": [
             {
@@ -4723,9 +7883,109 @@
               "b9": 44,
               "gross": 91,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                4,
+                5,
+                8,
+                4,
+                5,
+                4,
+                7,
+                4,
+                6,
+                5,
+                7,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "f9": 47,
+              "b9": 39,
+              "gross": 86,
+              "startingHole": 10
             }
           ],
           "dob": "2014-04-14"
+        },
+        {
+          "pos": "6",
+          "name": "Andreas Rebecchi",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2015,
+          "hcp": 17.1,
+          "team": null,
+          "detailId": "gb49360113",
+          "toPar": 34,
+          "total": 178,
+          "roundGross": [
+            90,
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                9,
+                4,
+                5,
+                4,
+                5,
+                5,
+                6,
+                5,
+                6,
+                6,
+                5,
+                7,
+                5,
+                4,
+                3,
+                3,
+                3,
+                5
+              ],
+              "f9": 49,
+              "b9": 41,
+              "gross": 90,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                6,
+                5,
+                5,
+                3,
+                5,
+                7,
+                5,
+                5,
+                6,
+                3,
+                5,
+                4,
+                3,
+                8
+              ],
+              "f9": 42,
+              "b9": 46,
+              "gross": 88,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2015-03-23"
         },
         {
           "pos": "7",
@@ -4736,10 +7996,11 @@
           "hcp": 15.5,
           "team": null,
           "detailId": "gb49605655",
-          "toPar": 23,
-          "total": 95,
+          "toPar": 40,
+          "total": 184,
           "roundGross": [
-            95
+            95,
+            89
           ],
           "rounds": [
             {
@@ -4768,6 +8029,33 @@
               "b9": 47,
               "gross": 95,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                7,
+                4,
+                6,
+                5,
+                5,
+                5,
+                5,
+                7,
+                5,
+                6,
+                4,
+                3,
+                5,
+                4,
+                4,
+                6
+              ],
+              "f9": 45,
+              "b9": 44,
+              "gross": 89,
+              "startingHole": 10
             }
           ],
           "dob": "2014-06-28"
@@ -4781,10 +8069,11 @@
           "hcp": 29.2,
           "team": null,
           "detailId": "gb49498799",
-          "toPar": 26,
-          "total": 98,
+          "toPar": 49,
+          "total": 193,
           "roundGross": [
-            98
+            98,
+            95
           ],
           "rounds": [
             {
@@ -4813,6 +8102,33 @@
               "b9": 48,
               "gross": 98,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                5,
+                7,
+                4,
+                6,
+                5,
+                5,
+                5,
+                6,
+                6,
+                4,
+                6,
+                8,
+                3,
+                6,
+                5,
+                3,
+                6
+              ],
+              "f9": 48,
+              "b9": 47,
+              "gross": 95,
+              "startingHole": 10
             }
           ],
           "dob": "2016-04-29"
@@ -4826,10 +8142,11 @@
           "hcp": 29.1,
           "team": null,
           "detailId": "gb49748581",
-          "toPar": 27,
-          "total": 99,
+          "toPar": 55,
+          "total": 199,
           "roundGross": [
-            99
+            99,
+            100
           ],
           "rounds": [
             {
@@ -4858,57 +8175,39 @@
               "b9": 44,
               "gross": 99,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                8,
+                3,
+                6,
+                5,
+                6,
+                6,
+                7,
+                5,
+                5,
+                7,
+                7,
+                5,
+                7,
+                4,
+                3,
+                5,
+                4,
+                7
+              ],
+              "f9": 51,
+              "b9": 49,
+              "gross": 100,
+              "startingHole": 10
             }
           ],
           "dob": "2015-06-22"
         },
         {
           "pos": "10",
-          "name": "Erik Beswick",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2015,
-          "hcp": 25.7,
-          "team": null,
-          "detailId": "gb49740283",
-          "toPar": 28,
-          "total": 100,
-          "roundGross": [
-            100
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                9,
-                4,
-                7,
-                4,
-                6,
-                7,
-                6,
-                6,
-                5,
-                6,
-                4,
-                4,
-                4,
-                4,
-                4,
-                7,
-                4,
-                9
-              ],
-              "f9": 54,
-              "b9": 46,
-              "gross": 100,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2015-05-05"
-        },
-        {
-          "pos": "11",
           "name": "Hugo-Laur Rohtoja",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -4916,10 +8215,11 @@
           "hcp": 26.1,
           "team": null,
           "detailId": "gb49338175",
-          "toPar": 31,
-          "total": 103,
+          "toPar": 57,
+          "total": 201,
           "roundGross": [
-            103
+            103,
+            98
           ],
           "rounds": [
             {
@@ -4948,12 +8248,39 @@
               "b9": 50,
               "gross": 103,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                5,
+                9,
+                4,
+                6,
+                5,
+                5,
+                4,
+                6,
+                8,
+                4,
+                7,
+                5,
+                4,
+                6,
+                4,
+                3,
+                6
+              ],
+              "f9": 51,
+              "b9": 47,
+              "gross": 98,
+              "startingHole": 10
             }
           ],
           "dob": "2015-09-07"
         },
         {
-          "pos": "12",
+          "pos": "11",
           "name": "Karl-Markus Karu",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -4961,10 +8288,11 @@
           "hcp": 33.7,
           "team": null,
           "detailId": "gb49698135",
-          "toPar": 36,
-          "total": 108,
+          "toPar": 64,
+          "total": 208,
           "roundGross": [
-            108
+            108,
+            100
           ],
           "rounds": [
             {
@@ -4993,12 +8321,39 @@
               "b9": 50,
               "gross": 108,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                4,
+                8,
+                4,
+                6,
+                5,
+                5,
+                4,
+                5,
+                7,
+                5,
+                8,
+                6,
+                5,
+                4,
+                5,
+                5,
+                7
+              ],
+              "f9": 48,
+              "b9": 52,
+              "gross": 100,
+              "startingHole": 10
             }
           ],
           "dob": "2015-12-30"
         },
         {
-          "pos": "13",
+          "pos": "12",
           "name": "Mattias Rõžov",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -5006,10 +8361,11 @@
           "hcp": 37,
           "team": null,
           "detailId": "gb49513944",
-          "toPar": 37,
-          "total": 109,
+          "toPar": 67,
+          "total": 211,
           "roundGross": [
-            109
+            109,
+            102
           ],
           "rounds": [
             {
@@ -5038,57 +8394,112 @@
               "b9": 55,
               "gross": 109,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                4,
+                6,
+                6,
+                4,
+                6,
+                10,
+                5,
+                6,
+                7,
+                6,
+                5,
+                6,
+                5,
+                5,
+                4,
+                4,
+                7
+              ],
+              "f9": 53,
+              "b9": 49,
+              "gross": 102,
+              "startingHole": 10
             }
           ],
           "dob": "2016-03-13"
         },
         {
-          "pos": "14",
-          "name": "David Robert Jarach",
+          "pos": "13",
+          "name": "Erik Beswick",
           "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2016,
-          "hcp": 38.1,
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2015,
+          "hcp": 25.7,
           "team": null,
-          "detailId": "gb49610158",
-          "toPar": 47,
-          "total": 119,
+          "detailId": "gb49740283",
+          "toPar": 69,
+          "total": 213,
           "roundGross": [
-            119
+            100,
+            113
           ],
           "rounds": [
             {
               "day": 1,
               "scores": [
-                10,
-                5,
-                8,
-                5,
-                8,
-                7,
-                6,
-                5,
-                8,
-                8,
-                4,
-                6,
-                7,
                 9,
                 4,
+                7,
+                4,
                 6,
+                7,
+                6,
+                6,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4,
+                7,
                 4,
                 9
               ],
-              "f9": 62,
-              "b9": 57,
-              "gross": 119,
+              "f9": 54,
+              "b9": 46,
+              "gross": 100,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                3,
+                8,
+                4,
+                5,
+                6,
+                5,
+                7,
+                8,
+                10,
+                6,
+                7,
+                8,
+                7,
+                4,
+                6,
+                5,
+                7
+              ],
+              "f9": 53,
+              "b9": 60,
+              "gross": 113,
+              "startingHole": 10
             }
           ],
-          "dob": "2016-01-12"
+          "dob": "2015-05-05"
         },
         {
-          "pos": "15",
+          "pos": "14",
           "name": "Alexander Eikner",
           "country": "EE",
           "club": "Otepää Golf & Country Club",
@@ -5096,10 +8507,11 @@
           "hcp": 40.9,
           "team": null,
           "detailId": "gb49711610",
-          "toPar": 51,
-          "total": 123,
+          "toPar": 87,
+          "total": 231,
           "roundGross": [
-            123
+            123,
+            108
           ],
           "rounds": [
             {
@@ -5128,9 +8540,109 @@
               "b9": 55,
               "gross": 123,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                4,
+                7,
+                5,
+                7,
+                5,
+                7,
+                5,
+                6,
+                10,
+                6,
+                7,
+                6,
+                5,
+                4,
+                5,
+                4,
+                8
+              ],
+              "f9": 53,
+              "b9": 55,
+              "gross": 108,
+              "startingHole": 10
             }
           ],
           "dob": "2016-09-28"
+        },
+        {
+          "pos": "15",
+          "name": "David Robert Jarach",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2016,
+          "hcp": 38.1,
+          "team": null,
+          "detailId": "gb49610158",
+          "toPar": 111,
+          "total": 255,
+          "roundGross": [
+            119,
+            136
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                10,
+                5,
+                8,
+                5,
+                8,
+                7,
+                6,
+                5,
+                8,
+                8,
+                4,
+                6,
+                7,
+                9,
+                4,
+                6,
+                4,
+                9
+              ],
+              "f9": 62,
+              "b9": 57,
+              "gross": 119,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                9,
+                9,
+                6,
+                4,
+                6,
+                8,
+                9,
+                7,
+                8,
+                8,
+                10,
+                10,
+                10,
+                10,
+                6,
+                5,
+                4,
+                7
+              ],
+              "f9": 66,
+              "b9": 70,
+              "gross": 136,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2016-01-12"
         }
       ],
       "draws": {
@@ -5145,10 +8657,10 @@
                   "name": "Hugo-Laur Rohtoja"
                 },
                 {
-                  "name": "David Robert Jarach"
+                  "name": "Alexander Eikner"
                 },
                 {
-                  "name": "Alexander Eikner"
+                  "name": "David Robert Jarach"
                 }
               ]
             },
@@ -5157,13 +8669,13 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Erik Beswick"
-                },
-                {
                   "name": "Karl-Markus Karu"
                 },
                 {
                   "name": "Mattias Rõžov"
+                },
+                {
+                  "name": "Erik Beswick"
                 }
               ]
             },
@@ -5187,10 +8699,10 @@
               "startHole": 1,
               "players": [
                 {
-                  "name": "Andreas Rebecchi"
+                  "name": "Georg Andreas Tšernjavski"
                 },
                 {
-                  "name": "Georg Andreas Tšernjavski"
+                  "name": "Andreas Rebecchi"
                 },
                 {
                   "name": "Remo Sildvee"
@@ -5202,10 +8714,90 @@
               "startHole": 1,
               "players": [
                 {
+                  "name": "Albert Järvekülg"
+                },
+                {
                   "name": "Mathias Lepp"
                 },
                 {
+                  "name": "Franco Villo"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "groups": [
+            {
+              "time": "10:41",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Mattias Rõžov"
+                },
+                {
+                  "name": "Alexander Eikner"
+                },
+                {
+                  "name": "David Robert Jarach"
+                }
+              ]
+            },
+            {
+              "time": "10:50",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Hugo-Laur Rohtoja"
+                },
+                {
+                  "name": "Karl-Markus Karu"
+                },
+                {
+                  "name": "Erik Beswick"
+                }
+              ]
+            },
+            {
+              "time": "10:59",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Remo Sildvee"
+                },
+                {
+                  "name": "Oliver Gorbunov"
+                },
+                {
+                  "name": "Kerret Sikaste"
+                }
+              ]
+            },
+            {
+              "time": "11:08",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Markus Kivi"
+                },
+                {
+                  "name": "Georg Andreas Tšernjavski"
+                },
+                {
+                  "name": "Andreas Rebecchi"
+                }
+              ]
+            },
+            {
+              "time": "11:17",
+              "startHole": 10,
+              "players": [
+                {
                   "name": "Albert Järvekülg"
+                },
+                {
+                  "name": "Mathias Lepp"
                 },
                 {
                   "name": "Franco Villo"
@@ -5241,24 +8833,24 @@
       ],
       "parTotal": 72,
       "meters": [
-        385,
-        91,
-        413,
-        131,
-        315,
-        303,
-        384,
-        237,
-        283,
-        386,
+        231,
+        55,
+        248,
+        79,
+        189,
+        182,
+        230,
         142,
-        288,
-        252,
-        111,
-        197,
-        251,
-        128,
-        385
+        170,
+        232,
+        85,
+        173,
+        151,
+        67,
+        118,
+        151,
+        77,
+        231
       ],
       "si": [
         5,
@@ -5280,13 +8872,13 @@
         14,
         6
       ],
-      "teeName": "Tee 4682m",
-      "metersTotal": 4682,
+      "teeName": "Tee 2811m",
+      "metersTotal": 2811,
       "courseRating": 70,
       "slope": 127,
       "players": [
         {
-          "pos": "T1",
+          "pos": "1",
           "name": "Sophie Helene Karu",
           "country": "EE",
           "club": "Valgeranna Golfiklubi",
@@ -5295,9 +8887,10 @@
           "team": null,
           "detailId": "gb49804496",
           "toPar": -2,
-          "total": 70,
+          "total": 142,
           "roundGross": [
-            70
+            70,
+            72
           ],
           "rounds": [
             {
@@ -5326,12 +8919,39 @@
               "b9": 32,
               "gross": 70,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                3,
+                6,
+                3,
+                4,
+                3,
+                4,
+                5,
+                4,
+                5,
+                3,
+                4,
+                4,
+                2,
+                3,
+                4,
+                4,
+                5
+              ],
+              "f9": 38,
+              "b9": 34,
+              "gross": 72,
+              "startingHole": 10
             }
           ],
           "dob": "2015-03-10"
         },
         {
-          "pos": "T1",
+          "pos": "2",
           "name": "Lumia Saat",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -5339,10 +8959,11 @@
           "hcp": 18.5,
           "team": null,
           "detailId": "gb49615921",
-          "toPar": -2,
-          "total": 70,
+          "toPar": -1,
+          "total": 143,
           "roundGross": [
-            70
+            70,
+            73
           ],
           "rounds": [
             {
@@ -5371,6 +8992,33 @@
               "b9": 35,
               "gross": 70,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5
+              ],
+              "f9": 38,
+              "b9": 35,
+              "gross": 73,
+              "startingHole": 10
             }
           ],
           "dob": "2016-02-22"
@@ -5384,10 +9032,11 @@
           "hcp": 16.2,
           "team": null,
           "detailId": "gb49652396",
-          "toPar": 0,
-          "total": 72,
+          "toPar": 2,
+          "total": 146,
           "roundGross": [
-            72
+            72,
+            74
           ],
           "rounds": [
             {
@@ -5416,57 +9065,39 @@
               "b9": 36,
               "gross": 72,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                6,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4
+              ],
+              "f9": 40,
+              "b9": 34,
+              "gross": 74,
+              "startingHole": 10
             }
           ],
           "dob": "2014-08-30"
         },
         {
           "pos": "4",
-          "name": "Helene Anne Õng",
-          "country": "EE",
-          "club": "Estonian Golf & Country Club",
-          "birthYear": 2016,
-          "hcp": 18.6,
-          "team": null,
-          "detailId": "gb49620836",
-          "toPar": 3,
-          "total": 75,
-          "roundGross": [
-            75
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                2,
-                6,
-                3,
-                5,
-                4,
-                5,
-                3,
-                4,
-                7,
-                4,
-                4,
-                5,
-                3,
-                3,
-                4,
-                4,
-                4
-              ],
-              "f9": 37,
-              "b9": 38,
-              "gross": 75,
-              "startingHole": 1
-            }
-          ],
-          "dob": "2016-03-19"
-        },
-        {
-          "pos": "5",
           "name": "Gloria Veskimeister",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -5474,10 +9105,11 @@
           "hcp": 21.3,
           "team": null,
           "detailId": "gb49652403",
-          "toPar": 9,
-          "total": 81,
+          "toPar": 7,
+          "total": 151,
           "roundGross": [
-            81
+            81,
+            70
           ],
           "rounds": [
             {
@@ -5506,12 +9138,39 @@
               "b9": 36,
               "gross": 81,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                3,
+                4,
+                3,
+                4
+              ],
+              "f9": 37,
+              "b9": 33,
+              "gross": 70,
+              "startingHole": 10
             }
           ],
           "dob": "2016-07-13"
         },
         {
-          "pos": "6",
+          "pos": "5",
           "name": "Katarina Uusküla",
           "country": "EE",
           "club": "Estonian Golf & Country Club",
@@ -5519,10 +9178,11 @@
           "hcp": 20.8,
           "team": null,
           "detailId": "gb49717407",
-          "toPar": 10,
-          "total": 82,
+          "toPar": 12,
+          "total": 156,
           "roundGross": [
-            82
+            82,
+            74
           ],
           "rounds": [
             {
@@ -5551,9 +9211,109 @@
               "b9": 38,
               "gross": 82,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                6,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                5,
+                4,
+                3,
+                3,
+                4,
+                5
+              ],
+              "f9": 40,
+              "b9": 34,
+              "gross": 74,
+              "startingHole": 10
             }
           ],
           "dob": "2016-06-07"
+        },
+        {
+          "pos": "6",
+          "name": "Helene Anne Õng",
+          "country": "EE",
+          "club": "Estonian Golf & Country Club",
+          "birthYear": 2016,
+          "hcp": 18.6,
+          "team": null,
+          "detailId": "gb49620836",
+          "toPar": 14,
+          "total": 158,
+          "roundGross": [
+            75,
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                2,
+                6,
+                3,
+                5,
+                4,
+                5,
+                3,
+                4,
+                7,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                4,
+                4
+              ],
+              "f9": 37,
+              "b9": 38,
+              "gross": 75,
+              "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                5,
+                7,
+                5,
+                4,
+                3,
+                5,
+                5,
+                6,
+                6,
+                5,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 41,
+              "b9": 42,
+              "gross": 83,
+              "startingHole": 10
+            }
+          ],
+          "dob": "2016-03-19"
         },
         {
           "pos": "7",
@@ -5564,10 +9324,11 @@
           "hcp": 24.2,
           "team": null,
           "detailId": "gb49849080",
-          "toPar": 12,
-          "total": 84,
+          "toPar": 20,
+          "total": 164,
           "roundGross": [
-            84
+            84,
+            80
           ],
           "rounds": [
             {
@@ -5596,6 +9357,33 @@
               "b9": 35,
               "gross": 84,
               "startingHole": 1
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                6,
+                4,
+                6,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4
+              ],
+              "f9": 40,
+              "b9": 40,
+              "gross": 80,
+              "startingHole": 10
             }
           ],
           "dob": "2014-01-31"
@@ -5645,6 +9433,50 @@
               ]
             }
           ]
+        },
+        "2": {
+          "round": 2,
+          "groups": [
+            {
+              "time": "11:37",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Katarina Uusküla"
+                },
+                {
+                  "name": "Mia Elisabeth Sild"
+                }
+              ]
+            },
+            {
+              "time": "11:46",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Gloria Veskimeister"
+                },
+                {
+                  "name": "Helene Anne Õng"
+                }
+              ]
+            },
+            {
+              "time": "11:55",
+              "startHole": 10,
+              "players": [
+                {
+                  "name": "Sophie Helene Karu"
+                },
+                {
+                  "name": "Lumia Saat"
+                },
+                {
+                  "name": "Rosanna Veskimeister"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -5673,24 +9505,24 @@
       ],
       "parTotal": 72,
       "meters": [
-        385,
-        91,
-        413,
-        131,
-        315,
-        303,
-        384,
-        237,
-        283,
-        386,
+        231,
+        55,
+        248,
+        79,
+        189,
+        182,
+        230,
         142,
-        288,
-        252,
-        111,
-        197,
-        251,
-        128,
-        385
+        170,
+        232,
+        85,
+        173,
+        151,
+        67,
+        118,
+        151,
+        77,
+        231
       ],
       "si": [
         5,
@@ -5712,48 +9544,13 @@
         14,
         6
       ],
-      "teeName": "Tee 4682m",
-      "metersTotal": 4682,
-      "courseRating": 70.2,
-      "slope": 131,
+      "teeName": "Tee 2811m",
+      "metersTotal": 2811,
+      "courseRating": 65.4,
+      "slope": 119,
       "players": [
         {
           "pos": "1",
-          "name": "Hans Valter Vainola",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2017,
-          "hcp": 46.4,
-          "team": null,
-          "detailId": "gb49614431",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            38
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                6,
-                5,
-                3,
-                4,
-                2,
-                5
-              ],
-              "f9": 38,
-              "gross": 38,
-              "startingHole": 10
-            }
-          ],
-          "dob": "2017-07-03"
-        },
-        {
-          "pos": "2",
           "name": "Oliver Matias Jeromaa",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -5764,7 +9561,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            42
+            42,
+            41
           ],
           "rounds": [
             {
@@ -5783,9 +9581,79 @@
               "f9": 42,
               "gross": 42,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5
+              ],
+              "f9": 41,
+              "gross": 41,
+              "startingHole": 1
             }
           ],
           "dob": "2017-05-21"
+        },
+        {
+          "pos": "2",
+          "name": "Hans Valter Vainola",
+          "country": "EE",
+          "club": "Rae Golfiklubi",
+          "birthYear": 2017,
+          "hcp": 46.4,
+          "team": null,
+          "detailId": "gb49614431",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            38,
+            46
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                6,
+                5,
+                3,
+                4,
+                2,
+                5
+              ],
+              "f9": 38,
+              "gross": 38,
+              "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                5,
+                4,
+                7,
+                3,
+                5,
+                5,
+                6,
+                3,
+                8
+              ],
+              "f9": 46,
+              "gross": 46,
+              "startingHole": 1
+            }
+          ],
+          "dob": "2017-07-03"
         },
         {
           "pos": "3",
@@ -5799,7 +9667,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            43
+            43,
+            48
           ],
           "rounds": [
             {
@@ -5818,82 +9687,29 @@
               "f9": 43,
               "gross": 43,
               "startingHole": 10
-            }
-          ],
-          "dob": "2018-06-28"
-        },
-        {
-          "pos": "4",
-          "name": "Harald Saks",
-          "country": "EE",
-          "club": "Rae Golfiklubi",
-          "birthYear": 2017,
-          "hcp": 54,
-          "team": null,
-          "detailId": "gb49609167",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            48
-          ],
-          "rounds": [
+            },
             {
-              "day": 1,
+              "day": 2,
               "scores": [
-                8,
                 6,
+                4,
+                5,
+                7,
                 6,
                 5,
-                5,
-                3,
                 5,
                 4,
                 6
               ],
               "f9": 48,
               "gross": 48,
-              "startingHole": 10
+              "startingHole": 1
             }
           ],
-          "dob": "2017-12-18"
+          "dob": "2018-06-28"
         },
         {
-          "pos": "5",
-          "name": "Kasper Luukas Sild",
-          "country": "EE",
-          "club": "Niitvälja Golf",
-          "birthYear": 2018,
-          "hcp": 54,
-          "team": null,
-          "detailId": "gb49849077",
-          "toPar": null,
-          "total": null,
-          "roundGross": [
-            51
-          ],
-          "rounds": [
-            {
-              "day": 1,
-              "scores": [
-                10,
-                5,
-                5,
-                4,
-                4,
-                4,
-                8,
-                4,
-                7
-              ],
-              "f9": 51,
-              "gross": 51,
-              "startingHole": 10
-            }
-          ],
-          "dob": "2018-01-17"
-        },
-        {
-          "pos": "6",
+          "pos": "4",
           "name": "Thor Saar",
           "country": "EE",
           "club": "Rae Golfiklubi",
@@ -5904,7 +9720,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            54
+            54,
+            46
           ],
           "rounds": [
             {
@@ -5923,9 +9740,132 @@
               "f9": 54,
               "gross": 54,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                4,
+                5,
+                5,
+                6,
+                5,
+                5,
+                4,
+                6
+              ],
+              "f9": 46,
+              "gross": 46,
+              "startingHole": 1
             }
           ],
           "dob": "2018-01-08"
+        },
+        {
+          "pos": "5",
+          "name": "Harald Saks",
+          "country": "EE",
+          "club": "Rae Golfiklubi",
+          "birthYear": 2017,
+          "hcp": 54,
+          "team": null,
+          "detailId": "gb49609167",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            48,
+            54
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                8,
+                6,
+                6,
+                5,
+                5,
+                3,
+                5,
+                4,
+                6
+              ],
+              "f9": 48,
+              "gross": 48,
+              "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                4,
+                9,
+                4,
+                6,
+                8,
+                5,
+                5,
+                6
+              ],
+              "f9": 54,
+              "gross": 54,
+              "startingHole": 1
+            }
+          ],
+          "dob": "2017-12-18"
+        },
+        {
+          "pos": "6",
+          "name": "Kasper Luukas Sild",
+          "country": "EE",
+          "club": "Niitvälja Golf",
+          "birthYear": 2018,
+          "hcp": 54,
+          "team": null,
+          "detailId": "gb49849077",
+          "toPar": null,
+          "total": null,
+          "roundGross": [
+            51,
+            56
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                10,
+                5,
+                5,
+                4,
+                4,
+                4,
+                8,
+                4,
+                7
+              ],
+              "f9": 51,
+              "gross": 51,
+              "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                6,
+                5,
+                6,
+                10,
+                8,
+                8,
+                4,
+                5,
+                4
+              ],
+              "f9": 56,
+              "gross": 56,
+              "startingHole": 1
+            }
+          ],
+          "dob": "2018-01-17"
         },
         {
           "pos": "7",
@@ -5939,7 +9879,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            67
+            67,
+            69
           ],
           "rounds": [
             {
@@ -5958,6 +9899,23 @@
               "f9": 67,
               "gross": 67,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                10,
+                10,
+                8,
+                4,
+                9,
+                7,
+                9,
+                5,
+                7
+              ],
+              "f9": 69,
+              "gross": 69,
+              "startingHole": 1
             }
           ],
           "dob": "2020-05-04"
@@ -5984,10 +9942,10 @@
               "startHole": 10,
               "players": [
                 {
-                  "name": "Harald Saks"
+                  "name": "Thor Saar"
                 },
                 {
-                  "name": "Thor Saar"
+                  "name": "Harald Saks"
                 }
               ]
             },
@@ -5996,10 +9954,54 @@
               "startHole": 10,
               "players": [
                 {
+                  "name": "Oliver Matias Jeromaa"
+                },
+                {
                   "name": "Hans Valter Vainola"
                 },
                 {
+                  "name": "Aaron Kivi"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "groups": [
+            {
+              "time": "14:30",
+              "startHole": 1,
+              "players": [
+                {
+                  "name": "Thor Saar"
+                },
+                {
+                  "name": "Herman Saks"
+                }
+              ]
+            },
+            {
+              "time": "14:39",
+              "startHole": 1,
+              "players": [
+                {
+                  "name": "Harald Saks"
+                },
+                {
+                  "name": "Kasper Luukas Sild"
+                }
+              ]
+            },
+            {
+              "time": "14:48",
+              "startHole": 1,
+              "players": [
+                {
                   "name": "Oliver Matias Jeromaa"
+                },
+                {
+                  "name": "Hans Valter Vainola"
                 },
                 {
                   "name": "Aaron Kivi"
@@ -6035,24 +10037,24 @@
       ],
       "parTotal": 72,
       "meters": [
-        385,
-        91,
-        413,
-        131,
-        315,
-        303,
-        384,
-        237,
-        283,
-        386,
+        231,
+        55,
+        248,
+        79,
+        189,
+        182,
+        230,
         142,
-        288,
-        252,
-        111,
-        197,
-        251,
-        128,
-        385
+        170,
+        232,
+        85,
+        173,
+        151,
+        67,
+        118,
+        151,
+        77,
+        231
       ],
       "si": [
         5,
@@ -6074,8 +10076,8 @@
         14,
         6
       ],
-      "teeName": "Tee 4682m",
-      "metersTotal": 4682,
+      "teeName": "Tee 2811m",
+      "metersTotal": 2811,
       "courseRating": 70,
       "slope": 127,
       "players": [
@@ -6091,7 +10093,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            45
+            45,
+            56
           ],
           "rounds": [
             {
@@ -6110,6 +10113,23 @@
               "f9": 45,
               "gross": 45,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                8,
+                5,
+                8,
+                4,
+                8,
+                6,
+                6,
+                6,
+                5
+              ],
+              "f9": 56,
+              "gross": 56,
+              "startingHole": 1
             }
           ],
           "dob": "2017-10-02"
@@ -6126,7 +10146,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            53
+            53,
+            54
           ],
           "rounds": [
             {
@@ -6145,6 +10166,23 @@
               "f9": 53,
               "gross": 53,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                3,
+                9,
+                4,
+                6,
+                7,
+                7,
+                6,
+                5
+              ],
+              "f9": 54,
+              "gross": 54,
+              "startingHole": 1
             }
           ],
           "dob": "2019-04-03"
@@ -6161,7 +10199,8 @@
           "toPar": null,
           "total": null,
           "roundGross": [
-            57
+            57,
+            55
           ],
           "rounds": [
             {
@@ -6180,6 +10219,23 @@
               "f9": 57,
               "gross": 57,
               "startingHole": 10
+            },
+            {
+              "day": 2,
+              "scores": [
+                7,
+                6,
+                6,
+                4,
+                8,
+                5,
+                6,
+                6,
+                7
+              ],
+              "f9": 55,
+              "gross": 55,
+              "startingHole": 1
             }
           ],
           "dob": "2018-03-20"
@@ -6205,9 +10261,29 @@
               ]
             }
           ]
+        },
+        "2": {
+          "round": 2,
+          "groups": [
+            {
+              "time": "14:57",
+              "startHole": 1,
+              "players": [
+                {
+                  "name": "Maribel Trink"
+                },
+                {
+                  "name": "Keity Aidla"
+                },
+                {
+                  "name": "Isabel Nora Karilaid"
+                }
+              ]
+            }
+          ]
         }
       }
     }
   ],
-  "scrapedAt": "2026-08-24T21:34:03.798Z"
+  "scrapedAt": "2026-08-25T21:43:34.582Z"
 }
