@@ -32,6 +32,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!api|assets|data|_next).*)", "destination": "/index.html" }
+    { "source": "/((?!api|assets|data|_next|_vercel).*)", "destination": "/index.html" }
   ]
 }
