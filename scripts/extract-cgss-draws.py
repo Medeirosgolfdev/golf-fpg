@@ -96,7 +96,7 @@ def parse_header(txt):
         dt = m.group(1)
     campo = grab(r"Campo")
     if campo:
-        campo = re.split(r"\s{2,}(?:N[ºo]|Modal)", campo)[0].strip()
+        campo = re.split(r"\s{2,}(?:N[ºo]|Modal|HCP)|\s+HCP\s*:", campo)[0].strip()
     modal = grab(r"Modal\.")
     if modal:
         modal = re.split(r"\s{2,}HCP", modal)[0].strip()
@@ -158,19 +158,19 @@ def parse_player_line(seg):
         tee = parts[0]
         sp = tokens.split(None, 1)
         tokens = sp[1] if len(sp) > 1 else ""
-    mpair = re.match(r"^(.+?/.+?)\s+(\d+)\s*$", tokens)
+    mpair = re.match(r"^(.+?/.+?)\s+([+-]?\d+)\s*$", tokens)
     if mpair and "/" in mpair.group(1):
         return {"raw": mpair.group(1).strip(), "tee": tee, "is_pair": True, "jogo": int(mpair.group(2))}
-    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+(\d{1,2},\d)\s+(\d+)\s*$", tokens)
+    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+(\d{1,2},\d)\s+([+-]?\d+)\s*$", tokens)
     if m:
         return {"name": m.group(1).strip(), "club": m.group(2).strip(), "hcp": float(m.group(3).replace(",", ".")), "tee": tee, "jogo": int(m.group(4))}
-    m = re.match(r"^(.+?)\s+(\d{1,2},\d)\s+(\d+)\s*$", tokens)
+    m = re.match(r"^(.+?)\s+(\d{1,2},\d)\s+([+-]?\d+)\s*$", tokens)
     if m:
         return {"name": m.group(1).strip(), "club": None, "hcp": float(m.group(2).replace(",", ".")), "tee": tee, "jogo": int(m.group(3))}
-    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+(\d+)\s*$", tokens)
+    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+([+-]?\d+)\s*$", tokens)
     if m:
         return {"name": m.group(1).strip(), "club": m.group(2).strip(), "hcp": None, "tee": tee, "jogo": int(m.group(3))}
-    m = re.match(r"^(.+?)\s+(\d+)\s*$", tokens)
+    m = re.match(r"^(.+?)\s+([+-]?\d+)\s*$", tokens)
     if m and len(m.group(1).strip()) > 2:
         return {"name": m.group(1).strip(), "club": None, "hcp": None, "tee": tee, "jogo": int(m.group(2))}
     return None
