@@ -132,6 +132,14 @@ async function apiGet(kind, params, { byStyle = "repeat" } = {}) {
     if (res.status === 400 && Array.isArray(params.by) && params.by.length > 1 && byStyle === "repeat") {
       return apiGet(kind, params, { byStyle: "comma" });
     }
+    // 402 = a dimensão existe mas o plano não lhe dá acesso (as UTM exigem
+    // Enterprise ou o add-on Web Analytics Plus). Não é avaria nossa nem
+    // melhora com retry — marca-se para o chamador poder saltar as irmãs.
+    if (res.status === 402) {
+      const err = new Error(`HTTP 402 — indisponível neste plano do Vercel.`);
+      err.planLimited = true;
+      throw err;
+    }
     // Erros de credenciais/permissão não melhoram com retry.
     if (res.status === 401 || res.status === 403) {
       throw new Error(`HTTP ${res.status} — token inválido ou sem acesso ao projecto. ${body.slice(0, 300)}`);
@@ -192,13 +200,24 @@ function previousMonthUtc(now) {
 // ══════════════════════════════════════════════════════════════════════
 
 async function collect(since, until, { withTime }) {
-  const out = { total: null, dimensoes: {}, cruzamentos: {}, avisos: [] };
+  const out = { total: null, dimensoes: {}, cruzamentos: {}, avisos: [], indisponiveis: [] };
+
+  // Dimensões que o plano não cobre: basta a primeira da família falhar para
+  // saltarmos as restantes (poupa 4 chamadas por retrato) e para o aviso sair
+  // uma vez em vez de cinco.
+  const bloqueadas = new Set();
+  const familia = (dim) => (dim.startsWith("utm") ? "utm" : dim);
 
   const count = await apiGet("count", { since, until });
   out.total = count && count.data ? count.data : count;
 
   const singles = withTime ? ["day", "hour", ...DIMENSIONS] : ["hour", ...DIMENSIONS];
   for (const dim of singles) {
+    if (bloqueadas.has(familia(dim))) {
+      out.dimensoes[dim] = null;
+      out.indisponiveis.push(dim);
+      continue;
+    }
     try {
       const r = await apiGet("aggregate", { since, until, by: [dim], limit: LIMIT });
       const rows = Array.isArray(r && r.data) ? r.data : [];
@@ -208,7 +227,12 @@ async function collect(since, until, { withTime }) {
       }
     } catch (e) {
       out.dimensoes[dim] = null;
-      out.avisos.push(`${dim}: falhou (${e.message})`);
+      if (e.planLimited) {
+        bloqueadas.add(familia(dim));
+        out.indisponiveis.push(dim);
+      } else {
+        out.avisos.push(`${dim}: falhou (${e.message})`);
+      }
     }
     await sleep(250); // gentileza com o rate limit
   }
@@ -228,6 +252,12 @@ async function collect(since, until, { withTime }) {
       out.avisos.push(`${key}: falhou (${e.message})`);
     }
     await sleep(250);
+  }
+
+  if (out.indisponiveis.length) {
+    out.avisos.push(
+      `Indisponíveis no plano actual do Vercel (as dimensões UTM exigem Enterprise ou o add-on Web Analytics Plus): ${out.indisponiveis.join(", ")}.`
+    );
   }
 
   return out;
