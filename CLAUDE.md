@@ -2640,6 +2640,7 @@ validado server-side. **Não replicável de Node puro.**
 | **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
 | **`daily-digest.yml`** | ✅ Novo 2026-08-17 | `scripts/build-run-digest.js` + `send-digest-issue.js` | Diário 07:30 UTC | **Resumo por email** do que os scrapers trouxeram nas últimas 24h. Sem secrets. Ver secção própria abaixo. |
+| **`analytics-snapshot.yml`** | ✅ Novo 2026-08-28 | `scripts/snapshot-web-analytics.js` | Diário 03:15 UTC (+ mensal no dia 1) | **Retrato do Vercel Web Analytics** para `data-archive/analytics/`. O plano Hobby só guarda 30 dias — isto copia-os para o repo antes de desaparecerem. Secret: `VERCEL_TOKEN`. Exit 2 = sem novidades. |
 
 ### ⚠ FCG (catgolf.com) — guarda anti-overwrite do scope (2026-08-17)
 
