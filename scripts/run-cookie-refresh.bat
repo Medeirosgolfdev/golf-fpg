@@ -25,6 +25,15 @@ set TMPFILE=logs\.cookie-header.tmp
 
 if not exist logs mkdir logs
 
+REM ── BOM UTF-8 no log ──────────────────────────────────────
+REM O chcp 65001 acima garante que se ESCREVE UTF-8, mas nao que se LEIA:
+REM sem BOM, o Get-Content do Windows PowerShell 5.1 e o Notepad assumem ANSI
+REM e os `·` e `—` que o Node escreve saem como `Â·` (28/08/2026).
+REM So corre quando o log ainda nao existe - zero custo nas corridas normais.
+REM Uma linha so, sem bloco: o parser do cmd tropeca em parenteses dentro de
+REM aspas quando estao dentro de um bloco if(...) - ver a nota do PASSO 4.
+if not exist "%LOGFILE%" powershell -NoProfile -Command "[IO.File]::WriteAllBytes((Join-Path $PWD '%LOGFILE%'), [byte[]](0xEF,0xBB,0xBF))"
+
 echo ============================================================ >> "%LOGFILE%"
 echo [%date% %time%] Cookie refresh starting >> "%LOGFILE%"
 echo ============================================================ >> "%LOGFILE%"

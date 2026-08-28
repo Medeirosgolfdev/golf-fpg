@@ -31,6 +31,15 @@ function loadCookies() {
   return { cookie: j.cookieHeader, src: COOKIES_FILE.replace(process.cwd(), ".") };
 }
 
+/* Mesma armadilha do test-datagolf-node.js: em Windows, process.exit() com os
+   sockets keep-alive do fetch ainda a fechar rebenta na libuv (async.c:76) e
+   devolve exit=-1073740791 mesmo tendo o teste passado. Ver o comentario la. */
+async function sair(code) {
+  const d = globalThis[Symbol.for("undici.globalDispatcher.1")];
+  if (d && typeof d.close === "function") { try { await d.close(); } catch {} }
+  process.exitCode = code;
+}
+
 async function main() {
   const { cookie: COOKIE, src } = loadCookies();
   console.log("-> Cookies lidos de", src);
@@ -64,7 +73,7 @@ async function main() {
   if (text.includes("Param_Errors.aspx")) {
     console.log("\n[ERRO] FALHA - Param_Errors.aspx (cookies invalidos/expirados)");
     console.log("Primeiros 500 chars:", text.slice(0, 500));
-    process.exit(2);
+    return sair(2);
   }
 
   try {
@@ -80,16 +89,16 @@ async function main() {
         console.log("  Data:", r0.hcp_dateStr || r0.score_dateStr || "-");
         console.log("  Stab:", r0.stableford ?? r0.calculated_stablnet_total ?? "-");
       }
-      process.exit(0);
+      return sair(0);
     }
     console.log("\n[AVISO] Resposta JSON inesperada:");
     console.log(JSON.stringify(j, null, 2).slice(0, 2000));
-    process.exit(3);
+    return sair(3);
   } catch {
     console.log("\n[AVISO] Resposta nao e JSON:");
     console.log(text.slice(0, 2000));
-    process.exit(4);
+    return sair(4);
   }
 }
 
-main().catch(e => { console.error("ERRO:", e.message); process.exit(1); });
+main().catch(e => { console.error("ERRO:", e.message); return sair(1); });

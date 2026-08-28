@@ -17,18 +17,17 @@
  *   4. Escreve a entrada no cgss-draws-manual.json (drawOnly:true) e o stub
  *      _drawOnly no pull-torneios001.json (players:[] de propósito — com
  *      jogadores o TournamentDetail abria numa tab Scorecard vazia).
- *   5. Reaponta o workflow .github/workflows/update-cgss-draw.yml para este
- *      torneio: DEFAULT_PLACEHOLDER/DEFAULT_SEARCH + crons no dia do torneio
- *      (13:10-19:10 Lisboa) e manhã seguinte (fallback).
- *
- * Depois é só: verificar em /FPG, commitar (public/data/* + workflow) e push —
- * a Action trata dos resultados e do re-chaveamento placeholder→real
- * (scripts/update-cgss-draw-results.js) e da reconciliação de feds.
+ * O workflow update-cgss-draw.yml NÃO precisa de ser tocado (2ª geração,
+ * 2026-08-28): auto-descobre os draw-only pendentes pela data e corre nos
+ * crons fixos de fim-de-semana — basta a entrada ficar committada. Depois é
+ * só: verificar em /FPG, commitar (2 JSON) e push; a Action trata dos
+ * resultados, do re-chaveamento placeholder→real e da reconciliação de feds.
  *
  * USO:
  *   node scripts/add-cgss-draw.js --pdf "C:/.../Draw X.pdf"
  *   node scripts/add-cgss-draw.js --json field.json      # transcrição manual
- *   ... [--search "PALAVRA"]   # dica p/ dias com 2 torneios (default: auto)
+ *   ... [--strict-cgss]        # recusa PDFs que não sejam do Santo da Serra
+ *                              # (usado pelo process-draw-inbox.js autónomo)
  *   ... [--dry-run]            # mostra tudo, não grava nada
  *
  * Formato do --json: {name, date, campo, modal, groups:[{teeTime, startHole,
@@ -45,7 +44,6 @@ const REPO = path.resolve(__dirname, "..");
 const DATA = path.join(REPO, "public", "data");
 const CGSS = path.join(DATA, "cgss-draws-manual.json");
 const PULL = path.join(DATA, "pull-torneios001.json");
-const WORKFLOW = path.join(REPO, ".github", "workflows", "update-cgss-draw.yml");
 
 const args = process.argv.slice(2);
 const argVal = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : null; };
@@ -105,6 +103,14 @@ if (!draw.name || !/^\d{4}-\d{2}-\d{2}$/.test(draw.date || "") || !nPlayers) {
   process.exit(1);
 }
 console.log(`[add] "${draw.name}" · ${draw.date} · ${draw.campo || "?"} · ${draw.groups.length} grupos / ${nPlayers} jogadores`);
+
+// Guarda para o modo autónomo (inbox): este fluxo é CGSS/ccode 007 — um draw
+// de outro organizador (ex: Porto Santo/PXO, "Draw Oficial PXO.pdf") tem de
+// ser tratado à mão (ccode diferente, outro ficheiro de pull).
+if (args.includes("--strict-cgss") && !/santo da serra/i.test(draw.campo || "")) {
+  console.error(`[add] ERRO: campo "${draw.campo}" não é do Santo da Serra — não parece um draw CGSS. Tratar manualmente. (exit 3)`);
+  process.exit(3);
+}
 
 /* ── detectar se o PDF traz coluna de clube real ─────────────────────────
  * O extractor mete "Santo da Serra" por defeito quando a coluna não existe —
@@ -211,29 +217,9 @@ const stub = {
   _drawOnly: true, players: [],
 };
 
-/* ── 5) reapontar o workflow ────────────────────────────────────────────── */
-const SEARCH = argVal("--search") ||
-  (draw.name.match(/[A-Za-zÀ-ÿ]{4,}/g) || []).filter(w => !/^(torneio|golfe?|cgss|santo|serra)$/i.test(w))[0] || "";
-const [Y, M, D] = draw.date.split("-").map(Number);
-const next = new Date(Date.UTC(Y, M - 1, D + 1));
-const cron1 = `10 12-18 ${D} ${M} *`;
-const cron2 = `10 9,12 ${next.getUTCDate()} ${next.getUTCMonth() + 1} *`;
-let wf = fs.readFileSync(WORKFLOW, "utf8");
-wf = wf.replace(/DEFAULT_PLACEHOLDER: '[^']*'/, `DEFAULT_PLACEHOLDER: '${TCODE}'`)
-       .replace(/DEFAULT_SEARCH: '[^']*'/, `DEFAULT_SEARCH: '${SEARCH}'`)
-       .replace(/default: '9\d{4}'/, `default: '${TCODE}'`)
-       .replace(/(search:\n\s+description: [^\n]+\n\s+required: false\n\s+default: ')[^']*(')/, `$1${SEARCH}$2`);
-const cronLines = wf.match(/^\s*- cron: '[^']*'.*$/gm) || [];
-if (cronLines.length === 2) {
-  wf = wf.replace(cronLines[0], `    - cron: '${cron1}'   # dia do torneio, 13:10-19:10 Lisboa (verão)`)
-         .replace(cronLines[1], `    - cron: '${cron2}'   # dia seguinte, fallback de manhã`);
-} else {
-  console.warn(`[add] ⚠ esperava 2 linhas de cron no workflow, encontrei ${cronLines.length} — crons NÃO alterados, ajustar à mão.`);
-}
-
 /* ── gravar ─────────────────────────────────────────────────────────────── */
 if (DRY) {
-  console.log(`[add] --dry-run: nada gravado. Placeholder ${TCODE} · search "${SEARCH}" · crons "${cron1}" + "${cron2}".`);
+  console.log(`[add] --dry-run: nada gravado. Placeholder ${TCODE} · a Action update-cgss-draw.yml apanha-o sozinha na data ${draw.date}.`);
   process.exit(0);
 }
 const writeAtomic = (file, obj) => {
@@ -246,10 +232,9 @@ pull.tournaments.push(stub);
 if (typeof pull.totalTournaments === "number") pull.totalTournaments = pull.tournaments.length;
 writeAtomic(CGSS, cgss);
 writeAtomic(PULL, pull);
-writeAtomic(WORKFLOW, wf);
-console.log(`[add] ✓ cgss-draws-manual.json + pull-torneios001.json (007/${TCODE}) e workflow reapontado (search "${SEARCH}", crons ${draw.date} + dia seguinte).`);
+console.log(`[add] ✓ cgss-draws-manual.json + pull-torneios001.json (007/${TCODE}).`);
 console.log(`[add] Próximos passos:
   1. Verificar em http://localhost:5199/FPG (filtro ⛳ Santo da Serra) — draw com ${nPlayers} jogadores.
   2. npm test && npm run build
-  3. git add public/data/cgss-draws-manual.json public/data/pull-torneios001.json .github/workflows/update-cgss-draw.yml && git commit && git push
-  4. A Action update-cgss-draw.yml apanha os resultados no dia (13:10-19:10 Lisboa) e re-chaveia ${TCODE} → tcode real + reconciliação de feds. Nada mais a fazer.`);
+  3. git add public/data/cgss-draws-manual.json public/data/pull-torneios001.json && git commit && git push
+  4. A Action update-cgss-draw.yml auto-descobre o pendente na data ${draw.date} (crons de fim-de-semana), re-chaveia ${TCODE} → tcode real e reconcilia os feds. Nada mais a fazer.`);

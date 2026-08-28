@@ -114,6 +114,18 @@ async function probe(label, url, body, referer) {
   }
 }
 
+/* Windows: chamar process.exit() com os sockets keep-alive do fetch ainda a
+   fechar rebenta com "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)"
+   (libuv src\win\async.c:76) e devolve exit=-1073740791 — DEPOIS de o teste
+   ter passado. A 28/08/2026 o run-cookie-refresh.bat leu esse codigo como
+   "cookies invalidos" e saltou a cascata do update-federados. Fechar o
+   dispatcher do undici e sair pelo exitCode deixa o event loop drenar. */
+async function sair(code) {
+  const d = globalThis[Symbol.for("undici.globalDispatcher.1")];
+  if (d && typeof d.close === "function") { try { await d.close(); } catch {} }
+  process.exitCode = code;
+}
+
 let COOKIE_HEADER = "";
 
 async function main() {
@@ -135,13 +147,13 @@ async function main() {
   for (const [nome, r] of results) console.log(r.ok ? `  OK   ${nome}` : `  FALHA ${nome} — ${r.detail}`);
   if (mortos.length > 0) {
     console.log(`\n[ERRO] ${mortos.length} de ${results.length} endpoints em baixo — refrescar DATAGOLF_SCORING_COOKIES.`);
-    process.exit(2);
+    return sair(2);
   }
   console.log("\n[OK] SUCESSO — os endpoints do scoring.datagolf.pt respondem.");
-  process.exit(0);
+  return sair(0);
 }
 
 main().catch(e => {
   console.error("ERRO:", e.message);
-  process.exit(1);
+  return sair(1);
 });
