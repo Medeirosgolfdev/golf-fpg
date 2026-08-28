@@ -1,0 +1,135 @@
+name: Resultados de torneio CGSS (draw-only → real)
+
+# GENÉRICO (substituiu o one-off update-rali.yml a 2026-08-28): publica os
+# resultados de um torneio CGSS (Santo da Serra, ccode 007) que esteja no site
+# como DRAW-ONLY com tcode placeholder 9xxxx, assim que a FPG os publicar.
+#
+# Usa scripts/update-cgss-draw-results.js: descobre o tcode real
+# (TournamentsLST + sondagem 11051-11090 com verificação de identidade por
+# sobreposição de nomes com o field do draw), scrapa classificação+scorecards,
+# substitui o placeholder em pull-torneios001.json, re-chaveia o draw em
+# cgss-draws-manual.json e reconcilia os fedCodes do draw com os federated_code
+# oficiais dos scorecards (reconcile-draw-feds.js).
+#
+# Corre:
+#  - Cron no fim-de-semana do torneio ACTUAL (ver TORNEIO ACTUAL abaixo). O
+#    script sai com exit 2 (sem commit) enquanto não houver classificação, por
+#    isso corridas "cedo demais" são inofensivas.
+#  - A pedido (Run workflow) com placeholder/search/tcode próprios — serve
+#    qualquer torneio CGSS futuro sem mexer no resto do workflow.
+#
+# ── TORNEIO ACTUAL: 8º Torneio CGSS OM NOS 2026 (2026-08-29, 60 jog) ──
+# Shotgun 08:30-09:40, fim ~13:00 Lisboa. Placeholder 007/90073.
+# Ao inserir um torneio novo: actualizar os DEFAULTS abaixo (env PLACEHOLDER/
+# SEARCH) e as linhas de cron (dia/mês). Placeholders usados até agora:
+# 90071 RALI 2026 · 90072 Calheta Viva (⚠ interrompido por tempestade — nunca
+# terá resultados, NÃO reapontar para ele) · 90073 8º OM NOS.
+#
+# Requer os GitHub Secrets DATAGOLF_SCORING_COOKIES (scoring.datagolf.pt, o
+# mesmo do update-classif) e FPG_ADMISSIONS_COOKIES (scoring.fpg.pt, o mesmo do
+# update-fpg-admissions-draws). Basta um deles autenticar.
+on:
+  workflow_dispatch:
+    inputs:
+      placeholder:
+        description: 'tcode placeholder da entrada draw-only (9xxxx).'
+        required: false
+        default: '90073'
+      search:
+        description: 'Palavra(s) do nome para o filtro TournamentsLST.'
+        required: false
+        default: 'OM NOS'
+      tcode:
+        description: 'tcode REAL (opcional — salta a descoberta).'
+        required: false
+        default: ''
+  schedule:
+    # 29 Ago (sábado do 8º OM NOS): 12:10/13:10/14:10/16:10 UTC =
+    # 13:10/14:10/15:10/17:10 Lisboa — a partir do fim previsto do torneio.
+    - cron: '10 12,13,14,16 29 8 *'
+    # 30 Ago (domingo, fallback de manhã): 09:10 UTC = 10:10 Lisboa.
+    - cron: '10 9 30 8 *'
+
+permissions:
+  contents: write
+
+env:
+  # Defaults usados pelas corridas de cron (o dispatch pode sobrepor).
+  DEFAULT_PLACEHOLDER: '90073'
+  DEFAULT_SEARCH: 'OM NOS'
+
+jobs:
+  update-cgss-draw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr update-cgss-draw-results.js
+        id: scrape
+        run: |
+          set +e
+          PLACEHOLDER="${{ github.event.inputs.placeholder }}"
+          SEARCH="${{ github.event.inputs.search }}"
+          [ -z "$PLACEHOLDER" ] && PLACEHOLDER="$DEFAULT_PLACEHOLDER"
+          [ -z "$SEARCH" ] && SEARCH="$DEFAULT_SEARCH"
+          ARGS="--placeholder $PLACEHOLDER --search \"$SEARCH\""
+          if [ -n "${{ github.event.inputs.tcode }}" ]; then
+            ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"
+          fi
+          echo "Args: $ARGS"
+          eval node scripts/update-cgss-draw-results.js $ARGS
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Updater falhou"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Ainda sem resultados publicados — sem commit."
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+          FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
+
+      - name: Commit e push (se houve resultados)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/pull-torneios001.json public/data/cgss-draws-manual.json public/data/fpg-admissions-draws.json
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          git commit -m "data: resultados de torneio CGSS (draw-only → real) [8º OM NOS 2026]"
+
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
+            if git push; then PUSH_OK=1; break; fi
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"
