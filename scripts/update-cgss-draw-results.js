@@ -232,21 +232,35 @@ async function fetchScorecardAggregate(host, tcode, scoreId) {
   return (r.ok && r.records?.length > 0) ? r.records : null;
 }
 
-async function tournLstRecent(host, tournName) {
-  const body = {
-    ClubCode: CCODE, dtIni: "", dtFim: "", CourseName: "", TournCode: "",
-    TournName: tournName || "",
-    jtStartIndex: "0", jtPageSize: "50", jtSorting: "started_at DESC",
-  };
-  const qs = `jtStartIndex=0&jtPageSize=50&jtSorting=${encodeURIComponent("started_at DESC")}`;
-  const r = await postJson(host, "tournaments.aspx/TournamentsLST", qs, body, `tournlst ${tournName || CCODE}`, { quiet: true });
-  if (!r.ok) return [];
-  return r.records.map((raw) => ({
-    name: raw.description || "",
-    ccode: raw.club_code || "",
-    tcode: String(raw.code || ""),
-    date: lisbonCivilDayStr(parseInt((raw.started_at || "").match(/\d+/)?.[0] || "0")),
-  }));
+/* ⚠ ClubCode:"007" dá ERRO neste endpoint (memória cgss-draw-only-tournament)
+ * — pede-se a lista geral (ClubCode:"0", sem TournName: o nome oficial pode
+ * não bater com o do PDF do draw) ordenada por data desc, paginada até já só
+ * vir coisa anterior à data do torneio, e filtra-se client-side por club_code.
+ * Como raramente há mais do que um torneio CGSS por dia, clube+data chegam
+ * para ordenar candidatos; a IDENTIDADE é sempre confirmada pela sobreposição
+ * de nomes com o field do draw (há dias com principal + júnior 9B). */
+async function tournLstRecent(host) {
+  const out = [];
+  for (let start = 0; start < 200; start += 50) {
+    const body = {
+      ClubCode: "0", dtIni: "", dtFim: "", CourseName: "", TournCode: "", TournName: "",
+      jtStartIndex: String(start), jtPageSize: "50", jtSorting: "started_at DESC",
+    };
+    const qs = `jtStartIndex=${start}&jtPageSize=50&jtSorting=${encodeURIComponent("started_at DESC")}`;
+    const r = await postJson(host, "tournaments.aspx/TournamentsLST", qs, body, `tournlst pág.${start / 50 + 1}`, { quiet: true });
+    if (!r.ok) break;
+    const recs = r.records.map((raw) => ({
+      name: raw.description || "",
+      ccode: raw.club_code || "",
+      tcode: String(raw.code || ""),
+      date: lisbonCivilDayStr(parseInt((raw.started_at || "").match(/\d+/)?.[0] || "0")),
+    }));
+    out.push(...recs);
+    if (recs.length < 50) break;
+    if (recs.every((x) => x.date < META.date)) break;
+    await sleep(150);
+  }
+  return out;
 }
 
 function extractHoleData(rec) {
@@ -366,17 +380,23 @@ function writeAtomic(file, obj) {
 
 /* ══ Main ════════════════════════════════════════════════════════════════ */
 (async () => {
-  // 1) descoberta primária: TournamentsLST (só torneios já jogados)
+  // 1) descoberta primária: TournamentsLST (só lista torneios já jogados).
+  //    Match por CLUBE (007) + DATA — nunca pelo nome, que no oficial pode
+  //    diferir do PDF do draw. --search fica só como dica de ordenação quando
+  //    o mesmo dia tem mais do que um torneio do clube.
   const dgHost = HOSTS.find(h => h.hasTournLST && h.cookie);
   if (dgHost && candidates.length > 1) {
-    const recs = await tournLstRecent(dgHost, SEARCH);
-    const hit = recs.find(r => r.ccode === CCODE && r.date >= META.date &&
-      (!SEARCH || norm(r.name).includes(norm(SEARCH))));
-    if (hit) {
-      console.log(`[cgss] TournamentsLST encontrou: ${hit.ccode}/${hit.tcode} "${hit.name}" (${hit.date})`);
-      candidates = [hit.tcode, ...candidates.filter(t => t !== hit.tcode)];
+    const recs = await tournLstRecent(dgHost);
+    const hits = recs.filter(r => r.ccode === CCODE && r.date >= META.date);
+    hits.sort((a, b) =>
+      (a.date === META.date ? 0 : 1) - (b.date === META.date ? 0 : 1) ||
+      (SEARCH && norm(b.name).includes(norm(SEARCH)) ? 1 : 0) - (SEARCH && norm(a.name).includes(norm(SEARCH)) ? 1 : 0));
+    if (hits.length) {
+      for (const h of hits) console.log(`[cgss] TournamentsLST candidato: ${h.ccode}/${h.tcode} "${h.name}" (${h.date})`);
+      const hitTcodes = hits.map(h => h.tcode);
+      candidates = [...hitTcodes, ...candidates.filter(t => !hitTcodes.includes(t))];
     } else {
-      console.log(`[cgss] TournamentsLST sem match (normal se ainda não publicado) — sondagem directa.`);
+      console.log(`[cgss] TournamentsLST: nenhum torneio 007 com data ≥ ${META.date} (normal se ainda não publicado) — sondagem directa.`);
     }
   }
 
