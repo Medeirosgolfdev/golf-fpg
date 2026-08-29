@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-08-23T20:13:05.290Z",
+  "lastUpdated": "2026-08-29T02:37:43.730Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-08-23",
+  "today": "2026-08-29",
   "summary": {
-    "total": 1752,
+    "total": 1753,
     "complete": 799,
-    "in_progress": 0,
+    "in_progress": 1,
     "future": 6,
     "stale": 10,
     "excluded": 935,
@@ -405,6 +405,27 @@
       "has_manuel": false,
       "status": "excluded",
       "excluded_reason": "Drive sem Manuel — coberto pelo pipeline drive-data"
+    },
+    {
+      "ccode": "007",
+      "tcode": "90073",
+      "name": "8º Torneio CGSS OM NOS 2026",
+      "date": "2026-08-29",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": true,
+      "player_count": 60,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": "pull-torneios001.json",
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "has_manuel": false,
+      "status": "in_progress"
     },
     {
       "ccode": "962",
