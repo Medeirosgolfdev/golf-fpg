@@ -142,7 +142,7 @@ jobs:
           exit 0
 
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || steps.rankings.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.rankings.outcome == 'success' && steps.rankings.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

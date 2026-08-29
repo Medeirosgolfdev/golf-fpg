@@ -132,11 +132,11 @@ jobs:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
       - name: Regenerar tracking (após novos dados de classif)
-        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
         run: node scripts/build-tournaments-tracking.js
 
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
