@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-08-23T20:13:03.878Z",
+  "geradoEm": "2026-08-29T02:37:41.933Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 149,
+  "totalRondas": 150,
   "totalCompanheirosUnicos": 182,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 131,
-      "rondasComDraw": 117,
+      "rondasComDraw": 118,
       "torneiosJogados": 97,
-      "torneiosComDraw": 91,
+      "torneiosComDraw": 92,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "003-10652",
@@ -633,6 +633,40 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90073",
+      "torneioNome": "8º Torneio CGSS OM NOS 2026",
+      "data": "2026-08-29",
+      "ronda": 1,
+      "teeTime": "09:40",
+      "startHole": 1,
+      "campo": "Santo da Serra - Serras-Machico",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Alexandre Henriques",
+          "fed": "2178",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Matilde Leal Gouveia",
+          "fed": "41131",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Mateus Penucho",
+          "fed": "52393",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "003-10652",
