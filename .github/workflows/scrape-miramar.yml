@@ -1,14 +1,21 @@
-name: Scrape torneios juvenis a pedido (Miramar / McGinley)
+name: Scrape de torneios FPG a pedido (ccode:tcode)
 
-# Re-scrapa a PEDIDO os resultados de torneios juvenis que decorrem em vários
-# dias, para correr quando cada ronda acaba. Escreve os ficheiros standalone
-# que a FPGPage carrega via EXTRA_TOURN_FILES (public/data/torneio-{ccode}-{tcode}.json):
+# Re-scrapa a PEDIDO os resultados de um ou mais torneios FPG, indicados como
+# pares `ccode:tcode`. Feita para torneios de vários dias: corre-se no fim de
+# cada ronda, enquanto a prova decorre. Escreve os ficheiros standalone que a
+# FPGPage carrega via EXTRA_TOURN_FILES (public/data/torneio-{ccode}-{tcode}.json).
 #
-#   003/10652  Miramar Internacional Open U25 2026 (U25, 54 buracos)   [terminado]
-#   003/10653  Miramar Internacional Open U25 2026 (Sub-10, 27 buracos) [terminado]
-#   962/10082  Paul McGinley Junior Cup 2026 — U18 & U16 (2 rondas)
-#   962/10083  Paul McGinley Junior Cup 2026 — U14      (2 rondas)
-#   962/10084  Paul McGinley Junior Cup 2026 — U12      (2 rondas)
+# NÃO tem defaults de propósito (2026-08-29). Nasceu a 23/08 com os cinco
+# torneios de Agosto no `pairs` — Miramar (003/10652+10653) e Paul McGinley
+# (962/10082+83+84) — mas todos já tinham acabado nessa data, por isso nunca
+# chegou a correr e o default só servia para re-scrapar provas terminadas.
+# Sem pares, a corrida não faz nada e sai verde: diz-se-lhe o que scrapar.
+#
+# Os ficheiros dessas provas continuam no repo e servidos ao site — e o
+# 912/10225 (Camp. Nacional de Profissionais) também, apesar de nunca ter
+# estado no default. Para refrescar qualquer um deles, basta passar o par.
+#
+# Uso: Actions → esta workflow → Run workflow → pairs: "962:10082,962:10083"
 #
 # Fonte: scoring.datagolf.pt/pt/Classifications.aspx?ccode=CCC&tcode=NNNNN via
 # scripts/scrape-classif-node.js (Node puro, warmup linkpage + ClassifLST +
@@ -24,9 +31,9 @@ on:
   workflow_dispatch:
     inputs:
       pairs:
-        description: 'Pares ccode:tcode a scrapar (CSV). Default = Miramar + McGinley 2026.'
+        description: 'Pares ccode:tcode a scrapar, separados por vírgula. Ex: 962:10082,962:10083'
         required: false
-        default: '003:10652,003:10653,962:10082,962:10083,962:10084'
+        default: ''
       force_commit:
         description: 'Commit mesmo sem mudanças?'
         required: false
@@ -61,7 +68,23 @@ jobs:
         id: scrape
         run: |
           set +e
-          PAIRS="${{ github.event.inputs.pairs || '003:10652,003:10653,962:10082,962:10083,962:10084' }}"
+          PAIRS="${{ github.event.inputs.pairs }}"
+          # Sem pares não há nada a fazer. Sai verde (não é avaria — é um
+          # dispatch sem argumentos), mas diz-se porquê no resumo do run, para
+          # não parecer que correu e não fez nada por avaria.
+          if [ -z "$(echo "$PAIRS" | tr -d '[:space:],')" ]; then
+            echo "Nenhum par ccode:tcode indicado — nada a scrapar."
+            echo "Indica os torneios no campo 'pairs', ex: 962:10082,962:10083" 
+            {
+              echo "### Nada a scrapar"
+              echo ""
+              echo "Esta workflow corre a pedido e não tem torneios por defeito."
+              echo "Volta a disparar preenchendo \`pairs\`, ex: \`962:10082,962:10083\`."
+            } >> $GITHUB_STEP_SUMMARY
+            echo "any_ok=0" >> $GITHUB_OUTPUT
+            echo "files=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           ANY_OK=0
           ANY_ERR=0
           FILES=""
