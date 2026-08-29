@@ -42,6 +42,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const REPO = path.resolve(__dirname, "..");
 const OUT = path.join(REPO, "public", "data", "om-cgss-junior.json");
@@ -73,9 +74,12 @@ const rankingUrl = code => `https://scoring.datagolf.pt/pt/rankings_classif.aspx
  * tcode. Assim que a prova entrar nas OMs adultas, o passo 2 mapeia o MESMO
  * tcode e o guard de dedup evita duplicar (a versão derivada ganha). Remover a
  * entrada aqui é então opcional (o dedup trata; fica só como documentação).
- *   RALI 2026 (007/11050) = Nível C (regulamento). */
+ *   RALI 2026 (007/11050) = Nível C (regulamento).
+ *   8º Torneio CGSS OM NOS 2026 (007/11057, 29-08) = Nível C (confirmado pela
+ *   Mariana; jogado hoje, ainda não lançado nas OMs adultas). */
 const PENDING_EVENTS = [
   { tcode: "11050", level: "C" },
+  { tcode: "11057", level: "C" },
 ];
 
 /* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
@@ -170,7 +174,17 @@ function matchRoster(fieldName, fieldClub, fieldAge) {
 
 /* ── HTTP ── */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+/* ⚠ Os DOIS endpoints datam as provas de maneira diferente — medido contra o
+ * pull-torneios (fonte já corrigida), com um caso de cada lado no verão:
+ *   · `started_at` (TournamentsLST) = meia-noite em hora de LISBOA → no horário
+ *     de verão são 23:00 UTC do dia anterior e o toISOString() dava dia −1
+ *     (RALI 01-08 saía 31-07; o 8º CGSS OM NOS de 29-08 saía 28-08).
+ *   · `tourn_date` (RankingsPlayersLST) já vem no dia civil em UTC — passá-lo
+ *     por lisbonCivilDayStr empurrava-o um dia para a FRENTE (NOS Empresas
+ *     22-05 virava 23-05).
+ * Daí dois helpers. A data PUBLICADA vem sempre do `started_at`. */
 const isoDate = s => { const m = /Date\((\d+)/.exec(s || ""); return m ? new Date(+m[1]).toISOString().slice(0, 10) : (s || null); };
+const isoDateStart = s => { const m = /Date\((\d+)/.exec(s || ""); return m ? lisbonCivilDayStr(+m[1]) : (s || null); };
 
 async function warmupClassif(tc) {
   try { const r = await fetch(`${BASE}/linkpage.aspx?page=classif&club=${CLUB}&tourn=${tc}&ack=${ACK}`, { headers: { "User-Agent": UA, Cookie: COOKIE, Referer: "https://scoring.datagolf.pt/" }, redirect: "follow" }); await r.text(); } catch {}
@@ -252,13 +266,20 @@ async function tournamentsLST(startIndex) {
   }
   // ⚠ O record do TournamentsLST usa `description` (não `name`) e `course_description`.
   const tName = t => t.description || t.name || "";
+  // A chave casa `tourn_date` (dia civil UTC) com `started_at`; como os dois
+  // campos discordam em um dia no verão, regista-se a prova nas DUAS datas.
   const byKey = new Map();
-  for (const t of tourns) byKey.set(`${norm(tName(t))}|${isoDate(t.started_at)}`, t);
+  for (const t of tourns) {
+    for (const d of new Set([isoDate(t.started_at), isoDateStart(t.started_at)])) {
+      if (d && !byKey.has(`${norm(tName(t))}|${d}`)) byKey.set(`${norm(tName(t))}|${d}`, t);
+    }
+  }
   for (const ev of events) {
     const t = byKey.get(`${norm(ev.desc)}|${ev.date}`) || tourns.find(x => norm(tName(x)) === norm(ev.desc));
     ev.tcode = t ? String(t.code) : null;
     ev.ccode = t ? String(t.club_code || CLUB).padStart(3, "0") : CLUB;
     ev.course = t ? (t.course_description || null) : null;
+    if (t) ev.date = isoDateStart(t.started_at); // data autoritativa (dia civil de Lisboa)
   }
   const playable = events.filter(e => e.tcode);
   console.log(`[om-junior] ${playable.length}/${events.length} provas mapeadas a tcode real.`);
@@ -271,11 +292,11 @@ async function tournamentsLST(startIndex) {
     const t = tourns.find(x => String(x.code) === String(pe.tcode));
     if (!t) { console.warn(`[om-junior] pendente t${pe.tcode}: não está na TournamentsLST(${CLUB}) — ignorada`); continue; }
     playable.push({
-      desc: tName(t), date: isoDate(t.started_at), level: pe.level,
+      desc: tName(t), date: isoDateStart(t.started_at), level: pe.level,
       tcode: String(pe.tcode), ccode: String(t.club_code || CLUB).padStart(3, "0"),
       course: t.course_description || null, pending: true,
     });
-    console.log(`[om-junior] + prova pendente (ainda não na OM adulta): "${tName(t)}" [${pe.level}] t${pe.tcode} ${isoDate(t.started_at)}`);
+    console.log(`[om-junior] + prova pendente (ainda não na OM adulta): "${tName(t)}" [${pe.level}] t${pe.tcode} ${isoDateStart(t.started_at)}`);
   }
   playable.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
 

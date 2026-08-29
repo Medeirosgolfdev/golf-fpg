@@ -145,6 +145,10 @@ const OM_LEVELS: Array<{ rx: RegExp; level: Level }> = [
   { rx: /\brali\b/i, level: "C" },
   { rx: /\bsummer\b/i, level: "C" },
   { rx: /\bcarnaval\b/i, level: "C" },
+  // Série numerada "Nº Torneio CGSS OM NOS" (confirmado pela Mariana: Nível C).
+  // Exige "OM NOS" literal para NÃO apanhar o "Torneio NOS Empresas" (Nível B),
+  // que de qualquer forma já bate acima (o primeiro padrão a casar ganha).
+  { rx: /\bom\s*\/?\s*nos\b/i, level: "C" },
 ];
 /** Nível OM de um torneio, ou null se não conta. Só CGSS (ccode 007). */
 export function omLevelOf(t: Tournament): Level | null {
