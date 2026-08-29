@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-08-29T02:37:41.933Z",
+  "geradoEm": "2026-08-29T22:09:22.012Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -635,21 +635,27 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-90073",
+      "torneioId": "007-11057",
       "torneioNome": "8º Torneio CGSS OM NOS 2026",
       "data": "2026-08-29",
       "ronda": 1,
       "teeTime": "09:40",
       "startHole": 1,
       "campo": "Santo da Serra - Serras-Machico",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 72,
+        "toPar": 0
+      },
       "companheiros": [
         {
           "nome": "Alexandre Henriques",
           "fed": "2178",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 77,
+            "toPar": 5
+          }
         },
         {
           "nome": "Matilde Leal Gouveia",
@@ -663,7 +669,10 @@
           "fed": "52393",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
         }
       ]
     },

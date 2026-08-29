@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-29T02:37:43.730Z",
+  "lastUpdated": "2026-08-29T22:09:24.287Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-08-29",
   "summary": {
@@ -408,7 +408,7 @@
     },
     {
       "ccode": "007",
-      "tcode": "90073",
+      "tcode": "11057",
       "name": "8º Torneio CGSS OM NOS 2026",
       "date": "2026-08-29",
       "rounds": 1,
@@ -418,13 +418,13 @@
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
       "has_classif": true,
-      "player_count": 60,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
+      "player_count": 63,
+      "players_with_scorecards": 60,
+      "players_with_full_scorecards": 60,
       "scorecards_source": "pull-torneios001.json",
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
-      "has_manuel": false,
+      "scorecards_ratio": 0.952,
+      "full_scorecards_ratio": 0.952,
+      "has_manuel": true,
       "status": "in_progress"
     },
     {
