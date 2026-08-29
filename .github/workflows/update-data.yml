@@ -108,6 +108,10 @@ jobs:
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
           node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
+          # Mesma página, bloco `const PATH` — percurso de torneios até scratch
+          # dos 18 rapazes da coorte, com o detalhe por jogador que a tabela
+          # mostra ao expandir uma linha (exit 2 = sem mudanças)
+          node scripts/build-percurso-path.js || echo "build-percurso-path: sem novidades ou aviso"
 
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.

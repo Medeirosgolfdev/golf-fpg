@@ -163,6 +163,7 @@ local, por isso um `git pull` depois de um push nosso dá conflito quase sempre
 | Ficheiro | Regenerar com |
 |---|---|
 | `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
+| `public/analise-percurso-juniores.html` (blocos `const P` e `const PATH`) | `node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js` |
 | `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` | `node scripts/aggregator/index.js` |
 
 São **output de scripts, não fonte**: nenhum dos lados do conflito está certo
