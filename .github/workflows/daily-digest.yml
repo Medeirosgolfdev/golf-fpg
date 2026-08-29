@@ -1,11 +1,11 @@
 name: Resumo diário de dados (email)
 
-# Um email por dia com o que os scrapers trouxeram nas últimas 24h:
+# Um email por dia com o que os scrapers trouxeram desde o resumo anterior:
 #   "Novo torneio X em Espanha, escalão Alevín, vencedor Y"
 #   "Fulano tem 2 scorecards novos; participou em Z"
 #
-# O resumo é calculado a partir do HISTÓRICO DO GIT (diff entre o repo de há
-# 24h e o actual), não de passos espalhados pelos ~20 workflows de dados. Duas
+# O resumo é calculado a partir do HISTÓRICO DO GIT (diff entre o repo no
+# arranque da corrida anterior e o actual), não de passos espalhados pelos ~20 workflows de dados. Duas
 # vantagens: nenhum workflow de dados é tocado (zero risco para os pipelines) e,
 # se um deles falhar a meio, a janela do dia seguinte apanha na mesma o que foi
 # commitado.
@@ -57,9 +57,49 @@ jobs:
         with:
           node-version: '20'
 
+      # A janela é ancorada na corrida ANTERIOR desta workflow, não num "há 24
+      # horas" cego. O `schedule` do GitHub é best-effort e derrapa horas: medido
+      # neste repo, 07:30 → 08:09 (26 Ago) → 18:22 (27 Ago). Com a janela fixa, as
+      # 10h entre 26/08 08:09 e 18:22 não foram cobertas por corrida NENHUMA — e
+      # foi lá que caiu o refresh do cadastro (40 federados novos, 1 saída), que
+      # nunca chegou a nenhum resumo. Ancorando na corrida anterior, uma corrida
+      # atrasada 12h resume 36h e uma corrida perdida é recuperada pela seguinte.
+      # Usa-se o created_at (início) da anterior, não o fim: sobrepor uns minutos
+      # pode repetir uma linha, saltar perde-a de vez.
+      - name: Determinar a janela (desde a corrida anterior)
+        id: janela
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MANUAL="${{ inputs.since }}"
+          if [ -n "$MANUAL" ]; then
+            echo "since=$MANUAL" >> $GITHUB_OUTPUT
+            echo "Janela manual: $MANUAL"
+            exit 0
+          fi
+          PREV=$(gh api \
+            "/repos/${{ github.repository }}/actions/workflows/daily-digest.yml/runs?status=success&per_page=10" \
+            --jq '[.workflow_runs[] | select(.id != ${{ github.run_id }}) | .created_at] | first' 2>/dev/null || echo "")
+          if [ -z "$PREV" ] || [ "$PREV" = "null" ]; then
+            echo "Sem corrida anterior bem-sucedida — recuo de 24h."
+            echo "since=24 hours ago" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # Tecto de 30 dias: depois de uma paragem longa, mais vale um resumo
+          # grande do que um que tente reconstruir meio ano.
+          LIMITE=$(date -u -d '30 days ago' +%s)
+          PREV_S=$(date -u -d "$PREV" +%s)
+          if [ "$PREV_S" -lt "$LIMITE" ]; then
+            echo "Corrida anterior ($PREV) tem mais de 30 dias — a limitar."
+            echo "since=30 days ago" >> $GITHUB_OUTPUT
+          else
+            echo "since=$PREV" >> $GITHUB_OUTPUT
+            echo "Janela desde a corrida anterior: $PREV"
+          fi
+
       - name: Construir resumo
         run: |
-          SINCE="${{ inputs.since || '24 hours ago' }}"
+          SINCE="${{ steps.janela.outputs.since }}"
           EXTRA=""
           [ "${{ inputs.include_all }}" = "true" ] && EXTRA="--all"
           mkdir -p reports/digests/pending
@@ -75,7 +115,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           if [ ! -f reports/digests/pending/diario.json ]; then
-            echo "ℹ️  Sem novidades nas últimas 24h — sem email."
+            echo "ℹ️  Sem novidades desde ${{ steps.janela.outputs.since }} — sem email."
             exit 0
           fi
           if [ "${{ inputs.dry_run }}" = "true" ]; then
