@@ -198,4 +198,95 @@ async function criarSessaoLista(opts = {}) {
   return ok ? s : null;
 }
 
-module.exports = { Sessao, BASE_LISTS, BASE_PT, ACK, UA, parseMetaClassif, criarSessaoLista };
+/**
+ * Roteador partilhado: mesma assinatura do `dgPost` dos scrapers, mas capaz de
+ * cair no caminho público quando o autenticado falha com 500.
+ *
+ * Cada família de PageMethod tem o SEU gate público e a SUA sessão — o
+ * `DG_Lists_URL` guarda o contexto da página, por isso reaproveitar uma sessão
+ * entre famílias faz a seguinte devolver `Result:ERROR` logo depois de um
+ * warmup bem sucedido:
+ *
+ *   tournaments.aspx/*        → scripts/tournaments.asp → 1PreparePage (tournlist)
+ *   classif*.aspx/*           → linkpage?page=classif&club&tourn   (por torneio)
+ *   FederatedsList_V2.aspx/*  → 1PreparePage (fedlist_v2)
+ *   rankings_classif.aspx/*   → linkpage?page=rankingresult&club&ranking
+ *
+ * ⚠ NÃO cobre as admissions: medido 2026-08-30, o gate público serve umas
+ * (000/10941) e devolve "Link address inválido" (Err=400) noutras (987/10245).
+ * Enquanto não se souber a regra, esse caminho fica com cookies.
+ *
+ * @param {object} opts
+ * @param {function|null} opts.dgPost — caminho autenticado (null = sem cookies)
+ * @param {function} [opts.info]      — logger para anunciar a comutação
+ * @returns {{post: function, get publico(): boolean}}
+ */
+function criarRoteador({ dgPost, info = () => {} }) {
+  let publico = !dgPost;
+  let sLista, sFed;
+  const sClassif = new Map();
+  const sRank = new Map();
+
+  const abrirPor = async (pathname, body) => {
+    if (pathname.startsWith('tournaments.aspx')) {
+      if (sLista === undefined) sLista = await criarSessaoLista().catch(() => null);
+      return sLista;
+    }
+    if (pathname.startsWith('FederatedsList_V2.aspx')) {
+      if (sFed === undefined) {
+        const x = new Sessao({ base: BASE_PT });
+        const g = await x.get(BASE_PT + '/1PreparePage.aspx?user=fpguser&page=fedlist_v2' +
+                              '&ccode=All&param=publicrestrictions&pagelang=PT').catch(() => null);
+        sFed = g && g.status === 200 && !/Runtime Error|Param_Errors/i.test(g.html) ? x : null;
+      }
+      return sFed;
+    }
+    if (pathname.startsWith('rankings_classif.aspx')) {
+      const k = `${body.Club}/${body.Rk_Code}`;
+      if (!sRank.has(k)) {
+        const x = new Sessao();
+        const g = await x.get(`${BASE_LISTS}/linkpage.aspx?page=rankingresult&club=${body.Club}` +
+                              `&ranking=${body.Rk_Code}&ack=${ACK.classif}&minpoints=1`).catch(() => null);
+        sRank.set(k, g && g.status === 200 && !/Runtime Error|Param_Errors/i.test(g.html) ? x : null);
+      }
+      return sRank.get(k);
+    }
+    // classif.aspx / classifAgregate.aspx — sessão por torneio
+    const k = `${body.tclub}/${body.tcode}`;
+    if (!sClassif.has(k)) {
+      const x = new Sessao();
+      const a = await x.abrir('classif', body.tclub, body.tcode).catch(() => null);
+      sClassif.set(k, a && a.ok ? x : null);
+    }
+    return sClassif.get(k);
+  };
+
+  const postPublico = async (pathname, body, qs) => {
+    const sess = await abrirPor(pathname, body);
+    if (!sess) throw new Error(`sem sessão pública para ${pathname}`);
+    const r = await sess.postPageMethod(pathname, body, { queryString: qs });
+    if (!r.ok) throw new Error(`${pathname}: Result=${r.result || '?'} (público)`);
+    return { Records: r.records, TotalRecordCount: r.total ?? 0, Result: 'OK' };
+  };
+
+  return {
+    get publico() { return publico; },
+    async post(pathname, body, qs) {
+      if (publico) return postPublico(pathname, body, qs);
+      try {
+        return await dgPost(pathname, body, qs);
+      } catch (e) {
+        // 500 não distingue "cookies mortas" de "FPG em baixo" — vale a pena
+        // perguntar sem credenciais antes de desistir.
+        if (!e || e.status !== 500) throw e;
+        const r = await postPublico(pathname, body, qs).catch(() => null);
+        if (!r) throw e;
+        publico = true;
+        info('cookies não autenticam — a seguir pelo caminho público (sem credenciais)');
+        return r;
+      }
+    },
+  };
+}
+
+module.exports = { Sessao, BASE_LISTS, BASE_PT, ACK, UA, parseMetaClassif, criarSessaoLista, criarRoteador };

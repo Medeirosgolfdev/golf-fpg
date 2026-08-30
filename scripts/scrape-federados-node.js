@@ -69,12 +69,18 @@ if (Number.isNaN(maxPages)) {
 // ── Cookies ──────────────────────────────────────────────────────
 // Fonte (por ordem): env DATAGOLF_SCORING_COOKIES (Actions) → ficheiro
 // api/.scoring-datagolf-cookies.json (dev local). Via lib partilhada.
+// ⚠ Opcionais desde 2026-08-30: o gate `1PreparePage.aspx?page=fedlist_v2`
+// (abaixo, em WARMUP_URLS) emite ele próprio a sessão a quem chega sem
+// credenciais, e o mergeCookies já a adopta. Sem cookies parte-se de um jar
+// vazio em vez de abortar. Medido: HandicapsLST devolve Result:OK com 17 840
+// federados sem uma única credencial nossa.
 function loadCookies() {
   return loadCookieHeader({
+    exitOnFail: false,
     envVars: ["DATAGOLF_SCORING_COOKIES"],
     file: COOKIES_PATH,
     label: "[federados]",
-  });
+  }) || "";
 }
 
 // ── .NET /Date(ms)/ → ISO YYYY-MM-DD (dia civil de Lisboa) ────────
@@ -128,6 +134,12 @@ const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like
 const ACK_TOURNLIST = "XH256YF45T";
 const WARMUP_URLS = [
   `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`,
+  // ⚠ O gate público da página dos federados, não a URL directa: é ele que
+  // repõe o contexto (DG_Lists_URL) e, sem credenciais, é ele que EMITE a
+  // sessão. Ir directo à FederatedsList_V2.aspx só funciona com uma sessão já
+  // com contexto — a armadilha que o comentário acima descreve.
+  "https://scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page=fedlist_v2" +
+    "&ccode=All&param=publicrestrictions&pagelang=PT",
   "https://scoring.datagolf.pt/pt/FederatedsList_V2.aspx",
 ];
 
@@ -157,30 +169,24 @@ function mergeCookies(cookieHeader, setCookies) {
 }
 
 async function warmup(cookieHeader) {
-  let cookie = cookieHeader;
-  for (const url of WARMUP_URLS) {
-    try {
-      const r = await fetch(url, {
-        headers: {
-          "User-Agent": UA,
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-          "Referer": "https://scoring.datagolf.pt/",
-          "Cookie": cookie,
-        },
-        redirect: "follow",
-      });
-      await r.text();
-      const set = typeof r.headers.getSetCookie === "function"
-        ? r.headers.getSetCookie()
-        : (r.headers.get("set-cookie") ? [r.headers.get("set-cookie")] : []);
-      cookie = mergeCookies(cookie, set);
-      console.log(`  warm-up ${new URL(url).pathname} → HTTP ${r.status}`);
-    } catch (e) {
-      // Um warm-up falhado não é fatal: o POST a seguir dirá se chega ou não.
-      console.warn(`  warm-up ${url} falhou: ${e.message}`);
-    }
+  /* ⚠ Segue os redirects À MÃO (Sessao.get), acumulando cookies de TODOS os
+     hops. O `fetch` nativo com `redirect:"follow"` só expõe os headers da
+     resposta FINAL: a sessão que o 1PreparePage emite no 302 evapora-se pelo
+     caminho e o HandicapsLST a seguir vinha sem contexto — 0 registos, com a
+     guarda anti-overwrite a salvar o ficheiro. Ver scripts/lib/fpg-session.js. */
+  const { Sessao } = require("./lib/fpg-session");
+  const sess = new Sessao({ base: "https://scoring.datagolf.pt/pt", ua: UA });
+  for (const part of String(cookieHeader || "").split(";")) {
+    const kv = part.trim();
+    const i = kv.indexOf("=");
+    if (i > 0) sess.jar.set(kv.slice(0, i).trim(), kv.slice(i + 1));
   }
-  return cookie;
+  const antes = sess.cookieHeader;
+  for (const url of WARMUP_URLS) {
+    try { await sess.get(url); } catch (e) { console.log(`  warm-up falhou (${url.slice(0, 60)}…): ${e.message}`); }
+  }
+  if (sess.cookieHeader !== antes) console.log("  (o servidor devolveu cookies novos — adoptados)");
+  return sess.cookieHeader;
 }
 
 // ── Fetch dum batch ──────────────────────────────────────────────

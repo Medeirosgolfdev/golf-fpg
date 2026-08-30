@@ -503,13 +503,46 @@ o seu (devolve `Result:ERROR` logo depois de um warmup bem sucedido). O
 `scrape-classif-node.js` mantém `SESSAO` (classif) e `SESSAO_LISTA`
 (descoberta) independentes.
 
-**Quem já usa isto:** `scrape-classif-node.js` e `scrape-drive-node.js`
-(este último com todo o pipeline — descoberta + classificações + scorecards).
-Nos dois a regra é a mesma: cookies primeiro, caminho público quando não há
-cookies **ou quando as que há devolvem 500**. No `scrape-drive-node.js` a
-comutação vive num único sítio (`dgPostSmart`, que embrulha o `dgPost`), e a
-troca é anunciada no log: `cookies não autenticam — a seguir pelo caminho
-público`.
+### Quem já corre sem cookies (2026-08-30)
+
+O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do que
+é alcançável. Medido uma a uma, e **só se portou o que passou**:
+
+| Script | Workflow | Endpoint | Sem cookies |
+|---|---|---|---|
+| `scrape-classif-node.js` | update-classif | ClassifLST + ScoreCard | ✅ |
+| `scrape-drive-node.js` | update-drive | TournamentsLST + ClassifLST + ScoreCard | ✅ |
+| `scrape-jovens-node.js` | update-jovens | idem | ✅ |
+| `scrape-federados-node.js` | update-federados | HandicapsLST (gate `fedlist_v2`) | ✅ 17 840 federados |
+| `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
+| `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
+| `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
+
+⚠ **As admissions NÃO são fiavelmente públicas.** O mesmo gate serve
+`000/10941` (página real de inscritos) e devolve `Param Error — Link address
+inválido` (Err=400) em `987/10245`. Enquanto não se souber a regra, esse
+scraper mantém-se autenticado — o `draw` continua público como sempre foi.
+
+A regra partilhada é a mesma em todos: **cookies primeiro** (o caminho
+autenticado é o primário e é o que se mantém testado), **público quando não há
+cookies ou quando as que há devolvem 500**. A comutação vive no
+`criarRoteador` de `fpg-session.js` — um só sítio, com um gate e uma sessão por
+família de PageMethod — e é anunciada no log: `cookies não autenticam — a
+seguir pelo caminho público`.
+
+⚠ **`redirect:"follow"` do fetch nativo perde a sessão** e mordeu em TRÊS
+sítios (o `Sessao.get` segue os redirects à mão e é a correcção):
+- o `scrape-federados-node.js` aquecia com `redirect:"follow"` e só lia o
+  `Set-Cookie` da resposta FINAL — a sessão emitida no 302 do
+  `1PreparePage.aspx` evaporava-se e o `HandicapsLST` vinha sem contexto
+  (0 registos, salvos pela guarda anti-overwrite);
+- o `scrape-drive-rankings.js` tinha o mesmo padrão no seu warmup;
+- e foi por isto que, à primeira, se concluiu que a descoberta precisava de
+  cookies.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
 
 ⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
 substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio

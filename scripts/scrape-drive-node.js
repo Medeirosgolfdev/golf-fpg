@@ -113,65 +113,13 @@ const dgPost = COOKIE ? makeFpgPost({
 // ═══════════════════════════════════════════════════════════
 // MODO PÚBLICO — sem cookies guardados (2026-08-30)
 // ═══════════════════════════════════════════════════════════
-/* Os gateways da FPG que levam o `ack` universal EMITEM eles próprios a
-   sessão ASP.NET (ASP.NET_SessionId + DG_Lists_URL) a quem chega sem
-   credenciais. Nunca foi preciso capturar cookies no Chrome 90 para este
-   scrape: faltava ACEITAR a sessão em vez de reproduzir uma guardada — e o
-   500 que se lia como "cookies expiraram" é, na origem,
-   "Object reference not set to an instance of an object", o null-ref clássico
-   de quem não tem sessão. Detalhe e medições em scripts/lib/fpg-session.js.
-
-   ⚠ DUAS sessões, não uma: o DG_Lists_URL guarda o CONTEXTO da página. Um
-   POST ao tournaments.aspx reescreve-o e o classif a seguir perde o seu
-   (Result:ERROR logo depois de um warmup bem sucedido). Daí a lista ter
-   sessão própria e cada torneio a sua. */
-const { Sessao, criarSessaoLista } = require("./lib/fpg-session");
-let MODO_PUBLICO = !COOKIE;
-let SESSAO_LISTA;                       // undefined = por criar · null = falhou
-const SESSOES_CLASSIF = new Map();      // "tclub/tcode" → Sessao
-
-async function sessaoLista() {
-  if (SESSAO_LISTA === undefined) SESSAO_LISTA = await criarSessaoLista().catch(() => null);
-  return SESSAO_LISTA;
-}
-
-async function sessaoClassif(tclub, tcode) {
-  const k = `${tclub}/${tcode}`;
-  if (!SESSOES_CLASSIF.has(k)) {
-    const sess = new Sessao();
-    const abriu = await sess.abrir("classif", tclub, tcode).catch(() => null);
-    SESSOES_CLASSIF.set(k, abriu && abriu.ok ? sess : null);
-  }
-  return SESSOES_CLASSIF.get(k);
-}
-
-/** Mesma assinatura e mesma forma de resposta do dgPost, sem credenciais. */
-async function dgPostPublico(pathname, body, qs) {
-  const lista = pathname.startsWith("tournaments.aspx");
-  const sess = lista ? await sessaoLista() : await sessaoClassif(body.tclub, body.tcode);
-  if (!sess) throw new Error(`sem sessão pública para ${pathname}`);
-  const r = await sess.postPageMethod(pathname, body, { queryString: qs });
-  if (!r.ok) throw new Error(`${pathname}: Result=${r.result || "?"} (público)`);
-  return { Records: r.records, TotalRecordCount: r.total ?? 0, Result: "OK" };
-}
-
-/** Caminho habitual primeiro (metadata igual); público quando ele falha. */
-async function dgPostSmart(pathname, body, qs) {
-  if (MODO_PUBLICO) return dgPostPublico(pathname, body, qs);
-  try {
-    return await dgPost(pathname, body, qs);
-  } catch (e) {
-    // HTTP 500 aqui não distingue "cookies mortas" de "FPG em baixo" — em
-    // qualquer dos casos vale a pena perguntar sem credenciais antes de
-    // desistir. Se o público responder, é porque o problema era nosso.
-    if (!e || e.status !== 500) throw e;
-    const r = await dgPostPublico(pathname, body, qs).catch(() => null);
-    if (!r) throw e;
-    MODO_PUBLICO = true;
-    info("cookies não autenticam — a seguir pelo caminho público (sem credenciais)");
-    return r;
-  }
-}
+/* Os gateways da FPG que levam o `ack` universal EMITEM eles próprios a sessão
+   ASP.NET a quem chega sem credenciais — nunca foi preciso capturar cookies no
+   Chrome 90 para este scrape. O roteador tenta o caminho habitual e, num HTTP
+   500, repete sem credenciais antes de desistir. Ver scripts/lib/fpg-session.js. */
+const { criarRoteador } = require("./lib/fpg-session");
+const ROTA = criarRoteador({ dgPost, info });
+const dgPostSmart = (pathname, body, qs) => ROTA.post(pathname, body, qs);
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBRIR TORNEIOS (drive + aquapor)
