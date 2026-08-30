@@ -61,7 +61,11 @@ const PAGE_SIZE = parseInt(argVal("--page-size", "150"), 10);
 /* ── Cookies (scoring.datagolf.pt) ──────────────────────────────────────── */
 const { loadCookieHeader } = require("./lib/cookies");
 const { lisbonCivilDayStr } = require("../lib/helpers");
+// ⚠ Opcional desde 2026-08-30: o caminho sem cookies (ver o fallback no
+// warmupLinkpage) cobre leaderboard + scorecards de um torneio conhecido, por
+// isso a falta de cookies já não é motivo para abortar.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["DATAGOLF_SCORING_COOKIES", "DATAGOLF_COOKIES"],
   file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
   label: "[classif]",
@@ -144,8 +148,9 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
    cookies tinham 7 horas e o browser da utilizadora abria o mesmo URL sem
    problema — porque um browser aceita o Set-Cookie e nós não.
    Ver scripts/lib/fpg-session.js. */
-const { Sessao } = require("./lib/fpg-session");
-let SESSAO = null;   // != null → o warmup primário falhou e estamos no fallback
+const { Sessao, parseMetaClassif } = require("./lib/fpg-session");
+let SESSAO = null;        // != null → estamos no caminho sem cookies
+let SESSAO_META = null;   // nome/campo/data lidos da própria página
 
 async function warmupLinkpage(tclub, tcode) {
   // Activa sessão ASP.NET antes de POSTs a PageMethods
@@ -156,13 +161,17 @@ async function warmupLinkpage(tclub, tcode) {
         "User-Agent": UA,
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "pt-PT,pt;q=0.9",
-        "Cookie": COOKIE,
+        ...(COOKIE ? { "Cookie": COOKIE } : {}),
         "Referer": `${BASE}/`,
       },
       redirect: "follow",
     });
-    await res.text();
-    if (res.ok) { SESSAO = null; return true; }
+    const html = await res.text();
+    // ⚠ HTTP 200 NÃO é prova de sessão útil. Sem cookies válidas este linkpage
+    // devolve 200 na mesma (medido 2026-08-30) e só o PageMethod a seguir é
+    // que rebenta — o warmup dava-se por bom e o fallback nunca corria.
+    // O teste é o CONTEÚDO: a página real traz Torneio/Campo/Data.
+    if (res.ok && parseMetaClassif(html).name) { SESSAO = null; SESSAO_META = null; return true; }
   } catch { /* cai no fallback */ }
 
   // Caminho habitual em baixo (ou cookies mortas) → sessão auto-gerada.
@@ -171,7 +180,9 @@ async function warmupLinkpage(tclub, tcode) {
     const abriu = await sess.abrir("classif", tclub, tcode);
     if (abriu.ok) {
       SESSAO = sess;
-      console.log(`${C}[classif]${X} fallback: sessão auto-gerada em scoring.fpg.pt/lists (sem cookies)`);
+      SESSAO_META = parseMetaClassif(abriu.html);
+      console.log(`[classif] sem cookies: sessão auto-gerada em scoring.fpg.pt/lists` +
+                  (SESSAO_META && SESSAO_META.name ? ` — ${SESSAO_META.name}` : ""));
       return true;
     }
   } catch { /* nada a fazer */ }
@@ -379,7 +390,12 @@ async function processOne(spec, idx, total) {
   await sleep(DELAY_MS);
 
   // 1. resolve — tenta via TournamentsLST (metadata completa: campo, rondas, etc)
-  const raw = await resolveTournament(tclub, tcode);
+  // ⚠ No caminho sem cookies isto é SALTADO, e não é só por ser inútil (o
+  // TournamentsLST não responde lá): o POST ao tournaments.aspx reescreve o
+  // contexto da sessão (DG_Lists_URL passa a apontar à lista de torneios) e o
+  // classif a seguir perde o seu — devolvia Result:ERROR logo depois de o
+  // warmup ter corrido bem. A metadata vem de SESSAO_META.
+  const raw = SESSAO ? null : await resolveTournament(tclub, tcode);
   let t;
   if (raw) {
     const circuit = spec.circuit || detectCircuit(raw);
@@ -389,13 +405,15 @@ async function processOne(spec, idx, total) {
     // do índice, etc.). Usar metadata mínima do spec (pode vir do tracking
     // com name/date/rounds) e tentar classif na mesma. A classif.aspx/ClassifLST
     // funciona directamente via tclub/tcode — não depende de resolve.
-    console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
+    // No caminho sem cookies o TournamentsLST nunca responde (medido com os 3
+    // acks): a metadata vem da própria página de classificações.
+    if (!SESSAO_META) console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
     t = {
-      name: spec.name || `${tclub}/${tcode}`,
+      name: (SESSAO_META && SESSAO_META.name) || spec.name || `${tclub}/${tcode}`,
       ccode: String(tclub).padStart(3, "0"),
       tcode: String(tcode),
-      date: spec.date || "",
-      campo: "",
+      date: (SESSAO_META && SESSAO_META.date) || spec.date || "",
+      campo: (SESSAO_META && SESSAO_META.campo) || "",
       clube: String(tclub).padStart(3, "0"),
       circuit: spec.circuit || "tour",
       series: "tour",

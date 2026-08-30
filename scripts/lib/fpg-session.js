@@ -133,4 +133,38 @@ class Sessao {
   }
 }
 
-module.exports = { Sessao, BASE_LISTS, ACK, UA };
+/**
+ * Metadata do torneio a partir do HTML da página de classificações.
+ * Serve para o caminho sem cookies: lá o `tournaments.aspx/TournamentsLST`
+ * (que é de onde vem normalmente o nome/campo/data) NÃO responde — medido com
+ * os três acks universais — mas a própria página já traz o essencial:
+ *
+ *   Torneio | 2º Torneio Drive Tour Norte – Amarante
+ *   Volta   | 1
+ *   Campo   | Amarante
+ *   Data    | 2026-08-30
+ *   PCC     | 0
+ */
+function parseMetaClassif(html) {
+  const txt = String(html)
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, '\n')
+    .replace(/&nbsp;/g, ' ');
+  const L = txt.split('\n').map(x => x.trim()).filter(Boolean);
+  const depois = (rotulo) => {
+    const i = L.findIndex(x => x.toLowerCase() === rotulo);
+    return i >= 0 && i + 1 < L.length ? L[i + 1] : null;
+  };
+  const data = L.find(x => /^\d{4}-\d{2}-\d{2}$/.test(x)) || null;
+  const pcc = depois('pcc');
+  return {
+    name: depois('torneio'),
+    campo: depois('campo'),
+    date: data,
+    volta: depois('volta') ? Number(depois('volta')) : null,
+    pcc: pcc != null && pcc !== '' && !isNaN(Number(pcc)) ? Number(pcc) : null,
+  };
+}
+
+module.exports = { Sessao, BASE_LISTS, ACK, UA, parseMetaClassif };

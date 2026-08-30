@@ -456,19 +456,56 @@ A mensagem do `indeterminado` manda **confirmar no browser antes de
 refrescar** — foi o que resolveu este caso: a utilizadora abriu o linkpage e
 funcionava, o que provou que o problema não eram os cookies.
 
-⚠ **Por provar — `scripts/lib/fpg-session.js`.** Durante a investigação
-levantou-se a hipótese de as cookies nunca terem sido precisas neste caminho: o
-gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) parecia emitir
-sessão ASP.NET própria a quem chega **sem credenciais**, e com ela a cadeia
-inteira respondeu `Result:OK` — leaderboard (18 jogadores) e scorecard
-buraco-a-buraco (par/SI/metros/CR/slope/cba). **Mas isso mediu-se às 18:09,
-dentro da janela em que o serviço estava a recuperar, e às 18:15 já não
-reproduzia** — logo não se pode atribuir o sucesso à sessão auto-gerada. A
-biblioteca fica no repo (usada como *fallback* no `scrape-classif-node.js`,
-que só entra quando o caminho habitual falha) e a experiência tem de ser
-repetida com a FPG estável. Se se confirmar, acaba o refresh manual no Chrome
-90 para este caminho. ⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão
-(500 mesmo com jar) — continua a exigir o hash do `1EntryPage.aspx`.
+### ✅ As cookies NÃO são precisas para os resultados — `scripts/lib/fpg-session.js`
+
+**Confirmado 2026-08-30, com o serviço estável** (a 1ª medição, às 18:09,
+apanhou a janela de recuperação e não provava nada; esta isolou o mecanismo).
+O gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) **emite ele
+próprio** `ASP.NET_SessionId` + `DG_Lists_URL` a quem chega sem credenciais.
+Medido no mesmo minuto, mesmo URL:
+
+| | resultado |
+|---|---|
+| **com** cookie jar (aceita a sessão) | **4/4 OK** — página 200, ClassifLST OK (18), ScoreCard OK |
+| **sem** jar | **3/3 → HTTP 500** Runtime Error |
+| POST directo sem sessão | `Result:ERROR — Object reference not set to an instance of an object` |
+
+Aquele *"Object reference..."* é a cara do 500 que se lia como "cookies
+expiraram". O que faltava era **aceitar** a sessão, não guardá-la.
+
+⚠ **`fetch` com `redirect:"follow"` não chega.** O linkpage responde 302 e a
+sessão é emitida NO CAMINHO; o fetch nativo não reenvia o `Set-Cookie` de um
+hop para o seguinte, por isso o pedido final chega sem sessão. O `Sessao.get`
+segue os redirects à mão, acumulando cookies.
+
+**Cobertura** (o que muda e o que não muda):
+
+| Passo | Sem cookies? |
+|---|---|
+| Resultados de um torneio **conhecido** (ccode/tcode): leaderboard + scorecards | ✅ |
+| **Descoberta** (`tournaments.aspx/TournamentsLST`) | ❌ — falha com os 3 acks; continua a precisar |
+
+O `scrape-classif-node.js` usa-o como caminho alternativo: cookies primeiro
+(trazem metadata mais rica via TournamentsLST), sessão pública quando não há
+cookies ou o caminho habitual falha. Verificado com os ficheiros de cookies
+escondidos: **18 jogadores e 14 scorecards, idênticos linha a linha** aos da
+via autenticada.
+
+⚠ **Três armadilhas neste caminho, todas com caso real:**
+1. **HTTP 200 não é prova de sessão útil.** Sem cookies o linkpage do
+   `scoring.datagolf.pt` devolve 200 na mesma e só o PageMethod a seguir
+   rebenta — o warmup dava-se por bom e o fallback nunca corria. O teste é o
+   CONTEÚDO (`parseMetaClassif(html).name`), não o `res.ok`.
+2. **Os params extra vão na query string E no body** — o `ScoreCard` devolve
+   500 se só forem num dos sítios (mesma armadilha do `my.fpg.pt`).
+3. Uma variável de cor inexistente (`${C}`) num `console.log` **dentro do
+   try** do fallback fazia o `catch` engolir tudo: a metadata já estava
+   preenchida (o nome aparecia no log!) mas `SESSAO` ficava a null e o scrape
+   caía no caminho autenticado sem cookies. Um throw cosmético a fingir-se de
+   falha de rede.
+
+⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão (500 mesmo com jar) —
+continua a exigir o hash do `1EntryPage.aspx`.
 
 ## Scripts — FPG Pipeline
 
