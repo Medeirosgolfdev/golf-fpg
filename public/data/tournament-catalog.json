@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-29T15:11:35.339Z",
+  "generatedAt": "2026-08-30T09:21:51.322Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -37763,6 +37763,32 @@
       "editionsCount": 3
     },
     {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
+      "label": "Campeonato Nacional de Clubes Solverde H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10795-20240905-all",
+        "fpg-000-10849-20250828-all",
+        "fpg-000-10916-20260827-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2026-08-27",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
+      "label": "Campeonato Nacional de Clubes Solverde S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10796-20240905-all",
+        "fpg-000-10850-20250828-all",
+        "fpg-000-10917-20260827-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2026-08-27",
+      "editionsCount": 3
+    },
+    {
       "id": "ffgolf-1re-division-u16-filles-trophee-brigitte-varangot",
       "label": "1re Division U16 Filles - Trophée Brigitte VARANGOT",
       "sourceId": "ffgolf",
@@ -48891,30 +48917,6 @@
       ],
       "firstDate": "2025-06-27",
       "lastDate": "2026-04-30",
-      "editionsCount": 2
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
-      "label": "Campeonato Nacional de Clubes Solverde H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10795-20240905-all",
-        "fpg-000-10849-20250828-all"
-      ],
-      "firstDate": "2024-09-05",
-      "lastDate": "2025-08-28",
-      "editionsCount": 2
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
-      "label": "Campeonato Nacional de Clubes Solverde S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10796-20240905-all",
-        "fpg-000-10850-20250828-all"
-      ],
-      "firstDate": "2024-09-05",
-      "lastDate": "2025-08-28",
       "editionsCount": 2
     },
     {
