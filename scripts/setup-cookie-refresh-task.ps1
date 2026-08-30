@@ -145,7 +145,9 @@ Write-Host "Task registada com LogonType=Interactive + AtLogOn trigger" -Foregro
 Write-Host ""
 Write-Host "=== TAREFA CRIADA COM SUCESSO ===" -ForegroundColor Cyan
 Write-Host "  Nome:    $TaskName"
-Write-Host "  Hora:    Todos os dias as 12:00"
+Write-Host "  Horas:   12:00 e 19:30 (todos os dias) + ao iniciar sessao"
+Write-Host "           19:30 e ~1h30 antes do primeiro scrape (20:00 UTC);"
+Write-Host "           as cookies FPG duram ~9h, so o das 12:00 nao chegava."
 Write-Host "  Script:  $BatFile"
 Write-Host "  Logs:    $LogFile"
 Write-Host ""
