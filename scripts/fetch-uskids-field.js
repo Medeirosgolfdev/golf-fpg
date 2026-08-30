@@ -318,7 +318,7 @@ async function descobrirTorneios() {
   // Filtrar logo à entrada: remove excluídos de runs anteriores
   const conhecidos = new Map(
     cache.torneios
-      .filter(t => incluirTorneio(t.t, t.name, t.type))
+      .filter(t => incluirTorneio(t.t, t.name, t.type, t.tour))
       .map(t => [t.t, t])
   );
   let encontrados = 0;
@@ -335,7 +335,7 @@ async function descobrirTorneios() {
   /** Chamado para CADA tcode que existe (internacional ou não). Filtra e regista. */
   const registar = (t, tn) => {
     const nome    = tn.name.trim();
-    const incluir = incluirTorneio(t, nome, tn.type);
+    const incluir = incluirTorneio(t, nome, tn.type, tn.tour);
     if (!incluir || diasAte(tn.start_date) < -30) return;
     if (!conhecidos.has(t)) {
       const cls = TIPO_LABEL[tn.type] ? ` [${TIPO_LABEL[tn.type]}]` : '';

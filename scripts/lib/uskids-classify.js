@@ -54,6 +54,32 @@ const TIPO_LABEL = {
 /** Tipos que entram SEMPRE, seja qual for o nome. */
 const TIPOS_INCLUIR = new Set([1, 7, 8]);
 
+/**
+ * Tipos que entram só quando o tour é INTERNACIONAL (fora dos EUA).
+ *
+ * O type 6 é a final de época (Tour Championship) de cada Local Tour de
+ * cidade — o irmão do type 5, que fica de fora de propósito. São 184, das
+ * quais 133 por jogar: pô-las todas no radar levaria a Fase 2 do monitor
+ * diário de 33 para ~166 torneios, cinco vezes o trabalho, e a esmagadora
+ * maioria é dos EUA, onde não nos cruzamos com ninguém. Ficam as 54 de fora
+ * dos EUA — Azata/Andaluzia, Venice, Milão, Turim, Toscana, Munique,
+ * Hamburgo, Nuremberga, Lyon, Londres, Panamá, América Latina, Ásia.
+ */
+const TIPOS_INCLUIR_SE_INTL = new Set([6]);
+
+/**
+ * O tour é de fora dos EUA?
+ *
+ * ⚠ O sinal é o CÓDIGO DE PAÍS ENTRE PARÊNTESES ("Lima (PE) Tour",
+ * "Andalusia (ES) Tour"). Os tours americanos que trazem sigla de estado
+ * usam VÍRGULA e nunca parênteses ("Charleston, SC Tour",
+ * "Central Valley, CA Tour") — verificado nos 158 tours distintos do corpus:
+ * 14 com vírgula, zero falsos positivos. Os únicos "(CA)" são Niagara e
+ * Vancouver, que são o CANADÁ, não a Califórnia — e esses contam como fora
+ * dos EUA, portanto entram de propósito.
+ */
+const ehTourInternacional = (tour) => /\([A-Z]{2}\)/.test(String(tour || ''));
+
 // ── Camada 2: palavras-chave (só para Local Tours que seguimos) ───────────
 const KEYWORDS_INCLUIR = [
   'world championship', 'world van horn', 'van horn cup',
@@ -116,11 +142,13 @@ const FORCAR_EXCLUIR = new Set([
  * nome. `tipo` é opcional: entradas de cache antigas não o têm e continuam a
  * ser avaliadas só pelo nome (o comportamento de antes).
  */
-function ehInternacional(name, tipo) {
+function ehInternacional(name, tipo, tour) {
   const n = String(name || '').toLowerCase();
   if (KEYWORDS_EXCLUIR_SEMPRE.some(k => n.includes(k))) return false;
   // Tipo oficial: Regional / State / Internacional entram sempre.
   if (tipo != null && TIPOS_INCLUIR.has(Number(tipo))) return true;
+  // Tour Championship: só fora dos EUA.
+  if (tipo != null && TIPOS_INCLUIR_SE_INTL.has(Number(tipo))) return ehTourInternacional(tour);
   // KEYWORDS_INCLUIR tem prioridade — se bater, inclui (exceto FORCAR_EXCLUIR)
   if (!KEYWORDS_INCLUIR.some(k => n.includes(k))) return false;
   if (INCLUIR_FORTE.some(k => n.includes(k))) return true;
@@ -129,14 +157,14 @@ function ehInternacional(name, tipo) {
 }
 
 /** Decisão final para um tcode: FORCAR_EXCLUIR > FORCAR_INCLUIR > tipo/nome. */
-function incluirTorneio(t, name, tipo) {
+function incluirTorneio(t, name, tipo, tour) {
   if (FORCAR_EXCLUIR.has(Number(t))) return false;
   if (FORCAR_INCLUIR.has(Number(t))) return true;
-  return ehInternacional(name, tipo);
+  return ehInternacional(name, tipo, tour);
 }
 
 module.exports = {
-  TIPO_LABEL, TIPOS_INCLUIR,
+  TIPO_LABEL, TIPOS_INCLUIR, TIPOS_INCLUIR_SE_INTL, ehTourInternacional,
   KEYWORDS_INCLUIR, KEYWORDS_EXCLUIR, KEYWORDS_EXCLUIR_SEMPRE, INCLUIR_FORTE,
   FORCAR_INCLUIR, FORCAR_EXCLUIR,
   ehInternacional, incluirTorneio,

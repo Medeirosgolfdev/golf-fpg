@@ -1184,7 +1184,23 @@ torneios vivos em t=22240…23640:
 | 12 | Girls Invitationals Tour | 2 | 2026 Girls Invitational - Longleaf (NC) |
 | 13 | International Teen Series Tour | 3 | International Teen Series at Al Hamra |
 
-`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome. As
+`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome.
+
+**`TIPOS_INCLUIR_SE_INTL = {6}` — Tour Championship, só fora dos EUA.** O
+type 6 é a final de época de cada Local Tour de cidade (irmão do type 5, que
+fica de fora): 184, das quais 133 por jogar. Todas no radar levariam a Fase 2
+do monitor diário de 33 para ~166 torneios — 5× o trabalho — e a esmagadora
+maioria é americana, onde não nos cruzamos com ninguém. Entram as **54 de fora
+dos EUA**: Azata/Andaluzia, Venice, Milão, Turim, Toscana, Munique, Hamburgo,
+Nuremberga, Lyon, Londres, Panamá, América Latina, Ásia, África.
+
+⚠ **O sinal é o código de país ENTRE PARÊNTESES** no `tour` ("Lima (PE) Tour",
+"Andalusia (ES) Tour"). Os tours americanos com sigla de estado usam
+**vírgula** e nunca parênteses ("Charleston, SC Tour", "Central Valley, CA
+Tour") — verificado nos 158 tours distintos do corpus: 14 com vírgula, zero
+falsos positivos. E os únicos "(CA)" são Niagara e Vancouver, que são o
+**Canadá**, não a Califórnia: entram de propósito. Efeito medido: **+64 no
+corpus (54 futuros), 0 americanos**. As
 palavras-chave ficam como camada **aditiva** — é só isso que continua a trazer
 as etapas de Local Tour que seguimos de propósito (Azata/Andaluzia, Panamá,
 Al Hamra, OPEN.9 Eichenried, Circolo Golf Venezia) sem abrir a porta às outras
