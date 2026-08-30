@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-29T23:11:51.918Z",
+  "generated": "2026-08-30T23:26:16.874Z",
   "year": "2026",
   "source": "build-classificacoes.js",
   "anchors": [
@@ -18,6 +18,821 @@
   ],
   "maxJuniorAge": 21,
   "tournaments": [
+    {
+      "name": "Campeonato Nacional de Clubes Solverde H",
+      "ccode": "000",
+      "tcode": "10916",
+      "date": "2026-08-27",
+      "campo": "Vilamoura - Pinhal",
+      "clube": "000",
+      "circuit": "tour",
+      "series": "tour",
+      "region": "nacional",
+      "escalao": null,
+      "num": 1,
+      "rounds": 1,
+      "playerCount": 48,
+      "players": [
+        {
+          "scoreId": "56611",
+          "pos": 2,
+          "name": "José Miguel Franco de Sousa",
+          "grossTotal": 70,
+          "toPar": -2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -1.1,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 70,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "40112",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2006-03-22"
+        },
+        {
+          "scoreId": "56618",
+          "pos": 3,
+          "name": "João Crasi Alves",
+          "grossTotal": 71,
+          "toPar": -1,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "39701",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Vilamoura",
+          "_dob": "2007-08-22"
+        },
+        {
+          "scoreId": "56616",
+          "pos": 3,
+          "name": "Gaspard Maes",
+          "grossTotal": 71,
+          "toPar": -1,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "51074",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Miramar",
+          "_dob": "2011-01-22"
+        },
+        {
+          "scoreId": "56612",
+          "pos": 3,
+          "name": "Rodrigo Marques Santos",
+          "grossTotal": 71,
+          "toPar": -1,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -1.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "37152",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Vilamoura",
+          "_dob": "2007-09-17"
+        },
+        {
+          "scoreId": "56609",
+          "pos": 6,
+          "name": "Afonso Rui Oliveira",
+          "grossTotal": 72,
+          "toPar": 0,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "40452",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Aroeira",
+          "_dob": "2007-03-29"
+        },
+        {
+          "scoreId": "56628",
+          "pos": 7,
+          "name": "Dinis Silva Rebelo",
+          "grossTotal": 73,
+          "toPar": 1,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 73,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "36678",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Vilamoura",
+          "_dob": "2007-04-13"
+        },
+        {
+          "scoreId": "56614",
+          "pos": 10,
+          "name": "Konstantin Mikirtumov",
+          "grossTotal": 74,
+          "toPar": 2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -0.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "34238",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2006-10-17"
+        },
+        {
+          "scoreId": "56617",
+          "pos": 10,
+          "name": "Santiago Dias",
+          "grossTotal": 74,
+          "toPar": 2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -1.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42908",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2012-05-29"
+        },
+        {
+          "scoreId": "56605",
+          "pos": 10,
+          "name": "Bernardo Costa Pinheiro",
+          "grossTotal": 74,
+          "toPar": 2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -5.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "40682",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2007-01-31"
+        },
+        {
+          "scoreId": "56622",
+          "pos": 14,
+          "name": "João Setúbal",
+          "grossTotal": 75,
+          "toPar": 3,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -1.8,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "43732",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Q. Peru",
+          "_dob": "2011-09-13"
+        },
+        {
+          "scoreId": "56625",
+          "pos": 14,
+          "name": "António Teixeira e Costa",
+          "grossTotal": 75,
+          "toPar": 3,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "37680",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Aroeira",
+          "_dob": "2006-12-26"
+        },
+        {
+          "scoreId": "56638",
+          "pos": 17,
+          "name": "António Mendes",
+          "grossTotal": 76,
+          "toPar": 4,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "36148",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Q. Peru",
+          "_dob": "2006-05-22"
+        },
+        {
+          "scoreId": "56608",
+          "pos": 17,
+          "name": "Gabriel Sardo",
+          "grossTotal": 76,
+          "toPar": 4,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "37010",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Q. Peru",
+          "_dob": "2008-06-08"
+        },
+        {
+          "scoreId": "56606",
+          "pos": 20,
+          "name": "Diogo Silva Pinto Rocha",
+          "grossTotal": 77,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -3.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "34186",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2007-04-13"
+        },
+        {
+          "scoreId": "56639",
+          "pos": 20,
+          "name": "Filipe Pinheiro",
+          "grossTotal": 77,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 2.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46591",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Belas",
+          "_dob": "2011-08-16"
+        },
+        {
+          "scoreId": "56627",
+          "pos": 20,
+          "name": "Francisco Nunes (jr)",
+          "grossTotal": 77,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46299",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Miramar",
+          "_dob": "2012-12-28"
+        },
+        {
+          "scoreId": "56615",
+          "pos": 20,
+          "name": "Francisco Reis",
+          "grossTotal": 77,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -0.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "40534",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Vilamoura",
+          "_dob": "2010-06-16"
+        },
+        {
+          "scoreId": "56644",
+          "pos": 25,
+          "name": "Rodrigo Sousa Correia",
+          "grossTotal": 78,
+          "toPar": 6,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "44934",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Vilamoura",
+          "_dob": "2011-08-25"
+        },
+        {
+          "scoreId": "56620",
+          "pos": 28,
+          "name": "Pedro Ferreira",
+          "grossTotal": 79,
+          "toPar": 7,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -0.1,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 79,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "43810",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2008-07-23"
+        },
+        {
+          "scoreId": "56643",
+          "pos": 30,
+          "name": "João Araújo",
+          "grossTotal": 81,
+          "toPar": 9,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 3.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "49012",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2011-11-02"
+        },
+        {
+          "scoreId": "56653",
+          "pos": 30,
+          "name": "Diogo Marques Lopes",
+          "grossTotal": 81,
+          "toPar": 9,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 8.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "35874",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2006-07-24"
+        },
+        {
+          "scoreId": "56619",
+          "pos": 30,
+          "name": "Tomás Afonso Araujo",
+          "grossTotal": 81,
+          "toPar": 9,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 0.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "35849",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Miramar",
+          "_dob": "2007-05-02"
+        },
+        {
+          "scoreId": "56626",
+          "pos": 33,
+          "name": "Nuno Palmares Jr.",
+          "grossTotal": 82,
+          "toPar": 10,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "49124",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2012-04-28"
+        },
+        {
+          "scoreId": "56604",
+          "pos": 33,
+          "name": "Ryan Dantas",
+          "grossTotal": 82,
+          "toPar": 10,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "45439",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Belas",
+          "_dob": "2011-12-25"
+        },
+        {
+          "scoreId": "56654",
+          "pos": 35,
+          "name": "Pedro Aires",
+          "grossTotal": 83,
+          "toPar": 11,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 7.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 83,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42068",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2008-03-31"
+        },
+        {
+          "scoreId": "56642",
+          "pos": 35,
+          "name": "Sebastião Cadete",
+          "grossTotal": 83,
+          "toPar": 11,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 3.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 83,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "43972",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Belas",
+          "_dob": "2007-08-08"
+        },
+        {
+          "scoreId": "56649",
+          "pos": 40,
+          "name": "Sebastiao Sardinha Saraiva",
+          "grossTotal": 84,
+          "toPar": 12,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 84,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46195",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Miramar",
+          "_dob": "2010-08-16"
+        },
+        {
+          "scoreId": "56641",
+          "pos": 42,
+          "name": "Dinis Silva",
+          "grossTotal": 85,
+          "toPar": 13,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 2.9,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 85,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "40910",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2006-02-18"
+        },
+        {
+          "scoreId": "56640",
+          "pos": 42,
+          "name": "Pedro Costa Alemão",
+          "grossTotal": 85,
+          "toPar": 13,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.8,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 85,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46706",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2011-01-15"
+        },
+        {
+          "scoreId": "56650",
+          "pos": 42,
+          "name": "Diogo Lima",
+          "grossTotal": 85,
+          "toPar": 13,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 7.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 85,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "49717",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2012-09-25"
+        },
+        {
+          "scoreId": "56647",
+          "pos": 45,
+          "name": "João Balixa",
+          "grossTotal": 86,
+          "toPar": 14,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.3,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 86,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46038",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Miramar",
+          "_dob": "2012-08-10"
+        },
+        {
+          "scoreId": "56657",
+          "pos": 46,
+          "name": "Marc Costa",
+          "grossTotal": 87,
+          "toPar": 15,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 10.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46308",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2013-02-20"
+        },
+        {
+          "scoreId": "56658",
+          "pos": 47,
+          "name": "Pedro Luís Fernandes",
+          "grossTotal": 92,
+          "toPar": 20,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 9.9,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 92,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "52168",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "CityNorte",
+          "_dob": "2012-12-19"
+        }
+      ],
+      "_anchors": [
+        "49124",
+        "42908",
+        "43732"
+      ],
+      "_sourceFile": "pull-torneios006.json"
+    },
     {
       "name": "Paul McGinley Junior Cup 2026 - U14",
       "ccode": "962",
