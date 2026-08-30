@@ -10,6 +10,8 @@
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { displayName, countryToIso2 } = require("../util/names");
+// Partilhado com o adapter england (ver util/rank.js).
+const { rankResults } = require("../util/rank");
 
 const SOURCE_ID = "wjgc";
 const SOURCE_LABEL = "WJGC / BJGT";
@@ -153,52 +155,7 @@ function normalize(data, fileName, playerMap) {
   };
 }
 
-/**
- * Reconstrói a POSIÇÃO de cada jogador.
- *
- * ⚠ A leaderboard da BlueGolf só imprime a posição na PRIMEIRA linha de cada
- * empate (T5 aparece uma vez, as linhas seguintes vêm em branco) — no FCG 2026
- * Boys 11-12 só 18 dos 75 jogadores traziam `pos`, e os restantes ficavam com
- * "—" na ficha do kids2. A `/major` já recalculava isto no `loadT`; aqui
- * espelha-se a MESMA regra para o canónico: quem não terminou vai para o fim
- * sem posição, e empates partilham a posição (ranking de competição).
- */
-function rankResults(results, holesPerRound) {
-  const withRounds = results.filter((r) => r.rounds.length > 0 && r.totalGross != null);
-  if (!withRounds.length) return;
-  const maxR = Math.max(...withRounds.map((r) => r.rounds.length));
-  const isComplete = (r) =>
-    r.status !== "DNS" &&
-    r.rounds.length === maxR &&
-    r.rounds.every((rd) =>
-      rd.gross != null &&
-      (!Array.isArray(rd.strokes) || rd.strokes.filter((s) => s > 0).length >= holesPerRound)
-    );
 
-  const ranked = withRounds
-    .map((r) => ({ r, complete: isComplete(r) }))
-    .sort((a, b) => (a.complete !== b.complete ? (a.complete ? -1 : 1) : a.r.totalGross - b.r.totalGross));
-
-  let pos = 1;
-  ranked.forEach((entry, i) => {
-    if (!entry.complete) {
-      entry.r.pos = null;
-      if (entry.r.status === "OK") entry.r.status = "CUT"; // não terminou
-      return;
-    }
-    const prev = ranked[i - 1];
-    if (i > 0 && prev && prev.complete && entry.r.totalGross > prev.r.totalGross) pos = i + 1;
-    entry.r.pos = pos;
-  });
-
-  // Sem total não há posição possível (inscrito que não jogou).
-  for (const r of results) {
-    if (r.totalGross == null || r.rounds.length === 0) {
-      r.pos = null;
-      if (r.status === "OK") r.status = "DNS";
-    }
-  }
-}
 
 /** Slug do EVENTO a partir do nome do ficheiro ("fcg268_boys_11-12" → "fcg268").
  *  Todos os escalões do mesmo evento partilham datas. */
