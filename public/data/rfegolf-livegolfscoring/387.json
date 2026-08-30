@@ -1,0 +1,3229 @@
+{
+  "id": 387,
+  "ok": true,
+  "scrapedAt": "2026-08-30T11:42:41.087Z",
+  "meta": {
+    "name": "Campeonato de España Sub-16 Femenino P&P",
+    "course": null,
+    "dateRange": "07 agosto - 08 agosto",
+    "rounds": [
+      {
+        "round": 1,
+        "label": "Ronda 1"
+      },
+      {
+        "round": 2,
+        "label": "Ronda 2"
+      }
+    ],
+    "year": 2026,
+    "dateIso": "2026-08-08"
+  },
+  "course": {
+    "meters": [
+      53,
+      61,
+      74,
+      68,
+      67,
+      51,
+      41,
+      65,
+      76,
+      84,
+      60,
+      58,
+      98,
+      75,
+      59,
+      47,
+      65,
+      59
+    ],
+    "si": [
+      16,
+      10,
+      5,
+      8,
+      3,
+      17,
+      14,
+      7,
+      2,
+      1,
+      15,
+      13,
+      6,
+      11,
+      18,
+      4,
+      9,
+      12
+    ],
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "avg": [
+      3.22,
+      3.35,
+      3.37,
+      3.55,
+      3.36,
+      3.44,
+      3.38,
+      3.51,
+      3.64,
+      3.69,
+      2.94,
+      3.31,
+      3.65,
+      3.08,
+      3.15,
+      3.53,
+      3.22,
+      3.1
+    ],
+    "metersTotal": 1161,
+    "holes": 18,
+    "courseRating": 49.5,
+    "slope": 58
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "label": "Ronda 1",
+      "par": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "players": [
+        {
+          "memberId": "38239",
+          "pos": 1,
+          "name": "NUÑEZ IGLESIAS, Blanca",
+          "toPar": -9,
+          "hoy": -9,
+          "scores": [
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            4,
+            2,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            22,
+            23
+          ],
+          "total": 45
+        },
+        {
+          "memberId": "38243",
+          "pos": 2,
+          "name": "GIL PRADA, Elsa",
+          "toPar": -4,
+          "hoy": -4,
+          "scores": [
+            3,
+            4,
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            24
+          ],
+          "total": 50
+        },
+        {
+          "memberId": "38237",
+          "pos": 2,
+          "name": "BERMUDO DEL RIO, Cornelia",
+          "toPar": -4,
+          "hoy": -4,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            4,
+            2,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            25,
+            25
+          ],
+          "total": 50
+        },
+        {
+          "memberId": "38241",
+          "pos": 4,
+          "name": "ELIAS GONZALEZ, Irene",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            6,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            25,
+            26
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38240",
+          "pos": 5,
+          "name": "ISORNA FELPETO, Elena",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38238",
+          "pos": 5,
+          "name": "QUINTANILLA GUTIERREZ, Noelia",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38247",
+          "pos": 5,
+          "name": "CASAS FERNANDEZ, Maria",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            27
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38250",
+          "pos": 8,
+          "name": "TRIGUERO FERNANDEZ, Clara",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            1,
+            3,
+            5,
+            2,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            27
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38244",
+          "pos": 9,
+          "name": "GONZALEZ BERNASES, Kira",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3
+          ],
+          "halves": [
+            26,
+            29
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38264",
+          "pos": 10,
+          "name": "SAENZ DE SANTAMARIA KHOTKO, Alicia",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            4,
+            5,
+            2,
+            3,
+            2,
+            4,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38262",
+          "pos": 10,
+          "name": "CALVO CRESPO, Carmen Manuela",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            27,
+            29
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38267",
+          "pos": 12,
+          "name": "BARRIO CID, Carmen",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            2,
+            4,
+            4,
+            3,
+            2,
+            3,
+            2,
+            2,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            32,
+            25
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38248",
+          "pos": 12,
+          "name": "DIAZ DOMINGUEZ, Elizaveta",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            6,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            2,
+            4,
+            2
+          ],
+          "halves": [
+            31,
+            26
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38242",
+          "pos": 12,
+          "name": "ARMAS MATEO, Valeria",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            27
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38245",
+          "pos": 12,
+          "name": "REY PEREZ, Martina",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            5,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            27
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38259",
+          "pos": 12,
+          "name": "FERNANDEZ VILLABRILLE, Mara",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            5,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38257",
+          "pos": 17,
+          "name": "RODRIGUEZ MIGUEZ, Martina",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            4,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38260",
+          "pos": 17,
+          "name": "DE LA VEGA RUIZ, Noa",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            2,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            2
+          ],
+          "halves": [
+            29,
+            29
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38246",
+          "pos": 17,
+          "name": "MESONADA CARPINTERO, Paula",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            6,
+            4,
+            2,
+            3,
+            5,
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            29,
+            29
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38253",
+          "pos": 20,
+          "name": "MINGUEZ RUTHERFORD, Olaya Breege",
+          "toPar": 5,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            4,
+            2,
+            3,
+            2,
+            4,
+            4,
+            3,
+            2,
+            3,
+            7,
+            4,
+            3
+          ],
+          "halves": [
+            27,
+            32
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38256",
+          "pos": 21,
+          "name": "CARNERO JARES, Carlota",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            4,
+            3,
+            2,
+            6,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            31,
+            29
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38263",
+          "pos": 22,
+          "name": "RUBIO ROMERO, Paula",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            2,
+            3,
+            6,
+            4,
+            4,
+            3,
+            2,
+            3,
+            5,
+            5,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            32,
+            29
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38272",
+          "pos": 22,
+          "name": "GARCIA SABORIDO, Xela",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            3,
+            2,
+            4,
+            5,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            28,
+            33
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38254",
+          "pos": 24,
+          "name": "GARCIA DE VINUESA SERRANO, Barbara",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            6,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            32,
+            30
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38271",
+          "pos": 24,
+          "name": "GAMBETTA SPERANZA, Carolina",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            3,
+            5,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            2,
+            2,
+            5,
+            3
+          ],
+          "halves": [
+            32,
+            30
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38255",
+          "pos": 24,
+          "name": "GOMEZ DE LA FUENTE GARCIA, Martina",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            31,
+            31
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38252",
+          "pos": 24,
+          "name": "MARIN MARTINEZ, Ana",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            2,
+            4,
+            4,
+            3,
+            6,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            32
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38251",
+          "pos": 24,
+          "name": "DIAZ JIMENEZ, Sofia",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            6,
+            2,
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4
+          ],
+          "halves": [
+            28,
+            34
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38269",
+          "pos": 24,
+          "name": "LAZARO MARIN, Marian",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            4,
+            4,
+            5,
+            3,
+            3,
+            4,
+            3,
+            3,
+            7,
+            4,
+            3
+          ],
+          "halves": [
+            27,
+            35
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38274",
+          "pos": 30,
+          "name": "SEGUIN LORENZO, Rocio",
+          "toPar": 9,
+          "hoy": 9,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            6,
+            5,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            33
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38268",
+          "pos": 31,
+          "name": "HOLGADO REQUENA, Elena",
+          "toPar": 10,
+          "hoy": 10,
+          "scores": [
+            3,
+            5,
+            4,
+            2,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4,
+            7,
+            4,
+            4,
+            3,
+            3,
+            2,
+            2,
+            3
+          ],
+          "halves": [
+            32,
+            32
+          ],
+          "total": 64
+        },
+        {
+          "memberId": "38258",
+          "pos": 32,
+          "name": "POZO GALLARDO, Olivia",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            3,
+            4,
+            5,
+            3,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            35,
+            30
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38270",
+          "pos": 32,
+          "name": "SANZ PASADAS, Amelia",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            4,
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            2,
+            3,
+            4
+          ],
+          "halves": [
+            34,
+            31
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38266",
+          "pos": 32,
+          "name": "FERNANDEZ BLANCO, Ines",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            4,
+            3,
+            5,
+            4,
+            2,
+            4,
+            4,
+            3,
+            5,
+            5,
+            4,
+            4,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            31
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38265",
+          "pos": 32,
+          "name": "AGRASAR FERNANDEZ, Mariana",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            2,
+            5,
+            6
+          ],
+          "halves": [
+            32,
+            33
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38261",
+          "pos": 36,
+          "name": "LOPEZ GUTIERREZ, Daniela",
+          "toPar": 13,
+          "hoy": 13,
+          "scores": [
+            3,
+            5,
+            4,
+            5,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            6,
+            3,
+            2,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            33
+          ],
+          "total": 67
+        },
+        {
+          "memberId": "38249",
+          "pos": 37,
+          "name": "PASCUAL CALLEJA, Daniela",
+          "toPar": 15,
+          "hoy": 15,
+          "scores": [
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            3,
+            6,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            36
+          ],
+          "total": 69
+        },
+        {
+          "memberId": "38273",
+          "pos": 38,
+          "name": "MORALES PEREZ, Gala",
+          "toPar": 19,
+          "hoy": 19,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            5,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            6,
+            4,
+            4,
+            6,
+            4,
+            3
+          ],
+          "halves": [
+            35,
+            38
+          ],
+          "total": 73
+        },
+        {
+          "memberId": "38275",
+          "pos": 38,
+          "name": "PREGO AJA, Laura",
+          "toPar": 19,
+          "hoy": 19,
+          "scores": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            7,
+            5,
+            3,
+            6,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            40
+          ],
+          "total": 73
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "label": "Ronda 2",
+      "par": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "players": [
+        {
+          "memberId": "38239",
+          "pos": 1,
+          "name": "NUÑEZ IGLESIAS, Blanca",
+          "toPar": -8,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            26
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38243",
+          "pos": 2,
+          "name": "GIL PRADA, Elsa",
+          "toPar": -3,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            29,
+            26
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38237",
+          "pos": 3,
+          "name": "BERMUDO DEL RIO, Cornelia",
+          "toPar": -1,
+          "hoy": 3,
+          "scores": [
+            3,
+            2,
+            3,
+            6,
+            4,
+            5,
+            2,
+            4,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            32,
+            25
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38238",
+          "pos": 4,
+          "name": "QUINTANILLA GUTIERREZ, Noelia",
+          "toPar": 2,
+          "hoy": 3,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38241",
+          "pos": 4,
+          "name": "ELIAS GONZALEZ, Irene",
+          "toPar": 2,
+          "hoy": 5,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            5,
+            4,
+            2,
+            4,
+            4,
+            4,
+            3,
+            2,
+            4,
+            2,
+            3,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            32,
+            27
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38253",
+          "pos": 6,
+          "name": "MINGUEZ RUTHERFORD, Olaya Breege",
+          "toPar": 3,
+          "hoy": -2,
+          "scores": [
+            3,
+            5,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            2,
+            2,
+            2,
+            3,
+            5,
+            2,
+            3,
+            4,
+            2,
+            2
+          ],
+          "halves": [
+            27,
+            25
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38240",
+          "pos": 6,
+          "name": "ISORNA FELPETO, Elena",
+          "toPar": 3,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            2,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38245",
+          "pos": 8,
+          "name": "REY PEREZ, Martina",
+          "toPar": 4,
+          "hoy": 1,
+          "scores": [
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            2
+          ],
+          "halves": [
+            27,
+            28
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38260",
+          "pos": 9,
+          "name": "DE LA VEGA RUIZ, Noa",
+          "toPar": 5,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            5,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            26,
+            29
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38247",
+          "pos": 9,
+          "name": "CASAS FERNANDEZ, Maria",
+          "toPar": 5,
+          "hoy": 6,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            4,
+            5,
+            3,
+            3,
+            2,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38250",
+          "pos": 11,
+          "name": "TRIGUERO FERNANDEZ, Clara",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            5,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38244",
+          "pos": 12,
+          "name": "GONZALEZ BERNASES, Kira",
+          "toPar": 8,
+          "hoy": 7,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            2,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38262",
+          "pos": 13,
+          "name": "CALVO CRESPO, Carmen Manuela",
+          "toPar": 9,
+          "hoy": 7,
+          "scores": [
+            3,
+            4,
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            30,
+            31
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38264",
+          "pos": 14,
+          "name": "SAENZ DE SANTAMARIA KHOTKO, Alicia",
+          "toPar": 10,
+          "hoy": 8,
+          "scores": [
+            3,
+            4,
+            4,
+            4,
+            4,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            4,
+            4,
+            4,
+            3
+          ],
+          "halves": [
+            31,
+            31
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38242",
+          "pos": 15,
+          "name": "ARMAS MATEO, Valeria",
+          "toPar": 11,
+          "hoy": 8,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3
+          ],
+          "halves": [
+            33,
+            29
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38259",
+          "pos": 15,
+          "name": "FERNANDEZ VILLABRILLE, Mara",
+          "toPar": 11,
+          "hoy": 8,
+          "scores": [
+            4,
+            5,
+            4,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            2,
+            3
+          ],
+          "halves": [
+            33,
+            29
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38254",
+          "pos": 17,
+          "name": "GARCIA DE VINUESA SERRANO, Barbara",
+          "toPar": 12,
+          "hoy": 4,
+          "scores": [
+            3,
+            5,
+            3,
+            3,
+            3,
+            2,
+            2,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38255",
+          "pos": 18,
+          "name": "GOMEZ DE LA FUENTE GARCIA, Martina",
+          "toPar": 13,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            6,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            31
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38252",
+          "pos": 18,
+          "name": "MARIN MARTINEZ, Ana",
+          "toPar": 13,
+          "hoy": 5,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            6,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            31
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38251",
+          "pos": 18,
+          "name": "DIAZ JIMENEZ, Sofia",
+          "toPar": 13,
+          "hoy": 5,
+          "scores": [
+            2,
+            3,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            32,
+            27
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38248",
+          "pos": 18,
+          "name": "DIAZ DOMINGUEZ, Elizaveta",
+          "toPar": 13,
+          "hoy": 10,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            7,
+            5,
+            3,
+            5,
+            3,
+            4,
+            5,
+            3,
+            3,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            34,
+            30
+          ],
+          "total": 64
+        },
+        {
+          "memberId": "38263",
+          "pos": 22,
+          "name": "RUBIO ROMERO, Paula",
+          "toPar": 14,
+          "hoy": 7,
+          "scores": [
+            4,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            6,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38246",
+          "pos": 22,
+          "name": "MESONADA CARPINTERO, Paula",
+          "toPar": 14,
+          "hoy": 10,
+          "scores": [
+            3,
+            3,
+            5,
+            6,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            2,
+            2,
+            3,
+            4,
+            3,
+            4,
+            2,
+            5
+          ],
+          "halves": [
+            35,
+            29
+          ],
+          "total": 64
+        },
+        {
+          "memberId": "38267",
+          "pos": 22,
+          "name": "BARRIO CID, Carmen",
+          "toPar": 14,
+          "hoy": 11,
+          "scores": [
+            6,
+            2,
+            3,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
+            2,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            35,
+            30
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38272",
+          "pos": 25,
+          "name": "GARCIA SABORIDO, Xela",
+          "toPar": 15,
+          "hoy": 8,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            7,
+            4,
+            4,
+            2,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            34,
+            28
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38257",
+          "pos": 26,
+          "name": "RODRIGUEZ MIGUEZ, Martina",
+          "toPar": 16,
+          "hoy": 12,
+          "scores": [
+            3,
+            5,
+            5,
+            4,
+            4,
+            4,
+            2,
+            4,
+            4,
+            5,
+            3,
+            3,
+            5,
+            4,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            35,
+            31
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38265",
+          "pos": 27,
+          "name": "AGRASAR FERNANDEZ, Mariana",
+          "toPar": 17,
+          "hoy": 6,
+          "scores": [
+            2,
+            2,
+            3,
+            4,
+            3,
+            3,
+            5,
+            6,
+            3,
+            5,
+            3,
+            4,
+            3,
+            2,
+            5,
+            2,
+            2,
+            3
+          ],
+          "halves": [
+            31,
+            29
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38271",
+          "pos": 27,
+          "name": "GAMBETTA SPERANZA, Carolina",
+          "toPar": 17,
+          "hoy": 9,
+          "scores": [
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            2,
+            2
+          ],
+          "halves": [
+            34,
+            29
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38269",
+          "pos": 27,
+          "name": "LAZARO MARIN, Marian",
+          "toPar": 17,
+          "hoy": 9,
+          "scores": [
+            4,
+            3,
+            2,
+            5,
+            3,
+            3,
+            4,
+            3,
+            3,
+            6,
+            3,
+            4,
+            3,
+            2,
+            4,
+            4,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            33
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38256",
+          "pos": 30,
+          "name": "CARNERO JARES, Carlota",
+          "toPar": 18,
+          "hoy": 12,
+          "scores": [
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            6,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            33
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38268",
+          "pos": 31,
+          "name": "HOLGADO REQUENA, Elena",
+          "toPar": 21,
+          "hoy": 11,
+          "scores": [
+            3,
+            3,
+            5,
+            4,
+            2,
+            4,
+            4,
+            3,
+            6,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            2,
+            4,
+            2
+          ],
+          "halves": [
+            34,
+            31
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38261",
+          "pos": 32,
+          "name": "LOPEZ GUTIERREZ, Daniela",
+          "toPar": 22,
+          "hoy": 9,
+          "scores": [
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            5,
+            5,
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            36,
+            27
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38266",
+          "pos": 32,
+          "name": "FERNANDEZ BLANCO, Ines",
+          "toPar": 22,
+          "hoy": 11,
+          "scores": [
+            4,
+            2,
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            2,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            36,
+            29
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38274",
+          "pos": 34,
+          "name": "SEGUIN LORENZO, Rocio",
+          "toPar": 23,
+          "hoy": 14,
+          "scores": [
+            3,
+            2,
+            2,
+            3,
+            4,
+            4,
+            3,
+            5,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            9,
+            4,
+            5
+          ],
+          "halves": [
+            29,
+            39
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38258",
+          "pos": 35,
+          "name": "POZO GALLARDO, Olivia",
+          "toPar": 24,
+          "hoy": 13,
+          "scores": [
+            4,
+            3,
+            5,
+            6,
+            6,
+            5,
+            5,
+            4,
+            3,
+            4,
+            2,
+            3,
+            3,
+            1,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            41,
+            26
+          ],
+          "total": 67
+        },
+        {
+          "memberId": "38270",
+          "pos": 35,
+          "name": "SANZ PASADAS, Amelia",
+          "toPar": 24,
+          "hoy": 13,
+          "scores": [
+            5,
+            4,
+            4,
+            3,
+            3,
+            6,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            6,
+            3,
+            3,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            37,
+            30
+          ],
+          "total": 67
+        },
+        {
+          "memberId": "38249",
+          "pos": 37,
+          "name": "PASCUAL CALLEJA, Daniela",
+          "toPar": 27,
+          "hoy": 12,
+          "scores": [
+            3,
+            4,
+            4,
+            4,
+            2,
+            3,
+            5,
+            5,
+            4,
+            4,
+            2,
+            4,
+            3,
+            3,
+            3,
+            6,
+            3,
+            4
+          ],
+          "halves": [
+            34,
+            32
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38273",
+          "pos": 38,
+          "name": "MORALES PEREZ, Gala",
+          "toPar": 33,
+          "hoy": 14,
+          "scores": [
+            4,
+            5,
+            4,
+            2,
+            4,
+            5,
+            3,
+            3,
+            3,
+            6,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4
+          ],
+          "halves": [
+            33,
+            35
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38275",
+          "pos": 39,
+          "name": "PREGO AJA, Laura",
+          "toPar": 36,
+          "hoy": 17,
+          "scores": [
+            3,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            9,
+            4,
+            2,
+            4,
+            4,
+            4,
+            3,
+            5,
+            2,
+            3
+          ],
+          "halves": [
+            40,
+            31
+          ],
+          "total": 71
+        }
+      ]
+    }
+  ],
+  "classification": [
+    {
+      "memberId": "38239",
+      "name": "NUÑEZ IGLESIAS, Blanca *",
+      "pos": 1,
+      "toPar": -8,
+      "roundTotals": [
+        45,
+        55
+      ],
+      "total": 100
+    },
+    {
+      "memberId": "38243",
+      "name": "GIL PRADA, Elsa *",
+      "pos": 2,
+      "toPar": -3,
+      "roundTotals": [
+        50,
+        55
+      ],
+      "total": 105
+    },
+    {
+      "memberId": "38237",
+      "name": "BERMUDO DEL RIO, Cornelia *",
+      "pos": 3,
+      "toPar": -1,
+      "roundTotals": [
+        50,
+        57
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38238",
+      "name": "QUINTANILLA GUTIERREZ, Noelia *",
+      "pos": 4,
+      "toPar": 2,
+      "roundTotals": [
+        53,
+        57
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38241",
+      "name": "ELIAS GONZALEZ, Irene *",
+      "pos": 5,
+      "toPar": 2,
+      "roundTotals": [
+        51,
+        59
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38253",
+      "name": "MINGUEZ RUTHERFORD, Olaya Breege *",
+      "pos": 6,
+      "toPar": 3,
+      "roundTotals": [
+        59,
+        52
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38240",
+      "name": "ISORNA FELPETO, Elena *",
+      "pos": 7,
+      "toPar": 3,
+      "roundTotals": [
+        53,
+        58
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38245",
+      "name": "REY PEREZ, Martina *",
+      "pos": 8,
+      "toPar": 4,
+      "roundTotals": [
+        57,
+        55
+      ],
+      "total": 112
+    },
+    {
+      "memberId": "38260",
+      "name": "DE LA VEGA RUIZ, Noa *",
+      "pos": 9,
+      "toPar": 5,
+      "roundTotals": [
+        58,
+        55
+      ],
+      "total": 113
+    },
+    {
+      "memberId": "38247",
+      "name": "CASAS FERNANDEZ, Maria *",
+      "pos": 10,
+      "toPar": 5,
+      "roundTotals": [
+        53,
+        60
+      ],
+      "total": 113
+    },
+    {
+      "memberId": "38250",
+      "name": "TRIGUERO FERNANDEZ, Clara *",
+      "pos": 11,
+      "toPar": 7,
+      "roundTotals": [
+        54,
+        61
+      ],
+      "total": 115
+    },
+    {
+      "memberId": "38244",
+      "name": "GONZALEZ BERNASES, Kira *",
+      "pos": 12,
+      "toPar": 8,
+      "roundTotals": [
+        55,
+        61
+      ],
+      "total": 116
+    },
+    {
+      "memberId": "38262",
+      "name": "CALVO CRESPO, Carmen Manuela *",
+      "pos": 13,
+      "toPar": 9,
+      "roundTotals": [
+        56,
+        61
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38264",
+      "name": "SAENZ DE SANTAMARIA KHOTKO, Alicia *",
+      "pos": 14,
+      "toPar": 10,
+      "roundTotals": [
+        56,
+        62
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38242",
+      "name": "ARMAS MATEO, Valeria *",
+      "pos": 15,
+      "toPar": 11,
+      "roundTotals": [
+        57,
+        62
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38259",
+      "name": "FERNANDEZ VILLABRILLE, Mara *",
+      "pos": 16,
+      "toPar": 11,
+      "roundTotals": [
+        57,
+        62
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38254",
+      "name": "GARCIA DE VINUESA SERRANO, Barbara",
+      "pos": 17,
+      "toPar": 12,
+      "roundTotals": [
+        62,
+        58
+      ],
+      "total": 120
+    },
+    {
+      "memberId": "38255",
+      "name": "GOMEZ DE LA FUENTE GARCIA, Martina",
+      "pos": 18,
+      "toPar": 13,
+      "roundTotals": [
+        62,
+        59
+      ],
+      "total": 121
+    },
+    {
+      "memberId": "38252",
+      "name": "MARIN MARTINEZ, Ana",
+      "pos": 19,
+      "toPar": 13,
+      "roundTotals": [
+        62,
+        59
+      ],
+      "total": 121
+    },
+    {
+      "memberId": "38251",
+      "name": "DIAZ JIMENEZ, Sofia",
+      "pos": 20,
+      "toPar": 13,
+      "roundTotals": [
+        62,
+        59
+      ],
+      "total": 121
+    },
+    {
+      "memberId": "38248",
+      "name": "DIAZ DOMINGUEZ, Elizaveta *",
+      "pos": 21,
+      "toPar": 13,
+      "roundTotals": [
+        57,
+        64
+      ],
+      "total": 121
+    },
+    {
+      "memberId": "38263",
+      "name": "RUBIO ROMERO, Paula",
+      "pos": 22,
+      "toPar": 14,
+      "roundTotals": [
+        61,
+        61
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38246",
+      "name": "MESONADA CARPINTERO, Paula *",
+      "pos": 23,
+      "toPar": 14,
+      "roundTotals": [
+        58,
+        64
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38267",
+      "name": "BARRIO CID, Carmen *",
+      "pos": 24,
+      "toPar": 14,
+      "roundTotals": [
+        57,
+        65
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38272",
+      "name": "GARCIA SABORIDO, Xela",
+      "pos": 25,
+      "toPar": 15,
+      "roundTotals": [
+        61,
+        62
+      ],
+      "total": 123
+    },
+    {
+      "memberId": "38257",
+      "name": "RODRIGUEZ MIGUEZ, Martina *",
+      "pos": 26,
+      "toPar": 16,
+      "roundTotals": [
+        58,
+        66
+      ],
+      "total": 124
+    },
+    {
+      "memberId": "38265",
+      "name": "AGRASAR FERNANDEZ, Mariana",
+      "pos": 27,
+      "toPar": 17,
+      "roundTotals": [
+        65,
+        60
+      ],
+      "total": 125
+    },
+    {
+      "memberId": "38271",
+      "name": "GAMBETTA SPERANZA, Carolina",
+      "pos": 28,
+      "toPar": 17,
+      "roundTotals": [
+        62,
+        63
+      ],
+      "total": 125
+    },
+    {
+      "memberId": "38269",
+      "name": "LAZARO MARIN, Marian",
+      "pos": 29,
+      "toPar": 17,
+      "roundTotals": [
+        62,
+        63
+      ],
+      "total": 125
+    },
+    {
+      "memberId": "38256",
+      "name": "CARNERO JARES, Carlota *",
+      "pos": 30,
+      "toPar": 18,
+      "roundTotals": [
+        60,
+        66
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38268",
+      "name": "HOLGADO REQUENA, Elena",
+      "pos": 31,
+      "toPar": 21,
+      "roundTotals": [
+        64,
+        65
+      ],
+      "total": 129
+    },
+    {
+      "memberId": "38261",
+      "name": "LOPEZ GUTIERREZ, Daniela",
+      "pos": 32,
+      "toPar": 22,
+      "roundTotals": [
+        67,
+        63
+      ],
+      "total": 130
+    },
+    {
+      "memberId": "38266",
+      "name": "FERNANDEZ BLANCO, Ines",
+      "pos": 33,
+      "toPar": 22,
+      "roundTotals": [
+        65,
+        65
+      ],
+      "total": 130
+    },
+    {
+      "memberId": "38274",
+      "name": "SEGUIN LORENZO, Rocio",
+      "pos": 34,
+      "toPar": 23,
+      "roundTotals": [
+        63,
+        68
+      ],
+      "total": 131
+    },
+    {
+      "memberId": "38258",
+      "name": "POZO GALLARDO, Olivia",
+      "pos": 35,
+      "toPar": 24,
+      "roundTotals": [
+        65,
+        67
+      ],
+      "total": 132
+    },
+    {
+      "memberId": "38270",
+      "name": "SANZ PASADAS, Amelia",
+      "pos": 36,
+      "toPar": 24,
+      "roundTotals": [
+        65,
+        67
+      ],
+      "total": 132
+    },
+    {
+      "memberId": "38249",
+      "name": "PASCUAL CALLEJA, Daniela",
+      "pos": 37,
+      "toPar": 27,
+      "roundTotals": [
+        69,
+        66
+      ],
+      "total": 135
+    },
+    {
+      "memberId": "38273",
+      "name": "MORALES PEREZ, Gala",
+      "pos": 38,
+      "toPar": 33,
+      "roundTotals": [
+        73,
+        68
+      ],
+      "total": 141
+    },
+    {
+      "memberId": "38275",
+      "name": "PREGO AJA, Laura",
+      "pos": 39,
+      "toPar": 36,
+      "roundTotals": [
+        73,
+        71
+      ],
+      "total": 144
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "subid": "1647",
+      "groups": [
+        {
+          "teeTime": "12:00",
+          "startHole": 1,
+          "players": [
+            "BERMUDO DEL RIO, CORNELIA",
+            "QUINTANILLA GUTIERREZ, NOELIA",
+            "NUÑEZ IGLESIAS, BLANCA"
+          ]
+        },
+        {
+          "teeTime": "12:56",
+          "startHole": 1,
+          "players": [
+            "GIL PRADA, ELSA",
+            "GONZALEZ BERNASES, KIRA",
+            "REY PEREZ, MARTINA"
+          ]
+        },
+        {
+          "teeTime": "13:59",
+          "startHole": 1,
+          "players": [
+            "PASCUAL CALLEJA, DANIELA",
+            "TRIGUERO FERNANDEZ, CLARA",
+            "DIAZ JIMENEZ, SOFIA"
+          ]
+        },
+        {
+          "teeTime": "14:15",
+          "startHole": 2,
+          "players": [
+            "GOMEZ DE LA FUENTE GARCIA, MARTINA",
+            "CARNERO JARES, CARLOTA",
+            "RODRIGUEZ MIGUEZ, MARTINA"
+          ]
+        },
+        {
+          "teeTime": "15:11",
+          "startHole": 4,
+          "players": [
+            "LOPEZ GUTIERREZ, DANIELA",
+            "CALVO CRESPO, CARMEN MANUELA",
+            "RUBIO ROMERO, PAULA"
+          ]
+        },
+        {
+          "teeTime": "16:46",
+          "startHole": 6,
+          "players": [
+            "BARRIO CID, CARMEN",
+            "HOLGADO REQUENA, ELENA",
+            "LAZARO MARIN, MARIAN"
+          ]
+        },
+        {
+          "teeTime": "17:42",
+          "startHole": 8,
+          "players": [
+            "MORALES PEREZ, GALA",
+            "SEGUIN LORENZO, ROCIO",
+            "PREGO AJA, LAURA"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "subid": "1648",
+      "groups": [
+        {
+          "teeTime": "08:30",
+          "startHole": 1,
+          "players": [
+            "PREGO AJA, LAURA",
+            "MORALES PEREZ, GALA",
+            "PASCUAL CALLEJA, DANIELA"
+          ]
+        },
+        {
+          "teeTime": "09:02",
+          "startHole": 1,
+          "players": [
+            "FERNANDEZ BLANCO, INES",
+            "POZO GALLARDO, OLIVIA",
+            "HOLGADO REQUENA, ELENA"
+          ]
+        },
+        {
+          "teeTime": "09:18",
+          "startHole": 1,
+          "players": [
+            "MARIN MARTINEZ, ANA",
+            "GOMEZ DE LA FUENTE GARCIA, MARTINA",
+            "GAMBETTA SPERANZA, CAROLINA"
+          ]
+        },
+        {
+          "teeTime": "09:58",
+          "startHole": 2,
+          "players": [
+            "CARNERO JARES, CARLOTA",
+            "MINGUEZ RUTHERFORD, OLAYA BREEGE",
+            "MESONADA CARPINTERO, PAULA"
+          ]
+        },
+        {
+          "teeTime": "11:02",
+          "startHole": 4,
+          "players": [
+            "REY PEREZ, MARTINA",
+            "ARMAS MATEO, VALERIA",
+            "DIAZ DOMINGUEZ, ELIZAVETA"
+          ]
+        },
+        {
+          "teeTime": "13:02",
+          "startHole": 6,
+          "players": [
+            "GONZALEZ BERNASES, KIRA",
+            "TRIGUERO FERNANDEZ, CLARA",
+            "CASAS FERNANDEZ, MARIA"
+          ]
+        },
+        {
+          "teeTime": "13:18",
+          "startHole": 8,
+          "players": [
+            "BERMUDO DEL RIO, CORNELIA",
+            "GIL PRADA, ELSA",
+            "NUÑEZ IGLESIAS, BLANCA"
+          ]
+        }
+      ]
+    }
+  ]
+}
