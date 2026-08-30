@@ -1744,15 +1744,41 @@ Confirmadíssimo via Chrome live em Carris 2025 (validado contra detail page do 
 
 Idade está IMPLÍCITA pelo tier do torneio (Carris=U18, McGregor=U16, Reid=U14) ou pela divisão (Jean Case Memorial U15 dentro do McGregor).
 
-### Limitações conhecidas — 9 torneios que não passam
+### Limitações conhecidas — torneios que não passam
 
 | Slug | Razão |
 |---|---|
 | `carris-trophy-2024`, `mcgregor-trophy-2023`, `english-girls-championship-2025` | "dropdown sem eventos" — England Golf arquivou e removeu os dados do GG |
-| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `boys-county-finals-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
-| `bronte-law-farnham-2026` | Torneio futuro, página ainda não publicada |
+| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
+| `bronte-law-farnham-2026`, `bronte-law-moor-allerton-2026` | Idem — `campaigns/2263/run`. Tentados os DOIS ids (aterragem e "Results"). |
+| `boys-county-finals-2025`, `boys-county-finals-2026` | **Match play entre condados** — o dropdown traz "Somerset vs Yorkshire", "Nottinghamshire vs Hampshire"… O `isStrokePlay` exclui match play **de propósito** (não há leaderboard individual para extrair). Não é falha do scraper nem da página. |
+| `english-schools-team-2026`, `english-schools-scratch-team-2026` | Campeonatos por EQUIPAS (escolas) — "dropdown sem eventos" nos dois ids. |
 
 Estes não são bugs do scraper. Confirmado via Chrome live: as páginas existem mas o iframe `tournament_results` nunca é carregado.
+
+⚠ **Estas provas contam em `semDados`, NUNCA em `fail`** (2026-08-30) — e por isso
+não fazem o cron ficar vermelho. Se contassem, o alarme tocava **todas as
+semanas**, porque o catálogo tem provas permanentemente sem stroke play e porque
+no início de cada época NENHUMA prova do ano tem ainda resultados. Um alarme que
+toca sempre deixa de ser lido — que é, no fundo, como o England chegou a estar
+três meses por scrapar. `fail` fica reservado a excepções (exit 1).
+
+### Época de 2026 — o que ficou coberto
+
+8 ficheiros / 7 provas, scrapados a 2026-08-30:
+
+| Prova | Jogadores | Par |
+|---|---|---|
+| Carris Trophy (4 rondas) | 144 | 70 |
+| Reid Trophy (3 rondas) | 144 | 70 |
+| McGregor Trophy | 144 | 71 |
+| English Girls' Open Stroke Play | 142 | 73 |
+| English Girls' U16 & U14 (`_div1` + `_div2`) | 51 + 93 | 73 |
+| Bronte Law — Royal Mid Surrey | 30 | 73 |
+| Bronte Law — Edgbaston | 27 | 72 |
+
+Todas entram no canónico do kids2 (agregador: 30296 juniores · 20898 torneios,
+9/9 sanity checks, Manuel×Dmitrii = 7 mantido).
 
 ### Bugs históricos resolvidos (2026-05-18)
 

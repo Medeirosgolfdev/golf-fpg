@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-30T09:45:23.807Z",
+  "generatedAt": "2026-08-30T10:26:14.754Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -30287,6 +30287,34 @@
       "editionsCount": 4
     },
     {
+      "id": "england-english-girls-u16-u14-stroke-play",
+      "label": "English Girls' U16 & U14 Stroke Play",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-u16-u14-2025_div1",
+        "england-england_english-girls-u16-u14-2025_div2",
+        "england-england_english-girls-u16-u14-2026_div1",
+        "england-england_english-girls-u16-u14-2026_div2"
+      ],
+      "firstDate": "2025-07-29",
+      "lastDate": "2026-08-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "england-reid-trophy",
+      "label": "Reid Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_reid-trophy-2023",
+        "england-england_reid-trophy-2024",
+        "england-england_reid-trophy-2025",
+        "england-england_reid-trophy-2026"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2026-08-04",
+      "editionsCount": 4
+    },
+    {
       "id": "ua-worlds",
       "label": "Under Armour World Championship",
       "sourceId": "uaworlds",
@@ -37958,6 +37986,19 @@
       "editionsCount": 3
     },
     {
+      "id": "england-carris-trophy",
+      "label": "Carris Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_carris-trophy-2023",
+        "england-england_carris-trophy-2025",
+        "england-england_carris-trophy-2026"
+      ],
+      "firstDate": "2023-07-25",
+      "lastDate": "2026-07-21",
+      "editionsCount": 3
+    },
+    {
       "id": "england-english-u18-amateur-championship",
       "label": "English U18 Amateur Championship",
       "sourceId": "england",
@@ -37971,16 +38012,16 @@
       "editionsCount": 3
     },
     {
-      "id": "england-reid-trophy",
-      "label": "Reid Trophy",
+      "id": "england-mcgregor-trophy",
+      "label": "McGregor Trophy",
       "sourceId": "england",
       "tournamentIds": [
-        "england-england_reid-trophy-2023",
-        "england-england_reid-trophy-2024",
-        "england-england_reid-trophy-2025"
+        "england-england_mcgregor-trophy-2024",
+        "england-england_mcgregor-trophy-2025",
+        "england-england_mcgregor-trophy-2026"
       ],
-      "firstDate": "2023-08-08",
-      "lastDate": "2025-08-05",
+      "firstDate": "2024-07-16",
+      "lastDate": "2026-07-14",
       "editionsCount": 3
     },
     {
@@ -49217,42 +49258,6 @@
       ],
       "firstDate": "2022-04-16",
       "lastDate": "2023-04-24",
-      "editionsCount": 2
-    },
-    {
-      "id": "england-carris-trophy",
-      "label": "Carris Trophy",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_carris-trophy-2023",
-        "england-england_carris-trophy-2025"
-      ],
-      "firstDate": "2023-07-25",
-      "lastDate": "2025-07-22",
-      "editionsCount": 2
-    },
-    {
-      "id": "england-english-girls-u16-u14-stroke-play",
-      "label": "English Girls' U16 & U14 Stroke Play",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_english-girls-u16-u14-2025_div1",
-        "england-england_english-girls-u16-u14-2025_div2"
-      ],
-      "firstDate": "2025-07-29",
-      "lastDate": "2025-07-29",
-      "editionsCount": 2
-    },
-    {
-      "id": "england-mcgregor-trophy",
-      "label": "McGregor Trophy",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_mcgregor-trophy-2024",
-        "england-england_mcgregor-trophy-2025"
-      ],
-      "firstDate": "2024-07-16",
-      "lastDate": "2025-07-15",
       "editionsCount": 2
     },
     {
@@ -75155,6 +75160,17 @@
       "editionsCount": 1
     },
     {
+      "id": "england-bronte-law-junior-series-edgbaston",
+      "label": "Bronte Law Junior Series  - Edgbaston",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-edgbaston-2026"
+      ],
+      "firstDate": "2026-07-01",
+      "lastDate": "2026-07-01",
+      "editionsCount": 1
+    },
+    {
       "id": "england-bronte-law-junior-series-farnham",
       "label": "Bronte Law Junior Series  - Farnham",
       "sourceId": "england",
@@ -75185,6 +75201,28 @@
       ],
       "firstDate": "2025-08-24",
       "lastDate": "2025-08-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-bronte-law-junior-series-royal-mid-surrey",
+      "label": "Bronte Law Junior Series  - Royal Mid Surrey",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-royal-mid-surrey-2026"
+      ],
+      "firstDate": "2026-07-01",
+      "lastDate": "2026-07-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-english-girls-open-stroke-play-championship",
+      "label": "English Girls' Open Stroke Play Championship",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-open-stroke-play-2026"
+      ],
+      "firstDate": "2026-07-21",
+      "lastDate": "2026-07-21",
       "editionsCount": 1
     },
     {
@@ -76145,28 +76183,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-english-u18-carris-trophy",
-      "label": "English U18 (Carris Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11777"
-      ],
-      "firstDate": "2026-07-21",
-      "lastDate": "2026-07-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-girls-open-stroke-play-championship",
-      "label": "English Girls' Open Stroke Play Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11780"
-      ],
-      "firstDate": "2026-07-21",
-      "lastDate": "2026-07-21",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-austrian-boys-u12",
       "label": "Austrian Boys U12",
       "sourceId": "egr",
@@ -76219,17 +76235,6 @@
       ],
       "firstDate": "2026-07-15",
       "lastDate": "2026-07-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-u16-mcgregor-trophy",
-      "label": "English U16 (McGregor Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11776"
-      ],
-      "firstDate": "2026-07-14",
-      "lastDate": "2026-07-14",
       "editionsCount": 1
     },
     {
