@@ -154,41 +154,64 @@ let SESSAO_META = null;   // nome/campo/data lidos da própria página
 let SESSAO_LISTA;         // undefined = por tentar · null = indisponível
 
 async function warmupLinkpage(tclub, tcode) {
-  // Activa sessão ASP.NET antes de POSTs a PageMethods
-  const url = `${BASE}/linkpage.aspx?page=classif&club=${tclub}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
-  try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent": UA,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "pt-PT,pt;q=0.9",
-        ...(COOKIE ? { "Cookie": COOKIE } : {}),
-        "Referer": `${BASE}/`,
-      },
-      redirect: "follow",
-    });
-    const html = await res.text();
-    // ⚠ HTTP 200 NÃO é prova de sessão útil. Sem cookies válidas este linkpage
-    // devolve 200 na mesma (medido 2026-08-30) e só o PageMethod a seguir é
-    // que rebenta — o warmup dava-se por bom e o fallback nunca corria.
-    // O teste é o CONTEÚDO: a página real traz Torneio/Campo/Data.
-    if (res.ok && parseMetaClassif(html).name) { SESSAO = null; SESSAO_META = null; return true; }
-  } catch { /* cai no fallback */ }
+  // ⚠ ORDEM: público primeiro (2026-08-30). A sessão auto-gerada pelo ack não
+  // expira; as cookies duram ~9h e morrem sempre a meio da janela de scrapes
+  // do fim-de-semana. As cookies ficam como fallback — se o gate público
+  // estiver em baixo, ainda se tenta por elas.
+  // FPG_AUTH_MODE=cookies restaura a ordem antiga sem mexer em código.
+  const modo = String(process.env.FPG_AUTH_MODE || "").trim().toLowerCase();
+  const publicoPrimeiro = modo !== "cookies";
 
-  // Caminho habitual em baixo (ou cookies mortas) → sessão auto-gerada.
-  try {
-    const sess = new Sessao();
-    const abriu = await sess.abrir("classif", tclub, tcode);
-    if (abriu.ok) {
-      SESSAO = sess;
-      SESSAO_META = parseMetaClassif(abriu.html);
-      console.log(`[classif] sem cookies: sessão auto-gerada em scoring.fpg.pt/lists` +
-                  (SESSAO_META && SESSAO_META.name ? ` — ${SESSAO_META.name}` : ""));
-      return true;
-    }
-  } catch { /* nada a fazer */ }
+  const viaPublica = async () => {
+    try {
+      const sess = new Sessao();
+      const abriu = await sess.abrir("classif", tclub, tcode);
+      if (abriu.ok) {
+        SESSAO = sess;
+        SESSAO_META = parseMetaClassif(abriu.html);
+        return true;
+      }
+    } catch { /* nada a fazer */ }
+    return false;
+  };
+
+  const viaCookies = async () => {
+    if (!COOKIE) return false;
+    const url = `${BASE}/linkpage.aspx?page=classif&club=${tclub}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": UA,
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "pt-PT,pt;q=0.9",
+          "Cookie": COOKIE,
+          "Referer": `${BASE}/`,
+        },
+        redirect: "follow",
+      });
+      const html = await res.text();
+      // ⚠ HTTP 200 NÃO é prova de sessão útil. Sem cookies válidas este linkpage
+      // devolve 200 na mesma (medido 2026-08-30) e só o PageMethod a seguir é
+      // que rebenta. O teste é o CONTEÚDO: a página real traz Torneio/Campo/Data.
+      if (res.ok && parseMetaClassif(html).name) { SESSAO = null; SESSAO_META = null; return true; }
+    } catch { /* cai no outro caminho */ }
+    return false;
+  };
+
+  const [primeiro, segundo] = publicoPrimeiro ? [viaPublica, viaCookies] : [viaCookies, viaPublica];
+  if (await primeiro()) { anunciarCaminho(); return true; }
+  if (await segundo()) { anunciarCaminho(); return true; }
   SESSAO = null;
   return false;
+}
+
+let ANUNCIOU_CAMINHO = false;
+function anunciarCaminho() {
+  if (ANUNCIOU_CAMINHO) return;
+  ANUNCIOU_CAMINHO = true;
+  console.log(SESSAO
+    ? "[classif] sessão pública (ack, sem credenciais)"
+    : "[classif] sessão autenticada por cookies");
 }
 
 async function postPageMethod(pathname, qs, body) {
