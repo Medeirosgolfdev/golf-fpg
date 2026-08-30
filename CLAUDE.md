@@ -503,8 +503,22 @@ o seu (devolve `Result:ERROR` logo depois de um warmup bem sucedido). O
 `scrape-classif-node.js` mantém `SESSAO` (classif) e `SESSAO_LISTA`
 (descoberta) independentes.
 
-O `scrape-classif-node.js` usa cookies primeiro e a sessão pública quando não
-há cookies ou o caminho habitual falha. Verificado com os ficheiros de cookies
+**Quem já usa isto:** `scrape-classif-node.js` e `scrape-drive-node.js`
+(este último com todo o pipeline — descoberta + classificações + scorecards).
+Nos dois a regra é a mesma: cookies primeiro, caminho público quando não há
+cookies **ou quando as que há devolvem 500**. No `scrape-drive-node.js` a
+comutação vive num único sítio (`dgPostSmart`, que embrulha o `dgPost`), e a
+troca é anunciada no log: `cookies não autenticam — a seguir pelo caminho
+público`.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
+
+Medido com o 987/10207 (Drive Tour Norte – Amarante) nos três cenários —
+cookies boas, **sem cookies** e **cookies mortas**: os `drive-data-2026-08.json`
+saem **byte a byte idênticos** (metadata, leaderboard, scorecards, par, metros,
+CR/slope, tee e PCC). Verificado com os ficheiros de cookies
 escondidos e as env vars limpas: **18 jogadores e 14 scorecards idênticos linha
 a linha** aos da via autenticada, com metadata completa (nome, campo, data,
 rondas, circuito).

@@ -88,7 +88,11 @@ const info = m => console.log(`  ${m}`);
 // COOKIES
 // ═══════════════════════════════════════════════════════════
 const { loadCookieHeader } = require("./lib/cookies");
+// ⚠ Opcionais desde 2026-08-30: há um caminho público que não leva
+// credencial nenhuma (ver "MODO PÚBLICO" abaixo). Sem cookies o scrape arranca
+// já nesse modo em vez de abortar.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["DATAGOLF_SCORING_COOKIES"],
   file: path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json"),
   label: "[drive]",
@@ -98,13 +102,76 @@ const COOKIE = loadCookieHeader({
 // FETCH WRAPPER
 // ═══════════════════════════════════════════════════════════
 const { makeFpgPost } = require("./lib/fpg-http");
-const dgPost = makeFpgPost({
+const dgPost = COOKIE ? makeFpgPost({
   baseUrl: BASE_URL,
   cookie: COOKIE,
   ua: UA,
   origin: "https://scoring.datagolf.pt",
   referer: `${BASE_URL}/tournaments.aspx`,
-});
+}) : null;
+
+// ═══════════════════════════════════════════════════════════
+// MODO PÚBLICO — sem cookies guardados (2026-08-30)
+// ═══════════════════════════════════════════════════════════
+/* Os gateways da FPG que levam o `ack` universal EMITEM eles próprios a
+   sessão ASP.NET (ASP.NET_SessionId + DG_Lists_URL) a quem chega sem
+   credenciais. Nunca foi preciso capturar cookies no Chrome 90 para este
+   scrape: faltava ACEITAR a sessão em vez de reproduzir uma guardada — e o
+   500 que se lia como "cookies expiraram" é, na origem,
+   "Object reference not set to an instance of an object", o null-ref clássico
+   de quem não tem sessão. Detalhe e medições em scripts/lib/fpg-session.js.
+
+   ⚠ DUAS sessões, não uma: o DG_Lists_URL guarda o CONTEXTO da página. Um
+   POST ao tournaments.aspx reescreve-o e o classif a seguir perde o seu
+   (Result:ERROR logo depois de um warmup bem sucedido). Daí a lista ter
+   sessão própria e cada torneio a sua. */
+const { Sessao, criarSessaoLista } = require("./lib/fpg-session");
+let MODO_PUBLICO = !COOKIE;
+let SESSAO_LISTA;                       // undefined = por criar · null = falhou
+const SESSOES_CLASSIF = new Map();      // "tclub/tcode" → Sessao
+
+async function sessaoLista() {
+  if (SESSAO_LISTA === undefined) SESSAO_LISTA = await criarSessaoLista().catch(() => null);
+  return SESSAO_LISTA;
+}
+
+async function sessaoClassif(tclub, tcode) {
+  const k = `${tclub}/${tcode}`;
+  if (!SESSOES_CLASSIF.has(k)) {
+    const sess = new Sessao();
+    const abriu = await sess.abrir("classif", tclub, tcode).catch(() => null);
+    SESSOES_CLASSIF.set(k, abriu && abriu.ok ? sess : null);
+  }
+  return SESSOES_CLASSIF.get(k);
+}
+
+/** Mesma assinatura e mesma forma de resposta do dgPost, sem credenciais. */
+async function dgPostPublico(pathname, body, qs) {
+  const lista = pathname.startsWith("tournaments.aspx");
+  const sess = lista ? await sessaoLista() : await sessaoClassif(body.tclub, body.tcode);
+  if (!sess) throw new Error(`sem sessão pública para ${pathname}`);
+  const r = await sess.postPageMethod(pathname, body, { queryString: qs });
+  if (!r.ok) throw new Error(`${pathname}: Result=${r.result || "?"} (público)`);
+  return { Records: r.records, TotalRecordCount: r.total ?? 0, Result: "OK" };
+}
+
+/** Caminho habitual primeiro (metadata igual); público quando ele falha. */
+async function dgPostSmart(pathname, body, qs) {
+  if (MODO_PUBLICO) return dgPostPublico(pathname, body, qs);
+  try {
+    return await dgPost(pathname, body, qs);
+  } catch (e) {
+    // HTTP 500 aqui não distingue "cookies mortas" de "FPG em baixo" — em
+    // qualquer dos casos vale a pena perguntar sem credenciais antes de
+    // desistir. Se o público responder, é porque o problema era nosso.
+    if (!e || e.status !== 500) throw e;
+    const r = await dgPostPublico(pathname, body, qs).catch(() => null);
+    if (!r) throw e;
+    MODO_PUBLICO = true;
+    info("cookies não autenticam — a seguir pelo caminho público (sem credenciais)");
+    return r;
+  }
+}
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBRIR TORNEIOS (drive + aquapor)
@@ -138,7 +205,7 @@ async function tournSearchPage(TournName, startIndex) {
     jtSorting: "started_at DESC",
   };
   const qs = `jtStartIndex=${startIndex}&jtPageSize=50&jtSorting=${encodeURIComponent("started_at DESC")}`;
-  const d = await dgPost("tournaments.aspx/TournamentsLST", body, qs);
+  const d = await dgPostSmart("tournaments.aspx/TournamentsLST", body, qs);
   return { records: d.Records || [], total: d.TotalRecordCount || 0 };
 }
 
@@ -191,7 +258,7 @@ async function fetchClassif(tclub, tcode, round) {
     };
     const qs = `jtStartIndex=${startIndex}&jtPageSize=${pageSize}&jtSorting=${encodeURIComponent("score_id DESC")}`;
     try {
-      const d = await dgPost("classif.aspx/ClassifLST", body, qs);
+      const d = await dgPostSmart("classif.aspx/ClassifLST", body, qs);
       const recs = d.Records || [];
       allRecords.push(...recs);
       if (recs.length < pageSize) break;
@@ -211,7 +278,7 @@ async function fetchScorecard(scoreId, tclub, tcode, round) {
     scoringtype: "1", classiftype: "I", classifround: String(round),
   };
   try {
-    const d = await dgPost("classif.aspx/ScoreCard", body, qs);
+    const d = await dgPostSmart("classif.aspx/ScoreCard", body, qs);
     return (d.Records && d.Records[0]) || null;
   } catch { return null; }
 }
@@ -223,7 +290,7 @@ async function fetchScorecardAggregate(scoreId, tclub, tcode) {
     scoringtype: "1", classiftype: "I", classifround: "",
   };
   try {
-    const d = await dgPost("classifAgregate.aspx/ScoreCard", body, qs);
+    const d = await dgPostSmart("classifAgregate.aspx/ScoreCard", body, qs);
     return d.Records || null;
   } catch { return null; }
 }
