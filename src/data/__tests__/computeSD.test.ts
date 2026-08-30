@@ -97,3 +97,51 @@ describe("computeSD — volta incompleta (a decorrer)", () => {
     expect(sd).toBe(6.3);
   });
 });
+
+/**
+ * Sentinelas de "sem cartão" — caso real: 8º Torneio CGSS OM NOS 2026
+ * (Santo da Serra, 29-08-2026). Nove jogadores marcados ND (não devolveu)
+ * vinham com grossTotal null e cartão todo a zeros; o numGross() converte
+ * isso em 999 e o Net Double Bogey "reparava" o cartão, dando SD ≈ −58.8.
+ * Como −58.8 ≤ HCP, o badge saía VERDE e as desistências apareciam como as
+ * melhores voltas do torneio.
+ */
+describe("computeSD — sentinelas de sem cartão", () => {
+  it("grossTotal null (ND) com cartão a zeros → sd null", () => {
+    const { sd, source } = computeSD(basePlayer({
+      scores: Array(18).fill(0), par: par18, si: si18, nholes: 18,
+      grossTotal: null as any, toPar: null as any, hcpExact: 25.8,
+      courseRating: 65.9, slope: 126,
+    }));
+    expect(sd).toBeNull();
+    expect(source).toBeNull();
+  });
+
+  it("gross 998 (ND/NR) → sd null", () => {
+    const { sd } = computeSD(basePlayer({
+      scores: Array(18).fill(0), par: par18, si: si18, nholes: 18,
+      grossTotal: 998, hcpExact: 14.8, courseRating: 65.9, slope: 126,
+    }));
+    expect(sd).toBeNull();
+  });
+
+  it("gross 999 (NS/WD) sem cartão → sd null", () => {
+    const { sd } = computeSD(basePlayer({
+      scores: [], par: par18, nholes: 18, grossTotal: 999,
+      courseRating: 65.9, slope: 126,
+    }));
+    expect(sd).toBeNull();
+  });
+
+  it("volta a sério do mesmo torneio continua a dar SD (Manuel, 72 · CR 65.9 · Slope 126 · PCC −1)", () => {
+    const scores = [5, 4, 4, 5, 3, 3, 4, 3, 5, 5, 3, 5, 3, 5, 4, 5, 2, 4];
+    const pars = [5, 4, 4, 4, 3, 4, 4, 3, 5, 4, 4, 5, 3, 4, 4, 5, 3, 4];
+    const si = [2, 4, 14, 12, 8, 6, 16, 10, 18, 15, 13, 5, 11, 1, 7, 3, 17, 9];
+    const { sd, source } = computeSD(basePlayer({
+      scores, par: pars, si, nholes: 18, grossTotal: 72, hcpExact: 7.9,
+      courseRating: 65.9, slope: 126, pcc: -1,
+    }));
+    expect(source).toBe("ags");
+    expect(sd).toBe(6.4);
+  });
+});

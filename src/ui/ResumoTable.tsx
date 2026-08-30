@@ -122,8 +122,10 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   let sd18: number | null = null;
   let sdSource: "fpg" | "ags" | "raw" | null = null;
 
-  // Skip SD calculation for multi-round combined entries (nholes > 18)
-  if (nh <= 18) {
+  // Skip SD calculation for multi-round combined entries (nholes > 18).
+  // g >= 900 é sentinela de "sem cartão" (998 ND/NR, 999 NS/WD) — ver a mesma
+  // guarda no computeSD() de fpgUtils.ts.
+  if (nh <= 18 && g < 900) {
     // 1) FPG lookup by scoreId
     const sid = String(p.scoreId);
     if (sdLookup[sid] != null) {

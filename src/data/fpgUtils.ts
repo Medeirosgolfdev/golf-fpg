@@ -454,6 +454,14 @@ export function computeSD(p: Player): SDResult {
   // Amendoeira 2026 (PCC −1): tabela 6.3 vs oficial 7.3.
   const pcc = typeof p.pcc === "number" ? p.pcc : 0;
   if (!cr || !slope || gross == null || isNaN(gross)) return { sd: null, source: null };
+  // ⚠ Sentinelas de "sem cartão": a FPG põe 998 (ND/NR — não devolveu) e 999
+  // (NS/WD) no lugar do gross, e o numGross() converte um grossTotal null no
+  // mesmo 999. Sem esta guarda o cartão a zeros era "reparado" pelo Net Double
+  // Bogey e saía um SD absurdo (−58.8 no 8º Torneio CGSS OM NOS 2026) que,
+  // sendo ≤ HCP, pintava o badge de VERDE: 9 desistências apareciam como as
+  // melhores voltas do dia. Mesma convenção do ranking Drive (gross ≥ 900 =
+  // sem cartão, não pontua).
+  if (gross >= 900) return { sd: null, source: null };
   // ⚠ Volta A DECORRER: cartão hole-by-hole com buracos por jogar (a zero ou
   // array curto) e gross igual à soma dos jogados → um SD sobre 5 buracos não
   // significa nada (dava −22.2 — caso Alexander Eikner, EJO 2026 R1). Se o
