@@ -135,6 +135,18 @@ const ACK_CLASSIF = "8428ACK987";
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* ── Fallback público: sessão auto-gerada ────────────────────────────────
+   O gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) emite ele
+   próprio um ASP.NET_SessionId + DG_Lists_URL a quem chega SEM credenciais, e
+   com essa sessão os PageMethods respondem Result:OK — leaderboard e scorecard
+   buraco-a-buraco incluídos. Medido a 2026-08-30, no dia em que o caminho
+   habitual (scoring.datagolf.pt/pt + cookies gravadas) dava 500 em tudo: os
+   cookies tinham 7 horas e o browser da utilizadora abria o mesmo URL sem
+   problema — porque um browser aceita o Set-Cookie e nós não.
+   Ver scripts/lib/fpg-session.js. */
+const { Sessao } = require("./lib/fpg-session");
+let SESSAO = null;   // != null → o warmup primário falhou e estamos no fallback
+
 async function warmupLinkpage(tclub, tcode) {
   // Activa sessão ASP.NET antes de POSTs a PageMethods
   const url = `${BASE}/linkpage.aspx?page=classif&club=${tclub}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
@@ -150,13 +162,30 @@ async function warmupLinkpage(tclub, tcode) {
       redirect: "follow",
     });
     await res.text();
-    return res.ok;
-  } catch {
-    return false;
-  }
+    if (res.ok) { SESSAO = null; return true; }
+  } catch { /* cai no fallback */ }
+
+  // Caminho habitual em baixo (ou cookies mortas) → sessão auto-gerada.
+  try {
+    const sess = new Sessao();
+    const abriu = await sess.abrir("classif", tclub, tcode);
+    if (abriu.ok) {
+      SESSAO = sess;
+      console.log(`${C}[classif]${X} fallback: sessão auto-gerada em scoring.fpg.pt/lists (sem cookies)`);
+      return true;
+    }
+  } catch { /* nada a fazer */ }
+  SESSAO = null;
+  return false;
 }
 
 async function postPageMethod(pathname, qs, body) {
+  if (SESSAO) {
+    // ⚠ os params extra vão na query string E no body — o servidor rejeita
+    // (500) se só forem num dos sítios.
+    const r = await SESSAO.postPageMethod(pathname, body, { queryString: qs });
+    return { ok: r.ok, status: r.status, result: r.result, records: r.records, total: r.total ?? 0 };
+  }
   const url = `${BASE}/${pathname}${qs ? "?" + qs : ""}`;
   const res = await fetch(url, {
     method: "POST",

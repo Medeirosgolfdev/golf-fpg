@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import liveness from './fpg-liveness.js';
 
-const { sondarFpg, diagnosticar, explicar, EXIT, CONTROL_ASPNET, CONTROL_REACH } = liveness;
+const { sondarFpg, diagnosticar, explicar, EXIT, CONTROL_REACH } = liveness;
 
-/** fetch falso: mapa url → {status, body}. */
 function fakeFetch(mapa) {
   return async (url) => {
     const r = mapa[url] ?? mapa._default;
@@ -11,65 +10,64 @@ function fakeFetch(mapa) {
     return { status: r.status, text: async () => r.body ?? '' };
   };
 }
-const PAGINA_OK  = { status: 200, body: '<html><body>' + 'x'.repeat(800) + '</body></html>' };
-const RUNTIME500 = { status: 500, body: '<html><head><title>Runtime Error</title></head></html>' };
+const OK        = { status: 200, body: '<html>' + 'x'.repeat(800) + '</html>' };
+const RUNTIME500 = { status: 500, body: '<title>Runtime Error</title>' };
 
-describe('fpg-liveness — sondas sem credenciais', () => {
-  it('ASP.NET de pé → a fonte não está em baixo', async () => {
-    const s = await sondarFpg({ fetchImpl: fakeFetch({ _default: PAGINA_OK }) });
-    expect(s.aspnet.up).toBe(true);
+describe('fpg-liveness — sonda de alcançabilidade', () => {
+  it('rota pública responde → a FPG está alcançável', async () => {
+    const s = await sondarFpg({ fetchImpl: fakeFetch({ [CONTROL_REACH]: OK }) });
+    expect(s.reach.up).toBe(true);
     expect(s.fonteEmBaixo).toBe(false);
   });
 
-  it('ASP.NET a arder e ASP clássico de pé → fonte em baixo (o caso de 2026-08-30)', async () => {
-    const s = await sondarFpg({ fetchImpl: fakeFetch({
-      [CONTROL_ASPNET]: RUNTIME500, [CONTROL_REACH]: PAGINA_OK }) });
+  it('rota pública em baixo → fonte em baixo', async () => {
+    const s = await sondarFpg({ fetchImpl: fakeFetch({ _default: RUNTIME500 }) });
     expect(s.fonteEmBaixo).toBe(true);
-    expect(s.reach.up).toBe(true);
   });
 
   it('"Runtime Error" com HTTP 200 também conta como em baixo', async () => {
     const s = await sondarFpg({ fetchImpl: fakeFetch({
       _default: { status: 200, body: '<title>Runtime Error</title>' } }) });
-    expect(s.aspnet.up).toBe(false);
-    expect(s.aspnet.runtimeError).toBe(true);
+    expect(s.reach.up).toBe(false);
   });
 
-  it('erro de rede não rebenta — conta como em baixo', async () => {
+  it('erro de rede não rebenta', async () => {
     const s = await sondarFpg({ fetchImpl: fakeFetch({ _default: new Error('ECONNRESET') }) });
     expect(s.fonteEmBaixo).toBe(true);
-    expect(s.aspnet.status).toBe(0);
+    expect(s.reach.status).toBe(0);
   });
 });
 
-describe('fpg-liveness — veredicto', () => {
-  const emBaixo = { fonteEmBaixo: true,  aspnet: { up: false, status: 500 }, reach: { up: true } };
-  const dePe    = { fonteEmBaixo: false, aspnet: { up: true,  status: 200 }, reach: { up: true } };
+describe('fpg-liveness — veredicto (deliberadamente conservador)', () => {
+  const emBaixo = { fonteEmBaixo: true,  reach: { up: false, status: 500 } };
+  const dePe    = { fonteEmBaixo: false, reach: { up: true,  status: 200 } };
 
-  it('autenticou → ok, seja qual for a sonda', () => {
+  it('autenticou → ok', () => {
     expect(diagnosticar(true, emBaixo)).toBe('ok');
     expect(diagnosticar(true, dePe)).toBe('ok');
   });
 
-  it('falhou COM cookies mas o controlo SEM cookies responde → são os cookies', () => {
-    expect(diagnosticar(false, dePe)).toBe('cookies');
-    expect(explicar('cookies', dePe)).toMatch(/segredo/);
-  });
-
-  it('falhou e o controlo sem cookies falha igual → fonte em baixo', () => {
-    // ⚠ É o coração da correcção: um pedido sem credenciais não pode estar a
-    // falhar por causa das nossas credenciais.
+  it('falhou e a FPG nem responde na rota pública → fonte em baixo', () => {
     expect(diagnosticar(false, emBaixo)).toBe('fonte-em-baixo');
-    expect(explicar('fonte-em-baixo', emBaixo)).toMatch(/NÃO resolve/);
+    expect(explicar('fonte-em-baixo')).toMatch(/não resolve/);
   });
 
-  it('sem sondas (falha ao sondar) cai no lado conservador: cookies', () => {
-    expect(diagnosticar(false, null)).toBe('cookies');
+  it('falhou mas a FPG responde → INDETERMINADO, nunca "está tudo bem"', () => {
+    // ⚠ A 1ª versão dizia "são os cookies" aqui, com base num controlo ASP.NET
+    // sem credenciais. Medido às 18:15 de 2026-08-30: esse controlo dava 500
+    // com a FPG recuperada e o scrape do Drive a correr bem — ou seja,
+    // mascararia cookies mortos como "não é connosco". Não sabemos isolar a
+    // causa, e o veredicto tem de o dizer.
+    expect(diagnosticar(false, dePe)).toBe('indeterminado');
+    expect(explicar('indeterminado')).toMatch(/confirmar abrindo o linkpage/);
   });
 
-  it('exit codes distintos para os dois diagnósticos', () => {
-    expect(EXIT.COOKIES).toBe(2);
+  it('indeterminado sai 2 → o alarme toca (nunca silêncio)', () => {
+    expect(EXIT.INDETERMINADO).toBe(2);
     expect(EXIT.FONTE_EM_BAIXO).toBe(3);
-    expect(EXIT.OK).toBe(0);
+  });
+
+  it('sem sondas cai no lado barulhento', () => {
+    expect(diagnosticar(false, null)).toBe('indeterminado');
   });
 });

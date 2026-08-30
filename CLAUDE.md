@@ -431,27 +431,44 @@ Não eram os cookies: as aplicações ASP.NET `scoring.datagolf.pt/pt` e
 `scoring.fpg.pt/lists` estavam a arder. O `my.fpg.pt` (outro backend) estava de
 pé, e o ASP clássico (`scoring-pt.datagolf.pt/scripts/draw.asp`) também.
 
-**A discriminação** vive em `scripts/lib/fpg-liveness.js` (`sondarFpg` +
-`diagnosticar`, 9 testes): antes de acusar o segredo, repete-se o pedido **sem
-credenciais nenhumas**. Um pedido que não leva credenciais não pode estar a
-falhar por causa delas.
+**A avaria acabou por si**, às ~18:10 UTC, sem ninguém mexer em nada: às 18:14
+o `scoring.datagolf.pt` voltou a responder com os mesmos cookies. Foram ~9h.
 
-- controlo ASP.NET responde → o 500 autenticado é mesmo dos cookies (**exit 2**)
-- controlo ASP.NET falha igual → **fonte em baixo** (**exit 3**); refrescar
-  cookies não resolve e, enquanto durar, a validade deles é *indeterminável*
+⚠ **Não há forma fiável de distinguir as duas causas de fora.** A primeira
+versão do `fpg-liveness.js` usava o `linkpage.aspx?page=admissions` **sem
+cookies** como controlo, a assumir que respondia 200 com o serviço de pé. Não
+responde: às 18:15, com a FPG recuperada e o scrape do Drive a correr bem, esse
+controlo continuava a dar 500. Como controlo era pior do que nenhum —
+mascararia cookies mesmo mortos como "não é connosco".
 
-⚠ **O controlo tem de bater na MESMA aplicação.** O `linkpage.aspx?page=draw`
-responde 200 sem cookies mesmo com tudo o resto em baixo — é servido pelo ASP
-clássico noutra máquina. Usá-lo como controlo dava "são os cookies" exactamente
-no dia em que não eram; fica só como sonda de alcançabilidade. O controlo é o
-`linkpage.aspx?page=admissions` **sem cookies** (mesmo host, mesma app), e não
-apodrece: um torneio inexistente devolve 200 na mesma.
+O que ficou (`scripts/lib/fpg-liveness.js`, 9 testes) é modesto de propósito:
+uma sonda de **alcançabilidade** (`linkpage.aspx?page=draw`, a única rota
+medida de pé com e sem avaria; não apodrece, um torneio inexistente devolve 200
+na mesma) e um veredicto de três estados:
 
-Quem consome o exit 3: `cookie-health.yml` (regista "fonte em baixo" e **não**
-falha o job nem pede refresh) e `update-drive.yml` (não pinta o cron de
-vermelho — o run seguinte apanha o torneio, porque o `--months-back` cobre o mês
-inteiro). Um alarme que toca por avarias que não podemos resolver deixa de ser
-lido — a mesma lição do `semDados` do England.
+| veredicto | quando | exit | efeito |
+|---|---|---|---|
+| `fonte-em-baixo` | a FPG nem responde na rota pública | **3** | `cookie-health` regista e não falha; `update-drive` não pinta o cron de vermelho |
+| `indeterminado` | a FPG responde mas o nosso 500 não se explica | **2** | o alarme TOCA à mesma — calá-lo por dúvida esconderia cookies mortos |
+| `ok` | autenticou | 0 | — |
+
+A mensagem do `indeterminado` manda **confirmar no browser antes de
+refrescar** — foi o que resolveu este caso: a utilizadora abriu o linkpage e
+funcionava, o que provou que o problema não eram os cookies.
+
+⚠ **Por provar — `scripts/lib/fpg-session.js`.** Durante a investigação
+levantou-se a hipótese de as cookies nunca terem sido precisas neste caminho: o
+gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) parecia emitir
+sessão ASP.NET própria a quem chega **sem credenciais**, e com ela a cadeia
+inteira respondeu `Result:OK` — leaderboard (18 jogadores) e scorecard
+buraco-a-buraco (par/SI/metros/CR/slope/cba). **Mas isso mediu-se às 18:09,
+dentro da janela em que o serviço estava a recuperar, e às 18:15 já não
+reproduzia** — logo não se pode atribuir o sucesso à sessão auto-gerada. A
+biblioteca fica no repo (usada como *fallback* no `scrape-classif-node.js`,
+que só entra quando o caminho habitual falha) e a experiência tem de ser
+repetida com a FPG estável. Se se confirmar, acaba o refresh manual no Chrome
+90 para este caminho. ⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão
+(500 mesmo com jar) — continua a exigir o hash do `1EntryPage.aspx`.
 
 ## Scripts — FPG Pipeline
 

@@ -23,15 +23,28 @@
  *                               irrelevante; refrescá-lo não muda nada)
  *   • controlo ASP.NET responde → aí sim, o 500 autenticado é dos cookies
  *
- * ⚠ O controlo TEM de bater na mesma aplicação. O `linkpage.aspx?page=draw`
- * responde 200 sem cookies mesmo com tudo o resto em baixo (é servido pelo
- * ASP clássico do `scoring-pt.datagolf.pt`, outra máquina) — usá-lo como
- * controlo devolvia "são os cookies" precisamente no dia em que não eram.
- * Fica como sonda de alcançabilidade (a FPG existe?), nunca como controlo.
+ * ⚠⚠ CORRIGIDO no mesmo dia, algumas horas depois: a primeira versão usava o
+ * `linkpage.aspx?page=admissions` SEM cookies como controlo, a assumir que
+ * respondia 200 com o serviço de pé. NÃO responde — às 18:15, com a FPG já
+ * recuperada e o scrape do Drive a correr perfeitamente, esse controlo
+ * continuava a dar 500. Como controlo, isso é pior do que não ter nenhum:
+ * mascararia cookies genuinamente mortos como "não é connosco" e calaria o
+ * alarme exactamente quando ele é preciso.
+ *
+ * O que sobrou é modesto e honesto: uma sonda de ALCANÇABILIDADE
+ * (`linkpage.aspx?page=draw`, servida pelo ASP clássico e a única rota que se
+ * mediu de pé com e sem avaria). Só distingue "a FPG não responde de todo" de
+ * "a FPG responde". No segundo caso NÃO conseguimos separar cookies mortos de
+ * avaria da aplicação, e o veredicto é `indeterminado` — que é tratado como
+ * "provavelmente cookies", para o alarme continuar a tocar. Nunca silêncio.
+ *
+ * Por provar (a repetir com a FPG estável, ver scripts/lib/fpg-session.js): se
+ * o gateway emitir sessão própria a quem chega sem credenciais, isto tudo fica
+ * obsoleto — deixa de haver segredo para expirar.
  */
 
-const CONTROL_ASPNET =
-  'https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=10941&ack=XH256YF450';
+// Única rota medida de pé sem credenciais, com e sem avaria. Não apodrece:
+// um torneio inexistente devolve 200 na mesma.
 const CONTROL_REACH =
   'https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=000&tourn=0&round=1&ack=8428ACK987';
 
@@ -65,41 +78,38 @@ async function sondar(url, { timeoutMs = 15000, fetchImpl } = {}) {
  * @returns {{aspnet:object, reach:object, fonteEmBaixo:boolean}}
  */
 async function sondarFpg(opts = {}) {
-  const [aspnet, reach] = await Promise.all([
-    sondar(opts.controlAspnet || CONTROL_ASPNET, opts),
-    sondar(opts.controlReach  || CONTROL_REACH,  opts),
-  ]);
-  return { aspnet, reach, fonteEmBaixo: !aspnet.up };
+  const reach = await sondar(opts.controlReach || CONTROL_REACH, opts);
+  return { reach, fonteEmBaixo: !reach.up };
 }
 
 /**
  * Veredicto final de um teste de cookies.
  * @param {boolean} autenticouOk  — o pedido COM cookies passou?
  * @param {object}  sondas        — resultado de sondarFpg()
- * @returns {"ok"|"fonte-em-baixo"|"cookies"}
+ * @returns {"ok"|"fonte-em-baixo"|"indeterminado"}
  */
 function diagnosticar(autenticouOk, sondas) {
   if (autenticouOk) return 'ok';
-  return sondas && sondas.fonteEmBaixo ? 'fonte-em-baixo' : 'cookies';
+  // Sem controlo capaz de isolar a causa, o lado seguro é o barulhento.
+  return sondas && sondas.fonteEmBaixo ? 'fonte-em-baixo' : 'indeterminado';
 }
 
 /** Linha para o log/resumo do workflow. */
-function explicar(veredicto, sondas) {
+function explicar(veredicto) {
   if (veredicto === 'ok') return 'cookies válidos';
-  if (veredicto === 'cookies') {
-    return 'cookies inválidos/expirados — o controlo SEM cookies respondeu, ' +
-           'logo a FPG está de pé e o 500 é do nosso segredo';
+  if (veredicto === 'fonte-em-baixo') {
+    return 'FONTE EM BAIXO — a FPG não responde nem na rota pública. ' +
+           'Refrescar cookies não resolve; voltar a tentar mais tarde';
   }
-  const r = sondas && sondas.reach && sondas.reach.up
-    ? 'a FPG responde no ASP clássico (draw), mas a aplicação ASP.NET está a dar erro'
-    : 'a FPG não responde de todo';
-  return `FONTE EM BAIXO — ${r}. Refrescar cookies NÃO resolve; voltar a tentar mais tarde`;
+  return 'INDETERMINADO — a FPG responde na rota pública, mas não conseguimos ' +
+         'isolar a causa do 500. Provavelmente cookies expirados; confirmar ' +
+         'abrindo o linkpage no browser antes de refrescar';
 }
 
 /** Códigos de saída partilhados pelos testes de cookies. */
-const EXIT = { OK: 0, ERRO: 1, COOKIES: 2, FONTE_EM_BAIXO: 3 };
+const EXIT = { OK: 0, ERRO: 1, INDETERMINADO: 2, FONTE_EM_BAIXO: 3 };
 
 module.exports = {
-  CONTROL_ASPNET, CONTROL_REACH,
+  CONTROL_REACH,
   sondar, sondarFpg, diagnosticar, explicar, EXIT,
 };

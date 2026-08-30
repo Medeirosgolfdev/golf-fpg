@@ -72,16 +72,16 @@ jobs:
       # resumo dava "✓ os 3 conjuntos estão válidos" sem ter validado nada
       # (visto a 2026-08-20 num run cancelado no checkout).
       #
-      # ⚠ E separar as DUAS causas de falha (2026-08-30): exit 3 = a FPG está
-      # em baixo (medido por uma sonda SEM credenciais — ver
-      # scripts/lib/fpg-liveness.js). Nesse dia o vigia mandou refrescar dois
-      # secrets que tinham 7 horas e estavam bons: os mesmos cookies davam 500,
-      # e um entry gate sem credencial nenhuma dava 500 também. Pedir trabalho
-      # inútil é a forma mais rápida de o alarme deixar de ser lido.
+      # ⚠ 2026-08-30: o vigia mandou refrescar dois secrets que tinham 7 horas
+      # e estavam bons — a FPG é que teve uma avaria de ~9h. Exit 3 = a FPG nem
+      # responde na rota pública (sonda em scripts/lib/fpg-liveness.js), único
+      # caso em que se sabe que o problema não é nosso. Exit 2 = não se
+      # conseguiu isolar a causa; aí o alarme TOCA à mesma, porque calá-lo por
+      # dúvida esconderia cookies mesmo mortos.
       - name: Resumo
         if: always()
         run: |
-          COOKIES=""   # secrets realmente mortos → há trabalho para fazer
+          COOKIES=""   # causa não isolada → provavelmente cookies, verificar
           FONTE=""     # FPG em baixo → não é connosco, voltar mais tarde
           INDEF=""     # teste não chegou a correr
 
@@ -99,14 +99,18 @@ jobs:
 
           if [ -n "$FONTE" ]; then
             echo "⚠ FONTE EM BAIXO (não é dos nossos cookies):$FONTE"
-            echo "  Uma sonda SEM credenciais falhou igual — refrescar cookies NÃO resolve."
+            echo "  A FPG não responde nem na rota pública — refrescar cookies NÃO resolve."
             echo "  Enquanto a FPG estiver assim, a validade destes cookies é indeterminável."
             echo ""
           fi
           if [ -n "$COOKIES" ]; then
-            echo "❌ Cookies expirados/inválidos:$COOKIES"
+            echo "❌ Autenticação falhou (causa não isolada):$COOKIES"
             echo ""
-            echo "Refrescar antes de Sexta à noite (janela de scrapes):"
+            echo "⚠ Confirmar PRIMEIRO abrindo no browser:"
+            echo "  https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=987&tourn=10207&ack=8428ACK987"
+            echo "  Se abrir aí, o problema pode ser da FPG e não dos cookies (aconteceu 2026-08-30)."
+            echo ""
+            echo "Se for mesmo dos cookies, refrescar antes de Sexta à noite:"
             echo "  1. Chrome 90 → login/navegar nos sites afectados"
             echo "  2. F12 → Application → Cookies → copiar"
             echo "  3. Actualizar os GitHub Secrets correspondentes"

@@ -74,11 +74,11 @@ jobs:
             exit 1
           fi
           if [ "$EXIT_CODE" = "3" ]; then
-            # ⚠ 2026-08-30: o classif/TournamentsLST da FPG ardeu para toda a
-            # gente e este job ficou vermelho como se os cookies (7 horas de
-            # vida) tivessem expirado. Um cron que grita por avarias da fonte
-            # deixa de ser lido — e o run seguinte apanha o torneio na mesma,
-            # porque o --months-back cobre o mês inteiro.
+            # ⚠ 2026-08-30: a FPG teve uma avaria de ~9h (09:27→18:10 UTC) e
+            # este job ficou vermelho como se os cookies (7 horas de vida)
+            # tivessem expirado. Exit 3 = a FPG nem responde na rota pública,
+            # único caso em que ficar verde é honesto; o run seguinte apanha o
+            # torneio na mesma, porque o --months-back cobre o mês inteiro.
             echo "⚠ Fonte FPG em baixo — nada a fazer do nosso lado; o próximo run recupera"
           fi
           if [ "$EXIT_CODE" = "2" ]; then

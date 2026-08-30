@@ -153,12 +153,11 @@ async function main() {
     // cookies que falha igual nao pode estar a falhar por causa deles.
     const sondas = await sondarFpg();
     const veredicto = diagnosticar(false, sondas);
-    console.log(`\n[${veredicto === "cookies" ? "ERRO" : "AVISO"}] ` +
-                `${mortos.length} de ${results.length} endpoints em baixo — ${explicar(veredicto, sondas)}.`);
-    console.log(`   (controlo sem cookies: ASP.NET HTTP ${sondas.aspnet.status}` +
-                `, alcancabilidade HTTP ${sondas.reach.status})`);
-    if (veredicto === "cookies") console.log("   Refrescar DATAGOLF_SCORING_COOKIES.");
-    return sair(veredicto === "cookies" ? EXIT.COOKIES : EXIT.FONTE_EM_BAIXO);
+    console.log(`\n[${veredicto === "indeterminado" ? "ERRO" : "AVISO"}] ` +
+                `${mortos.length} de ${results.length} endpoints em baixo — ${explicar(veredicto)}.`);
+    console.log(`   (sonda de alcançabilidade: HTTP ${sondas.reach.status})`);
+    if (veredicto === "indeterminado") console.log("   Verificar no browser antes de refrescar DATAGOLF_SCORING_COOKIES.");
+    return sair(veredicto === "indeterminado" ? EXIT.INDETERMINADO : EXIT.FONTE_EM_BAIXO);
   }
   console.log("\n[OK] SUCESSO — os endpoints do scoring.datagolf.pt respondem.");
   return sair(0);
