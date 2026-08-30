@@ -995,6 +995,50 @@ que é exactamente o erro que esta datação corrige.
 uma tinha de ser listada à mão em `FORCAR_EXCLUIR` (4 entradas). A guarda corre
 ANTES de tudo e resolve a classe inteira.
 
+### ⚠ O NOME não classifica o torneio — o `type` do GetMeta classifica (2026-08-30)
+
+A decisão de que torneios entram no radar vive agora em
+**`scripts/lib/uskids-classify.js`** (`incluirTorneio(t, name, type)`, 10 testes).
+Enquanto foi só por palavras-chave sobre o nome, falhava nos dois sentidos —
+o nome de um evento USKids é livre. Três **Regionais** com inscrições abertas
+nunca chegaram à app (medidos 2026-08-30, todos dentro da zona já varrida):
+
+| t | Torneio | Porque caiu |
+|---|---|---|
+| 22986 | PGA Golf Club Invitational 2026 | batia no exclude `'golf club'` — que existe para deitar fora os ~1200 eventos do Local Tour, que se chamam pelo nome do campo |
+| 23318 | Colonial Williamsburg Classic 2026 | `'classic'` só existia colado a um sítio (`'venice classic'`, `'holiday classic'`) |
+| 23420 | Monterey Challenge 2026 | `'challenge'` nem sequer era include |
+
+O `tournament` do `GetMeta` já traz a taxonomia oficial — `tour`
+("Domestic Championships Tour") e `type` (inteiro). Medido sobre os 1320
+torneios vivos em t=22240…23640:
+
+| type | tour | n | exemplo |
+|---|---|---|---|
+| **1** | Domestic Championships Tour | 5 | Seaview Open 2026 ← **Regional** |
+| 2 | Teen Series Tour | 30 | Teen Series at Longleaf (NC) |
+| 5 | `{cidade} Tour` | ~1150 | The Legends Golf Club ← **Local Tour** |
+| 6 | `{cidade} Tour` (Tour Championship) | ~190 | Longleaf … (Tour Championship) |
+| **7** | State Invitationals Tour | 8 | 2026 Kansas State Invitational |
+| **8** | International Championships Tour | 14 | Venice Open 2026 |
+| 9 | Team Golf Tour | 23 | Concord Local Parent/Child 2026 |
+| 12 | Girls Invitationals Tour | 2 | 2026 Girls Invitational - Longleaf (NC) |
+| 13 | International Teen Series Tour | 3 | International Teen Series at Al Hamra |
+
+`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome. As
+palavras-chave ficam como camada **aditiva** — é só isso que continua a trazer
+as etapas de Local Tour que seguimos de propósito (Azata/Andaluzia, Panamá,
+Al Hamra, OPEN.9 Eichenried, Circolo Golf Venezia) sem abrir a porta às outras
+~1200. `KEYWORDS_EXCLUIR_SEMPRE` (Parent/Child) corre antes do tipo e
+`FORCAR_EXCLUIR` vence tudo. Diferença medida sobre os 1320: **+3, −0**.
+
+⚠ **O `type` tem de ser guardado na cache.** O `descobrirTorneios` re-filtra as
+entradas de `uskids-discovery-cache.json` à entrada; sem `tour`/`type`
+persistidos, a re-entrada voltava a decidir só pelo nome e os Regionais caíam
+outra vez na corrida seguinte. Entradas antigas sem `type` continuam a ser
+lidas pelo nome (retrocompatível). O `uskids-field.json` também passa a
+carregar `tour`/`type` por torneio.
+
 **fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133])`.
 
 ### USKids — Script browser (F12)

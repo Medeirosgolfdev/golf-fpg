@@ -15,46 +15,9 @@ const { extrairAncoras, fundirAncoras, aplicarDatasInscricao } = require('./lib/
 const { criarPlano, proximoIntervalo, aplicarResultado } = require('./lib/uskids-scan-plan');
 
 // ── Filtros de descoberta ─────────────────────
-const KEYWORDS_INCLUIR = [
-  'world championship', 'world van horn', 'van horn cup',
-  'european championship', 'european van horn',
-  'irish open', 'paris invitational',
-  'marco simone', 'venice open', 'venice classic', 'venezia',
-  'rome open', 'rome classic', 'terre dei consoli',
-  'andaluz', 'andalusia', 'sevilla', 'marbella', 'sotogrande', 'valderrama',
-  'european', 'australian', 'canadian', 'african',
-  'panama', 'vallarta', 'jekyll', 'nordic', 'al hamra',
-  'fazenda boa vista', 'azata', 'holiday classic',
-  'championship', 'invitational', 'masters', 'open',
-];
-// Vencem TUDO (incluindo INCLUIR_FORTE): variantes pais/filhos de torneios que
-// de outra forma entravam pelo nome do evento principal ("Holiday Classic
-// Parent/Child 2026", "European Championship Parent/Child"). Era isto que
-// obrigava a listar cada uma à mão em FORCAR_EXCLUIR.
-const KEYWORDS_EXCLUIR_SEMPRE = ['parent/child', 'parent child'];
-const KEYWORDS_EXCLUIR = [
-  'tour championship', 'parent/child', 'parent', 'qualifier',
-  'van horn', 'teen series', 'teen championship', 'world teen',
-  'girls invitational', 'girls championship', 'girls open', 'girl',
-  'golf course', 'golf club', 'country club',
-  'veteran', 'world golf village',
-  'thailand championship', 'korean championship', 'malaysian championship', 'philippines championship',
-  // state abbreviations removidos: 'invitational' já inclui e queremos ver state invitationals
-];
-const FORCAR_INCLUIR = new Set([21080, 21133, 21667]); // 21080=Marco Simone 2026, 21133=Jekyll Island Cup, 21667=World Teen Championship 2026 (excepção às teen series)
-const FORCAR_EXCLUIR  = new Set([
-  21573, // Marco Simone local tour
-  21298, // International Teen Series at Al Hamra
-  21571, // Terre Dei Consoli Golf Club (local, não torneio)
-  21872, // Teen Van Horn Cup
-  22096, // World Championship Parent/Child - Girls
-  21502, // European Van Horn Cup 2026
-  21747, // World Van Horn Cup 2026
-  21510, // European Championship Parent/Child 2026
-  22095, // World Championship Parent/Child 2026 - Boys
-  21400, // Marco Simone Invitational Parent/Child 2026
-  22140, // OPEN.9 Golf Eichenried (local tour)
-]);
+// A classificação (tipo do GetMeta + palavras-chave + excepções por tcode)
+// vive em scripts/lib/uskids-classify.js, com testes.
+const { incluirTorneio, FORCAR_INCLUIR, TIPO_LABEL } = require('./lib/uskids-classify');
 
 // Prefixos de escalão — apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
@@ -88,31 +51,6 @@ const UA  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 // ─────────────────────────────────────────────
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-function ehInternacional(name) {
-  const n = name.toLowerCase();
-  if (KEYWORDS_EXCLUIR_SEMPRE.some(k => n.includes(k))) return false;
-  // KEYWORDS_INCLUIR tem prioridade — se bater, inclui sempre (exceto FORCAR_EXCLUIR)
-  // KEYWORDS_EXCLUIR só actua quando nenhum keyword de include bate exactamente
-  const temInclude = KEYWORDS_INCLUIR.some(k => n.includes(k));
-  if (!temInclude) return false;
-  // Verificar se algum keyword de include é suficientemente específico
-  // (ex: 'state invitational', 'european championship') para ignorar o exclude
-  const INCLUIR_FORTE = [
-    'world championship', 'world van horn', 'van horn cup',
-    'european championship', 'european van horn',
-    'marco simone', 'venice open', 'venice classic', 'venezia',
-    'rome open', 'rome classic', 'terre dei consoli',
-    'irish open', 'paris invitational',
-    'andaluz', 'andalusia', 'sevilla', 'marbella', 'sotogrande', 'valderrama',
-    'panama', 'vallarta', 'jekyll', 'nordic', 'al hamra',
-    'fazenda boa vista', 'azata', 'holiday classic',
-    'state invitational', 'state championship', 'state open',
-  ];
-  if (INCLUIR_FORTE.some(k => n.includes(k))) return true;
-  // Keywords genéricos (championship, open, invitational...) — KEYWORDS_EXCLUIR ainda actua
-  return !KEYWORDS_EXCLUIR.some(k => n.includes(k));
-}
 
 function parsearDataISO(s) {
   if (!s) return null;
@@ -380,7 +318,7 @@ async function descobrirTorneios() {
   // Filtrar logo à entrada: remove excluídos de runs anteriores
   const conhecidos = new Map(
     cache.torneios
-      .filter(t => !FORCAR_EXCLUIR.has(t.t) && (FORCAR_INCLUIR.has(t.t) || ehInternacional(t.name)))
+      .filter(t => incluirTorneio(t.t, t.name, t.type))
       .map(t => [t.t, t])
   );
   let encontrados = 0;
@@ -390,16 +328,18 @@ async function descobrirTorneios() {
       t, name: tn.name.trim(),
       date_inicio: tn.start_date, date_fim: tn.end_date,
       rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
+      tour: tn.tour || null, type: tn.type ?? null,
     });
   };
 
   /** Chamado para CADA tcode que existe (internacional ou não). Filtra e regista. */
   const registar = (t, tn) => {
     const nome    = tn.name.trim();
-    const incluir = !FORCAR_EXCLUIR.has(t) && (FORCAR_INCLUIR.has(t) || ehInternacional(nome));
+    const incluir = incluirTorneio(t, nome, tn.type);
     if (!incluir || diasAte(tn.start_date) < -30) return;
     if (!conhecidos.has(t)) {
-      console.log(`  ✅ NOVO  t=${t}  ${tn.start_date}  ${nome}`);
+      const cls = TIPO_LABEL[tn.type] ? ` [${TIPO_LABEL[tn.type]}]` : '';
+      console.log(`  ✅ NOVO  t=${t}  ${tn.start_date}  ${nome}${cls}`);
       encontrados++;
     }
     guardar(t, tn);
@@ -537,6 +477,7 @@ async function processarTorneio(page, torneio) {
       t: torneio.t, name: tn.name || torneio.name,
       date_inicio: tn.start_date, date_fim: tn.end_date,
       rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
+      tour: tn.tour || torneio.tour || null, type: tn.type ?? torneio.type ?? null,
       total_inscritos: 0, total_maximo: 0, sem_flights: true, escaloes: [],
       ultima_atualizacao: new Date().toISOString(),
     };
@@ -596,6 +537,7 @@ async function processarTorneio(page, torneio) {
     t: torneio.t, name: tn.name || torneio.name,
     date_inicio: tn.start_date, date_fim: tn.end_date,
     rondas: tn.rounds, campo: tn.courses||null, fee_18: tn.fee_18||null,
+    tour: tn.tour || torneio.tour || null, type: tn.type ?? torneio.type ?? null,
     total_inscritos: escaloes.reduce((s,e)=>s+e.inscritos,0),
     total_maximo:    escaloes.reduce((s,e)=>s+e.maximo,0),
     escaloes, ultima_atualizacao: new Date().toISOString(),
