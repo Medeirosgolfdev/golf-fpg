@@ -148,9 +148,10 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
    cookies tinham 7 horas e o browser da utilizadora abria o mesmo URL sem
    problema — porque um browser aceita o Set-Cookie e nós não.
    Ver scripts/lib/fpg-session.js. */
-const { Sessao, parseMetaClassif } = require("./lib/fpg-session");
+const { Sessao, parseMetaClassif, criarSessaoLista } = require("./lib/fpg-session");
 let SESSAO = null;        // != null → estamos no caminho sem cookies
 let SESSAO_META = null;   // nome/campo/data lidos da própria página
+let SESSAO_LISTA;         // undefined = por tentar · null = indisponível
 
 async function warmupLinkpage(tclub, tcode) {
   // Activa sessão ASP.NET antes de POSTs a PageMethods
@@ -229,7 +230,21 @@ async function resolveTournament(tclub, tcode) {
     jtStartIndex: "0", jtPageSize: "25", jtSorting: "started_at DESC",
   };
   const qs = "jtStartIndex=0&jtPageSize=25&jtSorting=" + encodeURIComponent("started_at DESC");
-  const r = await postPageMethod("tournaments.aspx/TournamentsLST", qs, body);
+  // Sem cookies o TournamentsLST tem entrada própria (ver criarSessaoLista):
+  // uma sessão SEPARADA da do classif, porque o DG_Lists_URL guarda o contexto
+  // da página e as duas pisavam-se.
+  let r;
+  if (SESSAO) {
+    if (SESSAO_LISTA === undefined) {
+      SESSAO_LISTA = await criarSessaoLista().catch(() => null);
+      if (SESSAO_LISTA) console.log("[classif] sem cookies: lista de torneios também");
+    }
+    if (!SESSAO_LISTA) return null;
+    const x = await SESSAO_LISTA.postPageMethod("tournaments.aspx/TournamentsLST", body, { queryString: qs });
+    r = { ok: x.ok, records: x.records };
+  } else {
+    r = await postPageMethod("tournaments.aspx/TournamentsLST", qs, body);
+  }
   if (!r.ok) return null;
   return r.records.find(rec =>
     String(rec.code) === String(tcode) && String(rec.club_code) === String(tclub)
@@ -390,12 +405,10 @@ async function processOne(spec, idx, total) {
   await sleep(DELAY_MS);
 
   // 1. resolve — tenta via TournamentsLST (metadata completa: campo, rondas, etc)
-  // ⚠ No caminho sem cookies isto é SALTADO, e não é só por ser inútil (o
-  // TournamentsLST não responde lá): o POST ao tournaments.aspx reescreve o
-  // contexto da sessão (DG_Lists_URL passa a apontar à lista de torneios) e o
-  // classif a seguir perde o seu — devolvia Result:ERROR logo depois de o
-  // warmup ter corrido bem. A metadata vem de SESSAO_META.
-  const raw = SESSAO ? null : await resolveTournament(tclub, tcode);
+  // ⚠ Sem cookies isto usa uma sessão SEPARADA (SESSAO_LISTA). Reaproveitar a
+  // do classif dava Result:ERROR: o POST ao tournaments.aspx reescreve o
+  // DG_Lists_URL (o contexto de página) e o classif a seguir perde o seu.
+  const raw = await resolveTournament(tclub, tcode);
   let t;
   if (raw) {
     const circuit = spec.circuit || detectCircuit(raw);

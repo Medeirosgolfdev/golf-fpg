@@ -478,18 +478,36 @@ sessão é emitida NO CAMINHO; o fetch nativo não reenvia o `Set-Cookie` de um
 hop para o seguinte, por isso o pedido final chega sem sessão. O `Sessao.get`
 segue os redirects à mão, acumulando cookies.
 
-**Cobertura** (o que muda e o que não muda):
+**Cobertura: o pipeline INTEIRO, descoberta incluída.**
 
-| Passo | Sem cookies? |
-|---|---|
-| Resultados de um torneio **conhecido** (ccode/tcode): leaderboard + scorecards | ✅ |
-| **Descoberta** (`tournaments.aspx/TournamentsLST`) | ❌ — falha com os 3 acks; continua a precisar |
+| Passo | Entrada pública (sem cookies) | PageMethod |
+|---|---|---|
+| Resultados de um torneio (leaderboard + scorecards) | `scoring.fpg.pt/lists/linkpage.aspx?page=classif&…&ack=8428ACK987` | `classif.aspx/ClassifLST` · `classifAgregate.aspx/ScoreCard` |
+| **Descoberta** de torneios | `scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T` → `1PreparePage.aspx` | `tournaments.aspx/TournamentsLST` |
 
-O `scrape-classif-node.js` usa-o como caminho alternativo: cookies primeiro
-(trazem metadata mais rica via TournamentsLST), sessão pública quando não há
-cookies ou o caminho habitual falha. Verificado com os ficheiros de cookies
-escondidos: **18 jogadores e 14 scorecards, idênticos linha a linha** aos da
-via autenticada.
+⚠ **A entrada da lista tem um hop em JavaScript.** O `tournaments.asp` responde
+com o `datalinkpt.html`, que NÃO faz redirect HTTP: é o `DataGolfeRedirect` da
+página que constrói a URL do `1PreparePage.aspx` e navega. Como não corremos
+JS, reconstruímos essa URL (`criarSessaoLista`), incluindo o detalhe de o
+`club=ALL` virar `ccode=All`. É o `1PreparePage.aspx` que emite a sessão.
+
+⚠ **Chegou a dar-se a descoberta por impossível sem cookies — era erro de
+método:** testou-se o `linkpage.aspx?page=tournlist` no host errado
+(`scoring.fpg.pt/lists`, onde falha com os 3 acks) e o `1PreparePage.aspx`
+*durante* a avaria da FPG, sem voltar a testar depois. Pelo caminho certo e com
+a FPG de pé: `Result:OK`, **84 993 torneios**, com filtro por clube/data/nome.
+
+⚠ **Duas sessões separadas, não uma.** O `DG_Lists_URL` guarda o CONTEXTO da
+página; um POST ao `tournaments.aspx` reescreve-o e o `classif` a seguir perde
+o seu (devolve `Result:ERROR` logo depois de um warmup bem sucedido). O
+`scrape-classif-node.js` mantém `SESSAO` (classif) e `SESSAO_LISTA`
+(descoberta) independentes.
+
+O `scrape-classif-node.js` usa cookies primeiro e a sessão pública quando não
+há cookies ou o caminho habitual falha. Verificado com os ficheiros de cookies
+escondidos e as env vars limpas: **18 jogadores e 14 scorecards idênticos linha
+a linha** aos da via autenticada, com metadata completa (nome, campo, data,
+rondas, circuito).
 
 ⚠ **Três armadilhas neste caminho, todas com caso real:**
 1. **HTTP 200 não é prova de sessão útil.** Sem cookies o linkpage do

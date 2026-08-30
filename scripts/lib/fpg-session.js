@@ -167,4 +167,35 @@ function parseMetaClassif(html) {
   };
 }
 
-module.exports = { Sessao, BASE_LISTS, ACK, UA, parseMetaClassif };
+const BASE_PT = 'https://scoring.datagolf.pt/pt';
+
+/**
+ * Sessão para a LISTA de torneios (`tournaments.aspx/TournamentsLST`), também
+ * sem cookies guardados.
+ *
+ * A entrada é a página pública `scoring-pt.datagolf.pt/scripts/tournaments.asp`
+ * com o ack universal. Ela responde com o `datalinkpt.html`, que é um gate
+ * **JavaScript**: não há redirect HTTP, é o browser que constrói a URL do
+ * `1PreparePage.aspx` e navega. Como não corremos JS, reconstruímos essa URL —
+ * é o que o `DataGolfeRedirect` da página faz, incluindo o detalhe de o
+ * `club=ALL` virar `ccode=All`. O `1PreparePage.aspx` é que emite a sessão e
+ * redirecciona para a `tournaments.aspx`.
+ *
+ * ⚠ Foi por não seguir este caminho que se concluiu, erradamente, que a
+ * descoberta precisava de cookies: testou-se o `linkpage.aspx?page=tournlist`
+ * no host errado (`scoring.fpg.pt/lists`, onde falha com os 3 acks) e o
+ * `1PreparePage.aspx` durante uma avaria da FPG. Pelo caminho certo e com a
+ * FPG de pé responde `Result:OK` — 84 993 torneios, com filtro por clube.
+ */
+const ENTRADA_LISTA = 'https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T';
+const PREPARE_LISTA = BASE_PT + '/1PreparePage.aspx?user=fpguser&page=tournlist&ccode=All&pagelang=PT';
+
+async function criarSessaoLista(opts = {}) {
+  const s = new Sessao({ base: BASE_PT, ...opts });
+  await s.get(ENTRADA_LISTA);              // aquece e apanha o cookie ASP clássico
+  const r = await s.get(PREPARE_LISTA);    // emite ASP.NET_SessionId + DG_Lists_URL
+  const ok = r.status === 200 && !/Runtime Error|Server Error in|Param_Errors|Err=999/i.test(r.html);
+  return ok ? s : null;
+}
+
+module.exports = { Sessao, BASE_LISTS, BASE_PT, ACK, UA, parseMetaClassif, criarSessaoLista };
