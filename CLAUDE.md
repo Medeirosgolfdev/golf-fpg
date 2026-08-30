@@ -557,12 +557,41 @@ O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do 
 inválido` (Err=400) em `987/10245`. Enquanto não se souber a regra, esse
 scraper mantém-se autenticado — o `draw` continua público como sempre foi.
 
-A regra partilhada é a mesma em todos: **cookies primeiro** (o caminho
-autenticado é o primário e é o que se mantém testado), **público quando não há
-cookies ou quando as que há devolvem 500**. A comutação vive no
-`criarRoteador` de `fpg-session.js` — um só sítio, com um gate e uma sessão por
-família de PageMethod — e é anunciada no log: `cookies não autenticam — a
-seguir pelo caminho público`.
+⚠ **A ordem foi INVERTIDA a 2026-08-30: público primeiro, cookies como
+fallback.** A regra era "cookies primeiro, público quando falham" — o caminho
+autenticado era o primário por ser o testado. Medido o dia inteiro, isso é o
+avesso do que interessa: **a sessão pública não expira** (é emitida pelo ack a
+cada pedido) e as cookies duram ~9h, morrendo sempre a meio da janela de
+scrapes do fim-de-semana. Pôr o caminho perecível à frente do perene fazia com
+que cada fim-de-semana dependesse de um refresh manual ter corrido nas horas
+certas.
+
+O fallback é **bidireccional**: se o gate público falhar (FPG em baixo, gate
+mudado), ainda se tenta com cookies antes de desistir. Comuta no `criarRoteador`
+de `fpg-session.js` e no `warmupLinkpage` do `scrape-classif-node.js`, os dois
+com o mesmo interruptor de emergência:
+
+| `FPG_AUTH_MODE` | Efeito |
+|---|---|
+| (não definido) / `auto` | **público primeiro**, cookies como fallback |
+| `cookies` | ordem antiga (cookies primeiro) — sem mexer em código |
+| `publico` | só público, nunca toca nas cookies |
+
+Validado com o 987/10207 nos dois caminhos: **18 jogadores, 14 scorecards**,
+ficheiros byte a byte idênticos. Testes: `scripts/lib/fpg-session-modo.test.js`
+(6). O log diz sempre por onde foi (`[classif] sessão pública (ack, sem
+credenciais)`).
+
+⚠ **As admissions ficam de fora — e agora sabe-se porquê.** Medido a
+2026-08-30 sobre os torneios que JÁ têm inscritos guardados no
+`fpg-admissions-draws.json`: o gate público serve o `000/10941` (Nacional
+Sub-12, 21 linhas) mas recusa **6 em 6** torneios de CLUBE que têm inscritos
+(988/10306, 985/10236, 987/10245-48). Não é ausência de dados — esses têm
+inscritos e a via autenticada trá-los. Cobertura nos nossos dados: FPG
+(ccode 000) 84% com inscrições, clubes 43% (o resto são provas cujas
+inscrições os clubes fazem por email e nunca chegam a publicar). Logo as
+cookies compram mesmo alguma coisa aqui, e o `scrape-fpg-admissions-draws-node.js`
+mantém-se autenticado.
 
 ⚠ **`redirect:"follow"` do fetch nativo perde a sessão** e mordeu em TRÊS
 sítios (o `Sessao.get` segue os redirects à mão e é a correcção):

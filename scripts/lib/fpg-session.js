@@ -221,11 +221,24 @@ async function criarSessaoLista(opts = {}) {
  * @param {function} [opts.info]      — logger para anunciar a comutação
  * @returns {{post: function, get publico(): boolean}}
  */
-function criarRoteador({ dgPost, info = () => {} }) {
-  let publico = !dgPost;
+function modoAuth() {
+  const m = String(process.env.FPG_AUTH_MODE || '').trim().toLowerCase();
+  return m === 'cookies' || m === 'publico' ? m : 'auto';
+}
+
+function criarRoteador({ dgPost, info = () => {}, preferirPublico }) {
+  const modo = modoAuth();
+  // 'auto' (default) = público primeiro. As cookies duram ~9h e morrem sempre a
+  // meio da janela de scrapes; o caminho público não expira. Fica como fallback
+  // — nos dois sentidos, para que uma avaria de um lado não pare o scrape.
+  const publicoPrimeiro = modo === 'cookies' ? false
+    : modo === 'publico' ? true
+    : (preferirPublico !== undefined ? preferirPublico : true);
+  let publico = !dgPost || modo === 'publico';
   let sLista, sFed;
   const sClassif = new Map();
   const sRank = new Map();
+  let avisouCookies = false;
 
   const abrirPor = async (pathname, body) => {
     if (pathname.startsWith('tournaments.aspx')) {
@@ -271,8 +284,26 @@ function criarRoteador({ dgPost, info = () => {} }) {
 
   return {
     get publico() { return publico; },
+    get modo() { return modo; },
     async post(pathname, body, qs) {
-      if (publico) return postPublico(pathname, body, qs);
+      if (publico || !dgPost) return postPublico(pathname, body, qs);
+
+      if (publicoPrimeiro) {
+        try {
+          return await postPublico(pathname, body, qs);
+        } catch (e) {
+          // O gate público falhou (FPG em baixo, gate mudado, torneio que só
+          // abre autenticado). Só desistimos depois de perguntar com cookies.
+          const r = await dgPost(pathname, body, qs).catch(() => null);
+          if (!r) throw e;
+          if (!avisouCookies) {
+            avisouCookies = true;
+            info('caminho público indisponível — a seguir com cookies');
+          }
+          return r;
+        }
+      }
+
       try {
         return await dgPost(pathname, body, qs);
       } catch (e) {
