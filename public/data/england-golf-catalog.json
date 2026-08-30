@@ -1,35 +1,397 @@
 {
-  "generated_at": "2026-05-17T00:00:00Z",
-  "source": "Discovered via web search + golfgenius.com microsite inspection. Each tournament has a microsite at either www.golfgenius.com or a subdomain like eg-{slug}{YY}.golfgenius.com.",
+  "generated_at": "2026-08-30T00:00:00Z",
+  "source": "Directorio publico do England Golf no GolfGenius (leagues/36129/customer_directories/10291) + inspeccao dos microsites. Cada torneio vive em www.golfgenius.com/pages/{gg_page} ou num subdominio eg-{slug}{YY}.golfgenius.com. Regenerar a lista de candidatos com scripts/discover-england-golf-events.js.",
   "note": "England Golf junior tournaments since 2023.",
   "tournaments": [
-    {"year":2023,"section":"boys-u18","gender":"M","ageGroup":"U18","slug":"carris-trophy-2023","title":"Carris Trophy 2023 (English Boys' U18 Open Amateur)","gg_base":"https://www.golfgenius.com","gg_page":"3812887"},
-    {"year":2024,"section":"boys-u18","gender":"M","ageGroup":"U18","slug":"carris-trophy-2024","title":"Carris Trophy 2024 (English Boys' U18 Open Amateur)","gg_base":"https://www.golfgenius.com","gg_page":"4924163"},
-    {"year":2025,"section":"boys-u18","gender":"M","ageGroup":"U18","slug":"carris-trophy-2025","title":"Carris Trophy 2025 (Luffenham Heath)","gg_base":"https://eg-carristrophy25.golfgenius.com","gg_page":"5527846"},
-    {"year":2023,"section":"boys-u16","gender":"M","ageGroup":"U16","slug":"mcgregor-trophy-2023","title":"McGregor Trophy 2023 (English Boys' U16 Open Amateur)","gg_base":"https://www.golfgenius.com","gg_page":"3786493"},
-    {"year":2024,"section":"boys-u16","gender":"M","ageGroup":"U16","slug":"mcgregor-trophy-2024","title":"McGregor Trophy 2024","gg_base":"https://www.golfgenius.com","gg_page":"4406563"},
-    {"year":2025,"section":"boys-u16","gender":"M","ageGroup":"U16","slug":"mcgregor-trophy-2025","title":"McGregor Trophy 2025","gg_base":"https://eg-mcgregortrophy25.golfgenius.com","gg_page":"5464879"},
-    {"year":2023,"section":"boys-u14","gender":"M","ageGroup":"U14","slug":"reid-trophy-2023","title":"Reid Trophy 2023 (English Boys' U14 Open Amateur)","gg_base":"https://www.golfgenius.com","gg_page":"3786740"},
-    {"year":2024,"section":"boys-u14","gender":"M","ageGroup":"U14","slug":"reid-trophy-2024","title":"Reid Trophy 2024 (West Sussex)","gg_base":"https://www.golfgenius.com","gg_page":"4945259"},
-    {"year":2025,"section":"boys-u14","gender":"M","ageGroup":"U14","slug":"reid-trophy-2025","title":"Reid Trophy 2025","gg_base":"https://eg-reidtrophy25.golfgenius.com","gg_page":"5548080"},
-    {"year":2023,"section":"u18-amateur","gender":"Mixed","ageGroup":"U18","slug":"english-u18-amateur-2023","title":"English U18 Amateur Championship 2023","gg_base":"https://www.golfgenius.com","gg_page":"3081331"},
-    {"year":2024,"section":"u18-amateur","gender":"Mixed","ageGroup":"U18","slug":"english-u18-amateur-2024","title":"English U18 Amateur Championship 2024","gg_base":"https://www.golfgenius.com","gg_page":"4890956"},
-    {"year":2025,"section":"u18-amateur","gender":"Mixed","ageGroup":"U18","slug":"english-u18-amateur-2025","title":"English U18 Amateur Championship 2025","gg_base":"https://www.golfgenius.com","gg_page":"5493581"},
-    {"year":2023,"section":"girls-u18","gender":"F","ageGroup":"U18","slug":"english-girls-open-stroke-play-2023","title":"English Girls' Open Stroke Play 2023","gg_base":"https://eg-englishgirlsopenstrokeplay23.golfgenius.com","gg_page":"3849917"},
-    {"year":2025,"section":"girls-u18","gender":"F","ageGroup":"U18","slug":"english-girls-championship-2025","title":"English Girls' Championship 2025","gg_base":"https://www.golfgenius.com","gg_page":"5527426"},
-    {"year":2023,"section":"girls-u16-u14","gender":"F","ageGroup":"U16/U14","slug":"english-girls-u16-u14-2023","title":"English Girls' U16 & U14 Open Stroke Play 2023","gg_base":"https://www.golfgenius.com","gg_page":"3127223"},
-    {"year":2024,"section":"girls-u16-u14","gender":"F","ageGroup":"U16/U14","slug":"english-girls-u16-u14-2024","title":"English Girls' U16 & U14 Open Stroke Play 2024","gg_base":"https://www.golfgenius.com","gg_page":"4330981"},
-    {"year":2025,"section":"girls-u16-u14","gender":"F","ageGroup":"U16/U14","slug":"english-girls-u16-u14-2025","title":"English Girls' U16 & U14 Stroke Play 2025","gg_base":"https://www.golfgenius.com","gg_page":"5091787"},
-    {"year":2023,"section":"telegraph","gender":"Mixed","ageGroup":"U16","slug":"justin-rose-telegraph-2023","title":"Justin Rose Telegraph Junior Golf 2023 (Quinta do Lago)","gg_base":"https://eg-justinrosetelegraphjuniorgolf23.golfgenius.com","gg_page":"4416255"},
-    {"year":2024,"section":"telegraph","gender":"Mixed","ageGroup":"U16","slug":"justin-rose-telegraph-2024","title":"Justin Rose Telegraph Junior Golf 2024 (Quinta do Lago)","gg_base":"https://www.golfgenius.com","gg_page":"5063052"},
-    {"year":2025,"section":"bronte-law","gender":"F","ageGroup":"Junior","slug":"bronte-law-cumberwell-park-2025","title":"Bronte Law Junior Series 2025 - Cumberwell Park","gg_base":"https://www.golfgenius.com","gg_page":"5062486"},
-    {"year":2025,"section":"bronte-law","gender":"F","ageGroup":"Junior","slug":"bronte-law-farnham-2025","title":"Bronte Law Junior Series 2025 - Farnham","gg_base":"https://www.golfgenius.com","gg_page":"5062510"},
-    {"year":2025,"section":"bronte-law","gender":"F","ageGroup":"Junior","slug":"bronte-law-luffenham-heath-2025","title":"Bronte Law Junior Series 2025 - Luffenham Heath","gg_base":"https://www.golfgenius.com","gg_page":"5081448"},
-    {"year":2025,"section":"bronte-law","gender":"F","ageGroup":"Junior","slug":"bronte-law-moor-allerton-2025","title":"Bronte Law Junior Series 2025 - Moor Allerton","gg_base":"https://www.golfgenius.com","gg_page":"5184758"},
-    {"year":2026,"section":"bronte-law","gender":"F","ageGroup":"Junior","slug":"bronte-law-farnham-2026","title":"Bronte Law Junior Series 2026 - Farnham","gg_base":"https://www.golfgenius.com","gg_page":"5698733"},
-    {"year":2025,"section":"internacionais","gender":"M","ageGroup":"U16","slug":"england-u16-v-spain-u16-2025","title":"England U16 v Spain U16 (Seaton Carew, Abr 2025)","gg_base":"https://www.golfgenius.com","gg_page":"5232918"},
-    {"year":2025,"section":"county-finals","gender":"M","ageGroup":"County","slug":"boys-county-finals-2025","title":"Boys' County Finals 2025","gg_base":"https://www.golfgenius.com","gg_page":"5116873"},
-    {"year":2024,"section":"junior-club","gender":"Mixed","ageGroup":"Junior","slug":"junior-champion-club-2024","title":"English Junior Champion Club 2024","gg_base":"https://eg-juniorchampionclub23.golfgenius.com","gg_page":"3943709"},
-    {"year":2025,"section":"junior-club","gender":"Mixed","ageGroup":"Junior","slug":"junior-champion-club-2025","title":"English Junior Champion Club 2025","gg_base":"https://www.golfgenius.com","gg_page":"5093524"}
+    {
+      "year": 2026,
+      "section": "boys-u14",
+      "gender": "M",
+      "ageGroup": "U14",
+      "slug": "reid-trophy-2026",
+      "title": "Reid Trophy 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5640376"
+    },
+    {
+      "year": 2026,
+      "section": "boys-u16",
+      "gender": "M",
+      "ageGroup": "U16",
+      "slug": "mcgregor-trophy-2026",
+      "title": "McGregor Trophy 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "6125885"
+    },
+    {
+      "year": 2026,
+      "section": "boys-u18",
+      "gender": "M",
+      "ageGroup": "U18",
+      "slug": "carris-trophy-2026",
+      "title": "Carris Trophy 2026 (English Boys' U18 Open Amateur)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5644445"
+    },
+    {
+      "year": 2026,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-edgbaston-2026",
+      "title": "Bronte Law Junior Series 2026 - Edgbaston",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5691697"
+    },
+    {
+      "year": 2026,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-farnham-2026",
+      "title": "Bronte Law Junior Series 2026 - Farnham",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5698733"
+    },
+    {
+      "year": 2026,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-moor-allerton-2026",
+      "title": "Bronte Law Junior Series 2026 - Moor Allerton",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5757880"
+    },
+    {
+      "year": 2026,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-royal-mid-surrey-2026",
+      "title": "Bronte Law Junior Series 2026 - Royal Mid Surrey",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5691720"
+    },
+    {
+      "year": 2026,
+      "section": "county-finals",
+      "gender": "M",
+      "ageGroup": "County",
+      "slug": "boys-county-finals-2026",
+      "title": "English Boys' County Finals 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "6192233"
+    },
+    {
+      "year": 2026,
+      "section": "girls-u16-u14",
+      "gender": "F",
+      "ageGroup": "U16/U14",
+      "slug": "english-girls-u16-u14-2026",
+      "title": "English Girls' U16 & U14 Stroke Play 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "6177935"
+    },
+    {
+      "year": 2026,
+      "section": "girls-u18",
+      "gender": "F",
+      "ageGroup": "U18",
+      "slug": "english-girls-open-stroke-play-2026",
+      "title": "English Girls' Open Stroke Play Championship 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5640563"
+    },
+    {
+      "year": 2026,
+      "section": "schools",
+      "gender": "Mixed",
+      "ageGroup": "Junior",
+      "slug": "english-schools-scratch-team-2026",
+      "title": "English Schools Scratch Team Championship 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5691685"
+    },
+    {
+      "year": 2026,
+      "section": "schools",
+      "gender": "Mixed",
+      "ageGroup": "Junior",
+      "slug": "english-schools-team-2026",
+      "title": "English Schools Team Championship 2026",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5691653"
+    },
+    {
+      "year": 2025,
+      "section": "boys-u14",
+      "gender": "M",
+      "ageGroup": "U14",
+      "slug": "reid-trophy-2025",
+      "title": "Reid Trophy 2025",
+      "gg_base": "https://eg-reidtrophy25.golfgenius.com",
+      "gg_page": "5548080"
+    },
+    {
+      "year": 2025,
+      "section": "boys-u16",
+      "gender": "M",
+      "ageGroup": "U16",
+      "slug": "mcgregor-trophy-2025",
+      "title": "McGregor Trophy 2025",
+      "gg_base": "https://eg-mcgregortrophy25.golfgenius.com",
+      "gg_page": "5464879"
+    },
+    {
+      "year": 2025,
+      "section": "boys-u18",
+      "gender": "M",
+      "ageGroup": "U18",
+      "slug": "carris-trophy-2025",
+      "title": "Carris Trophy 2025 (Luffenham Heath)",
+      "gg_base": "https://eg-carristrophy25.golfgenius.com",
+      "gg_page": "5527846"
+    },
+    {
+      "year": 2025,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-cumberwell-park-2025",
+      "title": "Bronte Law Junior Series 2025 - Cumberwell Park",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5062486"
+    },
+    {
+      "year": 2025,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-farnham-2025",
+      "title": "Bronte Law Junior Series 2025 - Farnham",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5062510"
+    },
+    {
+      "year": 2025,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-luffenham-heath-2025",
+      "title": "Bronte Law Junior Series 2025 - Luffenham Heath",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5081448"
+    },
+    {
+      "year": 2025,
+      "section": "bronte-law",
+      "gender": "F",
+      "ageGroup": "Junior",
+      "slug": "bronte-law-moor-allerton-2025",
+      "title": "Bronte Law Junior Series 2025 - Moor Allerton",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5184758"
+    },
+    {
+      "year": 2025,
+      "section": "county-finals",
+      "gender": "M",
+      "ageGroup": "County",
+      "slug": "boys-county-finals-2025",
+      "title": "Boys' County Finals 2025",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5116873"
+    },
+    {
+      "year": 2025,
+      "section": "girls-u16-u14",
+      "gender": "F",
+      "ageGroup": "U16/U14",
+      "slug": "english-girls-u16-u14-2025",
+      "title": "English Girls' U16 & U14 Stroke Play 2025",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5091787"
+    },
+    {
+      "year": 2025,
+      "section": "girls-u18",
+      "gender": "F",
+      "ageGroup": "U18",
+      "slug": "english-girls-championship-2025",
+      "title": "English Girls' Championship 2025",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5527426"
+    },
+    {
+      "year": 2025,
+      "section": "internacionais",
+      "gender": "M",
+      "ageGroup": "U16",
+      "slug": "england-u16-v-spain-u16-2025",
+      "title": "England U16 v Spain U16 (Seaton Carew, Abr 2025)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5232918"
+    },
+    {
+      "year": 2025,
+      "section": "junior-club",
+      "gender": "Mixed",
+      "ageGroup": "Junior",
+      "slug": "junior-champion-club-2025",
+      "title": "English Junior Champion Club 2025",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5093524"
+    },
+    {
+      "year": 2025,
+      "section": "u18-amateur",
+      "gender": "Mixed",
+      "ageGroup": "U18",
+      "slug": "english-u18-amateur-2025",
+      "title": "English U18 Amateur Championship 2025",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5493581"
+    },
+    {
+      "year": 2024,
+      "section": "boys-u14",
+      "gender": "M",
+      "ageGroup": "U14",
+      "slug": "reid-trophy-2024",
+      "title": "Reid Trophy 2024 (West Sussex)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "4945259"
+    },
+    {
+      "year": 2024,
+      "section": "boys-u16",
+      "gender": "M",
+      "ageGroup": "U16",
+      "slug": "mcgregor-trophy-2024",
+      "title": "McGregor Trophy 2024",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "4406563"
+    },
+    {
+      "year": 2024,
+      "section": "boys-u18",
+      "gender": "M",
+      "ageGroup": "U18",
+      "slug": "carris-trophy-2024",
+      "title": "Carris Trophy 2024 (English Boys' U18 Open Amateur)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "4924163"
+    },
+    {
+      "year": 2024,
+      "section": "girls-u16-u14",
+      "gender": "F",
+      "ageGroup": "U16/U14",
+      "slug": "english-girls-u16-u14-2024",
+      "title": "English Girls' U16 & U14 Open Stroke Play 2024",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "4330981"
+    },
+    {
+      "year": 2024,
+      "section": "junior-club",
+      "gender": "Mixed",
+      "ageGroup": "Junior",
+      "slug": "junior-champion-club-2024",
+      "title": "English Junior Champion Club 2024",
+      "gg_base": "https://eg-juniorchampionclub23.golfgenius.com",
+      "gg_page": "3943709"
+    },
+    {
+      "year": 2024,
+      "section": "telegraph",
+      "gender": "Mixed",
+      "ageGroup": "U16",
+      "slug": "justin-rose-telegraph-2024",
+      "title": "Justin Rose Telegraph Junior Golf 2024 (Quinta do Lago)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "5063052"
+    },
+    {
+      "year": 2024,
+      "section": "u18-amateur",
+      "gender": "Mixed",
+      "ageGroup": "U18",
+      "slug": "english-u18-amateur-2024",
+      "title": "English U18 Amateur Championship 2024",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "4890956"
+    },
+    {
+      "year": 2023,
+      "section": "boys-u14",
+      "gender": "M",
+      "ageGroup": "U14",
+      "slug": "reid-trophy-2023",
+      "title": "Reid Trophy 2023 (English Boys' U14 Open Amateur)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "3786740"
+    },
+    {
+      "year": 2023,
+      "section": "boys-u16",
+      "gender": "M",
+      "ageGroup": "U16",
+      "slug": "mcgregor-trophy-2023",
+      "title": "McGregor Trophy 2023 (English Boys' U16 Open Amateur)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "3786493"
+    },
+    {
+      "year": 2023,
+      "section": "boys-u18",
+      "gender": "M",
+      "ageGroup": "U18",
+      "slug": "carris-trophy-2023",
+      "title": "Carris Trophy 2023 (English Boys' U18 Open Amateur)",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "3812887"
+    },
+    {
+      "year": 2023,
+      "section": "girls-u16-u14",
+      "gender": "F",
+      "ageGroup": "U16/U14",
+      "slug": "english-girls-u16-u14-2023",
+      "title": "English Girls' U16 & U14 Open Stroke Play 2023",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "3127223"
+    },
+    {
+      "year": 2023,
+      "section": "girls-u18",
+      "gender": "F",
+      "ageGroup": "U18",
+      "slug": "english-girls-open-stroke-play-2023",
+      "title": "English Girls' Open Stroke Play 2023",
+      "gg_base": "https://eg-englishgirlsopenstrokeplay23.golfgenius.com",
+      "gg_page": "3849917"
+    },
+    {
+      "year": 2023,
+      "section": "telegraph",
+      "gender": "Mixed",
+      "ageGroup": "U16",
+      "slug": "justin-rose-telegraph-2023",
+      "title": "Justin Rose Telegraph Junior Golf 2023 (Quinta do Lago)",
+      "gg_base": "https://eg-justinrosetelegraphjuniorgolf23.golfgenius.com",
+      "gg_page": "4416255"
+    },
+    {
+      "year": 2023,
+      "section": "u18-amateur",
+      "gender": "Mixed",
+      "ageGroup": "U18",
+      "slug": "english-u18-amateur-2023",
+      "title": "English U18 Amateur Championship 2023",
+      "gg_base": "https://www.golfgenius.com",
+      "gg_page": "3081331"
+    }
   ]
 }

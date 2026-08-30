@@ -1266,6 +1266,23 @@ async function scrapeOne(browser, t) {
   }
 }
 
+/* Opcoes de launch sensiveis ao ambiente.
+   Em CI/local nao mexe em nada; num sandbox com proxy de egress (HTTPS_PROXY) ou
+   com o Chromium pre-instalado noutro caminho (PLAYWRIGHT_CHROMIUM_EXECUTABLE),
+   passa essas opcoes ao Playwright. --disable-quic/--disable-http2 sao precisos
+   quando o trafego passa por um proxy que re-termina TLS. */
+function launchOptions(headless) {
+  const opts = { headless };
+  const exe = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
+  if (exe) opts.executablePath = exe;
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  if (proxy) {
+    opts.proxy = { server: proxy };
+    opts.args = ["--disable-quic", "--disable-http2", "--ssl-version-max=tls1.2"];
+  }
+  return opts;
+}
+
 /* ─── MAIN ─── */
 function parseArgs(argv) {
   const args = {
@@ -1318,9 +1335,9 @@ function parseArgs(argv) {
   }
   console.log("England Golf scraper -- " + tournaments.length + " torneios");
 
-  const browser = await chromium.launch({ headless: args.headless });
+  const browser = await chromium.launch(launchOptions(args.headless));
   const outDir = path.resolve(__dirname, "../public/data");
-  let ok = 0, fail = 0, skipped = 0, totalFiles = 0;
+  let ok = 0, fail = 0, skipped = 0, totalFiles = 0, unchanged = 0;
 
   for (const t of tournaments) {
     try {
@@ -1345,6 +1362,14 @@ function parseArgs(argv) {
             }
           } catch { /* re-scrape */ }
         }
+        // So reescrever quando o CONTEUDO muda (ignorando o scrapedAt). Sem isto
+        // cada run do cron produzia um diff em todos os ficheiros so por causa do
+        // timestamp, e o commit semanal era ruido puro.
+        if (sameContent(outPath, f.data)) {
+          console.log("   inalterado " + f.filename + " (" + f.data.players.length + " jogadores)");
+          unchanged++;
+          continue;
+        }
         const tmp = outPath + ".tmp";
         fs.writeFileSync(tmp, JSON.stringify(f.data, null, 2), "utf-8");
         fs.renameSync(tmp, outPath);
@@ -1359,8 +1384,30 @@ function parseArgs(argv) {
   }
 
   await browser.close();
-  console.log("\nOK torneios " + ok + "/" + tournaments.length + " | ficheiros " + totalFiles + " | falhas " + fail + " | skipped " + skipped);
+  console.log("\nOK torneios " + ok + "/" + tournaments.length + " | ficheiros " + totalFiles +
+    " | inalterados " + unchanged + " | falhas " + fail + " | skipped " + skipped);
+
+  // Convencao do repo (ver "Controlo so commit se ha mais informacao" no CLAUDE.md):
+  //   0 = ha dados novos (o workflow committa)
+  //   2 = nada novo (NAO e erro -- o workflow salta o commit)
+  //   1 = erro real
+  if (totalFiles > 0) process.exit(0);
+  if (ok === 0 && fail > 0) process.exit(1);
+  process.exit(2);
 })();
+
+/* Compara o que vamos gravar com o que ja esta em disco, ignorando o scrapedAt. */
+function sameContent(outPath, data) {
+  if (!fs.existsSync(outPath)) return false;
+  try {
+    const existing = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+    const a = { ...existing }, b = { ...data };
+    delete a.scrapedAt; delete b.scrapedAt;
+    return JSON.stringify(a) === JSON.stringify(b);
+  } catch {
+    return false;
+  }
+}
 
 /* ─── transformToBjgtPerDivision (enriquecido 2026-05-18) ───
    Preserva TODOS os campos do scraped: id, memberIds (cross-ref), eventId, rank,
