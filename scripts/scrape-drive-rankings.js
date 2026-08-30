@@ -65,11 +65,18 @@ const CLUB = "988";
 const CLUB_AQUAPOR = "000";
 const BASE = "https://scoring.fpg.pt/lists";
 
+// ⚠ Opcionais desde 2026-08-30: o `linkpage.aspx?page=rankingresult` com o ack
+// universal emite ele próprio a sessão a quem chega sem credenciais (medido:
+// RankingsClassifLST devolve Result:OK). O warmup abaixo adopta-a.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["FPG_ADMISSIONS_COOKIES"],
   file: path.join(REPO, "api", ".fpg-admissions-cookies.json"),
   label: "[drive-rankings]",
-});
+}) || "";
+// Jar em uso: começa nas nossas cookies (se houver) e passa a incluir o que o
+// servidor emitir no warmup.
+let COOKIE_JAR = COOKIE;
 
 /* ── CLI ── */
 const args = process.argv.slice(2);
@@ -174,19 +181,28 @@ function dotNetToIso(s) {
 
 /* ── HTTP ── */
 async function warmup(code, club = CLUB) {
+  /* ⚠ Segue os redirects À MÃO, acumulando cookies de TODOS os hops: o
+     `fetch` com `redirect:"follow"` só expõe os headers da resposta FINAL, e a
+     sessão que o gateway emite no 302 perder-se-ia pelo caminho. É isso que
+     permite correr sem credenciais nossas. Ver scripts/lib/fpg-session.js. */
+  const { Sessao } = require("./lib/fpg-session");
+  const sess = new Sessao({ base: BASE, ua: UA });
+  for (const part of String(COOKIE_JAR || "").split(";")) {
+    const kv = part.trim();
+    const i = kv.indexOf("=");
+    if (i > 0) sess.jar.set(kv.slice(0, i).trim(), kv.slice(i + 1));
+  }
   const url = `${BASE}/linkpage.aspx?page=rankingresult&club=${club}&ranking=${code}&ack=${ACK}&minpoints=1`;
-  const r = await fetch(url, {
-    headers: {
-      "User-Agent": UA, "Cookie": COOKIE,
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "pt-PT,pt;q=0.9",
-      "Referer": "https://scoring.fpg.pt/",
-    },
-    redirect: "follow",
-  });
-  await r.text();
-  console.log(`[drive-rankings] warmup linkpage HTTP ${r.status}`);
-  return r.ok;
+  try {
+    const r = await sess.get(url);
+    COOKIE_JAR = sess.cookieHeader;
+    const ok = r.status === 200 && !/Runtime Error|Param_Errors|Err=999/i.test(r.html);
+    console.log(`[drive-rankings] warmup linkpage HTTP ${r.status}${ok ? "" : " (sem contexto)"}`);
+    return ok;
+  } catch (e) {
+    console.log(`[drive-rankings] warmup falhou: ${e.message}`);
+    return false;
+  }
 }
 
 /** PageMethod POST — params extra vão na URL E espelhados no body (padrão FPG). */
@@ -198,7 +214,7 @@ async function pageMethod(method, params) {
     const r = await fetch(url, {
       method: "POST",
       headers: {
-        "User-Agent": UA, "Cookie": COOKIE,
+        "User-Agent": UA, ...(COOKIE_JAR ? { "Cookie": COOKIE_JAR } : {}),
         "Content-Type": "application/json; charset=utf-8",
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "application/json, text/javascript, */*; q=0.01",
@@ -219,7 +235,7 @@ async function pageMethod(method, params) {
 
 /* ── Main ── */
 (async () => {
-  if (!COOKIE) { console.error("[drive-rankings] sem cookies (FPG_ADMISSIONS_COOKIES / api/.fpg-admissions-cookies.json)"); process.exit(1); }
+  if (!COOKIE) console.log("[drive-rankings] sem cookies — a usar o gateway público (a sessão vem do ack)");
 
   const targets = EXPLICIT_CODES.length
     ? EXPLICIT_CODES.map(code => ({ code, ...parseCode(code) }))

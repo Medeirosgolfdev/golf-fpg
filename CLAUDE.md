@@ -413,6 +413,165 @@ Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg
 
 **Cookie health:** workflow `cookie-health.yml` (Quinta 09:00 UTC) valida os 3 secrets de cookies via test-fpg-auth.js + test-datagolf-node.js + test-fpg-admissions-auth.js — falha (= email) se expirados, antes da janela de scrapes do fim-de-semana.
 
+### ⚠ HTTP 500 da FPG NÃO é prova de cookie expirado (2026-08-30)
+
+O ASP.NET da FPG explode em vez de devolver 401, por isso sempre lemos 500 como
+"cookies mortos" (está assim no `lib/fpg-http.js` e em várias secções abaixo).
+Na maioria das vezes acerta — mas a 30-08-2026 mediu-se o contrário e a
+heurística mandou fazer trabalho inútil:
+
+| Hora (UTC) | Facto |
+|---|---|
+| 10:40 | cookies dos 3 sites refrescados (commit `1831dd0bc`) |
+| 17:21 | `update-drive` morre com HTTP 500 na `TournamentsLST` |
+| 17:26 | `cookie-health` dá 2 dos 3 secrets por **expirados** |
+| 17:5x | os **mesmos** cookies, à mão, dão o mesmo 500 — e o `1PreparePage.aspx`, um entry gate **sem credencial nenhuma**, dá 500 também |
+
+Não eram os cookies: as aplicações ASP.NET `scoring.datagolf.pt/pt` e
+`scoring.fpg.pt/lists` estavam a arder. O `my.fpg.pt` (outro backend) estava de
+pé, e o ASP clássico (`scoring-pt.datagolf.pt/scripts/draw.asp`) também.
+
+**A avaria acabou por si**, às ~18:10 UTC, sem ninguém mexer em nada: às 18:14
+o `scoring.datagolf.pt` voltou a responder com os mesmos cookies. Foram ~9h.
+
+⚠ **Não há forma fiável de distinguir as duas causas de fora.** A primeira
+versão do `fpg-liveness.js` usava o `linkpage.aspx?page=admissions` **sem
+cookies** como controlo, a assumir que respondia 200 com o serviço de pé. Não
+responde: às 18:15, com a FPG recuperada e o scrape do Drive a correr bem, esse
+controlo continuava a dar 500. Como controlo era pior do que nenhum —
+mascararia cookies mesmo mortos como "não é connosco".
+
+O que ficou (`scripts/lib/fpg-liveness.js`, 9 testes) é modesto de propósito:
+uma sonda de **alcançabilidade** (`linkpage.aspx?page=draw`, a única rota
+medida de pé com e sem avaria; não apodrece, um torneio inexistente devolve 200
+na mesma) e um veredicto de três estados:
+
+| veredicto | quando | exit | efeito |
+|---|---|---|---|
+| `fonte-em-baixo` | a FPG nem responde na rota pública | **3** | `cookie-health` regista e não falha; `update-drive` não pinta o cron de vermelho |
+| `indeterminado` | a FPG responde mas o nosso 500 não se explica | **2** | o alarme TOCA à mesma — calá-lo por dúvida esconderia cookies mortos |
+| `ok` | autenticou | 0 | — |
+
+A mensagem do `indeterminado` manda **confirmar no browser antes de
+refrescar** — foi o que resolveu este caso: a utilizadora abriu o linkpage e
+funcionava, o que provou que o problema não eram os cookies.
+
+### ✅ As cookies NÃO são precisas para os resultados — `scripts/lib/fpg-session.js`
+
+**Confirmado 2026-08-30, com o serviço estável** (a 1ª medição, às 18:09,
+apanhou a janela de recuperação e não provava nada; esta isolou o mecanismo).
+O gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) **emite ele
+próprio** `ASP.NET_SessionId` + `DG_Lists_URL` a quem chega sem credenciais.
+Medido no mesmo minuto, mesmo URL:
+
+| | resultado |
+|---|---|
+| **com** cookie jar (aceita a sessão) | **4/4 OK** — página 200, ClassifLST OK (18), ScoreCard OK |
+| **sem** jar | **3/3 → HTTP 500** Runtime Error |
+| POST directo sem sessão | `Result:ERROR — Object reference not set to an instance of an object` |
+
+Aquele *"Object reference..."* é a cara do 500 que se lia como "cookies
+expiraram". O que faltava era **aceitar** a sessão, não guardá-la.
+
+⚠ **`fetch` com `redirect:"follow"` não chega.** O linkpage responde 302 e a
+sessão é emitida NO CAMINHO; o fetch nativo não reenvia o `Set-Cookie` de um
+hop para o seguinte, por isso o pedido final chega sem sessão. O `Sessao.get`
+segue os redirects à mão, acumulando cookies.
+
+**Cobertura: o pipeline INTEIRO, descoberta incluída.**
+
+| Passo | Entrada pública (sem cookies) | PageMethod |
+|---|---|---|
+| Resultados de um torneio (leaderboard + scorecards) | `scoring.fpg.pt/lists/linkpage.aspx?page=classif&…&ack=8428ACK987` | `classif.aspx/ClassifLST` · `classifAgregate.aspx/ScoreCard` |
+| **Descoberta** de torneios | `scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T` → `1PreparePage.aspx` | `tournaments.aspx/TournamentsLST` |
+
+⚠ **A entrada da lista tem um hop em JavaScript.** O `tournaments.asp` responde
+com o `datalinkpt.html`, que NÃO faz redirect HTTP: é o `DataGolfeRedirect` da
+página que constrói a URL do `1PreparePage.aspx` e navega. Como não corremos
+JS, reconstruímos essa URL (`criarSessaoLista`), incluindo o detalhe de o
+`club=ALL` virar `ccode=All`. É o `1PreparePage.aspx` que emite a sessão.
+
+⚠ **Chegou a dar-se a descoberta por impossível sem cookies — era erro de
+método:** testou-se o `linkpage.aspx?page=tournlist` no host errado
+(`scoring.fpg.pt/lists`, onde falha com os 3 acks) e o `1PreparePage.aspx`
+*durante* a avaria da FPG, sem voltar a testar depois. Pelo caminho certo e com
+a FPG de pé: `Result:OK`, **84 993 torneios**, com filtro por clube/data/nome.
+
+⚠ **Duas sessões separadas, não uma.** O `DG_Lists_URL` guarda o CONTEXTO da
+página; um POST ao `tournaments.aspx` reescreve-o e o `classif` a seguir perde
+o seu (devolve `Result:ERROR` logo depois de um warmup bem sucedido). O
+`scrape-classif-node.js` mantém `SESSAO` (classif) e `SESSAO_LISTA`
+(descoberta) independentes.
+
+### Quem já corre sem cookies (2026-08-30)
+
+O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do que
+é alcançável. Medido uma a uma, e **só se portou o que passou**:
+
+| Script | Workflow | Endpoint | Sem cookies |
+|---|---|---|---|
+| `scrape-classif-node.js` | update-classif | ClassifLST + ScoreCard | ✅ |
+| `scrape-drive-node.js` | update-drive | TournamentsLST + ClassifLST + ScoreCard | ✅ |
+| `scrape-jovens-node.js` | update-jovens | idem | ✅ |
+| `scrape-federados-node.js` | update-federados | HandicapsLST (gate `fedlist_v2`) | ✅ 17 840 federados |
+| `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
+| `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
+| `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
+
+⚠ **As admissions NÃO são fiavelmente públicas.** O mesmo gate serve
+`000/10941` (página real de inscritos) e devolve `Param Error — Link address
+inválido` (Err=400) em `987/10245`. Enquanto não se souber a regra, esse
+scraper mantém-se autenticado — o `draw` continua público como sempre foi.
+
+A regra partilhada é a mesma em todos: **cookies primeiro** (o caminho
+autenticado é o primário e é o que se mantém testado), **público quando não há
+cookies ou quando as que há devolvem 500**. A comutação vive no
+`criarRoteador` de `fpg-session.js` — um só sítio, com um gate e uma sessão por
+família de PageMethod — e é anunciada no log: `cookies não autenticam — a
+seguir pelo caminho público`.
+
+⚠ **`redirect:"follow"` do fetch nativo perde a sessão** e mordeu em TRÊS
+sítios (o `Sessao.get` segue os redirects à mão e é a correcção):
+- o `scrape-federados-node.js` aquecia com `redirect:"follow"` e só lia o
+  `Set-Cookie` da resposta FINAL — a sessão emitida no 302 do
+  `1PreparePage.aspx` evaporava-se e o `HandicapsLST` vinha sem contexto
+  (0 registos, salvos pela guarda anti-overwrite);
+- o `scrape-drive-rankings.js` tinha o mesmo padrão no seu warmup;
+- e foi por isto que, à primeira, se concluiu que a descoberta precisava de
+  cookies.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
+
+Medido com o 987/10207 (Drive Tour Norte – Amarante) nos três cenários —
+cookies boas, **sem cookies** e **cookies mortas**: os `drive-data-2026-08.json`
+saem **byte a byte idênticos** (metadata, leaderboard, scorecards, par, metros,
+CR/slope, tee e PCC). Verificado com os ficheiros de cookies
+escondidos e as env vars limpas: **18 jogadores e 14 scorecards idênticos linha
+a linha** aos da via autenticada, com metadata completa (nome, campo, data,
+rondas, circuito).
+
+⚠ **Três armadilhas neste caminho, todas com caso real:**
+1. **HTTP 200 não é prova de sessão útil.** Sem cookies o linkpage do
+   `scoring.datagolf.pt` devolve 200 na mesma e só o PageMethod a seguir
+   rebenta — o warmup dava-se por bom e o fallback nunca corria. O teste é o
+   CONTEÚDO (`parseMetaClassif(html).name`), não o `res.ok`.
+2. **Os params extra vão na query string E no body** — o `ScoreCard` devolve
+   500 se só forem num dos sítios (mesma armadilha do `my.fpg.pt`).
+3. Uma variável de cor inexistente (`${C}`) num `console.log` **dentro do
+   try** do fallback fazia o `catch` engolir tudo: a metadata já estava
+   preenchida (o nome aparecia no log!) mas `SESSAO` ficava a null e o scrape
+   caía no caminho autenticado sem cookies. Um throw cosmético a fingir-se de
+   falha de rede.
+
+⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão (500 mesmo com jar) —
+continua a exigir o hash do `1EntryPage.aspx`.
+
 ## Scripts — FPG Pipeline
 
 Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js Terminal** (correr em `C:\golf-fpg\scripts\`).
@@ -994,6 +1153,66 @@ que é exactamente o erro que esta datação corrige.
 2026") e o `INCLUIR_FORTE` ignora o `KEYWORDS_EXCLUIR` — era por isso que cada
 uma tinha de ser listada à mão em `FORCAR_EXCLUIR` (4 entradas). A guarda corre
 ANTES de tudo e resolve a classe inteira.
+
+### ⚠ O NOME não classifica o torneio — o `type` do GetMeta classifica (2026-08-30)
+
+A decisão de que torneios entram no radar vive agora em
+**`scripts/lib/uskids-classify.js`** (`incluirTorneio(t, name, type)`, 10 testes).
+Enquanto foi só por palavras-chave sobre o nome, falhava nos dois sentidos —
+o nome de um evento USKids é livre. Três **Regionais** com inscrições abertas
+nunca chegaram à app (medidos 2026-08-30, todos dentro da zona já varrida):
+
+| t | Torneio | Porque caiu |
+|---|---|---|
+| 22986 | PGA Golf Club Invitational 2026 | batia no exclude `'golf club'` — que existe para deitar fora os ~1200 eventos do Local Tour, que se chamam pelo nome do campo |
+| 23318 | Colonial Williamsburg Classic 2026 | `'classic'` só existia colado a um sítio (`'venice classic'`, `'holiday classic'`) |
+| 23420 | Monterey Challenge 2026 | `'challenge'` nem sequer era include |
+
+O `tournament` do `GetMeta` já traz a taxonomia oficial — `tour`
+("Domestic Championships Tour") e `type` (inteiro). Medido sobre os 1320
+torneios vivos em t=22240…23640:
+
+| type | tour | n | exemplo |
+|---|---|---|---|
+| **1** | Domestic Championships Tour | 5 | Seaview Open 2026 ← **Regional** |
+| 2 | Teen Series Tour | 30 | Teen Series at Longleaf (NC) |
+| 5 | `{cidade} Tour` | ~1150 | The Legends Golf Club ← **Local Tour** |
+| 6 | `{cidade} Tour` (Tour Championship) | ~190 | Longleaf … (Tour Championship) |
+| **7** | State Invitationals Tour | 8 | 2026 Kansas State Invitational |
+| **8** | International Championships Tour | 14 | Venice Open 2026 |
+| 9 | Team Golf Tour | 23 | Concord Local Parent/Child 2026 |
+| 12 | Girls Invitationals Tour | 2 | 2026 Girls Invitational - Longleaf (NC) |
+| 13 | International Teen Series Tour | 3 | International Teen Series at Al Hamra |
+
+`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome.
+
+**`TIPOS_INCLUIR_SE_INTL = {6}` — Tour Championship, só fora dos EUA.** O
+type 6 é a final de época de cada Local Tour de cidade (irmão do type 5, que
+fica de fora): 184, das quais 133 por jogar. Todas no radar levariam a Fase 2
+do monitor diário de 33 para ~166 torneios — 5× o trabalho — e a esmagadora
+maioria é americana, onde não nos cruzamos com ninguém. Entram as **54 de fora
+dos EUA**: Azata/Andaluzia, Venice, Milão, Turim, Toscana, Munique, Hamburgo,
+Nuremberga, Lyon, Londres, Panamá, América Latina, Ásia, África.
+
+⚠ **O sinal é o código de país ENTRE PARÊNTESES** no `tour` ("Lima (PE) Tour",
+"Andalusia (ES) Tour"). Os tours americanos com sigla de estado usam
+**vírgula** e nunca parênteses ("Charleston, SC Tour", "Central Valley, CA
+Tour") — verificado nos 158 tours distintos do corpus: 14 com vírgula, zero
+falsos positivos. E os únicos "(CA)" são Niagara e Vancouver, que são o
+**Canadá**, não a Califórnia: entram de propósito. Efeito medido: **+64 no
+corpus (54 futuros), 0 americanos**. As
+palavras-chave ficam como camada **aditiva** — é só isso que continua a trazer
+as etapas de Local Tour que seguimos de propósito (Azata/Andaluzia, Panamá,
+Al Hamra, OPEN.9 Eichenried, Circolo Golf Venezia) sem abrir a porta às outras
+~1200. `KEYWORDS_EXCLUIR_SEMPRE` (Parent/Child) corre antes do tipo e
+`FORCAR_EXCLUIR` vence tudo. Diferença medida sobre os 1320: **+3, −0**.
+
+⚠ **O `type` tem de ser guardado na cache.** O `descobrirTorneios` re-filtra as
+entradas de `uskids-discovery-cache.json` à entrada; sem `tour`/`type`
+persistidos, a re-entrada voltava a decidir só pelo nome e os Regionais caíam
+outra vez na corrida seguinte. Entradas antigas sem `type` continuam a ser
+lidas pelo nome (retrocompatível). O `uskids-field.json` também passa a
+carregar `tour`/`type` por torneio.
 
 **fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133])`.
 

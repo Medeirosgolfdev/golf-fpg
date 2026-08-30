@@ -39,42 +39,93 @@ jobs:
         continue-on-error: true
         env:
           FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
-        run: node scripts/test-fpg-auth.js
+        run: |
+          set +e
+          node scripts/test-fpg-auth.js
+          echo "code=$?" >> $GITHUB_OUTPUT
+          exit 0
 
       - name: "scoring.datagolf.pt (DATAGOLF_SCORING_COOKIES — drive/classif/jovens)"
         id: datagolf
         continue-on-error: true
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
-        run: node scripts/test-datagolf-node.js
+        run: |
+          set +e
+          node scripts/test-datagolf-node.js
+          echo "code=$?" >> $GITHUB_OUTPUT
+          exit 0
 
       - name: "scoring.fpg.pt/lists (FPG_ADMISSIONS_COOKIES — admissions/draws)"
         id: admissions
         continue-on-error: true
         env:
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
-        run: node scripts/test-fpg-admissions-auth.js
+        run: |
+          set +e
+          node scripts/test-fpg-admissions-auth.js
+          echo "code=$?" >> $GITHUB_OUTPUT
+          exit 0
 
       # ⚠ Testar contra "success", NUNCA contra "failure": um passo que não
       # chegou a correr tem outcome "skipped", e com o teste ao contrário o
       # resumo dava "✓ os 3 conjuntos estão válidos" sem ter validado nada
-      # (visto a 2026-08-20 num run cancelado no checkout — os 3 testes
-      # skipped e o resumo verde).
+      # (visto a 2026-08-20 num run cancelado no checkout).
+      #
+      # ⚠ 2026-08-30: o vigia mandou refrescar dois secrets que tinham 7 horas
+      # e estavam bons — a FPG é que teve uma avaria de ~9h. Exit 3 = a FPG nem
+      # responde na rota pública (sonda em scripts/lib/fpg-liveness.js), único
+      # caso em que se sabe que o problema não é nosso. Exit 2 = não se
+      # conseguiu isolar a causa; aí o alarme TOCA à mesma, porque calá-lo por
+      # dúvida esconderia cookies mesmo mortos.
       - name: Resumo
         if: always()
         run: |
-          FAILED=""
-          [ "${{ steps.fpg.outcome }}"        != "success" ] && FAILED="$FAILED FPG_COOKIES(my.fpg.pt):${{ steps.fpg.outcome }}"
-          [ "${{ steps.datagolf.outcome }}"   != "success" ] && FAILED="$FAILED DATAGOLF_SCORING_COOKIES(scoring.datagolf.pt):${{ steps.datagolf.outcome }}"
-          [ "${{ steps.admissions.outcome }}" != "success" ] && FAILED="$FAILED FPG_ADMISSIONS_COOKIES(scoring.fpg.pt):${{ steps.admissions.outcome }}"
-          if [ -n "$FAILED" ]; then
-            echo "❌ Cookies expirados/inválidos (ou teste não corrido):$FAILED"
+          COOKIES=""   # causa não isolada → provavelmente cookies, verificar
+          FONTE=""     # FPG em baixo → não é connosco, voltar mais tarde
+          INDEF=""     # teste não chegou a correr
+
+          classificar () {   # $1=nome  $2=outcome  $3=exit code
+            case "$2:$3" in
+              success:*) return ;;
+              *:3)  FONTE="$FONTE $1" ;;
+              *:2)  COOKIES="$COOKIES $1" ;;
+              *)    INDEF="$INDEF $1:$2/exit${3:-?}" ;;
+            esac
+          }
+          classificar "FPG_COOKIES(my.fpg.pt)"                  "${{ steps.fpg.outcome }}"        "${{ steps.fpg.outputs.code }}"
+          classificar "DATAGOLF_SCORING_COOKIES(scoring.datagolf.pt)" "${{ steps.datagolf.outcome }}"   "${{ steps.datagolf.outputs.code }}"
+          classificar "FPG_ADMISSIONS_COOKIES(scoring.fpg.pt)"  "${{ steps.admissions.outcome }}" "${{ steps.admissions.outputs.code }}"
+
+          if [ -n "$FONTE" ]; then
+            echo "⚠ FONTE EM BAIXO (não é dos nossos cookies):$FONTE"
+            echo "  A FPG não responde nem na rota pública — refrescar cookies NÃO resolve."
+            echo "  Enquanto a FPG estiver assim, a validade destes cookies é indeterminável."
             echo ""
-            echo "Refrescar antes de Sexta à noite (janela de scrapes):"
+          fi
+          if [ -n "$COOKIES" ]; then
+            echo "❌ Autenticação falhou (causa não isolada):$COOKIES"
+            echo ""
+            echo "⚠ Confirmar PRIMEIRO abrindo no browser:"
+            echo "  https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=987&tourn=10207&ack=8428ACK987"
+            echo "  Se abrir aí, o problema pode ser da FPG e não dos cookies (aconteceu 2026-08-30)."
+            echo ""
+            echo "Se for mesmo dos cookies, refrescar antes de Sexta à noite:"
             echo "  1. Chrome 90 → login/navegar nos sites afectados"
             echo "  2. F12 → Application → Cookies → copiar"
             echo "  3. Actualizar os GitHub Secrets correspondentes"
             echo "  (Playbook completo: CLAUDE.md — 'Cenário 1: cookies expiraram')"
-            exit 1
+          fi
+          if [ -n "$INDEF" ]; then
+            echo "⚠ Testes que não deram veredicto:$INDEF"
+          fi
+
+          # Só falha o job quando há trabalho NOSSO para fazer. Uma avaria da
+          # FPG fica registada no resumo mas não pinta o cron de vermelho —
+          # senão o alarme toca por coisas que não podemos resolver.
+          if [ -n "$COOKIES" ] || [ -n "$INDEF" ]; then exit 1; fi
+          if [ -n "$FONTE" ]; then
+            echo "Sem acção da nossa parte — voltar a validar quando a FPG recuperar."
+            exit 0
           fi
           echo "✓ Os 3 conjuntos de cookies estão válidos"

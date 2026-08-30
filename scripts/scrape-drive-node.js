@@ -88,7 +88,11 @@ const info = m => console.log(`  ${m}`);
 // COOKIES
 // ═══════════════════════════════════════════════════════════
 const { loadCookieHeader } = require("./lib/cookies");
+// ⚠ Opcionais desde 2026-08-30: há um caminho público que não leva
+// credencial nenhuma (ver "MODO PÚBLICO" abaixo). Sem cookies o scrape arranca
+// já nesse modo em vez de abortar.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["DATAGOLF_SCORING_COOKIES"],
   file: path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json"),
   label: "[drive]",
@@ -98,13 +102,24 @@ const COOKIE = loadCookieHeader({
 // FETCH WRAPPER
 // ═══════════════════════════════════════════════════════════
 const { makeFpgPost } = require("./lib/fpg-http");
-const dgPost = makeFpgPost({
+const dgPost = COOKIE ? makeFpgPost({
   baseUrl: BASE_URL,
   cookie: COOKIE,
   ua: UA,
   origin: "https://scoring.datagolf.pt",
   referer: `${BASE_URL}/tournaments.aspx`,
-});
+}) : null;
+
+// ═══════════════════════════════════════════════════════════
+// MODO PÚBLICO — sem cookies guardados (2026-08-30)
+// ═══════════════════════════════════════════════════════════
+/* Os gateways da FPG que levam o `ack` universal EMITEM eles próprios a sessão
+   ASP.NET a quem chega sem credenciais — nunca foi preciso capturar cookies no
+   Chrome 90 para este scrape. O roteador tenta o caminho habitual e, num HTTP
+   500, repete sem credenciais antes de desistir. Ver scripts/lib/fpg-session.js. */
+const { criarRoteador } = require("./lib/fpg-session");
+const ROTA = criarRoteador({ dgPost, info });
+const dgPostSmart = (pathname, body, qs) => ROTA.post(pathname, body, qs);
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBRIR TORNEIOS (drive + aquapor)
@@ -138,7 +153,7 @@ async function tournSearchPage(TournName, startIndex) {
     jtSorting: "started_at DESC",
   };
   const qs = `jtStartIndex=${startIndex}&jtPageSize=50&jtSorting=${encodeURIComponent("started_at DESC")}`;
-  const d = await dgPost("tournaments.aspx/TournamentsLST", body, qs);
+  const d = await dgPostSmart("tournaments.aspx/TournamentsLST", body, qs);
   return { records: d.Records || [], total: d.TotalRecordCount || 0 };
 }
 
@@ -191,7 +206,7 @@ async function fetchClassif(tclub, tcode, round) {
     };
     const qs = `jtStartIndex=${startIndex}&jtPageSize=${pageSize}&jtSorting=${encodeURIComponent("score_id DESC")}`;
     try {
-      const d = await dgPost("classif.aspx/ClassifLST", body, qs);
+      const d = await dgPostSmart("classif.aspx/ClassifLST", body, qs);
       const recs = d.Records || [];
       allRecords.push(...recs);
       if (recs.length < pageSize) break;
@@ -211,7 +226,7 @@ async function fetchScorecard(scoreId, tclub, tcode, round) {
     scoringtype: "1", classiftype: "I", classifround: String(round),
   };
   try {
-    const d = await dgPost("classif.aspx/ScoreCard", body, qs);
+    const d = await dgPostSmart("classif.aspx/ScoreCard", body, qs);
     return (d.Records && d.Records[0]) || null;
   } catch { return null; }
 }
@@ -223,7 +238,7 @@ async function fetchScorecardAggregate(scoreId, tclub, tcode) {
     scoringtype: "1", classiftype: "I", classifround: "",
   };
   try {
-    const d = await dgPost("classifAgregate.aspx/ScoreCard", body, qs);
+    const d = await dgPostSmart("classifAgregate.aspx/ScoreCard", body, qs);
     return d.Records || null;
   } catch { return null; }
 }
@@ -556,7 +571,26 @@ function writeIfChanged(filepath, newObj) {
   // nunca recebia os torneios novos.)
   console.log(`${G}✓ ${filesWritten} ficheiro(s) com conteúdo novo — commit${X}`);
   process.exit(0);
-})().catch(err => {
+})().catch(async err => {
   console.error(`${R}ERRO FATAL:${X} ${err.stack || err.message}`);
+  // ⚠ Um HTTP 500 da FPG não é prova de que o problema seja nosso. A 2026-08-30
+  // o `classif.aspx`/`TournamentsLST` ardeu para toda a gente (um entry gate
+  // SEM credenciais dava o mesmo 500) e este scrape pintou o cron de vermelho
+  // como se os cookies tivessem expirado — tinham 7 horas. Antes de sair 1,
+  // repetir a pergunta sem credenciais: se a fonte está em baixo, sai 3 e o
+  // workflow regista "fonte em baixo" em vez de acusar o nosso segredo.
+  if (err && err.status === 500) {
+    try {
+      const { sondarFpg, explicar } = require("./lib/fpg-liveness");
+      const sondas = await sondarFpg();
+      if (sondas.fonteEmBaixo) {
+        console.error(`${R}→${X} ${explicar("fonte-em-baixo", sondas)}`);
+        process.exit(3);
+      }
+      console.error("→ o controlo SEM cookies respondeu: o 500 é do nosso segredo (cookies).");
+    } catch (e) {
+      console.error("→ sonda de liveness falhou:", e.message);
+    }
+  }
   process.exit(1);
 });
