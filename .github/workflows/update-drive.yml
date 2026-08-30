@@ -67,10 +67,19 @@ jobs:
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
           # 0 = há mais dados → commit
           # 2 = nada novo → não commit (NÃO é erro)
+          # 3 = a FONTE (FPG) está em baixo → não é erro NOSSO, não falhar o cron
           # 1 = erro real
           if [ "$EXIT_CODE" = "1" ]; then
             echo "❌ Scraper falhou — ver logs acima"
             exit 1
+          fi
+          if [ "$EXIT_CODE" = "3" ]; then
+            # ⚠ 2026-08-30: o classif/TournamentsLST da FPG ardeu para toda a
+            # gente e este job ficou vermelho como se os cookies (7 horas de
+            # vida) tivessem expirado. Um cron que grita por avarias da fonte
+            # deixa de ser lido — e o run seguinte apanha o torneio na mesma,
+            # porque o --months-back cobre o mês inteiro.
+            echo "⚠ Fonte FPG em baixo — nada a fazer do nosso lado; o próximo run recupera"
           fi
           if [ "$EXIT_CODE" = "2" ]; then
             echo "ℹ️  Nenhum dado novo — a saltar o commit"

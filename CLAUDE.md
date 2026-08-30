@@ -413,6 +413,46 @@ Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg
 
 **Cookie health:** workflow `cookie-health.yml` (Quinta 09:00 UTC) valida os 3 secrets de cookies via test-fpg-auth.js + test-datagolf-node.js + test-fpg-admissions-auth.js — falha (= email) se expirados, antes da janela de scrapes do fim-de-semana.
 
+### ⚠ HTTP 500 da FPG NÃO é prova de cookie expirado (2026-08-30)
+
+O ASP.NET da FPG explode em vez de devolver 401, por isso sempre lemos 500 como
+"cookies mortos" (está assim no `lib/fpg-http.js` e em várias secções abaixo).
+Na maioria das vezes acerta — mas a 30-08-2026 mediu-se o contrário e a
+heurística mandou fazer trabalho inútil:
+
+| Hora (UTC) | Facto |
+|---|---|
+| 10:40 | cookies dos 3 sites refrescados (commit `1831dd0bc`) |
+| 17:21 | `update-drive` morre com HTTP 500 na `TournamentsLST` |
+| 17:26 | `cookie-health` dá 2 dos 3 secrets por **expirados** |
+| 17:5x | os **mesmos** cookies, à mão, dão o mesmo 500 — e o `1PreparePage.aspx`, um entry gate **sem credencial nenhuma**, dá 500 também |
+
+Não eram os cookies: as aplicações ASP.NET `scoring.datagolf.pt/pt` e
+`scoring.fpg.pt/lists` estavam a arder. O `my.fpg.pt` (outro backend) estava de
+pé, e o ASP clássico (`scoring-pt.datagolf.pt/scripts/draw.asp`) também.
+
+**A discriminação** vive em `scripts/lib/fpg-liveness.js` (`sondarFpg` +
+`diagnosticar`, 9 testes): antes de acusar o segredo, repete-se o pedido **sem
+credenciais nenhumas**. Um pedido que não leva credenciais não pode estar a
+falhar por causa delas.
+
+- controlo ASP.NET responde → o 500 autenticado é mesmo dos cookies (**exit 2**)
+- controlo ASP.NET falha igual → **fonte em baixo** (**exit 3**); refrescar
+  cookies não resolve e, enquanto durar, a validade deles é *indeterminável*
+
+⚠ **O controlo tem de bater na MESMA aplicação.** O `linkpage.aspx?page=draw`
+responde 200 sem cookies mesmo com tudo o resto em baixo — é servido pelo ASP
+clássico noutra máquina. Usá-lo como controlo dava "são os cookies" exactamente
+no dia em que não eram; fica só como sonda de alcançabilidade. O controlo é o
+`linkpage.aspx?page=admissions` **sem cookies** (mesmo host, mesma app), e não
+apodrece: um torneio inexistente devolve 200 na mesma.
+
+Quem consome o exit 3: `cookie-health.yml` (regista "fonte em baixo" e **não**
+falha o job nem pede refresh) e `update-drive.yml` (não pinta o cron de
+vermelho — o run seguinte apanha o torneio, porque o `--months-back` cobre o mês
+inteiro). Um alarme que toca por avarias que não podemos resolver deixa de ser
+lido — a mesma lição do `semDados` do England.
+
 ## Scripts — FPG Pipeline
 
 Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js Terminal** (correr em `C:\golf-fpg\scripts\`).

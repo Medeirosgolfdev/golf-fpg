@@ -14,10 +14,13 @@
  *   0 = sucesso
  *   1 = erro geral (rede, sem cookies)
  *   2 = cookies inválidos (Param Error / Erro 999 / HTTP 500)
+ *   3 = a FONTE está em baixo (o controlo sem credenciais também falha) —
+ *       refrescar cookies não resolve; ver scripts/lib/fpg-liveness.js
  */
 
 const fs = require("fs");
 const path = require("path");
+const { sondarFpg, diagnosticar, explicar, EXIT } = require("./lib/fpg-liveness");
 
 const COOKIES_FILE = path.join(__dirname, "..", "api", ".fpg-admissions-cookies.json");
 
@@ -64,9 +67,14 @@ async function main() {
     r.status >= 500 ||
     /Param_Errors|<title>\s*Param Error|Erro 999|Runtime Error/i.test(text)
   ) {
-    console.log("\n[ERRO] FALHA - cookies invalidos/expirados (Param Error)");
+    // Repetir SEM credenciais antes de acusar o segredo (ver fpg-liveness.js).
+    const sondas = await sondarFpg();
+    const veredicto = diagnosticar(false, sondas);
+    console.log(`\n[${veredicto === "cookies" ? "ERRO" : "AVISO"}] FALHA - ${explicar(veredicto, sondas)}`);
+    console.log(`   (controlo sem cookies: ASP.NET HTTP ${sondas.aspnet.status}` +
+                `, alcancabilidade HTTP ${sondas.reach.status})`);
     console.log("Primeiros 400 chars:", text.slice(0, 400).replace(/\s+/g, " "));
-    process.exit(2);
+    process.exit(veredicto === "cookies" ? EXIT.COOKIES : EXIT.FONTE_EM_BAIXO);
   }
 
   // A página de admissions válida tem a tabela de inscritos (ou pelo menos

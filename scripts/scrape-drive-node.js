@@ -556,7 +556,26 @@ function writeIfChanged(filepath, newObj) {
   // nunca recebia os torneios novos.)
   console.log(`${G}✓ ${filesWritten} ficheiro(s) com conteúdo novo — commit${X}`);
   process.exit(0);
-})().catch(err => {
+})().catch(async err => {
   console.error(`${R}ERRO FATAL:${X} ${err.stack || err.message}`);
+  // ⚠ Um HTTP 500 da FPG não é prova de que o problema seja nosso. A 2026-08-30
+  // o `classif.aspx`/`TournamentsLST` ardeu para toda a gente (um entry gate
+  // SEM credenciais dava o mesmo 500) e este scrape pintou o cron de vermelho
+  // como se os cookies tivessem expirado — tinham 7 horas. Antes de sair 1,
+  // repetir a pergunta sem credenciais: se a fonte está em baixo, sai 3 e o
+  // workflow regista "fonte em baixo" em vez de acusar o nosso segredo.
+  if (err && err.status === 500) {
+    try {
+      const { sondarFpg, explicar } = require("./lib/fpg-liveness");
+      const sondas = await sondarFpg();
+      if (sondas.fonteEmBaixo) {
+        console.error(`${R}→${X} ${explicar("fonte-em-baixo", sondas)}`);
+        process.exit(3);
+      }
+      console.error("→ o controlo SEM cookies respondeu: o 500 é do nosso segredo (cookies).");
+    } catch (e) {
+      console.error("→ sonda de liveness falhou:", e.message);
+    }
+  }
   process.exit(1);
 });
