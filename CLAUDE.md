@@ -771,6 +771,90 @@ full-bake (Padierna/Le Touquet/Doral/Venice 25+26/Paris/Glen/Marco Simone).
 
 ---
 
+## PCC — o ajuste que chega SEMPRE depois do scrape (2026-08-30)
+
+O **PCC** (*Playing Conditions Calculation*, Regra 5.6 do WHS) é um inteiro de
+**−1 a +3** calculado pela FPG **por campo e por dia**, a partir de todos os
+cartões válidos de jogadores com índice ≤ 36.0 entregues nesse campo nesse dia.
+Entra **subtraído** no differential:
+
+```
+SD = (113 / Slope) × (AGS − CR − PCC)
+```
+
+Logo **PCC −1 SOBE o SD em ~1 pancada** (dia fácil → o bom resultado conta um
+pouco menos) e +1..+3 baixam-no (dia difícil). Sem ele a tabela diverge do SD
+oficial exactamente por (113/slope)×PCC.
+
+⚠ **A FPG só o calcula ao FIM DO DIA** — e todos os nossos scrapes de resultados
+correm na própria noite do torneio (`update-drive` Sex/Sáb/Dom 21:00,
+`update-classif` Dom/Seg 01:00, `update-cgss-draw-results` a pedido). O
+`extractPcc()` desses scripts lê o campo `cba` do scorecard, encontra-o vazio, e
+o torneio ficava **para sempre** sem PCC. Caso que destapou isto: 8º Torneio
+CGSS OM NOS 2026 (007/11057, 29-08, Santo da Serra), scrapado às 22:57 do
+próprio dia — o Manuel aparecia com SD 5.5 em vez do oficial 6.4.
+
+### `scripts/backfill-pcc.js` — a rede de segurança
+
+Cada volta do WHS (`output/{fed}/whs.json`) traz o **`cba` oficial** mais
+`tournament_code`, `hcp_dateStr` e `course_description`. Como o WHS é
+re-descarregado às 00:05 UTC (já depois da meia-noite de Lisboa), o PCC chega-nos
+de graça — sem cookies e sem um pedido extra à FPG.
+
+```bash
+node scripts/backfill-pcc.js                      # dry-run
+node scripts/backfill-pcc.js --apply
+node scripts/backfill-pcc.js --apply --since 2026-01-01
+node scripts/backfill-pcc.js --tcode 11057 --verbose
+```
+
+Alvos: `pull-torneios*.json`, `drive-data-*.json`, `aquapor-data-*.json`.
+Exit **0** = preencheu · **2** = nada a fazer · **1** = erro. Idempotente.
+
+⚠ **Chave = tcode + DATA + CAMPO, nunca só o tcode.** A FPG reutiliza tcodes
+entre clubes — o 10052 é ao mesmo tempo um Drive Challenge dos Açores e um do
+Tejo. Casar só por tcode carimba um torneio com o PCC de outro, noutro ano.
+
+⚠ **Valor MODAL com maioria estrita, não o primeiro que aparece.** A própria FPG
+guarda `cba` desactualizado nalguns registos: na "Final Regional Drive Challenge
+Açores-Sub18" (10121, 27-08-2024) cinco dos nossos têm −1 e um tem 0 — o cartão
+desse foi processado antes de o PCC existir. É a mesma avaria pelo outro lado.
+Empate → não se mexe.
+
+⚠ **Só se escreve PCC ≠ 0.** 0 é "sem ajuste", idêntico a não ter campo nenhum —
+e é o que o `extractPcc()` dos scrapers faz, por isso um re-scrape futuro produz
+o mesmo ficheiro. O `pcc` vive no **`roundScores[]`** (a seguir a `meters`), não
+no jogador; o `normalizePlayer` levanta-o para o topo em runtime.
+
+Passagem inicial (2026-08-30): **5008 rondas em 136 torneios**; a coincidência
+exacta entre o SD calculado e o `sgd` oficial subiu de **63,4% para 73,4%** em
+15 421 rondas dos nossos. Limitação: só cobre torneios onde pelo menos um dos
+nossos jogadores jogou.
+
+### Onde corre
+
+| Workflow | Quando | Papel |
+|---|---|---|
+| `update-data.yml` | Dom+Seg 00:05 UTC | Varredura geral, a seguir a descarregar o WHS. O passo tem `id: pcc` e o commit corre também quando `steps.pcc.outputs.filled == '1'` (senão o PCC ficava no runner) |
+| `update-classif.yml` | Dom+Seg 01:00 UTC | Os torneios acabados de scrapar apanham o PCC na mesma noite, em vez de esperar uma semana |
+
+⚠ O `git add` dos dois workflows **tem de incluir** `pull-torneios*`,
+`drive-data-*` e `aquapor-data-*` — faltavam no `update-data.yml` e o backfill
+teria sido silenciosamente deitado fora.
+
+### ⚠ Sentinelas de "sem cartão" (o bug do badge verde)
+
+A FPG põe **998** (ND/NR — não devolveu) e **999** (NS/WD) no lugar do gross, e o
+`numGross()` converte um `grossTotal` null no mesmo 999. O `computeSD` só
+rejeitava `null`: o cartão a zeros era "reparado" pelo Net Double Bogey e saía um
+SD de **−58.8** que, sendo ≤ HCP, pintava o badge de **VERDE** — as 9
+desistências do CGSS OM NOS apareciam como as melhores voltas do dia (25 verdes
+em vez de 16). Guarda `gross >= 900` em `computeSD` (`fpgUtils.ts`) e nas duas
+cópias da mesma lógica (`ResumoTable.tsx`, `DrivePage.tsx`). Mesma convenção do
+ranking Drive. Testes em `src/data/__tests__/computeSD.test.ts`.
+
+---
+
 ## Scripts — USKids (Playwright)
 
 **fetch-uskids-results.js** — Scorecards completos + par/yards reais por buraco. Torneios em curso: atualiza auto. Históricos configurados no array `HISTORICOS`.
@@ -2627,10 +2711,10 @@ validado server-side. **Não replicável de Node puro.**
 | `uskids-results.yml` | ✅ | idem | — | idem |
 | `uskids-member-history.yml` | ✅ | idem | — | idem |
 | **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
-| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** |
+| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** Corre também `backfill-pcc.js --apply` — ver "PCC — o ajuste que chega SEMPRE depois do scrape". |
 | **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | Sex/Sáb/Dom 21:20 UTC | Scrape inscrições dos Nacionais de Jovens. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`update-fpg-admissions-draws.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-fpg-admissions-draws-node.js` | Sex/Sáb/Dom 20:00 UTC | **Cron aplica `--auto-extend --since 4d`**: scope manual (333) + Fonte 2 (JSONs locais: drive-data, jovens, pull-torneios, SdS) + Fonte 3 (TournamentsLST com warmup entry-gate, filtros INCLUDE=junior/PJA/jovens/sub-XX/ccode=007, EXCLUDE=Flintstones/Quarta Feira Europeia). Janela: futuros + em curso + torneios ≤3 rondas até dia seguinte ao fim. Para scope histórico completo: workflow_dispatch sem filtros. Secrets: `FPG_ADMISSIONS_COOKIES` + `DATAGOLF_SCORING_COOKIES`. |
-| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. Corre também `backfill-pcc.js --apply` (o WHS das 00:05 já traz o `cba` do próprio fim-de-semana). |
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
