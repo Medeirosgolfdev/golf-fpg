@@ -77,14 +77,33 @@ $Action   = New-ScheduledTaskAction `
     -Argument "/c `"$BatFile`"" `
     -WorkingDirectory $RepoPath
 
-# Dois triggers:
+# Tres triggers:
 #   1. Daily as 12:00 — execucao normal
-#   2. AtLogOn do user — apanha casos em que o PC estava off/hibernate as
+#   2. Daily as 19:30 — ANTES da janela de scrapes da noite (ver abaixo)
+#   3. AtLogOn do user — apanha casos em que o PC estava off/hibernate as
 #      12h e liga-se depois (quando o user faz login, dispara 3 min depois
 #      — tempo para rede estar pronta).
 #      Usar AtLogOn (nao AtStartup) porque LogonType=Interactive precisa
 #      de sessao activa, que so existe depois do user logar.
+#
+# ⚠ PORQUE HA UM SEGUNDO REFRESH AS 19:30 (medido 2026-08-30)
+#
+# As cookies da FPG duram ~9 HORAS, nao uma semana: capturadas as 09:33 UTC,
+# ainda vivas as 18:14, mortas as 19:14 (o cookie-health testou o proprio
+# Secret) e mortas as 22:07. Com um unico refresh ao meio-dia, a janela
+# inteira de scrapes do fim-de-semana cai DEPOIS da validade:
+#
+#   refresh                       12:00 local (11:00 UTC)   —
+#   update-fpg-admissions-draws   21:00 local (20:00 UTC)   +9h
+#   update-drive                  22:00 local (21:00 UTC)   +10h
+#   update-jovens                 22:20 local (21:20 UTC)   +10h20
+#   update-classif                02:00 local (01:00 UTC)   +14h
+#
+# Era isto que estava por tras dos "cookies expiraram" recorrentes ao
+# fim-de-semana: nao eram cookies frageis, era o refresh a nao cobrir os
+# scrapes. As 19:30 local (18:30 UTC) fica ~1h30 antes do primeiro scrape.
 $TriggerDaily = New-ScheduledTaskTrigger -Daily -At 12:00PM
+$TriggerNoite = New-ScheduledTaskTrigger -Daily -At 7:30PM
 $TriggerLogon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
 $TriggerLogon.Delay = "PT3M"   # ISO-8601: 3 minutos apos login
 
@@ -116,7 +135,7 @@ $Principal = New-ScheduledTaskPrincipal `
 Register-ScheduledTask `
     -TaskName $TaskName `
     -Action $Action `
-    -Trigger @($TriggerDaily, $TriggerLogon) `
+    -Trigger @($TriggerDaily, $TriggerNoite, $TriggerLogon) `
     -Settings $Settings `
     -Principal $Principal `
     -Description "Captura cookies frescos via Chrome 90 + Playwright. Corre diariamente as 12:00 + 3 min apos logon do user. Combinar com auto-login para autonomia completa." | Out-Null

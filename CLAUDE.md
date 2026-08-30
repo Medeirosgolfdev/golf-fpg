@@ -413,6 +413,40 @@ Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg
 
 **Cookie health:** workflow `cookie-health.yml` (Quinta 09:00 UTC) valida os 3 secrets de cookies via test-fpg-auth.js + test-datagolf-node.js + test-fpg-admissions-auth.js — falha (= email) se expirados, antes da janela de scrapes do fim-de-semana.
 
+### ⚠ As cookies duram ~9 HORAS, não uma semana (2026-08-30)
+
+Sempre se assumiu "validade típica ~1 semana" (ver "Cenário 1" mais abaixo).
+Medido num dia inteiro, com o log do `run-cookie-refresh.bat` a datar a
+captura:
+
+| Hora UTC | Estado das MESMAS cookies |
+|---|---|
+| 09:33 | capturadas e validadas nos 3 hosts (`TotalRecordCount=84986`) |
+| 18:14 | ✅ ainda autenticam |
+| 19:14 | ❌ mortas (o `cookie-health` testou o próprio Secret) |
+| 22:07 | ❌ mortas (ficheiro do repo, mesmo valor) |
+
+⚠ **E o refresh não cobria os scrapes.** A Scheduled Task corria só ao
+meio-dia; a janela de scrapes do fim-de-semana começa 9h depois:
+
+| | Local | UTC | Após o refresh |
+|---|---|---|---|
+| refresh | 12:00 | 11:00 | — |
+| `update-fpg-admissions-draws` | 21:00 | 20:00 | **+9h** |
+| `update-drive` | 22:00 | 21:00 | **+10h** |
+| `update-jovens` | 22:20 | 21:20 | **+10h20** |
+| `update-classif` | 02:00 | 01:00 | **+14h** |
+
+Era isto que estava por trás dos "cookies expiraram" recorrentes ao
+fim-de-semana — não eram cookies frágeis nem Secrets por actualizar (o log
+prova `gh secret set … exit=0` nos quatro), era o refresh a acabar antes de
+os scrapes começarem. O `setup-cookie-refresh-task.ps1` passou a registar um
+**segundo refresh diário às 19:30 local**, ~1h30 antes do primeiro scrape. A
+guarda de dedup do `.bat` é de 4h e o intervalo é de 7h30, por isso corre.
+
+⚠ Só tem efeito depois de **re-correr o `setup-cookie-refresh-task.ps1` como
+administrador** — editar o script não mexe na tarefa já registada.
+
 ### ⚠ HTTP 500 da FPG NÃO é prova de cookie expirado (2026-08-30)
 
 O ASP.NET da FPG explode em vez de devolver 401, por isso sempre lemos 500 como
