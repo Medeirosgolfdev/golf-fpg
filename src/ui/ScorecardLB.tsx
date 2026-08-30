@@ -476,7 +476,17 @@ export function ScorecardLB({
             <SexBadge sex={sex} />
           </span>
         ) : baseInner;
-        const base: React.ReactNode = nameDecorator_
+        // ⚠ O `nameDecorator` das paginas de circuito (IntlTournView, MajorPage)
+        // serve so para acrescentar a seta ↗ do kids2 -- e o <TournPName> acima
+        // JA a desenha. Aplica-lo aos dois punha DUAS setas em cada linha (o
+        // mesmo bug que o comentario em tournamentPrimitives.tsx ja descreve;
+        // ficou por corrigir deste lado). So no ramo `noLink` (RFEG), onde o
+        // nome e um <span> simples sem TournPName, e que a seta tem de vir daqui.
+        //
+        // Nunca se perde uma seta com isto: o TournPName resolve por juniorId,
+        // kidsHash E KidsLinkCtx, enquanto o <KidsLink> do decorator so le o
+        // KidsLinkCtx -- e portanto um SUBCONJUNTO do que o TournPName ja cobre.
+        const base: React.ReactNode = nameDecorator_ && noLink
           ? nameDecorator_(p.name, decorated)
           : decorated;
         // Marker para jogadores acrescentados de torneio simultâneo (ex: Sub 12

@@ -1563,9 +1563,58 @@ Armadilhas medidas (todas com caso real):
 
 Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgenius.com`, outros em subdomínios `eg-{slug}{YY}.golfgenius.com`). A página `/england` é uma duplicação minimalista da `/bjgt` (mesmos `TournView`, sub-tabs por ronda, ManuelPill, etc.).
 
-**Catálogo:** `public/data/england-golf-catalog.json` — 28 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
+**Catálogo:** `public/data/england-golf-catalog.json` — 39 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club, English Schools). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
 
-**Cobertura efectiva:** 19/28 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+**Cobertura efectiva:** 19/28 das edições 2023-2025 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+
+### ⚠ A época de 2026 esteve um Verão inteiro por scrapar (2026-08-30)
+
+O England era o **único circuito sem automação**: não havia workflow nenhum a
+correr o `scrape-england-golf.js`, e todos os `england_*.json` tinham
+`scrapedAt: 2026-05-18` — o dia em que o scraper foi escrito. Some-se a isso o
+catálogo ser **curado à mão** e os ids do GolfGenius **mudarem todos os anos**
+(o subdomínio inclusive: `eg-carristrophy25` → `eg-carristrophy26`), e o
+resultado foi 2026 ficar com **uma única entrada** — o `bronte-law-farnham-2026`,
+inserido em Maio quando a página ainda nem estava publicada. Corrigido com as
+três peças abaixo: descoberta, 11 entradas novas no catálogo e o
+`update-england.yml` semanal.
+
+### Descoberta de provas novas — `discover-england-golf-events.js`
+
+A fonte é o **directório público do England Golf** no GolfGenius:
+`/leagues/36129/customer_directories/10291/directory_iframe` (o link vive no
+próprio `englandgolf.org`). Lista os ~41 eventos da época com, para cada um, um
+link `/ggid/{ggid}` que redirecciona para a **página de resultados** — que é
+exactamente o `gg_page` que o scraper quer. Os ggid terminam no ano a 2 dígitos
+(`carris26`, `reid26`, `bljse26`), o que dá o filtro por época de borla.
+
+```bash
+node scripts/discover-england-golf-events.js            # juvenis do ano corrente
+node scripts/discover-england-golf-events.js --all      # todos os eventos (incl. adultos)
+node scripts/discover-england-golf-events.js --year 2027 --json /tmp/eg.json
+```
+
+Exit **0** = há provas por acrescentar · **2** = nada novo · **1** = erro.
+Imprime as entradas já em JSON, prontas a colar — com `section`/`gender`/
+`ageGroup` a `"REVER"`, **de propósito**: são esses três campos que fazem a
+`/england` agrupar as provas por secção e não há como inferi-los do nome com
+confiança. O workflow corre a descoberta mas **nunca edita o catálogo** — só
+escreve o aviso no resumo do run.
+
+⚠ **O directório é uma app React** — o HTML cru vem vazio, é preciso browser.
+⚠ **O GolfGenius devolve 403 a um `page.goto` directo em `/pages/{id}`** vindo de
+browser automatizado, mas serve o directório e os widgets à mesma. Por isso a
+resolução `ggid → /pages/{id}` é feita por `fetch` DENTRO do contexto do browser,
+nunca por navegação.
+⚠ **Cada evento tem DUAS páginas e nem sempre servem as duas.** O cartão do
+directório tem um link "Results" e o `/ggid/{ggid}` redirecciona para uma página
+de aterragem — que podem ser diferentes. No **Carris Trophy 2026** a aterragem é
+`/pages/6135942` ("Leaderboard"), onde o dropdown de eventos vem **vazio** e o
+scraper salta o torneio com `⚠ dropdown sem eventos`; o "Results" do cartão
+(`/pages/5644445`) abre a vista certa, com as 4 rondas e 195 jogadores. O
+discover propõe o "Results" primeiro e imprime a aterragem como `alt=` — se um
+torneio do catálogo der "dropdown sem eventos", **trocar pelo outro id antes de
+o dar como falhado**.
 
 ### CLI
 
@@ -1579,6 +1628,20 @@ node scripts/scrape-england-golf.js --skip-existing              # idempotente
 node scripts/scrape-england-golf.js --gg-base https://eg-X.golfgenius.com --gg-page 1234567 --slug X --year 2026  # ad-hoc
 node scripts/scrape-england-golf.js --no-headless                # debug com browser visível
 ```
+
+**Exit codes (2026-08-30):** **0** = gravou ficheiros novos/alterados · **2** =
+nada novo (NÃO é erro — o workflow salta o commit) · **1** = erro real. O
+ficheiro só é reescrito quando o conteúdo muda **ignorando o `scrapedAt`**
+(`sameContent`) — sem isso cada run do cron produzia um diff em todos os
+ficheiros só por causa do timestamp e o commit semanal era ruído puro.
+
+**Variáveis de ambiente (2026-08-30):** `launchOptions()` deixa o Playwright
+adaptar-se ao ambiente sem mexer no CI. `PLAYWRIGHT_CHROMIUM_EXECUTABLE` aponta
+para um Chromium pré-instalado; se houver `HTTPS_PROXY`, passa-o ao browser
+**mais** `--disable-quic --disable-http2 --ssl-version-max=tls1.2` (sem estes o
+Chromium não fala com um proxy que re-termina TLS — dá `ERR_CONNECTION_RESET`
+enquanto o `curl` funciona perfeitamente). Em CI nenhuma das duas está definida
+e o comportamento é o de sempre.
 
 ### Output enriquecido (refactor 2026-05-18)
 
@@ -1681,15 +1744,41 @@ Confirmadíssimo via Chrome live em Carris 2025 (validado contra detail page do 
 
 Idade está IMPLÍCITA pelo tier do torneio (Carris=U18, McGregor=U16, Reid=U14) ou pela divisão (Jean Case Memorial U15 dentro do McGregor).
 
-### Limitações conhecidas — 9 torneios que não passam
+### Limitações conhecidas — torneios que não passam
 
 | Slug | Razão |
 |---|---|
 | `carris-trophy-2024`, `mcgregor-trophy-2023`, `english-girls-championship-2025` | "dropdown sem eventos" — England Golf arquivou e removeu os dados do GG |
-| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `boys-county-finals-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
-| `bronte-law-farnham-2026` | Torneio futuro, página ainda não publicada |
+| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
+| `bronte-law-farnham-2026`, `bronte-law-moor-allerton-2026` | Idem — `campaigns/2263/run`. Tentados os DOIS ids (aterragem e "Results"). |
+| `boys-county-finals-2025`, `boys-county-finals-2026` | **Match play entre condados** — o dropdown traz "Somerset vs Yorkshire", "Nottinghamshire vs Hampshire"… O `isStrokePlay` exclui match play **de propósito** (não há leaderboard individual para extrair). Não é falha do scraper nem da página. |
+| `english-schools-team-2026`, `english-schools-scratch-team-2026` | Campeonatos por EQUIPAS (escolas) — "dropdown sem eventos" nos dois ids. |
 
 Estes não são bugs do scraper. Confirmado via Chrome live: as páginas existem mas o iframe `tournament_results` nunca é carregado.
+
+⚠ **Estas provas contam em `semDados`, NUNCA em `fail`** (2026-08-30) — e por isso
+não fazem o cron ficar vermelho. Se contassem, o alarme tocava **todas as
+semanas**, porque o catálogo tem provas permanentemente sem stroke play e porque
+no início de cada época NENHUMA prova do ano tem ainda resultados. Um alarme que
+toca sempre deixa de ser lido — que é, no fundo, como o England chegou a estar
+três meses por scrapar. `fail` fica reservado a excepções (exit 1).
+
+### Época de 2026 — o que ficou coberto
+
+8 ficheiros / 7 provas, scrapados a 2026-08-30:
+
+| Prova | Jogadores | Par |
+|---|---|---|
+| Carris Trophy (4 rondas) | 144 | 70 |
+| Reid Trophy (3 rondas) | 144 | 70 |
+| McGregor Trophy | 144 | 71 |
+| English Girls' Open Stroke Play | 142 | 73 |
+| English Girls' U16 & U14 (`_div1` + `_div2`) | 51 + 93 | 73 |
+| Bronte Law — Royal Mid Surrey | 30 | 73 |
+| Bronte Law — Edgbaston | 27 | 72 |
+
+Todas entram no canónico do kids2 (agregador: 30296 juniores · 20898 torneios,
+9/9 sanity checks, Manuel×Dmitrii = 7 mantido).
 
 ### Bugs históricos resolvidos (2026-05-18)
 
@@ -2721,6 +2810,7 @@ validado server-side. **Não replicável de Node puro.**
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 (email 2026-08-23) | `scripts/scrape-federados-node.js` (+ `build-run-digest` → email do cadastro) | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`update-golfgenius.yml`** | ✅ Novo 2026-07-23 | `scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json` | Diário 22:00 UTC | Eventos GolfGenius do scope (hoje: as 4 edições do Champion of Champions). Sem secrets (GG público a `fetch`). Exit 2 = sem alterações. Quando há novidades regenera o agregador + `major-catalog.json` e committa. `workflow_dispatch` aceita `slug` (só um evento do scope) ou `page_url` ad-hoc. |
+| **`update-england.yml`** | ✅ Novo 2026-08-30 | `scripts/discover-england-golf-events.js` + `scripts/scrape-england-golf.js` | Segunda 05:00 UTC | Torneios juvenis England Golf (GolfGenius) do catálogo, ano corrente. **Playwright** (o GG depende de JS para os dropdowns e scorecards); sem secrets (público). Os campeonatos ingleses jogam-se de Terça a Sexta, por isso à Segunda a semana anterior já fechou. A descoberta corre antes e AVISA (no `$GITHUB_STEP_SUMMARY`) que provas estão fora do catálogo, mas nunca o edita. Exit 2 = sem alterações. Com novidades regenera o agregador de juniores e committa. `workflow_dispatch` aceita `year`/`slug`/`gg_page`/`skip_existing`. |
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
 | **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |

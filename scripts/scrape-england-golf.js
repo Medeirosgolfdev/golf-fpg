@@ -1266,6 +1266,23 @@ async function scrapeOne(browser, t) {
   }
 }
 
+/* Opcoes de launch sensiveis ao ambiente.
+   Em CI/local nao mexe em nada; num sandbox com proxy de egress (HTTPS_PROXY) ou
+   com o Chromium pre-instalado noutro caminho (PLAYWRIGHT_CHROMIUM_EXECUTABLE),
+   passa essas opcoes ao Playwright. --disable-quic/--disable-http2 sao precisos
+   quando o trafego passa por um proxy que re-termina TLS. */
+function launchOptions(headless) {
+  const opts = { headless };
+  const exe = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
+  if (exe) opts.executablePath = exe;
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  if (proxy) {
+    opts.proxy = { server: proxy };
+    opts.args = ["--disable-quic", "--disable-http2", "--ssl-version-max=tls1.2"];
+  }
+  return opts;
+}
+
 /* ─── MAIN ─── */
 function parseArgs(argv) {
   const args = {
@@ -1313,19 +1330,29 @@ function parseArgs(argv) {
   }
 
   if (!tournaments.length) {
-    console.error("Nenhum torneio para processar");
-    process.exit(1);
+    // --slug/--gg-page explicitos que nao batem = engano do utilizador (erro).
+    // So um filtro de ano sem entradas no catalogo = nada a fazer (exit 2), senao
+    // o cron de Janeiro de um ano ainda sem provas no catalogo ficava vermelho.
+    if (args.slug || args.ggPage) {
+      console.error("Nenhum torneio para processar (slug/gg-page nao existe no catalogo)");
+      process.exit(1);
+    }
+    console.log("Nenhum torneio no catalogo para este filtro -- nada a fazer");
+    process.exit(2);
   }
   console.log("England Golf scraper -- " + tournaments.length + " torneios");
 
-  const browser = await chromium.launch({ headless: args.headless });
+  const browser = await chromium.launch(launchOptions(args.headless));
   const outDir = path.resolve(__dirname, "../public/data");
-  let ok = 0, fail = 0, skipped = 0, totalFiles = 0;
+  let ok = 0, fail = 0, skipped = 0, totalFiles = 0, unchanged = 0, semDados = 0;
 
   for (const t of tournaments) {
     try {
       const result = await scrapeOne(browser, t);
-      if (!result) { fail++; continue; }
+      // scrapeOne devolve null quando a prova ainda nao tem leaderboard publicada
+      // (sem leagueId, dropdown vazio). E o estado NORMAL de uma prova por jogar
+      // ou por equipas -- nao e erro, so nao ha nada para gravar.
+      if (!result) { semDados++; continue; }
 
       const divFiles = transformToBjgtPerDivision(result, t);
       if (!divFiles.length) {
@@ -1345,6 +1372,14 @@ function parseArgs(argv) {
             }
           } catch { /* re-scrape */ }
         }
+        // So reescrever quando o CONTEUDO muda (ignorando o scrapedAt). Sem isto
+        // cada run do cron produzia um diff em todos os ficheiros so por causa do
+        // timestamp, e o commit semanal era ruido puro.
+        if (sameContent(outPath, f.data)) {
+          console.log("   inalterado " + f.filename + " (" + f.data.players.length + " jogadores)");
+          unchanged++;
+          continue;
+        }
         const tmp = outPath + ".tmp";
         fs.writeFileSync(tmp, JSON.stringify(f.data, null, 2), "utf-8");
         fs.renameSync(tmp, outPath);
@@ -1359,8 +1394,38 @@ function parseArgs(argv) {
   }
 
   await browser.close();
-  console.log("\nOK torneios " + ok + "/" + tournaments.length + " | ficheiros " + totalFiles + " | falhas " + fail + " | skipped " + skipped);
+  console.log("\nOK torneios " + ok + "/" + tournaments.length + " | ficheiros " + totalFiles +
+    " | inalterados " + unchanged + " | sem dados " + semDados + " | erros " + fail +
+    " | skipped " + skipped);
+
+  // Convencao do repo (ver "Controlo so commit se ha mais informacao" no CLAUDE.md):
+  //   0 = ha dados novos (o workflow committa)
+  //   2 = nada novo (NAO e erro -- o workflow salta o commit)
+  //   1 = erro real (excepcao)
+  //
+  // ⚠ Uma prova sem leaderboard publicada conta em `semDados`, NAO em `fail`.
+  // Se contasse, o cron ficava vermelho todas as semanas: o catalogo tem provas
+  // permanentemente sem stroke play (o County Finals e match play entre condados,
+  // os Schools sao por equipas) e, no inicio de cada epoca, NENHUMA prova do ano
+  // tem ainda resultados. Um alarme que toca todas as semanas deixa de ser lido --
+  // que foi, no fundo, como o England chegou a ficar tres meses por scrapar.
+  if (totalFiles > 0) process.exit(0);
+  if (fail > 0) process.exit(1);
+  process.exit(2);
 })();
+
+/* Compara o que vamos gravar com o que ja esta em disco, ignorando o scrapedAt. */
+function sameContent(outPath, data) {
+  if (!fs.existsSync(outPath)) return false;
+  try {
+    const existing = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+    const a = { ...existing }, b = { ...data };
+    delete a.scrapedAt; delete b.scrapedAt;
+    return JSON.stringify(a) === JSON.stringify(b);
+  } catch {
+    return false;
+  }
+}
 
 /* ─── transformToBjgtPerDivision (enriquecido 2026-05-18) ───
    Preserva TODOS os campos do scraped: id, memberIds (cross-ref), eventId, rank,
