@@ -447,6 +447,21 @@ guarda de dedup do `.bat` é de 4h e o intervalo é de 7h30, por isso corre.
 ⚠ Só tem efeito depois de **re-correr o `setup-cookie-refresh-task.ps1` como
 administrador** — editar o script não mexe na tarefa já registada.
 
+⚠ **A Scheduled Task vive NOUTRO computador** (2026-08-30) — o refresh
+automático não corre no PC de trabalho. Consequências: (1) re-correr o
+`setup-cookie-refresh-task.ps1` só tem efeito na máquina onde a tarefa está
+registada, e essa precisa de `git pull` primeiro (o gatilho das 19:30 entrou em
+`71e6f2a33`); (2) com mais do que um PC a refrescar, o push para os Secrets
+passou a ser **condicionado à validação de cada host** — antes o
+`run-cookie-refresh.bat` escrevia os 4 Secrets desde que o `gh` estivesse
+autenticado, sem olhar aos `FPG_EXIT`/`DG_EXIT` (que só serviam para a
+notificação e para a cascata dos federados). Um refresh falhado num PC
+secundário apagava assim as cookies boas que o principal tinha acabado de pôr,
+e o log dizia `exit=0` na mesma — porque esse `exit` é do `gh`, não da
+validação. Agora: `FPG_COOKIES` exige `FPG_EXIT=0`, os dois `DATAGOLF_*` exigem
+`DG_EXIT=0`, e o `FPG_ADMISSIONS_COOKIES` (que não tem teste local próprio)
+exige `REFRESH_EXIT=0`, para um refresh parcial não o carimbar.
+
 ### ⚠ HTTP 500 da FPG NÃO é prova de cookie expirado (2026-08-30)
 
 O ASP.NET da FPG explode em vez de devolver 401, por isso sempre lemos 500 como
