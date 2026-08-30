@@ -20,11 +20,14 @@
  * Exit codes:
  *   0 = sucesso (Result:OK)
  *   1 = erro geral (rede, JSON invalido)
- *   2 = pelo menos um endpoint em baixo (cookies invalidos / HTTP 500)
+ *   2 = pelo menos um endpoint em baixo POR CAUSA DOS COOKIES
+ *   3 = a FONTE esta em baixo (o controlo sem credenciais tambem falha) —
+ *       refrescar cookies nao resolve; ver scripts/lib/fpg-liveness.js
  */
 
 const fs = require("fs");
 const path = require("path");
+const { sondarFpg, diagnosticar, explicar, EXIT } = require("./lib/fpg-liveness");
 
 const COOKIES_FILE = path.join(__dirname, "..", "api", ".scoring-datagolf-cookies.json");
 
@@ -146,8 +149,15 @@ async function main() {
   console.log("");
   for (const [nome, r] of results) console.log(r.ok ? `  OK   ${nome}` : `  FALHA ${nome} — ${r.detail}`);
   if (mortos.length > 0) {
-    console.log(`\n[ERRO] ${mortos.length} de ${results.length} endpoints em baixo — refrescar DATAGOLF_SCORING_COOKIES.`);
-    return sair(2);
+    // Antes de acusar o segredo: repetir SEM credenciais. Um pedido sem
+    // cookies que falha igual nao pode estar a falhar por causa deles.
+    const sondas = await sondarFpg();
+    const veredicto = diagnosticar(false, sondas);
+    console.log(`\n[${veredicto === "indeterminado" ? "ERRO" : "AVISO"}] ` +
+                `${mortos.length} de ${results.length} endpoints em baixo — ${explicar(veredicto)}.`);
+    console.log(`   (sonda de alcançabilidade: HTTP ${sondas.reach.status})`);
+    if (veredicto === "indeterminado") console.log("   Verificar no browser antes de refrescar DATAGOLF_SCORING_COOKIES.");
+    return sair(veredicto === "indeterminado" ? EXIT.INDETERMINADO : EXIT.FONTE_EM_BAIXO);
   }
   console.log("\n[OK] SUCESSO — os endpoints do scoring.datagolf.pt respondem.");
   return sair(0);
