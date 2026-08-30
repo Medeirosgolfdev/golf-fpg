@@ -138,7 +138,8 @@ jobs:
       # ClassifLST não o publica a tempo: a FPG só o calcula ao fim do dia.
       - name: Preencher PCC dos torneios acabados de scrapar
         if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
-        run: node scripts/backfill-pcc.js --apply || echo "backfill-pcc: sem novidades ou aviso"
+        run: |
+          node scripts/backfill-pcc.js --apply || echo "backfill-pcc: sem novidades ou aviso"
 
       - name: Regenerar tracking (após novos dados de classif)
         if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
