@@ -3976,16 +3976,22 @@ porquê ("as contas não batem").
 Agora, nas duas superfícies:
 - volta fora do top-14 → **esbatida** (`opacity .35`) + tooltip "Fora das 14
   melhores voltas — não soma";
-- coluna **Vlt** mostra `18 −4` (quantas ficaram de fora), com tooltip;
+- colunas **Vlt** e **Total** mostram DOIS números quando o tecto morde: o que
+  conta em cima (`14` · `276`) e o que se jogou por baixo, pequeno e esbatido
+  (`de 18` · `309`). Quem não passou as 14 mantém um número só;
 - a linha de regras explica-o em texto.
 
 ⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
 que continua **riscado** — são coisas diferentes: uma regra tirou-a vs. jogou-se
 e vale, mas há 14 melhores.
 
+⚠ O "total de todas" soma só as voltas ELEGÍVEIS (as `excluded` ficam fora dos
+dois números, como já ficavam da contagem de voltas) — senão os dois totais
+falavam de universos diferentes.
+
 Validado num browser com dados reais + um torneio fabricado a forçar 18 voltas:
-soma da linha 364, total 276, as 4 esbatidas eram exactamente as 4 piores
-(12, 9, 7, 5).
+`14 / de 18` e `276 / 309`, com 276 + (12+9+7+5) = 309 a fechar, e as 4
+esbatidas a serem exactamente as 4 piores.
 
 ### Provas do calendário 2026 que NÃO contam — e porquê
 

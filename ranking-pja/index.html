@@ -50,7 +50,9 @@
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
   .x{opacity:.4;text-decoration:line-through}
   .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */
-  .cut{color:var(--muted);font-size:9px}
+  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em pequeno */
+  .detail td.vl .big,.detail td.tot .big{display:block;line-height:1.15}
+  .detail td.vl .sub,.detail td.tot .sub{display:block;line-height:1.15;font-size:8.5px;font-weight:500;color:var(--muted)}
   .status{color:var(--muted);font-size:12px;padding:20px 4px}
   .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
   footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
@@ -174,6 +176,8 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       var dentro=s.slice(0,14);
       r.total=dentro.reduce(function(a,b){return a+b.pts;},0);
       dentro.forEach(function(x){if(r.results[x.rk])r.results[x.rk].inTop=true;});
+      r.contadas=dentro.length;
+      r.totalTodas=r.rounds.reduce(function(a,b){return a+b.pts;},0);
       r.voltas=r.rounds.length;r.cortadas=Math.max(0,r.rounds.length-14);});
     var memberSet=new Set((members||[]).map(String));
     memberSet.forEach(function(fed){if(map[fed])return;var db=playersDB[fed];if(!db)return;var es=(db.dob?escalaoAtDate(db.dob):null)||db.escalao||"";
@@ -257,7 +261,12 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
         else{var xs=res.excluded?" x":(res.inTop?"":" fora");
              var ti=res.excluded?"":(res.inTop?"":' title="Fora das 14 melhores voltas — nao soma"');
              h+='<td class="tp'+xs+'"'+ti+' style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'"'+ti+'>'+fmt(res.pts)+'</td>';}});});
-      h+='<td class="vl"'+(r.cortadas?' title="'+r.cortadas+' volta(s) fora das 14 melhores"':'')+'>'+r.voltas+(r.cortadas?' <span class="cut">&minus;'+r.cortadas+'</span>':'')+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
+      if(r.cortadas){
+        h+='<td class="vl" title="'+r.contadas+' das '+r.voltas+' voltas contam para o total"><span class="big">'+r.contadas+'</span><span class="sub">de '+r.voltas+'</span></td>'
+         + '<td class="tot" title="'+fmt(r.total)+' pts das voltas que contam · '+fmt(r.totalTodas)+' pts somando as '+r.voltas+'"><span class="big">'+fmt(r.total)+'</span><span class="sub">'+fmt(r.totalTodas)+'</span></td></tr>';
+      } else {
+        h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';
+      }});
     h+='</tbody></table></div>';
     det.innerHTML=h;
   }

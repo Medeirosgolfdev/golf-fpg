@@ -1086,6 +1086,13 @@ export function PJARankingView({
               const cortadas = metric === "pts"
                 ? [...row.results.values()].filter(r => !r.excluded && !r.inTop14).length
                 : 0;
+              // Quando o tecto morde, mostram-se os dois números: o que CONTA
+              // em grande, o que se JOGOU em pequeno. Sem isto a linha exibia
+              // 18 voltas ao lado de um total de 14 e as contas não fechavam.
+              const contadas = row.voltas - cortadas;
+              const totalTodas = cortadas > 0
+                ? row.allRounds.reduce((a, r) => a + r.pts, 0)
+                : 0;
               const classes = [
                 isManuel(row) ? "row-manuel" : "",
                 isSel ? "row-selected" : "",
@@ -1163,12 +1170,24 @@ export function PJARankingView({
                   })}
 
                   <td className="cs-s-games cs-grp"
-                      title={cortadas > 0 ? `${cortadas} volta(s) fora das 14 melhores` : undefined}>
-                    {row.voltas}
-                    {cortadas > 0 && <span className="muted fs-10">{"\u2212"}{cortadas}</span>}
+                      title={cortadas > 0 ? `${contadas} das ${row.voltas} voltas contam para o total` : undefined}>
+                    {cortadas > 0
+                      ? <>
+                          <span style={{ display: "block", lineHeight: 1.15 }}>{contadas}</span>
+                          <span className="muted" style={{ display: "block", lineHeight: 1.15, fontSize: 9 }}>de {row.voltas}</span>
+                        </>
+                      : row.voltas}
                   </td>
-                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
-                    {metric === "sd" ? (isNaN(row.total) ? "–" : row.total.toFixed(1)) : fmtPts(row.total)}
+                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}
+                      title={cortadas > 0 ? `${fmtPts(row.total)} pts das voltas que contam · ${fmtPts(totalTodas)} pts somando as ${row.voltas}` : undefined}>
+                    {metric === "sd"
+                      ? (isNaN(row.total) ? "–" : row.total.toFixed(1))
+                      : cortadas > 0
+                        ? <>
+                            <span style={{ display: "block", lineHeight: 1.15 }}>{fmtPts(row.total)}</span>
+                            <span className="muted" style={{ display: "block", lineHeight: 1.15, fontSize: 9, fontWeight: 500 }}>{fmtPts(totalTodas)}</span>
+                          </>
+                        : fmtPts(row.total)}
                   </td>
                 </tr>
               );
