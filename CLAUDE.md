@@ -3991,7 +3991,7 @@ soma da linha 364, total 276, as 4 esbatidas eram exactamente as 4 piores
 
 | Prova | ccode/tcode | Porque fica fora |
 |---|---|---|
-| Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os miúdos jogaram das **brancas**, fora das marcas do escalão deles. Os pontos são ±par (par = 25) e o par não muda com o tee: um escalão jovem posto num tee de adulto leva uma penalização que não tem a ver com o jogo dele, e o número deixa de ser comparável com o das outras provas. **Exclusão deliberada — não re-adicionar.** |
+| Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os tees de partida não foram os estabelecidos para as restantes provas do circuito (jogou-se das **brancas**) — resultados não comparáveis. **Exclusão deliberada — não re-adicionar.** ⚠ A nota pública fica-se pelo facto, em registo formal: não entra em cores de marcas nem na mecânica dos pontos. |
 | Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. **Sem nota pública** (ver acima). |
 
 ⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por

@@ -138,12 +138,11 @@ export const PJA_NOTAS = [
   {
     ano: "2026",
     tipo: "fora",
-    titulo: "A Taça Visconde Pereira Machado (6-7 Jul) não conta para o ranking",
+    titulo: "Taça Visconde Pereira Machado (6-7 Jul) — não considerada no ranking",
     texto:
-      "Os miúdos jogaram das marcas brancas, muito atrás das marcas do " +
-      "escalão deles. Num campo bem mais comprido fazem-se naturalmente mais " +
-      "pancadas — seriam penalizados pelas marcas de onde jogaram e não pelo " +
-      "golfe que fizeram. Para ninguém sair prejudicado, a prova fica de fora.",
+      "Os tees de partida utilizados nesta prova não corresponderam aos " +
+      "estabelecidos para as restantes provas do circuito, pelo que os " +
+      "resultados não são comparáveis.",
   },
   {
     ano: "2026",
