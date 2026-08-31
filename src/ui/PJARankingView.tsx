@@ -1172,10 +1172,7 @@ export function PJARankingView({
                   <td className="cs-s-games cs-grp"
                       title={cortadas > 0 ? `${contadas} das ${row.voltas} voltas contam para o total` : undefined}>
                     {cortadas > 0
-                      ? <>
-                          <span style={{ display: "block", lineHeight: 1.15 }}>{contadas}</span>
-                          <span className="muted" style={{ display: "block", lineHeight: 1.15, fontSize: 9 }}>de {row.voltas}</span>
-                        </>
+                      ? <>{contadas}<span className="muted" style={{ fontSize: 9 }}>/{row.voltas}</span></>
                       : row.voltas}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}
@@ -1183,10 +1180,9 @@ export function PJARankingView({
                     {metric === "sd"
                       ? (isNaN(row.total) ? "–" : row.total.toFixed(1))
                       : cortadas > 0
-                        ? <>
-                            <span style={{ display: "block", lineHeight: 1.15 }}>{fmtPts(row.total)}</span>
-                            <span className="muted" style={{ display: "block", lineHeight: 1.15, fontSize: 9, fontWeight: 500 }}>{fmtPts(totalTodas)}</span>
-                          </>
+                        // Na MESMA linha (não empilhado): empilhar punha esta
+                        // linha da tabela a quase o dobro da altura das outras.
+                        ? <>{fmtPts(row.total)}<span className="muted" style={{ fontSize: 9, fontWeight: 500 }}>/{fmtPts(totalTodas)}</span></>
                         : fmtPts(row.total)}
                   </td>
                 </tr>

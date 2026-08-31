@@ -3977,8 +3977,11 @@ Agora, nas duas superfícies:
 - volta fora do top-14 → **esbatida** (`opacity .35`) + tooltip "Fora das 14
   melhores voltas — não soma";
 - colunas **Vlt** e **Total** mostram DOIS números quando o tecto morde: o que
-  conta em cima (`14` · `276`) e o que se jogou por baixo, pequeno e esbatido
-  (`de 18` · `309`). Quem não passou as 14 mantém um número só;
+  conta em tamanho normal e, a seguir, o que se jogou em pequeno e esbatido —
+  `14/18` e `276/309`. Quem não passou as 14 mantém um número só.
+  ⚠ **Na mesma linha, nunca empilhados** (`display:block`): empilhar punha a
+  linha da tabela a **38-46px contra os 26px** das outras e dava muito nas
+  vistas. Inline a altura fica igual à das restantes (medido: excesso 0);
 - a linha de regras explica-o em texto.
 
 ⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
@@ -3990,8 +3993,8 @@ dois números, como já ficavam da contagem de voltas) — senão os dois totais
 falavam de universos diferentes.
 
 Validado num browser com dados reais + um torneio fabricado a forçar 18 voltas:
-`14 / de 18` e `276 / 309`, com 276 + (12+9+7+5) = 309 a fechar, e as 4
-esbatidas a serem exactamente as 4 piores.
+`14/18` e `276/309`, com 276 + (12+9+7+5) = 309 a fechar, e as 4 esbatidas a
+serem exactamente as 4 piores.
 
 ### Provas do calendário 2026 que NÃO contam — e porquê
 

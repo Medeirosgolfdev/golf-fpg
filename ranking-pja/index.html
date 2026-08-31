@@ -50,9 +50,10 @@
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
   .x{opacity:.4;text-decoration:line-through}
   .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */
-  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em pequeno */
-  .detail td.vl .big,.detail td.tot .big{display:block;line-height:1.15}
-  .detail td.vl .sub,.detail td.tot .sub{display:block;line-height:1.15;font-size:8.5px;font-weight:500;color:var(--muted)}
+  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em
+     pequeno — na MESMA linha. Empilhar os dois (display:block) punha a linha
+     da tabela a 38px contra os 26px das outras; inline a altura é a mesma. */
+  .detail td.two .sub{font-size:8.5px;font-weight:500;color:var(--muted);margin-left:1px}
   .status{color:var(--muted);font-size:12px;padding:20px 4px}
   .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
   footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
@@ -262,8 +263,8 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
              var ti=res.excluded?"":(res.inTop?"":' title="Fora das 14 melhores voltas — nao soma"');
              h+='<td class="tp'+xs+'"'+ti+' style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'"'+ti+'>'+fmt(res.pts)+'</td>';}});});
       if(r.cortadas){
-        h+='<td class="vl" title="'+r.contadas+' das '+r.voltas+' voltas contam para o total"><span class="big">'+r.contadas+'</span><span class="sub">de '+r.voltas+'</span></td>'
-         + '<td class="tot" title="'+fmt(r.total)+' pts das voltas que contam · '+fmt(r.totalTodas)+' pts somando as '+r.voltas+'"><span class="big">'+fmt(r.total)+'</span><span class="sub">'+fmt(r.totalTodas)+'</span></td></tr>';
+        h+='<td class="vl two" title="'+r.contadas+' das '+r.voltas+' voltas contam para o total"><span class="big">'+r.contadas+'</span><span class="sub">/'+r.voltas+'</span></td>'
+         + '<td class="tot two" title="'+fmt(r.total)+' pts das voltas que contam · '+fmt(r.totalTodas)+' pts somando as '+r.voltas+'"><span class="big">'+fmt(r.total)+'</span><span class="sub">/'+fmt(r.totalTodas)+'</span></td></tr>';
       } else {
         h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';
       }});
