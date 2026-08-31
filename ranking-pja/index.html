@@ -118,6 +118,8 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
     var wk=n.match(/Amendoeira\s+World\s+Kids(?:\s+Golfe?)?(?:\s+\d{4})?\s*(Sub[\d\s\/–-]*)?/i);
     if(wk){var sub=(wk[1]||"").replace(/\s+/g," ").trim();return {circuito:sub?("World Kids "+sub):"World Kids",local:campo||"Amendoeira"};}
+    var mir=n.match(/Miramar\s+Intern\w*cional\s+Open/i);if(mir){var msub=n.match(/Sub\s*-?\s*(\d+)/i);return {circuito:msub?("Miramar Open Sub "+msub[1]):"Miramar Open",local:campo||"Miramar"};}
+    if(/\bT\.\s*V\.\s*P\.\s*M\.?|Visconde\s+(?:de\s+)?Pereira\s+Machado/i.test(n)){var tesc=n.match(/Escal[\u00e3a]o\s*([AB])/i);return {circuito:tesc?("T.V.P.M. "+tesc[1].toUpperCase()):"T.V.P.M.",local:campo||"Estoril"};}
     if(/PJA/i.test(n)){var loc=(campo&&campo.trim())?campo.replace(/\s{2,}/g," ").trim():n.replace(/PJA/ig,"").replace(/\bmasters?\b/ig,"").replace(/20\d\d/g,"").replace(/\s{2,}/g," ").trim();return {circuito:"PJA",local:loc};}
     return {circuito:n,local:campo||""};}
   function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);

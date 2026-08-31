@@ -99,6 +99,20 @@ export function isPJACore(t) {
     // de Belas 2025, por isso NÃO podem entrar em PJA_TCODES. A edição 2025
     // fica fora (ranking 2025 é o legacy confirmado contra o Excel oficial).
     if (/Amendoeira\s+World\s+Kids/i.test(name)) return true;
+    // Miramar Internacional Open U25 (Club de Golf de Miramar, ccode 003 —
+    // tcode 10652 U25 + 10653 Sub-10, 19-21 Ago 2026) e Campeonato Juvenil —
+    // Taça Visconde Pereira Machado / T.V.P.M. (ccode 004 — tcode 10580
+    // Escalão A + 10581 Escalão B, 6-7 Jul 2026). Os dois constam do
+    // calendário oficial PJA TOUR 2026 ("Miramar Open" e "Taça Visconde
+    // Pereira Machado") e contaram para o ranking.
+    // Por NOME, nunca por tcode: a FPG reutiliza os quatro (10580 em 007/022/
+    // 068, 10581 em 022, 10652 em 009/022, 10653 em 009/022), por isso NÃO
+    // podem entrar em PJA_TCODES. O regex do Miramar exige "Intern*cional"
+    // (cobre a gralha "Internancional" da fonte) para não apanhar as provas
+    // de clube do mesmo campo — Taça Praia de Miramar, Miramar Winter/Spring
+    // Cup, Banco Carregosa Miramar Open.
+    if (/Miramar\s+Intern\w*cional\s+Open/i.test(name)) return true;
+    if (/\bT\.\s*V\.\s*P\.\s*M\.?|Visconde\s+(?:de\s+)?Pereira\s+Machado/i.test(name)) return true;
   }
   return false;
 }

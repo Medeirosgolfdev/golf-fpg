@@ -178,6 +178,18 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
     const sub = (wk[1] || "").replace(/\s+/g, " ").trim();
     return { circuito: sub ? `World Kids ${sub}` : "World Kids", local: campo || "Amendoeira" };
   }
+  // Miramar Internacional Open U25 (CGM, Ago 2026) — o U25 é multi-escalão
+  // ("Miramar Open"), o Sub-10 corre à parte ("Miramar Open Sub 10").
+  if (/Miramar\s+Intern\w*cional\s+Open/i.test(n)) {
+    const sub = n.match(/Sub\s*-?\s*(\d+)/i);
+    return { circuito: sub ? `Miramar Open Sub ${sub[1]}` : "Miramar Open", local: campo || "Miramar" };
+  }
+  // Campeonato Juvenil — Taça Visconde Pereira Machado (Jul 2026): dois
+  // escalões em dias seguidos, cada um com o seu tcode.
+  if (/\bT\.\s*V\.\s*P\.\s*M\.?|Visconde\s+(?:de\s+)?Pereira\s+Machado/i.test(n)) {
+    const esc = n.match(/Escal[\u00e3a]o\s*([AB])/i);
+    return { circuito: esc ? `T.V.P.M. ${esc[1].toUpperCase()}` : "T.V.P.M.", local: campo || "Estoril" };
+  }
   // PJA exclusivo ou fallback
   const pjaMatch = n.match(/^PJA\s+(.+)$/i);
   if (pjaMatch) return { circuito: "PJA", local: pjaMatch[1].trim() };

@@ -41,6 +41,37 @@ describe("isPJACore", () => {
     expect(isPJACore({ name: "Amendoeira World Kids Sub 12", tcode: "10570", date: "2025-07-23" })).toBe(false);
   });
 
+  it("Miramar Internacional Open U25 (2026) entra; provas de clube do mesmo campo ficam fora", () => {
+    // ccode 003, tcodes 10652 (U25) + 10653 (Sub-10), 19-21 Ago 2026 —
+    // "Miramar Open" no calendário oficial PJA TOUR 2026.
+    expect(isPJACore({ name: "X Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    expect(isPJACore({ name: "X Miramar Internacional Open U25 - Sub10", tcode: "10653", date: "2026-08-19" })).toBe(true);
+    expect(isPJACore({ name: "VIII Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    // gralha da fonte ("Internancional") — o regex tem de a apanhar
+    expect(isPJACore({ name: "Miramar Internancional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    // provas de clube do MESMO campo em 2026 — não são PJA
+    expect(isPJACore({ name: "Taça Praia de Miramar", tcode: "10616", date: "2026-02-21" })).toBe(false);
+    expect(isPJACore({ name: "Miramar Spring Cup", tcode: "10617", date: "2026-04-11" })).toBe(false);
+    expect(isPJACore({ name: "XI Banco Carregosa Miramar Open - Final", tcode: "10572", date: "2026-09-14" })).toBe(false);
+  });
+
+  it("Camp. Juvenil — Taça Visconde Pereira Machado (2026) entra nos dois escalões", () => {
+    // ccode 004, tcodes 10580 (Escalão A, 6 Jul) + 10581 (Escalão B, 7 Jul)
+    expect(isPJACore({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão A)", tcode: "10580", date: "2026-07-06" })).toBe(true);
+    expect(isPJACore({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão B)", tcode: "10581", date: "2026-07-07" })).toBe(true);
+    // nome por extenso (formato usado noutras edições)
+    expect(isPJACore({ name: "Camp. Juvenil - Taça Visconde de Pereira Machado", tcode: "10532", date: "2026-09-01" })).toBe(true);
+    // edições anteriores ficam fora (ranking 2025 é o legacy confirmado)
+    expect(isPJACore({ name: "CAMP. JUVENIL - Taça T.V.P.M. (Escalão A)", tcode: "10532", date: "2025-09-01" })).toBe(false);
+  });
+
+  it("tcodes reutilizados pela FPG nos mesmos números NÃO entram por tcode", () => {
+    // 10580/10581/10652/10653 vivem noutros clubes e anos — o match é por NOME
+    expect(isPJACore({ name: "Open Madeira ANSG", tcode: "10580", date: "2026-04-13" })).toBe(false);
+    expect(isPJACore({ name: "2º Estela Friday Cup 2026", tcode: "10652", date: "2026-02-20" })).toBe(false);
+    expect(isPJACore({ name: "8ª Taça Manuel Melo", tcode: "10653", date: "2026-02-21" })).toBe(false);
+  });
+
   it("tcodes do Clube de Belas 2025 que colidem com os do Amendoeira ficam fora", () => {
     expect(isPJACore({ name: "6ª Ordem de Merito do Clube de Belas/Sardinhada", tcode: "10604", date: "2025-06-29" })).toBe(false);
     expect(isPJACore({ name: "7ª Ordem de Mérito do Clube de Belas2025", tcode: "10606", date: "2025-07-19" })).toBe(false);
@@ -59,6 +90,8 @@ describe("classifyPJAEvent", () => {
     expect(classifyPJAEvent({ name: "1º Torneio do Circuito Aquapor-Morgado Golf" })).toBe("AQUAPOR");
     expect(classifyPJAEvent({ name: "Amendoeira World Kids Golfe 2026 Sub 12", tcode: "10604" })).toBe("PJA_EXCL");
     expect(classifyPJAEvent({ name: "PJA PGA Aroeira No.2" })).toBe("PJA_EXCL");
+    expect(classifyPJAEvent({ name: "X Miramar Internacional Open U25", tcode: "10652" })).toBe("PJA_EXCL");
+    expect(classifyPJAEvent({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão A)", tcode: "10580" })).toBe("PJA_EXCL");
   });
 });
 
@@ -76,6 +109,8 @@ describe("multiplicadores e pontos", () => {
 
   it("standard ×1.0 e pontos par=25 com mínimo 0", () => {
     expect(getTournMultiplier({ name: "Amendoeira World Kids Golfe 2026 Sub 14", tcode: "10605" })).toBe(1.0);
+    expect(getTournMultiplier({ name: "X Miramar Internacional Open U25", tcode: "10652" })).toBe(1.0);
+    expect(getTournMultiplier({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão B)", tcode: "10581" })).toBe(1.0);
     expect(pjaPts(0, 1)).toBe(25);
     expect(pjaPts(3, 1)).toBe(22);
     expect(pjaPts(-2, 1)).toBe(27);
