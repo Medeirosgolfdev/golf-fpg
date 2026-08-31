@@ -115,17 +115,10 @@ export function isPJACore(t) {
       // Se um dia houver um Sub-10 no circuito, apagar esta linha.
       return !/\bSub\s*-?\s*10\b/i.test(name);
     }
-    // ⚠ Campeonato Juvenil — Taça Visconde Pereira Machado / "T.V.P.M."
-    // (ccode 004, tcode 10580 Escalão A + 10581 Escalão B, 6-7 Jul 2026)
-    // está no calendário PJA TOUR 2026 mas fica DELIBERADAMENTE DE FORA:
-    // os miúdos jogaram das BRANCAS, fora das marcas do escalão deles.
-    // Os pontos PJA são ±par por volta (par = 25) e o par não muda com o
-    // tee — logo um escalão jovem posto num tee de adulto leva uma
-    // penalização que não tem nada a ver com o jogo dele, e o mesmo número
-    // deixa de ser comparável com o das outras provas do circuito.
-    // NÃO re-adicionar sem decisão da comissão técnica; se um dia entrar,
-    // entra por nome (os tcodes 10580/10581 são reutilizados pela FPG em
-    // 007/022/068 e 022 — nunca por PJA_TCODES).
+    // ⚠ A Taça Visconde Pereira Machado (T.V.P.M., 6-7 Jul 2026) está no
+    // calendário mas NÃO conta — exclusão deliberada, não re-adicionar.
+    // A razão é a que a nota pública explica (ver PJA_NOTAS); o detalhe
+    // técnico está no CLAUDE.md, secção "Ranking PJA".
   }
   return false;
 }

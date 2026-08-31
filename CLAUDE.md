@@ -3924,6 +3924,51 @@ Amendoeira entra por NOME em `isPJACore`, não por tcode).
 O que fica FORA da fonte única: `shortTournName` (apresentação, cada superfície
 tem a sua) e o motor de agregação/UI de cada lado.
 
+### ⚠ O `pja-rules.mjs` é servido EM CRU ao browser (2026-08-31)
+
+A standalone importa-o com `<script type="module">` **same-origin** — a pasta
+`ranking-pja/` é o root do projecto Vercel — por isso o ficheiro é
+descarregável tal e qual em `ranking-pja.vercel.app/pja-rules.mjs`,
+**comentários incluídos**. Não é bundled nem minificado (ao contrário da app
+principal, onde o Vite os deita fora).
+
+Logo: **nada de notas internas nesse ficheiro** — processo interno, decisões
+por confirmar, nomes de pessoas, raciocínio que fora de contexto se lê mal.
+O que for preciso guardar vai para aqui (o CLAUDE.md nunca é servido).
+Comentários curtos e neutros que expliquem o código chegam.
+
+⚠ As restantes secções do ficheiro ainda têm comentários desse género
+(o motivo do ×1.75 do Royal Óbidos, as notas do Amendoeira/Clube de Belas,
+o "legacy confirmado contra o Excel oficial" de 2025). Ficaram como estavam —
+limpar quando houver decisão sobre cada um.
+
+### Notas públicas do ranking — `PJA_NOTAS` (2026-08-31)
+
+O que o público lê sobre elegibilidade vive em `PJA_NOTAS` + `notasPJA(ano,
+hoje)` no `pja-rules.mjs`, e é renderizado por AMBAS as superfícies
+(`RankingNotas` na `PJARankingView`, `renderNotas()` na standalone). O texto
+está na fonte única pela mesma razão que as regras: senão as duas páginas
+acabam a dizer coisas diferentes.
+
+- `tipo: "fora"` — prova do calendário que não conta (fica indefinidamente).
+- `tipo: "info"` + `ate: "YYYY-MM-DD"` — nota de agenda, desaparece sozinha
+  depois dessa data (senão o site fica a anunciar provas já jogadas).
+- O bloco é desenhado ANTES do fetch dos dados — aparece mesmo que o
+  carregamento falhe.
+
+### Provas do calendário 2026 que NÃO contam — e porquê
+
+| Prova | ccode/tcode | Porque fica fora |
+|---|---|---|
+| Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os miúdos jogaram das **brancas**, fora das marcas do escalão deles. Os pontos são ±par (par = 25) e o par não muda com o tee: um escalão jovem posto num tee de adulto leva uma penalização que não tem a ver com o jogo dele, e o número deixa de ser comparável com o das outras provas. **Exclusão deliberada — não re-adicionar.** |
+| Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. |
+
+⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por
+`PJA_TCODES`. A FPG reutiliza os quatro números noutros clubes e anos: 10580 em
+007/022/068, 10581 em 022, 10652 em 009/022, 10653 em 009/022. Pô-los na
+whitelist por tcode arrastaria torneios que não têm nada a ver (mesma armadilha
+do Amendoeira ↔ Clube de Belas).
+
 ---
 
 ## Convenções de código
