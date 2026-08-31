@@ -49,6 +49,8 @@
   .leg li{padding:6px 0;border-bottom:1px solid var(--line)}
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
   .x{opacity:.4;text-decoration:line-through}
+  .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */
+  .cut{color:var(--muted);font-size:9px}
   .status{color:var(--muted);font-size:12px;padding:20px 4px}
   .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
   footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
@@ -82,7 +84,8 @@
   <h1>Ranking PJA Tour 2026 <span style="font-size:12px;color:var(--muted)">· Race to Dunas</span></h1>
   <p class="sub">Atualizado em tempo real a partir dos resultados oficiais. <span id="upd"></span></p>
   <div class="rules">
-    Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0). Conta o <b>top-14 voltas</b> do ano.
+    Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0).
+    Contam as <b>14 melhores voltas</b> do ano: quem jogar mais do que isso fica com as melhores 14 e as restantes não somam (aparecem <span style="opacity:.35">esbatidas</span> nas pontuações detalhadas).
     Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5.
   </div>
 
@@ -158,11 +161,20 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
           map[key]={fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:es,sex:(db&&db.sex)||"",results:{},rounds:[],total:0,voltas:0};}
         var row=map[key];var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
         function add(rn,g,par){if(!par||!g||g>=900)return;var tp=g-par;var rk=tournKey+"_r"+rn;var excl=(ev==="GG_MAIN"&&rn===1)||aqSkip;var pts=pjaPts(tp,mult);
-          row.results[rk]={toPar:tp,pts:pts,excluded:excl};if(!excl)row.rounds.push(pts);}
+          row.results[rk]={toPar:tp,pts:pts,excluded:excl,inTop:false};if(!excl)row.rounds.push({rk:rk,pts:pts});}
         var rs=p.roundScores;
         if(rs&&rs.length>1){rs.forEach(function(r,i){add(i+1,r.gross,rpar(r,p.parTotal,rs.length));});}
         else{var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar;var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;if(tp==null||isNaN(tp)||g==null||isNaN(g))return;add(1,g,g-tp);}});});
-    Object.keys(map).forEach(function(k){var r=map[k];var s=r.rounds.slice().sort(function(a,b){return b-a;});r.total=s.slice(0,14).reduce(function(a,b){return a+b;},0);r.voltas=r.rounds.length;});
+    /* TOP-14 VOLTAS: ficam as 14 MELHORES, caem as piores. A partir do momento
+       em que alguem passa as 14, o total deixa de ser a soma da linha — por
+       isso marca-se cada volta com `inTop`, para a tabela poder mostrar quais
+       e que ficaram de fora (senao as contas nao batem e ninguem percebe). */
+    Object.keys(map).forEach(function(k){var r=map[k];
+      var s=r.rounds.slice().sort(function(a,b){return b.pts-a.pts;});
+      var dentro=s.slice(0,14);
+      r.total=dentro.reduce(function(a,b){return a+b.pts;},0);
+      dentro.forEach(function(x){if(r.results[x.rk])r.results[x.rk].inTop=true;});
+      r.voltas=r.rounds.length;r.cortadas=Math.max(0,r.rounds.length-14);});
     var memberSet=new Set((members||[]).map(String));
     memberSet.forEach(function(fed){if(map[fed])return;var db=playersDB[fed];if(!db)return;var es=(db.dob?escalaoAtDate(db.dob):null)||db.escalao||"";
       map[fed]={fed:fed,name:db.name||fed,club:clubShort(db),escalao:es,sex:db.sex||"",results:{},rounds:[],total:0,voltas:0};});
@@ -242,8 +254,10 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td class="ge">'+esc(r.club||"—")+'</td>';
       cols.forEach(function(c){c.rounds.forEach(function(rd,j){var last=j===c.rounds.length-1;var res=r.results[rd.roundKey];
         if(!res){h+='<td class="tp"></td><td class="pt'+(last?' ge':'')+'"></td>';}
-        else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'">'+fmt(res.pts)+'</td>';}});});
-      h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
+        else{var xs=res.excluded?" x":(res.inTop?"":" fora");
+             var ti=res.excluded?"":(res.inTop?"":' title="Fora das 14 melhores voltas — nao soma"');
+             h+='<td class="tp'+xs+'"'+ti+' style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'"'+ti+'>'+fmt(res.pts)+'</td>';}});});
+      h+='<td class="vl"'+(r.cortadas?' title="'+r.cortadas+' volta(s) fora das 14 melhores"':'')+'>'+r.voltas+(r.cortadas?' <span class="cut">&minus;'+r.cortadas+'</span>':'')+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
     h+='</tbody></table></div>';
     det.innerHTML=h;
   }

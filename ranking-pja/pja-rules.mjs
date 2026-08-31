@@ -138,13 +138,12 @@ export const PJA_NOTAS = [
   {
     ano: "2026",
     tipo: "fora",
-    titulo: "A Taça Visconde Pereira Machado (6-7 Jul, Estoril) não conta para o ranking",
+    titulo: "A Taça Visconde Pereira Machado (6-7 Jul) não conta para o ranking",
     texto:
-      "Os miúdos jogaram das marcas brancas, mais recuadas do que as do " +
-      "escalão deles. O ranking pontua o resultado em relação ao par, e o par " +
-      "é o mesmo seja qual for a marca de saída — num campo mais comprido " +
-      "fariam mais pancadas e perderiam pontos por causa da marca, não do " +
-      "jogo. Por isso a prova ficou de fora.",
+      "Os miúdos jogaram das marcas brancas, muito atrás das marcas do " +
+      "escalão deles. Num campo bem mais comprido fazem-se naturalmente mais " +
+      "pancadas — seriam penalizados pelas marcas de onde jogaram e não pelo " +
+      "golfe que fizeram. Para ninguém sair prejudicado, a prova fica de fora.",
   },
   {
     ano: "2026",

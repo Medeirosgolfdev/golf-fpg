@@ -132,6 +132,8 @@ describe("PJA_NOTAS — o que o público lê", () => {
     expect(tvpm.titulo).toMatch(/Visconde Pereira Machado/i);
     expect(tvpm.texto).toMatch(/marcas brancas/i);
     expect(tvpm.texto).toMatch(/escalão/i);
+    // linguagem para quem lê o site: nada de jargão do motor de pontos
+    expect(tvpm.texto).not.toMatch(/±\s*par|\btee\b|25 pts|multiplicador/i);
     // o Sub-10 do Miramar é detalhe interno — fica FORA das notas públicas
     expect(notasPJA("2026", "2026-08-31").some(n => /Sub-10/i.test(n.titulo))).toBe(false);
   });

@@ -1081,6 +1081,11 @@ export function PJARankingView({
           >
             {sortedRows.map((row, idx) => {
               const isSel = selectedKey === row.key;
+              // Voltas que ficaram fora do top-14 (só no modo de pontos — em
+              // "sd" a métrica é uma média das melhores, não uma soma).
+              const cortadas = metric === "pts"
+                ? [...row.results.values()].filter(r => !r.excluded && !r.inTop14).length
+                : 0;
               const classes = [
                 isManuel(row) ? "row-manuel" : "",
                 isSel ? "row-selected" : "",
@@ -1123,10 +1128,21 @@ export function PJARankingView({
                             res.prova,
                             res.meters ? `${res.meters.toLocaleString("pt-PT")} m` : null,
                             res.excludedReason,
+                            !res.excluded && !res.inTop14 ? "Fora das 14 melhores voltas — não soma" : null,
                           ].filter(Boolean).join(" · ") || undefined;
+                          // Duas maneiras de uma volta não somar, com aspecto
+                          // diferente de propósito:
+                          //  • `excluded` — a regra tirou-a (GG Main R1, Aquapor
+                          //    de quem joga Drive Tour): riscada.
+                          //  • fora do TOP-14 — jogou-se e vale, mas há 14
+                          //    melhores: esbatida. Sem isto, a partir da 15ª
+                          //    volta a linha deixava de somar para o total e
+                          //    ninguém percebia porquê.
                           const excludedStyle = res.excluded
                             ? { opacity: 0.4, textDecoration: "line-through" as const }
-                            : {};
+                            : !res.inTop14
+                              ? { opacity: 0.35 }
+                              : {};
                           return (
                             <React.Fragment key={r.roundKey}>
                               <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={cellTitle}>{tpStr}</td>
@@ -1146,8 +1162,10 @@ export function PJARankingView({
                     );
                   })}
 
-                  <td className="cs-s-games cs-grp">
+                  <td className="cs-s-games cs-grp"
+                      title={cortadas > 0 ? `${cortadas} volta(s) fora das 14 melhores` : undefined}>
                     {row.voltas}
+                    {cortadas > 0 && <span className="muted fs-10">{"\u2212"}{cortadas}</span>}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
                     {metric === "sd" ? (isNaN(row.total) ? "–" : row.total.toFixed(1)) : fmtPts(row.total)}

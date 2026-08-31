@@ -3960,6 +3960,33 @@ acabam a dizer coisas diferentes.
 - O bloco é desenhado ANTES do fetch dos dados — aparece mesmo que o
   carregamento falhe.
 
+### ⚠ TOP-14 voltas: mostrar QUAIS caíram (2026-08-31)
+
+O total é a soma das **14 MELHORES voltas** do ano — caem as piores. ⚠ São
+**voltas, não provas**: uma prova de 3 rondas gasta 3 lugares, por isso o tecto
+aperta muito antes das "14 provas" (medido a 31-08: João Rocha 13 voltas em 6
+provas, Nuno Palmares 12 — o Torre e a Grande Final passam-nos os dois).
+
+Os dois motores já ordenavam por pontos e cortavam no 14 — o que faltava era
+**dizê-lo na tabela**. A `PJARankingView` chegava a calcular `inTop14` por
+volta e nunca o usava no render; a standalone nem isso. Resultado: a partir da
+15ª volta a linha deixava de somar para o total e não havia como perceber
+porquê ("as contas não batem").
+
+Agora, nas duas superfícies:
+- volta fora do top-14 → **esbatida** (`opacity .35`) + tooltip "Fora das 14
+  melhores voltas — não soma";
+- coluna **Vlt** mostra `18 −4` (quantas ficaram de fora), com tooltip;
+- a linha de regras explica-o em texto.
+
+⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
+que continua **riscado** — são coisas diferentes: uma regra tirou-a vs. jogou-se
+e vale, mas há 14 melhores.
+
+Validado num browser com dados reais + um torneio fabricado a forçar 18 voltas:
+soma da linha 364, total 276, as 4 esbatidas eram exactamente as 4 piores
+(12, 9, 7, 5).
+
 ### Provas do calendário 2026 que NÃO contam — e porquê
 
 | Prova | ccode/tcode | Porque fica fora |
