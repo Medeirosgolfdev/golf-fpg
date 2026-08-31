@@ -138,19 +138,13 @@ export const PJA_NOTAS = [
   {
     ano: "2026",
     tipo: "fora",
-    titulo: "Taça Visconde Pereira Machado (6-7 Jul, Estoril) não conta",
+    titulo: "A Taça Visconde Pereira Machado (6-7 Jul, Estoril) não conta para o ranking",
     texto:
-      "Os miúdos jogaram das brancas, fora das marcas do escalão deles. " +
-      "Como a pontuação é ±par (par = 25 pts) e o par não muda com o tee, " +
-      "o resultado não é comparável com o das outras provas do circuito.",
-  },
-  {
-    ano: "2026",
-    tipo: "fora",
-    titulo: "Miramar Open — Sub-10 não consta",
-    texto:
-      "Não há Sub-10 inscritos no PJA em 2026; do Miramar (19-21 Ago) conta " +
-      "apenas o U25.",
+      "Os miúdos jogaram das marcas brancas, mais recuadas do que as do " +
+      "escalão deles. O ranking pontua o resultado em relação ao par, e o par " +
+      "é o mesmo seja qual for a marca de saída — num campo mais comprido " +
+      "fariam mais pancadas e perderiam pontos por causa da marca, não do " +
+      "jogo. Por isso a prova ficou de fora.",
   },
   {
     ano: "2026",

@@ -3951,6 +3951,10 @@ está na fonte única pela mesma razão que as regras: senão as duas páginas
 acabam a dizer coisas diferentes.
 
 - `tipo: "fora"` — prova do calendário que não conta (fica indefinidamente).
+  ⚠ Só entram aqui as exclusões que alguém de fora **iria estranhar** (uma
+  prova do calendário sem coluna no ranking). O Sub-10 do Miramar não tem nota
+  pública de propósito: não há Sub-10 no circuito, ninguém dá pela falta, e a
+  nota só levantava uma pergunta que não existia.
 - `tipo: "info"` + `ate: "YYYY-MM-DD"` — nota de agenda, desaparece sozinha
   depois dessa data (senão o site fica a anunciar provas já jogadas).
 - O bloco é desenhado ANTES do fetch dos dados — aparece mesmo que o
@@ -3961,7 +3965,7 @@ acabam a dizer coisas diferentes.
 | Prova | ccode/tcode | Porque fica fora |
 |---|---|---|
 | Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os miúdos jogaram das **brancas**, fora das marcas do escalão deles. Os pontos são ±par (par = 25) e o par não muda com o tee: um escalão jovem posto num tee de adulto leva uma penalização que não tem a ver com o jogo dele, e o número deixa de ser comparável com o das outras provas. **Exclusão deliberada — não re-adicionar.** |
-| Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. |
+| Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. **Sem nota pública** (ver acima). |
 
 ⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por
 `PJA_TCODES`. A FPG reutiliza os quatro números noutros clubes e anos: 10580 em

@@ -124,15 +124,16 @@ describe("multiplicadores e pontos", () => {
 });
 
 describe("PJA_NOTAS — o que o público lê", () => {
-  it("explica, com a razão, as duas provas do calendário que não contam", () => {
+  it("explica, com a razão, a prova do calendário que não conta", () => {
     const fora = notasPJA("2026", "2026-08-31").filter(n => n.tipo === "fora");
-    expect(fora).toHaveLength(2);
+    expect(fora).toHaveLength(1);
     // a razão TEM de estar escrita — é isto que o utilizador vê no site
-    const tvpm = fora.find(n => /Visconde/i.test(n.titulo))!;
-    expect(tvpm.texto).toMatch(/brancas/i);
-    expect(tvpm.texto).toMatch(/marcas do escalão/i);
-    const sub10 = fora.find(n => /Sub-10/i.test(n.titulo))!;
-    expect(sub10.texto).toMatch(/não há sub-10/i);
+    const tvpm = fora[0];
+    expect(tvpm.titulo).toMatch(/Visconde Pereira Machado/i);
+    expect(tvpm.texto).toMatch(/marcas brancas/i);
+    expect(tvpm.texto).toMatch(/escalão/i);
+    // o Sub-10 do Miramar é detalhe interno — fica FORA das notas públicas
+    expect(notasPJA("2026", "2026-08-31").some(n => /Sub-10/i.test(n.titulo))).toBe(false);
   });
 
   it("notas de agenda desaparecem depois da prova; as de elegibilidade ficam", () => {
@@ -140,7 +141,7 @@ describe("PJA_NOTAS — o que o público lê", () => {
     expect(titulos("2026-08-31").some(t => /Torre/.test(t))).toBe(true);
     expect(titulos("2026-09-05").some(t => /Torre/.test(t))).toBe(true);   // no próprio dia ainda aparece
     expect(titulos("2026-09-07").some(t => /Torre/.test(t))).toBe(false);  // passou
-    expect(titulos("2026-12-31")).toHaveLength(2);                          // as "fora" não expiram
+    expect(titulos("2026-12-31")).toHaveLength(1);                          // a "fora" não expira
   });
 
   it("só devolve notas do ano pedido", () => {
