@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-08-23T20:13:03.878Z",
+  "geradoEm": "2026-08-30T22:16:35.190Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 149,
+  "totalRondas": 150,
   "totalCompanheirosUnicos": 182,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 131,
-      "rondasComDraw": 117,
-      "torneiosJogados": 97,
-      "torneiosComDraw": 91,
+      "rondasJogadas": 132,
+      "rondasComDraw": 118,
+      "torneiosJogados": 98,
+      "torneiosComDraw": 92,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "007-11057",
+          "nome": "8º Torneio CGSS OM NOS 2026",
+          "data": "2026-08-29",
+          "rondas": 1
+        },
         {
           "torneioId": "003-10652",
           "nome": "X Miramar Internacional Open U25",
@@ -633,6 +639,49 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-11057",
+      "torneioNome": "8º Torneio CGSS OM NOS 2026",
+      "data": "2026-08-29",
+      "ronda": 1,
+      "teeTime": "09:40",
+      "startHole": 1,
+      "campo": "Santo da Serra - Serras-Machico",
+      "manuelScore": {
+        "gross": 72,
+        "toPar": 0
+      },
+      "companheiros": [
+        {
+          "nome": "Alexandre Henriques",
+          "fed": "2178",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 77,
+            "toPar": 5
+          }
+        },
+        {
+          "nome": "Matilde Leal Gouveia",
+          "fed": "41131",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Mateus Penucho",
+          "fed": "52393",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "003-10652",

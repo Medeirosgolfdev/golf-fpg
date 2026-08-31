@@ -1,0 +1,167 @@
+name: Resultados de torneios CGSS (draw-only → real)
+
+# AUTO-DESCOBRIDOR (2026-08-28, 2ª geração): já não é preciso reapontar nada
+# por torneio. O job varre o cgss-draws-manual.json à procura de entradas
+# PENDENTES — ccode 007, tcode placeholder 9xxxx, drawOnly:true, com data
+# entre há 3 dias e hoje — e corre o update-cgss-draw-results.js para cada
+# uma: descoberta do tcode real (TournamentsLST por clube+data + sondagem
+# 11051-11090 com prova de identidade por sobreposição de nomes do draw),
+# scrape, substituição do placeholder, re-chaveamento do draw e reconciliação
+# de fedCodes. Sem pendentes, o job sai logo (verde, barato).
+#
+# Faz par com o percurso da pasta draws-inbox/ (local): largar o PDF do draw
+# lá → scripts/process-draw-inbox.js insere a entrada draw-only e committa →
+# este workflow apanha os resultados no fim-de-semana seguinte. Zero edições
+# manuais. (A janela de 3 dias também deixa de fora, por construção, casos
+# como o Calheta Viva 90072 — interrompido por tempestade, draw-only eterno.)
+#
+# Crons (UTC): Sex/Sáb/Dom de hora a hora 12:10-18:10 (13:10-19:10 Lisboa no
+# verão — os torneios CGSS acabam tipicamente ~13h) + Seg-Qui 13:10 (uma
+# passagem diária para torneios raros a meio da semana e catch-up).
+#
+# Requer os GitHub Secrets DATAGOLF_SCORING_COOKIES e FPG_ADMISSIONS_COOKIES
+# (os mesmos do update-classif / update-fpg-admissions-draws). Basta um.
+on:
+  workflow_dispatch:
+    inputs:
+      placeholder:
+        description: 'Forçar UM placeholder (9xxxx) — salta a varredura de pendentes.'
+        required: false
+        default: ''
+      search:
+        description: 'Dica de nome p/ ordenação (dias com 2 torneios do clube).'
+        required: false
+        default: ''
+      tcode:
+        description: 'tcode REAL (opcional — salta a descoberta).'
+        required: false
+        default: ''
+  schedule:
+    - cron: '10 12-18 * * 5,6,0'   # Sex/Sáb/Dom, 13:10-19:10 Lisboa (verão)
+    - cron: '10 13 * * 1-4'        # Seg-Qui, 14:10 Lisboa — catch-up diário
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update-cgss-draw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Varrer pendentes (draw-only 9xxxx com data recente)
+        id: pending
+        run: |
+          LIST=$(node -e '
+            const fs = require("fs");
+            const inp = process.env.INPUT_PLACEHOLDER || "";
+            if (inp.trim()) { console.log(inp.trim()); process.exit(0); }
+            const d = JSON.parse(fs.readFileSync("public/data/cgss-draws-manual.json", "utf8"));
+            const iso = (x) => x.toISOString().slice(0, 10);
+            const today = iso(new Date());
+            const cut = iso(new Date(Date.now() - 3 * 864e5));
+            const out = [];
+            for (const t of d.tournaments || []) {
+              if (String(t.ccode) !== "007" || !/^9\d{4}$/.test(String(t.tcode)) || t.drawOnly !== true) continue;
+              if (!t.date || t.date > today || t.date < cut) continue;
+              out.push(String(t.tcode));
+            }
+            console.log(out.join(" "));
+          ')
+          echo "list=$LIST" >> $GITHUB_OUTPUT
+          if [ -z "$LIST" ]; then
+            echo "ℹ️  Nenhum torneio draw-only pendente na janela (hoje-3d..hoje) — nada a fazer."
+          else
+            echo "Pendentes: $LIST"
+          fi
+        env:
+          INPUT_PLACEHOLDER: ${{ github.event.inputs.placeholder }}
+
+      - name: Setup Node.js
+        if: steps.pending.outputs.list != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        if: steps.pending.outputs.list != ''
+        run: npm ci
+
+      - name: Correr update-cgss-draw-results.js (cada pendente)
+        if: steps.pending.outputs.list != ''
+        id: scrape
+        run: |
+          set +e
+          UPDATED=0
+          FAILED=0
+          for P in ${{ steps.pending.outputs.list }}; do
+            ARGS="--placeholder $P"
+            if [ -n "${{ github.event.inputs.search }}" ]; then ARGS="$ARGS --search \"${{ github.event.inputs.search }}\""; fi
+            if [ -n "${{ github.event.inputs.tcode }}" ]; then ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"; fi
+            echo "── placeholder $P ──  ($ARGS)"
+            eval node scripts/update-cgss-draw-results.js $ARGS
+            CODE=$?
+            case "$CODE" in
+              0) UPDATED=1 ;;
+              2) echo "ℹ️  $P: ainda sem resultados publicados." ;;
+              *) echo "❌ $P: erro (exit $CODE)"; FAILED=1 ;;
+            esac
+          done
+          echo "updated=$UPDATED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+          FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
+
+      - name: Commit e push (se houve resultados)
+        if: steps.scrape.outputs.updated == '1'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/pull-torneios001.json public/data/cgss-draws-manual.json public/data/fpg-admissions-draws.json
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          git commit -m "data: resultados de torneio CGSS (draw-only → real)"
+
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
+            if git push; then PUSH_OK=1; break; fi
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"
+
+      - name: Aviso por email (issue criada e fechada — como o daily-digest)
+        if: steps.scrape.outputs.updated == '1'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          URL=$(gh issue create \
+            --title "⛳ Resultados CGSS publicados no site ($(date -u +%Y-%m-%d))" \
+            --body "@Medeirosgolfdev — o workflow update-cgss-draw apanhou os resultados dos pendentes (${{ steps.pending.outputs.list }}), re-chaveou o(s) placeholder(s) para o(s) tcode(s) reais e reconciliou os fedCodes dos draws. Ver em https://golf-fpg.vercel.app/FPG (filtro ⛳ Santo da Serra). Esta issue fecha-se sozinha — serve só para a notificação por email.")
+          gh issue close "$URL" --comment "Notificação entregue."
+
+      - name: Falhar o job se algum pendente deu erro real
+        if: steps.scrape.outputs.failed == '1'
+        run: |
+          echo "❌ Pelo menos um placeholder falhou com erro real (ver logs acima)."
+          exit 1

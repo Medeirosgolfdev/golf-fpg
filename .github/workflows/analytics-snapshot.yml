@@ -1,0 +1,151 @@
+name: Retrato do Web Analytics
+
+# Copia para o repo os dados do Vercel Web Analytics (visitas do golf-fpg).
+#
+# ─── Porquê ───────────────────────────────────────────────────────────
+# O plano Hobby do Vercel só guarda 30 DIAS. Passado esse prazo os dados
+# desaparecem sem recurso. Este workflow tira um retrato TODOS OS DIAS
+# (do dia anterior) e, no dia 1 de cada mês, um retrato do mês que fechou.
+#
+# ⚠ O ritmo diário não é exagero: é o que torna a perda impossível. Se
+# corresse só ao mês, uma única falha (token expirado, API em baixo, repo
+# bloqueado) apagava um mês inteiro de história assim que passassem os 30
+# dias. Com o diário, uma falha custa um dia — e o --backfill recupera-o
+# enquanto a janela não fechar.
+#
+# Requer GitHub Secret:
+#   VERCEL_TOKEN — token de conta criado em vercel.com/account/tokens
+#                  (o projectId/teamId não são segredos e estão no script)
+#
+# Escreve em data-archive/analytics/{daily,monthly}/ — fora de public/,
+# por isso NÃO é servido pelo site nem entra no build.
+
+on:
+  workflow_dispatch:
+    inputs:
+      day:
+        description: 'Dia específico (YYYY-MM-DD). Vazio = ontem'
+        required: false
+        default: ''
+        type: string
+      month:
+        description: 'Mês específico (YYYY-MM). Vazio = nenhum'
+        required: false
+        default: ''
+        type: string
+      backfill:
+        description: 'Recuperar os últimos N dias (máx. 30 — é o que o Vercel guarda)'
+        required: false
+        default: ''
+        type: string
+      dry_run:
+        description: 'Só mostrar, sem gravar'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # 03:15 UTC — o dia anterior em UTC já fechou há mais de três horas,
+    # com folga para o Vercel consolidar. Hora morta: não colide com a
+    # janela dos scrapes da FPG (20:00-01:00 UTC) nem com os workflows
+    # USKids da madrugada.
+    - cron: '15 3 * * *'
+
+permissions:
+  contents: write
+
+# Nunca dois retratos ao mesmo tempo — evita colisões no push.
+concurrency:
+  group: analytics-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Confirmar que o token existe
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "::error::Falta o secret VERCEL_TOKEN. Criar em vercel.com/account/tokens e adicionar em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Tirar o retrato
+        id: snap
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set +e
+          ARGS=""
+
+          if [ -n "${{ inputs.backfill }}" ]; then
+            ARGS="--backfill ${{ inputs.backfill }}"
+          else
+            if [ -n "${{ inputs.day }}" ]; then
+              ARGS="--day ${{ inputs.day }}"
+            else
+              ARGS="--day"
+            fi
+
+            if [ -n "${{ inputs.month }}" ]; then
+              ARGS="$ARGS --month ${{ inputs.month }}"
+            elif [ "$(date -u +%d)" = "01" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+              # Dia 1: fechar também o mês anterior, agora que está completo.
+              ARGS="$ARGS --month"
+            fi
+          fi
+
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+
+          echo "Argumentos: $ARGS"
+          node scripts/snapshot-web-analytics.js $ARGS
+          CODE=$?
+          echo "exit_code=$CODE" >> $GITHUB_OUTPUT
+
+          # 2 = nada de novo. Não é erro.
+          if [ "$CODE" = "1" ]; then exit 1; fi
+          exit 0
+
+      - name: Commit
+        if: steps.snap.outputs.exit_code == '0' && inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data-archive/analytics
+          if git diff --staged --quiet; then
+            echo "Nada para committar."
+            exit 0
+          fi
+          git commit -m "data: retrato do Web Analytics $(date -u +'%Y-%m-%d %H:%M UTC')"
+          # Outros workflows committam ao mesmo tempo — rebase antes de empurrar.
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            echo "push falhou (tentativa $i), a repetir..."
+            sleep 10
+          done
+          exit 1
+
+      - name: Resumo
+        if: always()
+        run: |
+          if [ "${{ steps.snap.outputs.exit_code }}" = "2" ]; then
+            echo "Sem dados novos — nada gravado." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Retratos em data-archive/analytics/:" >> $GITHUB_STEP_SUMMARY
+            ls -1 data-archive/analytics/daily 2>/dev/null | tail -5 >> $GITHUB_STEP_SUMMARY || true
+          fi

@@ -61,7 +61,11 @@ const PAGE_SIZE = parseInt(argVal("--page-size", "150"), 10);
 /* ── Cookies (scoring.datagolf.pt) ──────────────────────────────────────── */
 const { loadCookieHeader } = require("./lib/cookies");
 const { lisbonCivilDayStr } = require("../lib/helpers");
+// ⚠ Opcional desde 2026-08-30: o caminho sem cookies (ver o fallback no
+// warmupLinkpage) cobre leaderboard + scorecards de um torneio conhecido, por
+// isso a falta de cookies já não é motivo para abortar.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["DATAGOLF_SCORING_COOKIES", "DATAGOLF_COOKIES"],
   file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
   label: "[classif]",
@@ -135,28 +139,88 @@ const ACK_CLASSIF = "8428ACK987";
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* ── Fallback público: sessão auto-gerada ────────────────────────────────
+   O gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) emite ele
+   próprio um ASP.NET_SessionId + DG_Lists_URL a quem chega SEM credenciais, e
+   com essa sessão os PageMethods respondem Result:OK — leaderboard e scorecard
+   buraco-a-buraco incluídos. Medido a 2026-08-30, no dia em que o caminho
+   habitual (scoring.datagolf.pt/pt + cookies gravadas) dava 500 em tudo: os
+   cookies tinham 7 horas e o browser da utilizadora abria o mesmo URL sem
+   problema — porque um browser aceita o Set-Cookie e nós não.
+   Ver scripts/lib/fpg-session.js. */
+const { Sessao, parseMetaClassif, criarSessaoLista } = require("./lib/fpg-session");
+let SESSAO = null;        // != null → estamos no caminho sem cookies
+let SESSAO_META = null;   // nome/campo/data lidos da própria página
+let SESSAO_LISTA;         // undefined = por tentar · null = indisponível
+
 async function warmupLinkpage(tclub, tcode) {
-  // Activa sessão ASP.NET antes de POSTs a PageMethods
-  const url = `${BASE}/linkpage.aspx?page=classif&club=${tclub}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
-  try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent": UA,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "pt-PT,pt;q=0.9",
-        "Cookie": COOKIE,
-        "Referer": `${BASE}/`,
-      },
-      redirect: "follow",
-    });
-    await res.text();
-    return res.ok;
-  } catch {
+  // ⚠ ORDEM: público primeiro (2026-08-30). A sessão auto-gerada pelo ack não
+  // expira; as cookies duram ~9h e morrem sempre a meio da janela de scrapes
+  // do fim-de-semana. As cookies ficam como fallback — se o gate público
+  // estiver em baixo, ainda se tenta por elas.
+  // FPG_AUTH_MODE=cookies restaura a ordem antiga sem mexer em código.
+  const modo = String(process.env.FPG_AUTH_MODE || "").trim().toLowerCase();
+  const publicoPrimeiro = modo !== "cookies";
+
+  const viaPublica = async () => {
+    try {
+      const sess = new Sessao();
+      const abriu = await sess.abrir("classif", tclub, tcode);
+      if (abriu.ok) {
+        SESSAO = sess;
+        SESSAO_META = parseMetaClassif(abriu.html);
+        return true;
+      }
+    } catch { /* nada a fazer */ }
     return false;
-  }
+  };
+
+  const viaCookies = async () => {
+    if (!COOKIE) return false;
+    const url = `${BASE}/linkpage.aspx?page=classif&club=${tclub}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": UA,
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "pt-PT,pt;q=0.9",
+          "Cookie": COOKIE,
+          "Referer": `${BASE}/`,
+        },
+        redirect: "follow",
+      });
+      const html = await res.text();
+      // ⚠ HTTP 200 NÃO é prova de sessão útil. Sem cookies válidas este linkpage
+      // devolve 200 na mesma (medido 2026-08-30) e só o PageMethod a seguir é
+      // que rebenta. O teste é o CONTEÚDO: a página real traz Torneio/Campo/Data.
+      if (res.ok && parseMetaClassif(html).name) { SESSAO = null; SESSAO_META = null; return true; }
+    } catch { /* cai no outro caminho */ }
+    return false;
+  };
+
+  const [primeiro, segundo] = publicoPrimeiro ? [viaPublica, viaCookies] : [viaCookies, viaPublica];
+  if (await primeiro()) { anunciarCaminho(); return true; }
+  if (await segundo()) { anunciarCaminho(); return true; }
+  SESSAO = null;
+  return false;
+}
+
+let ANUNCIOU_CAMINHO = false;
+function anunciarCaminho() {
+  if (ANUNCIOU_CAMINHO) return;
+  ANUNCIOU_CAMINHO = true;
+  console.log(SESSAO
+    ? "[classif] sessão pública (ack, sem credenciais)"
+    : "[classif] sessão autenticada por cookies");
 }
 
 async function postPageMethod(pathname, qs, body) {
+  if (SESSAO) {
+    // ⚠ os params extra vão na query string E no body — o servidor rejeita
+    // (500) se só forem num dos sítios.
+    const r = await SESSAO.postPageMethod(pathname, body, { queryString: qs });
+    return { ok: r.ok, status: r.status, result: r.result, records: r.records, total: r.total ?? 0 };
+  }
   const url = `${BASE}/${pathname}${qs ? "?" + qs : ""}`;
   const res = await fetch(url, {
     method: "POST",
@@ -189,7 +253,21 @@ async function resolveTournament(tclub, tcode) {
     jtStartIndex: "0", jtPageSize: "25", jtSorting: "started_at DESC",
   };
   const qs = "jtStartIndex=0&jtPageSize=25&jtSorting=" + encodeURIComponent("started_at DESC");
-  const r = await postPageMethod("tournaments.aspx/TournamentsLST", qs, body);
+  // Sem cookies o TournamentsLST tem entrada própria (ver criarSessaoLista):
+  // uma sessão SEPARADA da do classif, porque o DG_Lists_URL guarda o contexto
+  // da página e as duas pisavam-se.
+  let r;
+  if (SESSAO) {
+    if (SESSAO_LISTA === undefined) {
+      SESSAO_LISTA = await criarSessaoLista().catch(() => null);
+      if (SESSAO_LISTA) console.log("[classif] sem cookies: lista de torneios também");
+    }
+    if (!SESSAO_LISTA) return null;
+    const x = await SESSAO_LISTA.postPageMethod("tournaments.aspx/TournamentsLST", body, { queryString: qs });
+    r = { ok: x.ok, records: x.records };
+  } else {
+    r = await postPageMethod("tournaments.aspx/TournamentsLST", qs, body);
+  }
   if (!r.ok) return null;
   return r.records.find(rec =>
     String(rec.code) === String(tcode) && String(rec.club_code) === String(tclub)
@@ -350,6 +428,9 @@ async function processOne(spec, idx, total) {
   await sleep(DELAY_MS);
 
   // 1. resolve — tenta via TournamentsLST (metadata completa: campo, rondas, etc)
+  // ⚠ Sem cookies isto usa uma sessão SEPARADA (SESSAO_LISTA). Reaproveitar a
+  // do classif dava Result:ERROR: o POST ao tournaments.aspx reescreve o
+  // DG_Lists_URL (o contexto de página) e o classif a seguir perde o seu.
   const raw = await resolveTournament(tclub, tcode);
   let t;
   if (raw) {
@@ -360,13 +441,15 @@ async function processOne(spec, idx, total) {
     // do índice, etc.). Usar metadata mínima do spec (pode vir do tracking
     // com name/date/rounds) e tentar classif na mesma. A classif.aspx/ClassifLST
     // funciona directamente via tclub/tcode — não depende de resolve.
-    console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
+    // No caminho sem cookies o TournamentsLST nunca responde (medido com os 3
+    // acks): a metadata vem da própria página de classificações.
+    if (!SESSAO_META) console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
     t = {
-      name: spec.name || `${tclub}/${tcode}`,
+      name: (SESSAO_META && SESSAO_META.name) || spec.name || `${tclub}/${tcode}`,
       ccode: String(tclub).padStart(3, "0"),
       tcode: String(tcode),
-      date: spec.date || "",
-      campo: "",
+      date: (SESSAO_META && SESSAO_META.date) || spec.date || "",
+      campo: (SESSAO_META && SESSAO_META.campo) || "",
       clube: String(tclub).padStart(3, "0"),
       circuit: spec.circuit || "tour",
       series: "tour",

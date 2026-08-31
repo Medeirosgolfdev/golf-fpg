@@ -12,7 +12,7 @@ import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tourname
 import { escalaoAtDate, shortDateSlash } from "../utils/format";
 import type { Tournament } from "../data/fpgTypes";
 import {
-  pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent,
+  pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, notasPJA,
 } from "../../ranking-pja/pja-rules.mjs";
 
 /* ─────────────────────────────────────────────
@@ -178,6 +178,11 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
     const sub = (wk[1] || "").replace(/\s+/g, " ").trim();
     return { circuito: sub ? `World Kids ${sub}` : "World Kids", local: campo || "Amendoeira" };
   }
+  // Miramar Internacional Open U25 (CGM, Ago 2026) — só o U25 conta para o
+  // ranking (o Sub-10 fica fora, ver isPJACore).
+  if (/Miramar\s+Intern\w*cional\s+Open/i.test(n)) {
+    return { circuito: "Miramar Open", local: campo || "Miramar" };
+  }
   // PJA exclusivo ou fallback
   const pjaMatch = n.match(/^PJA\s+(.+)$/i);
   if (pjaMatch) return { circuito: "PJA", local: pjaMatch[1].trim() };
@@ -191,6 +196,36 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
 
 const PName = ({ name, fedCode, playersDB, sex }: { name: string; fedCode?: string; playersDB: PlayersDB; sex?: string }) =>
   <TournPName name={name} fedCode={fedCode} playersDB={playersDB} sex={sex} />;
+
+/** Notas de elegibilidade — visíveis a quem abre o ranking, sem ter de clicar
+ *  em nada. A lista vem do `pja-rules.mjs` (a MESMA que a página standalone
+ *  ranking-pja.vercel.app mostra) — aqui só vive a apresentação. */
+const RankingNotas = ({ year }: { year: string | number }) => {
+  const notas = notasPJA(year);
+  if (!notas.length) return null;
+  return (
+    <div className="print-hide" style={{ display: "grid", gap: 6, margin: "10px 0 14px" }}>
+      {notas.map((n, i) => (
+        <div
+          key={i}
+          style={{
+            display: "flex", gap: 9, alignItems: "flex-start",
+            background: n.tipo === "info" ? "var(--bg-info)" : "var(--bg-warn)",
+            border: "1px solid var(--border)",
+            borderLeft: `4px solid var(${n.tipo === "info" ? "--color-info" : "--color-warn"})`,
+            borderRadius: 8, padding: "9px 12px",
+          }}
+        >
+          <span style={{ fontSize: 14, lineHeight: 1.25 }}>{n.tipo === "info" ? "📅" : "⚠️"}</span>
+          <span>
+            <b style={{ display: "block", fontSize: 12.5, marginBottom: 2 }}>{n.titulo}</b>
+            <span className="muted" style={{ fontSize: 11.5 }}>{n.texto}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 /* ─────────────────────────────────────────────
    Main Component
@@ -940,6 +975,8 @@ export function PJARankingView({
         : <div className="toolbar" style={{ flexWrap: "wrap", gap: 6 }}>{toolbarInner}</div>
       }
 
+      <RankingNotas year={year} />
+
       {sortedRows.length === 0
         ? <EmptyState size="sm" message={`Sem dados para ${year}.`} />
         : (
@@ -1044,6 +1081,18 @@ export function PJARankingView({
           >
             {sortedRows.map((row, idx) => {
               const isSel = selectedKey === row.key;
+              // Voltas que ficaram fora do top-14 (só no modo de pontos — em
+              // "sd" a métrica é uma média das melhores, não uma soma).
+              const cortadas = metric === "pts"
+                ? [...row.results.values()].filter(r => !r.excluded && !r.inTop14).length
+                : 0;
+              // Quando o tecto morde, mostram-se os dois números: o que CONTA
+              // em grande, o que se JOGOU em pequeno. Sem isto a linha exibia
+              // 18 voltas ao lado de um total de 14 e as contas não fechavam.
+              const contadas = row.voltas - cortadas;
+              const totalTodas = cortadas > 0
+                ? row.allRounds.reduce((a, r) => a + r.pts, 0)
+                : 0;
               const classes = [
                 isManuel(row) ? "row-manuel" : "",
                 isSel ? "row-selected" : "",
@@ -1086,10 +1135,21 @@ export function PJARankingView({
                             res.prova,
                             res.meters ? `${res.meters.toLocaleString("pt-PT")} m` : null,
                             res.excludedReason,
+                            !res.excluded && !res.inTop14 ? "Fora das 14 melhores voltas — não soma" : null,
                           ].filter(Boolean).join(" · ") || undefined;
+                          // Duas maneiras de uma volta não somar, com aspecto
+                          // diferente de propósito:
+                          //  • `excluded` — a regra tirou-a (GG Main R1, Aquapor
+                          //    de quem joga Drive Tour): riscada.
+                          //  • fora do TOP-14 — jogou-se e vale, mas há 14
+                          //    melhores: esbatida. Sem isto, a partir da 15ª
+                          //    volta a linha deixava de somar para o total e
+                          //    ninguém percebia porquê.
                           const excludedStyle = res.excluded
                             ? { opacity: 0.4, textDecoration: "line-through" as const }
-                            : {};
+                            : !res.inTop14
+                              ? { opacity: 0.35 }
+                              : {};
                           return (
                             <React.Fragment key={r.roundKey}>
                               <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={cellTitle}>{tpStr}</td>
@@ -1109,11 +1169,21 @@ export function PJARankingView({
                     );
                   })}
 
-                  <td className="cs-s-games cs-grp">
-                    {row.voltas}
+                  <td className="cs-s-games cs-grp"
+                      title={cortadas > 0 ? `${contadas} das ${row.voltas} voltas contam para o total` : undefined}>
+                    {cortadas > 0
+                      ? <>{contadas}<span className="muted" style={{ fontSize: 9 }}>/{row.voltas}</span></>
+                      : row.voltas}
                   </td>
-                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
-                    {metric === "sd" ? (isNaN(row.total) ? "–" : row.total.toFixed(1)) : fmtPts(row.total)}
+                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}
+                      title={cortadas > 0 ? `${fmtPts(row.total)} pts das voltas que contam · ${fmtPts(totalTodas)} pts somando as ${row.voltas}` : undefined}>
+                    {metric === "sd"
+                      ? (isNaN(row.total) ? "–" : row.total.toFixed(1))
+                      : cortadas > 0
+                        // Na MESMA linha (não empilhado): empilhar punha esta
+                        // linha da tabela a quase o dobro da altura das outras.
+                        ? <>{fmtPts(row.total)}<span className="muted" style={{ fontSize: 9, fontWeight: 500 }}>/{fmtPts(totalTodas)}</span></>
+                        : fmtPts(row.total)}
                   </td>
                 </tr>
               );

@@ -18,6 +18,12 @@
   h2.sec{font-size:16px;margin:26px 0 10px}
   .sub{color:var(--muted);font-size:12px;margin:0 0 14px}
   .rules{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--muted);font-size:11.5px;margin:0 0 16px}
+  .notas{margin:0 0 16px}
+  .nota{display:flex;gap:9px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:8px;padding:9px 12px;margin:0 0 7px}
+  .nota.info{border-left-color:var(--link)}
+  .nota .ic{font-size:14px;line-height:1.25}
+  .nota b{display:block;font-size:12.5px;margin:0 0 2px}
+  .nota span.tx{color:var(--muted);font-size:11.5px}
   .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
   .tab{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer}
   .tab.active{background:var(--accent);border-color:var(--accent);color:#04150a;font-weight:700}
@@ -43,6 +49,11 @@
   .leg li{padding:6px 0;border-bottom:1px solid var(--line)}
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
   .x{opacity:.4;text-decoration:line-through}
+  .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */
+  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em
+     pequeno — na MESMA linha. Empilhar os dois (display:block) punha a linha
+     da tabela a 38px contra os 26px das outras; inline a altura é a mesma. */
+  .detail td.two .sub{font-size:8.5px;font-weight:500;color:var(--muted);margin-left:1px}
   .status{color:var(--muted);font-size:12px;padding:20px 4px}
   .badge{font-size:9px;background:var(--accent2);color:#1a1206;border-radius:4px;padding:0 4px;margin-left:4px;font-weight:700}
   footer{color:var(--muted);font-size:11px;margin:6px 0 30px;text-align:center}
@@ -76,9 +87,12 @@
   <h1>Ranking PJA Tour 2026 <span style="font-size:12px;color:var(--muted)">· Race to Dunas</span></h1>
   <p class="sub">Atualizado em tempo real a partir dos resultados oficiais. <span id="upd"></span></p>
   <div class="rules">
-    Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0). Conta o <b>top-14 voltas</b> do ano.
+    Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0).
+    Contam as <b>14 melhores voltas</b> do ano: quem jogar mais do que isso fica com as melhores 14 e as restantes não somam (aparecem <span style="opacity:.35">esbatidas</span> nas pontuações detalhadas).
     Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5.
   </div>
+
+  <div class="notas" id="notas"></div>
 
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="status">A carregar resultados…</div></div>
@@ -98,12 +112,13 @@
    fonte única ./pja-rules.mjs — o MESMO ficheiro que a app principal
    (golf-fpg.vercel.app) importa. Alterar regras lá; aqui só vive o motor de
    agregação e a UI. */
-import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore } from "./pja-rules.mjs";
+import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore, notasPJA } from "./pja-rules.mjs";
 window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a correr
 (function (global) {
   "use strict";
   var YEAR="2026";
   var isGF=isGFTournament, getMult=getTournMultiplier, classify=classifyPJAEvent, isPJA=isPJACore;
+  global.PJANotas=notasPJA;
   function escalaoAtDate(dob){if(!dob)return null;var an=parseInt(String(dob).slice(0,4));if(isNaN(an))return null;var i=2026-an;if(i<0)return null;
     if(i<=10)return "Sub-10";if(i<=12)return "Sub-12";if(i<=14)return "Sub-14";if(i<=16)return "Sub-16";if(i<=18)return "Sub-18";if(i<=24)return "Sub-21+";return "Sénior";}
   function clubShort(db){if(!db)return "";var c=db.club;if(!c)return "";return typeof c==="object"?(c.short||c.long||""):String(c);}
@@ -118,6 +133,7 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
     var wk=n.match(/Amendoeira\s+World\s+Kids(?:\s+Golfe?)?(?:\s+\d{4})?\s*(Sub[\d\s\/–-]*)?/i);
     if(wk){var sub=(wk[1]||"").replace(/\s+/g," ").trim();return {circuito:sub?("World Kids "+sub):"World Kids",local:campo||"Amendoeira"};}
+    if(/Miramar\s+Intern\w*cional\s+Open/i.test(n))return {circuito:"Miramar Open",local:campo||"Miramar"};
     if(/PJA/i.test(n)){var loc=(campo&&campo.trim())?campo.replace(/\s{2,}/g," ").trim():n.replace(/PJA/ig,"").replace(/\bmasters?\b/ig,"").replace(/20\d\d/g,"").replace(/\s{2,}/g," ").trim();return {circuito:"PJA",local:loc};}
     return {circuito:n,local:campo||""};}
   function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);
@@ -148,11 +164,22 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
           map[key]={fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:es,sex:(db&&db.sex)||"",results:{},rounds:[],total:0,voltas:0};}
         var row=map[key];var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
         function add(rn,g,par){if(!par||!g||g>=900)return;var tp=g-par;var rk=tournKey+"_r"+rn;var excl=(ev==="GG_MAIN"&&rn===1)||aqSkip;var pts=pjaPts(tp,mult);
-          row.results[rk]={toPar:tp,pts:pts,excluded:excl};if(!excl)row.rounds.push(pts);}
+          row.results[rk]={toPar:tp,pts:pts,excluded:excl,inTop:false};if(!excl)row.rounds.push({rk:rk,pts:pts});}
         var rs=p.roundScores;
         if(rs&&rs.length>1){rs.forEach(function(r,i){add(i+1,r.gross,rpar(r,p.parTotal,rs.length));});}
         else{var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar;var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;if(tp==null||isNaN(tp)||g==null||isNaN(g))return;add(1,g,g-tp);}});});
-    Object.keys(map).forEach(function(k){var r=map[k];var s=r.rounds.slice().sort(function(a,b){return b-a;});r.total=s.slice(0,14).reduce(function(a,b){return a+b;},0);r.voltas=r.rounds.length;});
+    /* TOP-14 VOLTAS: ficam as 14 MELHORES, caem as piores. A partir do momento
+       em que alguem passa as 14, o total deixa de ser a soma da linha — por
+       isso marca-se cada volta com `inTop`, para a tabela poder mostrar quais
+       e que ficaram de fora (senao as contas nao batem e ninguem percebe). */
+    Object.keys(map).forEach(function(k){var r=map[k];
+      var s=r.rounds.slice().sort(function(a,b){return b.pts-a.pts;});
+      var dentro=s.slice(0,14);
+      r.total=dentro.reduce(function(a,b){return a+b.pts;},0);
+      dentro.forEach(function(x){if(r.results[x.rk])r.results[x.rk].inTop=true;});
+      r.contadas=dentro.length;
+      r.totalTodas=r.rounds.reduce(function(a,b){return a+b.pts;},0);
+      r.voltas=r.rounds.length;r.cortadas=Math.max(0,r.rounds.length-14);});
     var memberSet=new Set((members||[]).map(String));
     memberSet.forEach(function(fed){if(map[fed])return;var db=playersDB[fed];if(!db)return;var es=(db.dob?escalaoAtDate(db.dob):null)||db.escalao||"";
       map[fed]={fed:fed,name:db.name||fed,club:clubShort(db),escalao:es,sex:db.sex||"",results:{},rounds:[],total:0,voltas:0};});
@@ -232,8 +259,15 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td class="ge">'+esc(r.club||"—")+'</td>';
       cols.forEach(function(c){c.rounds.forEach(function(rd,j){var last=j===c.rounds.length-1;var res=r.results[rd.roundKey];
         if(!res){h+='<td class="tp"></td><td class="pt'+(last?' ge':'')+'"></td>';}
-        else{var xs=res.excluded?" x":"";h+='<td class="tp'+xs+'" style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'">'+fmt(res.pts)+'</td>';}});});
-      h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';});
+        else{var xs=res.excluded?" x":(res.inTop?"":" fora");
+             var ti=res.excluded?"":(res.inTop?"":' title="Fora das 14 melhores voltas — nao soma"');
+             h+='<td class="tp'+xs+'"'+ti+' style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'"'+ti+'>'+fmt(res.pts)+'</td>';}});});
+      if(r.cortadas){
+        h+='<td class="vl two" title="'+r.contadas+' das '+r.voltas+' voltas contam para o total"><span class="big">'+r.contadas+'</span><span class="sub">/'+r.voltas+'</span></td>'
+         + '<td class="tot two" title="'+fmt(r.total)+' pts das voltas que contam · '+fmt(r.totalTodas)+' pts somando as '+r.voltas+'"><span class="big">'+fmt(r.total)+'</span><span class="sub">/'+fmt(r.totalTodas)+'</span></td></tr>';
+      } else {
+        h+='<td class="vl">'+r.voltas+'</td><td class="tot">'+fmt(r.total)+'</td></tr>';
+      }});
     h+='</tbody></table></div>';
     det.innerHTML=h;
   }
@@ -245,7 +279,20 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       ul.appendChild(li);});
     document.getElementById("legend").style.display="block";
   }
+  /* Notas de elegibilidade — visíveis a quem consulta o ranking, sem ter de
+     abrir nada. O TEXTO vem do pja-rules.mjs (mesma lista da app). */
+  function renderNotas(){
+    var box=document.getElementById("notas");if(!box)return;
+    var notas=(window.PJANotas?window.PJANotas("2026"):[])||[];
+    box.innerHTML=notas.map(function(n){
+      return '<div class="nota '+(n.tipo==="info"?"info":"")+'">'
+           + '<span class="ic">'+(n.tipo==="info"?"📅":"⚠️")+'</span>'
+           + '<span><b>'+esc(n.titulo)+'</b><span class="tx">'+esc(n.texto)+'</span></span></div>';
+    }).join("");
+  }
   function renderAll(){renderTabs();renderSimple();renderDetail();}
+
+  renderNotas();   // não depende dos dados — aparece mesmo se o fetch falhar
 
   loadAll().then(function(res){
     var files=res[0],players=res[1],membersDoc=res[2];

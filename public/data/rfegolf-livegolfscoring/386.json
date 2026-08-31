@@ -1,0 +1,7198 @@
+{
+  "id": 386,
+  "ok": true,
+  "scrapedAt": "2026-08-30T11:42:41.727Z",
+  "meta": {
+    "name": "Campeonato de España Sub-16 Masculino P&P",
+    "course": null,
+    "dateRange": "07 agosto - 08 agosto",
+    "rounds": [
+      {
+        "round": 1,
+        "label": "Ronda 1"
+      },
+      {
+        "round": 2,
+        "label": "Ronda 2"
+      }
+    ],
+    "year": 2026,
+    "dateIso": "2026-08-08"
+  },
+  "course": {
+    "meters": [
+      53,
+      61,
+      74,
+      68,
+      67,
+      51,
+      41,
+      65,
+      76,
+      84,
+      60,
+      58,
+      98,
+      75,
+      59,
+      47,
+      65,
+      59
+    ],
+    "si": [
+      16,
+      10,
+      5,
+      8,
+      3,
+      17,
+      14,
+      7,
+      2,
+      1,
+      15,
+      13,
+      6,
+      11,
+      18,
+      4,
+      9,
+      12
+    ],
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "avg": [
+      3.07,
+      3.23,
+      3.11,
+      3.37,
+      3.38,
+      3.11,
+      3.12,
+      3.42,
+      3.27,
+      3.47,
+      2.95,
+      3.08,
+      3.21,
+      3.04,
+      3.21,
+      3.34,
+      3.24,
+      2.99
+    ],
+    "metersTotal": 1161,
+    "holes": 18,
+    "courseRating": 49.5,
+    "slope": 58
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "label": "Ronda 1",
+      "par": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "players": [
+        {
+          "memberId": "38300",
+          "pos": 1,
+          "name": "ZAPLANA DIAZ, Enzo",
+          "toPar": -6,
+          "hoy": -6,
+          "scores": [
+            3,
+            2,
+            4,
+            4,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            3,
+            3,
+            2,
+            2,
+            2,
+            3
+          ],
+          "halves": [
+            27,
+            21
+          ],
+          "total": 48
+        },
+        {
+          "memberId": "38277",
+          "pos": 1,
+          "name": "MATEO SANCHEZ, Ismael",
+          "toPar": -6,
+          "hoy": -6,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            3,
+            2,
+            2,
+            2,
+            3,
+            2,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            24,
+            24
+          ],
+          "total": 48
+        },
+        {
+          "memberId": "38279",
+          "pos": 1,
+          "name": "ALVAREZ RODRIGUEZ, Gonzalo",
+          "toPar": -6,
+          "hoy": -6,
+          "scores": [
+            2,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            4,
+            2,
+            2
+          ],
+          "halves": [
+            23,
+            25
+          ],
+          "total": 48
+        },
+        {
+          "memberId": "38304",
+          "pos": 4,
+          "name": "RUBIALES DOMINGUEZ, Sergio",
+          "toPar": -5,
+          "hoy": -5,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            26,
+            23
+          ],
+          "total": 49
+        },
+        {
+          "memberId": "38303",
+          "pos": 4,
+          "name": "GARCIA CORDERO, Javier",
+          "toPar": -5,
+          "hoy": -5,
+          "scores": [
+            4,
+            3,
+            2,
+            2,
+            3,
+            2,
+            2,
+            2,
+            4,
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4
+          ],
+          "halves": [
+            24,
+            25
+          ],
+          "total": 49
+        },
+        {
+          "memberId": "38293",
+          "pos": 6,
+          "name": "AVILA SANZ, Daniel",
+          "toPar": -4,
+          "hoy": -4,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            24,
+            26
+          ],
+          "total": 50
+        },
+        {
+          "memberId": "38306",
+          "pos": 7,
+          "name": "CARRON MIRON, Alex",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            26,
+            25
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38287",
+          "pos": 7,
+          "name": "CEBALLOS REDONDO, Carlos",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            25
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38329",
+          "pos": 7,
+          "name": "AMOROS GARCIA-PAGAN, Francisco",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            2,
+            4,
+            3,
+            2,
+            4,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            25,
+            26
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38280",
+          "pos": 7,
+          "name": "MARTINEZ FERREIRO, Ignacio",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            25,
+            26
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38298",
+          "pos": 7,
+          "name": "BOTANA MOSQUERA, Mateo",
+          "toPar": -3,
+          "hoy": -3,
+          "scores": [
+            2,
+            2,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            23,
+            28
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38285",
+          "pos": 12,
+          "name": "BARRANCO GARCIA, Goa",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            4,
+            3,
+            2,
+            2,
+            2,
+            4,
+            3,
+            3,
+            5,
+            2,
+            2
+          ],
+          "halves": [
+            27,
+            25
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38353",
+          "pos": 12,
+          "name": "TRILLO LAMA, Alexandre",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            26,
+            26
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38297",
+          "pos": 12,
+          "name": "ERASO MARTIN, Rafael",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            26
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38281",
+          "pos": 12,
+          "name": "RODRIGUEZ MIGUEZ, Mateo",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            25,
+            27
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38301",
+          "pos": 12,
+          "name": "PUCHE CASCANT, Maximilia",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            4,
+            3,
+            3,
+            4,
+            2,
+            3,
+            2,
+            4,
+            4
+          ],
+          "halves": [
+            23,
+            29
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38335",
+          "pos": 12,
+          "name": "MADORRAN CRESPO, Arturo",
+          "toPar": -2,
+          "hoy": -2,
+          "scores": [
+            2,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            2,
+            2,
+            3,
+            2,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            23,
+            29
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38343",
+          "pos": 18,
+          "name": "MORENO COSTAS, Hugo",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            5,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+            4
+          ],
+          "halves": [
+            29,
+            24
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38324",
+          "pos": 18,
+          "name": "LAZARO MARIN, Pablo",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            4,
+            4,
+            4,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            28,
+            25
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38313",
+          "pos": 18,
+          "name": "MESONADA CARPINTERO, Pedro",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            25
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38305",
+          "pos": 18,
+          "name": "CASAS VELEZ-OSORIO, Benjamin",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            5,
+            4,
+            2,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            27
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38290",
+          "pos": 18,
+          "name": "DOMINGUEZ JURADO, Carlos",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            3,
+            2,
+            3,
+            5,
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            26,
+            27
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38328",
+          "pos": 18,
+          "name": "ELVIRA MARTINEZ, Pablo",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            2,
+            2,
+            3,
+            2,
+            4,
+            3,
+            5,
+            4,
+            3
+          ],
+          "halves": [
+            25,
+            28
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38331",
+          "pos": 18,
+          "name": "DIAZ ROSON, Jose",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            24,
+            29
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38292",
+          "pos": 25,
+          "name": "LOPEZ DE SANTIAGO, Fernando",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            4,
+            2,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            26
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38347",
+          "pos": 25,
+          "name": "GARCIA CEBALLOS, Julio",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            26
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38284",
+          "pos": 25,
+          "name": "CEREZO PASCUAL, Hugo Albino",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            2,
+            2,
+            2,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            27,
+            27
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38340",
+          "pos": 25,
+          "name": "RODRIGUEZ MOLINA, Pablo",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            2,
+            2,
+            2,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            27,
+            27
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38276",
+          "pos": 25,
+          "name": "ELIAS GONZALEZ, Fernando",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            27
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38283",
+          "pos": 25,
+          "name": "MARTIN ALONSO, Diego",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            2
+          ],
+          "halves": [
+            26,
+            28
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38320",
+          "pos": 25,
+          "name": "PORTELA LLAMBI, Luis Miguel",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            4,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            25,
+            29
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38326",
+          "pos": 32,
+          "name": "CAZALLAS PERAL, Javier",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            25
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38308",
+          "pos": 32,
+          "name": "VIEJO MICALE, Gonzalo",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            5,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            30,
+            25
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38289",
+          "pos": 32,
+          "name": "GROSS PANEQUE, Diego",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            27
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38330",
+          "pos": 32,
+          "name": "VASQUEZ SIMBAQUEBA, Arturo",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2
+          ],
+          "halves": [
+            28,
+            27
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38318",
+          "pos": 32,
+          "name": "ROJAS ALONSO, Marco",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            5,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            28
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38356",
+          "pos": 32,
+          "name": "LIÑARES LEMA, Francisco",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            27,
+            28
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38294",
+          "pos": 32,
+          "name": "NUSTEDT, Hugo Kestas",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            2,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            5,
+            3,
+            2,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            26,
+            29
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38282",
+          "pos": 32,
+          "name": "GANCEDO FERNANDEZ, Martin",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            25,
+            30
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38346",
+          "pos": 40,
+          "name": "GARCIA PIQUE, Luis",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            2,
+            2,
+            3,
+            6,
+            5,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            2,
+            2,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            31,
+            25
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38315",
+          "pos": 40,
+          "name": "NUÑEZ IGLESIAS, Antonio",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            5,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            5,
+            3,
+            2,
+            2,
+            4,
+            3,
+            4,
+            4,
+            2,
+            2
+          ],
+          "halves": [
+            30,
+            26
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38314",
+          "pos": 40,
+          "name": "SANMIGUEL BELTRAN, Luis",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            2,
+            3,
+            4,
+            4,
+            2,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            27
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38337",
+          "pos": 40,
+          "name": "MARTINEZ CERRADA, Hugo",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            2,
+            5,
+            3,
+            3,
+            5,
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38355",
+          "pos": 40,
+          "name": "GOMEZ CACICEDO, Nicolas",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            1,
+            3,
+            3,
+            3,
+            6,
+            3,
+            2,
+            4,
+            3,
+            5,
+            2,
+            4,
+            3,
+            3,
+            3,
+            2,
+            2,
+            4
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38307",
+          "pos": 40,
+          "name": "FERNANDEZ MONTOTO, Eduardo",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            4,
+            4
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38338",
+          "pos": 40,
+          "name": "SANCHEZ ALVARO, Mariano",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            4,
+            3,
+            2,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3,
+            2,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            27,
+            29
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38295",
+          "pos": 40,
+          "name": "GARCIA GIMENEZ, Cesar",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4
+          ],
+          "halves": [
+            27,
+            29
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38334",
+          "pos": 40,
+          "name": "ZAPLANA DIAZ, Mario",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4
+          ],
+          "halves": [
+            25,
+            31
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38344",
+          "pos": 40,
+          "name": "MARTIN GARCIA, Asier",
+          "toPar": 2,
+          "hoy": 2,
+          "scores": [
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            5,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            25,
+            31
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38359",
+          "pos": 50,
+          "name": "FORMOSO BOUZAS, Mateo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            2,
+            2,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            31,
+            26
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38349",
+          "pos": 50,
+          "name": "DIAZ POLO, Gonzalo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            27
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38309",
+          "pos": 50,
+          "name": "RIOS LOPEZ, Nicolas",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            27
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38351",
+          "pos": 50,
+          "name": "CASADO ALVARELLOS, Pelayo Juan",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            6
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38358",
+          "pos": 50,
+          "name": "DELGADO MARCOS, Santiago",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38345",
+          "pos": 50,
+          "name": "FERRO VIGO, Lucas",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3
+          ],
+          "halves": [
+            28,
+            29
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38299",
+          "pos": 50,
+          "name": "HERGUEDAS SANZ, Pablo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            29
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38310",
+          "pos": 50,
+          "name": "LOPEZ GUTIERREZ, Rodrigo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            2,
+            3,
+            2,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            29
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38312",
+          "pos": 50,
+          "name": "MARTIN SUAREZ, Jorge",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            4,
+            2,
+            4,
+            4,
+            2,
+            3,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            30
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38291",
+          "pos": 50,
+          "name": "DIAZ POLO, Pablo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            2,
+            4,
+            7,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            30
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38316",
+          "pos": 60,
+          "name": "CASQUERO GONZALEZ, Marcos",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            2,
+            2,
+            3,
+            4,
+            4,
+            6,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38322",
+          "pos": 60,
+          "name": "PEÑA TRIBALDOS, Carlos",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            2,
+            4,
+            3,
+            4,
+            4
+          ],
+          "halves": [
+            29,
+            29
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38288",
+          "pos": 60,
+          "name": "DOCABO VILLANUSTRE, Martin",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38323",
+          "pos": 60,
+          "name": "RODRIGUEZ SAINZ, Alfonso",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            2,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            4,
+            4,
+            4
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38286",
+          "pos": 60,
+          "name": "AMBLAR RUA, Enrique",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38339",
+          "pos": 60,
+          "name": "GONZALEZ RODRIGUEZ, Dario",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38354",
+          "pos": 60,
+          "name": "HAFIAN NARANJO, Diego",
+          "toPar": 4,
+          "hoy": 4,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            5,
+            4,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            28,
+            30
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38336",
+          "pos": 67,
+          "name": "LLORCA CASTRO, Francisco",
+          "toPar": 5,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            5,
+            2,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            6
+          ],
+          "halves": [
+            29,
+            30
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38332",
+          "pos": 67,
+          "name": "PUERTO ABEL, Miguel",
+          "toPar": 5,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            3,
+            4,
+            5,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            29,
+            30
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38317",
+          "pos": 67,
+          "name": "MOURIÑO ABAL, Pedro Alexander",
+          "toPar": 5,
+          "hoy": 5,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            31
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38321",
+          "pos": 70,
+          "name": "HERRANZ GARCIA, Samuel",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            4,
+            2,
+            3,
+            3,
+            5,
+            3,
+            5,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            31,
+            29
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38363",
+          "pos": 70,
+          "name": "GIL GARCIA, Miguel",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38327",
+          "pos": 70,
+          "name": "CAAMAÑO RODRIGUEZ, Lucas",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            6,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            5,
+            5,
+            2
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38278",
+          "pos": 70,
+          "name": "FERNANDEZ GALLAGA, Julio",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            4,
+            3,
+            5,
+            2,
+            3,
+            3,
+            3,
+            6,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            32
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38325",
+          "pos": 70,
+          "name": "ROSENDE REBOREDO, Mateo",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            4,
+            5,
+            2,
+            2,
+            6,
+            3,
+            3,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            28,
+            32
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38342",
+          "pos": 70,
+          "name": "ANLLO LOPEZ, Martin",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            4,
+            4,
+            3,
+            2,
+            3,
+            3,
+            2,
+            4,
+            4,
+            3,
+            4,
+            8,
+            3,
+            2
+          ],
+          "halves": [
+            27,
+            33
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38333",
+          "pos": 70,
+          "name": "GONZALEZ GUTMAN, Luka",
+          "toPar": 6,
+          "hoy": 6,
+          "scores": [
+            2,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            6,
+            4,
+            3
+          ],
+          "halves": [
+            27,
+            33
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38361",
+          "pos": 77,
+          "name": "RODRIGUEZ MONTOIRO, Yago",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            3,
+            4,
+            5,
+            3,
+            6,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            27
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38365",
+          "pos": 77,
+          "name": "PEREZ ENJAMIO, Mario",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            5,
+            5,
+            4,
+            4,
+            3,
+            3,
+            4,
+            2,
+            2,
+            4,
+            4,
+            3
+          ],
+          "halves": [
+            32,
+            29
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38350",
+          "pos": 77,
+          "name": "MINGUEZ RUTHERFORD, William",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            2,
+            5,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            4,
+            5,
+            2,
+            2,
+            3,
+            3,
+            5,
+            5,
+            4,
+            5
+          ],
+          "halves": [
+            27,
+            34
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38296",
+          "pos": 77,
+          "name": "NUSTEDT, Astin Richard",
+          "toPar": 7,
+          "hoy": 7,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            27,
+            34
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38352",
+          "pos": 81,
+          "name": "SANDE BELMONTE, Alfonso",
+          "toPar": 9,
+          "hoy": 9,
+          "scores": [
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            33,
+            30
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38311",
+          "pos": 81,
+          "name": "CALASANZIO BORSELLINO, Leo",
+          "toPar": 9,
+          "hoy": 9,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4
+          ],
+          "halves": [
+            31,
+            32
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38362",
+          "pos": 81,
+          "name": "AHEDO GARCIA, Marcos",
+          "toPar": 9,
+          "hoy": 9,
+          "scores": [
+            2,
+            4,
+            2,
+            3,
+            4,
+            3,
+            3,
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            5,
+            5,
+            4
+          ],
+          "halves": [
+            30,
+            33
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38302",
+          "pos": 81,
+          "name": "CALVAR FERNANDEZ, Manuel",
+          "toPar": 9,
+          "hoy": 9,
+          "scores": [
+            2,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            2,
+            4,
+            5,
+            4,
+            2,
+            3,
+            4,
+            6,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            35
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38341",
+          "pos": 85,
+          "name": "GONZALEZ RODRIGUEZ, Beltran",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            5,
+            3,
+            3,
+            3,
+            4,
+            2,
+            4,
+            4,
+            9,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            37,
+            28
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38357",
+          "pos": 85,
+          "name": "VAZQUEZ SUAREZ, Jorge",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            3,
+            2,
+            4,
+            2,
+            5,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            2,
+            3,
+            4,
+            4,
+            7
+          ],
+          "halves": [
+            29,
+            36
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38319",
+          "pos": 87,
+          "name": "DAVILA SANCHEZ, Miguel",
+          "toPar": 12,
+          "hoy": 12,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            5,
+            6,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            33,
+            33
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38360",
+          "pos": 87,
+          "name": "COLON CEBEY, Asier",
+          "toPar": 12,
+          "hoy": 12,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            5,
+            5,
+            2,
+            4,
+            3,
+            5,
+            4,
+            3,
+            3,
+            3,
+            4,
+            5,
+            4,
+            3
+          ],
+          "halves": [
+            32,
+            34
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38364",
+          "pos": 89,
+          "name": "DIAZ JIMENEZ, Mateo",
+          "toPar": 13,
+          "hoy": 13,
+          "scores": [
+            6,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            5,
+            5,
+            3,
+            8,
+            1,
+            4,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            35,
+            32
+          ],
+          "total": 67
+        },
+        {
+          "memberId": "38348",
+          "pos": 89,
+          "name": "GIL PRADA, Marcos",
+          "toPar": 13,
+          "hoy": 13,
+          "scores": [
+            3,
+            3,
+            5,
+            6,
+            3,
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            3,
+            5,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            34
+          ],
+          "total": 67
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "label": "Ronda 2",
+      "par": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "players": [
+        {
+          "memberId": "38277",
+          "pos": 1,
+          "name": "MATEO SANCHEZ, Ismael",
+          "toPar": -9,
+          "hoy": -3,
+          "scores": [
+            4,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3
+          ],
+          "halves": [
+            26,
+            25
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38298",
+          "pos": 2,
+          "name": "BOTANA MOSQUERA, Mateo",
+          "toPar": -7,
+          "hoy": -4,
+          "scores": [
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            2,
+            2,
+            3,
+            2,
+            2,
+            3,
+            2,
+            5,
+            2
+          ],
+          "halves": [
+            27,
+            23
+          ],
+          "total": 50
+        },
+        {
+          "memberId": "38279",
+          "pos": 2,
+          "name": "ALVAREZ RODRIGUEZ, Gonzalo",
+          "toPar": -7,
+          "hoy": -1,
+          "scores": [
+            2,
+            3,
+            2,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38347",
+          "pos": 4,
+          "name": "GARCIA CEBALLOS, Julio",
+          "toPar": -6,
+          "hoy": -6,
+          "scores": [
+            2,
+            3,
+            3,
+            4,
+            2,
+            5,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+            2,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            28,
+            20
+          ],
+          "total": 48
+        },
+        {
+          "memberId": "38304",
+          "pos": 4,
+          "name": "RUBIALES DOMINGUEZ, Sergio",
+          "toPar": -6,
+          "hoy": -1,
+          "scores": [
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            6,
+            2,
+            3,
+            2,
+            2,
+            2
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38290",
+          "pos": 6,
+          "name": "DOMINGUEZ JURADO, Carlos",
+          "toPar": -5,
+          "hoy": -4,
+          "scores": [
+            2,
+            4,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            3,
+            2,
+            2,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            3
+          ],
+          "halves": [
+            28,
+            22
+          ],
+          "total": 50
+        },
+        {
+          "memberId": "38318",
+          "pos": 7,
+          "name": "ROJAS ALONSO, Marco",
+          "toPar": -2,
+          "hoy": -3,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            5,
+            4,
+            2
+          ],
+          "halves": [
+            23,
+            28
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38287",
+          "pos": 7,
+          "name": "CEBALLOS REDONDO, Carlos",
+          "toPar": -2,
+          "hoy": 1,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3
+          ],
+          "halves": [
+            28,
+            27
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38293",
+          "pos": 7,
+          "name": "AVILA SANZ, Daniel",
+          "toPar": -2,
+          "hoy": 2,
+          "scores": [
+            4,
+            2,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38282",
+          "pos": 10,
+          "name": "GANCEDO FERNANDEZ, Martin",
+          "toPar": -1,
+          "hoy": -2,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            26,
+            26
+          ],
+          "total": 52
+        },
+        {
+          "memberId": "38292",
+          "pos": 10,
+          "name": "LOPEZ DE SANTIAGO, Fernando",
+          "toPar": -1,
+          "hoy": -1,
+          "scores": [
+            3,
+            2,
+            2,
+            4,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38306",
+          "pos": 10,
+          "name": "CARRON MIRON, Alex",
+          "toPar": -1,
+          "hoy": 2,
+          "scores": [
+            2,
+            3,
+            2,
+            5,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            30
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38280",
+          "pos": 10,
+          "name": "MARTINEZ FERREIRO, Ignacio",
+          "toPar": -1,
+          "hoy": 2,
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            29
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38300",
+          "pos": 10,
+          "name": "ZAPLANA DIAZ, Enzo",
+          "toPar": -1,
+          "hoy": 5,
+          "scores": [
+            3,
+            4,
+            3,
+            6,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            25
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38312",
+          "pos": 15,
+          "name": "MARTIN SUAREZ, Jorge",
+          "toPar": 0,
+          "hoy": -3,
+          "scores": [
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            4,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            26,
+            25
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38276",
+          "pos": 15,
+          "name": "ELIAS GONZALEZ, Fernando",
+          "toPar": 0,
+          "hoy": 0,
+          "scores": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            25
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38343",
+          "pos": 15,
+          "name": "MORENO COSTAS, Hugo",
+          "toPar": 0,
+          "hoy": 1,
+          "scores": [
+            2,
+            6,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            5,
+            2
+          ],
+          "halves": [
+            29,
+            26
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38281",
+          "pos": 15,
+          "name": "RODRIGUEZ MIGUEZ, Mateo",
+          "toPar": 0,
+          "hoy": 2,
+          "scores": [
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            5,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            5,
+            3,
+            4
+          ],
+          "halves": [
+            28,
+            28
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38288",
+          "pos": 19,
+          "name": "DOCABO VILLANUSTRE, Martin",
+          "toPar": 1,
+          "hoy": -3,
+          "scores": [
+            4,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            25,
+            26
+          ],
+          "total": 51
+        },
+        {
+          "memberId": "38355",
+          "pos": 19,
+          "name": "GOMEZ CACICEDO, Nicolas",
+          "toPar": 1,
+          "hoy": -1,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38307",
+          "pos": 19,
+          "name": "FERNANDEZ MONTOTO, Eduardo",
+          "toPar": 1,
+          "hoy": -1,
+          "scores": [
+            3,
+            4,
+            2,
+            3,
+            3,
+            3,
+            2,
+            5,
+            4,
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            29,
+            24
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38294",
+          "pos": 19,
+          "name": "NUSTEDT, Hugo Kestas",
+          "toPar": 1,
+          "hoy": 0,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            2,
+            4,
+            3,
+            5,
+            3,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            27,
+            27
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38283",
+          "pos": 19,
+          "name": "MARTIN ALONSO, Diego",
+          "toPar": 1,
+          "hoy": 1,
+          "scores": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            27,
+            28
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38297",
+          "pos": 19,
+          "name": "ERASO MARTIN, Rafael",
+          "toPar": 1,
+          "hoy": 3,
+          "scores": [
+            3,
+            2,
+            3,
+            4,
+            3,
+            4,
+            2,
+            4,
+            3,
+            5,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            28,
+            29
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38303",
+          "pos": 19,
+          "name": "GARCIA CORDERO, Javier",
+          "toPar": 1,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            2,
+            5,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            27
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38291",
+          "pos": 26,
+          "name": "DIAZ POLO, Pablo",
+          "toPar": 2,
+          "hoy": -1,
+          "scores": [
+            3,
+            4,
+            2,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            27,
+            26
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38315",
+          "pos": 26,
+          "name": "NUÑEZ IGLESIAS, Antonio",
+          "toPar": 2,
+          "hoy": 0,
+          "scores": [
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            28,
+            26
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38305",
+          "pos": 26,
+          "name": "CASAS VELEZ-OSORIO, Benjamin",
+          "toPar": 2,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            2,
+            4,
+            5,
+            3,
+            4,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            28,
+            29
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38331",
+          "pos": 26,
+          "name": "DIAZ ROSON, Jose",
+          "toPar": 2,
+          "hoy": 3,
+          "scores": [
+            3,
+            2,
+            5,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            30,
+            27
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38344",
+          "pos": 30,
+          "name": "MARTIN GARCIA, Asier",
+          "toPar": 3,
+          "hoy": 1,
+          "scores": [
+            2,
+            4,
+            3,
+            4,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            4,
+            2,
+            4,
+            2,
+            3,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            28,
+            27
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38340",
+          "pos": 30,
+          "name": "RODRIGUEZ MOLINA, Pablo",
+          "toPar": 3,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38285",
+          "pos": 30,
+          "name": "BARRANCO GARCIA, Goa",
+          "toPar": 3,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            29
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38301",
+          "pos": 30,
+          "name": "PUCHE CASCANT, Maximilia",
+          "toPar": 3,
+          "hoy": 5,
+          "scores": [
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            27,
+            32
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38329",
+          "pos": 30,
+          "name": "AMOROS GARCIA-PAGAN, Francisco",
+          "toPar": 3,
+          "hoy": 6,
+          "scores": [
+            5,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            33,
+            27
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38336",
+          "pos": 35,
+          "name": "LLORCA CASTRO, Francisco",
+          "toPar": 4,
+          "hoy": -1,
+          "scores": [
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            4,
+            3,
+            2,
+            2
+          ],
+          "halves": [
+            29,
+            24
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38310",
+          "pos": 35,
+          "name": "LOPEZ GUTIERREZ, Rodrigo",
+          "toPar": 4,
+          "hoy": 1,
+          "scores": [
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            30,
+            25
+          ],
+          "total": 55
+        },
+        {
+          "memberId": "38326",
+          "pos": 35,
+          "name": "CAZALLAS PERAL, Javier",
+          "toPar": 4,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            27,
+            30
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38335",
+          "pos": 35,
+          "name": "MADORRAN CRESPO, Arturo",
+          "toPar": 4,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            2,
+            5,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            5,
+            3,
+            3,
+            2,
+            6,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38289",
+          "pos": 39,
+          "name": "GROSS PANEQUE, Diego",
+          "toPar": 5,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            29
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38324",
+          "pos": 39,
+          "name": "LAZARO MARIN, Pablo",
+          "toPar": 5,
+          "hoy": 6,
+          "scores": [
+            3,
+            5,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            2,
+            4,
+            2,
+            4,
+            2
+          ],
+          "halves": [
+            32,
+            28
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38296",
+          "pos": 41,
+          "name": "NUSTEDT, Astin Richard",
+          "toPar": 6,
+          "hoy": -1,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            5,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            28,
+            25
+          ],
+          "total": 53
+        },
+        {
+          "memberId": "38333",
+          "pos": 41,
+          "name": "GONZALEZ GUTMAN, Luka",
+          "toPar": 6,
+          "hoy": 0,
+          "scores": [
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            26,
+            28
+          ],
+          "total": 54
+        },
+        {
+          "memberId": "38346",
+          "pos": 41,
+          "name": "GARCIA PIQUE, Luis",
+          "toPar": 6,
+          "hoy": 4,
+          "scores": [
+            3,
+            2,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            29,
+            29
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38337",
+          "pos": 41,
+          "name": "MARTINEZ CERRADA, Hugo",
+          "toPar": 6,
+          "hoy": 4,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            7,
+            4,
+            3,
+            3,
+            2,
+            3,
+            1,
+            2,
+            3
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38334",
+          "pos": 41,
+          "name": "ZAPLANA DIAZ, Mario",
+          "toPar": 6,
+          "hoy": 4,
+          "scores": [
+            2,
+            4,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            2,
+            4,
+            2,
+            4,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38328",
+          "pos": 41,
+          "name": "ELVIRA MARTINEZ, Pablo",
+          "toPar": 6,
+          "hoy": 7,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38353",
+          "pos": 47,
+          "name": "TRILLO LAMA, Alexandre",
+          "toPar": 7,
+          "hoy": 9,
+          "scores": [
+            4,
+            3,
+            3,
+            5,
+            4,
+            3,
+            4,
+            3,
+            6,
+            6,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            35,
+            28
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38327",
+          "pos": 48,
+          "name": "CAAMAÑO RODRIGUEZ, Lucas",
+          "toPar": 8,
+          "hoy": 2,
+          "scores": [
+            3,
+            2,
+            2,
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            2,
+            4,
+            2,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            29,
+            27
+          ],
+          "total": 56
+        },
+        {
+          "memberId": "38317",
+          "pos": 48,
+          "name": "MOURIÑO ABAL, Pedro Alexander",
+          "toPar": 8,
+          "hoy": 3,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            32,
+            25
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38314",
+          "pos": 48,
+          "name": "SANMIGUEL BELTRAN, Luis",
+          "toPar": 8,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            5,
+            5,
+            2,
+            4,
+            4,
+            3,
+            3,
+            2,
+            3,
+            6,
+            2,
+            2
+          ],
+          "halves": [
+            31,
+            29
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38284",
+          "pos": 48,
+          "name": "CEREZO PASCUAL, Hugo Albino",
+          "toPar": 8,
+          "hoy": 8,
+          "scores": [
+            4,
+            4,
+            2,
+            5,
+            3,
+            5,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            29
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38278",
+          "pos": 52,
+          "name": "FERNANDEZ GALLAGA, Julio",
+          "toPar": 9,
+          "hoy": 3,
+          "scores": [
+            4,
+            2,
+            4,
+            2,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            4,
+            2,
+            3
+          ],
+          "halves": [
+            29,
+            28
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38332",
+          "pos": 52,
+          "name": "PUERTO ABEL, Miguel",
+          "toPar": 9,
+          "hoy": 4,
+          "scores": [
+            2,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            28
+          ],
+          "total": 58
+        },
+        {
+          "memberId": "38322",
+          "pos": 52,
+          "name": "PEÑA TRIBALDOS, Carlos",
+          "toPar": 9,
+          "hoy": 5,
+          "scores": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            31,
+            28
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38309",
+          "pos": 52,
+          "name": "RIOS LOPEZ, Nicolas",
+          "toPar": 9,
+          "hoy": 6,
+          "scores": [
+            5,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38338",
+          "pos": 52,
+          "name": "SANCHEZ ALVARO, Mariano",
+          "toPar": 9,
+          "hoy": 7,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            5,
+            4,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            6,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38350",
+          "pos": 57,
+          "name": "MINGUEZ RUTHERFORD, William",
+          "toPar": 10,
+          "hoy": 3,
+          "scores": [
+            3,
+            4,
+            3,
+            6,
+            4,
+            2,
+            3,
+            3,
+            3,
+            5,
+            4,
+            1,
+            3,
+            2,
+            4,
+            2,
+            3,
+            2
+          ],
+          "halves": [
+            31,
+            26
+          ],
+          "total": 57
+        },
+        {
+          "memberId": "38316",
+          "pos": 57,
+          "name": "CASQUERO GONZALEZ, Marcos",
+          "toPar": 10,
+          "hoy": 6,
+          "scores": [
+            2,
+            5,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            32,
+            28
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38354",
+          "pos": 57,
+          "name": "HAFIAN NARANJO, Diego",
+          "toPar": 10,
+          "hoy": 6,
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            4,
+            5,
+            2
+          ],
+          "halves": [
+            31,
+            29
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38295",
+          "pos": 57,
+          "name": "GARCIA GIMENEZ, Cesar",
+          "toPar": 10,
+          "hoy": 8,
+          "scores": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            2,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            29
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38313",
+          "pos": 57,
+          "name": "MESONADA CARPINTERO, Pedro",
+          "toPar": 10,
+          "hoy": 11,
+          "scores": [
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            5,
+            5,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            5,
+            3
+          ],
+          "halves": [
+            34,
+            31
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38286",
+          "pos": 62,
+          "name": "AMBLAR RUA, Enrique",
+          "toPar": 11,
+          "hoy": 7,
+          "scores": [
+            3,
+            5,
+            2,
+            3,
+            3,
+            3,
+            7,
+            4,
+            2,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            32,
+            29
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38358",
+          "pos": 62,
+          "name": "DELGADO MARCOS, Santiago",
+          "toPar": 11,
+          "hoy": 8,
+          "scores": [
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            2,
+            3,
+            2,
+            6,
+            3,
+            4,
+            2
+          ],
+          "halves": [
+            33,
+            29
+          ],
+          "total": 62
+        },
+        {
+          "memberId": "38308",
+          "pos": 62,
+          "name": "VIEJO MICALE, Gonzalo",
+          "toPar": 11,
+          "hoy": 10,
+          "scores": [
+            3,
+            6,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            33,
+            31
+          ],
+          "total": 64
+        },
+        {
+          "memberId": "38330",
+          "pos": 62,
+          "name": "VASQUEZ SIMBAQUEBA, Arturo",
+          "toPar": 11,
+          "hoy": 10,
+          "scores": [
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            30
+          ],
+          "total": 64
+        },
+        {
+          "memberId": "38320",
+          "pos": 62,
+          "name": "PORTELA LLAMBI, Luis Miguel",
+          "toPar": 11,
+          "hoy": 11,
+          "scores": [
+            4,
+            3,
+            5,
+            5,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3
+          ],
+          "halves": [
+            34,
+            31
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38321",
+          "pos": 67,
+          "name": "HERRANZ GARCIA, Samuel",
+          "toPar": 12,
+          "hoy": 6,
+          "scores": [
+            4,
+            3,
+            2,
+            4,
+            5,
+            3,
+            3,
+            4,
+            2,
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38325",
+          "pos": 67,
+          "name": "ROSENDE REBOREDO, Mateo",
+          "toPar": 12,
+          "hoy": 6,
+          "scores": [
+            3,
+            5,
+            3,
+            6,
+            3,
+            4,
+            2,
+            3,
+            3,
+            6,
+            2,
+            2,
+            4,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            32,
+            28
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38299",
+          "pos": 67,
+          "name": "HERGUEDAS SANZ, Pablo",
+          "toPar": 12,
+          "hoy": 9,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            6,
+            5,
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            4,
+            5,
+            2,
+            4
+          ],
+          "halves": [
+            34,
+            29
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38323",
+          "pos": 70,
+          "name": "RODRIGUEZ SAINZ, Alfonso",
+          "toPar": 13,
+          "hoy": 9,
+          "scores": [
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            5,
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            6,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            32,
+            31
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38359",
+          "pos": 71,
+          "name": "FORMOSO BOUZAS, Mateo",
+          "toPar": 14,
+          "hoy": 11,
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            5,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3,
+            3
+          ],
+          "halves": [
+            33,
+            32
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38349",
+          "pos": 71,
+          "name": "DIAZ POLO, Gonzalo",
+          "toPar": 14,
+          "hoy": 11,
+          "scores": [
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            2,
+            3,
+            4,
+            5,
+            6,
+            4,
+            3,
+            2
+          ],
+          "halves": [
+            33,
+            32
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38351",
+          "pos": 71,
+          "name": "CASADO ALVARELLOS, Pelayo Juan",
+          "toPar": 14,
+          "hoy": 11,
+          "scores": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            6,
+            3,
+            7,
+            3,
+            3,
+            3,
+            3,
+            3,
+            5,
+            4,
+            3
+          ],
+          "halves": [
+            31,
+            34
+          ],
+          "total": 65
+        },
+        {
+          "memberId": "38345",
+          "pos": 74,
+          "name": "FERRO VIGO, Lucas",
+          "toPar": 15,
+          "hoy": 12,
+          "scores": [
+            4,
+            3,
+            3,
+            3,
+            3,
+            6,
+            3,
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            3,
+            2
+          ],
+          "halves": [
+            33,
+            33
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38356",
+          "pos": 74,
+          "name": "LIÑARES LEMA, Francisco",
+          "toPar": 15,
+          "hoy": 14,
+          "scores": [
+            4,
+            4,
+            3,
+            5,
+            5,
+            3,
+            5,
+            3,
+            4,
+            6,
+            3,
+            4,
+            5,
+            3,
+            3,
+            3,
+            2,
+            3
+          ],
+          "halves": [
+            36,
+            32
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38362",
+          "pos": 76,
+          "name": "AHEDO GARCIA, Marcos",
+          "toPar": 16,
+          "hoy": 7,
+          "scores": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3,
+            5,
+            4,
+            4,
+            3,
+            4,
+            2,
+            4,
+            2,
+            2
+          ],
+          "halves": [
+            31,
+            30
+          ],
+          "total": 61
+        },
+        {
+          "memberId": "38360",
+          "pos": 77,
+          "name": "COLON CEBEY, Asier",
+          "toPar": 17,
+          "hoy": 5,
+          "scores": [
+            3,
+            4,
+            4,
+            5,
+            3,
+            3,
+            3,
+            4,
+            2,
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            2,
+            3,
+            4
+          ],
+          "halves": [
+            31,
+            28
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38357",
+          "pos": 77,
+          "name": "VAZQUEZ SUAREZ, Jorge",
+          "toPar": 17,
+          "hoy": 6,
+          "scores": [
+            3,
+            4,
+            5,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            30,
+            30
+          ],
+          "total": 60
+        },
+        {
+          "memberId": "38348",
+          "pos": 79,
+          "name": "GIL PRADA, Marcos",
+          "toPar": 18,
+          "hoy": 5,
+          "scores": [
+            3,
+            3,
+            2,
+            4,
+            3,
+            3,
+            4,
+            3,
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            30,
+            29
+          ],
+          "total": 59
+        },
+        {
+          "memberId": "38311",
+          "pos": 79,
+          "name": "CALASANZIO BORSELLINO, Leo",
+          "toPar": 18,
+          "hoy": 9,
+          "scores": [
+            3,
+            4,
+            2,
+            5,
+            3,
+            3,
+            5,
+            5,
+            2,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4
+          ],
+          "halves": [
+            32,
+            31
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38302",
+          "pos": 79,
+          "name": "CALVAR FERNANDEZ, Manuel",
+          "toPar": 18,
+          "hoy": 9,
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            3
+          ],
+          "halves": [
+            34,
+            29
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38342",
+          "pos": 79,
+          "name": "ANLLO LOPEZ, Martin",
+          "toPar": 18,
+          "hoy": 12,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            6,
+            3,
+            4
+          ],
+          "halves": [
+            29,
+            37
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38339",
+          "pos": 79,
+          "name": "GONZALEZ RODRIGUEZ, Dario",
+          "toPar": 18,
+          "hoy": 14,
+          "scores": [
+            3,
+            3,
+            3,
+            4,
+            6,
+            6,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            6,
+            3,
+            3,
+            2
+          ],
+          "halves": [
+            35,
+            33
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38365",
+          "pos": 84,
+          "name": "PEREZ ENJAMIO, Mario",
+          "toPar": 19,
+          "hoy": 12,
+          "scores": [
+            3,
+            2,
+            5,
+            6,
+            3,
+            3,
+            3,
+            4,
+            5,
+            4,
+            3,
+            3,
+            3,
+            3,
+            4,
+            3,
+            6,
+            3
+          ],
+          "halves": [
+            34,
+            32
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38363",
+          "pos": 85,
+          "name": "GIL GARCIA, Miguel",
+          "toPar": 20,
+          "hoy": 14,
+          "scores": [
+            4,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            3,
+            4
+          ],
+          "halves": [
+            32,
+            36
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38352",
+          "pos": 86,
+          "name": "SANDE BELMONTE, Alfonso",
+          "toPar": 21,
+          "hoy": 12,
+          "scores": [
+            3,
+            3,
+            4,
+            5,
+            4,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            4
+          ],
+          "halves": [
+            32,
+            34
+          ],
+          "total": 66
+        },
+        {
+          "memberId": "38364",
+          "pos": 87,
+          "name": "DIAZ JIMENEZ, Mateo",
+          "toPar": 22,
+          "hoy": 9,
+          "scores": [
+            3,
+            4,
+            3,
+            4,
+            2,
+            5,
+            2,
+            4,
+            4,
+            4,
+            2,
+            3,
+            6,
+            3,
+            4,
+            3,
+            4,
+            3
+          ],
+          "halves": [
+            31,
+            32
+          ],
+          "total": 63
+        },
+        {
+          "memberId": "38361",
+          "pos": 88,
+          "name": "RODRIGUEZ MONTOIRO, Yago",
+          "toPar": 23,
+          "hoy": 16,
+          "scores": [
+            4,
+            5,
+            6,
+            4,
+            5,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            5
+          ],
+          "halves": [
+            38,
+            32
+          ],
+          "total": 70
+        },
+        {
+          "memberId": "38319",
+          "pos": 89,
+          "name": "DAVILA SANCHEZ, Miguel",
+          "toPar": 26,
+          "hoy": 14,
+          "scores": [
+            5,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            2,
+            3,
+            3,
+            4,
+            3,
+            4,
+            6,
+            4,
+            4,
+            3
+          ],
+          "halves": [
+            34,
+            34
+          ],
+          "total": 68
+        },
+        {
+          "memberId": "38341",
+          "pos": 89,
+          "name": "GONZALEZ RODRIGUEZ, Beltran",
+          "toPar": 26,
+          "hoy": 15,
+          "scores": [
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            5,
+            4,
+            3,
+            3,
+            2,
+            6,
+            3,
+            5,
+            5,
+            2,
+            4,
+            3
+          ],
+          "halves": [
+            36,
+            33
+          ],
+          "total": 69
+        }
+      ]
+    }
+  ],
+  "classification": [
+    {
+      "memberId": "38277",
+      "name": "MATEO SANCHEZ, Ismael",
+      "pos": 1,
+      "toPar": -9,
+      "roundTotals": [
+        48,
+        51
+      ],
+      "total": 99
+    },
+    {
+      "memberId": "38298",
+      "name": "BOTANA MOSQUERA, Mateo",
+      "pos": 2,
+      "toPar": -7,
+      "roundTotals": [
+        51,
+        50
+      ],
+      "total": 101
+    },
+    {
+      "memberId": "38279",
+      "name": "ALVAREZ RODRIGUEZ, Gonzalo",
+      "pos": 3,
+      "toPar": -7,
+      "roundTotals": [
+        48,
+        53
+      ],
+      "total": 101
+    },
+    {
+      "memberId": "38347",
+      "name": "GARCIA CEBALLOS, Julio",
+      "pos": 4,
+      "toPar": -6,
+      "roundTotals": [
+        54,
+        48
+      ],
+      "total": 102
+    },
+    {
+      "memberId": "38304",
+      "name": "RUBIALES DOMINGUEZ, Sergio",
+      "pos": 5,
+      "toPar": -6,
+      "roundTotals": [
+        49,
+        53
+      ],
+      "total": 102
+    },
+    {
+      "memberId": "38290",
+      "name": "DOMINGUEZ JURADO, Carlos",
+      "pos": 6,
+      "toPar": -5,
+      "roundTotals": [
+        53,
+        50
+      ],
+      "total": 103
+    },
+    {
+      "memberId": "38318",
+      "name": "ROJAS ALONSO, Marco",
+      "pos": 7,
+      "toPar": -2,
+      "roundTotals": [
+        55,
+        51
+      ],
+      "total": 106
+    },
+    {
+      "memberId": "38287",
+      "name": "CEBALLOS REDONDO, Carlos",
+      "pos": 8,
+      "toPar": -2,
+      "roundTotals": [
+        51,
+        55
+      ],
+      "total": 106
+    },
+    {
+      "memberId": "38293",
+      "name": "AVILA SANZ, Daniel",
+      "pos": 9,
+      "toPar": -2,
+      "roundTotals": [
+        50,
+        56
+      ],
+      "total": 106
+    },
+    {
+      "memberId": "38282",
+      "name": "GANCEDO FERNANDEZ, Martin",
+      "pos": 10,
+      "toPar": -1,
+      "roundTotals": [
+        55,
+        52
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38292",
+      "name": "LOPEZ DE SANTIAGO, Fernando",
+      "pos": 11,
+      "toPar": -1,
+      "roundTotals": [
+        54,
+        53
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38306",
+      "name": "CARRON MIRON, Alex",
+      "pos": 12,
+      "toPar": -1,
+      "roundTotals": [
+        51,
+        56
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38280",
+      "name": "MARTINEZ FERREIRO, Ignacio",
+      "pos": 13,
+      "toPar": -1,
+      "roundTotals": [
+        51,
+        56
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38300",
+      "name": "ZAPLANA DIAZ, Enzo",
+      "pos": 14,
+      "toPar": -1,
+      "roundTotals": [
+        48,
+        59
+      ],
+      "total": 107
+    },
+    {
+      "memberId": "38312",
+      "name": "MARTIN SUAREZ, Jorge",
+      "pos": 15,
+      "toPar": 18,
+      "roundTotals": [
+        57,
+        51
+      ],
+      "total": 108
+    },
+    {
+      "memberId": "38276",
+      "name": "ELIAS GONZALEZ, Fernando",
+      "pos": 16,
+      "toPar": 18,
+      "roundTotals": [
+        54,
+        54
+      ],
+      "total": 108
+    },
+    {
+      "memberId": "38343",
+      "name": "MORENO COSTAS, Hugo",
+      "pos": 17,
+      "toPar": 18,
+      "roundTotals": [
+        53,
+        55
+      ],
+      "total": 108
+    },
+    {
+      "memberId": "38281",
+      "name": "RODRIGUEZ MIGUEZ, Mateo",
+      "pos": 18,
+      "toPar": 18,
+      "roundTotals": [
+        52,
+        56
+      ],
+      "total": 108
+    },
+    {
+      "memberId": "38288",
+      "name": "DOCABO VILLANUSTRE, Martin",
+      "pos": 19,
+      "toPar": 1,
+      "roundTotals": [
+        58,
+        51
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38355",
+      "name": "GOMEZ CACICEDO, Nicolas",
+      "pos": 20,
+      "toPar": 1,
+      "roundTotals": [
+        56,
+        53
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38307",
+      "name": "FERNANDEZ MONTOTO, Eduardo",
+      "pos": 21,
+      "toPar": 1,
+      "roundTotals": [
+        56,
+        53
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38294",
+      "name": "NUSTEDT, Hugo Kestas",
+      "pos": 22,
+      "toPar": 1,
+      "roundTotals": [
+        55,
+        54
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38283",
+      "name": "MARTIN ALONSO, Diego",
+      "pos": 23,
+      "toPar": 1,
+      "roundTotals": [
+        54,
+        55
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38297",
+      "name": "ERASO MARTIN, Rafael",
+      "pos": 24,
+      "toPar": 1,
+      "roundTotals": [
+        52,
+        57
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38303",
+      "name": "GARCIA CORDERO, Javier",
+      "pos": 25,
+      "toPar": 1,
+      "roundTotals": [
+        49,
+        60
+      ],
+      "total": 109
+    },
+    {
+      "memberId": "38291",
+      "name": "DIAZ POLO, Pablo",
+      "pos": 26,
+      "toPar": 2,
+      "roundTotals": [
+        57,
+        53
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38315",
+      "name": "NUÑEZ IGLESIAS, Antonio",
+      "pos": 27,
+      "toPar": 2,
+      "roundTotals": [
+        56,
+        54
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38305",
+      "name": "CASAS VELEZ-OSORIO, Benjamin",
+      "pos": 28,
+      "toPar": 2,
+      "roundTotals": [
+        53,
+        57
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38331",
+      "name": "DIAZ ROSON, Jose",
+      "pos": 29,
+      "toPar": 2,
+      "roundTotals": [
+        53,
+        57
+      ],
+      "total": 110
+    },
+    {
+      "memberId": "38344",
+      "name": "MARTIN GARCIA, Asier",
+      "pos": 30,
+      "toPar": 3,
+      "roundTotals": [
+        56,
+        55
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38340",
+      "name": "RODRIGUEZ MOLINA, Pablo",
+      "pos": 31,
+      "toPar": 3,
+      "roundTotals": [
+        54,
+        57
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38285",
+      "name": "BARRANCO GARCIA, Goa",
+      "pos": 32,
+      "toPar": 3,
+      "roundTotals": [
+        52,
+        59
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38301",
+      "name": "PUCHE CASCANT, Maximilia",
+      "pos": 33,
+      "toPar": 3,
+      "roundTotals": [
+        52,
+        59
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38329",
+      "name": "AMOROS GARCIA-PAGAN, Francisco",
+      "pos": 34,
+      "toPar": 3,
+      "roundTotals": [
+        51,
+        60
+      ],
+      "total": 111
+    },
+    {
+      "memberId": "38336",
+      "name": "LLORCA CASTRO, Francisco",
+      "pos": 35,
+      "toPar": 4,
+      "roundTotals": [
+        59,
+        53
+      ],
+      "total": 112
+    },
+    {
+      "memberId": "38310",
+      "name": "LOPEZ GUTIERREZ, Rodrigo",
+      "pos": 36,
+      "toPar": 4,
+      "roundTotals": [
+        57,
+        55
+      ],
+      "total": 112
+    },
+    {
+      "memberId": "38326",
+      "name": "CAZALLAS PERAL, Javier",
+      "pos": 37,
+      "toPar": 4,
+      "roundTotals": [
+        55,
+        57
+      ],
+      "total": 112
+    },
+    {
+      "memberId": "38335",
+      "name": "MADORRAN CRESPO, Arturo",
+      "pos": 38,
+      "toPar": 4,
+      "roundTotals": [
+        52,
+        60
+      ],
+      "total": 112
+    },
+    {
+      "memberId": "38289",
+      "name": "GROSS PANEQUE, Diego",
+      "pos": 39,
+      "toPar": 5,
+      "roundTotals": [
+        55,
+        58
+      ],
+      "total": 113
+    },
+    {
+      "memberId": "38324",
+      "name": "LAZARO MARIN, Pablo",
+      "pos": 40,
+      "toPar": 5,
+      "roundTotals": [
+        53,
+        60
+      ],
+      "total": 113
+    },
+    {
+      "memberId": "38296",
+      "name": "NUSTEDT, Astin Richard",
+      "pos": 41,
+      "toPar": 6,
+      "roundTotals": [
+        61,
+        53
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38333",
+      "name": "GONZALEZ GUTMAN, Luka",
+      "pos": 42,
+      "toPar": 6,
+      "roundTotals": [
+        60,
+        54
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38346",
+      "name": "GARCIA PIQUE, Luis",
+      "pos": 43,
+      "toPar": 6,
+      "roundTotals": [
+        56,
+        58
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38337",
+      "name": "MARTINEZ CERRADA, Hugo",
+      "pos": 44,
+      "toPar": 6,
+      "roundTotals": [
+        56,
+        58
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38334",
+      "name": "ZAPLANA DIAZ, Mario",
+      "pos": 45,
+      "toPar": 6,
+      "roundTotals": [
+        56,
+        58
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38328",
+      "name": "ELVIRA MARTINEZ, Pablo",
+      "pos": 46,
+      "toPar": 6,
+      "roundTotals": [
+        53,
+        61
+      ],
+      "total": 114
+    },
+    {
+      "memberId": "38353",
+      "name": "TRILLO LAMA, Alexandre",
+      "pos": 47,
+      "toPar": 7,
+      "roundTotals": [
+        52,
+        63
+      ],
+      "total": 115
+    },
+    {
+      "memberId": "38327",
+      "name": "CAAMAÑO RODRIGUEZ, Lucas",
+      "pos": 48,
+      "toPar": 8,
+      "roundTotals": [
+        60,
+        56
+      ],
+      "total": 116
+    },
+    {
+      "memberId": "38317",
+      "name": "MOURIÑO ABAL, Pedro Alexander",
+      "pos": 49,
+      "toPar": 8,
+      "roundTotals": [
+        59,
+        57
+      ],
+      "total": 116
+    },
+    {
+      "memberId": "38314",
+      "name": "SANMIGUEL BELTRAN, Luis",
+      "pos": 50,
+      "toPar": 8,
+      "roundTotals": [
+        56,
+        60
+      ],
+      "total": 116
+    },
+    {
+      "memberId": "38284",
+      "name": "CEREZO PASCUAL, Hugo Albino",
+      "pos": 51,
+      "toPar": 8,
+      "roundTotals": [
+        54,
+        62
+      ],
+      "total": 116
+    },
+    {
+      "memberId": "38278",
+      "name": "FERNANDEZ GALLAGA, Julio",
+      "pos": 52,
+      "toPar": 9,
+      "roundTotals": [
+        60,
+        57
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38332",
+      "name": "PUERTO ABEL, Miguel",
+      "pos": 53,
+      "toPar": 9,
+      "roundTotals": [
+        59,
+        58
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38322",
+      "name": "PEÑA TRIBALDOS, Carlos",
+      "pos": 54,
+      "toPar": 9,
+      "roundTotals": [
+        58,
+        59
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38309",
+      "name": "RIOS LOPEZ, Nicolas",
+      "pos": 55,
+      "toPar": 9,
+      "roundTotals": [
+        57,
+        60
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38338",
+      "name": "SANCHEZ ALVARO, Mariano",
+      "pos": 56,
+      "toPar": 9,
+      "roundTotals": [
+        56,
+        61
+      ],
+      "total": 117
+    },
+    {
+      "memberId": "38350",
+      "name": "MINGUEZ RUTHERFORD, William",
+      "pos": 57,
+      "toPar": 10,
+      "roundTotals": [
+        61,
+        57
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38316",
+      "name": "CASQUERO GONZALEZ, Marcos",
+      "pos": 58,
+      "toPar": 10,
+      "roundTotals": [
+        58,
+        60
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38354",
+      "name": "HAFIAN NARANJO, Diego",
+      "pos": 59,
+      "toPar": 10,
+      "roundTotals": [
+        58,
+        60
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38295",
+      "name": "GARCIA GIMENEZ, Cesar",
+      "pos": 60,
+      "toPar": 10,
+      "roundTotals": [
+        56,
+        62
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38313",
+      "name": "MESONADA CARPINTERO, Pedro",
+      "pos": 61,
+      "toPar": 10,
+      "roundTotals": [
+        53,
+        65
+      ],
+      "total": 118
+    },
+    {
+      "memberId": "38286",
+      "name": "AMBLAR RUA, Enrique",
+      "pos": 62,
+      "toPar": 11,
+      "roundTotals": [
+        58,
+        61
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38358",
+      "name": "DELGADO MARCOS, Santiago",
+      "pos": 63,
+      "toPar": 11,
+      "roundTotals": [
+        57,
+        62
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38308",
+      "name": "VIEJO MICALE, Gonzalo",
+      "pos": 64,
+      "toPar": 11,
+      "roundTotals": [
+        55,
+        64
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38330",
+      "name": "VASQUEZ SIMBAQUEBA, Arturo",
+      "pos": 65,
+      "toPar": 11,
+      "roundTotals": [
+        55,
+        64
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38320",
+      "name": "PORTELA LLAMBI, Luis Miguel",
+      "pos": 66,
+      "toPar": 11,
+      "roundTotals": [
+        54,
+        65
+      ],
+      "total": 119
+    },
+    {
+      "memberId": "38321",
+      "name": "HERRANZ GARCIA, Samuel",
+      "pos": 67,
+      "toPar": 12,
+      "roundTotals": [
+        60,
+        60
+      ],
+      "total": 120
+    },
+    {
+      "memberId": "38325",
+      "name": "ROSENDE REBOREDO, Mateo",
+      "pos": 68,
+      "toPar": 12,
+      "roundTotals": [
+        60,
+        60
+      ],
+      "total": 120
+    },
+    {
+      "memberId": "38299",
+      "name": "HERGUEDAS SANZ, Pablo",
+      "pos": 69,
+      "toPar": 12,
+      "roundTotals": [
+        57,
+        63
+      ],
+      "total": 120
+    },
+    {
+      "memberId": "38323",
+      "name": "RODRIGUEZ SAINZ, Alfonso",
+      "pos": 70,
+      "toPar": 13,
+      "roundTotals": [
+        58,
+        63
+      ],
+      "total": 121
+    },
+    {
+      "memberId": "38359",
+      "name": "FORMOSO BOUZAS, Mateo",
+      "pos": 71,
+      "toPar": 14,
+      "roundTotals": [
+        57,
+        65
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38349",
+      "name": "DIAZ POLO, Gonzalo",
+      "pos": 72,
+      "toPar": 14,
+      "roundTotals": [
+        57,
+        65
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38351",
+      "name": "CASADO ALVARELLOS, Pelayo Juan",
+      "pos": 73,
+      "toPar": 14,
+      "roundTotals": [
+        57,
+        65
+      ],
+      "total": 122
+    },
+    {
+      "memberId": "38345",
+      "name": "FERRO VIGO, Lucas",
+      "pos": 74,
+      "toPar": 15,
+      "roundTotals": [
+        57,
+        66
+      ],
+      "total": 123
+    },
+    {
+      "memberId": "38356",
+      "name": "LIÑARES LEMA, Francisco",
+      "pos": 75,
+      "toPar": 15,
+      "roundTotals": [
+        55,
+        68
+      ],
+      "total": 123
+    },
+    {
+      "memberId": "38362",
+      "name": "AHEDO GARCIA, Marcos",
+      "pos": 76,
+      "toPar": 16,
+      "roundTotals": [
+        63,
+        61
+      ],
+      "total": 124
+    },
+    {
+      "memberId": "38360",
+      "name": "COLON CEBEY, Asier",
+      "pos": 77,
+      "toPar": 17,
+      "roundTotals": [
+        66,
+        59
+      ],
+      "total": 125
+    },
+    {
+      "memberId": "38357",
+      "name": "VAZQUEZ SUAREZ, Jorge",
+      "pos": 78,
+      "toPar": 17,
+      "roundTotals": [
+        65,
+        60
+      ],
+      "total": 125
+    },
+    {
+      "memberId": "38348",
+      "name": "GIL PRADA, Marcos",
+      "pos": 79,
+      "toPar": 18,
+      "roundTotals": [
+        67,
+        59
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38311",
+      "name": "CALASANZIO BORSELLINO, Leo",
+      "pos": 80,
+      "toPar": 18,
+      "roundTotals": [
+        63,
+        63
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38302",
+      "name": "CALVAR FERNANDEZ, Manuel",
+      "pos": 81,
+      "toPar": 18,
+      "roundTotals": [
+        63,
+        63
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38342",
+      "name": "ANLLO LOPEZ, Martin",
+      "pos": 82,
+      "toPar": 18,
+      "roundTotals": [
+        60,
+        66
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38339",
+      "name": "GONZALEZ RODRIGUEZ, Dario",
+      "pos": 83,
+      "toPar": 18,
+      "roundTotals": [
+        58,
+        68
+      ],
+      "total": 126
+    },
+    {
+      "memberId": "38365",
+      "name": "PEREZ ENJAMIO, Mario",
+      "pos": 84,
+      "toPar": 19,
+      "roundTotals": [
+        61,
+        66
+      ],
+      "total": 127
+    },
+    {
+      "memberId": "38363",
+      "name": "GIL GARCIA, Miguel",
+      "pos": 85,
+      "toPar": 20,
+      "roundTotals": [
+        60,
+        68
+      ],
+      "total": 128
+    },
+    {
+      "memberId": "38352",
+      "name": "SANDE BELMONTE, Alfonso",
+      "pos": 86,
+      "toPar": 21,
+      "roundTotals": [
+        63,
+        66
+      ],
+      "total": 129
+    },
+    {
+      "memberId": "38364",
+      "name": "DIAZ JIMENEZ, Mateo",
+      "pos": 87,
+      "toPar": 22,
+      "roundTotals": [
+        67,
+        63
+      ],
+      "total": 130
+    },
+    {
+      "memberId": "38361",
+      "name": "RODRIGUEZ MONTOIRO, Yago",
+      "pos": 88,
+      "toPar": 23,
+      "roundTotals": [
+        61,
+        70
+      ],
+      "total": 131
+    },
+    {
+      "memberId": "38319",
+      "name": "DAVILA SANCHEZ, Miguel",
+      "pos": 89,
+      "toPar": 26,
+      "roundTotals": [
+        66,
+        68
+      ],
+      "total": 134
+    },
+    {
+      "memberId": "38341",
+      "name": "GONZALEZ RODRIGUEZ, Beltran",
+      "pos": 90,
+      "toPar": 26,
+      "roundTotals": [
+        65,
+        69
+      ],
+      "total": 134
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "subid": "1645",
+      "groups": [
+        {
+          "teeTime": "12:16",
+          "startHole": 1,
+          "players": [
+            "ELIAS GONZALEZ, FERNANDO",
+            "MATEO SANCHEZ, ISMAEL",
+            "FERNANDEZ GALLAGA, JULIO"
+          ]
+        },
+        {
+          "teeTime": "12:32",
+          "startHole": 1,
+          "players": [
+            "GANCEDO FERNANDEZ, MARTIN",
+            "MARTIN ALONSO, DIEGO",
+            "CEREZO PASCUAL, HUGO ALBINO"
+          ]
+        },
+        {
+          "teeTime": "12:48",
+          "startHole": 1,
+          "players": [
+            "DOCABO VILLANUSTRE, MARTIN",
+            "GROSS PANEQUE, DIEGO",
+            "DOMINGUEZ JURADO, CARLOS"
+          ]
+        },
+        {
+          "teeTime": "13:12",
+          "startHole": 1,
+          "players": [
+            "NUSTEDT, HUGO KESTAS",
+            "GARCIA GIMENEZ, CESAR",
+            "NUSTEDT, ASTIN RICHARD"
+          ]
+        },
+        {
+          "teeTime": "13:28",
+          "startHole": 1,
+          "players": [
+            "ZAPLANA DIAZ, ENZO",
+            "PUCHE CASCANT, MAXIMILIA",
+            "CALVAR FERNANDEZ, MANUEL"
+          ]
+        },
+        {
+          "teeTime": "14:23",
+          "startHole": 1,
+          "players": [
+            "CARRON MIRON, ALEX",
+            "FERNANDEZ MONTOTO, EDUARDO",
+            "VIEJO MICALE, GONZALO"
+          ]
+        },
+        {
+          "teeTime": "14:39",
+          "startHole": 1,
+          "players": [
+            "MARTIN SUAREZ, JORGE",
+            "MESONADA CARPINTERO, PEDRO",
+            "SANMIGUEL BELTRAN, LUIS"
+          ]
+        },
+        {
+          "teeTime": "14:55",
+          "startHole": 1,
+          "players": [
+            "ROJAS ALONSO, MARCO",
+            "DAVILA SANCHEZ, MIGUEL",
+            "PORTELA LLAMBI, LUIS MIGUEL"
+          ]
+        },
+        {
+          "teeTime": "15:27",
+          "startHole": 1,
+          "players": [
+            "LAZARO MARIN, PABLO",
+            "ROSENDE REBOREDO, MATEO",
+            "CAZALLAS PERAL, JAVIER"
+          ]
+        },
+        {
+          "teeTime": "15:43",
+          "startHole": 1,
+          "players": [
+            "VASQUEZ SIMBAQUEBA, ARTURO",
+            "DIAZ ROSON, JOSE",
+            "PUERTO ABEL, MIGUEL"
+          ]
+        },
+        {
+          "teeTime": "16:06",
+          "startHole": 1,
+          "players": [
+            "LLORCA CASTRO, FRANCISCO",
+            "MARTINEZ CERRADA, HUGO",
+            "SANCHEZ ALVARO, MARIANO"
+          ]
+        },
+        {
+          "teeTime": "16:22",
+          "startHole": 1,
+          "players": [
+            "ANLLO LOPEZ, MARTIN",
+            "MORENO COSTAS, HUGO",
+            "MARTIN GARCIA, ASIER"
+          ]
+        },
+        {
+          "teeTime": "16:54",
+          "startHole": 1,
+          "players": [
+            "GIL PRADA, MARCOS",
+            "DIAZ POLO, GONZALO",
+            "MINGUEZ RUTHERFORD, WILLIAM"
+          ]
+        },
+        {
+          "teeTime": "17:10",
+          "startHole": 1,
+          "players": [
+            "HAFIAN NARANJO, DIEGO",
+            "GOMEZ CACICEDO, NICOLAS",
+            "LIÑARES LEMA, FRANCISCO"
+          ]
+        },
+        {
+          "teeTime": "17:34",
+          "startHole": 1,
+          "players": [
+            "COLON CEBEY, ASIER",
+            "RODRIGUEZ MONTOIRO, YAGO",
+            "AHEDO GARCIA, MARCOS"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "subid": "1646",
+      "groups": [
+        {
+          "teeTime": "08:46",
+          "startHole": 1,
+          "players": [
+            "GIL PRADA, MARCOS",
+            "DIAZ JIMENEZ, MATEO",
+            "COLON CEBEY, ASIER"
+          ]
+        },
+        {
+          "teeTime": "09:26",
+          "startHole": 1,
+          "players": [
+            "CALVAR FERNANDEZ, MANUEL",
+            "AHEDO GARCIA, MARCOS",
+            "CALASANZIO BORSELLINO, LEO"
+          ]
+        },
+        {
+          "teeTime": "09:42",
+          "startHole": 1,
+          "players": [
+            "PEREZ ENJAMIO, MARIO",
+            "RODRIGUEZ MONTOIRO, YAGO",
+            "GONZALEZ GUTMAN, LUKA"
+          ]
+        },
+        {
+          "teeTime": "10:14",
+          "startHole": 1,
+          "players": [
+            "CAAMAÑO RODRIGUEZ, LUCAS",
+            "GIL GARCIA, MIGUEL",
+            "HERRANZ GARCIA, SAMUEL"
+          ]
+        },
+        {
+          "teeTime": "10:30",
+          "startHole": 1,
+          "players": [
+            "HAFIAN NARANJO, DIEGO",
+            "GONZALEZ RODRIGUEZ, DARIO",
+            "AMBLAR RUA, ENRIQUE"
+          ]
+        },
+        {
+          "teeTime": "10:46",
+          "startHole": 1,
+          "players": [
+            "CASQUERO GONZALEZ, MARCOS",
+            "MARTIN SUAREZ, JORGE",
+            "DIAZ POLO, PABLO"
+          ]
+        },
+        {
+          "teeTime": "11:26",
+          "startHole": 1,
+          "players": [
+            "DELGADO MARCOS, SANTIAGO",
+            "CASADO ALVARELLOS, PELAYO JUAN",
+            "RIOS LOPEZ, NICOLAS"
+          ]
+        },
+        {
+          "teeTime": "11:42",
+          "startHole": 1,
+          "players": [
+            "ZAPLANA DIAZ, MARIO",
+            "SANCHEZ ALVARO, MARIANO",
+            "GARCIA GIMENEZ, CESAR"
+          ]
+        },
+        {
+          "teeTime": "11:58",
+          "startHole": 1,
+          "players": [
+            "SANMIGUEL BELTRAN, LUIS",
+            "NUÑEZ IGLESIAS, ANTONIO",
+            "GARCIA PIQUE, LUIS"
+          ]
+        },
+        {
+          "teeTime": "12:14",
+          "startHole": 1,
+          "players": [
+            "ROJAS ALONSO, MARCO",
+            "VASQUEZ SIMBAQUEBA, ARTURO",
+            "GROSS PANEQUE, DIEGO"
+          ]
+        },
+        {
+          "teeTime": "12:30",
+          "startHole": 1,
+          "players": [
+            "MARTIN ALONSO, DIEGO",
+            "ELIAS GONZALEZ, FERNANDO",
+            "RODRIGUEZ MOLINA, PABLO"
+          ]
+        },
+        {
+          "teeTime": "12:46",
+          "startHole": 1,
+          "players": [
+            "DIAZ ROSON, JOSE",
+            "ELVIRA MARTINEZ, PABLO",
+            "DOMINGUEZ JURADO, CARLOS"
+          ]
+        },
+        {
+          "teeTime": "13:26",
+          "startHole": 1,
+          "players": [
+            "MORENO COSTAS, HUGO",
+            "MADORRAN CRESPO, ARTURO",
+            "PUCHE CASCANT, MAXIMILIA"
+          ]
+        },
+        {
+          "teeTime": "13:42",
+          "startHole": 1,
+          "players": [
+            "BARRANCO GARCIA, GOA",
+            "BOTANA MOSQUERA, MATEO",
+            "MARTINEZ FERREIRO, IGNACIO"
+          ]
+        },
+        {
+          "teeTime": "13:58",
+          "startHole": 1,
+          "players": [
+            "AVILA SANZ, DANIEL",
+            "GARCIA CORDERO, JAVIER",
+            "RUBIALES DOMINGUEZ, SERGIO"
+          ]
+        }
+      ]
+    }
+  ]
+}

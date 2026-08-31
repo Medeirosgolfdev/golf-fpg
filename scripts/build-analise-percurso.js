@@ -15,6 +15,11 @@
  *   hcpAge  — {idade: [hcp a 31/dez, Δ vs ano anterior]}
  *   best8   — {idade: média dos (até) 8 melhores score differentials da idade}
  *   cumR    — {idade: rondas acumuladas}
+ *   intl    — {idade: [provas, rondas]} provas internacionais (score_origin
+ *             "Intern": voltas homologadas fora de Portugal), agrupadas com a
+ *             mesma regra dos `events` (dias consecutivos + mesmo nº buracos)
+ *   eds     — {idade: n} voltas Extra Day Score (score_origin "EDS")
+ *   cumIE   — {idade: [provasIntl, rondasIntl, eds]} acumulados até essa idade
  *   maxage, start (1.º registo WHS), hcp11/hcp12, hcpNow, esc
  *
  * Os blocos PATH (percurso até scratch) e AQ (Aquapor) são análises curadas —
@@ -110,6 +115,35 @@ function buildPlayer(rows, birthYear) {
   }
   if (cur) pushEv(cur);
 
+  // intl / eds — exposicao internacional e voltas Extra Day Score.
+  // "Intern" = volta homologada num torneio fora de Portugal; "EDS" = Extra Day
+  // Score (volta de treino contada para o handicap). As provas internacionais
+  // agrupam-se com a MESMA regra dos `events` (dias consecutivos + mesmo nº de
+  // buracos) para que "3 provas / 9 rondas" signifique o mesmo nas duas tabelas.
+  const intl = {};
+  const eds = {};
+  let ci = null;
+  const pushIntl = (c) => {
+    const b = intl[c.age] = intl[c.age] || [0, 0];
+    b[0]++;
+    b[1] += c.n;
+  };
+  for (const r of rows) {
+    if (r.holes !== 9 && r.holes !== 18) continue;
+    const age = (+r.hcp_dateStr.slice(0, 4)) - birthYear;
+    if (r.score_origin === "EDS") eds[age] = (eds[age] || 0) + 1;
+    if (r.score_origin !== "Intern") continue;
+    const t = Date.parse(r.hcp_dateStr);
+    if (ci && r.holes === ci.holes && t - ci.last === DAY_MS) {
+      ci.n++;
+      ci.last = t;
+    } else {
+      if (ci) pushIntl(ci);
+      ci = { holes: r.holes, n: 1, last: t, age };
+    }
+  }
+  if (ci) pushIntl(ci);
+
   // best8 — média dos (até) 8 melhores differentials da idade
   const best8 = {};
   for (const [age, list] of Object.entries(sds)) {
@@ -130,9 +164,25 @@ function buildPlayer(rows, birthYear) {
   // cumR — acumulado
   const cumR = {};
   let acc = 0;
-  for (const age of Object.keys(cumRByAge).map(Number).sort((a, b) => a - b)) {
+  const agesPlayed = Object.keys(cumRByAge).map(Number).sort((a, b) => a - b);
+  for (const age of agesPlayed) {
     acc += cumRByAge[age];
     cumR[age] = acc;
+  }
+
+  // cumIE — [provasIntl, rondasIntl, eds] acumulados até cada idade jogada.
+  // Preenche TODAS as idades com rondas (mesmo as de zeros): "0" nessa idade é
+  // informação — "—" ficaria a dizer que não jogou de todo. E garante que
+  // `intl`/`eds` têm célula em todas essas idades, para a tabela não ter buracos.
+  const cumIE = {};
+  let ai = 0, ar = 0, ae = 0;
+  for (const age of agesPlayed) {
+    const iv = intl[age] || (intl[age] = [0, 0]);
+    if (eds[age] === undefined) eds[age] = 0;
+    ai += iv[0];
+    ar += iv[1];
+    ae += eds[age];
+    cumIE[age] = [ai, ar, ae];
   }
 
   const first = rows.find((r) => r.new_handicap != null) || rows[0];
@@ -147,6 +197,9 @@ function buildPlayer(rows, birthYear) {
     hcpAge,
     best8,
     cumR,
+    intl,
+    eds,
+    cumIE,
     maxage: agesWithHcp.length ? agesWithHcp[agesWithHcp.length - 1] : null,
     start: {
       label: `${MES_ABBR[firstM - 1]} ${firstY}`,

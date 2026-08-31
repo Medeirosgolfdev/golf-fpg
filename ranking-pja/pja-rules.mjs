@@ -99,6 +99,63 @@ export function isPJACore(t) {
     // de Belas 2025, por isso NÃO podem entrar em PJA_TCODES. A edição 2025
     // fica fora (ranking 2025 é o legacy confirmado contra o Excel oficial).
     if (/Amendoeira\s+World\s+Kids/i.test(name)) return true;
+    // Miramar Internacional Open U25 (Club de Golf de Miramar, ccode 003 —
+    // tcode 10652 U25 + 10653 Sub-10, 19-21 Ago 2026), "Miramar Open" no
+    // calendário oficial PJA TOUR 2026.
+    // Por NOME, nunca por tcode: a FPG reutiliza os dois números noutros
+    // clubes e anos (10652 em 009/022, 10653 em 009/022), por isso NÃO podem
+    // entrar em PJA_TCODES. O regex exige "Intern*cional" (cobre a gralha
+    // "Internancional" da fonte) para não apanhar as provas de clube do mesmo
+    // campo — Taça Praia de Miramar, Miramar Winter/Spring Cup, Banco
+    // Carregosa Miramar Open.
+    if (/Miramar\s+Intern\w*cional\s+Open/i.test(name)) {
+      // ⚠ Só o U25 (10652). O Sub-10 (10653, prova separada de 9 buracos/dia)
+      // fica de fora: não há nenhum Sub-10 inscrito no PJA 2026, por isso a
+      // prova nunca creditaria ninguém e só acrescentaria uma coluna vazia.
+      // Se um dia houver um Sub-10 no circuito, apagar esta linha.
+      return !/\bSub\s*-?\s*10\b/i.test(name);
+    }
+    // ⚠ A Taça Visconde Pereira Machado (T.V.P.M., 6-7 Jul 2026) está no
+    // calendário mas NÃO conta — exclusão deliberada, não re-adicionar.
+    // A razão é a que a nota pública explica (ver PJA_NOTAS); o detalhe
+    // técnico está no CLAUDE.md, secção "Ranking PJA".
   }
   return false;
+}
+
+/** Notas de elegibilidade MOSTRADAS ao público — as duas superfícies (app e
+ *  ranking-pja.vercel.app) renderizam esta mesma lista, cada uma à sua maneira.
+ *  O TEXTO vive aqui, e não em cada página, pela mesma razão que as regras:
+ *  a 2026-08-12 o Amendoeira entrou só numa das duas e as páginas ficaram a
+ *  dizer coisas diferentes uma da outra.
+ *
+ *  - `ano`   — época a que a nota pertence.
+ *  - `tipo`  — "fora" (prova do calendário que NÃO conta) · "info".
+ *  - `ate`   — data ISO a partir da qual a nota deixa de ser mostrada (para as
+ *              notas de agenda não ficarem no site depois de a prova passar).
+ */
+export const PJA_NOTAS = [
+  {
+    ano: "2026",
+    tipo: "fora",
+    titulo: "Taça Visconde Pereira Machado (6-7 Jul) — não considerada no ranking",
+    texto:
+      "Os tees de partida utilizados nesta prova não corresponderam aos " +
+      "estabelecidos para as restantes provas do circuito, pelo que os " +
+      "resultados não são comparáveis.",
+  },
+  {
+    ano: "2026",
+    tipo: "info",
+    ate: "2026-09-06",
+    titulo: "Próxima prova: Torre — 5 de Setembro",
+    texto: "Terras da Comporta · Torre.",
+  },
+];
+
+/** Notas a mostrar hoje: as do ano pedido que ainda não expiraram (`ate`).
+ *  `hoje` em ISO (YYYY-MM-DD) — parâmetro para os testes serem determinísticos. */
+export function notasPJA(year, hoje) {
+  const hj = hoje || new Date().toISOString().slice(0, 10);
+  return PJA_NOTAS.filter((n) => String(n.ano) === String(year) && (!n.ate || n.ate >= hj));
 }

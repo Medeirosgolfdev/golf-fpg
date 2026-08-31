@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-23T22:51:37.901Z",
+  "generated": "2026-08-29T15:39:27.611Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
@@ -1763,7 +1763,7 @@
       "tcode": "11025",
       "ccode": "007",
       "name": "Torneio NOS EMPRESAS CGSS 2026",
-      "date": "2026-05-22",
+      "date": "2026-05-23",
       "level": "B",
       "course": "Santo da Serra - Machico-Desertas",
       "nJuniors": 2,
@@ -1790,7 +1790,7 @@
       "tcode": "11050",
       "ccode": "007",
       "name": "Torneio CGSS RALI 2026",
-      "date": "2026-07-31",
+      "date": "2026-08-01",
       "level": "C",
       "course": "Santo da Serra - Machico-Desertas",
       "nJuniors": 5,
@@ -1837,6 +1837,42 @@
         }
       ],
       "pending": true
+    },
+    {
+      "tcode": "11057",
+      "ccode": "007",
+      "name": "8º Torneio CGSS OM NOS 2026",
+      "date": "2026-08-29",
+      "level": "C",
+      "course": "Santo da Serra - Serras-Machico",
+      "nJuniors": 3,
+      "juniors": [
+        {
+          "fed": "52884",
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "gross": 72,
+          "pos": 1,
+          "pts": 15
+        },
+        {
+          "fed": "52393",
+          "name": "Mateus Penucho",
+          "club": "Santo da Serra",
+          "gross": 86,
+          "pos": 2,
+          "pts": 12
+        },
+        {
+          "fed": "50398",
+          "name": "Gonçalo Gouveia",
+          "club": "Santo da Serra",
+          "gross": 97,
+          "pos": 3,
+          "pts": 10
+        }
+      ],
+      "pending": true
     }
   ],
   "ranking": [
@@ -1871,16 +1907,26 @@
           "tcode": "11050",
           "ccode": "007",
           "name": "Torneio CGSS RALI 2026",
-          "date": "2026-07-31",
+          "date": "2026-08-01",
           "level": "C",
           "pos": 1,
           "gross": 78,
           "pts": 15
+        },
+        {
+          "tcode": "11057",
+          "ccode": "007",
+          "name": "8º Torneio CGSS OM NOS 2026",
+          "date": "2026-08-29",
+          "level": "C",
+          "pos": 1,
+          "gross": 72,
+          "pts": 15
         }
       ],
-      "total": 55,
-      "played": 3,
-      "bestDrop3": 0,
+      "total": 70,
+      "played": 4,
+      "bestDrop3": 25,
       "lastResult": 1,
       "rank": 1
     },
@@ -1905,7 +1951,7 @@
           "tcode": "11025",
           "ccode": "007",
           "name": "Torneio NOS EMPRESAS CGSS 2026",
-          "date": "2026-05-22",
+          "date": "2026-05-23",
           "level": "B",
           "pos": 1,
           "gross": 83,
@@ -1949,7 +1995,7 @@
           "tcode": "11050",
           "ccode": "007",
           "name": "Torneio CGSS RALI 2026",
-          "date": "2026-07-31",
+          "date": "2026-08-01",
           "level": "C",
           "pos": 5,
           "gross": 98,
@@ -1959,42 +2005,8 @@
       "total": 37,
       "played": 3,
       "bestDrop3": 0,
-      "lastResult": 5,
+      "lastResult": null,
       "rank": 3
-    },
-    {
-      "fed": "41108",
-      "name": "Martim Lima",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10994",
-          "ccode": "007",
-          "name": "Torneio de Carnaval CGSS 2026",
-          "date": "2026-02-14",
-          "level": "C",
-          "pos": 1,
-          "gross": 83,
-          "pts": 15
-        },
-        {
-          "tcode": "11050",
-          "ccode": "007",
-          "name": "Torneio CGSS RALI 2026",
-          "date": "2026-07-31",
-          "level": "C",
-          "pos": 3,
-          "gross": 90,
-          "pts": 10
-        }
-      ],
-      "total": 25,
-      "played": 2,
-      "bestDrop3": 0,
-      "lastResult": 3,
-      "rank": 4
     },
     {
       "fed": "52393",
@@ -2017,42 +2029,62 @@
           "tcode": "11050",
           "ccode": "007",
           "name": "Torneio CGSS RALI 2026",
-          "date": "2026-07-31",
+          "date": "2026-08-01",
           "level": "C",
           "pos": 2,
           "gross": 82,
           "pts": 12
+        },
+        {
+          "tcode": "11057",
+          "ccode": "007",
+          "name": "8º Torneio CGSS OM NOS 2026",
+          "date": "2026-08-29",
+          "level": "C",
+          "pos": 2,
+          "gross": 86,
+          "pts": 12
         }
       ],
-      "total": 24,
-      "played": 2,
+      "total": 36,
+      "played": 3,
       "bestDrop3": 0,
       "lastResult": 2,
-      "rank": 5
+      "rank": 4
     },
     {
-      "fed": "41130",
-      "name": "Vasco Leal Gouveia",
+      "fed": "41108",
+      "name": "Martim Lima",
       "club": "Santo da Serra",
       "gender": "M",
       "canWin": true,
       "events": [
         {
-          "tcode": "11025",
+          "tcode": "10994",
           "ccode": "007",
-          "name": "Torneio NOS EMPRESAS CGSS 2026",
-          "date": "2026-05-22",
-          "level": "B",
-          "pos": 2,
-          "gross": 102,
-          "pts": 16
+          "name": "Torneio de Carnaval CGSS 2026",
+          "date": "2026-02-14",
+          "level": "C",
+          "pos": 1,
+          "gross": 83,
+          "pts": 15
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-08-01",
+          "level": "C",
+          "pos": 3,
+          "gross": 90,
+          "pts": 10
         }
       ],
-      "total": 16,
-      "played": 1,
+      "total": 25,
+      "played": 2,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 6
+      "rank": 5
     },
     {
       "fed": "50398",
@@ -2065,17 +2097,51 @@
           "tcode": "11050",
           "ccode": "007",
           "name": "Torneio CGSS RALI 2026",
-          "date": "2026-07-31",
+          "date": "2026-08-01",
           "level": "C",
           "pos": 4,
           "gross": 93,
           "pts": 8
+        },
+        {
+          "tcode": "11057",
+          "ccode": "007",
+          "name": "8º Torneio CGSS OM NOS 2026",
+          "date": "2026-08-29",
+          "level": "C",
+          "pos": 3,
+          "gross": 97,
+          "pts": 10
         }
       ],
-      "total": 8,
+      "total": 18,
+      "played": 2,
+      "bestDrop3": 0,
+      "lastResult": 3,
+      "rank": 6
+    },
+    {
+      "fed": "41130",
+      "name": "Vasco Leal Gouveia",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "11025",
+          "ccode": "007",
+          "name": "Torneio NOS EMPRESAS CGSS 2026",
+          "date": "2026-05-23",
+          "level": "B",
+          "pos": 2,
+          "gross": 102,
+          "pts": 16
+        }
+      ],
+      "total": 16,
       "played": 1,
       "bestDrop3": 0,
-      "lastResult": 4,
+      "lastResult": null,
       "rank": 7
     }
   ]

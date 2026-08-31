@@ -25,6 +25,15 @@ set TMPFILE=logs\.cookie-header.tmp
 
 if not exist logs mkdir logs
 
+REM ── BOM UTF-8 no log ──────────────────────────────────────
+REM O chcp 65001 acima garante que se ESCREVE UTF-8, mas nao que se LEIA:
+REM sem BOM, o Get-Content do Windows PowerShell 5.1 e o Notepad assumem ANSI
+REM e os `·` e `—` que o Node escreve saem como `Â·` (28/08/2026).
+REM So corre quando o log ainda nao existe - zero custo nas corridas normais.
+REM Uma linha so, sem bloco: o parser do cmd tropeca em parenteses dentro de
+REM aspas quando estao dentro de um bloco if(...) - ver a nota do PASSO 4.
+if not exist "%LOGFILE%" powershell -NoProfile -Command "[IO.File]::WriteAllBytes((Join-Path $PWD '%LOGFILE%'), [byte[]](0xEF,0xBB,0xBF))"
+
 echo ============================================================ >> "%LOGFILE%"
 echo [%date% %time%] Cookie refresh starting >> "%LOGFILE%"
 echo ============================================================ >> "%LOGFILE%"
@@ -88,6 +97,13 @@ REM ── Actualizar FPG_COOKIES ──
 REM gh secret set le de stdin quando -b nao e passado.
 REM Usamos type + pipe em vez de --body-file (nao existe na v2.90 do gh).
 echo    - FPG_COOKIES (my.fpg.pt)... >> "%LOGFILE%"
+REM GUARDA: nunca escrever por cima de Secrets bons com cookies que nao
+REM validaram. Com mais do que um PC a refrescar, um refresh falhado aqui
+REM apagava as cookies boas que o outro acabou de por.
+if not "!FPG_EXIT!" == "0" (
+    echo      my.fpg.pt nao validou ^(FPG_EXIT=!FPG_EXIT!^) - NAO escrevo o Secret >> "%LOGFILE%"
+    goto :after_fpg_secret
+)
 powershell -NoProfile -Command "(Get-Content api\.datagolf-cookies.json -Raw | ConvertFrom-Json).cookieHeader | Set-Content -NoNewline -Encoding ascii '%TMPFILE%'"
 if exist "%TMPFILE%" (
     type "%TMPFILE%" | gh secret set FPG_COOKIES >> "%LOGFILE%" 2>&1
@@ -103,7 +119,12 @@ REM consumidos por workflows diferentes:
 REM   - DATAGOLF_COOKIES         ← update-drive.yml (scrape-drive-node.js)
 REM   - DATAGOLF_SCORING_COOKIES ← update-jovens.yml + update-classif.yml
 REM Naming historico inconsistente; mantem-se os dois para nao partir workflows.
+:after_fpg_secret
 echo    - DATAGOLF_COOKIES e DATAGOLF_SCORING_COOKIES (scoring.datagolf.pt)... >> "%LOGFILE%"
+if not "!DG_EXIT!" == "0" (
+    echo      scoring.datagolf.pt nao validou ^(DG_EXIT=!DG_EXIT!^) - NAO escrevo os Secrets >> "%LOGFILE%"
+    goto :after_dg_secret
+)
 powershell -NoProfile -Command "(Get-Content api\.scoring-datagolf-cookies.json -Raw | ConvertFrom-Json).cookieHeader | Set-Content -NoNewline -Encoding ascii '%TMPFILE%'"
 if exist "%TMPFILE%" (
     type "%TMPFILE%" | gh secret set DATAGOLF_COOKIES >> "%LOGFILE%" 2>&1
@@ -117,6 +138,13 @@ if exist "%TMPFILE%" (
 
 REM ── Actualizar FPG_ADMISSIONS_COOKIES (scoring.fpg.pt) ──
 REM Usado por update-fpg-admissions-draws.yml (scrape-fpg-admissions-draws-node.js).
+:after_dg_secret
+REM O admissions nao tem teste local proprio; um refresh PARCIAL
+REM (REFRESH_EXIT=3) pode nao ter apanhado este host.
+if not "!REFRESH_EXIT!" == "0" (
+    echo      refresh parcial ^(REFRESH_EXIT=!REFRESH_EXIT!^) - NAO escrevo o Secret >> "%LOGFILE%"
+    goto :after_adm_secret
+)
 echo    - FPG_ADMISSIONS_COOKIES (scoring.fpg.pt)... >> "%LOGFILE%"
 powershell -NoProfile -Command "(Get-Content api\.fpg-admissions-cookies.json -Raw | ConvertFrom-Json).cookieHeader | Set-Content -NoNewline -Encoding ascii '%TMPFILE%'"
 if exist "%TMPFILE%" (
@@ -127,6 +155,7 @@ if exist "%TMPFILE%" (
     echo      nao consegui ler api\.fpg-admissions-cookies.json - skip >> "%LOGFILE%"
 )
 
+:after_adm_secret
 REM ── PASSO 3b: CASCATA — disparar update-federados as Quartas, com cookies frescos ──
 REM Em vez de um cron fixo (que corria ANTES do refresh diario e falhava com
 REM cookies de ~46h), disparamos a Action AQUI, logo apos os Secrets terem

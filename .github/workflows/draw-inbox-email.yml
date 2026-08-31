@@ -1,0 +1,163 @@
+name: Draws CGSS por email (inbox cloud)
+
+# Entrada CLOUD do percurso dos draws (2026-08-28): a Mariana reencaminha o
+# email do clube com o PDF do draw para o próprio Gmail (ou o clube envia
+# directo, se o remetente estiver na allowlist) e ESTE workflow insere o
+# torneio no site — sem PC nenhum ligado. Corre de hora a hora:
+#
+#   1. Fase leve (checkout sparse, ~30s): scripts/draw-mail-inbox.js
+#      --check-only liga ao Gmail por IMAP (SÓ-LEITURA — não marca lidos, não
+#      move nada) e vê se há emails novos com PDF de draw ainda não
+#      processados (memória em scripts/draw-mail-processed.json, versionada).
+#   2. Se houver: checkout completo, poppler p/ o extractor de PDF, e o mesmo
+#      script processa cada anexo com add-cgss-draw.js --strict-cgss
+#      (placeholder 9xxxx, feds, entrada + stub). Commit + push dos dados E da
+#      memória de processados no MESMO commit (se o push falhar, nada fica
+#      marcado e a corrida seguinte repete; o guard de duplicados protege).
+#   3. Aviso por email (issue auto-fechada, padrão daily-digest) com o sumário
+#      — também quando um PDF falha (ex: draw do Porto Santo → manual).
+#
+# Depois disto, o update-cgss-draw.yml (auto-descobridor) apanha os RESULTADOS
+# no dia do torneio e faz o re-chaveamento placeholder→real + reconciliação.
+#
+# SEGURANÇA: allowlist de remetentes (default: a própria conta — só emails
+# auto-reencaminhados contam) + o --strict-cgss valida que o PDF é mesmo um
+# draw DataGolf do Santo da Serra. O IMAP nunca escreve na caixa.
+#
+# Secrets necessários (a Mariana cria — ver instruções no fim do ficheiro):
+#   DRAW_MAIL_USER  — o endereço Gmail
+#   DRAW_MAIL_PASS  — app password do Gmail (não a password normal)
+# Variable opcional: DRAW_MAIL_SENDERS (CSV de remetentes extra, ex. o clube).
+# Sem os secrets, o workflow sai verde sem fazer nada (dá para fazer merge já).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 * * * *'   # de hora a hora
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: draw-inbox-email
+  cancel-in-progress: false
+
+jobs:
+  mail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Secrets presentes?
+        id: creds
+        run: |
+          if [ -z "${{ secrets.DRAW_MAIL_USER }}" ] || [ -z "${{ secrets.DRAW_MAIL_PASS }}" ]; then
+            echo "ℹ️  DRAW_MAIL_USER/DRAW_MAIL_PASS não configurados — inbox por email desligada."
+            echo "ok=0" >> $GITHUB_OUTPUT
+          else
+            echo "ok=1" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout leve (só scripts)
+        if: steps.creds.outputs.ok == '1'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deps IMAP
+        if: steps.creds.outputs.ok == '1'
+        run: npm i imapflow mailparser --no-save --no-audit --no-fund
+
+      - name: Há emails de draw novos?
+        if: steps.creds.outputs.ok == '1'
+        id: check
+        run: |
+          set +e
+          node scripts/draw-mail-inbox.js --check-only
+          CODE=$?
+          if [ "$CODE" = "0" ]; then echo "found=1" >> $GITHUB_OUTPUT
+          elif [ "$CODE" = "2" ]; then echo "found=0" >> $GITHUB_OUTPUT
+          else exit 1; fi
+        env:
+          DRAW_MAIL_USER: ${{ secrets.DRAW_MAIL_USER }}
+          DRAW_MAIL_PASS: ${{ secrets.DRAW_MAIL_PASS }}
+          DRAW_MAIL_SENDERS: ${{ vars.DRAW_MAIL_SENDERS }}
+
+      - name: Checkout completo
+        if: steps.check.outputs.found == '1'
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Preparar (poppler p/ pdftotext + deps IMAP de novo)
+        if: steps.check.outputs.found == '1'
+        run: |
+          sudo apt-get -yq install poppler-utils > /dev/null
+          npm i imapflow mailparser --no-save --no-audit --no-fund
+
+      - name: Processar emails de draw
+        if: steps.check.outputs.found == '1'
+        id: process
+        run: |
+          set +e
+          node scripts/draw-mail-inbox.js
+          CODE=$?
+          echo "code=$CODE" >> $GITHUB_OUTPUT
+          if [ "$CODE" = "1" ]; then exit 1; fi
+          exit 0
+        env:
+          DRAW_MAIL_USER: ${{ secrets.DRAW_MAIL_USER }}
+          DRAW_MAIL_PASS: ${{ secrets.DRAW_MAIL_PASS }}
+          DRAW_MAIL_SENDERS: ${{ vars.DRAW_MAIL_SENDERS }}
+
+      # ⚠ O `outcome == 'success'` NÃO é decorativo: quando um passo é saltado,
+      # `steps.X.outputs.Y` é null e o `==` do GitHub coage null→0 e '0'→0, logo
+      # `null == '0'` é VERDADEIRO. Sem esta guarda, os passos abaixo corriam
+      # justamente quando nada correu — foi o que rebentou a 2026-08-29 (sem
+      # secrets, tudo saltado, e a sanidade a ler ficheiros sem checkout: ENOENT).
+      - name: Sanidade dos JSON alterados
+        if: steps.process.outcome == 'success' && steps.process.outputs.code == '0'
+        run: |
+          node -e "
+            for (const f of ['public/data/cgss-draws-manual.json','public/data/pull-torneios001.json']) {
+              const d = JSON.parse(require('fs').readFileSync(f,'utf8'));
+              if (!Array.isArray(d.tournaments) || d.tournaments.length === 0) throw new Error(f+' vazio!');
+              console.log(f, 'OK —', d.tournaments.length, 'torneios');
+            }"
+
+      - name: Commit e push (dados + memória de processados, atómico)
+        if: steps.process.outcome == 'success' && (steps.process.outputs.code == '0' || steps.process.outputs.code == '3')
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/cgss-draws-manual.json public/data/pull-torneios001.json scripts/draw-mail-processed.json
+          if git diff --staged --quiet; then
+            echo "Nada em staging — sem commit."
+            exit 0
+          fi
+          git commit -m "data: draw CGSS via email (inbox cloud)"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
+            if git push; then PUSH_OK=1; break; fi
+            sleep $((i * 5))
+          done
+          [ "$PUSH_OK" = "1" ] || { echo "❌ Push falhou"; exit 1; }
+          echo "✓ Commit feito"
+
+      - name: Aviso por email (issue criada e fechada)
+        if: steps.process.outcome == 'success' && (steps.process.outputs.code == '0' || steps.process.outputs.code == '3')
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SUMMARY=$(node -e "console.log((JSON.parse(require('fs').readFileSync('draw-mail-result.json','utf8')).summary||'').slice(0,3000))")
+          TITLE="⛳ Draw(s) recebidos por email$([ '${{ steps.process.outputs.code }}' = '3' ] && echo ' — COM FALHAS')"
+          URL=$(gh issue create --title "$TITLE ($(date -u +%Y-%m-%d))" \
+            --body "@Medeirosgolfdev — o inbox cloud processou os emails de draw:
+
+          $SUMMARY
+
+          Entradas novas ficam já em https://golf-fpg.vercel.app/FPG (⛳ Santo da Serra); os resultados chegam pela Action update-cgss-draw no dia do torneio. Esta issue fecha-se sozinha — é só para a notificação.")
+          gh issue close "$URL" --comment "Notificação entregue."

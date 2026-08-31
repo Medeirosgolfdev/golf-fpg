@@ -131,19 +131,31 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      # PCC do próprio fim-de-semana. Este workflow corre à 01:00 UTC, 55 min
+      # depois do update-data.yml ter descarregado o WHS (00:05) — que é quem
+      # traz o `cba` oficial. Os torneios acabados de scrapar aqui apanham logo
+      # o PCC em vez de esperar pela varredura do domingo seguinte. O
+      # ClassifLST não o publica a tempo: a FPG só o calcula ao fim do dia.
+      - name: Preencher PCC dos torneios acabados de scrapar
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
+        run: |
+          node scripts/backfill-pcc.js --apply || echo "backfill-pcc: sem novidades ou aviso"
+
       - name: Regenerar tracking (após novos dados de classif)
-        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
         run: node scripts/build-tournaments-tracking.js
 
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || steps.scrape_recent.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios002.json' }}"
           # glob cobre o ficheiro-cauda (seja 006, 007, ...) + o $OUT (002).
-          git add "$OUT" public/data/pull-torneios*.json public/data/fpg-tournaments-tracking.json
+          # drive/aquapor entram porque o backfill-pcc também lhes toca.
+          git add "$OUT" public/data/pull-torneios*.json public/data/fpg-tournaments-tracking.json \
+                  public/data/drive-data-*.json public/data/aquapor-data-*.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."

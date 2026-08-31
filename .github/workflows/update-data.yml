@@ -88,6 +88,26 @@ jobs:
         env:
           FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
 
+      # PCC (Playing Conditions Calculation) — a FPG só o calcula ao FIM DO DIA,
+      # depois de entrarem todos os cartões do campo. Os scrapes de resultados
+      # correm na própria noite do torneio (update-classif, update-drive,
+      # update-cgss-draw-results) e apanham o campo `cba` ainda vazio, deixando
+      # o torneio para sempre sem PCC — e o SD das tabelas a divergir do oficial
+      # exactamente por (113/slope)×PCC. Como ESTE workflow corre depois da
+      # meia-noite de Lisboa e acaba de descarregar o WHS (que traz o `cba`
+      # oficial de cada volta), é aqui que se apanha o que ficou para trás, sem
+      # um único pedido extra à FPG. Exit 2 = nada a preencher (não é erro).
+      - name: Preencher PCC em falta (do WHS acabado de descarregar)
+        id: pcc
+        run: |
+          set +e
+          node scripts/backfill-pcc.js --apply
+          EXIT=$?
+          set -e
+          if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
+          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-pcc falhou — segue sem preencher."; fi
+          exit 0
+
       # Reconstruir os índices que dependem das rondas dos jogadores:
       #  - away-courses.json        (campos internacionais + _players)  ← extract-courses
       #  - course-player-names.json (nº federado → nome real)           ← build-course-player-names
@@ -108,6 +128,10 @@ jobs:
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
           node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
+          # Mesma página, bloco `const PATH` — percurso de torneios até scratch
+          # dos 18 rapazes da coorte, com o detalhe por jogador que a tabela
+          # mostra ao expandir uma linha (exit 2 = sem mudanças)
+          node scripts/build-percurso-path.js || echo "build-percurso-path: sem novidades ou aviso"
 
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
@@ -141,7 +165,9 @@ jobs:
           fi
 
       - name: Commit e push (se houve novidades)
-        if: steps.scrape.outputs.exit_code == '0'
+        # Também committa quando NÃO houve scorecards novos mas o backfill-pcc
+        # preencheu PCC em falta — senão o PCC ficava no runner e perdia-se.
+        if: steps.scrape.outputs.exit_code == '0' || steps.pcc.outputs.filled == '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -178,6 +204,9 @@ jobs:
                   public/data/recent-tournaments.json \
                   public/data/recent-tournaments-scrape-scope.json \
                   public/data/classificacoes.json \
+                  public/data/pull-torneios*.json \
+                  public/data/drive-data-*.json \
+                  public/data/aquapor-data-*.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

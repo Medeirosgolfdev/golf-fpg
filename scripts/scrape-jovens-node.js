@@ -118,7 +118,9 @@ const info = m => console.log(`  ${m}`);
 // COOKIES
 // ═══════════════════════════════════════════════════════════
 const { loadCookieHeader } = require("./lib/cookies");
+// ⚠ Opcionais desde 2026-08-30 — ver o roteador público mais abaixo.
 const COOKIE = loadCookieHeader({
+  exitOnFail: false,
   envVars: ["DATAGOLF_SCORING_COOKIES"],
   file: path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json"),
   label: "[jovens]",
@@ -136,7 +138,7 @@ async function warmupEntryGate() {
   try {
     const r = await fetch(warmupUrl, {
       headers: {
-        "User-Agent": UA, "Cookie": COOKIE,
+        "User-Agent": UA, ...(COOKIE ? { "Cookie": COOKIE } : {}),
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "pt-PT,pt;q=0.9",
       },
@@ -155,13 +157,20 @@ async function warmupEntryGate() {
 // Erro estruturado do FPG — agora na lib partilhada (scripts/lib/fpg-http.js)
 const { makeFpgPost, FpgHttpError } = require("./lib/fpg-http");
 
-const dgPost = makeFpgPost({
+const dgPostAuth = COOKIE ? makeFpgPost({
   baseUrl: BASE_URL,
   cookie: COOKIE,
   ua: UA,
   origin: "https://scoring.datagolf.pt",
   referer: `${BASE_URL}/tournaments.aspx`,
-});
+}) : null;
+
+/* Caminho público (sem credenciais): os gateways com o `ack` universal emitem
+   a própria sessão ASP.NET. Tenta-se o habitual primeiro e, num HTTP 500,
+   repete-se sem credenciais antes de desistir. Ver scripts/lib/fpg-session.js. */
+const { criarRoteador } = require("./lib/fpg-session");
+const ROTA = criarRoteador({ dgPost: dgPostAuth, info: log });
+const dgPost = (pathname, body, qs) => ROTA.post(pathname, body, qs);
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBERTA

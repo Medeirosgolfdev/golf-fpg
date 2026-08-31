@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-25T21:43:42.431Z",
+  "generatedAt": "2026-08-31T13:18:19.709Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -989,6 +989,10 @@
         "rfeg-lgs359",
         "rfeg-lgs366",
         "rfeg-lgs367",
+        "rfeg-lgs384",
+        "rfeg-lgs385",
+        "rfeg-lgs386",
+        "rfeg-lgs387",
         "rfeg-nc50113_benjamín_sc",
         "rfeg-nc50113_benjamín_hcp",
         "rfeg-rfeg13959_junior_f",
@@ -1012,8 +1016,8 @@
         "rfeg-rfeg16226_benjamin_f"
       ],
       "firstDate": "2021-03-18",
-      "lastDate": "2026-08-06",
-      "editionsCount": 66
+      "lastDate": "2026-08-08",
+      "editionsCount": 70
     },
     {
       "id": "ffgolf-championnats-france",
@@ -30287,6 +30291,34 @@
       "editionsCount": 4
     },
     {
+      "id": "england-english-girls-u16-u14-stroke-play",
+      "label": "English Girls' U16 & U14 Stroke Play",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-u16-u14-2025_div1",
+        "england-england_english-girls-u16-u14-2025_div2",
+        "england-england_english-girls-u16-u14-2026_div1",
+        "england-england_english-girls-u16-u14-2026_div2"
+      ],
+      "firstDate": "2025-07-29",
+      "lastDate": "2026-08-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "england-reid-trophy",
+      "label": "Reid Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_reid-trophy-2023",
+        "england-england_reid-trophy-2024",
+        "england-england_reid-trophy-2025",
+        "england-england_reid-trophy-2026"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2026-08-04",
+      "editionsCount": 4
+    },
+    {
       "id": "ua-worlds",
       "label": "Under Armour World Championship",
       "sourceId": "uaworlds",
@@ -37763,6 +37795,32 @@
       "editionsCount": 3
     },
     {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
+      "label": "Campeonato Nacional de Clubes Solverde H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10795-20240905-all",
+        "fpg-000-10849-20250828-all",
+        "fpg-000-10916-20260827-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2026-08-27",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
+      "label": "Campeonato Nacional de Clubes Solverde S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10796-20240905-all",
+        "fpg-000-10850-20250828-all",
+        "fpg-000-10917-20260827-all"
+      ],
+      "firstDate": "2024-09-05",
+      "lastDate": "2026-08-27",
+      "editionsCount": 3
+    },
+    {
       "id": "ffgolf-1re-division-u16-filles-trophee-brigitte-varangot",
       "label": "1re Division U16 Filles - Trophée Brigitte VARANGOT",
       "sourceId": "ffgolf",
@@ -37932,6 +37990,19 @@
       "editionsCount": 3
     },
     {
+      "id": "england-carris-trophy",
+      "label": "Carris Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_carris-trophy-2023",
+        "england-england_carris-trophy-2025",
+        "england-england_carris-trophy-2026"
+      ],
+      "firstDate": "2023-07-25",
+      "lastDate": "2026-07-21",
+      "editionsCount": 3
+    },
+    {
       "id": "england-english-u18-amateur-championship",
       "label": "English U18 Amateur Championship",
       "sourceId": "england",
@@ -37945,16 +38016,16 @@
       "editionsCount": 3
     },
     {
-      "id": "england-reid-trophy",
-      "label": "Reid Trophy",
+      "id": "england-mcgregor-trophy",
+      "label": "McGregor Trophy",
       "sourceId": "england",
       "tournamentIds": [
-        "england-england_reid-trophy-2023",
-        "england-england_reid-trophy-2024",
-        "england-england_reid-trophy-2025"
+        "england-england_mcgregor-trophy-2024",
+        "england-england_mcgregor-trophy-2025",
+        "england-england_mcgregor-trophy-2026"
       ],
-      "firstDate": "2023-08-08",
-      "lastDate": "2025-08-05",
+      "firstDate": "2024-07-16",
+      "lastDate": "2026-07-14",
       "editionsCount": 3
     },
     {
@@ -48894,30 +48965,6 @@
       "editionsCount": 2
     },
     {
-      "id": "fpg-campeonato-nacional-de-clubes-solverde-h",
-      "label": "Campeonato Nacional de Clubes Solverde H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10795-20240905-all",
-        "fpg-000-10849-20250828-all"
-      ],
-      "firstDate": "2024-09-05",
-      "lastDate": "2025-08-28",
-      "editionsCount": 2
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-clubes-solverde-s",
-      "label": "Campeonato Nacional de Clubes Solverde S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10796-20240905-all",
-        "fpg-000-10850-20250828-all"
-      ],
-      "firstDate": "2024-09-05",
-      "lastDate": "2025-08-28",
-      "editionsCount": 2
-    },
-    {
       "id": "ffgolf-2eme-division-u16-filles",
       "label": "2eme Division U16 Filles",
       "sourceId": "ffgolf",
@@ -49218,39 +49265,15 @@
       "editionsCount": 2
     },
     {
-      "id": "england-carris-trophy",
-      "label": "Carris Trophy",
+      "id": "england-bronte-law-junior-series-moor-allerton",
+      "label": "Bronte Law Junior Series  - Moor Allerton",
       "sourceId": "england",
       "tournamentIds": [
-        "england-england_carris-trophy-2023",
-        "england-england_carris-trophy-2025"
+        "england-england_bronte-law-moor-allerton-2025",
+        "england-england_bronte-law-moor-allerton-2026"
       ],
-      "firstDate": "2023-07-25",
-      "lastDate": "2025-07-22",
-      "editionsCount": 2
-    },
-    {
-      "id": "england-english-girls-u16-u14-stroke-play",
-      "label": "English Girls' U16 & U14 Stroke Play",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_english-girls-u16-u14-2025_div1",
-        "england-england_english-girls-u16-u14-2025_div2"
-      ],
-      "firstDate": "2025-07-29",
-      "lastDate": "2025-07-29",
-      "editionsCount": 2
-    },
-    {
-      "id": "england-mcgregor-trophy",
-      "label": "McGregor Trophy",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_mcgregor-trophy-2024",
-        "england-england_mcgregor-trophy-2025"
-      ],
-      "firstDate": "2024-07-16",
-      "lastDate": "2025-07-15",
+      "firstDate": "2025-08-24",
+      "lastDate": "2026-07-01",
       "editionsCount": 2
     },
     {
@@ -75153,6 +75176,17 @@
       "editionsCount": 1
     },
     {
+      "id": "england-bronte-law-junior-series-edgbaston",
+      "label": "Bronte Law Junior Series  - Edgbaston",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_bronte-law-edgbaston-2026"
+      ],
+      "firstDate": "2026-07-01",
+      "lastDate": "2026-07-01",
+      "editionsCount": 1
+    },
+    {
       "id": "england-bronte-law-junior-series-farnham",
       "label": "Bronte Law Junior Series  - Farnham",
       "sourceId": "england",
@@ -75175,14 +75209,25 @@
       "editionsCount": 1
     },
     {
-      "id": "england-bronte-law-junior-series-moor-allerton",
-      "label": "Bronte Law Junior Series  - Moor Allerton",
+      "id": "england-bronte-law-junior-series-royal-mid-surrey",
+      "label": "Bronte Law Junior Series  - Royal Mid Surrey",
       "sourceId": "england",
       "tournamentIds": [
-        "england-england_bronte-law-moor-allerton-2025"
+        "england-england_bronte-law-royal-mid-surrey-2026"
       ],
-      "firstDate": "2025-08-24",
-      "lastDate": "2025-08-24",
+      "firstDate": "2026-07-01",
+      "lastDate": "2026-07-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "england-english-girls-open-stroke-play-championship",
+      "label": "English Girls' Open Stroke Play Championship",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_english-girls-open-stroke-play-2026"
+      ],
+      "firstDate": "2026-07-21",
+      "lastDate": "2026-07-21",
       "editionsCount": 1
     },
     {
@@ -75956,6 +76001,50 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-rheinland-pfalz-saarland-meisterschaft-u16-u18-madchen",
+      "label": "Rheinland-Pfalz Saarland Meisterschaft U16-U18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12889"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-rheinland-pfalz-saarland-meisterschaft-u16-u18-jungen",
+      "label": "Rheinland-Pfalz Saarland Meisterschaft U16-U18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12890"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-rheinland-pfalz-saarland-meisterschaft-u14-madchen",
+      "label": "Rheinland-Pfalz Saarland Meisterschaft U14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12891"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-rheinland-pfalz-saarland-meisterschaft-u14-jungen",
+      "label": "Rheinland-Pfalz Saarland Meisterschaft U14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12892"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dormy-elite-tour-iii-drenge-u16",
       "label": "Dormy Elite Tour III Drenge U16",
       "sourceId": "egr",
@@ -76143,28 +76232,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-english-u18-carris-trophy",
-      "label": "English U18 (Carris Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11777"
-      ],
-      "firstDate": "2026-07-21",
-      "lastDate": "2026-07-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-girls-open-stroke-play-championship",
-      "label": "English Girls' Open Stroke Play Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11780"
-      ],
-      "firstDate": "2026-07-21",
-      "lastDate": "2026-07-21",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-austrian-boys-u12",
       "label": "Austrian Boys U12",
       "sourceId": "egr",
@@ -76217,17 +76284,6 @@
       ],
       "firstDate": "2026-07-15",
       "lastDate": "2026-07-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-u16-mcgregor-trophy",
-      "label": "English U16 (McGregor Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11776"
-      ],
-      "firstDate": "2026-07-14",
-      "lastDate": "2026-07-14",
       "editionsCount": 1
     },
     {

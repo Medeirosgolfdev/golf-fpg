@@ -163,6 +163,7 @@ local, por isso um `git pull` depois de um push nosso dá conflito quase sempre
 | Ficheiro | Regenerar com |
 |---|---|
 | `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
+| `public/analise-percurso-juniores.html` (blocos `const P` e `const PATH`) | `node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js` |
 | `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` | `node scripts/aggregator/index.js` |
 
 São **output de scripts, não fonte**: nenhum dos lados do conflito está certo
@@ -411,6 +412,243 @@ Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg
 **Validação de dados:** `scripts/validate-data.js` valida estrutura mínima dos JSON (contagens, campos obrigatórios) — corre nos workflows antes do commit. `node scripts/validate-data.js <ficheiro...>` ou `--glob "public/data/drive-data-*.json"`.
 
 **Cookie health:** workflow `cookie-health.yml` (Quinta 09:00 UTC) valida os 3 secrets de cookies via test-fpg-auth.js + test-datagolf-node.js + test-fpg-admissions-auth.js — falha (= email) se expirados, antes da janela de scrapes do fim-de-semana.
+
+### ⚠ As cookies duram ~9 HORAS, não uma semana (2026-08-30)
+
+Sempre se assumiu "validade típica ~1 semana" (ver "Cenário 1" mais abaixo).
+Medido num dia inteiro, com o log do `run-cookie-refresh.bat` a datar a
+captura:
+
+| Hora UTC | Estado das MESMAS cookies |
+|---|---|
+| 09:33 | capturadas e validadas nos 3 hosts (`TotalRecordCount=84986`) |
+| 18:14 | ✅ ainda autenticam |
+| 19:14 | ❌ mortas (o `cookie-health` testou o próprio Secret) |
+| 22:07 | ❌ mortas (ficheiro do repo, mesmo valor) |
+
+⚠ **E o refresh não cobria os scrapes.** A Scheduled Task corria só ao
+meio-dia; a janela de scrapes do fim-de-semana começa 9h depois:
+
+| | Local | UTC | Após o refresh |
+|---|---|---|---|
+| refresh | 12:00 | 11:00 | — |
+| `update-fpg-admissions-draws` | 21:00 | 20:00 | **+9h** |
+| `update-drive` | 22:00 | 21:00 | **+10h** |
+| `update-jovens` | 22:20 | 21:20 | **+10h20** |
+| `update-classif` | 02:00 | 01:00 | **+14h** |
+
+Era isto que estava por trás dos "cookies expiraram" recorrentes ao
+fim-de-semana — não eram cookies frágeis nem Secrets por actualizar (o log
+prova `gh secret set … exit=0` nos quatro), era o refresh a acabar antes de
+os scrapes começarem. O `setup-cookie-refresh-task.ps1` passou a registar um
+**segundo refresh diário às 19:30 local**, ~1h30 antes do primeiro scrape. A
+guarda de dedup do `.bat` é de 4h e o intervalo é de 7h30, por isso corre.
+
+⚠ Só tem efeito depois de **re-correr o `setup-cookie-refresh-task.ps1` como
+administrador** — editar o script não mexe na tarefa já registada.
+
+⚠ **A Scheduled Task vive NOUTRO computador** (2026-08-30) — o refresh
+automático não corre no PC de trabalho. Consequências: (1) re-correr o
+`setup-cookie-refresh-task.ps1` só tem efeito na máquina onde a tarefa está
+registada, e essa precisa de `git pull` primeiro (o gatilho das 19:30 entrou em
+`71e6f2a33`); (2) com mais do que um PC a refrescar, o push para os Secrets
+passou a ser **condicionado à validação de cada host** — antes o
+`run-cookie-refresh.bat` escrevia os 4 Secrets desde que o `gh` estivesse
+autenticado, sem olhar aos `FPG_EXIT`/`DG_EXIT` (que só serviam para a
+notificação e para a cascata dos federados). Um refresh falhado num PC
+secundário apagava assim as cookies boas que o principal tinha acabado de pôr,
+e o log dizia `exit=0` na mesma — porque esse `exit` é do `gh`, não da
+validação. Agora: `FPG_COOKIES` exige `FPG_EXIT=0`, os dois `DATAGOLF_*` exigem
+`DG_EXIT=0`, e o `FPG_ADMISSIONS_COOKIES` (que não tem teste local próprio)
+exige `REFRESH_EXIT=0`, para um refresh parcial não o carimbar.
+
+### ⚠ HTTP 500 da FPG NÃO é prova de cookie expirado (2026-08-30)
+
+O ASP.NET da FPG explode em vez de devolver 401, por isso sempre lemos 500 como
+"cookies mortos" (está assim no `lib/fpg-http.js` e em várias secções abaixo).
+Na maioria das vezes acerta — mas a 30-08-2026 mediu-se o contrário e a
+heurística mandou fazer trabalho inútil:
+
+| Hora (UTC) | Facto |
+|---|---|
+| 10:40 | cookies dos 3 sites refrescados (commit `1831dd0bc`) |
+| 17:21 | `update-drive` morre com HTTP 500 na `TournamentsLST` |
+| 17:26 | `cookie-health` dá 2 dos 3 secrets por **expirados** |
+| 17:5x | os **mesmos** cookies, à mão, dão o mesmo 500 — e o `1PreparePage.aspx`, um entry gate **sem credencial nenhuma**, dá 500 também |
+
+Não eram os cookies: as aplicações ASP.NET `scoring.datagolf.pt/pt` e
+`scoring.fpg.pt/lists` estavam a arder. O `my.fpg.pt` (outro backend) estava de
+pé, e o ASP clássico (`scoring-pt.datagolf.pt/scripts/draw.asp`) também.
+
+**A avaria acabou por si**, às ~18:10 UTC, sem ninguém mexer em nada: às 18:14
+o `scoring.datagolf.pt` voltou a responder com os mesmos cookies. Foram ~9h.
+
+⚠ **Não há forma fiável de distinguir as duas causas de fora.** A primeira
+versão do `fpg-liveness.js` usava o `linkpage.aspx?page=admissions` **sem
+cookies** como controlo, a assumir que respondia 200 com o serviço de pé. Não
+responde: às 18:15, com a FPG recuperada e o scrape do Drive a correr bem, esse
+controlo continuava a dar 500. Como controlo era pior do que nenhum —
+mascararia cookies mesmo mortos como "não é connosco".
+
+O que ficou (`scripts/lib/fpg-liveness.js`, 9 testes) é modesto de propósito:
+uma sonda de **alcançabilidade** (`linkpage.aspx?page=draw`, a única rota
+medida de pé com e sem avaria; não apodrece, um torneio inexistente devolve 200
+na mesma) e um veredicto de três estados:
+
+| veredicto | quando | exit | efeito |
+|---|---|---|---|
+| `fonte-em-baixo` | a FPG nem responde na rota pública | **3** | `cookie-health` regista e não falha; `update-drive` não pinta o cron de vermelho |
+| `indeterminado` | a FPG responde mas o nosso 500 não se explica | **2** | o alarme TOCA à mesma — calá-lo por dúvida esconderia cookies mortos |
+| `ok` | autenticou | 0 | — |
+
+A mensagem do `indeterminado` manda **confirmar no browser antes de
+refrescar** — foi o que resolveu este caso: a utilizadora abriu o linkpage e
+funcionava, o que provou que o problema não eram os cookies.
+
+### ✅ As cookies NÃO são precisas para os resultados — `scripts/lib/fpg-session.js`
+
+**Confirmado 2026-08-30, com o serviço estável** (a 1ª medição, às 18:09,
+apanhou a janela de recuperação e não provava nada; esta isolou o mecanismo).
+O gateway `scoring.fpg.pt/lists/linkpage.aspx` (ack universal) **emite ele
+próprio** `ASP.NET_SessionId` + `DG_Lists_URL` a quem chega sem credenciais.
+Medido no mesmo minuto, mesmo URL:
+
+| | resultado |
+|---|---|
+| **com** cookie jar (aceita a sessão) | **4/4 OK** — página 200, ClassifLST OK (18), ScoreCard OK |
+| **sem** jar | **3/3 → HTTP 500** Runtime Error |
+| POST directo sem sessão | `Result:ERROR — Object reference not set to an instance of an object` |
+
+Aquele *"Object reference..."* é a cara do 500 que se lia como "cookies
+expiraram". O que faltava era **aceitar** a sessão, não guardá-la.
+
+⚠ **`fetch` com `redirect:"follow"` não chega.** O linkpage responde 302 e a
+sessão é emitida NO CAMINHO; o fetch nativo não reenvia o `Set-Cookie` de um
+hop para o seguinte, por isso o pedido final chega sem sessão. O `Sessao.get`
+segue os redirects à mão, acumulando cookies.
+
+**Cobertura: o pipeline INTEIRO, descoberta incluída.**
+
+| Passo | Entrada pública (sem cookies) | PageMethod |
+|---|---|---|
+| Resultados de um torneio (leaderboard + scorecards) | `scoring.fpg.pt/lists/linkpage.aspx?page=classif&…&ack=8428ACK987` | `classif.aspx/ClassifLST` · `classifAgregate.aspx/ScoreCard` |
+| **Descoberta** de torneios | `scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T` → `1PreparePage.aspx` | `tournaments.aspx/TournamentsLST` |
+
+⚠ **A entrada da lista tem um hop em JavaScript.** O `tournaments.asp` responde
+com o `datalinkpt.html`, que NÃO faz redirect HTTP: é o `DataGolfeRedirect` da
+página que constrói a URL do `1PreparePage.aspx` e navega. Como não corremos
+JS, reconstruímos essa URL (`criarSessaoLista`), incluindo o detalhe de o
+`club=ALL` virar `ccode=All`. É o `1PreparePage.aspx` que emite a sessão.
+
+⚠ **Chegou a dar-se a descoberta por impossível sem cookies — era erro de
+método:** testou-se o `linkpage.aspx?page=tournlist` no host errado
+(`scoring.fpg.pt/lists`, onde falha com os 3 acks) e o `1PreparePage.aspx`
+*durante* a avaria da FPG, sem voltar a testar depois. Pelo caminho certo e com
+a FPG de pé: `Result:OK`, **84 993 torneios**, com filtro por clube/data/nome.
+
+⚠ **Duas sessões separadas, não uma.** O `DG_Lists_URL` guarda o CONTEXTO da
+página; um POST ao `tournaments.aspx` reescreve-o e o `classif` a seguir perde
+o seu (devolve `Result:ERROR` logo depois de um warmup bem sucedido). O
+`scrape-classif-node.js` mantém `SESSAO` (classif) e `SESSAO_LISTA`
+(descoberta) independentes.
+
+### Quem já corre sem cookies (2026-08-30)
+
+O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do que
+é alcançável. Medido uma a uma, e **só se portou o que passou**:
+
+| Script | Workflow | Endpoint | Sem cookies |
+|---|---|---|---|
+| `scrape-classif-node.js` | update-classif | ClassifLST + ScoreCard | ✅ |
+| `scrape-drive-node.js` | update-drive | TournamentsLST + ClassifLST + ScoreCard | ✅ |
+| `scrape-jovens-node.js` | update-jovens | idem | ✅ |
+| `scrape-federados-node.js` | update-federados | HandicapsLST (gate `fedlist_v2`) | ✅ 17 840 federados |
+| `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
+| `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
+| `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
+
+⚠ **As admissions NÃO são fiavelmente públicas.** O mesmo gate serve
+`000/10941` (página real de inscritos) e devolve `Param Error — Link address
+inválido` (Err=400) em `987/10245`. Enquanto não se souber a regra, esse
+scraper mantém-se autenticado — o `draw` continua público como sempre foi.
+
+⚠ **A ordem foi INVERTIDA a 2026-08-30: público primeiro, cookies como
+fallback.** A regra era "cookies primeiro, público quando falham" — o caminho
+autenticado era o primário por ser o testado. Medido o dia inteiro, isso é o
+avesso do que interessa: **a sessão pública não expira** (é emitida pelo ack a
+cada pedido) e as cookies duram ~9h, morrendo sempre a meio da janela de
+scrapes do fim-de-semana. Pôr o caminho perecível à frente do perene fazia com
+que cada fim-de-semana dependesse de um refresh manual ter corrido nas horas
+certas.
+
+O fallback é **bidireccional**: se o gate público falhar (FPG em baixo, gate
+mudado), ainda se tenta com cookies antes de desistir. Comuta no `criarRoteador`
+de `fpg-session.js` e no `warmupLinkpage` do `scrape-classif-node.js`, os dois
+com o mesmo interruptor de emergência:
+
+| `FPG_AUTH_MODE` | Efeito |
+|---|---|
+| (não definido) / `auto` | **público primeiro**, cookies como fallback |
+| `cookies` | ordem antiga (cookies primeiro) — sem mexer em código |
+| `publico` | só público, nunca toca nas cookies |
+
+Validado com o 987/10207 nos dois caminhos: **18 jogadores, 14 scorecards**,
+ficheiros byte a byte idênticos. Testes: `scripts/lib/fpg-session-modo.test.js`
+(6). O log diz sempre por onde foi (`[classif] sessão pública (ack, sem
+credenciais)`).
+
+⚠ **As admissions ficam de fora — e agora sabe-se porquê.** Medido a
+2026-08-30 sobre os torneios que JÁ têm inscritos guardados no
+`fpg-admissions-draws.json`: o gate público serve o `000/10941` (Nacional
+Sub-12, 21 linhas) mas recusa **6 em 6** torneios de CLUBE que têm inscritos
+(988/10306, 985/10236, 987/10245-48). Não é ausência de dados — esses têm
+inscritos e a via autenticada trá-los. Cobertura nos nossos dados: FPG
+(ccode 000) 84% com inscrições, clubes 43% (o resto são provas cujas
+inscrições os clubes fazem por email e nunca chegam a publicar). Logo as
+cookies compram mesmo alguma coisa aqui, e o `scrape-fpg-admissions-draws-node.js`
+mantém-se autenticado.
+
+⚠ **`redirect:"follow"` do fetch nativo perde a sessão** e mordeu em TRÊS
+sítios (o `Sessao.get` segue os redirects à mão e é a correcção):
+- o `scrape-federados-node.js` aquecia com `redirect:"follow"` e só lia o
+  `Set-Cookie` da resposta FINAL — a sessão emitida no 302 do
+  `1PreparePage.aspx` evaporava-se e o `HandicapsLST` vinha sem contexto
+  (0 registos, salvos pela guarda anti-overwrite);
+- o `scrape-drive-rankings.js` tinha o mesmo padrão no seu warmup;
+- e foi por isto que, à primeira, se concluiu que a descoberta precisava de
+  cookies.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
+
+⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
+substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
+`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
+
+Medido com o 987/10207 (Drive Tour Norte – Amarante) nos três cenários —
+cookies boas, **sem cookies** e **cookies mortas**: os `drive-data-2026-08.json`
+saem **byte a byte idênticos** (metadata, leaderboard, scorecards, par, metros,
+CR/slope, tee e PCC). Verificado com os ficheiros de cookies
+escondidos e as env vars limpas: **18 jogadores e 14 scorecards idênticos linha
+a linha** aos da via autenticada, com metadata completa (nome, campo, data,
+rondas, circuito).
+
+⚠ **Três armadilhas neste caminho, todas com caso real:**
+1. **HTTP 200 não é prova de sessão útil.** Sem cookies o linkpage do
+   `scoring.datagolf.pt` devolve 200 na mesma e só o PageMethod a seguir
+   rebenta — o warmup dava-se por bom e o fallback nunca corria. O teste é o
+   CONTEÚDO (`parseMetaClassif(html).name`), não o `res.ok`.
+2. **Os params extra vão na query string E no body** — o `ScoreCard` devolve
+   500 se só forem num dos sítios (mesma armadilha do `my.fpg.pt`).
+3. Uma variável de cor inexistente (`${C}`) num `console.log` **dentro do
+   try** do fallback fazia o `catch` engolir tudo: a metadata já estava
+   preenchida (o nome aparecia no log!) mas `SESSAO` ficava a null e o scrape
+   caía no caminho autenticado sem cookies. Um throw cosmético a fingir-se de
+   falha de rede.
+
+⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão (500 mesmo com jar) —
+continua a exigir o hash do `1EntryPage.aspx`.
 
 ## Scripts — FPG Pipeline
 
@@ -770,6 +1008,90 @@ full-bake (Padierna/Le Touquet/Doral/Venice 25+26/Paris/Glen/Marco Simone).
 
 ---
 
+## PCC — o ajuste que chega SEMPRE depois do scrape (2026-08-30)
+
+O **PCC** (*Playing Conditions Calculation*, Regra 5.6 do WHS) é um inteiro de
+**−1 a +3** calculado pela FPG **por campo e por dia**, a partir de todos os
+cartões válidos de jogadores com índice ≤ 36.0 entregues nesse campo nesse dia.
+Entra **subtraído** no differential:
+
+```
+SD = (113 / Slope) × (AGS − CR − PCC)
+```
+
+Logo **PCC −1 SOBE o SD em ~1 pancada** (dia fácil → o bom resultado conta um
+pouco menos) e +1..+3 baixam-no (dia difícil). Sem ele a tabela diverge do SD
+oficial exactamente por (113/slope)×PCC.
+
+⚠ **A FPG só o calcula ao FIM DO DIA** — e todos os nossos scrapes de resultados
+correm na própria noite do torneio (`update-drive` Sex/Sáb/Dom 21:00,
+`update-classif` Dom/Seg 01:00, `update-cgss-draw-results` a pedido). O
+`extractPcc()` desses scripts lê o campo `cba` do scorecard, encontra-o vazio, e
+o torneio ficava **para sempre** sem PCC. Caso que destapou isto: 8º Torneio
+CGSS OM NOS 2026 (007/11057, 29-08, Santo da Serra), scrapado às 22:57 do
+próprio dia — o Manuel aparecia com SD 5.5 em vez do oficial 6.4.
+
+### `scripts/backfill-pcc.js` — a rede de segurança
+
+Cada volta do WHS (`output/{fed}/whs.json`) traz o **`cba` oficial** mais
+`tournament_code`, `hcp_dateStr` e `course_description`. Como o WHS é
+re-descarregado às 00:05 UTC (já depois da meia-noite de Lisboa), o PCC chega-nos
+de graça — sem cookies e sem um pedido extra à FPG.
+
+```bash
+node scripts/backfill-pcc.js                      # dry-run
+node scripts/backfill-pcc.js --apply
+node scripts/backfill-pcc.js --apply --since 2026-01-01
+node scripts/backfill-pcc.js --tcode 11057 --verbose
+```
+
+Alvos: `pull-torneios*.json`, `drive-data-*.json`, `aquapor-data-*.json`.
+Exit **0** = preencheu · **2** = nada a fazer · **1** = erro. Idempotente.
+
+⚠ **Chave = tcode + DATA + CAMPO, nunca só o tcode.** A FPG reutiliza tcodes
+entre clubes — o 10052 é ao mesmo tempo um Drive Challenge dos Açores e um do
+Tejo. Casar só por tcode carimba um torneio com o PCC de outro, noutro ano.
+
+⚠ **Valor MODAL com maioria estrita, não o primeiro que aparece.** A própria FPG
+guarda `cba` desactualizado nalguns registos: na "Final Regional Drive Challenge
+Açores-Sub18" (10121, 27-08-2024) cinco dos nossos têm −1 e um tem 0 — o cartão
+desse foi processado antes de o PCC existir. É a mesma avaria pelo outro lado.
+Empate → não se mexe.
+
+⚠ **Só se escreve PCC ≠ 0.** 0 é "sem ajuste", idêntico a não ter campo nenhum —
+e é o que o `extractPcc()` dos scrapers faz, por isso um re-scrape futuro produz
+o mesmo ficheiro. O `pcc` vive no **`roundScores[]`** (a seguir a `meters`), não
+no jogador; o `normalizePlayer` levanta-o para o topo em runtime.
+
+Passagem inicial (2026-08-30): **5008 rondas em 136 torneios**; a coincidência
+exacta entre o SD calculado e o `sgd` oficial subiu de **63,4% para 73,4%** em
+15 421 rondas dos nossos. Limitação: só cobre torneios onde pelo menos um dos
+nossos jogadores jogou.
+
+### Onde corre
+
+| Workflow | Quando | Papel |
+|---|---|---|
+| `update-data.yml` | Dom+Seg 00:05 UTC | Varredura geral, a seguir a descarregar o WHS. O passo tem `id: pcc` e o commit corre também quando `steps.pcc.outputs.filled == '1'` (senão o PCC ficava no runner) |
+| `update-classif.yml` | Dom+Seg 01:00 UTC | Os torneios acabados de scrapar apanham o PCC na mesma noite, em vez de esperar uma semana |
+
+⚠ O `git add` dos dois workflows **tem de incluir** `pull-torneios*`,
+`drive-data-*` e `aquapor-data-*` — faltavam no `update-data.yml` e o backfill
+teria sido silenciosamente deitado fora.
+
+### ⚠ Sentinelas de "sem cartão" (o bug do badge verde)
+
+A FPG põe **998** (ND/NR — não devolveu) e **999** (NS/WD) no lugar do gross, e o
+`numGross()` converte um `grossTotal` null no mesmo 999. O `computeSD` só
+rejeitava `null`: o cartão a zeros era "reparado" pelo Net Double Bogey e saía um
+SD de **−58.8** que, sendo ≤ HCP, pintava o badge de **VERDE** — as 9
+desistências do CGSS OM NOS apareciam como as melhores voltas do dia (25 verdes
+em vez de 16). Guarda `gross >= 900` em `computeSD` (`fpgUtils.ts`) e nas duas
+cópias da mesma lógica (`ResumoTable.tsx`, `DrivePage.tsx`). Mesma convenção do
+ranking Drive. Testes em `src/data/__tests__/computeSD.test.ts`.
+
+---
+
 ## Scripts — USKids (Playwright)
 
 **fetch-uskids-results.js** — Scorecards completos + par/yards reais por buraco. Torneios em curso: atualiza auto. Históricos configurados no array `HISTORICOS`.
@@ -909,6 +1231,66 @@ que é exactamente o erro que esta datação corrige.
 2026") e o `INCLUIR_FORTE` ignora o `KEYWORDS_EXCLUIR` — era por isso que cada
 uma tinha de ser listada à mão em `FORCAR_EXCLUIR` (4 entradas). A guarda corre
 ANTES de tudo e resolve a classe inteira.
+
+### ⚠ O NOME não classifica o torneio — o `type` do GetMeta classifica (2026-08-30)
+
+A decisão de que torneios entram no radar vive agora em
+**`scripts/lib/uskids-classify.js`** (`incluirTorneio(t, name, type)`, 10 testes).
+Enquanto foi só por palavras-chave sobre o nome, falhava nos dois sentidos —
+o nome de um evento USKids é livre. Três **Regionais** com inscrições abertas
+nunca chegaram à app (medidos 2026-08-30, todos dentro da zona já varrida):
+
+| t | Torneio | Porque caiu |
+|---|---|---|
+| 22986 | PGA Golf Club Invitational 2026 | batia no exclude `'golf club'` — que existe para deitar fora os ~1200 eventos do Local Tour, que se chamam pelo nome do campo |
+| 23318 | Colonial Williamsburg Classic 2026 | `'classic'` só existia colado a um sítio (`'venice classic'`, `'holiday classic'`) |
+| 23420 | Monterey Challenge 2026 | `'challenge'` nem sequer era include |
+
+O `tournament` do `GetMeta` já traz a taxonomia oficial — `tour`
+("Domestic Championships Tour") e `type` (inteiro). Medido sobre os 1320
+torneios vivos em t=22240…23640:
+
+| type | tour | n | exemplo |
+|---|---|---|---|
+| **1** | Domestic Championships Tour | 5 | Seaview Open 2026 ← **Regional** |
+| 2 | Teen Series Tour | 30 | Teen Series at Longleaf (NC) |
+| 5 | `{cidade} Tour` | ~1150 | The Legends Golf Club ← **Local Tour** |
+| 6 | `{cidade} Tour` (Tour Championship) | ~190 | Longleaf … (Tour Championship) |
+| **7** | State Invitationals Tour | 8 | 2026 Kansas State Invitational |
+| **8** | International Championships Tour | 14 | Venice Open 2026 |
+| 9 | Team Golf Tour | 23 | Concord Local Parent/Child 2026 |
+| 12 | Girls Invitationals Tour | 2 | 2026 Girls Invitational - Longleaf (NC) |
+| 13 | International Teen Series Tour | 3 | International Teen Series at Al Hamra |
+
+`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome.
+
+**`TIPOS_INCLUIR_SE_INTL = {6}` — Tour Championship, só fora dos EUA.** O
+type 6 é a final de época de cada Local Tour de cidade (irmão do type 5, que
+fica de fora): 184, das quais 133 por jogar. Todas no radar levariam a Fase 2
+do monitor diário de 33 para ~166 torneios — 5× o trabalho — e a esmagadora
+maioria é americana, onde não nos cruzamos com ninguém. Entram as **54 de fora
+dos EUA**: Azata/Andaluzia, Venice, Milão, Turim, Toscana, Munique, Hamburgo,
+Nuremberga, Lyon, Londres, Panamá, América Latina, Ásia, África.
+
+⚠ **O sinal é o código de país ENTRE PARÊNTESES** no `tour` ("Lima (PE) Tour",
+"Andalusia (ES) Tour"). Os tours americanos com sigla de estado usam
+**vírgula** e nunca parênteses ("Charleston, SC Tour", "Central Valley, CA
+Tour") — verificado nos 158 tours distintos do corpus: 14 com vírgula, zero
+falsos positivos. E os únicos "(CA)" são Niagara e Vancouver, que são o
+**Canadá**, não a Califórnia: entram de propósito. Efeito medido: **+64 no
+corpus (54 futuros), 0 americanos**. As
+palavras-chave ficam como camada **aditiva** — é só isso que continua a trazer
+as etapas de Local Tour que seguimos de propósito (Azata/Andaluzia, Panamá,
+Al Hamra, OPEN.9 Eichenried, Circolo Golf Venezia) sem abrir a porta às outras
+~1200. `KEYWORDS_EXCLUIR_SEMPRE` (Parent/Child) corre antes do tipo e
+`FORCAR_EXCLUIR` vence tudo. Diferença medida sobre os 1320: **+3, −0**.
+
+⚠ **O `type` tem de ser guardado na cache.** O `descobrirTorneios` re-filtra as
+entradas de `uskids-discovery-cache.json` à entrada; sem `tour`/`type`
+persistidos, a re-entrada voltava a decidir só pelo nome e os Regionais caíam
+outra vez na corrida seguinte. Entradas antigas sem `type` continuam a ser
+lidas pelo nome (retrocompatível). O `uskids-field.json` também passa a
+carregar `tour`/`type` por torneio.
 
 **fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133])`.
 
@@ -1478,9 +1860,58 @@ Armadilhas medidas (todas com caso real):
 
 Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgenius.com`, outros em subdomínios `eg-{slug}{YY}.golfgenius.com`). A página `/england` é uma duplicação minimalista da `/bjgt` (mesmos `TournView`, sub-tabs por ronda, ManuelPill, etc.).
 
-**Catálogo:** `public/data/england-golf-catalog.json` — 28 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
+**Catálogo:** `public/data/england-golf-catalog.json` — 39 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club, English Schools). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
 
-**Cobertura efectiva:** 19/28 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+**Cobertura efectiva:** 19/28 das edições 2023-2025 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+
+### ⚠ A época de 2026 esteve um Verão inteiro por scrapar (2026-08-30)
+
+O England era o **único circuito sem automação**: não havia workflow nenhum a
+correr o `scrape-england-golf.js`, e todos os `england_*.json` tinham
+`scrapedAt: 2026-05-18` — o dia em que o scraper foi escrito. Some-se a isso o
+catálogo ser **curado à mão** e os ids do GolfGenius **mudarem todos os anos**
+(o subdomínio inclusive: `eg-carristrophy25` → `eg-carristrophy26`), e o
+resultado foi 2026 ficar com **uma única entrada** — o `bronte-law-farnham-2026`,
+inserido em Maio quando a página ainda nem estava publicada. Corrigido com as
+três peças abaixo: descoberta, 11 entradas novas no catálogo e o
+`update-england.yml` semanal.
+
+### Descoberta de provas novas — `discover-england-golf-events.js`
+
+A fonte é o **directório público do England Golf** no GolfGenius:
+`/leagues/36129/customer_directories/10291/directory_iframe` (o link vive no
+próprio `englandgolf.org`). Lista os ~41 eventos da época com, para cada um, um
+link `/ggid/{ggid}` que redirecciona para a **página de resultados** — que é
+exactamente o `gg_page` que o scraper quer. Os ggid terminam no ano a 2 dígitos
+(`carris26`, `reid26`, `bljse26`), o que dá o filtro por época de borla.
+
+```bash
+node scripts/discover-england-golf-events.js            # juvenis do ano corrente
+node scripts/discover-england-golf-events.js --all      # todos os eventos (incl. adultos)
+node scripts/discover-england-golf-events.js --year 2027 --json /tmp/eg.json
+```
+
+Exit **0** = há provas por acrescentar · **2** = nada novo · **1** = erro.
+Imprime as entradas já em JSON, prontas a colar — com `section`/`gender`/
+`ageGroup` a `"REVER"`, **de propósito**: são esses três campos que fazem a
+`/england` agrupar as provas por secção e não há como inferi-los do nome com
+confiança. O workflow corre a descoberta mas **nunca edita o catálogo** — só
+escreve o aviso no resumo do run.
+
+⚠ **O directório é uma app React** — o HTML cru vem vazio, é preciso browser.
+⚠ **O GolfGenius devolve 403 a um `page.goto` directo em `/pages/{id}`** vindo de
+browser automatizado, mas serve o directório e os widgets à mesma. Por isso a
+resolução `ggid → /pages/{id}` é feita por `fetch` DENTRO do contexto do browser,
+nunca por navegação.
+⚠ **Cada evento tem DUAS páginas e nem sempre servem as duas.** O cartão do
+directório tem um link "Results" e o `/ggid/{ggid}` redirecciona para uma página
+de aterragem — que podem ser diferentes. No **Carris Trophy 2026** a aterragem é
+`/pages/6135942` ("Leaderboard"), onde o dropdown de eventos vem **vazio** e o
+scraper salta o torneio com `⚠ dropdown sem eventos`; o "Results" do cartão
+(`/pages/5644445`) abre a vista certa, com as 4 rondas e 195 jogadores. O
+discover propõe o "Results" primeiro e imprime a aterragem como `alt=` — se um
+torneio do catálogo der "dropdown sem eventos", **trocar pelo outro id antes de
+o dar como falhado**.
 
 ### CLI
 
@@ -1494,6 +1925,20 @@ node scripts/scrape-england-golf.js --skip-existing              # idempotente
 node scripts/scrape-england-golf.js --gg-base https://eg-X.golfgenius.com --gg-page 1234567 --slug X --year 2026  # ad-hoc
 node scripts/scrape-england-golf.js --no-headless                # debug com browser visível
 ```
+
+**Exit codes (2026-08-30):** **0** = gravou ficheiros novos/alterados · **2** =
+nada novo (NÃO é erro — o workflow salta o commit) · **1** = erro real. O
+ficheiro só é reescrito quando o conteúdo muda **ignorando o `scrapedAt`**
+(`sameContent`) — sem isso cada run do cron produzia um diff em todos os
+ficheiros só por causa do timestamp e o commit semanal era ruído puro.
+
+**Variáveis de ambiente (2026-08-30):** `launchOptions()` deixa o Playwright
+adaptar-se ao ambiente sem mexer no CI. `PLAYWRIGHT_CHROMIUM_EXECUTABLE` aponta
+para um Chromium pré-instalado; se houver `HTTPS_PROXY`, passa-o ao browser
+**mais** `--disable-quic --disable-http2 --ssl-version-max=tls1.2` (sem estes o
+Chromium não fala com um proxy que re-termina TLS — dá `ERR_CONNECTION_RESET`
+enquanto o `curl` funciona perfeitamente). Em CI nenhuma das duas está definida
+e o comportamento é o de sempre.
 
 ### Output enriquecido (refactor 2026-05-18)
 
@@ -1596,15 +2041,41 @@ Confirmadíssimo via Chrome live em Carris 2025 (validado contra detail page do 
 
 Idade está IMPLÍCITA pelo tier do torneio (Carris=U18, McGregor=U16, Reid=U14) ou pela divisão (Jean Case Memorial U15 dentro do McGregor).
 
-### Limitações conhecidas — 9 torneios que não passam
+### Limitações conhecidas — torneios que não passam
 
 | Slug | Razão |
 |---|---|
 | `carris-trophy-2024`, `mcgregor-trophy-2023`, `english-girls-championship-2025` | "dropdown sem eventos" — England Golf arquivou e removeu os dados do GG |
-| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `boys-county-finals-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
-| `bronte-law-farnham-2026` | Torneio futuro, página ainda não publicada |
+| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
+| `bronte-law-farnham-2026`, `bronte-law-moor-allerton-2026` | Idem — `campaigns/2263/run`. Tentados os DOIS ids (aterragem e "Results"). |
+| `boys-county-finals-2025`, `boys-county-finals-2026` | **Match play entre condados** — o dropdown traz "Somerset vs Yorkshire", "Nottinghamshire vs Hampshire"… O `isStrokePlay` exclui match play **de propósito** (não há leaderboard individual para extrair). Não é falha do scraper nem da página. |
+| `english-schools-team-2026`, `english-schools-scratch-team-2026` | Campeonatos por EQUIPAS (escolas) — "dropdown sem eventos" nos dois ids. |
 
 Estes não são bugs do scraper. Confirmado via Chrome live: as páginas existem mas o iframe `tournament_results` nunca é carregado.
+
+⚠ **Estas provas contam em `semDados`, NUNCA em `fail`** (2026-08-30) — e por isso
+não fazem o cron ficar vermelho. Se contassem, o alarme tocava **todas as
+semanas**, porque o catálogo tem provas permanentemente sem stroke play e porque
+no início de cada época NENHUMA prova do ano tem ainda resultados. Um alarme que
+toca sempre deixa de ser lido — que é, no fundo, como o England chegou a estar
+três meses por scrapar. `fail` fica reservado a excepções (exit 1).
+
+### Época de 2026 — o que ficou coberto
+
+8 ficheiros / 7 provas, scrapados a 2026-08-30:
+
+| Prova | Jogadores | Par |
+|---|---|---|
+| Carris Trophy (4 rondas) | 144 | 70 |
+| Reid Trophy (3 rondas) | 144 | 70 |
+| McGregor Trophy | 144 | 71 |
+| English Girls' Open Stroke Play | 142 | 73 |
+| English Girls' U16 & U14 (`_div1` + `_div2`) | 51 + 93 | 73 |
+| Bronte Law — Royal Mid Surrey | 30 | 73 |
+| Bronte Law — Edgbaston | 27 | 72 |
+
+Todas entram no canónico do kids2 (agregador: 30296 juniores · 20898 torneios,
+9/9 sanity checks, Manuel×Dmitrii = 7 mantido).
 
 ### Bugs históricos resolvidos (2026-05-18)
 
@@ -2626,20 +3097,22 @@ validado server-side. **Não replicável de Node puro.**
 | `uskids-results.yml` | ✅ | idem | — | idem |
 | `uskids-member-history.yml` | ✅ | idem | — | idem |
 | **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
-| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** |
+| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** Corre também `backfill-pcc.js --apply` — ver "PCC — o ajuste que chega SEMPRE depois do scrape". |
 | **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | Sex/Sáb/Dom 21:20 UTC | Scrape inscrições dos Nacionais de Jovens. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`update-fpg-admissions-draws.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-fpg-admissions-draws-node.js` | Sex/Sáb/Dom 20:00 UTC | **Cron aplica `--auto-extend --since 4d`**: scope manual (333) + Fonte 2 (JSONs locais: drive-data, jovens, pull-torneios, SdS) + Fonte 3 (TournamentsLST com warmup entry-gate, filtros INCLUDE=junior/PJA/jovens/sub-XX/ccode=007, EXCLUDE=Flintstones/Quarta Feira Europeia). Janela: futuros + em curso + torneios ≤3 rondas até dia seguinte ao fim. Para scope histórico completo: workflow_dispatch sem filtros. Secrets: `FPG_ADMISSIONS_COOKIES` + `DATAGOLF_SCORING_COOKIES`. |
-| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. Corre também `backfill-pcc.js --apply` (o WHS das 00:05 já traz o `cba` do próprio fim-de-semana). |
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 (email 2026-08-23) | `scripts/scrape-federados-node.js` (+ `build-run-digest` → email do cadastro) | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`update-golfgenius.yml`** | ✅ Novo 2026-07-23 | `scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json` | Diário 22:00 UTC | Eventos GolfGenius do scope (hoje: as 4 edições do Champion of Champions). Sem secrets (GG público a `fetch`). Exit 2 = sem alterações. Quando há novidades regenera o agregador + `major-catalog.json` e committa. `workflow_dispatch` aceita `slug` (só um evento do scope) ou `page_url` ad-hoc. |
+| **`update-england.yml`** | ✅ Novo 2026-08-30 | `scripts/discover-england-golf-events.js` + `scripts/scrape-england-golf.js` | Segunda 05:00 UTC | Torneios juvenis England Golf (GolfGenius) do catálogo, ano corrente. **Playwright** (o GG depende de JS para os dropdowns e scorecards); sem secrets (público). Os campeonatos ingleses jogam-se de Terça a Sexta, por isso à Segunda a semana anterior já fechou. A descoberta corre antes e AVISA (no `$GITHUB_STEP_SUMMARY`) que provas estão fora do catálogo, mas nunca o edita. Exit 2 = sem alterações. Com novidades regenera o agregador de juniores e committa. `workflow_dispatch` aceita `year`/`slug`/`gg_page`/`skip_existing`. |
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
 | **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
 | **`daily-digest.yml`** | ✅ Novo 2026-08-17 | `scripts/build-run-digest.js` + `send-digest-issue.js` | Diário 07:30 UTC | **Resumo por email** do que os scrapers trouxeram nas últimas 24h. Sem secrets. Ver secção própria abaixo. |
+| **`analytics-snapshot.yml`** | ✅ Novo 2026-08-28 | `scripts/snapshot-web-analytics.js` | Diário 03:15 UTC (+ mensal no dia 1) | **Retrato do Vercel Web Analytics** para `data-archive/analytics/`. O plano Hobby só guarda 30 dias — isto copia-os para o repo antes de desaparecerem. Secret: `VERCEL_TOKEN`. Exit 2 = sem novidades. |
 
 ### ⚠ FCG (catgolf.com) — guarda anti-overwrite do scope (2026-08-17)
 
@@ -3450,6 +3923,91 @@ reutilize (ex: 10604-10606 = Amendoeira 2026 E Clube de Belas 2025 → o
 Amendoeira entra por NOME em `isPJACore`, não por tcode).
 O que fica FORA da fonte única: `shortTournName` (apresentação, cada superfície
 tem a sua) e o motor de agregação/UI de cada lado.
+
+### ⚠ O `pja-rules.mjs` é servido EM CRU ao browser (2026-08-31)
+
+A standalone importa-o com `<script type="module">` **same-origin** — a pasta
+`ranking-pja/` é o root do projecto Vercel — por isso o ficheiro é
+descarregável tal e qual em `ranking-pja.vercel.app/pja-rules.mjs`,
+**comentários incluídos**. Não é bundled nem minificado (ao contrário da app
+principal, onde o Vite os deita fora).
+
+Logo: **nada de notas internas nesse ficheiro** — processo interno, decisões
+por confirmar, nomes de pessoas, raciocínio que fora de contexto se lê mal.
+O que for preciso guardar vai para aqui (o CLAUDE.md nunca é servido).
+Comentários curtos e neutros que expliquem o código chegam.
+
+⚠ As restantes secções do ficheiro ainda têm comentários desse género
+(o motivo do ×1.75 do Royal Óbidos, as notas do Amendoeira/Clube de Belas,
+o "legacy confirmado contra o Excel oficial" de 2025). Ficaram como estavam —
+limpar quando houver decisão sobre cada um.
+
+### Notas públicas do ranking — `PJA_NOTAS` (2026-08-31)
+
+O que o público lê sobre elegibilidade vive em `PJA_NOTAS` + `notasPJA(ano,
+hoje)` no `pja-rules.mjs`, e é renderizado por AMBAS as superfícies
+(`RankingNotas` na `PJARankingView`, `renderNotas()` na standalone). O texto
+está na fonte única pela mesma razão que as regras: senão as duas páginas
+acabam a dizer coisas diferentes.
+
+- `tipo: "fora"` — prova do calendário que não conta (fica indefinidamente).
+  ⚠ Só entram aqui as exclusões que alguém de fora **iria estranhar** (uma
+  prova do calendário sem coluna no ranking). O Sub-10 do Miramar não tem nota
+  pública de propósito: não há Sub-10 no circuito, ninguém dá pela falta, e a
+  nota só levantava uma pergunta que não existia.
+- `tipo: "info"` + `ate: "YYYY-MM-DD"` — nota de agenda, desaparece sozinha
+  depois dessa data (senão o site fica a anunciar provas já jogadas).
+- O bloco é desenhado ANTES do fetch dos dados — aparece mesmo que o
+  carregamento falhe.
+
+### ⚠ TOP-14 voltas: mostrar QUAIS caíram (2026-08-31)
+
+O total é a soma das **14 MELHORES voltas** do ano — caem as piores. ⚠ São
+**voltas, não provas**: uma prova de 3 rondas gasta 3 lugares, por isso o tecto
+aperta muito antes das "14 provas" (medido a 31-08: João Rocha 13 voltas em 6
+provas, Nuno Palmares 12 — o Torre e a Grande Final passam-nos os dois).
+
+Os dois motores já ordenavam por pontos e cortavam no 14 — o que faltava era
+**dizê-lo na tabela**. A `PJARankingView` chegava a calcular `inTop14` por
+volta e nunca o usava no render; a standalone nem isso. Resultado: a partir da
+15ª volta a linha deixava de somar para o total e não havia como perceber
+porquê ("as contas não batem").
+
+Agora, nas duas superfícies:
+- volta fora do top-14 → **esbatida** (`opacity .35`) + tooltip "Fora das 14
+  melhores voltas — não soma";
+- colunas **Vlt** e **Total** mostram DOIS números quando o tecto morde: o que
+  conta em tamanho normal e, a seguir, o que se jogou em pequeno e esbatido —
+  `14/18` e `276/309`. Quem não passou as 14 mantém um número só.
+  ⚠ **Na mesma linha, nunca empilhados** (`display:block`): empilhar punha a
+  linha da tabela a **38-46px contra os 26px** das outras e dava muito nas
+  vistas. Inline a altura fica igual à das restantes (medido: excesso 0);
+- a linha de regras explica-o em texto.
+
+⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
+que continua **riscado** — são coisas diferentes: uma regra tirou-a vs. jogou-se
+e vale, mas há 14 melhores.
+
+⚠ O "total de todas" soma só as voltas ELEGÍVEIS (as `excluded` ficam fora dos
+dois números, como já ficavam da contagem de voltas) — senão os dois totais
+falavam de universos diferentes.
+
+Validado num browser com dados reais + um torneio fabricado a forçar 18 voltas:
+`14/18` e `276/309`, com 276 + (12+9+7+5) = 309 a fechar, e as 4 esbatidas a
+serem exactamente as 4 piores.
+
+### Provas do calendário 2026 que NÃO contam — e porquê
+
+| Prova | ccode/tcode | Porque fica fora |
+|---|---|---|
+| Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os tees de partida não foram os estabelecidos para as restantes provas do circuito (jogou-se das **brancas**) — resultados não comparáveis. **Exclusão deliberada — não re-adicionar.** ⚠ A nota pública fica-se pelo facto, em registo formal: não entra em cores de marcas nem na mecânica dos pontos. |
+| Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. **Sem nota pública** (ver acima). |
+
+⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por
+`PJA_TCODES`. A FPG reutiliza os quatro números noutros clubes e anos: 10580 em
+007/022/068, 10581 em 022, 10652 em 009/022, 10653 em 009/022. Pô-los na
+whitelist por tcode arrastaria torneios que não têm nada a ver (mesma armadilha
+do Amendoeira ↔ Clube de Belas).
 
 ---
 

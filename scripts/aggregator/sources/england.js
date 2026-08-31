@@ -13,6 +13,7 @@
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { displayName } = require("../util/names");
+const { rankResults } = require("../util/rank");
 
 const SOURCE_ID = "england";
 const SOURCE_LABEL = "England Golf";
@@ -103,7 +104,14 @@ function load() {
       results.push({
         playerSourceKey: key,
         playerName,
-        pos: typeof pl.pos === "number" ? pl.pos : null,
+        // O `pos` do ficheiro NAO serve: e o `data-rank` cru da leaderboard do
+        // GolfGenius, que conta as DUAS linhas que o GG poe por jogador (gross +
+        // sub-linha) -- daí 1, 3, 5, 7... e 144 jogadores a acabarem no lugar
+        // 288, com os empates nunca a partilhar lugar. A posicao real e
+        // reconstruida dos totais logo abaixo (rankResults), tal como o `loadT`
+        // da EnglandGolfPage sempre fez -- por isso a /england nunca mostrou o
+        // erro e so o kids2 o herdava.
+        pos: null,
         status: pl.pos == null && !rounds.length ? "DNS" : "OK",
         totalGross: typeof pl.total === "number" ? pl.total : null,
         toPar: typeof pl.toPar === "number" ? pl.toPar : (typeof pl.result === "number" ? pl.result : null),
@@ -111,6 +119,7 @@ function load() {
       });
     }
     if (!results.length) continue;
+    rankResults(results, par ? par.filter((x) => x > 0).length : 18);
 
     const division = data.players[0]?.division || data.category || data.ageGroup || "Geral";
     tournaments.push({

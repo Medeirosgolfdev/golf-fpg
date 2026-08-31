@@ -1,0 +1,213 @@
+name: Actualizar England Golf (Playwright)
+
+# Scrape dos torneios juvenis England Golf (GolfGenius): Carris/McGregor/Reid
+# Trophy, English Girls' Open Stroke Play e U16/U14, Bronte Law Junior Series,
+# Boys' County Finals, English Schools.
+#
+# PORQUE EXISTE: até 2026-08-30 o England era o único circuito sem automação —
+# o scraper só corria à mão e a última passagem tinha sido a 2026-05-18, o dia em
+# que foi escrito. Resultado: a época de 2026 inteira ficou de fora do site.
+#
+# Duas fases, ambas Playwright (o GolfGenius depende de JS para os dropdowns de
+# evento e para os scorecards) e SEM secrets — o GG do England Golf é público:
+#
+#   1. Descoberta — lê o directório público do England Golf e avisa (no log e no
+#      resumo do run) que provas do ano corrente ainda não estão no catálogo.
+#      NÃO edita o catálogo: as entradas precisam de section/gender/ageGroup
+#      curados à mão, que é o que faz a /england agrupar as provas certas.
+#      continue-on-error — se o directório mudar, o scrape corre na mesma.
+#   2. Scrape — corre o catálogo do ano corrente e reescreve os
+#      public/data/england_{slug}.json que mudaram.
+#
+# Exit codes do scraper: 0 = ficheiros novos/alterados → regenera o agregador de
+# juniores e committa · 2 = nada novo (NÃO é erro) · 1 = erro real.
+#
+# Nota: o commit é self-contained (scrape + agregador) porque um push feito com
+# GITHUB_TOKEN não dispara o build-juniors.yml.
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Ano a scrapar (ex: 2026). Vazio = ano corrente.'
+        required: false
+        default: ''
+      slug:
+        description: 'Slug específico do catálogo (ex: "carris-trophy-2026"). Vazio = todos do ano.'
+        required: false
+        default: ''
+      gg_page:
+        description: 'GG page ID ad-hoc (ex: "6135942"). Requer também slug e year.'
+        required: false
+        default: ''
+      skip_existing:
+        description: 'Saltar torneios que já têm ficheiro com jogadores'
+        required: false
+        default: false
+        type: boolean
+
+  schedule:
+    # Segunda 05:00 UTC — depois da cadeia de Segunda (ffgolf 02:00/03:00,
+    # spain 04:00), para não colidir no git push. Os campeonatos juvenis
+    # ingleses jogam-se de Terça a Sexta, por isso à Segunda a semana anterior
+    # já está fechada e publicada.
+    - cron: '0 5 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-england:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    concurrency:
+      group: update-england
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Descobrir provas fora do catálogo
+        # Só avisa — não edita o catálogo (section/gender/ageGroup são curados).
+        # Exit 2 = nada por acrescentar; qualquer falha não trava o scrape.
+        continue-on-error: true
+        run: |
+          YEAR="${{ github.event.inputs.year }}"
+          if [ -z "$YEAR" ]; then YEAR=$(date -u +%Y); fi
+          set +e
+          node scripts/discover-england-golf-events.js --year "$YEAR" | tee /tmp/eg-discovery.txt
+          RC=${PIPESTATUS[0]}
+          set -e
+          if [ "$RC" = "0" ]; then
+            {
+              echo "### ⚠ England Golf — provas de $YEAR fora do catálogo"
+              echo ''
+              echo 'Acrescentar a `public/data/england-golf-catalog.json` (rever section/gender/ageGroup):'
+              echo ''
+              echo '```'
+              cat /tmp/eg-discovery.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Correr scrape-england-golf.js
+        id: scrape
+        run: |
+          ARGS="--headless"
+          if [ -n "${{ github.event.inputs.year }}" ]; then
+            ARGS="$ARGS --year ${{ github.event.inputs.year }}"
+          else
+            CURRENT_YEAR=$(date -u +%Y)
+            ARGS="$ARGS --year $CURRENT_YEAR"
+            echo "ℹ️  Default: ano corrente $CURRENT_YEAR"
+          fi
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          if [ -n "${{ github.event.inputs.gg_page }}" ]; then
+            ARGS="$ARGS --gg-page ${{ github.event.inputs.gg_page }}"
+          fi
+          if [ "${{ github.event.inputs.skip_existing }}" = "true" ]; then
+            ARGS="$ARGS --skip-existing"
+          fi
+          echo "Args: $ARGS"
+
+          set +e
+          node scripts/scrape-england-golf.js $ARGS
+          EXIT_CODE=$?
+          set -e
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper England Golf falhou — ver logs acima"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem alterações — a saltar regeneração e commit"
+          fi
+          exit 0
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          set +e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: England Golf scrape + rebuild juniors ${DATE}"
+
+          # Ficheiros GERADOS (não-fonte). Um push concorrente de outro workflow
+          # regenera-os no mesmo instante → conflito no rebase. Fundir à mão só
+          # produz JSON inválido; a política do repo (CLAUDE.md, "Conflitos de git
+          # nos ficheiros GERADOS") é REGENERAR. Por isso: se os ÚNICOS conflitos
+          # forem estes, aceitamos qualquer lado e reconstruímos a seguir.
+          GEN_FILES="public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json"
+
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+
+            git rebase "origin/${GITHUB_REF_NAME}"
+            if [ $? -ne 0 ]; then
+              CONFLICTED=$(git diff --name-only --diff-filter=U)
+              UNEXPECTED=$(printf '%s\n' $CONFLICTED | grep -vxF -f <(printf '%s\n' $GEN_FILES))
+              if [ -n "$UNEXPECTED" ]; then
+                echo "Conflito inesperado em ficheiros não-gerados:"
+                echo "$UNEXPECTED"
+                git rebase --abort 2>/dev/null || true
+                echo "❌ Rebase com conflitos que não sabemos resolver automaticamente"
+                exit 1
+              fi
+              git checkout --theirs -- $CONFLICTED
+              git add -- $CONFLICTED
+              GIT_EDITOR=true git rebase --continue
+              if [ $? -ne 0 ]; then
+                git rebase --abort 2>/dev/null || true
+                echo "Rebase --continue falhou — retry em $((i * 5))s"
+                sleep $((i * 5))
+                continue
+              fi
+              node scripts/aggregator/index.js || { echo "❌ agregador falhou"; exit 1; }
+              git add public/data
+              git diff --staged --quiet || git commit --amend --no-edit
+            fi
+
+            if git push; then
+              PUSH_OK=1
+              break
+            fi
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ England Golf + juniores canónicos actualizados"

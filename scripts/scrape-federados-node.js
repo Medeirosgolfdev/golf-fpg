@@ -69,12 +69,18 @@ if (Number.isNaN(maxPages)) {
 // ── Cookies ──────────────────────────────────────────────────────
 // Fonte (por ordem): env DATAGOLF_SCORING_COOKIES (Actions) → ficheiro
 // api/.scoring-datagolf-cookies.json (dev local). Via lib partilhada.
+// ⚠ Opcionais desde 2026-08-30: o gate `1PreparePage.aspx?page=fedlist_v2`
+// (abaixo, em WARMUP_URLS) emite ele próprio a sessão a quem chega sem
+// credenciais, e o mergeCookies já a adopta. Sem cookies parte-se de um jar
+// vazio em vez de abortar. Medido: HandicapsLST devolve Result:OK com 17 840
+// federados sem uma única credencial nossa.
 function loadCookies() {
   return loadCookieHeader({
+    exitOnFail: false,
     envVars: ["DATAGOLF_SCORING_COOKIES"],
     file: COOKIES_PATH,
     label: "[federados]",
-  });
+  }) || "";
 }
 
 // ── .NET /Date(ms)/ → ISO YYYY-MM-DD (dia civil de Lisboa) ────────
@@ -95,6 +101,94 @@ function normalize(r) {
   return out;
 }
 
+// User-Agent do Chrome 90 — o mesmo browser que minta estes cookies (ver
+// CLAUDE.md, "Chrome 90 — setup detalhado") e o mesmo que o test-datagolf-node
+// usa para validar o secret.
+const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
+
+// ── Warm-up da sessão ────────────────────────────────────────────
+/* ⚠ Este endpoint NÃO responde a um POST directo com sessão fria.
+ *
+ * Medido a 2026-08-29, com cookies frescos e válidos (o cookie-health passou
+ * nos 3 conjuntos no mesmo minuto): `HandicapsLST` devolvia HTTP 500 logo no
+ * startIndex=0, três tentativas seguidas, enquanto o `TournamentsLST` — mesmo
+ * domínio, mesmos cookies, sem warm-up — respondia perfeitamente.
+ *
+ * A assimetria explica-se: o cookie `DG_Lists_URL` é capturado a navegar a
+ * lista de TORNEIOS (`page=tournlist`), por isso o servidor tem contexto para
+ * essa página e não para a dos federados. É a armadilha que o CLAUDE.md já
+ * documentava para admissions/classif ("linkpage.aspx é o gateway canónico —
+ * não ir directo às páginas alvo"), e este era o único scraper que ia directo.
+ *
+ * Enquanto os cookies eram capturados à mão e usados minutos depois, a sessão
+ * ainda vinha quente do browser e isto passava despercebido — funcionou às
+ * 14:09 de 26/08 e falhou às 19:09 do mesmo dia, sem uma linha de código pelo
+ * meio. Era o estado server-side a arrefecer, não os cookies a expirar.
+ *
+ * A ordem importa: aquece-se o entry-gate primeiro (repõe o contexto de
+ * listas), depois a própria página dos federados, adoptando pelo caminho
+ * qualquer cookie que o servidor devolva. Se ele nos entregar uma sessão
+ * nova, a antiga estava morta e é a nova que tem de ser aquecida — daí
+ * adoptar ANTES do passo seguinte, e não no fim.
+ */
+const ACK_TOURNLIST = "XH256YF45T";
+const WARMUP_URLS = [
+  `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`,
+  // ⚠ O gate público da página dos federados, não a URL directa: é ele que
+  // repõe o contexto (DG_Lists_URL) e, sem credenciais, é ele que EMITE a
+  // sessão. Ir directo à FederatedsList_V2.aspx só funciona com uma sessão já
+  // com contexto — a armadilha que o comentário acima descreve.
+  "https://scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page=fedlist_v2" +
+    "&ccode=All&param=publicrestrictions&pagelang=PT",
+  "https://scoring.datagolf.pt/pt/FederatedsList_V2.aspx",
+];
+
+/** Junta ao header os cookies que o servidor mandou (os novos ganham). */
+function mergeCookies(cookieHeader, setCookies) {
+  if (!setCookies || !setCookies.length) return cookieHeader;
+  const jar = new Map();
+  for (const part of cookieHeader.split(";")) {
+    const kv = part.trim();
+    if (!kv) continue;
+    const i = kv.indexOf("=");
+    if (i > 0) jar.set(kv.slice(0, i).trim(), kv.slice(i + 1));
+  }
+  let mudou = false;
+  for (const sc of setCookies) {
+    const first = String(sc).split(";")[0];
+    const i = first.indexOf("=");
+    if (i <= 0) continue;
+    const k = first.slice(0, i).trim();
+    const v = first.slice(i + 1);
+    if (!v || v === "deleted") continue;
+    if (jar.get(k) !== v) mudou = true;
+    jar.set(k, v);
+  }
+  if (mudou) console.log("  (o servidor devolveu cookies novos — adoptados)");
+  return [...jar].map(([k, v]) => `${k}=${v}`).join("; ");
+}
+
+async function warmup(cookieHeader) {
+  /* ⚠ Segue os redirects À MÃO (Sessao.get), acumulando cookies de TODOS os
+     hops. O `fetch` nativo com `redirect:"follow"` só expõe os headers da
+     resposta FINAL: a sessão que o 1PreparePage emite no 302 evapora-se pelo
+     caminho e o HandicapsLST a seguir vinha sem contexto — 0 registos, com a
+     guarda anti-overwrite a salvar o ficheiro. Ver scripts/lib/fpg-session.js. */
+  const { Sessao } = require("./lib/fpg-session");
+  const sess = new Sessao({ base: "https://scoring.datagolf.pt/pt", ua: UA });
+  for (const part of String(cookieHeader || "").split(";")) {
+    const kv = part.trim();
+    const i = kv.indexOf("=");
+    if (i > 0) sess.jar.set(kv.slice(0, i).trim(), kv.slice(i + 1));
+  }
+  const antes = sess.cookieHeader;
+  for (const url of WARMUP_URLS) {
+    try { await sess.get(url); } catch (e) { console.log(`  warm-up falhou (${url.slice(0, 60)}…): ${e.message}`); }
+  }
+  if (sess.cookieHeader !== antes) console.log("  (o servidor devolveu cookies novos — adoptados)");
+  return sess.cookieHeader;
+}
+
 // ── Fetch dum batch ──────────────────────────────────────────────
 async function fetchPage(cookieHeader, startIndex, batchSize) {
   const body = {
@@ -112,6 +206,7 @@ async function fetchPage(cookieHeader, startIndex, batchSize) {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "X-Requested-With": "XMLHttpRequest",
+      "User-Agent": UA,
       "Origin":  "https://scoring.datagolf.pt",
       "Referer": "https://scoring.datagolf.pt/pt/FederatedsList_V2.aspx",
       "Cookie":  cookieHeader,
@@ -159,9 +254,11 @@ function summarizeChanges(prev, next) {
 
 // ── Main ─────────────────────────────────────────────────────────
 async function main() {
-  const cookieHeader = loadCookies();
+  let cookieHeader = loadCookies();
   console.log(`→ Endpoint: ${ENDPOINT}`);
   console.log(`→ jtPageSize=${pageSize}, delay=${delayMs}ms, max-pages=${maxPages === Infinity ? "∞" : maxPages}`);
+  console.log(`→ Warm-up da sessão (este endpoint recusa POST a frio)...`);
+  cookieHeader = await warmup(cookieHeader);
   console.log(`→ A iniciar...`);
 
   const t0 = Date.now();
@@ -192,6 +289,12 @@ async function main() {
         }
         console.warn(`  Falha na página ${page} (${startIndex}): ${e.message} — retry em ${wait / 1000}s`);
         await new Promise(r => setTimeout(r, wait));
+        // Um 500 é o sintoma de sessão fria, não só de soluço do servidor: se
+        // a primeira repetição não chegou, re-aquecer antes da última. Uma
+        // sessão pode arrefecer a meio de um run longo.
+        if (attempt >= 0 && /HTTP 500/.test(e.message)) {
+          cookieHeader = await warmup(cookieHeader);
+        }
       }
     }
     if (!data) break;
@@ -267,8 +370,14 @@ async function main() {
 
   // Guard 1: nunca gravar 0 registos.
   if (all.length === 0) {
-    console.error(`✗ Recolhidos 0 registos — recusar gravar (provável falha de cookies / endpoint).`);
-    console.error(`  Verificar api/.scoring-datagolf-cookies.json e correr de novo.`);
+    // ⚠ Esta mensagem já disse "provável falha de cookies" para tudo, e custou
+    // caro: a 29/08 os cookies estavam válidos (cookie-health verde nos 3
+    // conjuntos) e a causa era sessão fria — HTTP 500. A pista tem de separar
+    // os dois casos, senão manda quem lê refrescar cookies que estão bons.
+    console.error(`✗ Recolhidos 0 registos — recusar gravar.`);
+    console.error(`  HTTP 500 mesmo depois do warm-up → o endpoint recusou a sessão;`);
+    console.error(`  Result=ERROR / Param_Errors / Erro 999 → aí sim, cookies expirados.`);
+    console.error(`  Validar primeiro com: node scripts/test-datagolf-node.js`);
     process.exit(1);
   }
 
