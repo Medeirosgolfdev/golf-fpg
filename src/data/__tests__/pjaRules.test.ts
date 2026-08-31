@@ -7,7 +7,7 @@
 import { describe, it, expect } from "vitest";
 import {
   PJA_TCODES, pjaPts, isGFTournament, getTournMultiplier,
-  classifyPJAEvent, isPJACore,
+  classifyPJAEvent, isPJACore, PJA_NOTAS, notasPJA,
 } from "../../../ranking-pja/pja-rules.mjs";
 
 describe("isPJACore", () => {
@@ -41,14 +41,15 @@ describe("isPJACore", () => {
     expect(isPJACore({ name: "Amendoeira World Kids Sub 12", tcode: "10570", date: "2025-07-23" })).toBe(false);
   });
 
-  it("Miramar Internacional Open U25 (2026) entra; provas de clube do mesmo campo ficam fora", () => {
-    // ccode 003, tcodes 10652 (U25) + 10653 (Sub-10), 19-21 Ago 2026 —
-    // "Miramar Open" no calendário oficial PJA TOUR 2026.
+  it("Miramar Open 2026: entra o U25, fica fora o Sub-10 e as provas de clube", () => {
+    // ccode 003, 19-21 Ago 2026 — "Miramar Open" no calendário PJA TOUR 2026.
     expect(isPJACore({ name: "X Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
-    expect(isPJACore({ name: "X Miramar Internacional Open U25 - Sub10", tcode: "10653", date: "2026-08-19" })).toBe(true);
     expect(isPJACore({ name: "VIII Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
     // gralha da fonte ("Internancional") — o regex tem de a apanhar
     expect(isPJACore({ name: "Miramar Internancional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    // Sub-10 (10653) fora — não há Sub-10 inscritos no PJA 2026
+    expect(isPJACore({ name: "X Miramar Internacional Open U25 - Sub10", tcode: "10653", date: "2026-08-19" })).toBe(false);
+    expect(isPJACore({ name: "VIII Miramar Internacional Open U25 - Sub 10", tcode: "10653", date: "2026-08-19" })).toBe(false);
     // provas de clube do MESMO campo em 2026 — não são PJA
     expect(isPJACore({ name: "Taça Praia de Miramar", tcode: "10616", date: "2026-02-21" })).toBe(false);
     expect(isPJACore({ name: "Miramar Spring Cup", tcode: "10617", date: "2026-04-11" })).toBe(false);
@@ -119,5 +120,31 @@ describe("multiplicadores e pontos", () => {
 
   it("PJA_TCODES mantém os 5 exclusivos de 2025", () => {
     expect([...PJA_TCODES].sort()).toEqual(["10019", "10036", "10260", "10444", "10492"]);
+  });
+});
+
+describe("PJA_NOTAS — o que o público lê", () => {
+  it("explica, com a razão, as duas provas do calendário que não contam", () => {
+    const fora = notasPJA("2026", "2026-08-31").filter(n => n.tipo === "fora");
+    expect(fora).toHaveLength(2);
+    // a razão TEM de estar escrita — é isto que o utilizador vê no site
+    const tvpm = fora.find(n => /Visconde/i.test(n.titulo))!;
+    expect(tvpm.texto).toMatch(/brancas/i);
+    expect(tvpm.texto).toMatch(/marcas do escalão/i);
+    const sub10 = fora.find(n => /Sub-10/i.test(n.titulo))!;
+    expect(sub10.texto).toMatch(/não há sub-10/i);
+  });
+
+  it("notas de agenda desaparecem depois da prova; as de elegibilidade ficam", () => {
+    const titulos = (hoje: string) => notasPJA("2026", hoje).map(n => n.titulo);
+    expect(titulos("2026-08-31").some(t => /Torre/.test(t))).toBe(true);
+    expect(titulos("2026-09-05").some(t => /Torre/.test(t))).toBe(true);   // no próprio dia ainda aparece
+    expect(titulos("2026-09-07").some(t => /Torre/.test(t))).toBe(false);  // passou
+    expect(titulos("2026-12-31")).toHaveLength(2);                          // as "fora" não expiram
+  });
+
+  it("só devolve notas do ano pedido", () => {
+    expect(notasPJA("2025", "2026-08-31")).toHaveLength(0);
+    expect(PJA_NOTAS.every(n => n.titulo && n.texto)).toBe(true);
   });
 });

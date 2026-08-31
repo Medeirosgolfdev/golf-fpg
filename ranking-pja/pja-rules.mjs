@@ -108,7 +108,13 @@ export function isPJACore(t) {
     // "Internancional" da fonte) para não apanhar as provas de clube do mesmo
     // campo — Taça Praia de Miramar, Miramar Winter/Spring Cup, Banco
     // Carregosa Miramar Open.
-    if (/Miramar\s+Intern\w*cional\s+Open/i.test(name)) return true;
+    if (/Miramar\s+Intern\w*cional\s+Open/i.test(name)) {
+      // ⚠ Só o U25 (10652). O Sub-10 (10653, prova separada de 9 buracos/dia)
+      // fica de fora: não há nenhum Sub-10 inscrito no PJA 2026, por isso a
+      // prova nunca creditaria ninguém e só acrescentaria uma coluna vazia.
+      // Se um dia houver um Sub-10 no circuito, apagar esta linha.
+      return !/\bSub\s*-?\s*10\b/i.test(name);
+    }
     // ⚠ Campeonato Juvenil — Taça Visconde Pereira Machado / "T.V.P.M."
     // (ccode 004, tcode 10580 Escalão A + 10581 Escalão B, 6-7 Jul 2026)
     // está no calendário PJA TOUR 2026 mas fica DELIBERADAMENTE DE FORA:
@@ -122,4 +128,49 @@ export function isPJACore(t) {
     // 007/022/068 e 022 — nunca por PJA_TCODES).
   }
   return false;
+}
+
+/** Notas de elegibilidade MOSTRADAS ao público — as duas superfícies (app e
+ *  ranking-pja.vercel.app) renderizam esta mesma lista, cada uma à sua maneira.
+ *  O TEXTO vive aqui, e não em cada página, pela mesma razão que as regras:
+ *  a 2026-08-12 o Amendoeira entrou só numa das duas e as páginas ficaram a
+ *  dizer coisas diferentes uma da outra.
+ *
+ *  - `ano`   — época a que a nota pertence.
+ *  - `tipo`  — "fora" (prova do calendário que NÃO conta) · "info".
+ *  - `ate`   — data ISO a partir da qual a nota deixa de ser mostrada (para as
+ *              notas de agenda não ficarem no site depois de a prova passar).
+ */
+export const PJA_NOTAS = [
+  {
+    ano: "2026",
+    tipo: "fora",
+    titulo: "Taça Visconde Pereira Machado (6-7 Jul, Estoril) não conta",
+    texto:
+      "Os miúdos jogaram das brancas, fora das marcas do escalão deles. " +
+      "Como a pontuação é ±par (par = 25 pts) e o par não muda com o tee, " +
+      "o resultado não é comparável com o das outras provas do circuito.",
+  },
+  {
+    ano: "2026",
+    tipo: "fora",
+    titulo: "Miramar Open — Sub-10 não consta",
+    texto:
+      "Não há Sub-10 inscritos no PJA em 2026; do Miramar (19-21 Ago) conta " +
+      "apenas o U25.",
+  },
+  {
+    ano: "2026",
+    tipo: "info",
+    ate: "2026-09-06",
+    titulo: "Próxima prova: Torre — 5 de Setembro",
+    texto: "Terras da Comporta · Torre.",
+  },
+];
+
+/** Notas a mostrar hoje: as do ano pedido que ainda não expiraram (`ate`).
+ *  `hoje` em ISO (YYYY-MM-DD) — parâmetro para os testes serem determinísticos. */
+export function notasPJA(year, hoje) {
+  const hj = hoje || new Date().toISOString().slice(0, 10);
+  return PJA_NOTAS.filter((n) => String(n.ano) === String(year) && (!n.ate || n.ate >= hj));
 }

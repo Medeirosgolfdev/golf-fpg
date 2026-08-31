@@ -18,6 +18,12 @@
   h2.sec{font-size:16px;margin:26px 0 10px}
   .sub{color:var(--muted);font-size:12px;margin:0 0 14px}
   .rules{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--muted);font-size:11.5px;margin:0 0 16px}
+  .notas{margin:0 0 16px}
+  .nota{display:flex;gap:9px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:8px;padding:9px 12px;margin:0 0 7px}
+  .nota.info{border-left-color:var(--link)}
+  .nota .ic{font-size:14px;line-height:1.25}
+  .nota b{display:block;font-size:12.5px;margin:0 0 2px}
+  .nota span.tx{color:var(--muted);font-size:11.5px}
   .tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
   .tab{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer}
   .tab.active{background:var(--accent);border-color:var(--accent);color:#04150a;font-weight:700}
@@ -80,6 +86,8 @@
     Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5.
   </div>
 
+  <div class="notas" id="notas"></div>
+
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="status">A carregar resultados…</div></div>
 
@@ -98,12 +106,13 @@
    fonte única ./pja-rules.mjs — o MESMO ficheiro que a app principal
    (golf-fpg.vercel.app) importa. Alterar regras lá; aqui só vive o motor de
    agregação e a UI. */
-import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore } from "./pja-rules.mjs";
+import { pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, isPJACore, notasPJA } from "./pja-rules.mjs";
 window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a correr
 (function (global) {
   "use strict";
   var YEAR="2026";
   var isGF=isGFTournament, getMult=getTournMultiplier, classify=classifyPJAEvent, isPJA=isPJACore;
+  global.PJANotas=notasPJA;
   function escalaoAtDate(dob){if(!dob)return null;var an=parseInt(String(dob).slice(0,4));if(isNaN(an))return null;var i=2026-an;if(i<0)return null;
     if(i<=10)return "Sub-10";if(i<=12)return "Sub-12";if(i<=14)return "Sub-14";if(i<=16)return "Sub-16";if(i<=18)return "Sub-18";if(i<=24)return "Sub-21+";return "Sénior";}
   function clubShort(db){if(!db)return "";var c=db.club;if(!c)return "";return typeof c==="object"?(c.short||c.long||""):String(c);}
@@ -118,7 +127,7 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       return {circuito:regiao?("DT"+num+" "+regiao):("DT"+num),local:local||(campo||"")};}
     var wk=n.match(/Amendoeira\s+World\s+Kids(?:\s+Golfe?)?(?:\s+\d{4})?\s*(Sub[\d\s\/–-]*)?/i);
     if(wk){var sub=(wk[1]||"").replace(/\s+/g," ").trim();return {circuito:sub?("World Kids "+sub):"World Kids",local:campo||"Amendoeira"};}
-    var mir=n.match(/Miramar\s+Intern\w*cional\s+Open/i);if(mir){var msub=n.match(/Sub\s*-?\s*(\d+)/i);return {circuito:msub?("Miramar Open Sub "+msub[1]):"Miramar Open",local:campo||"Miramar"};}
+    if(/Miramar\s+Intern\w*cional\s+Open/i.test(n))return {circuito:"Miramar Open",local:campo||"Miramar"};
     if(/PJA/i.test(n)){var loc=(campo&&campo.trim())?campo.replace(/\s{2,}/g," ").trim():n.replace(/PJA/ig,"").replace(/\bmasters?\b/ig,"").replace(/20\d\d/g,"").replace(/\s{2,}/g," ").trim();return {circuito:"PJA",local:loc};}
     return {circuito:n,local:campo||""};}
   function tournSortKey(t){var n=t.name||"",d=t.date||"",ev=classify(t);
@@ -246,7 +255,20 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       ul.appendChild(li);});
     document.getElementById("legend").style.display="block";
   }
+  /* Notas de elegibilidade — visíveis a quem consulta o ranking, sem ter de
+     abrir nada. O TEXTO vem do pja-rules.mjs (mesma lista da app). */
+  function renderNotas(){
+    var box=document.getElementById("notas");if(!box)return;
+    var notas=(window.PJANotas?window.PJANotas("2026"):[])||[];
+    box.innerHTML=notas.map(function(n){
+      return '<div class="nota '+(n.tipo==="info"?"info":"")+'">'
+           + '<span class="ic">'+(n.tipo==="info"?"📅":"⚠️")+'</span>'
+           + '<span><b>'+esc(n.titulo)+'</b><span class="tx">'+esc(n.texto)+'</span></span></div>';
+    }).join("");
+  }
   function renderAll(){renderTabs();renderSimple();renderDetail();}
+
+  renderNotas();   // não depende dos dados — aparece mesmo se o fetch falhar
 
   loadAll().then(function(res){
     var files=res[0],players=res[1],membersDoc=res[2];

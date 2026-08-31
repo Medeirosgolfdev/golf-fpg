@@ -12,7 +12,7 @@ import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tourname
 import { escalaoAtDate, shortDateSlash } from "../utils/format";
 import type { Tournament } from "../data/fpgTypes";
 import {
-  pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent,
+  pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent, notasPJA,
 } from "../../ranking-pja/pja-rules.mjs";
 
 /* ─────────────────────────────────────────────
@@ -178,11 +178,10 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
     const sub = (wk[1] || "").replace(/\s+/g, " ").trim();
     return { circuito: sub ? `World Kids ${sub}` : "World Kids", local: campo || "Amendoeira" };
   }
-  // Miramar Internacional Open U25 (CGM, Ago 2026) — o U25 é multi-escalão
-  // ("Miramar Open"), o Sub-10 corre à parte ("Miramar Open Sub 10").
+  // Miramar Internacional Open U25 (CGM, Ago 2026) — só o U25 conta para o
+  // ranking (o Sub-10 fica fora, ver isPJACore).
   if (/Miramar\s+Intern\w*cional\s+Open/i.test(n)) {
-    const sub = n.match(/Sub\s*-?\s*(\d+)/i);
-    return { circuito: sub ? `Miramar Open Sub ${sub[1]}` : "Miramar Open", local: campo || "Miramar" };
+    return { circuito: "Miramar Open", local: campo || "Miramar" };
   }
   // PJA exclusivo ou fallback
   const pjaMatch = n.match(/^PJA\s+(.+)$/i);
@@ -197,6 +196,36 @@ function shortTournName(name: string, campo?: string): { circuito: string; local
 
 const PName = ({ name, fedCode, playersDB, sex }: { name: string; fedCode?: string; playersDB: PlayersDB; sex?: string }) =>
   <TournPName name={name} fedCode={fedCode} playersDB={playersDB} sex={sex} />;
+
+/** Notas de elegibilidade — visíveis a quem abre o ranking, sem ter de clicar
+ *  em nada. A lista vem do `pja-rules.mjs` (a MESMA que a página standalone
+ *  ranking-pja.vercel.app mostra) — aqui só vive a apresentação. */
+const RankingNotas = ({ year }: { year: string | number }) => {
+  const notas = notasPJA(year);
+  if (!notas.length) return null;
+  return (
+    <div className="print-hide" style={{ display: "grid", gap: 6, margin: "10px 0 14px" }}>
+      {notas.map((n, i) => (
+        <div
+          key={i}
+          style={{
+            display: "flex", gap: 9, alignItems: "flex-start",
+            background: n.tipo === "info" ? "var(--bg-info)" : "var(--bg-warn)",
+            border: "1px solid var(--border)",
+            borderLeft: `4px solid var(${n.tipo === "info" ? "--color-info" : "--color-warn"})`,
+            borderRadius: 8, padding: "9px 12px",
+          }}
+        >
+          <span style={{ fontSize: 14, lineHeight: 1.25 }}>{n.tipo === "info" ? "📅" : "⚠️"}</span>
+          <span>
+            <b style={{ display: "block", fontSize: 12.5, marginBottom: 2 }}>{n.titulo}</b>
+            <span className="muted" style={{ fontSize: 11.5 }}>{n.texto}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 /* ─────────────────────────────────────────────
    Main Component
@@ -945,6 +974,8 @@ export function PJARankingView({
         ? createPortal(toolbarInner, toolbarSlot)
         : <div className="toolbar" style={{ flexWrap: "wrap", gap: 6 }}>{toolbarInner}</div>
       }
+
+      <RankingNotas year={year} />
 
       {sortedRows.length === 0
         ? <EmptyState size="sm" message={`Sem dados para ${year}.`} />
