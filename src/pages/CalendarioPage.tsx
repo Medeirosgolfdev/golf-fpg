@@ -108,6 +108,7 @@ const CAL_DEFS: CalDef[] = [
   { id: "fpg_torneios",   name: "Torneios FPG",            group: "FPG" },
 
   // ── Destaque: as provas que contam ──
+  { id: "drive_final",    name: "Finais Drive",            group: "DESTAQUE" },
   { id: "dest_uskids",    name: "US Kids International",   group: "DESTAQUE" },
   { id: "dest_pja",       name: "PJA Tour",                group: "DESTAQUE" },
   { id: "dest_intl",      name: "Internacionais",          group: "DESTAQUE" },
@@ -261,7 +262,7 @@ const EVENTS: CalEvent[] = [
   ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
   ev("drive_chall", "6º Torneio Drive Challenge Madeira",     new Date(2026,5,28), "Porto Santo",     "Strokeplay e Medal"),
   ev("drive_chall", "7º Torneio Drive Challenge Madeira",     new Date(2026,6,11), "Santo da Serra",  "Strokeplay e Medal"),
-  ev("drive_chall", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_final", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
 
   /* ══════════════════════════════════════
      DRIVE TOUR — verde (Sul/Norte/Tejo)
@@ -282,7 +283,7 @@ const EVENTS: CalEvent[] = [
   ev("drive_tour", "3º Torneio Drive Tour Tejo",  new Date(2026,2,28), "St. Estêvão",    "Strokeplay e Medal", new Date(2026,2,29)),
   ev("drive_tour", "4º Torneio Drive Tour Tejo",  new Date(2026,3,12), "Lisbon SC",      "Strokeplay e Medal"),
   // Final Nacional
-  ev("drive_tour", "Final Drive Tour",            new Date(2026,10,7), "Oeiras Green Valley (Lisboa)", "Strokeplay e Medal", new Date(2026,10,8)),
+  ev("drive_final", "Final Drive Tour",            new Date(2026,10,7), "Oeiras Green Valley (Lisboa)", "Strokeplay e Medal", new Date(2026,10,8)),
 
   /* ══════════════════════════════════════
      DRIVE TOUR MADEIRA — esmeralda
@@ -564,7 +565,6 @@ const NAO_DELE = new Set<string>([
   "fpg_aquapor",      // Circuito AQUAPOR — sete provas, todas no continente
   "fpg_torneios",     // provas nacionais de absolutos (Taça FPG, Lisbon Cup, …)
   "jr_fpg",           // Campeonato Nacional Individual Absoluto
-  "irma_bad",         // badminton da irmã
   "bday_sub10", "bday_sub12", "bday_sub14", "bday_sub16", "bday_sub18",
   "bday_pja", "bday_outros",   // aniversários dos outros miúdos
 ]);
@@ -592,6 +592,8 @@ const NAO_DELE_TITULOS: string[] = ["Open de Portugal", "Absoluto"];
  *  no Santo da Serra. */
 const NAO_VAI: { titulo: string; data: string }[] = [
   { titulo: "Torneio Quinta de São João", data: "2026-09-05" },
+  // 7 de Novembro: Final do Drive Tour em Oeiras.
+  { titulo: "Torneio de São Martinho", data: "2026-11-07" },
 ];
 const diaISO = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

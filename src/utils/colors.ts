@@ -199,7 +199,7 @@ export const C = {
     treino:         "#10b981",   /* esmeralda — Campo / Treino */
     colonias:       "#374151",   /* cinzento escuro — Colónias (sem animação) */
     escola:         "#94a3b8",   /* cinzento-azulado — calendário escolar (pano de fundo) */
-    irma_bad:       "#14b8a6",   /* turquesa — Badminton (irmã) */
+    irma_bad:       "#ff1493",   /* rosa-choque — Maria Antónia (irmã). Cor própria, a gritar, e NUNCA esbatida: é família. */
     profissao_fe:   "#fbbf24",   /* dourado — Profissão de Fé (full-cell pulse) */
     // Viagens
     viag_alg_fev:   "#f59e0b",
