@@ -16,7 +16,9 @@
  */
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
+import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
+import PastEditionsRepeaters from "./PastEditionsRepeaters";
 
 /**
  * Aliases CURADOS de edições que mudaram de nome/rótulo entre anos. A heurística
@@ -150,6 +152,7 @@ export function buildFpgEditionsIndex(pool: Tournament[]): Map<string, CircuitEn
 export function fpgPastEditionsTabs(
   index: Map<string, CircuitEntry[]>,
   current: Tournament | null | undefined,
+  playersDB?: PlayersDB,
 ): { key: string; label: string; content: React.ReactNode }[] | undefined {
   if (!current) return undefined;
   const k = editionKey(current);
@@ -157,9 +160,23 @@ export function fpgPastEditionsTabs(
   const entries = index.get(k);
   if (!entries || entries.length < 2) return undefined;
   const division = current.escalao || "—";
+  // Edições ANTERIORES (as outras, mais recente primeiro) com resultados — é
+  // sobre elas que o painel "Quem repete" cruza o field de hoje.
+  const curId = `${current.ccode}-${current.tcode}`;
+  const previous = entries
+    .filter((e) => e.id !== curId && e.divisions?.[0]?.results)
+    .map((e) => ({ id: e.id, year: e.year ?? 0, t: e.divisions![0].results as Tournament }))
+    .sort((a, b) => b.year - a.year);
   return [{
     key: "past-editions",
     label: "Edições anteriores",
-    content: <CircuitPastEditionsTab editions={entries} division={division} />,
+    content: (
+      <>
+        {playersDB && previous.length
+          ? <PastEditionsRepeaters current={current} previous={previous} playersDB={playersDB} />
+          : null}
+        <CircuitPastEditionsTab editions={entries} division={division} />
+      </>
+    ),
   }];
 }

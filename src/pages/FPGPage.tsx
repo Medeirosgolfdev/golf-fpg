@@ -70,8 +70,8 @@ import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEdition
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 
 /** Junta o tab da Ordem de Mérito (CGSS) aos tabs de "Edições anteriores". */
-function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0]) {
-  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t) ?? [])];
+function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0], playersDB?: Parameters<typeof fpgPastEditionsTabs>[2]) {
+  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
   return tabs.length ? tabs : undefined;
 }
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -2103,7 +2103,7 @@ function Content() {
       const t = d.results!;
       d.renderFull = () => (
         <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgExtraTabs(editionsIndex, t)} />
+          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB)} />
       );
     }
     return ents;
@@ -2658,7 +2658,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any)} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any, playersDB)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2932,7 +2932,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens)} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens, playersDB)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>
