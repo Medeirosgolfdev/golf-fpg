@@ -16,7 +16,7 @@ const json = (p) => JSON.parse(fs.readFileSync(path.join(REPO, p), "utf8"));
 
 describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
   it("encontra os repetentes e prevê valores plausíveis", async () => {
-    const { buildRepeaters, currentField } = await import("../src/pages/fpg/repeatersModel.ts");
+    const { buildRepeaters, currentField, masterTeeRatings } = await import("../src/pages/fpg/repeatersModel.ts");
 
     const pull = json("public/data/pull-torneios000.json").tournaments;
     const t2025 = pull.find((t) => t.ccode === "192" && t.tcode === "10013");
@@ -33,7 +33,12 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
       const p = fed ? players[fed] : null;
       return p ? { hcp: p.hcp ?? null, club: p.club?.short ?? null, escalao: p.escalao ?? null, sex: p.sex ?? null } : null;
     };
-    const r = buildRepeaters({ current, previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo });
+    const master = json("public/data/master-courses.json");
+    const masterRatings = masterTeeRatings(master, current.campo);
+    // O master conhece os 10 tees do Torre (6 M + 4 F).
+    expect(masterRatings.get("laranjas|F")).toEqual({ cr: 74.2, slope: 132 });
+    expect(masterRatings.get("amarelas|M")).toEqual({ cr: 66.2, slope: 122 });
+    const r = buildRepeaters({ current, previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, masterRatings });
 
     const field = currentField(current);
     expect(field).toHaveLength(16);
@@ -59,11 +64,12 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
     expect(francisco.hcpDelta).toBeLessThan(0);
     expect(francisco.forecast.total).toBeGreaterThan(francisco.editions[0].total);
 
-    // As raparigas passam para umas "Laranjas" que não existem em 2025 — a
-    // previsão delas é uma suposição e tem de vir marcada como tal.
+    // As "Laranjas" das raparigas não existem em 2025, mas o master-courses
+    // tem-nas (74.2/132) — logo a previsão delas é firme, não uma suposição.
+    // Inferi-las das amarelas (71.1/126) subestimava a prova em ~3 golpes.
     const angelina = r.find((x) => x.fed === "51523");
     expect(angelina.teeNow).toMatch(/laranja/i);
-    expect(angelina.forecast.teeKnown).toBe(false);
+    expect(angelina.forecast.teeKnown).toBe(true);
 
     // O Manuel joga o mesmo tee de 2025 (amarelas) → rating conhecido.
     const manuel = r.find((x) => x.fed === "52884");

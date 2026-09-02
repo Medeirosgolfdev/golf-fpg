@@ -205,6 +205,41 @@ const SPREAD_MIN = 2.5;
 
 function media(xs: number[]): number { return xs.reduce((a, b) => a + b, 0) / xs.length; }
 
+/**
+ * CR/Slope de TODOS os tees de um campo, a partir do `master-courses.json`.
+ * É a fonte autoritativa e cobre tees que nunca apareceram numa edição — no
+ * PJA Torre, as "Laranjas" das raparigas (74.2/132) não existem em 2025, e
+ * inferi-las das amarelas (71.1/126) subestimava a prova em ~3 golpes.
+ *
+ * `campo` é o nome como vem do torneio ("Terras da Comporta - Torre"); o
+ * `courseKey` do master é um slug ("terras-da-comporta-torre-golf-course"), daí
+ * o match por prefixo de slug em vez de igualdade.
+ */
+export function masterTeeRatings(
+  master: { courses?: { courseKey?: string; master?: { tees?: MasterTee[] } }[] } | null | undefined,
+  campo: string | null | undefined,
+): Map<string, { cr: number; slope: number }> {
+  const out = new Map<string, { cr: number; slope: number }>();
+  const slug = norm(campo).replace(/\s+/g, "-");
+  if (!slug || !master?.courses) return out;
+  const c = master.courses.find((x) => {
+    const k = String(x.courseKey || "");
+    return k === slug || k.startsWith(slug + "-") || slug.startsWith(k);
+  });
+  for (const t of c?.master?.tees || []) {
+    const r = t.ratings?.holes18;
+    if (!r?.courseRating || !r?.slopeRating) continue;
+    out.set(`${norm(t.teeName)}|${t.sex || "?"}`, { cr: r.courseRating, slope: r.slopeRating });
+  }
+  return out;
+}
+
+interface MasterTee {
+  teeName?: string;
+  sex?: string;
+  ratings?: { holes18?: { courseRating?: number; slopeRating?: number } };
+}
+
 export interface BuildRepeatersInput {
   /** Torneio aberto (dá o field de hoje e o nº de voltas). */
   current: Tournament;
@@ -212,6 +247,12 @@ export interface BuildRepeatersInput {
   previous: { id: string; year: number; t: Tournament }[];
   /** federados.json indexado por código de federado. */
   fedInfo: (fed: string | null) => FedInfo | null;
+  /**
+   * CR/Slope por `${tee}|${sexo}` vindos do master-courses (ver
+   * `masterTeeRatings`). Ganham aos inferidos das edições anteriores: cobrem
+   * tees que nunca lá apareceram.
+   */
+  masterRatings?: Map<string, { cr: number; slope: number }>;
   /** Nº de voltas desta edição (default: o `rounds` do torneio, ou 1). */
   nRounds?: number;
   /** Par de uma volta (default: o do primeiro jogador que o traga). */
@@ -285,7 +326,9 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     // Tee de hoje → CR/Slope. Do draw quando existe; senão o tee que ele jogou.
     const teeNow = f.tee || editions[0]?.rounds[0]?.tee || null;
     const sex = info?.sex || "?";
-    const ratTee = ratings.get(`${norm(teeNow)}|${sex}`) ?? ratings.get(`${norm(teeNow)}|?`) ?? null;
+    const chaveTee = `${norm(teeNow)}|${sex}`;
+    const ratTee = input.masterRatings?.get(chaveTee)
+      ?? ratings.get(chaveTee) ?? ratings.get(`${norm(teeNow)}|?`) ?? null;
     const rat = ratTee
       ?? (editions[0]?.rounds[0]?.cr && editions[0]?.rounds[0]?.slope
         ? { cr: editions[0].rounds[0].cr!, slope: editions[0].rounds[0].slope! } : null);

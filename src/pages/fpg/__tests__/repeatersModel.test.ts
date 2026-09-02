@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildRepeaters, currentField, nameKey, teeRatings } from "../repeatersModel";
+import { buildRepeaters, currentField, masterTeeRatings, nameKey, teeRatings } from "../repeatersModel";
 import type { Tournament } from "../../../data/fpgTypes";
 
 const jogador = (over: Record<string, unknown>) => ({
@@ -141,5 +141,49 @@ describe("teeKnown — não fingir que se conhece o rating de um tee novo", () =
   it("marca teeKnown=true quando o tee de hoje tem rating conhecido", () => {
     const r = buildRepeaters({ current: comTee("Amarelas"), previous: [{ id: "a", year: 2025, t: prev }], fedInfo });
     expect(r[0].forecast?.teeKnown).toBe(true);
+  });
+});
+
+describe("masterTeeRatings — a ficha do campo é a fonte autoritativa dos tees", () => {
+  const master = {
+    courses: [{
+      courseKey: "terras-da-comporta-torre-golf-course",
+      master: { tees: [
+        { teeName: "LARANJAS", sex: "F", ratings: { holes18: { courseRating: 74.2, slopeRating: 132 } } },
+        { teeName: "LARANJAS", sex: "M", ratings: { holes18: { courseRating: 68.7, slopeRating: 127 } } },
+        { teeName: "AMARELAS", sex: "M", ratings: { holes18: { courseRating: 66.2, slopeRating: 122 } } },
+      ] },
+    }],
+  };
+
+  it('casa o nome do torneio ("Terras da Comporta - Torre") com o slug do campo', () => {
+    const r = masterTeeRatings(master, "Terras da Comporta - Torre");
+    expect(r.get("laranjas|F")).toEqual({ cr: 74.2, slope: 132 });
+    expect(r.get("laranjas|M")).toEqual({ cr: 68.7, slope: 127 });
+  });
+
+  it("não inventa nada para um campo desconhecido", () => {
+    expect(masterTeeRatings(master, "Campo Que Não Existe").size).toBe(0);
+    expect(masterTeeRatings(null, "Terras da Comporta - Torre").size).toBe(0);
+  });
+
+  it("ganha ao rating inferido das edições anteriores", () => {
+    const prev = torneio([jogador({ name: "GAO,Angelina", fedCode: "51523", teeName: "AMARELAS",
+      courseRating: 71.1, slope: 126,
+      roundScores: [{ round: 1, gross: 73, courseRating: 71.1, slope: 126, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) }] })]);
+    const current = {
+      ccode: "192", tcode: "90101", players: [], rounds: 1, campo: "Terras da Comporta - Torre",
+      _draws: { "1": { groups: [{ tee: "Laranjas", players: [{ nome: "Angelina Gao", fed: "51523" }] }] } },
+    } as unknown as Tournament;
+    const fedInfo = () => ({ hcp: 4, club: null, escalao: "Sub-16", sex: "F" });
+    const previous = [{ id: "a", year: 2025, t: prev }];
+
+    const sem = buildRepeaters({ current, previous, fedInfo });
+    const com = buildRepeaters({ current, previous, fedInfo, masterRatings: masterTeeRatings(master, current.campo) });
+    expect(sem[0].forecast!.teeKnown).toBe(false);
+    expect(com[0].forecast!.teeKnown).toBe(true);
+    // As laranjas (74.2/132) são bem mais duras que as amarelas (71.1/126) que
+    // o fallback usava → a previsão TEM de subir.
+    expect(com[0].forecast!.total).toBeGreaterThan(sem[0].forecast!.total);
   });
 });

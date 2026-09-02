@@ -10,7 +10,7 @@
  * FPGPage já tem em memória — de propósito, para não puxar os 15 MB do
  * federados.json por causa de um painel.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Tournament } from "../../data/fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { useSort } from "../../hooks/useSort";
@@ -18,7 +18,8 @@ import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { fmtToPar } from "../../utils/format";
 import { tpColorDark } from "../../utils/scoreDisplay";
-import { buildRepeaters, currentField, type Repeater, type FedInfo } from "./repeatersModel";
+import { loadMasterData } from "../../data/loader";
+import { buildRepeaters, currentField, masterTeeRatings, type Repeater, type FedInfo } from "./repeatersModel";
 
 type SortKey = "nome" | "esc" | "n" | "best" | "last" | "hcp" | "delta" | "prev";
 
@@ -48,6 +49,17 @@ export default function PastEditionsRepeaters({
   const [aberto, setAberto] = useState<string | null>(null);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("best");
 
+  // CR/Slope oficiais de TODOS os tees do campo. Lazy (só ao abrir a tab) e
+  // cacheado pelo fetchCache — se a app já carregou o master, não custa nada.
+  const [masterRatings, setMasterRatings] = useState<Map<string, { cr: number; slope: number }> | null>(null);
+  useEffect(() => {
+    let vivo = true;
+    loadMasterData()
+      .then((m) => { if (vivo) setMasterRatings(masterTeeRatings(m as never, current.campo)); })
+      .catch(() => { if (vivo) setMasterRatings(new Map()); });
+    return () => { vivo = false; };
+  }, [current.campo]);
+
   const rows = useMemo(() => {
     const fedInfo = (fed: string | null): FedInfo | null => {
       const p = fed ? playersDB?.[fed] : null;
@@ -60,8 +72,8 @@ export default function PastEditionsRepeaters({
         sex: p.sex || null,
       };
     };
-    return buildRepeaters({ current, previous, fedInfo });
-  }, [current, previous, playersDB]);
+    return buildRepeaters({ current, previous, fedInfo, masterRatings: masterRatings ?? undefined });
+  }, [current, previous, playersDB, masterRatings]);
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -203,8 +215,10 @@ export default function PastEditionsRepeaters({
           de cada volta que ele jogou aqui — <code>(113/Slope) × (gross − CR − PCC)</code>, que
           desconta a dificuldade do tee — e corrige-se pela <b>variação do índice</b> desde
           então. Quem baixou 2 pontos de índice é esperado ~2 golpes melhor. O resultado
-          volta a gross com o CR e o Slope do tee que vai jogar hoje (que difere por sexo:
-          no mesmo campo, as mesmas marcas dão ratings diferentes a rapazes e raparigas).
+          volta a gross com o CR e o Slope do tee que vai jogar hoje, lidos da ficha do
+          campo — que os tem para todas as marcas, incluindo as que nunca apareceram numa
+          edição, e separados por sexo (no Torre as amarelas dão 66,2/122 aos rapazes e
+          71,1/126 às raparigas).
         </p>
         <p style={{ margin: "6px 0" }}>
           O intervalo é a dispersão real das voltas dele aqui (nunca menos de ~2,5 golpes de
@@ -214,8 +228,8 @@ export default function PastEditionsRepeaters({
           O «≈» marca as previsões com uma suposição por baixo — ou não há voltas
           utilizáveis do jogador aqui (sai só do índice de hoje, contando o índice
           <b> mais ~3,5 golpes</b>, porque o índice WHS é a média das 8 melhores de 20
-          voltas: o bom dia, que sai ~1 em cada 5, não o que se faz num dia normal), ou
-          não se conhece o CR/Slope do tee que ele vai jogar e usou-se o do tee anterior.
+          voltas: o bom dia, que sai ~1 em cada 5, não o que se faz num dia normal), ou o
+          campo não está na base com o tee que ele vai jogar e usou-se o do tee anterior.
           Passar o rato por cima diz qual dos dois é.
         </p>
       </details>
