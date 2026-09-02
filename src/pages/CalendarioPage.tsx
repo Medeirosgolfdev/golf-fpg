@@ -44,69 +44,120 @@ interface CalendarSource {
   group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS" | "JUNIOR" | "ANIVER";
 }
 
-/* ═══ Calendar Sources ═══ */
-const CALENDARS: CalendarSource[] = [
-  // ── CGSS Santo da Serra — azuis ──
-  { id: "cgss_major",     name: "Majors (A)",         color: C.cal.cgss_major, group: "CGSS" },
-  { id: "cgss_om_b",      name: "O.M. Nível B",       color: "var(--chart-2)", group: "CGSS" },
-  { id: "cgss_om_c",      name: "O.M. Nível C",       color: C.cal.cgss_om_c, group: "CGSS" },
-  { id: "cgss_pares",     name: "Camp. Pares",        color: C.cal.cgss_pares, group: "CGSS" },
-  { id: "cgss_ouro",      name: "Ranking Ouro",       color: C.cal.cgss_ouro, group: "CGSS" },
-  { id: "cgss_patrocin",  name: "Patrocinador",       color: "var(--text-3)", group: "CGSS" },
-  { id: "cgss_regional",  name: "Regional",           color: C.cal.cgss_regional, group: "CGSS" },
-  { id: "cgss_fpg",       name: "FPG Nacional",       color: C.cal.cgss_fpg, group: "CGSS" },
+/* ═══ Paleta ═══
+   Uma COR-MÃE por família e, dentro dela, tons do escuro ao claro por ordem de
+   importância. Antes cada calendário tinha a sua cor à sorte — as onze viagens
+   eram onze cores diferentes, e o "FPG Jr" usava a dos US Kids — o que fazia o
+   calendário parecer um saco de missangas em vez de dizer, à distância, de que
+   tipo de compromisso se trata. */
+const FAMILIA: Record<CalendarSource["group"], string> = {
+  CGSS:     "#1d4ed8",   // azul — o clube
+  JUNIOR:   "#0f766e",   // verde-azulado — academia júnior
+  DRIVE:    "#7c3aed",   // violeta — circuito Drive
+  FPG:      "#be185d",   // magenta — federação
+  DESTAQUE: "#b91c1c",   // vermelho — as provas que contam
+  ANIVER:   "#94a3b8",   // cinzento-azulado — aniversários (contexto, não agenda)
+  VIAGENS:  "#ea580c",   // laranja — deslocações
+};
+
+/** Tom `i` de `n` dentro da família: mesma cor, cada vez mais clara. */
+function tom(base: string, i: number, n: number): string {
+  const [r, g, b] = [1, 3, 5].map(k => parseInt(base.slice(k, k + 2), 16) / 255);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  const h = d === 0 ? 0
+    : max === r ? ((g - b) / d + (g < b ? 6 : 0)) / 6
+    : max === g ? ((b - r) / d + 2) / 6
+    : ((r - g) / d + 4) / 6;
+  const passo = n <= 1 ? 0 : (i / (n - 1));
+  const L = Math.min(0.78, l + passo * 0.30);          // clareia
+  const S = Math.max(0.25, s - passo * 0.22);          // e dessatura um pouco
+  const c = (1 - Math.abs(2 * L - 1)) * S, x = c * (1 - Math.abs(((h * 6) % 2) - 1)), m = L - c / 2;
+  const seg = Math.floor(h * 6) % 6;
+  const rgb = [[c, x, 0], [x, c, 0], [0, c, x], [0, x, c], [x, 0, c], [c, 0, x]][seg];
+  return "#" + rgb.map(v => Math.round((v + m) * 255).toString(16).padStart(2, "0")).join("");
+}
+
+/* ═══ Calendar Sources ═══
+   A ordem DENTRO de cada família é a ordem dos tons: primeiro o que mais pesa. */
+type CalDef = { id: string; name: string; group: CalendarSource["group"]; color?: string };
+const CAL_DEFS: CalDef[] = [
+  // ── CGSS Santo da Serra ──
+  { id: "cgss_major",     name: "Majors (A)",              group: "CGSS" },
+  { id: "cgss_om_b",      name: "O.M. Nível B",            group: "CGSS" },
+  { id: "cgss_om_c",      name: "O.M. Nível C",            group: "CGSS" },
+  { id: "cgss_regional",  name: "Regional",                group: "CGSS" },
+  { id: "cgss_fpg",       name: "FPG Nacional",            group: "CGSS" },
+  { id: "cgss_ouro",      name: "Ranking Ouro",            group: "CGSS" },
+  { id: "cgss_pares",     name: "Camp. Pares",             group: "CGSS" },
+  { id: "cgss_patrocin",  name: "Patrocinador",            group: "CGSS" },
 
   // ── Junior CGSS — Academia ──
-  { id: "jr_cgss",        name: "CGSS Jr",             color: C.cal.jr_cgss, group: "JUNIOR" },
-  { id: "jr_regional",    name: "Regional Jr",         color: C.cal.jr_regional, group: "JUNIOR" },
-  { id: "jr_fpg",         name: "FPG Jr",              color: C.cal.dest_uskids, group: "JUNIOR" },
+  { id: "jr_cgss",        name: "CGSS Jr",                 group: "JUNIOR" },
+  { id: "jr_regional",    name: "Regional Jr",             group: "JUNIOR" },
+  { id: "jr_fpg",         name: "FPG Jr",                  group: "JUNIOR" },
 
-  // ── Drive — violeta / verde ──
-  { id: "drive_chall",    name: "Drive Challenge",     color: C.cal.drive_chall, group: "DRIVE" },
-  { id: "drive_tour",     name: "Drive Tour",          color: C.cal.drive_tour, group: "DRIVE" },
-  { id: "drive_tour_mad", name: "Drive Tour Madeira",  color: C.cal.drive_tour_mad, group: "DRIVE" },
+  // ── Drive ──
+  { id: "drive_tour_mad", name: "Drive Tour Madeira",      group: "DRIVE" },
+  { id: "drive_chall",    name: "Drive Challenge",         group: "DRIVE" },
+  { id: "drive_tour",     name: "Drive Tour",              group: "DRIVE" },
 
   // ── FPG ──
-  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",    color: C.cal.fpg_aquapor, group: "FPG" },
-  { id: "fpg_torneios",   name: "Torneios FPG",        color: C.cal.fpg_torneios, group: "FPG" },
+  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",        group: "FPG" },
+  { id: "fpg_torneios",   name: "Torneios FPG",            group: "FPG" },
 
-  // ── Destaque — vermelho / laranja ──
-  { id: "dest_intl",      name: "Internacionais",      color: C.cal.dest_intl, group: "DESTAQUE" },
-  { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: C.cal.dest_intl, group: "DESTAQUE" },
-  { id: "dest_uskids",    name: "US Kids International",color: C.cal.dest_uskids, group: "DESTAQUE" },
-  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "var(--text-muted)", group: "DESTAQUE" },
-  { id: "dest_bjgt",      name: "BJGT",                color: C.cal.dest_bjgt, group: "DESTAQUE" },
-  { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
-  { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
-  { id: "profissao_fe",   name: "✝ Profissão de Fé",   color: C.cal.profissao_fe, group: "DESTAQUE" },
-  { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", color: C.cal.irma_bad, group: "DESTAQUE" },
+  // ── Destaque: as provas que contam ──
+  { id: "dest_uskids",    name: "US Kids International",   group: "DESTAQUE" },
+  { id: "dest_pja",       name: "PJA Tour",                group: "DESTAQUE" },
+  { id: "dest_intl",      name: "Internacionais",          group: "DESTAQUE" },
+  { id: "dest_nac_jr",    name: "Nacional Sub14&18",       group: "DESTAQUE" },
+  { id: "dest_bjgt",      name: "BJGT",                    group: "DESTAQUE" },
+  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",   group: "DESTAQUE" },
 
-  // ── Aniversários por escalão ──
-  { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
-  { id: "bday_sub12",     name: "🎂 Sub-12",            color: C.cal.bday_sub12, group: "ANIVER" },
-  { id: "bday_sub14",     name: "🎂 Sub-14",            color: C.cal.bday_sub14, group: "ANIVER" },
-  { id: "bday_sub16",     name: "🎂 Sub-16",            color: C.cal.bday_sub16, group: "ANIVER" },
-  { id: "bday_sub18",     name: "🎂 Sub-18",            color: C.cal.bday_sub18, group: "ANIVER" },
-  { id: "bday_pja",       name: "🎂 PJA",               color: C.cal.dest_pja, group: "ANIVER" },
-  { id: "bday_outros",    name: "🎂 Outros",            color: C.cal.bday_outros, group: "ANIVER" },
-  { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
-  { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
-  { id: "colonias",       name: "🏕 Colónias",          color: C.cal.colonias, group: "DESTAQUE" },
+  // ── Fora das provas: identidade própria, de propósito ──
+  { id: "pessoal",        name: "🎂 Pessoal",              group: "DESTAQUE", color: C.cal.pessoal },
+  { id: "profissao_fe",   name: "✝ Profissão de Fé",       group: "DESTAQUE", color: C.cal.profissao_fe },
+  { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", group: "DESTAQUE", color: C.cal.irma_bad },
+  { id: "treino",         name: "⛳ Campo / Treino",       group: "DESTAQUE", color: C.cal.treino },
+  { id: "ferias",         name: "🏖 Férias",               group: "DESTAQUE", color: C.cal.ferias },
+  { id: "colonias",       name: "🏕 Colónias",             group: "DESTAQUE", color: C.cal.colonias },
 
-  // ── Viagens — laranja / âmbar ──
-  { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
-  { id: "viag_malaga",    name: "✈ Málaga (Fev)",        color: C.cal.viag_malaga, group: "VIAGENS" },
-  { id: "viag_roma",      name: "✈ Roma (Mar)",          color: C.cal.viag_roma, group: "VIAGENS" },
-  { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: C.cal.viag_alg_mar, group: "VIAGENS" },
-  { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: C.cal.viag_edinb, group: "VIAGENS" },
-  { id: "viag_jun",         name: "✈ Lisboa Jun · Manuel + M. Francisco",        color: C.cal.viag_roma,        group: "VIAGENS" },
-  { id: "viag_par_jul",     name: "✈ Paris Jul · Manuel + M. Francisco",        color: C.cal.viag_edinb,       group: "VIAGENS" },
-  { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2",                  color: C.cal.viag_alg_jul_m,   group: "VIAGENS" },
-  { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",   color: C.cal.viag_alg_jul_mamf,group: "VIAGENS" },
-  { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
-  { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",              color: C.cal.viag_malaga_nov,  group: "VIAGENS" },
-  { id: "viag_paris_set",   name: "✈ Paris + Comporta (Set)",                  color: C.cal.viag_paris_set,   group: "VIAGENS" },
+  // ── Aniversários ──
+  { id: "bday_pja",       name: "🎂 PJA",                  group: "ANIVER" },
+  { id: "bday_sub10",     name: "🎂 Sub-10",               group: "ANIVER" },
+  { id: "bday_sub12",     name: "🎂 Sub-12",               group: "ANIVER" },
+  { id: "bday_sub14",     name: "🎂 Sub-14",               group: "ANIVER" },
+  { id: "bday_sub16",     name: "🎂 Sub-16",               group: "ANIVER" },
+  { id: "bday_sub18",     name: "🎂 Sub-18",               group: "ANIVER" },
+  { id: "bday_outros",    name: "🎂 Outros",               group: "ANIVER" },
+
+  // ── Viagens (todas laranja; distinguem-se pelo nome, não pela cor) ──
+  { id: "viag_paris_set",   name: "✈ Paris + Comporta (Set)",              group: "VIAGENS" },
+  { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",           group: "VIAGENS" },
+  { id: "viag_alg_fev",     name: "✈ Algarve (Fev)",                       group: "VIAGENS" },
+  { id: "viag_malaga",      name: "✈ Málaga (Fev)",                        group: "VIAGENS" },
+  { id: "viag_roma",        name: "✈ Roma (Mar)",                          group: "VIAGENS" },
+  { id: "viag_alg_mar",     name: "✈ Algarve (Mar/Abr)",                   group: "VIAGENS" },
+  { id: "viag_edinb",       name: "✈ Edimburgo (Mai)",                     group: "VIAGENS" },
+  { id: "viag_jun",         name: "✈ Lisboa Jun · Manuel + M. Francisco",  group: "VIAGENS" },
+  { id: "viag_par_jul",     name: "✈ Paris Jul · Manuel + M. Francisco",   group: "VIAGENS" },
+  { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2",              group: "VIAGENS" },
+  { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",group: "VIAGENS" },
+  { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",          group: "VIAGENS" },
 ];
+const CALENDARS: CalendarSource[] = (() => {
+  const porGrupo = new Map<string, CalDef[]>();
+  for (const d of CAL_DEFS) {
+    if (d.color) continue;                       // cor própria não entra na rampa
+    const a = porGrupo.get(d.group) ?? []; a.push(d); porGrupo.set(d.group, a);
+  }
+  return CAL_DEFS.map(d => {
+    if (d.color) return { id: d.id, name: d.name, color: d.color, group: d.group };
+    const fam = porGrupo.get(d.group)!;
+    return { id: d.id, name: d.name, group: d.group, color: tom(FAMILIA[d.group], fam.indexOf(d), fam.length) };
+  });
+})();
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
 
@@ -434,6 +485,18 @@ const GROUP_LABELS: Record<string, string> = {
 function isSameDay(a: Date, b: Date) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
+/* ═══ Meses ═══
+   O calendário deixou de viver só em 2026: já tem o ano lectivo 2026/27 e as
+   provas de 2027 vão entrando. A navegação passa a andar num índice ABSOLUTO
+   de mês desde Janeiro de 2026 — assim ‹ › atravessam a viragem do ano sem
+   caso especial. */
+const ANO_BASE = 2026;
+const ANO_FIM = 2027;
+const MI_MAX = (ANO_FIM - ANO_BASE + 1) * 12 - 1;
+const miAno = (mi: number) => ANO_BASE + Math.floor(mi / 12);
+const miMes = (mi: number) => ((mi % 12) + 12) % 12;
+const miDe = (d: Date) => Math.min(MI_MAX, Math.max(0, (d.getFullYear() - ANO_BASE) * 12 + d.getMonth()));
+
 function getMonthDays(year: number, month: number) {
   const first = new Date(year, month, 1);
   const last = new Date(year, month + 1, 0);
@@ -464,6 +527,7 @@ function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "
 
 /* Highlighted "full-cell" events */
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
+  irma_bad:      { bg: C.cal.irma_bad, border: "#0d9488", text: "#fff", icon: "🏸", cls: "hl-teal" },
   pessoal:       { bg: C.cal.hl_pessoal_bg, border: C.cal.hl_pessoal_border, text: C.cal.hl_pessoal_text, icon: "🎂", cls: "hl-green" },
 };
 /* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
@@ -472,7 +536,14 @@ const HL_BAR: Record<string, string> = {
   dest_nac_jr:  "hl-red",
   profissao_fe: "hl-gold",
 };
-function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
+function isHighlight(e: CalEvent) {
+  // A célula inteira é o destaque MÁXIMO da página (é o que os aniversários
+  // da família usam). Reserva-se aos eventos escolhidos à mão: o calendário
+  // do badminton, por exemplo, tem quatro provas e só o Nacional é evento de
+  // família.
+  if (e.calId === "irma_bad") return emDestaque(e);
+  return e.calId in HIGHLIGHT;
+}
 
 /** Já passou? Compara-se por DIA: um evento de hoje ainda é de hoje, mesmo
  *  que a hora já tenha passado. (Com `new Date()` cru, tudo o que era de hoje
@@ -601,7 +672,8 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           return (
             <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : livreMini ? "var(--cal-livre-bg)" : "transparent",
+              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)"
+                : livreMini ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
               fontWeight: isToday || isSel ? 600 : 400,
             }} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
               {d.date.getDate()}
@@ -672,9 +744,9 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
   const firstUpcomingRef = useRef<HTMLDivElement>(null);
   const grouped = useMemo(() => {
     const m = new Map<number, CalEvent[]>();
-    for (const e of events) { const k = e.date.getMonth(); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
+    for (const e of events) { const k = miDe(e.date); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
     const all = [...m.entries()].sort((a, b) => a[0] - b[0]);
-    const cur = today.getMonth();
+    const cur = miDe(today);
     return [...all.filter(([k]) => k >= cur), ...all.filter(([k]) => k < cur)];
   }, [events]);
 
@@ -695,12 +767,12 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
   return (
     <div className="cal-page-inner">
       {grouped.map(([month, evts]) => {
-        const isCur = month === today.getMonth();
+        const isCur = month === miDe(today);
         return (
         <div key={month} ref={isCur ? todayMonthRef : undefined}>
           <div className="uppercase fs-13 fw-700" style={{ color: "var(--accent)",
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
-            {monthLabel(month)} 2026
+            {monthLabel(miMes(month))} {miAno(month)}
           </div>
           <div className="d-flex flex-col gap-4">
             {evts.map(e => {
@@ -769,7 +841,7 @@ export default function CalendarioPage() {
 function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
-    return now.getFullYear() === 2026 ? now.getMonth() : 1;
+    return now.getFullYear() >= ANO_BASE ? miDe(now) : 0;
   });
   const [selectedEvent, setSelectedEvent] = useState<CalEvent | null>(null);
   // Em mobile, abrir por defeito em "list" — o grid mensal de 7 colunas
@@ -811,19 +883,21 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       const d = parseInt(parts[2], 10);
       if (isNaN(m) || isNaN(d) || d < 1 || d > 31) continue;
       const birthYear = parseInt(parts[0], 10);
-      const age = 2026 - birthYear;
       const firstName = p.name.split(" ")[0];
       const isPJA = p.tags?.includes("PJA");
       const calId = isPJA ? "bday_pja" : (escalaoToCalId[p.escalao] || "bday_outros");
-      bdayEvs.push({
-        id: ++bdayId,
-        calId,
-        title: `🎂 ${firstName} — ${age} anos`,
-        date: new Date(2026, m, d),
-        campo: "",
-        modalidade: `${p.name} · #${fed}`,
-        note: ovr?.note,
-      });
+      // Um evento por ANO coberto — o calendário já atravessa 2026 e 2027.
+      for (let ano = ANO_BASE; ano <= ANO_FIM; ano++) {
+        bdayEvs.push({
+          id: ++bdayId,
+          calId,
+          title: `🎂 ${firstName} — ${ano - birthYear} anos`,
+          date: new Date(ano, m, d),
+          campo: "",
+          modalidade: `${p.name} · #${fed}`,
+          note: ovr?.note,
+        });
+      }
     }
     return [...EVENTS, ...bdayEvs];
   }, [players]);
@@ -831,9 +905,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [listScrollSignal, setListScrollSignal] = useState(0);
   const goToday = () => {
     const now = new Date();
-    const m = now.getFullYear() === 2026 ? now.getMonth() : 1;
+    const m = now.getFullYear() >= ANO_BASE ? miDe(now) : 0;
     setCurrentMonth(m);
-    setSelectedDate(now.getFullYear() === 2026 ? now : null);
+    setSelectedDate(now.getFullYear() >= ANO_BASE ? now : null);
     setListScrollSignal(v => v + 1);
   };
 
@@ -859,7 +933,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   }, []);
 
   const goToEvent = (ev: CalEvent) => {
-    setCurrentMonth(ev.date.getMonth());
+    setCurrentMonth(miDe(ev.date));
     setSelectedDate(ev.date);
     setSelectedEvent(ev);
     setSearchOpen(false);
@@ -883,7 +957,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     allEvents.filter(e => enabledCals.has(e.calId)).sort((a, b) => a.date.getTime() - b.date.getTime()),
     [enabledCals, allEvents]
   );
-  const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
+  const monthDays = useMemo(() => getMonthDays(miAno(currentMonth), miMes(currentMonth)), [currentMonth]);
   const gridRows = monthDays.length / 7;
   // Máximo de eventos mostrados por célula antes de colapsar em "+N mais".
   // Meses de 6 semanas têm células mais baixas → limite menor para não cortar.
@@ -900,14 +974,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         {/* Mini cal */}
         <div>
           <div className="flex-between-mb6">
-            <span className="fs-13 fw-700 c-text">{monthLabel(currentMonth)} 2026</span>
+            <span className="fs-13 fw-700 c-text">{monthLabel(miMes(currentMonth))} {miAno(currentMonth)}</span>
             <div className="d-flex gap-2">
               <SmBtn l="‹" onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} dis={currentMonth <= 0} />
-              <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} dis={currentMonth >= 11} />
+              <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m + 1))} dis={currentMonth >= MI_MAX} />
             </div>
           </div>
-          <MiniCal year={2026} month={currentMonth} selected={selectedDate} visibleEvents={visibleEvents}
-            onSelect={d => { setSelectedDate(d); setCurrentMonth(d.getMonth()); }} />
+          <MiniCal year={miAno(currentMonth)} month={miMes(currentMonth)} selected={selectedDate} visibleEvents={visibleEvents}
+            onSelect={d => { setSelectedDate(d); setCurrentMonth(miDe(d)); }} />
         </div>
 
         {/* Calendar toggles */}
@@ -968,7 +1042,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                               const dd = `${d.getDate()}/${d.getMonth() + 1}`;
                               return (
                                 <button key={ev.id} onClick={() => {
-                                  setCurrentMonth(d.getMonth());
+                                  setCurrentMonth(miDe(d));
                                   setSelectedDate(d);
                                   setSelectedEvent(ev);
                                 }} style={{
@@ -1003,7 +1077,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
               {sidebarOpen ? "◀" : "▶"}
             </button>
-            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
+            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário {miAno(currentMonth)}</h2>
             <button onClick={goToday} className="p p-filter shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
@@ -1060,14 +1134,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 fontSize: "var(--fs-18)", color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>‹</button>
             <span className="fw-700 ta-c" style={{ fontSize: "var(--fs-15)", color: "var(--text)", flex: 1 }}>
-              {monthLabel(currentMonth)} 2026
+              {monthLabel(miMes(currentMonth))} {miAno(currentMonth)}
             </span>
             <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
-            <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} title="Mês seguinte" disabled={currentMonth >= 11}
+            <button onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m+1))} title="Mês seguinte" disabled={currentMonth >= MI_MAX}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
-                background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
+                background: "var(--bg-card)", cursor: currentMonth >= MI_MAX ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "var(--fs-18)", color: currentMonth >= 11 ? "var(--border)" : "var(--text-2)",
+                fontSize: "var(--fs-18)", color: currentMonth >= MI_MAX ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>›</button>
           </div>
         </div>
@@ -1144,11 +1218,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       borderRight: "1px solid var(--border-light)",
                       borderBottom: "1px solid var(--border-light)",
                       padding: CP, overflow: "hidden", cursor: "pointer",
-                      background: isSel ? "var(--accent-light)" : livre ? "var(--cal-livre-bg)" : "transparent",
+                      background: isSel ? "var(--accent-light)" : livre ? "var(--cal-livre-bg)"
+                        : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
                       transition: "background 0.12s",
                     }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
-                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = livre ? "var(--cal-livre-bg)" : "transparent"; }} title={tipDia}>
+                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = livre ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent"; }} title={tipDia}>
                       <div className="fs-11" style={{
                         fontWeight: isToday ? 700 : 500,
                         minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
@@ -1181,7 +1256,6 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                             marginLeft:  (pos === "mid" || pos === "end") ? -CP : 0,
                             marginRight: (pos === "mid" || pos === "start") ? -CP : 0,
                             borderRadius: bRadius,
-                            ...(emDestaque(e) ? { outline: "2px solid var(--cal-destaque)", outlineOffset: -1, fontWeight: 800 } : {}),
                             background: calColor(e),
                             color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
                             textOverflow: "ellipsis", cursor: "pointer",
@@ -1253,7 +1327,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
     setTimeout(() => document.addEventListener("mousedown", h), 10);
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} 2026`;
+  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} ${date.getFullYear()}`;
   return (
     <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
       <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
