@@ -68,3 +68,65 @@ describe("buildFpgEditionsIndex — Miramar Internacional Open", () => {
     expect(groups[0].map(e => e.year).sort()).toEqual([2024, 2025, 2026]);
   });
 });
+
+describe("buildFpgEditionsIndex — PJA @ Terras da Comporta (alias por campo)", () => {
+  // O nome muda todos os anos; o campo é que distingue as duas provas anuais.
+  const tc = (tcode: string, name: string, date: string, campo: string): Tournament =>
+    ({ ccode: "192", tcode, name, date, escalao: null, campo, players: [] } as unknown as Tournament);
+
+  const torre = [
+    tc("10013", "PJA Race to Dunas", "2025-09-12", "Terras da Comporta Torre Golf Course"),
+    tc("90101", "PJA Torre 2026", "2026-09-05", "Terras da Comporta - Torre"),
+  ];
+  const dunas = [
+    tc("10005", "PJA TOUR Grand Final", "2024-11-30", "Terras da Comporta Dunas Golf Course"),
+    tc("10019", "Race to Dunas G. Final", "2025-11-29", "Terras da Comporta Dunas Golf Course"),
+  ];
+
+  it("junta as edições do Torre apesar dos nomes diferentes", () => {
+    const groups = [...buildFpgEditionsIndex(torre).values()];
+    expect(groups).toHaveLength(1);
+    expect(groups[0].map(e => e.tcode).sort()).toEqual(["10013", "90101"]);
+  });
+
+  it("junta as Grandes Finais das Dunas", () => {
+    const groups = [...buildFpgEditionsIndex(dunas).values()];
+    expect(groups).toHaveLength(1);
+    expect(groups[0].map(e => e.tcode).sort()).toEqual(["10005", "10019"]);
+  });
+
+  it("NÃO mistura o Torre com as Dunas — o 'Dunas' do nome de 2025 é um engano", () => {
+    const index = buildFpgEditionsIndex([...torre, ...dunas]);
+    const groups = [...index.values()].map(g => g.map(e => e.tcode).sort());
+    expect(groups).toHaveLength(2);
+    expect(groups).toContainEqual(["10013", "90101"]);
+    expect(groups).toContainEqual(["10005", "10019"]);
+  });
+
+  it("não apanha provas de outro clube com 'Torre' no campo", () => {
+    const outroClube = { ccode: "029", tcode: "10543", name: "PJA Aroeira Masters 2026",
+      date: "2026-04-24", escalao: null, campo: "PGA Aroeira", players: [] } as unknown as Tournament;
+    const index = buildFpgEditionsIndex([...torre, outroClube]);
+    expect([...index.values()]).toHaveLength(2);
+  });
+});
+
+describe("buildFpgEditionsIndex — o nome da etapa do Torre pode mudar", () => {
+  // Quando os resultados saírem, o placeholder é promovido e o torneio adopta o
+  // nome OFICIAL da FPG. A tab não pode desaparecer nessa altura.
+  const tc = (tcode: string, name: string, date: string): Tournament =>
+    ({ ccode: "192", tcode, name, date, escalao: null,
+       campo: "Terras da Comporta Torre Golf Course", players: [] } as unknown as Tournament);
+
+  for (const nome of ["PJA Torre 2026", "PJA Race to Dunas", "Race to Dunas - Torre",
+                      "2º Torneio Torre Golf Course"]) {
+    it(`casa com a edição de 2025 quando se chama "${nome}"`, () => {
+      const groups = [...buildFpgEditionsIndex([
+        tc("10013", "PJA Race to Dunas", "2025-09-12"),
+        tc("10024", nome, "2026-09-05"),
+      ]).values()];
+      expect(groups).toHaveLength(1);
+      expect(groups[0]).toHaveLength(2);
+    });
+  }
+});
