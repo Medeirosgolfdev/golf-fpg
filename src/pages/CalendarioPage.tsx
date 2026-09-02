@@ -499,14 +499,21 @@ const NAO_DELE = new Set<string>([
   "cgss_patrocin",    // torneios de patrocinador (Diário de Notícias, BPI, …)
   "cgss_regional",    // Campeonatos Regionais Absolutos
   "cgss_fpg",         // Campeonatos Nacionais Absolutos / de Clubes
-  "dest_intl",        // circuito profissional (Open de Portugal, …)
   "irma_bad",         // badminton da irmã
   "bday_sub10", "bday_sub12", "bday_sub14", "bday_sub16", "bday_sub18",
   "bday_pja", "bday_outros",   // aniversários dos outros miúdos
 ]);
-/** Excepções por título (`includes`, sem maiúsculas/acentos a contar). */
+/* Excepções por TÍTULO (`includes`, sem maiúsculas nem acentos a contar) —
+   para quando o calendário do evento não chega para decidir. */
+/** É dele, apesar de o calendário dizer que não. */
 const MANUEL_EXCEPCOES: string[] = [];
+/** NÃO é dele, apesar de o calendário dizer que sim.
+ *  ⚠ O calendário «Internacionais» mistura as provas juvenis que ele joga
+ *  (Faldo Series, Castro Marim U14, Greatgolf, World Kids) com o circuito
+ *  profissional — que é só para ver na televisão. */
+const NAO_DELE_TITULOS: string[] = ["Open de Portugal"];
 function isDele(e: CalEvent): boolean {
+  if (NAO_DELE_TITULOS.some(x => norm(e.title).includes(norm(x)))) return false;
   if (MANUEL_EXCEPCOES.some(x => norm(e.title).includes(norm(x)))) return true;
   return !NAO_DELE.has(e.calId);
 }
@@ -515,8 +522,16 @@ function isDele(e: CalEvent): boolean {
  *  muitos e diários, e a cheio tapavam o resto. */
 function opacidadeDe(e: CalEvent): number {
   if (isDele(e)) return 1;
-  return e.calId.startsWith("bday_") ? 0.3 : 0.45;
+  return e.calId.startsWith("bday_") ? 0.22 : 0.3;
 }
+
+/** Nível da Ordem de Mérito do CGSS a que a prova conta (A/B/C), ou null.
+ *  É o que decide quantos pontos ela vale — ver a tab 🏅 da FPGPage — por isso
+ *  merece estar à vista no calendário, e não só no nome do calendário. */
+const OM_NIVEL: Record<string, "A" | "B" | "C"> = {
+  cgss_major: "A", cgss_om_b: "B", cgss_om_c: "C",
+};
+function omNivel(e: CalEvent): "A" | "B" | "C" | null { return OM_NIVEL[e.calId] ?? null; }
 
 
 type EvPos = "single" | "start" | "mid" | "end";
@@ -701,7 +716,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
                     <div className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)" }}>
-                      {hl ? `${hl.icon} ` : ""}{e.title}
+                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm" style={{ marginRight: 4, fontWeight: 800, fontSize: 9 }} title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
@@ -1164,7 +1179,19 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           }}
                           onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : Math.min(0.85, opacidadeDe(e) + 0.25)))}
                           onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : opacidadeDe(e)))}>
-                          {showTitle ? e.title : "\u00A0"}
+                          {showTitle ? (
+                            <>
+                              {omNivel(e) ? (
+                                <span title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`} style={{
+                                  display: "inline-block", minWidth: 10, marginRight: 3,
+                                  padding: "0 3px", borderRadius: 2, fontSize: 8, fontWeight: 800,
+                                  background: "rgba(255,255,255,0.85)", color: "var(--text)",
+                                  lineHeight: 1.6, verticalAlign: "middle",
+                                }}>{omNivel(e)}</span>
+                              ) : null}
+                              {e.title}
+                            </>
+                          ) : " "}
                         </div>
                         );
                       })}
