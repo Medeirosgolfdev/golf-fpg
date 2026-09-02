@@ -499,19 +499,31 @@ const NAO_DELE = new Set<string>([
   "cgss_patrocin",    // torneios de patrocinador (Diário de Notícias, BPI, …)
   "cgss_regional",    // Campeonatos Regionais Absolutos
   "cgss_fpg",         // Campeonatos Nacionais Absolutos / de Clubes
+  "fpg_aquapor",      // Circuito AQUAPOR — sete provas, todas no continente
+  "fpg_torneios",     // provas nacionais de absolutos (Taça FPG, Lisbon Cup, …)
+  "jr_fpg",           // Campeonato Nacional Individual Absoluto
   "irma_bad",         // badminton da irmã
   "bday_sub10", "bday_sub12", "bday_sub14", "bday_sub16", "bday_sub18",
   "bday_pja", "bday_outros",   // aniversários dos outros miúdos
 ]);
 /* Excepções por TÍTULO (`includes`, sem maiúsculas nem acentos a contar) —
    para quando o calendário do evento não chega para decidir. */
-/** É dele, apesar de o calendário dizer que não. */
-const MANUEL_EXCEPCOES: string[] = [];
+/** É dele — ou é para ver em família — apesar de o calendário dizer que não.
+ *  O Nacional de Badminton da irmã é o exemplo: vão todos, e ela vai a
+ *  campeã nacional. */
+const MANUEL_EXCEPCOES: string[] = ["Campeonato Nacional Badminton"];
+/** Os que levam contorno, para saltarem à vista sem precisarem de animação
+ *  (que num evento de vários dias fica a gritar). */
+const EM_DESTAQUE: string[] = ["Campeonato Nacional Badminton"];
+function emDestaque(e: CalEvent): boolean {
+  return EM_DESTAQUE.some(x => norm(e.title).includes(norm(x)));
+}
 /** NÃO é dele, apesar de o calendário dizer que sim.
  *  ⚠ O calendário «Internacionais» mistura as provas juvenis que ele joga
  *  (Faldo Series, Castro Marim U14, Greatgolf, World Kids) com o circuito
- *  profissional — que é só para ver na televisão. */
-const NAO_DELE_TITULOS: string[] = ["Open de Portugal"];
+ *  profissional; e o «Regional Jr» mistura os Campeonatos de Jovens com os
+ *  Absolutos, que são de gente crescida. */
+const NAO_DELE_TITULOS: string[] = ["Open de Portugal", "Absoluto"];
 function isDele(e: CalEvent): boolean {
   if (NAO_DELE_TITULOS.some(x => norm(e.title).includes(norm(x)))) return false;
   if (MANUEL_EXCEPCOES.some(x => norm(e.title).includes(norm(x)))) return true;
@@ -1169,6 +1181,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                             marginLeft:  (pos === "mid" || pos === "end") ? -CP : 0,
                             marginRight: (pos === "mid" || pos === "start") ? -CP : 0,
                             borderRadius: bRadius,
+                            ...(emDestaque(e) ? { outline: "2px solid var(--cal-destaque)", outlineOffset: -1, fontWeight: 800 } : {}),
                             background: calColor(e),
                             color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
                             textOverflow: "ellipsis", cursor: "pointer",
