@@ -22,6 +22,7 @@ import PasswordGate from "../ui/PasswordGate";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
+import { schoolDay } from "../data/schoolCalendar";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 
 /* ═══ Types ═══ */
@@ -91,7 +92,6 @@ const CALENDARS: CalendarSource[] = [
   { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
   { id: "colonias",       name: "🏕 Colónias",          color: C.cal.colonias, group: "DESTAQUE" },
-  { id: "escola",         name: "🎒 Escola (ISS)",      color: C.cal.escola, group: "DESTAQUE" },
 
   // ── Viagens — laranja / âmbar ──
   { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
@@ -105,6 +105,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",   color: C.cal.viag_alg_jul_mamf,group: "VIAGENS" },
   { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
   { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",              color: C.cal.viag_malaga_nov,  group: "VIAGENS" },
+  { id: "viag_paris_set",   name: "✈ Paris (Set) · La Boulie",                 color: C.cal.viag_paris_set,   group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -319,21 +320,6 @@ const EVENTS: CalEvent[] = [
   ev("profissao_fe", "Profissão de Fé — 18:30", new Date(2026,5,6), "", ""),
   ev("ferias",  "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
 
-  /* ══ Calendário escolar ISS Madeira 2026/2027 ══
-     Do PDF oficial "ISS-Madeira School Calendar 2026/27". Os períodos entram
-     como MARCOS (início/fim) e não como intervalos: pintar 3 meses seguidos
-     tapava tudo o resto. As interrupções entram como intervalos — são elas
-     que interessam para marcar viagens. */
-  ev("escola", "🎒 Início do 1.º período (ISS)",        new Date(2026,8,1),  "ISS Madeira", ""),
-  ev("escola", "🎒 Fim do 1.º período (ISS)",           new Date(2026,11,11), "ISS Madeira", ""),
-  ev("ferias", "🎄 Interrupção do Natal (ISS)",         new Date(2026,11,12), "", "", new Date(2027,0,3)),
-  ev("escola", "🎒 Início do 2.º período (ISS)",        new Date(2027,0,4),  "ISS Madeira", ""),
-  ev("escola", "🎒 Fim do 2.º período (ISS)",           new Date(2027,2,25), "ISS Madeira", ""),
-  ev("ferias", "🐣 Interrupção da Páscoa (ISS)",        new Date(2027,2,26), "", "", new Date(2027,3,11)),
-  ev("escola", "🎒 Início do 3.º período (ISS)",        new Date(2027,3,12), "ISS Madeira", ""),
-  ev("escola", "🎒 Fim do ano lectivo (ISS)",           new Date(2027,5,30), "ISS Madeira", ""),
-  ev("ferias", "🏖 Férias de Verão (ISS)",              new Date(2027,6,1),  "", "", new Date(2027,7,31)),
-
   /* ══════════════════════════════════════
      ⛳ CAMPO / TREINO
      ══════════════════════════════════════ */
@@ -418,6 +404,11 @@ const EVENTS: CalEvent[] = [
   //   marcados (nas outras viagens há sempre o par da Madeira).
   ev("viag_malaga_nov", "✈ TP1134 LIS → AGP 07:20–09:35",       new Date(2026,10,18), "TAP", ""),
   ev("viag_malaga_nov", "✈ TP1137 AGP → LIS 15:00–15:25",       new Date(2026,10,23), "TAP", ""),
+
+  // Setembro — Paris (treino). Dia inteiro no Golf de La Boulie com o Antoine
+  // Schwartz; o dia da viagem fica marcado sem nº de voo (não foi indicado).
+  ev("viag_paris_set", "✈ Viagem para Paris",                     new Date(2026,8,2),  "", ""),
+  ev("treino",         "⛳ Putt training day — Antoine Schwartz",  new Date(2026,8,3),  "Golf de La Boulie (FR)", "Dia inteiro"),
 ];
 
 /* ═══ Helpers ═══ */
@@ -524,12 +515,19 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           const isToday = isSameDay(d.date, today);
           const isSel = selected && isSameDay(d.date, selected);
           const has = visibleEvents.some(e => eventOnDay(e, d.date));
+          // Pano de fundo do ano lectivo: os dias COM aulas ficam esbatidos, para
+          // se ver de relance se uma viagem cai em período de escola. Os dias
+          // úteis sem aulas (interrupções, mid-term, conference days) ficam
+          // limpos e dizem o motivo ao passar o rato.
+          const sd = schoolDay(d.date);
+          const escola = d.inMonth && sd.tipo === "aulas";
+          const semAulas = d.inMonth && sd.tipo === "sem-aulas" && d.date.getDay() !== 0 && d.date.getDay() !== 6;
           return (
             <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : "transparent",
+              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : escola ? "var(--bg-subtle)" : "transparent",
               fontWeight: isToday || isSel ? 600 : 400,
-            }}>
+            }} title={sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : semAulas ? `Sem aulas — ${sd.motivo}` : undefined}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
                 <span className="cal-dot-indicator" style={{ width: 3, height: 3, background: "var(--accent)" }} />

@@ -211,6 +211,7 @@ export const C = {
     viag_alg_jul_mamf:"#facc15",  /* amarelo — Algarve Jul (Mariana + M. Francisco) — provisório */
     viag_vce_ago:    "#f43f5e",   /* rosa — Veneza+Porto Ago — provisório */
     viag_malaga_nov: "#8b5cf6",  /* violeta — Málaga Nov (US Kids Spanish Open) */
+    viag_paris_set: "#0ea5e9",   /* azul-céu — Paris Set (treino La Boulie) */
     // Aniversários (ramp rosa)
     bday_sub10:     "#f9a8d4",
     bday_sub12:     "#f472b6",
