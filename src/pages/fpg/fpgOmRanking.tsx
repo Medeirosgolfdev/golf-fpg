@@ -162,6 +162,22 @@ export function omLevelOf(t: Tournament): Level | null {
 
 const LEVEL_LABEL: Record<Level, string> = { A: "Nível A (Major)", B: "Nível B", C: "Nível C" };
 
+/** Escada de pontos de um nível: 1º…10º das `points` + as bandas 11-15/16-20.
+ *  Usada nos dois sítios que a mostram — os pontos em jogo NESTA prova e o
+ *  que vale cada prova que ainda falta. */
+function pointsLadder(
+  data: { points?: Record<string, Record<string, number>>; bands?: Record<string, Record<string, number>> } | null,
+  lv: Level,
+): Array<{ pos: string; pts: number }> {
+  const pts = (data?.points?.[lv] || {}) as Record<string, number>;
+  const bands = (data?.bands?.[lv] || {}) as Record<string, number>;
+  const out: Array<{ pos: string; pts: number }> = [];
+  for (let p = 1; p <= 10; p++) if (pts[p] != null) out.push({ pos: `${p}º`, pts: pts[p] });
+  if (bands["11-15"] != null) out.push({ pos: "11-15º", pts: bands["11-15"] });
+  if (bands["16-20"] != null) out.push({ pos: "16-20º", pts: bands["16-20"] });
+  return out;
+}
+
 /* ── Calendário oficial das provas NOMEADAS no regulamento (13 provas) ──
    Serve para saber quantas provas da época já contam e quais ainda faltam.
    A Carnaval NÃO está aqui (não é nomeada no regulamento — foi acrescentada
@@ -301,12 +317,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           {/* Pontos em JOGO nesta prova (a mesma escala do nível para todas as
               categorias) — o que cada posição vale para a OM neste torneio. */}
           {(() => {
-            const lvlPts = (data.points?.[level] || {}) as Record<string, number>;
-            const bands = (data.bands?.[level] || {}) as Record<string, number>;
-            const ladder: Array<{ pos: string; pts: number }> = [];
-            for (let p = 1; p <= 10; p++) if (lvlPts[p] != null) ladder.push({ pos: `${p}º`, pts: lvlPts[p] });
-            if (bands["11-15"] != null) ladder.push({ pos: "11-15º", pts: bands["11-15"] });
-            if (bands["16-20"] != null) ladder.push({ pos: "16-20º", pts: bands["16-20"] });
+            const ladder = pointsLadder(data, level);
             if (!ladder.length) return null;
             return (
               <div style={{ marginBottom: 12, padding: "8px 10px", background: "var(--accent-light)", borderRadius: 8 }}>
@@ -401,9 +412,16 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
               {(["A", "B", "C"] as Level[]).map(lv => {
                 const items = missing.filter(m => m.level === lv);
                 if (!items.length) return null;
+                // Quanto vale uma prova deste nível — a mesma escada que o
+                // bloco de cima mostra para ESTA prova. Sem isto a lista dizia
+                // que faltam 8 provas mas não que uma de Nível A vale 25 ao
+                // vencedor e uma de Nível C vale 15.
+                const ladder = pointsLadder(data, lv);
+                const topo = ladder.slice(0, 3).map(l => `${l.pos} ${l.pts}`).join(" · ");
+                const todos = ladder.map(l => `${l.pos} ${l.pts}`).join(" · ");
                 return (
                   <div key={lv} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6, marginBottom: 4 }}>
-                    <span className="fs-11 p-muted" style={{ minWidth: 78 }}>{LEVEL_LABEL[lv]}:</span>
+                    <span className="fs-11 p-muted" style={{ minWidth: 78 }} title={todos ? `Uma prova de ${LEVEL_LABEL[lv]} paga: ${todos}` : undefined}>{LEVEL_LABEL[lv]}:</span>
                     {items.map(m => {
                       const isThis = m.rx.test(tournament.name || "");
                       return (
@@ -414,6 +432,13 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         </span>
                       );
                     })}
+                    {topo ? (
+                      <span className="fs-11 p-muted" title={`escada completa: ${todos}`}
+                        style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>
+                        vale <strong style={{ color: "var(--accent)" }}>{topo}</strong>
+                        {ladder.length > 3 ? " …" : ""}
+                      </span>
+                    ) : null}
                   </div>
                 );
               })}
