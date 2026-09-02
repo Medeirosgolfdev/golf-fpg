@@ -17,6 +17,7 @@
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
 import PastEditionsRepeaters from "./PastEditionsRepeaters";
 
@@ -170,12 +171,21 @@ export function fpgPastEditionsTabs(
   return [{
     key: "past-editions",
     label: "Edições anteriores",
+    // ⚠ Cada bloco no seu error boundary. A tab é carregada com a página (que
+    // é lazy), por isso um erro aqui dentro — no painel ou no carregamento das
+    // edições — derrubava a /FPG INTEIRA e deixava o ecrã em branco, sem
+    // sequer dizer o que falhou. Aconteceu a 2026-09-02 com um módulo em cache
+    // no dev server a apontar para um ficheiro renomeado.
     content: (
       <>
-        {playersDB && previous.length
-          ? <PastEditionsRepeaters current={current} previous={previous} playersDB={playersDB} />
-          : null}
-        <CircuitPastEditionsTab editions={entries} division={division} />
+        {playersDB && previous.length ? (
+          <SectionErrorBoundary label="Quem repete">
+            <PastEditionsRepeaters current={current} previous={previous} playersDB={playersDB} />
+          </SectionErrorBoundary>
+        ) : null}
+        <SectionErrorBoundary label="Edições anteriores">
+          <CircuitPastEditionsTab editions={entries} division={division} />
+        </SectionErrorBoundary>
       </>
     ),
   }];
