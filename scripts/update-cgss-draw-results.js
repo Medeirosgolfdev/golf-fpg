@@ -2,9 +2,11 @@
 /**
  * update-cgss-draw-results.js
  * ═══════════════════════════════════════════════════════════════════════════
- * GENÉRICO: substitui uma entrada DRAW-ONLY de um torneio CGSS (ccode 007,
- * tcode placeholder 9xxxx — convenção RALI/90071, Calheta/90072, OM NOS/90073)
- * pelos RESULTADOS REAIS assim que a FPG os publicar.
+ * GENÉRICO: substitui uma entrada DRAW-ONLY com tcode placeholder 9xxxx pelos
+ * RESULTADOS REAIS assim que a FPG os publicar. Por omissão CGSS (ccode 007,
+ * cgss-draws-manual.json — convenção RALI/90071, Calheta/90072, OM NOS/90073);
+ * `--ccode`/`--draws-file` servem outros circuitos com o mesmo padrão (PJA:
+ * ccode 192 + pja-draws-manual.json, Torre/90101).
  *
  * Generalização do jobCalheta do update-calheta-portosanto-results.js — é a
  * 3ª vez que o fluxo se repete, por isso passou a script único parameterizado.
@@ -36,7 +38,10 @@
  * USO:
  *   node scripts/update-cgss-draw-results.js --placeholder 90073 --search "OM NOS"
  *   node scripts/update-cgss-draw-results.js --placeholder 90073 --tcode 11055   # forçar
- *   ... [--pull 001] [--probe-from 11051] [--probe-to 11090]
+ *   node scripts/update-cgss-draw-results.js --placeholder 90101 --ccode 192  *        --draws-file pja-draws-manual.json --pull 000 --adopt-name --search "PJA"  *        --probe-from 10024 --probe-to 10040
+ *      (o clube 192 vai em 10023 a 2026-09-02 — daí o range; o default 11051+
+ *       é o do CGSS e não serve aqui)
+ *   ... [--pull 001] [--probe-from 11051] [--probe-to 11090] [--min-rounds 2]
  *   ... [--min-overlap N] [--min-players N] [--dry-run]
  *
  * EXIT CODES: 0 = actualizado · 2 = ainda sem resultados publicados · 1 = erro.
@@ -46,21 +51,34 @@
 const fs = require("fs");
 const path = require("path");
 const { loadCookieHeader } = require("./lib/cookies");
+const { Sessao, criarSessaoLista } = require("./lib/fpg-session");
 const { lisbonCivilDayStr } = require("../lib/helpers.js");
 
 const REPO = path.resolve(__dirname, "..");
-const CGSS = path.join(REPO, "public", "data", "cgss-draws-manual.json");
 const ADM = path.join(REPO, "public", "data", "fpg-admissions-draws.json");
-const CCODE = "007";
 
 const args = process.argv.slice(2);
 const argVal = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : null; };
 const DRY = args.includes("--dry-run");
 const PLACEHOLDER = String(argVal("--placeholder") || "");
 if (!/^9\d{4}$/.test(PLACEHOLDER)) {
-  console.error("uso: node scripts/update-cgss-draw-results.js --placeholder 9xxxx [--search STR] [--tcode N] [--pull NNN] [--dry-run]");
+  console.error("uso: node scripts/update-cgss-draw-results.js --placeholder 9xxxx [--search STR] [--tcode N]");
+  console.error("     [--ccode NNN] [--draws-file X.json] [--pull NNN] [--adopt-name] [--dry-run]");
   process.exit(1);
 }
+/* ⚠ Por omissão CGSS (007 + cgss-draws-manual.json) — o fluxo para que nasceu.
+ * `--ccode`/`--draws-file` servem os outros circuitos que também vivem de draws
+ * curados com tcode placeholder (PJA: 192 + pja-draws-manual.json). */
+const CCODE = String(argVal("--ccode") || "007");
+const CGSS = path.join(REPO, "public", "data", argVal("--draws-file") || "cgss-draws-manual.json");
+/* Nome: por omissão manda o do draw curado (no CGSS a FPG publica "Torneio
+ * NNNNN"); `--adopt-name` prefere o nome oficial quando a TournamentsLST o dá. */
+const ADOPT_NAME = args.includes("--adopt-name");
+/* Provas a 2 voltas: promover no fim do 1.º dia deixaria o torneio congelado
+ * com uma ronda só (deixa de ser placeholder, logo o auto-descobridor nunca
+ * mais lhe pega). `--min-rounds 2` faz o sábado sair 2 (= "ainda não") e a
+ * promoção acontecer no domingo, com as duas voltas. */
+const MIN_ROUNDS = parseInt(argVal("--min-rounds") || "1", 10);
 const PULL = path.join(REPO, "public", "data", `pull-torneios${argVal("--pull") || "001"}.json`);
 const SEARCH = argVal("--search") || "";
 const PROBE_FROM = parseInt(argVal("--probe-from") || "11051", 10);
@@ -72,8 +90,10 @@ const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
 
 const cgssFile = JSON.parse(fs.readFileSync(CGSS, "utf8"));
 const drawEntry = cgssFile.tournaments.find(t => String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER);
-if (!drawEntry) { console.error(`[cgss] ERRO: sem entrada ${CCODE}/${PLACEHOLDER} no cgss-draws-manual.json.`); process.exit(1); }
+if (!drawEntry) { console.error(`[cgss] ERRO: sem entrada ${CCODE}/${PLACEHOLDER} em ${path.basename(CGSS)}.`); process.exit(1); }
 const META = { name: drawEntry.name, date: drawEntry.date, campo: drawEntry.campo };
+/** tcode → nome oficial, preenchido pela TournamentsLST (usado com --adopt-name). */
+const OFFICIAL_NAME = new Map();
 const drawNames = new Set();
 for (const r of Object.values(drawEntry.draws || {}))
   for (const g of r.groups || []) for (const p of g.players || []) drawNames.add(norm(p.nome));
@@ -94,22 +114,33 @@ const PAGE_SIZE = 150;
 const RETRY_WAITS = [2000, 5000, 10000];
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-const cookieDG = loadCookieHeader({
+/* `FPG_AUTH_MODE=publico` nem chega a ler os ficheiros de cookies (senão o log
+ * anunciava credenciais que não vai usar). */
+const MODO_AUTH = String(process.env.FPG_AUTH_MODE || "auto").toLowerCase();
+const SO_PUBLICO = MODO_AUTH === "publico";
+const cookieDG = SO_PUBLICO ? null : loadCookieHeader({
   envVars: ["DATAGOLF_SCORING_COOKIES", "DATAGOLF_COOKIES"],
   file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
   label: "[cgss/datagolf]", exitOnFail: false,
 });
-const cookieFPG = loadCookieHeader({
+const cookieFPG = SO_PUBLICO ? null : loadCookieHeader({
   envVars: ["FPG_ADMISSIONS_COOKIES"],
   file: path.join(REPO, "api", ".fpg-admissions-cookies.json"),
   label: "[cgss/fpg]", exitOnFail: false,
 });
-const HOSTS = [
-  { id: "scoring.datagolf.pt", base: "https://scoring.datagolf.pt/pt", origin: "https://scoring.datagolf.pt", cookie: cookieDG, hasTournLST: true },
-  { id: "scoring.fpg.pt",      base: "https://scoring.fpg.pt/lists",   origin: "https://scoring.fpg.pt",      cookie: cookieFPG, hasTournLST: false },
-];
-for (const h of HOSTS) if (!h.cookie) console.warn(`[cgss] aviso: sem cookies para ${h.id} — tento na mesma.`);
-if (!HOSTS.some(h => h.cookie)) { console.error("[cgss] ERRO: sem cookies para nenhum host."); process.exit(1); }
+/* ⚠ AS COOKIES NÃO SÃO PRECISAS PARA LER RESULTADOS (2026-08-30). O gateway
+ * `scoring.fpg.pt/lists/linkpage.aspx` emite sessão a quem chega sem
+ * credenciais, e a `1PreparePage.aspx` faz o mesmo para a TournamentsLST —
+ * ver scripts/lib/fpg-session.js. Como as cookies duram ~9h e morrem sempre a
+ * meio da janela de scrapes, o canal PÚBLICO vai à frente e as cookies ficam
+ * como fallback. `FPG_AUTH_MODE=cookies` inverte, `=publico` só usa o público. */
+const HOST_PUBLICO = { id: "público (sem cookies)", publico: true, cookie: null, hasTournLST: true };
+const HOST_DG = { id: "scoring.datagolf.pt", base: "https://scoring.datagolf.pt/pt", origin: "https://scoring.datagolf.pt", cookie: cookieDG, hasTournLST: true };
+const HOST_FPG = { id: "scoring.fpg.pt", base: "https://scoring.fpg.pt/lists", origin: "https://scoring.fpg.pt", cookie: cookieFPG, hasTournLST: false };
+const HOSTS = MODO_AUTH === "publico" ? [HOST_PUBLICO]
+  : MODO_AUTH === "cookies" ? [HOST_DG, HOST_FPG, HOST_PUBLICO]
+  : [HOST_PUBLICO, HOST_DG, HOST_FPG];
+console.log(`[cgss] canais: ${HOSTS.map(h => h.id + (h.publico ? "" : h.cookie ? " (cookies)" : " (sem cookies)")).join(" → ")}`);
 
 function classifyBody(text) {
   const t = text || "";
@@ -126,7 +157,44 @@ function logFailure(host, label, status, text, extra) {
   console.error(`[cgss]   corpo[0..300]: ${head}`);
 }
 
+/* ── canal público: sessão emitida pelo próprio gateway ──────────────────── */
+const sessoesPub = new Map();   // "ccode/tcode" → Sessao | null
+let sessaoLista;                // TournamentsLST (entra pela 1PreparePage)
+
+async function sessaoPublica(pathname, body) {
+  if (pathname.startsWith("tournaments.aspx")) {
+    if (sessaoLista === undefined) sessaoLista = await criarSessaoLista().catch(() => null);
+    return sessaoLista;
+  }
+  const k = `${CCODE}/${body.tcode}`;
+  if (!sessoesPub.has(k)) {
+    const s = new Sessao();
+    const a = await s.abrir("classif", CCODE, body.tcode).catch(() => null);
+    sessoesPub.set(k, a && a.ok ? s : null);
+  }
+  return sessoesPub.get(k);
+}
+
+async function postPublico(pathname, qs, body, label, { quiet } = {}) {
+  let sess;
+  try { sess = await sessaoPublica(pathname, body); }
+  catch (e) { sess = null; if (!quiet) console.error(`[cgss] ✗ público · ${label}: sessão falhou: ${e.message}`); }
+  if (!sess) return { ok: false, status: 0, error: "sem sessão pública" };
+  try {
+    const r = await sess.postPageMethod(pathname, body, { queryString: qs });
+    if (!r.ok) {
+      if (!quiet) console.error(`[cgss] ✗ público · ${label}: HTTP ${r.status} · Result=${r.result || "?"}`);
+      return { ok: false, status: r.status, error: `Result=${r.result || "?"}` };
+    }
+    return { ok: true, status: 200, records: r.records || [], total: r.total ?? 0 };
+  } catch (e) {
+    if (!quiet) console.error(`[cgss] ✗ público · ${label}: rede falhou: ${e.message}`);
+    return { ok: false, status: 0, error: `network: ${e.message}` };
+  }
+}
+
 async function postJson(host, pathname, qs, body, label, { quiet } = {}) {
+  if (host.publico) return postPublico(pathname, qs, body, label, { quiet });
   const url = `${host.base}/${pathname}${qs ? "?" + qs : ""}`;
   for (let attempt = 0; attempt <= RETRY_WAITS.length; attempt++) {
     let res, text;
@@ -178,6 +246,9 @@ async function postJson(host, pathname, qs, body, label, { quiet } = {}) {
 }
 
 async function warmup(host, tcode) {
+  // No canal público o warmup é o próprio `Sessao.abrir` (segue os redirects à
+  // mão e guarda a sessão emitida no caminho) — feito em `sessaoPublica`.
+  if (host.publico) return true;
   const url = `${host.base}/linkpage.aspx?page=classif&club=${CCODE}&tourn=${tcode}&ack=${ACK_CLASSIF}`;
   try {
     const res = await fetch(url, {
@@ -365,7 +436,7 @@ async function scrapeTournament(host, tcode) {
   return {
     ok: true,
     tournament: {
-      name: META.name, ccode: CCODE, tcode,
+      name: (ADOPT_NAME && OFFICIAL_NAME.get(String(tcode))) || META.name, ccode: CCODE, tcode,
       date: META.date || "", campo,
       rounds: nRounds, playerCount: players.length, players,
     },
@@ -384,7 +455,7 @@ function writeAtomic(file, obj) {
   //    Match por CLUBE (007) + DATA — nunca pelo nome, que no oficial pode
   //    diferir do PDF do draw. --search fica só como dica de ordenação quando
   //    o mesmo dia tem mais do que um torneio do clube.
-  const dgHost = HOSTS.find(h => h.hasTournLST && h.cookie);
+  const dgHost = HOSTS.find(h => h.hasTournLST && (h.cookie || h.publico));
   if (dgHost && candidates.length > 1) {
     const recs = await tournLstRecent(dgHost);
     const hits = recs.filter(r => r.ccode === CCODE && r.date >= META.date);
@@ -392,22 +463,31 @@ function writeAtomic(file, obj) {
       (a.date === META.date ? 0 : 1) - (b.date === META.date ? 0 : 1) ||
       (SEARCH && norm(b.name).includes(norm(SEARCH)) ? 1 : 0) - (SEARCH && norm(a.name).includes(norm(SEARCH)) ? 1 : 0));
     if (hits.length) {
-      for (const h of hits) console.log(`[cgss] TournamentsLST candidato: ${h.ccode}/${h.tcode} "${h.name}" (${h.date})`);
+      for (const h of hits) {
+        console.log(`[cgss] TournamentsLST candidato: ${h.ccode}/${h.tcode} "${h.name}" (${h.date})`);
+        if (h.name) OFFICIAL_NAME.set(String(h.tcode), h.name);
+      }
       const hitTcodes = hits.map(h => h.tcode);
       candidates = [...hitTcodes, ...candidates.filter(t => !hitTcodes.includes(t))];
     } else {
-      console.log(`[cgss] TournamentsLST: nenhum torneio 007 com data ≥ ${META.date} (normal se ainda não publicado) — sondagem directa.`);
+      console.log(`[cgss] TournamentsLST: nenhum torneio ${CCODE} com data ≥ ${META.date} (normal se ainda não publicado) — sondagem directa.`);
     }
   }
 
   // 2) scrape + verificação de identidade (sondagem barata primeiro)
   let scraped = null;
   outer: for (const host of HOSTS) {
+    // Um canal que já leu classificações é um canal VIVO: se nenhum candidato
+    // bateu nele, repetir a varredura toda nos canais seguintes só martelava a
+    // FPG (32 tcodes × 3 canais) para dar o mesmo "ainda não". Só se passa ao
+    // canal seguinte quando este não conseguiu ler nada.
+    let vivo = false;
     for (const tcode of candidates) {
       await warmup(host, tcode);
       await sleep(100);
       const probe = await fetchClassif(host, tcode, 1, { quiet: true });
       if (!probe.ok || probe.records.length === 0) { await sleep(150); continue; }
+      vivo = true;
       const names = probe.records.map(mapPlayer);
       if (!anyResults(names)) { await sleep(150); continue; }
       const ov = overlap(names);
@@ -420,10 +500,15 @@ function writeAtomic(file, obj) {
       const full = await scrapeTournament(host, tcode);
       if (full.ok && full.tournament && anyResults(full.tournament.players)) { scraped = full.tournament; break outer; }
     }
+    if (vivo) { console.log(`[cgss] ${host.id}: canal vivo, nenhum candidato bate com o draw — não repito nos outros canais.`); break; }
   }
 
   if (!scraped) {
     console.log(`[cgss] Sem classificação publicada — ficheiros intactos. (exit 2)`);
+    process.exit(2);
+  }
+  if ((scraped.rounds || 1) < MIN_ROUNDS) {
+    console.log(`[cgss] ${CCODE}/${scraped.tcode}: só ${scraped.rounds || 1} de ${MIN_ROUNDS} rondas publicadas — ficheiros intactos, volto mais tarde. (exit 2)`);
     process.exit(2);
   }
   const nWith = scraped.players.filter(playerHasScore).length;
@@ -446,8 +531,8 @@ function writeAtomic(file, obj) {
     drawEntry.drawOnly = false;
     cgssFile.total = cgssFile.tournaments.length;
     writeAtomic(CGSS, cgssFile);
-    console.log(`[cgss] cgss-draws-manual.json: draw re-chaveado ${PLACEHOLDER} → ${scraped.tcode}.`);
-  } catch (e) { console.warn(`[cgss] aviso: re-chavear cgss falhou: ${e.message}`); }
+    console.log(`[cgss] ${path.basename(CGSS)}: draw re-chaveado ${PLACEHOLDER} → ${scraped.tcode}.`);
+  } catch (e) { console.warn(`[cgss] aviso: re-chavear ${path.basename(CGSS)} falhou: ${e.message}`); }
 
   // 5) re-chavear casca admissions (se existir)
   try {
@@ -469,6 +554,6 @@ function writeAtomic(file, obj) {
     reconcileDrawFeds({});
   } catch (e) { console.warn(`[cgss] aviso: reconciliação de feds falhou: ${e.message}`); }
 
-  console.log("[cgss] ✓ Concluído. Verificar em /FPG (filtro Santo da Serra) e commitar public/data/.");
+  console.log("[cgss] ✓ Concluído. Verificar em /FPG e commitar public/data/.");
   process.exit(0);
 })().catch(e => { console.error("[cgss] ERRO:", e.message); process.exit(1); });

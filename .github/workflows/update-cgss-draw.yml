@@ -1,13 +1,23 @@
-name: Resultados de torneios CGSS (draw-only → real)
+name: Resultados de torneios draw-only (CGSS + PJA) → tcode real
 
-# AUTO-DESCOBRIDOR (2026-08-28, 2ª geração): já não é preciso reapontar nada
-# por torneio. O job varre o cgss-draws-manual.json à procura de entradas
-# PENDENTES — ccode 007, tcode placeholder 9xxxx, drawOnly:true, com data
-# entre há 3 dias e hoje — e corre o update-cgss-draw-results.js para cada
-# uma: descoberta do tcode real (TournamentsLST por clube+data + sondagem
-# 11051-11090 com prova de identidade por sobreposição de nomes do draw),
-# scrape, substituição do placeholder, re-chaveamento do draw e reconciliação
-# de fedCodes. Sem pendentes, o job sai logo (verde, barato).
+# AUTO-DESCOBRIDOR (2026-08-28, 2ª geração; 3ª a 2026-09-02: deixou de ser só
+# CGSS). O job varre os ficheiros de draws curados à procura de entradas
+# PENDENTES — tcode placeholder 9xxxx, drawOnly:true, com data entre há 3 dias
+# e hoje — e corre o update-cgss-draw-results.js para cada uma: descoberta do
+# tcode real (TournamentsLST por clube+data + sondagem com prova de identidade
+# por sobreposição de nomes do draw), scrape, substituição do placeholder,
+# re-chaveamento do draw e reconciliação de fedCodes. Sem pendentes, o job sai
+# logo (verde, barato).
+#
+#   public/data/cgss-draws-manual.json → ccode 007 (Santo da Serra)
+#   public/data/pja-draws-manual.json  → PJA Tour (192 Comporta, 029 Aroeira…)
+#
+# Tudo o que é por-torneio é DERIVADO, não configurado: o ficheiro pull-torneios
+# onde vive o stub, a janela de sondagem (à volta do maior tcode real do clube)
+# e o nº de rondas a exigir (o `rounds` do stub). Uma prova a 2 voltas só é
+# promovida quando as DUAS estão publicadas — promovê-la no fim do 1.º dia
+# deixá-la-ia congelada com uma ronda, e sem placeholder o auto-descobridor
+# nunca mais lhe pegava.
 #
 # Faz par com o percurso da pasta draws-inbox/ (local): largar o PDF do draw
 # lá → scripts/process-draw-inbox.js insere a entrada draw-only e committa →
@@ -16,16 +26,19 @@ name: Resultados de torneios CGSS (draw-only → real)
 # como o Calheta Viva 90072 — interrompido por tempestade, draw-only eterno.)
 #
 # Crons (UTC): Sex/Sáb/Dom de hora a hora 12:10-18:10 (13:10-19:10 Lisboa no
-# verão — os torneios CGSS acabam tipicamente ~13h) + Seg-Qui 13:10 (uma
-# passagem diária para torneios raros a meio da semana e catch-up).
+# verão — os CGSS acabam ~13h, os PJA ~16h30) + Seg-Qui 13:10 (uma passagem
+# diária para torneios raros a meio da semana e catch-up).
 #
-# Requer os GitHub Secrets DATAGOLF_SCORING_COOKIES e FPG_ADMISSIONS_COOKIES
-# (os mesmos do update-classif / update-fpg-admissions-draws). Basta um.
+# SEM SECRETS OBRIGATÓRIOS desde 2026-09-02: o scraper lê os resultados pelo
+# canal PÚBLICO (o gateway linkpage.aspx emite sessão a quem chega sem
+# credenciais — ver scripts/lib/fpg-session.js). As cookies, quando existem,
+# ficam como fallback; é o que faz isto funcionar ao domingo à tarde, quando
+# as cookies (~9h de vida) já morreram.
 on:
   workflow_dispatch:
     inputs:
       placeholder:
-        description: 'Forçar UM placeholder (9xxxx) — salta a varredura de pendentes.'
+        description: 'Forçar UM placeholder (9xxxx) — salta a janela de datas.'
         required: false
         default: ''
       search:
@@ -60,17 +73,46 @@ jobs:
         run: |
           LIST=$(node -e '
             const fs = require("fs");
-            const inp = process.env.INPUT_PLACEHOLDER || "";
-            if (inp.trim()) { console.log(inp.trim()); process.exit(0); }
-            const d = JSON.parse(fs.readFileSync("public/data/cgss-draws-manual.json", "utf8"));
+            const FICHEIROS = [
+              { file: "public/data/cgss-draws-manual.json", adopt: 0 },
+              // O PJA publica o nome a sério (o CGSS fica-se por "Torneio NNNNN",
+              // e aí o nome do PDF do draw é que é bom) → adopta o oficial.
+              { file: "public/data/pja-draws-manual.json", adopt: 1 },
+            ];
+            const forced = (process.env.INPUT_PLACEHOLDER || "").trim();
             const iso = (x) => x.toISOString().slice(0, 10);
             const today = iso(new Date());
             const cut = iso(new Date(Date.now() - 3 * 864e5));
+
+            // Índice dos pull-torneios: onde vive o stub e qual o maior tcode
+            // REAL de cada clube (base da janela de sondagem).
+            const stub = new Map();      // "ccode/tcode" → { idx, rounds }
+            const maxReal = new Map();   // ccode → maior tcode < 90000
+            for (const f of fs.readdirSync("public/data")) {
+              const m = /^pull-torneios(\d+)\.json$/.exec(f);
+              if (!m) continue;
+              let d; try { d = JSON.parse(fs.readFileSync("public/data/" + f, "utf8")); } catch { continue; }
+              for (const t of d.tournaments || []) {
+                const cc = String(t.ccode), tc = String(t.tcode);
+                if (/^9\d{4}$/.test(tc)) stub.set(cc + "/" + tc, { idx: m[1], rounds: t.rounds || 1 });
+                else if (/^\d+$/.test(tc)) maxReal.set(cc, Math.max(maxReal.get(cc) || 0, parseInt(tc, 10)));
+              }
+            }
+
             const out = [];
-            for (const t of d.tournaments || []) {
-              if (String(t.ccode) !== "007" || !/^9\d{4}$/.test(String(t.tcode)) || t.drawOnly !== true) continue;
-              if (!t.date || t.date > today || t.date < cut) continue;
-              out.push(String(t.tcode));
+            for (const { file, adopt } of FICHEIROS) {
+              let d; try { d = JSON.parse(fs.readFileSync(file, "utf8")); } catch { continue; }
+              for (const t of d.tournaments || []) {
+                const cc = String(t.ccode), tc = String(t.tcode);
+                if (!/^9\d{4}$/.test(tc) || t.drawOnly !== true) continue;
+                if (forced) { if (tc !== forced) continue; }
+                else if (!t.date || t.date > today || t.date < cut) continue;
+                const st = stub.get(cc + "/" + tc);
+                if (!st) { console.error("aviso: " + cc + "/" + tc + " sem stub em pull-torneios — saltado"); continue; }
+                const base = maxReal.get(cc) || 0;
+                if (!base) { console.error("aviso: " + cc + " sem tcode real conhecido — saltado"); continue; }
+                out.push([cc, tc, file.split("/").pop(), st.idx, base - 6, base + 25, st.rounds, adopt].join(":"));
+              }
             }
             console.log(out.join(" "));
           ')
@@ -101,17 +143,20 @@ jobs:
           set +e
           UPDATED=0
           FAILED=0
-          for P in ${{ steps.pending.outputs.list }}; do
-            ARGS="--placeholder $P"
+          for SPEC in ${{ steps.pending.outputs.list }}; do
+            IFS=':' read -r CC TC DFILE PULL PF PT MINR ADOPT <<< "$SPEC"
+            ARGS="--placeholder $TC --ccode $CC --draws-file $DFILE --pull $PULL"
+            ARGS="$ARGS --probe-from $PF --probe-to $PT --min-rounds $MINR"
+            [ "$ADOPT" = "1" ] && ARGS="$ARGS --adopt-name"
             if [ -n "${{ github.event.inputs.search }}" ]; then ARGS="$ARGS --search \"${{ github.event.inputs.search }}\""; fi
             if [ -n "${{ github.event.inputs.tcode }}" ]; then ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"; fi
-            echo "── placeholder $P ──  ($ARGS)"
+            echo "── $CC/$TC ──  ($ARGS)"
             eval node scripts/update-cgss-draw-results.js $ARGS
             CODE=$?
             case "$CODE" in
               0) UPDATED=1 ;;
-              2) echo "ℹ️  $P: ainda sem resultados publicados." ;;
-              *) echo "❌ $P: erro (exit $CODE)"; FAILED=1 ;;
+              2) echo "ℹ️  $CC/$TC: ainda sem resultados completos publicados." ;;
+              *) echo "❌ $CC/$TC: erro (exit $CODE)"; FAILED=1 ;;
             esac
           done
           echo "updated=$UPDATED" >> $GITHUB_OUTPUT
@@ -121,20 +166,29 @@ jobs:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
 
+      # O /draws lê o manuel-pairings.json, que é GERADO — sem isto o torneio
+      # ficava lá com o tcode placeholder e sem scores.
+      - name: Regenerar pairings
+        if: steps.scrape.outputs.updated == '1'
+        continue-on-error: true
+        run: node scripts/pairings-build.js
+
       - name: Commit e push (se houve resultados)
         if: steps.scrape.outputs.updated == '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/pull-torneios001.json public/data/cgss-draws-manual.json public/data/fpg-admissions-draws.json
+          git add public/data/pull-torneios*.json public/data/cgss-draws-manual.json \
+                  public/data/pja-draws-manual.json public/data/fpg-admissions-draws.json \
+                  public/data/manuel-pairings.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."
             exit 0
           fi
 
-          git commit -m "data: resultados de torneio CGSS (draw-only → real)"
+          git commit -m "data: resultados de torneio draw-only (placeholder → tcode real)"
 
           PUSH_OK=0
           for i in 1 2 3 4 5; do
@@ -156,8 +210,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           URL=$(gh issue create \
-            --title "⛳ Resultados CGSS publicados no site ($(date -u +%Y-%m-%d))" \
-            --body "@Medeirosgolfdev — o workflow update-cgss-draw apanhou os resultados dos pendentes (${{ steps.pending.outputs.list }}), re-chaveou o(s) placeholder(s) para o(s) tcode(s) reais e reconciliou os fedCodes dos draws. Ver em https://golf-fpg.vercel.app/FPG (filtro ⛳ Santo da Serra). Esta issue fecha-se sozinha — serve só para a notificação por email.")
+            --title "⛳ Resultados publicados no site ($(date -u +%Y-%m-%d))" \
+            --body "@Medeirosgolfdev — o workflow apanhou os resultados dos pendentes (${{ steps.pending.outputs.list }}), re-chaveou o(s) placeholder(s) para o(s) tcode(s) reais e reconciliou os fedCodes dos draws. Ver em https://golf-fpg.vercel.app/FPG. Esta issue fecha-se sozinha — serve só para a notificação por email.")
           gh issue close "$URL" --comment "Notificação entregue."
 
       - name: Falhar o job se algum pendente deu erro real

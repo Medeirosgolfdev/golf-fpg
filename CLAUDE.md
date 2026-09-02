@@ -564,6 +564,7 @@ O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do 
 | `scrape-jovens-node.js` | update-jovens | idem | ✅ |
 | `scrape-federados-node.js` | update-federados | HandicapsLST (gate `fedlist_v2`) | ✅ 17 840 federados |
 | `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
+| `update-cgss-draw-results.js` | update-cgss-draw | ClassifLST + ScoreCard + TournamentsLST | ✅ **60 jog. / 54 scorecards** no 192/10023 |
 | `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
 | `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
 
