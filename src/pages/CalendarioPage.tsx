@@ -52,12 +52,12 @@ interface CalendarSource {
    tipo de compromisso se trata. */
 const FAMILIA: Record<CalendarSource["group"], string> = {
   CGSS:     "#1d4ed8",   // azul — o clube
-  JUNIOR:   "#0f766e",   // verde-azulado — academia júnior
+  JUNIOR:   "#047857",   // verde-esmeralda — academia júnior
   DRIVE:    "#7c3aed",   // violeta — circuito Drive
   FPG:      "#be185d",   // magenta — federação
   DESTAQUE: "#b91c1c",   // vermelho — as provas que contam
-  ANIVER:   "#94a3b8",   // cinzento-azulado — aniversários (contexto, não agenda)
-  VIAGENS:  "#ea580c",   // laranja — deslocações
+  ANIVER:   "#9ca3af",   // cinzento neutro — aniversários (contexto, não agenda)
+  VIAGENS:  "#0e7490",   // ciano — deslocações (céu e mar, e não compete com as provas)
 };
 
 /** Tom `i` de `n` dentro da família: mesma cor, cada vez mais clara. */
