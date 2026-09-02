@@ -520,8 +520,8 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           // úteis sem aulas (interrupções, mid-term, conference days) ficam
           // limpos e dizem o motivo ao passar o rato.
           const sd = schoolDay(d.date);
-          const escola = d.inMonth && sd.tipo === "aulas";
-          const semAulas = d.inMonth && sd.tipo === "sem-aulas" && d.date.getDay() !== 0 && d.date.getDay() !== 6;
+          const escola = sd.tipo === "aulas";
+          const semAulas = sd.tipo === "sem-aulas" && d.date.getDay() !== 0 && d.date.getDay() !== 6;
           return (
             <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
@@ -1022,8 +1022,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   // dia COM aulas fica esbatido; dia útil SEM aulas fica limpo e diz
                   // o motivo (interrupção, mid-term, conference day) no tooltip.
                   const sd = schoolDay(d.date);
-                  const temAulas = d.inMonth && sd.tipo === "aulas";
-                  const semAulas = d.inMonth && sd.tipo === "sem-aulas"
+                  const temAulas = sd.tipo === "aulas";
+                  const semAulas = sd.tipo === "sem-aulas"
                     && d.date.getDay() !== 0 && d.date.getDay() !== 6;
                   const tipDia = sd.tipo === "aulas" ? `Escola — ${sd.periodo}`
                     : semAulas ? `Sem aulas — ${sd.motivo}` : undefined;
@@ -1071,7 +1071,6 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       padding: CP, overflow: "hidden", cursor: "pointer",
                       background: isSel ? "var(--accent-light)" : temAulas ? "var(--cal-escola-bg)" : "transparent",
                       transition: "background 0.12s",
-                      ...(temAulas ? { boxShadow: "inset 3px 0 0 0 var(--cal-escola-bar)" } : {}),
                     }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
                       onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = temAulas ? "var(--cal-escola-bg)" : "transparent"; }} title={tipDia}>
