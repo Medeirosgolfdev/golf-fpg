@@ -361,7 +361,7 @@ const EVENTS: CalEvent[] = [
   ev("dest_pja", "PJA — Great Golf Júnior Open 2026", new Date(2026,1,15), "Vilamoura",         "Strokeplay", new Date(2026,1,17)),
   ev("dest_pja", "VIII Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
   ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
-  ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Torre",              "Strokeplay"),
+  ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Terras da Comporta - Torre", "2R Strokeplay", new Date(2026,8,6)),
   ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
 
   /* ══════════════════════════════════════
@@ -462,8 +462,9 @@ const EVENTS: CalEvent[] = [
   ev("viag_paris_set", "✈ TP438 LIS → PARIS ORLY 16:50–20:15",    new Date(2026,8,2),  "TAP", ""),
   ev("treino",         "⛳ Putt training day — Antoine Schwartz",  new Date(2026,8,3),  "Golf de La Boulie (FR)", "Dia inteiro"),
   ev("viag_paris_set", "✈ TP429 PARIS ORLY → LIS 10:15–11:55",    new Date(2026,8,4),  "TAP", ""),
-  // Aterram sexta e seguem para a Comporta; regressam domingo à noite.
-  ev("treino",         "⛳ Terras da Comporta — Dunas",            new Date(2026,8,4),  "Terras da Comporta - Dunas", "", new Date(2026,8,6)),
+  // Aterram sexta e seguem para a Comporta: sexta treino, sábado e domingo a
+  // prova do PJA. É tudo Terras da Comporta — não vale a pena separar campos.
+  ev("treino",         "⛳ Treino — Terras da Comporta",           new Date(2026,8,4),  "Terras da Comporta - Torre", "Treino"),
   ev("viag_paris_set", "✈ TP1695 LIS → FNC 22:20–00:10 (+1)",     new Date(2026,8,6),  "TAP", ""),
 ];
 
@@ -527,23 +528,13 @@ function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "
 
 /* Highlighted "full-cell" events */
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
-  irma_bad:      { bg: C.cal.irma_bad, border: "#0d9488", text: "#fff", icon: "🏸", cls: "hl-teal" },
   pessoal:       { bg: C.cal.hl_pessoal_bg, border: C.cal.hl_pessoal_border, text: C.cal.hl_pessoal_text, icon: "🎂", cls: "hl-green" },
 };
-/* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
-const HL_BAR: Record<string, string> = {
-  treino:       "hl-teal",
-  dest_nac_jr:  "hl-red",
-  profissao_fe: "hl-gold",
-};
-function isHighlight(e: CalEvent) {
-  // A célula inteira é o destaque MÁXIMO da página (é o que os aniversários
-  // da família usam). Reserva-se aos eventos escolhidos à mão: o calendário
-  // do badminton, por exemplo, tem quatro provas e só o Nacional é evento de
-  // família.
-  if (e.calId === "irma_bad") return emDestaque(e);
-  return e.calId in HIGHLIGHT;
-}
+/* As barras não animam. O pulsar chamava a atenção para o sítio errado e, num
+   evento de vários dias, repetia-se célula a célula. O destaque faz-se com a
+   cor cheia e o peso do texto. */
+const HL_BAR: Record<string, string> = {};
+function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
 
 /** Já passou? Compara-se por DIA: um evento de hoje ainda é de hoje, mesmo
  *  que a hora já tenha passado. (Com `new Date()` cru, tudo o que era de hoje
@@ -595,7 +586,22 @@ function emDestaque(e: CalEvent): boolean {
  *  profissional; e o «Regional Jr» mistura os Campeonatos de Jovens com os
  *  Absolutos, que são de gente crescida. */
 const NAO_DELE_TITULOS: string[] = ["Open de Portugal", "Absoluto"];
+/** Provas que ele não vai jogar por CHOQUE de agenda — o título sozinho não
+ *  chega, porque a prova existe e noutro ano pode ser a que ele joga.
+ *  ⚠ 5 de Setembro: está na Comporta para o PJA do Torre, logo não pode estar
+ *  no Santo da Serra. */
+const NAO_VAI: { titulo: string; data: string }[] = [
+  { titulo: "Torneio Quinta de São João", data: "2026-09-05" },
+];
+const diaISO = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+/** Prova que ele NÃO PODE jogar por estar noutro sítio nesse dia. */
+function naoPode(e: CalEvent): boolean {
+  const dia = diaISO(e.date);
+  return NAO_VAI.some(x => x.data === dia && norm(e.title).includes(norm(x.titulo)));
+}
 function isDele(e: CalEvent): boolean {
+  if (naoPode(e)) return false;
   if (NAO_DELE_TITULOS.some(x => norm(e.title).includes(norm(x)))) return false;
   if (MANUEL_EXCEPCOES.some(x => norm(e.title).includes(norm(x)))) return true;
   return !NAO_DELE.has(e.calId);
@@ -605,6 +611,9 @@ function isDele(e: CalEvent): boolean {
  *  muitos e diários, e a cheio tapavam o resto. */
 function opacidadeDe(e: CalEvent): number {
   if (isDele(e)) return 1;
+  // Impossível de jogar (está noutro sítio) desce mais do que "não é do
+  // género dele": não é uma escolha, é um facto.
+  if (naoPode(e)) return 0.16;
   return e.calId.startsWith("bday_") ? 0.22 : 0.3;
 }
 
@@ -1259,7 +1268,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                             background: calColor(e),
                             color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
                             textOverflow: "ellipsis", cursor: "pointer",
-                            fontWeight: 600, lineHeight: 1.6,
+                            fontWeight: emDestaque(e) ? 800 : 600, lineHeight: 1.6,
                             opacity: isPast ? 0.4 : opacidadeDe(e),
                             minHeight: pos !== "single" && !showTitle ? 16 : undefined,
                             transition: "opacity 0.15s",
