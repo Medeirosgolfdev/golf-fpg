@@ -91,6 +91,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
   { id: "colonias",       name: "🏕 Colónias",          color: C.cal.colonias, group: "DESTAQUE" },
+  { id: "escola",         name: "🎒 Escola (ISS)",      color: C.cal.escola, group: "DESTAQUE" },
 
   // ── Viagens — laranja / âmbar ──
   { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
@@ -103,6 +104,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2",                  color: C.cal.viag_alg_jul_m,   group: "VIAGENS" },
   { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",   color: C.cal.viag_alg_jul_mamf,group: "VIAGENS" },
   { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
+  { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",              color: C.cal.viag_malaga_nov,  group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -289,6 +291,10 @@ const EVENTS: CalEvent[] = [
   ev("dest_uskids_tbc", "Irish Open 2026",                   new Date(2026,6,1),  "Mountwolseley, Tullow (IE)",       "", new Date(2026,6,2)),
   ev("dest_uskids_tbc", "Paris Invitational 2026",           new Date(2026,6,4),  "Magny-le-Hongre (FR)",             "", new Date(2026,6,6)),
   ev("dest_uskids", "Venice Open 2026",                      new Date(2026,7,13), "Venice (IT)",                      "3R Strokeplay", new Date(2026,7,15)),
+  // US Kids International Championships Tour (t=23132, 107/159 inscritos a
+  // 2026-09-02). San Roque fica em Sotogrande (Cádiz), a ~1h de Málaga — daí
+  // os voos para AGP.
+  ev("dest_uskids", "US Kids Spanish Open 2026",              new Date(2026,10,20), "San Roque Golf & Resort (ES)",     "3R Strokeplay", new Date(2026,10,22)),
   // ev("dest_uskids", "Canadian Invitational 2026",     new Date(2026,6,6),  "Canadá",                           "", new Date(2026,6,7)),
 
   /* ══════════════════════════════════════
@@ -312,6 +318,21 @@ const EVENTS: CalEvent[] = [
   ev("pessoal", "MANUEL 12 ANOS", new Date(2026,3,29), "", ""),
   ev("profissao_fe", "Profissão de Fé — 18:30", new Date(2026,5,6), "", ""),
   ev("ferias",  "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
+
+  /* ══ Calendário escolar ISS Madeira 2026/2027 ══
+     Do PDF oficial "ISS-Madeira School Calendar 2026/27". Os períodos entram
+     como MARCOS (início/fim) e não como intervalos: pintar 3 meses seguidos
+     tapava tudo o resto. As interrupções entram como intervalos — são elas
+     que interessam para marcar viagens. */
+  ev("escola", "🎒 Início do 1.º período (ISS)",        new Date(2026,8,1),  "ISS Madeira", ""),
+  ev("escola", "🎒 Fim do 1.º período (ISS)",           new Date(2026,11,11), "ISS Madeira", ""),
+  ev("ferias", "🎄 Interrupção do Natal (ISS)",         new Date(2026,11,12), "", "", new Date(2027,0,3)),
+  ev("escola", "🎒 Início do 2.º período (ISS)",        new Date(2027,0,4),  "ISS Madeira", ""),
+  ev("escola", "🎒 Fim do 2.º período (ISS)",           new Date(2027,2,25), "ISS Madeira", ""),
+  ev("ferias", "🐣 Interrupção da Páscoa (ISS)",        new Date(2027,2,26), "", "", new Date(2027,3,11)),
+  ev("escola", "🎒 Início do 3.º período (ISS)",        new Date(2027,3,12), "ISS Madeira", ""),
+  ev("escola", "🎒 Fim do ano lectivo (ISS)",           new Date(2027,5,30), "ISS Madeira", ""),
+  ev("ferias", "🏖 Férias de Verão (ISS)",              new Date(2027,6,1),  "", "", new Date(2027,7,31)),
 
   /* ══════════════════════════════════════
      ⛳ CAMPO / TREINO
@@ -391,6 +412,12 @@ const EVENTS: CalEvent[] = [
   ev("viag_vce_ago",    "✈ TP1930 LIS → OPO 16:00–17:00",        new Date(2026,7,16), "TAP", "Prov. · Manuel, Mariana, M. Francisco"),
   ev("viag_vce_ago",    "✈ TP1933 OPO → LIS 21:15–22:15",        new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
   ev("viag_vce_ago",    "✈ TP1697 LIS → FNC 23:40–01:30 (+1)",   new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
+
+  // Novembro — Málaga (US Kids Spanish Open, San Roque)
+  // ⚠ Do bilhete só constam os voos LIS↔AGP; os FNC↔LIS ainda não estão
+  //   marcados (nas outras viagens há sempre o par da Madeira).
+  ev("viag_malaga_nov", "✈ TP1134 LIS → AGP 07:20–09:35",       new Date(2026,10,18), "TAP", ""),
+  ev("viag_malaga_nov", "✈ TP1137 AGP → LIS 15:00–15:25",       new Date(2026,10,23), "TAP", ""),
 ];
 
 /* ═══ Helpers ═══ */
