@@ -33,11 +33,12 @@
   --bg-hover-subtle:  #dde5d4;
 
   /* Calendário — pano de fundo do ano lectivo (/calendario). Fundo dos dias
-     COM aulas; os dias sem aulas ficam sem ele.
+     LIVRES de escola (fim-de-semana, interrupções, feriados); os dias de
+     aulas ficam sem ele.
      É pano de fundo e tem de ser quase imperceptível: se se nota, passa a
      competir com as barras dos torneios, que são o conteúdo. Sem barras nem
      contornos — só o tom. */
-  --cal-escola-bg:    #f7f9fc;   /* azul-acinzentado quase branco — dia de escola */
+  --cal-livre-bg:     #e4efdb;   /* verde claro — dia LIVRE de escola */
   --bg-active:        #e6ead9;
   --bg-topbar:        #1a2e1a;
   --bg-header:        #eef2e8;   /* cabeçalhos de tabela, barra de secção */

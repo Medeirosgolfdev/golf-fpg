@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  isSchoolDay, schoolDay, SCHOOL_TERMS, PDF_DIAS_DE_AULAS,
+  isSchoolDay, isFreeDay, freeDayReason, schoolDay, SCHOOL_TERMS, PDF_DIAS_DE_AULAS,
 } from "../schoolCalendar";
 
 const D = (s: string) => new Date(s + "T12:00:00");
@@ -85,5 +85,29 @@ describe("SCHOOL_TERMS", () => {
   it("os três períodos estão por ordem e não se sobrepõem", () => {
     for (let i = 1; i < SCHOOL_TERMS.length; i++)
       expect(SCHOOL_TERMS[i].inicio > SCHOOL_TERMS[i - 1].fim).toBe(true);
+  });
+});
+
+describe("isFreeDay — é isto que o calendário sombreia", () => {
+  it("fins-de-semana, interrupções e dias soltos contam como livres", () => {
+    expect(isFreeDay(D("2026-09-05"))).toBe(true);              // sábado
+    expect(isFreeDay(D("2026-11-04"))).toBe(true);              // conference day
+    expect(isFreeDay(D("2026-10-28"))).toBe(true);              // mid-term
+    expect(isFreeDay(D("2026-12-25"))).toBe(true);              // Natal
+  });
+
+  it("um dia de aulas não é livre", () => {
+    expect(isFreeDay(D("2026-09-03"))).toBe(false);
+    expect(isFreeDay(D("2026-11-18"))).toBe(false);             // viagem a Málaga
+  });
+
+  it("antes do ano lectivo coberto não se sabe — não conta como livre", () => {
+    expect(isFreeDay(D("2026-08-15"))).toBe(false);
+  });
+
+  it("o motivo serve o tooltip", () => {
+    expect(freeDayReason(D("2026-09-05"))).toBe("Fim-de-semana");
+    expect(freeDayReason(D("2026-11-04"))).toBe("Conference day (sem aulas)");
+    expect(freeDayReason(D("2026-09-03"))).toBeNull();
   });
 });

@@ -22,7 +22,7 @@ import PasswordGate from "../ui/PasswordGate";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
-import { schoolDay } from "../data/schoolCalendar";
+import { schoolDay, isFreeDay, freeDayReason } from "../data/schoolCalendar";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 
 /* ═══ Types ═══ */
@@ -105,7 +105,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",   color: C.cal.viag_alg_jul_mamf,group: "VIAGENS" },
   { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
   { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",              color: C.cal.viag_malaga_nov,  group: "VIAGENS" },
-  { id: "viag_paris_set",   name: "✈ Paris (Set) · La Boulie",                 color: C.cal.viag_paris_set,   group: "VIAGENS" },
+  { id: "viag_paris_set",   name: "✈ Paris + Comporta (Set)",                  color: C.cal.viag_paris_set,   group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -407,8 +407,13 @@ const EVENTS: CalEvent[] = [
 
   // Setembro — Paris (treino). Dia inteiro no Golf de La Boulie com o Antoine
   // Schwartz; o dia da viagem fica marcado sem nº de voo (não foi indicado).
-  ev("viag_paris_set", "✈ Viagem para Paris",                     new Date(2026,8,2),  "", ""),
+  ev("viag_paris_set", "✈ TP1688 FNC → LIS 12:40–14:25",          new Date(2026,8,2),  "TAP", ""),
+  ev("viag_paris_set", "✈ TP438 LIS → PARIS ORLY 16:50–20:15",    new Date(2026,8,2),  "TAP", ""),
   ev("treino",         "⛳ Putt training day — Antoine Schwartz",  new Date(2026,8,3),  "Golf de La Boulie (FR)", "Dia inteiro"),
+  ev("viag_paris_set", "✈ TP429 PARIS ORLY → LIS 10:15–11:55",    new Date(2026,8,4),  "TAP", ""),
+  // Aterram sexta e seguem para a Comporta; regressam domingo à noite.
+  ev("treino",         "⛳ Terras da Comporta — Dunas",            new Date(2026,8,4),  "Terras da Comporta - Dunas", "", new Date(2026,8,6)),
+  ev("viag_paris_set", "✈ TP1695 LIS → FNC 22:20–00:10 (+1)",     new Date(2026,8,6),  "TAP", ""),
 ];
 
 /* ═══ Helpers ═══ */
@@ -469,6 +474,51 @@ const HL_BAR: Record<string, string> = {
 };
 function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
 
+/** Já passou? Compara-se por DIA: um evento de hoje ainda é de hoje, mesmo
+ *  que a hora já tenha passado. (Com `new Date()` cru, tudo o que era de hoje
+ *  nascia esbatido a partir da meia-noite.) */
+function jaPassou(e: CalEvent, hoje: Date): boolean {
+  const fim = e.endDate || e.date;
+  const f = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate()).getTime();
+  const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()).getTime();
+  return f < h;
+}
+
+/* ═══ O que é DELE ═══
+   O calendário mistura duas coisas: a agenda do Manuel e o calendário geral do
+   clube/federação, que é o pano de fundo onde ela se insere. As provas em que
+   ele NÃO entra ficam esbatidas — continuam lá, para se perceber o contexto e
+   as sobreposições, mas deixam de disputar a atenção com o que ele vai jogar.
+
+   ⚠ A regra é por CALENDÁRIO, não por prova: quem decide é a natureza do
+   evento. As excepções (uma prova de adultos que ele foi jogar, ou uma prova
+   juvenil que ele falha) marcam-se à mão em MANUEL_EXCEPCOES, pelo título. */
+const NAO_DELE = new Set<string>([
+  "cgss_pares",       // Campeonato do Clube de Pares — prova de duplas de sócios
+  "cgss_ouro",        // Ranking Ouro — provas dos adultos do clube
+  "cgss_patrocin",    // torneios de patrocinador (Diário de Notícias, BPI, …)
+  "cgss_regional",    // Campeonatos Regionais Absolutos
+  "cgss_fpg",         // Campeonatos Nacionais Absolutos / de Clubes
+  "dest_intl",        // circuito profissional (Open de Portugal, …)
+  "irma_bad",         // badminton da irmã
+  "bday_sub10", "bday_sub12", "bday_sub14", "bday_sub16", "bday_sub18",
+  "bday_pja", "bday_outros",   // aniversários dos outros miúdos
+]);
+/** Excepções por título (`includes`, sem maiúsculas/acentos a contar). */
+const MANUEL_EXCEPCOES: string[] = [];
+function isDele(e: CalEvent): boolean {
+  if (MANUEL_EXCEPCOES.some(x => norm(e.title).includes(norm(x)))) return true;
+  return !NAO_DELE.has(e.calId);
+}
+/** Quanto se vê um evento. A agenda do Manuel a 100%; o calendário do clube
+ *  em surdina; os aniversários dos outros miúdos ainda mais abaixo — são
+ *  muitos e diários, e a cheio tapavam o resto. */
+function opacidadeDe(e: CalEvent): number {
+  if (isDele(e)) return 1;
+  return e.calId.startsWith("bday_") ? 0.3 : 0.45;
+}
+
+
 type EvPos = "single" | "start" | "mid" | "end";
 function getEvPos(e: CalEvent, day: Date, weekStart: Date, weekEnd: Date): EvPos {
   if (!e.endDate || isSameDay(e.date, e.endDate)) return "single";
@@ -520,14 +570,13 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           // úteis sem aulas (interrupções, mid-term, conference days) ficam
           // limpos e dizem o motivo ao passar o rato.
           const sd = schoolDay(d.date);
-          const escola = sd.tipo === "aulas";
-          const semAulas = sd.tipo === "sem-aulas" && d.date.getDay() !== 0 && d.date.getDay() !== 6;
+          const livreMini = isFreeDay(d.date);
           return (
             <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : escola ? "var(--bg-subtle)" : "transparent",
+              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : livreMini ? "var(--cal-livre-bg)" : "transparent",
               fontWeight: isToday || isSel ? 600 : 400,
-            }} title={sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : semAulas ? `Sem aulas — ${sd.motivo}` : undefined}>
+            }} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
                 <span className="cal-dot-indicator" style={{ width: 3, height: 3, background: "var(--accent)" }} />
@@ -630,7 +679,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
             {evts.map(e => {
               const c = calColor(e);
               const hl = HIGHLIGHT[e.calId];
-              const isPast = (e.endDate || e.date) < today;
+              const isPast = jaPassou(e, today);
               const isFirstUpcoming = e.id === todayKey;
               return (
                 <div key={e.id}
@@ -640,7 +689,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                     borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
                     background: hl ? `${hl.bg}18` : "transparent",
                     border: hl ? `2px solid ${hl.bg}66` : "2px solid transparent",
-                    opacity: isPast ? 0.45 : 1,
+                    opacity: isPast ? 0.45 : opacidadeDe(e),
                   }}
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
@@ -1018,15 +1067,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   const weekIdx = Math.floor(i / 7);
                   const weekStart = monthDays[weekIdx * 7].date;
                   const weekEnd = monthDays[weekIdx * 7 + 6].date;
-                  // Pano de fundo do ano lectivo (ver src/data/schoolCalendar.ts):
-                  // dia COM aulas fica esbatido; dia útil SEM aulas fica limpo e diz
-                  // o motivo (interrupção, mid-term, conference day) no tooltip.
+                  // Pano de fundo (ver src/data/schoolCalendar.ts): sombreiam-se os
+                  // dias LIVRES de escola — fins-de-semana, interrupções, feriados e
+                  // os dias soltos sem aulas. É onde há espaço para jogar e viajar,
+                  // e são a minoria: sombrear os dias de aulas pintava quase tudo.
+                  const livre = isFreeDay(d.date);
                   const sd = schoolDay(d.date);
-                  const temAulas = sd.tipo === "aulas";
-                  const semAulas = sd.tipo === "sem-aulas"
-                    && d.date.getDay() !== 0 && d.date.getDay() !== 6;
-                  const tipDia = sd.tipo === "aulas" ? `Escola — ${sd.periodo}`
-                    : semAulas ? `Sem aulas — ${sd.motivo}` : undefined;
+                  const tipDia = livre ? `Livre — ${freeDayReason(d.date)}`
+                    : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined;
                   const CP = 4;
 
                   // Highlight cell: full colored square with icon + label
@@ -1069,11 +1117,11 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       borderRight: "1px solid var(--border-light)",
                       borderBottom: "1px solid var(--border-light)",
                       padding: CP, overflow: "hidden", cursor: "pointer",
-                      background: isSel ? "var(--accent-light)" : temAulas ? "var(--cal-escola-bg)" : "transparent",
+                      background: isSel ? "var(--accent-light)" : livre ? "var(--cal-livre-bg)" : "transparent",
                       transition: "background 0.12s",
                     }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
-                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = temAulas ? "var(--cal-escola-bg)" : "transparent"; }} title={tipDia}>
+                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = livre ? "var(--cal-livre-bg)" : "transparent"; }} title={tipDia}>
                       <div className="fs-11" style={{
                         fontWeight: isToday ? 700 : 500,
                         minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
@@ -1085,10 +1133,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         {d.date.getDate()}
                       </div>
                       {dayEvts.slice(0, cellCap).map(e => {
-                        const isPast = (e.endDate || e.date) < today;
+                        const isPast = jaPassou(e, today);
                         const pos = getEvPos(e, d.date, weekStart, weekEnd);
                         const showTitle = pos === "single" || pos === "start";
-                        const barCls = HL_BAR[e.calId];
+                        // A animação só faz sentido num evento de UM dia: repetida em
+                        // três células seguidas (o Dunas, 4-6 Set) fica a gritar.
+                        const barCls = pos === "single" ? HL_BAR[e.calId] : undefined;
                         const bRadius =
                           pos === "start" ? "3px 0 0 3px" :
                           pos === "end"   ? "0 3px 3px 0" :
@@ -1108,12 +1158,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                             color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
                             textOverflow: "ellipsis", cursor: "pointer",
                             fontWeight: 600, lineHeight: 1.6,
-                            opacity: isPast ? 0.4 : 1,
+                            opacity: isPast ? 0.4 : opacidadeDe(e),
                             minHeight: pos !== "single" && !showTitle ? 16 : undefined,
                             transition: "opacity 0.15s",
                           }}
-                          onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : 0.85))}
-                          onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : 1))}>
+                          onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : Math.min(0.85, opacidadeDe(e) + 0.25)))}
+                          onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : opacidadeDe(e)))}>
                           {showTitle ? e.title : "\u00A0"}
                         </div>
                         );

@@ -112,9 +112,27 @@ export function schoolDay(d: Date): SchoolDay {
   return { tipo: "aulas", periodo: term.nome };
 }
 
-/** true quando há aulas — é isto que o calendário sombreia. */
+/** true quando há aulas. */
 export function isSchoolDay(d: Date): boolean {
   return schoolDay(d).tipo === "aulas";
+}
+
+/**
+ * true quando o dia está LIVRE de escola — fim-de-semana, interrupção,
+ * feriado ou um dos dias soltos sem aulas. É isto que o calendário sombreia:
+ * o que interessa ver de relance é onde há espaço para jogar e viajar, não
+ * onde há aulas (que é a maioria dos dias).
+ * ⚠ `fora` (antes do ano lectivo coberto) não conta como livre — não se sabe.
+ */
+export function isFreeDay(d: Date): boolean {
+  const t = schoolDay(d).tipo;
+  return t === "fim-de-semana" || t === "sem-aulas";
+}
+
+/** Motivo de um dia livre, para o tooltip ("Fim-de-semana", "Mid-term break"…). */
+export function freeDayReason(d: Date): string | null {
+  const s = schoolDay(d);
+  return s.tipo === "fim-de-semana" ? "Fim-de-semana" : s.tipo === "sem-aulas" ? s.motivo : null;
 }
 
 /**
