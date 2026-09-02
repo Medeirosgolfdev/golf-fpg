@@ -25,6 +25,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { norm } from "../../utils/format";
+import { pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -446,7 +447,83 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                 Além destas, os torneios juniores exclusivos (9 buracos) não contam. A época fecha a 14 Nov 2026 (regra 8).
               </div>
             </div>
+
           )}
+          {/* O que ainda está em jogo e até onde cada um pode chegar. Só
+              aritmética do regulamento: soma dos 1.ºs lugares das provas que
+              faltam, e quantas dessas teria de ganhar para passar o líder de
+              hoje. Nada sobre quem vai jogar o quê — isso não se sabe. */}
+          {(() => {
+            if (!missing.length) return null;
+            const topo: Partial<Record<OmLevel, number>> = {};
+            for (const lv of ["A", "B", "C"] as OmLevel[]) {
+              const l = pointsLadder(data, lv);
+              if (l.length) topo[lv] = l[0].pts;
+            }
+            const jogo = pontosEmJogo(missing.map(m => ({ level: m.level })), topo);
+            if (!jogo.total) return null;
+            // Valores individuais das provas que faltam, do maior para o menor.
+            const valores = jogo.porNivel.flatMap(n => Array.from({ length: n.provas }, () => n.porProva));
+            const proj = projectar(
+              standings.map(p => ({
+                fed: p.fed, name: p.name, total: p.total, played: p.played,
+                canWin: p.canWin, pontuacoes: p.events.map(e => e.pts),
+              })),
+              valores,
+            );
+            const byFed = new Map(proj.map(x => [x.fed, x]));
+            const semHipotese = proj.filter(x => !x.aindaChega).length;
+            return (
+              <div style={{ marginTop: 10, padding: "10px 12px", background: "var(--bg-1)", border: "1px solid var(--border)", borderRadius: 8 }}>
+                <div className="fs-12" style={{ marginBottom: 6 }}>
+                  🧮 <strong>Ainda por distribuir</strong> — <strong style={{ color: "var(--accent)" }}>{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
+                  {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).
+                </div>
+                <div style={{ overflowX: "auto" }}>
+                  <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+                    <thead>
+                      <tr>
+                        <th>#</th><th>Jogador</th>
+                        <th title="Pontos de hoje">Hoje</th>
+                        <th title="Total se ganhasse todas as provas que faltam">Máximo</th>
+                        <th title="Pontos que lhe faltam para passar o líder de hoje">Para o 1º</th>
+                        <th title="Quantas das provas que faltam teria de GANHAR para passar o líder de hoje (as mais valiosas primeiro)">Vitórias</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map(p => {
+                        const x = byFed.get(p.fed);
+                        if (!x) return null;
+                        const eu = p.fed === MANUEL_FED;
+                        return (
+                          <tr key={p.fed} className={eu ? "row-manuel" : undefined}>
+                            <td>{p.rank}</td>
+                            <td>{p.name}</td>
+                            <td>{x.total}</td>
+                            <td><strong>{x.maximo}</strong></td>
+                            <td>{x.paraOLider === 0 ? <span className="p-muted">lidera</span> : x.paraOLider}</td>
+                            <td>
+                              {x.vitoriasNecessarias === 0 ? <span className="p-muted">—</span>
+                                : x.vitoriasNecessarias == null ? <span className="p-muted" title="Nem ganhando todas as que faltam">sem hipótese</span>
+                                  : <>{x.vitoriasNecessarias} de {missing.length}</>}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+                  Contas sobre o ranking de HOJE: «Para o 1º» é a diferença para o líder actual, e «Vitórias» conta as
+                  provas mais valiosas primeiro — se o líder também pontuar, a conta sobe.
+                  {semHipotese > 0 ? ` ${semHipotese} jogador(es) já não chega(m) nem ganhando tudo.` : ""}
+                  {" "}⚠ Não entra aqui a <strong>regra 7.1</strong> (no fecho descontam-se as 3 piores pontuações de cada um):
+                  com poucas provas jogadas ela é dura — quem só tem 4 fica com a melhor — por isso o que mais pesa até 14 Nov
+                  é <strong>jogar mais provas</strong>.
+                </div>
+              </div>
+            );
+          })()}
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova por <strong>gross</strong> entre os juniores (empates partilham; sem cartão não pontua).
