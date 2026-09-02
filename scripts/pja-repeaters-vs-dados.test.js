@@ -38,7 +38,9 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
     // O master conhece os 10 tees do Torre (6 M + 4 F).
     expect(masterRatings.get("laranjas|F")).toEqual({ cr: 74.2, slope: 132 });
     expect(masterRatings.get("amarelas|M")).toEqual({ cr: 66.2, slope: 122 });
-    const r = buildRepeaters({ current, previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, masterRatings });
+    const stats = json("public/player-stats.json");
+    const form = (fed) => (fed ? stats[fed] ?? null : null);
+    const r = buildRepeaters({ current, previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, form, masterRatings });
 
     const field = currentField(current);
     expect(field).toHaveLength(16);
@@ -57,12 +59,18 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
     }
 
     // O Francisco jogou 2025 das AMARELAS (66.2/122) e em 2026 vai às VERDES
-    // (71/132) — quase 5 golpes mais difícil. Apesar de ter baixado o índice, a
-    // previsão TEM de piorar: é o caso que prova que o tee entra na conta.
+    // (71/132). O tee TEM de entrar na conta: com a mesma forma, prever nas
+    // verdes dá pior do que nas amarelas — quase 5 golpes por volta.
+    // (Não se testa "pior que 2025": ele baixou 2,7 de índice em 3 meses e o
+    // ganho de forma pode mais do que compensar o tee — e compensa.)
     const francisco = r.find((x) => x.fed === "52856");
     expect(francisco, "Francisco Vilardell Carvalho no field").toBeTruthy();
-    expect(francisco.hcpDelta).toBeLessThan(0);
-    expect(francisco.forecast.total).toBeGreaterThan(francisco.editions[0].total);
+    expect(francisco.teeNow).toMatch(/verde/i);
+    const nasAmarelas = buildRepeaters({
+      current: { ...current, _draws: { 1: { groups: [{ tee: "Amarelas", players: [{ nome: "Francisco Carvalho", fed: "52856" }] }] } } },
+      previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, form, masterRatings,
+    })[0];
+    expect(nasAmarelas.forecast.total).toBeLessThan(francisco.forecast.total);
 
     // As "Laranjas" das raparigas não existem em 2025, mas o master-courses
     // tem-nas (74.2/132) — logo a previsão delas é firme, não uma suposição.
@@ -74,5 +82,16 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
     // O Manuel joga o mesmo tee de 2025 (amarelas) → rating conhecido.
     const manuel = r.find((x) => x.fed === "52884");
     expect(manuel.forecast.teeKnown).toBe(true);
+
+    // ⚠ Guarda contra a versão optimista do modelo, que previa 132 (66+66) ao
+    // Nuno Palmares — 12 abaixo do par, com UM 66 na carreira. Nenhuma previsão
+    // pode ficar abaixo do que o jogador faz num bom dia (as 8 melhores de 20).
+    for (const x of r) {
+      if (!x.forecast || x.form?.avgSD8 == null) continue;
+      const rat = masterRatings.get(`${(x.teeNow || "").toLowerCase()}|${x.sex}`);
+      if (!rat) continue;
+      const bomDia = Math.round(rat.cr + (x.form.avgSD8 * rat.slope) / 113) * 2;
+      expect(x.forecast.total, `${x.name}: previsão abaixo do bom dia dele`).toBeGreaterThanOrEqual(bomDia);
+    }
   });
 });

@@ -187,3 +187,58 @@ describe("masterTeeRatings — a ficha do campo é a fonte autoritativa dos tees
     expect(com[0].forecast!.total).toBeGreaterThan(sem[0].forecast!.total);
   });
 });
+
+describe("previsão pela FORMA (player-stats)", () => {
+  const prev = torneio([
+    jogador({ name: "ROCHA,João", fedCode: "48297", grossTotal: 150, toPar: 6, hcpExact: 6.0 }),
+    // field com dispersão, para haver mediana (precisa de ≥5 differentials)
+    ...Array.from({ length: 6 }, (_, i) => jogador({
+      name: `OUTRO${i},X`, fedCode: `9000${i}`, hcpExact: 10,
+      roundScores: [{ round: 1, gross: 80 + i, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) }],
+    })),
+  ]);
+  const hoje = {
+    ccode: "192", tcode: "90101", players: [], rounds: 2,
+    _draws: { "1": { groups: [{ teeTime: "11:05", tee: "AMARELAS", players: [{ nome: "João Rocha", fed: "48297" }] }] } },
+  } as unknown as Tournament;
+  const fedInfo = () => ({ hcp: 3.8, club: null, escalao: "Sub-14", sex: "M" });
+  const form = () => ({ avgSD5: 4.6, avgSD8: 3.0, avgSD20: 7.0, lastSD: 5, roundsLast3m: 12,
+    roundsLast12m: 40, hcpDelta3m: -1.2, bestGross: 70, avgGross5: 75, lastRoundDate: "2026-08-30" });
+  const previous = [{ id: "a", year: 2025, t: prev }];
+
+  it("usa o MEIO entre o bom dia e o dia normal, não o potencial", () => {
+    const r = buildRepeaters({ current: hoje, previous, fedInfo, form });
+    const f = r[0].forecast!;
+    expect(f.basis).toBe("forma");
+    // meio de 3.0 e 7.0 = 5.0 → 71 + 5×130/113 ≈ 76.8 → 77/volta
+    expect(f.perRound).toBe(77);
+    expect(f.total).toBe(154);
+  });
+
+  it("⚠ nunca prevê melhor do que o bom dia do jogador (regressão do Nuno)", () => {
+    // Bug real: prever pelo avgSD8 dava 132 (66+66) a quem tem UM 66 na vida.
+    const r = buildRepeaters({ current: hoje, previous, fedInfo, form });
+    const f = r[0].forecast!;
+    const bomDia = Math.round(71 + (3.0 * 130) / 113) * 2;
+    expect(f.total).toBeGreaterThan(bomDia);
+  });
+
+  it("o ajuste ao campo NÃO entra na previsão — só informa", () => {
+    const r = buildRepeaters({ current: hoje, previous, fedInfo, form });
+    // Jogou bem melhor que a mediana do field (150 vs ~161) → fit negativo…
+    expect(r[0].courseFit).toBeLessThan(0);
+    // …mas a previsão continua a ser só a forma convertida no tee.
+    expect(r[0].forecast!.perRound).toBe(77);
+  });
+
+  it("sem forma, cai no comportamento antigo (histórico + índice)", () => {
+    const r = buildRepeaters({ current: hoje, previous, fedInfo });
+    expect(r[0].forecast!.basis).toBe("historico");
+  });
+
+  it("traz a hora de saída e o tee do draw", () => {
+    const r = buildRepeaters({ current: hoje, previous, fedInfo, form });
+    expect(r[0].teeTime).toBe("11:05");
+    expect(r[0].teeNow).toBe("AMARELAS");
+  });
+});

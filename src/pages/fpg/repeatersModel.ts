@@ -52,12 +52,12 @@ export interface RepeaterForecast {
   /** ±par esperado no torneio, quando se conhece o par. */
   toPar: number | null;
   /**
-   * "historico" — ancorado no que ELE fez nesta prova, corrigido pela variação
-   * do índice desde então (o caso bom).
-   * "indice" — só a partir do índice de hoje, quando as voltas antigas não têm
-   * CR/Slope utilizável. Menos fiável; a UI di-lo.
+   * "forma" — o caso bom: as voltas das últimas semanas (player-stats).
+   * "historico" — sem stats de forma: o que fez aqui, corrigido pela variação
+   * do índice desde então.
+   * "indice" — só o índice de hoje. O palpite mais fraco; a UI di-lo.
    */
-  basis: "historico" | "indice";
+  basis: "forma" | "historico" | "indice";
   /**
    * false quando NÃO se conhece o CR/Slope do tee que ele vai jogar hoje e se
    * usou o do tee que jogou antes. Caso real no PJA Torre: em 2026 as raparigas
@@ -66,6 +66,20 @@ export interface RepeaterForecast {
    * suposição, e a UI tem de a mostrar como tal.
    */
   teeKnown: boolean;
+}
+
+/** Forma actual do jogador (player-stats.json — voltas de TODA a carreira). */
+export interface PlayerForm {
+  avgSD5: number | null;
+  avgSD8: number | null;
+  avgSD20: number | null;
+  lastSD: number | null;
+  roundsLast3m: number;
+  roundsLast12m: number;
+  hcpDelta3m: number | null;
+  bestGross: number | null;
+  avgGross5: number | null;
+  lastRoundDate: string | null;
 }
 
 export interface Repeater {
@@ -88,6 +102,19 @@ export interface Repeater {
   sdBest: number | null;
   /** Tee que vai jogar (do draw), quando se sabe. */
   teeNow: string | null;
+  /** Hora de saída e buraco de partida (do draw). */
+  teeTime: string | null;
+  startHole: number | null;
+  /** Forma actual (player-stats). */
+  form: PlayerForm | null;
+  /**
+   * Onde ficou face à MEDIANA do field na última edição que jogou (em
+   * differential). Negativo = melhor que o campo do meio. Régua feita dos
+   * adversários daquele dia, por isso absorve vento e estado do campo.
+   * ⚠ Informação, NÃO entra na previsão: somá-lo à forma de hoje contava a
+   * melhoria do jogador duas vezes.
+   */
+  courseFit: number | null;
   forecast: RepeaterForecast | null;
 }
 
@@ -96,6 +123,8 @@ export interface FieldEntry {
   fed: string | null;
   name: string;
   tee?: string | null;
+  teeTime?: string | null;
+  startHole?: number | null;
 }
 
 /** Dados de hoje vindos do federados.json, por federado. */
@@ -128,13 +157,16 @@ const keyOf = (fed: string | null | undefined, name: string): string =>
 /** Extrai o field de HOJE: o draw da 1ª ronda se existir, senão a leaderboard. */
 export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   if (!t) return [];
-  const draws = (t as unknown as { _draws?: Record<string, { groups?: { tee?: string | null; players?: { nome?: string; fed?: string | null; tee?: string | null }[] }[] }> })._draws;
+  const draws = (t as unknown as { _draws?: Record<string, { groups?: { tee?: string | null; teeTime?: string | null; startHole?: number | null; players?: { nome?: string; fed?: string | null; tee?: string | null }[] }[] }> })._draws;
   const r1 = draws && (draws["1"] || Object.values(draws)[0]);
   const out: FieldEntry[] = [];
   for (const g of r1?.groups || []) {
     for (const p of g.players || []) {
       if (!p?.nome) continue;
-      out.push({ fed: p.fed || null, name: p.nome, tee: p.tee ?? g.tee ?? null });
+      out.push({
+        fed: p.fed || null, name: p.nome, tee: p.tee ?? g.tee ?? null,
+        teeTime: g.teeTime ?? null, startHole: g.startHole ?? null,
+      });
     }
   }
   if (out.length) return out;
@@ -245,8 +277,11 @@ export interface BuildRepeatersInput {
   current: Tournament;
   /** Edições anteriores da mesma prova, mais recente primeiro. */
   previous: { id: string; year: number; t: Tournament }[];
-  /** federados.json indexado por código de federado. */
+  /** federados.json (ou players.json) indexado por código de federado. */
   fedInfo: (fed: string | null) => FedInfo | null;
+  /** Forma actual por federado (player-stats.json). Sem isto a previsão cai
+   *  para o índice, que é bastante pior. */
+  form?: (fed: string | null) => PlayerForm | null;
   /**
    * CR/Slope por `${tee}|${sexo}` vindos do master-courses (ver
    * `masterTeeRatings`). Ganham aos inferidos das edições anteriores: cobrem
@@ -280,6 +315,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
 
   // Índice: chave → participações nas edições anteriores.
   const hist = new Map<string, RepeaterEdition[]>();
+  const sdsPorEdicao = new Map<string, number[]>();
   for (const { id, year, t } of previous) {
     for (const p of t.players || []) {
       if (!p?.name) continue;
@@ -305,7 +341,18 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
       };
       const arr = hist.get(k);
       if (arr) arr.push(ed); else hist.set(k, [ed]);
+      for (const rd of rounds) if (rd.sd != null) (sdsPorEdicao.get(id) ?? sdsPorEdicao.set(id, []).get(id)!).push(rd.sd);
     }
+  }
+  // Mediana dos differentials de cada edição — a régua contra a qual se mede
+  // quem se dá bem com esta prova. É o próprio field daquele dia, por isso
+  // absorve o vento e o estado do campo sem precisar de constantes.
+  const medianaPorEdicao = new Map<string, number>();
+  for (const [id, xs] of sdsPorEdicao) {
+    if (xs.length < 5) continue;                 // amostra curta não faz régua
+    const s = [...xs].sort((a, b) => a - b);
+    const m = s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2;
+    medianaPorEdicao.set(id, m);
   }
 
   const out: Repeater[] = [];
@@ -322,6 +369,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     // O índice "de então" é o da edição mais recente que traga um.
     const hcpThen = editions.find((e) => e.hcpThen != null)?.hcpThen ?? null;
     const toPars = editions.map((e) => e.toPar).filter((x): x is number => x != null);
+    const medianaSD = medianaPorEdicao.get(editions[0].id) ?? null;
 
     // Tee de hoje → CR/Slope. Do draw quando existe; senão o tee que ele jogou.
     const teeNow = f.tee || editions[0]?.rounds[0]?.tee || null;
@@ -333,13 +381,36 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
       ?? (editions[0]?.rounds[0]?.cr && editions[0]?.rounds[0]?.slope
         ? { cr: editions[0].rounds[0].cr!, slope: editions[0].rounds[0].slope! } : null);
 
+    // ── Forma de hoje ────────────────────────────────────────────────────
+    // A forma manda: são as voltas das últimas semanas, medidas. O índice é a
+    // média das 8 MELHORES de 20 — melhora devagar e não diz como ele está a
+    // jogar agora. (Manuel a 2026-09: índice 7,5 mas avgSD8 7,7 e avgSD20 10,5.)
+    //
+    // ⚠ Uma volta de torneio típica não sai nem ao nível das 8 melhores (o
+    // potencial) nem à média de 20 (que inclui as más): fica no MEIO. Prever
+    // pelo avgSD8 dava disparates — 132 (−12) ao Nuno Palmares, ou seja 66+66,
+    // quando a melhor volta da vida dele é um único 66.
+    const form = input.form?.(f.fed) ?? null;
+    const sdBom = form?.avgSD8 ?? form?.avgSD5 ?? null;         // bom dia
+    const sdNormal = form?.avgSD20 ?? form?.avgSD5 ?? null;     // dia qualquer
+    const formaSD = sdBom != null && sdNormal != null ? (sdBom + sdNormal) / 2
+      : sdBom ?? sdNormal;
+    // Como ele se dá com esta prova: onde ficou face à MEDIANA do field nesse
+    // ano. Negativo = melhor que o campo do meio. Medido contra os adversários
+    // reais, sem constantes — e por isso NÃO entra na previsão (é informação,
+    // não um ajuste; misturá-lo com a forma contava a melhoria duas vezes).
+    const courseFit = sdAvg != null && medianaSD != null
+      ? +(sdAvg - medianaSD).toFixed(1) : null;
+
     let forecast: RepeaterForecast | null = null;
     if (rat) {
       let sdEsp: number | null = null;
       let basis: RepeaterForecast["basis"] = "historico";
-      if (sdAvg != null) {
-        // Ancorar no que ele FEZ aqui e corrigir pela evolução do índice: se
-        // baixou 2 pontos desde a última edição, espera-se ~2 golpes melhor.
+      if (formaSD != null) {
+        sdEsp = formaSD;
+        basis = "forma";
+      } else if (sdAvg != null) {
+        // Sem stats de forma: o que fez aqui, corrigido pela evolução do índice.
         const ajuste = hcpNow != null && hcpThen != null ? hcpNow - hcpThen : 0;
         sdEsp = sdAvg + ajuste;
       } else if (hcpNow != null) {
@@ -347,9 +418,13 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
         basis = "indice";
       }
       if (sdEsp != null) {
-        const spread = sds.length >= 2
-          ? Math.max(SPREAD_MIN, (Math.max(...sds) - Math.min(...sds)) / 2)
-          : SD_MEDIA_ACIMA_DO_INDICE;
+        // Espalhamento: metade da distância entre o bom dia e o dia normal —
+        // assim o intervalo vai de ~avgSD8 (se lhe correr bem) a tanto acima da
+        // média quanto o bom dia está abaixo. Sem forma, a dispersão das voltas
+        // que fez aqui.
+        const oscila = sdBom != null && sdNormal != null ? Math.abs(sdNormal - sdBom) : null;
+        const spread = Math.max(SPREAD_MIN,
+          oscila ?? (sds.length >= 2 ? (Math.max(...sds) - Math.min(...sds)) / 2 : SD_MEDIA_ACIMA_DO_INDICE));
         const toGross = (sd: number) => rat.cr + (sd * rat.slope) / 113;
         const perRound = Math.round(toGross(sdEsp));
         forecast = {
@@ -376,6 +451,10 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
       sdAvg: sdAvg != null ? +sdAvg.toFixed(1) : null,
       sdBest: sdBest != null ? +sdBest.toFixed(1) : null,
       teeNow,
+      teeTime: f.teeTime ?? null,
+      startHole: f.startHole ?? null,
+      form,
+      courseFit,
       forecast,
     });
   }
