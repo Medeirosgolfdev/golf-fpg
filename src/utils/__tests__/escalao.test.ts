@@ -116,6 +116,14 @@ describe("escalaoAtDate — regra FPG year-based (year − yearOfBirth)", () => 
       expect(escalaoAtDate("1940-01-01", "2026-01-01")).toBe("Super Sénior");
     });
 
+    it("aceita dob no formato DD/MM/YYYY das fontes ES/FR", () => {
+      // Regressão: o `slice(0,4)` lia "19/0" como ano 19 e o Martin Rosende
+      // (n. 19/07/2008), com 18 anos, aparecia como "Super Sénior" na /rfeg.
+      expect(escalaoAtDate("19/07/2008", "2026-09-02")).toBe("Sub 18");
+      expect(escalaoAtDate("01/02/2016", "2026-01-01")).toBe("Sub 10");
+      expect(escalaoAtDate("31/12/2014", 2026)).toBe("Sub 12");
+    });
+
     it("fronteiras 24/25, 49/50, 69/70 (regressão do bug que mostrava Sub 24 para todos os adultos)", () => {
       expect(escalaoAtDate("2002-12-31", "2026-01-01")).toBe("Sub 24");
       expect(escalaoAtDate("2001-12-31", "2026-01-01")).toBe("Absoluto");

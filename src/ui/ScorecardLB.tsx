@@ -468,14 +468,28 @@ export function ScorecardLB({
             highlight={isManuel(p)}
           />
         );
+        // Bandeira ANTES do nome, quando o adapter injectou `_country` (LGS/RFEG:
+        // a fonte marca-a na linha do leaderboard). No ramo com TournPName a
+        // bandeira já vem de lá — aqui só o ramo `noLink`, que é um <span> nu.
+        // ⚠ Aqui os PORTUGUESES levam bandeira também. Na maior parte da app PT
+        // é o default e a bandeira seria ruído; num torneio estrangeiro é o
+        // contrário — é a razão de se olhar para a lista. A linha continua
+        // destacada (`_isPortuguese`); as duas coisas somam-se.
+        const cc = (p as { _country?: string | null })._country;
+        const withFlag = cc && noLink ? (
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <span aria-label={cc} title={cc}>{flagOf(cc)}</span>
+            {baseInner}
+          </span>
+        ) : baseInner;
         // Pill de sexo após o nome (só renderiza se _sex foi injectado pelo
         // adapter da página — RFEG/intl). Usa SexBadge (NUNCA texto/símbolo Unicode).
         const decorated = sex === "M" || sex === "F" ? (
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-            {baseInner}
+            {withFlag}
             <SexBadge sex={sex} />
           </span>
-        ) : baseInner;
+        ) : withFlag;
         // ⚠ O `nameDecorator` das paginas de circuito (IntlTournView, MajorPage)
         // serve so para acrescentar a seta ↗ do kids2 -- e o <TournPName> acima
         // JA a desenha. Aplica-lo aos dois punha DUAS setas em cada linha (o

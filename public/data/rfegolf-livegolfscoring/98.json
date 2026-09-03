@@ -1,1 +1,321 @@
-{"id":98,"ok":true,"scrapedAt":"2026-06-28T10:01:49.993Z","meta":{"name":"Campeonato de España de Golf Adaptado 2021 - Copa Federación","course":null,"dateRange":"08 mayo - 09 mayo","rounds":[{"round":1,"label":"Ronda 1"},{"round":2,"label":"Ronda 2"}]},"course":{"meters":[264,485,332,143,345,378,314,164,416,499,330,159,288,496,338,159,334,357],"si":[14,4,10,16,8,2,12,6,18,7,3,17,15,13,9,11,5,1],"par":[4,5,4,3,4,4,4,3,5,5,4,3,4,5,4,3,4,4],"avg":[4.6,6.8,4.7,4.2,6.1,5.6,5.5,4.2,6.33,6.78,6.67,3.78,5.44,5.78,5.33,5.11,4.67,6],"metersTotal":5801,"holes":18,"courseRating":70.9,"slope":132},"rounds":[{"round":1,"label":"Ronda 1","par":null,"players":[{"memberId":"8941","pos":null,"name":"GRANELL RUIZ, Lorenzo","toPar":null,"hoy":0,"scores":null,"halves":null,"total":19,"_fromClassif":true},{"memberId":"8944","pos":null,"name":"SALINAS SANCHEZ, Juan Carlos","toPar":null,"hoy":0,"scores":null,"halves":null,"total":11,"_fromClassif":true}]},{"round":2,"label":"Ronda 2","par":null,"players":[]}],"classification":[{"memberId":"8940","name":"GONZALEZ TABAR, Iñaki","pos":1,"toPar":50,"roundTotals":null,"total":24},{"memberId":"8939","name":"HERRANZ PEREZ, Felipe Antonio","pos":2,"toPar":46,"roundTotals":null,"total":22},{"memberId":"8943","name":"CASTELLANOS VELA, Angel","pos":3,"toPar":34,"roundTotals":null,"total":15},{"memberId":"8942","name":"SILVESTRE ALCARAZ, Juan","pos":4,"toPar":34,"roundTotals":null,"total":16},{"memberId":"8937","name":"GARCES GARCIA, Eliseo","pos":5,"toPar":26,"roundTotals":null,"total":14},{"memberId":"8946","name":"SANCHEZ HERREROS, Jose Manuel","pos":6,"toPar":24,"roundTotals":null,"total":10},{"memberId":"8938","name":"POZA ESPERON, Andres","pos":7,"toPar":23,"roundTotals":null,"total":12},{"memberId":"8945","name":"GARCIA GARRIDO, Jose Manuel","pos":8,"toPar":19,"roundTotals":null,"total":9},{"memberId":"8947","name":"ORTEGA CARRETERO, Jose Luis","pos":9,"toPar":12,"roundTotals":null,"total":6},{"memberId":"8941","name":"GRANELL RUIZ, Lorenzo","pos":10,"toPar":26,"roundTotals":[19],"total":19},{"memberId":"8944","name":"SALINAS SANCHEZ, Juan Carlos","pos":11,"toPar":11,"roundTotals":[11],"total":11}],"horarios":[{"round":1,"subid":"503","groups":[{"teeTime":"10:45","startHole":1,"players":["GARCES GARCIA, ELISEO","POZA ESPERON, ANDRES"]},{"teeTime":"11:00","startHole":1,"players":["SILVESTRE ALCARAZ, JUAN","CASTELLANOS VELA, ANGEL"]},{"teeTime":"11:12","startHole":1,"players":["SANCHEZ HERREROS, JOSE MANUEL","ORTEGA CARRETERO, JOSE LUIS"]}]},{"round":2,"subid":"504","groups":[{"teeTime":"09:21","startHole":1,"players":["CASTELLANOS VELA, ANGEL","GRANELL RUIZ, LORENZO"]},{"teeTime":"09:35","startHole":1,"players":["SANCHEZ HERREROS, JOSE MANUEL","ORTEGA CARRETERO, JOSE LUIS"]},{"teeTime":"09:49","startHole":1,"players":["POZA ESPERON, ANDRES","GARCES GARCIA, ELISEO"]}]}]}
+{
+  "id": 98,
+  "ok": true,
+  "scrapedAt": "2026-06-28T10:01:49.993Z",
+  "meta": {
+    "name": "Campeonato de España de Golf Adaptado 2021 - Copa Federación",
+    "course": "Club de Golf Gorraiz",
+    "dateRange": "08 mayo - 09 mayo",
+    "rounds": [
+      {
+        "round": 1,
+        "label": "Ronda 1"
+      },
+      {
+        "round": 2,
+        "label": "Ronda 2"
+      }
+    ]
+  },
+  "course": {
+    "meters": [
+      264,
+      485,
+      332,
+      143,
+      345,
+      378,
+      314,
+      164,
+      416,
+      499,
+      330,
+      159,
+      288,
+      496,
+      338,
+      159,
+      334,
+      357
+    ],
+    "si": [
+      14,
+      4,
+      10,
+      16,
+      8,
+      2,
+      12,
+      6,
+      18,
+      7,
+      3,
+      17,
+      15,
+      13,
+      9,
+      11,
+      5,
+      1
+    ],
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      5,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      4
+    ],
+    "avg": [
+      4.6,
+      6.8,
+      4.7,
+      4.2,
+      6.1,
+      5.6,
+      5.5,
+      4.2,
+      6.33,
+      6.78,
+      6.67,
+      3.78,
+      5.44,
+      5.78,
+      5.33,
+      5.11,
+      4.67,
+      6
+    ],
+    "metersTotal": 5801,
+    "holes": 18,
+    "courseRating": 70.9,
+    "slope": 132
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "label": "Ronda 1",
+      "par": null,
+      "players": [
+        {
+          "memberId": "8941",
+          "pos": null,
+          "name": "GRANELL RUIZ, Lorenzo",
+          "toPar": null,
+          "hoy": 0,
+          "scores": null,
+          "halves": null,
+          "total": 19,
+          "_fromClassif": true
+        },
+        {
+          "memberId": "8944",
+          "pos": null,
+          "name": "SALINAS SANCHEZ, Juan Carlos",
+          "toPar": null,
+          "hoy": 0,
+          "scores": null,
+          "halves": null,
+          "total": 11,
+          "_fromClassif": true
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "label": "Ronda 2",
+      "par": null,
+      "players": []
+    }
+  ],
+  "classification": [
+    {
+      "memberId": "8940",
+      "name": "GONZALEZ TABAR, Iñaki",
+      "pos": 1,
+      "toPar": 50,
+      "roundTotals": null,
+      "total": 24,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8939",
+      "name": "HERRANZ PEREZ, Felipe Antonio",
+      "pos": 2,
+      "toPar": 46,
+      "roundTotals": null,
+      "total": 22,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8943",
+      "name": "CASTELLANOS VELA, Angel",
+      "pos": 3,
+      "toPar": 34,
+      "roundTotals": null,
+      "total": 15,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8942",
+      "name": "SILVESTRE ALCARAZ, Juan",
+      "pos": 4,
+      "toPar": 34,
+      "roundTotals": null,
+      "total": 16,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8937",
+      "name": "GARCES GARCIA, Eliseo",
+      "pos": 5,
+      "toPar": 26,
+      "roundTotals": null,
+      "total": 14,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8946",
+      "name": "SANCHEZ HERREROS, Jose Manuel",
+      "pos": 6,
+      "toPar": 24,
+      "roundTotals": null,
+      "total": 10,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8938",
+      "name": "POZA ESPERON, Andres",
+      "pos": 7,
+      "toPar": 23,
+      "roundTotals": null,
+      "total": 12,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8945",
+      "name": "GARCIA GARRIDO, Jose Manuel",
+      "pos": 8,
+      "toPar": 19,
+      "roundTotals": null,
+      "total": 9,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8947",
+      "name": "ORTEGA CARRETERO, Jose Luis",
+      "pos": 9,
+      "toPar": 12,
+      "roundTotals": null,
+      "total": 6,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8941",
+      "name": "GRANELL RUIZ, Lorenzo",
+      "pos": 10,
+      "toPar": 26,
+      "roundTotals": [
+        19
+      ],
+      "total": 19,
+      "country": null,
+      "region": null
+    },
+    {
+      "memberId": "8944",
+      "name": "SALINAS SANCHEZ, Juan Carlos",
+      "pos": 11,
+      "toPar": 11,
+      "roundTotals": [
+        11
+      ],
+      "total": 11,
+      "country": null,
+      "region": null
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "subid": "503",
+      "groups": [
+        {
+          "teeTime": "10:45",
+          "startHole": 1,
+          "players": [
+            "GARCES GARCIA, ELISEO",
+            "POZA ESPERON, ANDRES"
+          ]
+        },
+        {
+          "teeTime": "11:00",
+          "startHole": 1,
+          "players": [
+            "SILVESTRE ALCARAZ, JUAN",
+            "CASTELLANOS VELA, ANGEL"
+          ]
+        },
+        {
+          "teeTime": "11:12",
+          "startHole": 1,
+          "players": [
+            "SANCHEZ HERREROS, JOSE MANUEL",
+            "ORTEGA CARRETERO, JOSE LUIS"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "subid": "504",
+      "groups": [
+        {
+          "teeTime": "09:21",
+          "startHole": 1,
+          "players": [
+            "CASTELLANOS VELA, ANGEL",
+            "GRANELL RUIZ, LORENZO"
+          ]
+        },
+        {
+          "teeTime": "09:35",
+          "startHole": 1,
+          "players": [
+            "SANCHEZ HERREROS, JOSE MANUEL",
+            "ORTEGA CARRETERO, JOSE LUIS"
+          ]
+        },
+        {
+          "teeTime": "09:49",
+          "startHole": 1,
+          "players": [
+            "POZA ESPERON, ANDRES",
+            "GARCES GARCIA, ELISEO"
+          ]
+        }
+      ]
+    }
+  ]
+}

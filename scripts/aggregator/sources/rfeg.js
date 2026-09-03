@@ -147,7 +147,11 @@ function load(opts) {
       name: displayName(splitName(pl.n || pl.name || "")) || prev?.name || null,
       dob,
       sex: pl.sex || prev?.sex || null,
-      country: "ES",
+      // País da bandeira do leaderboard oficial (`co`, posto pelo
+      // build-rfegolf-rivals). "ES" só como default: nos torneios internacionais
+      // — onde estão os nossos — assumi-lo fazia dos 7 portugueses do Spanish
+      // International U-18 outros tantos espanhóis.
+      country: pl.co || prev?.country || "ES",
       club: pl.club || prev?.club || null,
       ageGroupCurrent: pl.catEdad || prev?.ageGroupCurrent || null,
       region: pl.region || prev?.region || null,

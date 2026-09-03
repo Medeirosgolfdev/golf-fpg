@@ -619,7 +619,16 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   // Total (accumulated) entry — jogadores incompletos vão para o fim
   // playedRounds = máximo de rondas realmente jogadas (não o total declarado do torneio)
   // Isto evita marcar todos como "incompletos" quando ainda faltam rondas futuras.
-  const playedRounds = Math.max(0, ...t.players.map(p => p.roundScores?.length ?? 0));
+  // ⚠ Voltas A DECORRER não contam para este máximo: numa ronda a meio só uma
+  // parte do campo já saiu, e contá-la fazia com que todos os outros ficassem
+  // "incompletos" — e, sendo muitos, a heurística de cut promovia-os a
+  // eliminados. Aparecia "CUT" no campo inteiro a meio do segundo dia.
+  // Uma volta A MEIO não conta como jogada (nem para quem a está a jogar, nem
+  // para o máximo) — senão o campo todo ficava "incompleto" logo ao primeiro
+  // cartão entregue.
+  const openRound = (t as { _openRound?: number })._openRound;
+  const playedRounds = Math.max(0, ...t.players.map(p =>
+    (p.roundScores ?? []).filter(rs => !isRoundInProgress(rs)).length));
 
   const totalPlayers: Player[] = [];
   for (const p of t.players) {
@@ -666,11 +675,17 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   }
   let cutN = -1;
   let cutCount = 0;
-  for (const k of Object.keys(countByN)) {
-    const n = Number(k);
-    if (countByN[n] >= 5 && countByN[n] > cutCount) {
-      cutCount = countByN[n];
-      cutN = n;
+  // ⚠ Com uma ronda AINDA A DECORRER não se procura cut nenhum: quem não saiu
+  // tem menos voltas que os primeiros grupos, e a heurística lia isso como uma
+  // eliminação em massa — a meio da manhã metade do campo aparecia como "CUT",
+  // o líder da véspera incluído. Fica em "INC" (ronda por jogar), que é o que é.
+  if (!openRound) {
+    for (const k of Object.keys(countByN)) {
+      const n = Number(k);
+      if (countByN[n] >= 5 && countByN[n] > cutCount) {
+        cutCount = countByN[n];
+        cutN = n;
+      }
     }
   }
   // Promover _incomplete -> _cut quando rondas batem com o cut detectado

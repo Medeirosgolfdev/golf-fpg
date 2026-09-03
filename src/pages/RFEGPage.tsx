@@ -29,12 +29,15 @@ import ExtLink from "../ui/ExternalLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { isManuelByName as isM } from "../constants/manuel";
 import { displayName, fmtToPar, norm } from "../utils/format";
+import { flag } from "../utils/flagUtils";
 import { tpColor } from "../ui/tournamentPrimitives";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
 import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
+import { useFedByName, loadFedByName, fedByNameKeys, type FedByNameEntry } from "../ui/InscricoesComponents";
+import { loadGolfboxPlayers, golfboxLookup, type GolfboxEntry } from "../ui/InscricoesComponents";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
@@ -237,20 +240,31 @@ function catPillClass(cat: string | null): string {
   return "p p-sm";
 }
 
+/** Ano/mês/dia de uma data, nos DOIS formatos que aqui se cruzam: "19/07/2008"
+ *  (fontes espanholas) e "2008-07-19" (ISO — federados FPG e as datas dos
+ *  torneios). ⚠ Antes só o primeiro era aceite, com dois efeitos: os
+ *  portugueses, cuja ficha vem da FPG em ISO, ficavam sem idade nenhuma; e a
+ *  data do TORNEIO (também ISO) caía sempre no `else`, ou seja, a idade era
+ *  calculada à data de hoje em vez de à data em que se jogou. */
+function ymd(s: string | null | undefined): { y: number; m: number; d: number } | null {
+  if (!s) return null;
+  const dmy = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
+  if (dmy) return { y: +dmy[3], m: +dmy[2], d: +dmy[1] };
+  const iso = /(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
+  if (iso) return { y: +iso[1], m: +iso[2], d: +iso[3] };
+  return null;
+}
+
 function ageAt(dob: string | null, ref: string | null | undefined): number | null {
-  if (!dob) return null;
-  const m = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(dob);
-  if (!m) return null;
-  const dobY = parseInt(m[3], 10);
-  const dobM = parseInt(m[2], 10);
-  const dobD = parseInt(m[1], 10);
-  const refMatch = ref ? /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(ref) : null;
+  const b = ymd(dob);
+  if (!b) return null;
+  const r = ymd(ref);
   const today = new Date();
-  const ry = refMatch ? parseInt(refMatch[3], 10) : today.getFullYear();
-  const rmm = refMatch ? parseInt(refMatch[2], 10) : today.getMonth() + 1;
-  const rd = refMatch ? parseInt(refMatch[1], 10) : today.getDate();
-  let age = ry - dobY;
-  if (rmm < dobM || (rmm === dobM && rd < dobD)) age--;
+  const ry = r ? r.y : today.getFullYear();
+  const rmm = r ? r.m : today.getMonth() + 1;
+  const rd = r ? r.d : today.getDate();
+  let age = ry - b.y;
+  if (rmm < b.m || (rmm === b.m && rd < b.d)) age--;
   return age;
 }
 
@@ -279,10 +293,21 @@ function lgsToFPGTournament(
     rounds: Array<{ round: number; label: string; par: number[] | null; players: Array<{
       memberId?: string | null; pos: number | null; name: string; toPar: number; hoy: number;
       scores: number[] | null; halves: number[] | null; total: number | null;
+      country?: string | null; region?: string | null;
+      /** Ronda A DECORRER: buracos já jogados ("scores" com nulls nos que
+       *  faltam), quantos são, e a soma parcial. O "total" fica null — um
+       *  cartão a meio não é uma volta. */
+      holesPlayed?: number | null; partialGross?: number | null;
     }> }>;
     course?: { meters?: (number | null)[]; si?: (number | null)[]; par?: (number | null)[]; courseRating?: number | null; slope?: number | null } | null;
   },
   dobLookup?: DobLookup,
+  /** Federados FPG por nome — só consultado para quem a bandeira da fonte diz
+   *  ser português (ver `ptFed` abaixo). */
+  fedByName?: Map<string, FedByNameEntry>,
+  /** Fichas GolfBox (EGA + federações nórdicas) por nome — DOB/licença dos
+   *  ESTRANGEIROS, que a fonte espanhola não conhece. */
+  golfbox?: Map<string, GolfboxEntry[]>,
 ): FPGTournament {
   const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
@@ -302,10 +327,33 @@ function lgsToFPGTournament(
   // (`_partial`). Filtrar por `players.length` não chegava — a R3 placeholder do
   // Campeonato de España juvenil 2026 contava como jogada → toda a gente ficava
   // incompleta (→ WD) e pos/toPar/total liam-se da ronda sem scores (→ "--").
-  const roundIsPlayed = (r: { players: Array<{ total: number | null }> }) =>
-    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999);
+  // Uma ronda A DECORRER conta como jogada desde que alguém já tenha buracos
+  // entregues ("partialGross") — é o que põe os resultados de hoje na página,
+  // em vez de esperar que a volta feche.
+  const roundIsPlayed = (r: { players: Array<{ total: number | null; partialGross?: number | null }> }) =>
+    (r.players ?? []).some((p) => (p.total != null && p.total > 0 && p.total < 999)
+      || (p.partialGross != null && p.partialGross > 0));
   const playedRoundsArr = lgs.rounds.filter(roundIsPlayed);
   const playedRounds = playedRoundsArr.length || numRounds;
+  // Voltas FECHADAS. ⚠ NÃO basta "alguém já tem total": a meio do segundo dia
+  // os primeiros grupos já entregaram (15 de 120) e isso fazia a ronda contar
+  // como fechada — toda a gente que ainda não saiu ficava "incompleta" e a
+  // aparecer como **WD**, o líder da véspera incluído. Uma ronda está a decorrer
+  // enquanto houver cartões a meio, ou enquanto menos de metade do campo tiver
+  // entregue (uma ronda acabada tem quase toda a gente, tirando WD genuínos).
+  const roundEmCurso = (r: { players: Array<{ total: number | null; partialGross?: number | null }> }) => {
+    const ps = r.players ?? [];
+    if (!ps.length) return false;
+    const comTotal = ps.filter((p) => p.total != null && p.total > 0 && p.total < 999).length;
+    if (!comTotal) return false;
+    const parciais = ps.filter((p) => p.partialGross != null && p.partialGross > 0).length;
+    // Cartões a meio são o sinal directo. O limiar cobre o intervalo em que
+    // ninguém está no campo (uns já entregaram, outros ainda não saíram): numa
+    // ronda fechada quase toda a gente tem total, tirando os WD.
+    return parciais > 0 || comTotal < ps.length * 0.85;
+  };
+  const closedRounds = lgs.rounds.filter((r) =>
+    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999) && !roundEmCurso(r)).length;
   const sliceH = <T,>(a: T[] | undefined | null): T[] => (a || []).slice(0, courseHoles);
   // teeName com a distância total → o scorecard só desenha a linha de METROS quando
   // o jogador tem teeName (ScorecardLB agrupa metros por tee). Sem isto, os torneios
@@ -314,26 +362,33 @@ function lgsToFPGTournament(
   const lgsTeeLabel: string | undefined = lgsMetersTotal > 0 ? `${lgsMetersTotal} m` : undefined;
 
   // Agregar por jogador (key = memberId ou nome) com scores hbh por ronda
-  type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: FPGRoundScore[] };
+  type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: FPGRoundScore[]; country: string | null; region: string | null };
   const agg: Record<string, Acc> = {};
   for (const r of lgs.rounds) {
     for (const p of r.players) {
       const key = p.memberId || p.name;
-      if (!agg[key]) agg[key] = { name: p.name, pos: null, toPar: 0, total: 0, rounds: [] };
+      if (!agg[key]) agg[key] = { name: p.name, pos: null, toPar: 0, total: 0, rounds: [], country: null, region: null };
+      if (p.country && !agg[key].country) agg[key].country = p.country;
+      if (p.region && !agg[key].region) agg[key].region = p.region;
       // Aceitar a ronda com total válido mesmo SEM scorecard buraco-a-buraco —
       // rondas preenchidas pela classificação geral (quando o hoyoahoyo não listou
       // o jogador) só trazem o total. Contam para gross/standings; o scorecard
       // dessa ronda fica em branco. Sem isto, um 2º/3º classificado ausente de
       // R1/R2 caía como "incompleto" e o top-3 do Resumo saía errado.
       const hasCard = !!(p.scores && p.scores.length === courseHoles);
-      if (p.total != null && p.total > 0 && p.total < 999) {
+      const emCurso = p.total == null && p.partialGross != null && p.partialGross > 0;
+      if ((p.total != null && p.total > 0 && p.total < 999) || emCurso) {
         agg[key].rounds.push({
-          round: r.round, gross: p.total,
+          round: r.round, gross: emCurso ? (p.partialGross as number) : (p.total as number),
           scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
           si: sliceH(lgs.course?.si) as number[], meters: sliceH(lgs.course?.meters) as number[], teeName: lgsTeeLabel,
           courseRating: lgs.course?.courseRating ?? undefined,
           slope: lgs.course?.slope ?? undefined,
-        });
+          // Volta a meio: o gross é a soma dos buracos ENTREGUES, não uma volta.
+          // Fica fora do total do torneio (ver `total` mais abaixo) e o cartão
+          // mostra só os buracos jogados.
+          ...(emCurso ? { _emCurso: true, _holesPlayed: p.holesPlayed ?? null } : {}),
+        } as FPGRoundScore);
       }
     }
   }
@@ -348,7 +403,11 @@ function lgsToFPGTournament(
       if (agg[key]) {
         agg[key].pos = p.pos;
         agg[key].toPar = p.toPar;
-        agg[key].total = agg[key].rounds.reduce((a, b) => a + b.gross, 0);
+        // Só VOLTAS FECHADAS somam para o total do torneio — somar o parcial de
+        // quem vai no buraco 12 dava um "total" que não é resultado nenhum.
+        agg[key].total = agg[key].rounds
+          .filter((x) => !(x as { _emCurso?: boolean })._emCurso)
+          .reduce((a, b) => a + b.gross, 0);
       }
     }
   }
@@ -365,26 +424,54 @@ function lgsToFPGTournament(
   // Como esta função foi criada antes de termos hcpLookup, lemos via campo extra.
   const players: FPGPlayer[] = sortedAcc.map((a, idx) => {
     const e = lookupByName[norm(a.name)];
-    const club = e?.club ? displayName(e.club) : "";
-    const age = e?.dob ? ageAt(e.dob, dateRef) : null;
-    const escLabel = escaloEsForPlayer(e?.catEdad, e?.dob, dateRef);
-    const sex: "M" | "F" | null = e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null;
-    const incomplete = a.rounds.length < playedRounds;
+    // Português num torneio espanhol: a fonte local não o conhece (sem licença
+    // RFEG), mas nós temos a ficha dele na FPG. Só se aplica a quem a BANDEIRA
+    // da fonte marca como PT — cruzar por nome sem essa garantia apanharia
+    // homónimos espanhóis.
+    const ptFed = a.country === "PT" && fedByName
+      ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
+      : undefined;
+    // Estrangeiro sem ficha local: procurar no roster GolfBox, exigindo a
+    // nacionalidade da bandeira (um homónimo de outro país não serve).
+    const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;
+    const club = e?.club ? displayName(e.club) : (ptFed?.club ? displayName(ptFed.club) : (gb?.club ? displayName(gb.club) : ""));
+    const dobRef = e?.dob || ptFed?.dob || gb?.dob || null;
+    const age = dobRef ? ageAt(dobRef, dateRef) : null;
+    const escLabel = escaloEsForPlayer(e?.catEdad, dobRef, dateRef);
+    const sex: "M" | "F" | null = (e?.sex || ptFed?.sex) === "M" ? "M" : (e?.sex || ptFed?.sex) === "F" ? "F" : null;
+    // "Incompleto" (→ WD) mede-se só contra as voltas FECHADAS: quem ainda não
+    // saiu para a ronda de hoje não é um desistente.
+    const incomplete = a.rounds.filter((x) => !(x as { _emCurso?: boolean })._emCurso).length < closedRounds;
     // HCP via lookup global (LGS não tem HCP no JSON)
     const lic = (e?.licencia || "").toUpperCase();
-    const hcp = lic && (lgs as any)._hcpLookup?.[lic]?.hcp;
+    // ⚠ `lic && …` devolve a STRING VAZIA quando não há licença — não null.
+    // Testar `!= null` deixava passar essa string e o HCP do federado português
+    // nunca era usado (coluna a "—" em todos os nossos).
+    const hcpEs = lic ? (lgs as any)._hcpLookup?.[lic]?.hcp : undefined;   // eslint-disable-line @typescript-eslint/no-explicit-any
+    const hcp = typeof hcpEs === "number" ? hcpEs : (ptFed?.hcp ?? undefined);
+    // Bandeira do leaderboard oficial (o LGS marca-a na linha de cada jogador).
+    // Vai na coluna do clube — mesmo padrão do BJGT/England, que também não têm
+    // clube dos estrangeiros; a região ("Andalucía") serve de clube quando o
+    // lookup não traz nenhum. Sem isto os 7 portugueses deste torneio eram
+    // indistinguíveis no meio de 120 nomes.
+    // ⚠ Só ESTRANGEIROS levam bandeira — mesma convenção do `rfegForeignFlag`:
+    // estamos no circuito espanhol, os espanhóis são o default.
+    const clubLabel = club || a.region || "";
+    const flagEmoji = a.country && a.country !== "ES" ? flag(a.country) : "";
     return {
       scoreId: `lgs-${lgs.id}-${idx}`,
       pos: a.pos ?? idx + 1,
       name: formatPlayerName(a.name),
-      club: club || "—",
-      fed: e?.licencia || undefined,
-      fedCode: e?.licencia || undefined,
+      club: [flagEmoji, clubLabel].filter(Boolean).join(" ") || "—",
+      _isPortuguese: a.country === "PT",
+      _country: a.country || undefined,
+      fed: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
+      fedCode: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
       grossTotal: a.total || null,
       toPar: a.toPar,
       hcpExact: hcp != null ? hcp : undefined,
       escalao: escLabel,
-      dob: e?.dob || undefined,
+      dob: dobRef || undefined,
       _sex: sex,
       _age: age,
       nholes: courseHoles,
@@ -410,6 +497,9 @@ function lgsToFPGTournament(
     // cria uma aba "R3" vazia a dizer "sem scorecards"). O draw da R3 aparece à
     // mesma, como aba "Draw R3" intercalada (ver roundDraws em rfegLoadDivisions).
     rounds: playedRounds,
+    // Ronda a decorrer (se houver): o acumulado desconta-a ao decidir quem está
+    // incompleto, para não marcar como eliminado quem ainda nem saiu.
+    _openRound: lgs.rounds.find(roundEmCurso)?.round,
     playerCount: players.length,
     players,
   };
@@ -475,22 +565,30 @@ function yearOf(s: string | null | undefined): number | null {
   return m ? parseInt(m[1], 10) : null;
 }
 /** Escalão RFEG canónico de um jogador.
- *  1) Categoria OFICIAL da fonte (catEdad/nivel), normalizada — autoritativa: o
- *     RFEG atribui a categoria por COHORT de ano de nascimento.
- *  2) Fallback: idade-no-ano = anoTorneio − anoNascimento (NÃO idade exacta à data
- *     do torneio — senão o mesmo ano de nascimento parte-se em duas categorias
- *     consoante o aniversário caia antes/depois do torneio: ex. dois nascidos em
- *     2015 apareciam como Alevín e Benjamín no mesmo campeonato). */
+ *  1) idade-no-ano = anoTorneio − anoNascimento (NÃO a idade exacta à data do
+ *     torneio — senão o mesmo ano de nascimento parte-se em duas categorias
+ *     consoante o aniversário caia antes/depois do torneio: ex. dois nascidos
+ *     em 2015 apareciam como Alevín e Benjamín no mesmo campeonato).
+ *  2) Fallback: categoria da fonte (catEdad/nivel), normalizada.
+ *
+ *  ⚠ A ordem já foi a inversa ("a categoria da fonte é oficial, logo manda").
+ *  Não manda: o `catEdad` do `licencia-dob-lookup` é um RETRATO da última prova
+ *  em que vimos o jogador, que pode ser de há anos — e o escalão muda todos os
+ *  anos. Num torneio de 2026 apareciam "Infantil" e "Alevín" em miúdos nascidos
+ *  em 2008-2010 (Sub-18/Sub-16), porque a categoria guardada era de 2021-2024.
+ *  Com DOB, a idade-no-ano é a verdade e a categoria da fonte não acrescenta
+ *  nada; sem DOB, é tudo o que temos. */
 function escaloEsForPlayer(
   catEdad: string | null | undefined,
   dob: string | null | undefined,
   ref: string | null | undefined,
 ): string | null {
-  const canon = canonEscaloEs(catEdad);
-  if (canon) return canon;
   const by = yearOf(dob), ty = yearOf(ref);
-  if (by == null || ty == null) return null;
-  return ageToEscalaoEs(ty - by);
+  if (by != null && ty != null) {
+    const calc = ageToEscalaoEs(ty - by);
+    if (calc) return calc;
+  }
+  return canonEscaloEs(catEdad);
 }
 
 /* ── ncToFPGTournament ────────────────────────────────────────
@@ -1004,7 +1102,7 @@ interface LgsHorarioRound {
   groups: { teeTime: string | null; startHole: number | null; players: string[] }[];
 }
 
-function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
+function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup, fedByName?: Map<string, FedByNameEntry>, golfbox?: Map<string, GolfboxEntry[]>): RFEGDetail {
   const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) {
@@ -1020,6 +1118,7 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
   const playerAgg: Record<string, {
     name: string; pos: number | null;
     rounds: number[]; toPar: number; hoy: number; total: number;
+    country: string | null; region: string | null;
   }> = {};
   // Só rondas com SCORES reais (a R3 de um evento em curso pode trazer jogadores
   // placeholder do draw com total=null → não é uma ronda jogada). Sem isto, o
@@ -1032,9 +1131,12 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     for (const p of r.players) {
       const key = p.memberId || p.name;
       if (!playerAgg[key]) {
-        playerAgg[key] = { name: p.name, pos: null, rounds: [], toPar: 0, hoy: 0, total: 0 };
+        playerAgg[key] = { name: p.name, pos: null, rounds: [], toPar: 0, hoy: 0, total: 0, country: null, region: null };
       }
       playerAgg[key].rounds.push(p.total ?? 0);
+      const pc = (p as { country?: string | null; region?: string | null });
+      if (pc.country && !playerAgg[key].country) playerAgg[key].country = pc.country;
+      if (pc.region && !playerAgg[key].region) playerAgg[key].region = pc.region;
     }
   }
   // Pos/toPar/total da última ronda (acumulado)
@@ -1075,7 +1177,14 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
       // mostrar ESC/Nasc./FED/Clube/HCP como na FPG (o draw LGS só traz nomes).
       const e = lookupByName[norm(a.name)];
       const lic = (e?.licencia || "").toUpperCase();
-      const hcp = lic && hcpLookup ? (hcpLookup[lic]?.hcp ?? null) : null;
+      const hcpEs = lic && hcpLookup ? (hcpLookup[lic]?.hcp ?? null) : null;
+      // Português: a ficha vem da FPG (ver o gémeo em lgsToFPGTournament). É o
+      // que dá ESC/Nasc./FED/Clube/HCP aos nossos nas tabs de Draw e Inscrições.
+      const ptFed = a.country === "PT" && fedByName
+        ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
+        : undefined;
+      const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;
+      const hcp = typeof hcpEs === "number" ? hcpEs : (ptFed?.hcp ?? null);
       return {
         pos: a.pos,
         name: a.name,
@@ -1083,10 +1192,11 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
         hoy: a.hoy,
         rounds: a.rounds,
         total: a.total,
-        licencia: e?.licencia ?? null,
-        dob: e?.dob ?? null,
-        club: e?.club ?? null,
+        licencia: e?.licencia ?? ptFed?.fed ?? gb?.memberId ?? null,
+        dob: e?.dob ?? ptFed?.dob ?? gb?.dob ?? null,
+        club: e?.club ?? ptFed?.club ?? gb?.club ?? a.region ?? null,
         hcp,
+        country: a.country,
       };
     }),
   };
@@ -1116,15 +1226,23 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     inscritos: {
       admitidos: aggregated.map(a => {
         const e = lookupByName[norm(a.name)];
+        // Mesmo enriquecimento do leaderboard: sem ele os nossos apareciam na
+        // lista de inscritos sem federado, clube, HCP nem data de nascimento.
+        const ptFed = a.country === "PT" && fedByName
+          ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
+          : undefined;
+        const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;
         return {
           pos: a.pos, name: a.name,
-          licencia: e?.licencia || null,
-          pais: "ESPAÑA",
-          hcp: null,
+          licencia: e?.licencia || ptFed?.fed || gb?.memberId || null,
+          // País real da bandeira do leaderboard (o default "ESPAÑA" fazia da
+          // lista inteira espanhóis, num torneio com 19 nacionalidades).
+          pais: a.country || "ESPAÑA",
+          hcp: ptFed?.hcp ?? null,
           catEdad: e?.catEdad || null,
-          sexo: e?.sex || null,
-          club: e?.club || null,
-          dob: e?.dob || null,
+          sexo: e?.sex || ptFed?.sex || null,
+          club: e?.club || ptFed?.club || gb?.club || a.region || null,
+          dob: e?.dob || ptFed?.dob || gb?.dob || null,
           estado: null,
         };
       }),
@@ -1593,28 +1711,63 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
   const activeRound = onlyRound ?? activeRoundState;
   const isNc = !!detail._ncHorarios;
 
-  // mitarjeta (CEE): o draw do teeTimes só traz NOMES. Enriquecemos por nome a
-  // partir do leaderboard (detail.results) — fed/dob/clube/HCP + gross/±par da R1 —
-  // para preencher as MESMAS colunas que o DrawTab mostra na FPG.
+  // mitarjeta (CEE) e livegolfscoring: o draw dos tee times só traz NOMES.
+  // Enriquecemos por nome a partir do leaderboard (detail.results) — fed / dob /
+  // clube / HCP / país — para preencher as MESMAS colunas que o DrawTab mostra
+  // na FPG.
+  //
+  // ⚠ A chave tem de existir nas DUAS ordens do nome. A fonte escreve
+  // "MORTON, Frankie" e o DrawTab pesquisa com `norm(p.nome)`, onde `p.nome` já
+  // passou por `formatPlayerName` → "Frankie Morton". Só com a primeira chave o
+  // cruzamento falhava em TODA a gente e as colunas ±/Tot ficavam a "–".
   const mitaByName = useMemo(() => {
-    const m = new Map<string, { fed: string | null; dobIso: string | null; club: string | null; hcp: number | null; gross: number; toPar: number | null }>();
+    type Info = { name: string; fed: string | null; dobIso: string | null; club: string | null; hcp: number | null; gross: number; toPar: number | null; country: string | null };
+    const m = new Map<string, Info>();
     if (isNc) return m;
     const grp = (detail.results || []).find((r) => r.players && r.players.length > 0);
     for (const p of (grp?.players || [])) {
-      const key = norm(p.name);
-      if (!key || m.has(key)) continue;
       const r1 = Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0;
-      m.set(key, {
+      const info: Info = {
+        name: formatPlayerName(p.name),
         fed: p.licencia || null,
         dobIso: esDateToIso(p.dob),
         club: p.club || null,
         hcp: typeof p.hcp === "number" ? p.hcp : null,
         gross: r1,
         toPar: typeof p.toPar === "number" ? p.toPar : null,
-      });
+        country: ((p as { country?: string | null }).country) || null,
+      };
+      for (const k of [norm(p.name), norm(formatPlayerName(p.name))]) {
+        if (k && !m.has(k)) m.set(k, info);
+      }
     }
     return m;
   }, [isNc, detail.results]);
+
+  // Gross de CADA ronda por jogador (livegolfscoring). O `mitaByName` só guarda
+  // "a primeira ronda com valor", o que servia o mitarjeta (1 ronda) mas fazia o
+  // draw da R2 mostrar os resultados da R1 — e a R1 ficar sem nenhum quando o
+  // cruzamento por nome falhava. Aqui a ronda é explícita (`r.round`).
+  const lgsGrossByRound = useMemo(() => {
+    const byRound = new Map<number, Map<string, { gross: number; toPar: number | null }>>();
+    const rounds = (detail as { _lgsRounds?: LgsRound[] })._lgsRounds;
+    if (!Array.isArray(rounds)) return byRound;
+    const parTotal = Array.isArray(detail.coursePar) && detail.coursePar.length
+      ? detail.coursePar.reduce((a: number, b) => a + (b || 0), 0)
+      : null;
+    for (const r of rounds) {
+      const m = new Map<string, { gross: number; toPar: number | null }>();
+      for (const p of (r.players || [])) {
+        if (p.total == null || p.total <= 0 || p.total >= 999) continue;
+        // ±par DESTA ronda (gross − par do campo). O `toPar` do leaderboard é o
+        // acumulado do torneio e no draw de uma ronda seria enganador.
+        const rec = { gross: p.total, toPar: parTotal != null ? p.total - parTotal : null };
+        for (const k of [norm(p.name), norm(formatPlayerName(p.name))]) if (k && !m.has(k)) m.set(k, rec);
+      }
+      if (m.size) byRound.set(r.round, m);
+    }
+    return byRound;
+  }, [detail]);
 
   // Enriquecer como a FPG: playersDB (escalão via dob) + resultados ±/Tot da ronda.
   // NextCaddy cruza o jogador do draw (jid) com o leaderboard via inscribedId (ins);
@@ -1632,9 +1785,13 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
         }
       }
     } else {
-      // mitarjeta: dob (ISO) por fed → o DrawTab calcula ESC + Nasc. + bandeira ES.
+      // mitarjeta/LGS: dob (ISO) por fed → o DrawTab calcula ESC + Nasc.
+      // ⚠ Só entram jogadores COM licença: as chaves do playersDB são lidas
+      // como federados (o DrawTab resolve o fed por nome a partir daqui), por
+      // isso uma chave sintética para os estrangeiros aparecia como número de
+      // federado na coluna FED. O país deles vai na própria linha do draw.
       for (const info of mitaByName.values()) {
-        if (info.fed) db[info.fed] = { dob: info.dobIso || undefined, country: "ES" };
+        if (info.fed) db[info.fed] = { dob: info.dobIso || undefined, country: info.country || "ES" };
       }
     }
     return db;
@@ -1649,6 +1806,17 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
         const rr = drawInfo[String(p.ins)]?.rounds.find((x) => x.round === activeRound);
         if (rr && rr.gross != null) m.set(p.jid, { gross: rr.gross, toPar: rr.toPar });
       }
+    } else if (lgsGrossByRound.size) {
+      // livegolfscoring: o gross é o DA RONDA que este draw mostra. Uma ronda
+      // ainda por jogar não tem entrada → colunas ±/Tot a "–", como deve ser.
+      const byName = lgsGrossByRound.get(activeRound);
+      if (byName) {
+        for (const [key, rec] of byName) m.set(key, rec);
+        for (const [key, info] of mitaByName) {
+          const rec = byName.get(key);
+          if (rec && info.fed) m.set(info.fed, rec);
+        }
+      }
     } else {
       // mitarjeta só tem R1 — indexar por fed (autoritativo) E por nome normalizado.
       for (const [key, info] of mitaByName) {
@@ -1660,7 +1828,7 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
       }
     }
     return m;
-  }, [isNc, horarios, drawInfo, activeRound, mitaByName]);
+  }, [isNc, horarios, drawInfo, activeRound, mitaByName, lgsGrossByRound]);
 
   // Construir FpgDraw a partir dos NC horarios para a ronda activa
   const drawForRound = useMemo<FpgDraw | null>(() => {
@@ -1690,6 +1858,10 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
         fed: isNc ? (p.jid || null) : (info?.fed || null),   // jid NC / licencia mitarjeta
         hcp: isNc ? p.hcp : (info?.hcp ?? null),
         tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
+        // Conterrâneos destacados como nos draws internacionais do MAJOR
+        // (`.row-portuguese`) — num campo de 120 é o que os torna visíveis.
+        isPortuguese: info?.country === "PT",
+        country: info?.country || null,
       });
     }
     return {
@@ -1738,6 +1910,8 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
 }
 
 function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEntry; dobLookup?: DobLookup; hcpLookup?: HcpLookup }) {
+  // Fichas FPG por nome — preenchem os PORTUGUESES, que a fonte espanhola não conhece.
+  const fedByName = useFedByName();
   const [data, setData] = useState<RFEGDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<RFEGTab>("scorecards");
@@ -1754,7 +1928,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         if (entry.source === "nextcaddy") {
           setData(adaptNextCaddy(d as NCDetail, dobLookup, hcpLookup));
         } else if (entry.source === "livegolfscoring") {
-          setData(adaptLgs(d as LgsDetail, dobLookup, hcpLookup));
+          setData(adaptLgs(d as LgsDetail, dobLookup, hcpLookup, fedByName));
         } else if (entry.source === "golfdirecto") {
           setData(adaptFcg(d as unknown as FCGDetail, dobLookup, hcpLookup) as unknown as RFEGDetail);
         } else {
@@ -1776,7 +1950,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         rounds: (data as any)._lgsRounds,
         course: (data as any)._lgsCourse,
         _hcpLookup: hcpLookup,
-      } as any, dobLookup);
+      } as any, dobLookup, fedByName);
     }
     if (entry.source === "nextcaddy") return ncToFPGTournament(data, dobLookup);
     if (entry.source === "rfegolf") return data.mitarjetaTorneo
@@ -2280,6 +2454,24 @@ interface HcpLookupFile {
   lookup: HcpLookup;
 }
 
+/* ⚠ Os lookups TÊM de ser esperados, não lidos do estado do React.
+ *
+ * O `rfegLoadDivisions` recebia-os por parâmetro, portanto ficava com o valor
+ * que existisse no instante em que o CircuitShell o chama — e o shell CACHEIA o
+ * que ele devolve. Numa ligação em que os JSON chegam depois desse instante, o
+ * torneio ficava permanentemente sem licenças, clubes, HCP nem datas de
+ * nascimento (Inscrições e Draw completamente a "–"), enquanto noutra máquina,
+ * com os ficheiros já em cache, aparecia tudo. Estas funções devolvem a MESMA
+ * promessa partilhada do `cachedFetchJson`, por isso não há download a mais. */
+function loadDobLookup(): Promise<DobLookup | undefined> {
+  return cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json")
+    .then((d) => d?.lookup).catch(() => undefined);
+}
+function loadHcpLookup(): Promise<HcpLookup | undefined> {
+  return cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json")
+    .then((d) => d?.lookup).catch(() => undefined);
+}
+
 export function RFEGPageLegacy() {
   const [index, setIndex] = useState<RFEGIndex | null>(null);
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
@@ -2650,7 +2842,13 @@ const ES_COUNTRY_CODE: Record<string, string> = {
  *  fonte não dá o país são marcados via RFEG_NAT_OVERRIDE (por nome). */
 function rfegForeignFlag(pais: string | null | undefined): string | undefined {
   if (!pais) return undefined;
-  const code = ES_COUNTRY_CODE[pais.trim().toUpperCase()];
+  const raw = pais.trim().toUpperCase();
+  // O LGS já nos dá o país em ISO-2 (ou "GB-ENG"), vindo da bandeira que a
+  // própria fonte marca na linha; o microsite RFEG dá o nome por extenso em
+  // espanhol. Aceitar os dois — só com a tabela de nomes, um "PT" não resolvia
+  // e a lista de inscritos ficava sem bandeira nenhuma.
+  if (/^[A-Z]{2}(-[A-Z]{3})?$/.test(raw)) return raw === "ES" ? undefined : raw;
+  const code = ES_COUNTRY_CODE[raw];
   if (!code || code === "ES") return undefined;
   return code;
 }
@@ -2856,15 +3054,26 @@ function NCResultsLeaderboard({ players }: { players: RFEGPlayer[] }) {
 
 /** Carrega o detalhe de um torneio e constrói a sua (única) divisão. */
 async function rfegLoadDivisions(
-  t: RFEGIndexEntry, dobLookup?: DobLookup, hcpLookup?: HcpLookup,
+  t: RFEGIndexEntry, dobLookup?: DobLookup, hcpLookup?: HcpLookup, fedByName?: Map<string, FedByNameEntry>,
 ): Promise<CircuitDivision[]> {
   const raw = await cachedFetchJson<RFEGDetail | NCDetail | LgsDetail>(`/data/${t.filePath}`);
   if (!raw) return [];
+  // ⚠ ESPERAR pelas fichas FPG em vez de usar o que o estado do React já tiver:
+  // o federados.json tem 18 MB e chega sempre depois desta função, cujo
+  // resultado o CircuitShell CACHEIA — os portugueses ficavam para sempre sem
+  // federado, clube nem HCP. A promessa é partilhada (mesma cache dos outros
+  // hooks de federados), por isso não é um download a mais.
+  const [fbn, dob, hcp, gbx] = await Promise.all([
+    fedByName && fedByName.size ? Promise.resolve(fedByName) : loadFedByName().catch(() => undefined),
+    dobLookup && Object.keys(dobLookup).length ? Promise.resolve(dobLookup) : loadDobLookup(),
+    hcpLookup && Object.keys(hcpLookup).length ? Promise.resolve(hcpLookup) : loadHcpLookup(),
+    loadGolfboxPlayers().catch(() => undefined),
+  ]);
 
   let data: RFEGDetail;
-  if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dobLookup, hcpLookup);
-  else if (t.source === "livegolfscoring") data = adaptLgs(raw as LgsDetail, dobLookup, hcpLookup);
-  else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dobLookup, hcpLookup) as unknown as RFEGDetail;
+  if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dob, hcp);
+  else if (t.source === "livegolfscoring") data = adaptLgs(raw as LgsDetail, dob, hcp, fbn, gbx);
+  else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dob, hcp) as unknown as RFEGDetail;
   else { const d = raw as RFEGDetail; data = { ...d, coursePar: d.coursePar ?? null }; }
 
   let results: FPGTournament | null = null;
@@ -2874,13 +3083,13 @@ async function rfegLoadDivisions(
       meta: { name: data.meta.name, course: data.meta.course, dateRange: data.meta.dateStart, dateIso: data.meta.dateStart },
       rounds: (data as unknown as { _lgsRounds: unknown[] })._lgsRounds,
       course: (data as unknown as { _lgsCourse?: unknown })._lgsCourse,
-      _hcpLookup: hcpLookup,
-    } as any, dobLookup); // eslint-disable-line @typescript-eslint/no-explicit-any
-  } else if (t.source === "nextcaddy") results = ncToFPGTournament(data, dobLookup);
+      _hcpLookup: hcp,
+    } as any, dob, fbn, gbx); // eslint-disable-line @typescript-eslint/no-explicit-any
+  } else if (t.source === "nextcaddy") results = ncToFPGTournament(data, dob);
   else if (t.source === "rfegolf") results = data.mitarjetaTorneo
-    ? mitarjetaToFPGTournament(data, dobLookup)
-    : rfegolfToFPGTournament(data, dobLookup);
-  else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dobLookup) as unknown as FPGTournament | null;
+    ? mitarjetaToFPGTournament(data, dob)
+    : rfegolfToFPGTournament(data, dob);
+  else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dob) as unknown as FPGTournament | null;
 
   const lists = (Object.keys(LIST_LABELS) as ListKind[])
     .map((k) => ({ key: k, label: LIST_LABELS[k], players: (data.inscritos[k] || []).map(rfegInscritoRow) }))

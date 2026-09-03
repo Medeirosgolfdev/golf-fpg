@@ -21,6 +21,15 @@ function get(url) {
   });
 }
 
+const MESES = {
+  enero: "01", febrero: "02", marzo: "03", abril: "04", mayo: "05", junio: "06",
+  julio: "07", agosto: "08", septiembre: "09", setiembre: "09", octubre: "10",
+  noviembre: "11", diciembre: "12",
+};
+function mesLower(s) {
+  return String(s || "").toLowerCase();   // nenhum mes em espanhol leva acento
+}
+
 async function enrich(file) {
   const fp = path.join(ROOT, file);
   const d = JSON.parse(fs.readFileSync(fp, "utf-8"));
@@ -28,18 +37,24 @@ async function enrich(file) {
   const id = d.id;
   try {
     const html = await get(`https://rfegolf.livegolfscoring.es/torneos/imprimir/${id}`);
-    // Fecha: 27/06/2025 19:11 — tem o ano. Também "Del 25 junio al 27 junio de 2025"
+    // ⚠ "Fecha: 03/09/2026 11:42" é a data em que a PÁGINA foi gerada (= agora),
+    // não a do torneio: num torneio a decorrer dá o dia de hoje, e num torneio
+    // antigo scrapado hoje daria o ano errado. A data real do torneio está no
+    // cabeçalho "Del 02 septiembre al 05 septiembre [de 2025]" — essa manda.
+    // O "Fecha:" fica só como fonte do ANO quando o cabeçalho não o traz
+    // (torneios do ano corrente, que é quando o "Del" o omite).
     const fechaM = /Fecha:\s*(\d{1,2}\/\d{1,2}\/(\d{4}))/i.exec(html);
     const delM = /Del\s+(\d+)\s+(\w+)\s+al\s+(\d+)\s+(\w+)(?:\s+de\s+(\d{4}))?/i.exec(html);
     let year = null;
     let dateIso = null;
-    if (fechaM) {
-      year = parseInt(fechaM[2], 10);
+    if (delM && delM[5]) year = parseInt(delM[5], 10);
+    if (!year && fechaM) year = parseInt(fechaM[2], 10);
+    const mesIni = delM ? MESES[mesLower(delM[2])] : null;
+    if (year && mesIni) {
+      dateIso = `${year}-${mesIni}-${String(delM[1]).padStart(2, "0")}`;
+    } else if (fechaM) {
       const parts = fechaM[1].split("/");
       dateIso = `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
-    }
-    if (!year && delM && delM[5]) {
-      year = parseInt(delM[5], 10);
     }
     if (year || dateIso) {
       d.meta.year = year;

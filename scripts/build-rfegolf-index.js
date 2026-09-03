@@ -92,6 +92,11 @@ function extractCategoryFromName(name) {
   if (!name) return null;
   const m = name.match(/\bSub[\s-]?(\d+)\b/i);
   if (m) return "Sub-" + m[1];
+  // Os torneios INTERNACIONAIS da RFEG usam a nomenclatura inglesa ("Spanish
+  // International U-18 Mens Championship"). Sem isto ficavam com category null
+  // e a /rfeg, que exige categoria, não os mostrava de todo (caso lgs388).
+  const u = name.match(/\bU-?(1[0-8]|2[01]|[6-9])\b/i);
+  if (u) return "Sub-" + u[1];
   if (/\bAlev[ií]n\b/i.test(name)) return "Alevín";
   if (/\bBenjam[ií]n\b/i.test(name)) return "Benjamín";
   if (/\bInfantil\b/i.test(name)) return "Infantil";
@@ -106,6 +111,9 @@ function extractSexFromName(name) {
   if (/\bMasculino\s+y\s+Femenino\b/i.test(name) || /\bMixto\b/i.test(name)) return "Mixto";
   if (/\bMasculino\b/i.test(name)) return "M";
   if (/\bFemenino\b/i.test(name)) return "F";
+  // Provas internacionais, com o escalão em inglês ("... U-18 Mens Championship")
+  if (/\b(Mens|Men's|Boys)\b/i.test(name)) return "M";
+  if (/\b(Womens|Women's|Ladies|Girls)\b/i.test(name)) return "F";
   return null;
 }
 
@@ -347,7 +355,9 @@ for (const file of lgsFiles) {
     // ("31 mayo - 03 junio") + ano resolvido. Puramente offline.
     const range = parseEsDateRange(j.meta.dateRange, year);
     const dateStartIso = j.meta.dateIso || (range && range.start) || null;
-    const dateEndIso = j.meta.dateIso || (range && range.end) || null;
+    // ⚠ o fim vem do RANGE ("02 septiembre - 05 septiembre"); o `meta.dateIso` é
+    // só o dia de início, e usá-lo aqui achatava provas de vários dias a um só.
+    const dateEndIso = (range && range.end) || j.meta.dateIso || null;
     const category = extractCategoryFromName(name);
     const sex = extractSexFromName(name);
     const totalPlayers = (j.rounds && j.rounds[0]?.players?.length) || 0;

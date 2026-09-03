@@ -52,14 +52,22 @@ const NC_DATE_LOOKUP = (() => {
   return map;
 })();
 
+// ⚠ Os torneios INTERNACIONAIS da RFEG usam a nomenclatura inglesa ("Spanish
+// International U-18 Mens Championship") — só "Sub-NN" deixava-os de fora, e
+// são exactamente as provas onde os nossos jogam (caso lgs388, 2026-09-02).
+const U_ESCALAO = /\bU-?(1[0-8]|2[01]|[6-9])\b/i;
+
 function isJuvenil(name) {
-  return /\b(Sub-?\d+|Alev[íi]n|Benjam[íi]n|Infantil|Cadete|Junior|Juvenil)\b/i.test(name || "");
+  return /\b(Sub-?\d+|Alev[íi]n|Benjam[íi]n|Infantil|Cadete|Junior|Juvenil)\b/i.test(name || "")
+    || U_ESCALAO.test(name || "");
 }
 
 function extractAgeGroup(name) {
   if (!name) return null;
   const m = name.match(/Sub[\s-]?(\d+)/i);
   if (m) return "Sub-" + m[1];
+  const u = (name || "").match(U_ESCALAO);
+  if (u) return "Sub-" + u[1];
   if (/Alev[íi]n/i.test(name)) return "Alevín";
   if (/Benjam[íi]n/i.test(name)) return "Benjamín";
   if (/Infantil/i.test(name)) return "Infantil";
@@ -97,7 +105,8 @@ for (const f of lgsFiles) {
     for (const r of d.rounds || []) {
       for (const p of r.players || []) {
         const key = p.memberId || p.name;
-        if (!agg[key]) agg[key] = { name: p.name, scoresByRound: [], totalsByRound: [], pos: null, total: null, toPar: null };
+        if (!agg[key]) agg[key] = { name: p.name, country: null, scoresByRound: [], totalsByRound: [], pos: null, total: null, toPar: null };
+        if (p.country && !agg[key].country) agg[key].country = p.country;
         if (Array.isArray(p.scores) && p.scores.length === 18) {
           agg[key].scoresByRound.push(p.scores);
           agg[key].totalsByRound.push(p.total ?? 0);
@@ -122,6 +131,7 @@ for (const f of lgsFiles) {
     const tid = `lgs${d.id}`;
     out.torneios[tid] = {
       name, year, ageGroup,
+      campo: d.meta?.course || null,
       dateIso: d.meta?.dateIso || null,
       dateRange: d.meta?.dateRange || null,
       par, parTotal,
@@ -130,6 +140,11 @@ for (const f of lgsFiles) {
       source: "lgs",
       players: players.map(a => ({
         n: a.name,
+        // País ISO-2 da bandeira do leaderboard oficial. Sem isto o agregador
+        // carimbava "ES" em toda a gente vista só em resultados — nos torneios
+        // internacionais isso fazia dos portugueses, noruegueses e ingleses do
+        // field outros tantos espanhóis.
+        co: a.country || null,
         p: a.pos,
         t: a.total,
         tp: a.toPar,

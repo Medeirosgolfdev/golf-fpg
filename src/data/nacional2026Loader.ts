@@ -48,6 +48,9 @@ export interface FpgDrawFlight {
     tee?: string | null;
     /** Conterrâneo em draws internacionais (sem fed) → `.row-portuguese` no DrawTab. */
     isPortuguese?: boolean;
+    /** Nacionalidade ISO-2 do jogador (draws internacionais, sem fed nosso) →
+     *  bandeira ao lado do nome. */
+    country?: string | null;
   }>;
 }
 

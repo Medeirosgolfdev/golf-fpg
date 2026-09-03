@@ -239,6 +239,7 @@ export default function DrawTab({
       gross: number;
       toPar: number | null;
       isPortuguese: boolean;
+      country?: string;
     }> = [];
     let idx = 0;
     // Heurística: o scraper do draw às vezes mete o fed no campo `clube` (só dígitos 4-6 chars).
@@ -437,6 +438,8 @@ export default function DrawTab({
           // (`fmDrawsToFpg`) → `.row-portuguese`. Nos draws FPG o campo não
           // existe (todos são PT — destacar todos não distinguiria nada).
           isPortuguese: !!(p as { isPortuguese?: boolean }).isPortuguese,
+          // Nacionalidade da fonte (draws internacionais) → bandeira no nome.
+          country: ((p as { country?: string | null }).country) || undefined,
         });
       }
     }
@@ -542,6 +545,7 @@ export default function DrawTab({
               fed={p.fed || undefined}
               juniorId={p.juniorId}
               playersDB={p.noFed ? undefined : playersDB}
+              country={p.country}
               highlight={manuel}
             />
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).

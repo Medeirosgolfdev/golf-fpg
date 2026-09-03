@@ -143,6 +143,22 @@ async function main() {
     }
   }
 
+  // 2c. Datas de nascimento do roster GolfBox (EGA + federações do norte da
+  //     Europa). ANTES do matcher de propósito: a DOB é a evidência que junta o
+  //     mesmo miúdo visto em fontes diferentes — nos torneios internacionais os
+  //     estrangeiros chegam só com o nome e ficavam como entidades soltas.
+  {
+    const { enrichWithGolfbox } = require("./util/golfbox-dob");
+    const r = enrichWithGolfbox(rawSources);
+    if (!r.disponivel) {
+      info("golfbox-players.json ausente — sem enriquecimento de DOB (correr scripts/build-golfbox-players.js)");
+    } else if (r.total) {
+      step("DOB via roster GolfBox");
+      sub(`${r.total} jogador(es): ${Object.entries(r.porFonte).map(([k, v]) => `${k}×${v}`).join(" · ")}`);
+      console.log("");
+    }
+  }
+
   // 3. Identity matcher
   step("Identity matcher");
   let matchResult;

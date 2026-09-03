@@ -23,6 +23,7 @@
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
+const { lgsCountryToIso } = require("./lib/lgs-country.js");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -189,6 +190,72 @@ function parseHoyoAHoyo(html) {
     }
   }
 
+  // ── Cartões por CÉLULA (parciais + reparação dos corrompidos) ─────────────
+  // O parse acima é sobre o TEXTO da linha e exige o cartão completo — numa
+  // ronda em curso não há total nem IN, e os jogadores ficavam sem scores
+  // nenhuns (`_partial: true`, `scores: null`). Mas os buracos já jogados ESTÃO
+  // na página, em células próprias: 18 × `<td class="golpeshoyoahoyo">` (número
+  // ou "-") intercaladas com `<td class="inout">` (OUT/IN/TOT). Lê-las por
+  // posição dá os parciais sem tocar no caminho dos cartões completos.
+  // Serve dois casos:
+  //  (a) PARCIAIS — numa ronda a decorrer não há total nem IN, o parse por texto
+  //      desiste (`_partial: true`, `scores: null`) e os buracos já jogados
+  //      perdiam-se, apesar de estarem na página;
+  //  (b) CARTÕES CORROMPIDOS — o parse por texto conta números numa linha e
+  //      desalinha-se quando o espaçamento muda: um cartão real saiu como
+  //      `[…,5,32,4,…,37]` (com o OUT e o IN metidos entre os buracos) e total 1.
+  // Aqui cada buraco vem da SUA célula (18 × `<td class="golpeshoyoahoyo">`,
+  // número ou "-"), portanto não há contagem que se desalinhe.
+  const byKeyRow = {};
+  for (const p of players) byKeyRow[p.memberId || normNameLgs(p.name)] = p;
+  {
+    const trRe2 = /<tr[^>]*id="jugador-\d+"[^>]*>([\s\S]+?)<\/tr>/gi;
+    let m2;
+    while ((m2 = trRe2.exec(html)) !== null) {
+      const row = m2[0];
+      const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(row);
+      const nameM = /class="jugador"[^>]*><a[^>]*>([^<]+)</.exec(row);
+      const target = byKeyRow[(idM && idM[1])] || (nameM && byKeyRow[normNameLgs(nameM[1])]);
+      if (!target) continue;
+      const holes = [...row.matchAll(/<td[^>]*class="golpeshoyoahoyo"[^>]*>([\s\S]*?)<\/td>/gi)]
+        .map((c) => {
+          const v = parseInt(stripTags(c[1]), 10);
+          return isNaN(v) ? null : v;
+        });
+      if (holes.length !== courseHoles) continue;
+      const jogados = holes.filter((h) => h != null).length;
+      if (!jogados) continue;
+      const soma = holes.reduce((a, b) => a + (b || 0), 0);
+
+      if (jogados === courseHoles) {
+        // Cartão completo: as células mandam sobre o parse por texto (que só
+        // fica quando coincide). Se o texto tinha dado outro total, era lixo.
+        target.scores = holes;
+        if (target.total !== soma) {
+          target.total = soma;
+          target._repaired = true;
+        }
+        target.halves = courseHoles === 18
+          ? [holes.slice(0, 9).reduce((a, b) => a + b, 0), holes.slice(9).reduce((a, b) => a + b, 0)]
+          : null;
+        delete target._partial;
+      } else {
+        // Cartão A MEIO segundo as células. Se o parse por texto o dava por
+        // completo, enganou-se — foi assim que um jogador no buraco 18 saiu com
+        // `[…,3,29]` (o IN metido como buraco) e total −3 (o ±par como gross).
+        target.scores = holes;                                 // nulls nos por jogar
+        target.holesPlayed = jogados;
+        target.partialGross = soma;
+        if (target.total !== soma) {
+          target.total = null;                                 // não é uma volta
+          target.halves = null;
+          target._repaired = true;
+        }
+        target._partial = true;
+      }
+    }
+  }
+
   return { par, players, dropped };
 }
 
@@ -233,9 +300,17 @@ function parseTorneoMeta(html) {
     const nm2 = /<title[^>]*>([^<]+)<\/title>/.exec(html);
     if (nm2) name = stripTags(nm2[1]).replace(/\s*-\s*Real Federación.+$/i, "").trim();
   }
+  // O campo vem na linha das datas: `Del 02 septiembre al 05 septiembre -
+  // <span>Campo:</span> <a href="/campo/zaudin-golf">Zaudín Golf</a>, Sevilla`.
+  // ⚠ O selector antigo (`span.nombre_campo`) não existe na página — nenhum dos
+  // 287 ficheiros tinha campo até 2026-09-03.
   let course = null;
   const cm = /<span[^>]*class="nombre_campo"[^>]*>([^<]+)<\/span>/.exec(html);
   if (cm) course = stripTags(cm[1]);
+  if (!course) {
+    const cm2 = /Campo:\s*<\/span>\s*<a[^>]*>([^<]+)<\/a>/i.exec(html);
+    if (cm2) course = stripTags(cm2[1]);
+  }
   let dateRange = null;
   const dm = /Del\s+(\d+\s+[a-z]+)\s+al\s+(\d+\s+[a-z]+(?:\s+\d{4})?)/i.exec(html);
   if (dm) dateRange = `${dm[1]} - ${dm[2]}`;
@@ -276,6 +351,27 @@ function normNameLgs(s) {
  * Mesmo assim guardamos a auto-validação aritmética: só marcamos roundTotals como
  * válidos quando a SOMA bate com o total final — nunca se inventa um score.
  */
+/**
+ * Tabela `.tarjetacampo` da página de classificação: uma linha por buraco com
+ * `Hoyo | Par | Hdp | Mtrs`. É a fonte MAIS fiável do campo — está sempre lá,
+ * enquanto a página /estadisticas falta em ~50 dos 287 torneios (e só existe
+ * depois de haver voltas suficientes). "Hdp" é o stroke index do buraco.
+ */
+function parseTarjetaCampo(html) {
+  const tblM = /<table[^>]*class="[^"]*tarjetacampo[^"]*"[^>]*>([\s\S]*?)<\/table>/i.exec(html);
+  if (!tblM) return null;
+  const par = [], si = [], meters = [];
+  const rowRe = /<tr[^>]*>\s*<td[^>]*>\s*(\d{1,2})\s*<\/td>\s*<td[^>]*>\s*(\d)\s*<\/td>\s*<td[^>]*>\s*(\d{1,2})\s*<\/td>\s*<td[^>]*>\s*(\d{1,4})\s*<\/td>/gi;
+  let m;
+  while ((m = rowRe.exec(tblM[1])) !== null) {
+    par.push(Number(m[2]));
+    si.push(Number(m[3]));
+    meters.push(Number(m[4]));
+  }
+  if (par.length !== 9 && par.length !== 18) return null;
+  return { par, si, meters };
+}
+
 function parseClasificacion(html /* , nRounds */) {
   const out = [];
   const trRe = /<tr[^>]*id="jugador-\d+"[^>]*>([\s\S]+?)<\/tr>/gi;
@@ -284,6 +380,19 @@ function parseClasificacion(html /* , nRounds */) {
     const row = m[0];
     const idM = /id="(?:jugador|star|fichalink)-(\d+)"/.exec(row);
     const memberId = idM ? idM[1] : null;
+    // Bandeira. Há DOIS formatos e só um é país:
+    //   /img/banderas/paises/por.png  → PAÍS (torneios internacionais)
+    //   /img/banderas/4.png title="Galicia" → COMUNIDADE AUTÓNOMA (provas nacionais)
+    // O `title` é sempre a comunidade de quem está federado em Espanha — existe
+    // também sobre uma bandeira de país (um polaco federado na Andaluzia).
+    // ⚠ Bandeira regional NÃO implica nacionalidade espanhola: há estrangeiros
+    // federados em Espanha (Dmitrii Elchaninov, russo, Andaluzia — a própria
+    // página tem overrides para isso). Nesse caso guarda-se só a região.
+    const flagM = /class="flag"[^>]*src="\/img\/banderas\/(?:paises\/)?([a-z0-9_-]+)\.png"[^>]*?(?:title="([^"]*)")?/i.exec(row);
+    const isCountryFlag = !!flagM && /\/paises\//i.test(flagM[0]);
+    const countryCode = isCountryFlag ? flagM[1].toLowerCase() : null;
+    const country = lgsCountryToIso(countryCode);
+    const region = flagM && flagM[2] ? decodeEntities(flagM[2]).trim() || null : null;
     // Nome: célula <td class="jugador">
     const nameM = /<td[^>]*class="[^"]*jugador[^"]*"[^>]*>([\s\S]*?)<\/td>/i.exec(row);
     const name = nameM ? stripTags(nameM[1]).replace(/\s{2,}/g, " ") : null;
@@ -304,7 +413,7 @@ function parseClasificacion(html /* , nRounds */) {
         roundTotals.reduce((a, b) => a + b, 0) === total) {
       validated = roundTotals;
     }
-    out.push({ memberId, name, pos, toPar, roundTotals: validated, total });
+    out.push({ memberId, name, country, countryCode, region, pos, toPar, roundTotals: validated, total });
   }
   return out;
 }
@@ -422,6 +531,17 @@ async function scrapeTorneo(id) {
         course.courseRating = cv.courseRating;
         course.slope = cv.slope;
       }
+      // Tabela "Scorecard" da própria página (Hoyo|Par|Hdp|Mtrs). Preenche o que
+      // faltar: a /estadisticas só existe depois de haver voltas suficientes e
+      // falta em ~50 dos 287 torneios — esta está sempre lá. Não sobrepõe o que
+      // as estatísticas já trouxeram (essas são as distâncias JOGADAS).
+      const tarjeta = parseTarjetaCampo(cls.body);
+      if (tarjeta) {
+        course = course || {};
+        if (!Array.isArray(course.par) || !course.par.length) course.par = tarjeta.par;
+        if (!Array.isArray(course.si) || !course.si.length) course.si = tarjeta.si;
+        if (!Array.isArray(course.meters) || !course.meters.length) course.meters = tarjeta.meters;
+      }
       classification = parseClasificacion(cls.body, rounds.length);
       let filled = 0;
       for (const cp of classification) {
@@ -443,6 +563,28 @@ async function scrapeTorneo(id) {
       }
       if (filled) console.warn(`  ↺ id=${id}: ${filled} ronda(s) preenchida(s) via classificação geral`);
       else if (classification.length) console.warn(`  · id=${id}: classificação lida (${classification.length} jogadores), 0 rondas em falta para preencher`);
+      // A bandeira só existe na classificação — propagá-la para os jogadores de
+      // cada ronda, que é o que a UI e o agregador consomem.
+      const natByMid = {}, natByName = {};
+      for (const cp of classification) {
+        if (!cp.country && !cp.region) continue;
+        const nat = { country: cp.country || null, region: cp.region || null };
+        if (cp.memberId) natByMid[cp.memberId] = nat;
+        natByName[normNameLgs(cp.name)] = nat;
+      }
+      let flagged = 0;
+      for (const rd of roundsData) {
+        for (const p of rd.players) {
+          const nat = (p.memberId && natByMid[p.memberId]) || natByName[normNameLgs(p.name)];
+          if (!nat) continue;
+          p.country = nat.country;
+          if (nat.region) p.region = nat.region;
+          flagged++;
+        }
+      }
+      const semPais = classification.filter(c => c.countryCode && !c.country).map(c => c.countryCode);
+      if (semPais.length) console.warn(`  ⚠ id=${id}: código(s) de país por mapear em lib/lgs-country.js: ${[...new Set(semPais)].join(", ")}`);
+      if (flagged) console.warn(`  🏳 id=${id}: país em ${flagged} linha(s) de ronda`);
     }
   } catch (e) { console.warn(`  ⚠ id=${id}: classificação geral indisponível (${e.message})`); }
 
@@ -537,6 +679,20 @@ async function main() {
       try {
         const result = await scrapeTorneo(id);
         if (result.ok) {
+          // ⚠ Preservar a data já resolvida. `meta.year`/`meta.dateIso` são
+          // postos pelo enrich-lgs-dates (a página de classificação não traz o
+          // ANO), e um re-scrape reescrevia o meta inteiro — o torneio ficava
+          // sem data até alguém correr o enrich, e sem data não há cálculo de
+          // escalão nenhum (a coluna ESC. do draw esvaziava-se toda).
+          try {
+            if (fs.existsSync(out)) {
+              const prev = JSON.parse(fs.readFileSync(out, "utf-8"));
+              if (prev && prev.meta) {
+                if (result.meta.year == null && prev.meta.year != null) result.meta.year = prev.meta.year;
+                if (!result.meta.dateIso && prev.meta.dateIso) result.meta.dateIso = prev.meta.dateIso;
+              }
+            }
+          } catch { /* ficheiro anterior ilegível — segue com o novo */ }
           fs.writeFileSync(out, JSON.stringify(result, null, pretty ? 2 : 0));
           ok++;
           const nP = result.rounds.reduce((a, r) => a + (r.players?.length || 0), 0);

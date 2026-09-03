@@ -170,6 +170,9 @@ export default function AdmissionsTab({
           // agregador tem "Diego Gross Paneque".
           juniorId={(p as any)._rfeg?.juniorId}
           playersDB={playersDB}
+          // País da própria fonte (circuitos estrangeiros marcam-no na linha) —
+          // o playersDB só cobre quem tem federado nosso.
+          country={(p as { country?: string }).country}
           highlight={manuel}
         />
       );

@@ -73,6 +73,10 @@ export interface Tournament extends BaseTournament {
   _roundLabel?: string;    // "R1", "R2", "Resumo"
   _totalRounds?: number;   // e.g. 2
   _isIncomplete?: boolean; // true for players missing rounds
+  /** Nº da ronda que está A DECORRER (parte do campo ainda em jogo). Quem não
+   *  saiu para ela não é um jogador incompleto — sem isto o acumulado marcava
+   *  metade do field como eliminado no cut a meio da manhã. */
+  _openRound?: number;
   /** Override do label do botão/tab de escalão na Jovens view. Usar quando o
    *  `escalao` canónico (ex: "Sub 10") não descreve bem o torneio — p.ex. num
    *  Regional combinado Sub 10/12 ou Sub 14 a 24, o label fica "Sub 10 e 12"

@@ -252,9 +252,27 @@ export function anoEscalao(dob: string, escalao: string, dateOrYear?: string | n
 /** Idade completa (em anos) do jogador à data fornecida. Retorna null se inválido.
  *  NOTA: Esta é a idade REAL/exacta, baseada em dias. Para o escalão FPG usa `escalaoAtDate`,
  *  que segue a regra year-based (year − yearOfBirth). */
+/** Ano de uma data, aceitando ISO ("2008-07-19", "2008") E o formato das fontes
+ *  espanholas/francesas ("19/07/2008"). ⚠ `slice(0,4)` sozinho lia "19/0" como
+ *  ano 19 num dob "DD/MM/YYYY" — um miúdo de 18 anos aparecia como "Super
+ *  Sénior" na /rfeg (idade 2026−19). Devolve null se não encontrar 4 dígitos. */
+function yearOfDate(s: string | number | null | undefined): number | null {
+  if (s == null) return null;
+  if (typeof s === "number") return Number.isFinite(s) ? s : null;
+  const dmy = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})/.exec(s.trim());
+  if (dmy) return parseInt(dmy[3], 10);
+  const m = /(\d{4})/.exec(s);
+  return m ? parseInt(m[1], 10) : null;
+}
+
 export function ageAtDate(dob: string | null | undefined, date: string | null | undefined): number | null {
   if (!dob || !date) return null;
-  const d = new Date(dob), t = new Date(date);
+  // "19/07/2008" (fontes ES/FR) é Invalid Date em JS → normalizar para ISO antes.
+  const iso = (s: string) => {
+    const m = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})$/.exec(s.trim());
+    return m ? `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}` : s;
+  };
+  const d = new Date(iso(dob)), t = new Date(iso(date));
   if (isNaN(+d) || isNaN(+t)) return null;
   let age = t.getFullYear() - d.getFullYear();
   const md = t.getMonth() - d.getMonth();
@@ -295,8 +313,9 @@ export function escalaoAtDate(
   date: string | number | null | undefined
 ): string | null {
   if (!dob || date == null) return null;
-  const anoNasc = parseInt(String(dob).slice(0, 4));
-  const anoTorn = typeof date === "number" ? date : parseInt(String(date).slice(0, 4));
+  const anoNasc = yearOfDate(dob);
+  const anoTorn = typeof date === "number" ? date : yearOfDate(date);
+  if (anoNasc == null || anoTorn == null) return null;
   if (isNaN(anoNasc) || isNaN(anoTorn)) return null;
   const idade = anoTorn - anoNasc;
   if (idade < 0) return null;
