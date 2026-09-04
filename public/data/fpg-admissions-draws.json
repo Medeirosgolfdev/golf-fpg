@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-09-04T18:51:41.196Z",
-  "total": 1205,
+  "scrapedAt": "2026-09-04T21:59:14.506Z",
+  "total": 1206,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -382843,6 +382843,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 10",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 10",
         "date": "2026-09-04",
@@ -383005,7 +383006,122 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 10",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Gabriela Bueno",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Artur Von Hafe",
+                  "fed": null,
+                  "clube": "RIO"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Fabian Aponte",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Doeun Kim",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Vaz",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Miguel Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Henrique Monção",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Francisco Lopes",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rafael Paço",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Dias",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383013,6 +383129,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 12",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 12",
         "date": "2026-09-04",
@@ -383175,7 +383292,127 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 12",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "09:20",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Carlos Gonçalves Dias",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Diogo Gomes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tomás Tomásio",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Dinis Henriques",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Valentin Iria",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Vicente Poeira",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Carolina Paiva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Marta Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Martim Silva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "João Couto",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Vasco Abreu",
+                  "fed": null,
+                  "clube": "UCDR Guardizela"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "James Orrison",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383183,6 +383420,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 14",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 14",
         "date": "2026-09-04",
@@ -383345,7 +383583,130 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 14",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Marta Andrade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Manuel Gomes da Silva",
+                  "fed": null,
+                  "clube": "Quinta do Fojo",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Guilherme Oliveira Alves",
+                  "fed": null,
+                  "clube": "Amarante",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Mariana Costa",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Maria Ferreira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tomás Araújo",
+                  "fed": null,
+                  "clube": "Citynorte",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Gil Ribeiro",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tomás Duarte Matias",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "fed": null,
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "David Grilo",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383353,6 +383714,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 16",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 16",
         "date": "2026-09-04",
@@ -383475,7 +383837,95 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 16",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 10,
+          "groups": [
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Dinis Seabra",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Oliveira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Nuno Bessa",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Luís Pedro Reis",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Afonso Polery",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Gustavo Castro",
+                  "fed": null,
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rafael Nogueira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "António Pereira Mendes",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Afonso Poiarez",
+                  "fed": null,
+                  "clube": "Estela"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383483,6 +383933,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 18",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 18",
         "date": "2026-09-04",
@@ -383535,7 +383986,39 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 18",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Alexandre Lopes",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Taras Zhurbei",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Martim Ferreira",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383735,6 +384218,18 @@
       "draws": {}
     },
     {
+      "ccode": "192",
+      "tcode": "90101",
+      "name": "PJA Torre 2026",
+      "date": "2026-09-05",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10306",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub16",
@@ -383910,10 +384405,107 @@
       "tcode": "10285",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
       "date": "2026-09-13",
-      "expectedYear": 2026,
       "admissions": {
-        "error": "param-errors",
-        "players": []
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
+        "date": "2026-09-13",
+        "totalInscritos": 9,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10285",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "54264",
+            "nome": "Harry Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 15.8,
+            "vacf": 88,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "59128",
+            "nome": "Thiago Gonzalez Bernases",
+            "clube": "RIO",
+            "hcp": 16.4,
+            "vacf": 91.6,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "57110",
+            "nome": "Karol Reiff",
+            "clube": "Vila Sol",
+            "hcp": 30.2,
+            "vacf": 103.6,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "51969",
+            "nome": "Luca Everest",
+            "clube": "Vilamoura, C. G",
+            "hcp": 34.7,
+            "vacf": 105.2,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "51880",
+            "nome": "Rafael Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 37.4,
+            "vacf": 108.3,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "50955",
+            "nome": "Mateus Miguel Estevão",
+            "clube": "Vilamoura, C. G",
+            "hcp": 47.2,
+            "vacf": 120.7,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "58831",
+            "nome": "Afonso Furtado de Oliveira",
+            "clube": "Floresta Parque",
+            "hcp": 45.4,
+            "vacf": 122.1,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "57224",
+            "nome": "Alexander Adeoye",
+            "clube": "Espiche",
+            "hcp": 54,
+            "vacf": 133.3,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "54663",
+            "nome": "Nicholas Murtagh",
+            "clube": "Vilamoura, C. G",
+            "hcp": 54,
+            "vacf": 138,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },
@@ -383922,10 +384514,147 @@
       "tcode": "10286",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
       "date": "2026-09-13",
-      "expectedYear": 2026,
       "admissions": {
-        "error": "param-errors",
-        "players": []
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
+        "date": "2026-09-13",
+        "totalInscritos": 13,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10286",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.3,
+            "vacf": 79.3,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51804",
+            "nome": "Joe Short",
+            "clube": "Vila Sol",
+            "hcp": 6.6,
+            "vacf": 80.8,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "53838",
+            "nome": "Gabriel Costa",
+            "clube": "Amendoeira",
+            "hcp": 18.5,
+            "vacf": 90,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "53304",
+            "nome": "Francisca Ribeiro Fragoso",
+            "clube": "Vilamoura, C. G",
+            "hcp": 20.4,
+            "vacf": 90.7,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50761",
+            "nome": "Peter Yao",
+            "clube": "Vilamoura, C. G",
+            "hcp": 21,
+            "vacf": 92.7,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55498",
+            "nome": "Zeyn Lababedi",
+            "clube": "Vila Sol",
+            "hcp": 19.7,
+            "vacf": 93.8,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "51803",
+            "nome": "Thea Jensen",
+            "clube": "Vila Sol",
+            "hcp": 27.6,
+            "vacf": 100,
+            "registo": "2026/07/15 10:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "48132",
+            "nome": "Charlie Lora Silva",
+            "clube": "Vilamoura, C. G",
+            "hcp": 32.6,
+            "vacf": 107.4,
+            "registo": "2026/07/15 10:29",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50425",
+            "nome": "Maria Carolina Custodinho",
+            "clube": "Vilamoura, C. G",
+            "hcp": 34.9,
+            "vacf": 108.9,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "54265",
+            "nome": "Henry McGovern",
+            "clube": "Vila Sol",
+            "hcp": 37.5,
+            "vacf": 110.1,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "51341",
+            "nome": "Martim Lage Guerreiro",
+            "clube": "Vilamoura, C. G",
+            "hcp": 44.4,
+            "vacf": 115.6,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "55579",
+            "nome": "Thomas Starreveld",
+            "clube": "Assoc. Qta.Lago",
+            "hcp": 43.2,
+            "vacf": 115.7,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "54263",
+            "nome": "Poppy Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 45.1,
+            "vacf": 119.2,
+            "registo": "2026/07/15 10:27",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },
@@ -383934,10 +384663,147 @@
       "tcode": "10287",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
       "date": "2026-09-13",
-      "expectedYear": 2026,
       "admissions": {
-        "error": "param-errors",
-        "players": []
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
+        "date": "2026-09-13",
+        "totalInscritos": 13,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10287",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "55269",
+            "nome": "Finn Gordon",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5.8,
+            "vacf": 77.4,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.7,
+            "vacf": 78.1,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "54845",
+            "nome": "José Silva",
+            "clube": "Amendoeira",
+            "hcp": 8.7,
+            "vacf": 79.9,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "46037",
+            "nome": "Tomás Lima Pinto",
+            "clube": "Vilamoura, C. G",
+            "hcp": 11.2,
+            "vacf": 81.8,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50628",
+            "nome": "Carlotta Balzer",
+            "clube": "Amendoeira",
+            "hcp": 17.8,
+            "vacf": 89.6,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55065",
+            "nome": "Cole Hutchison",
+            "clube": "Vila Sol",
+            "hcp": 20.6,
+            "vacf": 92.2,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "55398",
+            "nome": "Cole Wall",
+            "clube": "Vila Sol",
+            "hcp": 23.2,
+            "vacf": 93.7,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "58760",
+            "nome": "Noah Ruane",
+            "clube": "Vila Sol",
+            "hcp": 23.7,
+            "vacf": 98.2,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50189",
+            "nome": "Thomas Blake Maia",
+            "clube": "Vilamoura, C. G",
+            "hcp": 29.9,
+            "vacf": 101,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "51916",
+            "nome": "Jasper Mclaren",
+            "clube": "Vila Sol",
+            "hcp": 30.1,
+            "vacf": 102.8,
+            "registo": "2026/07/15 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "50349",
+            "nome": "Vicente Fernandes Fernandes",
+            "clube": "Amendoeira",
+            "hcp": 35.4,
+            "vacf": 109.7,
+            "registo": "2026/07/15 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "49209",
+            "nome": "Florence Murtagh",
+            "clube": "Vilamoura, C. G",
+            "hcp": 39.5,
+            "vacf": 112.8,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "57223",
+            "nome": "Inês Pinheiro",
+            "clube": "Vilamoura, C. G",
+            "hcp": 40.2,
+            "vacf": 114.9,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },
@@ -383946,10 +384812,67 @@
       "tcode": "10288",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
       "date": "2026-09-13",
-      "expectedYear": 2026,
       "admissions": {
-        "error": "param-errors",
-        "players": []
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
+        "date": "2026-09-13",
+        "totalInscritos": 5,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10288",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "56072",
+            "nome": "Igor Kostyn",
+            "clube": "Vilamoura, C. G",
+            "hcp": 9.1,
+            "vacf": 80.3,
+            "registo": "2026/07/15 10:11",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "44607",
+            "nome": "Rita Melo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.6,
+            "vacf": 91.5,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "42178",
+            "nome": "Yasmin Batista",
+            "clube": "Amendoeira",
+            "hcp": 32.3,
+            "vacf": 104.7,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "58327",
+            "nome": "Luca Passarella Bueno",
+            "clube": "Vilamoura, C. G",
+            "hcp": 29.8,
+            "vacf": 111.5,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48792",
+            "nome": "Érica Furtado",
+            "clube": "Amendoeira",
+            "hcp": 46,
+            "vacf": 117.6,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },
