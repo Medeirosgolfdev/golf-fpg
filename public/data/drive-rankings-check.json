@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-08-30T23:08:07.193Z",
+  "checkedAt": "2026-09-04T16:47:50.962Z",
   "year": "2026",
   "rankings": {
     "DC_MADM10G26": {
@@ -357,7 +357,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-25"
+      "oficialAte": "2026-07-25",
+      "provasIgnoradas": 14
     },
     "DC_NOR_10N26": {
       "code": "DC_NOR_10N26",
@@ -380,7 +381,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-25"
+      "oficialAte": "2026-07-25",
+      "provasIgnoradas": 15
     },
     "DC_NOR_12N26": {
       "code": "DC_NOR_12N26",
@@ -403,7 +405,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-25"
+      "oficialAte": "2026-07-25",
+      "provasIgnoradas": 15
     },
     "DC_NOR_14N26": {
       "code": "DC_NOR_14N26",
@@ -426,7 +429,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-25"
+      "oficialAte": "2026-07-25",
+      "provasIgnoradas": 9
     },
     "DC_NOR_16N26": {
       "code": "DC_NOR_16N26",
@@ -449,7 +453,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-25"
+      "oficialAte": "2026-07-25",
+      "provasIgnoradas": 3
     },
     "DC_NOR_18N26": {
       "code": "DC_NOR_18N26",
@@ -625,25 +630,24 @@
       "type": "gross",
       "sex": null,
       "issues": [
-        "Santiago Dias: oficial=415 nosso(melhores-3)=330 (2 provas nossas vs 2 oficiais)",
+        "Santiago Dias: oficial=415 nosso(melhores-4)=330 (2 provas nossas vs 2 oficiais)",
         "Santiago Dias 2026-02-28: pts oficial=250 (pos 1) vs nosso=165 (pos 2)",
-        "Luis António Silva: oficial=165 nosso(melhores-3)=250 (1 provas nossas vs 1 oficiais)",
-        "Luis António Silva 2026-02-28: pts oficial=165 (pos 2) vs nosso=250 (pos 1)",
-        "Jorge Xavier Graça Silva: oficial=70 nosso(melhores-3)=71 (3 provas nossas vs 3 oficiais)",
+        "Jorge Xavier Graça Silva: oficial=235 nosso(melhores-4)=236 (4 provas nossas vs 4 oficiais)",
         "Jorge Xavier Graça Silva 2026-02-28: pts oficial=21 (pos 16) vs nosso=22 (pos 15)",
-        "André Von Hafe: oficial=45 nosso(melhores-3)=44 (3 provas nossas vs 3 oficiais)",
+        "Luis António Silva: oficial=165 nosso(melhores-4)=250 (1 provas nossas vs 1 oficiais)",
+        "Luis António Silva 2026-02-28: pts oficial=165 (pos 2) vs nosso=250 (pos 1)",
+        "André Von Hafe: oficial=139 nosso(melhores-4)=138 (4 provas nossas vs 4 oficiais)",
         "André Von Hafe 2026-02-28: pts oficial=22 (pos 15) vs nosso=21 (pos 16)",
-        "Gabriel Marques Guerreiro: oficial=39 nosso(melhores-3)=38 (2 provas nossas vs 2 oficiais)",
+        "Gabriel Marques Guerreiro: oficial=39 nosso(melhores-4)=38 (2 provas nossas vs 2 oficiais)",
         "Gabriel Marques Guerreiro 2026-02-28: pts oficial=19 (pos 18) vs nosso=18 (pos 19)",
-        "Margarida Silva Pinto: oficial=35 nosso(melhores-3)=38 (2 provas nossas vs 2 oficiais)",
+        "Margarida Silva Pinto: oficial=35 nosso(melhores-4)=38 (2 provas nossas vs 2 oficiais)",
         "Margarida Silva Pinto 2026-02-28: pts oficial=35 (pos 8) vs nosso=38 (pos 8)",
-        "Teresa Ferreira: oficial=18 nosso(melhores-3)=19 (1 provas nossas vs 1 oficiais)",
+        "Teresa Ferreira: oficial=18 nosso(melhores-4)=19 (1 provas nossas vs 1 oficiais)",
         "Teresa Ferreira 2026-02-28: pts oficial=18 (pos 19) vs nosso=19 (pos 18)"
       ],
-      "bestN": 3,
+      "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-04-19",
-      "provasIgnoradas": 13
+      "oficialAte": "2026-08-30"
     },
     "RFDC_26M18G": {
       "code": "RFDC_26M18G",
@@ -845,6 +849,294 @@
       "bestN": 4,
       "bestNmisses": 0,
       "oficialAte": "2026-07-18"
+    },
+    "RFDC_26N10G": {
+      "code": "RFDC_26N10G",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 10",
+      "type": "gross",
+      "sex": null,
+      "issues": [
+        "Francisco Vaz: oficial=211 nosso(melhores-4=154 + final×1.5=53)=207 (5 provas nossas vs 1 oficiais)",
+        "Francisco Vaz 2026-09-04: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-04"
+    },
+    "RFDC_26N10N": {
+      "code": "RFDC_26N10N",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 10",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26N12G": {
+      "code": "RFDC_26N12G",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 12",
+      "type": "gross",
+      "sex": null,
+      "issues": [
+        "Vasco Abreu: oficial=504 nosso(melhores-4=447 + final×1.5=53)=500 (6 provas nossas vs 1 oficiais)",
+        "Vasco Abreu 2026-09-04: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-04"
+    },
+    "RFDC_26N12N": {
+      "code": "RFDC_26N12N",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 12",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26N14G": {
+      "code": "RFDC_26N14G",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 14",
+      "type": "gross",
+      "sex": null,
+      "issues": [
+        "André Von Hafe: oficial=515 nosso(melhores-4=458 + final×1.5=53)=511 (5 provas nossas vs 1 oficiais)",
+        "André Von Hafe 2026-09-04: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-04"
+    },
+    "RFDC_26N14N": {
+      "code": "RFDC_26N14N",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 14",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26N16G": {
+      "code": "RFDC_26N16G",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 16",
+      "type": "gross",
+      "sex": null,
+      "issues": [
+        "Nuno Bessa: oficial=339 nosso(melhores-4=282 + final×1.5=53)=335 (3 provas nossas vs 1 oficiais)",
+        "Nuno Bessa 2026-09-04: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-04"
+    },
+    "RFDC_26N16N": {
+      "code": "RFDC_26N16N",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 16",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26N18G": {
+      "code": "RFDC_26N18G",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 18",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": "2026-09-04"
+    },
+    "RFDC_26N18N": {
+      "code": "RFDC_26N18N",
+      "series": "challenge-final",
+      "zone": "norte",
+      "escalao": "Sub 18",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26S10G": {
+      "code": "RFDC_26S10G",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 10",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26S10N": {
+      "code": "RFDC_26S10N",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 10",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26S12G": {
+      "code": "RFDC_26S12G",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 12",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26S12N": {
+      "code": "RFDC_26S12N",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 12",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26S14G": {
+      "code": "RFDC_26S14G",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 14",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26S14N": {
+      "code": "RFDC_26S14N",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 14",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26S16G": {
+      "code": "RFDC_26S16G",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 16",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26S16N": {
+      "code": "RFDC_26S16N",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 16",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26S18G": {
+      "code": "RFDC_26S18G",
+      "series": "challenge-final",
+      "zone": "sul",
+      "escalao": "Sub 18",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T10G": {
+      "code": "RFDC_26T10G",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 10",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T10N": {
+      "code": "RFDC_26T10N",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 10",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26T12G": {
+      "code": "RFDC_26T12G",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 12",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T12N": {
+      "code": "RFDC_26T12N",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 12",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26T14G": {
+      "code": "RFDC_26T14G",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 14",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T14N": {
+      "code": "RFDC_26T14N",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 14",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26T16G": {
+      "code": "RFDC_26T16G",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 16",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T16N": {
+      "code": "RFDC_26T16N",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 16",
+      "type": "net",
+      "sex": null,
+      "issues": []
+    },
+    "RFDC_26T18G": {
+      "code": "RFDC_26T18G",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 18",
+      "type": "gross",
+      "sex": null,
+      "issues": [],
+      "oficialAte": null
+    },
+    "RFDC_26T18N": {
+      "code": "RFDC_26T18N",
+      "series": "challenge-final",
+      "zone": "tejo",
+      "escalao": "Sub 18",
+      "type": "net",
+      "sex": null,
+      "issues": []
     }
   },
   "pointsTable": {
@@ -1051,142 +1343,147 @@
     "challenge-final|1": {
       "oficial": 375,
       "nosso": 375,
-      "amostras": "375×16 844×1"
+      "amostras": "375×26 844×1 669×1"
     },
     "challenge-final|2": {
       "oficial": 248,
       "nosso": 248,
-      "amostras": "248×16 830×1"
+      "amostras": "248×26 830×1 603×1"
     },
     "challenge-final|3": {
       "oficial": 141,
       "nosso": 141,
-      "amostras": "141×14 745×1"
+      "amostras": "141×24 745×1 565×1"
     },
     "challenge-final|4": {
       "oficial": 113,
       "nosso": 113,
-      "amostras": "113×10 409×1"
+      "amostras": "113×18 409×1 564×1"
     },
     "challenge-final|5": {
       "oficial": 96,
       "nosso": 96,
-      "amostras": "96×6 327×1"
+      "amostras": "96×14 327×1 406×1"
     },
     "challenge-final|6": {
       "oficial": 80,
       "nosso": 80,
-      "amostras": "80×6 226×1"
+      "amostras": "80×14 226×1 368×1"
     },
     "challenge-final|7": {
       "oficial": 68,
       "nosso": 68,
-      "amostras": "68×4 204×1"
+      "amostras": "68×12 204×1 365×1"
     },
     "challenge-final|8": {
       "oficial": 57,
       "nosso": 53,
-      "amostras": "57×2 64×1"
+      "amostras": "57×10 64×1 146×1"
     },
     "challenge-final|9": {
       "oficial": 50,
       "nosso": 50,
-      "amostras": "50×2"
+      "amostras": "50×10 137×1"
     },
     "challenge-final|10": {
       "oficial": 45,
       "nosso": 45,
-      "amostras": "45×2"
+      "amostras": "45×8 112×1"
     },
     "challenge-final|11": {
       "oficial": 41,
       "nosso": 41,
-      "amostras": "41×2"
+      "amostras": "41×8 80×1"
     },
     "challenge-final|12": {
       "oficial": 39,
       "nosso": 39,
-      "amostras": "39×2"
+      "amostras": "39×8"
     },
     "challenge-final|13": {
       "oficial": 36,
       "nosso": 36,
-      "amostras": "36×2"
+      "amostras": "36×8"
     },
     "challenge-final|14": {
       "oficial": 35,
       "nosso": 35,
-      "amostras": "35×2"
+      "amostras": "35×8"
+    },
+    "challenge-final|15": {
+      "oficial": 33,
+      "nosso": 33,
+      "amostras": "33×4"
     },
     "tour|1": {
       "oficial": 250,
       "nosso": 250,
-      "amostras": "250×15"
+      "amostras": "250×16"
     },
     "tour|2": {
       "oficial": 165,
       "nosso": 165,
-      "amostras": "165×15"
+      "amostras": "165×16"
     },
     "tour|3": {
       "oficial": 94,
       "nosso": 94,
-      "amostras": "94×15"
+      "amostras": "94×16"
     },
     "tour|4": {
       "oficial": 75,
       "nosso": 75,
-      "amostras": "75×15"
+      "amostras": "75×16"
     },
     "tour|5": {
       "oficial": 64,
       "nosso": 64,
-      "amostras": "64×15"
+      "amostras": "64×16"
     },
     "tour|6": {
       "oficial": 53,
       "nosso": 53,
-      "amostras": "53×15"
+      "amostras": "53×16"
     },
     "tour|7": {
       "oficial": 45,
       "nosso": 45,
-      "amostras": "45×15"
+      "amostras": "45×16"
     },
     "tour|8": {
       "oficial": 38,
       "nosso": 38,
-      "amostras": "38×12 35×1"
+      "amostras": "38×13 35×1"
     },
     "tour|9": {
       "oficial": 33,
       "nosso": 33,
-      "amostras": "33×13"
+      "amostras": "33×14"
     },
     "tour|10": {
       "oficial": 30,
       "nosso": 30,
-      "amostras": "30×13"
+      "amostras": "30×14"
     },
     "tour|11": {
       "oficial": 27,
       "nosso": 27,
-      "amostras": "27×13"
+      "amostras": "27×14"
     },
     "tour|12": {
       "oficial": 26,
       "nosso": 26,
-      "amostras": "26×12"
+      "amostras": "26×13"
     },
     "tour|13": {
       "oficial": 24,
       "nosso": 24,
-      "amostras": "24×12"
+      "amostras": "24×13"
     },
     "tour|14": {
       "oficial": 23,
       "nosso": 23,
-      "amostras": "23×11"
+      "amostras": "23×12"
     },
     "tour|15": {
       "oficial": 22,
@@ -1222,17 +1519,20 @@
   "summary": {
     "pointsTableIssues": [
       "aquapor pos 12: valores oficiais inexplicados [23.2(5×)] — nosso=26",
-      "challenge-final pos 1: valores oficiais inexplicados [844(1×)] — nosso=375",
-      "challenge-final pos 2: valores oficiais inexplicados [830(1×)] — nosso=248",
-      "challenge-final pos 3: valores oficiais inexplicados [745(1×)] — nosso=141",
-      "challenge-final pos 4: valores oficiais inexplicados [409(1×)] — nosso=113",
-      "challenge-final pos 5: valores oficiais inexplicados [327(1×)] — nosso=96",
-      "challenge-final pos 6: valores oficiais inexplicados [226(1×)] — nosso=80",
-      "challenge-final pos 7: valores oficiais inexplicados [204(1×)] — nosso=68",
-      "challenge-final pos 8: valores oficiais inexplicados [57(2×), 64(1×)] — nosso=53",
+      "challenge-final pos 1: valores oficiais inexplicados [844(1×), 669(1×)] — nosso=375",
+      "challenge-final pos 2: valores oficiais inexplicados [830(1×), 603(1×)] — nosso=248",
+      "challenge-final pos 3: valores oficiais inexplicados [745(1×), 565(1×)] — nosso=141",
+      "challenge-final pos 4: valores oficiais inexplicados [409(1×), 564(1×)] — nosso=113",
+      "challenge-final pos 5: valores oficiais inexplicados [327(1×), 406(1×)] — nosso=96",
+      "challenge-final pos 6: valores oficiais inexplicados [226(1×), 368(1×)] — nosso=80",
+      "challenge-final pos 7: valores oficiais inexplicados [204(1×), 365(1×)] — nosso=68",
+      "challenge-final pos 8: valores oficiais inexplicados [57(10×), 64(1×), 146(1×)] — nosso=53",
+      "challenge-final pos 9: valores oficiais inexplicados [137(1×)] — nosso=50",
+      "challenge-final pos 10: valores oficiais inexplicados [112(1×)] — nosso=45",
+      "challenge-final pos 11: valores oficiais inexplicados [80(1×)] — nosso=41",
       "tour pos 8: valores oficiais inexplicados [35(1×)] — nosso=38"
     ],
-    "ok": 66,
-    "divergent": 6
+    "ok": 91,
+    "divergent": 10
   }
 }
