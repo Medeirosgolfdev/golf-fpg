@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-09-04T21:59:14.506Z",
-  "total": 1206,
+  "scrapedAt": "2026-09-05T21:50:02.780Z",
+  "total": 1209,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -382838,6 +382838,18 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "11059",
+      "name": "Quarta  Feira Europeia 24",
+      "date": "2026-09-02",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "987",
       "tcode": "10245",
       "name": "Final Drive Challenge Norte-Oporto-Sub 10",
@@ -384026,6 +384038,7 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
         "date": "2026-09-05",
@@ -384139,7 +384152,83 @@
         ],
         "_liveUpdatedAt": "2026-07-24T13:25:03.330Z"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "António Trinité",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Maria Almeida Santos",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "José Duarte Santana Lopes",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Artur Santos",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Alexander James Lucas",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Oskar Henze",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Afonso Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Francisco Ivo de Carvalho",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -384147,18 +384236,260 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 13,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10237",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48946",
+            "nome": "Miguel Santos Pereira",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.1,
+            "vacf": 87,
+            "registo": "2026/07/15 09:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "50011",
+            "nome": "Tomás Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 23.8,
+            "vacf": 94.9,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "49087",
+            "nome": "Tomás Pinto Barbosa",
+            "clube": "Quinta do Peru",
+            "hcp": 23.5,
+            "vacf": 97.1,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "57587",
+            "nome": "Maria Madalena Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 26.4,
+            "vacf": 98.9,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48113",
+            "nome": "Maria Luz",
+            "clube": "Belas",
+            "hcp": 26.4,
+            "vacf": 99.3,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "50703",
+            "nome": "António Vasco",
+            "clube": "Vidago Palace C",
+            "hcp": 23.7,
+            "vacf": 100.8,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "58816",
+            "nome": "Diogo Cajus",
+            "clube": "CGCUL",
+            "hcp": 34.1,
+            "vacf": 105.6,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "47318",
+            "nome": "Tiago Borges Oliveira",
+            "clube": "The One",
+            "hcp": 31.2,
+            "vacf": 107.9,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50215",
+            "nome": "João Lima",
+            "clube": "Villa Batalha",
+            "hcp": 33.9,
+            "vacf": 111.2,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "47839",
+            "nome": "Apolo Silva",
+            "clube": "Quinta do Peru",
+            "hcp": 43.4,
+            "vacf": 115.5,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "50828",
+            "nome": "António Ferreira Lobo",
+            "clube": "ACP Golfe",
+            "hcp": 32.8,
+            "vacf": 115.9,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "56008",
+            "nome": "Vicente Lima",
+            "clube": "Lisbon SC",
+            "hcp": 40.8,
+            "vacf": 116.3,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "59275",
+            "nome": "Tomás Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 51.7,
+            "vacf": 125.7,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Vicente Lima",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "António Ferreira Lobo",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Tomás Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Apolo Silva",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "António Vasco",
+                  "fed": null,
+                  "clube": "Vidago Palace C"
+                },
+                {
+                  "nome": "Tiago Borges Oliveira",
+                  "fed": null,
+                  "clube": "The One"
+                },
+                {
+                  "nome": "Tomás Pinto Barbosa",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Diogo Cajus",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Maria Luz",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Maria Madalena Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "João Lima",
+                  "fed": null,
+                  "clube": "Villa Batalha"
+                },
+                {
+                  "nome": "Tomás Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -384166,18 +384497,263 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 13,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10238",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "57756",
+            "nome": "Miguel Maria Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 17.4,
+            "vacf": 88.9,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "46873",
+            "nome": "Catarina Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 15.3,
+            "vacf": 89.2,
+            "registo": "2026/07/15 09:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "46026",
+            "nome": "Beatriz Mendes",
+            "clube": "Quinta do Peru",
+            "hcp": 29.3,
+            "vacf": 99.4,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "58484",
+            "nome": "David Cruz da Silva",
+            "clube": "Belas",
+            "hcp": 26.7,
+            "vacf": 99.7,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48164",
+            "nome": "David Stocksreiter Ferreira",
+            "clube": "Lisbon SC",
+            "hcp": 27.8,
+            "vacf": 100.2,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "51081",
+            "nome": "Andres Pava",
+            "clube": "ACP Golfe",
+            "hcp": 29.5,
+            "vacf": 100.7,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "44032",
+            "nome": "Lourenço Cid",
+            "clube": "Lisbon SC",
+            "hcp": 27.2,
+            "vacf": 101,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "49528",
+            "nome": "Ario Kiani",
+            "clube": "Qta. Marinha",
+            "hcp": 20.5,
+            "vacf": 103.1,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "53939",
+            "nome": "Mário Novaes Moura",
+            "clube": "Quinta do Peru",
+            "hcp": 30.2,
+            "vacf": 103.8,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "47658",
+            "nome": "Guilherme Pereira",
+            "clube": "Lisbon SC",
+            "hcp": 36.3,
+            "vacf": 109,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "35019",
+            "nome": "Lucas Lemos Guerreiro",
+            "clube": "Clube Benfica",
+            "hcp": 36.2,
+            "vacf": 109.3,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "48529",
+            "nome": "Matilde Bandeira",
+            "clube": "Vale de Janelas",
+            "hcp": 40.8,
+            "vacf": 112.6,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "56957",
+            "nome": "Pedro Uva Peixoto",
+            "clube": "Lisbon SC",
+            "hcp": 46.9,
+            "vacf": 125.3,
+            "registo": "2026/07/15 09:49",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Pedro Uva Peixoto",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Ario Kiani",
+                  "fed": null,
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Lucas Lemos Guerreiro",
+                  "fed": null,
+                  "clube": "Clube Benfica"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Mário Novaes Moura",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "fed": null,
+                  "clube": "Quinta do Peru",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Lourenço Cid",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "fed": null,
+                  "clube": "Vale de Janelas",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Cruz da Silva",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Andres Pava",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Maria Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Verdes"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -384185,18 +384761,156 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 7,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10239",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "53715",
+            "nome": "João Gomes",
+            "clube": "Lisbon SC",
+            "hcp": 10.2,
+            "vacf": 81.8,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "58051",
+            "nome": "Salvador Paulo Rodrigues",
+            "clube": "Quinta do Peru",
+            "hcp": 16.6,
+            "vacf": 88.2,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "56749",
+            "nome": "João Pereira",
+            "clube": "Quinta do Peru",
+            "hcp": 16.9,
+            "vacf": 88.2,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "43918",
+            "nome": "Henrique Rodrigues Pereira",
+            "clube": "Lisbon SC",
+            "hcp": 20,
+            "vacf": 92.1,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "45869",
+            "nome": "Francisco Rodrigues",
+            "clube": "Belas",
+            "hcp": 25.1,
+            "vacf": 97.8,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "59557",
+            "nome": "Tiago Afonso Barata",
+            "clube": "Quinta do Peru",
+            "hcp": 26.8,
+            "vacf": 100.8,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "50138",
+            "nome": "Afonso Rocha",
+            "clube": "Belas",
+            "hcp": 45.8,
+            "vacf": 118.5,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Rocha",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Tiago Afonso Barata",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Francisco Rodrigues",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Henrique Rodrigues Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Pereira",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "João Gomes",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -384204,23 +384918,84 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 2,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10240",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "44844",
+            "nome": "Tiago Lúcio",
+            "clube": "Jamor C.G.",
+            "hcp": 21.8,
+            "vacf": 94.3,
+            "registo": "2026/07/15 09:39",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "54571",
+            "nome": "Rodrigo Diamantino Manso",
+            "clube": "Lisbon SC",
+            "hcp": 52.3,
+            "vacf": 125.3,
+            "registo": "2026/07/15 09:40",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rodrigo Diamantino Manso",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Tiago Lúcio",
+                  "fed": null,
+                  "clube": "Jamor C.G."
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "192",
       "tcode": "90101",
       "name": "PJA Torre 2026",
+      "date": "2026-09-05",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "11061",
+      "name": "Torneio Quinta de São João 2026",
       "date": "2026-09-05",
       "expectedYear": "2026",
       "admissions": {
@@ -384939,6 +385714,25 @@
         "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10307",
+        "ccode": "988",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10309",
+      "name": "Final Nacional Drive Challenge Sub 10",
+      "date": "2026-10-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Nacional Drive Challenge Sub 10",
+        "date": "2026-10-12",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10309",
         "ccode": "988",
         "players": []
       },
