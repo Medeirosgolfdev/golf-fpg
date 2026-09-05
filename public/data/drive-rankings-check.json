@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-04T16:47:50.962Z",
+  "checkedAt": "2026-09-05T18:55:50.245Z",
   "year": "2026",
   "rankings": {
     "DC_MADM10G26": {
@@ -127,7 +127,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-11"
+      "oficialAte": "2026-07-11",
+      "provasIgnoradas": 9
     },
     "DC_TEJO10N26": {
       "code": "DC_TEJO10N26",
@@ -150,7 +151,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-11"
+      "oficialAte": "2026-07-11",
+      "provasIgnoradas": 10
     },
     "DC_TEJO12N26": {
       "code": "DC_TEJO12N26",
@@ -173,7 +175,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-11"
+      "oficialAte": "2026-07-11",
+      "provasIgnoradas": 12
     },
     "DC_TEJO14N26": {
       "code": "DC_TEJO14N26",
@@ -196,7 +199,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-11"
+      "oficialAte": "2026-07-11",
+      "provasIgnoradas": 7
     },
     "DC_TEJO16N26": {
       "code": "DC_TEJO16N26",
@@ -219,7 +223,8 @@
       "issues": [],
       "bestN": 4,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-11"
+      "oficialAte": "2026-07-11",
+      "provasIgnoradas": 2
     },
     "DC_TEJO18N26": {
       "code": "DC_TEJO18N26",
@@ -1050,8 +1055,11 @@
       "escalao": "Sub 10",
       "type": "gross",
       "sex": null,
-      "issues": [],
-      "oficialAte": null
+      "issues": [
+        "Alexander James Lucas: oficial=354 nosso(melhores-4=297 + final×1.5=53)=350 (4 provas nossas vs 1 oficiais)",
+        "Alexander James Lucas 2026-09-05: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-05"
     },
     "RFDC_26T10N": {
       "code": "RFDC_26T10N",
@@ -1069,8 +1077,11 @@
       "escalao": "Sub 12",
       "type": "gross",
       "sex": null,
-      "issues": [],
-      "oficialAte": null
+      "issues": [
+        "Apolo Silva: oficial=224 nosso(melhores-4=167 + final×1.5=53)=220 (4 provas nossas vs 1 oficiais)",
+        "Apolo Silva 2026-09-05: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-05"
     },
     "RFDC_26T12N": {
       "code": "RFDC_26T12N",
@@ -1088,8 +1099,11 @@
       "escalao": "Sub 14",
       "type": "gross",
       "sex": null,
-      "issues": [],
-      "oficialAte": null
+      "issues": [
+        "Ario Kiani: oficial=168 nosso(melhores-4=111 + final×1.5=53)=164 (6 provas nossas vs 1 oficiais)",
+        "Ario Kiani 2026-09-05: pts oficial=57 (pos 8) vs nosso=53 (pos 8) [final ×1.5]"
+      ],
+      "oficialAte": "2026-09-05"
     },
     "RFDC_26T14N": {
       "code": "RFDC_26T14N",
@@ -1108,7 +1122,7 @@
       "type": "gross",
       "sex": null,
       "issues": [],
-      "oficialAte": null
+      "oficialAte": "2026-09-05"
     },
     "RFDC_26T16N": {
       "code": "RFDC_26T16N",
@@ -1127,7 +1141,7 @@
       "type": "gross",
       "sex": null,
       "issues": [],
-      "oficialAte": null
+      "oficialAte": "2026-09-05"
     },
     "RFDC_26T18N": {
       "code": "RFDC_26T18N",
@@ -1268,7 +1282,7 @@
     "challenge|6": {
       "oficial": 53,
       "nosso": 53,
-      "amostras": "53×188"
+      "amostras": "53×187"
     },
     "challenge|7": {
       "oficial": 45,
@@ -1283,17 +1297,17 @@
     "challenge|9": {
       "oficial": 33,
       "nosso": 33,
-      "amostras": "33×124"
+      "amostras": "33×125"
     },
     "challenge|10": {
       "oficial": 30,
       "nosso": 30,
-      "amostras": "30×108"
+      "amostras": "30×109"
     },
     "challenge|11": {
       "oficial": 27,
       "nosso": 27,
-      "amostras": "27×101"
+      "amostras": "27×102"
     },
     "challenge|12": {
       "oficial": 26,
@@ -1343,62 +1357,62 @@
     "challenge-final|1": {
       "oficial": 375,
       "nosso": 375,
-      "amostras": "375×26 844×1 669×1"
+      "amostras": "375×36 844×1 669×1"
     },
     "challenge-final|2": {
       "oficial": 248,
       "nosso": 248,
-      "amostras": "248×26 830×1 603×1"
+      "amostras": "248×36 830×1 603×1"
     },
     "challenge-final|3": {
       "oficial": 141,
       "nosso": 141,
-      "amostras": "141×24 745×1 565×1"
+      "amostras": "141×32 745×1 565×1"
     },
     "challenge-final|4": {
       "oficial": 113,
       "nosso": 113,
-      "amostras": "113×18 409×1 564×1"
+      "amostras": "113×26 409×1 564×1"
     },
     "challenge-final|5": {
       "oficial": 96,
       "nosso": 96,
-      "amostras": "96×14 327×1 406×1"
+      "amostras": "96×22 327×1 406×1"
     },
     "challenge-final|6": {
       "oficial": 80,
       "nosso": 80,
-      "amostras": "80×14 226×1 368×1"
+      "amostras": "80×22 226×1 368×1"
     },
     "challenge-final|7": {
       "oficial": 68,
       "nosso": 68,
-      "amostras": "68×12 204×1 365×1"
+      "amostras": "68×20 204×1 365×1"
     },
     "challenge-final|8": {
       "oficial": 57,
       "nosso": 53,
-      "amostras": "57×10 64×1 146×1"
+      "amostras": "57×16 64×1 146×1"
     },
     "challenge-final|9": {
       "oficial": 50,
       "nosso": 50,
-      "amostras": "50×10 137×1"
+      "amostras": "50×16 137×1"
     },
     "challenge-final|10": {
       "oficial": 45,
       "nosso": 45,
-      "amostras": "45×8 112×1"
+      "amostras": "45×12 112×1"
     },
     "challenge-final|11": {
       "oficial": 41,
       "nosso": 41,
-      "amostras": "41×8 80×1"
+      "amostras": "41×10 80×1"
     },
     "challenge-final|12": {
       "oficial": 39,
       "nosso": 39,
-      "amostras": "39×8"
+      "amostras": "39×10"
     },
     "challenge-final|13": {
       "oficial": 36,
@@ -1526,13 +1540,13 @@
       "challenge-final pos 5: valores oficiais inexplicados [327(1×), 406(1×)] — nosso=96",
       "challenge-final pos 6: valores oficiais inexplicados [226(1×), 368(1×)] — nosso=80",
       "challenge-final pos 7: valores oficiais inexplicados [204(1×), 365(1×)] — nosso=68",
-      "challenge-final pos 8: valores oficiais inexplicados [57(10×), 64(1×), 146(1×)] — nosso=53",
+      "challenge-final pos 8: valores oficiais inexplicados [57(16×), 64(1×), 146(1×)] — nosso=53",
       "challenge-final pos 9: valores oficiais inexplicados [137(1×)] — nosso=50",
       "challenge-final pos 10: valores oficiais inexplicados [112(1×)] — nosso=45",
       "challenge-final pos 11: valores oficiais inexplicados [80(1×)] — nosso=41",
       "tour pos 8: valores oficiais inexplicados [35(1×)] — nosso=38"
     ],
-    "ok": 91,
-    "divergent": 10
+    "ok": 88,
+    "divergent": 13
   }
 }
