@@ -28,6 +28,7 @@
  *   node scripts/prune-player-scope.js            # dry-run (default)
  *   node scripts/prune-player-scope.js --apply
  *   node scripts/prune-player-scope.js --apply --year 2026
+ *   node scripts/prune-player-scope.js --restore 40452 31831   # repor jogadores
  * ═══════════════════════════════════════════════════════════════════════
  */
 "use strict";
@@ -59,6 +60,7 @@ const TAGS_FIXAS = ["PJA", "inscrito-nacional"];
 
 const args  = process.argv.slice(2);
 const APPLY = args.includes("--apply");
+const RESTORE = args.includes("--restore");
 const YEAR  = Number((args[args.indexOf("--year") + 1] || "").match(/^\d{4}$/) ? args[args.indexOf("--year") + 1] : new Date().getFullYear());
 
 const anoUltimaVolta = (s) => {
@@ -76,6 +78,60 @@ function manter(p) {
   if (anoUltimaVolta(p.lastRound) < YEAR) return null;  // inactivo
   if (indice(p) > tecto) return null;                   // acima do tecto
   return "activo-" + p.escalao;
+}
+
+/* ── Modo restauro ───────────────────────────────────────────────────────
+ * Repor um jogador cortado: volta ao `players.json` (a partir da auditoria) e
+ * o scrape bruto volta a `output/{fed}/` (a partir de `data-archive/players/`,
+ * ou do histórico do git se não estiver arquivado). O `analysis/data.json` é
+ * regenerado a seguir pelo pipeline — o comando di-lo no fim.
+ */
+if (RESTORE) {
+  const alvos = args.filter((a) => /^\d+$/.test(a));
+  if (!alvos.length) { console.error("Uso: --restore <fed> [<fed> ...]"); process.exit(1); }
+
+  const players = JSON.parse(fs.readFileSync(PLAYERS_PUB, "utf8"));
+  /* A auditoria mais recente que conheça cada jogador. */
+  const auditorias = fs.existsSync(ARCHIVE)
+    ? fs.readdirSync(ARCHIVE).filter((f) => /^players-removidos-.*\.json$/.test(f)).sort().reverse()
+    : [];
+
+  let repostos = 0, semFicha = 0, comBruto = 0;
+  for (const fed of alvos) {
+    if (players[fed]) { console.log(`  ${fed}: já está no players.json`); }
+    else {
+      let ficha = null;
+      for (const a of auditorias) {
+        const d = JSON.parse(fs.readFileSync(path.join(ARCHIVE, a), "utf8"));
+        if (d.players && d.players[fed]) { ficha = d.players[fed]; break; }
+      }
+      if (!ficha) { console.log(`  ${fed}: ⚠ sem ficha em nenhuma auditoria — acrescentar à mão`); semFicha++; }
+      else { players[fed] = ficha; repostos++; console.log(`  ${fed}: ${ficha.name} reposto no players.json`); }
+    }
+    /* Bruto: do arquivo, senão do histórico do git. */
+    const src = path.join(ARCHIVE, "players", fed);
+    const dst = path.join(OUTPUT, fed);
+    if (fs.existsSync(src)) {
+      fs.mkdirSync(dst, { recursive: true });
+      for (const f of fs.readdirSync(src)) fs.copyFileSync(path.join(src, f), path.join(dst, f));
+      comBruto++;
+      console.log(`  ${fed}: scrape bruto restaurado de data-archive/players/${fed}/`);
+    } else {
+      console.log(`  ${fed}: ⚠ sem bruto arquivado — recuperar do histórico:`);
+      console.log(`        git checkout <sha-antes-do-corte> -- output/${fed}/`);
+    }
+  }
+  if (repostos) {
+    const json = JSON.stringify(players, null, 2) + "\n";
+    fs.writeFileSync(PLAYERS_PUB, json);
+    if (fs.existsSync(PLAYERS_ROOT)) fs.writeFileSync(PLAYERS_ROOT, json);
+  }
+  console.log(`\n✅ ${repostos} reposto(s) no players.json · ${comBruto} com scrape bruto restaurado` +
+              (semFicha ? ` · ${semFicha} sem ficha` : ""));
+  console.log(`ℹ️  A seguir: node pipeline.js --skip-import ${alvos.join(" ")}   (regenera analysis/data.json)`);
+  console.log(`   E, se o bruto vier do histórico e estiver desactualizado:`);
+  console.log(`   node scripts/fpg-scrape-node.js ${alvos.join(" ")} --full`);
+  process.exit(0);
 }
 
 /* ── Ler ─────────────────────────────────────────────────────────────── */
@@ -127,11 +183,20 @@ if (!APPLY) {
 fs.mkdirSync(ARCHIVE, { recursive: true });
 const stamp = new Date().toISOString().slice(0, 10);
 const auditPath = path.join(ARCHIVE, `players-removidos-${stamp}.json`);
+/* ⚠ A auditoria é a rede de segurança do `--restore`: NUNCA a substituir.
+ * Duas passagens no mesmo dia caem no mesmo nome de ficheiro — sem este
+ * merge, a segunda (com 1 jogador) apagava a primeira (com 494) e perdiam-se
+ * as fichas de quem tinha sido cortado. */
+let anterior = {};
+if (fs.existsSync(auditPath)) {
+  try { anterior = JSON.parse(fs.readFileSync(auditPath, "utf8")).players || {}; } catch {}
+}
+const todos = { ...anterior, ...removed };
 fs.writeFileSync(auditPath, JSON.stringify({
   gerado_em: new Date().toISOString(),
   regra: { LIMITES, ano: YEAR, fixos: { manuel: MANUEL, coorte: COORTE_PERCURSO, tags: TAGS_FIXAS } },
-  total: Object.keys(removed).length,
-  players: removed,
+  total: Object.keys(todos).length,
+  players: todos,
 }, null, 2) + "\n");
 console.log(`\n💾 Auditoria: ${path.relative(ROOT, auditPath)}`);
 

@@ -141,6 +141,48 @@ function main() {
     }
   }
 
+  /* ── Preservar o que já foi recolhido (2026-09-06) ──────────────────
+   * Este builder lê `output/{fed}/` e reescrevia o ficheiro DO ZERO, por
+   * isso encolhia sempre que o universo de jogadores seguidos encolhe (ver
+   * `scripts/prune-player-scope.js`): a passagem de 673 → 179 jogadores
+   * levava 61% das voltas e deixava 12 campos sem ninguém em `/campos`.
+   * As voltas de quem deixou de ser seguido continuam a ser verdade — o
+   * miúdo jogou aquele campo naquele dia — por isso ficam, congeladas.
+   * `--rebuild` força a reconstrução limpa (para quando se quer mesmo
+   * deitar fora o histórico). */
+  const outPath = path.join(DATA, "course-players.json");
+  const REBUILD = process.argv.includes("--rebuild");
+  const FORCE   = process.argv.includes("--force");
+  let preservados = 0;
+  if (!REBUILD && fs.existsSync(outPath)) {
+    try {
+      const antigo = JSON.parse(fs.readFileSync(outPath, "utf8")).players || {};
+      for (const [key, porFed] of Object.entries(antigo)) {
+        for (const [nfed, rondas] of Object.entries(porFed || {})) {
+          if (players[key]?.[nfed]) continue;   // o build novo tem-no: ganha
+          (players[key] ||= {})[nfed] = rondas;
+          preservados++;
+          totalLinks++;
+        }
+      }
+    } catch { /* ficheiro corrompido — segue com o build novo */ }
+  }
+
+  /* Guarda anti-encolhimento: nunca escrever um ficheiro que perca >30% das
+   * ligações face ao que está em disco (a mesma guarda do
+   * `scrape-federados-node.js` e do `discover-fcg-scope.js`). Sem ela, um
+   * scrape falhado que deixe `output/` vazio apagava a página inteira. */
+  if (!FORCE && fs.existsSync(outPath)) {
+    try {
+      const antes = JSON.parse(fs.readFileSync(outPath, "utf8")).links || 0;
+      if (antes > 0 && totalLinks < antes * 0.7) {
+        console.error(`⚠  RECUSADO: ${totalLinks} ligações vs ${antes} em disco (perda de ${(100 - 100 * totalLinks / antes).toFixed(0)}%).`);
+        console.error("   Ficheiro anterior preservado. Usar --force se a perda for intencional.");
+        process.exit(2);
+      }
+    } catch { /* sem baseline fiável — segue */ }
+  }
+
   const out = {
     generated: new Date().toISOString(),
     source: "output/<nfed>/analysis/data.json → master-courses.json",
@@ -148,7 +190,8 @@ function main() {
     links: totalLinks,
     players,
   };
-  fs.writeFileSync(path.join(DATA, "course-players.json"), JSON.stringify(out));
+  fs.writeFileSync(outPath, JSON.stringify(out));
+  if (preservados) console.log(`Preservadas ${preservados} ligações de jogadores já não seguidos`);
   console.log(`Jogadores escaneados: ${scanned}`);
   console.log(`Campos PT com jogadores: ${Object.keys(players).length}`);
   console.log(`Ligações jogador↔campo: ${totalLinks}`);

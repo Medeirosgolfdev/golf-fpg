@@ -166,6 +166,57 @@ as caches à raiz. A app só lê `/{fed}/analysis/data.json`.
 ⚠ Se um dia a app passar a ler outro ficheiro por federado, **acrescentá-lo à
 excepção** — senão passa a dar 404 em produção e funciona em local.
 
+### Seguranças — como é que a informação NÃO se perde
+
+O corte do scope não pode custar informação já recolhida. Quatro camadas,
+todas verificadas com dados reais a 2026-09-06:
+
+**1. Os derivados PRESERVAM o histórico.** `build-course-players.js` e
+`build-recent-tournaments.js` liam `output/` e reescreviam o ficheiro DO ZERO
+— com 179 jogadores em vez de 673 isso levaria **61% das voltas** do
+`/campos` (42 975) e **48% das participações** do `/torneios-recentes`
+(1219 dos 3004 torneios ficavam vazios). Passaram a **fundir** com o
+ficheiro em disco: quem já não é seguido continua lá, congelado (um miúdo
+que jogou aquele campo naquele dia jogou-o na mesma). Medido depois da
+mudança: 110 campos · 9528 ligações · 70 335 voltas e 3004 torneios — **zero
+perdas** com 179 jogadores em `output/`. `--rebuild` força reconstrução limpa.
+
+**2. Guarda anti-encolhimento** nos dois builders: recusam escrever (exit 2,
+ficheiro anterior intacto) se o build novo perder **>30%** face ao que está em
+disco, salvo `--force`. É a guarda que já existia no `scrape-federados-node.js`
+e no `discover-fcg-scope.js` — e que salvou o FCG em Julho/Agosto. Testada:
+`--rebuild` sem `--force` é recusado com "perda de 60%" / "perda de 41%" e o
+ficheiro fica byte a byte igual. O `update-data.yml` já corre estes builders
+com `|| echo aviso`, por isso o exit 2 não parte o workflow.
+
+**3. O scrape BRUTO fica arquivado, fora do deploy** —
+`scripts/archive-player-raw.js`. Copia `whs.json`, `whs-list.json` e
+`scorecards.json` dos jogadores cortados para `data-archive/players/{fed}/`,
+que está fora de `public/` e do `outDir`, logo **não entra no deployment**.
+São 531 MB de 518 jogadores, e o repositório quase não cresce: os ficheiros
+vêm do commit anterior ao corte, por isso são os **mesmos blobs git** que já
+estavam no histórico (verificado: mesmo SHA em `data-archive/players/36864/
+whs.json` e em `676bf4bea~1:output/36864/whs.json`) — só muda a árvore.
+Isto é o que permite **RECONSTRUIR** e não apenas congelar.
+
+```bash
+node scripts/archive-player-raw.js --from <sha-antes-do-corte>            # dry-run
+node scripts/archive-player-raw.js --from <sha> --apply --scorecards      # aplica
+```
+
+**4. Restauro num comando** — `prune-player-scope.js --restore <fed>`: repõe a
+ficha no `players.json` (lida das auditorias em `data-archive/`) e o bruto em
+`output/{fed}/` (do arquivo, ou diz o `git checkout` a fazer se não estiver
+arquivado). Circuito testado de ponta a ponta **sem tocar na FPG**: o fed 2195
+foi reposto e o `make-scorecards-ui.js` regenerou-lhe o `data.json` com as
+111 voltas e o índice 7,2 a partir do arquivo.
+
+⚠ **A auditoria nunca é substituída.** Duas passagens no mesmo dia caem no
+mesmo `players-removidos-YYYY-MM-DD.json`; sem o merge, a segunda (1 jogador)
+apagava a primeira (494) e o `--restore` ficava sem as fichas. Apanhado a
+testar o restauro — está corrigido, mas é o tipo de erro que só aparece na
+segunda corrida.
+
 ### O que continua por fazer
 
 - **Apagar deployments antigos no Vercel** — nada disto encolhe os que já

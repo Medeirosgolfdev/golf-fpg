@@ -287,7 +287,57 @@ function main() {
     });
   }
 
+  /* ── Preservar o que já foi recolhido (2026-09-06) ──────────────────────
+   * Este ficheiro é reconstruído DO ZERO a partir de `output/{fed}/`, por
+   * isso encolhia sempre que o universo de jogadores seguidos encolhe (ver
+   * `scripts/prune-player-scope.js`): a passagem de 673 → 179 jogadores
+   * levava 48% das participações e deixava 1219 dos 3004 torneios sem
+   * ninguém. Um torneio jogado não deixa de ter acontecido — as
+   * participações de quem já não é seguido ficam, congeladas. `--rebuild`
+   * força reconstrução limpa. */
+  const outPath = path.join(DATA_DIR, "recent-tournaments.json");
+  const REBUILD = process.argv.includes("--rebuild");
+  const FORCE   = process.argv.includes("--force");
+  let presJog = 0, presTorn = 0;
+  if (!REBUILD && fs.existsSync(outPath)) {
+    try {
+      const antigos = JSON.parse(fs.readFileSync(outPath, "utf8")).tournaments || [];
+      const porChave = new Map(out.map((t) => [t.ccode + "|" + t.tcode, t]));
+      for (const velho of antigos) {
+        const chave = velho.ccode + "|" + velho.tcode;
+        const novo = porChave.get(chave);
+        if (!novo) { out.push(velho); porChave.set(chave, velho); presTorn++; continue; }
+        const vistos = new Set((novo.players || []).map((p) => String(p.scoreId)));
+        for (const p of velho.players || []) {
+          if (vistos.has(String(p.scoreId))) continue;   // o build novo manda
+          novo.players.push(p); presJog++;
+        }
+        // Reordenar a posição ENTRE OS NOSSOS com o conjunto completo.
+        novo.players
+          .filter((p) => typeof p.grossTotal === "number")
+          .sort((a, b) => a.grossTotal - b.grossTotal)
+          .forEach((p, i) => { p.pos = i + 1; });
+        novo.playerCount = novo.players.length;
+        novo.nOurs = novo.players.length;
+      }
+    } catch { /* ficheiro corrompido — segue com o build novo */ }
+  }
+
   out.sort((a, b) => (b.dateSort || 0) - (a.dateSort || 0));
+
+  /* Guarda anti-encolhimento (mesma do build-course-players): recusa escrever
+   * um ficheiro que perca >30% dos torneios face ao que está em disco. */
+  if (!FORCE && fs.existsSync(outPath)) {
+    try {
+      const antes = (JSON.parse(fs.readFileSync(outPath, "utf8")).tournaments || []).length;
+      if (antes > 0 && out.length < antes * 0.7) {
+        console.error(`⚠  RECUSADO: ${out.length} torneios vs ${antes} em disco (perda de ${(100 - 100 * out.length / antes).toFixed(0)}%).`);
+        console.error("   Ficheiro anterior preservado. Usar --force se a perda for intencional.");
+        process.exit(2);
+      }
+    } catch { /* sem baseline fiável — segue */ }
+  }
+  if (presTorn || presJog) console.log(`Preservados ${presTorn} torneios e ${presJog} participações de jogadores já não seguidos`);
 
   const nScraped = out.filter((t) => t.scraped).length;
   const doc = {
@@ -305,7 +355,6 @@ function main() {
     tournaments: out,
   };
 
-  const outPath = path.join(DATA_DIR, "recent-tournaments.json");
   fs.writeFileSync(outPath, JSON.stringify(doc) + "\n");
   const sizeMB = (fs.statSync(outPath).size / 1e6).toFixed(1);
 
