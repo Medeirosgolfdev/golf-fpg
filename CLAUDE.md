@@ -147,6 +147,14 @@ pô-lo no `players.json` e correr `node scripts/fpg-scrape-node.js <fed> --full`
 "quem jogou este campo", `/torneios-recentes`, comparação entre jogadores)
 passam a cobrir 179 jogadores em vez de 673.
 
+⚠ Quem sai do `players.json` **não desaparece do site**: passa a `_source:
+"feds"` no `federadosLoader` e é servido pelo `FederadoOnlyDetail` (cadastro +
+WHS ao vivo). O `player-stats.json` e o `hcp-history.json` são MERGE (não
+substituição), por isso mantêm as entradas dos removidos — congeladas na data
+do corte, já que não há `output/{fed}/` para as recalcular. São 1,9 MB no
+total; ficam de propósito, porque alimentam métricas de listas que abrangem
+todos os federados.
+
 ### 3. `scripts/prune-deploy-output.js` — o que NÃO vai para o deploy
 
 Corre a seguir ao `vite build` (está no `npm run build`) e **só quando `VERCEL`
