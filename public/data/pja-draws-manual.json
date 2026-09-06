@@ -1,6 +1,6 @@
 {
   "_doc": "Draws COMPLETOS curados (imagens/Excel/texto/PDF) que o extractor CGSS (so c007) nao cobre. Manuel jr = licenca 52884; homonimo (marido) Manuel Medeiros = licenca 54907. Meta autoritativa (corrige datas placeholder do scrape). Fundido por nacional2026Loader + pairings-build.",
-  "gerado_em": "2026-09-02",
+  "gerado_em": "2026-09-06",
   "source": "manual (PJA imagens/Excel/texto + PDFs Porto Santo/LPCC)",
   "total": 9,
   "tournaments": [
@@ -1474,7 +1474,7 @@
       "name": "PJA Torre 2026",
       "date": "2026-09-05",
       "campo": "Terras da Comporta - Torre",
-      "source": "Draw D1 oficial PJA (imagem, 2026-09-02)",
+      "source": "Draw D1 oficial PJA (imagem, 2026-09-02) + D2 folha manuscrita do organizador (2026-09-06; tees herdados do D1)",
       "drawOnly": true,
       "draws": {
         "1": {
@@ -1529,6 +1529,151 @@
                 { "nome": "Rodrigo Faria Constantino", "clube": null, "fed": "45278", "hcp": null },
                 { "nome": "Rafael Gonçales Benesi", "clube": null, "fed": "54774", "hcp": null },
                 { "nome": "Diogo Sequeira", "clube": null, "fed": "56654", "hcp": null }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Clara Trindade",
+                  "clube": null,
+                  "fed": "45812",
+                  "hcp": null,
+                  "tee": "Laranjas"
+                },
+                {
+                  "nome": "Martim Moreira",
+                  "clube": null,
+                  "fed": "42985",
+                  "hcp": null,
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "Rafael Gonçales Benesi",
+                  "clube": null,
+                  "fed": "54774",
+                  "hcp": null,
+                  "tee": "Brancas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:30",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Salvador Ivo de Carvalho",
+                  "clube": null,
+                  "fed": "43968",
+                  "hcp": null,
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "Francisco Vilardell Carvalho",
+                  "clube": null,
+                  "fed": "52856",
+                  "hcp": null,
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": null,
+                  "fed": "49085",
+                  "hcp": null,
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:40",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Madalena Figueiredo",
+                  "clube": null,
+                  "fed": "52011",
+                  "hcp": null,
+                  "tee": "Laranjas"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": null,
+                  "fed": "51523",
+                  "hcp": null,
+                  "tee": "Laranjas"
+                },
+                {
+                  "nome": "Guo Ziyang",
+                  "clube": null,
+                  "fed": "57904",
+                  "hcp": null,
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:50",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "João Rocha",
+                  "clube": null,
+                  "fed": "48297",
+                  "hcp": null,
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "William Gao",
+                  "clube": null,
+                  "fed": "51524",
+                  "hcp": null,
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": null,
+                  "fed": "46706",
+                  "hcp": null,
+                  "tee": "Brancas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Rodrigo Faria Constantino",
+                  "clube": null,
+                  "fed": "45278",
+                  "hcp": null,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": null,
+                  "fed": "52884",
+                  "hcp": null,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": null,
+                  "fed": "49124",
+                  "hcp": null,
+                  "tee": "Verdes"
+                }
               ]
             }
           ]
