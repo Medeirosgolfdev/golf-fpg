@@ -65,6 +65,38 @@ async function api(caminho, opts = {}) {
   return corpo;
 }
 
+/** Minutos de espera pedidos por um 429 do Vercel ("try again in 10 minutes"). */
+function minutosDoErro(msg, porDefeito = 10) {
+  const m = /try again in (\d+)\s*minute/i.exec(String(msg || ""));
+  const n = m ? Number(m[1]) : NaN;
+  return Number.isFinite(n) && n > 0 && n <= 120 ? n : porDefeito;
+}
+
+const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Apaga um deployment, respeitando o limite da API.
+ * ⚠ O Vercel corta às ~200 remoções por 10 minutos (`code: "now-rm"`). Medido
+ * a 2026-09-06 a limpar o atraso de 1049: 220 apagados e 829 recusados com
+ * HTTP 429. Sem esta espera, uma limpeza grande só apaga o primeiro lote e
+ * dá o resto por falhado.
+ */
+async function apagarComEspera(id, esperasRestantes) {
+  for (;;) {
+    try {
+      await api(`/v13/deployments/${id}`, { method: "DELETE" });
+      return { ok: true, esperasRestantes };
+    } catch (e) {
+      if (e.status !== 429) throw e;
+      if (esperasRestantes <= 0) return { ok: false, esperasRestantes, motivo: "limite da API" };
+      const min = minutosDoErro(e.message);
+      console.log(`    ⏳ limite da API atingido — a esperar ${min} min (${esperasRestantes} espera(s) disponíveis)…`);
+      await dormir(min * 60000 + 15000);
+      esperasRestantes--;
+    }
+  }
+}
+
 /**
  * Decide, para UM projecto, o que se guarda e o que se apaga.
  * Pura de propósito: é a parte perigosa e é a que os testes cobrem
@@ -102,7 +134,7 @@ async function todosDeployments(projectId) {
   return out;
 }
 
-module.exports = { escolher };
+module.exports = { escolher, minutosDoErro };
 
 /* Só corre quando invocado directamente (o teste importa `escolher`). */
 if (require.main !== module) return;
@@ -121,6 +153,10 @@ if (require.main !== module) return;
 
   const agora = Date.now();
   let totalApagar = 0, totalGuardar = 0, apagados = 0, falhados = 0;
+  /* Quantas janelas de 10 min se aceita esperar por causa do limite da API.
+   * 5 esperas ≈ 1200 remoções, que chega para qualquer atraso realista.
+   * O `timeout-minutes` do workflow tem de acomodar isto. */
+  let esperas = Number(arg("--max-esperas", "5"));
 
   for (const p of alvos) {
     const deps = await todosDeployments(p.id);
@@ -143,9 +179,15 @@ if (require.main !== module) return;
       const quando = new Date(d.created).toISOString().slice(0, 16);
       if (!APPLY) { console.log(`    [dry-run] apagaria ${quando}  ${id}`); continue; }
       try {
-        await api(`/v13/deployments/${id}`, { method: "DELETE" });
-        apagados++;
-        if (apagados % 25 === 0) console.log(`    … ${apagados} apagados`);
+        const r = await apagarComEspera(id, esperas);
+        esperas = r.esperasRestantes;
+        if (r.ok) {
+          apagados++;
+          if (apagados % 50 === 0) console.log(`    … ${apagados} apagados`);
+        } else {
+          falhados++;
+          if (falhados === 1) console.error(`    ⚠ esgotadas as esperas pelo limite da API — resta correr outra vez.`);
+        }
       } catch (e) {
         falhados++;
         console.error(`    ⚠ falhou ${id}: ${e.message}`);

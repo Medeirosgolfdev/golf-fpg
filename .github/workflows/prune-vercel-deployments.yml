@@ -42,7 +42,9 @@ permissions:
 jobs:
   prune:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # O Vercel corta às ~200 remoções por 10 min; o script espera a janela e
+    # continua, por isso um atraso grande pode levar quase uma hora.
+    timeout-minutes: 90
     steps:
       # Só o script — um checkout completo traz ~2,5 GB de dados (output/ e
       # public/data) que esta limpeza não usa para nada, e demorava minutos.

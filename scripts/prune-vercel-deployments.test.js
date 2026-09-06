@@ -3,7 +3,7 @@
  * a sério apagaria deployments a sério. */
 import { describe, it, expect } from "vitest";
 import { createRequire } from "module";
-const { escolher } = createRequire(import.meta.url)("./prune-vercel-deployments.js");
+const { escolher, minutosDoErro } = createRequire(import.meta.url)("./prune-vercel-deployments.js");
 
 const DIA = 86400000;
 const agora = Date.parse("2026-09-06T21:00:00Z");
@@ -68,5 +68,22 @@ describe("escolher — o que se apaga", () => {
     expect(guardar).toHaveLength(8);   // prod + 2 em curso + 5 recentes
     expect(apagar).toHaveLength(32);
     expect(apagar.every((d) => d.state === "READY")).toBe(true);
+  });
+});
+
+describe("minutosDoErro — espera pedida pelo limite da API", () => {
+  it("lê os minutos da mensagem real do Vercel", () => {
+    expect(minutosDoErro('HTTP 429 em /v13/deployments/dpl_x: Too many requests - try again in 10 minutes (more than 200, code: "now-rm").')).toBe(10);
+  });
+  it("aceita outros valores", () => {
+    expect(minutosDoErro("Too many requests - try again in 3 minutes")).toBe(3);
+  });
+  it("cai no valor por defeito quando a mensagem não diz nada", () => {
+    expect(minutosDoErro("Too many requests")).toBe(10);
+    expect(minutosDoErro(undefined)).toBe(10);
+  });
+  it("ignora valores absurdos (protege contra esperar horas)", () => {
+    expect(minutosDoErro("try again in 5000 minutes")).toBe(10);
+    expect(minutosDoErro("try again in 0 minutes")).toBe(10);
   });
 });
