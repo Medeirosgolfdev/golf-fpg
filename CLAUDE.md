@@ -73,6 +73,103 @@ design-system.html # Referência visual de todos os componentes CSS
 > ⚠ Não mover o `outDir` para `dist/` sem confirmar a *Output Directory* do
 > projecto Vercel `golf-fpg` — o deploy de produção depende dela.
 
+## ⚠ Deployment Storage do Vercel — o que entra no deploy (2026-09-06)
+
+A Vercel avisou por email que o plano gratuito tinha chegado a **100% dos 10 GB
+de Deployment Storage**. A causa não era tráfego: **cada deployment pesava
+~9,1 GB**, por isso um único deployment enchia a conta — e os workflows de dados
+fazem ~11 commits/dia, cada um a gerar outro.
+
+Porquê: `output/` é ao mesmo tempo o `outDir` do Vite e a pasta onde o scraper
+escreve. O Vercel clona o repo, o Vite copia `public/` (~1 GB) para lá, e o
+Output Directory publicado passa a incluir **também as 697 pastas por federado
+que estão em git** (8,1 GB). Estava tudo a ser servido publicamente — medido em
+produção, `golf-fpg.vercel.app/52884/scorecards.json` devolvia 3,9 MB a quem o
+pedisse, e a ficha de cada jogador obrigava o browser a descarregar **10 MB**.
+
+Três correcções, por ordem de retorno:
+
+| # | O quê | Ganho |
+|---|---|---|
+| 1 | `CROSS_DATA` extraído para `/data/cross-data.json` | −6,4 GB |
+| 2 | Universo de jogadores reduzido de 673 para 179 | −5,6 GB |
+| 3 | Intermédios do scraper fora do deployment | −0,8 GB |
+
+Resultado medido: **9,1 GB → 1,10 GB por deployment**, e a ficha de um jogador
+de 10,2 MB → ~1 MB.
+
+### 1. `CROSS_DATA` vive agora em `/data/cross-data.json`
+
+O `CROSS_DATA` é uma tabela indexada por federado — a MESMA para toda a gente —
+e vinha embutida em cada `output/{fed}/analysis/data.json`: 9,4 MB × 678
+ficheiros = 6,4 GB, com cada cópia parada num instante diferente (554 de 673
+entradas iguais entre dois ficheiros; as outras eram só staleness).
+
+- **Escrita:** `scripts/make-scorecards-ui.js` → `writeCrossData()`, uma vez por
+  run (o `crossStats` é sempre calculado sobre TODOS os jogadores descobertos em
+  `output/`, mesmo em runs incrementais).
+- **Leitura:** `src/data/playerDataLoader.ts` → `loadCrossData()`, um `fetch`
+  partilhado e cacheado; pedido em paralelo com o `data.json`, por isso só a
+  primeira ficha aberta é que o paga.
+- **Retrocompatível:** um `data.json` que ainda traga `CROSS_DATA` embutido
+  ganha prioridade sobre o ficheiro partilhado.
+
+⚠ Não voltar a pôr `CROSS_DATA` dentro do `data.json` — é a duplicação O(n²) que
+encheu o Deployment Storage.
+
+### 2. `scripts/prune-player-scope.js` — o universo seguido
+
+Reduz `players.json` + as pastas `output/{fed}/` a quem é relevante para o
+percurso do Manuel. Regra decidida em 2026-09-06 (constantes no topo do script):
+
+| | Tecto de índice |
+|---|---|
+| Sub-10 | ≤ 36 |
+| Sub-12 | ≤ 25 |
+| Sub-14 | ≤ 15 |
+| Sub-16 | ≤ 10 |
+| Sub-18 | ≤ 5 |
+
+Mais, sempre e independentemente do índice: o Manuel, a **coorte dos 18** de
+`build-percurso-path.js` (sem ela a `/analise-percurso-juniores` fica sem
+dados) e quem tem tag `PJA` ou `inscrito-nacional`. Sai quem for adulto sem
+essas tags, quem não jogou no ano corrente, e quem está acima do tecto ou sem
+índice estabelecido (≥54).
+
+Primeira passagem: 673 → **179 jogadores**, 518 pastas apagadas (24 delas órfãs,
+sem entrada em `players.json`). Lista dos removidos em
+`data-archive/players-removidos-2026-09-06.json` (fora de `public/`, não vai
+para o deploy).
+
+⚠ **Não é perda de dados** — vêm todos da FPG. Repor um jogador é voltar a
+pô-lo no `players.json` e correr `node scripts/fpg-scrape-node.js <fed> --full`.
+⚠ **Custo real:** as páginas derivadas das voltas dos nossos (`/campos` →
+"quem jogou este campo", `/torneios-recentes`, comparação entre jogadores)
+passam a cobrir 179 jogadores em vez de 673.
+
+### 3. `scripts/prune-deploy-output.js` — o que NÃO vai para o deploy
+
+Corre a seguir ao `vite build` (está no `npm run build`) e **só quando `VERCEL`
+está definido** — em local apagaria ficheiros de que o `pipeline.js` precisa e
+que estão em git. Remove do Output Directory o que a app nunca pede:
+`output/*/{whs.json,whs-list.json,scorecards.json,summary.json,scorecards/}` e
+as caches à raiz. A app só lê `/{fed}/analysis/data.json`.
+
+⚠ Se um dia a app passar a ler outro ficheiro por federado, **acrescentá-lo à
+excepção** — senão passa a dar 404 em produção e funciona em local.
+
+### O que continua por fazer
+
+- **Apagar deployments antigos no Vercel** — nada disto encolhe os que já
+  existem; a conta só desce quando forem apagados (dashboard → Deployments, ou
+  `DELETE /v13/deployments/{id}`).
+- `public/data/` são ~1 GB e é agora quase todo o deployment. Os pesos: 
+  `ffgolf-resultats` 168 MB, `nextcaddy` 92 MB, `juniors-tournaments-0{0,1}` 94 MB,
+  `uskids-member-history-slim` 40 MB, `juniors.json` 40 MB. O `nextcaddy` e o
+  `rfegolf-livegolfscoring` (38 MB) **não são pedidos por nenhum `fetch` do
+  `src/`** — são entradas dos builders; podem seguir o caminho do
+  `data-archive/` quando houver tempo para confirmar.
+
 ### Páginas (lazy-loaded)
 
 | Rota | Página | Dados |
@@ -2361,8 +2458,11 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 ```
 { DATA: CourseData[], HOLES: Record<scoreId, { g[18], p[18], si[18], m?[18], hc }>,
-  EC, HOLE_STATS, CROSS_DATA, CURRENT_FED, HCP_INFO, META }
+  EC, ECDET, HOLE_STATS, TEE, CURRENT_FED, HCP_INFO, META }
 ```
+⚠ **Sem `CROSS_DATA` desde 2026-09-06** — a tabela global vive em
+`/data/cross-data.json` e é fundida em runtime pelo `playerDataLoader`
+(ver "Deployment Storage do Vercel").
 
 ---
 

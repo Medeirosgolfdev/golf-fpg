@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "gallery": "node scripts/build-logos-gallery.js",
     "prebuild": "node scripts/build-logos-gallery.js",
-    "build": "tsc --noEmit && node node_modules/vite/bin/vite.js build",
+    "build": "tsc --noEmit && node node_modules/vite/bin/vite.js build && node scripts/prune-deploy-output.js",
     "preview": "vite preview",
     "login": "node scripts/login.js",
     "scrape": "node scripts/golf-all.js",
