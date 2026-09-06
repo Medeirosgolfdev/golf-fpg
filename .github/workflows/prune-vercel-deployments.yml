@@ -44,7 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      # Só o script — um checkout completo traz ~2,5 GB de dados (output/ e
+      # public/data) que esta limpeza não usa para nada, e demorava minutos.
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/prune-vercel-deployments.js
+          sparse-checkout-cone-mode: false
 
       - uses: actions/setup-node@v4
         with:
