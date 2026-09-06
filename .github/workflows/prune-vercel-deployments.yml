@@ -1,0 +1,90 @@
+name: Limpar deployments antigos do Vercel
+
+# PORQUÊ: o Deployment Storage do plano gratuito (10 GB) conta TODOS os
+# deployments retidos, não só o de produção. As correcções de 2026-09-06
+# puseram cada deployment NOVO em ~1,1 GB (eram ~9,1 GB), mas não encolhem os
+# antigos — só apagá-los liberta espaço. E como os workflows de dados fazem
+# ~11 commits/dia, cada um a gerar um deployment, isto tem de ser recorrente.
+#
+# Por defeito é DRY-RUN: mostra o que apagaria e não apaga nada. Para apagar
+# a sério, correr à mão com apply=true.
+#
+# Requer o GitHub Secret VERCEL_TOKEN (o mesmo que o analytics-snapshot.yml
+# já usa; criado em vercel.com/account/tokens).
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Apagar mesmo? (false = só mostra o que apagaria)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      keep:
+        description: 'Quantos deployments recentes guardar por projecto'
+        required: false
+        default: '5'
+      min_age_days:
+        description: 'Não apagar nada mais novo do que N dias'
+        required: false
+        default: '1'
+      project:
+        description: 'Só um projecto (nome). Vazio = todos os do team.'
+        required: false
+        default: ''
+  schedule:
+    - cron: '0 4 * * 1'   # Segunda 04:00 UTC — mantém o storage limitado sozinho
+
+permissions:
+  contents: read
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verificar secret
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "::error::Falta o secret VERCEL_TOKEN. Criar em vercel.com/account/tokens e adicionar em Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Limpar
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set +e
+          # O cron corre sempre em modo real; o dispatch obedece ao input.
+          APPLY=""
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.apply }}" = "true" ]; then
+            APPLY="--apply"
+          fi
+          PROJ=""
+          if [ -n "${{ github.event.inputs.project }}" ]; then PROJ="--project ${{ github.event.inputs.project }}"; fi
+
+          node scripts/prune-vercel-deployments.js \
+            $APPLY $PROJ \
+            --keep "${{ github.event.inputs.keep || '5' }}" \
+            --min-age-days "${{ github.event.inputs.min_age_days || '1' }}" \
+            | tee /tmp/prune.log
+          EXIT=${PIPESTATUS[0]}
+          set -e
+          # exit 2 = dry-run sem nada para apagar (não é erro)
+          if [ "$EXIT" = "2" ]; then echo "Nada para apagar."; exit 0; fi
+          exit $EXIT
+
+      - name: Resumo
+        if: always()
+        run: |
+          echo '### Limpeza de deployments do Vercel' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -40 /tmp/prune.log >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo '(sem output)' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

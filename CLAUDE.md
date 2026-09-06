@@ -220,8 +220,18 @@ segunda corrida.
 ### O que continua por fazer
 
 - **Apagar deployments antigos no Vercel** — nada disto encolhe os que já
-  existem; a conta só desce quando forem apagados (dashboard → Deployments, ou
-  `DELETE /v13/deployments/{id}`).
+  existem; a conta só desce quando forem apagados. Automatizado em
+  `scripts/prune-vercel-deployments.js` + workflow **`prune-vercel-deployments.yml`**
+  (Segunda 04:00 UTC, e `workflow_dispatch` com `apply=false` para ver primeiro).
+  Usa o secret `VERCEL_TOKEN` que o `analytics-snapshot.yml` já tinha.
+  Poupa sempre: o deployment que está EM produção, os que estão a construir/em
+  fila, os `--keep N` mais recentes (default 5, margem de rollback) e tudo com
+  menos de `--min-age-days` (default 1). A selecção é a função pura `escolher()`,
+  testada em `prune-vercel-deployments.test.js` (7 testes) — chamar a API a
+  sério num teste apagaria deployments a sério.
+  ⚠ O team tem **6 projectos** (`golf-fpg`, `ranking-pja`, `golf`, `golf1`,
+  `medeirosgolf`, `uskids-golf`) e TODOS contam para os mesmos 10 GB; sem
+  `--project` a limpeza cobre-os a todos.
 - `public/data/` são ~1 GB e é agora quase todo o deployment. Os pesos: 
   `ffgolf-resultats` 168 MB, `nextcaddy` 92 MB, `juniors-tournaments-0{0,1}` 94 MB,
   `uskids-member-history-slim` 40 MB, `juniors.json` 40 MB. O `nextcaddy` e o
