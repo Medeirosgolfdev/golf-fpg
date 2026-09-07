@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-07T04:38:25.926Z",
+  "generated": "2026-09-07T11:21:44.596Z",
   "year": "2026",
   "source": "build-classificacoes.js",
   "anchors": [
@@ -18,6 +18,501 @@
   ],
   "maxJuniorAge": 21,
   "tournaments": [
+    {
+      "name": "PJA Torre 2026",
+      "ccode": "192",
+      "tcode": "10024",
+      "date": "2026-09-05",
+      "campo": "Terras da Comporta Torre Golf Course",
+      "rounds": 2,
+      "playerCount": 16,
+      "players": [
+        {
+          "scoreId": "1465",
+          "pos": 1,
+          "name": "PALMARES JR.,Nuno",
+          "grossTotal": 141,
+          "toPar": -3,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 70,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "49124",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2012-04-28"
+        },
+        {
+          "scoreId": "1478",
+          "pos": 2,
+          "name": "GOULARTT MEDEIROS,Manuel",
+          "grossTotal": 146,
+          "toPar": 2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 7.5,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 73,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 73,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "52884",
+          "escalao": "Sub 12",
+          "sex": "M",
+          "club": "Santo da Serra",
+          "_dob": "2014-04-29"
+        },
+        {
+          "scoreId": "1470",
+          "pos": 4,
+          "name": "FARIA CONSTANTINO,Rodrigo",
+          "grossTotal": 149,
+          "toPar": 5,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "45278",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Belas",
+          "_dob": "2006-05-04"
+        },
+        {
+          "scoreId": "1466",
+          "pos": 8,
+          "name": "COSTA ALEMÃO,Pedro",
+          "grossTotal": 155,
+          "toPar": 11,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 1.8,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 79,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46706",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2011-01-15"
+        },
+        {
+          "scoreId": "1471",
+          "pos": 3,
+          "name": "GAO,William",
+          "grossTotal": 148,
+          "toPar": 4,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.5,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "51524",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Quinta do Peru",
+          "_dob": "2012-11-14"
+        },
+        {
+          "scoreId": "1480",
+          "pos": 5,
+          "name": "ZIYANG,Guo",
+          "grossTotal": 150,
+          "toPar": 6,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 9.2,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "57904",
+          "escalao": "Sub 12",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2014-03-27"
+        },
+        {
+          "scoreId": "1467",
+          "pos": 6,
+          "name": "ROCHA,João",
+          "grossTotal": 152,
+          "toPar": 8,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 3.8,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "48297",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2012-09-02"
+        },
+        {
+          "scoreId": "1468",
+          "pos": 13,
+          "name": "GAO,Angelina",
+          "grossTotal": 162,
+          "toPar": 18,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4,
+          "teeName": "LARANJAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            },
+            {
+              "round": 2,
+              "gross": 84,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            }
+          ],
+          "fedCode": "51523",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Quinta do Peru",
+          "_dob": "2011-06-09"
+        },
+        {
+          "scoreId": "1474",
+          "pos": 9,
+          "name": "FIGUEIREDO,Madalena",
+          "grossTotal": 157,
+          "toPar": 13,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.6,
+          "teeName": "LARANJAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            },
+            {
+              "round": 2,
+              "gross": 79,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            }
+          ],
+          "fedCode": "52011",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Belas",
+          "_dob": "2010-01-14"
+        },
+        {
+          "scoreId": "1475",
+          "pos": 7,
+          "name": "CASTRO FERREIRA,Ricardo",
+          "grossTotal": 154,
+          "toPar": 10,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.7,
+          "teeName": "AMARELAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            },
+            {
+              "round": 2,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "AMARELAS"
+            }
+          ],
+          "fedCode": "49085",
+          "escalao": "Sub 12",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2015-07-02"
+        },
+        {
+          "scoreId": "1476",
+          "pos": 14,
+          "name": "VILARDELL CARVALHO,Francisco",
+          "grossTotal": 164,
+          "toPar": 20,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 6.8,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 86,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "52856",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Vale Pisão",
+          "_dob": "2013-03-20"
+        },
+        {
+          "scoreId": "1469",
+          "pos": 10,
+          "name": "IVO DE CARVALHO,Salvador",
+          "grossTotal": 159,
+          "toPar": 15,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "43968",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2012-01-23"
+        },
+        {
+          "scoreId": "1477",
+          "pos": 11,
+          "name": "BENESI,Rafael Gonçales",
+          "grossTotal": 159,
+          "toPar": 15,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 6.8,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "54774",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Estoril",
+          "_dob": "2011-02-27"
+        },
+        {
+          "scoreId": "1473",
+          "pos": 12,
+          "name": "TRINDADE,Clara",
+          "grossTotal": 162,
+          "toPar": 18,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 5.5,
+          "teeName": "LARANJAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            },
+            {
+              "round": 2,
+              "gross": 80,
+              "parTotal": 72,
+              "teeName": "LARANJAS"
+            }
+          ],
+          "fedCode": "45812",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Belas",
+          "_dob": "2011-03-31"
+        },
+        {
+          "scoreId": "1479",
+          "pos": 15,
+          "name": "MOREIRA,Martim",
+          "grossTotal": 169,
+          "toPar": 25,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 7.7,
+          "teeName": "VERDES",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            },
+            {
+              "round": 2,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "VERDES"
+            }
+          ],
+          "fedCode": "42985",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Belas",
+          "_dob": "2012-02-16"
+        },
+        {
+          "scoreId": "1472",
+          "pos": "ND",
+          "name": "SEQUEIRA,Diogo",
+          "grossTotal": 1997,
+          "toPar": 1853,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": 4.9,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 998,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 999,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "56654",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Quinta do Peru",
+          "_dob": "2011-03-19"
+        }
+      ],
+      "_anchors": [
+        "49124"
+      ],
+      "_sourceFile": "pull-torneios000.json"
+    },
     {
       "name": "Campeonato Nacional de Clubes Solverde H",
       "ccode": "000",
