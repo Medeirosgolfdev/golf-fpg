@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-09-07T05:56:33.370Z",
+  "lastUpdated": "2026-09-07T11:03:29.310Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-09-07",
   "summary": {
     "total": 1765,
-    "complete": 806,
+    "complete": 807,
     "in_progress": 0,
     "future": 6,
     "stale": 10,
-    "excluded": 941,
+    "excluded": 942,
     "missing_admissions": 0,
     "missing_classif": 0,
-    "missing_scorecards": 2,
+    "missing_scorecards": 0,
     "missing_draws": 0,
     "unknown": 0
   },
@@ -408,7 +408,7 @@
     },
     {
       "ccode": "192",
-      "tcode": "90101",
+      "tcode": "10024",
       "name": "PJA Torre 2026",
       "date": "2026-09-05",
       "rounds": 2,
@@ -419,13 +419,13 @@
       "draws_players_total": 0,
       "has_classif": true,
       "player_count": 16,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
+      "players_with_scorecards": 16,
+      "players_with_full_scorecards": 16,
       "scorecards_source": "pull-torneios000.json",
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
-      "has_manuel": false,
-      "status": "missing_scorecards"
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
+      "has_manuel": true,
+      "status": "complete"
     },
     {
       "ccode": "007",
@@ -851,7 +851,8 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "missing_scorecards"
+      "status": "excluded",
+      "excluded_reason": "tcode placeholder (torneio só-draw) — sem classificação na FPG"
     },
     {
       "ccode": "920",

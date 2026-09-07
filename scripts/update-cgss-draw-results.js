@@ -562,6 +562,31 @@ function writeAtomic(file, obj) {
   writeAtomic(PULL, pull);
   console.log(`[cgss] ${path.basename(PULL)}: placeholder ${PLACEHOLDER} → real ${scraped.tcode}.`);
 
+  /* 3b) varrer os OUTROS pull-torneios à procura do mesmo placeholder.
+   * ⚠ O placeholder pode ter-se multiplicado sozinho: a casca no
+   * fpg-admissions-draws.json entra no fpg-tournaments-tracking.json, e o
+   * `update-classif --auto-from-tracking` vai scrapá-lo, gravando um stub de 0
+   * jogadores no SEU ficheiro (pull-torneios002 por omissão). Limpar só o
+   * `--pull` deixava esse sobreviver — e o ranking PJA, que deduplica por
+   * ccode/tcode/date, mostrava duas colunas vazias ao lado do torneio a sério.
+   * O `build-tournaments-tracking.js` já exclui tcodes 9xxxx, mas isto apanha
+   * os que ficaram para trás. */
+  for (const f of fs.readdirSync(path.dirname(PULL))) {
+    if (!/^pull-torneios\d{3}\.json$/.test(f)) continue;
+    const p = path.join(path.dirname(PULL), f);
+    if (p === PULL) continue;
+    try {
+      const outro = JSON.parse(fs.readFileSync(p, "utf8"));
+      const antes = outro.tournaments.length;
+      outro.tournaments = outro.tournaments.filter(t =>
+        !(String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER));
+      if (outro.tournaments.length === antes) continue;
+      if (typeof outro.totalTournaments === "number") outro.totalTournaments = outro.tournaments.length;
+      writeAtomic(p, outro);
+      console.log(`[cgss] ${f}: removido eco do placeholder ${CCODE}/${PLACEHOLDER}.`);
+    } catch (e) { console.warn(`[cgss] aviso: varrer ${f} falhou: ${e.message}`); }
+  }
+
   // 4) re-chavear o draw (drawOnly=false — a tab Draw fica ao lado dos resultados)
   try {
     const dup = cgssFile.tournaments.some(t => String(t.ccode) === CCODE && String(t.tcode) === scraped.tcode);
