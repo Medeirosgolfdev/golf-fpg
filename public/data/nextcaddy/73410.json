@@ -27,7 +27,49 @@
   "leaderboardPdfOnly": true,
   "categoryNames": {},
   "inscritos": [],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Pedro Domecq Silva",
+          "hcp": 54,
+          "ins": "2395331",
+          "jid": "78646",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Miguel Gomez Sainz",
+          "hcp": 54,
+          "ins": "2395332",
+          "jid": "78646",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Jaime De La Lastra Romero",
+          "hcp": 54,
+          "ins": "2395333",
+          "jid": "78646",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Fernando Saenz Vidau",
+          "hcp": 54,
+          "ins": "2395334",
+          "jid": "78646",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -47,5 +89,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-08-31T10:51:33.320Z"
+  "horariosScrapedAt": "2026-09-07T09:14:57.166Z"
 }

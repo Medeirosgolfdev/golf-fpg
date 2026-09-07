@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T04:49:08.190Z",
+  "generatedAt": "2026-09-07T09:02:56.909Z",
   "source": "scripts/discover-fcg-scope.js",
   "years": [
     "2025",
@@ -7,7 +7,7 @@
   ],
   "keepNonJuvenile": false,
   "totalTournaments": 27,
-  "totalGames": 25,
+  "totalGames": 26,
   "totalImaster": 0,
   "totalInscritos": 43,
   "tournaments": [
@@ -1051,8 +1051,8 @@
       "juvenile": true
     },
     {
-      "slug": "campionat-de-catalunya-matchplay-sub-1816141210-2026-2026-09-19",
-      "title": "CAMPIONAT DE CATALUNYA MATCHPLAY SUB-18/16/14/12/10 2026",
+      "slug": "campionat-de-catalunya-matchplay-juvenil-2026-2026-09-19",
+      "title": "CAMPIONAT DE CATALUNYA MATCHPLAY JUVENIL 2026",
       "organizer": null,
       "sede": null,
       "dateStart": null,
@@ -1065,14 +1065,22 @@
         "ALV",
         "BNJ"
       ],
-      "games": [],
+      "games": [
+        {
+          "gameId": "6a8eb299dba8392dd144000b",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
       "imasterIds": [],
       "inscritos": [],
       "dateRaw": "19-09-2026",
       "dateIso": "2026-09-19",
-      "name": "CAMPIONAT DE CATALUNYA MATCHPLAY SUB-18/16/14/12/10 2026",
+      "name": "CAMPIONAT DE CATALUNYA MATCHPLAY JUVENIL 2026",
       "year": 2026,
-      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-matchplay-sub-1816141210-2026-2026-09-19",
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-matchplay-juvenil-2026-2026-09-19",
       "juvenile": true
     },
     {
