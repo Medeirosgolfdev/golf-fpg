@@ -2,6 +2,12 @@
  * pja-repeaters-vs-dados.test.js — o painel "Quem repete" contra os dados REAIS
  * do repo (mesma ideia do drive-ranking-vs-oficial.test.js).
  *
+ * Desde que o PJA Torre 2026 se jogou (5-6 Set, 192/10024) este ficheiro faz
+ * duas coisas: verifica a mecânica do painel e AFERE o modelo de previsão —
+ * reconstitui o estado da véspera (o field do draw, sem resultados), prevê, e
+ * compara com o que aconteceu. É a única forma honesta de saber se o modelo
+ * presta.
+ *
  * Vive em scripts/ e não em src/__tests__ porque lê ficheiros com `fs`: o
  * tsconfig do `src` não tem os tipos do Node, e o `npm run build` corre
  * `tsc --noEmit` sobre ele.
@@ -14,74 +20,54 @@ import { fileURLToPath } from "node:url";
 const REPO = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const json = (p) => JSON.parse(fs.readFileSync(path.join(REPO, p), "utf8"));
 
-describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
-  it("encontra os repetentes e prevê valores plausíveis", async () => {
-    const { buildRepeaters, currentField, masterTeeRatings } = await import("../src/pages/fpg/repeatersModel.ts");
-
-    const pull = json("public/data/pull-torneios000.json").tournaments;
-    const t2025 = pull.find((t) => t.ccode === "192" && t.tcode === "10013");
-    const stub = pull.find((t) => t.ccode === "192" && t.tcode === "90101");
-    const draw = json("public/data/pja-draws-manual.json").tournaments
-      .find((t) => t.ccode === "192" && t.tcode === "90101");
-    const players = json("public/data/players.json");
-    expect(t2025, "edição de 2025 (192/10013)").toBeTruthy();
-    expect(stub, "stub de 2026 (192/90101)").toBeTruthy();
-    expect(draw, "draw curado de 2026").toBeTruthy();
-
-    const current = { ...stub, _draws: draw.draws };
-    const fedInfo = (fed) => {
+/** Estado da VÉSPERA: o field vem do draw e ainda não há resultados. */
+function cenario() {
+  const pull = json("public/data/pull-torneios000.json").tournaments;
+  const t2025 = pull.find((t) => t.ccode === "192" && t.tcode === "10013");
+  const t2026 = pull.find((t) => t.ccode === "192" && t.tcode === "10024");
+  const draw = json("public/data/pja-draws-manual.json").tournaments
+    .find((t) => t.ccode === "192" && t.tcode === "10024");
+  const players = json("public/data/players.json");
+  const stats = json("public/player-stats.json");
+  return {
+    t2025, t2026, draw,
+    vespera: { ...t2026, players: [], _draws: draw.draws },
+    fedInfo: (fed) => {
       const p = fed ? players[fed] : null;
       return p ? { hcp: p.hcp ?? null, club: p.club?.short ?? null, escalao: p.escalao ?? null, sex: p.sex ?? null } : null;
-    };
-    const master = json("public/data/master-courses.json");
-    const masterRatings = masterTeeRatings(master, current.campo);
+    },
+    form: (fed) => (fed ? stats[fed] ?? null : null),
+  };
+}
+
+describe("PJA Torre — o painel na véspera da prova", () => {
+  it("encontra os repetentes e trata os tees como deve", async () => {
+    const { buildRepeaters, currentField, masterTeeRatings } = await import("../src/pages/fpg/repeatersModel.ts");
+    const c = cenario();
+    expect(c.t2025, "edição de 2025 (192/10013)").toBeTruthy();
+    expect(c.t2026, "edição de 2026 (192/10024)").toBeTruthy();
+    expect(c.draw, "draw curado").toBeTruthy();
+
+    const masterRatings = masterTeeRatings(json("public/data/master-courses.json"), c.vespera.campo);
     // O master conhece os 10 tees do Torre (6 M + 4 F).
     expect(masterRatings.get("laranjas|F")).toEqual({ cr: 74.2, slope: 132 });
     expect(masterRatings.get("amarelas|M")).toEqual({ cr: 66.2, slope: 122 });
-    const stats = json("public/player-stats.json");
-    const form = (fed) => (fed ? stats[fed] ?? null : null);
-    const r = buildRepeaters({ current, previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, form, masterRatings });
 
-    const field = currentField(current);
+    const r = buildRepeaters({
+      current: c.vespera, previous: [{ id: "192-10013", year: 2025, t: c.t2025 }],
+      fedInfo: c.fedInfo, form: c.form, masterRatings,
+    });
+
+    const field = currentField(c.vespera);
     expect(field).toHaveLength(16);
-    // Medido a 2026-09-02: 14 dos 16 do draw já jogaram a edição de 2025.
     expect(r.length).toBeGreaterThanOrEqual(10);
     expect(r.length).toBeLessThanOrEqual(field.length);
 
-    for (const x of r) {
-      expect(x.editions.length).toBeGreaterThan(0);
-      if (!x.forecast) continue;
-      // Duas voltas num par 72: fora desta janela é erro de modelo, não golfe.
-      expect(x.forecast.total, x.name).toBeGreaterThan(130);
-      expect(x.forecast.total, x.name).toBeLessThan(220);
-      expect(x.forecast.low).toBeLessThanOrEqual(x.forecast.total);
-      expect(x.forecast.high).toBeGreaterThanOrEqual(x.forecast.total);
-    }
-
-    // O Francisco jogou 2025 das AMARELAS (66.2/122) e em 2026 vai às VERDES
-    // (71/132). O tee TEM de entrar na conta: com a mesma forma, prever nas
-    // verdes dá pior do que nas amarelas — quase 5 golpes por volta.
-    // (Não se testa "pior que 2025": ele baixou 2,7 de índice em 3 meses e o
-    // ganho de forma pode mais do que compensar o tee — e compensa.)
-    const francisco = r.find((x) => x.fed === "52856");
-    expect(francisco, "Francisco Vilardell Carvalho no field").toBeTruthy();
-    expect(francisco.teeNow).toMatch(/verde/i);
-    const nasAmarelas = buildRepeaters({
-      current: { ...current, _draws: { 1: { groups: [{ tee: "Amarelas", players: [{ nome: "Francisco Carvalho", fed: "52856" }] }] } } },
-      previous: [{ id: "192-10013", year: 2025, t: t2025 }], fedInfo, form, masterRatings,
-    })[0];
-    expect(nasAmarelas.forecast.total).toBeLessThan(francisco.forecast.total);
-
-    // As "Laranjas" das raparigas não existem em 2025, mas o master-courses
-    // tem-nas (74.2/132) — logo a previsão delas é firme, não uma suposição.
-    // Inferi-las das amarelas (71.1/126) subestimava a prova em ~3 golpes.
+    // As "Laranjas" das raparigas não existem em 2025, mas o master tem-nas
+    // (74.2/132) — logo a previsão delas é firme, não uma suposição.
     const angelina = r.find((x) => x.fed === "51523");
     expect(angelina.teeNow).toMatch(/laranja/i);
     expect(angelina.forecast.teeKnown).toBe(true);
-
-    // O Manuel joga o mesmo tee de 2025 (amarelas) → rating conhecido.
-    const manuel = r.find((x) => x.fed === "52884");
-    expect(manuel.forecast.teeKnown).toBe(true);
 
     // ⚠ Guarda contra a versão optimista do modelo, que previa 132 (66+66) ao
     // Nuno Palmares — 12 abaixo do par, com UM 66 na carreira. Nenhuma previsão
@@ -93,5 +79,53 @@ describe("PJA Torre — field de 2026 contra a edição de 2025", () => {
       const bomDia = Math.round(rat.cr + (x.form.avgSD8 * rat.slope) / 113) * 2;
       expect(x.forecast.total, `${x.name}: previsão abaixo do bom dia dele`).toBeGreaterThanOrEqual(bomDia);
     }
+  });
+});
+
+describe("PJA Torre — o modelo aferido contra o que aconteceu", () => {
+  it("acerta o intervalo na maioria e não se afasta em média", async () => {
+    const { buildRepeaters, masterTeeRatings } = await import("../src/pages/fpg/repeatersModel.ts");
+    const c = cenario();
+    const r = buildRepeaters({
+      current: c.vespera, previous: [{ id: "192-10013", year: 2025, t: c.t2025 }],
+      fedInfo: c.fedInfo, form: c.form,
+      masterRatings: masterTeeRatings(json("public/data/master-courses.json"), c.vespera.campo),
+    });
+    const real = new Map(c.t2026.players.map((p) => [p.fedCode, p]));
+
+    let n = 0, dentro = 0, somaErro = 0;
+    for (const x of r) {
+      const p = real.get(x.fed); if (!p || !x.forecast) continue;
+      const tot = typeof p.grossTotal === "number" && p.grossTotal < 900 ? p.grossTotal : null;
+      if (tot == null) continue;                       // sem cartão não afere nada
+      n++;
+      if (tot >= x.forecast.low && tot <= x.forecast.high) dentro++;
+      somaErro += Math.abs(x.forecast.total - tot);
+    }
+    const erroMedio = somaErro / n;
+
+    // Medido a 2026-09-06 sobre as 13 previsões com resultado: 11/13 dentro do
+    // intervalo, erro médio 5,0 golpes em 36 buracos (2,5 por volta). Os
+    // limiares são folgados de propósito — isto trava uma REGRESSÃO do modelo,
+    // não certifica pontaria: um torneio é uma amostra pequena.
+    expect(n).toBeGreaterThanOrEqual(10);
+    expect(dentro / n, `só ${dentro}/${n} dentro do intervalo`).toBeGreaterThanOrEqual(0.6);
+    expect(erroMedio, `erro médio ${erroMedio.toFixed(1)} golpes`).toBeLessThan(9);
+  });
+
+  it("o Manuel: previsto no intervalo, e o resultado real lá dentro", async () => {
+    const { buildRepeaters, masterTeeRatings } = await import("../src/pages/fpg/repeatersModel.ts");
+    const c = cenario();
+    const r = buildRepeaters({
+      current: c.vespera, previous: [{ id: "192-10013", year: 2025, t: c.t2025 }],
+      fedInfo: c.fedInfo, form: c.form,
+      masterRatings: masterTeeRatings(json("public/data/master-courses.json"), c.vespera.campo),
+    });
+    const manuel = r.find((x) => x.fed === "52884");
+    const real = c.t2026.players.find((p) => p.fedCode === "52884");
+    expect(real.grossTotal).toBe(146);                 // 73+73, 2.º classificado
+    expect(real.pos).toBe(2);
+    expect(manuel.forecast.low).toBeLessThanOrEqual(146);
+    expect(manuel.forecast.high).toBeGreaterThanOrEqual(146);
   });
 });

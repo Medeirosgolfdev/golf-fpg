@@ -53,6 +53,7 @@ const path = require("path");
 const { loadCookieHeader } = require("./lib/cookies");
 const { Sessao, criarSessaoLista } = require("./lib/fpg-session");
 const { lisbonCivilDayStr } = require("../lib/helpers.js");
+const { spliceDrawTcode } = require("./lib/draw-splice");
 
 const REPO = path.resolve(__dirname, "..");
 const ADM = path.join(REPO, "public", "data", "fpg-admissions-draws.json");
@@ -87,6 +88,15 @@ const PROBE_TO = parseInt(argVal("--probe-to") || "11090", 10);
 /* ── entrada do draw (metadata + field) ─────────────────────────────────── */
 const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
   .toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+/**
+ * Chave de nome para comparar o draw com a classificação.
+ * ⚠ A FPG escreve "APELIDO,Nome" na classificação e "Nome Apelido" no draw
+ * (medido no PJA Torre 2026: "ROCHA,João" vs "João Rocha"). Comparar as
+ * strings tal como vêm dava ZERO nomes em comum num torneio que era o certo,
+ * e a verificação de identidade recusava-o. Ordenar os tokens resolve — é o
+ * mesmo truque do `nameKey` do painel "Quem repete" e do `vetKey` da /major.
+ */
+const chaveNome = (s) => norm(s).split(" ").filter(Boolean).sort().join(" ");
 
 const cgssFile = JSON.parse(fs.readFileSync(CGSS, "utf8"));
 const drawEntry = cgssFile.tournaments.find(t => String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER);
@@ -96,7 +106,7 @@ const META = { name: drawEntry.name, date: drawEntry.date, campo: drawEntry.camp
 const OFFICIAL_NAME = new Map();
 const drawNames = new Set();
 for (const r of Object.values(drawEntry.draws || {}))
-  for (const g of r.groups || []) for (const p of g.players || []) drawNames.add(norm(p.nome));
+  for (const g of r.groups || []) for (const p of g.players || []) drawNames.add(chaveNome(p.nome));
 const MIN_OVERLAP = parseInt(argVal("--min-overlap") || String(Math.ceil(drawNames.size * 0.5)), 10);
 const MIN_PLAYERS = parseInt(argVal("--min-players") || String(Math.ceil(drawNames.size * 0.6)), 10);
 const candidatesArg = argVal("--tcode");
@@ -266,21 +276,29 @@ async function warmup(host, tcode) {
   } catch { return false; }
 }
 
+/**
+ * Classificação de um torneio.
+ * `round` = número da volta (classificação DESSA volta) ou "A" para a
+ * classificação AGREGADA — a final, por total.
+ * ⚠ Numa prova a várias voltas é preciso pedir a agregada: com a da R1, a
+ * posição e o total ficam os do primeiro dia. Medido no PJA Torre 2026, onde
+ * o 5.º classificado (148) aparecia atrás do 4.º (155).
+ */
 async function fetchClassif(host, tcode, round, { quiet } = {}) {
   const all = [];
   let startIndex = 0;
   while (true) {
     const body = {
       Classi: "1", tclub: CCODE, tcode: tcode,
-      classiforder: "1", classiftype: "I", classifroundtype: "D",
-      scoringtype: "1", round: String(round || 1),
+      classiforder: "1", classiftype: "I", classifroundtype: round === "A" ? "A" : "D",
+      scoringtype: "1", round: round === "A" ? "" : String(round || 1),
       members: "0", playertypes: "0", gender: "0",
       minagemen: "0", maxagemen: "999", minageladies: "0", maxageladies: "999",
       minhcp: "-8", maxhcp: "99", idfilter: "-1",
       jtStartIndex: String(startIndex), jtPageSize: String(PAGE_SIZE), jtSorting: "score_id DESC",
     };
     const qs = `jtStartIndex=${startIndex}&jtPageSize=${PAGE_SIZE}&jtSorting=${encodeURIComponent("score_id DESC")}`;
-    const r = await postJson(host, "classif.aspx/ClassifLST", qs, body, `classif ${CCODE}/${tcode} R${round || 1}`, { quiet });
+    const r = await postJson(host, "classif.aspx/ClassifLST", qs, body, `classif ${CCODE}/${tcode} ${round === "A" ? "agregada" : "R" + (round || 1)}`, { quiet });
     if (!r.ok) return { ok: false, records: all, error: r.error };
     all.push(...r.records);
     if (r.records.length < PAGE_SIZE) break;
@@ -377,7 +395,7 @@ function mapPlayer(r) {
 }
 const playerHasScore = (p) => typeof p.grossTotal === "number" && p.grossTotal > 0 && p.grossTotal < 900;
 const anyResults = (players) => Array.isArray(players) && players.some(playerHasScore);
-const overlap = (players) => players.reduce((s, p) => s + (drawNames.has(norm(p.name)) ? 1 : 0), 0);
+const overlap = (players) => players.reduce((s, p) => s + (drawNames.has(chaveNome(p.name)) ? 1 : 0), 0);
 
 async function scrapeTournament(host, tcode) {
   await warmup(host, tcode);
@@ -391,6 +409,26 @@ async function scrapeTournament(host, tcode) {
   await sleep(150);
   const c2 = await fetchClassif(host, tcode, 2, { quiet: true });
   if (c2.ok && c2.records.length > 0) nRounds = 2;
+
+  // Com mais do que uma volta, a posição e o total válidos são os da
+  // classificação AGREGADA — a da R1 dá o primeiro dia.
+  if (nRounds > 1) {
+    await sleep(150);
+    const ag = await fetchClassif(host, tcode, "A");
+    if (ag.ok && ag.records.length > 0) {
+      const porScore = new Map(ag.records.map(r => [String(r.score_id), r]));
+      for (const p of players) {
+        const a = porScore.get(String(p.scoreId));
+        if (!a) continue;
+        const pos = parseInt(a.classif_pos, 10);
+        if (!isNaN(pos)) p.pos = pos;
+        if (a.gross_total != null) p.grossTotal = a.gross_total;
+        if (a.to_par_total != null) p.toPar = a.to_par_total;
+      }
+    } else {
+      console.warn("[cgss] aviso: sem classificação agregada — posições ficam as da R1.");
+    }
+  }
 
   console.log(`[cgss]   ${host.id}: ${CCODE}/${tcode} → ${players.length} jogadores${nRounds > 1 ? ` (${nRounds}R)` : ""} — scorecards…`);
   let scOk = 0, scFail = 0;
@@ -526,11 +564,28 @@ function writeAtomic(file, obj) {
 
   // 4) re-chavear o draw (drawOnly=false — a tab Draw fica ao lado dos resultados)
   try {
-    cgssFile.tournaments = cgssFile.tournaments.filter(t => !(String(t.ccode) === CCODE && String(t.tcode) === scraped.tcode));
-    drawEntry.tcode = scraped.tcode;
-    drawEntry.drawOnly = false;
-    cgssFile.total = cgssFile.tournaments.length;
-    writeAtomic(CGSS, cgssFile);
+    const dup = cgssFile.tournaments.some(t => String(t.ccode) === CCODE && String(t.tcode) === scraped.tcode);
+    const raw = fs.readFileSync(CGSS, "utf8");
+    const splice = dup ? null : spliceDrawTcode(raw, CCODE, PLACEHOLDER, scraped.tcode);
+    if (splice) {
+      // Confirmar que o splice produz exactamente o que se queria antes de gravar.
+      const esperado = JSON.parse(raw);
+      const alvo = esperado.tournaments.find(t => String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER);
+      alvo.tcode = scraped.tcode; alvo.drawOnly = false;
+      if (JSON.stringify(JSON.parse(splice)) !== JSON.stringify(esperado)) throw new Error("splice divergiu do esperado");
+      const tmp = CGSS + ".tmp";
+      fs.writeFileSync(tmp, splice);
+      fs.renameSync(tmp, CGSS);
+    } else {
+      // Só aqui se re-serializa: houve duplicado a remover (o `total` muda) ou
+      // o ficheiro não tem a forma esperada. O diff fica feio, mas é correcto.
+      cgssFile.tournaments = cgssFile.tournaments.filter(t => !(String(t.ccode) === CCODE && String(t.tcode) === scraped.tcode));
+      drawEntry.tcode = scraped.tcode;
+      drawEntry.drawOnly = false;
+      cgssFile.total = cgssFile.tournaments.length;
+      writeAtomic(CGSS, cgssFile);
+      console.warn(`[cgss] aviso: ${path.basename(CGSS)} re-serializado (diff grande) — splice textual não aplicável.`);
+    }
     console.log(`[cgss] ${path.basename(CGSS)}: draw re-chaveado ${PLACEHOLDER} → ${scraped.tcode}.`);
   } catch (e) { console.warn(`[cgss] aviso: re-chavear ${path.basename(CGSS)} falhou: ${e.message}`); }
 

@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-09-06T21:52:59.427Z",
+  "geradoEm": "2026-09-07T10:48:42.752Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -641,55 +641,73 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "192-90101",
+      "torneioId": "192-10024",
       "torneioNome": "PJA Torre 2026",
       "data": "2026-09-05",
       "ronda": 1,
       "teeTime": "11:15",
       "startHole": 1,
       "campo": "Terras da Comporta - Torre",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 73,
+        "toPar": 1
+      },
       "companheiros": [
         {
           "nome": "Guo Ziyang",
           "fed": "57904",
           "clube": "Estoril",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 76,
+            "toPar": 4
+          }
         },
         {
           "nome": "Ricardo Castro Ferreira",
           "fed": "49085",
           "clube": "Quinta Lágrimas",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
         }
       ]
     },
     {
       "circuito": "FPG",
-      "torneioId": "192-90101",
+      "torneioId": "192-10024",
       "torneioNome": "PJA Torre 2026",
       "data": "2026-09-05",
       "ronda": 2,
       "teeTime": "12:00",
       "startHole": 1,
       "campo": "Terras da Comporta - Torre",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 73,
+        "toPar": 1
+      },
       "companheiros": [
         {
           "nome": "Rodrigo Faria Constantino",
           "fed": "45278",
           "clube": "Aroeira",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
         },
         {
           "nome": "Nuno Palmares Jr.",
           "fed": "49124",
           "clube": "Estoril",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 70,
+            "toPar": -2
+          }
         }
       ]
     },
