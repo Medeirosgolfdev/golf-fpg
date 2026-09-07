@@ -3224,6 +3224,21 @@ Headers obrigatórios: `Cookie:` (6 cookies), `Content-Type: application/json`,
 ```
 Os params `jt*` vão também na query string além do body. Headers: `Content-Type: application/json; charset=utf-8`, `X-Requested-With: XMLHttpRequest`. Cross-domain: mesmo endpoint em `scoring.fpg.pt/lists/classif.aspx/ClassifLST`.
 
+⚠ **`classifroundtype` decide se a classificação é POR VOLTA ou AGREGADA**
+(medido 2026-09-06 no PJA Torre 2026, 192/10024):
+
+| valor | `round` | devolve |
+|---|---|---|
+| `"D"` | `"1"`, `"2"`… | a classificação **daquela volta** |
+| `"A"` | `""` | a classificação **agregada** (soma das voltas) |
+
+Com `"D"` os campos `classif_pos`/`gross_total`/`to_par_total` são os da volta
+pedida — num torneio a 2 voltas, ficar-se pela R1 põe o 5.º classificado (148)
+à frente do 4.º (155). Provas com mais de uma volta têm de fazer **uma segunda
+passagem em `"A"`** e sobrepor `pos`/`grossTotal`/`toPar` casando por
+`score_id`; os scorecards continuam a vir volta a volta. É o que o
+`update-cgss-draw-results.js` faz.
+
 Headers obrigatórios: `Cookie:` (2 cookies), `Content-Type: application/json`,
 `X-Requested-With: XMLHttpRequest`, `Origin: https://scoring.datagolf.pt`,
 `Referer: https://scoring.datagolf.pt/pt/tournaments.aspx`.
