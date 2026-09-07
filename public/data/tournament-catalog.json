@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T18:21:11.954Z",
+  "generatedAt": "2026-09-07T10:17:44.682Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -533,17 +533,27 @@
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
         "rfeg-rfeg14713_cadete_m",
-        "rfeg-rfeg15361_cadete_m"
+        "rfeg-rfeg15361_cadete_m",
+        "rfeg-rfeg15923_girlsboys_m"
       ],
       "firstDate": "2020-10-29",
       "lastDate": "2026-09-02",
-      "editionsCount": 527
+      "editionsCount": 528
     },
     {
       "id": "ffgolf-gp-jeunes",
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2501365354",
+        "ffgolf-2501380055",
+        "ffgolf-2601459964",
+        "ffgolf-2601463125",
+        "ffgolf-2601468054",
+        "ffgolf-2601448806",
+        "ffgolf-2601405025",
+        "ffgolf-2601465699",
+        "ffgolf-2601469958",
         "ffgolf-2601444105",
         "ffgolf-2601463024",
         "ffgolf-2601462841",
@@ -607,7 +617,6 @@
         "ffgolf-2501365554",
         "ffgolf-2501372042",
         "ffgolf-2501377451",
-        "ffgolf-2501365354",
         "ffgolf-2501361320",
         "ffgolf-2501305952",
         "ffgolf-2501358035",
@@ -847,8 +856,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-08-22",
-      "editionsCount": 301
+      "lastDate": "2026-09-05",
+      "editionsCount": 309
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -7463,6 +7472,29 @@
       "editionsCount": 13
     },
     {
+      "id": "uskids-seaview-open",
+      "label": "Seaview Open",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-5045",
+        "uskids-8195",
+        "uskids-455",
+        "uskids-1544",
+        "uskids-2750",
+        "uskids-3773",
+        "uskids-7490",
+        "uskids-10300",
+        "uskids-12495",
+        "uskids-14585",
+        "uskids-17172",
+        "uskids-19816",
+        "uskids-22605"
+      ],
+      "firstDate": "2014-08-30",
+      "lastDate": "2026-09-05",
+      "editionsCount": 13
+    },
+    {
       "id": "uskids-gardner-municipal-golf-course",
       "label": "Gardner Municipal Golf Course",
       "sourceId": "uskids",
@@ -8333,28 +8365,6 @@
       "editionsCount": 12
     },
     {
-      "id": "uskids-seaview-open",
-      "label": "Seaview Open",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-5045",
-        "uskids-8195",
-        "uskids-455",
-        "uskids-1544",
-        "uskids-2750",
-        "uskids-3773",
-        "uskids-7490",
-        "uskids-10300",
-        "uskids-12495",
-        "uskids-14585",
-        "uskids-17172",
-        "uskids-19816"
-      ],
-      "firstDate": "2014-08-30",
-      "lastDate": "2025-08-30",
-      "editionsCount": 12
-    },
-    {
       "id": "uskids-simsbury-farms-golf-course",
       "label": "Simsbury Farms Golf Course",
       "sourceId": "uskids",
@@ -9012,6 +9022,28 @@
       ],
       "firstDate": "2022-05-15",
       "lastDate": "2026-05-24",
+      "editionsCount": 12
+    },
+    {
+      "id": "fpg-pja",
+      "label": "Portuguese Junior Amateur",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-152-10368-20240305-all",
+        "fpg-002-11022-20240317-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-038-10651-20250530-all",
+        "fpg-125-10370-20250823-all",
+        "fpg-125-10371-20250824-all",
+        "fpg-192-10013-20250912-all",
+        "fpg-017-10189-20251024-all",
+        "fpg-192-90101-20260905-all",
+        "fpg-192-90101-20260905-all"
+      ],
+      "firstDate": "2024-03-05",
+      "lastDate": "2026-09-05",
       "editionsCount": 12
     },
     {
@@ -10378,27 +10410,6 @@
       ],
       "firstDate": "2024-01-24",
       "lastDate": "2026-05-03",
-      "editionsCount": 11
-    },
-    {
-      "id": "fpg-pja",
-      "label": "Portuguese Junior Amateur",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-152-10368-20240305-all",
-        "fpg-002-11022-20240317-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-038-10651-20250530-all",
-        "fpg-125-10370-20250823-all",
-        "fpg-125-10371-20250824-all",
-        "fpg-192-10013-20250912-all",
-        "fpg-017-10189-20251024-all",
-        "fpg-192-90101-20260905-all"
-      ],
-      "firstDate": "2024-03-05",
-      "lastDate": "2026-09-05",
       "editionsCount": 11
     },
     {
@@ -14234,6 +14245,24 @@
       "editionsCount": 8
     },
     {
+      "id": "uskids-gulf-coast-state-invitational",
+      "label": "Gulf Coast State Invitational",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-7134",
+        "uskids-8831",
+        "uskids-12610",
+        "uskids-5587",
+        "uskids-14998",
+        "uskids-17340",
+        "uskids-19898",
+        "uskids-22539"
+      ],
+      "firstDate": "2018-05-26",
+      "lastDate": "2026-09-05",
+      "editionsCount": 8
+    },
+    {
       "id": "uskids-golf-nazionale",
       "label": "Golf Nazionale",
       "sourceId": "uskids",
@@ -16790,23 +16819,6 @@
       ],
       "firstDate": "2015-04-11",
       "lastDate": "2019-10-05",
-      "editionsCount": 7
-    },
-    {
-      "id": "uskids-gulf-coast-state-invitational",
-      "label": "Gulf Coast State Invitational",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-7134",
-        "uskids-8831",
-        "uskids-12610",
-        "uskids-5587",
-        "uskids-14998",
-        "uskids-17340",
-        "uskids-19898"
-      ],
-      "firstDate": "2018-05-26",
-      "lastDate": "2025-08-30",
       "editionsCount": 7
     },
     {
@@ -73904,6 +73916,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-tilgate-forest-golf-course-tour-championship",
+      "label": "Tilgate Forest Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22561"
+      ],
+      "firstDate": "2026-09-06",
+      "lastDate": "2026-09-06",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-el-cristo-golf-country-club-tour-championship",
       "label": "El Cristo Golf & Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -74165,6 +74188,17 @@
       ],
       "firstDate": "2026-05-30",
       "lastDate": "2026-05-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-mini-tour-u10-paca-etape-6-gde-bastide",
+      "label": "Mini Tour U10 PACA - Etape 6 (Gde Bastide)",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601469201"
+      ],
+      "firstDate": "2026-08-29",
+      "lastDate": "2026-08-29",
       "editionsCount": 1
     },
     {
