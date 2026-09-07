@@ -208,7 +208,7 @@ const EVENTS: CalEvent[] = [
   // Agosto
   ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
   ev("cgss_om_c",     "Torneio CGSS Summer",                new Date(2026,7,22), "Santo da Serra", "Stableford"),
-  ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,25), "Pinhal",         "Strokeplay", new Date(2026,7,28)),
+  ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,27), "Vilamoura - Pinhal", "Strokeplay", new Date(2026,7,30)),
   ev("cgss_om_c",     "Torneio CGSS",                       new Date(2026,7,29), "Santo da Serra", "Stableford"),
   // Setembro
   ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
@@ -257,12 +257,13 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   ev("drive_chall", "1º Torneio Drive Challenge Madeira",     new Date(2026,0,4),  "Palheiro",       "Strokeplay e Medal"),
   ev("drive_chall", "2º Torneio Drive Challenge Madeira",     new Date(2026,1,8),  "Santo da Serra",  "Strokeplay e Medal"),
-  ev("drive_chall", "5º Torneio Drive Challenge Madeira",     new Date(2026,2,8),  "Santo da Serra",  "Strokeplay e Medal"),
+  ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,2,8),  "Santo da Serra",  "Strokeplay e Medal"),
   ev("drive_chall", "4º Torneio Drive Challenge Madeira",     new Date(2026,3,12), "Porto Santo",     "Strokeplay e Medal"),
-  ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_chall", "5º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
   ev("drive_chall", "6º Torneio Drive Challenge Madeira",     new Date(2026,5,28), "Porto Santo",     "Strokeplay e Medal"),
   ev("drive_chall", "7º Torneio Drive Challenge Madeira",     new Date(2026,6,11), "Santo da Serra",  "Strokeplay e Medal"),
   ev("drive_final", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_final", "Final Nacional Drive Challenge",         new Date(2026,9,10), "Jamor",           "Strokeplay e Medal", new Date(2026,9,11)),
 
   /* ══════════════════════════════════════
      DRIVE TOUR — verde (Sul/Norte/Tejo)
@@ -270,16 +271,18 @@ const EVENTS: CalEvent[] = [
   // Sul
   ev("drive_tour", "1º Torneio Drive Tour Sul",   new Date(2026,0,11), "Laguna GC",    "Strokeplay e Medal"),
   ev("drive_tour", "2º Torneio Drive Tour Sul",   new Date(2026,1,1),  "Vila Sol",     "Strokeplay e Medal"),
-  ev("drive_tour", "3º Torneio Drive Tour Sul",   new Date(2026,3,4),  "Penina (TBC)", "Strokeplay e Medal"),
+  ev("drive_tour", "3º Torneio Drive Tour Sul",   new Date(2026,3,4),  "Quinta do Vale", "Strokeplay e Medal"),
   ev("drive_tour", "4º Torneio Drive Tour Sul",   new Date(2026,5,10), "Boavista",     "Strokeplay e Medal"),
   // Norte
   ev("drive_tour", "1º Torneio Drive Tour Norte", new Date(2026,0,4),  "Estela GC",      "Strokeplay e Medal"),
-  ev("drive_tour", "2º Torneio Drive Tour Norte", new Date(2026,1,1),  "Amarante",       "Strokeplay e Medal"),
+  // Remarcado: jogou-se a 30 Ago (987/10207), não a 1 Fev.
+  ev("drive_tour", "2º Torneio Drive Tour Norte", new Date(2026,7,30), "Amarante",       "Strokeplay e Medal"),
   ev("drive_tour", "3º Torneio Drive Tour Norte", new Date(2026,1,28), "Vale Pisão",     "Strokeplay e Medal", new Date(2026,2,1)),
   ev("drive_tour", "4º Torneio Drive Tour Norte", new Date(2026,3,19), "Ponte de Lima",  "Strokeplay e Medal"),
   // Tejo
   ev("drive_tour", "1º Torneio Drive Tour Tejo",  new Date(2026,0,4),  "Montado",        "Strokeplay e Medal"),
-  ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,0,31), "Belas",          "Strokeplay e Medal"),
+  // Remarcado: jogou-se a 10 Jun (985/10203), não a 31 Jan.
+  ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,5,10), "Belas",          "Strokeplay e Medal"),
   ev("drive_tour", "3º Torneio Drive Tour Tejo",  new Date(2026,2,28), "St. Estêvão",    "Strokeplay e Medal", new Date(2026,2,29)),
   ev("drive_tour", "4º Torneio Drive Tour Tejo",  new Date(2026,3,12), "Lisbon SC",      "Strokeplay e Medal"),
   // Final Nacional
@@ -301,9 +304,11 @@ const EVENTS: CalEvent[] = [
   ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2026,2,14), "Quinta do Peru",      "Strokeplay", new Date(2026,2,15)),
   ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2026,4,16), "Vidago Palace",       "Strokeplay", new Date(2026,4,17)),
   ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2026,6,18), "Palmares",            "Strokeplay", new Date(2026,6,19)),
-  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,8,19), "TBC",                 "Strokeplay", new Date(2026,8,20)),
-  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
-  ev("fpg_aquapor", "7º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
+  // O 5º de Setembro (campo TBC) saiu do calendário oficial e a FPG renumerou:
+  // as páginas em competicoes.fpg.pt mantêm os slugs "6o-…-estela" e
+  // "7o-…-belas-cc" mas os títulos são agora 5º e 6º. O circuito tem 6 provas.
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
 
   /* ══════════════════════════════════════
      FPG — Torneios (roxo)
@@ -313,14 +318,14 @@ const EVENTS: CalEvent[] = [
   ev("fpg_torneios", "Aberto do Estoril",       new Date(2026,4,23), "CG Estoril",    "Strokeplay", new Date(2026,4,24)),
   ev("fpg_torneios", "Taça RS Yeatman",         new Date(2026,5,20), "CG Miramar",    "Strokeplay", new Date(2026,5,21)),
   ev("fpg_torneios", "Taça Mendes D'Almeida",   new Date(2026,7,15), "Vidago Palace", "Strokeplay", new Date(2026,7,16)),
-  ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Ribagolfe",     "Strokeplay e Match", new Date(2026,9,13)),
+  ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Santo Estêvão", "Strokeplay e Match", new Date(2026,9,13)),
 
   /* ══════════════════════════════════════
      DESTAQUE — Internacionais (vermelho)
      ══════════════════════════════════════ */
   ev("dest_intl", "Faldo Series Madeira",                              new Date(2026,9,16),  "Santo da Serra",              "Strokeplay", new Date(2026,9,18)),
-  ev("dest_intl", "63º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
-  ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,4), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
+  ev("dest_intl", "64º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
+  ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,3), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
   ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
   ev("dest_intl", "World Kids Golf 2026 by Amendoeira",                new Date(2026,6,29), "Amendoeira",                  "3R Strokeplay (jantar de encerramento)", new Date(2026,6,31)),
 
@@ -360,7 +365,7 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   // CANCELADO: ev("dest_pja", "PJA — Quinta da Marinha", new Date(2026,0,24), "Quinta da Marinha", "Strokeplay", new Date(2026,0,25)),
   ev("dest_pja", "PJA — Great Golf Júnior Open 2026", new Date(2026,1,15), "Vilamoura",         "Strokeplay", new Date(2026,1,17)),
-  ev("dest_pja", "VIII Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
+  ev("dest_pja", "X Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
   ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
   ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Terras da Comporta - Torre", "2R Strokeplay", new Date(2026,8,6)),
   ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
