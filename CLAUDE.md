@@ -3028,6 +3028,52 @@ refrescos manuais.
 
 ---
 
+#### 📊 Estatísticas de Clubes — `scripts/stat_*.asp` (público) — 2026-09-07
+
+O ASP clássico do `scoring-pt.datagolf.pt` serve **30 vistas de estatísticas
+agregadas** de toda a federação. É público (fetch puro, sem cookies), e não
+estava mapeado em lado nenhum até agora. Detalhe completo, com as colunas de
+cada vista, em `docs/api-fpg-endpoints.md` §14.
+
+```
+https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack={ack}
+```
+É um frameset: `stat_all_options.asp` (barra de opções) + `stat_nfed.asp`
+(vista corrente). Cada vista abre também sozinha.
+
+⚠ **O `ack` decide o ÂMBITO.** Os links que os clubes publicam trazem um ack
+**de clube** (ex. `64K06NJFI7` = Palheiro/059), que prende o painel àquele
+clube — 26 opções no `<select>`. Com o ack **master `XH256YF45T`** (o mesmo do
+`tournlist`/`draw.asp`) o selector abre nos **312** e aceita `club=ALL`: 286
+clubes em 36 páginas. Os acks de admissions/classif (`XH256YF450`,
+`MN0JF0I697`, `OT342GH16T`) são recusados aqui.
+
+⚠ Um ack errado devolve **HTTP 200 com 106 bytes** e o texto `Key not
+authorized` — testar pelo conteúdo, nunca por `res.ok`.
+
+Params: `club` · `ack` · `data1`/`data2` (YYYY-MM-DD) · `selyear1`/`selyear2` ·
+`course` · `counttype` (`hcp`|`all`) · `order`/`ordertype` · `pagesize`/`npage`
+· **`origin=1` obrigatório** no grupo TORNEIOS (`stat_scores_*`).
+
+O que vale a pena (medido a 2026-09-07):
+
+| Vista | Dá |
+|---|---|
+| `numresults` | **ranking nacional de actividade** — nome, nº de voltas, **fed**, clube+ccode, HCP, estado. ⚠ tecto de **2000 registos** (paginar por clube) |
+| `stat_ages` | **demografia júnior por clube** — escalões 0-10 · 11-12 · 13-14 · 15-16 · 17-18, por ano desde 2006 |
+| `stat_tourns_players` | nº de torneios por federado, cruzando clube ORGANIZADOR × anos × clube dos jogadores |
+| `stat_rounds` | voltas/torneios/EDS por clube |
+| `<select name="club">` | **tabela clube→ccode dos 286 clubes** (`Palheiro-059`, `Santo da Serra-007`, `FPG_DRIVE-988`) — o repo casa clubes por NOME, isto é o mapa oficial |
+
+⚠ **`stat_cba`/`stat_cba_course` NÃO são o PCC.** É o CBA antigo (CONGU/EGA),
+buckets −2(D)/−2/−1/0/+1, **agregado em %** por clube ou campo — sem valor por
+dia/torneio. Não substitui o `backfill-pcc.js`.
+
+⚠ Tudo o que sai daqui é **agregado**; as vistas por jogador (`numresults`,
+`stat_tourns_*`, `stat_highscores_players`) dão contagens, nunca resultados.
+
+---
+
 ## FPG — APIs em tempo real (descobertas 2026-04-14)
 
 Documentação completa em `docs/api-fpg-endpoints.md`. Resumo crítico:

@@ -309,6 +309,13 @@ const EVENTS: CalEvent[] = [
   // "7o-…-belas-cc" mas os títulos são agora 5º e 6º. O circuito tem 6 provas.
   ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
   ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
+  // 2027 — já publicado em competicoes.fpg.pt (o 6º ainda sem campo).
+  ev("fpg_aquapor", "1º Torneio do Circuito AQUAPOR",  new Date(2027,0,16), "Morgado do Reguengo", "Strokeplay", new Date(2027,0,17)),
+  ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2027,1,20), "Quinta do Peru",      "Strokeplay", new Date(2027,1,21)),
+  ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2027,3,17), "Oporto",              "Strokeplay", new Date(2027,3,18)),
+  ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2027,4,8),  "Vidago Palace",       "Strokeplay", new Date(2027,4,9)),
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2027,6,17), "Penina",              "Strokeplay", new Date(2027,6,18)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2027,10,20),"TBA",                 "Strokeplay", new Date(2027,10,21)),
 
   /* ══════════════════════════════════════
      FPG — Torneios (roxo)
