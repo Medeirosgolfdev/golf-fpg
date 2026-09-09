@@ -100,7 +100,7 @@ function buildPlayerLookup() {
 function buildScrapedSet() {
   const set = new Set();
   const files = fs.readdirSync(DATA_DIR).filter(
-    (f) => /^(pull-torneios|drive-data|aquapor-data|jovens_)/.test(f) && f.endsWith(".json")
+    (f) => /^(pull-torneios|drive-data|aquapor-data|jovens_|torneio-)/.test(f) && f.endsWith(".json")
   );
   for (const f of files) {
     const d = readJsonSafe(path.join(DATA_DIR, f));
