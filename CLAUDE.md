@@ -3608,6 +3608,20 @@ Descoberto a investigar um caso concreto: o federado 60382 entrou com índice
    fontes trazem agarradas as competições sociais de clube ("MENS DAY 11/8",
    "Competição Mensal", "Mid-Amateur"). Medido no histórico real: 39 derivados
    + 8 provas de adultos ignorados numa janela de 24h.
+4. **WAGR: só provas com PORTUGUESES** (`fromWagr`, 2026-09-09) — é um quarto
+   filtro, e só para esta fonte. O WAGR são **~4.000 eventos por ANO do mundo
+   inteiro**; sem o corte, o resumo enchia-se de provas sem relação com o
+   percurso dos nossos (um júnior na Malásia entrava). Medido sobre 2025+2026:
+   **101 provas** com portugueses e vencedor, das quais **28 passam** o filtro
+   de jovens — ~14 por ano, uma linha cada 3-4 semanas. As 73 cortadas são
+   sobretudo **Collegiate** (52), o golfe universitário americano onde jogam
+   portugueses já adultos.
+
+⚠ **O `winner` do WAGR pode trazer VÁRIOS nomes separados por vírgula** (provas
+por equipas — 103 dos 8.084 eventos). Passá-lo ao `displayName` dava asneira: ele
+lê a vírgula como "APELIDO, Nome" e trocava a ordem, colando os dois num nome
+inventado ("Tomas Afonso Araujo,Joao Alves" → "Joao Alves Tomas Afonso Araujo",
+uma pessoa que não existe). O `wagrWinners()` separa ANTES de formatar.
 
 ### Armadilhas resolvidas (todas com caso real)
 
