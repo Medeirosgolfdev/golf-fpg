@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T11:38:27.364Z",
+  "generatedAt": "2026-09-09T12:04:34.416Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -5850,6 +5850,32 @@
       ],
       "firstDate": "2018-10-06",
       "lastDate": "2026-08-16",
+      "editionsCount": 16
+    },
+    {
+      "id": "fpg-drive-tour",
+      "label": "Drive Tour",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10579-20221112-sub_18",
+        "fpg-000-10578-20221112-sub_18",
+        "fpg-000-10577-20221112-sub_16",
+        "fpg-000-10576-20221112-sub_16",
+        "fpg-000-10575-20221112-sub_14",
+        "fpg-000-10574-20221112-sub_14",
+        "fpg-000-10573-20221112-sub_12",
+        "fpg-000-10572-20221112-sub_12",
+        "fpg-000-10689-20231104-sub_18",
+        "fpg-000-10688-20231104-sub_18",
+        "fpg-000-10687-20231104-sub_16",
+        "fpg-000-10686-20231104-sub_16",
+        "fpg-000-10685-20231104-sub_14",
+        "fpg-000-10684-20231104-sub_14",
+        "fpg-000-10683-20231104-sub_12",
+        "fpg-000-10682-20231104-sub_12"
+      ],
+      "firstDate": "2022-11-12",
+      "lastDate": "2023-11-04",
       "editionsCount": 16
     },
     {
@@ -49183,6 +49209,138 @@
       "editionsCount": 2
     },
     {
+      "id": "fpg-campeonato-nacional-sub-10-raparigas",
+      "label": "Campeonato Nacional Sub 10 - - Raparigas",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10534-20220716-sub_10",
+        "fpg-000-10773-20240624-sub_10"
+      ],
+      "firstDate": "2022-07-16",
+      "lastDate": "2024-06-24",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-sub-10-rapazes",
+      "label": "Campeonato Nacional Sub 10 - - Rapazes",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10535-20220716-sub_10",
+        "fpg-000-10772-20240624-sub_10"
+      ],
+      "firstDate": "2022-07-16",
+      "lastDate": "2024-06-24",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-nacional-jovens-sub-10",
+      "label": "Nacional de Jovens Sub-10",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10648-20230704-sub_10",
+        "fpg-000-10647-20230704-sub_10"
+      ],
+      "firstDate": "2023-07-04",
+      "lastDate": "2023-07-04",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-14-s",
+      "label": "Campeonato Nacional de Jovens Sub 14 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10870-20250424-sub_14",
+        "fpg-000-10940-20260430-sub_14"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-14-h",
+      "label": "Campeonato Nacional de Jovens Sub 14 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10869-20250424-sub_14",
+        "fpg-000-10939-20260430-sub_14"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-16-s",
+      "label": "Campeonato Nacional de Jovens Sub 16 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10868-20250424-sub_16",
+        "fpg-000-10938-20260430-sub_16"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-16-h",
+      "label": "Campeonato Nacional de Jovens Sub 16 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10867-20250424-sub_16",
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-18-s",
+      "label": "Campeonato Nacional de Jovens Sub 18 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10866-20250424-sub_18",
+        "fpg-000-10936-20260430-sub_18"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-18-h",
+      "label": "Campeonato Nacional de Jovens Sub 18 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10865-20250424-sub_18",
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "firstDate": "2025-04-24",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-10-h",
+      "label": "Campeonato Nacional de Jovens Sub 10 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-988-10256-20250627-sub_10",
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "firstDate": "2025-06-27",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-12-s",
+      "label": "Campeonato Nacional de Jovens Sub 12 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-988-10255-20250627-sub_12",
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "firstDate": "2025-06-27",
+      "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
       "id": "fpg-campeonato-nacional-de-jovens-sub-12-h",
       "label": "Campeonato Nacional de Jovens Sub 12 H",
       "sourceId": "fpg",
@@ -74077,28 +74235,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-nacional-jovens-sub-10",
-      "label": "Nacional de Jovens Sub-10",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10647-20230704-sub_10"
-      ],
-      "firstDate": "2023-07-04",
-      "lastDate": "2023-07-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-sub-10-rapazes",
-      "label": "Campeonato Nacional Sub 10 - - Rapazes",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10772-20240624-sub_10"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-1st-castro-marim-portuguese-int-u14-championship",
       "label": "1st Castro Marim Portuguese Int. U14 Championship",
       "sourceId": "fpg",
@@ -74107,94 +74243,6 @@
       ],
       "firstDate": "2025-12-05",
       "lastDate": "2025-12-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-18-h",
-      "label": "Campeonato Nacional de Jovens Sub 18 H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10935-20260430-sub_18"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-18-s",
-      "label": "Campeonato Nacional de Jovens Sub 18 S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10936-20260430-sub_18"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-16-h",
-      "label": "Campeonato Nacional de Jovens Sub 16 H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10937-20260430-sub_16"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-16-s",
-      "label": "Campeonato Nacional de Jovens Sub 16 S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10938-20260430-sub_16"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-14-h",
-      "label": "Campeonato Nacional de Jovens Sub 14 H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10939-20260430-sub_14"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-14-s",
-      "label": "Campeonato Nacional de Jovens Sub 14 S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10940-20260430-sub_14"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-12-s",
-      "label": "Campeonato Nacional de Jovens Sub 12 S",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10942-20260430-sub_12"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-10-h",
-      "label": "Campeonato Nacional de Jovens Sub 10 H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10943-20260430-sub_10"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
       "editionsCount": 1
     },
     {
@@ -74327,6 +74375,28 @@
       ],
       "firstDate": "2026-05-30",
       "lastDate": "2026-05-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-sub-12-raparigas",
+      "label": "Campeonato Nacional Sub 12 - Raparigas",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10771-20240624-sub_12"
+      ],
+      "firstDate": "2024-06-24",
+      "lastDate": "2024-06-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-sub-12-rapazes",
+      "label": "Campeonato Nacional Sub 12 - Rapazes",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10770-20240624-sub_12"
+      ],
+      "firstDate": "2024-06-24",
+      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {
