@@ -87,6 +87,10 @@ const DATA = {
   fpgFederados: path.join(DATA_DIR, "federados.json"),
   fpgPullTorneios: (n) => path.join(DATA_DIR, `pull-torneios${String(n).padStart(3, "0")}.json`),
   fpgPullPattern: /^pull-torneios\d{3}\.json$/,
+  // jovens_YYYY.json — mesma estrutura "fpg-pull". É a casa canónica dos
+  // Campeonatos Nacionais de Jovens (consumidos por /FPG/jovens); o agregador
+  // lê-os para não duplicar os Nacionais em pull-torneios (dedup por sourceKey).
+  fpgJovensPattern: /^jovens_\d{4}\.json$/,
   fpgDrivePattern: /^drive-data-\d{4}-\d{2}\.json$/,
   fpgAquaporPattern: /^aquapor-data-\d{4}-\d{2}\.json$/,
   uskidsMemberHistorySlim: path.join(DATA_DIR, "uskids-member-history-slim.json"),
