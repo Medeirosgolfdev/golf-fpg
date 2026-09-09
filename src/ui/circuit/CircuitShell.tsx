@@ -503,7 +503,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 
   // ── Estado de filtros ──────────────────────────────────────────────
   const [search, setSearch] = useState("");
-  const [fYear, setFYear] = useState("all");
+  const [fYear, setFYear] = useState(() => {
+    const d = config.filters?.defaultYear;
+    return d === "current" ? String(new Date().getFullYear()) : (d ?? "all");
+  });
   const [fEsc, setFEsc] = useState("all");
   const [fSex, setFSex] = useState("all");
   const [fSource, setFSource] = useState("all");

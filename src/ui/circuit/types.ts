@@ -327,6 +327,20 @@ export interface CircuitConfig {
     /** Toggles ligados por defeito ao abrir a página (subconjunto de `toggles`).
      *  Ex: RFEG liga "results" para esconder futuros só-inscritos à partida. */
     defaultToggles?: CircuitToggle[];
+    /**
+     * Ano pré-seleccionado no filtro ao abrir a página — `"current"` = o ano
+     * civil de hoje, ou um ano literal ("2026"). Ausente = "all" (todos), que
+     * é o comportamento de sempre e o de todas as páginas menos a /wagr.
+     *
+     * ⚠ Existe por CUSTO DE RENDER, não por gosto: a /wagr traz ~8.000 eventos
+     * (o mundo inteiro, 2 anos) e a sidebar renderiza TODAS as entradas — sem
+     * isto, montar a página ou limpar um filtro custava segundos. Só usar em
+     * páginas com milhares de entradas.
+     * ⚠ Não afecta deep-links: o `cur` cai no `entries.find` quando a entrada
+     * seleccionada está fora do filtro, por isso /wagr/evt/{id} de outro ano
+     * continua a abrir.
+     */
+    defaultYear?: "current" | string;
   };
 
   /** Limiar de "muitos torneios" para o toggle Veteranos (default 3). */
