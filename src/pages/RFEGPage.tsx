@@ -2655,7 +2655,7 @@ export function RFEGPageLegacy() {
         <select className="input" value={filterSex} onChange={(e) => setFilterSex(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">M+F</option>
           <option value="M">Masculino</option>
-          <option value="F">Femenino</option>
+          <option value="F">Feminino</option>
         </select>
         <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">Fontes</option>

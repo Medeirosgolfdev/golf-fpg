@@ -883,7 +883,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             <select className="input" value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
               <option value="all">M+F</option>
               <option value="M">Masculino</option>
-              <option value="F">Femenino</option>
+              <option value="F">Feminino</option>
             </select>
           )}
           {flt.source && sources.length > 1 && (
