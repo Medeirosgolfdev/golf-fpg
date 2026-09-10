@@ -26,13 +26,17 @@ const histOutPath = path.join(__dirname, "..", "public", "data", "hcp-history.js
 /* HCP máximo plausível (WHS topo = 54). Acima disto é provisório/lixo
  * (ex: índices 77/99 que esmagavam a escala do gráfico) → excluído. */
 const HCP_MAX_PLAUSIBLE = 54;
+/* Plus handicaps são NEGATIVOS nos dados da FPG (ex: +3.7 → -3.7) e são
+ * válidos — excluí-los cortava o histórico no dia em que o jogador passava a
+ * plus (o Diogo Rocha, -3.7, aparecia parado em 0.1). */
+const HCP_MIN_PLAUSIBLE = -10;
 /* Pontos máximos guardados por jogador no histórico compacto. Quase todos os
  * juniores têm menos do que isto; só downsample em casos extremos. */
 const HIST_MAX_PTS = 160;
 
 /**
  * Converte raw.hcpHistory ([{d:ms, h}]) num histórico compacto e robusto:
- *  - exclui HCP não plausível (> 54) e valores não finitos
+ *  - exclui HCP não plausível (> 54 ou < -10) e valores não finitos; mantém os plus (negativos)
  *  - resolução diária (1 ponto/dia, fica o último), d em dias inteiros
  *  - downsample uniforme se exceder HIST_MAX_PTS (preservando extremos)
  * Formato: [[dayInt, h1dp], ...] — dayInt = ms/86400000, h com 1 casa.
@@ -42,7 +46,7 @@ function compactHcpHistory(hh) {
   const byDay = new Map();
   for (const p of hh) {
     const d = Number(p.d), h = Number(p.h);
-    if (!isFinite(d) || d <= 0 || !isFinite(h) || h <= 0 || h > HCP_MAX_PLAUSIBLE) continue;
+    if (!isFinite(d) || d <= 0 || !isFinite(h) || h < HCP_MIN_PLAUSIBLE || h > HCP_MAX_PLAUSIBLE) continue;
     byDay.set(Math.round(d / 86400000), Math.round(h * 10) / 10); // último do dia vence
   }
   let pts = [...byDay.entries()].sort((a, b) => a[0] - b[0]);
