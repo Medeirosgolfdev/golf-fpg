@@ -40,11 +40,10 @@ const fs = require("fs");
 const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 
+// Resultados (pull-torneios) passam-se como argumento — o scrape-miramar.yml
+// passa o ficheiro onde escreveu.
 const ALVOS_POR_DEFEITO = [
   "public/data/fpg-admissions-draws.json",
-  ...fs.readdirSync(path.join(ROOT, "public", "data"))
-    .filter(f => /^torneio-\d+-\d+\.json$/.test(f))
-    .map(f => `public/data/${f}`),
 ];
 
 const DRY = process.argv.includes("--dry");

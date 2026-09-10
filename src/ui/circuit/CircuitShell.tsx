@@ -612,9 +612,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // forma de partilhar/bookmark o torneio nem de saber qual está aberto. Reflectimos
   // o default no URL (/rfeg/{source}/{id}). O guard `selectedId == null` garante que
   // só dispara uma vez (depois do navigate, selectedId passa a estar definido).
+  // ⚠ Nunca durante `loading`: os hooks correm antes do early-return de loading,
+  // e com as entries ainda a meio o default seria um torneio qualquer — o
+  // navigate reescrevia o deep-link que a página ainda estava a resolver.
   useEffect(() => {
+    if (loading) return;
     if (selectedId == null && !infoView && cur && onSelectEntry) onSelectEntry(cur);
-  }, [selectedId, infoView, cur, onSelectEntry]);
+  }, [loading, selectedId, infoView, cur, onSelectEntry]);
 
   const selectEntry = (e: CircuitEntry) => {
     setLocalId(e.id);
@@ -667,6 +671,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // stale), reflectir o escalão activo no URL. Só dispara quando divergem — a
   // página deve guardar o navigate com um teste de location (evita loop).
   useEffect(() => {
+    if (loading) return; // idem ao default do torneio: não reescrever o URL a meio do carregamento
     if (divControlled && cur && curDiv && curDiv.key !== selectedDivKey) {
       onSelectDivision!(cur, curDiv);
     }

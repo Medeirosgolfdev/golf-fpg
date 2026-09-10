@@ -411,10 +411,14 @@ function CircuitBadge({ circuitos }: { circuitos: Set<"FPG" | "USKids" | "Intl">
 
 // ── Página principal ──────────────────────────────────────────────────
 
-// Para cada torneio FPG agregado, devolvemos uma URL canónica para a página
-// interna `/FPG/torneio/{ccode}-{tcode}` (deep-link já suportado pela FPGPage).
-function linkTorneioFPG(torneioId: string): string {
-  return `/FPG/torneio/${torneioId}`;
+// Para cada torneio FPG agregado, devolvemos uma URL canónica
+// `/{base}/torneio/{ccode}-{tcode}`. Drive Tour/Challenge e Aquapor vivem na
+// DrivePage (drive-data-*): a FPGPage só carrega os drives mensais desde 2026,
+// por isso um `/FPG/torneio/` de um drive de 2025 nunca era encontrado e o
+// shell abria outro torneio no lugar dele.
+const DRIVE_RX = /\b(drive|aquapor)\b/i;
+function linkTorneioFPG(torneioId: string, nome?: string | null): string {
+  return DRIVE_RX.test(nome || "") ? `/drive/torneio/${torneioId}` : `/FPG/torneio/${torneioId}`;
 }
 
 // Lista colapsável e ordenada de torneios — usada para "Com draw", "Sem draw"
@@ -505,7 +509,7 @@ function TorneiosList({
                     {fmtDateShort(t.data)}
                   </span>
                   <Link
-                    to={linkTorneioFPG(t.torneioId)}
+                    to={linkTorneioFPG(t.torneioId, t.nome)}
                     className="courseLink"
                     style={{ flex: 1, lineHeight: 1.3 }}
                   >
@@ -560,7 +564,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
               <CircuitBadge circuitos={new Set([t.circuito])} />
               <h3 style={{ margin: 0, fontSize: "var(--fs-16)", fontWeight: 700 }}>
                 {isFpg ? (
-                  <Link to={linkTorneioFPG(t.torneioId)} className="courseLink">{t.nome}</Link>
+                  <Link to={linkTorneioFPG(t.torneioId, t.nome)} className="courseLink">{t.nome}</Link>
                 ) : t.nome}
               </h3>
             </div>
@@ -1339,7 +1343,7 @@ export default function DrawsPage() {
                                     </span>
                                     <span style={{ flex: "1 1 160px", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                       {r.circuito === "FPG" && r.torneioId.includes("-") ? (
-                                        <Link to={`/FPG/torneio/${r.torneioId}`} className="courseLink">{r.torneioNome}</Link>
+                                        <Link to={linkTorneioFPG(r.torneioId, r.torneioNome)} className="courseLink">{r.torneioNome}</Link>
                                       ) : (
                                         r.torneioNome
                                       )}

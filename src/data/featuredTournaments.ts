@@ -170,8 +170,8 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   //   scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=10652 (U25)
   //   scoring.datagolf.pt/pt/Classifications.aspx?ccode=003&tcode=10653 (Sub-10)
   // Substituídos aqui, no teeRegulation.ts e no fpg-admissions-draws.json.
-  // Resultados scraped à parte (torneio-003-10652/10653.json, EXTRA_TOURN_FILES
-  // na FPGPage). Edições anteriores foram 10564 (U25) + 10565 (Sub10).
+  // Resultados nos pull-torneios (pull-torneios006.json). Edições anteriores
+  // foram 10564 (U25) + 10565 (Sub10).
   {
     ccode: "003",
     tcode: "10652",

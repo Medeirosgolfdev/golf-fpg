@@ -34,15 +34,12 @@ function listFiles(prefix) {
   return fs.readdirSync(DATA).filter(f => f.startsWith(prefix) && f.endsWith(".json")).map(f => path.join(DATA, f));
 }
 // Ficheiros com scores FPG (formato "fpg-pull": {tournaments:[{ccode,tcode,players}]}).
-// Inclui os standalone `torneio-{ccode}-{tcode}.json` — torneios scrapados a parte,
-// fora da numeracao pull-torneios (os mesmos que a FPGPage carrega em
-// EXTRA_TOURN_FILES). Sem eles, os draws desses torneios ficavam sem scores
-// (manuelScore/companheiros a null) no manuel-pairings.json.
+// Os torneios scrapados a pedido (scrape-miramar.yml) vão também para os
+// pull-torneios — não há ficheiros avulsos por torneio.
 function listFpgScoreFiles() {
   return [
     ...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
     ...listFiles("jovens_"), ...listFiles("clubes_"),
-    ...fs.readdirSync(DATA).filter(f => /^torneio-\d+-\d+\.json$/.test(f)).map(f => path.join(DATA, f)),
   ];
 }
 function normName(s) {
