@@ -429,7 +429,7 @@ export default function USKidsFieldPage() {
     // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
     // em public/data/. Ao adicionar novos ficheiros, incrementar AQUI e também em
     // KIDSdataLoader.ts (array `coreTasks`, kind "completo").
-    const TORNEIOS_COMPLETOS_COUNT = 40;
+    const TORNEIOS_COMPLETOS_COUNT = 41; // (41) = Local Tours Jutland + Copenhagen (DK), Fall 2025 + Spring 2026
     const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
       `/data/uskids_torneios_completos(${i + 1}).json`
     );
