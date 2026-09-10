@@ -41,6 +41,7 @@ function totalCalculado(fed, filtro) {
         gross: typeof p.grossTotal === "number" ? p.grossTotal : null,
       })),
       t.series,
+      t.name,
     );
     if (!pts.has(String(fed))) continue;
     results.push({ pos: null, pts: pts.get(String(fed)), series: t.series, tournName: t.name });

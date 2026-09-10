@@ -5,6 +5,7 @@
 import { describe, it, expect } from "vitest";
 import {
   drivePoints, finalPoints, sharedPoints, isFinalEvent, isNacionalFinal, FINAL_WEIGHT,
+  tournamentPoints,
 } from "./drive-points.cjs";
 
 describe("drivePoints", () => {
@@ -28,8 +29,16 @@ describe("finalPoints (Final regional a ×1.5)", () => {
     [2, 248],  // 247,5 arredondado
     [3, 141],
     [4, 113],  // 112,5 arredondado
+    [8, 57],   // 38×1.5 — a Final usa a tabela do Tour (RFDC_26N12G, Vasco Abreu)
+    [9, 50],   // 49,5 arredondado
   ])("%iº lugar vale %i pontos", (pos, pts) => {
     expect(finalPoints(pos, "challenge")).toBe(pts);
+  });
+
+  it("tournamentPoints aplica a tabela das Finais quando recebe o nome", () => {
+    const field = Array.from({ length: 9 }, (_, i) => ({ fed: String(i + 1), pos: i + 1, gross: 40 + i }));
+    expect(tournamentPoints(field, "challenge", "Final Drive Challenge Norte-Oporto-Sub 12").get("8")).toBe(38);
+    expect(tournamentPoints(field, "challenge", "7º Torneio Drive Challenge Norte-Qtª Barca -Sub 12").get("8")).toBe(35);
   });
 
   it("o peso é 1.5", () => {

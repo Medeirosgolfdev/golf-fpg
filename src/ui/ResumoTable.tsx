@@ -360,6 +360,7 @@ export function ResumoTable(props: {
           sex: playersDB[p.fed || ""]?.sex || "",
         })),
         t.series,
+        t.name,
       ));
     }
     const provasPorJogador = new Map<string, { pos: number | string | null; pts: number; series?: string | null; tournName?: string }[]>();

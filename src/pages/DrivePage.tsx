@@ -879,6 +879,7 @@ function buildSub12Data(
         sex: playersDB[p.fed || p.fedCode || ""]?.sex || "",
       })),
       t.series,
+      t.name,
     );
     for (const p of t.players) {
       if (isDNS(p)) continue;

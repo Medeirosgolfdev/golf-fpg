@@ -969,7 +969,12 @@ regras próprias, todas medidas contra o oficial (não são suposições):
 | `RFDC_{aa}{M\|N\|S\|T\|A\|C}{esc}{G\|N}` | Challenge, **ranking final** | 988 | total da fase regular **+ Final ×1.5** |
 | `RCA{H\|S}{aa}` | Circuito Aquapor | **000** | nacional, **separado por sexo** |
 
-- **Final ×1.5** (arredondado): 1º 250→375 · 2º 165→**248** · 3º 94→141 · 4º 75→**113**.
+- **Final ×1.5** (arredondado): 1º 250→375 · 2º 165→**248** · 3º 94→141 · 4º 75→**113** · 8º **38**→57.
+  ⚠ **As Finais usam a tabela do TOUR (8º = 38), não a do Challenge (8º = 35)** — medido a
+  2026-09-10: 16/16 oitavos lugares nas Finais oficiais valem 57, e a fase regular do Challenge
+  dá 35 em 137/137. `DRIVE_POINTS_FINAL` + `tournamentPoints(field, series, tournName)` — sem o
+  nome da prova o 8º de uma Final sai com 35. Apanhado pelo `drive-ranking-vs-oficial.test.js`
+  na Final do Norte Sub 12 (4 Set 2026).
   A Final **Nacional** não entra em ranking regional nenhum.
 - **Empates:** o Challenge/Tour desempata por **countback** (última volta →
   últimos 9 → 6 → 3 → 1 buraco — `scripts/lib/drive-countback.cjs`); o
