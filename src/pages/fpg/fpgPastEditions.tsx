@@ -16,7 +16,10 @@
  */
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
+import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
+import PastEditionsRepeaters from "./PastEditionsRepeaters";
 
 /**
  * Aliases CURADOS de edições que mudaram de nome/rótulo entre anos. A heurística
@@ -36,7 +39,7 @@ import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pa
  * escalão do nome GLOBALMENTE re-partiria o Miramar U25 (o "U25" do nome daria
  * "Sub 25" e deixava de casar com a edição anterior sem escalão).
  */
-interface EditionAlias { match: RegExp; canon: string; deriveEscFromName?: boolean }
+interface EditionAlias { match: RegExp; canon: string; course?: RegExp; deriveEscFromName?: boolean }
 const EDITION_ALIASES: EditionAlias[] = [
   // World Kids @ Amendoeira (ccode 179) — o nome variou muito entre anos:
   //   2024 "World Kids Golf 2024 Under N" · 2025 "Amendoeira World Kids Sub N"
@@ -58,10 +61,28 @@ const EDITION_ALIASES: EditionAlias[] = [
   // O U25 não precisa de regra (o family key dele já é estável nos três anos)
   // e não é afectado por esta: "…open u25" não contém "sub 10".
   { match: /^miramar internacional open\b.*\bsub\s?10\b/, canon: "miramar internacional open sub 10" },
+  // PJA @ Terras da Comporta (ccode 192). A organização rebaptiza a prova
+  // todos os anos — "PJA TOUR Grand Final" (2024), "PJA Race to Dunas" (2025,
+  // no TORRE), "Race to Dunas G. Final" (2025, nas DUNAS) — e o resultado
+  // eram quatro family keys, quatro singletons e a tab escondida em todas.
+  //
+  // O que é estável não é o nome: é o CAMPO. São duas provas distintas que
+  // se repetem lá todos os anos — a etapa de Setembro no Torre e a Grande
+  // Final de Novembro nas Dunas — e o campo separa-as sem ambiguidade. Daí o
+  // `course` (⚠ testado contra `t.campo`, NUNCA contra o nome: "PJA Race to
+  // Dunas" tem "Dunas" no nome mas joga-se no Torre, e é precisamente esse o
+  // caso que uma regra por nome mandava para o grupo errado).
+  { match: /\bdunas\b|\bgrand\w*\b/, course: /\bdunas\b/i, canon: "pja comporta grande final" },
+  // ⚠ O match é largo de propósito: o nome desta etapa ainda vai mudar (o
+  // torneio de 2026 entra com nome provisório e adopta o oficial da FPG quando
+  // os resultados saírem). Uma regra colada ao nome fazia a tab desaparecer
+  // nessa altura, em silêncio. Quem manda é o `course`.
+  { match: /^pja\b|\btorre\b|\brace to dunas\b/, course: /\btorre\b/i, canon: "pja comporta torre" },
 ];
-function editionAliasFor(rawFamKey: string | null): EditionAlias | null {
+function editionAliasFor(rawFamKey: string | null, campo?: string | null): EditionAlias | null {
   if (!rawFamKey) return null;
-  return EDITION_ALIASES.find(a => a.match.test(rawFamKey)) ?? null;
+  return EDITION_ALIASES.find(a =>
+    a.match.test(rawFamKey) && (!a.course || a.course.test(String(campo || "")))) ?? null;
 }
 /** Escalão "Sub N" a partir do nome ("Under 14"/"U14"/"Sub 14" → "Sub 14";
  *  "Under 16/18" → "Sub 16"). Usado só para eventos com `deriveEscFromName`. */
@@ -82,14 +103,14 @@ const CCODE_ALIASES: Record<string, string> = { "920": "183" };
 function editionKey(t: Tournament): string | null {
   const raw = tournamentFamilyKey(t.name);
   if (!raw) return null;
-  const fam = editionAliasFor(raw)?.canon ?? raw;
+  const fam = editionAliasFor(raw, t.campo)?.canon ?? raw;
   const cc = CCODE_ALIASES[String(t.ccode)] ?? t.ccode;
   return `${cc || "?"}|${fam}`;
 }
 
 /** Converte um torneio FPG numa `CircuitEntry` (uma coluna = uma edição). */
 function toEntry(t: Tournament): CircuitEntry {
-  const alias = editionAliasFor(tournamentFamilyKey(t.name));
+  const alias = editionAliasFor(tournamentFamilyKey(t.name), t.campo);
   const esc = t.escalao || (alias?.deriveEscFromName ? escFromName(t.name) : null) || "—";
   const div: CircuitDivision = { key: "d", escalao: esc, tabLabel: esc, results: t };
   return {
@@ -132,6 +153,7 @@ export function buildFpgEditionsIndex(pool: Tournament[]): Map<string, CircuitEn
 export function fpgPastEditionsTabs(
   index: Map<string, CircuitEntry[]>,
   current: Tournament | null | undefined,
+  playersDB?: PlayersDB,
 ): { key: string; label: string; content: React.ReactNode }[] | undefined {
   if (!current) return undefined;
   const k = editionKey(current);
@@ -139,9 +161,32 @@ export function fpgPastEditionsTabs(
   const entries = index.get(k);
   if (!entries || entries.length < 2) return undefined;
   const division = current.escalao || "—";
+  // Edições ANTERIORES (as outras, mais recente primeiro) com resultados — é
+  // sobre elas que o painel "Quem repete" cruza o field de hoje.
+  const curId = `${current.ccode}-${current.tcode}`;
+  const previous = entries
+    .filter((e) => e.id !== curId && e.divisions?.[0]?.results)
+    .map((e) => ({ id: e.id, year: e.year ?? 0, t: e.divisions![0].results as Tournament }))
+    .sort((a, b) => b.year - a.year);
   return [{
     key: "past-editions",
     label: "Edições anteriores",
-    content: <CircuitPastEditionsTab editions={entries} division={division} />,
+    // ⚠ Cada bloco no seu error boundary. A tab é carregada com a página (que
+    // é lazy), por isso um erro aqui dentro — no painel ou no carregamento das
+    // edições — derrubava a /FPG INTEIRA e deixava o ecrã em branco, sem
+    // sequer dizer o que falhou. Aconteceu a 2026-09-02 com um módulo em cache
+    // no dev server a apontar para um ficheiro renomeado.
+    content: (
+      <>
+        {playersDB && previous.length ? (
+          <SectionErrorBoundary label="Quem repete">
+            <PastEditionsRepeaters current={current} previous={previous} playersDB={playersDB} />
+          </SectionErrorBoundary>
+        ) : null}
+        <SectionErrorBoundary label="Edições anteriores">
+          <CircuitPastEditionsTab editions={entries} division={division} />
+        </SectionErrorBoundary>
+      </>
+    ),
   }];
 }

@@ -13,7 +13,8 @@
  * A FPGPage lê 000..NNN automaticamente (pára após 2 falhas seguidas), por
  * isso a numeração contígua sem buracos é a única invariante a respeitar.
  *
- * USO:  node scripts/pull-torneios-tail.cjs [--target 120] [--data-dir public/data]
+ * USO:  node scripts/pull-torneios-tail.cjs [--target 120] [--data-dir public/data] [--for ccode:tcode]
+ *       --for: devolve o ficheiro que já contém esse torneio (senão a cauda)
  * SAÍDA: caminho relativo ao repo (ex: public/data/pull-torneios006.json)
  */
 "use strict";
@@ -27,6 +28,7 @@ function argVal(flag, def) {
 
 const TARGET = parseInt(argVal("--target", "120"), 10) || 120;
 const DATA_DIR = argVal("--data-dir", path.join("public", "data"));
+const FOR = argVal("--for", null); // "ccode:tcode"
 
 const RE = /^pull-torneios(\d{3})\.json$/; // só os numerados 000..999 (ignora avulsos tipo pull-torneios-10685.json)
 
@@ -46,6 +48,23 @@ function main() {
   for (const f of fs.existsSync(DATA_DIR) ? fs.readdirSync(DATA_DIR) : []) {
     const m = RE.exec(f);
     if (m) maxIdx = Math.max(maxIdx, parseInt(m[1], 10));
+  }
+
+  // --for ccode:tcode → o ficheiro que JÁ tem esse torneio (um re-scrape
+  // actualiza-o no sítio, sem duplicar); só se não estiver em nenhum é que vai
+  // para a cauda.
+  if (FOR) {
+    const [cc, tc] = FOR.split(":");
+    for (let i = 0; i <= maxIdx; i++) {
+      const fp = path.join(DATA_DIR, `pull-torneios${pad(i)}.json`);
+      try {
+        const d = JSON.parse(fs.readFileSync(fp, "utf8"));
+        if ((d.tournaments || []).some(t => String(t.ccode) === cc && String(t.tcode) === tc)) {
+          process.stdout.write(fp);
+          return;
+        }
+      } catch { /* inexistente/ilegível */ }
+    }
   }
 
   if (maxIdx < 0) {

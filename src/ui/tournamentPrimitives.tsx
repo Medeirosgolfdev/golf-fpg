@@ -160,6 +160,7 @@ export function TournPName({
   highlight,
   maxLen = 26,
   sex: sexProp,
+  country: countryProp,
   juniorId,
 }: {
   name: string;
@@ -175,6 +176,10 @@ export function TournPName({
    *  jogador não está no playersDB. Evita que quem chama acrescente um
    *  segundo SexBadge por fora — o badge é sempre renderizado aqui. */
   sex?: string;
+  /** Nacionalidade (ISO-2) vinda da própria fonte, para quem não está no
+   *  playersDB — caso dos draws internacionais, onde a esmagadora maioria não
+   *  tem federado nenhum do nosso lado. Só usada se o playersDB nada souber. */
+  country?: string;
 }) {
   const fedKey = fed || fedCode;
   const hasLink = !!fedKey;
@@ -203,8 +208,12 @@ export function TournPName({
   // FPG sem kidsHash quando há um intl: com kidsHash).
   const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex ?? sexProp;
   const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
-  const country = directEntry?.country ?? candidates.find(e => e.country)?.country;
-  const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;
+  const country = directEntry?.country ?? candidates.find(e => e.country)?.country ?? countryProp;
+  // PT não leva bandeira por defeito — num site português seria ruído em todas
+  // as linhas. A excepção é o país vir por PROP: só as páginas de circuitos
+  // estrangeiros a passam, e aí ver a bandeira portuguesa é justamente o ponto.
+  const flagEmoji = country && (!!countryProp || country.toUpperCase() !== "PT")
+    ? flagOf(country) : null;
 
   // ── Seta ↗ para /kids2: UMA so, resolvida aqui ──────────────────────────
   // Tres origens, por ordem de fiabilidade:

@@ -7,7 +7,7 @@
 import { describe, it, expect } from "vitest";
 import {
   PJA_TCODES, pjaPts, isGFTournament, getTournMultiplier,
-  classifyPJAEvent, isPJACore,
+  classifyPJAEvent, isPJACore, PJA_NOTAS, notasPJA,
 } from "../../../ranking-pja/pja-rules.mjs";
 
 describe("isPJACore", () => {
@@ -41,6 +41,39 @@ describe("isPJACore", () => {
     expect(isPJACore({ name: "Amendoeira World Kids Sub 12", tcode: "10570", date: "2025-07-23" })).toBe(false);
   });
 
+  it("Miramar Open 2026: entra o U25, fica fora o Sub-10 e as provas de clube", () => {
+    // ccode 003, 19-21 Ago 2026 — "Miramar Open" no calendário PJA TOUR 2026.
+    expect(isPJACore({ name: "X Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    expect(isPJACore({ name: "VIII Miramar Internacional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    // gralha da fonte ("Internancional") — o regex tem de a apanhar
+    expect(isPJACore({ name: "Miramar Internancional Open U25", tcode: "10652", date: "2026-08-19" })).toBe(true);
+    // Sub-10 (10653) fora — não há Sub-10 inscritos no PJA 2026
+    expect(isPJACore({ name: "X Miramar Internacional Open U25 - Sub10", tcode: "10653", date: "2026-08-19" })).toBe(false);
+    expect(isPJACore({ name: "VIII Miramar Internacional Open U25 - Sub 10", tcode: "10653", date: "2026-08-19" })).toBe(false);
+    // provas de clube do MESMO campo em 2026 — não são PJA
+    expect(isPJACore({ name: "Taça Praia de Miramar", tcode: "10616", date: "2026-02-21" })).toBe(false);
+    expect(isPJACore({ name: "Miramar Spring Cup", tcode: "10617", date: "2026-04-11" })).toBe(false);
+    expect(isPJACore({ name: "XI Banco Carregosa Miramar Open - Final", tcode: "10572", date: "2026-09-14" })).toBe(false);
+  });
+
+  it("Camp. Juvenil — Taça Visconde Pereira Machado fica FORA (jogaram das brancas)", () => {
+    // ccode 004, tcodes 10580 (Escalão A, 6 Jul) + 10581 (Escalão B, 7 Jul).
+    // Está no calendário PJA TOUR 2026 mas NÃO conta: os miúdos jogaram das
+    // brancas, fora das marcas do escalão deles — o par (e logo os pontos)
+    // não é comparável com o resto do circuito. Ver a nota no isPJACore.
+    expect(isPJACore({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão A)", tcode: "10580", date: "2026-07-06" })).toBe(false);
+    expect(isPJACore({ name: "CAMP. JUVENIL - T.V.P.M. (Escalão B)", tcode: "10581", date: "2026-07-07" })).toBe(false);
+    // nome por extenso — a mesma prova, também fora
+    expect(isPJACore({ name: "Camp. Juvenil - Taça Visconde de Pereira Machado", tcode: "10532", date: "2026-09-01" })).toBe(false);
+  });
+
+  it("tcodes reutilizados pela FPG nos mesmos números NÃO entram por tcode", () => {
+    // 10652/10653 vivem noutros clubes e anos — o match do Miramar é por NOME
+    expect(isPJACore({ name: "2º Estela Friday Cup 2026", tcode: "10652", date: "2026-02-20" })).toBe(false);
+    expect(isPJACore({ name: "8ª Taça Manuel Melo", tcode: "10653", date: "2026-02-21" })).toBe(false);
+    expect(isPJACore({ name: "23º Torneio Internacional Juvenil - Sub14", tcode: "10652", date: "2026-12-20" })).toBe(false);
+  });
+
   it("tcodes do Clube de Belas 2025 que colidem com os do Amendoeira ficam fora", () => {
     expect(isPJACore({ name: "6ª Ordem de Merito do Clube de Belas/Sardinhada", tcode: "10604", date: "2025-06-29" })).toBe(false);
     expect(isPJACore({ name: "7ª Ordem de Mérito do Clube de Belas2025", tcode: "10606", date: "2025-07-19" })).toBe(false);
@@ -59,6 +92,7 @@ describe("classifyPJAEvent", () => {
     expect(classifyPJAEvent({ name: "1º Torneio do Circuito Aquapor-Morgado Golf" })).toBe("AQUAPOR");
     expect(classifyPJAEvent({ name: "Amendoeira World Kids Golfe 2026 Sub 12", tcode: "10604" })).toBe("PJA_EXCL");
     expect(classifyPJAEvent({ name: "PJA PGA Aroeira No.2" })).toBe("PJA_EXCL");
+    expect(classifyPJAEvent({ name: "X Miramar Internacional Open U25", tcode: "10652" })).toBe("PJA_EXCL");
   });
 });
 
@@ -76,6 +110,7 @@ describe("multiplicadores e pontos", () => {
 
   it("standard ×1.0 e pontos par=25 com mínimo 0", () => {
     expect(getTournMultiplier({ name: "Amendoeira World Kids Golfe 2026 Sub 14", tcode: "10605" })).toBe(1.0);
+    expect(getTournMultiplier({ name: "X Miramar Internacional Open U25", tcode: "10652" })).toBe(1.0);
     expect(pjaPts(0, 1)).toBe(25);
     expect(pjaPts(3, 1)).toBe(22);
     expect(pjaPts(-2, 1)).toBe(27);
@@ -85,5 +120,35 @@ describe("multiplicadores e pontos", () => {
 
   it("PJA_TCODES mantém os 5 exclusivos de 2025", () => {
     expect([...PJA_TCODES].sort()).toEqual(["10019", "10036", "10260", "10444", "10492"]);
+  });
+});
+
+describe("PJA_NOTAS — o que o público lê", () => {
+  it("explica, com a razão, a prova do calendário que não conta", () => {
+    const fora = notasPJA("2026", "2026-08-31").filter(n => n.tipo === "fora");
+    expect(fora).toHaveLength(1);
+    // a razão TEM de estar escrita — é isto que o utilizador vê no site
+    const tvpm = fora[0];
+    expect(tvpm.titulo).toMatch(/Visconde Pereira Machado/i);
+    expect(tvpm.texto).toMatch(/tees de partida/i);
+    expect(tvpm.texto).toMatch(/restantes provas do circuito/i);
+    // registo formal e curto: nada de jargão do motor de pontos nem de
+    // explicações sobre marcas/cores — a razão basta-se a si própria
+    expect(tvpm.texto).not.toMatch(/±\s*par|25 pts|multiplicador|brancas|amarelas|miúdos/i);
+    // o Sub-10 do Miramar é detalhe interno — fica FORA das notas públicas
+    expect(notasPJA("2026", "2026-08-31").some(n => /Sub-10/i.test(n.titulo))).toBe(false);
+  });
+
+  it("notas de agenda desaparecem depois da prova; as de elegibilidade ficam", () => {
+    const titulos = (hoje: string) => notasPJA("2026", hoje).map(n => n.titulo);
+    expect(titulos("2026-08-31").some(t => /Torre/.test(t))).toBe(true);
+    expect(titulos("2026-09-05").some(t => /Torre/.test(t))).toBe(true);   // no próprio dia ainda aparece
+    expect(titulos("2026-09-07").some(t => /Torre/.test(t))).toBe(false);  // passou
+    expect(titulos("2026-12-31")).toHaveLength(1);                          // a "fora" não expira
+  });
+
+  it("só devolve notas do ano pedido", () => {
+    expect(notasPJA("2025", "2026-08-31")).toHaveLength(0);
+    expect(PJA_NOTAS.every(n => n.titulo && n.texto)).toBe(true);
   });
 });

@@ -6,6 +6,9 @@
  * Tabelas oficiais FPG/DataGolf do ranking Drive — POR SÉRIE (2026-07-10):
  *   TOUR:      8º = 38, 20º = 18 (empírico, RankingsClassifLST)
  *   CHALLENGE: 8º = 35
+ *   FINAL:     8º = 38 — as Finais do Challenge usam a tabela do TOUR, não a do
+ *              Challenge (2026-09-10: 16/16 oitavos lugares nas Finais oficiais
+ *              valem 57 = 38×1.5; a fase regular do Challenge dá 35 em 137/137).
  */
 "use strict";
 
@@ -18,13 +21,17 @@ const BASE = {
 
 const DRIVE_POINTS_TOUR = { ...BASE, 8: 38 };
 const DRIVE_POINTS_CHALLENGE = { ...BASE, 8: 35 };
+const DRIVE_POINTS_FINAL = { ...BASE, 8: 38 };
 const DRIVE_POINTS = DRIVE_POINTS_CHALLENGE;  // retro-compat
 
+/** `series`: "final" → tabela das Finais; "tour"/"aquapor" → Tour; resto → Challenge. */
 function drivePoints(pos, series) {
   if (pos == null) return 0;
   const n = Number(pos);
   if (isNaN(n) || n <= 0) return 0;
-  const table = (series === "tour" || series === "aquapor") ? DRIVE_POINTS_TOUR : DRIVE_POINTS_CHALLENGE;
+  const table = series === "final" ? DRIVE_POINTS_FINAL
+    : (series === "tour" || series === "aquapor") ? DRIVE_POINTS_TOUR
+    : DRIVE_POINTS_CHALLENGE;
   return table[n] ?? 0;
 }
 
@@ -38,8 +45,10 @@ function isNacionalFinal(name) {
   return isFinalEvent(name) && /nacional/i.test(String(name || ""));
 }
 
-function finalPoints(pos, series) {
-  return Math.round(drivePoints(pos, series) * FINAL_WEIGHT);
+/** Pontos de uma Final: tabela das Finais × 1.5, arredondado.
+ *  O `series` é ignorado (mantido por compatibilidade de assinatura). */
+function finalPoints(pos, _series) {
+  return Math.round(drivePoints(pos, "final") * FINAL_WEIGHT);
 }
 
 /** Empate que o countback não separa: os `count` jogadores partilham a posição
@@ -63,8 +72,10 @@ function hasCard(gross) {
 
 /** Pontos de UM torneio por federado, com as regras oficiais de empate.
  *  Aquapor classifica dentro do sexo; Challenge/Tour usa a posição já
- *  desempatada por countback. ESPELHO de src/constants/drivePoints.ts. */
-function tournamentPoints(field, series) {
+ *  desempatada por countback. Numa Final (`tournName`) a tabela é a das
+ *  Finais — sem o nome o 8º lugar de uma Final sai com 35 em vez de 38.
+ *  ESPELHO de src/constants/drivePoints.ts. */
+function tournamentPoints(field, series, tournName) {
   const out = new Map();
   const scored = field.filter(p => p.fed && hasCard(p.gross));
   if (series === "aquapor") {
@@ -83,6 +94,7 @@ function tournamentPoints(field, series) {
     }
     return out;
   }
+  const tabela = isFinalEvent(tournName) ? "final" : series;
   const porPos = new Map();
   for (const p of scored) {
     const k = String(p.pos);
@@ -90,7 +102,7 @@ function tournamentPoints(field, series) {
     porPos.get(k).push(p);
   }
   for (const [, grupo] of porPos) {
-    const pts = sharedPoints(grupo[0].pos, grupo.length, series);
+    const pts = sharedPoints(grupo[0].pos, grupo.length, tabela);
     for (const p of grupo) out.set(p.fed, pts);
   }
   return out;
@@ -102,9 +114,10 @@ function rankingTotal(results, bestN = RANKING_BEST_N) {
   let finais = 0;
   for (const r of results) {
     if (isNacionalFinal(r.tournName)) continue;
-    const base = r.pts ?? drivePoints(r.pos, r.series);
+    const final = isFinalEvent(r.tournName);
+    const base = r.pts ?? drivePoints(r.pos, final ? "final" : r.series);
     if (!base) continue;
-    if (isFinalEvent(r.tournName)) finais += Math.round(base * FINAL_WEIGHT);
+    if (final) finais += Math.round(base * FINAL_WEIGHT);
     else regulares.push(base);
   }
   const melhores = regulares.sort((a, b) => b - a).slice(0, bestN).reduce((s, x) => s + x, 0);
@@ -112,7 +125,7 @@ function rankingTotal(results, bestN = RANKING_BEST_N) {
 }
 
 module.exports = {
-  DRIVE_POINTS, DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, drivePoints,
+  DRIVE_POINTS, DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, DRIVE_POINTS_FINAL, drivePoints,
   FINAL_WEIGHT, isFinalEvent, isNacionalFinal, finalPoints, sharedPoints,
   RANKING_BEST_N, hasCard, tournamentPoints, rankingTotal,
 };

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Extrai draws COMPLETOS (todos os grupos) dos PDFs CGSS -> cgss-draws-manual.json.
 Manuel jr = fed 52884 (nome "Goulartt Medeiros"); homonimo "Manuel Medeiros" = fed 54907."""
-import os, re, json, subprocess, unicodedata, glob, argparse
+import os, re, sys, json, subprocess, unicodedata, glob, argparse
 from datetime import date
 
 MANUEL_FED = "52884"
@@ -19,35 +19,50 @@ def norm(s):
     return re.sub(r"\s+", " ", s).strip().lower()
 
 
+def _pdfplumber_text(path):
+    # Estes draws DataGolf têm DUAS colunas (metade esquerda + metade direita).
+    # Recortamos a página nas duas metades e usamos extract_text() NATIVO em cada
+    # uma — agrupa por coordenada vertical, por isso cada "hora buraco" fica na
+    # linha do 1º jogador do seu grupo, e preserva os espaços reais do PDF (ao
+    # contrário de uma reconstrução manual, que colava nomes e baralhava
+    # colunas). O ponto de corte é o x da 2ª ocorrência de "Saída" (início da
+    # coluna direita); se só houver uma, trata a página como coluna única.
+    import pdfplumber
+    out = []
+    with pdfplumber.open(path) as pdf:
+        for pg in pdf.pages:
+            try:
+                saidas = sorted(w["x0"] for w in pg.extract_words() if w.get("text") == "Saída")
+            except Exception:
+                saidas = []
+            if len(saidas) >= 2:
+                mid = saidas[1] - 5
+                out.append(pg.crop((0, 0, mid, pg.height)).extract_text() or "")
+                out.append(pg.crop((mid, 0, pg.width, pg.height)).extract_text() or "")
+            else:
+                out.append(pg.extract_text() or "")
+    return "\n".join(out)
+
+
 def pdftext(path):
-    # Preferir pdftotext -layout (poppler). Se não estiver instalado (típico em
-    # Windows sem poppler), cair para pdfplumber (pip install pdfplumber), que
-    # também preserva o layout em colunas via espaços.
-    try:
-        return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True).stdout
-    except FileNotFoundError:
-        # Fallback sem poppler: pdfplumber. Estes draws DataGolf têm DUAS colunas
-        # (metade esquerda + metade direita). Recortamos a página nas duas metades
-        # e usamos extract_text() NATIVO em cada uma — extract_text preserva os
-        # espaços reais do PDF (ao contrário de uma reconstrução manual, que colava
-        # nomes e baralhava colunas). O ponto de corte é o x da 2ª ocorrência de
-        # "Saída" (início da coluna direita); se só houver uma, trata a página como
-        # coluna única.
-        import pdfplumber
-        out = []
-        with pdfplumber.open(path) as pdf:
-            for pg in pdf.pages:
-                try:
-                    saidas = sorted(w["x0"] for w in pg.extract_words() if w.get("text") == "Saída")
-                except Exception:
-                    saidas = []
-                if len(saidas) >= 2:
-                    mid = saidas[1] - 5
-                    out.append(pg.crop((0, 0, mid, pg.height)).extract_text() or "")
-                    out.append(pg.crop((mid, 0, pg.width, pg.height)).extract_text() or "")
-                else:
-                    out.append(pg.extract_text() or "")
-        return "\n".join(out)
+    # Motor PRINCIPAL: pdfplumber (pip install pdfplumber). O `pdftotext -layout`
+    # passou a recurso: o do Git for Windows (xpdf 4.00, em mingw64/bin — e
+    # portanto no PATH do PowerShell também) EMPILHA a coluna "Saída Tee" dos
+    # draws DataGolf em linhas seguidas, desalinhada dos jogadores → 1 jogador
+    # por grupo e o resto todo no último (XIII Barbeito 2026-09-12: 38 + 31).
+    # Partia TODOS os draws DataGolf, não só esse. O add-cgss-draw.js recusa
+    # grupos com mais de 4 lugares, por isso o recurso nunca publica lixo.
+    # CGSS_PDF_ENGINE=pdftotext|pdfplumber força um motor (diagnóstico/testes).
+    engine = os.environ.get("CGSS_PDF_ENGINE", "").strip().lower()
+    if engine != "pdftotext":
+        try:
+            return _pdfplumber_text(path)
+        except ImportError:
+            if engine == "pdfplumber":
+                raise
+            print("  (aviso) pdfplumber não instalado — a usar pdftotext -layout, que pode baralhar "
+                  "os grupos dos draws DataGolf (pip install pdfplumber)", file=sys.stderr)
+    return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True).stdout
 
 
 def load_results_index(data_dir):
@@ -288,7 +303,14 @@ if __name__ == "__main__":
             total += len(players)
             if any(pl.get("fed") == MANUEL_FED for pl in players):
                 manuel_grp = g["time"]
-            out_groups.append({"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players})
+            # entries = lugares no grupo (um par conta 1) — é o que a guarda do
+            # add-cgss-draw.js compara com o máximo de 4
+            entries = len(g["players"])
+            if entries > 4:
+                print("  (aviso) %s %s buraco %s: %d lugares num grupo — extracção provavelmente baralhada"
+                      % (base, g["time"], g["hole"], entries), file=sys.stderr)
+            out_groups.append({"teeTime": g["time"], "startHole": g["hole"], "tee": None,
+                               "entries": entries, "players": players})
         if not out_groups:
             print("  (sem grupos — não é draw, ignorado) " + base)
             continue

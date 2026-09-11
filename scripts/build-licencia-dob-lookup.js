@@ -158,6 +158,46 @@ if (fs.existsSync(NC_DIR)) {
   console.log(`NC: processed=${ncProcessed}, novos=${ncAdded}, enriquecidos=${ncEnriched}`);
 }
 
+/* ── Roster RFEG (spain-players.json) ───────────────────────────────────────
+ * O lookup acima é construído a partir de quem APARECE em provas scrapadas.
+ * Quem tem licença mas nunca apareceu numa dessas listas fica de fora — e
+ * depois surge num torneio internacional sem escalão, sem clube e sem idade
+ * (caso Ignacio Adaro Vega e Julen Ortiz Rodriguez no Spanish International
+ * U-18 2026, ambos com ficha completa no roster). O roster entra aqui como
+ * última camada: não sobrepõe nada, só preenche o que falta. */
+const ROSTER_ES = path.resolve(__dirname, "../public/data/spain-players.json");
+let rosterAdd = 0, rosterEnrich = 0;
+if (fs.existsSync(ROSTER_ES)) {
+  try {
+    const sp = JSON.parse(fs.readFileSync(ROSTER_ES, "utf-8"));
+    for (const p of Object.values(sp.byLicencia || {})) {
+      const lic = p.licencia;
+      if (!lic) continue;
+      const prev = lookup[lic];
+      if (!prev) {
+        lookup[lic] = {
+          licencia: lic, name: p.name || null,
+          dob: p.dob || null, dobIso: p.dobIso || null,
+          sex: p.sex || null, club: p.club || null,
+          catEdad: p.catEdad || null, sources: ["roster"],
+          firstSeenIso: p.firstSeenIso || null, lastSeenIso: p.lastSeenIso || null,
+        };
+        rosterAdd++;
+      } else {
+        let mudou = false;
+        if (!prev.dob && p.dob) { prev.dob = p.dob; prev.dobIso = p.dobIso || prev.dobIso; mudou = true; }
+        if (!prev.club && p.club) { prev.club = p.club; mudou = true; }
+        if (!prev.sex && p.sex) { prev.sex = p.sex; mudou = true; }
+        if (!prev.name && p.name) { prev.name = p.name; mudou = true; }
+        if (mudou) { rosterEnrich++; if (!prev.sources.includes("roster")) prev.sources.push("roster"); }
+      }
+    }
+    console.log(`Roster RFEG: novos=${rosterAdd}, enriquecidos=${rosterEnrich}`);
+  } catch (e) {
+    console.warn(`Roster RFEG ignorado (${e.message})`);
+  }
+}
+
 const out = {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-licencia-dob-lookup.js",

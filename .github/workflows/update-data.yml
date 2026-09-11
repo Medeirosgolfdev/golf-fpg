@@ -181,6 +181,10 @@ jobs:
           #   - output/{fed}/*                → fpg-scrape-node.js + pipeline (render)
           #   - public/data/{fed}/analysis/   → só o Manuel (render estático)
           #   - public/data/players.json      → pipeline.js (sync step)
+          #   - public/data/cross-data.json   → make-scorecards-ui.js (tabela
+          #     global CROSS_DATA, 1 cópia partilhada por todas as fichas desde
+          #     2026-09-06). SEM isto a tabela ficava no runner e o site servia
+          #     escalões/índices congelados no dia da migração.
           #   - public/player-stats.json      → enrich-players.js  ⚠ SEM /data/
           #   - public/data/hcp-history.json  → enrich-players.js (evolução de HCP)
           #   - public/analise-percurso-juniores.html → build-analise-percurso.js
@@ -194,6 +198,7 @@ jobs:
           git add output/ \
                   public/data/*/analysis/ \
                   public/data/players.json \
+                  public/data/cross-data.json \
                   public/player-stats.json \
                   public/data/hcp-history.json \
                   public/analise-percurso-juniores.html \

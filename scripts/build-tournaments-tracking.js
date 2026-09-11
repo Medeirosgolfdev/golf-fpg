@@ -195,7 +195,20 @@ function main() {
       : 0;
     const hasManuel = !!(adm.has_manuel || cls.has_manuel);
     t.has_manuel = hasManuel;
-    if (exc) {
+    if (/^9\d{4}$/.test(String(t.tcode))) {
+      // tcode PLACEHOLDER de um torneio só-draw (convenção 9xxxx, fora do
+      // range real ~10xxx-11xxx): não existe na FPG, logo não há classificação
+      // para ir buscar.
+      // ⚠ Sem isto o placeholder entra no scope do `--auto-from-tracking` e o
+      // update-classif vai scrapá-lo, gravando um stub de 0 jogadores noutro
+      // pull-torneios. Aconteceu com o PJA Torre 2026 (192/90101 → fantasma no
+      // pull-torneios002): a promoção limpa só o ficheiro que recebe em
+      // `--pull`, por isso o fantasma sobreviveu e o ranking PJA passou a ter
+      // DUAS colunas vazias ao lado do torneio a sério (o dedup do ranking é
+      // por ccode/tcode/date, e o placeholder tem tcode diferente do real).
+      t.status = "excluded";
+      t.excluded_reason = "tcode placeholder (torneio só-draw) — sem classificação na FPG";
+    } else if (exc) {
       t.status = "excluded";
       t.excluded_reason = exc.reason || null;
     } else if (isDriveSeries(t.name) && !hasManuel) {

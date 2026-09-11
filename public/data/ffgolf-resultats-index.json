@@ -1,8 +1,534 @@
 {
-  "generatedAt": "2026-08-24T03:08:16.065Z",
+  "generatedAt": "2026-09-07T07:10:56.102Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1239,
+  "total": 1248,
   "tournaments": [
+    {
+      "file": "03-02-2501365354.json",
+      "trnId": "2501365354",
+      "partKey": "d719003406b7cf093884907395fd2de4",
+      "name": "Grand Prix Jeunes de Valence St Didier",
+      "formule": "Score maximum",
+      "date": "05/09/2026",
+      "dateIso": "2026-09-05",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "02",
+      "seriesCount": 4,
+      "totalPlayers": 93,
+      "course": "Guimand de Charpey",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12 F",
+          "players": 16
+        },
+        {
+          "serieId": "111",
+          "label": "U12 G",
+          "players": 45
+        },
+        {
+          "serieId": "115",
+          "label": "U14 G",
+          "players": 26
+        },
+        {
+          "serieId": "213",
+          "label": "U14 F",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "02"
+      ]
+    },
+    {
+      "file": "03-02-2501380055.json",
+      "trnId": "2501380055",
+      "partKey": "d719003406b7cf093884907395fd2de4",
+      "name": "GRAND PRIX JEUNES DE VALENCE SAINT DIDIER - U12 & BENJ.",
+      "formule": "Simple",
+      "date": "05/09/2026",
+      "dateIso": "2026-09-05",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "02",
+      "seriesCount": 4,
+      "totalPlayers": 91,
+      "course": "Guimand de Charpey",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12 F",
+          "players": 13
+        },
+        {
+          "serieId": "111",
+          "label": "U12 G",
+          "players": 40
+        },
+        {
+          "serieId": "115",
+          "label": "U14 G",
+          "players": 36
+        },
+        {
+          "serieId": "213",
+          "label": "U14 F",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "02"
+      ]
+    },
+    {
+      "file": "03-09-2601459964.json",
+      "trnId": "2601459964",
+      "partKey": "24be3ef898f705aba5da1a580184316a",
+      "name": "GRAND PRIX JEUNES DU GOLF DE CAEN LA MER 2026",
+      "formule": "Simple",
+      "date": "05/09/2026",
+      "dateIso": "2026-09-05",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "09",
+      "seriesCount": 6,
+      "totalPlayers": 127,
+      "course": "Plaine-Vallon",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12",
+          "players": 46
+        },
+        {
+          "serieId": "113",
+          "label": "BENJAMINS",
+          "players": 35
+        },
+        {
+          "serieId": "117",
+          "label": "MINIMES",
+          "players": 13
+        },
+        {
+          "serieId": "210",
+          "label": "U12",
+          "players": 17
+        },
+        {
+          "serieId": "214",
+          "label": "BENJAMINS",
+          "players": 13
+        },
+        {
+          "serieId": "218",
+          "label": "MINIMES",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "09"
+      ]
+    },
+    {
+      "file": "01-00-2601469201.json",
+      "trnId": "2601469201",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Mini Tour U10 PACA - Etape 6 (Gde Bastide)",
+      "formule": "Simple",
+      "date": "29/08/2026",
+      "dateIso": "2026-08-29",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 27,
+      "course": "Grande Bastide - Aller",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "U8 Mixte",
+          "players": 4
+        },
+        {
+          "serieId": "17",
+          "label": "U9 Mixte",
+          "players": 3
+        },
+        {
+          "serieId": "19",
+          "label": "U10G",
+          "players": 12
+        },
+        {
+          "serieId": "26",
+          "label": "U8 Mixte",
+          "players": 2
+        },
+        {
+          "serieId": "28",
+          "label": "U9 Mixte",
+          "players": 2
+        },
+        {
+          "serieId": "210",
+          "label": "U10F",
+          "players": 4
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "03-04-2601463125.json",
+      "trnId": "2601463125",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Grand Prix Jeunes de Cannes Mougins",
+      "formule": "Simple",
+      "date": "29/08/2026",
+      "dateIso": "2026-08-29",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 6,
+      "totalPlayers": 77,
+      "course": "Mougins",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 10
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 21
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 34
+        },
+        {
+          "serieId": "119",
+          "label": "MG",
+          "players": 8
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 3
+        },
+        {
+          "serieId": "217",
+          "label": "MF",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "04"
+      ]
+    },
+    {
+      "file": "03-13-2601468054.json",
+      "trnId": "2601468054",
+      "partKey": "03947aa48fdb59e6113c267a95b53f53",
+      "name": "Grand Prix Jeunes 2026",
+      "formule": "Simple",
+      "date": "29/08/2026",
+      "dateIso": "2026-08-29",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "13",
+      "seriesCount": 5,
+      "totalPlayers": 46,
+      "course": "Prunevelle",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 22
+        },
+        {
+          "serieId": "113",
+          "label": "BG",
+          "players": 16
+        },
+        {
+          "serieId": "117",
+          "label": "MG",
+          "players": 2
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 4
+        },
+        {
+          "serieId": "215",
+          "label": "BF",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "13"
+      ]
+    },
+    {
+      "file": "03-12-2601448806.json",
+      "trnId": "2601448806",
+      "partKey": "decc0ee17f2419134ac9701a6b8303b0",
+      "name": "GRAND PRIX JEUNES DE LIMERE",
+      "formule": "Simple",
+      "date": "28/08/2026",
+      "dateIso": "2026-08-28",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "12",
+      "seriesCount": 6,
+      "totalPlayers": 39,
+      "course": "Limère",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 12
+        },
+        {
+          "serieId": "113",
+          "label": "U14G",
+          "players": 12
+        },
+        {
+          "serieId": "117",
+          "label": "U16G",
+          "players": 6
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 4
+        },
+        {
+          "serieId": "215",
+          "label": "U14F",
+          "players": 3
+        },
+        {
+          "serieId": "219",
+          "label": "U16F",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "12"
+      ]
+    },
+    {
+      "file": "03-01-2601405025.json",
+      "trnId": "2601405025",
+      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
+      "name": "Grand Prix Jeunes de la Ligue Paris Ile-de-France 4",
+      "formule": "Simple",
+      "date": "27/08/2026",
+      "dateIso": "2026-08-27",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "01",
+      "seriesCount": 6,
+      "totalPlayers": 127,
+      "course": "Le Wings",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 15
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 45
+        },
+        {
+          "serieId": "115",
+          "label": "BENG",
+          "players": 38
+        },
+        {
+          "serieId": "119",
+          "label": "MING",
+          "players": 15
+        },
+        {
+          "serieId": "213",
+          "label": "BENF",
+          "players": 8
+        },
+        {
+          "serieId": "217",
+          "label": "MINF",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "01"
+      ]
+    },
+    {
+      "file": "03-10-2601465699.json",
+      "trnId": "2601465699",
+      "partKey": "756465e70e31bd1354b2126627e9cd2e",
+      "name": "Grand Prix Jeunes de La Baule 2026",
+      "formule": "Simple",
+      "date": "25/08/2026",
+      "dateIso": "2026-08-25",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "10",
+      "seriesCount": 6,
+      "totalPlayers": 88,
+      "course": "Bleu",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 8
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 30
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 21
+        },
+        {
+          "serieId": "119",
+          "label": "MG",
+          "players": 15
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 11
+        },
+        {
+          "serieId": "217",
+          "label": "MF",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "10"
+      ]
+    },
+    {
+      "file": "03-02-2601469958.json",
+      "trnId": "2601469958",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "Grand Prix Jeunes Majeur - Evian",
+      "formule": "Simple",
+      "date": "24/08/2026",
+      "dateIso": "2026-08-24",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "02",
+      "seriesCount": 2,
+      "totalPlayers": 63,
+      "course": "Evian Junior GPJM",
+      "sex": "MF",
+      "roundsPlayed": 3,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 42
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 21
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "02",
+        "19"
+      ]
+    },
     {
       "file": "03-03-2601444105.json",
       "trnId": "2601444105",
@@ -6466,53 +6992,6 @@
       "ffgolfSection": null,
       "ligues": [
         "13"
-      ]
-    },
-    {
-      "file": "03-02-2501365354.json",
-      "trnId": "2501365354",
-      "partKey": "d719003406b7cf093884907395fd2de4",
-      "name": "GRAND PRIX JEUNES DE VALENCE SAINT DIDIER - U12 & U14",
-      "formule": "Simple",
-      "date": "06/09/2025",
-      "dateIso": "2025-09-06",
-      "year": 2025,
-      "typeCompetition": "03",
-      "ligue": "02",
-      "seriesCount": 4,
-      "totalPlayers": 93,
-      "course": "Guimand de Charpey",
-      "sex": "MF",
-      "roundsPlayed": 2,
-      "divisions": [
-        {
-          "serieId": "29",
-          "label": "U12 F",
-          "players": 16
-        },
-        {
-          "serieId": "111",
-          "label": "U12 G",
-          "players": 45
-        },
-        {
-          "serieId": "115",
-          "label": "U14 G",
-          "players": 26
-        },
-        {
-          "serieId": "213",
-          "label": "U14 F",
-          "players": 6
-        }
-      ],
-      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
-      "ffgolfOfficialUrl": null,
-      "ggPage": null,
-      "ffgolfSlug": null,
-      "ffgolfSection": null,
-      "ligues": [
-        "02"
       ]
     },
     {

@@ -36,7 +36,10 @@ function processPlayer(FED, allPlayers, crossStats) {
     ECDET: eclecticDetails,
     HOLE_STATS: courseHoleStats,
     TEE: DEFAULT_TEE_COLORS,
-    CROSS_DATA: crossStats || {},
+    // ⚠ CROSS_DATA NÃO vai aqui — ver writeCrossData(). Era a mesma tabela
+    // global de todos os jogadores repetida em cada data.json (9,4 MB × 678
+    // ficheiros = 6,4 GB), o que sozinho enchia o Deployment Storage do
+    // Vercel e obrigava cada ficha de jogador a descarregar 10 MB.
     CURRENT_FED: FED,
     HCP_INFO: hcpInfo,
     META: {
@@ -53,6 +56,21 @@ function processPlayer(FED, allPlayers, crossStats) {
   writeJsonAtomicVerified(jsonPath, jsonData, 0);
 
   console.log("OK -> " + jsonPath);
+}
+
+/* ——————————— cross-data.json (tabela global, 1 cópia) ———————————
+ * O `CROSS_DATA` é uma tabela indexada por federado — igual para todos os
+ * jogadores. Vivia DENTRO de cada `output/{fed}/analysis/data.json`; agora é
+ * um ficheiro único servido em `/data/cross-data.json` e carregado uma vez
+ * pelo browser (o `playerDataLoader` funde-o com a ficha do jogador).
+ * Escrito em TODOS os runs, mesmo incrementais: o `crossStats` é sempre
+ * calculado sobre todos os jogadores descobertos em `output/`.
+ */
+function writeCrossData(crossStats) {
+  const out = path.join(process.cwd(), "public", "data", "cross-data.json");
+  writeJsonAtomicVerified(out, crossStats || {}, 0);
+  const mb = (fs.statSync(out).size / 1048576).toFixed(2);
+  console.log("OK -> " + out + " (" + Object.keys(crossStats || {}).length + " jogadores, " + mb + " MB)");
 }
 
 /* ——————————— Entry point ——————————— */
@@ -89,6 +107,7 @@ function processPlayer(FED, allPlayers, crossStats) {
 
   console.log("\nEncontrados " + allPlayers.length + " jogadores, a processar " + toProcess.length + "\n");
   const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
+  writeCrossData(crossStats);
 
   let ok = 0, fail = 0;
   for (const p of toProcess) {

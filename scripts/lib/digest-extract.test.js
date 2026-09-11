@@ -11,6 +11,8 @@ import {
   inferEscalao,
   isJuniorish,
   sourceInfo,
+  isPortugalish,
+  wagrWinners,
   detectFormat,
   winnerOf,
   extractTournaments,
@@ -242,6 +244,91 @@ describe("extractTournaments", () => {
 
   it("formato desconhecido devolve [] em vez de rebentar", () => {
     expect(extractTournaments({ lixo: true }, "public/data/x.json")).toEqual([]);
+  });
+});
+
+
+/* ── WAGR ────────────────────────────────────────────────────────────────
+ * Fatia real de public/data/wagr/events/wagr_256586.json (Campeonato Nacional
+ * de Clubes Sub 18 2025) — prova por EQUIPAS, com dois vencedores separados
+ * por vírgula, que é o caso que mais facilmente se estraga. */
+const WAGR_PT = {
+  id: "256586",
+  name: "Campeonato Nacional de Clubes Sub 18",
+  country: "Portugal",
+  eventType: "Junior",
+  startDate: "2025-04-15",
+  year: 2025,
+  winner: "Tomas Afonso Araujo,Joao Alves",
+  url: "https://www.wagr.com/events/x-256586",
+  players: [
+    { id: "38937", pos: "1", posNum: 1, name: "Tomas Afonso Araujo", country: "Portugal", total: 213, points: 5.1 },
+    { id: "39853", pos: "2", posNum: 2, name: "Joao Alves", country: "Portugal", total: 216, points: 4.2 },
+  ],
+};
+/* Mesmo formato, campo SEM portugueses — não pode entrar no resumo. */
+const WAGR_SEM_PT = {
+  id: "257849",
+  name: "St Andrews Links Trophy",
+  country: "Scotland",
+  eventType: "All Ages",
+  startDate: "2025-06-06",
+  year: 2025,
+  winner: "Connor Graham",
+  url: "https://www.wagr.com/events/x-257849",
+  players: [
+    { id: "1", pos: "1", posNum: 1, name: "Connor Graham", country: "Scotland", total: 279, points: 20 },
+    { id: "2", pos: "2", posNum: 2, name: "Some Swede", country: "Sweden", total: 281, points: 18 },
+  ],
+};
+
+describe("WAGR — só provas com portugueses", () => {
+  it("é reconhecido como formato próprio (tem `players` mas não `tournament`/`slug`)", () => {
+    expect(detectFormat(WAGR_PT)).toBe("wagr");
+  });
+  it("o caminho dá a fonte WAGR", () => {
+    expect(sourceInfo("public/data/wagr/events/wagr_256586.json").source).toBe("WAGR");
+  });
+  it("extrai a prova quando há portugueses em campo", () => {
+    const [r] = extractTournaments(WAGR_PT, "public/data/wagr/events/wagr_256586.json");
+    expect(r.tournament).toBe("Campeonato Nacional de Clubes Sub 18");
+    expect(r.category).toBe("Junior");
+    expect(r.date).toBe("2025-04-15");
+    expect(r.source).toBe("WAGR");
+  });
+  it("⚠ NÃO extrai nada de uma prova sem portugueses — é o corte que evita ~4.000 eventos/ano no email", () => {
+    expect(extractTournaments(WAGR_SEM_PT, "public/data/wagr/events/wagr_257849.json")).toEqual([]);
+  });
+  it("dois vencedores separados por vírgula não viram um nome inventado", () => {
+    // O displayName sozinho lia a vírgula como "APELIDO, Nome" e devolvia
+    // "Joao Alves Tomas Afonso Araujo" — uma pessoa que não existe.
+    const [r] = extractTournaments(WAGR_PT, "public/data/wagr/events/wagr_256586.json");
+    expect(r.winner).toBe("Tomas Afonso Araujo e Joao Alves");
+  });
+});
+
+describe("wagrWinners", () => {
+  it("um nome fica como está", () => {
+    expect(wagrWinners("Luis Silva")).toBe("Luis Silva");
+  });
+  it("dois nomes juntam-se com 'e'", () => {
+    expect(wagrWinners("Tomas Afonso Araujo,Joao Alves")).toBe("Tomas Afonso Araujo e Joao Alves");
+  });
+  it("tres ou mais usam virgulas e um 'e' no fim", () => {
+    expect(wagrWinners("A Um,B Dois,C Tres")).toBe("A Um, B Dois e C Tres");
+  });
+  it("vazio/null da null", () => {
+    expect(wagrWinners("")).toBeNull();
+    expect(wagrWinners(null)).toBeNull();
+  });
+});
+
+describe("isPortugalish", () => {
+  it("aceita o nome por extenso e as abreviaturas", () => {
+    for (const c of ["Portugal", "portugal", "PT", "prt", "POR"]) expect(isPortugalish(c), c).toBe(true);
+  });
+  it("recusa os outros", () => {
+    for (const c of ["Spain", "Poland", "", null, "Puerto Rico"]) expect(isPortugalish(c), String(c)).toBe(false);
   });
 });
 

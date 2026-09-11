@@ -72,9 +72,51 @@ function seriesFromTournName(name) {
   return { id: `fpg-${seriesId(noYear)}`, label: noYear };
 }
 
+/** Chave de dedup de um torneio (mesma fórmula do sourceKey em normalizeTournament). */
+function tournKey(t) {
+  const ccode = t.ccode || "000";
+  const dateSlug = t.date ? String(t.date).replace(/-/g, "") : "noDate";
+  const escSlug = String(t.escalao || "all").toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 20);
+  return `${ccode}-${t.tcode}-${dateSlug}-${escSlug}`;
+}
+
+/** Nº de player-rondas de um torneio (para escolher a cópia mais rica no dedup). */
+function playerRoundCount(t) {
+  let n = 0;
+  for (const p of (Array.isArray(t.players) ? t.players : [])) {
+    n += Array.isArray(p.roundScores) ? p.roundScores.length : 1;
+  }
+  return n;
+}
+
+/**
+ * Lê pull-torneios*.json + jovens_*.json e devolve um array de torneios
+ * DEDUPLICADO por sourceKey. Um Campeonato Nacional de Jovens que exista nas
+ * duas fontes (a mesma prova é publicada em ambas) conta UMA vez — fica a
+ * cópia com mais dados. Assim o agregador e a /FPG/jovens lêem o MESMO torneio
+ * sem que ele precise de estar duplicado em pull-torneios.
+ */
+function collectTournamentEntries(files) {
+  const byKey = new Map();
+  for (const file of files) {
+    const data = readJsonSafe(file, { tournaments: [] });
+    const arr = Array.isArray(data?.tournaments) ? data.tournaments : [];
+    for (const t of arr) {
+      if (!t || !t.tcode) continue;
+      const key = tournKey(t);
+      const prev = byKey.get(key);
+      if (!prev || playerRoundCount(t) > playerRoundCount(prev)) byKey.set(key, t);
+    }
+  }
+  return Array.from(byKey.values());
+}
+
 async function load(opts) {
   const players = readJsonSafe(DATA.fpgPlayers, {});
   const pullFiles = listFiles(DATA_DIR, DATA.fpgPullPattern);
+  const jovensFiles = listFiles(DATA_DIR, DATA.fpgJovensPattern);
+  // Torneios de pull + jovens, deduplicados por sourceKey (ver acima).
+  const tournEntries = collectTournamentEntries([...pullFiles, ...jovensFiles]);
   // NOTA: drive-data-*.json e aquapor-data-*.json são EXCLUÍDOS por design.
   // São tour stops regionais adultos, não juniores internacionais. Mesmo dentro
   // de pull-torneios, filtramos pelo nome para apanhar entradas Drive/Aquapor.
@@ -123,29 +165,34 @@ async function load(opts) {
   const ADULT_ESCALAO = /Sub\s*(2[0-9]|3\d|4\d|5\d)|Absoluto|S[eé]nior|Master|Adultos?/i;
 
   const tournaments = [];
-  for (const file of pullFiles) {
-    const data = readJsonSafe(file, { tournaments: [] });
-    const arr = Array.isArray(data?.tournaments) ? data.tournaments : [];
-    for (const t of arr) {
-      const name = String(t?.name || "");
-      const escalao = String(t?.escalao || "");
-      // Excluir torneios que NÃO matchem padrão relevante, exceto se forem Final Drive Tour
-      const isFinalDrive = /Grande Final Drive Tour|Final Drive Tour/i.test(name);
-      if (!isFinalDrive && EXCLUDE.test(name)) continue;
-      if (!RELEVANT.test(name)) continue;
-      // Excluir escalões adultos (Sub-20+, Absoluto, Sénior)
-      if (ADULT_ESCALAO.test(escalao)) continue;
-      if (ADULT_ESCALAO.test(name)) continue;
-      const tourn = normalizeTournament(t, "pull", playerMap);
-      if (tourn) tournaments.push(tourn);
-    }
+  for (const t of tournEntries) {
+    const name = String(t?.name || "");
+    const escalao = String(t?.escalao || "");
+    // Excluir torneios que NÃO matchem padrão relevante, exceto se forem Final Drive Tour
+    const isFinalDrive = /Grande Final Drive Tour|Final Drive Tour/i.test(name);
+    if (!isFinalDrive && EXCLUDE.test(name)) continue;
+    if (!RELEVANT.test(name)) continue;
+    // Excluir escalões adultos (Sub-20+, Absoluto, Sénior)
+    if (ADULT_ESCALAO.test(escalao)) continue;
+    // O check por NOME corrige provas que passam o RELEVANT mas são de adultos
+    // (ex: "Campeonato Nacional Mid-Amateur"). MAS "PJA" = Portuguese JUNIOR
+    // Amateur, sempre juvenil — e vários finais chamam-se "PJA Masters"
+    // (029/10543, 038/10754, 189/10097, 038/10584, 029/10523), onde o token
+    // "Master(s)" (categoria sénior) é falso-positivo e tirava-os do kids2.
+    // Isentar PJA do check por nome; o check por escalão acima é a rede de
+    // segurança para um eventual "PJA" com escalão adulto (não existe hoje).
+    if (ADULT_ESCALAO.test(name) && !/\bPJA\b/i.test(name)) continue;
+    const tourn = normalizeTournament(t, "pull", playerMap);
+    if (tourn) tournaments.push(tourn);
   }
 
 
   // 2b) hcpHistory — acumular snapshots de HCP por jogador a partir de TODOS
-  // os pull-torneios (incluindo os fora da whitelist). Cada participação dá um
+  // os torneios (incluindo os fora da whitelist). Cada participação dá um
   // snapshot (date, hcpExact, tcode, label). Alimenta sparkline no KIDS2Page.
-  collectHcpHistory(pullFiles, playerMap);
+  // Usa o conjunto DEDUPLICADO para não contar 2× uma prova que exista em
+  // pull-torneios e jovens_ ao mesmo tempo.
+  collectHcpHistory(tournEntries, playerMap);
 
   // 3) Devolver array de jogadores
   const playersArr = Array.from(playerMap.values());
@@ -160,35 +207,32 @@ async function load(opts) {
 
 
 /**
- * Lê TODOS os pull-torneios e injecta {date, hcpExact, source:'fpg', tcode, label}
- * em playerMap.get(key).hcpHistory para cada participação com hcpExact. Cria
- * entrada anónima se o jogador ainda não está no roster.
+ * Percorre os torneios (já deduplicados) e injecta {date, hcpExact,
+ * source:'fpg', tcode, label} em playerMap.get(key).hcpHistory para cada
+ * participação com hcpExact. Cria entrada anónima se o jogador ainda não está
+ * no roster.
  */
-function collectHcpHistory(pullFiles, playerMap) {
-  for (const file of pullFiles) {
-    const data = readJsonSafe(file, { tournaments: [] });
-    const arr = Array.isArray(data && data.tournaments) ? data.tournaments : [];
-    for (const t of arr) {
-      if (!t || !t.tcode || !t.date) continue;
-      const date = String(t.date).slice(0, 10);
-      const tcode = String(t.tcode);
-      const ccode = t.ccode || "000";
-      const label = t.name || ("t=" + tcode);
-      const players = Array.isArray(t.players) ? t.players : [];
-      for (const pl of players) {
-        if (!pl) continue;
-        const hcpExact = typeof pl.hcpExact === "number" ? pl.hcpExact : null;
-        if (hcpExact == null) continue;
-        // Só anexar a entries que JÁ existam no playerMap. Não criar
-        // anónimos aqui — evita duplicação (e.g. Manuel sem fedCode num torneio
-        // de Drive criaria "anon|manuel medeiros" que conflitaria com fed 52884).
-        let key = pl.fedCode ? String(pl.fedCode) : null;
-        if (!key) continue;
-        if (!playerMap.has(key)) continue;
-        const player = playerMap.get(key);
-        if (!player.hcpHistory) player.hcpHistory = [];
-        player.hcpHistory.push({ date, hcpExact, source: "fpg", tcode, ccode, label });
-      }
+function collectHcpHistory(tournEntries, playerMap) {
+  for (const t of tournEntries) {
+    if (!t || !t.tcode || !t.date) continue;
+    const date = String(t.date).slice(0, 10);
+    const tcode = String(t.tcode);
+    const ccode = t.ccode || "000";
+    const label = t.name || ("t=" + tcode);
+    const players = Array.isArray(t.players) ? t.players : [];
+    for (const pl of players) {
+      if (!pl) continue;
+      const hcpExact = typeof pl.hcpExact === "number" ? pl.hcpExact : null;
+      if (hcpExact == null) continue;
+      // Só anexar a entries que JÁ existam no playerMap. Não criar
+      // anónimos aqui — evita duplicação (e.g. Manuel sem fedCode num torneio
+      // de Drive criaria "anon|manuel medeiros" que conflitaria com fed 52884).
+      let key = pl.fedCode ? String(pl.fedCode) : null;
+      if (!key) continue;
+      if (!playerMap.has(key)) continue;
+      const player = playerMap.get(key);
+      if (!player.hcpHistory) player.hcpHistory = [];
+      player.hcpHistory.push({ date, hcpExact, source: "fpg", tcode, ccode, label });
     }
   }
 }

@@ -22,6 +22,7 @@
 11. [Ficheiros relacionados](#11-ficheiros-relacionados)
 12. [Lições aprendidas](#12-li%C3%A7%C3%B5es-aprendidas)
 13. [O backoffice clubarea (`1Page.aspx` + HMAC)](#13-o-backoffice-clubarea-1pageaspx--hmac)
+14. [Estatísticas de Clubes (`stat_*.asp`)](#14-estat%C3%ADsticas-de-clubes-stat_asp--p%C3%BAblico-sem-cookies)
 
 ---
 
@@ -902,3 +903,154 @@ um atalho para contornar a privacy policy da FPG.
 | `scoring.fpg.pt/lists/1Page.aspx` | Shell ASP.NET único que renderiza todas as 38 páginas |
 | `scoring.fpg.pt/lists/1EntryPage.aspx` | Entry-page público que setta `DG_Lists_URL` antes de redirigir para `linkpage.aspx` |
 | `golf-portugal.pt/api/debug/fpg/trace` | Debug endpoint que mostra a resolução `linkpage → 1Page` em tempo real |
+
+---
+
+## 14. Estatísticas de Clubes (`stat_*.asp`) — público, sem cookies
+
+> Descoberto 2026-09-07 (a utilizadora apanhou o frameset no DevTools de uma
+> página do Palheiro). **Não estava em lado nenhum do repo** — nem o host, nem
+> as páginas, nem o `ack`.
+
+O ASP clássico do `scoring-pt.datagolf.pt` serve um painel de **estatísticas
+agregadas** com 30 vistas. É **público**: responde a `fetch`/`curl` puro, sem
+cookies e sem sessão aquecida — como o `admissions.asp`/`draw.asp` da §5.
+
+### 14.1 Entrada
+
+```
+https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack={ack}
+```
+
+É um **frameset** de duas filas:
+
+| Frame | Ficheiro | Papel |
+|---|---|---|
+| `stat_all_options` | `stat_all_options.asp?club=…&ack=…` | barra de opções (o `<select>` com as 30 vistas) |
+| `stat_all_target` | `stat_nfed.asp?club=…&ack=…` | vista corrente (arranca no nº de federados) |
+
+Cada vista funciona também **sozinha** — é só trocar o nome do ficheiro.
+
+### 14.2 ⚠ O `ack` decide o ÂMBITO, não é decoração
+
+Medido a 2026-09-07 no `stat_nfed.asp`, contando as opções do `<select
+name="club">`:
+
+| `ack` | Origem | Efeito |
+|---|---|---|
+| **`XH256YF45T`** | o mesmo do `tournlist` / `draw.asp` | **"master": 312 opções, com `TODOS` (`club=ALL`)** → qualquer clube |
+| `64K06NJFI7` | ack próprio do Palheiro (059) | 26 opções, **travado** no clube do link |
+| `8428ACK987` | classif/draw/rankingresult | idem — travado no `club=` passado |
+| `XH256YF450` · `MN0JF0I697` · `OT342GH16T` | admissions / admissions.asp / classif.asp | `Key not authorized` (106 bytes) |
+
+Ou seja: os links que os clubes publicam trazem um ack **de clube**, que serve
+só para prender o painel àquele clube. Com o ack master abre-se tudo —
+`stat_nfed.asp?club=ALL` devolve **286 clubes** em 36 páginas.
+
+⚠ Um ack errado **não dá erro HTTP**: devolve `200` com 106 bytes e o texto
+`Key not authorized`. Testar pelo tamanho/conteúdo, nunca por `res.ok`.
+
+### 14.3 Parâmetros comuns
+
+| Param | O quê |
+|---|---|
+| `club` | ccode a 3 dígitos, ou `ALL` (só com o ack master) |
+| `ack` | ver acima |
+| `data1` / `data2` | intervalo, `YYYY-MM-DD` (vistas CBA) |
+| `selyear1` / `selyear2` | intervalo de anos (vistas por época) |
+| `course` | ex. `032-1` (`stat_cba_course`) |
+| `counttype` | `hcp` (só voltas que contam p/ handicap) · `all` |
+| `order` / `ordertype` | coluna e `ASC`/`DESC` |
+| `pagesize` / `npage` | paginação (`numresults` aceita até 500) |
+| `origin=1` | **obrigatório** no grupo TORNEIOS (`stat_scores_*`) |
+
+### 14.4 Catálogo das 30 vistas (colunas reais, medidas com `club=ALL`)
+
+**Federados** — uma linha por clube, ordenável:
+
+| Página | Título | Colunas |
+|---|---|---|
+| `stat_nfed` | Nº de Federados | Clube · Total · % · com HCP · % · Total federados |
+| `stat_gender` | por Sexo | Jogadores · Homens/% · Senhoras/% |
+| `stat_ages` | Idades | escalões **0-10 · 11-12 · 13-14 · 15-16 · 17-18** · 19-21 · 22-29 · 30-39 · 40-49 · 50-64 · ≥65 (n e %) |
+| `stat_hcp` | por Handicap | médias + categorias C1…C6 (n e %) |
+| `stat_hcp_status` | Estados de HCP | EGA · Caducado · HCP Perdido · Suspenso · Sem HCP |
+| `stat_nations` | Nacionalidade/Clube | Nacionais/% · Internacionais/% |
+| `stat_nations_countries` | Nacionalidades por País | Nacionalidade · Total · % |
+| `stat_firstscore` | Primeiro Handicap | Total · Min./Max./Média HCP |
+| `stat_generalplay` | General Play | Descidas · Subidas · Iguais (n e %) |
+| `stat_foreignhcp` | HCP do Estrangeiro | idem |
+| **`numresults`** | **Nº Resultados por Jogador** | **Nome · Nº voltas · Federado · Clube+ccode · HCP · Estado HCP** |
+
+**Revisão de handicap · CBA:**
+
+| Página | Colunas |
+|---|---|
+| `stat_ahr` | Revisão Anual: estado, datas, nº jogadores, revistos/não revistos, subidas/descidas |
+| `stat_cba` | por clube: voltas totais/calculadas + distribuição −2(D) · −2 · −1 · 0 · +1 e média |
+| `stat_cba_course` | o mesmo **por campo** (+ `data1`/`data2`/`course`) |
+
+**Voltas e scores:**
+
+| Página | Colunas |
+|---|---|
+| `stat_rounds` | Clube · Jogadores · Torneios · Voltas · Voltas HCP/% · **EDS/%** · Estrangeiro/% |
+| `stat_roundsbyclub` | voltas por clube de filiação |
+| `stat_avg_playersbyround` | média de resultados por volta de torneio |
+| **`stat_tourns_players`** | **Federado · Nome · Clube · Nº resultados** (cruza clube ORGANIZADOR × anos × clube dos jogadores) |
+| `stat_tourns_members` | idem, por sócio |
+| `stat_highscores` / `_players` | pontuações altas por clube / por jogador (com HCP e média) |
+| `stat_scores_internationals` | scores de **não federados**: oficiais vs extras |
+
+**Torneios** (`&origin=1`):
+
+| Página | Colunas |
+|---|---|
+| `stat_scores_results` | por clube: total/válidos/DQ/NR + **histograma de pontos stableford** (0-19 … >49) |
+| `stat_scores_results_prev` | o mesmo, época anterior |
+| `stat_scores_avgpoints` | média de pontos **por categoria de HCP** |
+| `stat_scores_resulttype` | válidos/DQ/NR em % + média |
+| `stat_scores_buffer` / `_cat` | Buffer Zone: acima/dentro/abaixo (por clube / por categoria) |
+
+### 14.5 O que se tira daqui — e o que NÃO
+
+**Vale a pena:**
+
+- **`numresults` com `club=ALL`** é o ranking nacional de actividade: quem
+  entregou mais cartões no ano, com **fed_code, clube e HCP**. Medido em
+  2026: Rui Mário M. de Meireles (Belas, 182 voltas) · John Malkin (Palheiro,
+  140). ⚠ **Tecto de 2000 registos** — para ir além, paginar por clube.
+- **`stat_ages` dá a demografia júnior por clube** (0-10 / 11-12 / 13-14 /
+  15-16 / 17-18), por ano, desde 2006 — quantos miúdos tem cada clube e como
+  isso evoluiu. Não temos nada equivalente.
+- **`stat_tourns_players`** responde a "quem joga mais torneios" sem passar
+  pelo WHS de cada um.
+- **Tabela `clube → ccode` completa (286 clubes)** — está no `<select>` destas
+  páginas em texto simples (`Palheiro-059`, `Santo da Serra-007`,
+  `FPG_DRIVE-988`, `FPG-000`). O repo casa clubes **por nome**; isto é o mapa
+  oficial.
+
+**Não serve para:**
+
+- ⚠ **O `stat_cba*` NÃO é o PCC do WHS.** É o **CBA** antigo (CONGU/EGA), com
+  buckets −2(D)/−2/−1/0/+1, e vem **agregado em percentagens** por clube ou
+  campo — não há valor por dia/torneio. Não substitui o `backfill-pcc.js`
+  (ver CLAUDE.md, "PCC — o ajuste que chega SEMPRE depois do scrape").
+- Não há dados por volta nem scorecards: tudo o que sai daqui é **agregado**,
+  excepto as vistas por jogador (`numresults`, `stat_tourns_*`,
+  `stat_highscores_players`), que dão contagens — nunca resultados.
+- Não expõe contactos (email/telefone) — isso é o backoffice da §13.
+
+### 14.6 Links prontos (ack master)
+
+```
+https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club=ALL&ack=XH256YF45T
+https://scoring-pt.datagolf.pt/scripts/stat_nfed.asp?club=ALL&ack=XH256YF45T
+https://scoring-pt.datagolf.pt/scripts/stat_ages.asp?club=ALL&ack=XH256YF45T
+https://scoring-pt.datagolf.pt/scripts/stat_tourns_players.asp?club=ALL&ack=XH256YF45T
+https://scoring-pt.datagolf.pt/scripts/stat_scores_results.asp?club=ALL&ack=XH256YF45T&origin=1
+https://scoring-pt.datagolf.pt/scripts/numresults.asp?club=ALL&ack=XH256YF45T&selyear1=2026&selyear2=2026&counttype=all&order=nresults&ordertype=DESC&pagesize=500
+```
+
+As restantes 24 seguem o mesmo molde: `{pagina}.asp?club=ALL&ack=XH256YF45T`
+(+ `&origin=1` no grupo TORNEIOS).

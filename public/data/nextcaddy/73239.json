@@ -1,0 +1,255 @@
+{
+  "tourId": 73239,
+  "url": "https://www.nextcaddy.com/tour/73239",
+  "scrapedAt": "2026-08-31T10:50:54.485Z",
+  "meta": {
+    "name": "POOL NIÑOS",
+    "organizer": null,
+    "course": "Villa Nueva Golf Resort",
+    "courseCode": "AMD5",
+    "dateStart": "2026-08-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 62,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alfonso Lacave Urrutia",
+          "licencia": "CM01975357",
+          "hcp": 29,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": -13,
+          "inscribedId": 2391915
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Del Camino Muñoz",
+          "licencia": "AM05977026",
+          "hcp": 17.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2391916
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Garrido Bellon",
+          "licencia": "AM05975360",
+          "hcp": 34.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2391912
+        },
+        {
+          "pos": 4,
+          "name": "Andres Del Camino Muñoz",
+          "licencia": "AM05977027",
+          "hcp": 26.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2391917
+        },
+        {
+          "pos": 5,
+          "name": "Pedro Lacave Urrutia",
+          "licencia": "CM00154898",
+          "hcp": 36.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2391914
+        },
+        {
+          "pos": 6,
+          "name": "Santiago Colmenar Pita",
+          "licencia": "AM05180205",
+          "hcp": 20.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2391913
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carlos Garrido Bellon",
+      "licencia": "AM05975360",
+      "hcp": 34.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Santiago Colmenar Pita",
+      "licencia": "AM05180205",
+      "hcp": 20.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Pedro Lacave Urrutia",
+      "licencia": "CM00154898",
+      "hcp": 36.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Alfonso Lacave Urrutia",
+      "licencia": "CM01975357",
+      "hcp": 29,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Del Camino Muñoz",
+      "licencia": "AM05977026",
+      "hcp": 17.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Andres Del Camino Muñoz",
+      "licencia": "AM05977027",
+      "hcp": 26.9,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Alfonso Lacave Urrutia",
+          "hcp": 29,
+          "ins": "2391915",
+          "jid": "78457",
+          "nivel": "I"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Santiago Colmenar Pita",
+          "hcp": 20.7,
+          "ins": "2391913",
+          "jid": "78457",
+          "nivel": "I"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Carlos Garrido Bellon",
+          "hcp": 34.7,
+          "ins": "2391912",
+          "jid": "78457",
+          "nivel": "C"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Manuel Del Camino Muñoz",
+          "hcp": 17.2,
+          "ins": "2391916",
+          "jid": "78457",
+          "nivel": "I"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Andres Del Camino Muñoz",
+          "hcp": 26.9,
+          "ins": "2391917",
+          "jid": "78457",
+          "nivel": "A"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Pedro Lacave Urrutia",
+          "hcp": 36.1,
+          "ins": "2391914",
+          "jid": "78457",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78457
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1107512041_73239-pool-ninos.pdf"
+  ]
+}

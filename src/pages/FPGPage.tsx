@@ -70,8 +70,8 @@ import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEdition
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 
 /** Junta o tab da Ordem de Mérito (CGSS) aos tabs de "Edições anteriores". */
-function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0]) {
-  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t) ?? [])];
+function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0], playersDB?: Parameters<typeof fpgPastEditionsTabs>[2]) {
+  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
   return tabs.length ? tabs : undefined;
 }
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -803,6 +803,7 @@ function Content() {
   // Carregamos separadamente para não afectar o displayList principal (tabs
   // Todos/Circuito/Santo continuam a ver apenas pull-torneios).
   const [pjaExtraTournaments, setPjaExtraTournaments] = useState<Tournament[]>([]);
+  const [pjaExtraReady, setPjaExtraReady] = useState(false);
 
   // ── Estado CLASSIFICAÇÕES ─────────────────────────────────────────────────
   // Calendário dos jogadores de referência (Nuno Palmares, Santiago Dias,
@@ -1094,45 +1095,6 @@ function Content() {
           if (hitStop) break;
         }
 
-        // ── Ficheiros de torneio standalone (fora da numeração pull-torneios) ──
-        // Cada ficheiro traz o seu próprio ccode/tcode, por isso o deep-link
-        // /FPG/torneio/{ccode}-{tcode} resolve naturalmente (sem reescrita).
-        const EXTRA_TOURN_FILES: string[] = [
-          // Camp. Nacional de Profissionais 2026 (ccode 912 / tcode 10225) —
-          // scraped à parte porque não veio na numeração pull-torneios.
-          "/data/torneio-912-10225.json",
-          // X Miramar Internacional Open U25 2026 (ccode 003) — U25 (10652) +
-          // Sub-10 (10653). Scraped à parte durante a prova (19-21 Ago); fundem
-          // com as entradas de inscrições/draw do fpg-admissions-draws por ccode-tcode.
-          "/data/torneio-003-10652.json",
-          "/data/torneio-003-10653.json",
-          // Paul McGinley Junior Cup 2026 (ccode 962) — U18&U16 (10082), U14
-          // (10083), U12 (10084). Scraped à parte; fundem com as inscrições/draw
-          // do fpg-admissions-draws por ccode-tcode.
-          "/data/torneio-962-10082.json",
-          "/data/torneio-962-10083.json",
-          "/data/torneio-962-10084.json",
-        ];
-        await Promise.all(EXTRA_TOURN_FILES.map(async (url) => {
-          try {
-            const resp = await fetch(url);
-            if (!resp.ok) return;
-            const d = await resp.json() as DriveData;
-            const normalised = (d.tournaments || []).map(t => {
-              const extLinks = externalLinks[String(t.tcode)];
-              return { ...t,
-                _sourceFile: url, _sourceIndex: -1,
-                players: t.players.map(normalizePlayer),
-                ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}) };
-            });
-            allT.push(...normalised);
-            meta.push({ file: url, index: -1, lastUpdated: d.lastUpdated, source: d.source, count: normalised.length });
-          } catch (e) {
-            console.warn(`[FPGPage] Falhou a carregar ${url}: ${String(e).slice(0, 120)}`);
-          }
-        }));
-        if (alive) { setTournaments([...allT]); setFileMeta([...meta]); }
-
         if (alive) {
           if (allT.length === 0) {
             setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
@@ -1319,6 +1281,7 @@ function Content() {
       // `tournaments` e `displayList` naturalmente, aparecendo em todas as tabs
       // (Torneios, Ranking PJA, Draw) tal como o Nacional sintético.
       setPjaExtraTournaments([...drive, ...aq]);
+      setPjaExtraReady(true);
       setPjaMembers(members);
       setPjaPdfSnapshot(pdfSnap);
     });
@@ -2103,7 +2066,7 @@ function Content() {
       const t = d.results!;
       d.renderFull = () => (
         <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgExtraTabs(editionsIndex, t)} />
+          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB)} />
       );
     }
     return ents;
@@ -2129,6 +2092,31 @@ function Content() {
     }
     return empty;
   }, [params.tkey, shellEntries]);
+
+  // Um drive/Aquapor pedido em /FPG/torneio/ (vem nos drive-data mensais, não
+  // entra no shell) → reencaminhar para a DrivePage, onde ele vive.
+  const tkeyDriveTarget = useMemo(() => {
+    if (!params.tkey || shellSel.id) return null;
+    const p = parseTournKey(params.tkey);
+    if (!p) return null;
+    const hit = pjaExtraTournaments.some(t =>
+      t.ccode === p.ccode && String(t.tcode ?? "").split("+").includes(p.tcode));
+    return hit ? tournamentUrl("drive", p.ccode, p.tcode) : null;
+  }, [params.tkey, shellSel.id, pjaExtraTournaments]);
+
+  // ⚠ Deep-link por resolver: os torneios chegam em lotes (jovens e drives
+  // mensais, pequenos, costumam chegar ANTES dos pull-torneios). Com
+  // `selectedId` indefinido o shell aplica o seu default — o mais recente do
+  // que já chegou (ex.: um jovens) — e reescreve o URL: o deep-link perdia-se e
+  // os links da /draws abriam todos o mesmo torneio. Enquanto QUALQUER lote
+  // faltar, o shell fica em "a carregar" com um id sentinela.
+  const tkeyPending = !!params.tkey && !shellSel.id
+    && (loading || !jovensLoaded || !pjaExtraReady || !!tkeyDriveTarget);
+
+  useEffect(() => {
+    if (tkeyDriveTarget) navigate(tkeyDriveTarget + location.search, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tkeyDriveTarget]);
 
   // Navega o URL para o tcode canónico (ccode-firstTcode) de uma divisão,
   // PRESERVANDO a query (ex.: ?manuel=0). Remove `tab` para o shell reescrever a
@@ -2156,8 +2144,8 @@ function Content() {
     <CircuitShell
       entries={shellEntries}
       config={shellConfig}
-      loading={loading}
-      selectedId={shellSel.id}
+      loading={loading || tkeyPending}
+      selectedId={shellSel.id ?? (tkeyPending ? "__tkey-pending__" : undefined)}
       selectedDivKey={shellSel.divKey}
       onSelectEntry={(e) => {
         const rep = fpgRepDivision(e.divisions ?? []);
@@ -2658,7 +2646,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any)} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any, playersDB)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2932,7 +2920,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens)} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens, playersDB)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>

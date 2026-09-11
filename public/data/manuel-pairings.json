@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-08-30T22:16:35.190Z",
+  "geradoEm": "2026-09-11T13:55:40.785Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 150,
-  "totalCompanheirosUnicos": 182,
+  "totalRondas": 153,
+  "totalCompanheirosUnicos": 185,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 132,
-      "rondasComDraw": 118,
-      "torneiosJogados": 98,
-      "torneiosComDraw": 92,
+      "rondasJogadas": 134,
+      "rondasComDraw": 121,
+      "torneiosJogados": 99,
+      "torneiosComDraw": 94,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "192-10024",
+          "nome": "PJA Torre Masters",
+          "data": "2026-09-05",
+          "rondas": 2
+        },
         {
           "torneioId": "007-11057",
           "nome": "8º Torneio CGSS OM NOS 2026",
@@ -639,6 +645,112 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90074",
+      "torneioNome": "XIII Torneio - Vinhos Barbeito Madeira / CGSS 2026",
+      "data": "2026-09-12",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 17,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Ricardo Camacho",
+          "fed": "41799",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "João Pedro Lopes",
+          "fed": "17131",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Duarte Franco",
+          "fed": "39874",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "192-10024",
+      "torneioNome": "PJA Torre 2026",
+      "data": "2026-09-05",
+      "ronda": 1,
+      "teeTime": "11:15",
+      "startHole": 1,
+      "campo": "Terras da Comporta - Torre",
+      "manuelScore": {
+        "gross": 73,
+        "toPar": 1
+      },
+      "companheiros": [
+        {
+          "nome": "Guo Ziyang",
+          "fed": "57904",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 76,
+            "toPar": 4
+          }
+        },
+        {
+          "nome": "Ricardo Castro Ferreira",
+          "fed": "49085",
+          "clube": "Quinta Lágrimas",
+          "pais": null,
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "192-10024",
+      "torneioNome": "PJA Torre 2026",
+      "data": "2026-09-05",
+      "ronda": 2,
+      "teeTime": "12:00",
+      "startHole": 1,
+      "campo": "Terras da Comporta - Torre",
+      "manuelScore": {
+        "gross": 73,
+        "toPar": 1
+      },
+      "companheiros": [
+        {
+          "nome": "Rodrigo Faria Constantino",
+          "fed": "45278",
+          "clube": "Aroeira",
+          "pais": null,
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
+        },
+        {
+          "nome": "Nuno Palmares Jr.",
+          "fed": "49124",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 70,
+            "toPar": -2
+          }
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "007-11057",

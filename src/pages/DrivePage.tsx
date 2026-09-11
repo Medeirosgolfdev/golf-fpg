@@ -4,7 +4,7 @@
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
  *      + multi-round support (R1/R2/Total tabs)
  */
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { ESCALOES_DRIVE as ESCALOES } from "../constants/escaloes";
 import { useSort } from "../hooks/useSort";
 import { loadPlayers } from "../data/loader";
@@ -879,6 +879,7 @@ function buildSub12Data(
         sex: playersDB[p.fed || p.fedCode || ""]?.sex || "",
       })),
       t.series,
+      t.name,
     );
     for (const p of t.players) {
       if (isDNS(p)) continue;
@@ -1515,14 +1516,28 @@ function DriveContent() {
 
   // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
   // actual deixa de estar visível depois de mudar filtros).
+  const tkeyConsumedRef = useRef<string | null>(null);
   useEffect(() => {
     if (driveEntries.length === 0) return;
     const exists = selectedDriveId && driveEntries.some(e => e.id === selectedDriveId);
-    if (!exists) {
-      const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
-      setSelectedDriveId(latest?.id ?? null);
+    if (exists) return;
+    // Deep-link /drive/torneio/{ccode}-{tcode}: abrir ESSE torneio e não o mais
+    // recente. Se existe nos dados mas ainda não está visível, o efeito de
+    // deep-link está a ajustar série/ano/Manuel — esperar pela próxima corrida.
+    // Consome-se UMA vez: depois disso, mudar filtros volta ao comportamento normal.
+    const parsed = tkeyConsumedRef.current === urlTkey ? null : parseTournKey(urlTkey);
+    if (parsed) {
+      const hit = (t: any) => !!t && String(t.ccode) === parsed.ccode
+        && stripRoundSuffix(String(t.tcode ?? "")).split("+").includes(parsed.tcode);
+      const entry = driveEntries.find(e => (e.divisions ?? []).some(d => hit(d.results)));
+      if (entry) { tkeyConsumedRef.current = urlTkey ?? null; setSelectedDriveId(entry.id); return; }
+      if (raw.some(hit)) return;
+      tkeyConsumedRef.current = urlTkey ?? null;
     }
-  }, [driveEntries, selectedDriveId]);
+    const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
+    setSelectedDriveId(latest?.id ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [driveEntries, selectedDriveId, urlTkey]);
 
   // State para tab especial (Inscrições / Draw RN) ortogonal ao roundIdx
   const [specialTab, setSpecialTab] = useState<string | null>(null);  // "admissions" | "draw:1" | null
@@ -1721,11 +1736,10 @@ function DriveContent() {
     const matchesT = (t: Tournament) => t.ccode === ccode && (
       t.tcode === tcode || (t.tcode || "").split("+").includes(tcode)
     );
-    let found: Tournament | null = null;
-    let detectedSeries: "tour" | "challenge" | "aquapor" | null = null;
-    for (const t of tourT) { if (matchesT(t)) { found = t; detectedSeries = "tour"; break; } }
-    if (!found) for (const t of challT) { if (matchesT(t)) { found = t; detectedSeries = "challenge"; break; } }
-    if (!found) for (const t of aquaporT) { if (matchesT(t)) { found = t; detectedSeries = "aquapor"; break; } }
+    // ⚠ Procurar em TODOS os anos (data.tournaments) — tourT/challT/aquaporT já
+    // vêm cortados ao ano activo, e um deep-link de outro ano nunca era achado.
+    const found: Tournament | null = data?.tournaments.find(matchesT) ?? null;
+    const detectedSeries = found ? ((found.series || "tour") as "tour" | "challenge" | "aquapor") : null;
     if (!found || !detectedSeries) return;  // ainda não carregado — próxima corrida apanha
     if (series !== detectedSeries && series !== "all") setSeries(detectedSeries);
     // Desligar filterManuel se o Manuel não está neste torneio — caso contrário o
@@ -1734,8 +1748,12 @@ function DriveContent() {
     // Limpar filtros regionais/escalão que possam estar a esconder o torneio
     if (regionFilter && found.region !== regionFilter) setRegionFilter(null);
     if (escFilter.length > 0) setEscFilter([]);
+    // O ano por defeito é o mais recente: um deep-link para outro ano ficava
+    // escondido e a página abria outro torneio (ex.: links da /draws para 2023).
+    const fYear = (found.date || "").slice(0, 4);
+    if (fYear && activeYear !== fYear) setYearFilter(fYear);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, tourT, challT, aquaporT]);
+  }, [urlTkey, data]);
 
   // ── Deep-link: sync URL (:tkey) → selectedGroupKey + roundIdx ──────────
   // `/drive/torneio/{ccode}-{tcode}` → procura o torneio na lista filtrada

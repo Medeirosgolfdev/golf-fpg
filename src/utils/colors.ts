@@ -198,7 +198,8 @@ export const C = {
     ferias:         "#a3e635",   /* lima — Férias */
     treino:         "#10b981",   /* esmeralda — Campo / Treino */
     colonias:       "#374151",   /* cinzento escuro — Colónias (sem animação) */
-    irma_bad:       "#14b8a6",   /* turquesa — Badminton (irmã) */
+    escola:         "#94a3b8",   /* cinzento-azulado — calendário escolar (pano de fundo) */
+    irma_bad:       "#ff1493",   /* rosa-choque — Maria Antónia (irmã). Cor própria, a gritar, e NUNCA esbatida: é família. */
     profissao_fe:   "#fbbf24",   /* dourado — Profissão de Fé (full-cell pulse) */
     // Viagens
     viag_alg_fev:   "#f59e0b",
@@ -209,6 +210,8 @@ export const C = {
     viag_alg_jul_m:  "#fb923c",   /* laranja — Algarve Jul (Manuel+2) — provisório */
     viag_alg_jul_mamf:"#facc15",  /* amarelo — Algarve Jul (Mariana + M. Francisco) — provisório */
     viag_vce_ago:    "#f43f5e",   /* rosa — Veneza+Porto Ago — provisório */
+    viag_malaga_nov: "#8b5cf6",  /* violeta — Málaga Nov (US Kids Spanish Open) */
+    viag_paris_set: "#0ea5e9",   /* azul-céu — Paris Set (treino La Boulie) */
     // Aniversários (ramp rosa)
     bday_sub10:     "#f9a8d4",
     bday_sub12:     "#f472b6",

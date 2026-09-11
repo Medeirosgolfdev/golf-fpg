@@ -2,8 +2,9 @@ name: Scrape de torneios FPG a pedido (ccode:tcode)
 
 # Re-scrapa a PEDIDO os resultados de um ou mais torneios FPG, indicados como
 # pares `ccode:tcode`. Feita para torneios de vários dias: corre-se no fim de
-# cada ronda, enquanto a prova decorre. Escreve os ficheiros standalone que a
-# FPGPage carrega via EXTRA_TOURN_FILES (public/data/torneio-{ccode}-{tcode}.json).
+# cada ronda, enquanto a prova decorre. Escreve nos pull-torneios, como os
+# outros: no ficheiro que já tem o torneio, ou na cauda se é novo
+# (scripts/pull-torneios-tail.cjs --for ccode:tcode). Sem ficheiros avulsos.
 #
 # NÃO tem defaults de propósito (2026-08-29). Nasceu a 23/08 com os cinco
 # torneios de Agosto no `pairs` — Miramar (003/10652+10653) e Paul McGinley
@@ -11,9 +12,8 @@ name: Scrape de torneios FPG a pedido (ccode:tcode)
 # chegou a correr e o default só servia para re-scrapar provas terminadas.
 # Sem pares, a corrida não faz nada e sai verde: diz-se-lhe o que scrapar.
 #
-# Os ficheiros dessas provas continuam no repo e servidos ao site — e o
-# 912/10225 (Camp. Nacional de Profissionais) também, apesar de nunca ter
-# estado no default. Para refrescar qualquer um deles, basta passar o par.
+# Essas provas (e o 912/10225, Camp. Nacional de Profissionais) estão no
+# pull-torneios006.json. Para refrescar qualquer uma, basta passar o par.
 #
 # Uso: Actions → esta workflow → Run workflow → pairs: "962:10082,962:10083"
 #
@@ -64,7 +64,7 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Scrapar cada par ccode:tcode para o seu ficheiro standalone
+      - name: Scrapar cada par ccode:tcode para os pull-torneios
         id: scrape
         run: |
           set +e
@@ -95,14 +95,16 @@ jobs:
             CCODE="${PAIR%%:*}"
             TC="${PAIR##*:}"
             [ -z "$CCODE" ] || [ -z "$TC" ] || [ "$CCODE" = "$TC" ] && { echo "⚠ par inválido: $PAIR (usar ccode:tcode)"; continue; }
-            OUT="public/data/torneio-${CCODE}-${TC}.json"
+            # Nada de ficheiros avulsos por torneio: vai para o pull-torneios que
+            # JÁ o tem (re-scrape actualiza no sítio) ou, se é novo, para a cauda.
+            OUT=$(node scripts/pull-torneios-tail.cjs --for "${CCODE}:${TC}")
             echo "── Scrape ${CCODE}/${TC} → ${OUT}"
             node scripts/scrape-classif-node.js --tclub "$CCODE" --tcode "$TC" --out "$OUT"
             EC=$?
             echo "  exit=$EC"
             if [ "$EC" = "1" ]; then ANY_ERR=1; fi
             if [ "$EC" = "0" ]; then ANY_OK=1; fi
-            [ -f "$OUT" ] && FILES="$FILES $OUT"
+            if [ -f "$OUT" ]; then case " $FILES " in *" $OUT "*) ;; *) FILES="$FILES $OUT" ;; esac; fi
           done
           echo "any_ok=$ANY_OK" >> $GITHUB_OUTPUT
           echo "files=$FILES" >> $GITHUB_OUTPUT
@@ -132,7 +134,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/torneio-*.json
+          git add public/data/pull-torneios*.json
 
           if git diff --staged --quiet && [ "${{ github.event.inputs.force_commit }}" != "true" ]; then
             echo "Nenhuma alteração — sem commit."

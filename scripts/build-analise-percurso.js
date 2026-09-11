@@ -15,10 +15,9 @@
  *   hcpAge  — {idade: [hcp a 31/dez, Δ vs ano anterior]}
  *   best8   — {idade: média dos (até) 8 melhores score differentials da idade}
  *   cumR    — {idade: rondas acumuladas}
- *   intl    — {idade: [provas, rondas]} provas internacionais (score_origin
- *             "Intern": voltas homologadas fora de Portugal), agrupadas com a
+ *   intl    — {idade: [provas, rondas]} provas internacionais, agrupadas com a
  *             mesma regra dos `events` (dias consecutivos + mesmo nº buracos)
- *   eds     — {idade: n} voltas Extra Day Score (score_origin "EDS")
+ *   eds     — {idade: n} voltas fora de competição (Extra Day Score)
  *   cumIE   — {idade: [provasIntl, rondasIntl, eds]} acumulados até essa idade
  *   maxage, start (1.º registo WHS), hcp11/hcp12, hcpNow, esc
  *
@@ -45,6 +44,45 @@ const PLAYERS_PATH = path.join(ROOT, "public", "data", "players.json");
 const MES_ABBR = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 const MES_FULL = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 const DAY_MS = 86400000;
+
+// ── Origem da volta no WHS da FPG ────────────────────────────────────────────
+// O `score_origin` tem SEIS valores e nenhum deles significa exactamente o que
+// o nome sugere. Duas armadilhas medidas nos dados reais (2026-09-07):
+//
+// 1. INTERNACIONAL não é só "Intern". As voltas jogadas fora de Portugal
+//    chegam por DOIS caminhos: "Intern" (o clube regista a volta away) e
+//    "Import" (a volta vem importada do sistema de outra federação). Os nomes
+//    mais frequentes de "Import" em todo o repo são literalmente "Resultado no
+//    estrangeiro" (55), "Registo HCP RFEG", "HCP Record RFEG", "Registo de hcp
+//    EUA", "USGA Scoring Record" — mais Grands Prix franceses, Puntuables
+//    espanhóis, clubes ingleses/irlandeses/checos/polacos. Contar só "Intern"
+//    perdia 649 voltas no repo (145 só no roster desta página): o Ricardo CF
+//    aparecia com ZERO internacionais aos 11 anos, tendo jogado o CFJ U12
+//    Garçons e três Grand Prix em França.
+//
+// 2. EDS não é só "EDS". A MESMA volta aparece sob "EDS" ou sob "Indiv"
+//    conforme o formulário por onde o clube a lançou — o nome "Extra Day
+//    Score" existe 223× como "EDS" e 45× como "Indiv"; "EDS" existe 22× como
+//    "EDS" e 224× como "Indiv"; "extra day card" 1× e 57×. É o mesmo objecto
+//    (volta fora de competição declarada pelo jogador) com dois códigos.
+//    Contar só "EDS" dava 4 ao Manuel em vez de 15.
+//
+// "Torn" = torneio nacional homologado; "First" = handicap inicial.
+
+/** Torneios de "Import" que se disputam EM Portugal (não contam como internacional). */
+const IMPORT_NACIONAL = /rolear\s+algarve/i;
+
+/** Volta jogada fora de Portugal ("Intern" + "Import", tirando os nacionais). */
+function isInternacional(r) {
+  if (r.score_origin === "Intern") return true;
+  if (r.score_origin !== "Import") return false;
+  return !IMPORT_NACIONAL.test(r.tourn_name || "");
+}
+
+/** Volta fora de competição declarada pelo jogador ("EDS" + "Indiv"). */
+function isForaDeCompeticao(r) {
+  return r.score_origin === "EDS" || r.score_origin === "Indiv";
+}
 
 const round1 = (v) => Math.round(v * 10) / 10;
 const round3 = (v) => Math.round(v * 1000) / 1000;
@@ -115,11 +153,12 @@ function buildPlayer(rows, birthYear) {
   }
   if (cur) pushEv(cur);
 
-  // intl / eds — exposicao internacional e voltas Extra Day Score.
-  // "Intern" = volta homologada num torneio fora de Portugal; "EDS" = Extra Day
-  // Score (volta de treino contada para o handicap). As provas internacionais
-  // agrupam-se com a MESMA regra dos `events` (dias consecutivos + mesmo nº de
-  // buracos) para que "3 provas / 9 rondas" signifique o mesmo nas duas tabelas.
+  // intl / eds — exposicao internacional e voltas fora de competicao.
+  // Ver `isInternacional` / `isForaDeCompeticao` no topo: os dois conceitos
+  // repartem-se por DOIS score_origin cada um (Intern+Import, EDS+Indiv). As
+  // provas internacionais agrupam-se com a MESMA regra dos `events` (dias
+  // consecutivos + mesmo nº de buracos) para que "3 provas / 9 rondas"
+  // signifique o mesmo nas duas tabelas.
   const intl = {};
   const eds = {};
   let ci = null;
@@ -131,8 +170,8 @@ function buildPlayer(rows, birthYear) {
   for (const r of rows) {
     if (r.holes !== 9 && r.holes !== 18) continue;
     const age = (+r.hcp_dateStr.slice(0, 4)) - birthYear;
-    if (r.score_origin === "EDS") eds[age] = (eds[age] || 0) + 1;
-    if (r.score_origin !== "Intern") continue;
+    if (isForaDeCompeticao(r)) eds[age] = (eds[age] || 0) + 1;
+    if (!isInternacional(r)) continue;
     const t = Date.parse(r.hcp_dateStr);
     if (ci && r.holes === ci.holes && t - ci.last === DAY_MS) {
       ci.n++;

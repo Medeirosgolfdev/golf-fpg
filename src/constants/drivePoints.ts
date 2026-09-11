@@ -9,8 +9,10 @@
    as séries têm tabelas DIFERENTES no 8º lugar —
      · TOUR:      8º = 38 (12 amostras oficiais) e 20º = 18
      · CHALLENGE: 8º = 35 (112 amostras oficiais)
-   O ranking OFICIAL conta apenas os MELHORES N resultados (tipicamente 4;
-   o verify detecta o N por ranking) — o site ainda soma tudo.
+   ⚠ 2026-09-10: as FINAIS do Challenge usam a tabela do TOUR (8º = 38), não a
+   do Challenge — 16/16 oitavos lugares nas Finais oficiais valem 57 = 38×1.5,
+   enquanto a fase regular do Challenge dá 35 em 137/137. Apanhado pelo
+   drive-ranking-vs-oficial.test.js na Final do Norte Sub 12 (4 Set 2026).
    ═══════════════════════════════════════════════════════ */
 
 const BASE: Record<number, number> = {
@@ -28,17 +30,24 @@ export const DRIVE_POINTS_CHALLENGE: Record<number, number> = {
   ...BASE, 8: 35,
 };
 
+/** Tabela das Finais regionais (antes do ×1.5) — igual à do Tour. */
+export const DRIVE_POINTS_FINAL: Record<number, number> = {
+  ...BASE, 8: 38,
+};
+
 /** Retro-compat: tabela "default" (= Challenge). Preferir drivePoints(pos, series). */
 export const DRIVE_POINTS = DRIVE_POINTS_CHALLENGE;
 
 /** Pontos do ranking para uma posição final, conforme a série.
- *  `series`: "tour" | "aquapor" → tabela Tour; resto → Challenge.
- *  Posições fora da tabela → 0. */
+ *  `series`: "final" → tabela das Finais; "tour" | "aquapor" → tabela Tour;
+ *  resto → Challenge. Posições fora da tabela → 0. */
 export function drivePoints(pos: number | string | null, series?: string | null): number {
   if (pos == null) return 0;
   const n = Number(pos);
   if (isNaN(n) || n <= 0) return 0;
-  const table = (series === "tour" || series === "aquapor") ? DRIVE_POINTS_TOUR : DRIVE_POINTS_CHALLENGE;
+  const table = series === "final" ? DRIVE_POINTS_FINAL
+    : (series === "tour" || series === "aquapor") ? DRIVE_POINTS_TOUR
+    : DRIVE_POINTS_CHALLENGE;
   return table[n] ?? 0;
 }
 
@@ -47,7 +56,8 @@ export function drivePoints(pos: number | string | null, series?: string | null)
    o Drive Challenge tem DOIS rankings por zona/escalão —
      · `DC_*`   = FASE REGULAR: melhores 4 provas, as Finais NÃO entram
      · `RFDC_*` = RANKING FINAL: total da fase regular + a Final a ×1.5
-   Verificado: 1º 250→375 · 2º 165→248 (247,5) · 3º 94→141 · 4º 75→113 (112,5).
+   Verificado: 1º 250→375 · 2º 165→248 (247,5) · 3º 94→141 · 4º 75→113 (112,5)
+   · 8º 38→57 (tabela das Finais, ver cabeçalho).
    Arredondamento a meio para cima (Math.round). ────────────────────────── */
 export const FINAL_WEIGHT = 1.5;
 
@@ -62,9 +72,10 @@ export function isNacionalFinal(name: string | null | undefined): boolean {
   return isFinalEvent(name) && /nacional/i.test(String(name || ""));
 }
 
-/** Pontos de uma Final: tabela normal × 1.5, arredondado. */
-export function finalPoints(pos: number | string | null, series?: string | null): number {
-  return Math.round(drivePoints(pos, series) * FINAL_WEIGHT);
+/** Pontos de uma Final: tabela das Finais × 1.5, arredondado.
+ *  O `series` é ignorado (mantido por compatibilidade de assinatura). */
+export function finalPoints(pos: number | string | null, _series?: string | null): number {
+  return Math.round(drivePoints(pos, "final") * FINAL_WEIGHT);
 }
 
 /** Quantas provas contam para o ranking (as melhores). Medido no oficial:
@@ -86,8 +97,14 @@ export interface FieldEntry {
 /** Pontos de UM torneio, por federado — com as regras oficiais de empate.
  *  · Aquapor: classifica DENTRO do sexo e empates partilham lugar/pontos.
  *  · Challenge/Tour: usa a posição já desempatada por countback no scrape;
- *    se ainda assim duas partilharem lugar, dividem os pontos. */
-export function tournamentPoints(field: FieldEntry[], series?: string | null): Map<string, number> {
+ *    se ainda assim duas partilharem lugar, dividem os pontos.
+ *  · Numa Final (`tournName`) usa a tabela das Finais — sem o nome o 8º
+ *    lugar de uma Final sai com 35 em vez de 38. */
+export function tournamentPoints(
+  field: FieldEntry[],
+  series?: string | null,
+  tournName?: string | null,
+): Map<string, number> {
   const out = new Map<string, number>();
   const scored = field.filter(p => p.fed && hasCard(p.gross));
 
@@ -108,6 +125,7 @@ export function tournamentPoints(field: FieldEntry[], series?: string | null): M
     return out;
   }
 
+  const tabela = isFinalEvent(tournName) ? "final" : series;
   const porPos = new Map<string, FieldEntry[]>();
   for (const p of scored) {
     const k = String(p.pos);
@@ -115,7 +133,7 @@ export function tournamentPoints(field: FieldEntry[], series?: string | null): M
     porPos.get(k)!.push(p);
   }
   for (const [, grupo] of porPos) {
-    const pts = sharedPoints(grupo[0].pos, grupo.length, series);
+    const pts = sharedPoints(grupo[0].pos, grupo.length, tabela);
     for (const p of grupo) out.set(p.fed, pts);
   }
   return out;
@@ -136,9 +154,10 @@ export function rankingTotal(results: RankingResultLike[], bestN: number = RANKI
   let finais = 0;
   for (const r of results) {
     if (isNacionalFinal(r.tournName)) continue;
-    const base = r.pts ?? drivePoints(r.pos, r.series);
+    const final = isFinalEvent(r.tournName);
+    const base = r.pts ?? drivePoints(r.pos, final ? "final" : r.series);
     if (!base) continue;
-    if (isFinalEvent(r.tournName)) finais += Math.round(base * FINAL_WEIGHT);
+    if (final) finais += Math.round(base * FINAL_WEIGHT);
     else regulares.push(base);
   }
   const melhores = regulares.sort((a, b) => b - a).slice(0, bestN).reduce((s, x) => s + x, 0);

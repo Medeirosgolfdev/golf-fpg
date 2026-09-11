@@ -17,3 +17,15 @@ export function isGFTournament(t: PJATournLike): boolean;
 export function getTournMultiplier(t: PJATournLike): number;
 export function classifyPJAEvent(t: PJATournLike): PJAEventType;
 export function isPJACore(t: PJATournLike): boolean;
+
+export interface PJANota {
+  ano: string;
+  tipo: "fora" | "info";
+  titulo: string;
+  texto: string;
+  /** Data ISO a partir da qual a nota deixa de ser mostrada. */
+  ate?: string;
+}
+
+export const PJA_NOTAS: PJANota[];
+export function notasPJA(year: string | number, hoje?: string): PJANota[];

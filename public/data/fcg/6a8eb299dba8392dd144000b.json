@@ -1,0 +1,122 @@
+{
+  "gameId": "6a8eb299dba8392dd144000b",
+  "fetchedAt": "2026-09-07T09:15:14.331Z",
+  "game": {
+    "_id": "6a8eb299dba8392dd144000b",
+    "name": "CAMPIONAT DE CATALUNYA MATCHPLAY JUVENIL 2026",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-09-19T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6a8eb299dba8392dd1440036",
+      "name": "CAMPIONAT DE CATALUNYA MATCHPLAY JUVENIL 2026",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6e4d36dfe90dea3337",
+      "name": "GOLF COSTA DAURADA",
+      "city": "TARRAGONA",
+      "state": "CATALUÑA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6e4d36dfe90dea3349",
+      "name": "COSTA DAURADA - Costa Daurada",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 67.6,
+        "slope": 123,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd14400bc"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66,
+        "slope": 115,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd14400a9"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.8,
+        "slope": 132,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd14400f5"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 71.3,
+        "slope": 135,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd14400e2"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 129,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd1440096"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 70.6,
+        "slope": 124,
+        "par": 72,
+        "_id": "6a8eb299dba8392dd14400cf"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a8eb299dba8392dd1440048",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a8eb299dba8392dd144004b",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

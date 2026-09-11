@@ -73,6 +73,172 @@ design-system.html # Referência visual de todos os componentes CSS
 > ⚠ Não mover o `outDir` para `dist/` sem confirmar a *Output Directory* do
 > projecto Vercel `golf-fpg` — o deploy de produção depende dela.
 
+## ⚠ Deployment Storage do Vercel — o que entra no deploy (2026-09-06)
+
+A Vercel avisou por email que o plano gratuito tinha chegado a **100% dos 10 GB
+de Deployment Storage**. A causa não era tráfego: **cada deployment pesava
+~9,1 GB**, por isso um único deployment enchia a conta — e os workflows de dados
+fazem ~11 commits/dia, cada um a gerar outro.
+
+Porquê: `output/` é ao mesmo tempo o `outDir` do Vite e a pasta onde o scraper
+escreve. O Vercel clona o repo, o Vite copia `public/` (~1 GB) para lá, e o
+Output Directory publicado passa a incluir **também as 697 pastas por federado
+que estão em git** (8,1 GB). Estava tudo a ser servido publicamente — medido em
+produção, `golf-fpg.vercel.app/52884/scorecards.json` devolvia 3,9 MB a quem o
+pedisse, e a ficha de cada jogador obrigava o browser a descarregar **10 MB**.
+
+Três correcções, por ordem de retorno:
+
+| # | O quê | Ganho |
+|---|---|---|
+| 1 | `CROSS_DATA` extraído para `/data/cross-data.json` | −6,4 GB |
+| 2 | Universo de jogadores reduzido de 673 para 179 | −5,6 GB |
+| 3 | Intermédios do scraper fora do deployment | −0,8 GB |
+
+Resultado medido: **9,1 GB → 1,10 GB por deployment**, e a ficha de um jogador
+de 10,2 MB → ~1 MB.
+
+### 1. `CROSS_DATA` vive agora em `/data/cross-data.json`
+
+O `CROSS_DATA` é uma tabela indexada por federado — a MESMA para toda a gente —
+e vinha embutida em cada `output/{fed}/analysis/data.json`: 9,4 MB × 678
+ficheiros = 6,4 GB, com cada cópia parada num instante diferente (554 de 673
+entradas iguais entre dois ficheiros; as outras eram só staleness).
+
+- **Escrita:** `scripts/make-scorecards-ui.js` → `writeCrossData()`, uma vez por
+  run (o `crossStats` é sempre calculado sobre TODOS os jogadores descobertos em
+  `output/`, mesmo em runs incrementais).
+- **Leitura:** `src/data/playerDataLoader.ts` → `loadCrossData()`, um `fetch`
+  partilhado e cacheado; pedido em paralelo com o `data.json`, por isso só a
+  primeira ficha aberta é que o paga.
+- **Retrocompatível:** um `data.json` que ainda traga `CROSS_DATA` embutido
+  ganha prioridade sobre o ficheiro partilhado.
+
+⚠ Não voltar a pôr `CROSS_DATA` dentro do `data.json` — é a duplicação O(n²) que
+encheu o Deployment Storage.
+
+### 2. `scripts/prune-player-scope.js` — o universo seguido
+
+Reduz `players.json` + as pastas `output/{fed}/` a quem é relevante para o
+percurso do Manuel. Regra decidida em 2026-09-06 (constantes no topo do script):
+
+| | Tecto de índice |
+|---|---|
+| Sub-10 | ≤ 36 |
+| Sub-12 | ≤ 25 |
+| Sub-14 | ≤ 15 |
+| Sub-16 | ≤ 10 |
+| Sub-18 | ≤ 5 |
+
+Mais, sempre e independentemente do índice: o Manuel, a **coorte dos 18** de
+`build-percurso-path.js` (sem ela a `/analise-percurso-juniores` fica sem
+dados) e quem tem tag `PJA` ou `inscrito-nacional`. Sai quem for adulto sem
+essas tags, quem não jogou no ano corrente, e quem está acima do tecto ou sem
+índice estabelecido (≥54).
+
+Primeira passagem: 673 → **179 jogadores**, 518 pastas apagadas (24 delas órfãs,
+sem entrada em `players.json`). Lista dos removidos em
+`data-archive/players-removidos-2026-09-06.json` (fora de `public/`, não vai
+para o deploy).
+
+⚠ **Não é perda de dados** — vêm todos da FPG. Repor um jogador é voltar a
+pô-lo no `players.json` e correr `node scripts/fpg-scrape-node.js <fed> --full`.
+⚠ **Custo real:** as páginas derivadas das voltas dos nossos (`/campos` →
+"quem jogou este campo", `/torneios-recentes`, comparação entre jogadores)
+passam a cobrir 179 jogadores em vez de 673.
+
+⚠ Quem sai do `players.json` **não desaparece do site**: passa a `_source:
+"feds"` no `federadosLoader` e é servido pelo `FederadoOnlyDetail` (cadastro +
+WHS ao vivo). O `player-stats.json` e o `hcp-history.json` são MERGE (não
+substituição), por isso mantêm as entradas dos removidos — congeladas na data
+do corte, já que não há `output/{fed}/` para as recalcular. São 1,9 MB no
+total; ficam de propósito, porque alimentam métricas de listas que abrangem
+todos os federados.
+
+### 3. `scripts/prune-deploy-output.js` — o que NÃO vai para o deploy
+
+Corre a seguir ao `vite build` (está no `npm run build`) e **só quando `VERCEL`
+está definido** — em local apagaria ficheiros de que o `pipeline.js` precisa e
+que estão em git. Remove do Output Directory o que a app nunca pede:
+`output/*/{whs.json,whs-list.json,scorecards.json,summary.json,scorecards/}` e
+as caches à raiz. A app só lê `/{fed}/analysis/data.json`.
+
+⚠ Se um dia a app passar a ler outro ficheiro por federado, **acrescentá-lo à
+excepção** — senão passa a dar 404 em produção e funciona em local.
+
+### Seguranças — como é que a informação NÃO se perde
+
+O corte do scope não pode custar informação já recolhida. Quatro camadas,
+todas verificadas com dados reais a 2026-09-06:
+
+**1. Os derivados PRESERVAM o histórico.** `build-course-players.js` e
+`build-recent-tournaments.js` liam `output/` e reescreviam o ficheiro DO ZERO
+— com 179 jogadores em vez de 673 isso levaria **61% das voltas** do
+`/campos` (42 975) e **48% das participações** do `/torneios-recentes`
+(1219 dos 3004 torneios ficavam vazios). Passaram a **fundir** com o
+ficheiro em disco: quem já não é seguido continua lá, congelado (um miúdo
+que jogou aquele campo naquele dia jogou-o na mesma). Medido depois da
+mudança: 110 campos · 9528 ligações · 70 335 voltas e 3004 torneios — **zero
+perdas** com 179 jogadores em `output/`. `--rebuild` força reconstrução limpa.
+
+**2. Guarda anti-encolhimento** nos dois builders: recusam escrever (exit 2,
+ficheiro anterior intacto) se o build novo perder **>30%** face ao que está em
+disco, salvo `--force`. É a guarda que já existia no `scrape-federados-node.js`
+e no `discover-fcg-scope.js` — e que salvou o FCG em Julho/Agosto. Testada:
+`--rebuild` sem `--force` é recusado com "perda de 60%" / "perda de 41%" e o
+ficheiro fica byte a byte igual. O `update-data.yml` já corre estes builders
+com `|| echo aviso`, por isso o exit 2 não parte o workflow.
+
+**3. O scrape BRUTO fica arquivado, fora do deploy** —
+`scripts/archive-player-raw.js`. Copia `whs.json`, `whs-list.json` e
+`scorecards.json` dos jogadores cortados para `data-archive/players/{fed}/`,
+que está fora de `public/` e do `outDir`, logo **não entra no deployment**.
+São 531 MB de 518 jogadores, e o repositório quase não cresce: os ficheiros
+vêm do commit anterior ao corte, por isso são os **mesmos blobs git** que já
+estavam no histórico (verificado: mesmo SHA em `data-archive/players/36864/
+whs.json` e em `676bf4bea~1:output/36864/whs.json`) — só muda a árvore.
+Isto é o que permite **RECONSTRUIR** e não apenas congelar.
+
+```bash
+node scripts/archive-player-raw.js --from <sha-antes-do-corte>            # dry-run
+node scripts/archive-player-raw.js --from <sha> --apply --scorecards      # aplica
+```
+
+**4. Restauro num comando** — `prune-player-scope.js --restore <fed>`: repõe a
+ficha no `players.json` (lida das auditorias em `data-archive/`) e o bruto em
+`output/{fed}/` (do arquivo, ou diz o `git checkout` a fazer se não estiver
+arquivado). Circuito testado de ponta a ponta **sem tocar na FPG**: o fed 2195
+foi reposto e o `make-scorecards-ui.js` regenerou-lhe o `data.json` com as
+111 voltas e o índice 7,2 a partir do arquivo.
+
+⚠ **A auditoria nunca é substituída.** Duas passagens no mesmo dia caem no
+mesmo `players-removidos-YYYY-MM-DD.json`; sem o merge, a segunda (1 jogador)
+apagava a primeira (494) e o `--restore` ficava sem as fichas. Apanhado a
+testar o restauro — está corrigido, mas é o tipo de erro que só aparece na
+segunda corrida.
+
+### O que continua por fazer
+
+- **Apagar deployments antigos no Vercel** — nada disto encolhe os que já
+  existem; a conta só desce quando forem apagados. Automatizado em
+  `scripts/prune-vercel-deployments.js` + workflow **`prune-vercel-deployments.yml`**
+  (Segunda 04:00 UTC, e `workflow_dispatch` com `apply=false` para ver primeiro).
+  Usa o secret `VERCEL_TOKEN` que o `analytics-snapshot.yml` já tinha.
+  Poupa sempre: o deployment que está EM produção, os que estão a construir/em
+  fila, os `--keep N` mais recentes (default 5, margem de rollback) e tudo com
+  menos de `--min-age-days` (default 1). A selecção é a função pura `escolher()`,
+  testada em `prune-vercel-deployments.test.js` (7 testes) — chamar a API a
+  sério num teste apagaria deployments a sério.
+  ⚠ O team tem **6 projectos** (`golf-fpg`, `ranking-pja`, `golf`, `golf1`,
+  `medeirosgolf`, `uskids-golf`) e TODOS contam para os mesmos 10 GB; sem
+  `--project` a limpeza cobre-os a todos.
+- `public/data/` são ~1 GB e é agora quase todo o deployment. Os pesos: 
+  `ffgolf-resultats` 168 MB, `nextcaddy` 92 MB, `juniors-tournaments-0{0,1}` 94 MB,
+  `uskids-member-history-slim` 40 MB, `juniors.json` 40 MB. O `nextcaddy` e o
+  `rfegolf-livegolfscoring` (38 MB) **não são pedidos por nenhum `fetch` do
+  `src/`** — são entradas dos builders; podem seguir o caminho do
+  `data-archive/` quando houver tempo para confirmar.
+
 ### Páginas (lazy-loaded)
 
 | Rota | Página | Dados |
@@ -101,6 +267,8 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
+| `/egr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | EGRPage | egr-ranking.json + egr/egr-events-list.json + egr/events/egr_{id}.json (European Golf Rankings) |
+| `/wagr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | WAGRPage | wagr-ranking.json + wagr/wagr-events-list.json + wagr/events/wagr_{id}.json (World Amateur Golf Ranking) |
 
 > **Páginas legadas** — `/bjgt-legacy` e `/doral-legacy` foram **removidas** 2026-07-02 (redirect → `/major`, que tem paridade total via CircuitShell; BJGTPage.tsx/DORALPage.tsx sobrevivem como módulos de dados+componentes ricos consumidos pela MajorPage). **`/kids-legacy` (KIDSPage) foi REMOVIDA em 2026-08-06** (sunset; redirect → `/kids2`). As 4 funcionalidades que bloqueavam o sunset resolveram-se assim: **(1)** tabela H2H detalhada → o `kids2/components/MatchupVsManuel.tsx` foi elevado à paridade (±par por lado, coluna Resultado c/ tinte, Dif. em ±par, médias de posição; e corrigidos 2 bugs: `totalGross ?? 0` a poluir médias e confrontos perdidos quando um jogador está em 2 flights do mesmo torneio, caso England cross-trophy); **(2-4)** Previsão WHS, Course Tab e Scorecards históricos NUNCA foram exclusivas — vivem no `kids/FieldRivaisDashboard.tsx`, que o kids2 renderiza em `/kids2/next-t` (tabs `?tab=previsao|campo|scorecards`). Apagados: `KIDSPage.tsx` + cadeia legacy-only (`kids/RivalDetail`, `RivalCharts`, `H2HSortableTable`, `RivaisSidebar`, `AnaliseSection`, `MemberHistTable`, `TournScorecard`, `courseScorecards`, `dobInference`, `tournDef`, `types`). **Mantêm-se** em `src/pages/kids/`: `FieldRivaisDashboard.tsx` + `CourseTab`/`PrevisaoTab`/`previsaoModel`/`HistoricScorecardsTab` (partilhados com o kids2). O array manual `D` da KIDSPage morreu com ela (a armadilha D vs TG_D ficou resolvida).
 >
@@ -564,6 +732,7 @@ O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do 
 | `scrape-jovens-node.js` | update-jovens | idem | ✅ |
 | `scrape-federados-node.js` | update-federados | HandicapsLST (gate `fedlist_v2`) | ✅ 17 840 federados |
 | `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
+| `update-cgss-draw-results.js` | update-cgss-draw | ClassifLST + ScoreCard + TournamentsLST | ✅ **60 jog. / 54 scorecards** no 192/10023 |
 | `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
 | `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
 
@@ -800,7 +969,12 @@ regras próprias, todas medidas contra o oficial (não são suposições):
 | `RFDC_{aa}{M\|N\|S\|T\|A\|C}{esc}{G\|N}` | Challenge, **ranking final** | 988 | total da fase regular **+ Final ×1.5** |
 | `RCA{H\|S}{aa}` | Circuito Aquapor | **000** | nacional, **separado por sexo** |
 
-- **Final ×1.5** (arredondado): 1º 250→375 · 2º 165→**248** · 3º 94→141 · 4º 75→**113**.
+- **Final ×1.5** (arredondado): 1º 250→375 · 2º 165→**248** · 3º 94→141 · 4º 75→**113** · 8º **38**→57.
+  ⚠ **As Finais usam a tabela do TOUR (8º = 38), não a do Challenge (8º = 35)** — medido a
+  2026-09-10: 16/16 oitavos lugares nas Finais oficiais valem 57, e a fase regular do Challenge
+  dá 35 em 137/137. `DRIVE_POINTS_FINAL` + `tournamentPoints(field, series, tournName)` — sem o
+  nome da prova o 8º de uma Final sai com 35. Apanhado pelo `drive-ranking-vs-oficial.test.js`
+  na Final do Norte Sub 12 (4 Set 2026).
   A Final **Nacional** não entra em ranking regional nenhum.
 - **Empates:** o Challenge/Tour desempata por **countback** (última volta →
   últimos 9 → 6 → 3 → 1 buraco — `scripts/lib/drive-countback.cjs`); o
@@ -1752,6 +1926,118 @@ com DOB/clube). Flag em `SOURCE_FLAGS.México = flagOf("Mexico")`.
 
 ---
 
+## Fonte WAGR — wagr.com (2026-09-09)
+
+O **World Amateur Golf Ranking** (The R&A + USGA) — o ranking amador oficial.
+Página `/wagr` no CircuitShell, gémea da `/egr`.
+
+> ⚠ **CORRECÇÃO de uma conclusão anterior.** O arquivo de conversas
+> (`golfe-03-circuitos-internacionais`) dizia **"WAGR ⛔ depende de JavaScript"**.
+> Estava ERRADO — foi tirado em 2026 a olhar para o HTML cru à procura de
+> *datas*. O wagr.com é **Next.js com render no servidor + API REST pública**:
+> scrapa-se com `fetch` puro, sem login, sem chave, sem cookies, sem Playwright.
+
+### As duas portas de entrada
+
+**1. API pública** — `https://worldgolfranking2021api.wagr.com/api/wagr/…`
+(sem autenticação, CORS aberto; o `stg…` no bundle é o ambiente de testes):
+
+| Endpoint | Dá |
+|---|---|
+| `rankings/getRankings?rankingsType=0\|1&pageSize=100000` | ranking mundial numa request — **`0` = homens (~5.000), `1` = senhoras (~3.300)**. `2` e `3` também devolvem senhoras |
+| `events/getEvents?year=Y&pageSize=5000` | **TODOS os eventos do ano do mundo numa request** (~4.000/ano; 2026 = 4.129, 1,9 MB): id, nome, datas, país, tipo, power, campo(s), vencedor |
+| `playerprofile/getPlayerEvents?profileId=&tab=1` | histórico de um jogador |
+| `search/getSearchResults?searchTerm=` | pesquisa global (jogadores + eventos) |
+| `getCountries` / `getRegions` / `getWeekRibbon` | tabelas de referência + a semana oficial ("9 SEP 26-36") |
+
+⚠ O `countries` do getRankings é o **countryId**, não o nome (Portugal = **33**).
+Com o nome devolve `totalRecords: 0` em silêncio.
+
+**2. O leaderboard NÃO tem endpoint** — os resultados vêm no **`__NEXT_DATA__`**
+do SSR de `https://www.wagr.com/events/{slug}-{id}` (`pageProps.eventResultsData`):
+posição, país, R1-R4, total e pontos WAGR.
+👉 **O SLUG É DECORATIVO — só o id final conta.** `/events/x-272939` devolve
+exactamente o mesmo que `/events/campeonato-nacional-de-jovens-272939`, por isso
+o scraper não guarda slugs.
+
+### As três limitações que definem o que se pode fazer
+
+1. **O leaderboard é PARCIAL** — só aparecem os jogadores que **pontuaram** no
+   WAGR, não o campo todo. O Campeonato Nacional de Jovens 2026 dá **4 linhas**.
+   É um leaderboard *de ranking*. A UI di-lo no `metaLine`.
+2. **NÃO há DOB nem escalão do JOGADOR** — o escalão é do **EVENTO**
+   (`eventType`: Junior / All Ages / Collegiate / MidAm / Senior / Pro / Other).
+   👉 Por isso o WAGR **não alimenta o agregador kids2** — o matching seria ainda
+   mais fraco que o do EGR (nome + país, sem clube).
+3. **O Manuel NÃO está no WAGR** (pesquisa "Medeiros" = 0 — joga USKids/FPG, não
+   provas com pontos WAGR). É base de **rivais e de contexto**. A diferença face
+   ao EGR: o WAGR **inclui as provas da FPG** (Nacionais, Internacional Amateur)
+   **e o Faldo Madeira** — 30 eventos em Portugal só em 2026 — e traz 16
+   portugueses no ranking masculino e 10 no feminino.
+
+⚠ **Não há par do campo** em lado nenhum → sem ±Par. O `wagrCircuit` usa
+`hideTotals` do `ScorecardLeaderboard` e põe TOT/PTS como colunas próprias.
+
+⚠ **`filters.defaultYear: "current"` — opção NOVA do CircuitShell, criada para
+esta página e por CUSTO DE RENDER.** A sidebar do shell desenha *todas* as
+entradas e a /wagr traz ~8.000 (o mundo, 2 anos): medido em dev, montar a página
+gerava **65.520 nós** e limpar um filtro custava **~2 s**. Com o ano corrente
+pré-seleccionado são ~14.000 nós. Os outros anos ficam a um clique nas pills e
+**os deep-links de qualquer ano continuam a abrir** (o `cur` do shell cai no
+`entries.find` quando a entrada está fora do filtro). Nenhuma outra página a
+define — o default continua a ser "all".
+
+### Pipeline
+
+```bash
+node scripts/scrape-wagr.js --ranking                        # wagr-ranking.json (M+F)
+node scripts/scrape-wagr.js --events --year 2026 --skip-existing --concurrency 8
+node scripts/build-wagr-events-list.js                       # índice da sidebar
+```
+
+`scrape-wagr.js` também aceita `--country`, `--type Junior`, `--limit` e
+`--no-leaderboards` (só o índice). Workflow **`update-wagr.yml`** — quarta 07:00
+UTC (o ranking WAGR sai à quarta), `timeout-minutes: 120`, sem secrets.
+
+⚠ **O índice de eventos faz MERGE, não substituição** — um run `--year 2024` não
+pode levar à frente a meta de 2025/2026. É a mesma armadilha que apagou as datas
+de 753/754 eventos do EGR a 2026-08-06.
+
+⚠ **`total: "0"` do WAGR NÃO é um score** — vem nas linhas **"Participant"**
+(match play, provas por equipas, quem pontuou só por participar; ~3% das linhas).
+Guardado como 0, o jogador mostrava "0" na coluna TOTAL e **subia ao topo de
+qualquer ordenação por total**. O `score()` do scraper normaliza para `null`;
+os ficheiros antigos arrumam-se com `scripts/repair-wagr-zero-scores.js --apply`
+(idempotente; depois refazer rollup + índice).
+
+⚠ **`--skip-existing` NÃO é `existsSync`** — um evento ainda por jogar devolve
+`results: []` e escreveria um ficheiro vazio que nunca mais seria re-fetchado
+(o leaderboard nunca apareceria). A guarda é `isSettled()`: salta só se tem
+classificados **ou** se acabou há mais de **60 dias** (aí o vazio é definitivo —
+ninguém daquela prova pontuou no WAGR). Coberto por testes em
+`scripts/scrape-wagr.test.js`.
+
+⚠ **Ritmo real do scrape:** ~1,7 eventos/s com `--concurrency 8`. Um ano inteiro
+do mundo demora ~40 min; com `--skip-existing` o run semanal só apanha os novos.
+
+### Outputs — pesar antes de shippar
+
+Medido com 2025+2026 do mundo inteiro (**8.084 eventos**), ~38 MB no total:
+
+| Ficheiro | Peso | Quando é pedido |
+|---|---|---|
+| `wagr/events/wagr_{id}.json` | 15,4 MB em 8.084 ficheiros (~2 KB cada) | 1 por evento aberto |
+| `wagr/player-events/wagr-player-events-NN.json` | 17,0 MB em **16 shards** (~1,1 MB cada) | 1 shard por jogador aberto |
+| `wagr/wagr-events-list.json` | 2,0 MB (6.998 eventos com classificados) | ao abrir a /wagr |
+| `wagr-ranking.json` | 1,9 MB | ao abrir o Ranking |
+| `wagr/wagr-events-index.json` | 1,9 MB | nunca (intermédio do scraper) |
+
+⚠ **O rollup jogador→eventos é SHARDED por `playerId % 16`** — inteiro são
+**17 MB**, e ninguém descarrega isso para ver UM jogador. A função do shard está
+duplicada (`shardOf` no scraper, `wagrShardOf` na WAGRPage); se divergirem, o
+detalhe mostra "sem eventos" **em silêncio** → espelho fixado em
+`scripts/wagr-shard-mirror.test.js`.
+
 ## Scripts — FFG (França)
 
 ### Categoria FFG de um jogador (`cat`/`catYear`) — 2026-07-23
@@ -2360,8 +2646,11 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 ```
 { DATA: CourseData[], HOLES: Record<scoreId, { g[18], p[18], si[18], m?[18], hc }>,
-  EC, HOLE_STATS, CROSS_DATA, CURRENT_FED, HCP_INFO, META }
+  EC, ECDET, HOLE_STATS, TEE, CURRENT_FED, HCP_INFO, META }
 ```
+⚠ **Sem `CROSS_DATA` desde 2026-09-06** — a tabela global vive em
+`/data/cross-data.json` e é fundida em runtime pelo `playerDataLoader`
+(ver "Deployment Storage do Vercel").
 
 ---
 
@@ -2858,6 +3147,52 @@ refrescos manuais.
 
 ---
 
+#### 📊 Estatísticas de Clubes — `scripts/stat_*.asp` (público) — 2026-09-07
+
+O ASP clássico do `scoring-pt.datagolf.pt` serve **30 vistas de estatísticas
+agregadas** de toda a federação. É público (fetch puro, sem cookies), e não
+estava mapeado em lado nenhum até agora. Detalhe completo, com as colunas de
+cada vista, em `docs/api-fpg-endpoints.md` §14.
+
+```
+https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack={ack}
+```
+É um frameset: `stat_all_options.asp` (barra de opções) + `stat_nfed.asp`
+(vista corrente). Cada vista abre também sozinha.
+
+⚠ **O `ack` decide o ÂMBITO.** Os links que os clubes publicam trazem um ack
+**de clube** (ex. `64K06NJFI7` = Palheiro/059), que prende o painel àquele
+clube — 26 opções no `<select>`. Com o ack **master `XH256YF45T`** (o mesmo do
+`tournlist`/`draw.asp`) o selector abre nos **312** e aceita `club=ALL`: 286
+clubes em 36 páginas. Os acks de admissions/classif (`XH256YF450`,
+`MN0JF0I697`, `OT342GH16T`) são recusados aqui.
+
+⚠ Um ack errado devolve **HTTP 200 com 106 bytes** e o texto `Key not
+authorized` — testar pelo conteúdo, nunca por `res.ok`.
+
+Params: `club` · `ack` · `data1`/`data2` (YYYY-MM-DD) · `selyear1`/`selyear2` ·
+`course` · `counttype` (`hcp`|`all`) · `order`/`ordertype` · `pagesize`/`npage`
+· **`origin=1` obrigatório** no grupo TORNEIOS (`stat_scores_*`).
+
+O que vale a pena (medido a 2026-09-07):
+
+| Vista | Dá |
+|---|---|
+| `numresults` | **ranking nacional de actividade** — nome, nº de voltas, **fed**, clube+ccode, HCP, estado. ⚠ tecto de **2000 registos** (paginar por clube) |
+| `stat_ages` | **demografia júnior por clube** — escalões 0-10 · 11-12 · 13-14 · 15-16 · 17-18, por ano desde 2006 |
+| `stat_tourns_players` | nº de torneios por federado, cruzando clube ORGANIZADOR × anos × clube dos jogadores |
+| `stat_rounds` | voltas/torneios/EDS por clube |
+| `<select name="club">` | **tabela clube→ccode dos 286 clubes** (`Palheiro-059`, `Santo da Serra-007`, `FPG_DRIVE-988`) — o repo casa clubes por NOME, isto é o mapa oficial |
+
+⚠ **`stat_cba`/`stat_cba_course` NÃO são o PCC.** É o CBA antigo (CONGU/EGA),
+buckets −2(D)/−2/−1/0/+1, **agregado em %** por clube ou campo — sem valor por
+dia/torneio. Não substitui o `backfill-pcc.js`.
+
+⚠ Tudo o que sai daqui é **agregado**; as vistas por jogador (`numresults`,
+`stat_tourns_*`, `stat_highscores_players`) dão contagens, nunca resultados.
+
+---
+
 ## FPG — APIs em tempo real (descobertas 2026-04-14)
 
 Documentação completa em `docs/api-fpg-endpoints.md`. Resumo crítico:
@@ -3053,6 +3388,21 @@ Headers obrigatórios: `Cookie:` (6 cookies), `Content-Type: application/json`,
 }
 ```
 Os params `jt*` vão também na query string além do body. Headers: `Content-Type: application/json; charset=utf-8`, `X-Requested-With: XMLHttpRequest`. Cross-domain: mesmo endpoint em `scoring.fpg.pt/lists/classif.aspx/ClassifLST`.
+
+⚠ **`classifroundtype` decide se a classificação é POR VOLTA ou AGREGADA**
+(medido 2026-09-06 no PJA Torre 2026, 192/10024):
+
+| valor | `round` | devolve |
+|---|---|---|
+| `"D"` | `"1"`, `"2"`… | a classificação **daquela volta** |
+| `"A"` | `""` | a classificação **agregada** (soma das voltas) |
+
+Com `"D"` os campos `classif_pos`/`gross_total`/`to_par_total` são os da volta
+pedida — num torneio a 2 voltas, ficar-se pela R1 põe o 5.º classificado (148)
+à frente do 4.º (155). Provas com mais de uma volta têm de fazer **uma segunda
+passagem em `"A"`** e sobrepor `pos`/`grossTotal`/`toPar` casando por
+`score_id`; os scorecards continuam a vir volta a volta. É o que o
+`update-cgss-draw-results.js` faz.
 
 Headers obrigatórios: `Cookie:` (2 cookies), `Content-Type: application/json`,
 `X-Requested-With: XMLHttpRequest`, `Origin: https://scoring.datagolf.pt`,
@@ -3263,6 +3613,20 @@ Descoberto a investigar um caso concreto: o federado 60382 entrou com índice
    fontes trazem agarradas as competições sociais de clube ("MENS DAY 11/8",
    "Competição Mensal", "Mid-Amateur"). Medido no histórico real: 39 derivados
    + 8 provas de adultos ignorados numa janela de 24h.
+4. **WAGR: só provas com PORTUGUESES** (`fromWagr`, 2026-09-09) — é um quarto
+   filtro, e só para esta fonte. O WAGR são **~4.000 eventos por ANO do mundo
+   inteiro**; sem o corte, o resumo enchia-se de provas sem relação com o
+   percurso dos nossos (um júnior na Malásia entrava). Medido sobre 2025+2026:
+   **101 provas** com portugueses e vencedor, das quais **28 passam** o filtro
+   de jovens — ~14 por ano, uma linha cada 3-4 semanas. As 73 cortadas são
+   sobretudo **Collegiate** (52), o golfe universitário americano onde jogam
+   portugueses já adultos.
+
+⚠ **O `winner` do WAGR pode trazer VÁRIOS nomes separados por vírgula** (provas
+por equipas — 103 dos 8.084 eventos). Passá-lo ao `displayName` dava asneira: ele
+lê a vírgula como "APELIDO, Nome" e trocava a ordem, colando os dois num nome
+inventado ("Tomas Afonso Araujo,Joao Alves" → "Joao Alves Tomas Afonso Araujo",
+uma pessoa que não existe). O `wagrWinners()` separa ANTES de formatar.
 
 ### Armadilhas resolvidas (todas com caso real)
 
@@ -3923,6 +4287,91 @@ reutilize (ex: 10604-10606 = Amendoeira 2026 E Clube de Belas 2025 → o
 Amendoeira entra por NOME em `isPJACore`, não por tcode).
 O que fica FORA da fonte única: `shortTournName` (apresentação, cada superfície
 tem a sua) e o motor de agregação/UI de cada lado.
+
+### ⚠ O `pja-rules.mjs` é servido EM CRU ao browser (2026-08-31)
+
+A standalone importa-o com `<script type="module">` **same-origin** — a pasta
+`ranking-pja/` é o root do projecto Vercel — por isso o ficheiro é
+descarregável tal e qual em `ranking-pja.vercel.app/pja-rules.mjs`,
+**comentários incluídos**. Não é bundled nem minificado (ao contrário da app
+principal, onde o Vite os deita fora).
+
+Logo: **nada de notas internas nesse ficheiro** — processo interno, decisões
+por confirmar, nomes de pessoas, raciocínio que fora de contexto se lê mal.
+O que for preciso guardar vai para aqui (o CLAUDE.md nunca é servido).
+Comentários curtos e neutros que expliquem o código chegam.
+
+⚠ As restantes secções do ficheiro ainda têm comentários desse género
+(o motivo do ×1.75 do Royal Óbidos, as notas do Amendoeira/Clube de Belas,
+o "legacy confirmado contra o Excel oficial" de 2025). Ficaram como estavam —
+limpar quando houver decisão sobre cada um.
+
+### Notas públicas do ranking — `PJA_NOTAS` (2026-08-31)
+
+O que o público lê sobre elegibilidade vive em `PJA_NOTAS` + `notasPJA(ano,
+hoje)` no `pja-rules.mjs`, e é renderizado por AMBAS as superfícies
+(`RankingNotas` na `PJARankingView`, `renderNotas()` na standalone). O texto
+está na fonte única pela mesma razão que as regras: senão as duas páginas
+acabam a dizer coisas diferentes.
+
+- `tipo: "fora"` — prova do calendário que não conta (fica indefinidamente).
+  ⚠ Só entram aqui as exclusões que alguém de fora **iria estranhar** (uma
+  prova do calendário sem coluna no ranking). O Sub-10 do Miramar não tem nota
+  pública de propósito: não há Sub-10 no circuito, ninguém dá pela falta, e a
+  nota só levantava uma pergunta que não existia.
+- `tipo: "info"` + `ate: "YYYY-MM-DD"` — nota de agenda, desaparece sozinha
+  depois dessa data (senão o site fica a anunciar provas já jogadas).
+- O bloco é desenhado ANTES do fetch dos dados — aparece mesmo que o
+  carregamento falhe.
+
+### ⚠ TOP-14 voltas: mostrar QUAIS caíram (2026-08-31)
+
+O total é a soma das **14 MELHORES voltas** do ano — caem as piores. ⚠ São
+**voltas, não provas**: uma prova de 3 rondas gasta 3 lugares, por isso o tecto
+aperta muito antes das "14 provas" (medido a 31-08: João Rocha 13 voltas em 6
+provas, Nuno Palmares 12 — o Torre e a Grande Final passam-nos os dois).
+
+Os dois motores já ordenavam por pontos e cortavam no 14 — o que faltava era
+**dizê-lo na tabela**. A `PJARankingView` chegava a calcular `inTop14` por
+volta e nunca o usava no render; a standalone nem isso. Resultado: a partir da
+15ª volta a linha deixava de somar para o total e não havia como perceber
+porquê ("as contas não batem").
+
+Agora, nas duas superfícies:
+- volta fora do top-14 → **esbatida** (`opacity .35`) + tooltip "Fora das 14
+  melhores voltas — não soma";
+- colunas **Vlt** e **Total** mostram DOIS números quando o tecto morde: o que
+  conta em tamanho normal e, a seguir, o que se jogou em pequeno e esbatido —
+  `14/18` e `276/309`. Quem não passou as 14 mantém um número só.
+  ⚠ **Na mesma linha, nunca empilhados** (`display:block`): empilhar punha a
+  linha da tabela a **38-46px contra os 26px** das outras e dava muito nas
+  vistas. Inline a altura fica igual à das restantes (medido: excesso 0);
+- a linha de regras explica-o em texto.
+
+⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
+que continua **riscado** — são coisas diferentes: uma regra tirou-a vs. jogou-se
+e vale, mas há 14 melhores.
+
+⚠ O "total de todas" soma só as voltas ELEGÍVEIS (as `excluded` ficam fora dos
+dois números, como já ficavam da contagem de voltas) — senão os dois totais
+falavam de universos diferentes.
+
+Validado num browser com dados reais + um torneio fabricado a forçar 18 voltas:
+`14/18` e `276/309`, com 276 + (12+9+7+5) = 309 a fechar, e as 4 esbatidas a
+serem exactamente as 4 piores.
+
+### Provas do calendário 2026 que NÃO contam — e porquê
+
+| Prova | ccode/tcode | Porque fica fora |
+|---|---|---|
+| Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os tees de partida não foram os estabelecidos para as restantes provas do circuito (jogou-se das **brancas**) — resultados não comparáveis. **Exclusão deliberada — não re-adicionar.** ⚠ A nota pública fica-se pelo facto, em registo formal: não entra em cores de marcas nem na mecânica dos pontos. |
+| Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. **Sem nota pública** (ver acima). |
+
+⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por
+`PJA_TCODES`. A FPG reutiliza os quatro números noutros clubes e anos: 10580 em
+007/022/068, 10581 em 022, 10652 em 009/022, 10653 em 009/022. Pô-los na
+whitelist por tcode arrastaria torneios que não têm nada a ver (mesma armadilha
+do Amendoeira ↔ Clube de Belas).
 
 ---
 

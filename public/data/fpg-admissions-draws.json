@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-08-30T22:16:31.026Z",
-  "total": 1201,
+  "scrapedAt": "2026-09-05T21:50:02.780Z",
+  "total": 1209,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -382838,11 +382838,24 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "11059",
+      "name": "Quarta  Feira Europeia 24",
+      "date": "2026-09-02",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "987",
       "tcode": "10245",
       "name": "Final Drive Challenge Norte-Oporto-Sub 10",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 10",
         "date": "2026-09-04",
@@ -383005,7 +383018,122 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 10",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Gabriela Bueno",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Artur Von Hafe",
+                  "fed": null,
+                  "clube": "RIO"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Fabian Aponte",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Doeun Kim",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Vaz",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Miguel Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Henrique Monção",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Francisco Lopes",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rafael Paço",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Dias",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383013,6 +383141,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 12",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 12",
         "date": "2026-09-04",
@@ -383175,7 +383304,127 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 12",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "09:20",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Carlos Gonçalves Dias",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Diogo Gomes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tomás Tomásio",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Dinis Henriques",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Valentin Iria",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Vicente Poeira",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Carolina Paiva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Marta Mendes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Martim Silva",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "João Couto",
+                  "fed": null,
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Vasco Abreu",
+                  "fed": null,
+                  "clube": "UCDR Guardizela"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "James Orrison",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383183,6 +383432,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 14",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 14",
         "date": "2026-09-04",
@@ -383345,7 +383595,130 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 14",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 15,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Marta Andrade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Manuel Gomes da Silva",
+                  "fed": null,
+                  "clube": "Quinta do Fojo",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Guilherme Oliveira Alves",
+                  "fed": null,
+                  "clube": "Amarante",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 10,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Mariana Costa",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Maria Ferreira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tomás Araújo",
+                  "fed": null,
+                  "clube": "Citynorte",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Gil Ribeiro",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tomás Duarte Matias",
+                  "fed": null,
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "fed": null,
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "fed": null,
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "David Grilo",
+                  "fed": null,
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": null,
+                  "clube": "Citynorte"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383353,6 +383726,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 16",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 16",
         "date": "2026-09-04",
@@ -383475,7 +383849,95 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 16",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 10,
+          "groups": [
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Dinis Seabra",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "fed": null,
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Oliveira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Nuno Bessa",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Luís Pedro Reis",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Afonso Polery",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Gustavo Castro",
+                  "fed": null,
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rafael Nogueira",
+                  "fed": null,
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "António Pereira Mendes",
+                  "fed": null,
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Afonso Poiarez",
+                  "fed": null,
+                  "clube": "Estela"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "987",
@@ -383483,6 +383945,7 @@
       "name": "Final Drive Challenge Norte-Oporto-Sub 18",
       "date": "2026-09-04",
       "expectedYear": "2026",
+      "campo": "Oporto",
       "admissions": {
         "name": "Final Drive Challenge Norte-Oporto-Sub 18",
         "date": "2026-09-04",
@@ -383535,7 +383998,39 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Norte-Oporto-Sub 18",
+          "date": "2026-09-04",
+          "campo": "Oporto",
+          "clube": "Federação Portuguesa de Golfe - DRIVE NORTE",
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Alexandre Lopes",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Taras Zhurbei",
+                  "fed": null,
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Martim Ferreira",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383543,6 +384038,7 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
         "date": "2026-09-05",
@@ -383656,7 +384152,83 @@
         ],
         "_liveUpdatedAt": "2026-07-24T13:25:03.330Z"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 10",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "António Trinité",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Maria Almeida Santos",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "José Duarte Santana Lopes",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Artur Santos",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Alexander James Lucas",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Oskar Henze",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Afonso Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Francisco Ivo de Carvalho",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383664,18 +384236,260 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 13,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10237",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48946",
+            "nome": "Miguel Santos Pereira",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.1,
+            "vacf": 87,
+            "registo": "2026/07/15 09:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "50011",
+            "nome": "Tomás Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 23.8,
+            "vacf": 94.9,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "49087",
+            "nome": "Tomás Pinto Barbosa",
+            "clube": "Quinta do Peru",
+            "hcp": 23.5,
+            "vacf": 97.1,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "57587",
+            "nome": "Maria Madalena Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 26.4,
+            "vacf": 98.9,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48113",
+            "nome": "Maria Luz",
+            "clube": "Belas",
+            "hcp": 26.4,
+            "vacf": 99.3,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "50703",
+            "nome": "António Vasco",
+            "clube": "Vidago Palace C",
+            "hcp": 23.7,
+            "vacf": 100.8,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "58816",
+            "nome": "Diogo Cajus",
+            "clube": "CGCUL",
+            "hcp": 34.1,
+            "vacf": 105.6,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "47318",
+            "nome": "Tiago Borges Oliveira",
+            "clube": "The One",
+            "hcp": 31.2,
+            "vacf": 107.9,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50215",
+            "nome": "João Lima",
+            "clube": "Villa Batalha",
+            "hcp": 33.9,
+            "vacf": 111.2,
+            "registo": "2026/07/15 09:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "47839",
+            "nome": "Apolo Silva",
+            "clube": "Quinta do Peru",
+            "hcp": 43.4,
+            "vacf": 115.5,
+            "registo": "2026/07/15 09:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "50828",
+            "nome": "António Ferreira Lobo",
+            "clube": "ACP Golfe",
+            "hcp": 32.8,
+            "vacf": 115.9,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "56008",
+            "nome": "Vicente Lima",
+            "clube": "Lisbon SC",
+            "hcp": 40.8,
+            "vacf": 116.3,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "59275",
+            "nome": "Tomás Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 51.7,
+            "vacf": 125.7,
+            "registo": "2026/07/15 09:53",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 12",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Vicente Lima",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "António Ferreira Lobo",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Tomás Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Apolo Silva",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "António Vasco",
+                  "fed": null,
+                  "clube": "Vidago Palace C"
+                },
+                {
+                  "nome": "Tiago Borges Oliveira",
+                  "fed": null,
+                  "clube": "The One"
+                },
+                {
+                  "nome": "Tomás Pinto Barbosa",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Diogo Cajus",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Maria Luz",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Maria Madalena Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "João Lima",
+                  "fed": null,
+                  "clube": "Villa Batalha"
+                },
+                {
+                  "nome": "Tomás Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383683,18 +384497,263 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 13,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10238",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "57756",
+            "nome": "Miguel Maria Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 17.4,
+            "vacf": 88.9,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "46873",
+            "nome": "Catarina Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 15.3,
+            "vacf": 89.2,
+            "registo": "2026/07/15 09:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "46026",
+            "nome": "Beatriz Mendes",
+            "clube": "Quinta do Peru",
+            "hcp": 29.3,
+            "vacf": 99.4,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "58484",
+            "nome": "David Cruz da Silva",
+            "clube": "Belas",
+            "hcp": 26.7,
+            "vacf": 99.7,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48164",
+            "nome": "David Stocksreiter Ferreira",
+            "clube": "Lisbon SC",
+            "hcp": 27.8,
+            "vacf": 100.2,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "51081",
+            "nome": "Andres Pava",
+            "clube": "ACP Golfe",
+            "hcp": 29.5,
+            "vacf": 100.7,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "44032",
+            "nome": "Lourenço Cid",
+            "clube": "Lisbon SC",
+            "hcp": 27.2,
+            "vacf": 101,
+            "registo": "2026/07/15 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "49528",
+            "nome": "Ario Kiani",
+            "clube": "Qta. Marinha",
+            "hcp": 20.5,
+            "vacf": 103.1,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "53939",
+            "nome": "Mário Novaes Moura",
+            "clube": "Quinta do Peru",
+            "hcp": 30.2,
+            "vacf": 103.8,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "47658",
+            "nome": "Guilherme Pereira",
+            "clube": "Lisbon SC",
+            "hcp": 36.3,
+            "vacf": 109,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "35019",
+            "nome": "Lucas Lemos Guerreiro",
+            "clube": "Clube Benfica",
+            "hcp": 36.2,
+            "vacf": 109.3,
+            "registo": "2026/07/15 09:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "48529",
+            "nome": "Matilde Bandeira",
+            "clube": "Vale de Janelas",
+            "hcp": 40.8,
+            "vacf": 112.6,
+            "registo": "2026/07/15 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "56957",
+            "nome": "Pedro Uva Peixoto",
+            "clube": "Lisbon SC",
+            "hcp": 46.9,
+            "vacf": 125.3,
+            "registo": "2026/07/15 09:49",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 14",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Pedro Uva Peixoto",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Ario Kiani",
+                  "fed": null,
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Lucas Lemos Guerreiro",
+                  "fed": null,
+                  "clube": "Clube Benfica"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Mário Novaes Moura",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "fed": null,
+                  "clube": "Quinta do Peru",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Lourenço Cid",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "fed": null,
+                  "clube": "Vale de Janelas",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Cruz da Silva",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Andres Pava",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Maria Neves Ferreira",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Verdes"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383702,18 +384761,156 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 7,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10239",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "53715",
+            "nome": "João Gomes",
+            "clube": "Lisbon SC",
+            "hcp": 10.2,
+            "vacf": 81.8,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "58051",
+            "nome": "Salvador Paulo Rodrigues",
+            "clube": "Quinta do Peru",
+            "hcp": 16.6,
+            "vacf": 88.2,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "56749",
+            "nome": "João Pereira",
+            "clube": "Quinta do Peru",
+            "hcp": 16.9,
+            "vacf": 88.2,
+            "registo": "2026/07/15 09:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "43918",
+            "nome": "Henrique Rodrigues Pereira",
+            "clube": "Lisbon SC",
+            "hcp": 20,
+            "vacf": 92.1,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "45869",
+            "nome": "Francisco Rodrigues",
+            "clube": "Belas",
+            "hcp": 25.1,
+            "vacf": 97.8,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "59557",
+            "nome": "Tiago Afonso Barata",
+            "clube": "Quinta do Peru",
+            "hcp": 26.8,
+            "vacf": 100.8,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "50138",
+            "nome": "Afonso Rocha",
+            "clube": "Belas",
+            "hcp": 45.8,
+            "vacf": 118.5,
+            "registo": "2026/07/15 09:43",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 16",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Rocha",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Tiago Afonso Barata",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Francisco Rodrigues",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Henrique Rodrigues Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Pereira",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "João Gomes",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -383721,15 +384918,88 @@
       "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
       "date": "2026-09-05",
       "expectedYear": "2026",
+      "campo": "Santo Estevão Golf",
       "admissions": {
         "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
         "date": "2026-09-05",
-        "totalInscritos": 0,
+        "totalInscritos": 2,
         "reservas": 0,
-        "status": "Inscrições ainda não abertas",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10240",
         "ccode": "985",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "44844",
+            "nome": "Tiago Lúcio",
+            "clube": "Jamor C.G.",
+            "hcp": 21.8,
+            "vacf": 94.3,
+            "registo": "2026/07/15 09:39",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "54571",
+            "nome": "Rodrigo Diamantino Manso",
+            "clube": "Lisbon SC",
+            "hcp": 52.3,
+            "vacf": 125.3,
+            "registo": "2026/07/15 09:40",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Final Drive Challenge Tejo - Stº Estêvão - Sub 18",
+          "date": "2026-09-05",
+          "campo": "Santo Estevão Golf",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rodrigo Diamantino Manso",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Tiago Lúcio",
+                  "fed": null,
+                  "clube": "Jamor C.G."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "192",
+      "tcode": "10024",
+      "name": "PJA Torre 2026",
+      "date": "2026-09-05",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "11061",
+      "name": "Torneio Quinta de São João 2026",
+      "date": "2026-09-05",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
         "players": []
       },
       "draws": {}
@@ -383906,6 +385176,482 @@
       "draws": {}
     },
     {
+      "ccode": "988",
+      "tcode": "10285",
+      "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
+      "date": "2026-09-13",
+      "admissions": {
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
+        "date": "2026-09-13",
+        "totalInscritos": 9,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10285",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "54264",
+            "nome": "Harry Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 15.8,
+            "vacf": 88,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "59128",
+            "nome": "Thiago Gonzalez Bernases",
+            "clube": "RIO",
+            "hcp": 16.4,
+            "vacf": 91.6,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "57110",
+            "nome": "Karol Reiff",
+            "clube": "Vila Sol",
+            "hcp": 30.2,
+            "vacf": 103.6,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "51969",
+            "nome": "Luca Everest",
+            "clube": "Vilamoura, C. G",
+            "hcp": 34.7,
+            "vacf": 105.2,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "51880",
+            "nome": "Rafael Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 37.4,
+            "vacf": 108.3,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "50955",
+            "nome": "Mateus Miguel Estevão",
+            "clube": "Vilamoura, C. G",
+            "hcp": 47.2,
+            "vacf": 120.7,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "58831",
+            "nome": "Afonso Furtado de Oliveira",
+            "clube": "Floresta Parque",
+            "hcp": 45.4,
+            "vacf": 122.1,
+            "registo": "2026/07/15 10:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "57224",
+            "nome": "Alexander Adeoye",
+            "clube": "Espiche",
+            "hcp": 54,
+            "vacf": 133.3,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "54663",
+            "nome": "Nicholas Murtagh",
+            "clube": "Vilamoura, C. G",
+            "hcp": 54,
+            "vacf": 138,
+            "registo": "2026/07/15 10:32",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10286",
+      "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
+      "date": "2026-09-13",
+      "admissions": {
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
+        "date": "2026-09-13",
+        "totalInscritos": 13,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10286",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.3,
+            "vacf": 79.3,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51804",
+            "nome": "Joe Short",
+            "clube": "Vila Sol",
+            "hcp": 6.6,
+            "vacf": 80.8,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "53838",
+            "nome": "Gabriel Costa",
+            "clube": "Amendoeira",
+            "hcp": 18.5,
+            "vacf": 90,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "53304",
+            "nome": "Francisca Ribeiro Fragoso",
+            "clube": "Vilamoura, C. G",
+            "hcp": 20.4,
+            "vacf": 90.7,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50761",
+            "nome": "Peter Yao",
+            "clube": "Vilamoura, C. G",
+            "hcp": 21,
+            "vacf": 92.7,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55498",
+            "nome": "Zeyn Lababedi",
+            "clube": "Vila Sol",
+            "hcp": 19.7,
+            "vacf": 93.8,
+            "registo": "2026/07/15 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "51803",
+            "nome": "Thea Jensen",
+            "clube": "Vila Sol",
+            "hcp": 27.6,
+            "vacf": 100,
+            "registo": "2026/07/15 10:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "48132",
+            "nome": "Charlie Lora Silva",
+            "clube": "Vilamoura, C. G",
+            "hcp": 32.6,
+            "vacf": 107.4,
+            "registo": "2026/07/15 10:29",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50425",
+            "nome": "Maria Carolina Custodinho",
+            "clube": "Vilamoura, C. G",
+            "hcp": 34.9,
+            "vacf": 108.9,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "54265",
+            "nome": "Henry McGovern",
+            "clube": "Vila Sol",
+            "hcp": 37.5,
+            "vacf": 110.1,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "51341",
+            "nome": "Martim Lage Guerreiro",
+            "clube": "Vilamoura, C. G",
+            "hcp": 44.4,
+            "vacf": 115.6,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "55579",
+            "nome": "Thomas Starreveld",
+            "clube": "Assoc. Qta.Lago",
+            "hcp": 43.2,
+            "vacf": 115.7,
+            "registo": "2026/07/15 10:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "54263",
+            "nome": "Poppy Seabrook",
+            "clube": "Vila Sol",
+            "hcp": 45.1,
+            "vacf": 119.2,
+            "registo": "2026/07/15 10:27",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10287",
+      "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
+      "date": "2026-09-13",
+      "admissions": {
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
+        "date": "2026-09-13",
+        "totalInscritos": 13,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10287",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "55269",
+            "nome": "Finn Gordon",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5.8,
+            "vacf": 77.4,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 7.7,
+            "vacf": 78.1,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "54845",
+            "nome": "José Silva",
+            "clube": "Amendoeira",
+            "hcp": 8.7,
+            "vacf": 79.9,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "46037",
+            "nome": "Tomás Lima Pinto",
+            "clube": "Vilamoura, C. G",
+            "hcp": 11.2,
+            "vacf": 81.8,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "50628",
+            "nome": "Carlotta Balzer",
+            "clube": "Amendoeira",
+            "hcp": 17.8,
+            "vacf": 89.6,
+            "registo": "2026/07/15 10:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "55065",
+            "nome": "Cole Hutchison",
+            "clube": "Vila Sol",
+            "hcp": 20.6,
+            "vacf": 92.2,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "55398",
+            "nome": "Cole Wall",
+            "clube": "Vila Sol",
+            "hcp": 23.2,
+            "vacf": 93.7,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "58760",
+            "nome": "Noah Ruane",
+            "clube": "Vila Sol",
+            "hcp": 23.7,
+            "vacf": 98.2,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50189",
+            "nome": "Thomas Blake Maia",
+            "clube": "Vilamoura, C. G",
+            "hcp": 29.9,
+            "vacf": 101,
+            "registo": "2026/07/15 10:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "51916",
+            "nome": "Jasper Mclaren",
+            "clube": "Vila Sol",
+            "hcp": 30.1,
+            "vacf": 102.8,
+            "registo": "2026/07/15 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "50349",
+            "nome": "Vicente Fernandes Fernandes",
+            "clube": "Amendoeira",
+            "hcp": 35.4,
+            "vacf": 109.7,
+            "registo": "2026/07/15 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "49209",
+            "nome": "Florence Murtagh",
+            "clube": "Vilamoura, C. G",
+            "hcp": 39.5,
+            "vacf": 112.8,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "57223",
+            "nome": "Inês Pinheiro",
+            "clube": "Vilamoura, C. G",
+            "hcp": 40.2,
+            "vacf": 114.9,
+            "registo": "2026/07/15 10:23",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10288",
+      "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
+      "date": "2026-09-13",
+      "admissions": {
+        "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
+        "date": "2026-09-13",
+        "totalInscritos": 5,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10288",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "56072",
+            "nome": "Igor Kostyn",
+            "clube": "Vilamoura, C. G",
+            "hcp": 9.1,
+            "vacf": 80.3,
+            "registo": "2026/07/15 10:11",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "44607",
+            "nome": "Rita Melo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.6,
+            "vacf": 91.5,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "42178",
+            "nome": "Yasmin Batista",
+            "clube": "Amendoeira",
+            "hcp": 32.3,
+            "vacf": 104.7,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "58327",
+            "nome": "Luca Passarella Bueno",
+            "clube": "Vilamoura, C. G",
+            "hcp": 29.8,
+            "vacf": 111.5,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "48792",
+            "nome": "Érica Furtado",
+            "clube": "Amendoeira",
+            "hcp": 46,
+            "vacf": 117.6,
+            "registo": "2026/07/15 10:12",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
       "ccode": "000",
       "tcode": "10895",
       "name": "5º Torneio do Circuito Mid-Amateur & Senior",
@@ -383963,13 +385709,722 @@
       "admissions": {
         "name": "Final Nacional do Drive Challenge",
         "date": "2026-10-10",
-        "totalInscritos": 0,
+        "totalInscritos": 46,
         "reservas": 0,
-        "status": "Inscrições fechadas",
+        "status": "Lista de apurados publicada pela FPG (Sul por publicar)",
         "rounds": 1,
         "tcode": "10307",
         "ccode": "988",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 6.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 2,
+            "fed": "47677",
+            "nome": "Íris Costa",
+            "clube": "Palheiro",
+            "hcp": 36.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 3,
+            "fed": "57486",
+            "nome": "Nicolau Rodrigues",
+            "clube": "PXO Clube",
+            "hcp": 36.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 4,
+            "fed": "53532",
+            "nome": "Rafael Brito",
+            "clube": "PXO Clube",
+            "hcp": 16.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 5,
+            "fed": "54757",
+            "nome": "Mafalda Sousa",
+            "clube": "Santo da Serra",
+            "hcp": 31.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 6,
+            "fed": "50398",
+            "nome": "Gonçalo Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 17.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 7,
+            "fed": "39465",
+            "nome": "Salvador Rodrigues",
+            "clube": "Palheiro",
+            "hcp": 5.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 8,
+            "fed": "38976",
+            "nome": "José Pedro Miranda",
+            "clube": "Palheiro",
+            "hcp": 7.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 9,
+            "fed": "38195",
+            "nome": "Lucas Duarte",
+            "clube": "Palheiro",
+            "hcp": 27.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 10,
+            "fed": "41121",
+            "nome": "André Gonçalves",
+            "clube": "Palheiro",
+            "hcp": 5.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 11,
+            "fed": "53548",
+            "nome": "Tomás Câmara",
+            "clube": "PXO Clube",
+            "hcp": 11.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 12,
+            "fed": "42684",
+            "nome": "Rodrigo Abreu",
+            "clube": "Palheiro",
+            "hcp": 7.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 13,
+            "fed": "48052",
+            "nome": "Miguel Nunes",
+            "clube": "Ilha Terceira",
+            "hcp": 12.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 14,
+            "fed": "45009",
+            "nome": "João Pedro Quadros",
+            "clube": "Ilha Terceira",
+            "hcp": 12.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 15,
+            "fed": "41983",
+            "nome": "Clara Almeida",
+            "clube": "VerdeGolf",
+            "hcp": 42.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 16,
+            "fed": "57454",
+            "nome": "Guilherme Matos",
+            "clube": "VerdeGolf",
+            "hcp": 34.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 17,
+            "fed": "55301",
+            "nome": "Afonso Sousa",
+            "clube": "Ilha Terceira",
+            "hcp": 16.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 18,
+            "fed": "53696",
+            "nome": "Martim Duarte",
+            "clube": "Ilha Terceira",
+            "hcp": 17.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 19,
+            "fed": "52512",
+            "nome": "Manuel Pires Nascimento",
+            "clube": "Ilha Terceira",
+            "hcp": 39.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 20,
+            "fed": "47078",
+            "nome": "Madalena Plantier Van Zeller",
+            "clube": "Ilha Terceira",
+            "hcp": 6.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 21,
+            "fed": "36625",
+            "nome": "Tomás Valadão",
+            "clube": "Ilha Terceira",
+            "hcp": 13.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 22,
+            "fed": "44677",
+            "nome": "João Lucas Fagundes",
+            "clube": "Ilha Terceira",
+            "hcp": 17.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 23,
+            "fed": "48046",
+            "nome": "Tomás Sarmento de Beires",
+            "clube": "Citynorte",
+            "hcp": 9.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 24,
+            "fed": "49328",
+            "nome": "Catarina Loureiro",
+            "clube": "Oporto",
+            "hcp": 14.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 25,
+            "fed": "54475",
+            "nome": "Maksim Mutalapov",
+            "clube": "Oporto",
+            "hcp": 17.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 26,
+            "fed": "51768",
+            "nome": "David Grilo",
+            "clube": "Cantanhede",
+            "hcp": 12.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 27,
+            "fed": "52168",
+            "nome": "Pedro Luís Fernandes",
+            "clube": "Citynorte",
+            "hcp": 9.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 28,
+            "fed": "52270",
+            "nome": "Marta Andrade",
+            "clube": "Citynorte",
+            "hcp": 32.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 29,
+            "fed": "46079",
+            "nome": "Afonso Poiarez",
+            "clube": "Estela",
+            "hcp": 11.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 30,
+            "fed": "55093",
+            "nome": "Afonso Polery",
+            "clube": "Estela",
+            "hcp": 11,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 31,
+            "fed": "51108",
+            "nome": "Luís Pedro Reis",
+            "clube": "Oporto",
+            "hcp": 25.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 32,
+            "fed": "56642",
+            "nome": "Martim Ferreira",
+            "clube": "Oporto",
+            "hcp": 43,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 33,
+            "fed": "48102",
+            "nome": "Alexandre Lopes",
+            "clube": "Vale Pisão",
+            "hcp": 37.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 34,
+            "fed": "59450",
+            "nome": "Taras Zhurbei",
+            "clube": "Q. Lágrimas",
+            "hcp": 52,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 35,
+            "fed": "48946",
+            "nome": "Miguel Santos Pereira",
+            "clube": "Vilamoura, C. G",
+            "hcp": 13.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 36,
+            "fed": "50011",
+            "nome": "Tomás Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 22,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 37,
+            "fed": "59275",
+            "nome": "Tomás Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 47.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 12",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 38,
+            "fed": "46873",
+            "nome": "Catarina Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 13.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 39,
+            "fed": "57756",
+            "nome": "Miguel Maria Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 15.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 40,
+            "fed": "48529",
+            "nome": "Matilde Bandeira",
+            "clube": "Vale de Janelas",
+            "hcp": 39.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 14",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 41,
+            "fed": "56749",
+            "nome": "João Pereira",
+            "clube": "Quinta do Peru",
+            "hcp": 16.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 42,
+            "fed": "53715",
+            "nome": "João Gomes",
+            "clube": "Lisbon SC",
+            "hcp": 10.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 43,
+            "fed": "50138",
+            "nome": "Afonso Rocha",
+            "clube": "Belas",
+            "hcp": 44.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 16",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 44,
+            "fed": "44844",
+            "nome": "Tiago Lúcio",
+            "clube": "Jamor C.G.",
+            "hcp": 21.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 45,
+            "fed": "54571",
+            "nome": "Rodrigo Diamantino Manso",
+            "clube": "Lisbon SC",
+            "hcp": 51.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 46,
+            "fed": "51430",
+            "nome": "Manuel Vaz Pinto",
+            "clube": "Lisbon SC",
+            "hcp": 16.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 18",
+            "regiao": "Tejo"
+          }
+        ],
+        "campo": "Jamor",
+        "_source": "PDF «Lista de Jogadores Apurados» da FPG, carregado a 2026-09-10"
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10309",
+      "name": "Final Nacional Drive Challenge Sub 10",
+      "date": "2026-10-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Final Nacional Drive Challenge Sub 10",
+        "date": "2026-10-12",
+        "totalInscritos": 11,
+        "reservas": 0,
+        "status": "Lista de apurados publicada pela FPG (Sul por publicar)",
+        "rounds": 1,
+        "tcode": "10309",
+        "ccode": "988",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "55539",
+            "nome": "Henrique Santana",
+            "clube": "Santo da Serra",
+            "hcp": 28.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 2,
+            "fed": "56026",
+            "nome": "Afonso Aniceto",
+            "clube": "Santo da Serra",
+            "hcp": 35.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 3,
+            "fed": "57640",
+            "nome": "Daniel Augusto",
+            "clube": "PXO Clube",
+            "hcp": 38.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Madeira"
+          },
+          {
+            "pos": 4,
+            "fed": "59154",
+            "nome": "Vicente Henrique Rocha",
+            "clube": "Ilha Terceira",
+            "hcp": 30.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 5,
+            "fed": "56604",
+            "nome": "Miguel Freitas",
+            "clube": "Ilha Terceira",
+            "hcp": 38.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Açores"
+          },
+          {
+            "pos": 6,
+            "fed": "54330",
+            "nome": "Lucas Pereira Amorim",
+            "clube": "Oporto",
+            "hcp": 10.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 7,
+            "fed": "52815",
+            "nome": "Manuel Dias",
+            "clube": "Braga",
+            "hcp": 11.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 8,
+            "fed": "51176",
+            "nome": "Henrique Monção",
+            "clube": "Miramar",
+            "hcp": 37.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Norte"
+          },
+          {
+            "pos": 9,
+            "fed": "54255",
+            "nome": "Francisco Ivo de Carvalho",
+            "clube": "Belas",
+            "hcp": 19.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 10,
+            "fed": "58864",
+            "nome": "Mikhail Khontulev",
+            "clube": "Estoril",
+            "hcp": 22.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Tejo"
+          },
+          {
+            "pos": 11,
+            "fed": "59274",
+            "nome": "Afonso Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 42.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed",
+            "escalao": "Sub 10",
+            "regiao": "Tejo"
+          }
+        ],
+        "campo": "Jamor",
+        "_source": "PDF «Lista de Jogadores Apurados» da FPG, carregado a 2026-09-10"
       },
       "draws": {}
     },

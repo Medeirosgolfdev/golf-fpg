@@ -102,6 +102,13 @@ function categoryLabel(raw, fallbackText) {
   return inferEscalao(fallbackText) || null;
 }
 
+/** País do jogador é Portugal? O WAGR escreve "Portugal" por extenso, mas as
+ *  abreviaturas aparecem noutras fontes — aceitam-se as três. */
+function isPortugalish(c) {
+  const s = String(c == null ? "" : c).trim();
+  return /portugal/i.test(s) || /^(pt|prt|por)$/i.test(s);
+}
+
 /* ── Fonte / país a partir do caminho ───────────────────────────────────── */
 
 const SOURCES = [
@@ -115,6 +122,8 @@ const SOURCES = [
   [/^public\/data\/england[_/]/, { source: "England Golf", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" }],
   [/^public\/data\/gjgl\//, { source: "Global Junior Golf Live", country: null, flag: "🌍" }],
   [/^public\/data\/egr\//, { source: "EGR", country: null, flag: "🌍" }],
+  // ⚠ O WAGR entra no resumo SÓ com portugueses em prova — ver fromWagr().
+  [/^public\/data\/wagr\//, { source: "WAGR", country: null, flag: "🌍" }],
   [/^public\/data\/(?:drive|aquapor)-data-/, { source: "Drive / Aquapor", country: "Portugal", flag: "🇵🇹" }],
   [/^public\/data\/pull-torneios/, { source: "FPG", country: "Portugal", flag: "🇵🇹" }],
   [/^public\/data\/jovens_/, { source: "FPG · Jovens", country: "Portugal", flag: "🇵🇹" }],
@@ -159,6 +168,10 @@ function detectFormat(d) {
   if (d.game && Array.isArray(d.categories)) return "fcg";
   if (d.details && Array.isArray(d.details.series)) return "ffgResultats";
   if (Array.isArray(d.divisions) && d.divisions.some((x) => x && Array.isArray(x.players))) return "jobfile";
+  // WAGR antes do flatPlayers: os eventos wagr_{id}.json têm `players` mas não
+  // `tournament`/`slug`. O `url` do wagr.com é a marca inequívoca (o scraper
+  // escreve-o sempre) e não colide com nenhuma outra fonte.
+  if (Array.isArray(d.players) && /(^|\/\/)(www\.)?wagr\.com\//.test(String(d.url || ""))) return "wagr";
   if (Array.isArray(d.players) && (d.tournament || d.slug)) return "flatPlayers";
   if (Array.isArray(d.tournaments) && d.tournaments.some((t) => t && Array.isArray(t.players))) return "fpgPull";
   if (Array.isArray(d.resultados)) return "uskidsResults";
@@ -372,6 +385,55 @@ function fromFlatPlayers(d) {
   }];
 }
 
+/**
+ * Vencedor(es) de um evento WAGR, do campo `winner` do calendário.
+ *
+ * ⚠ O WAGR separa vencedores múltiplos por VÍRGULA ("Tomas Afonso
+ * Araujo,Joao Alves" — provas por equipas; 103 dos 8.084 eventos). Passar isso
+ * ao `displayName` dava asneira: ele lê a vírgula como "APELIDO, Nome" e
+ * trocava a ordem, colando os dois num só nome inventado ("Joao Alves Tomas
+ * Afonso Araujo"). Separa-se ANTES e formata-se cada nome por si.
+ */
+function wagrWinners(raw) {
+  const names = String(raw == null ? "" : raw)
+    .split(",")
+    .map((s) => displayName(s))
+    .filter(Boolean);
+  if (!names.length) return null;
+  if (names.length === 1) return names[0];
+  return `${names.slice(0, -1).join(", ")} e ${names[names.length - 1]}`;
+}
+
+/**
+ * WAGR (public/data/wagr/events/wagr_{id}.json).
+ *
+ * ⚠ SÓ entram provas com PORTUGUESES em campo. O WAGR são ~4.000 eventos por
+ * ANO do mundo inteiro; sem este corte o resumo diário enchia-se de provas sem
+ * relação nenhuma com o percurso dos nossos (um júnior na Malásia entrava).
+ * Decidido com a Mariana a 2026-09-09, sobre a alternativa de filtrar por
+ * escalão ou por região.
+ *
+ * ⚠ O vencedor vem do CALENDÁRIO (`d.winner`), não do topo do leaderboard: nas
+ * provas de match play o 1.º da tabela é o líder da qualificação stroke play,
+ * não o campeão. O `winnerOf` é o fallback para quando o calendário não o traz.
+ */
+function fromWagr(d) {
+  const players = Array.isArray(d.players) ? d.players : [];
+  if (!players.some((p) => p && isPortugalish(p.country))) return [];
+  const winner = wagrWinners(d.winner) || (winnerOf(players) || {}).name;
+  if (!winner) return [];
+  const cat = categoryLabel(d.eventType, d.name);
+  return [{
+    tournament: d.name || "(sem nome)",
+    category: cat,
+    winner,
+    date: firstDate(d.startDate),
+    year: d.year || null,
+    nPlayers: players.length,
+    key: `wagr|${d.id}`,
+  }];
+}
+
 function fromFpgPull(d) {
   const out = [];
   for (const t of d.tournaments || []) {
@@ -424,6 +486,7 @@ const EXTRACTORS = {
   ffgResultats: fromFfgResultats,
   jobfile: fromJobfile,
   flatPlayers: fromFlatPlayers,
+  wagr: fromWagr,
   fpgPull: fromFpgPull,
   uskidsResults: fromUskidsResults,
 };
@@ -664,6 +727,8 @@ module.exports = {
   isJuniorish,
   categoryLabel,
   sourceInfo,
+  isPortugalish,
+  wagrWinners,
   detectFormat,
   winnerOf,
   extractTournaments,

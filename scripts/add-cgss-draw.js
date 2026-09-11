@@ -29,6 +29,10 @@
  *   ... [--strict-cgss]        # recusa PDFs que não sejam do Santo da Serra
  *                              # (usado pelo process-draw-inbox.js autónomo)
  *   ... [--dry-run]            # mostra tudo, não grava nada
+ *   ... [--tcode-real 11064]   # quando o clube já divulgou o link da
+ *                              # classificação: grava `tcodeReal` na entrada e
+ *                              # a Action tenta-o PRIMEIRO; se os nomes não
+ *                              # baterem com o draw, sonda os vizinhos
  *
  * Formato do --json: {name, date, campo, modal, groups:[{teeTime, startHole,
  *   players:[{nome, clube|null, hcp, tee|null}]}]}
@@ -39,6 +43,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const { execFileSync } = require("child_process");
+const { MAX_GROUP_SLOTS, oversizedGroups } = require("./cgss-draw-guard");
 
 const REPO = path.resolve(__dirname, "..");
 const DATA = path.join(REPO, "public", "data");
@@ -50,8 +55,13 @@ const argVal = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] :
 const DRY = args.includes("--dry-run");
 const PDF = argVal("--pdf");
 const JSON_IN = argVal("--json");
+const TCODE_REAL = argVal("--tcode-real");
 if (!PDF && !JSON_IN) {
-  console.error('uso: node scripts/add-cgss-draw.js --pdf "Draw X.pdf" | --json field.json [--search STR] [--dry-run]');
+  console.error('uso: node scripts/add-cgss-draw.js --pdf "Draw X.pdf" | --json field.json [--tcode-real N] [--dry-run]');
+  process.exit(1);
+}
+if (TCODE_REAL && !/^\d{4,5}$/.test(TCODE_REAL)) {
+  console.error(`[add] ERRO: --tcode-real "${TCODE_REAL}" não parece um tcode da FPG.`);
   process.exit(1);
 }
 
@@ -85,6 +95,7 @@ if (JSON_IN) {
     for (const g of r.groups || []) {
       groups.push({
         teeTime: g.teeTime, startHole: g.startHole,
+        entries: g.entries, // lugares (par = 1) — só para a guarda, não é gravado
         players: (g.players || []).map(p => ({
           nome: p.nome, clube: p.clube ?? null,
           hcp: p.hcp ?? null, tee: p.tee ? String(p.tee).toUpperCase() : null,
@@ -103,6 +114,19 @@ if (!draw.name || !/^\d{4}-\d{2}-\d{2}$/.test(draw.date || "") || !nPlayers) {
   process.exit(1);
 }
 console.log(`[add] "${draw.name}" · ${draw.date} · ${draw.campo || "?"} · ${draw.groups.length} grupos / ${nPlayers} jogadores`);
+
+// Guarda de sanidade (só no --pdf: o --json é transcrito e visto por alguém).
+// Um grupo com mais de 4 lugares é extracção baralhada — a inbox de email
+// publica sem ninguém ver, por isso recusa-se em vez de gravar. (exit 4)
+if (PDF) {
+  const big = oversizedGroups(draw.groups);
+  if (big.length) {
+    console.error(`[add] ERRO: o extractor devolveu ${big.length} grupo(s) com mais de ${MAX_GROUP_SLOTS} lugares — ` +
+      big.map(g => `${g.teeTime} buraco ${g.startHole}: ${g.slots}`).join(" · ") + ".");
+    console.error(`[add] Draw provavelmente baralhado — nada gravado. Transcrever o PDF para JSON e usar --json. (exit 4)`);
+    process.exit(4);
+  }
+}
 
 // Guarda para o modo autónomo (inbox): este fluxo é CGSS/ccode 007 — um draw
 // de outro organizador (ex: Porto Santo/PXO, "Draw Oficial PXO.pdf") tem de
@@ -125,7 +149,10 @@ console.log(`[add] coluna de clube no PDF: ${hasClubCol ? "SIM (regras de clube 
 /* ── 2) placeholder seguinte ────────────────────────────────────────────── */
 const cgss = JSON.parse(fs.readFileSync(CGSS, "utf8"));
 const pull = JSON.parse(fs.readFileSync(PULL, "utf8"));
-let maxPh = 90070;
+// 90071-90073 já foram usados (RALI, Calheta, 8º OM NOS). Depois de
+// re-chaveados deixam de aparecer nos ficheiros — não os reciclar, senão o
+// mesmo placeholder passa a nomear dois torneios no histórico do git.
+let maxPh = 90073;
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);
@@ -206,6 +233,7 @@ const entry = {
   ccode: "007", tcode: TCODE, name: draw.name, date: draw.date,
   campo: draw.campo || "Santo da Serra", modal: draw.modal || null,
   source: draw.source, drawOnly: true,
+  ...(TCODE_REAL ? { tcodeReal: String(TCODE_REAL) } : {}),
   draws: { "1": { totalJogadores: nPlayers, groups: draw.groups.map(g => ({
     teeTime: g.teeTime, startHole: g.startHole, tee: null,
     players: g.players.map(p => ({ nome: p.nome, clube: p.clube, fed: p.fed, hcp: p.hcp, tee: p.tee || null, ...(p.noFed ? { noFed: true } : {}) })),

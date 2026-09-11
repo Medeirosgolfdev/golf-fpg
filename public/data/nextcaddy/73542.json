@@ -1,0 +1,590 @@
+{
+  "tourId": 73542,
+  "url": "https://www.nextcaddy.com/tour/73542",
+  "scrapedAt": "2026-09-07T09:14:24.594Z",
+  "meta": {
+    "name": "AMIGOS",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-09-05",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-05",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2398074
+        },
+        {
+          "pos": 2,
+          "name": "Alfonso Gonzalez Peña",
+          "licencia": "CM52138410",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2398109
+        },
+        {
+          "pos": 3,
+          "name": "Juan Antonio Leon Morente",
+          "licencia": "AM76189540",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2398077
+        },
+        {
+          "pos": 4,
+          "name": "Gustavo Caspueñas Bello",
+          "licencia": "AM76650304",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2398111
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2398112
+        },
+        {
+          "pos": 6,
+          "name": "Raul Jose Lozada Olmedo",
+          "licencia": "AME2930732",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2398072
+        },
+        {
+          "pos": 7,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2398110
+        },
+        {
+          "pos": 8,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2398073
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Raul Jose Lozada Olmedo",
+      "licencia": "AME2930732",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Antonio Leon Morente",
+      "licencia": "AM76189540",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "CM52138410",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Gustavo Caspueñas Bello",
+      "licencia": "AM76650304",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 21.7,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161682,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            27
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            52
+          ],
+          [
+            "Peor",
+            49
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161683,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            8
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            10
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            8
+          ],
+          [
+            "7",
+            10
+          ],
+          [
+            "8",
+            10
+          ],
+          [
+            "9",
+            9
+          ],
+          [
+            "10",
+            9
+          ],
+          [
+            "11",
+            3
+          ],
+          [
+            "12",
+            10
+          ],
+          [
+            "13",
+            11
+          ],
+          [
+            "14",
+            4
+          ],
+          [
+            "15",
+            12
+          ],
+          [
+            "16",
+            18
+          ],
+          [
+            "17",
+            6
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161684,
+        "datos": [
+          [
+            "Hoyo",
+            "MURIEL MARTIN",
+            "ALFONSO GONZALEZ PEÑA",
+            "JUAN ANTONIO leon morente "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            4
+          ],
+          [
+            "Hoyo 13",
+            2,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            5
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            5
+          ],
+          [
+            "Hoyo 16",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 17",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 18",
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161685,
+        "datos": [
+          [
+            "Hoyo",
+            "MURIEL MARTIN",
+            "ALFONSO GONZALEZ PEÑA",
+            "JUAN ANTONIO leon morente "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 12",
+            2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 13",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            2,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78779
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-09-07T09:14:57.639Z"
+}

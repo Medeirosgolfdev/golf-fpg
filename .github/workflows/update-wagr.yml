@@ -1,0 +1,116 @@
+name: Actualizar WAGR
+
+# Refresh do World Amateur Golf Ranking (wagr.com) — Node-puro, SEM secrets:
+# a API é pública (worldgolfranking2021api.wagr.com) e os leaderboards vêm no
+# __NEXT_DATA__ do SSR das páginas de evento. Pipeline:
+#   1. scrape-wagr.js --ranking                 → wagr-ranking.json (M+F, ~8.400)
+#   2. scrape-wagr.js --events --skip-existing  → wagr/events/wagr_{id}.json (novos)
+#   3. build-wagr-events-list.js                → wagr/wagr-events-list.json (índice sidebar)
+#
+# ⚠ São ~4.000 eventos por ano no mundo inteiro. Com --skip-existing um run
+#   semanal só apanha os novos (dezenas), mas o PRIMEIRO run de um ano novo
+#   demora — daí o timeout largo. O ranking é sempre re-scrapado (muda todas as
+#   semanas, à quarta-feira).
+# ⚠ NÃO alimenta o agregador kids2: o WAGR não tem DOB nem escalão do jogador,
+#   o matching seria fraco. É uma página autónoma (ver CLAUDE.md).
+on:
+  workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: 'Re-fetch de TODOS os eventos (ignora --skip-existing)'
+        required: false
+        default: false
+        type: boolean
+      extra_year:
+        description: 'Ano adicional a scrapar (backfill, ex: 2024)'
+        required: false
+        type: string
+  schedule:
+    # Quarta 07:00 UTC — o ranking WAGR sai à quarta-feira.
+    - cron: '0 7 * * 3'
+
+permissions:
+  contents: write
+
+jobs:
+  update-wagr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    concurrency:
+      group: update-wagr
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrape WAGR (ranking + eventos + índice)
+        run: |
+          set +e
+          SKIP="--skip-existing"
+          if [ "${{ github.event.inputs.full_rebuild }}" = "true" ]; then SKIP=""; fi
+
+          YEAR=$(date -u +'%Y')
+          PREV=$((YEAR - 1))
+          YEARS="--year $YEAR --year $PREV"
+          if [ -n "${{ github.event.inputs.extra_year }}" ]; then
+            YEARS="$YEARS --year ${{ github.event.inputs.extra_year }}"
+          fi
+
+          echo "▸ ranking";       node scripts/scrape-wagr.js --ranking
+          echo "▸ eventos $YEARS"; node scripts/scrape-wagr.js --events $YEARS $SKIP --concurrency 8
+          echo "▸ índice";        node scripts/build-wagr-events-list.js
+          # Nenhum destes é fatal (exit 2 = sem novidades). Erros reais nos logs.
+          exit 0
+
+      - name: Detectar alterações WAGR
+        id: diff
+        run: |
+          if git diff --quiet -- public/data/wagr public/data/wagr-ranking.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações WAGR — a saltar commit"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit e push (se houve alterações)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/wagr public/data/wagr-ranking.json
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: WAGR refresh ${DATE}"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ WAGR actualizado"

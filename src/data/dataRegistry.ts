@@ -101,6 +101,9 @@ export const FILE_GREATGOLF = `${BASE}torneio-greatgolf.json`;
 
 // Perfil por jogador
 export const FILE_PLAYER_DATA = (nfed: string) => `/${nfed}/analysis/data.json`;
+// Tabela global de jogadores (CROSS_DATA) — UMA cópia partilhada por todas as
+// fichas desde 2026-09-06; antes vinha embutida em cada data.json.
+export const FILE_CROSS_DATA = `${BASE}cross-data.json`;
 
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1335,7 +1338,10 @@ PlayerPageData = {
   ECDET:       Record<teeKey, Record<scoreId, EclecticEntry>>,
   HOLE_STATS:  Record<teeKey, Record<"18"|"9f"|"9b", HoleStatsData>>,
   TEE:         unknown[],
-  CROSS_DATA:  Record<nfed, CrossPlayerData>,
+  CROSS_DATA:  Record<nfed, CrossPlayerData>,   // ⚠ NÃO está no ficheiro desde
+  //   2026-09-06: vem de /data/cross-data.json (FILE_CROSS_DATA), pedido uma
+  //   vez e fundido pelo loader. Ficheiros antigos que ainda o tragam embutido
+  //   continuam a funcionar (ganham prioridade).
   CURRENT_FED: string,
   HCP_INFO:    HcpInfo,
   META:        { lastUpdate, lastRoundDate, generatedDate, latestHcp, escalao, club }

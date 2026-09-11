@@ -22,6 +22,7 @@ import PasswordGate from "../ui/PasswordGate";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
+import { schoolDay, isFreeDay, freeDayReason } from "../data/schoolCalendar";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 
 /* ═══ Types ═══ */
@@ -43,67 +44,121 @@ interface CalendarSource {
   group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS" | "JUNIOR" | "ANIVER";
 }
 
-/* ═══ Calendar Sources ═══ */
-const CALENDARS: CalendarSource[] = [
-  // ── CGSS Santo da Serra — azuis ──
-  { id: "cgss_major",     name: "Majors (A)",         color: C.cal.cgss_major, group: "CGSS" },
-  { id: "cgss_om_b",      name: "O.M. Nível B",       color: "var(--chart-2)", group: "CGSS" },
-  { id: "cgss_om_c",      name: "O.M. Nível C",       color: C.cal.cgss_om_c, group: "CGSS" },
-  { id: "cgss_pares",     name: "Camp. Pares",        color: C.cal.cgss_pares, group: "CGSS" },
-  { id: "cgss_ouro",      name: "Ranking Ouro",       color: C.cal.cgss_ouro, group: "CGSS" },
-  { id: "cgss_patrocin",  name: "Patrocinador",       color: "var(--text-3)", group: "CGSS" },
-  { id: "cgss_regional",  name: "Regional",           color: C.cal.cgss_regional, group: "CGSS" },
-  { id: "cgss_fpg",       name: "FPG Nacional",       color: C.cal.cgss_fpg, group: "CGSS" },
+/* ═══ Paleta ═══
+   Uma COR-MÃE por família e, dentro dela, tons do escuro ao claro por ordem de
+   importância. Antes cada calendário tinha a sua cor à sorte — as onze viagens
+   eram onze cores diferentes, e o "FPG Jr" usava a dos US Kids — o que fazia o
+   calendário parecer um saco de missangas em vez de dizer, à distância, de que
+   tipo de compromisso se trata. */
+const FAMILIA: Record<CalendarSource["group"], string> = {
+  CGSS:     "#1d4ed8",   // azul — o clube
+  JUNIOR:   "#047857",   // verde-esmeralda — academia júnior
+  DRIVE:    "#7c3aed",   // violeta — circuito Drive
+  FPG:      "#be185d",   // magenta — federação
+  DESTAQUE: "#b91c1c",   // vermelho — as provas que contam
+  ANIVER:   "#9ca3af",   // cinzento neutro — aniversários (contexto, não agenda)
+  VIAGENS:  "#0e7490",   // ciano — deslocações (céu e mar, e não compete com as provas)
+};
+
+/** Tom `i` de `n` dentro da família: mesma cor, cada vez mais clara. */
+function tom(base: string, i: number, n: number): string {
+  const [r, g, b] = [1, 3, 5].map(k => parseInt(base.slice(k, k + 2), 16) / 255);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  const h = d === 0 ? 0
+    : max === r ? ((g - b) / d + (g < b ? 6 : 0)) / 6
+    : max === g ? ((b - r) / d + 2) / 6
+    : ((r - g) / d + 4) / 6;
+  const passo = n <= 1 ? 0 : (i / (n - 1));
+  const L = Math.min(0.78, l + passo * 0.30);          // clareia
+  const S = Math.max(0.25, s - passo * 0.22);          // e dessatura um pouco
+  const c = (1 - Math.abs(2 * L - 1)) * S, x = c * (1 - Math.abs(((h * 6) % 2) - 1)), m = L - c / 2;
+  const seg = Math.floor(h * 6) % 6;
+  const rgb = [[c, x, 0], [x, c, 0], [0, c, x], [0, x, c], [x, 0, c], [c, 0, x]][seg];
+  return "#" + rgb.map(v => Math.round((v + m) * 255).toString(16).padStart(2, "0")).join("");
+}
+
+/* ═══ Calendar Sources ═══
+   A ordem DENTRO de cada família é a ordem dos tons: primeiro o que mais pesa. */
+type CalDef = { id: string; name: string; group: CalendarSource["group"]; color?: string };
+const CAL_DEFS: CalDef[] = [
+  // ── CGSS Santo da Serra ──
+  { id: "cgss_major",     name: "Majors (A)",              group: "CGSS" },
+  { id: "cgss_om_b",      name: "O.M. Nível B",            group: "CGSS" },
+  { id: "cgss_om_c",      name: "O.M. Nível C",            group: "CGSS" },
+  { id: "cgss_regional",  name: "Regional",                group: "CGSS" },
+  { id: "cgss_fpg",       name: "FPG Nacional",            group: "CGSS" },
+  { id: "cgss_ouro",      name: "Ranking Ouro",            group: "CGSS" },
+  { id: "cgss_pares",     name: "Camp. Pares",             group: "CGSS" },
+  { id: "cgss_patrocin",  name: "Patrocinador",            group: "CGSS" },
 
   // ── Junior CGSS — Academia ──
-  { id: "jr_cgss",        name: "CGSS Jr",             color: C.cal.jr_cgss, group: "JUNIOR" },
-  { id: "jr_regional",    name: "Regional Jr",         color: C.cal.jr_regional, group: "JUNIOR" },
-  { id: "jr_fpg",         name: "FPG Jr",              color: C.cal.dest_uskids, group: "JUNIOR" },
+  { id: "jr_cgss",        name: "CGSS Jr",                 group: "JUNIOR" },
+  { id: "jr_regional",    name: "Regional Jr",             group: "JUNIOR" },
+  { id: "jr_fpg",         name: "FPG Jr",                  group: "JUNIOR" },
 
-  // ── Drive — violeta / verde ──
-  { id: "drive_chall",    name: "Drive Challenge",     color: C.cal.drive_chall, group: "DRIVE" },
-  { id: "drive_tour",     name: "Drive Tour",          color: C.cal.drive_tour, group: "DRIVE" },
-  { id: "drive_tour_mad", name: "Drive Tour Madeira",  color: C.cal.drive_tour_mad, group: "DRIVE" },
+  // ── Drive ──
+  { id: "drive_tour_mad", name: "Drive Tour Madeira",      group: "DRIVE" },
+  { id: "drive_chall",    name: "Drive Challenge",         group: "DRIVE" },
+  { id: "drive_tour",     name: "Drive Tour",              group: "DRIVE" },
 
   // ── FPG ──
-  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",    color: C.cal.fpg_aquapor, group: "FPG" },
-  { id: "fpg_torneios",   name: "Torneios FPG",        color: C.cal.fpg_torneios, group: "FPG" },
+  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",        group: "FPG" },
+  { id: "fpg_torneios",   name: "Torneios FPG",            group: "FPG" },
 
-  // ── Destaque — vermelho / laranja ──
-  { id: "dest_intl",      name: "Internacionais",      color: C.cal.dest_intl, group: "DESTAQUE" },
-  { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: C.cal.dest_intl, group: "DESTAQUE" },
-  { id: "dest_uskids",    name: "US Kids International",color: C.cal.dest_uskids, group: "DESTAQUE" },
-  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "var(--text-muted)", group: "DESTAQUE" },
-  { id: "dest_bjgt",      name: "BJGT",                color: C.cal.dest_bjgt, group: "DESTAQUE" },
-  { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
-  { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
-  { id: "profissao_fe",   name: "✝ Profissão de Fé",   color: C.cal.profissao_fe, group: "DESTAQUE" },
-  { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", color: C.cal.irma_bad, group: "DESTAQUE" },
+  // ── Destaque: as provas que contam ──
+  { id: "drive_final",    name: "Finais Drive",            group: "DESTAQUE" },
+  { id: "dest_uskids",    name: "US Kids International",   group: "DESTAQUE" },
+  { id: "dest_pja",       name: "PJA Tour",                group: "DESTAQUE" },
+  { id: "dest_intl",      name: "Internacionais",          group: "DESTAQUE" },
+  { id: "dest_nac_jr",    name: "Nacional Sub14&18",       group: "DESTAQUE" },
+  { id: "dest_bjgt",      name: "BJGT",                    group: "DESTAQUE" },
+  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",   group: "DESTAQUE" },
 
-  // ── Aniversários por escalão ──
-  { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
-  { id: "bday_sub12",     name: "🎂 Sub-12",            color: C.cal.bday_sub12, group: "ANIVER" },
-  { id: "bday_sub14",     name: "🎂 Sub-14",            color: C.cal.bday_sub14, group: "ANIVER" },
-  { id: "bday_sub16",     name: "🎂 Sub-16",            color: C.cal.bday_sub16, group: "ANIVER" },
-  { id: "bday_sub18",     name: "🎂 Sub-18",            color: C.cal.bday_sub18, group: "ANIVER" },
-  { id: "bday_pja",       name: "🎂 PJA",               color: C.cal.dest_pja, group: "ANIVER" },
-  { id: "bday_outros",    name: "🎂 Outros",            color: C.cal.bday_outros, group: "ANIVER" },
-  { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
-  { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
-  { id: "colonias",       name: "🏕 Colónias",          color: C.cal.colonias, group: "DESTAQUE" },
+  // ── Fora das provas: identidade própria, de propósito ──
+  { id: "pessoal",        name: "🎂 Pessoal",              group: "DESTAQUE", color: C.cal.pessoal },
+  { id: "profissao_fe",   name: "✝ Profissão de Fé",       group: "DESTAQUE", color: C.cal.profissao_fe },
+  { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", group: "DESTAQUE", color: C.cal.irma_bad },
+  { id: "treino",         name: "⛳ Campo / Treino",       group: "DESTAQUE", color: C.cal.treino },
+  { id: "ferias",         name: "🏖 Férias",               group: "DESTAQUE", color: C.cal.ferias },
+  { id: "colonias",       name: "🏕 Colónias",             group: "DESTAQUE", color: C.cal.colonias },
 
-  // ── Viagens — laranja / âmbar ──
-  { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
-  { id: "viag_malaga",    name: "✈ Málaga (Fev)",        color: C.cal.viag_malaga, group: "VIAGENS" },
-  { id: "viag_roma",      name: "✈ Roma (Mar)",          color: C.cal.viag_roma, group: "VIAGENS" },
-  { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: C.cal.viag_alg_mar, group: "VIAGENS" },
-  { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: C.cal.viag_edinb, group: "VIAGENS" },
-  { id: "viag_jun",         name: "✈ Lisboa Jun · Manuel + M. Francisco",        color: C.cal.viag_roma,        group: "VIAGENS" },
-  { id: "viag_par_jul",     name: "✈ Paris Jul · Manuel + M. Francisco",        color: C.cal.viag_edinb,       group: "VIAGENS" },
-  { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2",                  color: C.cal.viag_alg_jul_m,   group: "VIAGENS" },
-  { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",   color: C.cal.viag_alg_jul_mamf,group: "VIAGENS" },
-  { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
+  // ── Aniversários ──
+  { id: "bday_pja",       name: "🎂 PJA",                  group: "ANIVER" },
+  { id: "bday_sub10",     name: "🎂 Sub-10",               group: "ANIVER" },
+  { id: "bday_sub12",     name: "🎂 Sub-12",               group: "ANIVER" },
+  { id: "bday_sub14",     name: "🎂 Sub-14",               group: "ANIVER" },
+  { id: "bday_sub16",     name: "🎂 Sub-16",               group: "ANIVER" },
+  { id: "bday_sub18",     name: "🎂 Sub-18",               group: "ANIVER" },
+  { id: "bday_outros",    name: "🎂 Outros",               group: "ANIVER" },
+
+  // ── Viagens (todas laranja; distinguem-se pelo nome, não pela cor) ──
+  { id: "viag_paris_set",   name: "✈ Paris + Comporta (Set)",              group: "VIAGENS" },
+  { id: "viag_malaga_nov",  name: "✈ Málaga Nov · Spanish Open",           group: "VIAGENS" },
+  { id: "viag_alg_fev",     name: "✈ Algarve (Fev)",                       group: "VIAGENS" },
+  { id: "viag_malaga",      name: "✈ Málaga (Fev)",                        group: "VIAGENS" },
+  { id: "viag_roma",        name: "✈ Roma (Mar)",                          group: "VIAGENS" },
+  { id: "viag_alg_mar",     name: "✈ Algarve (Mar/Abr)",                   group: "VIAGENS" },
+  { id: "viag_edinb",       name: "✈ Edimburgo (Mai)",                     group: "VIAGENS" },
+  { id: "viag_jun",         name: "✈ Lisboa Jun · Manuel + M. Francisco",  group: "VIAGENS" },
+  { id: "viag_par_jul",     name: "✈ Paris Jul · Manuel + M. Francisco",   group: "VIAGENS" },
+  { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2",              group: "VIAGENS" },
+  { id: "viag_alg_jul_mamf",name: "✈ Algarve Jul · Mariana + M. Francisco",group: "VIAGENS" },
+  { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",          group: "VIAGENS" },
 ];
+const CALENDARS: CalendarSource[] = (() => {
+  const porGrupo = new Map<string, CalDef[]>();
+  for (const d of CAL_DEFS) {
+    if (d.color) continue;                       // cor própria não entra na rampa
+    const a = porGrupo.get(d.group) ?? []; a.push(d); porGrupo.set(d.group, a);
+  }
+  return CAL_DEFS.map(d => {
+    if (d.color) return { id: d.id, name: d.name, color: d.color, group: d.group };
+    const fam = porGrupo.get(d.group)!;
+    return { id: d.id, name: d.name, group: d.group, color: tom(FAMILIA[d.group], fam.indexOf(d), fam.length) };
+  });
+})();
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
 
@@ -153,7 +208,7 @@ const EVENTS: CalEvent[] = [
   // Agosto
   ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
   ev("cgss_om_c",     "Torneio CGSS Summer",                new Date(2026,7,22), "Santo da Serra", "Stableford"),
-  ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,25), "Pinhal",         "Strokeplay", new Date(2026,7,28)),
+  ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,27), "Vilamoura - Pinhal", "Strokeplay", new Date(2026,7,30)),
   ev("cgss_om_c",     "Torneio CGSS",                       new Date(2026,7,29), "Santo da Serra", "Stableford"),
   // Setembro
   ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
@@ -202,12 +257,13 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   ev("drive_chall", "1º Torneio Drive Challenge Madeira",     new Date(2026,0,4),  "Palheiro",       "Strokeplay e Medal"),
   ev("drive_chall", "2º Torneio Drive Challenge Madeira",     new Date(2026,1,8),  "Santo da Serra",  "Strokeplay e Medal"),
-  ev("drive_chall", "5º Torneio Drive Challenge Madeira",     new Date(2026,2,8),  "Santo da Serra",  "Strokeplay e Medal"),
+  ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,2,8),  "Santo da Serra",  "Strokeplay e Medal"),
   ev("drive_chall", "4º Torneio Drive Challenge Madeira",     new Date(2026,3,12), "Porto Santo",     "Strokeplay e Medal"),
-  ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_chall", "5º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
   ev("drive_chall", "6º Torneio Drive Challenge Madeira",     new Date(2026,5,28), "Porto Santo",     "Strokeplay e Medal"),
   ev("drive_chall", "7º Torneio Drive Challenge Madeira",     new Date(2026,6,11), "Santo da Serra",  "Strokeplay e Medal"),
-  ev("drive_chall", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_final", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_final", "Final Nacional Drive Challenge",         new Date(2026,9,10), "Jamor",           "Strokeplay e Medal", new Date(2026,9,11)),
 
   /* ══════════════════════════════════════
      DRIVE TOUR — verde (Sul/Norte/Tejo)
@@ -215,20 +271,22 @@ const EVENTS: CalEvent[] = [
   // Sul
   ev("drive_tour", "1º Torneio Drive Tour Sul",   new Date(2026,0,11), "Laguna GC",    "Strokeplay e Medal"),
   ev("drive_tour", "2º Torneio Drive Tour Sul",   new Date(2026,1,1),  "Vila Sol",     "Strokeplay e Medal"),
-  ev("drive_tour", "3º Torneio Drive Tour Sul",   new Date(2026,3,4),  "Penina (TBC)", "Strokeplay e Medal"),
+  ev("drive_tour", "3º Torneio Drive Tour Sul",   new Date(2026,3,4),  "Quinta do Vale", "Strokeplay e Medal"),
   ev("drive_tour", "4º Torneio Drive Tour Sul",   new Date(2026,5,10), "Boavista",     "Strokeplay e Medal"),
   // Norte
   ev("drive_tour", "1º Torneio Drive Tour Norte", new Date(2026,0,4),  "Estela GC",      "Strokeplay e Medal"),
-  ev("drive_tour", "2º Torneio Drive Tour Norte", new Date(2026,1,1),  "Amarante",       "Strokeplay e Medal"),
+  // Remarcado: jogou-se a 30 Ago (987/10207), não a 1 Fev.
+  ev("drive_tour", "2º Torneio Drive Tour Norte", new Date(2026,7,30), "Amarante",       "Strokeplay e Medal"),
   ev("drive_tour", "3º Torneio Drive Tour Norte", new Date(2026,1,28), "Vale Pisão",     "Strokeplay e Medal", new Date(2026,2,1)),
   ev("drive_tour", "4º Torneio Drive Tour Norte", new Date(2026,3,19), "Ponte de Lima",  "Strokeplay e Medal"),
   // Tejo
   ev("drive_tour", "1º Torneio Drive Tour Tejo",  new Date(2026,0,4),  "Montado",        "Strokeplay e Medal"),
-  ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,0,31), "Belas",          "Strokeplay e Medal"),
+  // Remarcado: jogou-se a 10 Jun (985/10203), não a 31 Jan.
+  ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,5,10), "Belas",          "Strokeplay e Medal"),
   ev("drive_tour", "3º Torneio Drive Tour Tejo",  new Date(2026,2,28), "St. Estêvão",    "Strokeplay e Medal", new Date(2026,2,29)),
   ev("drive_tour", "4º Torneio Drive Tour Tejo",  new Date(2026,3,12), "Lisbon SC",      "Strokeplay e Medal"),
   // Final Nacional
-  ev("drive_tour", "Final Drive Tour",            new Date(2026,10,7), "Oeiras Green Valley (Lisboa)", "Strokeplay e Medal", new Date(2026,10,8)),
+  ev("drive_final", "Final Drive Tour",            new Date(2026,10,7), "Oeiras Green Valley (Lisboa)", "Strokeplay e Medal", new Date(2026,10,8)),
 
   /* ══════════════════════════════════════
      DRIVE TOUR MADEIRA — esmeralda
@@ -246,9 +304,18 @@ const EVENTS: CalEvent[] = [
   ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2026,2,14), "Quinta do Peru",      "Strokeplay", new Date(2026,2,15)),
   ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2026,4,16), "Vidago Palace",       "Strokeplay", new Date(2026,4,17)),
   ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2026,6,18), "Palmares",            "Strokeplay", new Date(2026,6,19)),
-  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,8,19), "TBC",                 "Strokeplay", new Date(2026,8,20)),
-  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
-  ev("fpg_aquapor", "7º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
+  // O 5º de Setembro (campo TBC) saiu do calendário oficial e a FPG renumerou:
+  // as páginas em competicoes.fpg.pt mantêm os slugs "6o-…-estela" e
+  // "7o-…-belas-cc" mas os títulos são agora 5º e 6º. O circuito tem 6 provas.
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
+  // 2027 — já publicado em competicoes.fpg.pt (o 6º ainda sem campo).
+  ev("fpg_aquapor", "1º Torneio do Circuito AQUAPOR",  new Date(2027,0,16), "Morgado do Reguengo", "Strokeplay", new Date(2027,0,17)),
+  ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2027,1,20), "Quinta do Peru",      "Strokeplay", new Date(2027,1,21)),
+  ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2027,3,17), "Oporto",              "Strokeplay", new Date(2027,3,18)),
+  ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2027,4,8),  "Vidago Palace",       "Strokeplay", new Date(2027,4,9)),
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2027,6,17), "Penina",              "Strokeplay", new Date(2027,6,18)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2027,10,20),"TBA",                 "Strokeplay", new Date(2027,10,21)),
 
   /* ══════════════════════════════════════
      FPG — Torneios (roxo)
@@ -258,14 +325,14 @@ const EVENTS: CalEvent[] = [
   ev("fpg_torneios", "Aberto do Estoril",       new Date(2026,4,23), "CG Estoril",    "Strokeplay", new Date(2026,4,24)),
   ev("fpg_torneios", "Taça RS Yeatman",         new Date(2026,5,20), "CG Miramar",    "Strokeplay", new Date(2026,5,21)),
   ev("fpg_torneios", "Taça Mendes D'Almeida",   new Date(2026,7,15), "Vidago Palace", "Strokeplay", new Date(2026,7,16)),
-  ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Ribagolfe",     "Strokeplay e Match", new Date(2026,9,13)),
+  ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Santo Estêvão", "Strokeplay e Match", new Date(2026,9,13)),
 
   /* ══════════════════════════════════════
      DESTAQUE — Internacionais (vermelho)
      ══════════════════════════════════════ */
   ev("dest_intl", "Faldo Series Madeira",                              new Date(2026,9,16),  "Santo da Serra",              "Strokeplay", new Date(2026,9,18)),
-  ev("dest_intl", "63º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
-  ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,4), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
+  ev("dest_intl", "64º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
+  ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,3), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
   ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
   ev("dest_intl", "World Kids Golf 2026 by Amendoeira",                new Date(2026,6,29), "Amendoeira",                  "3R Strokeplay (jantar de encerramento)", new Date(2026,6,31)),
 
@@ -289,6 +356,10 @@ const EVENTS: CalEvent[] = [
   ev("dest_uskids_tbc", "Irish Open 2026",                   new Date(2026,6,1),  "Mountwolseley, Tullow (IE)",       "", new Date(2026,6,2)),
   ev("dest_uskids_tbc", "Paris Invitational 2026",           new Date(2026,6,4),  "Magny-le-Hongre (FR)",             "", new Date(2026,6,6)),
   ev("dest_uskids", "Venice Open 2026",                      new Date(2026,7,13), "Venice (IT)",                      "3R Strokeplay", new Date(2026,7,15)),
+  // US Kids International Championships Tour (t=23132, 107/159 inscritos a
+  // 2026-09-02). San Roque fica em Sotogrande (Cádiz), a ~1h de Málaga — daí
+  // os voos para AGP.
+  ev("dest_uskids", "US Kids Spanish Open 2026",              new Date(2026,10,20), "San Roque Golf & Resort (ES)",     "3R Strokeplay", new Date(2026,10,22)),
   // ev("dest_uskids", "Canadian Invitational 2026",     new Date(2026,6,6),  "Canadá",                           "", new Date(2026,6,7)),
 
   /* ══════════════════════════════════════
@@ -301,9 +372,9 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   // CANCELADO: ev("dest_pja", "PJA — Quinta da Marinha", new Date(2026,0,24), "Quinta da Marinha", "Strokeplay", new Date(2026,0,25)),
   ev("dest_pja", "PJA — Great Golf Júnior Open 2026", new Date(2026,1,15), "Vilamoura",         "Strokeplay", new Date(2026,1,17)),
-  ev("dest_pja", "VIII Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
+  ev("dest_pja", "X Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
   ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
-  ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Torre",              "Strokeplay", new Date(2026,8,6)),
+  ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Terras da Comporta - Torre", "2R Strokeplay", new Date(2026,8,6)),
   ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
 
   /* ══════════════════════════════════════
@@ -391,6 +462,23 @@ const EVENTS: CalEvent[] = [
   ev("viag_vce_ago",    "✈ TP1930 LIS → OPO 16:00–17:00",        new Date(2026,7,16), "TAP", "Prov. · Manuel, Mariana, M. Francisco"),
   ev("viag_vce_ago",    "✈ TP1933 OPO → LIS 21:15–22:15",        new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
   ev("viag_vce_ago",    "✈ TP1697 LIS → FNC 23:40–01:30 (+1)",   new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
+
+  // Novembro — Málaga (US Kids Spanish Open, San Roque)
+  // ⚠ Do bilhete só constam os voos LIS↔AGP; os FNC↔LIS ainda não estão
+  //   marcados (nas outras viagens há sempre o par da Madeira).
+  ev("viag_malaga_nov", "✈ TP1134 LIS → AGP 07:20–09:35",       new Date(2026,10,18), "TAP", ""),
+  ev("viag_malaga_nov", "✈ TP1137 AGP → LIS 15:00–15:25",       new Date(2026,10,23), "TAP", ""),
+
+  // Setembro — Paris (treino). Dia inteiro no Golf de La Boulie com o Antoine
+  // Schwartz; o dia da viagem fica marcado sem nº de voo (não foi indicado).
+  ev("viag_paris_set", "✈ TP1688 FNC → LIS 12:40–14:25",          new Date(2026,8,2),  "TAP", ""),
+  ev("viag_paris_set", "✈ TP438 LIS → PARIS ORLY 16:50–20:15",    new Date(2026,8,2),  "TAP", ""),
+  ev("treino",         "⛳ Putt training day — Antoine Schwartz",  new Date(2026,8,3),  "Golf de La Boulie (FR)", "Dia inteiro"),
+  ev("viag_paris_set", "✈ TP429 PARIS ORLY → LIS 10:15–11:55",    new Date(2026,8,4),  "TAP", ""),
+  // Aterram sexta e seguem para a Comporta: sexta treino, sábado e domingo a
+  // prova do PJA. É tudo Terras da Comporta — não vale a pena separar campos.
+  ev("treino",         "⛳ Treino — Terras da Comporta",           new Date(2026,8,4),  "Terras da Comporta - Torre", "Treino"),
+  ev("viag_paris_set", "✈ TP1695 LIS → FNC 22:20–00:10 (+1)",     new Date(2026,8,6),  "TAP", ""),
 ];
 
 /* ═══ Helpers ═══ */
@@ -411,6 +499,18 @@ const GROUP_LABELS: Record<string, string> = {
 function isSameDay(a: Date, b: Date) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
+/* ═══ Meses ═══
+   O calendário deixou de viver só em 2026: já tem o ano lectivo 2026/27 e as
+   provas de 2027 vão entrando. A navegação passa a andar num índice ABSOLUTO
+   de mês desde Janeiro de 2026 — assim ‹ › atravessam a viragem do ano sem
+   caso especial. */
+const ANO_BASE = 2026;
+const ANO_FIM = 2027;
+const MI_MAX = (ANO_FIM - ANO_BASE + 1) * 12 - 1;
+const miAno = (mi: number) => ANO_BASE + Math.floor(mi / 12);
+const miMes = (mi: number) => ((mi % 12) + 12) % 12;
+const miDe = (d: Date) => Math.min(MI_MAX, Math.max(0, (d.getFullYear() - ANO_BASE) * 12 + d.getMonth()));
+
 function getMonthDays(year: number, month: number) {
   const first = new Date(year, month, 1);
   const last = new Date(year, month + 1, 0);
@@ -443,13 +543,102 @@ function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
   pessoal:       { bg: C.cal.hl_pessoal_bg, border: C.cal.hl_pessoal_border, text: C.cal.hl_pessoal_text, icon: "🎂", cls: "hl-green" },
 };
-/* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
-const HL_BAR: Record<string, string> = {
-  treino:       "hl-teal",
-  dest_nac_jr:  "hl-red",
-  profissao_fe: "hl-gold",
-};
+/* As barras não animam. O pulsar chamava a atenção para o sítio errado e, num
+   evento de vários dias, repetia-se célula a célula. O destaque faz-se com a
+   cor cheia e o peso do texto. */
+const HL_BAR: Record<string, string> = {};
 function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
+
+/** Já passou? Compara-se por DIA: um evento de hoje ainda é de hoje, mesmo
+ *  que a hora já tenha passado. (Com `new Date()` cru, tudo o que era de hoje
+ *  nascia esbatido a partir da meia-noite.) */
+function jaPassou(e: CalEvent, hoje: Date): boolean {
+  const fim = e.endDate || e.date;
+  const f = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate()).getTime();
+  const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()).getTime();
+  return f < h;
+}
+
+/* ═══ O que é DELE ═══
+   O calendário mistura duas coisas: a agenda do Manuel e o calendário geral do
+   clube/federação, que é o pano de fundo onde ela se insere. As provas em que
+   ele NÃO entra ficam esbatidas — continuam lá, para se perceber o contexto e
+   as sobreposições, mas deixam de disputar a atenção com o que ele vai jogar.
+
+   ⚠ A regra é por CALENDÁRIO, não por prova: quem decide é a natureza do
+   evento. As excepções (uma prova de adultos que ele foi jogar, ou uma prova
+   juvenil que ele falha) marcam-se à mão em MANUEL_EXCEPCOES, pelo título. */
+const NAO_DELE = new Set<string>([
+  "cgss_pares",       // Campeonato do Clube de Pares — prova de duplas de sócios
+  "cgss_ouro",        // Ranking Ouro — provas dos adultos do clube
+  "cgss_patrocin",    // torneios de patrocinador (Diário de Notícias, BPI, …)
+  "cgss_regional",    // Campeonatos Regionais Absolutos
+  "cgss_fpg",         // Campeonatos Nacionais Absolutos / de Clubes
+  "fpg_aquapor",      // Circuito AQUAPOR — sete provas, todas no continente
+  "fpg_torneios",     // provas nacionais de absolutos (Taça FPG, Lisbon Cup, …)
+  "jr_fpg",           // Campeonato Nacional Individual Absoluto
+  "bday_sub10", "bday_sub12", "bday_sub14", "bday_sub16", "bday_sub18",
+  "bday_pja", "bday_outros",   // aniversários dos outros miúdos
+]);
+/* Excepções por TÍTULO (`includes`, sem maiúsculas nem acentos a contar) —
+   para quando o calendário do evento não chega para decidir. */
+/** É dele — ou é para ver em família — apesar de o calendário dizer que não.
+ *  O Nacional de Badminton da irmã é o exemplo: vão todos, e ela vai a
+ *  campeã nacional. */
+const MANUEL_EXCEPCOES: string[] = ["Campeonato Nacional Badminton"];
+/** Os que levam contorno, para saltarem à vista sem precisarem de animação
+ *  (que num evento de vários dias fica a gritar). */
+const EM_DESTAQUE: string[] = ["Campeonato Nacional Badminton"];
+function emDestaque(e: CalEvent): boolean {
+  return EM_DESTAQUE.some(x => norm(e.title).includes(norm(x)));
+}
+/** NÃO é dele, apesar de o calendário dizer que sim.
+ *  ⚠ O calendário «Internacionais» mistura as provas juvenis que ele joga
+ *  (Faldo Series, Castro Marim U14, Greatgolf, World Kids) com o circuito
+ *  profissional; e o «Regional Jr» mistura os Campeonatos de Jovens com os
+ *  Absolutos, que são de gente crescida. */
+const NAO_DELE_TITULOS: string[] = ["Open de Portugal", "Absoluto"];
+/** Provas que ele não vai jogar por CHOQUE de agenda — o título sozinho não
+ *  chega, porque a prova existe e noutro ano pode ser a que ele joga.
+ *  ⚠ 5 de Setembro: está na Comporta para o PJA do Torre, logo não pode estar
+ *  no Santo da Serra. */
+const NAO_VAI: { titulo: string; data: string }[] = [
+  { titulo: "Torneio Quinta de São João", data: "2026-09-05" },
+  // 7 de Novembro: Final do Drive Tour em Oeiras.
+  { titulo: "Torneio de São Martinho", data: "2026-11-07" },
+];
+const diaISO = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+/** Prova que ele NÃO PODE jogar por estar noutro sítio nesse dia. */
+function naoPode(e: CalEvent): boolean {
+  const dia = diaISO(e.date);
+  return NAO_VAI.some(x => x.data === dia && norm(e.title).includes(norm(x.titulo)));
+}
+function isDele(e: CalEvent): boolean {
+  if (naoPode(e)) return false;
+  if (NAO_DELE_TITULOS.some(x => norm(e.title).includes(norm(x)))) return false;
+  if (MANUEL_EXCEPCOES.some(x => norm(e.title).includes(norm(x)))) return true;
+  return !NAO_DELE.has(e.calId);
+}
+/** Quanto se vê um evento. A agenda do Manuel a 100%; o calendário do clube
+ *  em surdina; os aniversários dos outros miúdos ainda mais abaixo — são
+ *  muitos e diários, e a cheio tapavam o resto. */
+function opacidadeDe(e: CalEvent): number {
+  if (isDele(e)) return 1;
+  // Impossível de jogar (está noutro sítio) desce mais do que "não é do
+  // género dele": não é uma escolha, é um facto.
+  if (naoPode(e)) return 0.16;
+  return e.calId.startsWith("bday_") ? 0.22 : 0.3;
+}
+
+/** Nível da Ordem de Mérito do CGSS a que a prova conta (A/B/C), ou null.
+ *  É o que decide quantos pontos ela vale — ver a tab 🏅 da FPGPage — por isso
+ *  merece estar à vista no calendário, e não só no nome do calendário. */
+const OM_NIVEL: Record<string, "A" | "B" | "C"> = {
+  cgss_major: "A", cgss_om_b: "B", cgss_om_c: "C",
+};
+function omNivel(e: CalEvent): "A" | "B" | "C" | null { return OM_NIVEL[e.calId] ?? null; }
+
 
 type EvPos = "single" | "start" | "mid" | "end";
 function getEvPos(e: CalEvent, day: Date, weekStart: Date, weekEnd: Date): EvPos {
@@ -497,12 +686,19 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           const isToday = isSameDay(d.date, today);
           const isSel = selected && isSameDay(d.date, selected);
           const has = visibleEvents.some(e => eventOnDay(e, d.date));
+          // Pano de fundo do ano lectivo: os dias COM aulas ficam esbatidos, para
+          // se ver de relance se uma viagem cai em período de escola. Os dias
+          // úteis sem aulas (interrupções, mid-term, conference days) ficam
+          // limpos e dizem o motivo ao passar o rato.
+          const sd = schoolDay(d.date);
+          const livreMini = isFreeDay(d.date);
           return (
             <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : "transparent",
+              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)"
+                : livreMini ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
               fontWeight: isToday || isSel ? 600 : 400,
-            }}>
+            }} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
                 <span className="cal-dot-indicator" style={{ width: 3, height: 3, background: "var(--accent)" }} />
@@ -571,9 +767,9 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
   const firstUpcomingRef = useRef<HTMLDivElement>(null);
   const grouped = useMemo(() => {
     const m = new Map<number, CalEvent[]>();
-    for (const e of events) { const k = e.date.getMonth(); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
+    for (const e of events) { const k = miDe(e.date); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
     const all = [...m.entries()].sort((a, b) => a[0] - b[0]);
-    const cur = today.getMonth();
+    const cur = miDe(today);
     return [...all.filter(([k]) => k >= cur), ...all.filter(([k]) => k < cur)];
   }, [events]);
 
@@ -594,18 +790,18 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
   return (
     <div className="cal-page-inner">
       {grouped.map(([month, evts]) => {
-        const isCur = month === today.getMonth();
+        const isCur = month === miDe(today);
         return (
         <div key={month} ref={isCur ? todayMonthRef : undefined}>
           <div className="uppercase fs-13 fw-700" style={{ color: "var(--accent)",
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
-            {monthLabel(month)} 2026
+            {monthLabel(miMes(month))} {miAno(month)}
           </div>
           <div className="d-flex flex-col gap-4">
             {evts.map(e => {
               const c = calColor(e);
               const hl = HIGHLIGHT[e.calId];
-              const isPast = (e.endDate || e.date) < today;
+              const isPast = jaPassou(e, today);
               const isFirstUpcoming = e.id === todayKey;
               return (
                 <div key={e.id}
@@ -615,7 +811,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                     borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
                     background: hl ? `${hl.bg}18` : "transparent",
                     border: hl ? `2px solid ${hl.bg}66` : "2px solid transparent",
-                    opacity: isPast ? 0.45 : 1,
+                    opacity: isPast ? 0.45 : opacidadeDe(e),
                   }}
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
@@ -627,7 +823,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
                     <div className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)" }}>
-                      {hl ? `${hl.icon} ` : ""}{e.title}
+                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm" style={{ marginRight: 4, fontWeight: 800, fontSize: 9 }} title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
@@ -668,7 +864,7 @@ export default function CalendarioPage() {
 function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
-    return now.getFullYear() === 2026 ? now.getMonth() : 1;
+    return now.getFullYear() >= ANO_BASE ? miDe(now) : 0;
   });
   const [selectedEvent, setSelectedEvent] = useState<CalEvent | null>(null);
   // Em mobile, abrir por defeito em "list" — o grid mensal de 7 colunas
@@ -710,19 +906,21 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       const d = parseInt(parts[2], 10);
       if (isNaN(m) || isNaN(d) || d < 1 || d > 31) continue;
       const birthYear = parseInt(parts[0], 10);
-      const age = 2026 - birthYear;
       const firstName = p.name.split(" ")[0];
       const isPJA = p.tags?.includes("PJA");
       const calId = isPJA ? "bday_pja" : (escalaoToCalId[p.escalao] || "bday_outros");
-      bdayEvs.push({
-        id: ++bdayId,
-        calId,
-        title: `🎂 ${firstName} — ${age} anos`,
-        date: new Date(2026, m, d),
-        campo: "",
-        modalidade: `${p.name} · #${fed}`,
-        note: ovr?.note,
-      });
+      // Um evento por ANO coberto — o calendário já atravessa 2026 e 2027.
+      for (let ano = ANO_BASE; ano <= ANO_FIM; ano++) {
+        bdayEvs.push({
+          id: ++bdayId,
+          calId,
+          title: `🎂 ${firstName} — ${ano - birthYear} anos`,
+          date: new Date(ano, m, d),
+          campo: "",
+          modalidade: `${p.name} · #${fed}`,
+          note: ovr?.note,
+        });
+      }
     }
     return [...EVENTS, ...bdayEvs];
   }, [players]);
@@ -730,9 +928,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [listScrollSignal, setListScrollSignal] = useState(0);
   const goToday = () => {
     const now = new Date();
-    const m = now.getFullYear() === 2026 ? now.getMonth() : 1;
+    const m = now.getFullYear() >= ANO_BASE ? miDe(now) : 0;
     setCurrentMonth(m);
-    setSelectedDate(now.getFullYear() === 2026 ? now : null);
+    setSelectedDate(now.getFullYear() >= ANO_BASE ? now : null);
     setListScrollSignal(v => v + 1);
   };
 
@@ -758,7 +956,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   }, []);
 
   const goToEvent = (ev: CalEvent) => {
-    setCurrentMonth(ev.date.getMonth());
+    setCurrentMonth(miDe(ev.date));
     setSelectedDate(ev.date);
     setSelectedEvent(ev);
     setSearchOpen(false);
@@ -782,7 +980,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     allEvents.filter(e => enabledCals.has(e.calId)).sort((a, b) => a.date.getTime() - b.date.getTime()),
     [enabledCals, allEvents]
   );
-  const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
+  const monthDays = useMemo(() => getMonthDays(miAno(currentMonth), miMes(currentMonth)), [currentMonth]);
   const gridRows = monthDays.length / 7;
   // Máximo de eventos mostrados por célula antes de colapsar em "+N mais".
   // Meses de 6 semanas têm células mais baixas → limite menor para não cortar.
@@ -799,14 +997,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         {/* Mini cal */}
         <div>
           <div className="flex-between-mb6">
-            <span className="fs-13 fw-700 c-text">{monthLabel(currentMonth)} 2026</span>
+            <span className="fs-13 fw-700 c-text">{monthLabel(miMes(currentMonth))} {miAno(currentMonth)}</span>
             <div className="d-flex gap-2">
               <SmBtn l="‹" onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} dis={currentMonth <= 0} />
-              <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} dis={currentMonth >= 11} />
+              <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m + 1))} dis={currentMonth >= MI_MAX} />
             </div>
           </div>
-          <MiniCal year={2026} month={currentMonth} selected={selectedDate} visibleEvents={visibleEvents}
-            onSelect={d => { setSelectedDate(d); setCurrentMonth(d.getMonth()); }} />
+          <MiniCal year={miAno(currentMonth)} month={miMes(currentMonth)} selected={selectedDate} visibleEvents={visibleEvents}
+            onSelect={d => { setSelectedDate(d); setCurrentMonth(miDe(d)); }} />
         </div>
 
         {/* Calendar toggles */}
@@ -867,7 +1065,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                               const dd = `${d.getDate()}/${d.getMonth() + 1}`;
                               return (
                                 <button key={ev.id} onClick={() => {
-                                  setCurrentMonth(d.getMonth());
+                                  setCurrentMonth(miDe(d));
                                   setSelectedDate(d);
                                   setSelectedEvent(ev);
                                 }} style={{
@@ -902,7 +1100,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
               {sidebarOpen ? "◀" : "▶"}
             </button>
-            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
+            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário {miAno(currentMonth)}</h2>
             <button onClick={goToday} className="p p-filter shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
@@ -959,14 +1157,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 fontSize: "var(--fs-18)", color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>‹</button>
             <span className="fw-700 ta-c" style={{ fontSize: "var(--fs-15)", color: "var(--text)", flex: 1 }}>
-              {monthLabel(currentMonth)} 2026
+              {monthLabel(miMes(currentMonth))} {miAno(currentMonth)}
             </span>
             <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
-            <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} title="Mês seguinte" disabled={currentMonth >= 11}
+            <button onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m+1))} title="Mês seguinte" disabled={currentMonth >= MI_MAX}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
-                background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
+                background: "var(--bg-card)", cursor: currentMonth >= MI_MAX ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "var(--fs-18)", color: currentMonth >= 11 ? "var(--border)" : "var(--text-2)",
+                fontSize: "var(--fs-18)", color: currentMonth >= MI_MAX ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>›</button>
           </div>
         </div>
@@ -993,6 +1191,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   const weekIdx = Math.floor(i / 7);
                   const weekStart = monthDays[weekIdx * 7].date;
                   const weekEnd = monthDays[weekIdx * 7 + 6].date;
+                  // Pano de fundo (ver src/data/schoolCalendar.ts): sombreiam-se os
+                  // dias LIVRES de escola — fins-de-semana, interrupções, feriados e
+                  // os dias soltos sem aulas. É onde há espaço para jogar e viajar,
+                  // e são a minoria: sombrear os dias de aulas pintava quase tudo.
+                  const livre = isFreeDay(d.date);
+                  const sd = schoolDay(d.date);
+                  const tipDia = livre ? `Livre — ${freeDayReason(d.date)}`
+                    : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined;
                   const CP = 4;
 
                   // Highlight cell: full colored square with icon + label
@@ -1035,11 +1241,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       borderRight: "1px solid var(--border-light)",
                       borderBottom: "1px solid var(--border-light)",
                       padding: CP, overflow: "hidden", cursor: "pointer",
-                      background: isSel ? "var(--accent-light)" : "transparent",
+                      background: isSel ? "var(--accent-light)" : livre ? "var(--cal-livre-bg)"
+                        : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
                       transition: "background 0.12s",
                     }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
-                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = isSel ? "var(--accent-light)" : "transparent"; }}>
+                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = livre ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent"; }} title={tipDia}>
                       <div className="fs-11" style={{
                         fontWeight: isToday ? 700 : 500,
                         minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
@@ -1051,10 +1258,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         {d.date.getDate()}
                       </div>
                       {dayEvts.slice(0, cellCap).map(e => {
-                        const isPast = (e.endDate || e.date) < today;
+                        const isPast = jaPassou(e, today);
                         const pos = getEvPos(e, d.date, weekStart, weekEnd);
                         const showTitle = pos === "single" || pos === "start";
-                        const barCls = HL_BAR[e.calId];
+                        // A animação só faz sentido num evento de UM dia: repetida em
+                        // três células seguidas (o Dunas, 4-6 Set) fica a gritar.
+                        const barCls = pos === "single" ? HL_BAR[e.calId] : undefined;
                         const bRadius =
                           pos === "start" ? "3px 0 0 3px" :
                           pos === "end"   ? "0 3px 3px 0" :
@@ -1073,14 +1282,26 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                             background: calColor(e),
                             color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
                             textOverflow: "ellipsis", cursor: "pointer",
-                            fontWeight: 600, lineHeight: 1.6,
-                            opacity: isPast ? 0.4 : 1,
+                            fontWeight: emDestaque(e) ? 800 : 600, lineHeight: 1.6,
+                            opacity: isPast ? 0.4 : opacidadeDe(e),
                             minHeight: pos !== "single" && !showTitle ? 16 : undefined,
                             transition: "opacity 0.15s",
                           }}
-                          onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : 0.85))}
-                          onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : 1))}>
-                          {showTitle ? e.title : "\u00A0"}
+                          onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : Math.min(0.85, opacidadeDe(e) + 0.25)))}
+                          onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : opacidadeDe(e)))}>
+                          {showTitle ? (
+                            <>
+                              {omNivel(e) ? (
+                                <span title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`} style={{
+                                  display: "inline-block", minWidth: 10, marginRight: 3,
+                                  padding: "0 3px", borderRadius: 2, fontSize: 8, fontWeight: 800,
+                                  background: "rgba(255,255,255,0.85)", color: "var(--text)",
+                                  lineHeight: 1.6, verticalAlign: "middle",
+                                }}>{omNivel(e)}</span>
+                              ) : null}
+                              {e.title}
+                            </>
+                          ) : " "}
                         </div>
                         );
                       })}
@@ -1129,7 +1350,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
     setTimeout(() => document.addEventListener("mousedown", h), 10);
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} 2026`;
+  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} ${date.getFullYear()}`;
   return (
     <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
       <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
