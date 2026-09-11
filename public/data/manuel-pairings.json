@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-09-07T10:48:42.752Z",
+  "geradoEm": "2026-09-11T11:28:05.442Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 152,
-  "totalCompanheirosUnicos": 183,
+  "totalRondas": 153,
+  "totalCompanheirosUnicos": 186,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 132,
-      "rondasComDraw": 120,
-      "torneiosJogados": 98,
-      "torneiosComDraw": 93,
+      "rondasJogadas": 134,
+      "rondasComDraw": 121,
+      "torneiosJogados": 99,
+      "torneiosComDraw": 94,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "192-10024",
+          "nome": "PJA Torre Masters",
+          "data": "2026-09-05",
+          "rondas": 2
+        },
         {
           "torneioId": "007-11057",
           "nome": "8º Torneio CGSS OM NOS 2026",
@@ -639,6 +645,40 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90074",
+      "torneioNome": "XIII Torneio - Vinhos Barbeito Madeira / CGSS 2026",
+      "data": "2026-09-12",
+      "ronda": 1,
+      "teeTime": "09:10",
+      "startHole": 10,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Carlos Gouveia",
+          "fed": "2390",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Dário Reis",
+          "fed": "43657",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Yolanda Sixto",
+          "fed": "55957",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "192-10024",

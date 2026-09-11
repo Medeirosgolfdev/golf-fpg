@@ -111,7 +111,10 @@ jobs:
                 if (!st) { console.error("aviso: " + cc + "/" + tc + " sem stub em pull-torneios — saltado"); continue; }
                 const base = maxReal.get(cc) || 0;
                 if (!base) { console.error("aviso: " + cc + " sem tcode real conhecido — saltado"); continue; }
-                out.push([cc, tc, file.split("/").pop(), st.idx, base - 6, base + 25, st.rounds, adopt].join(":"));
+                // tcodeReal: o clube já divulgou o link da classificação
+                // (add-cgss-draw.js --tcode-real) → vai direito a ele.
+                const real = /^\d{4,5}$/.test(String(t.tcodeReal || "")) ? String(t.tcodeReal) : "";
+                out.push([cc, tc, file.split("/").pop(), st.idx, base - 6, base + 25, st.rounds, adopt, real].join(":"));
               }
             }
             console.log(out.join(" "));
@@ -144,12 +147,13 @@ jobs:
           UPDATED=0
           FAILED=0
           for SPEC in ${{ steps.pending.outputs.list }}; do
-            IFS=':' read -r CC TC DFILE PULL PF PT MINR ADOPT <<< "$SPEC"
+            IFS=':' read -r CC TC DFILE PULL PF PT MINR ADOPT REAL <<< "$SPEC"
             ARGS="--placeholder $TC --ccode $CC --draws-file $DFILE --pull $PULL"
             ARGS="$ARGS --probe-from $PF --probe-to $PT --min-rounds $MINR"
             [ "$ADOPT" = "1" ] && ARGS="$ARGS --adopt-name"
             if [ -n "${{ github.event.inputs.search }}" ]; then ARGS="$ARGS --search \"${{ github.event.inputs.search }}\""; fi
-            if [ -n "${{ github.event.inputs.tcode }}" ]; then ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"; fi
+            if [ -n "${{ github.event.inputs.tcode }}" ]; then ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"
+            elif [ -n "$REAL" ]; then ARGS="$ARGS --tcode $REAL"; fi
             echo "── $CC/$TC ──  ($ARGS)"
             eval node scripts/update-cgss-draw-results.js $ARGS
             CODE=$?
