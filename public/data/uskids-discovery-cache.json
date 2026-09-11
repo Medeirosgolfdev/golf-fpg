@@ -139,7 +139,7 @@
       "date_inicio": "9/12/2026",
       "date_fim": "9/13/2026",
       "rondas": 2,
-      "campo": "Hyatt Hill Country - Lakes, Hyatt Hill Country - Creek, Hyatt Hill Country Golf Club",
+      "campo": "Hyatt Hill Country - Lakes, Hyatt Hill Country - Creek",
       "fee_18": "265.00",
       "tour": "State Invitationals Tour",
       "type": 7
@@ -882,6 +882,17 @@
       "type": 6
     },
     {
+      "t": 23701,
+      "name": "Club Campestre de Aguascalientes (Tour Championship)",
+      "date_inicio": "11/29/2026",
+      "date_fim": "11/29/2026",
+      "rondas": 1,
+      "campo": "Club Campestre de Aguascalientes",
+      "fee_18": "45.00",
+      "tour": "Aguascalientes (MX) Tour",
+      "type": 6
+    },
+    {
       "t": 23428,
       "name": "2026 Florida - Winter State Invitational",
       "date_inicio": "12/5/2026",
@@ -1003,6 +1014,17 @@
       "type": 6
     },
     {
+      "t": 23695,
+      "name": "NCBA Kenya Invitational 2026",
+      "date_inicio": "12/20/2026",
+      "date_fim": "12/22/2026",
+      "rondas": 3,
+      "campo": "Karen Country Club",
+      "fee_18": "185.00",
+      "tour": "International Championships Tour",
+      "type": 8
+    },
+    {
       "t": 23670,
       "name": "Holiday Classic 2026",
       "date_inicio": "12/21/2026",
@@ -1058,8 +1080,8 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-10T12:11:45.370Z",
-  "varredura_max_t": 23685,
+  "gerado_em": "2026-09-11T12:16:53.683Z",
+  "varredura_max_t": 23701,
   "varredura": {
     "fim": "fronteira-esgotada",
     "blocos": 26,
@@ -1067,9 +1089,9 @@
     "retomas": 0,
     "intervalos_degradados": 0
   },
-  "fronteira_max_t_visto": 23685,
-  "fronteira_avancou_em": "2026-09-10",
-  "dias_sem_descoberta": 1,
+  "fronteira_max_t_visto": 23701,
+  "fronteira_avancou_em": "2026-09-11",
+  "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-09-09"
+  "ultima_descoberta": "2026-09-11"
 }
