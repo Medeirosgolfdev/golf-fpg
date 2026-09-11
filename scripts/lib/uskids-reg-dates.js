@@ -59,6 +59,14 @@ function extrairAncoras(torneios) {
  * Funde âncoras novas com as guardadas: dedup por pid (fica a data mais antiga,
  * a mais próxima da inscrição real) e força monotonia — o pid cresce com o
  * tempo, portanto a data nunca pode recuar.
+ *
+ * A monotonia corrige-se PARA BAIXO, da direita para a esquerda: o `firstSeen`
+ * é um limite SUPERIOR (a inscrição foi nesse dia ou antes) e nunca inferior.
+ * Uma âncora atrasada é normal — alguém inscrito há semanas que só hoje
+ * aparece num torneio (saiu da lista de espera, mudou de escalão) — e se a
+ * corrigíssemos para cima arrastaria para essa data todas as de pid maior.
+ * Foi o que aconteceu a 11 Set 2026: o pid 1821675 (inscrito ~11 Ago) surgiu
+ * no Black Mountain e 548 âncoras passaram a "hoje".
  */
 function fundirAncoras(antigas, novas) {
   const m = new Map();
@@ -70,8 +78,10 @@ function fundirAncoras(antigas, novas) {
   const arr = [...m.entries()]
     .map(([pid, dia]) => ({ pid, dia }))
     .sort((a, b) => a.pid - b.pid);
-  let max = '';
-  for (const a of arr) { if (a.dia < max) a.dia = max; else max = a.dia; }
+  let min = '9999-12-31';
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i].dia > min) arr[i].dia = min; else min = arr[i].dia;
+  }
   return arr;
 }
 
@@ -124,7 +134,8 @@ function aplicarDatasInscricao(torneios, ancoras) {
         if (dia && desde && dia > desde) { j.regDia = dia; j.regObs = true; obs++; continue; }
         const r = estimarDia(j.pid, ancoras);
         if (!r) { delete j.regDia; delete j.regObs; sem++; continue; }
-        j.regDia = r.dia; j.regObs = false;
+        // Já estava inscrito quando o vimos: a estimativa nunca passa do firstSeen.
+        j.regDia = dia && r.dia > dia ? dia : r.dia; j.regObs = false;
         est++; if (r.fora) fora++;
       }
   }

@@ -42,16 +42,25 @@ describe('fundirAncoras', () => {
       [{ pid: 10, dia: '2026-06-01' }],
     )).toEqual([{ pid: 10, dia: '2026-06-01' }]);
   });
-  it('força monotonia (a data nunca recua com o pid)', () => {
+  it('força monotonia corrigindo para baixo (firstSeen é limite superior)', () => {
     expect(fundirAncoras([], [
-      { pid: 10, dia: '2026-06-10' },
-      { pid: 20, dia: '2026-06-01' },   // ruído: recua
+      { pid: 10, dia: '2026-06-10' },   // visto tarde: pid 20 prova que foi antes
+      { pid: 20, dia: '2026-06-01' },
       { pid: 30, dia: '2026-06-20' },
     ])).toEqual([
-      { pid: 10, dia: '2026-06-10' },
-      { pid: 20, dia: '2026-06-10' },
+      { pid: 10, dia: '2026-06-01' },
+      { pid: 20, dia: '2026-06-01' },
       { pid: 30, dia: '2026-06-20' },
     ]);
+  });
+  it('uma âncora atrasada não arrasta as seguintes (caso 11 Set 2026)', () => {
+    const r = fundirAncoras([], [
+      { pid: 1821574, dia: '2026-08-11' },
+      { pid: 1821675, dia: '2026-09-11' },   // inscrito em Agosto, só visto hoje
+      { pid: 1834744, dia: '2026-08-20' },
+      { pid: 1849704, dia: '2026-09-09' },
+    ]);
+    expect(r.map(a => a.dia)).toEqual(['2026-08-11', '2026-08-20', '2026-08-20', '2026-09-09']);
   });
 });
 
@@ -82,7 +91,7 @@ describe('aplicarDatasInscricao', () => {
   ];
   it('marca observado quem apareceu depois do arranque e estima o resto', () => {
     const ts = [torn(1, [
-      jog('bulk', 1500, '2026-05-20T09:00:00Z'),
+      jog('bulk', 1500, '2026-06-07T09:00:00Z'),
       jog('novo', 1800, '2026-06-08T09:00:00Z'),
     ])];
     const r = aplicarDatasInscricao(ts, anc);
@@ -100,6 +109,11 @@ describe('aplicarDatasInscricao', () => {
     const [a, b] = ts[0].escaloes[0].jogadores;
     expect(a).toMatchObject({ regDia: '2026-06-03', regObs: false });
     expect(b).toMatchObject({ regDia: '2026-06-10', regObs: false });
+  });
+  it('a estimativa nunca passa do firstSeen', () => {
+    const ts = [torn(9, [jog('A', 2500, '2026-06-12T09:00:00Z')])];   // extrapolaria 06-16
+    aplicarDatasInscricao(ts, anc);
+    expect(ts[0].escaloes[0].jogadores[0]).toMatchObject({ regDia: '2026-06-12', regObs: false });
   });
   it('sem pid nem âncora útil não inventa data', () => {
     const ts = [torn(9, [{ nome: 'X', firstSeen: '2026-08-23T09:00:00Z' }])];
