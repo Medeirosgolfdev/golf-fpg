@@ -112,7 +112,8 @@ jobs:
                 const base = maxReal.get(cc) || 0;
                 if (!base) { console.error("aviso: " + cc + " sem tcode real conhecido — saltado"); continue; }
                 // tcodeReal: o clube já divulgou o link da classificação
-                // (add-cgss-draw.js --tcode-real) → vai direito a ele.
+                // (add-cgss-draw.js --tcode-real) → tentado PRIMEIRO, mas só
+                // como pista: se os nomes não baterem, sonda a janela.
                 const real = /^\d{4,5}$/.test(String(t.tcodeReal || "")) ? String(t.tcodeReal) : "";
                 out.push([cc, tc, file.split("/").pop(), st.idx, base - 6, base + 25, st.rounds, adopt, real].join(":"));
               }
@@ -153,7 +154,7 @@ jobs:
             [ "$ADOPT" = "1" ] && ARGS="$ARGS --adopt-name"
             if [ -n "${{ github.event.inputs.search }}" ]; then ARGS="$ARGS --search \"${{ github.event.inputs.search }}\""; fi
             if [ -n "${{ github.event.inputs.tcode }}" ]; then ARGS="$ARGS --tcode ${{ github.event.inputs.tcode }}"
-            elif [ -n "$REAL" ]; then ARGS="$ARGS --tcode $REAL"; fi
+            elif [ -n "$REAL" ]; then ARGS="$ARGS --tcode-hint $REAL"; fi
             echo "── $CC/$TC ──  ($ARGS)"
             eval node scripts/update-cgss-draw-results.js $ARGS
             CODE=$?

@@ -38,6 +38,8 @@
  * USO:
  *   node scripts/update-cgss-draw-results.js --placeholder 90073 --search "OM NOS"
  *   node scripts/update-cgss-draw-results.js --placeholder 90073 --tcode 11055   # forçar
+ *   node scripts/update-cgss-draw-results.js --placeholder 90074 --tcode-hint 11064
+ *      (pista: tenta-o primeiro; se os nomes não baterem, sonda a janela)
  *   node scripts/update-cgss-draw-results.js --placeholder 90101 --ccode 192  *        --draws-file pja-draws-manual.json --pull 000 --adopt-name --search "PJA"  *        --probe-from 10024 --probe-to 10040
  *      (o clube 192 vai em 10023 a 2026-09-02 — daí o range; o default 11051+
  *       é o do CGSS e não serve aqui)
@@ -104,15 +106,41 @@ if (!drawEntry) { console.error(`[cgss] ERRO: sem entrada ${CCODE}/${PLACEHOLDER
 const META = { name: drawEntry.name, date: drawEntry.date, campo: drawEntry.campo };
 /** tcode → nome oficial, preenchido pela TournamentsLST (usado com --adopt-name). */
 const OFFICIAL_NAME = new Map();
+/** tcode → data oficial (TournamentsLST). Um candidato de OUTRO dia é
+ * rejeitado mesmo que os nomes batam: medido a 2026-09-11, o RALI (11050,
+ * 01/08) tinha 41 dos 60 nomes do draw do OM NOS (29/08) — os sócios CGSS
+ * repetem-se e o limiar de 50% sozinho aceitava-o. */
+const OFFICIAL_DATE = new Map();
+// 1.ª fonte: os torneios do clube que já temos gravados (a TournamentsLST só
+// traz os ~200 mais recentes do país — o RALI de 01/08 já lá não vinha).
+for (const f of fs.readdirSync(path.dirname(PULL))) {
+  if (!/^pull-torneios\d{3}\.json$/.test(f)) continue;
+  try {
+    for (const t of JSON.parse(fs.readFileSync(path.join(path.dirname(PULL), f), "utf8")).tournaments || []) {
+      if (String(t.ccode) !== CCODE || !/^\d+$/.test(String(t.tcode)) || /^9\d{4}$/.test(String(t.tcode))) continue;
+      const d = String(t.date || "").slice(0, 10);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+        OFFICIAL_DATE.set(String(t.tcode), d);
+        if (t.name) OFFICIAL_NAME.set(String(t.tcode), t.name);
+      }
+    }
+  } catch { /* ficheiro ilegível — fica sem esta fonte */ }
+}
 const drawNames = new Set();
 for (const r of Object.values(drawEntry.draws || {}))
   for (const g of r.groups || []) for (const p of g.players || []) drawNames.add(chaveNome(p.nome));
 const MIN_OVERLAP = parseInt(argVal("--min-overlap") || String(Math.ceil(drawNames.size * 0.5)), 10);
 const MIN_PLAYERS = parseInt(argVal("--min-players") || String(Math.ceil(drawNames.size * 0.6)), 10);
 const candidatesArg = argVal("--tcode");
+/* `--tcode-hint`: o tcode que o clube já divulgou (link da classificação).
+ * É só uma PISTA — vai à frente, mas se os nomes não baterem com o draw a
+ * sondagem continua pela janela toda (o clube pode ter trocado o torneio). */
+const HINT = argVal("--tcode-hint") ? String(argVal("--tcode-hint")) : null;
 let candidates = candidatesArg
   ? [String(candidatesArg)]
   : Array.from({ length: PROBE_TO - PROBE_FROM + 1 }, (_, i) => String(PROBE_FROM + i));
+const hintFirst = (list) => (HINT && !candidatesArg ? [HINT, ...list.filter(t => t !== HINT)] : list);
+candidates = hintFirst(candidates);
 
 console.log(`[cgss] "${META.name}" (${META.date}) · placeholder ${CCODE}/${PLACEHOLDER} · field ${drawNames.size}`);
 console.log(`[cgss] identidade: ≥${MIN_OVERLAP} nomes do draw e ≥${MIN_PLAYERS} jogadores.`);
@@ -496,6 +524,13 @@ function writeAtomic(file, obj) {
   const dgHost = HOSTS.find(h => h.hasTournLST && (h.cookie || h.publico));
   if (dgHost && candidates.length > 1) {
     const recs = await tournLstRecent(dgHost);
+    // As datas de TODOS os torneios recentes do clube (não só os ≥ data do
+    // draw, nem só quando há algum) — é o que recusa os torneios da semana
+    // anterior que caem dentro da janela de sondagem.
+    for (const r of recs) if (r.ccode === CCODE && r.date) {
+      OFFICIAL_DATE.set(String(r.tcode), r.date);
+      if (r.name && !OFFICIAL_NAME.has(String(r.tcode))) OFFICIAL_NAME.set(String(r.tcode), r.name);
+    }
     const hits = recs.filter(r => r.ccode === CCODE && r.date >= META.date);
     hits.sort((a, b) =>
       (a.date === META.date ? 0 : 1) - (b.date === META.date ? 0 : 1) ||
@@ -506,7 +541,7 @@ function writeAtomic(file, obj) {
         if (h.name) OFFICIAL_NAME.set(String(h.tcode), h.name);
       }
       const hitTcodes = hits.map(h => h.tcode);
-      candidates = [...hitTcodes, ...candidates.filter(t => !hitTcodes.includes(t))];
+      candidates = hintFirst([...hitTcodes, ...candidates.filter(t => !hitTcodes.includes(t))]);
     } else {
       console.log(`[cgss] TournamentsLST: nenhum torneio ${CCODE} com data ≥ ${META.date} (normal se ainda não publicado) — sondagem directa.`);
     }
@@ -521,6 +556,12 @@ function writeAtomic(file, obj) {
     // canal seguinte quando este não conseguiu ler nada.
     let vivo = false;
     for (const tcode of candidates) {
+      const dataOficial = OFFICIAL_DATE.get(tcode);
+      if (dataOficial && dataOficial !== META.date) {
+        console.log(`[cgss]   ${CCODE}/${tcode}: "${OFFICIAL_NAME.get(tcode) || "?"}" é de ${dataOficial}, o draw é de ${META.date} — NÃO é este torneio.` +
+          (tcode === HINT ? " ⚠ era o tcode indicado — a procurar nos vizinhos." : ""));
+        continue;
+      }
       await warmup(host, tcode);
       await sleep(100);
       const probe = await fetchClassif(host, tcode, 1, { quiet: true });
@@ -530,7 +571,8 @@ function writeAtomic(file, obj) {
       if (!anyResults(names)) { await sleep(150); continue; }
       const ov = overlap(names);
       if (drawNames.size > 0 && (ov < MIN_OVERLAP || names.length < MIN_PLAYERS)) {
-        console.log(`[cgss]   ${CCODE}/${tcode}: ${names.length} jogadores, ${ov} do field — NÃO é este torneio, ignorado.`);
+        console.log(`[cgss]   ${CCODE}/${tcode}: ${names.length} jogadores, ${ov} do field — NÃO é este torneio, ignorado.` +
+          (tcode === HINT ? " ⚠ era o tcode indicado — a procurar nos vizinhos." : ""));
         await sleep(150);
         continue;
       }
