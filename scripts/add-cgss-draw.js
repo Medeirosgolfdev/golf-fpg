@@ -31,8 +31,8 @@
  *   ... [--dry-run]            # mostra tudo, não grava nada
  *   ... [--tcode-real 11064]   # quando o clube já divulgou o link da
  *                              # classificação: grava `tcodeReal` na entrada e
- *                              # a Action salta a descoberta (vai direita a ele,
- *                              # mantendo a verificação de identidade)
+ *                              # a Action tenta-o PRIMEIRO; se os nomes não
+ *                              # baterem com o draw, sonda os vizinhos
  *
  * Formato do --json: {name, date, campo, modal, groups:[{teeTime, startHole,
  *   players:[{nome, clube|null, hcp, tee|null}]}]}
