@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-10T21:07:42.396Z",
+  "generatedAt": "2026-09-11T11:23:06.790Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -5853,6 +5853,32 @@
       "editionsCount": 16
     },
     {
+      "id": "fpg-pja",
+      "label": "Portuguese Junior Amateur",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-152-10368-20240305-all",
+        "fpg-002-11022-20240317-all",
+        "fpg-189-10097-20240412-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-038-10584-20240914-all",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-038-10651-20250530-all",
+        "fpg-125-10370-20250823-all",
+        "fpg-125-10371-20250824-all",
+        "fpg-192-10013-20250912-all",
+        "fpg-017-10189-20251024-all",
+        "fpg-029-10523-20251122-all",
+        "fpg-192-10024-20260905-all",
+        "fpg-029-10543-20260424-all",
+        "fpg-038-10754-20260626-all"
+      ],
+      "firstDate": "2024-03-05",
+      "lastDate": "2026-09-05",
+      "editionsCount": 16
+    },
+    {
       "id": "fpg-drive-tour",
       "label": "Drive Tour",
       "sourceId": "fpg",
@@ -10443,27 +10469,6 @@
       ],
       "firstDate": "2024-01-24",
       "lastDate": "2026-05-03",
-      "editionsCount": 11
-    },
-    {
-      "id": "fpg-pja",
-      "label": "Portuguese Junior Amateur",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-152-10368-20240305-all",
-        "fpg-002-11022-20240317-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-038-10651-20250530-all",
-        "fpg-125-10370-20250823-all",
-        "fpg-125-10371-20250824-all",
-        "fpg-192-10013-20250912-all",
-        "fpg-017-10189-20251024-all",
-        "fpg-192-10024-20260905-all"
-      ],
-      "firstDate": "2024-03-05",
-      "lastDate": "2026-09-05",
       "editionsCount": 11
     },
     {
