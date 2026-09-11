@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-09-05T21:50:02.780Z",
-  "total": 1209,
+  "scrapedAt": "2026-09-11T22:07:48.157Z",
+  "total": 1210,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -385005,6 +385005,18 @@
       "draws": {}
     },
     {
+      "ccode": "007",
+      "tcode": "90074",
+      "name": "XIII Torneio - Vinhos Barbeito Madeira / CGSS 2026",
+      "date": "2026-09-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10306",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub16",
@@ -385180,6 +385192,7 @@
       "tcode": "10285",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
       "date": "2026-09-13",
+      "campo": "Castro Marim-Guadiana+Atlântico",
       "admissions": {
         "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
         "date": "2026-09-13",
@@ -385282,13 +385295,90 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub10",
+          "date": "2026-09-13",
+          "campo": "Castro Marim-Guadiana+Atlântico",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "10:46",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Alexander Adeoye",
+                  "fed": null,
+                  "clube": "Espiche"
+                },
+                {
+                  "nome": "Nicholas Murtagh",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Mateus Miguel Estevão",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:56",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Afonso Furtado de Oliveira",
+                  "fed": null,
+                  "clube": "Floresta Parque"
+                },
+                {
+                  "nome": "Karol Reiff",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Rafael Ribeiro Crisóstomo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:06",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Luca Everest",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Thiago Gonzalez Bernases",
+                  "fed": null,
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Harry Seabrook",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
       "tcode": "10286",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
       "date": "2026-09-13",
+      "campo": "Castro Marim-Guadiana+Atlântico",
       "admissions": {
         "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
         "date": "2026-09-13",
@@ -385431,13 +385521,124 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub12",
+          "date": "2026-09-13",
+          "campo": "Castro Marim-Guadiana+Atlântico",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 13,
+          "groups": [
+            {
+              "teeTime": "09:56",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Charlie Lora Silva",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Martim Lage Guerreiro",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:06",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Henry McGovern",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Maria Carolina Custodinho",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:16",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Thomas Starreveld",
+                  "fed": null,
+                  "clube": "Assoc. Qta.Lago"
+                },
+                {
+                  "nome": "Poppy Seabrook",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Thea Jensen",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:26",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Francisca Ribeiro Fragoso",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Peter Yao",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Zeyn Lababedi",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:36",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Joe Short",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Gabriel Costa",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
       "tcode": "10287",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
       "date": "2026-09-13",
+      "campo": "Castro Marim-Guadiana+Atlântico",
       "admissions": {
         "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
         "date": "2026-09-13",
@@ -385580,13 +385781,116 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub14",
+          "date": "2026-09-13",
+          "campo": "Castro Marim-Guadiana+Atlântico",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 12,
+          "groups": [
+            {
+              "teeTime": "09:06",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Jasper McLaren",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Vicente Fernandes Fernandes",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Inês Pinheiro",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:16",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Noah Ruane",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Cole Hutchison",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Florence Murtagh",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:26",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Cole Wall",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Finn Gordon",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:36",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "José Silva",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Carlotta Balzer",
+                  "fed": null,
+                  "clube": "Amendoeira",
+                  "tee": "Verdes"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Verdes"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
       "tcode": "10288",
       "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
       "date": "2026-09-13",
+      "campo": "Castro Marim-Guadiana+Atlântico",
       "admissions": {
         "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
         "date": "2026-09-13",
@@ -385649,7 +385953,58 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Reg. Drive Challenge Sul-Castro Marim-Sub18",
+          "date": "2026-09-13",
+          "campo": "Castro Marim-Guadiana+Atlântico",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 5,
+          "groups": [
+            {
+              "teeTime": "07:56",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Luca Passarella Bueno",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Érica Furtado",
+                  "fed": null,
+                  "clube": "Amendoeira",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:06",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Rita Melo",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Yasmin Batista",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Igor Kostyn",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "000",
