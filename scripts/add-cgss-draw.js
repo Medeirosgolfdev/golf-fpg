@@ -43,6 +43,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const { execFileSync } = require("child_process");
+const { MAX_GROUP_SLOTS, oversizedGroups } = require("./cgss-draw-guard");
 
 const REPO = path.resolve(__dirname, "..");
 const DATA = path.join(REPO, "public", "data");
@@ -94,6 +95,7 @@ if (JSON_IN) {
     for (const g of r.groups || []) {
       groups.push({
         teeTime: g.teeTime, startHole: g.startHole,
+        entries: g.entries, // lugares (par = 1) — só para a guarda, não é gravado
         players: (g.players || []).map(p => ({
           nome: p.nome, clube: p.clube ?? null,
           hcp: p.hcp ?? null, tee: p.tee ? String(p.tee).toUpperCase() : null,
@@ -112,6 +114,19 @@ if (!draw.name || !/^\d{4}-\d{2}-\d{2}$/.test(draw.date || "") || !nPlayers) {
   process.exit(1);
 }
 console.log(`[add] "${draw.name}" · ${draw.date} · ${draw.campo || "?"} · ${draw.groups.length} grupos / ${nPlayers} jogadores`);
+
+// Guarda de sanidade (só no --pdf: o --json é transcrito e visto por alguém).
+// Um grupo com mais de 4 lugares é extracção baralhada — a inbox de email
+// publica sem ninguém ver, por isso recusa-se em vez de gravar. (exit 4)
+if (PDF) {
+  const big = oversizedGroups(draw.groups);
+  if (big.length) {
+    console.error(`[add] ERRO: o extractor devolveu ${big.length} grupo(s) com mais de ${MAX_GROUP_SLOTS} lugares — ` +
+      big.map(g => `${g.teeTime} buraco ${g.startHole}: ${g.slots}`).join(" · ") + ".");
+    console.error(`[add] Draw provavelmente baralhado — nada gravado. Transcrever o PDF para JSON e usar --json. (exit 4)`);
+    process.exit(4);
+  }
+}
 
 // Guarda para o modo autónomo (inbox): este fluxo é CGSS/ccode 007 — um draw
 // de outro organizador (ex: Porto Santo/PXO, "Draw Oficial PXO.pdf") tem de

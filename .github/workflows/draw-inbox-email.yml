@@ -9,7 +9,8 @@ name: Draws CGSS por email (inbox cloud)
 #      --check-only liga ao Gmail por IMAP (SÓ-LEITURA — não marca lidos, não
 #      move nada) e vê se há emails novos com PDF de draw ainda não
 #      processados (memória em scripts/draw-mail-processed.json, versionada).
-#   2. Se houver: checkout completo, poppler p/ o extractor de PDF, e o mesmo
+#   2. Se houver: checkout completo, pdfplumber (+ poppler de recurso) p/ o
+#      extractor de PDF, e o mesmo
 #      script processa cada anexo com add-cgss-draw.js --strict-cgss
 #      (placeholder 9xxxx, feds, entrada + stub). Commit + push dos dados E da
 #      memória de processados no MESMO commit (se o push falhar, nada fica
@@ -90,9 +91,17 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Preparar (poppler p/ pdftotext + deps IMAP de novo)
+      # pdfplumber é o motor principal do extract-cgss-draws.py (lê os grupos
+      # pelas coordenadas); o pdftotext fica como recurso.
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.found == '1'
+        with:
+          python-version: '3.12'
+
+      - name: Preparar (pdfplumber + poppler p/ o extractor + deps IMAP de novo)
         if: steps.check.outputs.found == '1'
         run: |
+          python -m pip install --quiet --disable-pip-version-check pdfplumber
           sudo apt-get -yq install poppler-utils > /dev/null
           npm i imapflow mailparser --no-save --no-audit --no-fund
 
