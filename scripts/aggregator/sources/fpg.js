@@ -174,7 +174,14 @@ async function load(opts) {
     if (!RELEVANT.test(name)) continue;
     // Excluir escalões adultos (Sub-20+, Absoluto, Sénior)
     if (ADULT_ESCALAO.test(escalao)) continue;
-    if (ADULT_ESCALAO.test(name)) continue;
+    // O check por NOME corrige provas que passam o RELEVANT mas são de adultos
+    // (ex: "Campeonato Nacional Mid-Amateur"). MAS "PJA" = Portuguese JUNIOR
+    // Amateur, sempre juvenil — e vários finais chamam-se "PJA Masters"
+    // (029/10543, 038/10754, 189/10097, 038/10584, 029/10523), onde o token
+    // "Master(s)" (categoria sénior) é falso-positivo e tirava-os do kids2.
+    // Isentar PJA do check por nome; o check por escalão acima é a rede de
+    // segurança para um eventual "PJA" com escalão adulto (não existe hoje).
+    if (ADULT_ESCALAO.test(name) && !/\bPJA\b/i.test(name)) continue;
     const tourn = normalizeTournament(t, "pull", playerMap);
     if (tourn) tournaments.push(tourn);
   }
