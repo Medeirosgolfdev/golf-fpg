@@ -2,28 +2,6 @@
   "ultimo_t": 22242,
   "torneios": [
     {
-      "t": 22396,
-      "name": "2026 Oregon State Invitational",
-      "date_inicio": "8/12/2026",
-      "date_fim": "8/13/2026",
-      "rondas": 2,
-      "campo": "Sunriver Resort (Meadows)",
-      "fee_18": "450.00",
-      "tour": "State Invitationals Tour",
-      "type": 7
-    },
-    {
-      "t": 22936,
-      "name": "Royal Blue Golf Club at Baha Mar (Tour Championship)",
-      "date_inicio": "8/12/2026",
-      "date_fim": "8/12/2026",
-      "rondas": 1,
-      "campo": "Royal Blue Golf Club at Baha Mar",
-      "fee_18": "97.00",
-      "tour": "Nassau (BS) Tour",
-      "type": 6
-    },
-    {
       "t": 22243,
       "name": "Venice Open 2026",
       "date_inicio": "8/13/2026",
@@ -1080,18 +1058,18 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-11T12:16:53.683Z",
+  "gerado_em": "2026-09-12T11:40:42.008Z",
   "varredura_max_t": 23701,
   "varredura": {
-    "fim": "fronteira-esgotada",
-    "blocos": 26,
-    "sondas": 74,
+    "fim": "rede-degradada",
+    "blocos": 2,
+    "sondas": 0,
     "retomas": 0,
-    "intervalos_degradados": 0
+    "intervalos_degradados": 3
   },
   "fronteira_max_t_visto": 23701,
   "fronteira_avancou_em": "2026-09-11",
-  "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 0,
+  "dias_sem_descoberta": 1,
+  "dias_sem_avanco": 1,
   "ultima_descoberta": "2026-09-11"
 }
