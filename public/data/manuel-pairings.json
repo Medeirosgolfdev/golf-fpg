@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-09-11T22:07:50.743Z",
+  "geradoEm": "2026-09-12T15:30:54.591Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -647,21 +647,27 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-90074",
+      "torneioId": "007-11064",
       "torneioNome": "XIII Torneio - Vinhos Barbeito Madeira / CGSS 2026",
       "data": "2026-09-12",
       "ronda": 1,
       "teeTime": "09:00",
       "startHole": 17,
       "campo": "Santo da Serra - Machico-Desertas",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 80,
+        "toPar": 8
+      },
       "companheiros": [
         {
           "nome": "Ricardo Camacho",
           "fed": "41799",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 81,
+            "toPar": 9
+          }
         },
         {
           "nome": "João Pedro Lopes",
@@ -675,7 +681,10 @@
           "fed": "39874",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 95,
+            "toPar": 23
+          }
         }
       ]
     },
