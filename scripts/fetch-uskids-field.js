@@ -12,7 +12,11 @@ const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const { extrairAncoras, fundirAncoras, aplicarDatasInscricao } = require('./lib/uskids-reg-dates');
-const { criarPlano, proximoIntervalo, aplicarResultado } = require('./lib/uskids-scan-plan');
+const { criarPlano, proximoIntervalo, aplicarResultado, MARGEM_DENSA } = require('./lib/uskids-scan-plan');
+const {
+  ehRateLimit, erroRateLimit, deveVarrerProfundo: decidirProfunda,
+  deveRecusarEscrita, PERDA_MAXIMA, DIAS_VARREDURA_PROFUNDA,
+} = require('./lib/uskids-rate-guard');
 
 // ── Filtros de descoberta ─────────────────────
 // A classificação (tipo do GetMeta + palavras-chave + excepções por tcode)
@@ -33,8 +37,6 @@ const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase()
 const SCAN_CONCURRENCY   = 5;    // pedidos GetMeta em paralelo
 const DELAY_SCAN   = 60;
 const DELAY_FETCH  = 400;
-// Perda máxima de inscritos tolerada face ao ficheiro em disco (ver guarda na escrita).
-const PERDA_MAXIMA = 0.30;
 // Redescobrir se cache tiver mais de 3 dias
 const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corrida
 
@@ -45,7 +47,10 @@ const ANCHORS    = path.join(DIR, 'uskids-pid-anchors.json');
 
 const IFRAME_URL = (t, ax = 1129) =>
   `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${ax}&t=${t}`;
-const API = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
+// ⚠ `USKIDS_API_BASE` existe para os testes poderem exercitar a varredura
+// contra um servidor local (ex: a simular rate limit) sem tocar no
+// signupanytime. Em produção nunca está definida.
+const API = process.env.USKIDS_API_BASE || 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
 const UA  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 
 // ─────────────────────────────────────────────
@@ -53,6 +58,15 @@ const UA  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML
 // ─────────────────────────────────────────────
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+const hojeISO = () => new Date().toISOString().slice(0, 10);
+
+/** Liga a decisão (pura, em lib/uskids-rate-guard.js) ao relógio e ao CLI. */
+const deveVarrerProfundo = (cache) => decidirProfunda({
+  ultima: cache.ultima_varredura_profunda,
+  hoje: hojeISO(),
+  forcar: process.argv.includes('--full-scan'),
+});
 
 function parsearDataISO(s) {
   if (!s) return null;
@@ -202,19 +216,6 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
 /** Nº de torneios que bateram no rate limit nesta corrida (ver guardaRateLimit). */
 let rateLimitHits = 0;
 
-/** O signupanytime responde ao rate limit com "Too many requests" em TEXTO —
- *  não com 429. Passar esse corpo ao JSON.parse dá um erro de sintaxe que se
- *  lê como "torneio sem dados"; é preciso reconhecê-lo pelo que é. */
-function ehRateLimit(txt) {
-  return /too many requests/i.test(String(txt || '').slice(0, 200));
-}
-
-function erroRateLimit() {
-  const e = new Error('rate limit (Too many requests)');
-  e.rateLimited = true;
-  return e;
-}
-
 function esperarGetMeta(page, t, ms = 12000) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timeout')), ms);
@@ -266,7 +267,11 @@ async function metaTournament(t) {
       const txt = (await r.text()).trim();
       // ⚠ "Too many requests" NÃO é um tcode inexistente. Tratá-lo como tal
       // fazia a varredura ler a zona sob rate limit como fronteira esgotada.
-      if (ehRateLimit(txt)) throw erroRateLimit();
+      // ⚠ Uma recusa NÃO se repete. As 3 tentativas existem para rede
+      // instável; contra um rate limit multiplicam por 3 os pedidos contra um
+      // servidor que já disse não — com concorrência 5 eram 15 pedidos só
+      // para o bloco perceber que estava travado.
+      if (ehRateLimit(txt)) { rateLimitHits++; return ERRO; }
       if (!txt) return null;                    // não existe
       let j;
       try { j = JSON.parse(txt); } catch { return null; }   // lixo ⇒ não existe
@@ -296,8 +301,16 @@ async function varrerIntervalo(de, ate, registar) {
   const achados = [];
   let erros = 0;
   let i = 0;
+  const antes = rateLimitHits;
+  let travado = false;
   async function worker() {
     while (i < ts.length) {
+      // ⚠ Assim que a fonte recusa, PARAR. Sem isto cada tcode ainda gastava
+      // 3 tentativas e o intervalo inteiro ia ao ar contra um servidor que já
+      // tinha dito não — a 12-09 foram 3 intervalos (540 tcodes) até o
+      // disjuntor disparar. Continuar a insistir é o que faz um limite
+      // temporário virar bloqueio.
+      if (rateLimitHits > antes) { travado = true; return; }
       const t  = ts[i++];
       const tn = await metaTournament(t);
       if (tn === ERRO) erros++;
@@ -309,7 +322,7 @@ async function varrerIntervalo(de, ate, registar) {
   achados.sort((a, b) => a[0] - b[0]);
   let ultimoT = 0;
   for (const [t, tn] of achados) { ultimoT = t; registar(t, tn); }
-  return { total: achados.length, ultimoT, erros };
+  return { total: achados.length, ultimoT, erros, travado };
 }
 
 /** Fracção de tcodes que não responderam a partir da qual o intervalo não é de
@@ -320,6 +333,9 @@ const ERRO_TOLERADO = 0.25;
 async function varrerIntervaloFiavel(de, ate, registar) {
   let r = await varrerIntervalo(de, ate, registar);
   const n = ate - de + 1;
+  // Um intervalo travado pelo rate limit não se repete: a repetição é para
+  // rede instável, e aqui a fonte respondeu — disse que não.
+  if (r.travado) return r;
   if (r.total === 0 && r.erros > n * ERRO_TOLERADO) {
     console.warn(`   ⚠️  t=${de}…${ate}: ${r.erros}/${n} sem resposta — a repetir`);
     await sleep(2000);
@@ -387,10 +403,26 @@ async function descobrirTorneios() {
   // tcodes de outras contas (21610→22243 = 632 vazios): era aí que a varredura
   // antiga morria ao fim de 100 misses e nunca mais descobria nada (último
   // torneio novo: 6 Jul 2026).
-  const tStartA = (cache.ultimo_t || 0) + 1;
-  if (tStartA <= tKnownMax) {
-    console.log(`   ↻ Passagem A: t=${tStartA}…${tKnownMax} (zona conhecida, varrida por inteiro)`);
-    await varrerIntervalo(tStartA, tKnownMax, registar);
+  // ⚠ CADÊNCIA (2026-09-12): a Passagem A e as sondas de salto correm só de
+  // DIAS_VARREDURA_PROFUNDA em DIAS_VARREDURA_PROFUNDA dias. Medido: a corrida
+  // completa custa ~4.400 GetMeta/dia (A 1459 + densa 1500 + sondas 1480) para
+  // descobrir tipicamente zero a dois torneios — e foi esse volume diário
+  // contra uma API pública que acabou por bater no rate limit deles.
+  // A rede que DESCOBRE é a densa, e essa mantém-se diária. As outras duas são
+  // seguros contra casos raros (um torneio criado dentro da zona conhecida; um
+  // buraco maior que a margem densa) que não aparecem de um dia para o outro.
+  // Semanais, o custo médio cai para ~1.920/dia e o atraso máximo é 7 dias —
+  // muito dentro dos limiares do canário (30d sem descobertas, 21d sem avanço).
+  const profunda = deveVarrerProfundo(cache);
+  if (profunda.correr) {
+    const tStartA = (cache.ultimo_t || 0) + 1;
+    if (tStartA <= tKnownMax) {
+      console.log(`   ↻ Passagem A: t=${tStartA}…${tKnownMax} (zona conhecida, varrida por inteiro) — ${profunda.porque}`);
+      await varrerIntervalo(tStartA, tKnownMax, registar);
+    }
+    cache.ultima_varredura_profunda = hojeISO();
+  } else {
+    console.log(`   ⏭  Passagem A e sondas saltadas (varredura profunda foi há ${profunda.dias}d; corre a cada ${DIAS_VARREDURA_PROFUNDA}d — usar --full-scan para forçar)`);
   }
 
   // ── Passagem B: fronteira (acima do maior t conhecido) ───────────────────
@@ -398,19 +430,29 @@ async function descobrirTorneios() {
   // densa segue o último tcode vivo (margem dinâmica) e, se um buraco absurdo a
   // interromper, as sondas de salto procuram vida muito mais à frente e a densa
   // retoma. Só termina quando as sondas esgotam o alcance sem achar nada.
-  let plano = criarPlano({ inicio: tKnownMax + 1 });
-  console.log(`   ⏩ Passagem B: t=${tKnownMax + 1}… (densa até últimoVivo+${plano.margemDensa}, sondas até +${plano.tectoSonda})`);
+  // Sem varredura profunda, o tecto das sondas iguala o fim da densa: o plano
+  // faz a densa e termina. `tectoSonda: 0` não serve — poria fimSondas abaixo
+  // do cursor logo no arranque e a densa nem corria.
+  let plano = criarPlano({ inicio: tKnownMax + 1,
+                           ...(profunda.correr ? {} : { tectoSonda: MARGEM_DENSA }) });
+  console.log(`   ⏩ Passagem B: t=${tKnownMax + 1}… (densa até últimoVivo+${plano.margemDensa}` +
+              `${profunda.correr ? `, sondas até +${plano.tectoSonda}` : ', sem sondas hoje'})`);
   // Disjuntor: com o servidor em baixo cada intervalo custa minutos e a
   // varredura comeria a corrida inteira (incl. a Fase 2, que é o que alimenta a
   // página). Ao fim de DEGRADADOS_SEGUIDOS abandona-se a fronteira — mas o
   // motivo fica 'rede-degradada', NÃO 'fronteira-esgotada': é uma corrida
   // falhada, não uma fronteira que acabou, e o canário grita por causa disso.
   const DEGRADADOS_SEGUIDOS = 3;
-  let degradados = 0, seguidos = 0, abortou = false;
+  let degradados = 0, seguidos = 0, abortou = false, travadoPorLimite = false;
   for (;;) {
     const iv = proximoIntervalo(plano);
     if (!iv) break;
     const r = await varrerIntervaloFiavel(iv.de, iv.ate, registar);
+    if (r.travado) {
+      console.warn('   ⛔ A fonte recusou (rate limit) — fronteira abandonada nesta corrida');
+      travadoPorLimite = true;
+      break;
+    }
     if (r.degradado) { degradados++; seguidos++; } else seguidos = 0;
     if (seguidos >= DEGRADADOS_SEGUIDOS) {
       console.warn(`   ⛔ ${seguidos} intervalos seguidos sem resposta — fronteira abandonada nesta corrida`);
@@ -421,9 +463,10 @@ async function descobrirTorneios() {
   }
   cache.varredura_max_t = Math.max(tKnownMax, plano.ultimoVivo);
   cache.varredura = {
-    fim: abortou ? 'rede-degradada' : plano.motivo,
+    fim: travadoPorLimite ? 'rate-limit' : abortou ? 'rede-degradada' : plano.motivo,
     blocos: plano.blocosDensos, sondas: plano.sondas,
     retomas: plano.retomas, intervalos_degradados: degradados,
+    profunda: profunda.correr,
   };
   console.log(`   📡 Fronteira: último tcode vivo t=${cache.varredura_max_t}` +
               ` (${plano.blocosDensos} blocos, ${plano.sondas} sondas` +
@@ -670,41 +713,24 @@ async function main() {
     // Mesma política do scrape-federados-node.js e do discover-fcg-scope.js:
     // um run degradado nunca grava por cima de um bom. Sem ela, o rate limit
     // de 2026-09-12 apagou 2018 inscritos e o workflow ficou verde no commit.
-    // ⚠ A comparação é só sobre os torneios que estão nos DOIS lados. Um
-    // torneio que já se jogou sai do radar e leva os inscritos com ele: a
-    // 2026-08-01 um único evento a sair fez o total cair 39% (1500→916) sendo
-    // o run perfeitamente bom — nos torneios comuns os inscritos até subiram.
-    // Medir o total puro recusaria esse dia e congelaria o ficheiro em silêncio.
-    const porTorneio = (ts) => {
-      const m = new Map();
-      for (const t of (ts || [])) {
-        let jog = 0, esc = 0;
-        for (const e of (t.escaloes || [])) { esc++; jog += (e.jogadores || []).length; }
-        m.set(t.t, jog);
-        m.totalEsc = (m.totalEsc || 0) + esc;
-      }
-      return m;
-    };
-    const mNovo = porTorneio(resultados);
-    let mAntigo = new Map();
-    try { mAntigo = porTorneio(JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios); } catch {}
-
-    let antesComum = 0, agoraComum = 0;
-    for (const [t, jog] of mNovo) if (mAntigo.has(t)) { antesComum += mAntigo.get(t); agoraComum += jog; }
-
-    const force = process.argv.includes('--force');
-    if (antesComum > 0 && !force) {
-      const perda = 1 - agoraComum / antesComum;
-      if (perda > PERDA_MAXIMA) {
-        console.error(`\n❌ Recusado: nos torneios que já seguíamos o build novo tem ${agoraComum} ` +
-                      `inscritos contra ${antesComum} em disco (perda de ${Math.round(perda * 100)}%).`);
-        if (rateLimitHits) console.error(`   ${rateLimitHits} torneios bateram no rate limit do signupanytime.`);
-        console.error('   Ficheiro anterior preservado. Usar --force para gravar mesmo assim.');
-        process.exitCode = 2;
-        return;
-      }
+    // A comparação é só sobre os torneios que estão nos DOIS lados — ver o
+    // porquê (e o caso real de 2026-08-01) em lib/uskids-rate-guard.js.
+    let anteriores = [];
+    try { anteriores = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios || []; } catch {}
+    const g = deveRecusarEscrita(anteriores, resultados, {
+      max: PERDA_MAXIMA, forcar: process.argv.includes('--force'),
+    });
+    if (g.recusar) {
+      console.error(`\n❌ Recusado: nos torneios que já seguíamos o build novo tem ${g.agora} ` +
+                    `inscritos contra ${g.antes} em disco (perda de ${Math.round(g.perda * 100)}%).`);
+      if (rateLimitHits) console.error(`   ${rateLimitHits} pedidos bateram no rate limit do signupanytime.`);
+      console.error('   Ficheiro anterior preservado. Usar --force para gravar mesmo assim.');
+      process.exitCode = 2;
+      return;
     }
-    const novo = { esc: mNovo.totalEsc || 0, jog: [...mNovo.values()].reduce((a, b) => a + b, 0) };
+    let escNovo = 0, jogNovo = 0;
+    for (const t of resultados) for (const e of (t.escaloes || [])) { escNovo++; jogNovo += (e.jogadores || []).length; }
+    const novo = { esc: escNovo, jog: jogNovo };
 
     fs.writeFileSync(OUTPUT, JSON.stringify({
       gerado_em: new Date().toISOString(),
@@ -730,4 +756,12 @@ async function main() {
 }
 
 
-main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+if (require.main === module) {
+  main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+}
+
+// Exportado para os testes exercitarem o código REAL (não uma cópia).
+module.exports = {
+  varrerIntervalo, varrerIntervaloFiavel, metaTournament, preservarAnterior,
+  get rateLimitHits() { return rateLimitHits; },
+};

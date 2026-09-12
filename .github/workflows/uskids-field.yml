@@ -78,7 +78,14 @@ jobs:
             const erros = [];
             if (d != null && d > 30) erros.push(`${d} dias sem descobrir um torneio novo`);
             if (a != null && a > 21) erros.push(`${a} dias sem a fronteira de tcodes avançar`);
-            if (c.varredura && c.varredura.fim === "rede-degradada")
+            if (c.varredura && c.varredura.fim === "rate-limit") {
+              // Auto-recuperável: a varredura densa do dia seguinte apanha o
+              // que faltou. Falhar aqui tocaria o alarme por algo que se
+              // resolve sozinho — e um alarme que toca sempre deixa de ser
+              // lido. Se persistir, os limiares de 21d/30d acima disparam.
+              console.log("::warning::USKids: o signupanytime aplicou rate limit — varredura truncada nesta corrida.");
+            }
+            else if (c.varredura && c.varredura.fim === "rede-degradada")
               erros.push("a fronteira foi abandonada por falta de resposta do servidor");
             else if (c.varredura && c.varredura.intervalos_degradados >= 2)
               erros.push(`${c.varredura.intervalos_degradados} intervalos sem resposta (rede degradada)`);

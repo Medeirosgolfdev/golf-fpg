@@ -574,6 +574,7 @@ Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos dev
 | `lib/cookies.js` | `loadCookieHeader({envVars, file, label})` | as cópias de `loadCookies()` (env primeiro, ficheiro local depois) |
 | `lib/fpg-http.js` | `makeFpgPost({baseUrl, cookie, ua, origin, referer, extraHeaders, retries})`, `FpgHttpError`, `sleep` | as cópias de `dgPost()`/`fpgPost()` — retry em HTTP 500 + detecção `Result:"ERROR"` |
 | `lib/atomic-write.js` | `writeJsonAtomic(filePath, data)` | escritas directas com `writeFileSync` (tmp+rename, nunca deixa JSON truncado) |
+| `lib/uskids-rate-guard.js` | `ehRateLimit`, `deveVarrerProfundo`, `perdaNosComuns`, `deveRecusarEscrita` | as defesas do monitor USKids contra uma fonte que recusa (17 testes) |
 
 Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg-admissions-draws-node, fpg-scrape-node, scrape-nacionais-feds-node.
 
@@ -1308,8 +1309,13 @@ MESMA cache para saber que torneios estão em curso — descoberta partida = sem
 resultados também.
 ```bash
 node fetch-uskids-field.js
-node fetch-uskids-field.js --force-discovery   # ignora a cache
+node fetch-uskids-field.js --force-discovery   # ignora a cache de descoberta
+node fetch-uskids-field.js --full-scan         # força a varredura profunda (Passagem A + sondas)
+node fetch-uskids-field.js --force             # grava mesmo perdendo >30% dos inscritos
 ```
+
+Exit **0** = gravou · **2** = guarda anti-encolhimento recusou (ficheiro
+anterior intacto, não é erro) · **1** = erro.
 
 ⚠ **A varredura de tcodes tem de ser em DUAS passagens (corrigido 2026-08-23).**
 Os tcodes do signupanytime são sequenciais por criação mas só uma fatia pertence
@@ -1324,7 +1330,8 @@ desde 6 de Julho** (o site ficou preso em Outubro). Por cima disso havia um
   paragem antecipada** (é onde estão os buracos gigantes).
 - **Passagem B** — acima do maior conhecido: segue o plano de
   `scripts/lib/uskids-scan-plan.js` (9 testes), que **nunca desiste
-  definitivamente num buraco**. Duas redes: (1) varredura **densa com margem
+  definitivamente num buraco**. ⚠ Desde 2026-09-12 as **sondas** (e a Passagem
+  A) correm só 1×/semana — ver "O volume" mais abaixo; a densa continua diária. Duas redes: (1) varredura **densa com margem
   dinâmica** — varre tudo até `últimoVivo + 1500`, e como a margem conta a
   partir do último tcode VIVO, cada torneio encontrado empurra o fim para a
   frente (enquanto houver vida a varredura não acaba); (2) **sondas de salto** —
@@ -1450,10 +1457,73 @@ tipicamente zero a dois torneios**, e não tem backoff nenhum. Com esse volume
 diário contra uma API pública de terceiros, bater num limite era questão de
 tempo: o seguro contra "a varredura pára" foi pago em pedidos.
 
-O que este fix garante é que **da próxima vez não custa dados** — o que não
-resolve é o volume. Se voltar a repetir-se com frequência, o caminho é reduzir
-a Fase 1 (sondas mais espaçadas, ou varredura densa só de 2 em 2 dias), não
-levantar a guarda.
+### O volume — resolvido em duas frentes (2026-09-12)
+
+**1. Cadência: a varredura CARA passou a semanal.** Medido o custo real da
+Fase 1, por dia:
+
+| Parte | Pedidos | O que faz | Cadência |
+|---|---|---|---|
+| Passagem A (âncora → topo conhecido) | 1.459 | apanha um torneio criado DENTRO da zona já varrida | **semanal** |
+| Densa (até `últimoVivo+1500`) | 1.500 | **é esta que descobre**; a margem é dinâmica, cada achado empurra o fim | **diária** |
+| Sondas de salto (até +20.000) | 1.480 | seguro contra um buraco maior que a margem densa | **semanal** |
+| | **4.439** | | |
+
+Média semanal: **4.439 → 1.920/dia (−57%)**, sem tocar na rede que descobre.
+`DIAS_VARREDURA_PROFUNDA = 7`; `--full-scan` força; a cache guarda
+`ultima_varredura_profunda` e a `varredura` do diagnóstico passa a trazer
+`profunda: true|false` (num dia leve `sondas: 0` é normal, não avaria).
+
+Verificado com o plano real (`inicio` = 23702, fronteira morta):
+
+| cenário | leve (diária) | profunda (semanal) |
+|---|---|---|
+| torneios a +300 e +800 | **acha 2** | acha 2 |
+| cadeia de 6 (+300 … +5300) | **acha 6** (a margem dinâmica segue-os) | acha 6 |
+| buraco de +9.000 | acha 0 | **acha** |
+
+Ou seja: o único caso que a cadência atrasa é o buraco maior que 1.500, e no
+máximo 7 dias — muito dentro dos limiares do canário (30d sem descobertas,
+21d sem a fronteira avançar).
+
+**2. Parar quando a fonte diz não.** A 12-09 o scraper continuou a martelar
+muito depois da primeira recusa: o disjuntor só olhava a intervalos inteiros,
+e cada tcode ainda gastava **3 tentativas** (as que existem para rede
+instável). Com concorrência 5 isso são 15 pedidos só para um bloco perceber
+que está travado, e foram ~540 tcodes até desistir. Agora:
+
+- `metaTournament` devolve `ERRO` **à primeira** num rate limit — uma recusa
+  não se repete;
+- `varrerIntervalo` verifica `rateLimitHits` entre tcodes e **abandona o
+  bloco** (devolve `travado: true`);
+- `varrerIntervaloFiavel` **não repete** um intervalo travado;
+- a Passagem B pára com `fim: 'rate-limit'`.
+
+Medido contra um servidor local que só responde `Too many requests`: um bloco
+de 60 tcodes custa **≤10 pedidos** (só os que já iam em voo), contra 15+ antes
+só para o detectar.
+
+⚠ **`fim: 'rate-limit'` avisa mas NÃO falha o canário** — é auto-recuperável
+(a densa do dia seguinte apanha o que faltou) e um alarme que toca por algo
+que se resolve sozinho deixa de ser lido. Se persistir, os limiares de 21d/30d
+disparam por si.
+
+### Onde vive, e o que está testado
+
+A lógica pura saiu do script para **`scripts/lib/uskids-rate-guard.js`**
+(`ehRateLimit` · `deveVarrerProfundo` · `perdaNosComuns` / `deveRecusarEscrita`),
+com **17 testes** em `uskids-rate-guard.test.js` — incluindo os DOIS casos
+reais do histórico (01-08 legítimo → grava; 12-09 → recusa).
+
+Mais **3 testes de integração** em `uskids-scan-abort.test.js` que exercitam a
+varredura **REAL** (o `fetch-uskids-field.js` passou a exportar quando é
+`require`d) contra um HTTP local a recusar — nunca tocam no signupanytime. É
+a env var `USKIDS_API_BASE` que aponta a API para o servidor de teste; em
+produção nunca está definida.
+
+⚠ Esses testes de integração valem o que custaram: **apanharam um defeito na
+primeira versão desta correcção** — o corte no `varrerIntervalo` não servia de
+nada enquanto o `metaTournament` continuasse a fazer 3 tentativas por tcode.
 
 ⚠ **É a mesma classe de avaria do FCG** (`discover-fcg-scope.js`, 2026-08-17) e
 do `build-course-players.js`: uma fonte que responde **200 com lixo** vale mais
