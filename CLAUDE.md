@@ -1383,16 +1383,23 @@ O signupanytime aplicou **rate limit** e responde-lhe com `Too many requests`
 em **texto, HTTP 200** — não com 429. Três defeitos em cadeia:
 
 1. **O corpo ia direito ao `JSON.parse`.** O erro de sintaxe lia-se como
-   "torneio sem dados", não como "a fonte recusou-nos". Na Fase 1 era pior:
-   o `metaTournament` devolvia `null` = *tcode não existe*, exactamente a
-   confusão que o resto daquela função documenta ter de evitar.
+   "torneio sem dados", não como "a fonte recusou-nos".
 2. **Cada falha produzia uma entrada VAZIA** e a escrita final gravava
    `resultados` **do zero** — sem merge nem guarda. Um run 100% falhado
-   apagava tudo.
+   apagava tudo. **É este o defeito que custou os dados**, e é independente
+   da causa: qualquer falha geral da fonte teria feito o mesmo.
 3. **O canário não protege os dados.** Corre DEPOIS do commit (de propósito,
    para o alarme nunca custar dados) e só olha para a varredura: disparou a
    dizer "rede degradada", e o email dizia `All jobs have failed` — mas o que
    se tinha perdido já estava commitado e no ar.
+
+⚠ **A Fase 1 portou-se bem — a correcção lá é preventiva.** O log mostra
+`60/60 sem resposta` em três intervalos seguidos, e esse contador só sobe com
+o sentinela `ERRO` (o `catch`): na varredura o servidor recusou com **status de
+erro**, não com 200+texto, e o disjuntor fez exactamente o que devia. A guarda
+`ehRateLimit` no `metaTournament` cobre a *outra* variante (200 + corpo de
+texto), que ali seria lida como "tcode não existe" — mas não foi o que se
+passou a 12-09; não ler o log ao contrário numa próxima vez.
 
 Corrigido em três camadas, pela ordem em que travam a avaria:
 
@@ -1400,12 +1407,53 @@ Corrigido em três camadas, pela ordem em que travam a avaria:
 |---|---|
 | `ehRateLimit()` | reconhece o corpo pelo que é, nas duas fases (`esperarGetMeta` e `metaTournament`); na Fase 1 passa a ser falha de rede, nunca "tcode inexistente" |
 | `preservarAnterior()` | um torneio que falha devolve o **registo anterior** marcado `stale`/`stale_desde`, em vez de uma entrada vazia. Só fica vazio quem nunca teve dados |
-| **Guarda anti-encolhimento** | recusa gravar se perder **>30%** dos inscritos face ao ficheiro em disco (`PERDA_MAXIMA`), salvo `--force`. **Exit 2**, ficheiro anterior intacto |
+| **Guarda anti-encolhimento** | recusa gravar se perder **>30%** dos inscritos (`PERDA_MAXIMA`), salvo `--force`. **Exit 2**, ficheiro anterior intacto |
+
+⚠ **A guarda compara só os torneios que estão nos DOIS lados** — não o total.
+Um torneio que se joga sai do radar e leva os inscritos com ele: a **2026-08-01**
+um único evento a sair fez o total cair **39% (1500→916)** num run perfeitamente
+bom — nos torneios comuns os inscritos até subiram (913→916). Sobre o total, a
+guarda teria recusado esse dia e **congelado o ficheiro em silêncio** (o
+workflow fica verde com um `::warning::`), que é a falha que ela existe para
+evitar. Medido sobre os 223 commits do ficheiro desde Março: só há **duas**
+quedas >15% em seis meses — essa, legítima, e a de 12-09. Na métrica dos
+comuns dão **0%** e **100%**.
 
 O `uskids-field.yml` traduz **exit 2 → sucesso com `::warning::`**, e salta o
 commit E o canário nesse run (`steps.field.outputs.degradado`): sem dados novos
 não há nada para commitar, e o canário mediria uma varredura que o rate limit
 já tinha estragado.
+
+### Porquê só agora — e porque volta a acontecer
+
+Medido nos runs e na cache (`varredura` do `uskids-discovery-cache.json`):
+
+| dia | fim da varredura | blocos | sondas | degradados |
+|---|---|---|---|---|
+| 09-09 | fronteira-esgotada | 25 | 74 | 0 |
+| 10-09 | fronteira-esgotada | 26 | 74 | 0 |
+| 11-09 | fronteira-esgotada | 26 | 74 | 0 |
+| **12-09** | **rede-degradada** | **2** | **0** | **3** |
+
+**Não mudámos nada.** O último tcode vivo é o mesmo nos dois dias (23701), a
+Fase 2 tinha os mesmos 87 torneios, e nenhum outro workflow nosso tocava no
+signupanytime naquela janela (o `daily-digest` só arrancou às 11:41, depois).
+A 11-09 a Fase 1 varreu 26 blocos + 74 sondas — **~6.000 GetMeta** — e passou;
+a 12-09 o servidor cortou ao **terceiro intervalo**, ~180. O que mudou foi o
+lado deles. De fora não há como saber se apertaram o limite ou se foi um pico
+de carga.
+
+⚠ **Mas a exposição é nossa, e é por desenho.** A Passagem B "nunca desiste
+definitivamente num buraco" (densa até `últimoVivo+1500` + sondas até +20000) —
+a cura da avaria das 7 semanas — custa **~6.000 pedidos por dia para descobrir
+tipicamente zero a dois torneios**, e não tem backoff nenhum. Com esse volume
+diário contra uma API pública de terceiros, bater num limite era questão de
+tempo: o seguro contra "a varredura pára" foi pago em pedidos.
+
+O que este fix garante é que **da próxima vez não custa dados** — o que não
+resolve é o volume. Se voltar a repetir-se com frequência, o caminho é reduzir
+a Fase 1 (sondas mais espaçadas, ou varredura densa só de 2 em 2 dias), não
+levantar a guarda.
 
 ⚠ **É a mesma classe de avaria do FCG** (`discover-fcg-scope.js`, 2026-08-17) e
 do `build-course-players.js`: uma fonte que responde **200 com lixo** vale mais

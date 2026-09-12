@@ -670,27 +670,41 @@ async function main() {
     // Mesma política do scrape-federados-node.js e do discover-fcg-scope.js:
     // um run degradado nunca grava por cima de um bom. Sem ela, o rate limit
     // de 2026-09-12 apagou 2018 inscritos e o workflow ficou verde no commit.
-    const totais = (ts) => {
-      let esc = 0, jog = 0;
-      for (const t of (ts || [])) for (const e of (t.escaloes || [])) { esc++; jog += (e.jogadores || []).length; }
-      return { esc, jog };
+    // ⚠ A comparação é só sobre os torneios que estão nos DOIS lados. Um
+    // torneio que já se jogou sai do radar e leva os inscritos com ele: a
+    // 2026-08-01 um único evento a sair fez o total cair 39% (1500→916) sendo
+    // o run perfeitamente bom — nos torneios comuns os inscritos até subiram.
+    // Medir o total puro recusaria esse dia e congelaria o ficheiro em silêncio.
+    const porTorneio = (ts) => {
+      const m = new Map();
+      for (const t of (ts || [])) {
+        let jog = 0, esc = 0;
+        for (const e of (t.escaloes || [])) { esc++; jog += (e.jogadores || []).length; }
+        m.set(t.t, jog);
+        m.totalEsc = (m.totalEsc || 0) + esc;
+      }
+      return m;
     };
-    const novo = totais(resultados);
-    let antigo = { esc: 0, jog: 0 };
-    try { antigo = totais(JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios); } catch {}
+    const mNovo = porTorneio(resultados);
+    let mAntigo = new Map();
+    try { mAntigo = porTorneio(JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios); } catch {}
+
+    let antesComum = 0, agoraComum = 0;
+    for (const [t, jog] of mNovo) if (mAntigo.has(t)) { antesComum += mAntigo.get(t); agoraComum += jog; }
 
     const force = process.argv.includes('--force');
-    if (antigo.jog > 0 && !force) {
-      const perda = 1 - novo.jog / antigo.jog;
+    if (antesComum > 0 && !force) {
+      const perda = 1 - agoraComum / antesComum;
       if (perda > PERDA_MAXIMA) {
-        console.error(`\n❌ Recusado: o build novo tem ${novo.jog} inscritos contra ${antigo.jog} ` +
-                      `em disco (perda de ${Math.round(perda * 100)}%).`);
+        console.error(`\n❌ Recusado: nos torneios que já seguíamos o build novo tem ${agoraComum} ` +
+                      `inscritos contra ${antesComum} em disco (perda de ${Math.round(perda * 100)}%).`);
         if (rateLimitHits) console.error(`   ${rateLimitHits} torneios bateram no rate limit do signupanytime.`);
         console.error('   Ficheiro anterior preservado. Usar --force para gravar mesmo assim.');
         process.exitCode = 2;
         return;
       }
     }
+    const novo = { esc: mNovo.totalEsc || 0, jog: [...mNovo.values()].reduce((a, b) => a + b, 0) };
 
     fs.writeFileSync(OUTPUT, JSON.stringify({
       gerado_em: new Date().toISOString(),
