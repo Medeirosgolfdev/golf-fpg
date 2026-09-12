@@ -20,8 +20,23 @@ jobs:
         with: { node-version: '20', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-field.js
+      # Exit 2 = a guarda anti-encolhimento recusou gravar (rate limit do
+      # signupanytime, fonte degradada). Não é erro: o ficheiro bom que já
+      # estava em disco fica intacto e não há nada de novo para commitar.
+      - name: Descoberta + inscritos
+        id: field
+        run: |
+          set +e
+          node scripts/fetch-uskids-field.js
+          CODE=$?
+          if [ "$CODE" = "2" ]; then
+            echo "::warning::USKids: build recusado pela guarda anti-encolhimento — dados anteriores preservados."
+            echo "degradado=1" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          exit $CODE
       - name: Commit se houve alterações
+        if: steps.field.outputs.degradado != '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -53,6 +68,7 @@ jobs:
       # GitHub mandar email. Limiares largos de propósito — isto avisa que a
       # varredura parou, não que houve uma semana fraca.
       - name: Canário — a descoberta continua viva?
+        if: steps.field.outputs.degradado != '1'
         run: |
           node -e '
             const c = require("./public/data/uskids-discovery-cache.json");

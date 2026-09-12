@@ -33,6 +33,8 @@ const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase()
 const SCAN_CONCURRENCY   = 5;    // pedidos GetMeta em paralelo
 const DELAY_SCAN   = 60;
 const DELAY_FETCH  = 400;
+// Perda máxima de inscritos tolerada face ao ficheiro em disco (ver guarda na escrita).
+const PERDA_MAXIMA = 0.30;
 // Redescobrir se cache tiver mais de 3 dias
 const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corrida
 
@@ -107,14 +109,16 @@ function normNome(s) {
  *  de desinscrições (removed).
  *  Retorna { firstSeenMap, prevByEscalao, prevRemoved } */
 function carregarFieldAnterior() {
-  const empty = { firstSeenMap: new Map(), prevByEscalao: new Map(), prevRemoved: new Map() };
+  const empty = { firstSeenMap: new Map(), prevByEscalao: new Map(), prevRemoved: new Map(), prevTorneios: new Map() };
   try {
     if (!fs.existsSync(OUTPUT)) return empty;
     const prev = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
     const fsMap = new Map();      // "t:nomeNorm" → firstSeen
     const byEsc = new Map();      // "t:escalaoNome" → Map(nomeNorm → {nome, pais})
     const remMap = new Map();     // "t:escalaoNome" → Map(nomeNorm → {nome, removedAt, pais})
+    const prevT  = new Map();     // t → entrada COMPLETA do run anterior
     for (const t of (prev.torneios || [])) {
+      prevT.set(t.t, t);
       for (const e of (t.escaloes || [])) {
         const escKey = `${t.t}:${e.nome}`;
         const set = new Map();
@@ -139,7 +143,7 @@ function carregarFieldAnterior() {
         }
       }
     }
-    return { firstSeenMap: fsMap, prevByEscalao: byEsc, prevRemoved: remMap };
+    return { firstSeenMap: fsMap, prevByEscalao: byEsc, prevRemoved: remMap, prevTorneios: prevT };
   } catch { return empty; }
 }
 
@@ -195,6 +199,22 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
   }
 }
 
+/** Nº de torneios que bateram no rate limit nesta corrida (ver guardaRateLimit). */
+let rateLimitHits = 0;
+
+/** O signupanytime responde ao rate limit com "Too many requests" em TEXTO —
+ *  não com 429. Passar esse corpo ao JSON.parse dá um erro de sintaxe que se
+ *  lê como "torneio sem dados"; é preciso reconhecê-lo pelo que é. */
+function ehRateLimit(txt) {
+  return /too many requests/i.test(String(txt || '').slice(0, 200));
+}
+
+function erroRateLimit() {
+  const e = new Error('rate limit (Too many requests)');
+  e.rateLimited = true;
+  return e;
+}
+
 function esperarGetMeta(page, t, ms = 12000) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timeout')), ms);
@@ -202,7 +222,11 @@ function esperarGetMeta(page, t, ms = 12000) {
       if (!response.url().includes(`op=GetMeta&t=${t}`)) return;
       clearTimeout(timer);
       page.off('response', handler);
-      try { resolve(await response.json()); } catch (e) { reject(e); }
+      try {
+        const txt = await response.text();
+        if (ehRateLimit(txt)) return reject(erroRateLimit());
+        resolve(JSON.parse(txt));
+      } catch (e) { reject(e); }
     };
     page.on('response', handler);
   });
@@ -240,6 +264,9 @@ async function metaTournament(t) {
       // tcode inexistente custar 3 tentativas × 12 s — a varredura da fronteira
       // (toda ela vazia, por definição) deixava de acabar em tempo útil.
       const txt = (await r.text()).trim();
+      // ⚠ "Too many requests" NÃO é um tcode inexistente. Tratá-lo como tal
+      // fazia a varredura ler a zona sob rate limit como fronteira esgotada.
+      if (ehRateLimit(txt)) throw erroRateLimit();
       if (!txt) return null;                    // não existe
       let j;
       try { j = JSON.parse(txt); } catch { return null; }   // lixo ⇒ não existe
@@ -453,7 +480,20 @@ async function descobrirTorneios() {
 // FASE 2: INSCRITOS
 // ─────────────────────────────────────────────
 
-async function processarTorneio(page, torneio) {
+/** ⚠ Um torneio que falha NÃO pode apagar os inscritos que já tínhamos.
+ *  A 2026-09-12 o signupanytime devolveu "Too many requests" aos 87 torneios e,
+ *  como cada falha produzia uma entrada vazia e a escrita final era do ZERO, o
+ *  uskids-field.json passou de 1,07 MB / 2018 inscritos para 39 KB / zero.
+ *  Em caso de falha devolve-se a entrada ANTERIOR marcada `stale`. */
+function preservarAnterior(torneio, prev, msg) {
+  if (!prev || !(prev.escaloes || []).length) {
+    return { ...torneio, erro: msg, escaloes: [], ultima_atualizacao: new Date().toISOString() };
+  }
+  console.warn(`  ♻️  mantido o registo anterior (${prev.escaloes.length} escalões)`);
+  return { ...prev, erro: msg, stale: true, stale_desde: prev.ultima_atualizacao || null };
+}
+
+async function processarTorneio(page, torneio, prev) {
   const dias = diasAte(torneio.date_inicio);
   console.log(`\n▶ ${torneio.name} (t=${torneio.t}) — ${dias >= 0 ? `daqui a ${dias}d` : 'em curso'}`);
 
@@ -464,7 +504,8 @@ async function processarTorneio(page, torneio) {
     meta = await metaP;
   } catch (err) {
     console.warn(`  ⚠️  GetMeta falhou: ${err.message}`);
-    return { ...torneio, erro: err.message, escaloes: [], ultima_atualizacao: new Date().toISOString() };
+    if (err.rateLimited) rateLimitHits++;
+    return preservarAnterior(torneio, prev, err.message);
   }
 
   const tn        = meta.tournament;
@@ -599,7 +640,7 @@ async function main() {
     console.log(`\n📋 FASE 2 — Inscritos (${torneios.filter(t=>diasAte(t.date_inicio)>=-1).length} torneios)`);
     const resultados = [];
     for (const torneio of torneios.filter(t => diasAte(t.date_inicio) >= -1)) {
-      resultados.push(await processarTorneio(page, torneio));
+      resultados.push(await processarTorneio(page, torneio, prevMap.prevTorneios.get(torneio.t)));
       await sleep(DELAY_FETCH);
     }
 
@@ -624,13 +665,41 @@ async function main() {
                 `${st.sem ? ` · ${st.sem} sem data` : ''} — ${ancoras.length} âncoras`);
 
     fs.mkdirSync(DIR, { recursive: true });
+
+    // ── Guarda anti-encolhimento ───────────────────────────────────────────
+    // Mesma política do scrape-federados-node.js e do discover-fcg-scope.js:
+    // um run degradado nunca grava por cima de um bom. Sem ela, o rate limit
+    // de 2026-09-12 apagou 2018 inscritos e o workflow ficou verde no commit.
+    const totais = (ts) => {
+      let esc = 0, jog = 0;
+      for (const t of (ts || [])) for (const e of (t.escaloes || [])) { esc++; jog += (e.jogadores || []).length; }
+      return { esc, jog };
+    };
+    const novo = totais(resultados);
+    let antigo = { esc: 0, jog: 0 };
+    try { antigo = totais(JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios); } catch {}
+
+    const force = process.argv.includes('--force');
+    if (antigo.jog > 0 && !force) {
+      const perda = 1 - novo.jog / antigo.jog;
+      if (perda > PERDA_MAXIMA) {
+        console.error(`\n❌ Recusado: o build novo tem ${novo.jog} inscritos contra ${antigo.jog} ` +
+                      `em disco (perda de ${Math.round(perda * 100)}%).`);
+        if (rateLimitHits) console.error(`   ${rateLimitHits} torneios bateram no rate limit do signupanytime.`);
+        console.error('   Ficheiro anterior preservado. Usar --force para gravar mesmo assim.');
+        process.exitCode = 2;
+        return;
+      }
+    }
+
     fs.writeFileSync(OUTPUT, JSON.stringify({
       gerado_em: new Date().toISOString(),
       torneios: resultados,
     }, null, 2), 'utf8');
 
     console.log('\n══════════════════════════════════════');
-    console.log('✅  uskids-field.json actualizado');
+    console.log(`✅  uskids-field.json actualizado (${novo.esc} escalões · ${novo.jog} inscritos)`);
+    if (rateLimitHits) console.log(`⚠️   ${rateLimitHits} torneios com rate limit — registos anteriores mantidos`);
     console.log('\n📊  Boys 12:');
     for (const t of resultados) {
       if (t.erro || t.sem_flights) { console.log(`  ⏳ ${t.name}`); continue; }

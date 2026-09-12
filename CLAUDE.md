@@ -1369,6 +1369,50 @@ South American Championship 31 Out, Australian Challenge 21 Set, Mexico
 Invitational 12 Dez, Indian Championship 22 Dez, Florida Winter State 5 Dez,
 Antalya Turkish Open 30 Jan 2027, Circolo Golf Venezia 3 Out).
 
+### ⚠ "Too many requests" apagou o field inteiro (2026-09-12)
+
+O `uskids-field.json` passou de **1,07 MB / 1172 escalões / 2018 inscritos**
+para **39 KB e ZERO**, num commit que o workflow deu por bom e fez deploy. Os
+87 torneios ficaram lá — só com `escaloes: []` e este erro em **87 de 87**:
+
+```
+"erro": "Unexpected token 'T', \"Too many r\"... is not valid JSON"
+```
+
+O signupanytime aplicou **rate limit** e responde-lhe com `Too many requests`
+em **texto, HTTP 200** — não com 429. Três defeitos em cadeia:
+
+1. **O corpo ia direito ao `JSON.parse`.** O erro de sintaxe lia-se como
+   "torneio sem dados", não como "a fonte recusou-nos". Na Fase 1 era pior:
+   o `metaTournament` devolvia `null` = *tcode não existe*, exactamente a
+   confusão que o resto daquela função documenta ter de evitar.
+2. **Cada falha produzia uma entrada VAZIA** e a escrita final gravava
+   `resultados` **do zero** — sem merge nem guarda. Um run 100% falhado
+   apagava tudo.
+3. **O canário não protege os dados.** Corre DEPOIS do commit (de propósito,
+   para o alarme nunca custar dados) e só olha para a varredura: disparou a
+   dizer "rede degradada", e o email dizia `All jobs have failed` — mas o que
+   se tinha perdido já estava commitado e no ar.
+
+Corrigido em três camadas, pela ordem em que travam a avaria:
+
+| | O quê |
+|---|---|
+| `ehRateLimit()` | reconhece o corpo pelo que é, nas duas fases (`esperarGetMeta` e `metaTournament`); na Fase 1 passa a ser falha de rede, nunca "tcode inexistente" |
+| `preservarAnterior()` | um torneio que falha devolve o **registo anterior** marcado `stale`/`stale_desde`, em vez de uma entrada vazia. Só fica vazio quem nunca teve dados |
+| **Guarda anti-encolhimento** | recusa gravar se perder **>30%** dos inscritos face ao ficheiro em disco (`PERDA_MAXIMA`), salvo `--force`. **Exit 2**, ficheiro anterior intacto |
+
+O `uskids-field.yml` traduz **exit 2 → sucesso com `::warning::`**, e salta o
+commit E o canário nesse run (`steps.field.outputs.degradado`): sem dados novos
+não há nada para commitar, e o canário mediria uma varredura que o rate limit
+já tinha estragado.
+
+⚠ **É a mesma classe de avaria do FCG** (`discover-fcg-scope.js`, 2026-08-17) e
+do `build-course-players.js`: uma fonte que responde **200 com lixo** vale mais
+do que um erro franco, porque passa por dados bons. A regra do repo aplica-se a
+qualquer scraper novo — **nunca gravar um build muito mais pequeno do que o que
+está em disco sem alguém ter dito que sim**.
+
 ### Datas de inscrição USKids — reconstruídas pelo `pid` (2026-08-23)
 
 **A API não publica data de inscrição.** `GetPlayerTeeTimes` devolve
