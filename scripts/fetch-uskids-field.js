@@ -40,7 +40,10 @@ const DELAY_FETCH  = 400;
 // Redescobrir se cache tiver mais de 3 dias
 const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corrida
 
-const DIR        = path.join(__dirname, '..', 'public', 'data');
+// ⚠ `USKIDS_DATA_DIR`, como o `USKIDS_API_BASE` abaixo, existe para os testes
+// correrem a descoberta sem escrever por cima da cache real. Em produção
+// nunca está definida.
+const DIR        = process.env.USKIDS_DATA_DIR || path.join(__dirname, '..', 'public', 'data');
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
 const OUTPUT     = path.join(DIR, 'uskids-field.json');
 const ANCHORS    = path.join(DIR, 'uskids-pid-anchors.json');
@@ -392,7 +395,11 @@ async function descobrirTorneios() {
   for (const t of FORCAR_INCLUIR) {
     if (conhecidos.has(t)) continue;
     const tn = await metaTournament(t);
-    if (tn) { guardar(t, tn); console.log(`   ✅ Forçado: t=${t} ${tn.name.trim()}`); }
+    // ⚠ ERRO é um Symbol, logo TRUTHY: sem o testar, uma recusa da fonte aqui
+    // ia direita ao guardar() e matava o run inteiro num TypeError, antes
+    // sequer de a varredura começar. "Não respondeu" ≠ "não existe".
+    if (tn === ERRO) console.warn(`   ⚠️  Forçado t=${t} sem resposta da fonte`);
+    else if (tn) { guardar(t, tn); console.log(`   ✅ Forçado: t=${t} ${tn.name.trim()}`); }
     else console.warn(`   ⚠️  Forçado t=${t} sem meta`);
   }
 
@@ -497,16 +504,21 @@ async function descobrirTorneios() {
   // verde a descobrir zero torneios. Estes dois carimbos são o que torna uma
   // paragem visível — o passo "Canário" do uskids-field.yml falha o job (e o
   // GitHub manda email) quando ficam estagnados.
-  const hojeISO = new Date().toISOString().slice(0, 10);
+  // ⚠ NÃO chamar a esta variável `hojeISO`: ensombraria a função hojeISO() do
+  // módulo em TODA esta função (hoisting do const), e a Passagem A, que a usa
+  // centenas de linhas acima, rebentava na temporal dead zone. Aconteceu a
+  // 2026-09-13 — o run morreu com "Cannot access 'hojeISO' before
+  // initialization" depois de já ter varrido a zona conhecida.
+  const hoje = hojeISO();
   // Arrancar o contador na primeira corrida: sem carimbo inicial,
   // dias_sem_descoberta ficaria null para sempre até haver um torneio novo —
   // e o canário nunca dispararia se a varredura partisse já a seguir.
-  if (encontrados > 0 || !cache.ultima_descoberta) cache.ultima_descoberta = hojeISO;
+  if (encontrados > 0 || !cache.ultima_descoberta) cache.ultima_descoberta = hoje;
   if (cache.varredura_max_t > (cache.fronteira_max_t_visto || 0)) {
     cache.fronteira_max_t_visto = cache.varredura_max_t;
-    cache.fronteira_avancou_em  = hojeISO;
+    cache.fronteira_avancou_em  = hoje;
   }
-  const idade = (d) => d ? Math.floor((Date.parse(hojeISO) - Date.parse(d)) / 86400000) : null;
+  const idade = (d) => d ? Math.floor((Date.parse(hoje) - Date.parse(d)) / 86400000) : null;
   cache.dias_sem_descoberta = idade(cache.ultima_descoberta);
   cache.dias_sem_avanco     = idade(cache.fronteira_avancou_em);
 
@@ -763,5 +775,6 @@ if (require.main === module) {
 // Exportado para os testes exercitarem o código REAL (não uma cópia).
 module.exports = {
   varrerIntervalo, varrerIntervaloFiavel, metaTournament, preservarAnterior,
+  descobrirTorneios,
   get rateLimitHits() { return rateLimitHits; },
 };

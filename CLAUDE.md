@@ -1515,15 +1515,50 @@ A lógica pura saiu do script para **`scripts/lib/uskids-rate-guard.js`**
 com **17 testes** em `uskids-rate-guard.test.js` — incluindo os DOIS casos
 reais do histórico (01-08 legítimo → grava; 12-09 → recusa).
 
-Mais **3 testes de integração** em `uskids-scan-abort.test.js` que exercitam a
+Mais **4 testes de integração** em `uskids-scan-abort.test.js` que exercitam a
 varredura **REAL** (o `fetch-uskids-field.js` passou a exportar quando é
-`require`d) contra um HTTP local a recusar — nunca tocam no signupanytime. É
-a env var `USKIDS_API_BASE` que aponta a API para o servidor de teste; em
-produção nunca está definida.
+`require`d) contra um HTTP local a recusar — nunca tocam no signupanytime.
+Duas env vars, ambas só para testes e nunca definidas em produção:
+`USKIDS_API_BASE` aponta a API para o servidor de teste e `USKIDS_DATA_DIR`
+manda a cache para um directório temporário.
 
 ⚠ Esses testes de integração valem o que custaram: **apanharam um defeito na
 primeira versão desta correcção** — o corte no `varrerIntervalo` não servia de
 nada enquanto o `metaTournament` continuasse a fazer 3 tentativas por tcode.
+
+### ⚠ A correcção partiu o run seguinte — e os testes não deram por nada (2026-09-13)
+
+O run de 13-09, o primeiro com a correcção acima, morreu ao fim de 4 minutos:
+
+```
+↻ Passagem A: t=22243…23701 (zona conhecida, varrida por inteiro) — primeira vez
+Erro fatal: ReferenceError: Cannot access 'hojeISO' before initialization
+```
+
+Um `const hojeISO` **local**, declarado no FIM da `descobrirTorneios` (o carimbo
+do canário), ensombra a função `hojeISO()` do módulo em **toda** a função — e a
+Passagem A, que a chama centenas de linhas acima, caía na temporal dead zone. A
+variável local passou a chamar-se `hoje`.
+
+⚠ **Nenhum teste chegava a EXECUTAR a `descobrirTorneios`.** Os 17 unitários
+cobriam a lib pura e os 3 de integração só a varredura — a função que orquestra
+tudo nunca era chamada, por isso um erro que rebenta à primeira linha executada
+passava a suite inteira. O teste que faltava é barato **por causa da própria
+correcção**: contra a fonte a recusar as duas passagens abortam de imediato, por
+isso a orquestração inteira corre em milissegundos e passa exactamente pela
+linha que rebentou.
+
+⚠ E esse teste novo apanhou logo um **segundo** defeito, este anterior a tudo
+isto: `metaTournament` devolve o sentinela `ERRO` — que é um `Symbol`, logo
+**truthy** — e o ciclo dos `FORCAR_INCLUIR` fazia `if (tn) guardar(t, tn)`. Uma
+recusa da fonte ali ia direita ao `guardar()` e matava o run num `TypeError`,
+antes sequer de a varredura começar. "Não respondeu" ≠ "não existe", e aqui as
+duas coisas estavam a ser lidas como a mesma.
+
+✅ **Os dados não sofreram** com nenhuma das duas falhas: o processo morreu antes
+de qualquer escrita, e o `uskids-field.json` ficou nos 87 torneios / 1172
+escalões / 2018 inscritos do último run bom (11-09). É o efeito lateral bom de
+escrever só no fim.
 
 ⚠ **É a mesma classe de avaria do FCG** (`discover-fcg-scope.js`, 2026-08-17) e
 do `build-course-players.js`: uma fonte que responde **200 com lixo** vale mais
