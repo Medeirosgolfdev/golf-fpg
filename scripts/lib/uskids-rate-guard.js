@@ -102,8 +102,55 @@ function deveRecusarEscrita(torneiosAntigos, torneiosNovos, { max = PERDA_MAXIMA
   return { ...r, recusar: !forcar && r.antes > 0 && r.perda > max };
 }
 
+/** Limiares do canário — largos de propósito: avisam que a varredura PAROU. */
+const DIAS_SEM_DESCOBERTA = 30;
+const DIAS_SEM_AVANCO = 21;
+
+/**
+ * O canário: falhar o job (= email) ou só avisar?
+ *
+ * ⚠ A distinção que faltava (2026-09-13). Uma recusa da fonte chega às duas
+ * fases com CARAS diferentes: na Fase 2 vem 200 + "Too many requests" (e o
+ * `fim` fica `rate-limit`), na Fase 1 vem com status de erro, que o disjuntor
+ * lê — correctamente — como `rede-degradada`. Medido no mesmo run: Fase 2 a
+ * dizer rate limit em 87 de 87 torneios E Fase 1 a terminar em
+ * `rede-degradada`. Era o MESMO corte a entrar por duas portas, e só uma
+ * delas tocava o alarme.
+ *
+ * Logo: com prova de rate limit no run, `rede-degradada` é o mesmo caso
+ * auto-recuperável do `rate-limit` — aviso, não erro. Sem essa prova, uma
+ * fronteira abandonada continua a falhar o job, que é o que ela sempre fez.
+ * Um alarme que toca todos os dias por algo que se resolve sozinho deixa de
+ * ser lido — e foi assim que a avaria das 7 semanas passou despercebida.
+ *
+ * Os limiares de dias não são tocados: se a recusa persistir, disparam por si.
+ */
+function avaliarCanario({ varredura, diasSemDescoberta, diasSemAvanco, rateLimitHits = 0 }) {
+  const v = varredura || {};
+  const erros = [], avisos = [];
+  const recusada = v.fim === 'rate-limit' || rateLimitHits > 0;
+
+  if (diasSemDescoberta != null && diasSemDescoberta > DIAS_SEM_DESCOBERTA)
+    erros.push(`${diasSemDescoberta} dias sem descobrir um torneio novo`);
+  if (diasSemAvanco != null && diasSemAvanco > DIAS_SEM_AVANCO)
+    erros.push(`${diasSemAvanco} dias sem a fronteira de tcodes avançar`);
+
+  if (recusada) {
+    avisos.push(v.fim === 'rede-degradada'
+      ? 'o signupanytime recusou-nos — a fronteira foi abandonada nesta corrida'
+      : 'o signupanytime aplicou rate limit — varredura truncada nesta corrida');
+  } else if (v.fim === 'rede-degradada') {
+    erros.push('a fronteira foi abandonada por falta de resposta do servidor');
+  } else if (v.intervalos_degradados >= 2) {
+    erros.push(`${v.intervalos_degradados} intervalos sem resposta (rede degradada)`);
+  }
+
+  return { falhar: erros.length > 0, erros, avisos };
+}
+
 module.exports = {
   PERDA_MAXIMA, DIAS_VARREDURA_PROFUNDA,
+  DIAS_SEM_DESCOBERTA, DIAS_SEM_AVANCO, avaliarCanario,
   ehRateLimit, erroRateLimit,
   deveVarrerProfundo,
   inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita,

@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   ehRateLimit, erroRateLimit, deveVarrerProfundo,
-  inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita,
+  inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita, avaliarCanario,
   PERDA_MAXIMA, DIAS_VARREDURA_PROFUNDA,
 } from './uskids-rate-guard.js';
 
@@ -130,5 +130,61 @@ describe('inscritosPorTorneio', () => {
     expect(m.get(1)).toBe(3);
     expect(m.get(2)).toBe(0);
     expect(m.get(3)).toBe(0);
+  });
+});
+
+describe('avaliarCanario', () => {
+  it('o caso REAL de 2026-09-13: a fonte recusou, logo não toca o alarme', () => {
+    // Fase 1 acabou em rede-degradada (o servidor recusa ali com status de
+    // erro) E a Fase 2 registou 87 recusas "Too many requests". É o MESMO
+    // corte visto de dois sítios — e resolve-se sozinho na corrida seguinte.
+    const r = avaliarCanario({
+      varredura: { fim: 'rede-degradada', intervalos_degradados: 3 },
+      diasSemDescoberta: 2, diasSemAvanco: 2, rateLimitHits: 87,
+    });
+    expect(r.falhar).toBe(false);
+    expect(r.avisos).toHaveLength(1);
+  });
+
+  it('a MESMA varredura sem prova de recusa continua a falhar o job', () => {
+    const r = avaliarCanario({
+      varredura: { fim: 'rede-degradada', intervalos_degradados: 3 },
+      diasSemDescoberta: 2, diasSemAvanco: 2, rateLimitHits: 0,
+    });
+    expect(r.falhar).toBe(true);
+    expect(r.erros[0]).toMatch(/fronteira foi abandonada/);
+  });
+
+  it('rate limit na Fase 1 avisa, como antes', () => {
+    const r = avaliarCanario({ varredura: { fim: 'rate-limit' }, diasSemDescoberta: 1, diasSemAvanco: 1 });
+    expect(r.falhar).toBe(false);
+    expect(r.avisos[0]).toMatch(/rate limit/);
+  });
+
+  it('os limiares de dias disparam MESMO com rate limit — é a rede que fica', () => {
+    // Esta é a garantia de que calar o ruído diário não esconde uma paragem
+    // real: se a recusa persistir, ao fim de 21/30 dias o alarme toca na mesma.
+    const r = avaliarCanario({
+      varredura: { fim: 'rede-degradada' },
+      diasSemDescoberta: 31, diasSemAvanco: 22, rateLimitHits: 87,
+    });
+    expect(r.falhar).toBe(true);
+    expect(r.erros).toHaveLength(2);
+  });
+
+  it('intervalos degradados sem recusa continuam a acusar', () => {
+    const r = avaliarCanario({
+      varredura: { fim: 'fronteira-esgotada', intervalos_degradados: 2 },
+      diasSemDescoberta: 1, diasSemAvanco: 1,
+    });
+    expect(r.falhar).toBe(true);
+  });
+
+  it('uma varredura saudável passa calada', () => {
+    const r = avaliarCanario({
+      varredura: { fim: 'fronteira-esgotada', intervalos_degradados: 0 },
+      diasSemDescoberta: 2, diasSemAvanco: 2,
+    });
+    expect(r).toEqual({ falhar: false, erros: [], avisos: [] });
   });
 });

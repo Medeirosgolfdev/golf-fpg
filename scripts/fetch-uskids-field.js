@@ -746,6 +746,10 @@ async function main() {
 
     fs.writeFileSync(OUTPUT, JSON.stringify({
       gerado_em: new Date().toISOString(),
+      // Prova de que a fonte nos recusou NESTE run — é o que permite ao
+      // canário distinguir "a fonte cortou-nos" de "a rede falhou sem
+      // explicação". Sem isto, os dois casos chegam lá iguais.
+      rate_limit_hits: rateLimitHits,
       torneios: resultados,
     }, null, 2), 'utf8');
 

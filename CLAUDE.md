@@ -574,7 +574,7 @@ Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos dev
 | `lib/cookies.js` | `loadCookieHeader({envVars, file, label})` | as cópias de `loadCookies()` (env primeiro, ficheiro local depois) |
 | `lib/fpg-http.js` | `makeFpgPost({baseUrl, cookie, ua, origin, referer, extraHeaders, retries})`, `FpgHttpError`, `sleep` | as cópias de `dgPost()`/`fpgPost()` — retry em HTTP 500 + detecção `Result:"ERROR"` |
 | `lib/atomic-write.js` | `writeJsonAtomic(filePath, data)` | escritas directas com `writeFileSync` (tmp+rename, nunca deixa JSON truncado) |
-| `lib/uskids-rate-guard.js` | `ehRateLimit`, `deveVarrerProfundo`, `perdaNosComuns`, `deveRecusarEscrita` | as defesas do monitor USKids contra uma fonte que recusa (17 testes) |
+| `lib/uskids-rate-guard.js` | `ehRateLimit`, `deveVarrerProfundo`, `perdaNosComuns`, `deveRecusarEscrita`, `avaliarCanario` | as defesas do monitor USKids contra uma fonte que recusa (23 testes) |
 
 Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg-admissions-draws-node, fpg-scrape-node, scrape-nacionais-feds-node.
 
@@ -1507,6 +1507,33 @@ só para o detectar.
 (a densa do dia seguinte apanha o que faltou) e um alarme que toca por algo
 que se resolve sozinho deixa de ser lido. Se persistir, os limiares de 21d/30d
 disparam por si.
+
+⚠ **E `rede-degradada` é o MESMO caso quando há prova de recusa (2026-09-13).**
+A distinção acima estava mal calibrada: uma recusa da fonte chega às duas fases
+com caras diferentes — na Fase 2 vem 200 + "Too many requests" (`fim:
+rate-limit`), na Fase 1 vem com **status de erro**, que o disjuntor lê,
+correctamente, como `rede-degradada`. Medido no run de 13-09: Fase 2 a acusar
+rate limit em **87 de 87** torneios E Fase 1 a acabar em `rede-degradada`. Era o
+mesmo corte a entrar por duas portas e só uma delas tocava o alarme — ou seja, o
+caso auto-recuperável falhava o job **todos os dias**.
+
+O `fetch-uskids-field.js` grava agora `rate_limit_hits` no topo do
+`uskids-field.json` (a Fase 2 corre DEPOIS de a cache ser escrita, por isso a
+prova do run vive lá e não na cache), e a decisão saiu do bloco `node -e` do
+workflow para **`avaliarCanario`** (`lib/uskids-rate-guard.js`, 6 testes) +
+`scripts/uskids-canary.js`:
+
+| situação | canário |
+|---|---|
+| `rede-degradada` **com** recusas no run | ⚠ aviso |
+| `rede-degradada` **sem** recusas | ❌ falha (como sempre) |
+| `fim: rate-limit` | ⚠ aviso |
+| >30d sem descobertas · >21d sem a fronteira avançar | ❌ falha **mesmo com rate limit** |
+
+⚠ A última linha é a que impede isto de virar uma mordaça: calar o ruído diário
+só é defensável porque os limiares de dias continuam a disparar se a recusa
+persistir. Verificado com os ficheiros reais de 13-09 — com os 87 hits sai exit
+0 + aviso, e a MESMA varredura com `rate_limit_hits: 0` continua a sair exit 1.
 
 ### Onde vive, e o que está testado
 
