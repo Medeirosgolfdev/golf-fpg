@@ -1,17 +1,6 @@
 {
-  "ultimo_t": 22242,
+  "ultimo_t": 22271,
   "torneios": [
-    {
-      "t": 22243,
-      "name": "Venice Open 2026",
-      "date_inicio": "8/13/2026",
-      "date_fim": "8/15/2026",
-      "rondas": 3,
-      "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "fee_18": "465.00",
-      "tour": "International Championships Tour",
-      "type": 8
-    },
     {
       "t": 22619,
       "name": "Club de Golf Valle Alto (Tour Championship)",
@@ -1058,18 +1047,20 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-12T11:40:42.008Z",
+  "gerado_em": "2026-09-13T13:06:52.740Z",
   "varredura_max_t": 23701,
   "varredura": {
     "fim": "rede-degradada",
     "blocos": 2,
     "sondas": 0,
     "retomas": 0,
-    "intervalos_degradados": 3
+    "intervalos_degradados": 3,
+    "profunda": true
   },
   "fronteira_max_t_visto": 23701,
   "fronteira_avancou_em": "2026-09-11",
-  "dias_sem_descoberta": 1,
-  "dias_sem_avanco": 1,
-  "ultima_descoberta": "2026-09-11"
+  "dias_sem_descoberta": 2,
+  "dias_sem_avanco": 2,
+  "ultima_descoberta": "2026-09-11",
+  "ultima_varredura_profunda": "2026-09-13"
 }
