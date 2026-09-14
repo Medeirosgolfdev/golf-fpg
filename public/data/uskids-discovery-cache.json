@@ -1036,6 +1036,17 @@
       "type": 8
     },
     {
+      "t": 23714,
+      "name": "Royal Malta Golf Club (Tour Championship)",
+      "date_inicio": "3/7/2027",
+      "date_fim": "3/7/2027",
+      "rondas": 1,
+      "campo": "Royal Malta Golf Club",
+      "fee_18": "45.00",
+      "tour": "Malta (MT) Tour",
+      "type": 6
+    },
+    {
       "t": 23608,
       "name": "Marco Simone Invitational 2027",
       "date_inicio": "3/13/2027",
@@ -1047,20 +1058,20 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-13T13:06:52.740Z",
-  "varredura_max_t": 23701,
+  "gerado_em": "2026-09-14T13:49:14.095Z",
+  "varredura_max_t": 23714,
   "varredura": {
     "fim": "rede-degradada",
-    "blocos": 2,
+    "blocos": 12,
     "sondas": 0,
     "retomas": 0,
     "intervalos_degradados": 3,
-    "profunda": true
+    "profunda": false
   },
-  "fronteira_max_t_visto": 23701,
-  "fronteira_avancou_em": "2026-09-11",
-  "dias_sem_descoberta": 2,
-  "dias_sem_avanco": 2,
-  "ultima_descoberta": "2026-09-11",
+  "fronteira_max_t_visto": 23714,
+  "fronteira_avancou_em": "2026-09-14",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-09-14",
   "ultima_varredura_profunda": "2026-09-13"
 }
