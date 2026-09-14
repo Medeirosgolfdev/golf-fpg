@@ -1,0 +1,166 @@
+{
+  "gameId": "6aa00d2c6717d5b07d3d7ccc",
+  "fetchedAt": "2026-09-14T09:54:49.864Z",
+  "game": {
+    "_id": "6aa00d2c6717d5b07d3d7ccc",
+    "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 2026 (WAGR)",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-10-02T06:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "white",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "6aa00d2c6717d5b07d3d7cf7",
+      "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 2026 (WAGR)",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6f4d36dfe90dea33c7",
+      "name": "FONTANALS GOLF",
+      "city": "GIRONA",
+      "state": "ESPAÑA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6f4d36dfe90dea33cb",
+      "name": "FONTANALS GOLF - Fontanals Golf",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 74,
+        "slope": 138,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7d85"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.5,
+        "slope": 121,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7dab"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 137,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7dd1"
+      },
+      {
+        "gender": "M",
+        "color": "pink",
+        "lap": "lap18",
+        "rating": 64.4,
+        "slope": 108,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7dbe"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.1,
+        "slope": 132,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7de4"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.3,
+        "slope": 135,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7d72"
+      },
+      {
+        "gender": "F",
+        "color": "pink",
+        "lap": "lap18",
+        "rating": 67.7,
+        "slope": 125,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7df7"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 74.6,
+        "slope": 137,
+        "par": 72,
+        "_id": "6aa00d2c6717d5b07d3d7d98"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6aa00d2c6717d5b07d3d7d09",
+      "name": "SCRATCH SUB-18 MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aa00d2c6717d5b07d3d7d0c",
+      "name": "SCRATCH SUB-18 FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aa00d2c6717d5b07d3d7d0f",
+      "name": "SCRATCH SUB-16 MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aa00d2c6717d5b07d3d7d12",
+      "name": "SCRATCH SUB-16 FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}
