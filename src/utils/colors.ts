@@ -201,6 +201,7 @@ export const C = {
     escola:         "#94a3b8",   /* cinzento-azulado — calendário escolar (pano de fundo) */
     irma_bad:       "#ff1493",   /* rosa-choque — Maria Antónia (irmã). Cor própria, a gritar, e NUNCA esbatida: é família. */
     profissao_fe:   "#fbbf24",   /* dourado — Profissão de Fé (full-cell pulse) */
+    andebol:        "#8b4513",   /* castanho — Andebol do Manuel. Nenhuma outra categoria é castanha, de propósito. */
     // Viagens
     viag_alg_fev:   "#f59e0b",
     viag_malaga:    "#f97316",

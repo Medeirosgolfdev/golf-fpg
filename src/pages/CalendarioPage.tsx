@@ -120,6 +120,7 @@ const CAL_DEFS: CalDef[] = [
   { id: "pessoal",        name: "🎂 Pessoal",              group: "DESTAQUE", color: C.cal.pessoal },
   { id: "profissao_fe",   name: "✝ Profissão de Fé",       group: "DESTAQUE", color: C.cal.profissao_fe },
   { id: "irma_bad",       name: "🏸 Maria Antónia (irmã)", group: "DESTAQUE", color: C.cal.irma_bad },
+  { id: "andebol",        name: "🤾 Andebol",              group: "DESTAQUE", color: C.cal.andebol },
   { id: "treino",         name: "⛳ Campo / Treino",       group: "DESTAQUE", color: C.cal.treino },
   { id: "ferias",         name: "🏖 Férias",               group: "DESTAQUE", color: C.cal.ferias },
   { id: "colonias",       name: "🏕 Colónias",             group: "DESTAQUE", color: C.cal.colonias },
@@ -406,6 +407,60 @@ const EVENTS: CalEvent[] = [
   ev("irma_bad", "Mosquitos 2 — Colónia · Maria Antónia", new Date(2026,7,19),  "Tona",             "",          new Date(2026,7,26)),
   ev("irma_bad", "4ª Jornada Nacional S11, S15 & S19",    new Date(2026,9,17),  "Caldas da Rainha", "Badminton", new Date(2026,9,18)),
   ev("irma_bad", "Campeonato Nacional Badminton S11",     new Date(2026,10,14), "Caldas da Rainha", "Badminton", new Date(2026,10,15)),
+
+  /* ══════════════════════════════════════
+     ANDEBOL — Manuel, Sub-14 masculinos (castanho)
+     Fonte: «Planeamento Desportivo 2026/27» da Associação de Andebol da Madeira
+     (linha Andebol 6/7 · MASC Sub14, e Selecções Sub14). ⚠ Na grelha as
+     células ocupam o fim-de-semana inteiro — não se sabe se o jogo é ao sábado
+     ou ao domingo, por isso cada jornada vai de sábado a domingo.
+     ══════════════════════════════════════ */
+  ev("andebol", "Calheta Beach Handball",                  new Date(2026,8,19),  "Calheta",        "", new Date(2026,8,20)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,8,26),  "",               "", new Date(2026,8,27)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,9,3),   "",               "", new Date(2026,9,4)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,9,10),  "",               "", new Date(2026,9,11)),
+  ev("andebol", "EHF Beach Handball Champions Cup",        new Date(2026,9,15),  "Porto Santo",    "", new Date(2026,9,18)),
+  ev("andebol", "1.º Estágio masculino",                   new Date(2026,9,24),  "",               "", new Date(2026,9,25)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,9,31),  "",               "", new Date(2026,10,1)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,10,7),  "",               "", new Date(2026,10,8)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,10,14), "",               "", new Date(2026,10,15)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,10,21), "",               "", new Date(2026,10,22)),
+  ev("andebol", "1.º Torneio de Concentração",             new Date(2026,10,28), "Serra de Água",  "", new Date(2026,10,29)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,11,1),  "",               ""),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,11,5),  "",               "", new Date(2026,11,6)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,11,12), "",               "", new Date(2026,11,13)),
+  ev("andebol", "Torneio de Abertura",                     new Date(2026,11,19), "",               "", new Date(2026,11,20)),
+  ev("andebol", "VII Torneio CE Levada",                   new Date(2026,11,28), "",               "", new Date(2026,11,30)),
+  ev("andebol", "Campeonato",                              new Date(2027,0,9),   "",               "", new Date(2027,0,10)),
+  ev("andebol", "2.º Estágio (selecção Sub-14)",           new Date(2027,0,9),   "",               "", new Date(2027,0,10)),
+  ev("andebol", "Campeonato",                              new Date(2027,0,16),  "",               "", new Date(2027,0,17)),
+  ev("andebol", "33.º Clinic AAM",                         new Date(2027,0,23),  "",               "", new Date(2027,0,24)),
+  ev("andebol", "Campeonato",                              new Date(2027,0,30),  "",               "", new Date(2027,0,31)),
+  ev("andebol", "Campeonato",                              new Date(2027,1,6),   "",               "", new Date(2027,1,7)),
+  ev("andebol", "Campeonato",                              new Date(2027,1,13),  "",               "", new Date(2027,1,14)),
+  ev("andebol", "Campeonato",                              new Date(2027,1,20),  "",               "", new Date(2027,1,21)),
+  ev("andebol", "Campeonato",                              new Date(2027,1,27),  "",               "", new Date(2027,1,28)),
+  ev("andebol", "Campeonato",                              new Date(2027,2,6),   "",               "", new Date(2027,2,7)),
+  ev("andebol", "Campeonato",                              new Date(2027,2,13),  "",               "", new Date(2027,2,14)),
+  ev("andebol", "Campeonato",                              new Date(2027,2,20),  "",               "", new Date(2027,2,21)),
+  ev("andebol", "Campeonato",                              new Date(2027,2,26),  "",               "", new Date(2027,2,27)),
+  ev("andebol", "XXXIII Madeira Handball",                 new Date(2027,3,2),   "",               "", new Date(2027,3,3)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,3,10),  "",               "", new Date(2027,3,11)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,3,17),  "",               "", new Date(2027,3,18)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,3,24),  "",               "", new Date(2027,3,25)),
+  ev("andebol", "3.º Estágio (selecção Sub-14)",           new Date(2027,3,24),  "",               "", new Date(2027,3,25)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,4,1),   "",               "", new Date(2027,4,2)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,4,8),   "",               "", new Date(2027,4,9)),
+  ev("andebol", "2.º Torneio de Concentração",             new Date(2027,4,15),  "Funchal",        "", new Date(2027,4,16)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,4,22),  "",               "", new Date(2027,4,23)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,4,29),  "",               "", new Date(2027,4,30)),
+  ev("andebol", "Taça AAM",                                new Date(2027,5,5),   "",               "", new Date(2027,5,6)),
+  ev("andebol", "Torneio de Encerramento",                 new Date(2027,5,12),  "",               "", new Date(2027,5,13)),
+  ev("andebol", "4.º Estágio (selecção Sub-14)",           new Date(2027,5,12),  "",               "", new Date(2027,5,13)),
+  ev("andebol", "II IPTL Beach Handball Cup",              new Date(2027,5,19),  "",               "", new Date(2027,5,20)),
+  ev("andebol", "Campeonato Nacional (PO15) · Torneio do Porto Santo", new Date(2027,5,26), "Porto Santo", "", new Date(2027,5,28)),
+  ev("andebol", "Encerramento da época",                   new Date(2027,5,30),  "",               ""),
+  ev("andebol", "Torneio de Selecções Regionais — Festa do Andebol", new Date(2027,6,8), "",       "", new Date(2027,6,11)),
 
   /* ══════════════════════════════════════
      ✈ VIAGENS — Voos
