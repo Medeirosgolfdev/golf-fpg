@@ -25,7 +25,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { norm } from "../../utils/format";
-import { pontosEmJogo, projectar, type OmLevel } from "./omProjection";
+import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -187,21 +187,33 @@ function pointsLadder(
    O Carnaval não está nesta lista só por não ser nomeado no regulamento — mas
    CONTA para a OM (Nível C, calendário do clube de 18/02/2026; ver OM_LEVELS).
    As provas juniores exclusivas de 9 buracos não contam. Cada entrada casa por regex contra o nome do torneio. */
-const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp }> = [
-  { name: "Troféu João Sousa", level: "A", rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i },
-  { name: "Taça do Clube", level: "A", rx: /\bta[cç]a\s+do\s+clube\b/i },
-  { name: "Taça Presidente", level: "A", rx: /\bta[cç]a\s+presidente\b/i },
-  { name: "Torneio da Restauração", level: "A", rx: /\brestaura[cç][aã]o\b/i },
-  { name: "Torneio NOS Empresas", level: "B", rx: /\bnos\s+empresas\b/i },
-  { name: "Torneio Barbeito Madeira", level: "B", rx: /\bbarbeito\b/i },
-  { name: "Torneio de Inverno", level: "C", rx: /\binverno\b/i },
-  { name: "Torneio de Primavera", level: "C", rx: /\bprimavera\b/i },
-  { name: "Torneio de Páscoa", level: "C", rx: /\bp[aá]scoa\b/i },
-  { name: "Torneio de Outono", level: "C", rx: /\boutono\b/i },
-  { name: "Torneio de São Martinho", level: "C", rx: /\bs[aã]o\s+martinho\b/i },
-  { name: "Rali", level: "C", rx: /\brali\b/i },
-  { name: "Summer", level: "C", rx: /\bsummer\b/i },
+/* `date` = dia da prova no calendário do clube de 2026 (versão de 08/09/2026;
+   a de Fevereiro para Jan-Fev). null = a prova é nomeada no regulamento mas não
+   está no calendário deste ano (Páscoa, Outono) — nunca conta como "em falta".
+   ⚠ Sem isto o site somava aos pontos em aberto provas que não se vão jogar:
+   a 14/09/2026 dizia 135 (3 A + 4 C) quando só faltavam 90 (3 A + São Martinho).
+   Actualizar as datas quando o clube mexer no calendário. */
+const OM_FIM_EPOCA = "2026-11-14"; // regra 8
+const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp; date: string | null }> = [
+  { name: "Troféu João Sousa", level: "A", rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i, date: "2026-10-10" },
+  { name: "Taça do Clube", level: "A", rx: /\bta[cç]a\s+do\s+clube\b/i, date: "2026-09-26" },
+  { name: "Taça Presidente", level: "A", rx: /\bta[cç]a\s+presidente\b/i, date: "2026-10-31" },
+  { name: "Torneio da Restauração", level: "A", rx: /\brestaura[cç][aã]o\b/i, date: "2026-01-24" },
+  { name: "Torneio NOS Empresas", level: "B", rx: /\bnos\s+empresas\b/i, date: "2026-05-23" },
+  { name: "Torneio Barbeito Madeira", level: "B", rx: /\bbarbeito\b/i, date: "2026-09-12" },
+  { name: "Torneio de Inverno", level: "C", rx: /\binverno\b/i, date: "2026-01-17" },
+  { name: "Torneio de Primavera", level: "C", rx: /\bprimavera\b/i, date: "2026-03-14" },
+  { name: "Torneio de Páscoa", level: "C", rx: /\bp[aá]scoa\b/i, date: null },
+  { name: "Torneio de Outono", level: "C", rx: /\boutono\b/i, date: null },
+  { name: "Torneio de São Martinho", level: "C", rx: /\bs[aã]o\s+martinho\b/i, date: "2026-11-07" },
+  { name: "Rali", level: "C", rx: /\brali\b/i, date: "2026-08-01" },
+  { name: "Summer", level: "C", rx: /\bsummer\b/i, date: "2026-08-22" },
 ];
+const ddmm = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}` : "");
+const hojeISO = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
 
 /* ── A tab ── */
 function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Level }) {
@@ -248,11 +260,21 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
     return [...evs].sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   }, [data, asOf]);
 
-  // Provas do calendário oficial (regulamento) ainda por contar.
-  const missing = useMemo(
-    () => (data ? OM_CALENDAR.filter(c => !(data.events ?? []).some(e => c.rx.test(e.name))) : []),
-    [data]
-  );
+  // Provas nomeadas no regulamento, cada uma com o seu estado de hoje. Só as
+  // "por-jogar" e as "a-aguardar" (jogadas, sem resultados ainda) têm pontos
+  // em aberto; as não realizadas (regra 7) e as fora do calendário não contam.
+  const calEstado = useMemo(() => {
+    if (!data) return [];
+    const hoje = hojeISO();
+    return OM_CALENDAR.map(c => ({
+      ...c,
+      estado: estadoProva({ data: c.date, jogada: (data.events ?? []).some(e => c.rx.test(e.name)) }, hoje, OM_FIM_EPOCA),
+    }));
+  }, [data]);
+  const missing = useMemo(() => calEstado.filter(c => c.estado === "por-jogar" || c.estado === "a-aguardar"), [calEstado]);
+  const jaContam = calEstado.filter(c => c.estado === "jogada").length;
+  const naoRealizadas = calEstado.filter(c => c.estado === "nao-realizada");
+  const foraCalendario = calEstado.filter(c => c.estado === "fora-do-calendario");
 
   const rows = useMemo(() => {
     const r = [...standings];
@@ -410,8 +432,8 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           {missing.length > 0 && (
             <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-1)", border: "1px solid var(--border)", borderRadius: 8 }}>
               <div className="fs-12" style={{ marginBottom: 6 }}>
-                📅 <strong>Torneios em falta</strong> — {missing.length} de {OM_CALENDAR.length} provas nomeadas ainda por contar
-                {" "}({OM_CALENDAR.length - missing.length} já contam):
+                📅 <strong>Provas que faltam até ao fecho</strong> — {missing.length}
+                {" "}({jaContam} das provas nomeadas no regulamento já contam):
               </div>
               {(["A", "B", "C"] as Level[]).map(lv => {
                 const items = missing.filter(m => m.level === lv);
@@ -431,7 +453,9 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                       return (
                         <span key={m.name} className="p p-sm"
                           style={isThis ? { background: "var(--accent-light)", borderColor: "var(--accent)", fontWeight: 700 } : undefined}
-                          title={isThis ? "É esta prova (ainda sem resultados publicados)." : undefined}>
+                          title={isThis ? "É esta prova (ainda sem resultados publicados)."
+                            : m.estado === "a-aguardar" ? `Jogou-se a ${ddmm(m.date)} — à espera dos resultados.`
+                            : m.date ? `Joga-se a ${ddmm(m.date)}.` : undefined}>
                           {m.name}{isThis ? " ← esta prova" : ""}
                         </span>
                       );
@@ -446,6 +470,15 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                   </div>
                 );
               })}
+              {(naoRealizadas.length > 0 || foraCalendario.length > 0) && (
+                <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
+                  Não contam em 2026:{" "}
+                  {[
+                    ...naoRealizadas.map(m => `${m.name} (${ddmm(m.date)} — não se realizou, regra 7)`),
+                    ...(foraCalendario.length ? [`${foraCalendario.map(m => m.name).join(", ")} (fora do calendário do clube)`] : []),
+                  ].join(" · ")}.
+                </div>
+              )}
               <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
                 Além destas, os torneios juniores exclusivos (9 buracos) não contam. A época fecha a 14 Nov 2026 (regra 8).
               </div>

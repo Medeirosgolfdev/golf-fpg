@@ -1,5 +1,37 @@
 import { describe, it, expect } from "vitest";
-import { pontosEmJogo, projectar, type JogadorOm } from "../omProjection";
+import { estadoProva, pontosEmJogo, projectar, type JogadorOm } from "../omProjection";
+
+describe("estadoProva", () => {
+  const FIM = "2026-11-14";
+  const HOJE = "2026-09-14";
+  it("jogada ganha a tudo", () => {
+    expect(estadoProva({ data: "2026-09-12", jogada: true }, HOJE, FIM)).toBe("jogada");
+  });
+  it("sem data ou depois do fecho → fora do calendário", () => {
+    expect(estadoProva({ data: null, jogada: false }, HOJE, FIM)).toBe("fora-do-calendario");      // Páscoa, Outono
+    expect(estadoProva({ data: "2026-12-12", jogada: false }, HOJE, FIM)).toBe("fora-do-calendario"); // Natal
+  });
+  it("data futura (ou hoje) → por jogar", () => {
+    expect(estadoProva({ data: "2026-09-26", jogada: false }, HOJE, FIM)).toBe("por-jogar");
+    expect(estadoProva({ data: HOJE, jogada: false }, HOJE, FIM)).toBe("por-jogar");
+  });
+  it("jogou-se há poucos dias sem resultados → a aguardar; há muito → não realizada (regra 7)", () => {
+    expect(estadoProva({ data: "2026-09-12", jogada: false }, HOJE, FIM)).toBe("a-aguardar");
+    expect(estadoProva({ data: "2026-08-22", jogada: false }, HOJE, FIM)).toBe("nao-realizada"); // Summer
+  });
+  it("caso real de 14/09/2026: faltam 3 A + São Martinho = 90, não 135", () => {
+    const cal = [
+      { level: "A" as const, data: "2026-09-26" }, { level: "A" as const, data: "2026-10-10" },
+      { level: "A" as const, data: "2026-10-31" }, { level: "C" as const, data: "2026-11-07" },
+      { level: "C" as const, data: "2026-08-22" }, { level: "C" as const, data: null }, { level: "C" as const, data: null },
+    ];
+    const faltam = cal.filter(c => {
+      const e = estadoProva({ data: c.data, jogada: false }, HOJE, FIM);
+      return e === "por-jogar" || e === "a-aguardar";
+    });
+    expect(pontosEmJogo(faltam, { A: 25, B: 20, C: 15 }).total).toBe(90);
+  });
+});
 
 const TOPO = { A: 25, B: 20, C: 15 };
 

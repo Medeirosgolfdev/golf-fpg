@@ -32,6 +32,31 @@ export function pontosEmJogo(missing: { level: OmLevel }[], topo: TopByLevel): P
   return { total: porNivel.reduce((s, x) => s + x.soma, 0), porNivel };
 }
 
+/** Estado de uma prova do calendário da OM, visto a partir de hoje. */
+export type EstadoProva =
+  | "jogada"               // já tem resultados → já conta
+  | "por-jogar"            // data ainda por chegar → pontos em aberto
+  | "a-aguardar"           // jogou-se há poucos dias, resultados ainda não entraram
+  | "nao-realizada"        // a data passou e não houve prova → regra 7, deixa de contar
+  | "fora-do-calendario";  // não está no calendário do clube deste ano (ou é depois do fecho)
+
+/** Dias de tolerância depois da data de uma prova antes de a dar como não
+ *  realizada: os resultados só entram no build semanal (domingo à noite). */
+export const DIAS_A_AGUARDAR = 8;
+
+/** `data`, `hoje` e `fimEpoca` em YYYY-MM-DD (comparáveis como texto). */
+export function estadoProva(
+  p: { data?: string | null; jogada: boolean },
+  hoje: string,
+  fimEpoca: string,
+): EstadoProva {
+  if (p.jogada) return "jogada";
+  if (!p.data || p.data > fimEpoca) return "fora-do-calendario";
+  if (p.data >= hoje) return "por-jogar";
+  const dias = (Date.parse(hoje) - Date.parse(p.data)) / 86_400_000;
+  return dias <= DIAS_A_AGUARDAR ? "a-aguardar" : "nao-realizada";
+}
+
 export interface JogadorOm {
   fed: string;
   name: string;
