@@ -607,6 +607,8 @@ const NAO_DELE_TITULOS: string[] = ["Open de Portugal", "Absoluto"];
  *  no Santo da Serra. */
 const NAO_VAI: { titulo: string; data: string }[] = [
   { titulo: "Torneio Quinta de São João", data: "2026-09-05" },
+  // 10 de Outubro: Final Nacional do Drive Challenge no Jamor (está apurado).
+  { titulo: "Troféu João Sousa", data: "2026-10-10" },
   // 7 de Novembro: Final do Drive Tour em Oeiras.
   { titulo: "Torneio de São Martinho", data: "2026-11-07" },
 ];
@@ -628,9 +630,9 @@ function isDele(e: CalEvent): boolean {
  *  muitos e diários, e a cheio tapavam o resto. */
 function opacidadeDe(e: CalEvent): number {
   if (isDele(e)) return 1;
-  // Impossível de jogar (está noutro sítio) desce mais do que "não é do
-  // género dele": não é uma escolha, é um facto.
-  if (naoPode(e)) return 0.16;
+  // Impossível de jogar (está noutro sítio): esbatida, mas ainda legível —
+  // são provas dele que se perdem, não pano de fundo.
+  if (naoPode(e)) return 0.45;
   return e.calId.startsWith("bday_") ? 0.22 : 0.3;
 }
 
