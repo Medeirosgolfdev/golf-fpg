@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T13:45:19.640Z",
+  "generatedAt": "2026-09-14T10:40:36.966Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -529,6 +529,9 @@
         "rfeg-nc72750_infantil_hcp",
         "rfeg-nc72886_junior_hcp",
         "rfeg-nc73150_junior_hcp",
+        "rfeg-nc73621_infantil_hcp",
+        "rfeg-nc73622_infantil_hcp",
+        "rfeg-nc73623_infantil_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -537,8 +540,8 @@
         "rfeg-rfeg15923_girlsboys_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-09-02",
-      "editionsCount": 528
+      "lastDate": "2026-09-09",
+      "editionsCount": 531
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -11872,6 +11875,26 @@
       "editionsCount": 10
     },
     {
+      "id": "uskids-azata-golf",
+      "label": "Azata Golf",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21087",
+        "uskids-21088",
+        "uskids-21091",
+        "uskids-21092",
+        "uskids-21093",
+        "uskids-22768",
+        "uskids-22767"
+      ],
+      "firstDate": "2026-01-24",
+      "lastDate": "2026-09-13",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-the-summit-club-at-armonk",
       "label": "The Summit Club at Armonk",
       "sourceId": "uskids",
@@ -13683,25 +13706,6 @@
       ],
       "firstDate": "2022-02-19",
       "lastDate": "2025-08-25",
-      "editionsCount": 9
-    },
-    {
-      "id": "uskids-azata-golf",
-      "label": "Azata Golf",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-21929",
-        "uskids-21930",
-        "uskids-21931",
-        "uskids-21087",
-        "uskids-21088",
-        "uskids-21091",
-        "uskids-21092",
-        "uskids-21093",
-        "uskids-22767"
-      ],
-      "firstDate": "2026-01-24",
-      "lastDate": "2026-09-12",
       "editionsCount": 9
     },
     {
@@ -27762,6 +27766,20 @@
       "editionsCount": 4
     },
     {
+      "id": "uskids-santa-maria-country-club-club-de-golf-de-panama-tour-championship",
+      "label": "Santa Maria Country Club & Club de Golf de Panama (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-14854",
+        "uskids-16529",
+        "uskids-19580",
+        "uskids-22273"
+      ],
+      "firstDate": "2023-09-10",
+      "lastDate": "2026-09-13",
+      "editionsCount": 4
+    },
+    {
       "id": "uskids-south-shore-country-club",
       "label": "South Shore Country Club",
       "sourceId": "uskids",
@@ -33855,19 +33873,6 @@
       ],
       "firstDate": "2018-08-26",
       "lastDate": "2020-01-26",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-santa-maria-country-club-club-de-golf-de-panama-tour-championship",
-      "label": "Santa Maria Country Club & Club de Golf de Panama (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-14854",
-        "uskids-16529",
-        "uskids-19580"
-      ],
-      "firstDate": "2023-09-10",
-      "lastDate": "2025-09-14",
       "editionsCount": 3
     },
     {
@@ -74232,6 +74237,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-macarthur-grange-country-club-tour-championship",
+      "label": "Macarthur Grange Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22734"
+      ],
+      "firstDate": "2026-09-13",
+      "lastDate": "2026-09-13",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-el-cristo-golf-country-club-tour-championship",
       "label": "El Cristo Golf & Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -74408,6 +74424,50 @@
       "editionsCount": 1
     },
     {
+      "id": "ffgolf-tour-8-air-moana-polynesian-junior-tour-u8-u10",
+      "label": "TOUR 8 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601473541"
+      ],
+      "firstDate": "2026-09-12",
+      "lastDate": "2026-09-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-tour-8-air-moana-polynesian-junior-tour-u12-u18",
+      "label": "TOUR 8 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601473540"
+      ],
+      "firstDate": "2026-09-12",
+      "lastDate": "2026-09-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-tour-7-air-moana-polynesian-junior-tour-u12-u18",
+      "label": "TOUR 7 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601465504"
+      ],
+      "firstDate": "2026-08-29",
+      "lastDate": "2026-08-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-tour-7-air-moana-polynesian-junior-tour-u8-u10",
+      "label": "TOUR 7 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601465505"
+      ],
+      "firstDate": "2026-08-29",
+      "lastDate": "2026-08-29",
+      "editionsCount": 1
+    },
+    {
       "id": "ffgolf-mini-tour-u10-paca-etape-6-gde-bastide",
       "label": "Mini Tour U10 PACA - Etape 6 (Gde Bastide)",
       "sourceId": "ffgolf",
@@ -74427,6 +74487,28 @@
       ],
       "firstDate": "2026-08-22",
       "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-tour-6-air-moana-polynesian-junior-tour-u12-u18",
+      "label": "TOUR 6 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601465502"
+      ],
+      "firstDate": "2026-08-16",
+      "lastDate": "2026-08-16",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-tour-6-air-moana-polynesian-junior-tour-u8-u10",
+      "label": "TOUR 6 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601465503"
+      ],
+      "firstDate": "2026-08-16",
+      "lastDate": "2026-08-16",
       "editionsCount": 1
     },
     {
