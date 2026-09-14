@@ -213,7 +213,6 @@ const EVENTS: CalEvent[] = [
   ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Torneio Pérola do Atlântico (SCP Golfe)", new Date(2026,8,14), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Taça Prof. Ernâni Lopes",            new Date(2026,8,18), "Santo da Serra", "Stableford"),
-  ev("cgss_patrocin", "Porto Santo Colombos",               new Date(2026,8,19), "Porto Santo",    ""),
   // Calendário do clube de 08/09/2026: a Taça do Clube passou de 25 Jul para aqui e
   // a prova de pares que estava neste dia saiu.
   ev("cgss_major",    "Taça do Clube",                      new Date(2026,8,26), "Santo da Serra", "Medal"),

@@ -60,7 +60,6 @@ const EVENTS: CalEvent[] = [
   { title: "XIII Torneio Barbeito Madeira",            date: new Date(2026, 8, 12), campo: "Santo da Serra" },
   { title: "Torneio Pérola do Atlântico (SCP Golfe)",  date: new Date(2026, 8, 14), campo: "Santo da Serra" },
   { title: "Taça Prof. Ernâni Lopes",                  date: new Date(2026, 8, 18), campo: "Santo da Serra" },
-  { title: "Porto Santo Colombos",                     date: new Date(2026, 8, 19), campo: "Porto Santo" },
   { title: "Taça do Clube",                            date: new Date(2026, 8, 26), campo: "Santo da Serra" },
   // Outubro
   { title: "Torneio 50 Anos de Autonomia",             date: new Date(2026, 9,  3), campo: "Santo da Serra" },
