@@ -656,11 +656,26 @@ async function main() {
   });
   const page = await context.newPage();
 
+  // --only t1,t2 — actualiza SÓ esses torneios: sem descoberta (Fase 1) e sem
+  // tocar nos restantes. São poucos pedidos e em série, o que serve para
+  // refrescar os torneios que interessam quando a fonte corta a rajada diária
+  // (Set 2026: o signupanytime bloqueia qualquer IP que faça a Fase 1 inteira).
+  const iOnly = process.argv.indexOf('--only');
+  const only = iOnly > 0
+    ? new Set(String(process.argv[iOnly + 1] || '').split(',').map(Number).filter(Boolean))
+    : null;
+
   let torneios;
   try {
     // Fase 1: descoberta (só se cache tiver mais de 3 dias, ou --force-discovery)
     const forceDiscovery = process.argv.includes('--force-discovery');
-    if (forceDiscovery || cacheDesactualizada()) {
+    if (only) {
+      let doCache = [], doField = [];
+      try { doCache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')).torneios || []; } catch {}
+      try { doField = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios || []; } catch {}
+      torneios = [...only].map(t => doCache.find(x => x.t === t) || doField.find(x => x.t === t)).filter(Boolean);
+      console.log(`\n🎯 --only: ${torneios.map(t => `${t.name} (t=${t.t})`).join(' · ') || 'nenhum torneio conhecido'}`);
+    } else if (forceDiscovery || cacheDesactualizada()) {
       if (forceDiscovery) {
         console.log('\n🔄 --force-discovery activo');
         // Recuar ultimo_t para apanhar torneios que foram excluídos em varreduras anteriores.
@@ -727,9 +742,17 @@ async function main() {
     // de 2026-09-12 apagou 2018 inscritos e o workflow ficou verde no commit.
     // A comparação é só sobre os torneios que estão nos DOIS lados — ver o
     // porquê (e o caso real de 2026-08-01) em lib/uskids-rate-guard.js.
-    let anteriores = [];
-    try { anteriores = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios || []; } catch {}
-    const g = deveRecusarEscrita(anteriores, resultados, {
+    let anterior = {};
+    try { anterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+    const anteriores = anterior.torneios || [];
+    // Com --only, os torneios não pedidos ficam exactamente como estavam em disco.
+    let final = resultados;
+    if (only) {
+      const novos = new Map(resultados.map(t => [t.t, t]));
+      final = anteriores.map(t => novos.get(t.t) ?? t);
+      for (const t of resultados) if (!anteriores.some(a => a.t === t.t)) final.push(t);
+    }
+    const g = deveRecusarEscrita(anteriores, final, {
       max: PERDA_MAXIMA, forcar: process.argv.includes('--force'),
     });
     if (g.recusar) {
@@ -741,16 +764,18 @@ async function main() {
       return;
     }
     let escNovo = 0, jogNovo = 0;
-    for (const t of resultados) for (const e of (t.escaloes || [])) { escNovo++; jogNovo += (e.jogadores || []).length; }
+    for (const t of final) for (const e of (t.escaloes || [])) { escNovo++; jogNovo += (e.jogadores || []).length; }
     const novo = { esc: escNovo, jog: jogNovo };
 
     fs.writeFileSync(OUTPUT, JSON.stringify({
-      gerado_em: new Date().toISOString(),
+      // Um --only não é um run completo: o cabeçalho continua o do último run
+      // inteiro (é o que o canário lê); a data de cada torneio vive no próprio.
+      gerado_em: only ? (anterior.gerado_em || new Date().toISOString()) : new Date().toISOString(),
       // Prova de que a fonte nos recusou NESTE run — é o que permite ao
       // canário distinguir "a fonte cortou-nos" de "a rede falhou sem
       // explicação". Sem isto, os dois casos chegam lá iguais.
-      rate_limit_hits: rateLimitHits,
-      torneios: resultados,
+      rate_limit_hits: only ? (anterior.rate_limit_hits ?? 0) : rateLimitHits,
+      torneios: final,
     }, null, 2), 'utf8');
 
     console.log('\n══════════════════════════════════════');

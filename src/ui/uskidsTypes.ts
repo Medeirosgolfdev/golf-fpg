@@ -73,6 +73,11 @@ export interface Torneio {
   ultima_atualizacao: string;
   sem_flights?: boolean;
   erro?: string;
+  /** A fonte falhou neste run e o registo é o anterior, preservado
+   *  (`preservarAnterior` no fetch-uskids-field.js). `stale_desde` = data
+   *  desses dados, que é também o `ultima_atualizacao`. */
+  stale?: boolean;
+  stale_desde?: string;
   url_uskids?: string | null;
 }
 

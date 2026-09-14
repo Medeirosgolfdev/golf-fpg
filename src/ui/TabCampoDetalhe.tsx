@@ -8,7 +8,7 @@ import type { Torneio } from "./uskidsTypes";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
 import {
   LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, ArMapCtx,
-  badgeVagas, fmtTs, diasAte, isTerminado, seriesBase, playerSeriesResult
+  badgeVagas, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
 
 /** Dias desde a inscrição de um jogador.
@@ -23,6 +23,21 @@ function diasDesdeInscricao(j: { regDia?: string; firstSeen?: string }): number 
   const ms = Date.parse(j.regDia ? `${j.regDia}T00:00:00Z` : d);
   if (Number.isNaN(ms)) return null;
   return Math.max(0, Math.floor((Date.now() - ms) / 86400_000));
+}
+
+/** "11/09/2026, 13:19" — com ano: um aviso de dados antigos tem de dizer de quando são. */
+function fmtDataHora(iso?: string): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? ""
+    : d.toLocaleString("pt-PT", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
+}
+
+/** A mensagem crua da fonte ("rate limit (Too many requests)") em português. */
+function erroLegivel(erro: string): string {
+  return /rate.?limit|too many/i.test(erro)
+    ? "a USKids recusou os pedidos (demasiados pedidos seguidos)"
+    : erro;
 }
 
 /** Devolve o elemento ↗ com link para a página Kids do jogador.
@@ -98,6 +113,12 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
   const dias    = diasAte(t.date_inicio);
   const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
+  // Um erro só esconde o campo quando não há dados nenhuns. Se a fonte recusou
+  // hoje mas o registo anterior foi preservado (`stale`), mostra-se esse, com
+  // a data — nunca uma página vazia com a mensagem crua da fonte.
+  const semDados  = t.escaloes.length === 0;
+  const bloqueado = !!t.sem_flights || (!!t.erro && semDados);
+  const dataDados = fmtDataHora(t.stale_desde || t.ultima_atualizacao);
 
   return (
     <div>
@@ -140,7 +161,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         </div>
 
         {/* KPIs de inscrição */}
-        {!t.erro && !t.sem_flights && (
+        {!bloqueado && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:8 }}>
             <span className="chip fw-700 fs-13" style={{ background:"var(--color-good-dark)", color:"#fff", padding:"3px 12px" }}>
               {t.total_inscritos}/{t.total_maximo} inscritos
@@ -162,7 +183,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         )}
 
         {/* Flight IDs por escalão — acesso rápido ao número de cada flight (para scraping/pesquisa) */}
-        {!t.erro && !t.sem_flights && t.escaloes.some(e => e.flight_id) && (
+        {!bloqueado && t.escaloes.some(e => e.flight_id) && (
           <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginTop:8, alignItems:"center" }}>
             <span className="muted fs-11">Flights:</span>
             {t.escaloes.filter(e => e.flight_id).map(e => (
@@ -177,15 +198,21 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         {t.sem_flights && (
           <div className="notice" style={{ marginTop:10 }}>⏳ Flights ainda não publicados</div>
         )}
-        {t.erro && (
-          <div className="notice-error" style={{ marginTop:10 }}>⚠️ {t.erro}</div>
+        {t.erro && semDados && (
+          <div className="notice-error" style={{ marginTop:10 }}>⚠️ Sem lista de inscritos: {erroLegivel(t.erro)}.</div>
+        )}
+        {t.erro && !semDados && (
+          <div className="notice" style={{ marginTop:10 }}>
+            ⚠️ Não foi possível actualizar hoje — {erroLegivel(t.erro)}.
+            {" "}Estes são os inscritos de <strong>{dataDados}</strong>, a última actualização conseguida.
+          </div>
         )}
 
         {/* Links */}
         <TournExternalLinks t={t.t} urlUskids={t.url_uskids} />
       </div>
 
-      {t.erro || t.sem_flights ? null : (
+      {bloqueado ? null : (
         <>
           {/* ── Grid de escalões ── */}
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))", gap:10, marginBottom:20 }}>
@@ -370,7 +397,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             </div>
           )}
 
-          <div className="muted fs-11" style={{ textAlign:"right" }}>{fmtTs(t.ultima_atualizacao)}</div>
+          <div className="muted fs-11" style={{ textAlign:"right" }}>Última actualização: {dataDados}</div>
         </>
       )}
     </div>
