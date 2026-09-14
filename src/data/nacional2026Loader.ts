@@ -33,6 +33,12 @@ export interface FpgAdmissionPlayer {
   country?: string | null;   // código flag-icon (ex.: "ES")
   escalao?: string | null;   // escalão já resolvido (ex.: "Alevín")
   teeName?: string | null;   // tee do jogador (ex.: "5498 m") — texto, não cor
+  // Listas de apurados (finais Drive): pontos do ranking que o apurou, a posição
+  // nesse ranking ("1º Madeira", "Net 2º") e o detalhe para o tooltip.
+  regiao?: string | null;
+  pts?: number | null;
+  ptsRank?: string | null;
+  ptsInfo?: string | null;
 }
 
 export interface FpgDrawFlight {
@@ -150,6 +156,10 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     ...(p.country ? { country: p.country } : {}),
     ...(p.escalao ? { escalao: p.escalao } : {}),
     ...(p.desinscritoEm ? { desinscritoEm: p.desinscritoEm } : {}),
+    ...(p.regiao ? { regiao: p.regiao } : {}),
+    ...(p.pts != null ? { pts: p.pts } : {}),
+    ...(p.ptsRank ? { ptsRank: p.ptsRank } : {}),
+    ...(p.ptsInfo ? { ptsInfo: p.ptsInfo } : {}),
   };
 }
 

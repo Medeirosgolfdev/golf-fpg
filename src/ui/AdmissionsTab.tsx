@@ -43,7 +43,7 @@ interface Props {
   teeRule?: TeeRule;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status";
 
 
 export default function AdmissionsTab({
@@ -54,9 +54,11 @@ export default function AdmissionsTab({
   const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
   const fedGenders = useFedGenders();
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", { pts: "desc" });
 
   const players = admissions.players || [];
+  // Listas de apurados (finais Drive) trazem os pontos do ranking que os apurou.
+  const hasPts = players.some(p => p.pts != null);
   const confirmedCount = admissions.totalInscritos ?? players.filter(p => p.status === "confirmed").length;
   const reservasCount = admissions.reservas ?? players.filter(p => p.status === "reserva").length;
   const desistentesCount = players.filter(p => p.status === "desistente").length;
@@ -137,6 +139,7 @@ export default function AdmissionsTab({
         case "clube":   v = a._clube.localeCompare(b._clube, "pt"); break;
         case "hcp":     v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
         case "nasc":    v = (a._dobYear ?? INF) - (b._dobYear ?? INF); break;
+        case "pts":     v = (a.pts ?? -1) - (b.pts ?? -1); break;
         case "vac":     v = (a.vac ?? INF) - (b.vac ?? INF); break;
         case "registo": v = (a.dataInscricao || "").localeCompare(b.dataInscricao || ""); break;
         case "status":  v = a.status.localeCompare(b.status); break;
@@ -219,6 +222,16 @@ export default function AdmissionsTab({
                 </span>
               ) : <span className="muted">–</span>}
             </td>
+            {hasPts && (
+              <td title={p.ptsInfo || ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+                {p.pts != null ? (
+                  <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15 }}>
+                    <b>{p.pts}</b>
+                    {p.ptsRank && <span className="muted fs-10">{p.ptsRank}</span>}
+                  </span>
+                ) : <span className="muted">–</span>}
+              </td>
+            )}
           </>
         ),
         postScorecardCells: hidePostCols ? undefined : (
@@ -240,7 +253,7 @@ export default function AdmissionsTab({
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols]);
+  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts]);
 
   if (admissions.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -263,6 +276,10 @@ export default function AdmissionsTab({
       <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
       <th className="lb-tee">TEE</th>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
+      {hasPts && (
+        <SortableHdr k="pts" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
+          style={{ padding: "7px 8px", textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
+      )}
     </>
   );
   const postScorecardHeaderCells = (
