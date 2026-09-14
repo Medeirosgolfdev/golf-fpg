@@ -50,25 +50,26 @@ const EVENTS: CalEvent[] = [
   { title: "3º Torneio Circuito AQUAPOR",              date: new Date(2026, 5, 14), campo: "Quinta do Peru" },
   // Julho
   { title: "7º Torneio Drive Challenge Madeira",       date: new Date(2026, 6, 11), campo: "Santo da Serra" },
-  { title: "IV Prova Camp. Clube de Pares",            date: new Date(2026, 6,  4), campo: "Santo da Serra" },
-  { title: "Taça do Clube",                            date: new Date(2026, 6, 25), campo: "Santo da Serra" },
+  { title: "III Prova Camp. Clube de Pares",           date: new Date(2026, 6,  4), campo: "Santo da Serra" },
   // Agosto
   { title: "Torneio CGSS Rali",                        date: new Date(2026, 7,  1), campo: "Santo da Serra" },
   { title: "Torneio CGSS Summer",                      date: new Date(2026, 7, 22), campo: "Santo da Serra" },
-  { title: "Camp. Nacional de Clubes",                 date: new Date(2026, 7, 25), campo: "Pinhal" },
+  { title: "Camp. Nacional de Clubes",                 date: new Date(2026, 7, 27), campo: "Vilamoura - Pinhal" },
   { title: "Torneio CGSS",                             date: new Date(2026, 7, 29), campo: "Santo da Serra" },
   // Setembro
   { title: "XIII Torneio Barbeito Madeira",            date: new Date(2026, 8, 12), campo: "Santo da Serra" },
+  { title: "Torneio Pérola do Atlântico (SCP Golfe)",  date: new Date(2026, 8, 14), campo: "Santo da Serra" },
+  { title: "Taça Prof. Ernâni Lopes",                  date: new Date(2026, 8, 18), campo: "Santo da Serra" },
   { title: "Porto Santo Colombos",                     date: new Date(2026, 8, 19), campo: "Porto Santo" },
-  { title: "4º Torneio Circuito AQUAPOR",              date: new Date(2026, 8, 20), campo: "TBC" },
+  { title: "Taça do Clube",                            date: new Date(2026, 8, 26), campo: "Santo da Serra" },
   // Outubro
-  { title: "Torneio CGEx ZMM",                         date: new Date(2026, 9,  4), campo: "Santo da Serra" },
-  { title: "Torneio Serras / São Martinho CGSS",       date: new Date(2026, 9, 10), campo: "Santo da Serra" },
-  { title: "Troféu João Sousa",                        date: new Date(2026, 9, 17), campo: "Santo da Serra" },
+  { title: "Torneio 50 Anos de Autonomia",             date: new Date(2026, 9,  3), campo: "Santo da Serra" },
+  { title: "Troféu João Sousa",                        date: new Date(2026, 9, 10), campo: "Santo da Serra" },
   { title: "V Prova Camp. Clube de Pares",             date: new Date(2026, 9, 24), campo: "Santo da Serra" },
   { title: "Taça Presidente",                          date: new Date(2026, 9, 31), campo: "Santo da Serra" },
   // Novembro
   { title: "Torneio de São Martinho CGSS",             date: new Date(2026, 10,  7), campo: "Santo da Serra" },
+  { title: "VI Prova Camp. Clube de Pares",            date: new Date(2026, 10, 14), campo: "Santo da Serra" },
   { title: "Taça 1937 — Gala Encerramento",            date: new Date(2026, 10, 21), campo: "Santo da Serra" },
   // Dezembro
   { title: "Torneio Solidário",                        date: new Date(2026, 11,  5), campo: "Santo da Serra" },

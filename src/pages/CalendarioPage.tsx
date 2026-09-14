@@ -203,7 +203,6 @@ const EVENTS: CalEvent[] = [
   ev("cgss_pares",    "III Prova Camp. Clube de Pares",      new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
   ev("cgss_patrocin", "Expresso BPI Golf Cup QR",            new Date(2026,6,18), "Santo da Serra", "Texas Scramble"),
   ev("cgss_patrocin", "Expresso BPI Golf Cup MF",            new Date(2026,6,19), "Santo da Serra", "Texas Scramble"),
-  ev("cgss_major",    "Taça do Clube",                       new Date(2026,6,25), "Santo da Serra", "Medal"),
   ev("cgss_ouro",     "IV Aberto CGSS 2026",                 new Date(2026,6,26), "Santo da Serra", "Strokeplay"),
   // Agosto
   ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
@@ -215,7 +214,9 @@ const EVENTS: CalEvent[] = [
   ev("cgss_patrocin", "Torneio Pérola do Atlântico (SCP Golfe)", new Date(2026,8,14), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Taça Prof. Ernâni Lopes",            new Date(2026,8,18), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Porto Santo Colombos",               new Date(2026,8,19), "Porto Santo",    ""),
-  ev("cgss_pares",    "IV Prova Camp. Clube de Pares",      new Date(2026,8,26), "Santo da Serra", "Texas Scramble"),
+  // Calendário do clube de 08/09/2026: a Taça do Clube passou de 25 Jul para aqui e
+  // a prova de pares que estava neste dia saiu.
+  ev("cgss_major",    "Taça do Clube",                      new Date(2026,8,26), "Santo da Serra", "Medal"),
   // Outubro
   ev("cgss_patrocin", "Torneio 50 Anos de Autonomia",       new Date(2026,9,3),  "Santo da Serra", "Stableford", new Date(2026,9,4)),
   ev("cgss_major",    "Troféu João Sousa",                  new Date(2026,9,10), "Santo da Serra", "Stableford"),
@@ -223,6 +224,8 @@ const EVENTS: CalEvent[] = [
   ev("cgss_major",    "Taça Presidente",                    new Date(2026,9,31), "Santo da Serra", "Stableford"),
   // Novembro
   ev("cgss_om_c",     "Torneio de São Martinho CGSS",       new Date(2026,10,7), "Santo da Serra", "Stableford"),
+  // O PDF do clube chama-lhe "V Prova", tal como à de 24 Out — número por confirmar.
+  ev("cgss_pares",    "VI Prova Camp. Clube de Pares",      new Date(2026,10,14),"Santo da Serra", "Betterball"),
   ev("cgss_patrocin", "Taça 1937 — Gala Encerramento",      new Date(2026,10,21),"Santo da Serra", "Stableford"),
   // Dezembro
   ev("cgss_patrocin", "Torneio Solidário",                  new Date(2026,11,5), "Santo da Serra", "Stableford"),
