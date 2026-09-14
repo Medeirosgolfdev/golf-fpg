@@ -8,7 +8,7 @@
  *
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import LoadingState from "../../ui/LoadingState";
@@ -35,18 +35,20 @@ import { kidsUrl } from "../../ui/KidsLink";
 const CANONICAL_TCODES = new Set([
   // European Championship — 5 edições mais recentes (2026 acabou de jogar)
   "8300",  "13568", "15704", "18242", "21131",         // 2022, 2023, 2024, 2025, 2026
-  // World Championship — 4 edições mais recentes
-  "11604", "14029", "15807", "18124",                  // 2022, 2023, 2024, 2025
-  // Venice Open — 4 edições mais recentes
-  "12229", "14302", "16428", "19418",                  // 2022, 2023, 2024, 2025
+  // World Championship — edições mais recentes
+  "11604", "14029", "15807", "18124", "21610",         // 2022, 2023, 2024, 2025, 2026
+  // Venice Open — edições mais recentes
+  "12229", "14302", "16428", "19418", "22243",         // 2022, 2023, 2024, 2025, 2026
+  // Spanish Open (San Roque) — estreou 2025
+  "20429",                                             // 2025
   // Marco Simone Invitational — última edição (estreou 2025)
   "18438", "21080",                                    // 2025, 2026
   // Rome Classic — 4 edições (2022-2025)
   "12578", "14670", "16795", "20175",                  // 2022, 2023, 2024, 2025
   // Irish Open (Irlanda) — 5 edições (2021-2025); boa penetração europeia
-  "8660", "11307", "13470", "16020", "18978",          // 2021, 2022, 2023, 2024, 2025
-  // Paris Invitational (França) — 1 edição disponível no member-history
-  "18975",                                             // 2025
+  "8660", "11307", "13470", "16020", "18978", "21455", // 2021, 2022, 2023, 2024, 2025, 2026
+  // Paris Invitational (França)
+  "18975", "21795",                                    // 2025, 2026
   // Red White & Blue Invitational 2026 (4 Jul) — grande field US do escalão
   "22187",
   // Washington State Invitational 2026 (3 Jul)
@@ -70,10 +72,11 @@ const SERIES_PRIORITY: Record<string, number> = {
 // World Championship (onde tipicamente só o Manuel os jogou) — aí só fazem
 // barulho. Escondidos quando o torneio seleccionado tem scope "global".
 const EURO_CIRCUIT_TCODES = new Set([
-  "8660", "11307", "13470", "16020", "18978",          // Irish Open 2021-2025
+  "8660", "11307", "13470", "16020", "18978", "21455", // Irish Open 2021-2026
   "12578", "14670", "16795", "20175",                  // Rome Classic 2022-2025
   "18438", "21080",                                    // Marco Simone 2025, 2026
-  "18975",                                             // Paris Invitational 2025
+  "18975", "21795",                                    // Paris Invitational 2025, 2026
+  "20429",                                             // Spanish Open 2025
 ]);
 const EURO_EXTRA_PREFIXES = ["eowagr"] as const;
 
@@ -345,7 +348,29 @@ const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; h
 ];
 // Só torneios ainda não passados (data hoje ou futura)
 const _today = new Date().toISOString().slice(0, 10);
-const UP_TORN_FUTURE = UP_TORN.filter(u => !u.date_iso || u.date_iso >= _today);
+const isManuelNome = (n: string) => normName(n).includes("manuel medeiros");
+const usToIso = (s: string) => { const [m, d, y] = (s || "").split("/"); return y ? `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}` : ""; };
+
+/** UP_TORN (curados à mão) + os torneios futuros do field em que o Manuel está
+ *  inscrito. A lista curada sozinha envelhecia: tinha o Belgium (onde ele não vai)
+ *  e não tinha o Spanish Open (onde está inscrito). */
+function buildUpTorn(field: FieldData | null): typeof UP_TORN {
+  if (!field) return UP_TORN;
+  const known = new Set(UP_TORN.map(u => u.tcode));
+  const extra: typeof UP_TORN = [];
+  for (const t of field.torneios) {
+    const iso = usToIso(t.date_inicio);
+    if (known.has(String(t.t)) || !iso || iso < _today) continue;
+    if (!t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuelNome(j.nome)))) continue;
+    const m = t.name.match(/^(.+?)\s+(\d{4})$/);
+    extra.push({
+      id: `usk${t.t}`, tcode: String(t.t), date_iso: iso, name: t.name,
+      short: m ? `${m[1].split(" ")[0]} '${m[2].slice(2)}` : t.name.slice(0, 12),
+      url: `/uskids?t=${t.t}&tab=campo`,
+    });
+  }
+  return [...UP_TORN, ...extra].sort((a, b) => (a.date_iso || "").localeCompare(b.date_iso || ""));
+}
 
 // Link oficial de RESULTADOS (signupanytime) por tcode USKids — usado nos
 // cabeçalhos de torneio da cross-table (coluna por edição + grupo da série).
@@ -554,6 +579,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     if (syncUrl) { const t = searchParams.get("t"); if (t && !Number.isNaN(Number(t))) return Number(t); }
     return defaultT;
   });
+  // Sem ?t= no endereço, abre-se o próximo torneio em que o Manuel está inscrito
+  // (o defaultT fixo caía num torneio sem ele — ex. Belgium 2026 em vez do Spanish Open).
+  const autoPick = useRef(!(syncUrl && searchParams.get("t")));
   const [escalaoNome, setEscalaoNome] = useState<string>(() =>
     (syncUrl && searchParams.get("esc")) || defaultEscalao,
   );
@@ -720,6 +748,10 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   //
   // Ordenados por data: futuros ascendente (próximo primeiro), passados
   // descendente (mais recente primeiro). Junta-se as duas listas.
+  // Próximos torneios = curados (UP_TORN) + os do field em que o Manuel está inscrito.
+  const upTorn = useMemo(() => buildUpTorn(field), [field]);
+  const upTornFuture = useMemo(() => upTorn.filter(u => !u.date_iso || u.date_iso >= _today), [upTorn]);
+
   const futureTorneios = useMemo<FieldTorneio[]>(() => {
     if (!field && !mh && !uskRes) return [];
     const today = new Date().toISOString().slice(0, 10);
@@ -731,7 +763,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
     // 1) Futuros (UP_TORN ∩ field)
     if (field) {
-      const relevantTcodes = new Set(UP_TORN.map(u => u.tcode).filter(Boolean) as string[]);
+      const relevantTcodes = new Set(upTorn.map(u => u.tcode).filter(Boolean) as string[]);
       const fut = field.torneios
         .filter(t => relevantTcodes.has(String(t.t)))
         .filter(t => {
@@ -770,7 +802,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         }
       }
       // (b) UP_TORN com data passada — descoberta via mh.torneios OU uskRes
-      for (const ut of UP_TORN) {
+      for (const ut of upTorn) {
         if (!ut.tcode) continue;
         let startIso = "";
         if (mh && mh.torneios[ut.tcode]) startIso = toIso(mh.torneios[ut.tcode].startDate);
@@ -983,6 +1015,20 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   // tem Boys 12 mas o escalão fica "" no select se algo falhou antes).
   useEffect(() => {
     if (futureTorneios.length === 0) return;
+    // 0) Sem ?t= no endereço: o próximo torneio do Manuel (só depois de o field carregar)
+    if (autoPick.current && field) {
+      autoPick.current = false;
+      const inscrito = (t: FieldTorneio) => t.escaloes.find(e => (e.jogadores ?? []).some(j => isManuelNome(j.nome)));
+      const alvo = futureTorneios
+        .filter(t => t.t > 0 && toIso(t.date_inicio) >= _today && inscrito(t))
+        .sort((a, b) => toIso(a.date_inicio).localeCompare(toIso(b.date_inicio)))[0];
+      if (alvo) {
+        setTorneioT(alvo.t);
+        const esc = inscrito(alvo);
+        if (esc) setEscalaoNome(esc.nome);
+        return;
+      }
+    }
     // 1) Se o torneio actual não existe, fixar no primeiro disponível
     const currentTorneio = futureTorneios.find(x => x.t === torneioT);
     if (!currentTorneio) {
@@ -1074,15 +1120,14 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     // SÓ os canónicos (curados) — mesmo com 0 participantes do escalão actual,
     // porque são os que dão referência de nível. Ver nota no topo do ficheiro.
     // Num field global (World), o circuito europeu pequeno fica de fora.
-    const upSel = UP_TORN.find(u => u.tcode === String(torneioT));
+    const upSel = upTorn.find(u => u.tcode === String(torneioT));
     const isGlobalField = upSel
       ? upSel.scope === "global"
       : /world championship/i.test(torneio?.name || "");
     // Ano do torneio em análise — base para calcular a idade que o field tinha
     // em cada torneio passado (ver shiftEscalao).
-    const refYear = parseInt(
-      (upSel?.date_iso || toIso(torneio?.date_inicio || "")).slice(0, 4), 10,
-    ) || new Date().getFullYear();
+    const refIso = upSel?.date_iso || toIso(torneio?.date_inicio || "");
+    const refYear = parseInt(refIso.slice(0, 4), 10) || new Date().getFullYear();
     const selectedTcodes = [...CANONICAL_TCODES]
       .filter(tcode => !!mh.torneios[tcode])
       .filter(tcode => !(isGlobalField && EURO_CIRCUIT_TCODES.has(tcode)))
@@ -1222,9 +1267,16 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       // Divisão tem de conter o escalão que estes miúdos tinham À DATA do
       // torneio (mata Doral B8-9, divisões Girls, e escolhe a B10-11 em vez da
       // B12-13 num Doral de 2025 para um field que hoje é Boys 12).
-      const tidYear = parseInt(info.date.match(/(?:19|20)\d{2}/)?.[0] || "", 10) || refYear;
-      const anosAtras = Math.max(0, refYear - tidYear);
-      if (!escalaoMatches(shiftEscalao(escalaoNome, anosAtras), extraTidEscalao(tid))) continue;
+      // Idade à data do torneio com precisão de MESES, não de anos civis: entre o
+      // WJGC de Fev 2026 e um torneio em Nov 2026 vão 0,7 anos — um Boys 12 de
+      // hoje podia ter 11 ou 12 lá e jogou a B10-11 ou a B12-13. Aceitam-se as
+      // duas (antes contava 0 anos e cortava a B10-11, onde estava o Manuel).
+      const tidMs = Date.parse(info.date), refMs = Date.parse(refIso);
+      const anos = Number.isNaN(tidMs) || Number.isNaN(refMs)
+        ? Math.max(0, refYear - (parseInt(info.date.match(/(?:19|20)\d{2}/)?.[0] || "", 10) || refYear))
+        : Math.max(0, (refMs - tidMs) / (365.25 * 86400000));
+      const escTid = extraTidEscalao(tid);
+      if (![Math.floor(anos), Math.ceil(anos)].some(a => escalaoMatches(shiftEscalao(escalaoNome, a), escTid))) continue;
       const nrounds = extraRounds.get(tid) ?? 1;
       // Par por ronda: derivado de (total − toPar) / nº de rondas de um jogador.
       let parPer = 72;
@@ -1428,7 +1480,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }
 
       const up: string[] = [];
-      const upCurrent = UP_TORN.find(u => u.tcode === String(torneioT));
+      const upCurrent = upTorn.find(u => u.tcode === String(torneioT));
       if (upCurrent && !fm.isM) up.push(upCurrent.id);
 
       // Buscar DOB do autoRival correspondente (existe quando o loader cruza com players.json)
@@ -1440,7 +1492,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         co: normPaisDisplay(fm.p.pais),
         isM: fm.isM,
         r,
-        up: fm.isM ? UP_TORN_FUTURE.map(u => u.id) : up,
+        up: fm.isM ? upTornFuture.map(u => u.id) : up,
         dob,
       });
     }
@@ -1512,7 +1564,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     if (!manuel) return null;
 
     const allCountries = [...new Set(D.map(p => p.co))].sort();
-    return { D, T, UP: UP_TORN_FUTURE, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
+    return { D, T, UP: upTornFuture, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
   }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes, intlCols]);
 
   // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
@@ -1598,7 +1650,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           }}
         >
           {(() => {
-            const UP_T_SET = new Set(UP_TORN.map(u => u.tcode));
+            const UP_T_SET = new Set(upTorn.map(u => u.tcode));
             const todayIso = new Date().toISOString().slice(0, 10);
             const fmtDate = (us: string) => {
               const iso = (s => { const [m2,d2,y2]=(s||"").split("/"); return y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:s; })(us);
@@ -1749,7 +1801,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           }}>
             <span>{torneioSelecionado.date_inicio}</span>
             {(() => {
-              const hub = UP_TORN.find(u => u.tcode === String(torneioT))?.hub;
+              const hub = upTorn.find(u => u.tcode === String(torneioT))?.hub;
               return hub ? (
                 <a href={hub} target="_blank" rel="noreferrer"
                    style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}

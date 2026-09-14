@@ -393,7 +393,15 @@ export default function USKidsFieldPage() {
       .then((d: FieldData) => {
         setFieldData(d);
         upsertFileMeta({ path: "/data/uskids-field.json", status: "loaded", count: d.torneios?.length, group: "field" });
-        if (d.torneios.length) setSelectedTState(prev => prev !== null ? prev : d.torneios[0].t);
+        // Por omissão abre o próximo torneio em que o Manuel está inscrito — o filtro
+        // ★ Manuel vem ligado, e abrir d.torneios[0] mostrava um torneio fora da lista.
+        if (d.torneios.length) setSelectedTState(prev => {
+          if (prev !== null) return prev;
+          const doManuel = d.torneios
+            .filter(t => t.escaloes?.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome))))
+            .sort((a, b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
+          return (doManuel[0] ?? d.torneios[0]).t;
+        });
       })
       .catch(e => {
         setErro(e.message);
