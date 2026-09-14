@@ -32,8 +32,10 @@
  *   · Desempate 1º (rule 4): melhor resultado na última prova; depois HCP WHS
  *     mais baixo. Aplicado só como ordenação secundária.
  *
- * Fonte de dados: scoring.datagolf.pt (cookies DATAGOLF_SCORING_COOKIES /
- * api/.scoring-datagolf-cookies.json). Sem esses cookies não corre.
+ * Fonte de dados: scoring.datagolf.pt, pelo gateway PÚBLICO do ack (sem
+ * credenciais) com as cookies DATAGOLF_SCORING_COOKIES só como fallback — a
+ * política do repo (ver "Quem já corre sem cookies" no CLAUDE.md). Corre sem
+ * cookies nenhumas.
  *
  * OUTPUT: public/data/om-cgss-junior.json
  * EXIT: 0 = escrito/atualizado · 2 = sem alterações · 1 = erro
@@ -42,6 +44,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+const { criarRoteador } = require("./lib/fpg-session");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const REPO = path.resolve(__dirname, "..");
@@ -76,10 +79,14 @@ const rankingUrl = code => `https://scoring.datagolf.pt/pt/rankings_classif.aspx
  * entrada aqui é então opcional (o dedup trata; fica só como documentação).
  *   RALI 2026 (007/11050) = Nível C (regulamento).
  *   8º Torneio CGSS OM NOS 2026 (007/11057, 29-08) = Nível C (confirmado pela
- *   Mariana; jogado hoje, ainda não lançado nas OMs adultas). */
+ *   Mariana; jogado hoje, ainda não lançado nas OMs adultas).
+ *   XIII Torneio Vinhos Barbeito Madeira (007/11064, 12-09) = Nível B (o
+ *   regulamento nomeia o Barbeito como Nível B; é o mesmo padrão /barbeito/ que
+ *   o OM_LEVELS da UI usa). */
 const PENDING_EVENTS = [
   { tcode: "11050", level: "C" },
   { tcode: "11057", level: "C" },
+  { tcode: "11064", level: "B" },
 ];
 
 /* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
@@ -189,41 +196,67 @@ const isoDateStart = s => { const m = /Date\((\d+)/.exec(s || ""); return m ? li
 async function warmupClassif(tc) {
   try { const r = await fetch(`${BASE}/linkpage.aspx?page=classif&club=${CLUB}&tourn=${tc}&ack=${ACK}`, { headers: { "User-Agent": UA, Cookie: COOKIE, Referer: "https://scoring.datagolf.pt/" }, redirect: "follow" }); await r.text(); } catch {}
 }
-async function pageMethod(pageAsp, method, params, referer) {
-  const qs = new URLSearchParams(params).toString();
-  const r = await fetch(`${BASE}/${pageAsp}/${method}?${qs}`, {
+/* ⚠ As TRÊS famílias de PageMethod que este build usa — `rankings_classif`,
+ * `tournaments` e `classif` — são servidas pelo gateway do ack SEM credencial
+ * nenhuma, e essa sessão não expira (é emitida a cada pedido). As cookies
+ * duram ~9h e morrem sempre antes do cron semanal: a 2026-09-12 o run deu
+ * HTTP 500 nas quatro OMs adultas com a FPG perfeitamente de pé (medido pelo
+ * caminho público no mesmo minuto: 31 jogadores na OM Homens, 84 torneios,
+ * 91 jogadores no 007/11064). Daí a ordem do resto do repo: público primeiro,
+ * cookies como fallback nos dois sentidos. FPG_AUTH_MODE=cookies inverte. */
+function refererFor(pathname, body) {
+  if (pathname.startsWith("rankings_classif.aspx"))
+    return `${BASE}/linkpage.aspx?page=rankingresult&club=${CLUB}&ranking=${body.Rk_Code}&ack=${ACK}`;
+  if (pathname.startsWith("classif.aspx")) return `${BASE}/classif.aspx?ccode=${CLUB}&tcode=${body.tcode}`;
+  return `${BASE}/tournaments.aspx`;
+}
+/** Caminho AUTENTICADO. Lança em falha (é o que o roteador espera para comutar). */
+async function dgPost(pathname, body, qs) {
+  const r = await fetch(`${BASE}/${pathname}${qs ? `?${qs}` : ""}`, {
     method: "POST",
     headers: {
       "User-Agent": UA, Cookie: COOKIE, "Content-Type": "application/json; charset=utf-8",
       "X-Requested-With": "XMLHttpRequest", "Accept": "application/json, text/javascript, */*; q=0.01",
-      "Origin": "https://scoring.datagolf.pt", "Referer": referer || `${BASE}/tournaments.aspx`,
+      "Origin": "https://scoring.datagolf.pt", "Referer": refererFor(pathname, body),
     },
-    body: JSON.stringify(params),
+    body: JSON.stringify(body),
   });
-  if (!r.ok) return { error: `http-${r.status}`, records: [] };
+  if (!r.ok) { const e = new Error(`${pathname}: http-${r.status}`); e.status = r.status; throw e; }
   const j = await r.json(); const d = j.d || j;
-  if (d.Result !== "OK") return { error: d.Message || d.Result, records: [] };
-  return { records: d.Records || [], total: d.TotalRecordCount };
+  if (d.Result !== "OK") { const e = new Error(`${pathname}: ${d.Message || d.Result}`); e.status = 500; throw e; }
+  return { Records: d.Records || [], TotalRecordCount: d.TotalRecordCount };
 }
-const rankLST = (method, params) => pageMethod("rankings_classif.aspx", method, { jtStartIndex: "0", jtPageSize: "500", ...params }, `${BASE}/linkpage.aspx?page=rankingresult&club=${CLUB}&ranking=${params.Rk_Code}&ack=${ACK}`);
+const ROTA = criarRoteador({ dgPost: COOKIE ? dgPost : null, info: m => console.log(`[om-junior] ${m}`) });
+async function pageMethod(pageAsp, method, params) {
+  const qs = new URLSearchParams(params).toString();
+  try {
+    const d = await ROTA.post(`${pageAsp}/${method}`, params, qs);
+    return { records: d.Records || [], total: d.TotalRecordCount };
+  } catch (e) {
+    return { error: (e && e.message) || String(e), records: [] };
+  }
+}
+const rankLST = (method, params) => pageMethod("rankings_classif.aspx", method, { jtStartIndex: "0", jtPageSize: "500", ...params });
 async function classifLST(tc) {
-  await warmupClassif(tc);
+  if (COOKIE) await warmupClassif(tc);   // o caminho público abre o seu próprio gate
   const body = { Classi:"1", tclub:CLUB, tcode:String(tc), classiforder:"1", classiftype:"I", classifroundtype:"D",
     scoringtype:"1", round:"1", members:"0", playertypes:"0", gender:"0", minagemen:"0", maxagemen:"999",
     minageladies:"0", maxageladies:"999", minhcp:"-8", maxhcp:"99", idfilter:"-1",
     jtStartIndex:"0", jtPageSize:"400", jtSorting:"score_id DESC" };
-  return pageMethod("classif.aspx", "ClassifLST", body, `${BASE}/classif.aspx?ccode=${CLUB}&tcode=${tc}`);
+  return pageMethod("classif.aspx", "ClassifLST", body);
 }
 async function tournamentsLST(startIndex) {
   // pageSize ≤ 100 obrigatório (≥200 → HTTP 500)
   const body = { ClubCode: CLUB, dtIni: `${YEAR}-01-01`, dtFim: `${YEAR}-12-31`, CourseName: "", TournCode: "", TournName: "",
     jtStartIndex: String(startIndex), jtPageSize: "50", jtSorting: "started_at DESC" };
-  return pageMethod("tournaments.aspx", "TournamentsLST", body, `${BASE}/tournaments.aspx`);
+  return pageMethod("tournaments.aspx", "TournamentsLST", body);
 }
 
 /* ── main ── */
 (async () => {
-  if (!COOKIE) { console.error("[om-junior] sem cookies (DATAGOLF_SCORING_COOKIES / api/.scoring-datagolf-cookies.json)"); process.exit(1); }
+  console.log(COOKIE
+    ? "[om-junior] cookies presentes — gateway público primeiro, cookies como fallback."
+    : "[om-junior] sem cookies — só gateway público (ack, sem credenciais).");
 
   // 1. Derivar provas OM + nível a partir das OMs adultas oficiais.
   console.log("[om-junior] a derivar provas da OM adulta oficial…");

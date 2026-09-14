@@ -574,6 +574,7 @@ Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos dev
 | `lib/cookies.js` | `loadCookieHeader({envVars, file, label})` | as cópias de `loadCookies()` (env primeiro, ficheiro local depois) |
 | `lib/fpg-http.js` | `makeFpgPost({baseUrl, cookie, ua, origin, referer, extraHeaders, retries})`, `FpgHttpError`, `sleep` | as cópias de `dgPost()`/`fpgPost()` — retry em HTTP 500 + detecção `Result:"ERROR"` |
 | `lib/atomic-write.js` | `writeJsonAtomic(filePath, data)` | escritas directas com `writeFileSync` (tmp+rename, nunca deixa JSON truncado) |
+| `lib/uskids-rate-guard.js` | `ehRateLimit`, `deveVarrerProfundo`, `perdaNosComuns`, `deveRecusarEscrita`, `avaliarCanario` | as defesas do monitor USKids contra uma fonte que recusa (23 testes) |
 
 Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg-admissions-draws-node, fpg-scrape-node, scrape-nacionais-feds-node.
 
@@ -1308,8 +1309,13 @@ MESMA cache para saber que torneios estão em curso — descoberta partida = sem
 resultados também.
 ```bash
 node fetch-uskids-field.js
-node fetch-uskids-field.js --force-discovery   # ignora a cache
+node fetch-uskids-field.js --force-discovery   # ignora a cache de descoberta
+node fetch-uskids-field.js --full-scan         # força a varredura profunda (Passagem A + sondas)
+node fetch-uskids-field.js --force             # grava mesmo perdendo >30% dos inscritos
 ```
+
+Exit **0** = gravou · **2** = guarda anti-encolhimento recusou (ficheiro
+anterior intacto, não é erro) · **1** = erro.
 
 ⚠ **A varredura de tcodes tem de ser em DUAS passagens (corrigido 2026-08-23).**
 Os tcodes do signupanytime são sequenciais por criação mas só uma fatia pertence
@@ -1324,7 +1330,8 @@ desde 6 de Julho** (o site ficou preso em Outubro). Por cima disso havia um
   paragem antecipada** (é onde estão os buracos gigantes).
 - **Passagem B** — acima do maior conhecido: segue o plano de
   `scripts/lib/uskids-scan-plan.js` (9 testes), que **nunca desiste
-  definitivamente num buraco**. Duas redes: (1) varredura **densa com margem
+  definitivamente num buraco**. ⚠ Desde 2026-09-12 as **sondas** (e a Passagem
+  A) correm só 1×/semana — ver "O volume" mais abaixo; a densa continua diária. Duas redes: (1) varredura **densa com margem
   dinâmica** — varre tudo até `últimoVivo + 1500`, e como a margem conta a
   partir do último tcode VIVO, cada torneio encontrado empurra o fim para a
   frente (enquanto houver vida a varredura não acaba); (2) **sondas de salto** —
@@ -1368,6 +1375,223 @@ Primeira corrida com a correcção: **8 torneios novos** (Spanish Open 20 Nov,
 South American Championship 31 Out, Australian Challenge 21 Set, Mexico
 Invitational 12 Dez, Indian Championship 22 Dez, Florida Winter State 5 Dez,
 Antalya Turkish Open 30 Jan 2027, Circolo Golf Venezia 3 Out).
+
+### ⚠ "Too many requests" apagou o field inteiro (2026-09-12)
+
+O `uskids-field.json` passou de **1,07 MB / 1172 escalões / 2018 inscritos**
+para **39 KB e ZERO**, num commit que o workflow deu por bom e fez deploy. Os
+87 torneios ficaram lá — só com `escaloes: []` e este erro em **87 de 87**:
+
+```
+"erro": "Unexpected token 'T', \"Too many r\"... is not valid JSON"
+```
+
+O signupanytime aplicou **rate limit** e responde-lhe com `Too many requests`
+em **texto, HTTP 200** — não com 429. Três defeitos em cadeia:
+
+1. **O corpo ia direito ao `JSON.parse`.** O erro de sintaxe lia-se como
+   "torneio sem dados", não como "a fonte recusou-nos".
+2. **Cada falha produzia uma entrada VAZIA** e a escrita final gravava
+   `resultados` **do zero** — sem merge nem guarda. Um run 100% falhado
+   apagava tudo. **É este o defeito que custou os dados**, e é independente
+   da causa: qualquer falha geral da fonte teria feito o mesmo.
+3. **O canário não protege os dados.** Corre DEPOIS do commit (de propósito,
+   para o alarme nunca custar dados) e só olha para a varredura: disparou a
+   dizer "rede degradada", e o email dizia `All jobs have failed` — mas o que
+   se tinha perdido já estava commitado e no ar.
+
+⚠ **A Fase 1 portou-se bem — a correcção lá é preventiva.** O log mostra
+`60/60 sem resposta` em três intervalos seguidos, e esse contador só sobe com
+o sentinela `ERRO` (o `catch`): na varredura o servidor recusou com **status de
+erro**, não com 200+texto, e o disjuntor fez exactamente o que devia. A guarda
+`ehRateLimit` no `metaTournament` cobre a *outra* variante (200 + corpo de
+texto), que ali seria lida como "tcode não existe" — mas não foi o que se
+passou a 12-09; não ler o log ao contrário numa próxima vez.
+
+Corrigido em três camadas, pela ordem em que travam a avaria:
+
+| | O quê |
+|---|---|
+| `ehRateLimit()` | reconhece o corpo pelo que é, nas duas fases (`esperarGetMeta` e `metaTournament`); na Fase 1 passa a ser falha de rede, nunca "tcode inexistente" |
+| `preservarAnterior()` | um torneio que falha devolve o **registo anterior** marcado `stale`/`stale_desde`, em vez de uma entrada vazia. Só fica vazio quem nunca teve dados |
+| **Guarda anti-encolhimento** | recusa gravar se perder **>30%** dos inscritos (`PERDA_MAXIMA`), salvo `--force`. **Exit 2**, ficheiro anterior intacto |
+
+⚠ **A guarda compara só os torneios que estão nos DOIS lados** — não o total.
+Um torneio que se joga sai do radar e leva os inscritos com ele: a **2026-08-01**
+um único evento a sair fez o total cair **39% (1500→916)** num run perfeitamente
+bom — nos torneios comuns os inscritos até subiram (913→916). Sobre o total, a
+guarda teria recusado esse dia e **congelado o ficheiro em silêncio** (o
+workflow fica verde com um `::warning::`), que é a falha que ela existe para
+evitar. Medido sobre os 223 commits do ficheiro desde Março: só há **duas**
+quedas >15% em seis meses — essa, legítima, e a de 12-09. Na métrica dos
+comuns dão **0%** e **100%**.
+
+O `uskids-field.yml` traduz **exit 2 → sucesso com `::warning::`**, e salta o
+commit E o canário nesse run (`steps.field.outputs.degradado`): sem dados novos
+não há nada para commitar, e o canário mediria uma varredura que o rate limit
+já tinha estragado.
+
+### Porquê só agora — e porque volta a acontecer
+
+Medido nos runs e na cache (`varredura` do `uskids-discovery-cache.json`):
+
+| dia | fim da varredura | blocos | sondas | degradados |
+|---|---|---|---|---|
+| 09-09 | fronteira-esgotada | 25 | 74 | 0 |
+| 10-09 | fronteira-esgotada | 26 | 74 | 0 |
+| 11-09 | fronteira-esgotada | 26 | 74 | 0 |
+| **12-09** | **rede-degradada** | **2** | **0** | **3** |
+
+**Não mudámos nada.** O último tcode vivo é o mesmo nos dois dias (23701), a
+Fase 2 tinha os mesmos 87 torneios, e nenhum outro workflow nosso tocava no
+signupanytime naquela janela (o `daily-digest` só arrancou às 11:41, depois).
+A 11-09 a Fase 1 varreu 26 blocos + 74 sondas — **~6.000 GetMeta** — e passou;
+a 12-09 o servidor cortou ao **terceiro intervalo**, ~180. O que mudou foi o
+lado deles. De fora não há como saber se apertaram o limite ou se foi um pico
+de carga.
+
+⚠ **Mas a exposição é nossa, e é por desenho.** A Passagem B "nunca desiste
+definitivamente num buraco" (densa até `últimoVivo+1500` + sondas até +20000) —
+a cura da avaria das 7 semanas — custa **~6.000 pedidos por dia para descobrir
+tipicamente zero a dois torneios**, e não tem backoff nenhum. Com esse volume
+diário contra uma API pública de terceiros, bater num limite era questão de
+tempo: o seguro contra "a varredura pára" foi pago em pedidos.
+
+### O volume — resolvido em duas frentes (2026-09-12)
+
+**1. Cadência: a varredura CARA passou a semanal.** Medido o custo real da
+Fase 1, por dia:
+
+| Parte | Pedidos | O que faz | Cadência |
+|---|---|---|---|
+| Passagem A (âncora → topo conhecido) | 1.459 | apanha um torneio criado DENTRO da zona já varrida | **semanal** |
+| Densa (até `últimoVivo+1500`) | 1.500 | **é esta que descobre**; a margem é dinâmica, cada achado empurra o fim | **diária** |
+| Sondas de salto (até +20.000) | 1.480 | seguro contra um buraco maior que a margem densa | **semanal** |
+| | **4.439** | | |
+
+Média semanal: **4.439 → 1.920/dia (−57%)**, sem tocar na rede que descobre.
+`DIAS_VARREDURA_PROFUNDA = 7`; `--full-scan` força; a cache guarda
+`ultima_varredura_profunda` e a `varredura` do diagnóstico passa a trazer
+`profunda: true|false` (num dia leve `sondas: 0` é normal, não avaria).
+
+Verificado com o plano real (`inicio` = 23702, fronteira morta):
+
+| cenário | leve (diária) | profunda (semanal) |
+|---|---|---|
+| torneios a +300 e +800 | **acha 2** | acha 2 |
+| cadeia de 6 (+300 … +5300) | **acha 6** (a margem dinâmica segue-os) | acha 6 |
+| buraco de +9.000 | acha 0 | **acha** |
+
+Ou seja: o único caso que a cadência atrasa é o buraco maior que 1.500, e no
+máximo 7 dias — muito dentro dos limiares do canário (30d sem descobertas,
+21d sem a fronteira avançar).
+
+**2. Parar quando a fonte diz não.** A 12-09 o scraper continuou a martelar
+muito depois da primeira recusa: o disjuntor só olhava a intervalos inteiros,
+e cada tcode ainda gastava **3 tentativas** (as que existem para rede
+instável). Com concorrência 5 isso são 15 pedidos só para um bloco perceber
+que está travado, e foram ~540 tcodes até desistir. Agora:
+
+- `metaTournament` devolve `ERRO` **à primeira** num rate limit — uma recusa
+  não se repete;
+- `varrerIntervalo` verifica `rateLimitHits` entre tcodes e **abandona o
+  bloco** (devolve `travado: true`);
+- `varrerIntervaloFiavel` **não repete** um intervalo travado;
+- a Passagem B pára com `fim: 'rate-limit'`.
+
+Medido contra um servidor local que só responde `Too many requests`: um bloco
+de 60 tcodes custa **≤10 pedidos** (só os que já iam em voo), contra 15+ antes
+só para o detectar.
+
+⚠ **`fim: 'rate-limit'` avisa mas NÃO falha o canário** — é auto-recuperável
+(a densa do dia seguinte apanha o que faltou) e um alarme que toca por algo
+que se resolve sozinho deixa de ser lido. Se persistir, os limiares de 21d/30d
+disparam por si.
+
+⚠ **E `rede-degradada` é o MESMO caso quando há prova de recusa (2026-09-13).**
+A distinção acima estava mal calibrada: uma recusa da fonte chega às duas fases
+com caras diferentes — na Fase 2 vem 200 + "Too many requests" (`fim:
+rate-limit`), na Fase 1 vem com **status de erro**, que o disjuntor lê,
+correctamente, como `rede-degradada`. Medido no run de 13-09: Fase 2 a acusar
+rate limit em **87 de 87** torneios E Fase 1 a acabar em `rede-degradada`. Era o
+mesmo corte a entrar por duas portas e só uma delas tocava o alarme — ou seja, o
+caso auto-recuperável falhava o job **todos os dias**.
+
+O `fetch-uskids-field.js` grava agora `rate_limit_hits` no topo do
+`uskids-field.json` (a Fase 2 corre DEPOIS de a cache ser escrita, por isso a
+prova do run vive lá e não na cache), e a decisão saiu do bloco `node -e` do
+workflow para **`avaliarCanario`** (`lib/uskids-rate-guard.js`, 6 testes) +
+`scripts/uskids-canary.js`:
+
+| situação | canário |
+|---|---|
+| `rede-degradada` **com** recusas no run | ⚠ aviso |
+| `rede-degradada` **sem** recusas | ❌ falha (como sempre) |
+| `fim: rate-limit` | ⚠ aviso |
+| >30d sem descobertas · >21d sem a fronteira avançar | ❌ falha **mesmo com rate limit** |
+
+⚠ A última linha é a que impede isto de virar uma mordaça: calar o ruído diário
+só é defensável porque os limiares de dias continuam a disparar se a recusa
+persistir. Verificado com os ficheiros reais de 13-09 — com os 87 hits sai exit
+0 + aviso, e a MESMA varredura com `rate_limit_hits: 0` continua a sair exit 1.
+
+### Onde vive, e o que está testado
+
+A lógica pura saiu do script para **`scripts/lib/uskids-rate-guard.js`**
+(`ehRateLimit` · `deveVarrerProfundo` · `perdaNosComuns` / `deveRecusarEscrita`),
+com **17 testes** em `uskids-rate-guard.test.js` — incluindo os DOIS casos
+reais do histórico (01-08 legítimo → grava; 12-09 → recusa).
+
+Mais **4 testes de integração** em `uskids-scan-abort.test.js` que exercitam a
+varredura **REAL** (o `fetch-uskids-field.js` passou a exportar quando é
+`require`d) contra um HTTP local a recusar — nunca tocam no signupanytime.
+Duas env vars, ambas só para testes e nunca definidas em produção:
+`USKIDS_API_BASE` aponta a API para o servidor de teste e `USKIDS_DATA_DIR`
+manda a cache para um directório temporário.
+
+⚠ Esses testes de integração valem o que custaram: **apanharam um defeito na
+primeira versão desta correcção** — o corte no `varrerIntervalo` não servia de
+nada enquanto o `metaTournament` continuasse a fazer 3 tentativas por tcode.
+
+### ⚠ A correcção partiu o run seguinte — e os testes não deram por nada (2026-09-13)
+
+O run de 13-09, o primeiro com a correcção acima, morreu ao fim de 4 minutos:
+
+```
+↻ Passagem A: t=22243…23701 (zona conhecida, varrida por inteiro) — primeira vez
+Erro fatal: ReferenceError: Cannot access 'hojeISO' before initialization
+```
+
+Um `const hojeISO` **local**, declarado no FIM da `descobrirTorneios` (o carimbo
+do canário), ensombra a função `hojeISO()` do módulo em **toda** a função — e a
+Passagem A, que a chama centenas de linhas acima, caía na temporal dead zone. A
+variável local passou a chamar-se `hoje`.
+
+⚠ **Nenhum teste chegava a EXECUTAR a `descobrirTorneios`.** Os 17 unitários
+cobriam a lib pura e os 3 de integração só a varredura — a função que orquestra
+tudo nunca era chamada, por isso um erro que rebenta à primeira linha executada
+passava a suite inteira. O teste que faltava é barato **por causa da própria
+correcção**: contra a fonte a recusar as duas passagens abortam de imediato, por
+isso a orquestração inteira corre em milissegundos e passa exactamente pela
+linha que rebentou.
+
+⚠ E esse teste novo apanhou logo um **segundo** defeito, este anterior a tudo
+isto: `metaTournament` devolve o sentinela `ERRO` — que é um `Symbol`, logo
+**truthy** — e o ciclo dos `FORCAR_INCLUIR` fazia `if (tn) guardar(t, tn)`. Uma
+recusa da fonte ali ia direita ao `guardar()` e matava o run num `TypeError`,
+antes sequer de a varredura começar. "Não respondeu" ≠ "não existe", e aqui as
+duas coisas estavam a ser lidas como a mesma.
+
+✅ **Os dados não sofreram** com nenhuma das duas falhas: o processo morreu antes
+de qualquer escrita, e o `uskids-field.json` ficou nos 87 torneios / 1172
+escalões / 2018 inscritos do último run bom (11-09). É o efeito lateral bom de
+escrever só no fim.
+
+⚠ **É a mesma classe de avaria do FCG** (`discover-fcg-scope.js`, 2026-08-17) e
+do `build-course-players.js`: uma fonte que responde **200 com lixo** vale mais
+do que um erro franco, porque passa por dados bons. A regra do repo aplica-se a
+qualquer scraper novo — **nunca gravar um build muito mais pequeno do que o que
+está em disco sem alguém ter dito que sim**.
 
 ### Datas de inscrição USKids — reconstruídas pelo `pid` (2026-08-23)
 

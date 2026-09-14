@@ -1,8 +1,117 @@
 {
-  "generatedAt": "2026-09-07T07:10:56.102Z",
+  "generatedAt": "2026-09-14T07:44:50.096Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1248,
+  "total": 1254,
   "tournaments": [
+    {
+      "file": "01-00-2601473541.json",
+      "trnId": "2601473541",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 8 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "formule": "Simple",
+      "date": "12/09/2026",
+      "dateIso": "2026-09-12",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 9,
+      "course": "Tahiti Atimaono - Aller",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "16",
+          "label": "H/U10",
+          "players": 4
+        },
+        {
+          "serieId": "25",
+          "label": "F/U10",
+          "players": 2
+        },
+        {
+          "serieId": "116",
+          "label": "H/U8",
+          "players": 2
+        },
+        {
+          "serieId": "215",
+          "label": "F/U8",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601473540.json",
+      "trnId": "2601473540",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 8 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "formule": "Simple",
+      "date": "12/09/2026",
+      "dateIso": "2026-09-12",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 7,
+      "totalPlayers": 32,
+      "course": "Tahiti Atimaono",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "18",
+          "label": "H/U12",
+          "players": 7
+        },
+        {
+          "serieId": "27",
+          "label": "F/U12",
+          "players": 2
+        },
+        {
+          "serieId": "29",
+          "label": "F/U14",
+          "players": 3
+        },
+        {
+          "serieId": "110",
+          "label": "H/U14",
+          "players": 15
+        },
+        {
+          "serieId": "112",
+          "label": "H/U16",
+          "players": 3
+        },
+        {
+          "serieId": "211",
+          "label": "F/U16",
+          "players": 1
+        },
+        {
+          "serieId": "213",
+          "label": "F/U18",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "03-02-2501365354.json",
       "trnId": "2501365354",
@@ -152,6 +261,120 @@
       "ffgolfSection": null,
       "ligues": [
         "09"
+      ]
+    },
+    {
+      "file": "01-00-2601465504.json",
+      "trnId": "2601465504",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 7 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "formule": "Simple",
+      "date": "29/08/2026",
+      "dateIso": "2026-08-29",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 8,
+      "totalPlayers": 33,
+      "course": "Tahiti Atimaono",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "18",
+          "label": "H/U12",
+          "players": 8
+        },
+        {
+          "serieId": "27",
+          "label": "F/U12",
+          "players": 2
+        },
+        {
+          "serieId": "29",
+          "label": "F/U14",
+          "players": 3
+        },
+        {
+          "serieId": "110",
+          "label": "H/U14",
+          "players": 14
+        },
+        {
+          "serieId": "112",
+          "label": "H/U16",
+          "players": 3
+        },
+        {
+          "serieId": "114",
+          "label": "H/U18",
+          "players": 1
+        },
+        {
+          "serieId": "211",
+          "label": "F/U16",
+          "players": 1
+        },
+        {
+          "serieId": "213",
+          "label": "F/U18",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601465505.json",
+      "trnId": "2601465505",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 7 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "formule": "Simple",
+      "date": "29/08/2026",
+      "dateIso": "2026-08-29",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 8,
+      "course": "Tahiti Atimaono - Aller",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "16",
+          "label": "H/U10",
+          "players": 4
+        },
+        {
+          "serieId": "25",
+          "label": "F/U10",
+          "players": 2
+        },
+        {
+          "serieId": "116",
+          "label": "H/U8",
+          "players": 1
+        },
+        {
+          "serieId": "215",
+          "label": "F/U8",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
       ]
     },
     {
@@ -698,6 +921,120 @@
       "ffgolfSection": null,
       "ligues": [
         "11"
+      ]
+    },
+    {
+      "file": "01-00-2601465502.json",
+      "trnId": "2601465502",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 6 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
+      "formule": "Simple",
+      "date": "16/08/2026",
+      "dateIso": "2026-08-16",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 8,
+      "totalPlayers": 31,
+      "course": "Moorea Green Pearl",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "18",
+          "label": "H/U12",
+          "players": 8
+        },
+        {
+          "serieId": "27",
+          "label": "F/U12",
+          "players": 1
+        },
+        {
+          "serieId": "29",
+          "label": "F/U14",
+          "players": 2
+        },
+        {
+          "serieId": "110",
+          "label": "H/U14",
+          "players": 14
+        },
+        {
+          "serieId": "112",
+          "label": "H/U16",
+          "players": 2
+        },
+        {
+          "serieId": "114",
+          "label": "H/U18",
+          "players": 2
+        },
+        {
+          "serieId": "211",
+          "label": "F/U16",
+          "players": 1
+        },
+        {
+          "serieId": "213",
+          "label": "F/U18",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601465503.json",
+      "trnId": "2601465503",
+      "partKey": "697d6a9804f0005e114be9bc9589beaa",
+      "name": "TOUR 6 AIR MOANA POLYNESIAN JUNIOR TOUR U8-U10",
+      "formule": "Simple",
+      "date": "16/08/2026",
+      "dateIso": "2026-08-16",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 8,
+      "course": "Moorea Green Pearl - Aller",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "16",
+          "label": "H/U10",
+          "players": 3
+        },
+        {
+          "serieId": "25",
+          "label": "F/U10",
+          "players": 2
+        },
+        {
+          "serieId": "116",
+          "label": "H/U8",
+          "players": 2
+        },
+        {
+          "serieId": "215",
+          "label": "F/U8",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
       ]
     },
     {

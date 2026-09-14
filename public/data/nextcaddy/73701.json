@@ -1,0 +1,590 @@
+{
+  "tourId": 73701,
+  "url": "https://www.nextcaddy.com/tour/73701",
+  "scrapedAt": "2026-09-14T09:53:32.203Z",
+  "meta": {
+    "name": "AMIGOS DE MIRAFLORES 12/9",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-09-12",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-12",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jacinto Perez Reyes",
+          "licencia": "AME4154112",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2402826
+        },
+        {
+          "pos": 2,
+          "name": "Luis Javier Benavides Delgado",
+          "licencia": "AM65605135",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2402825
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2402822
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2402823
+        },
+        {
+          "pos": 5,
+          "name": "Raul Jose Lozada Olmedo",
+          "licencia": "AME2930732",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2402827
+        },
+        {
+          "pos": 6,
+          "name": "Juan Carlos Fernandez Perez",
+          "licencia": "AM70973298",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2402824
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2402820
+        },
+        {
+          "pos": 8,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2402821
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Juan Carlos Fernandez Perez",
+      "licencia": "AM70973298",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Luis Javier Benavides Delgado",
+      "licencia": "AM65605135",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jacinto Perez Reyes",
+      "licencia": "AME4154112",
+      "hcp": 15.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Raul Jose Lozada Olmedo",
+      "licencia": "AME2930732",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 21.4,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161730,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            37
+          ],
+          [
+            "Birdie",
+            8
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            40
+          ],
+          [
+            "Peor",
+            40
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161731,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            0
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            11
+          ],
+          [
+            "4",
+            8
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            8
+          ],
+          [
+            "7",
+            4
+          ],
+          [
+            "8",
+            4
+          ],
+          [
+            "9",
+            5
+          ],
+          [
+            "10",
+            3
+          ],
+          [
+            "11",
+            11
+          ],
+          [
+            "12",
+            3
+          ],
+          [
+            "13",
+            4
+          ],
+          [
+            "14",
+            10
+          ],
+          [
+            "15",
+            13
+          ],
+          [
+            "16",
+            6
+          ],
+          [
+            "17",
+            9
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161732,
+        "datos": [
+          [
+            "Hoyo",
+            "LUIS JAVIER BENAVIDES DELGADO",
+            "JACINTO PEREZ REYES",
+            "FRANCISCO QUERO ZUMAQUERO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            -4
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            -4
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            2,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -3,
+            3
+          ],
+          [
+            "Hoyo 14",
+            2,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 15",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161733,
+        "datos": [
+          [
+            "Hoyo",
+            "LUIS JAVIER BENAVIDES DELGADO",
+            "JACINTO PEREZ REYES",
+            "FRANCISCO QUERO ZUMAQUERO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78954
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-09-14T09:54:14.755Z"
+}

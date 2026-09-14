@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T09:02:56.909Z",
+  "generatedAt": "2026-09-14T09:41:55.342Z",
   "source": "scripts/discover-fcg-scope.js",
   "years": [
     "2025",
@@ -7,7 +7,7 @@
   ],
   "keepNonJuvenile": false,
   "totalTournaments": 27,
-  "totalGames": 26,
+  "totalGames": 27,
   "totalImaster": 0,
   "totalInscritos": 43,
   "tournaments": [
@@ -1084,8 +1084,8 @@
       "juvenile": true
     },
     {
-      "slug": "campionat-de-catalunya-sub-18-i-sub-16-wagr-2026-2026-10-02",
-      "title": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2026",
+      "slug": "campionat-de-catalunya-sub-18-i-sub-16-2026-wagr-2026-10-02",
+      "title": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 2026 (WAGR)",
       "organizer": null,
       "sede": null,
       "dateStart": null,
@@ -1097,14 +1097,22 @@
         "INF",
         "ALV"
       ],
-      "games": [],
+      "games": [
+        {
+          "gameId": "6aa00d2c6717d5b07d3d7ccc",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
       "imasterIds": [],
       "inscritos": [],
       "dateRaw": "02-10-2026",
       "dateIso": "2026-10-02",
-      "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 (WAGR) 2026",
+      "name": "CAMPIONAT DE CATALUNYA SUB-18 I SUB-16 2026 (WAGR)",
       "year": 2026,
-      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-sub-18-i-sub-16-wagr-2026-2026-10-02",
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-sub-18-i-sub-16-2026-wagr-2026-10-02",
       "juvenile": true
     },
     {
