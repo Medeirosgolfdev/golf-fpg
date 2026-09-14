@@ -7,8 +7,10 @@
  * ⚠ As datas dos períodos e das interrupções longas vêm do TEXTO do PDF. Os
  * dias soltos sem aulas (mid-term, conference days, staff development) só lá
  * estão na COR das células — foram lidos dos rectângulos do PDF, cruzando cada
- * número com o rectângulo que o pinta. Ver `verificacao` no fim: os totais
- * mensais que o PDF imprime batem certo em 7 dos 10 meses.
+ * número com o rectângulo que o pinta (relido a 14/09/2026: fundo amarelo =
+ * mid-term, pêssego = staff development, moldura verde = conference day,
+ * moldura vermelha = início de período). Bate dia a dia com a GRELHA do PDF —
+ * ver o aviso sobre os totais do rodapé no fim.
  *
  * Serve o sombreado do /calendario: os dias de aulas ficam com um fundo
  * esbatido, para se ver de relance que uma viagem cai (ou não) em período
@@ -139,10 +141,12 @@ export function freeDayReason(d: Date): string | null {
  * Totais que o PDF imprime no rodapé (dias de aulas por mês), guardados para
  * conferência: `scripts/school-calendar.test.ts` compara-os com o que este
  * ficheiro produz.
- * ⚠ Batem em 7 dos 10 meses. Out, Jan e Abr dão MAIS um dia do que o PDF diz —
- * ou seja, falta-nos um dia sem aulas em cada um desses meses, que a leitura
- * das cores não apanhou. Não foram inventados: quando se souber quais são,
- * acrescentam-se a SCHOOL_OFF_DAYS e o teste passa a bater a 10/10.
+ * ⚠ O RODAPÉ do PDF não bate com a GRELHA do próprio PDF em 6 dos 10 meses:
+ * contando dia a dia na grelha, Out/Jan/Abr têm 16/20/15 dias de aulas (o
+ * rodapé diz 15/19/14) e Nov/Dez/Jun têm 20/6/20 (o rodapé diz 21/7/21). O
+ * total do ano é o mesmo (172). Confirmado a 14/09/2026 relendo as cores e as
+ * molduras de todas as células: não há mais nenhum dia marcado. Quem está certo
+ * é a grelha — NÃO acrescentar dias sem aulas para "acertar" com o rodapé.
  */
 export const PDF_DIAS_DE_AULAS: Record<string, number> = {
   "2026-09": 22, "2026-10": 15, "2026-11": 21, "2026-12": 7,

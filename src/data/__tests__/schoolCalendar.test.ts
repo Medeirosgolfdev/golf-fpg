@@ -59,18 +59,18 @@ describe("schoolCalendar — contra os totais impressos no PDF", () => {
     });
   }
 
-  // ⚠ Seis meses divergem em 1 dia — três para cada lado — e o TOTAL do ano
-  // bate exactamente (172). Ou seja: os quatro dias soltos que se leram das
-  // cores do PDF existem mesmo, mas três deles estão a ser atribuídos ao mês
-  // errado. Fica travado aqui para não passar despercebido; quando se souber
-  // as datas certas, passam para o bloco de cima.
+  // ⚠ Nestes seis meses é o RODAPÉ do PDF que não bate com a GRELHA do próprio
+  // PDF (1 dia para cada lado; o total do ano é o mesmo, 172). Confirmado a
+  // 14/09/2026 relendo cores e molduras de todas as células: o site segue a
+  // grelha, que é o que está certo. Os testes fixam a diferença para ninguém
+  // "acertar" o calendário com o rodapé.
   for (const ym of ["2026-10", "2027-01", "2027-04"]) {
-    it(`${ym}: por confirmar — 1 dia a MAIS que o PDF`, () => {
+    it(`${ym}: a grelha dá 1 dia a MAIS do que o rodapé do PDF`, () => {
       expect(conta(ym)).toBe(PDF_DIAS_DE_AULAS[ym] + 1);
     });
   }
   for (const ym of ["2026-11", "2026-12", "2027-06"]) {
-    it(`${ym}: por confirmar — 1 dia a MENOS que o PDF`, () => {
+    it(`${ym}: a grelha dá 1 dia a MENOS do que o rodapé do PDF`, () => {
       expect(conta(ym)).toBe(PDF_DIAS_DE_AULAS[ym] - 1);
     });
   }
