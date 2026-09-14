@@ -10,19 +10,20 @@
  *     exclude 'golf club', que existe para deitar fora os ~1200 eventos do
  *     Local Tour, que se chamam pelo nome do campo;
  *   • "Colonial Williamsburg Classic 2026" e "Monterey Challenge 2026"
- *     (Regionais também) não batiam em include nenhum — 'classic' e 'challenge'
- *     só existiam colados a um sítio ('venice classic', 'australian').
+ *     (Regionais também) não batiam em include nenhum.
  * Os três estavam com inscrições abertas e nunca chegaram à app (medido
- * 2026-08-30: t=22986, 23318, 23420, todos dentro da zona varrida).
+ * 2026-08-30: t=22986, 23318, 23420).
  *
- * O `tournament` do GetMeta traz `tour` (ex: "Domestic Championships Tour") e
- * `type` (inteiro), e é essa a taxonomia oficial. Medida sobre os 1320 torneios
- * vivos em t=22240…23640 (2026-08-30):
+ * O `tournament` do GetMeta traz `tour` e `type` (inteiro), e é essa a
+ * taxonomia oficial. Medida sobre os 1320 torneios vivos em t=22240…23640
+ * (2026-08-30) e, para os tipos 3 e 4, nos números mais antigos (2026-09-14):
  *
  *   type  tour                            n     exemplo
  *   ────  ──────────────────────────────  ────  ─────────────────────────────
  *      1  Domestic Championships Tour        5  Seaview Open 2026        ← Regional
  *      2  Teen Series Tour                  30  Teen Series at Longleaf (NC)
+ *      3  Domestic Championships Tour        -  World Teen Championship 2026
+ *      4  Domestic Championships Tour        -  World Championship 2026
  *      5  {cidade} Tour                   ~1150 The Legends Golf Club    ← Local Tour
  *      6  {cidade} Tour (Tour Championship) ~190 Longleaf … (Tour Championship)
  *      7  State Invitationals Tour           8  2026 Kansas State Invitational
@@ -31,10 +32,13 @@
  *     12  Girls Invitationals Tour           2  2026 Girls Invitational - Longleaf (NC)
  *     13  International Teen Series Tour     3  International Teen Series at Al Hamra
  *
- * Os três escalões que a app segue — Regional (1), State (7) e Internacional
- * (8) — entram agora pelo `type`, sem depender do nome. As palavras-chave
- * ficam como camada ADITIVA, e só elas: é o que continua a trazer as etapas de
- * Local Tour que seguimos de propósito (Azata/Andaluzia, Panamá, Al Hamra,
+ * Decisão de 14/09/2026 (com a procura nova cada torneio custa ~5 pedidos e a
+ * página tem filtros por categoria, que escondem o que não interessa): entram
+ * pelo tipo os Regionais, as Teen Series, os Mundiais, TODOS os Tour
+ * Championships (EUA incluídos — escondidos por defeito na página), os State e
+ * os Internacionais. Ficam de fora os Girls (12) — "não procures os GIRLS" — e
+ * os Pais/Filhos (9). Os Local Tours (5) só entram pelas palavras-chave: é o
+ * que traz as etapas que seguimos de propósito (Azata/Andaluzia, Panamá,
  * OPEN.9 Eichenried, Circolo Golf Venezia) sem abrir a porta aos outros ~1200.
  * FORCAR_EXCLUIR vence tudo.
  */
@@ -43,6 +47,8 @@
 const TIPO_LABEL = {
   1:  'Domestic Championships (Regional)',
   2:  'Teen Series',
+  3:  'World Teen Championship',
+  4:  'World Championship',
   5:  'Local Tour',
   6:  'Local Tour (Tour Championship)',
   7:  'State Invitationals',
@@ -52,38 +58,14 @@ const TIPO_LABEL = {
   13: 'International Teen Series',
 };
 /** Tipos que entram SEMPRE, seja qual for o nome. */
-const TIPOS_INCLUIR = new Set([1, 7, 8]);
-
-/**
- * Tipos que entram só quando o tour é INTERNACIONAL (fora dos EUA).
- *
- * O type 6 é a final de época (Tour Championship) de cada Local Tour de
- * cidade — o irmão do type 5, que fica de fora de propósito. São 184, das
- * quais 133 por jogar: pô-las todas no radar levaria a Fase 2 do monitor
- * diário de 33 para ~166 torneios, cinco vezes o trabalho, e a esmagadora
- * maioria é dos EUA, onde não nos cruzamos com ninguém. Ficam as 54 de fora
- * dos EUA — Azata/Andaluzia, Venice, Milão, Turim, Toscana, Munique,
- * Hamburgo, Nuremberga, Lyon, Londres, Panamá, América Latina, Ásia.
- */
-const TIPOS_INCLUIR_SE_INTL = new Set([6]);
-
-/**
- * O tour é de fora dos EUA?
- *
- * ⚠ O sinal é o CÓDIGO DE PAÍS ENTRE PARÊNTESES ("Lima (PE) Tour",
- * "Andalusia (ES) Tour"). Os tours americanos que trazem sigla de estado
- * usam VÍRGULA e nunca parênteses ("Charleston, SC Tour",
- * "Central Valley, CA Tour") — verificado nos 158 tours distintos do corpus:
- * 14 com vírgula, zero falsos positivos. Os únicos "(CA)" são Niagara e
- * Vancouver, que são o CANADÁ, não a Califórnia — e esses contam como fora
- * dos EUA, portanto entram de propósito.
- */
-const ehTourInternacional = (tour) => /\([A-Z]{2}\)/.test(String(tour || ''));
+const TIPOS_INCLUIR = new Set([1, 2, 3, 4, 6, 7, 8, 13]);
+/** Tipos que ficam SEMPRE de fora, seja qual for o nome. */
+const TIPOS_EXCLUIR = new Set([9, 12]);
 
 // ── Camada 2: palavras-chave (só para Local Tours que seguimos) ───────────
 const KEYWORDS_INCLUIR = [
-  'world championship', 'world van horn', 'van horn cup',
-  'european championship', 'european van horn',
+  'world championship',
+  'european championship',
   'irish open', 'paris invitational',
   'marco simone', 'venice open', 'venice classic', 'venezia',
   'rome open', 'rome classic', 'terre dei consoli',
@@ -93,23 +75,22 @@ const KEYWORDS_INCLUIR = [
   'fazenda boa vista', 'azata', 'holiday classic',
   'championship', 'invitational', 'masters', 'open',
 ];
-// Vencem TUDO (incluindo INCLUIR_FORTE e o tipo): variantes pais/filhos de
-// torneios que de outra forma entravam pelo nome do evento principal ("Holiday
-// Classic Parent/Child 2026", "European Championship Parent/Child"). Era isto
-// que obrigava a listar cada uma à mão em FORCAR_EXCLUIR.
-const KEYWORDS_EXCLUIR_SEMPRE = ['parent/child', 'parent child'];
+// Vencem TUDO (incluindo o tipo): as variantes pais/filhos herdam o nome do
+// evento principal ("Holiday Classic Parent/Child 2026"); o Veteran Qualifier e
+// as Van Horn Cup (por equipas) são tipo 4 como o World Championship.
+const KEYWORDS_EXCLUIR_SEMPRE = ['parent/child', 'parent child', 'veteran', 'van horn'];
 const KEYWORDS_EXCLUIR = [
   'tour championship', 'parent/child', 'parent', 'qualifier',
-  'van horn', 'teen series', 'teen championship', 'world teen',
+  'teen series', 'teen championship', 'world teen',
   'girls invitational', 'girls championship', 'girls open', 'girl',
   'golf course', 'golf club', 'country club',
-  'veteran', 'world golf village',
+  'world golf village',
   'thailand championship', 'korean championship', 'malaysian championship', 'philippines championship',
 ];
 // Keywords específicos o bastante para ignorar KEYWORDS_EXCLUIR.
 const INCLUIR_FORTE = [
-  'world championship', 'world van horn', 'van horn cup',
-  'european championship', 'european van horn',
+  'world championship',
+  'european championship',
   'marco simone', 'venice open', 'venice classic', 'venezia',
   'rome open', 'rome classic', 'terre dei consoli',
   'irish open', 'paris invitational',
@@ -121,7 +102,7 @@ const INCLUIR_FORTE = [
 
 // ── Camada 3: excepções por tcode ─────────────────────────────────────────
 // 21080=Marco Simone 2026, 21133=Jekyll Island Cup,
-// 21667=World Teen Championship 2026 (excepção às teen series)
+// 21667=World Teen Championship 2026 (hoje já entra pelo tipo 3)
 const FORCAR_INCLUIR = new Set([21080, 21133, 21667]);
 const FORCAR_EXCLUIR = new Set([
   21573, // Marco Simone local tour
@@ -142,13 +123,11 @@ const FORCAR_EXCLUIR = new Set([
  * nome. `tipo` é opcional: entradas de cache antigas não o têm e continuam a
  * ser avaliadas só pelo nome (o comportamento de antes).
  */
-function ehInternacional(name, tipo, tour) {
+function ehInternacional(name, tipo) {
   const n = String(name || '').toLowerCase();
   if (KEYWORDS_EXCLUIR_SEMPRE.some(k => n.includes(k))) return false;
-  // Tipo oficial: Regional / State / Internacional entram sempre.
+  if (tipo != null && TIPOS_EXCLUIR.has(Number(tipo))) return false;
   if (tipo != null && TIPOS_INCLUIR.has(Number(tipo))) return true;
-  // Tour Championship: só fora dos EUA.
-  if (tipo != null && TIPOS_INCLUIR_SE_INTL.has(Number(tipo))) return ehTourInternacional(tour);
   // KEYWORDS_INCLUIR tem prioridade — se bater, inclui (exceto FORCAR_EXCLUIR)
   if (!KEYWORDS_INCLUIR.some(k => n.includes(k))) return false;
   if (INCLUIR_FORTE.some(k => n.includes(k))) return true;
@@ -156,15 +135,16 @@ function ehInternacional(name, tipo, tour) {
   return !KEYWORDS_EXCLUIR.some(k => n.includes(k));
 }
 
-/** Decisão final para um tcode: FORCAR_EXCLUIR > FORCAR_INCLUIR > tipo/nome. */
-function incluirTorneio(t, name, tipo, tour) {
+/** Decisão final para um tcode: FORCAR_EXCLUIR > FORCAR_INCLUIR > tipo/nome.
+ *  (`tour` aceite por compatibilidade com os chamadores; já não decide nada.) */
+function incluirTorneio(t, name, tipo, _tour) {
   if (FORCAR_EXCLUIR.has(Number(t))) return false;
   if (FORCAR_INCLUIR.has(Number(t))) return true;
-  return ehInternacional(name, tipo, tour);
+  return ehInternacional(name, tipo);
 }
 
 module.exports = {
-  TIPO_LABEL, TIPOS_INCLUIR, TIPOS_INCLUIR_SE_INTL, ehTourInternacional,
+  TIPO_LABEL, TIPOS_INCLUIR, TIPOS_EXCLUIR,
   KEYWORDS_INCLUIR, KEYWORDS_EXCLUIR, KEYWORDS_EXCLUIR_SEMPRE, INCLUIR_FORTE,
   FORCAR_INCLUIR, FORCAR_EXCLUIR,
   ehInternacional, incluirTorneio,

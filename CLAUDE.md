@@ -574,7 +574,8 @@ Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos dev
 | `lib/cookies.js` | `loadCookieHeader({envVars, file, label})` | as cópias de `loadCookies()` (env primeiro, ficheiro local depois) |
 | `lib/fpg-http.js` | `makeFpgPost({baseUrl, cookie, ua, origin, referer, extraHeaders, retries})`, `FpgHttpError`, `sleep` | as cópias de `dgPost()`/`fpgPost()` — retry em HTTP 500 + detecção `Result:"ERROR"` |
 | `lib/atomic-write.js` | `writeJsonAtomic(filePath, data)` | escritas directas com `writeFileSync` (tmp+rename, nunca deixa JSON truncado) |
-| `lib/uskids-rate-guard.js` | `ehRateLimit`, `deveVarrerProfundo`, `perdaNosComuns`, `deveRecusarEscrita`, `avaliarCanario` | as defesas do monitor USKids contra uma fonte que recusa (23 testes) |
+| `lib/uskids-rate-guard.js` | `ehRateLimit`, `perdaNosComuns`, `deveRecusarEscrita`, `avaliarCanario` | as defesas do monitor USKids contra uma fonte que recusa |
+| `lib/uskids-frontier.js` | `criarFronteira`, `aplicarResultado`, `buracosARever`, `planoBackfill`, `planearFase2`, `ordemFase2` | a procura de torneios USKids só para a frente + quem se pede por dia (2026-09-14) |
 
 Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg-admissions-draws-node, fpg-scrape-node, scrape-nacionais-feds-node.
 
@@ -1308,14 +1309,59 @@ inscritos por escalão (→ `uskids-field.json`). O `fetch-uskids-results.js` l�
 MESMA cache para saber que torneios estão em curso — descoberta partida = sem
 resultados também.
 ```bash
-node fetch-uskids-field.js
-node fetch-uskids-field.js --force-discovery   # ignora a cache de descoberta
-node fetch-uskids-field.js --full-scan         # força a varredura profunda (Passagem A + sondas)
-node fetch-uskids-field.js --force             # grava mesmo perdendo >30% dos inscritos
+node scripts/fetch-uskids-field.js
+node scripts/fetch-uskids-field.js --only 23132,23670   # só estes torneios: sem Fase 1, os outros ficam como estão
+node scripts/fetch-uskids-field.js --backfill 400       # enche mais depressa o catálogo para trás (default 150/corrida)
+node scripts/fetch-uskids-field.js --force              # grava mesmo perdendo >30% dos inscritos
 ```
 
 Exit **0** = gravou · **2** = guarda anti-encolhimento recusou (ficheiro
 anterior intacto, não é erro) · **1** = erro.
+
+### ⚡ Procura só para a frente, um pedido de cada vez (2026-09-14)
+
+A varredura das secções seguintes (Passagem A + densa +1500 + sondas +20000,
+5 em paralelo, sem pausa) fazia **4.400–6.000 pedidos por dia** e levou a
+USKids a bloquear-nos a 12/09 — no GitHub e, em teste, também no PC de casa.
+Substituída por `scripts/lib/uskids-frontier.js` (puro, com testes) +
+`descobrirTorneios`. O que a justifica, **medido a 14/09**:
+
+- **Os tcodes são todos da USKids e seguidos.** O "buraco de 632" (21610→22243)
+  não existia: 11 de 12 números amostrados lá dentro são torneios USKG (Local
+  Tours, State Invitationals, Tour Championships). O código antigo chamava
+  "vazio" a tudo o que o filtro excluía.
+- Número que ainda não existe = **HTTP 200 com corpo vazio**. Na zona viva o
+  maior falhanço seguido medido é de 15.
+- A USKids cria **~6 números por dia** (23588 a 23/08 → 23714 a 14/09).
+- Em **6 meses de histórico** nenhum torneio apareceu atrás da fronteira por si:
+  os 87 "atrás" caem todos em dias em que mudámos as regras.
+- **Abrir a página de inscritos no browser custa 13 pedidos** (+ analytics); o
+  GetMeta pedido de dentro da página, 1.
+
+O que faz agora, por corrida:
+
+| Parte | Pedidos | Como |
+|---|---|---|
+| Fronteira | ~6 + 40 | do último número que existe para a frente, 1 de cada vez (1,2 s), até **40 seguidos inexistentes**. Sem resposta → **pára** e recomeça no mesmo número na corrida seguinte (nunca passa à frente de um número por confirmar) |
+| Buracos | poucos | inexistentes deixados para trás revistos durante 7 dias |
+| Catálogo | 150 | `uskids-tcode-catalog.json` guarda **todos** os números vistos, incluindo os excluídos (tipo, tour, datas, estado); enche-se para trás até `PISO_BACKFILL` (22240). Uma mudança de regras **reclassifica em casa, 0 pedidos** |
+| Inscritos | ~100–450 | `planearFase2`: todos os dias os do Manuel, os de `scripts/uskids-seguir-diario.json` e os que começam em ≤30 dias; os outros **1×/semana** (`t % 7`). Escalão com a mesma contagem reaproveita os nomes. Página aberta **uma vez**; tecto `ORCAMENTO_FASE2 = 450` |
+
+À **primeira recusa** pára tudo (Fase 1 e Fase 2); os torneios que faltam ficam
+com o registo anterior. Total típico: **~150–300 pedidos/dia**, contra ~6.000.
+
+Regras de inclusão (14/09, `uskids-classify.js`): entram pelo tipo os
+Regionais (1), Teen Series (2, 13), **Mundiais (3, 4 — o World Championship é
+tipo 4)**, **todos** os Tour Championships (6, EUA incluídos), State (7) e
+Internacionais (8). **Ficam fora os Girls (12) — "não procures os GIRLS" — e os
+Pais/Filhos (9)**, e por nome o Veteran Qualifier e as Van Horn Cup. Na página
+`/uskids` há chips por categoria ao lado do ★ Manuel (só com ele desligado); por
+defeito vêem-se os Internacionais e os Mundiais.
+
+---
+
+⛔ **HISTÓRICO — as secções seguintes descrevem a varredura antiga, substituída a
+2026-09-14 (acima).** Ficam pelo registo das avarias que ensinaram as regras.
 
 ⚠ **A varredura de tcodes tem de ser em DUAS passagens (corrigido 2026-08-23).**
 Os tcodes do signupanytime são sequenciais por criação mas só uma fatia pertence
@@ -1662,6 +1708,8 @@ torneios vivos em t=22240…23640:
 
 `TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome.
 
+⛔ *Substituído a 2026-09-14: entram TODOS os Tour Championships, EUA incluídos
+(escondidos por defeito na página) — ver "Procura só para a frente".*
 **`TIPOS_INCLUIR_SE_INTL = {6}` — Tour Championship, só fora dos EUA.** O
 type 6 é a final de época de cada Local Tour de cidade (irmão do type 5, que
 fica de fora): 184, das quais 133 por jogar. Todas no radar levariam a Fase 2

@@ -5,9 +5,9 @@
  */
 import { describe, it, expect } from 'vitest';
 import {
-  ehRateLimit, erroRateLimit, deveVarrerProfundo,
+  ehRateLimit, erroRateLimit,
   inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita, avaliarCanario,
-  PERDA_MAXIMA, DIAS_VARREDURA_PROFUNDA,
+  PERDA_MAXIMA,
 } from './uskids-rate-guard.js';
 
 const torneio = (t, inscritos) => ({
@@ -33,34 +33,6 @@ describe('ehRateLimit', () => {
   it('erroRateLimit é distinguível de uma falha de rede', () => {
     expect(erroRateLimit().rateLimited).toBe(true);
     expect(new Error('ECONNRESET').rateLimited).toBeUndefined();
-  });
-});
-
-describe('deveVarrerProfundo', () => {
-  it('corre na primeira vez (cache sem marca)', () => {
-    expect(deveVarrerProfundo({ ultima: null, hoje: '2026-09-12' }).correr).toBe(true);
-  });
-
-  it('não corre dentro do intervalo', () => {
-    const r = deveVarrerProfundo({ ultima: '2026-09-10', hoje: '2026-09-12' });
-    expect(r.correr).toBe(false);
-    expect(r.dias).toBe(2);
-  });
-
-  it('corre ao fim do intervalo', () => {
-    expect(deveVarrerProfundo({ ultima: '2026-09-05', hoje: '2026-09-12' }).correr).toBe(true);
-    // …e a fronteira do intervalo é inclusiva
-    expect(deveVarrerProfundo({ ultima: '2026-09-06', hoje: '2026-09-12' }).correr).toBe(false);
-  });
-
-  it('--full-scan corre sempre', () => {
-    const r = deveVarrerProfundo({ ultima: '2026-09-12', hoje: '2026-09-12', forcar: true });
-    expect(r.correr).toBe(true);
-    expect(r.porque).toBe('--full-scan');
-  });
-
-  it('a cadência é semanal', () => {
-    expect(DIAS_VARREDURA_PROFUNDA).toBe(7);
   });
 });
 

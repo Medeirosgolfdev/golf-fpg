@@ -50,6 +50,7 @@ interface Torneio {
   ultima_atualizacao: string;
   sem_flights?: boolean; erro?: string;
   url_uskids?: string | null;
+  tour?: string | null; type?: number | null;
 }
 
 
@@ -320,6 +321,40 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
 // ─────────────────────────────────────────────
 type Tab = "campo" | "resultados" | "rivais";
 
+// Categorias da lista de torneios, pelo `type` do GetMeta (a mesma taxonomia de
+// scripts/lib/uskids-classify.js). Vigiam-se todas; a lista esconde as que
+// incomodam. Por defeito vêem-se só os Internacionais e os Mundiais (decisão
+// dela, 14/09/2026): os Tour Championship são a maioria (56 de 85) e afogavam
+// os torneios que interessam.
+// ⚠ Os tipos 3 e 4 só aparecem nos números mais antigos (World Championship
+// 2026 = 4, World Teen = 3, ambos "Domestic Championships Tour") — não estavam
+// na amostra de 30/08. Um tipo que falte aqui aparece na mesma, como "Tipo N".
+const CATEGORIAS: { tipo: number; label: string }[] = [
+  { tipo: 4,  label: "Mundiais" },
+  { tipo: 3,  label: "Mundial Teen" },
+  { tipo: 8,  label: "Internacionais" },
+  { tipo: 13, label: "Teen Intl" },
+  { tipo: 1,  label: "Regionais" },
+  { tipo: 7,  label: "State Inv." },
+  { tipo: 12, label: "Girls Inv." },
+  { tipo: 2,  label: "Teen Series" },
+  { tipo: 5,  label: "Local Tour" },
+  { tipo: 6,  label: "Tour Champ." },
+  { tipo: 9,  label: "Pais/Filhos" },
+];
+// Guarda-se o que está VISÍVEL (e não o escondido): um tipo novo que a USKids
+// venha a usar entra riscado, em vez de encher a lista sem ser pedido.
+const CAT_VISIVEIS_DEFAULT = [8, 4, 3];   // Internacionais + Mundiais
+const CAT_LS_KEY = "uskids_categorias_visiveis_v1";
+function lerCatVisiveis(): Set<number> {
+  try {
+    const v = JSON.parse(localStorage.getItem(CAT_LS_KEY) ?? "null");
+    if (Array.isArray(v)) return new Set(v.filter((x: unknown): x is number => typeof x === "number"));
+  } catch { /* sem storage: fica o default */ }
+  return new Set(CAT_VISIVEIS_DEFAULT);
+}
+const labelCategoria = (tipo: number) => CATEGORIAS.find(c => c.tipo === tipo)?.label ?? `Tipo ${tipo}`;
+
 // Tipo explícito para entradas do mapa allTorneios — elimina os (as any) casts
 type TorneioEntry = {
   t: number; name: string; date: string; dateFim?: string;
@@ -329,6 +364,7 @@ type TorneioEntry = {
   campo?: string; totalInscritos?: number; totalMaximo?: number;
   urlResultados?: string; manuelJogou?: boolean; terminado?: boolean;
   manuelPos?: number | null; manuelScore?: number | null; nPaises?: number;
+  tipo?: number | null;
 };
 
 export default function USKidsFieldPage() {
@@ -357,6 +393,22 @@ export default function USKidsFieldPage() {
   const MIN_FIELD = 60;
   // Pesquisa por nome/campo na sidebar (tabs Torneios + Resultados)
   const [search, setSearch] = useState("");
+  // Torneio pedido por link (?t= na primeira carga — ex.: os "próximos torneios"
+  // do kids2). Fica sempre visível, seja qual for a categoria.
+  const [tLigado] = useState<number | null>(() => {
+    const p = searchParams.get("t");  // (o paramT só é declarado mais abaixo)
+    return p ? parseInt(p) || null : null;
+  });
+  // Categorias escondidas na lista — preferência deste browser.
+  const [catVisiveis, setCatVisiveis] = useState<Set<number>>(lerCatVisiveis);
+  useEffect(() => {
+    try { localStorage.setItem(CAT_LS_KEY, JSON.stringify([...catVisiveis])); } catch { /* sem storage */ }
+  }, [catVisiveis]);
+  const alternarCategoria = (tipo: number) => setCatVisiveis(prev => {
+    const n = new Set(prev);
+    if (n.has(tipo)) n.delete(tipo); else n.add(tipo);
+    return n;
+  });
 
   // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
@@ -392,6 +444,11 @@ export default function USKidsFieldPage() {
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d: FieldData) => {
         setFieldData(d);
+        // Link para um torneio que não é do Manuel: o ★ Manuel arranca desligado,
+        // senão o torneio pedido nem estava na lista (no mesmo render, batched).
+        const ligado = tLigado != null ? d.torneios.find(t => t.t === tLigado) : null;
+        if (ligado && !ligado.escaloes?.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome))))
+          setFilterManuel(false);
         upsertFileMeta({ path: "/data/uskids-field.json", status: "loaded", count: d.torneios?.length, group: "field" });
         // Por omissão abre o próximo torneio em que o Manuel está inscrito — o filtro
         // ★ Manuel vem ligado, e abrir d.torneios[0] mostrava um torneio fora da lista.
@@ -557,6 +614,7 @@ export default function USKidsFieldPage() {
         totalMaximo: t.total_maximo ?? undefined,
         terminado: ended,
         manuelJogou: manuelInscrito,
+        tipo: t.type ?? null,
       });
     }
     for (const t of torneiosResultados) {
@@ -678,6 +736,53 @@ export default function USKidsFieldPage() {
     return torneiosResultados.length ? torneiosResultados[0].t : null;
   }, [allTorneios, torneiosResultados]);
 
+  // ── Lista da barra lateral ─────────────────────────────────────────────
+  // Calculada ANTES dos early returns, porque o efeito que alinha a selecção
+  // com a lista é um hook. Primeiro sem o filtro de categoria — as contagens dos
+  // chips saem daqui, para mostrarem também quantos estão escondidos.
+  const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
+  // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
+  // (= soma de participantes na última ronda de cada escalão).
+  const fieldFilter = (t: TorneioEntry) =>
+    !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
+  // Pesquisa por nome do torneio ou campo (case/acentos-insensível).
+  const qSearch = normNameAuto(search);
+  const searchFilter = (t: TorneioEntry) =>
+    !qSearch || normNameAuto(t.name).includes(qSearch) || normNameAuto(t.campo ?? "").includes(qSearch);
+  const listaSemCategoria = (tab === "campo"
+    ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
+    : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t))
+  ).filter(searchFilter);
+  // Só na tab Torneios (em Resultados quase nenhum torneio traz tipo) e só com o
+  // ★ Manuel DESLIGADO: ligado, a lista é "os torneios do Manuel" e nenhuma
+  // categoria os pode esconder (uma escolha antiga de chips escondia o Spanish
+  // Open). Sem tipo conhecido, ou pedido por link, nunca se esconde.
+  const catFilter = (t: TorneioEntry) =>
+    tab !== "campo" || filterManuel || t.tipo == null || t.t === tLigado || catVisiveis.has(t.tipo);
+  // Os chips saem dos DADOS, não da lista fixa: um tipo que a USKids venha a
+  // usar e que não está em CATEGORIAS aparece sozinho, como "Tipo N".
+  const ordemCat = (tipo: number) => { const i = CATEGORIAS.findIndex(c => c.tipo === tipo); return i < 0 ? 99 : i; };
+  const contagemCat = [...new Set(listaSemCategoria.map(t => t.tipo).filter((x): x is number => x != null))]
+    .sort((a, b) => ordemCat(a) - ordemCat(b) || a - b)
+    .map(tipo => ({ tipo, label: labelCategoria(tipo), n: listaSemCategoria.filter(t => t.tipo === tipo).length }));
+  const mostrarChips = tab === "campo" && !filterManuel
+    && (contagemCat.length > 1 || contagemCat.some(c => !catVisiveis.has(c.tipo)));
+
+  // O detalhe é sempre um torneio que está na lista. Se o seleccionado deixou de
+  // estar — mudou um filtro, ou o ?t= guardado é de um torneio que já acabou —
+  // abre-se o primeiro visível: os do Manuel primeiro, depois o mais próximo.
+  const chaveVisiveis = tab === "campo" ? listaSemCategoria.filter(catFilter).map(t => t.t).join(",") : "";
+  useEffect(() => {
+    if (!chaveVisiveis) return;
+    const ids = new Set(chaveVisiveis.split(",").map(Number));
+    if (selectedT != null && ids.has(selectedT)) return;
+    const hoje = new Date().toISOString().slice(0, 10);
+    const vis = allTorneios.filter(t => ids.has(t.t))
+      .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
+    const alvo = vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
+    if (alvo) setSelectedT(alvo.t);
+  }, [chaveVisiveis, selectedT]);
+
   if (erro) return (
     <div style={{ padding: 32 }}>
       <div className="notice-error">
@@ -790,19 +895,7 @@ export default function USKidsFieldPage() {
   };
 
   const renderSidebarTorneios = () => {
-    const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
-    // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
-    // (= soma de participantes na última ronda de cada escalão).
-    const fieldFilter = (t: TorneioEntry) =>
-      !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
-    // Pesquisa por nome do torneio ou campo (case/acentos-insensível).
-    const q = normNameAuto(search);
-    const searchFilter = (t: TorneioEntry) =>
-      !q || normNameAuto(t.name).includes(q) || normNameAuto(t.campo ?? "").includes(q);
-    const activeList = (tab === "campo"
-      ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-      : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t))
-    ).filter(searchFilter);
+    const activeList = listaSemCategoria.filter(catFilter);
 
     const buildMonthMap = (list: TorneioEntry[]) => {
       const monthMap: Record<string, TorneioEntry[]> = {};
@@ -860,6 +953,9 @@ export default function USKidsFieldPage() {
             <span className="p p-sm p-tourn" style={{
               background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
             }}>INVIT</span>
+          )}
+          {t.tipo != null && t.tipo !== 8 && (
+            <span className="p p-sm p-muted" title="Categoria USKids">{labelCategoria(t.tipo)}</span>
           )}
           {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
           {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
@@ -957,7 +1053,8 @@ export default function USKidsFieldPage() {
     if (!mainKeys.length) {
       return (
         <div className="muted fs-12" style={{ padding:"20px 14px", textAlign:"center" }}>
-          {search ? `Sem torneios para "${search}"` : "Sem torneios"}
+          {search ? `Sem torneios para "${search}"`
+            : listaSemCategoria.length ? "Todos os torneios estão escondidos pelas categorias" : "Sem torneios"}
         </div>
       );
     }
@@ -999,6 +1096,26 @@ export default function USKidsFieldPage() {
               : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
             ★ Manuel
           </button>
+          {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
+              não se confundirem com o ★ Manuel. */}
+          {mostrarChips && (<>
+            <ToolbarSep />
+            {contagemCat.map(c => {
+              const on = catVisiveis.has(c.tipo);
+              return (
+                <button key={c.tipo}
+                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+                  onClick={() => alternarCategoria(c.tipo)}
+                  aria-pressed={on}
+                  title={on ? "Clicar para esconder" : `${c.n} escondidos — clicar para mostrar`}
+                  style={on
+                    ? { flexShrink:0, background:"var(--bg-info)", borderColor:"var(--border-info)", color:"var(--color-info)" }
+                    : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-3)", borderColor:"var(--border)", textDecoration:"line-through" }}>
+                  {c.label} <span className="fs-10" style={{ opacity:.7 }}>{c.n}</span>
+                </button>
+              );
+            })}
+          </>)}
         </>)}
         {tab === "resultados" && (
           <button

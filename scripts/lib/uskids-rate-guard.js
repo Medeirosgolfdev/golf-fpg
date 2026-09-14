@@ -12,16 +12,15 @@
  * diferente:
  *
  *  1. `ehRateLimit`      — reconhecer a recusa (vem em TEXTO, HTTP 200).
- *  2. `deveVarrerProfundo` — não martelar a fonte todos os dias com a
- *                            varredura cara, que é o que nos levou ao limite.
- *  3. `perdaNosComuns`   — nunca gravar um build que perdeu inscritos.
+ *  2. `perdaNosComuns`   — nunca gravar um build que perdeu inscritos.
+ *  3. `avaliarCanario`   — gritar quando a procura parou, calar quando só
+ *                          fomos recusados num dia.
+ * (O volume de pedidos, que foi o que nos levou ao limite, resolve-se em
+ * lib/uskids-frontier.js.)
  */
 
 /** Perda de inscritos tolerada antes de recusar a escrita. */
 const PERDA_MAXIMA = 0.30;
-
-/** De quantos em quantos dias corre a varredura profunda (Passagem A + sondas). */
-const DIAS_VARREDURA_PROFUNDA = 7;
 
 /**
  * O signupanytime responde ao rate limit com "Too many requests" em TEXTO e
@@ -37,27 +36,6 @@ function erroRateLimit() {
   const e = new Error('rate limit (Too many requests)');
   e.rateLimited = true;
   return e;
-}
-
-/**
- * A varredura profunda (Passagem A + sondas de salto) corre de
- * `intervaloDias` em `intervaloDias` dias; a densa, que é a que descobre,
- * corre sempre. Uma cache sem marca corre já.
- *
- * @param {object} o
- * @param {string|null} o.ultima  data ISO (YYYY-MM-DD) da última profunda
- * @param {string} o.hoje         data ISO de hoje
- * @param {boolean} [o.forcar]    --full-scan
- */
-function deveVarrerProfundo({ ultima, hoje, intervaloDias = DIAS_VARREDURA_PROFUNDA, forcar = false }) {
-  if (forcar) return { correr: true, porque: '--full-scan', dias: 0 };
-  if (!ultima) return { correr: true, porque: 'primeira vez', dias: Infinity };
-  const dias = Math.floor(
-    (new Date(`${hoje}T00:00:00Z`).getTime() - new Date(`${ultima}T00:00:00Z`).getTime()) / 86400000,
-  );
-  return dias >= intervaloDias
-    ? { correr: true, porque: `${dias}d desde a última`, dias }
-    : { correr: false, porque: null, dias };
 }
 
 /** Map t → nº de inscritos, a partir da lista de torneios do field.json. */
@@ -149,9 +127,8 @@ function avaliarCanario({ varredura, diasSemDescoberta, diasSemAvanco, rateLimit
 }
 
 module.exports = {
-  PERDA_MAXIMA, DIAS_VARREDURA_PROFUNDA,
+  PERDA_MAXIMA,
   DIAS_SEM_DESCOBERTA, DIAS_SEM_AVANCO, avaliarCanario,
   ehRateLimit, erroRateLimit,
-  deveVarrerProfundo,
   inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita,
 };
