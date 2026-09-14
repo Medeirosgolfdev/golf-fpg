@@ -126,8 +126,11 @@ export function OmCatBadge({ hit }: { hit: OmHit }) {
 
 /* ── Classificador de nível OM por nome (do regulamento) ──
    As provas juniores exclusivas de 9 buracos NÃO contam e não batem em nenhum
-   padrão (têm "9 buracos" e nomes fora da lista). Carnaval foi acrescentado
-   pela Comissão Técnica (observado como Nível C). */
+   padrão (têm "9 buracos" e nomes fora da lista).
+   ⚠ O Torneio de Carnaval CONTA para a OM, Nível C — não é nomeado no
+   regulamento, mas o Calendário Geral CGSS de 18/02/2026 marca-o "O.M nível C"
+   (14 Fev), ao abrigo da regra 5 (a Comissão Técnica acrescenta provas).
+   Cópia em OneDrive\Golfe\Arquivo_GOLF\2026\2026_CGSS_Calendario.pdf. */
 const OM_LEVELS: Array<{ rx: RegExp; level: Level }> = [
   // Nível A — Majors
   { rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i, level: "A" },
@@ -181,9 +184,9 @@ function pointsLadder(
 
 /* ── Calendário oficial das provas NOMEADAS no regulamento (13 provas) ──
    Serve para saber quantas provas da época já contam e quais ainda faltam.
-   A Carnaval NÃO está aqui (não é nomeada no regulamento — foi acrescentada
-   pela Comissão Técnica, regra 5); as provas juniores exclusivas de 9 buracos
-   também não contam. Cada entrada casa por regex contra o nome do torneio. */
+   O Carnaval não está nesta lista só por não ser nomeado no regulamento — mas
+   CONTA para a OM (Nível C, calendário do clube de 18/02/2026; ver OM_LEVELS).
+   As provas juniores exclusivas de 9 buracos não contam. Cada entrada casa por regex contra o nome do torneio. */
 const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp }> = [
   { name: "Troféu João Sousa", level: "A", rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i },
   { name: "Taça do Clube", level: "A", rx: /\bta[cç]a\s+do\s+clube\b/i },
