@@ -23,13 +23,13 @@ Erros de tipo, imports em falta, variáveis não usadas, ou testes falhados inva
 - html-to-image (exportação de overlays)
 - Playwright (scraping pipeline)
 - Deploy: Vercel com GitHub integration
-- 17 GitHub Actions para automação de dados (ver tabela "GitHub Actions — estado")
+- 33 workflows GitHub Actions para automação de dados (ver tabela "GitHub Actions — estado")
 
 ## Estrutura
 
 ```
 src/
-  pages/          # 12 páginas lazy-loaded
+  pages/          # ~25 páginas lazy-loaded (ver tabela de rotas)
   data/           # loaders, types, registos de dados (KIDSdataLoader, rivalData, dataRegistry, etc.)
   ui/             # componentes partilhados (NavBar, PillBadge, SidebarToggle, etc.)
   utils/          # format, mathUtils, teeColors, flagUtils, fixEncoding, whsCalc, scoreDisplay
@@ -427,9 +427,9 @@ Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scra
 `scripts/aggregator/index.js` orquestra os adapters de `scripts/aggregator/sources/`
 e escreve `public/data/{juniors,juniors-tournaments*,tournament-catalog}.json`
 (consumidos pelo `KIDS2Page`). Corre no `build-juniors.yml` (push nos paths de
-input + workflow_dispatch). ~30.2k juniores / ~20.8k torneios.
+input + workflow_dispatch). ~30.4k juniores / ~20.9k torneios (2026-09-15).
 
-### Fontes (11 adapters)
+### Fontes (os 11 adapters originais — hoje são ~30, ver `scripts/aggregator/sources/`)
 
 | Adapter | Lê | Tipo |
 |---|---|---|
@@ -793,10 +793,6 @@ sítios (o `Sessao.get` segue os redirects à mão e é a correcção):
 substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
 `dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
 
-⚠ Ao encaminhar chamadas por um wrapper, cuidado com o *find-and-replace*: a
-substituição em massa de `dgPost(` apanhou também a chamada DENTRO do próprio
-`dgPostSmart` e criou recursão infinita. O router tem de chamar o original.
-
 Medido com o 987/10207 (Drive Tour Norte – Amarante) nos três cenários —
 cookies boas, **sem cookies** e **cookies mortas**: os `drive-data-2026-08.json`
 saem **byte a byte idênticos** (metadata, leaderboard, scorecards, par, metros,
@@ -818,16 +814,19 @@ rondas, circuito).
    caía no caminho autenticado sem cookies. Um throw cosmético a fingir-se de
    falha de rede.
 
-⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão (500 mesmo com jar) —
-continua a exigir o hash do `1EntryPage.aspx`.
+⚠ O gémeo `scoring.datagolf.pt/pt` **não** emite sessão pelo `linkpage` (500
+mesmo com jar). Nesse host a entrada pública é o `1PreparePage.aspx` (lista de
+torneios via `criarSessaoLista`; WHS via gate `fedhcp` — ver "O WHS também é
+público"); o `1EntryPage.aspx` com hash só serve o caminho autenticado.
 
 ## Scripts — FPG Pipeline
 
 Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js Terminal** (correr em `C:\golf-fpg\scripts\`).
 
-> **⚠ Reorganização 2026-06-23 — localização dos scripts da raiz.** A raiz já só
-> contém `pipeline.js` (continua na raiz porque o `scripts/fpg-scrape-node.js` o
-> invoca via `node pipeline.js --skip-import`). Os restantes scripts que estavam
+> **⚠ Reorganização 2026-06-23 — localização dos scripts da raiz.** Na raiz fica
+> o `pipeline.js` (o `scripts/fpg-scrape-node.js` invoca-o via `node pipeline.js
+> --skip-import`), o `scrape-bluegolf.js` (⛔ BlueGolf descontinuado; há cópia em
+> `scripts/`) e os utilitários `pg-*.js`. Os restantes scripts que estavam
 > soltos na raiz foram movidos:
 > - **Activos** (sem substituto Node-puro) → `scripts/`: `find-tcodes.js`, `uskids_scrape_courses - PERFEITO COM DISTANCIAS.js`.
 > - **Legados** (browser-console / Playwright / servidor-local, todos substituídos pelos `*-node.js` da era 2026-04) → `scripts/_archive/browser-console/`: `scraper-headless.js`, `update-jogadores.js`, `update-torneios.js`, `fpg-download-whs-only.js`, `scrape-consola-inscritos-campeonato-nacional.js`, `pull-torneios.js`, `scrape-drive-aquapor-v7.js`.
@@ -845,11 +844,10 @@ Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js 
 
 1. Browser Console em `scoring.datagolf.pt`: `scripts/_archive/browser-console/scrape-drive-aquapor-v7.js` → `drive-data.json` + `aquapor-data.json`
 2. Browser Console em `scoring.datagolf.pt`: `scripts/_archive/browser-console/pull-torneios.js` → `pull-torneiosNNN.json` (editar `POR_CODIGO` com ccode/tcode)
-3. `node scripts/build-drive-sd-lookup.js` → `drive-sd-lookup.json`
 
 ### Fluxo: Descarregar inscrições + draws de torneios FPG
 
-**Fluxo que funciona (browser console + merge Node). Não fazer Node puro — o servidor FPG exige sessão de browser real.**
+**LEGADO** — substituído pelo `scrape-fpg-admissions-draws-node.js` (Node puro desde 2026-04-22, descrito mais abaixo). O fluxo browser fica como referência dos URLs e fallback manual.
 
 Duas páginas públicas são necessárias, em subdomínios diferentes:
 
@@ -918,7 +916,7 @@ verdade só nos torneios da FPG — daí os 962/* aparecerem na UI como "Torneio
 grupo. Agora cada jogador leva `tee` próprio quando difere do grupo, mais `hcp`
 exacto; `campo` e `clube` saem do bloco de meta.
 
-**Script Node `scripts/scrape-fpg-admissions-draws.js` (legacy)** — existe mas **não funciona**. Servidor FPG rejeita (HTTP 500 ou HTML truncado) mesmo com cookies capturados de Chrome 90. Mantido como referência dos URLs e da tentativa; **usar sempre o fluxo browser acima**.
+**Script Node `scripts/scrape-fpg-admissions-draws.js` (legacy)** — existe mas **não funciona**. Servidor FPG rejeita (HTTP 500 ou HTML truncado) mesmo com cookies capturados de Chrome 90. Mantido como referência dos URLs e da tentativa; **usar o `scrape-fpg-admissions-draws-node.js`** (abaixo).
 
 ### Scripts FPG detalhados
 
@@ -1091,7 +1089,7 @@ qualquer ccode/tcode, antes hardcoded 10935-10944 + club=000): função Vercel
 (cache key `ccode/tcode` para clubes ≠000 no `inscricoes_nacionais.json`).
 No Nacional 2026 o `live: false` está posto (evento já disputado).
 
-**scrape-classif-node.js** — Node puro (2026-04-22). Substitui `pull-torneios.js` browser-console. GET linkpage warmup + POST `classif.aspx/ClassifLST` paginado + POST `classifAgregate.aspx/ScoreCard` por jogador. Output formato compatível com `pull-torneiosNNN.json`. Scope: `scripts/classif-scope.json` (217 torneios já processados) ou flags CLI. Workflow: `update-classif.yml` (Sáb/Dom 20:30 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
+**scrape-classif-node.js** — Node puro (2026-04-22). Substitui `pull-torneios.js` browser-console. GET linkpage warmup + POST `classif.aspx/ClassifLST` paginado + POST `classifAgregate.aspx/ScoreCard` por jogador. Output formato compatível com `pull-torneiosNNN.json`. Scope: `scripts/classif-scope.json` (217 torneios já processados) ou flags CLI. Workflow: `update-classif.yml` (Dom/Seg 01:00 UTC). Corre pela sessão pública (ack, sem cookies); o Secret `DATAGOLF_SCORING_COOKIES` é só fallback — ver "Quem já corre sem cookies".
 ```bash
 node scripts/scrape-classif-node.js --tclub 000 --tcode 10825
 node scripts/scrape-classif-node.js --scope scripts/classif-scope.json --out public/data/pull-torneios-node.json
@@ -1105,14 +1103,13 @@ node scripts/scrape-classif-node.js --scope scripts/batch-aroeira.json --concurr
 **Utilitários** (todos em `scripts/`):
 - `node scripts/make-scorecards-ui.js 52884` / `--all` — gera UI scorecards (= `npm run scorecards`)
 - `node scripts/enrich-players.js` → `player-stats.json`
-- `node scripts/build-drive-sd-lookup.js` → `drive-sd-lookup.json`
 - `node scripts/merge-courses.js` — consolida campos duplicados
 - `node scripts/find-tcodes.js` — varre ccode/tcode, imprime torneios (movido da raiz em 2026-06-23)
 - `node scripts/validate-encoding.js` — valida encoding dos JSON
 
 ### Refresh de federados (`scrape-federados-node.js`)
 
-Refresh COMPLETO de `public/data/federados.json` (~15.600 activos, `FedStat=9`)
+Refresh COMPLETO de `public/data/federados.json` (~17,9k activos em 2026-09, `FedStat=9`)
 via Node puro. Substitui o antigo `scrape-federados.js` (browser console).
 Endpoint `POST /pt/FederatedsList_V2.aspx/HandicapsLST`, paginado a 100
 (200+ → HTTP 500), ~156 páginas / ~30s. Apanha fotos novas (paths antigos →
@@ -1126,13 +1123,13 @@ node scripts/scrape-federados-node.js --max-pages 5   # debug (parcial — exige
 node scripts/scrape-federados-inativos.js             # script separado: federados-inativos.json (FedStat=7)
 ```
 
-Cookies: env `DATAGOLF_SCORING_COOKIES` (Actions) ou ficheiro
-`api/.scoring-datagolf-cookies.json` (dev) — os mesmos do `scoring.datagolf.pt`.
+Corre pela sessão pública (gate `fedlist_v2`, sem cookies — ver "Quem já corre
+sem cookies"); as cookies (`DATAGOLF_SCORING_COOKIES` / ficheiro
+`api/.scoring-datagolf-cookies.json`) ficam só como fallback.
 Compara byte-a-byte (ignorando timestamps) e tem guardas anti-overwrite (recusa
 gravar 0 registos, run incompleto, ou perda >10% sem `--force`). Exit codes:
 **0** = actualizado, **2** = sem alterações (não é erro), **1** = erro.
-Validar cookies antes: `node scripts/test-datagolf-node.js` (deve dar `Result:"OK"`).
-Workflow: `update-federados.yml` (Quarta 05:00 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
+Workflow: `update-federados.yml` (Quarta 17:00 UTC).
 
 ---
 
@@ -1242,7 +1239,10 @@ no jogador; o `normalizePlayer` levanta-o para o topo em runtime.
 Passagem inicial (2026-08-30): **5008 rondas em 136 torneios**; a coincidência
 exacta entre o SD calculado e o `sgd` oficial subiu de **63,4% para 73,4%** em
 15 421 rondas dos nossos. Limitação: só cobre torneios onde pelo menos um dos
-nossos jogadores jogou.
+nossos jogadores jogou. (Medição anterior ao `whsCalc.ts`: com os métodos
+validados a 2026-09-15 o cálculo bate em 99,4% em 18 buracos e 85–91% em 9 — e
+o site mostra o SD oficial sempre que o tem; ver "SD oficial nas voltas dos
+torneios".)
 
 ### Onde corre
 
@@ -1262,8 +1262,9 @@ A FPG põe **998** (ND/NR — não devolveu) e **999** (NS/WD) no lugar do gross
 rejeitava `null`: o cartão a zeros era "reparado" pelo Net Double Bogey e saía um
 SD de **−58.8** que, sendo ≤ HCP, pintava o badge de **VERDE** — as 9
 desistências do CGSS OM NOS apareciam como as melhores voltas do dia (25 verdes
-em vez de 16). Guarda `gross >= 900` em `computeSD` (`fpgUtils.ts`) e nas duas
-cópias da mesma lógica (`ResumoTable.tsx`, `DrivePage.tsx`). Mesma convenção do
+em vez de 16). Guarda `gross >= 900` no `computeSD` (`fpgUtils.ts`) e no
+`roundDifferential` (`whsCalc.ts`) — as antigas cópias no `ResumoTable.tsx` e na
+`DrivePage.tsx` passaram a chamar o `computeSD` (2026-09-15). Mesma convenção do
 ranking Drive. Testes em `src/data/__tests__/computeSD.test.ts`.
 
 ---
@@ -1312,14 +1313,14 @@ A lógica partilhada (ficheiros, datas das rondas, casamento) está em
 
 **fetch-uskids-results.js** — Scorecards completos + par/yards reais por buraco. Torneios em curso: atualiza auto. Históricos configurados no array `HISTORICOS`.
 ```bash
-node fetch-uskids-results.js
+node scripts/fetch-uskids-results.js
 ```
 Output: `public/data/uskids-results.json`
 
 **fetch-uskids-member-history.js** — Histórico completo de carreira USKids de cada jogador nos flights configurados. Matching memberID→nome por strokes fingerprinting. Checkpoint a cada 50 jogadores — seguro interromper.
 ```bash
-node fetch-uskids-member-history.js         # scrape (só novos)
-node fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)
+node scripts/fetch-uskids-member-history.js         # scrape (só novos)
+node scripts/fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)
 ```
 Output: `data-archive/uskids-member-history.json` (ficheiro único)
 
@@ -1400,8 +1401,11 @@ defeito vêem-se os Internacionais e os Mundiais.
 
 ---
 
-⛔ **HISTÓRICO — as secções seguintes descrevem a varredura antiga, substituída a
-2026-09-14 (acima).** Ficam pelo registo das avarias que ensinaram as regras.
+⛔ **HISTÓRICO — as secções seguintes, até "Datas de inscrição USKids",
+descrevem a varredura antiga, substituída a 2026-09-14 (acima).** Ficam pelo
+registo das avarias que ensinaram as regras. As secções "Datas de inscrição
+USKids" e "O NOME não classifica o torneio" continuam em vigor, com as regras de
+inclusão por tipo alargadas a 2026-09-14 (acima).
 
 ⚠ **A varredura de tcodes tem de ser em DUAS passagens (corrigido 2026-08-23).**
 Os tcodes do signupanytime são sequenciais por criação mas só uma fatia pertence
@@ -1746,7 +1750,8 @@ torneios vivos em t=22240…23640:
 | 12 | Girls Invitationals Tour | 2 | 2026 Girls Invitational - Longleaf (NC) |
 | 13 | International Teen Series Tour | 3 | International Teen Series at Al Hamra |
 
-`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome.
+`TIPOS_INCLUIR = {1, 7, 8}` entram **sempre**, seja qual for o nome. ⛔ *Alargado
+a 2026-09-14 aos tipos 2, 3, 4, 6 e 13 — ver "Procura só para a frente".*
 
 ⛔ *Substituído a 2026-09-14: entram TODOS os Tour Championships, EUA incluídos
 (escondidos por defeito na página) — ver "Procura só para a frente".*
@@ -2221,7 +2226,8 @@ registada (checklist completo): `Kids2SourceKey`/`SOURCE_PILLS`
 (`KIDS2Page.tsx`), `SourceKey` (`kids2/Sidebar.tsx`), `--source-{fsga,uajt,
 mexnacional}` (`tokens.css`) + `SOURCE_COLORS`/`SOURCE_LABELS`
 (`EvolutionChart.tsx`), paths de trigger no `build-juniors.yml`. Build validado:
-**15878 juniores** (+~1.6k), 9/9 sanity checks (Manuel×Dmitrii=6 mantido).
+**15878 juniores** (+~1.6k), 9/9 sanity checks (Manuel×Dmitrii=6 mantido) —
+números de 2026-07-03; hoje ~30.4k juniores e Manuel×Dmitrii = 7.
 ⚠ O matcher é conservador: "Mauricio Mijares" (uskids, sem DOB) **não** funde
 automaticamente com "Mauricio Mijares Lugo" (mexnacional, com DOB) — nomes
 diferentes + sem chave forte partilhada. Resolvido por `forceMerge` em
@@ -2761,9 +2767,9 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 |----|------|------|
 | 21573 | Marco Simone Local Tour 2026 | 2026 |
 | 21610 | World Championship 2026 | Set 2026 (a ocorrer) |
-| 22243 | Venice Open 2026 | Ago 2026 (a ocorrer) |
+| 22243 | Venice Open 2026 | Ago 2026 (jogado) |
 
-> **Nota (2026-06-12):** European Championship 2026 (`21131`) já ocorreu a **26 Mai 2026** — movido para a tabela de conhecidos acima (estava erradamente marcado "Ago 2026"). O World 2026 (`21610`) e o Venice 2026 (`22243`) ainda estão por ocorrer — ver `FULL_FIELD_TCODES` abaixo para correr o campo completo quando acontecerem.
+> **Nota (2026-06-12):** European Championship 2026 (`21131`) já ocorreu a **26 Mai 2026** — movido para a tabela de conhecidos acima (estava erradamente marcado "Ago 2026"). O Venice Open 2026 (`22243`) já se jogou (Agosto); o World 2026 (`21610`) confirmar no `uskids-field.json`.
 
 ### Regionais USA (em LINKS_EXTRA / REGIONAL_CHAMPIONSHIPS)
 
@@ -3019,12 +3025,11 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome + `dob`/`sex` p/ os jogadores dos campos) |
 | recent-tournaments.json | FPG | build-recent-tournaments.js | ✓ | RecentTournamentsPage (`/torneios-recentes`) — torneios reconstruídos das voltas dos nossos |
 | simulador-players.json | FPG | build-simulador-players.js (update-drive + update-federados) | ✗ | SimuladorPage — selector: Drive da Madeira dos últimos 12 meses (Drive Tour + Drive Challenge só Sub-12/Sub-14) + escolhidos à mão, com HI/sexo do cadastro (a página não carrega o federados.json de 18 MB) |
-| drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
-| aquapor-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
-| melhorias.json | FPG | manual | ✓ | JogadoresPage, CamposPage |
+| drive-data-YYYY-MM.json | FPG | scrape-drive-node.js (mensal) | ✓ | DrivePage |
+| aquapor-data-YYYY-MM.json | FPG | scrape-drive-node.js (mensal) | ✓ | DrivePage |
+| melhorias.json (⚠ na RAIZ, não em public/data) | FPG | enrich-intl-round.js | ✓ | JogadoresPage, CamposPage (importado em `App.tsx`) |
 | away-courses.json | FPG | pipeline.js | ✓ | CamposPage |
 | player-stats.json | FPG | enrich-players.js | ✗ | JogadoresPage |
-| drive-sd-lookup.json | FPG | build-drive-sd-lookup.js | ✗ | DrivePage |
 | {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids_torneios_completos(1-40).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
@@ -3036,9 +3041,9 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
-| uskids-discovery-cache.json | USKids | fetch-uskids-discovery.js | ✗ | fetch-uskids-results.js |
+| uskids-discovery-cache.json | USKids | fetch-uskids-field.js (Fase 1) | ✗ | fetch-uskids-results.js |
 | t_de_tournaments_do_uskids.json | USKids | (automação, 6448 entries) | ✗ | KIDSdataLoader (uskTournNames fallback) |
-| bjgt_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js | ✓ | BJGTPage, KIDSdataLoader |
+| bjgt_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js (⛔ descontinuado) | ✓ | MajorPage (via módulo BJGTPage), KIDSdataLoader |
 | eowagr25_*.json | EOWAGR | scrape-eowagr25*.js | ✓ | KIDSdataLoader |
 | ftm_doral_2024/2025.json | Doral | scrape-golfgenius.js | r1/r2Gross | KIDSdataLoader |
 | coc_{2023..2026}.json | Champion of Champions | scrape-golfgenius-node.js (`--scope`) | ✓ (9 e 18 buracos) | MajorPage (source `coc`), aggregator (`sources/coc.js`) |
@@ -3079,8 +3084,9 @@ Slope é que diferem entre M e F — é o MESMO tee. Nunca listar "Amarelas M" e
   prioridade no arranque (`readInitialSimState`); efeito espelha estado →
   query params (replace) + localStorage. Refrescar já não perde nada.
 - **Selector de jogador** na toolbar (de `players.json`, default Manuel via
-  `MANUEL_FED`): escolher um jogador pré-preenche o HI (se vazio) e carrega o
-  `PlayerPageData` via `loadPlayerData(fed)`.
+  `MANUEL_FED`): escolher um jogador carrega o `PlayerPageData` via
+  `loadPlayerData(fed)`; o HI e o sexo seguem o jogador (ver "janela WHS,
+  score-alvo e selector" abaixo — só em "Jogador (HI manual)" vale o HI escrito).
 - **Simulador "E se?"** — reutiliza o `RoundSimulator` (que já existia na
   JogadoresPage). Projecta o HI após uma volta simulada (best-N de 20 via
   `whsQtyCalc`/tabela 5.2a + regra Exceptional Score), top-N, rondas
@@ -3187,7 +3193,9 @@ volta: `{ date, gross, toPar, holes, tee, event, sd }` (`holes` = 9 ou 18).
 
 ### `scripts/lib/course-aliases.cjs` — ESPELHO Node de `src/utils/courseAliases.ts`
 
-O Node não importa `.ts`, mas o cruzamento precisa da MESMA canonização de nomes
+Escrito quando o Node ainda não corria `.ts` (hoje, Node ≥ 22.18, corre — é
+assim que os scripts usam o `whsCalc.ts` via `scripts/lib/whs.cjs`; estes
+espelhos `.cjs` podiam passar a esse padrão). O cruzamento precisa da MESMA canonização de nomes
 que a app usa em runtime — senão perde ~16% das voltas (nomes FPG curtos/variantes
 que não batem com o master). **Manter sincronizado** com `courseAliases.ts`
 (precedente: `colors.ts` espelha `tokens.css`).
@@ -3360,13 +3368,18 @@ Montecchia não apareciam).
 > WAGR/EGR, outros), com o tipo de acesso (público / sessão pública / só browser /
 > login / limite / efémero / parado), exemplos reais e o script que usa cada um.
 > Publicado também como artifact. **Quando se descobrir um link novo, acrescentá-lo lá.**
+> Tem uma secção **por clube** (~120 códigos, com o `ack` de cada clube, federados
+> activos/juniores/seguidos e os links já montados). ⚠ **O código do CAMPO não é o
+> do clube**: `course.asp?ncourse=055` é o Santo da Serra (o clube 055 é Évora);
+> 025 é o Estoril. O `course.asp` leva só o número; o `show_strokeindex.asp` leva
+> campo-percurso (`025-1`).
 
 | Site | URL | Para quê | Auth |
 |------|-----|----------|------|
-| scoring.datagolf.pt | `scoring.datagolf.pt/pt/tournaments.aspx` | Torneios DRIVE+AQUAPOR+pull | Público |
-| scoring.fpg.pt | `scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884` | Download WHS | Login |
+| scoring.datagolf.pt | `scoring.datagolf.pt/pt/tournaments.aspx` | Torneios DRIVE+AQUAPOR+pull; WHS (gate `fedhcp`) | Público com entry-gate (sessão pública via `1PreparePage.aspx`) |
+| scoring.fpg.pt | `scoring.fpg.pt/lists/linkpage.aspx` | Inscrições, draw, classificação | Público (sessão emitida pelo `linkpage`) |
 | area.my.fpg.pt | `area.my.fpg.pt/login/` | Login FPG (SSO) | SSO |
-| my.fpg.pt | `my.fpg.pt/Home/PlayerWHS.aspx?no=52884` | WHS — **gémeo de scoring.datagolf.pt** | Login |
+| my.fpg.pt | `my.fpg.pt/Home/PlayerWHS.aspx?no=52884` | WHS — **gémeo de scoring.datagolf.pt**; fallback do `fpg-scrape-node.js` | Login |
 | golf-portugal.pt | `golf-portugal.pt/api/*` | Proxy público FPG (REST) | Público |
 | signupanytime.com | `www.signupanytime.com` | Torneios USKids | Público |
 | tournaments.uskidsgolf.com | `tournaments.uskidsgolf.com/tournaments/international` | Calendário torneios | Público |
@@ -3398,7 +3411,7 @@ Estas URLs são úteis para scrapar dados **pré-jogo** (quem está inscrito, te
 
 **Descoberta 2026-04-22 via `scripts/probe-admissions-sources.js`.** Ir directamente às páginas alvo (`tournAdmissions.aspx`, `classifications.aspx`, etc.) com os cookies certos funciona *às vezes*, mas é frágil — devolve `Param Error` (HTTP 200 com título "Param Error") se a sessão do servidor não estiver "aquecida" pelo `linkpage.aspx` logo antes. Depois do `linkpage.aspx` rodar, o directo passa a funcionar na mesma sessão (estado server-side).
 
-**Consequência prática:** sempre usar `linkpage.aspx?page=...` como ponto de entrada. O servidor FPG faz automaticamente o redirect 302 para a página alvo (`tournAdmissions.aspx`, etc.), `fetch` com `redirect: 'follow'` apanha a resposta final com os dados. Nunca saltar o linkpage em clientes server-side em que o warmup não está garantido.
+**Consequência prática:** sempre usar `linkpage.aspx?page=...` como ponto de entrada. O servidor FPG faz automaticamente o redirect 302 para a página alvo (`tournAdmissions.aspx`, etc.). ⚠ Sem cookies, o `fetch` com `redirect: 'follow'` perde a sessão emitida no caminho — seguir os redirects à mão (`Sessao.get` de `scripts/lib/fpg-session.js`). Nunca saltar o linkpage em clientes server-side em que o warmup não está garantido.
 
 **Sintoma de bug escondido se ignorares isto:** o middleware em `vite.config.ts` apontava para `tournAdmissions.aspx` directamente e funcionava em 99% dos casos (porque corridas anteriores aqueciam a sessão). Após restart do Vite, a primeira chamada podia devolver "Param Error" silenciosamente — o parser parsearia 0 linhas e a UI ficaria vazia. Mudar para `linkpage.aspx` eliminou essa fragilidade.
 
@@ -3426,7 +3439,7 @@ Não é `linkpage.aspx` nem usa `ack`: é uma aplicação ASP.NET à parte, com
 **entry gate próprio** (`1.aspx`) que guarda o torneio NA SESSÃO e faz 302 para
 `/live-scoring/Home/ls_classif.aspx`. Ir directo a `ls_classif.aspx` dá sempre
 HTTP 500 — falta contexto, não cookies. **Não precisa dos cookies do Chrome 90**
-(emite sessão própria) — é o único backend FPG assim.
+(emite sessão própria, como o `linkpage.aspx` e o `1PreparePage.aspx`).
 
 **Porque interessa:** é a ÚNICA fonte com o jogo a decorrer — posição, buraco
 em que cada um vai (ou tee time se ainda não saiu), to-par do dia — **e tem
@@ -3490,9 +3503,9 @@ inscrição, data de registo, VAC nem reservas — a lista vem por ordem alfabé
 por isso é **fallback, nunca primeira escolha**: o `scrapeAdmissions` do
 `scrape-fpg-admissions-draws-node.js` só lá vai quando o linkpage falha ou
 devolve lista vazia (`parseAdmissionsPt`, log `fallback admissions.asp
-(público)`). Vale ouro porque é exactamente o que salva o scrape enquanto as
-cookies de `scoring.fpg.pt` estão expiradas — que é o estado normal entre
-refrescos manuais.
+(público)`). Vale ouro porque é exactamente o que salva o scrape quando as
+cookies de `scoring.fpg.pt` estão expiradas (duram ~9h — ver "As cookies duram
+~9 HORAS").
 
 **Dead ends confirmados no mesmo probe (não voltar a testar):**
 - ~~`scoring-pt.datagolf.pt/scripts/admissions.asp`~~ — **RESOLVIDO 2026-08-20**, ver acima (faltava o `ack`).
@@ -3679,6 +3692,12 @@ de ficheiro/env var — nunca hardcoded. Actualmente corrigido.
 
 #### Backend 2: `scoring.datagolf.pt` (público — torneios, drive, aquapor)
 
+> ⚠ **Histórico (2026-04).** Desde 2026-08-30 os scrapers entram neste host
+> pela **sessão pública** (`1PreparePage.aspx` / `linkpage.aspx`, sem cookies —
+> ver "As cookies NÃO são precisas para os resultados"); o que se segue sobre o
+> hash do `1EntryPage.aspx` só vale para o caminho autenticado, que ficou de
+> fallback.
+
 **Cookies necessários:** dois, **ambos obrigatórios**:
 - `ASP.NET_SessionId` — sessão ASP.NET (HttpOnly, SameSite=None)
 - `DG_Lists_URL` — cookie de "entry context" que prova que o browser passou
@@ -3723,13 +3742,9 @@ Alternativa sem cURL: F12 → **Application** → **Cookies** → clicar no
 domínio → copiar cada linha (nome=valor). Ambos os métodos dão os mesmos
 cookies.
 
-Validade dos cookies:
-- `my.fpg.pt` — `.AspNet.ApplicationCookie` dura dias a semanas (ASP.NET
-  Identity default é 14 dias sliding expiration)
-- `scoring.datagolf.pt` — `ASP.NET_SessionId` dura 20min sem actividade
-  (ASP.NET default), mas pode ser muito mais longo na FPG. `DG_Lists_URL`
-  não testada individualmente. Para fins práticos, assumir **1 semana**
-  e refrescar por precaução.
+Validade dos cookies: **medida a 2026-08-30 — ~9 horas** (ver "As cookies
+duram ~9 HORAS, não uma semana"). As estimativas antigas desta secção ("dias a
+semanas", "assumir 1 semana") estavam erradas.
 
 ---
 
@@ -3777,7 +3792,7 @@ ou similar.
 | `/Home/PlayerWHS.aspx/ScoreCard?score_id=X&scoringtype=Y&competitiontype=Z&pp=N` | POST | `{score_id, scoringtype, competitiontype, pp:"N"}` | Scorecard hole-by-hole (par_1..18, gross_1..18, meters_1..18, stroke_index_1..18, stbgross_1..18, stbnet_1..18, bogey_1..18). **Atenção:** `scoringtype` e `competitiontype` TÊM de estar na URL E no body (descoberto 2026-04-15). Valores vêm do record da lista WHS (`scoring_type_id` e `competition_type_id`). Hardcodar valores fixos (1/10 para tudo) falha com "An error occurred while processing this request". |
 | `/Home/PlayerWHS.aspx/View20Scores?fed_code=X` | POST | `{fed_code}` | 20 rondas do cálculo WHS |
 | `/Home/PlayerWHS.aspx/ViewWHSCalc?fed_code=X` | POST | `{fed_code}` | Cálculo WHS detalhado (soft/hard cap) |
-| `/Home/FederatedsList_V2.aspx/HandicapsLST` | POST | ver `scripts/scrape-federados.js` | Lista de federados (32 campos, incl. `encryptedfedcode`) |
+| `/Home/FederatedsList_V2.aspx/HandicapsLST` | POST | ver `scripts/scrape-federados-node.js` | Lista de federados (32 campos, incl. `encryptedfedcode`) |
 
 Headers obrigatórios: `Cookie:` (6 cookies), `Content-Type: application/json`,
 `X-Requested-With: XMLHttpRequest`, `Referer: https://my.fpg.pt/Home/PlayerWHS.aspx?no=X`.
@@ -3862,30 +3877,48 @@ O `DG_Lists_URL` é URL-encoded. Descodificado: `1EntryPage.aspx?user=fpguser&dt
 O `hash` (40 chars hex) é gerado pelo browser ao entrar pela primeira vez e
 validado server-side. **Não replicável de Node puro.**
 
-### GitHub Actions — estado 2026-05-08
+### GitHub Actions — estado (crons conferidos nos `.yml` a 2026-09-15)
+
+⚠ Os scrapers FPG entram pela **sessão pública**; onde a tabela diz "Secret" é
+só o fallback (ver "Quem já corre sem cookies"). As admissions são a excepção:
+continuam autenticadas.
 
 | Workflow | Estado | Script | Cron | Notas |
 |---|---|---|---|---|
-| `uskids-field.yml` | ✅ | Playwright headless | — | Site público signupanytime.com |
-| `uskids-results.yml` | ✅ | idem | — | idem |
-| `uskids-member-history.yml` | ✅ | idem | — | idem |
-| **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
+| `uskids-field.yml` | ✅ | `scripts/fetch-uskids-field.js` | Diário 07:00 UTC | Site público signupanytime.com — ver "Procura só para a frente" |
+| `uskids-results.yml` | ✅ | `scripts/fetch-uskids-results.js` | Diário 16:00 UTC | idem |
+| `uskids-member-history.yml` | ✅ | `scripts/fetch-uskids-member-history.js` | Diário 16:30 UTC | idem |
+| **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. **Público primeiro desde 2026-09-15** (gate `fedhcp`, sem cookies); o Secret `FPG_COOKIES` fica de fallback. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** Corre também `backfill-pcc.js --apply` — ver "PCC — o ajuste que chega SEMPRE depois do scrape" — e `backfill-sd.js` — ver "SD oficial nas voltas dos torneios". |
-| **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | Sex/Sáb/Dom 21:20 UTC | Scrape inscrições dos Nacionais de Jovens. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | Sex/Sáb/Dom 21:20 UTC | Scrape inscrições dos Nacionais de Jovens. Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`update-fpg-admissions-draws.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-fpg-admissions-draws-node.js` | Sex/Sáb/Dom 20:00 UTC | **Cron aplica `--auto-extend --since 4d`**: scope manual (333) + Fonte 2 (JSONs locais: drive-data, jovens, pull-torneios, SdS) + Fonte 3 (TournamentsLST com warmup entry-gate, filtros INCLUDE=junior/PJA/jovens/sub-XX/ccode=007, EXCLUDE=Flintstones/Quarta Feira Europeia). Janela: futuros + em curso + torneios ≤3 rondas até dia seguinte ao fim. Para scope histórico completo: workflow_dispatch sem filtros. Secrets: `FPG_ADMISSIONS_COOKIES` + `DATAGOLF_SCORING_COOKIES`. |
-| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. Corre também `backfill-pcc.js --apply` (o WHS das 00:05 já traz o `cba` do próprio fim-de-semana). |
+| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret `DATAGOLF_SCORING_COOKIES` só de fallback. Corre também `backfill-pcc.js --apply` (o WHS das 00:05 já traz o `cba` do próprio fim-de-semana). |
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
-| **`update-federados.yml`** | ✅ Novo 2026-06-14 (email 2026-08-23) | `scripts/scrape-federados-node.js` (+ `build-run-digest` → email do cadastro) | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-federados.yml`** | ✅ Novo 2026-06-14 (email 2026-08-23) | `scripts/scrape-federados-node.js` (+ `build-run-digest` → email do cadastro) | Quarta 17:00 UTC (1×/semana) | Refresh completo de `public/data/federados.json` (~17,9k activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Sessão pública; Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`update-golfgenius.yml`** | ✅ Novo 2026-07-23 | `scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json` | Diário 22:00 UTC | Eventos GolfGenius do scope (hoje: as 4 edições do Champion of Champions). Sem secrets (GG público a `fetch`). Exit 2 = sem alterações. Quando há novidades regenera o agregador + `major-catalog.json` e committa. `workflow_dispatch` aceita `slug` (só um evento do scope) ou `page_url` ad-hoc. |
 | **`update-england.yml`** | ✅ Novo 2026-08-30 | `scripts/discover-england-golf-events.js` + `scripts/scrape-england-golf.js` | Segunda 05:00 UTC | Torneios juvenis England Golf (GolfGenius) do catálogo, ano corrente. **Playwright** (o GG depende de JS para os dropdowns e scorecards); sem secrets (público). Os campeonatos ingleses jogam-se de Terça a Sexta, por isso à Segunda a semana anterior já fechou. A descoberta corre antes e AVISA (no `$GITHUB_STEP_SUMMARY`) que provas estão fora do catálogo, mas nunca o edita. Exit 2 = sem alterações. Com novidades regenera o agregador de juniores e committa. `workflow_dispatch` aceita `year`/`slug`/`gg_page`/`skip_existing`. |
 | **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
-| **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
+| **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Segunda 09:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
 | **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
 | **`daily-digest.yml`** | ✅ Novo 2026-08-17 | `scripts/build-run-digest.js` + `send-digest-issue.js` | Diário 07:30 UTC | **Resumo por email** do que os scrapers trouxeram nas últimas 24h. Sem secrets. Ver secção própria abaixo. |
 | **`analytics-snapshot.yml`** | ✅ Novo 2026-08-28 | `scripts/snapshot-web-analytics.js` | Diário 03:15 UTC (+ mensal no dia 1) | **Retrato do Vercel Web Analytics** para `data-archive/analytics/`. O plano Hobby só guarda 30 dias — isto copia-os para o repo antes de desaparecerem. Secret: `VERCEL_TOKEN`. Exit 2 = sem novidades. |
+| **`update-cgss-draw.yml`** | ✅ | `scripts/update-cgss-draw-results.js` | Sex/Sáb/Dom 12:10-18:10 UTC (horário) + Seg-Qui 13:10 UTC | Draws/resultados dos torneios CGSS. Sessão pública. |
+| **`update-golfbox.yml`** | ✅ | `scripts/scrape-golfbox.js` | Diário 21:00 UTC | Scope em `scripts/golfbox-scope.json` — ver "GolfBox". |
+| **`update-wagr.yml`** | ✅ | `scripts/scrape-wagr.js` | Quarta 07:00 UTC | Ver "Fonte WAGR". |
+| **`update-egr.yml`** | ✅ | scrapers EGR | Segunda 06:00 UTC | European Golf Rankings. |
+| **`update-gjgl.yml`** | ✅ | scrapers GJGL | Segunda 05:30 UTC | Global Junior Golf Live. |
+| **`update-uskids-rich-players.yml`** | ✅ | `scripts/fetch-uskids-rich-players-node.js` | Segunda 02:00 UTC | Ver "fetch-uskids-rich-players-node.js". |
+| **`update-ffgolf-calendar-jeunes.yml`** | ✅ | calendário FFG jovens | Segunda 01:30 UTC | |
+| **`update-ffgolf-teesheet.yml`** | ✅ | tee sheets FFG | Diário 20:00 UTC | Ver "FFG tee sheet". |
+| **`update-om-cgss-junior.yml`** | ✅ | OM CGSS Júnior | Domingo 22:30 UTC | |
+| **`cookie-health.yml`** | ✅ | `test-fpg-auth.js` + `test-datagolf-node.js` + `test-fpg-admissions-auth.js` | Quinta 09:00 UTC | Ver "Cookie health". |
+| **`prune-vercel-deployments.yml`** | ✅ | `scripts/prune-vercel-deployments.js` | Segunda 04:00 UTC | Ver "Deployment Storage do Vercel". Secret: `VERCEL_TOKEN`. |
+| **`draw-inbox-email.yml`** | ✅ | — | De hora a hora (:23) | |
+| **`build-major-catalog.yml`** | ✅ | `scripts/build-major-catalog.js` | push nos ficheiros MAJOR | Ver "Catálogo + lazy load". |
+| **`scrape-miramar.yml`** | ✅ | — | só manual | |
 
 ### ⚠ FCG (catgolf.com) — guarda anti-overwrite do scope (2026-08-17)
 
@@ -4088,8 +4121,9 @@ OK.
 
 **Quando os cookies expiram:** user refresca no browser (Firefox com
 SameSite=off em about:config, ou Chrome 90) → copia via DevTools → actualiza
-GitHub Secret no repo + `api/.datagolf-cookies.json` local. Validade típica
-~1 semana.
+GitHub Secret no repo + `api/.datagolf-cookies.json` local. Validade medida:
+~9 horas (ver "As cookies duram ~9 HORAS") — e desde 2026-08-30 só são
+precisas como fallback (e para as admissions).
 
 ### Pipeline de actualização de dados — arquitectura 2026-04-15
 
@@ -4119,25 +4153,30 @@ Três camadas de automação, escolhidas por onde fazem sentido:
 Torneios FPG acontecem tipicamente **Sexta/Sábado/Domingo**. Crons:
 
 ```yaml
-# update-drive.yml — scrape de torneios (usa scoring.datagolf.pt)
+# update-drive.yml — scrape de torneios (scoring.datagolf.pt)
 - cron: '0 21 * * 5,6,0'   # 21:00 UTC Sex+Sáb+Dom
 
-# update-data.yml — scrape de WHS/scorecards dos nossos jogadores (usa my.fpg.pt)
-- cron: '0 21 * * 6,0'     # 21:00 UTC Sáb+Dom
+# update-data.yml — WHS/scorecards dos nossos jogadores (gate público fedhcp)
+- cron: '5 0 * * 0,1'      # 00:05 UTC Dom+Seg — depois do cut SD da meia-noite
 ```
 
-21:00 UTC = 22:00 Lisboa (inverno) / 22:00 BST (verão), após torneios
-estarem carregados. O drive corre também à Sexta para apanhar torneios
-que começam nesse dia.
+21:00 UTC = 21:00 Lisboa no inverno (WET, UTC+0) / 22:00 no verão (WEST,
+UTC+1), após os torneios estarem carregados. O drive corre também à Sexta para
+apanhar torneios que começam nesse dia. A tabela "GitHub Actions — estado" tem
+os restantes.
 
 ### Scripts Node-puros criados 2026-04-15
 
-Substituem a abordagem Playwright antiga. Todos lêem cookies de
+Substituem a abordagem Playwright antiga. Desde 2026-08-30/09-15 vão
+**primeiro pela sessão pública** (`scripts/lib/fpg-session.js`); as cookies de
 env (`FPG_COOKIES` ou `DATAGOLF_SCORING_COOKIES`) ou de
-`api/.datagolf-cookies.json` / `api/.scoring-datagolf-cookies.json`.
+`api/.datagolf-cookies.json` / `api/.scoring-datagolf-cookies.json` ficam como
+fallback — ver "Quem já corre sem cookies".
 
 #### `scripts/fpg-scrape-node.js`
-Scraper de WHS + scorecards via `my.fpg.pt/Home/PlayerWHS.aspx/*`.
+Scraper de WHS + scorecards: gate público `fedhcp` (`PlayerWHS.aspx/HCPWhsFederLST`
++ `fed_hcp.aspx/ScoreCard`, sem login), com `my.fpg.pt/Home/PlayerWHS.aspx/*`
+(cookies) de fallback.
 
 ```bash
 node scripts/fpg-scrape-node.js 52884                  # 1 jogador, incremental
@@ -4167,7 +4206,7 @@ node scripts/scrape-drive-node.js --months-back 99   # ano inteiro
 Output mensal em `public/data/drive-data-YYYY-MM.json` e
 `public/data/aquapor-data-YYYY-MM.json`.
 
-Re-implementação pura Node do antigo `scrape-drive-aquapor-v8.js` (browser
+Re-implementação pura Node do antigo `scrape-drive-aquapor-v7.js` (browser
 console). Elimina Playwright wrapper.
 
 #### `scripts/cleanup-players-json.js`
@@ -4249,10 +4288,10 @@ errado.
 | Diferença | `scoring.datagolf.pt/pt/` | `my.fpg.pt/Home/` |
 |---|---|---|
 | Path base | `/pt/` | `/Home/` |
-| Auth | Cookie ASP.NET via GET inicial | **Login SSO obrigatório** (area.my.fpg.pt) |
+| Auth | Sessão pública (gate `fedhcp` / `1PreparePage.aspx`, sem login — desde 2026-09-15) | **Login SSO obrigatório** (area.my.fpg.pt) |
 | listAction da `PlayerWHS.aspx` | `/pt/PlayerWHS.aspx/HCPWhsFederLST?fed_code=X` | `/Home/PlayerWHS.aspx/HCPWhsFederLST?fed_code=X&pp=N` |
-| Body do POST WHS | `{ fed_code, jtStartIndex, jtPageSize, jtSorting }` | `{ fed_code, pp:"N", jtStartIndex, jtPageSize }` (**sem `jtSorting`!**) |
-| `jtSorting` no body | obrigatório (`"hcp_date DESC"`) | rejeitado (devolve HTTP 500) |
+| Body do POST WHS | `{ fed_code, jtStartIndex, jtPageSize }` (o `fpg-scrape-node.js` manda o mesmo body nos dois, com `pp:"N"`, e ambos respondem) | `{ fed_code, pp:"N", jtStartIndex, jtPageSize }` (**sem `jtSorting`!**) |
+| `jtSorting` no body | aceite, não obrigatório (medido 2026-04 como obrigatório; o caminho público de 2026-09-15 funciona sem ele) | rejeitado (devolve HTTP 500) |
 | Param `pp:"N"` | inexistente | obrigatório (na URL E no body) |
 
 **Lição aprendida:** nunca hardcodar o path nem o body do POST. Sempre fazer
@@ -4280,7 +4319,7 @@ POST JSON com `Cookie: ASP.NET_SessionId=X` + Referer da própria página.
 | `PlayerWHS.aspx/ScoreCard?score_id=X` | `{ score_id, scoringtype, competitiontype }` | Scorecard hole-by-hole (`par_1..18`, `gross_1..18`, `meters_1..18`, `stroke_index_1..18`, `stbgross_1..18`, `stbnet_1..18`, `bogey_1..18`) |
 | `PlayerWHS.aspx/View20Scores?fed_code=X` | `{ fed_code }` | 20 rondas do cálculo WHS |
 | `PlayerWHS.aspx/ViewWHSCalc?fed_code=X` | `{ fed_code }` | Cálculo WHS detalhado (soft/hard cap, etc.) |
-| `FederatedsList_V2.aspx/HandicapsLST` | Ver `scripts/scrape-federados.js` | Lista de federados (32 campos — o `encryptedfedcode` é token único por jogador) |
+| `FederatedsList_V2.aspx/HandicapsLST` | Ver `scripts/scrape-federados-node.js` | Lista de federados (32 campos — o `encryptedfedcode` é token único por jogador) |
 
 ### Autenticação — cookies necessários
 
@@ -4376,6 +4415,10 @@ era na verdade "cookie ausente".
 
 ### Estratégias disponíveis (em ordem de preferência, 2026-04-14 tarde)
 
+> ⚠ **Histórico.** Desde 2026-08-30/09-15 a primeira escolha é a **sessão
+> pública** (`scripts/lib/fpg-session.js`, gates `linkpage`/`1PreparePage`/
+> `fedhcp`); as cookies ficaram de fallback e duram ~9h, não uma semana.
+
 1. **⭐ Primário — server-side direto com `.AspNet.ApplicationCookie`**
    - Login manual em Chrome 90 → copiar cookies do DevTools → guardar em
      `api/.datagolf-cookies.json` (gitignored) → proxy/scripts lêem o ficheiro
@@ -4384,8 +4427,8 @@ era na verdade "cookie ausente".
    - Refresh ~1×/semana via novo login manual (validade do token ASP.NET Identity)
    - **Sem dependência de golf-portugal.pt, sem Playwright, sem Cloud Run**
    - Prova de conceito: `scripts/test-fpg-auth.js`
-   - Implementações a fazer: `scripts/scrape-fpg-server.js` (bulk scrape),
-     atualizar `api/datagolf.js` para usar `my.fpg.pt` diretamente
+   - Implementado: `scripts/fpg-scrape-node.js` (bulk scrape) e o proxy
+     `api/datagolf.js` refeito (ver abaixo)
 
 2. **Fallback — `golf-portugal.pt/api/*` via proxy `api/datagolf.js`**
    - Se os nossos cookies expirarem e o user não puder refrescar logo
@@ -4479,7 +4522,7 @@ que possa vir a inspeccionar campos não-canónicos.
 
 ### UI de "Só cadastro FPG" em `JogadoresPage.tsx`
 
-Componente `FederadoOnlyDetail` (linha ~1982) renderiza jogadores que só têm
+Componente `FederadoOnlyDetail` (hoje em `src/pages/jogadores/FederadoOnlyDetail.tsx`) renderiza jogadores que só têm
 cadastro em `federados.json` (sem `{fed}/analysis/data.json` pré-calculado).
 Usa `getPlayerHistory(fed)` de `datagolfClient.ts` → `/api/datagolf?action=whs&fed=X`.
 
@@ -4495,7 +4538,7 @@ Depois das correcções 2026-04-14/15:
 ### Sidebar de JogadoresPage — limite aumentado
 
 `MAX_SIDEBAR_ITEMS = 2000` (era 500, 2026-04-15). Razão: com 15.646
-federados activos, 500 não chega para encontrar jogadores com nomes
+federados activos (hoje ~17,9k), 500 não chega para encontrar jogadores com nomes
 comuns (ex: "Joana Sousa" aparecia depois da 500ª posição). O filtro
 `filtered` já corre sobre todos os federados, só o render é limitado.
 Para uma lista maior, considerar virtualização real (react-window).
@@ -4547,7 +4590,7 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 |---|---|---|
 | GET `/pt/` puro | 500 | "Server Error in '/pt' Application" |
 | GET `/pt/PlayerWHS.aspx?no=X` (sem sessão prévia) | 500 | "Runtime Error" |
-| GET `/pt/FederatedsList_V2.aspx` (sem sessão) | 200 | Body diz "Erro 999 — autenticação inválida" mas **seta `Set-Cookie: ASP.NET_SessionId`** ← URL útil para getSession() |
+| GET `/pt/FederatedsList_V2.aspx` (sem sessão) | 500 (antes: 200 com "Erro 999" e `Set-Cookie: ASP.NET_SessionId`) | Já não serve para obter sessão — usar o gate `fedlist_v2` / `1PreparePage.aspx` (`scripts/lib/fpg-session.js`) |
 | POST PageMethod sem cookie / sem auth válida | 200 | `{"d":{"Result":"ERROR","Message":"Error executing child request for Param_Errors.aspx."}}` |
 | POST PageMethod com auth + body certo | 200 | `{"d":{"Result":"OK","Records":[...],"TotalRecordCount":N}}` |
 | POST PageMethod com `jtSorting` no `my.fpg.pt` | **500** | Internal Server Error |
@@ -4586,12 +4629,12 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
    da infra deles, não do ASP.NET em geral). **Consequência prática:**
    GitHub Actions pode usar cookies capturados localmente.
 
-5. **`scoring.datagolf.pt` exige passagem pelo `1EntryPage.aspx`.** GET
+5. **`scoring.datagolf.pt` exige passagem por um entry-gate.** GET
    directo a `/pt/tournaments.aspx` devolve sempre 500 ou redirect para
-   Err=999. O entry page valida um hash SHA-1 que é impossível de
-   replicar de Node (depende do estado server-side da sessão que o pediu).
-   Logo: a captura tem de ser feita via browser real (Chrome 90), não pode
-   ser automatizada sem Playwright+browser.
+   Err=999. O `1EntryPage.aspx` valida um hash SHA-1 que não se replica de
+   Node — ⛔ *mas desde 2026-08-30 há entrada pública pelo `1PreparePage.aspx`
+   (ver "As cookies NÃO são precisas para os resultados"); o hash só importa
+   ao caminho autenticado, que ficou de fallback.*
 
 6. **Nunca hardcodar paths/bodies de PageMethods FPG.** Auto-descobrir
    sempre via `jt.options.actions.listAction`. As subtilezas `/pt/` vs
@@ -4623,9 +4666,10 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 11. **Playwright só é necessário para (a) captura inicial de cookies — e
     nem isso, porque o Chrome 90 do user resolve — ou (b) scraping de
     sites não-FPG que tenham protecção extra.** Para FPG, **não precisamos
-    mais de Playwright**.
+    mais de Playwright** — excepto o **live scoring** (`/live-scoring/`), cujos
+    PageMethods só respondem à navegação real da página.
 
-12. **Documentação completa em `docs/api-fpg-endpoints.md`** — 12 secções
+12. **Documentação completa em `docs/api-fpg-endpoints.md`** — secções §1-§15
     com tudo o que descobrimos. Consultar em caso de dúvida antes de
     redescobrir.
 
@@ -4655,11 +4699,13 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 
 **Cenário 3: "GitHub Action parou de funcionar"**
 1. Ver logs do último run — procurar `HTTP 500` ou `Result:"ERROR"` ou
-   `Param_Errors`
-2. Se `Param_Errors` → cookies expiraram, seguir Cenário 1
-3. Se `HTTP 500` Runtime Error → endpoint mudou, seguir Cenário 2 para
-   re-descobrir
-4. Se timeout → site lento ou bloqueado, dar retry manual
+   `Param_Errors`, e por onde foi (`sessão pública` ou `cookies`)
+2. ⚠ **HTTP 500 NÃO prova cookies expirados** — ver "HTTP 500 da FPG NÃO é
+   prova de cookie expirado": correr o `fpg-liveness` / abrir o linkpage no
+   browser. `fonte-em-baixo` → esperar (a avaria de 30-08 durou ~9h)
+3. Se a FPG responde e a sessão pública falha → o gate mudou, seguir Cenário 2
+4. Se só o caminho autenticado falha (admissions) → cookies, seguir Cenário 1
+5. Se timeout → site lento ou bloqueado, dar retry manual
 
 **Cenário 4: "Parece que um cookie não existe"**
 1. F12 → Network → encontrar a response que devia setar o cookie
@@ -4674,12 +4720,12 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 
 ### Ficheiros de dados relacionados
 
-- `public/data/federados.json` (15 MB, 15.646 activos — `FedStat=9`)
+- `public/data/federados.json` (~18 MB, ~17,9k activos em 2026-09 — `FedStat=9`)
 - `public/data/federados-inativos.json` (41 MB, 43.054 inactivos — `FedStat=7`)
 - `public/data/federados-inativos-stats.json` (~25 KB, agregados)
 - `public/data/federados-inativos-jovens.json` (~2.7 MB, Sub-10 a Sub-21)
 - `public/data/fpg-whs.json` (gerado pelo console script — usar como cache)
-- `api/.datagolf-cookies.json` (gerado pelo Playwright — gitignored)
+- `api/.datagolf-cookies.json` (cookies capturadas no browser / pelo `run-cookie-refresh.bat`; ⚠ está no git, é committado com os refrescos)
 
 ---
 
@@ -4891,7 +4937,8 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
     só entra no NDB); em 9 buracos só em 85–91% (o Expected SD depende do HI
     exacto do dia) — daí o oficial ir buscar-se só aos juniores. Nunca se
     **estima** sem CR/Slope (as voltas de treino deixaram de ter o SD "CR = par");
-    espanhóis (RFEG/mitarjeta) e histórico USKids não mostram SD. O
+    espanhóis (RFEG/mitarjeta) e os scorecards históricos USKids do kids2
+    (`HistoricScorecardsTab`) não mostram SD — não há HCP de inscrição. O
     `drive-sd-lookup` (nunca existiu em disco) e os símbolos "~"/"≈" do `SDPill`
     saíram.
   - **Métodos validados** contra o `sgd` oficial (3253 voltas, 2026-09-15):
@@ -5030,7 +5077,7 @@ npx vitest            # watch mode
 
 ### Ficheiro de testes: `src/pages/__tests__/KIDSdataLoader.test.ts`
 
-35 testes cobrindo as funções core do loader de rivais:
+Testes das funções core do loader de rivais (contagem da altura em que a tabela foi feita; o número actual sai do `npm test`):
 
 | Grupo | Testes | Cobre |
 |-------|--------|-------|
@@ -5039,7 +5086,8 @@ npx vitest            # watch mode
 | `shortenTournName` | 7 | WC, EC, Venice, Marco, Rome, El Prat, RWB |
 | `mergeInto` | 5 | Dedup por normName, forceTids override, memberId propagation |
 | `processUskidsCompleto` | 4 | 18H válido, 9H com tp correcto, zeros rejeitados, filtro ±1 escalão |
-| `processMemberHistory` | 7 | tp com scorecard completo, tp=null sem strokes, tp=null com zeros, Boys 9-13, nome "?", 9H El Prat
+| `processMemberHistory` | 7 | tp com scorecard completo, tp=null sem strokes, tp=null com zeros, Boys 9-13, nome "?", 9H El Prat |
+
 ---
 
 ## Página `/nacionais-jovens` — Campeões Nacionais de Jovens (2005-2026)
@@ -5093,7 +5141,7 @@ utilizado.
 `jovensAnaliseData.ts`), pois essa regra usa `playersDB[fedCode].sex` para
 identificar nacionalidade.
 
-**Workaround actual em `NacionaisJovensPage`:** capturamos `player_gender` no
+**Workaround actual (hoje na tab `/titulos/nacional` da `TitulosPage`; a `NacionaisJovensPage` foi removida):** capturamos `player_gender` no
 scrape e populamos `player.sex` directamente no registo (não no playersDB
 sintético — abandonámos essa abordagem porque deixava `synth-XXXX` visíveis na
 UI). A `JovensAnaliseView.playerSex` foi modificada para preferir `p.sex`
@@ -5144,7 +5192,7 @@ Para datasets grandes (21 anos × 5 escalões = grelha enorme), a `ChampionsGrid
 agora aceita `splitByEscalao?: boolean`. Quando true, renderiza UMA tabela
 por escalão (Sub-10, Sub-12, ...) em vez de uma única grelha empilhada.
 
-`NacionaisJovensPage` usa `splitByEscalao={true}`. `/FPG/jovens` continua
+A tab `/titulos/nacional` (`TitulosPage`, antes `NacionaisJovensPage`) usa `splitByEscalao={true}`. `/FPG/jovens` continua
 com layout original (default `false`).
 
 Cada bloco de escalão tem o seu próprio `escYears` filtrado (anos onde ESSE
@@ -5185,4 +5233,12 @@ jogadores na última linha. Fix: `paddingBottom: 14px` na div wrapper.
 - 2021: 10458-10464
 - 2022: 10572-10579
 - 2023: 10682-10689
-- 2024: 10802-10808 (sem Sub-12; s
+- 2024: 10802-10808 (sem Sub-12; só Sub-14/16/18 H+S + Sub-25)
+
+**Sub-10 NÃO existiu como Nacional individual em 2007-2011** — gap real, não há
+nada para scrapar.
+
+**2025 Sub-10/12 foram organizados pela FPG Sul (ccode=988), não pela FPG
+central (ccode=000)** — tabela TournamentsLST com filtro `ClubCode='000'`
+deixa-os de fora. É preciso pesquisar com `ClubCode='0'` (todos) ou
+explicitamente `ClubCode='988'` para os apanhar.
