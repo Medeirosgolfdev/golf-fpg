@@ -12,7 +12,7 @@
 |---|---|---|---|---|
 | **Faldo Futures** | Boys 11-12 | ❌ acaba aos 12 | GolfGenius | ✅ (9 países em 2025) |
 | **PING JGT** | Rookies (6-12) | Masters (13-15) | GolfGenius | ⚠️ confirmar por email |
-| **BJGT** | 12-13 (a confirmar) | 12-13 (a confirmar) | BlueGolf | ✅ WAGR oficial |
+| **BJGT** | 12-13 (a confirmar) | 12-13 (a confirmar) | site próprio (juniorgolftour.co.uk) | ✅ WAGR oficial |
 | **Junior Tour Scotland** | Boys U14 | Boys U14 | DotGolf | ✅ via Scottish Golf App |
 
 **Tours secundários:** PING Welsh Junior Tour (limitado, residents-focused); Golf Ireland Championships (Ulster Boys' U16, Faldo @ Lough Erne).
@@ -101,7 +101,6 @@ Quando Manuel passar a 13 anos a 29/04/2027:
 - [ ] Extender `scripts/scrape-england-golf.js` para aceitar `--catalog` flag → usar `uk-junior-catalog.json` para PING JGT + Faldo Futures (ambos GolfGenius).
 
 **Fase 2 — Scrapers Playwright:**
-- [ ] Estender `scripts/scrape-bluegolf.js` para BJGT 2026 schedule (confirmar divisões 12-13!) + OOM por divisão.
 - [ ] Novo scraper Wales (PING Welsh) — DotGolf JS-rendered.
 - [ ] Novo scraper Golf Ireland — DotGolf JS-rendered.
 
@@ -125,7 +124,7 @@ A nossa investigação preliminar indica que o BJGT mudou as divisões para 2026
 
 Se confirmado: Manuel (12 a 29/04/2026, "not yet 14 on 24/06/2026") joga **12-13 division** em 2026 e ainda 12-13 em 2027. Só sobe a 14-15 em 2028.
 
-**Confirmação requer correr `scrape-bluegolf.js`** contra `https://brjgt.bluegolf.com/bluegolf/brjgt26/schedule/index.htm?display=champ` no PC (o sandbox de Cowork não corre Playwright e é demasiado pesado para scrape).
+**Confirmação:** ver a [BJGT 2026 Tour Policy](https://juniorgolftour.co.uk/bjgt-2026-tour-policy/) — não há scraper para o BJGT.
 
 ---
 

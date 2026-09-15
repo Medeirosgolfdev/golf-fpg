@@ -50,7 +50,6 @@ Usados internamente por `golf-all.js`, `make-scorecards-ui.js`, `process-data.js
 
 | Script | Situação |
 |--------|----------|
-| `scrape-bluegolf.js` | Scraper para BlueGolf (BJGT/WJGC). Usado para gerar os `wjgc_*.json`. Manter se ainda vais scrape torneios BlueGolf. |
 | `update-data.yml` | Workflow GH Actions antigo que usa `golf-all.js`. Verifica se ainda é útil. |
 
 ---
@@ -173,9 +172,6 @@ GITHUB ACTIONS (planeado):
 US KIDS (workflows próprios, GH Actions):
   fetch-uskids-field.js    → uskids-field.json
   fetch-uskids-results.js  → uskids-results.json
-
-BLUEGOLF/BJGT (uso pontual, quando há torneio novo):
-  scrape-bluegolf.js       → wjgc_*.json
 
 UTILITÁRIOS PARTILHADOS (não correr directamente):
   process-data.js, helpers.js, tee-colors.js, scorecard-fragment.js,

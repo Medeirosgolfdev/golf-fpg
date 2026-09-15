@@ -1,6 +1,6 @@
 # Melhorias propostas — /campos e /simulador
 
-> Investigação 2026-06-13. Baseada em auditoria do código actual (CamposPage.tsx 695 linhas, SimuladorPage.tsx 1542 linhas) e pesquisa de referências externas: BlueGolf Yardage Book, GolfLogix, Arccos Caddie/AI Strategy, Clippd, calculadoras WHS (USGA, intelligentgolf, National Club Golfer) e Longleaf Tee System (US Kids Golf + ASGCA).
+> Investigação 2026-06-13. Baseada em auditoria do código actual (CamposPage.tsx 695 linhas, SimuladorPage.tsx 1542 linhas) e pesquisa de referências externas: GolfLogix, Arccos Caddie/AI Strategy, Clippd, calculadoras WHS (USGA, intelligentgolf, National Club Golfer) e Longleaf Tee System (US Kids Golf + ASGCA).
 
 ---
 
@@ -27,7 +27,7 @@ As duas páginas têm dados ricos por baixo (master-courses com holes/par/SI/dis
 Hoje o header é título + `courseKey` cru (ex: `away-marco-simone` — jargão interno exposto ao utilizador). Substituir por cards: Par · Distância (range entre tees, ex: 4 712–6 092 m) · CR/Slope do tee de referência · N.º tees · País · N.º jogadores que lá jogaram. Padrão já usado em DrivePage/USKIDSPage.
 
 **2. Perfil do campo em gráfico (recharts).**
-Barras por buraco (1–18 em X, distância em Y, cor por par 3/4/5, linha/badge de SI). É o formato "yardage book" que BlueGolf e GolfLogix usam — vê-se num relance onde estão os buracos longos e os SI baixos. Respeita a preferência "buracos em colunas".
+Barras por buraco (1–18 em X, distância em Y, cor por par 3/4/5, linha/badge de SI). É o formato "yardage book" que o GolfLogix usa — vê-se num relance onde estão os buracos longos e os SI baixos. Respeita a preferência "buracos em colunas".
 
 **3. Secção "Como se jogou aqui" — cruzar com resultados.**
 `_players` já lista quem jogou e quando, mas não mostra *como*. Cruzando com `{fed}/analysis/data.json` (HOLES por scoreId): melhor volta no campo, média vs par, e — a jóia — **média por buraco do Manuel** sobreposta no gráfico do ponto 2 (par tracejado vs média real). Identifica imediatamente os buracos-problema do campo. É exactamente o que a Arccos faz no round history por campo.
@@ -96,7 +96,6 @@ A relação score→SD hoje são 3 tabelas (2 escondidas em `<details>`). Uma li
 
 ## Fontes
 
-- [BlueGolf Yardage Book](https://www.bluegolf.com/info/yardagebook.html) — overlay de distâncias por buraco
 - [GolfLogix](https://www.golflogix.com/blog/whats-best-golf-yardage-app/) — visualização de dificuldade/terreno por buraco
 - [Arccos AI Strategy](https://www.arccosgolf.com/blogs/community/introducing-arccos-ai-strategy-beta) e [Arccos Caddie Preview](https://www.arccosgolf.com/blogs/community/plot-your-golf-strategy-on-your-next-golf-trip) — estratégia pré-volta por campo, histórico por campo
 - [Clippd Review — Golf Monthly](https://www.golfmonthly.com/reviews/golf-tech-and-training-aids/clippd-review) — Shot/Player Quality, dashboards de insights
