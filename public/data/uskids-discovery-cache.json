@@ -375,6 +375,17 @@
       "type": 6
     },
     {
+      "t": 23293,
+      "name": "The Links At Spring Church (Tour Championship)",
+      "date_inicio": "10/4/2026",
+      "date_fim": "10/4/2026",
+      "rondas": 1,
+      "campo": "The Links At Spring Church",
+      "fee_18": "59.00",
+      "tour": "Pittsburgh Tour",
+      "type": 6
+    },
+    {
       "t": 22771,
       "name": "Azata Golf",
       "date_inicio": "10/10/2026",
@@ -494,6 +505,17 @@
       "fee_18": "215.00",
       "tour": "Teen Series Tour",
       "type": 2
+    },
+    {
+      "t": 23183,
+      "name": "Hunter Ranch Golf Course (Tour Championship)",
+      "date_inicio": "10/17/2026",
+      "date_fim": "10/17/2026",
+      "rondas": 1,
+      "campo": "Hunter Ranch Golf Course",
+      "fee_18": "77.00",
+      "tour": "San Joaquin Valley Tour",
+      "type": 6
     },
     {
       "t": 23125,
@@ -639,6 +661,17 @@
       "type": 6
     },
     {
+      "t": 23170,
+      "name": "Clustered Spires Golf Club (Tour Championship)",
+      "date_inicio": "10/24/2026",
+      "date_fim": "10/24/2026",
+      "rondas": 1,
+      "campo": "Clustered Spires Golf Club",
+      "fee_18": "63.00",
+      "tour": "Central Maryland Tour",
+      "type": 6
+    },
+    {
       "t": 23099,
       "name": "Green Eagle Golf Course - North Course (Tour Championship)",
       "date_inicio": "10/25/2026",
@@ -691,6 +724,50 @@
       "campo": "Los Robles Greens Golf Course",
       "fee_18": "97.00",
       "tour": "Los Angeles Tour",
+      "type": 6
+    },
+    {
+      "t": 23274,
+      "name": "Keney Park Golf Club (Tour Championship)",
+      "date_inicio": "10/25/2026",
+      "date_fim": "10/25/2026",
+      "rondas": 1,
+      "campo": "Keney Golf Course",
+      "fee_18": "57.00",
+      "tour": "Hartford Tour",
+      "type": 6
+    },
+    {
+      "t": 23268,
+      "name": "Stonebridge Golf Club (Tour Championship)",
+      "date_inicio": "10/25/2026",
+      "date_fim": "10/25/2026",
+      "rondas": 1,
+      "campo": "Stonebridge Golf Club",
+      "fee_18": "65.00",
+      "tour": "Charlotte Tour",
+      "type": 6
+    },
+    {
+      "t": 23221,
+      "name": "Abenaqui Country Club (Tour Championship)",
+      "date_inicio": "10/25/2026",
+      "date_fim": "10/25/2026",
+      "rondas": 1,
+      "campo": "Abenaqui Country Club",
+      "fee_18": "67.00",
+      "tour": "Concord Tour",
+      "type": 6
+    },
+    {
+      "t": 23199,
+      "name": "Buffalo Rock Golf & Venue (Tour Championship)",
+      "date_inicio": "10/25/2026",
+      "date_fim": "10/25/2026",
+      "rondas": 1,
+      "campo": "Buffalo Rock Golf & Venue ",
+      "fee_18": "55.00",
+      "tour": "Tulsa Tour",
       "type": 6
     },
     {
@@ -845,6 +922,17 @@
       "campo": "Sudden Valley Golf Course",
       "fee_18": "77.00",
       "tour": "Seattle Tour",
+      "type": 6
+    },
+    {
+      "t": 23226,
+      "name": "Kiln Creek Golf Club and Resort (Tour Championship)",
+      "date_inicio": "11/1/2026",
+      "date_fim": "11/1/2026",
+      "rondas": 1,
+      "campo": "Kiln Creek Golf Club and Resort",
+      "fee_18": "71.00",
+      "tour": "Hampton Roads, VA Tour",
       "type": 6
     },
     {
@@ -1035,6 +1123,17 @@
       "type": 6
     },
     {
+      "t": 23213,
+      "name": "Flagstone Golf Club (Tour Championship)",
+      "date_inicio": "11/15/2026",
+      "date_fim": "11/15/2026",
+      "rondas": 1,
+      "campo": "Flagstone Golf Club",
+      "fee_18": "57.00",
+      "tour": "Chattanooga Tour",
+      "type": 6
+    },
+    {
       "t": 23132,
       "name": "Spanish Open 2026",
       "date_inicio": "11/20/2026",
@@ -1197,6 +1296,28 @@
       "campo": "Hyatt Hill Country Golf Club",
       "fee_18": "85.00",
       "tour": "San Antonio Tour",
+      "type": 6
+    },
+    {
+      "t": 23286,
+      "name": "New Mexico State University Golf Course (Tour Championship)",
+      "date_inicio": "11/22/2026",
+      "date_fim": "11/22/2026",
+      "rondas": 1,
+      "campo": "New Mexico State University Golf Course",
+      "fee_18": "61.00",
+      "tour": "El Paso Tour",
+      "type": 6
+    },
+    {
+      "t": 23254,
+      "name": "Reunion Golf & Country Club (Tour Championship)",
+      "date_inicio": "11/23/2026",
+      "date_fim": "11/23/2026",
+      "rondas": 1,
+      "campo": "Reunion Golf & Country Club",
+      "fee_18": "59.00",
+      "tour": "Central Mississippi Tour",
       "type": 6
     },
     {
@@ -1497,15 +1618,15 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-15T10:18:17.196Z",
+  "gerado_em": "2026-09-15T10:27:57.253Z",
   "varredura_max_t": 23714,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 443,
-    "novos": 40,
+    "pedidos": 190,
+    "novos": 11,
     "buracos_revistos": 0,
-    "catalogo": 382,
-    "backfill_falta": 1074
+    "catalogo": 530,
+    "backfill_falta": 924
   },
   "fronteira_max_t_visto": 23714,
   "fronteira_avancou_em": "2026-09-14",
