@@ -1191,3 +1191,27 @@ POST …/rankings_classif.aspx/RankingsPlayersLST?Club=&Rk_Code=&fed_code=      
   falta para 2026.
 - `page=drawsnext`/`drawlist` e `page=singlescores` também abrem sem login, mas
   a tabela vem montada no servidor (sem PageMethod) e a 15 Set estava vazia.
+
+### 15.3 Mais páginas ASP públicas — encontradas a rastrear (2026-09-15)
+
+Um rastreador (partindo das páginas conhecidas, seguindo os links `.asp`, 1
+pedido de cada vez) deu 50 páginas distintas. As novas que valem a pena, todas
+GET simples, **sem portão nem sessão**:
+
+| Página | Dá |
+|---|---|
+| `scorecard.asp?id={score_id}&displayclassif=1&club=ALL&ack=XH256YF45T` | **cartão completo de uma volta**: jogador, torneio, data, campo, par/SI/metros/gross por buraco, CR/Slope, HCP exacto e de jogo, ajuste CBA (PCC), estado. `displayclassif=0` = todas as pontuações |
+| `show_card.asp?ncourse={campo}-{percurso}&inframe=Y&stat=Y&info=Y&ack=8428ACK987&club=ALL` | **cartão do percurso com todos os tees**: metros por buraco de cada tee, par, SI, CR/Slope H e S por tee |
+| `all_courses.asp?club=ALL&ack=XH256YF45T` | os **81 campos / 108 percursos** com código, zona e nome — o mapa campo→código |
+| `course.asp?ncourse={campo}&ack=8428ACK987&club=ALL` | ficha do campo (proprietário, morada, mapa) com os links show_card de cada percurso |
+| `stat_club_access.asp?club=ALL&ack=XH256YF45T` | registo de acessos ao servidor por clube |
+
+- ⚠ **O código do campo não é o do clube**: campo 055 = Santo da Serra (clube
+  007; o clube 055 é Évora), campo 025 = Estoril. `course.asp` leva só o
+  número; `show_card`/`show_strokeindex` levam `campo-percurso`.
+- `classif.asp` e `tourn_admissions.asp` já não são públicos: reencaminham para
+  o portão (`page=tournclassif&score=1` / `page=admissions`).
+- `playerresults.asp` (visto numa conversa de 7 Set) dá **404** — já não existe.
+- Nada disto está ainda ligado a scripts: o `scorecard.asp` é a reserva mais
+  simples para os cartões, e o `show_card.asp` a fonte oficial de tees/ratings
+  para o `master-courses.json`.

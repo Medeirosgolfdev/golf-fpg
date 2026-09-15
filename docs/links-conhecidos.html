@@ -85,6 +85,10 @@ section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch
 .club-head,.club summary{display:grid;grid-template-columns:52px minmax(0,1.1fr) minmax(0,1.6fr) 110px 128px 64px 58px 58px;gap:10px;align-items:baseline;padding:8px 4px}
 .club-head{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);font-weight:600;border-bottom:1px solid var(--border);padding-block:6px}
 .club-head .num,.club .num{text-align:right;font-variant-numeric:tabular-nums}
+.course-head,.course summary{display:grid;grid-template-columns:52px minmax(0,1.2fr) minmax(0,1.8fr) 170px 48px;gap:10px;align-items:baseline;padding:8px 4px}
+.course-head{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);font-weight:600;border-bottom:1px solid var(--border);padding-block:6px}
+.course-head .num{text-align:right}
+@media (max-width:820px){ .course-head{display:none} .course summary{grid-template-columns:44px minmax(0,1fr) auto} .course .cf,.course .cz{display:none} .course .num{display:block} }
 .club{border-bottom:1px solid var(--border-light)}
 .club summary{cursor:pointer;list-style:none;font-size:14px}
 .club summary::-webkit-details-marker{display:none}
@@ -198,8 +202,12 @@ const S = [
   { n: "ScoreCard de torneio", a: "sess", m: "POST", u: "https://scoring.fpg.pt/lists/classifAgregate.aspx/ScoreCard",
     d: "Cartão buraco a buraco de cada jogador (um registo por volta), com par, SI, metros, CR/Slope e o campo cba (PCC).",
     w: "Não traz o SD — esse só existe no WHS de cada jogador." },
-  { n: "Classificação (ASP clássico)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/classif.asp?club={ccode}&tourn={tcode}&ack=OT342GH16T",
-    d: "Versão ASP da classificação." },
+  { n: "Classificação (ASP clássico)", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/classif.asp?club={ccode}&tourn={tcode}&ack=XH256YF45T",
+    d: "Hoje reencaminha para o portão (page=tournclassif&score=1&tcode=…), que abre a página Classifications.aspx." },
+  { n: "Cartão de uma volta (scorecard.asp)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/scorecard.asp?id={score_id}&displayclassif=1&club=ALL&ack=XH256YF45T",
+    d: "O cartão completo de qualquer volta, num só GET e sem portão: jogador, federado, torneio, data, campo, par, SI, metros e gross por buraco, CR/Slope, HCP exacto e de jogo, ajuste CBA (PCC) e estado. displayclassif=0 mostra todas as pontuações (Stableford, net…).",
+    ex: [["Manuel · 12 Set 2026", "https://scoring-pt.datagolf.pt/scripts/scorecard.asp?id=4385632&displayclassif=1&club=ALL&ack=XH256YF45T"]],
+    w: "Descoberto a 15 Set a rastrear as páginas ASP (vinha ligado do gráfico das 20 voltas). O id é o score_id do WHS. É a reserva mais simples para os cartões — ainda não está ligada a nenhum script." },
   { n: "Lista de torneios", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club={ccode|ALL}&ack={ack}",
     d: "Entrada da pesquisa de torneios (84 993), de todos os clubes ou de um. O browser é levado a 1PreparePage.aspx?page=tournlist; os dados vêm por POST a tournaments.aspx/TournamentsLST.",
     ex: [["Todos", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T"], ["Santo da Serra", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=007&ack=XH256YF45T"], ["Palheiro", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=059&ack=XH256YF45T"], ["Drive Tour e Challenge", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=988&ack=XH256YF45T"], ["FPG e Aquapor", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=000&ack=XH256YF45T"], ["Miramar", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=003&ack=MD34WW156A"]],
@@ -240,7 +248,7 @@ const S = [
   { n: "PlayerWHS (my.fpg.pt)", a: "login", u: "https://my.fpg.pt/Home/PlayerWHS.aspx?no={fed}",
     d: "O gémeo autenticado: HCPWhsFederLST, ScoreCard, View20Scores, ViewWHSCalc.",
     ex: [["Manuel", "https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884"]],
-    w: "Cookies de login (duram ~9 h). Continua como reserva do fpg-scrape-node.js e primário do fetch-whs-sd.js." },
+    w: "Cookies de login (duram ~9 h). Continua como reserva do fpg-scrape-node.js." },
   { n: "Lista de federados", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=ALL&pagelang=PT&page=fedlist_v2",
     d: "Os ~17 800 federados activos (32 campos). Dados por POST a FederatedsList_V2.aspx/HandicapsLST, 100 de cada vez.",
     ex: [["Abrir a lista", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=ALL&pagelang=PT&page=fedlist_v2"]], where: "scrape-federados-node.js" },
@@ -254,7 +262,7 @@ const S = [
   { n: "Fotos dos federados", a: "ok", u: "https://hcp-portugal.datagolf.pt/photos/{n}/{uuid}.jpeg",
     d: "O caminho vem no campo photo do cadastro; fotos antigas passam a 404 quando mudam." },
   { n: "golf-portugal.pt (proxy)", a: "ok", u: "https://golf-portugal.pt/api/clubs/{qualquer}/players/{fed}/results?startIndex=0&limit={n}",
-    d: "Proxy externo com resultados, perfil (/players/{fed}), handicaps e /api/scorecards/{score_id}. Reserva do fetch-whs-sd.js.",
+    d: "Proxy externo com resultados, perfil (/players/{fed}), handicaps e /api/scorecards/{score_id}.",
     w: "Não traz tcode nem gross; falha de vez em quando com 500." },
  ]},
  { grp: "FPG", id: "fpg-rankings", title: "FPG — rankings e calendário", sub: "Rankings Drive/Aquapor, Ordens de Mérito de clube e o calendário oficial.", items: [
@@ -281,7 +289,7 @@ const S = [
     ex: [["Santo da Serra (451)", "https://scoring-pt.datagolf.pt/scripts/members.asp?club=007&ack=XH256YF45T&order=name"], ["ACP Golfe (2680)", "https://scoring-pt.datagolf.pt/scripts/members.asp?club=103&ack=XH256YF45T&order=name"]],
     w: "<b>club=ALL</b> devolve a tabela vazia (medido a 15 Set) — é um pedido por clube. Ser sócio ≠ ser federado pelo clube (ACP: 1922 de 2680)." },
   { n: "Estatísticas de clubes (painel)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack=XH256YF45T",
-    d: "30 vistas agregadas (idades, HCP, voltas, torneios…). Cada vista abre sozinha em {vista}.asp. O &lt;select&gt; de clubes é o mapa oficial clube→ccode (286).",
+    d: "30 vistas agregadas (idades, HCP, voltas, torneios…), mais stat_club_access.asp (registo de acessos ao servidor por clube). Cada vista abre sozinha em {vista}.asp. O &lt;select&gt; de clubes é o mapa oficial clube→ccode (286).",
     ex: [["Painel (todos)", "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club=ALL&ack=XH256YF45T"], ["Demografia júnior", "https://scoring-pt.datagolf.pt/scripts/stat_ages.asp?club=ALL&ack=XH256YF45T"], ["Torneios por federado", "https://scoring-pt.datagolf.pt/scripts/stat_tourns_players.asp?club=ALL&ack=XH256YF45T"]],
     w: "O grupo TORNEIOS (stat_scores_*) exige <b>&amp;origin=1</b>. O stat_cba não é o PCC." },
   { n: "Ranking de actividade", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/numresults.asp?club={ccode|ALL}&ack=XH256YF45T&selyear1={ano}&selyear2={ano}&counttype=all&order=nresults&ordertype=DESC&pagesize={n}",
@@ -297,6 +305,13 @@ const S = [
     ex: [["Santo da Serra (campo 055)", "https://scoring-pt.datagolf.pt/scripts/course.asp?ncourse=055&ack=8428ACK987&club=ALL"], ["Porto Santo (P&P)", "https://scoringpp-pt.datagolf.pt/scripts/course.asp?ncourse=035&ack=XH256YF45T&club=ALL"]] },
   { n: "Campos de Portugal (portal FPG)", a: "ok", u: "https://portal.fpg.pt/campos/listagem-campos-nacionais-golfe/",
     d: "A listagem oficial dos campos nacionais.", ex: [["Abrir", "https://portal.fpg.pt/campos/listagem-campos-nacionais-golfe/"]] },
+  { n: "Campos Nacionais (all_courses.asp)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/all_courses.asp?club=ALL&ack=XH256YF45T",
+    d: "Os 81 campos com código, zona, nome e nº de percursos, cada um ligado à sua ficha. É o mapa oficial campo → código (ver a secção Campos).",
+    ex: [["Abrir", "https://scoring-pt.datagolf.pt/scripts/all_courses.asp?club=ALL&ack=XH256YF45T"]] },
+  { n: "Cartão de um percurso (show_card.asp)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/show_card.asp?ncourse={campo}-{percurso}&inframe=Y&stat=Y&info=Y&ack=8428ACK987&club=ALL",
+    d: "O cartão do percurso com TODOS os tees: metros por buraco de cada tee, par, SI e CR/Slope de homens e de senhoras por tee.",
+    ex: [["Santo da Serra · Desertas-Serras (055-1)", "https://scoring-pt.datagolf.pt/scripts/show_card.asp?ncourse=055-1&inframe=Y&stat=Y&info=Y&ack=8428ACK987&club=ALL"], ["Santo da Serra · Machico-Desertas (055-2)", "https://scoring-pt.datagolf.pt/scripts/show_card.asp?ncourse=055-2&inframe=Y&stat=Y&info=Y&ack=8428ACK987&club=ALL"]],
+    w: "Fonte oficial para os tees e ratings do master-courses — ainda não usada por nenhum script." },
   { n: "Próximos draws de um clube", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page=drawsnext",
     d: "Lista dos draws que o clube publicou (data, competição, volta, campo), cada um a apontar para o draw.asp com o ack do clube. page=drawlist dá a lista completa.",
     ex: [["Santo da Serra", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=drawsnext"], ["Drive (988) · todos", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=988&pagelang=PT&page=drawlist"]],
@@ -576,6 +591,35 @@ function clubLinks(cc, ack) {
     ]),
   ];
 }
+// [código, zona, nome curto, nome completo, nº de percursos] — de all_courses.asp a 15 Set 2026
+const COURSES = [["030","Norte","Amarante","Campo de Golfe de Amarante",1],["115","Norte","Citygolf","Citygolf",1],["036","Norte","Estela","Estela Golf",1],["027","Norte","Estela Golf P&P (Qta. da Barca)","Estela Golf Pitch & Putt Academy",1],["107","Norte","Guardizela","Guardizela Golf Club",1],["038","Norte","Miramar","Club Golf Miramar",1],["031","Norte","Oporto","Oporto Golf Club",1],["099","Norte","Paredes - Aqueduto","Campo de Golfe do Aqueduto",1],["041","Norte","Ponte de Lima","Áxis Golfe Ponte de Lima",1],["068","Norte","Quinta do Fojo","Golfe da Quinta do Fojo",1],["092","Norte","Vale Pisão","Golfe Vale Pisão",1],["097","Norte","Vidago Clube","Campo do Clube de Golfe de Vidago",1],["060","Norte","Vidago Palace","Vidago Palace Golf Course",1],["111","Centro","Cantanhede","Campo de Golfe de Cantanhede",1],["012","Centro","Montebelo","Montebelo Golfe",3],["090","Oeste e Vale do Tejo","Bom Sucesso","Guardian Bom Sucesso Golf",1],["075","Oeste e Vale do Tejo","CampoReal","CampoReal",1],["002","Oeste e Vale do Tejo","Praia D`El Rey","Praia D' El Rey Golf Course",1],["065","Oeste e Vale do Tejo","Ribagolfe","Ribagolfe Lakes e Ribagolfe Oaks",2],["056","Oeste e Vale do Tejo","Royal Óbidos","Royal Óbidos",1],["071","Oeste e Vale do Tejo","Santo Estêvão","Santo Estêvão Golfe",1],["108","Oeste e Vale do Tejo","West Cliffs","West Cliffs",1],["010","Lisboa","Belas","Campo de Golfe do Belas Clube de Campo",1],["025","Lisboa","Estoril","Estoril - Blue Course",2],["104","Lisboa","Jamor","C. N. F. Golfe do Jamor",1],["026","Lisboa","Lisbon","Lisbon Sports Club",1],["105","Lisboa","Oeiras","Oeiras Green Valley / Academia Municipal de Golfe",1],["037","Lisboa","Oitavos","Oitavos Dunes",1],["001","Lisboa","Penha Longa","Sports Clube da Penha Longa",4],["003","Lisboa","Quinta da Beloura","Beloura Pestana Golf Resort",1],["023","Lisboa","Quinta da Marinha","Clube de Golfe da Quinta da Marinha",1],["064","Lisboa","The One Hills","THE ONE Hills Lisbon City Golf",1],["095","Península de Setúbal","Aldeia dos Capuchos","Golf Aldeia dos Capuchos",1],["004","Península de Setúbal","Aroeira","PGA Aroeira Nº 1 e PGA Aroeira Nº 2",2],["013","Península de Setúbal","Montado","Campo de Golfe do Montado",1],["007","Península de Setúbal","Quinta do Peru","Quinta do Peru Golf & Country Club",1],["114","Alentejo","Comporta Dunas","Terras da Comporta Dunas Golf Course",1],["117","Alentejo","Comporta Torre","Terras da Comporta Torre Golf Course",1],["112","Alentejo","CostaTerra Golf","CostaTerra Golf & Ocean Club",1],["106","Alentejo","Pinheirinho","Herdade do Pinheirinho",1],["116","Alentejo","Quinta dos Reis Olives Golf Course","Quinta dos Reis Olives Golf Course",1],["005","Alentejo","Troia","Troia Golf Championship Course",1],["019","Algarve","Alto Golf","Alto Golf Pestana Golf Resort",1],["093","Algarve","Amendoeira Golf Resort","Faldo Course e O'Connor Jnr. Course",2],["120","Algarve","Balaia Golf Village","Balaia Golf Village",1],["011","Algarve","Benamor","Benamor Golf",1],["059","Algarve","Boavista","Boavista Golfe",1],["067","Algarve","Castro Marim","Castro Marim Golf & Country Club",3],["070","Algarve","Espiche","Espiche Golf",1],["119","Algarve","Ferragudo Golf Course","Ferragudo Golf Course",1],["081","Algarve","Golfe de Silves","Pestana Silves Golf Resort",1],["063","Algarve","Golfe do Morgado","Morgado Golf Course",1],["077","Algarve","Golfe dos Álamos","Álamos Golf Course",1],["072","Algarve","Gramacho","Gramacho Pestana Golf Resort",1],["085","Algarve","Monte Rei","Monte Rei Golf & Country Club",1],["113","Algarve","Ombria Golf Course","Ombria Golf Course",1],["018","Algarve","Palmares","Palmares Golf",3],["022","Algarve","Penina","Resort Course Penina",2],["057","Algarve","Pine Cliffs","Pine Cliffs Golf & Country Club",1],["080","Algarve","Pinheiros Altos","Pinheiros Altos",4],["034","Algarve","Pinta Course","Pinta Pestana Golf Resort",1],["039","Algarve","Quinta da Ria","Quinta da Ria e Quinta de Cima",2],["009","Algarve","Quinta do Lago","Quinta do Lago Sul e Quinta do Lago Norte",2],["091","Algarve","Quinta do Lago Laranjal","Laranjal",1],["089","Algarve","Quinta do Vale","Quinta do Vale Golf Resort",1],["017","Algarve","Salgados","Salgados Golf",1],["045","Algarve","San Lourenzo","San Lourenzo Golf Course",1],["028","Algarve","Santo António (Parque da Floresta)","Santo António Villas, Golf & Spa",1],["118","Algarve","The Els Club Vilamoura","The Els Club Vilamoura",1],["051","Algarve","Vale do Lobo","Royal e Ocean",2],["015","Algarve","Vila Sol","Vila Sol Pestana Golf Resort",3],["043","Algarve","Vilamoura - Laguna","Laguna Golf Course",1],["024","Algarve","Vilamoura - Millennium","Millennium Golf Course",1],["044","Algarve","Vilamoura - Old Course","Old Course",1],["008","Algarve","Vilamoura - Pinhal","Pinhal Golf Course",1],["050","Açores","Terceira","Campo de Golfe da Ilha Terceira",1],["047","Açores","Verdegolf - Batalha","Campo de Golfe da Batalha",3],["046","Açores","Verdegolf - Furnas","Campo de Golfe das Furnas",1],["032","Madeira","Palheiro Golf","Palheiro Golfe",1],["073","Madeira","Porto Santo","Porto Santo Golfe",1],["055","Madeira","Santo da Serra","Clube de Golf Santo da Serra",4]];
+function renderCourses(terms) {
+  if (activeAccess) return;
+  const list = COURSES.filter(c => !terms.length || terms.every(t => norm(c.join(" ")).includes(t)));
+  if (!list.length) return;
+  const a = document.createElement("a"); a.href = "#campos"; a.innerHTML = `<span>Campos</span><span class="n">${list.length}</span>`; toc.appendChild(a);
+  const s = document.createElement("section"); s.id = "campos";
+  s.innerHTML = `<h2>Campos</h2><p class="sub">Os campos de Portugal com o código oficial da FPG (que não é o do clube). Cada um abre a ficha, e cada percurso o cartão com todos os tees (metros, par, SI, CR/Slope de homens e senhoras) e as estatísticas por buraco. Fonte: all_courses.asp, 15 Set 2026.</p>
+    <div class="course-head" aria-hidden="true"><span>Cód.</span><span>Campo</span><span>Nome completo</span><span>Zona</span><span class="num">Perc.</span></div>`;
+  for (const [cod, zona, curto, nome, np] of list) {
+    const d = document.createElement("details"); d.className = "club course";
+    const sm = document.createElement("summary");
+    sm.innerHTML = `<span class="cc"></span><span class="cs"></span><span class="cf"></span><span class="cz"></span><span class="num"></span>`;
+    sm.children[0].textContent = cod; sm.children[1].textContent = curto; sm.children[2].textContent = nome; sm.children[2].title = nome; sm.children[3].textContent = zona; sm.children[4].textContent = np;
+    d.appendChild(sm);
+    const body = document.createElement("div"); body.className = "club-body";
+    const links = document.createElement("div"); links.className = "club-links";
+    const add = (label, href) => { const l = document.createElement("a"); l.href = href; l.target = "_blank"; l.rel = "noopener noreferrer"; l.textContent = label + " ↗"; links.appendChild(l); };
+    add("Ficha do campo", `${P}course.asp?ncourse=${cod}&ack=8428ACK987&club=ALL`);
+    for (let i = 1; i <= np; i++) {
+      const suf = np > 1 ? ` · percurso ${i}` : "";
+      add(`Cartão com todos os tees${suf}`, `${P}show_card.asp?ncourse=${cod}-${i}&inframe=Y&stat=Y&info=Y&ack=8428ACK987&club=ALL`);
+      add(`Estatísticas por buraco${suf}`, `${P}show_strokeindex.asp?ncourse=${cod}-${i}&tee=0&ack=${M}&club=ALL`);
+    }
+    body.appendChild(links); d.appendChild(body); s.appendChild(d);
+  }
+  main.appendChild(s);
+}
 const $ = s => document.querySelector(s);
 let clubSort = "cc";
 function renderClubs(terms) {
@@ -703,7 +747,8 @@ function render() {
     s.appendChild(list); main.appendChild(s);
   }
   renderClubs(terms);
-  if (!total && !document.getElementById("clubes")) { const e = document.createElement("p"); e.className = "empty"; e.textContent = "Nenhum link corresponde à pesquisa. Experimente outro termo ou limpe o filtro de acesso."; main.appendChild(e); }
+  renderCourses(terms);
+  if (!total && !document.getElementById("clubes") && !document.getElementById("campos")) { const e = document.createElement("p"); e.className = "empty"; e.textContent = "Nenhum link corresponde à pesquisa. Experimente outro termo ou limpe o filtro de acesso."; main.appendChild(e); }
   count.textContent = `${total} link${total === 1 ? "" : "s"}`;
 }
 q.addEventListener("input", render);
