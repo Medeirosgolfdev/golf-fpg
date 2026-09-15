@@ -252,7 +252,7 @@ segunda corrida.
 | `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/` |
 | `/FPG` (`/diversos` → redirect `/FPG`) | FPGPage | pull-torneiosNNN.json |
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
-| — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO de dados (URLS, loadT, bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage — UI standalone removida 2026-07-02 | bjgt_*.json, wjgc_*.json |
+| — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO de dados (URLS, loadT, bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage — UI standalone removida 2026-07-02 | brjgt*_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
 | `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
 | — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO de dados (DATA_FILES, normalizeFile, doralMajorDivision) consumido pela MajorPage — UI standalone removida 2026-07-02 | ftm_doral_*.json |
@@ -268,6 +268,7 @@ segunda corrida.
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 | `/egr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | EGRPage | egr-ranking.json + egr/egr-events-list.json + egr/events/egr_{id}.json (European Golf Rankings) |
 | `/wagr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | WAGRPage | wagr-ranking.json + wagr/wagr-events-list.json + wagr/events/wagr_{id}.json (World Amateur Golf Ranking) |
+| `/faldo` (+ `/:source/:key`) | FaldoPage | faldo-catalog.json + faldo/{tour}_{id}.json (Faldo Series — um JobFile por etapa) |
 
 > **Páginas legadas** — `/bjgt-legacy` e `/doral-legacy` foram **removidas** 2026-07-02 (redirect → `/major`, que tem paridade total via CircuitShell; BJGTPage.tsx/DORALPage.tsx sobrevivem como módulos de dados+componentes ricos consumidos pela MajorPage). **`/kids-legacy` (KIDSPage) foi REMOVIDA em 2026-08-06** (sunset; redirect → `/kids2`). As 4 funcionalidades que bloqueavam o sunset resolveram-se assim: **(1)** tabela H2H detalhada → o `kids2/components/MatchupVsManuel.tsx` foi elevado à paridade (±par por lado, coluna Resultado c/ tinte, Dif. em ±par, médias de posição; e corrigidos 2 bugs: `totalGross ?? 0` a poluir médias e confrontos perdidos quando um jogador está em 2 flights do mesmo torneio, caso England cross-trophy); **(2-4)** Previsão WHS, Course Tab e Scorecards históricos NUNCA foram exclusivas — vivem no `kids/FieldRivaisDashboard.tsx`, que o kids2 renderiza em `/kids2/next-t` (tabs `?tab=previsao|campo|scorecards`). Apagados: `KIDSPage.tsx` + cadeia legacy-only (`kids/RivalDetail`, `RivalCharts`, `H2HSortableTable`, `RivaisSidebar`, `AnaliseSection`, `MemberHistTable`, `TournScorecard`, `courseScorecards`, `dobInference`, `tournDef`, `types`). **Mantêm-se** em `src/pages/kids/`: `FieldRivaisDashboard.tsx` + `CourseTab`/`PrevisaoTab`/`previsaoModel`/`HistoricScorecardsTab` (partilhados com o kids2). O array manual `D` da KIDSPage morreu com ela (a armadilha D vs TG_D ficou resolvida).
 >
@@ -368,45 +369,23 @@ sem torneios nenhuns. Aconteceu a 2026-07-23.
 
 O `KIDSdataLoader.ts` era o loader central da KIDSPage (removida 2026-08-06); hoje o consumidor principal é o `kids2/NextTournaments.tsx` (`buildAutoRivals` → `FieldRivaisDashboard`). Exporta `buildAutoRivals()`, `normName()`, `getScorecards()`, `uskTournNames` (Map) e `uskFieldSizes` (Map).
 
-### 3 Fases de carregamento
+### Só lê o canónico do agregador (verificado 2026-09-15)
 
-**Fase 1 — Paralelo (core tasks):**
-Carrega em paralelo todos estes ficheiros, processando cada um com a função adequada:
-- `wjgc_*.json`, `eowagr*.json` → `processWjgc(d, tid)`
-- `ftm_doral_*.json` → `processDoral(d)`
-- `uskids-results.json` → `processUskids(d)`
-- `uskids_torneios_completos(1-41).json` → `processUskidsCompleto(d)` (suporta formato v1 e v2)
-- `uskids-field-sizes.json` → `processFieldSizes(d)` (popula `uskFieldSizes`)
-- `t_de_tournaments_do_uskids.json` → `processTournMeta(d)` (popula `uskTournNames`, 6448 entradas)
-- `processManuelOverrides()` — injeta scores manuais do Manuel (MANUEL_OVERRIDES)
+O `KIDSdataLoader.ts` (~580 linhas) já **não** lê os ficheiros de cada circuito.
+Carrega só os 3 ficheiros do agregador — `juniors.json`,
+`juniors-tournaments.json` (em shards) e `tournament-catalog.json`; a
+identidade e o merge das fontes (USKids, WJGC/EOWAGR, Doral, pull-torneios, …)
+resolvem-se em build-time por `scripts/aggregator/` (ver "Agregador de
+juniores"). `uskTournNames` e `uskFieldSizes` saem do canónico. As antigas
+`processWjgc` / `processUskidsCompleto` / `processMemberHistory` /
+`processManuelOverrides` ficam como stubs vazios, só para compatibilidade dos
+testes (os grupos respectivos estão em `describe.skip`); o mapeamento
+ficheiro→tid legado é o `FILE_TO_LEGACY_TID`. `buildAutoRivals()` cacheia em
+`_autoRivalsCache`; `opts.force: true` força o reload.
 
-O `uskids-member-history-slim.json` começa a descarregar em paralelo nesta fase mas só é processado na Fase 2.
+### Marco Simone 2026 Boys 11 — score oficial com penalidade
 
-**Fase 2 — Member History (slim):**
-Aguarda o `uskids-member-history-slim.json` → `processMemberHistory(d)`. Ficheiro slim único (dados do torneio partilhados em `d.torneios`, não duplicados por jogador). Fonte complementar para torneios não cobertos pelos completos.
-
-**Fase 3 — Pull-torneios (autoritativo):**
-`pull-torneios000.json` → `processPullTorneios(d)` com `PULL_TIDS` force set. **Sobrescreve** dados parciais de outras fontes. Mapeamento `PULL_TCODE_TO_TID`:
-- `10260` → `gg25` (Greatgolf Junior Open 2025)
-- `10080` → `qdl25` (Quinta do Lago Junior Open 2025)
-- `10296` → `gg26` (Greatgolf Junior Open 2026 U12)
-- `10295` → `gg26_u14` (Greatgolf Junior Open 2026 U14)
-- `10294` → `gg26_open` (Greatgolf Junior Open 2026 open)
-
-Depois: enriquecimento FPG via `players.json` (carregado em paralelo desde o início) — corrige `co="Portugal"`, adiciona `fpgClub` e `dob`.
-
-### Formato tid (tournament ID interno)
-
-- USKids completo: `usk{tcode}_b{minAge}` (ex: `usk21080_b11`)
-- USKids results (uskids-results.json): lookup via `USKIDS_ID[tourn.name]` (ex: `desert26`, `sandestin26`)
-- WJGC/EOWAGR: tid definido no array de tasks (ex: `wjgc26`, `eowagr25_b910`)
-- Doral: `doral{YY}_b{ages}` gerado por `processDoral()` baseado em `d.year`
-- Pull-torneios: via `PULL_TCODE_TO_TID` (ex: `gg25`, `qdl25`)
-- Manuel overrides: definido em `MANUEL_OVERRIDES[].tid` (ex: `marco26_b11`)
-
-### MANUEL_OVERRIDES
-
-Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scraper. Actualmente: Marco Simone 2026 Boys 11 — Manuel marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (alertou a organização posteriormente e foi-lhe aplicada uma penalidade).
+O Manuel foi excluído pelo scraper nesse torneio (no loader antigo o score era injectado pelo array `MANUEL_OVERRIDES`; hoje vem do slim/canónico e do `applyResultOverrides()` da USKIDSPage). Manuel marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (alertou a organização posteriormente e foi-lhe aplicada uma penalidade).
 
 **Política do site (2026-05-17):** mostrar SEMPRE o score **oficial com penalidade** (R1=91 com hole 5=10, R2=79) e não o score real jogado (R1=86 com hole 5=5, R2=79). O `uskids-member-history-slim.json` já regista o oficial e isso alimenta o canónico que o `KIDS2Page` consome. O override do `applyResultOverrides()` na USKIDSPage replica os mesmos valores oficiais para preencher o leaderboard de `uskids-results.json` (que continua a excluir o Manuel por IE). Para reverter para o score jogado, ver comentário no override em `USKIDSPage.tsx`.
 
@@ -432,7 +411,7 @@ input + workflow_dispatch). ~30.4k juniores / ~21.2k torneios (2026-09-15).
 | `fpg` | players.json + pull-torneios (whitelist: Nacionais/PJA/GG/QDL/Finais Drive; **Drive/Aquapor regionais excluídos por design**) | **forte** (fed) |
 | `rfeg` | spain-players.json (roster) + rfegolf-rivals.json | **forte** (licencia) |
 | `ffgolf` | france-players.json + ffgolf-juniors-slim.json | **forte** (lic) |
-| `eowagr` / `wjgc` / `doral` / `fm` | eowagr*/wjgc_*+bjgt_*/ftm_doral_*/ftm_fm_* | fracas (nome+país) |
+| `eowagr` / `wjgc` / `doral` / `fm` | eowagr*/wjgc_*+brjgt*_*/ftm_doral_*/ftm_fm_* | fracas (nome+país) |
 | `fcg` (2026-07-02) | fcg-rivals.json (Catalunha, golfdirecto) | fraca (nome+**dob** ~58%) |
 | `england` (2026-07-02) | england_{slug}*.json | fraca (nome+país; memberIds GG são por-torneio) |
 | `gjgl` (2026-07-02) | gjgl/gjgl_*.json (exclui U23) | fraca (nome+país + dobRange do birthYearEst) |
@@ -1004,7 +983,7 @@ total calculado com os rankings oficiais reais do repo (RFDC_ quando existe).
 
 **scrape-fpg-admissions-draws-node.js** — Node puro (2026-04-22). Substitui os browser-scripts `browser-scrape-fpg-admissions-draws.js` + `browser-scrape-fpg-draws-only.js` + `merge-fpg-admissions-draws.js`. Corre linkpage cross-domain (scoring.fpg.pt/lists) em paralelo, merge aditivo (preserva bons, rejeita `_suspect`), output único em `public/data/fpg-admissions-draws.json`. Scope: `scripts/fpg-admissions-scope.json` (~390 torneios em 2026-09; cresce com o `--auto-extend`). Exit code 2 = sem novidades. Workflow: `update-fpg-admissions-draws.yml` (Sex/Sáb/Dom 20:00 UTC) — **regenera também `public/data/manuel-pairings.json` via `pairings-build.js` e committa-o** (alimenta a página `/draws`). Secret: `FPG_ADMISSIONS_COOKIES`.
 
-⚠ **Trava `_manual` (2026-06-14):** uma entrada de torneio com `"_manual": true` é **curada à mão** e o scraper preserva-a INTACTA (salta-a no merge — ver guarda no topo do loop em `scrape-fpg-admissions-draws-node.js`). Usar quando se inserem draws/admissions manualmente (ex: folhas de pairing fotografadas) que NÃO devem ser sobrescritos num run futuro — crítico porque a FPG reutiliza tcodes (um tcode antigo reaproveitado traria um draw "legítimo" `nScore>0` que de outra forma ganhava ao manual). Os draws por jogador podem ter `tee` próprio (flights com tees mistos M/F) — `FpgDrawFlight.players[].tee` em `nacional2026Loader.ts`, lido pelo `DrawTab` (`p.tee ?? g.tee`). Actualmente marcados: `125/10370` (PJA Vale Pisão Dia 2) e `152/10444` (AT&T Pebble Beach Royal Óbidos D1+D2).
+⚠ **Trava `_manual` (2026-06-14):** uma entrada de torneio com `"_manual": true` é **curada à mão** e o scraper preserva-a INTACTA (salta-a no merge — ver guarda no topo do loop em `scrape-fpg-admissions-draws-node.js`). Usar quando se inserem draws/admissions manualmente (ex: folhas de pairing fotografadas) que NÃO devem ser sobrescritos num run futuro — crítico porque a FPG reutiliza tcodes (um tcode antigo reaproveitado traria um draw "legítimo" `nScore>0` que de outra forma ganhava ao manual). Os draws por jogador podem ter `tee` próprio (flights com tees mistos M/F) — `FpgDrawFlight.players[].tee` em `nacional2026Loader.ts`, lido pelo `DrawTab` (`p.tee ?? g.tee`). Actualmente marcados (2026-09): `125/10370` (PJA Vale Pisão Dia 2), `152/10444` (AT&T Pebble Beach Royal Óbidos D1+D2), `059/10685`, `038/10754`, `003/10652`, `003/10653` e `988/90800` (placeholder de torneio só-draw).
 
 ⚠ **Congelamento automático de draws passados (2026-06-14):** além do `_manual`, o scraper congela AUTOMATICAMENTE qualquer torneio cujo evento terminou há >2 dias — os draws não mudam depois de o jogo ser jogado. `drawsAreFrozen()` estima o fim do evento por `date + (maxRound−1)` (nº de rondas já capturadas) + buffer `DRAW_FREEZE_BUFFER_DAYS=2` e remove esses torneios do scope ANTES do fetch (poupa requests + elimina overwrite por reutilização de tcode). Só congela quando JÁ há draws na base — eventos passados sem draw capturado ainda podem ser backfilled. `--tcodes` (escolha explícita) ignora a trava (escape hatch para forçar re-scrape).
 ```bash
@@ -1782,7 +1761,7 @@ outra vez na corrida seguinte. Entradas antigas sem `type` continuam a ser
 lidas pelo nome (retrocompatível). O `uskids-field.json` também passa a
 carregar `tour`/`type` por torneio.
 
-**fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133])`.
+**fetch-uskids-discovery.js** — Varre IDs no signupanytime, filtra torneios internacionais por keywords. Forçar inclusão: `FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133, 21667])` (21667 = World Teen Championship 2026).
 
 ### USKids — Script browser (F12)
 
@@ -1790,45 +1769,40 @@ carregar `tour`/`type` por torneio.
 - Configurar: editar array `TOURNAMENTS`: `{ t: "21080" }`
 - Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em USKIDSPage.tsx (actualmente **41**)
 
-### Flights no member-history (FLIGHTS + TOURN_NAMES em fetch-uskids-member-history.js)
+### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 
-| Torneio | t= | Boys 9 | Boys 10 | Boys 11 | Boys 12 |
-|---------|-----|--------|---------|---------|---------|
-| Marco Simone 2026 | 21080 | 272798 | 272799 | 272800 | 272801 |
-| Venice Open 2025 | 19418 | 250227 | 250228 | 250229 | 250230 |
-| Rome Classic 2025 | 20175 | 260328 | 260329 | 260330 | 260331 |
-| European Championship 2025 | 18242 | 234338 | 234339 | 234340 | 234341 |
-| European Championship 2026 | 21131 | 273490 | 273491 | 273492 | 273493 |
-
-Para adicionar: obter fids via `GetMeta&t={t}` campo flights → adicionar a FLIGHTS + TOURN_NAMES → correr.
+Os torneios a processar estão em `ALL_TCODES`; os flights Boys 9-13 de cada
+tcode são auto-descobertos via `GetMeta` (o `FLIGHTS_MANUAL` ficou vazio a
+2026-06-12). Para adicionar um torneio basta acrescentar o tcode a `ALL_TCODES`.
 
 ---
 
 ## Scripts — BJGT / WJGC / EOWAGR / Doral
 
->  correr `scrape-bluegolf.js`, `scrape-eowagr25*.js` ou qualquer
-> fetch automatizado a `*.bluegolf.com` 
+> ⛔ **NÃO correr** `scrape-bluegolf.js`, `scrape-eowagr25*.js` ou qualquer
+> fetch automatizado a `*.bluegolf.com` — descontinuado desde 2026-07-09
+> (pedido nominal da BlueGolf).
 
 **scrape-bluegolf.js** — Scraper genérico BlueGolf.  Browser visível (CAPTCHA possível).
 ```bash
 node scrape-bluegolf.js "https://brjgt.bluegolf.com/…/contest/73/leaderboard.htm" wjgc_2026_b1011.json
 ```
-Depois: copiar JSON para `public/data/` e registar em `dataRegistry.ts` + `KIDSdataLoader.ts` (adicionar ao array `coreTasks`).
+Depois: copiar JSON para `public/data/`, registar em `dataRegistry.ts` e garantir que o adapter do agregador (`scripts/aggregator/sources/wjgc.js`) o lê → `node scripts/aggregator/index.js` (o `KIDSdataLoader` já não tem lista de ficheiros; lê o canónico).
 
 **scrape-eowagr25-all.js** — 3 escalões de uma vez: B9-10 (c13), B13-14 (c77), B7-8 (c121).
 ```bash
-node scrape-eowagr25-all.js
+node scripts/scrape-eowagr25-all.js
 ```
 
 **scrape-eowagr25.js** — Contest 21 (Boys 11-12) com scorecards completos.
 ```bash
-node scrape-eowagr25.js [output.json]
+node scripts/scrape-eowagr25.js [output.json]
 ```
 
 **scrape-golfgenius.js** — Doral (First Tee Miami). v2: fix coluna "total", B8-9 suporta 9H back-9.
 ```bash
-node scrape-golfgenius.js                    # 2025 (URL default)
-node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994
+node scripts/scrape-golfgenius.js                    # 2025 (URL default)
+node scripts/scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994
 ```
 
 ---
@@ -1837,7 +1811,7 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 
 > **⚡ Catálogo + lazy load (2026-07-06)** — a `/major` deixou de pedir ~127
 > ficheiros (~14.6 MB, incl. ~48 pedidos 404 por adivinhar anos) no arranque.
-> Agora pede SÓ `public/data/major-catalog.json` (~50 KB, gerado por
+> Agora pede SÓ `public/data/major-catalog.json` (~160 KB em Set 2026 — ~50 KB quando foi criado; gerado por
 > `scripts/build-major-catalog.js`): a lista lateral sai desse índice (name,
 > campo, datas, nº jog/esc/rondas, hasManuel/hasPt) e o detalhe de cada torneio
 > (scorecards) carrega **lazy** ao clicar, via `loadDivisions` no `CircuitShell`
@@ -1866,7 +1840,7 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 >
 > **`major-veterans.json` + tab "✈️ Internacionalizações" (2026-07-24)** — o mesmo
 > `build-major-catalog.js` emite um 2º ficheiro (`public/data/major-veterans.json`,
-> ~800 KB, jogadores com ≥2 torneios: nome, país dominante, flags pt/usa, nº
+> ~1,3 MB em Set 2026, jogadores com ≥2 torneios: nome, país dominante, flags pt/usa, nº
 > torneios/anos/circuitos, séries e lista de entradas). A tab (menu ⓘ Info da
 > /major, `src/pages/major/MajorVeteransView.tsx`) carrega-o **lazy** e mostra um
 > ranking ordenável com filtros (procura, circuito, mín. torneios, 🇵🇹 Só PT,
@@ -1879,10 +1853,10 @@ formatos de output e dois caminhos de scrape:
 | Torneio | Plataforma | URL | Scraper | Output | Estado |
 |---|---|---|---|---|---|
 | **FSGA — 72nd Boys' Junior Championship** | GolfGenius (v2tid) | `v2tournaments/4708880` + `4739657` | `scrape-fsga.js` | `fsga_2026.json` (JobFile, 2 divisões) | ✅ ligado a `/major` (source `fsga`) |
-| **Under Armour — Summer National Championship** | GolfGenius (pages) | `pages/12770450567004716088` | **`scrape-golfgenius-node.js`** (Node-puro) | `uajt_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `uajt`) |
+| **Under Armour — Summer National Championship** | GolfGenius (pages) | `pages/12770450567004716088` | **`scrape-golfgenius-node.js`** (Node-puro) | `uajt_2026.json` (JobFile, 10 divisões) | ✅ ligado (source `uajt`) |
 | **México — Campeonato Nacional Infantil Juvenil (LXXV)** | GolfGenius (multi-liga) | `pages/5989156` (hub JS) | **`scrape-golfgenius-node.js --v2tids`** | `mexnacional_2026.json` (JobFile, 12 divisões) | ✅ ligado (source `mexnacional`) |
 | **México — Copa Bobby Díaz (7-15)** | GolfGenius | `pages/5666137` (liga 502696) | `scrape-golfgenius-node.js --v2tids` | `icopa_2025.json` (4 divisões c/ jogadores) | ✅ ligado (source `icopa`) |
-| **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2025.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
+| **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2026.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
 | **'Champion of Champions' World Championship** | GolfGenius (pages) | `pages/12114827382448210411` (2026) | **`scrape-golfgenius-node.js --scope`** | `coc_{2023,2024,2025,2026}.json` (JobFile, 8-10 divisões) | ✅ ligado (source `coc`) — cron `update-golfgenius.yml` |
 | **Optimist International Junior Championships** (600+/ano, 25+ países; PGA National→Trump Doral) | GolfGenius (microsites `tndm-*`) | 3 FASES/ano por escalões (P1 = Boys 10-11/12-13 + Girls 10-12 ⭐ universo do Manuel; P2 = 14-15/13-14; P3 = 16-18/15-18) — URLs por fase em `golfgenius-scope.json` | **`scrape-golfgenius-node.js --scope`** (país+gradYear do roster "Players"; `stop` = nº da fase) | `optimist{1..3}_{2023..2026}.json` (JobFile; ids `optimist:{ano}:{fase}` como o ejt) | ✅ ligado (source `optimist`, 2026-08-06) — cron `update-golfgenius.yml`. ⚠ `optimist3_2023` é vista agregada sem divisões (o GG de 2023 não tem select — fica 1 flight). ⚠ o site ShotStat (optimist.shotstat.com) só tem o Tournament of Champions, NÃO o International |
 | **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
@@ -1946,8 +1920,8 @@ jogador pode aparecer nas duas (cross-divisão, como no England Golf).
 node scripts/scrape-fsga.js                 # EDITIONS (72nd Boys' Junior)
 node scripts/scrape-fsga.js 4708880 4739657 # v2tids ad-hoc (uma edição, várias divisões)
 ```
-Wiring: `buildFsgaEntries` + source `fsga` em `MajorPage.tsx`; `FSGA_YEARS`
-tenta `fsga_{ano}.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
+Wiring: entrada `fsga` em `GG_JOB_LOADERS` (`MajorPage.tsx`), construída por
+`buildGgJobEntries`; os anos vêm do `major-catalog.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
 ronda (retrocompatível — FM/JOB sem `pars` usam o par da divisão).
 
 ### scrape-golfgenius-node.js — GolfGenius genérico Node-puro (pages/v2tids) ⭐
@@ -1960,7 +1934,7 @@ reexporta `scrapeEdition`/`ggGet`/`courseNamesLabel`). Descoberta:
 **v2tid dessa divisão** (leaderboard multi-ronda). Depois: leaderboard +
 scorecards + par por buraco dos marcadores (como FSGA).
 ```bash
-node scripts/scrape-golfgenius-node.js "https://www.golfgenius.com/pages/12770450567004716088"  # UA → uajt_2026.json (12 divisões auto)
+node scripts/scrape-golfgenius-node.js "https://www.golfgenius.com/pages/12770450567004716088"  # UA → uajt_2026.json (10 divisões auto)
 node scripts/scrape-golfgenius-node.js <url> --league 528939       # página 100% JS sem leagueId no HTML
 node scripts/scrape-golfgenius-node.js <url> --skip-scorecards     # só leaderboards (rápido)
 ```
@@ -2049,7 +2023,7 @@ node scrape-bluegolf.js "https://jwgc.bluegolf.com/bluegolf/jwgc26/event/jwgc261
 Output: 1 JSON por escalão (`{evSlug}_{cat}.json`, ex: `fcg268_boys_10-11.json`),
 formato **bluegolf** (`{tournament,category,course,year,par,si,yards,parTotal,
 players:[{name,country,pos,result,total,rounds:[{day,scores,f9,b9,gross}]}]}`) —
-o mesmo dos `wjgc_*`/`bjgt_*`. Ligar ao `/major` = registar em `BJGT_URLS`
+o mesmo dos `wjgc_*`/`brjgt*_*`. Ligar ao `/major` = registar no array `URLS`
 (`BJGTPage.tsx`) com série/escalão/ano, como os BJGT/EOWAGR. Registados:
 `fcg251_*` (2025), `fcg268_*` (2026, 10 escalões, 13-15 Jul) e `jwgc261_*`.
 
@@ -2086,17 +2060,19 @@ células = nome · total · ±par · pancadas de cada ronda. É o equivalente à
 próprio, `src/ui/circuit/PastEditionsTable.tsx`. Responde a "que score foi
 preciso para ganhar / entrar no top-10 neste escalão ao longo dos anos".
 
-Funciona em **TODAS** as fontes do MAJOR porque o carregador (`PastEditionsTab`
-na `MajorPage`) passa pelo **`loadDivisionsFor`** — o mesmo loader que o shell
-usa para abrir um torneio — em vez de ler os JobFiles directamente. Anos vêm do
-`major-catalog.json`; tudo lazy (só ao abrir a tab) e cacheado.
+Funciona em **TODAS** as fontes do MAJOR porque o `CircuitShell` monta o
+`CircuitPastEditionsTab` (`src/ui/circuit/pastEditions.tsx`) a partir do
+`editionKey` do config e carrega cada edição por `entry.loadDivisions` — na
+MAJOR, o **`loadDivisionsFor`**, o mesmo loader que abre um torneio — em vez de
+ler os JobFiles directamente. Anos vêm do `major-catalog.json`; tudo lazy (só ao
+abrir a tab) e cacheado. O `isFullRound` vive em `pastEditions.tsx`.
 
 Duas vias de injecção, conforme a divisão:
 - **`renderFull`** (JOB, FM e as JobFile GolfGenius/GolfBox) → `extraTabs` do
   `TournamentDetail`;
-- **render por secções do shell** (BJGT/EOWAGR/FCG/JWGC, Doral) → novo
-  `pastEditionsTab` no `CircuitConfig`, que o `CircuitShell` acrescenta aos
-  `trailingTabs`.
+- **render por secções do shell** (BJGT/EOWAGR/FCG/JWGC, Doral) → o
+  `CircuitShell` acrescenta a tab aos `trailingTabs` quando o config define
+  `editionKey` (o `pastEditionsTab` do `CircuitConfig` ficou como fallback legado).
 
 ⚠ **Ordenar por total põe quem NÃO acabou em 1º** — 2 voltas somam menos que 3
 (168 < 205) e um WD aparecia como campeão; num caso real o vencedor (205, −11)
@@ -2465,7 +2441,7 @@ Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgeni
 
 **Catálogo:** `public/data/england-golf-catalog.json` — 39 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club, English Schools). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
 
-**Cobertura efectiva:** 19/28 das edições 2023-2025 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+**Cobertura efectiva:** 19/27 das edições 2023-2025 com dados completos. 8 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
 
 ### ⚠ A época de 2026 esteve um Verão inteiro por scrapar (2026-08-30)
 
@@ -2522,7 +2498,6 @@ o dar como falhado**.
 node scripts/scrape-england-golf.js                              # tudo
 node scripts/scrape-england-golf.js --since-year 2023            # ≥ 2023
 node scripts/scrape-england-golf.js --slug carris-trophy-2025    # só esse
-node scripts/scrape-england-golf.js --slugs A,B,C                # vários slugs (2026-05-18)
 node scripts/scrape-england-golf.js --year 2025
 node scripts/scrape-england-golf.js --skip-existing              # idempotente
 node scripts/scrape-england-golf.js --gg-base https://eg-X.golfgenius.com --gg-page 1234567 --slug X --year 2026  # ad-hoc
@@ -2650,7 +2625,7 @@ Idade está IMPLÍCITA pelo tier do torneio (Carris=U18, McGregor=U16, Reid=U14)
 |---|---|
 | `carris-trophy-2024`, `mcgregor-trophy-2023`, `english-girls-championship-2025` | "dropdown sem eventos" — England Golf arquivou e removeu os dados do GG |
 | `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
-| `bronte-law-farnham-2026`, `bronte-law-moor-allerton-2026` | Idem — `campaigns/2263/run`. Tentados os DOIS ids (aterragem e "Results"). |
+| `bronte-law-farnham-2026` | Idem — `campaigns/2263/run`. Tentados os DOIS ids (aterragem e "Results"). |
 | `boys-county-finals-2025`, `boys-county-finals-2026` | **Match play entre condados** — o dropdown traz "Somerset vs Yorkshire", "Nottinghamshire vs Hampshire"… O `isStrokePlay` exclui match play **de propósito** (não há leaderboard individual para extrair). Não é falha do scraper nem da página. |
 | `english-schools-team-2026`, `english-schools-scratch-team-2026` | Campeonatos por EQUIPAS (escolas) — "dropdown sem eventos" nos dois ids. |
 
@@ -2665,7 +2640,7 @@ três meses por scrapar. `fail` fica reservado a excepções (exit 1).
 
 ### Época de 2026 — o que ficou coberto
 
-8 ficheiros / 7 provas, scrapados a 2026-08-30:
+9 ficheiros / 8 provas (7 scrapadas a 2026-08-30, o Moor Allerton a 2026-09-07):
 
 | Prova | Jogadores | Par |
 |---|---|---|
@@ -2676,6 +2651,7 @@ três meses por scrapar. `fail` fica reservado a excepções (exit 1).
 | English Girls' U16 & U14 (`_div1` + `_div2`) | 51 + 93 | 73 |
 | Bronte Law — Royal Mid Surrey | 30 | 73 |
 | Bronte Law — Edgbaston | 27 | 72 |
+| Bronte Law — Moor Allerton | 34 | 73 |
 
 Todas entram no canónico do kids2 (agregador: 30296 juniores · 20898 torneios,
 9/9 sanity checks, Manuel×Dmitrii = 7 mantido).
@@ -2721,7 +2697,7 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 
 ## t= codes USKids conhecidos
 
-### Em USKIDS_KNOWN_TCODES (processados pelos torneios_completos)
+### Tcodes internacionais conhecidos (lista de referência — não há constante no código)
 
 | t= | Nome | Data | Tipo |
 |----|------|------|------|
@@ -2750,17 +2726,16 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 | 21239 | Mississippi State Inv. 2026 | Mar 2026 | USA |
 | 21131 | European Championship 2026 | 26 Mai 2026 | EURO |
 
-### Em USKIDS_ID (torneios sem completos, processados via uskids-results.json)
+### Tids legados (`src/ui/TabelaGlobal.tsx`, com sufixo `_bN` — ex. `desert26_b9`)
 
 | Nome no JSON | tid | Notas |
 |-------------|-----|-------|
 | Desert Shootout 2026 | `desert26` | |
 | Sandestin Championship 2026 | `sandestin26` | |
 | 2026 Mississippi State Invitational | `msstate26` | |
-| 2026 South Carolina State Invitational | `scstate26` | |
 | Real Club de Golf El Prat | `elprat23` | 9H |
 
-### Futuros / em FLIGHTS
+### Futuros (`ALL_TCODES` do fetch-uskids-member-history.js; o 21573 só na descoberta)
 
 | t= | Nome | Data |
 |----|------|------|
@@ -2805,7 +2780,7 @@ PlayerEntry = {
   }]
 }] }] }
 ```
-⚠ `strokes[]` pode estar ausente. `par[]` nem sempre existe — usar `USKIDS_PAR["{tcode}-{age_group}"]` como fallback.
+⚠ `strokes[]` pode estar ausente. `par[]` nem sempre existe (não há tabela de fallback no código).
 
 ### uskids_torneios_completos(N).json — Dois formatos
 
@@ -2839,7 +2814,7 @@ Detectado automaticamente por presença de `signupanytime_t`. Par extraído de `
 4. `start_date` é formato americano "M/D/YYYY"
 5. `country` é minúsculo ("pt") — diferente dos outros JSONs ("PT")
 
-### uskids-member-history-slim.json (formato slim para KIDSdataLoader)
+### uskids-member-history-slim.json (formato slim — lido pelo agregador, `kids/FieldRivaisDashboard`, `HistoricScorecardsTab`, `USKIDSPage`, `PastEditionsTable`)
 
 Gerado por `build-member-history-slim.js` a partir dos ficheiros numerados em `data-archive/`. Escrito em `public/data/`.
 
@@ -2926,18 +2901,18 @@ Schema deliberadamente fala SI/par/yards a partir do `GetMemberTournamentResults
 ### uskids-field-sizes.json
 
 ```
-{ [tcode]: { escaloes: { "Boys 10": { inscritos: N }, ... } }, _gerado_em: "..." }
+{ [tcode]: { name, start_date, end_date, rounds, escaloes: { "Boys 10": { fid, inscritos } } }, _gerado_em: "..." }
 ```
-Popula `uskFieldSizes` Map. Grupos com range ("Boys 9-10") populam todas as idades: `usk{tcode}_b9` e `usk{tcode}_b10`.
+Gerado por `scripts/fetch-uskids-field-sizes.js` (manual, sem workflow); lido pelo agregador (`sources/uskids.js`).
 
 ### t_de_tournaments_do_uskids.json
 
 ```
 [{ t: number, name: string, date: "M/D/YYYY" }, ...]  // 6448 entradas
 ```
-Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prioridade).
+Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nomes por t=.
 
-### wjgc_*.json / eowagr*.json / bjgt_*.json (formato "bluegolf")
+### wjgc_*.json / eowagr*.json / brjgt*_*.json (formato "bluegolf")
 
 ```
 { tournament, category, course, year, par: number[18], si?: number[18],
@@ -2951,7 +2926,7 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 ### ftm_doral_*.json (formato "ftm-doral")
 
 ```
-{ year,  // gera tids dinâmicos "doral{YY}_b{ages}"
+{ year,  // o tid legado "doral{YY}" vem do FILE_TO_LEGACY_TID do KIDSdataLoader
   divisions: [{ key, label, nineHoleOnly, startingHole (10 para B8-9 back-9),
     par[], course, cr?, slope?,
     players: [{ name, country?, pos, r1Gross, r2Gross, total, toPar, rounds?[] }]
@@ -3005,7 +2980,7 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
   `recent-tournaments-scrape-scope.json` = `[{tclub,tcode,name,nOurs}]` dos
   **não scrapeados com ≥6 nossos** (só FPG, ccode presente), ordenado por `nOurs`
   desc. O `update-classif.yml` tem um passo que corre
-  `scrape-classif-node.js --scope <esse ficheiro> --limit 80 --out public/data/pull-torneios006.json`
+  `scrape-classif-node.js --scope <esse ficheiro> --limit 80 --out <ficheiro-cauda dado por pull-torneios-tail.cjs> --concurrency 2`
   (`--limit` novo no scraper). Merge aditivo → o scope **auto-drena** a cada
   semana (à medida que ficam scrapeados, saem do scope no build seguinte) e a
   FPGPage passa a mostrar o leaderboard completo (lê `pull-torneios000..NNN`).
@@ -3016,9 +2991,9 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 
 | Ficheiro | Circuito | Gerado por | Scorecard? | Usado em |
 |----------|----------|------------|------------|----------|
-| pull-torneiosNNN.json (000-NNN) | FPG | scrape-classif-node.js (novos) ou pull-torneios.js browser (legacy) | ✓ | FPGPage, KIDSdataLoader (pull-torneios000 autoritativo) |
+| pull-torneiosNNN.json (000-NNN) | FPG | scrape-classif-node.js (novos) ou pull-torneios.js browser (legacy) | ✓ | FPGPage, agregador (`sources/fpg.js`; pull-torneios000 autoritativo) |
 | fpg-admissions-draws.json | FPG | scrape-fpg-admissions-draws-node.js (novo) | ✗ | AdmissionsTab, DrawTab (inscrições + pairings pré-jogo) |
-| players.json | FPG | pipeline.js | ✗ | JogadoresPage, FPGPage, KIDSdataLoader (enriquecimento) |
+| players.json | FPG | pipeline.js | ✗ | JogadoresPage, FPGPage, agregador (enriquecimento) |
 | master-courses.json | FPG | pipeline.js (+ add-paco-do-lumiar.js p/ campos manuais) | ✓ | CamposPage |
 | course-players.json | FPG | build-course-players.js | ✓ | CamposPage (`_players` dos campos PT — quem jogou + scores por volta) |
 | course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome + `dob`/`sex` p/ os jogadores dos campos) |
@@ -3028,32 +3003,32 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | aquapor-data-YYYY-MM.json | FPG | scrape-drive-node.js (mensal) | ✓ | DrivePage |
 | melhorias.json (⚠ na RAIZ, não em public/data) | FPG | enrich-intl-round.js | ✓ | JogadoresPage, CamposPage (importado em `App.tsx`) |
 | away-courses.json | FPG | pipeline.js | ✓ | CamposPage |
-| player-stats.json | FPG | enrich-players.js | ✗ | JogadoresPage |
-| {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
-| uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
-| uskids_torneios_completos(1-41).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
+| player-stats.json (⚠ em `public/`, não em public/data) | FPG | enrich-players.js | ✗ | JogadoresPage |
+| {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage (PlayerDetail), BJGTAnalysisPage, CamposPage, CompararPage, SimuladorPage, TeeAdvisorView, kids/PrevisaoTab |
+| uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, agregador (`sources/uskids.js`) |
+| uskids_torneios_completos(1-41).json | USKids | browser script | ✓ | USKIDSPage, agregador (`sources/uskids.js`) |
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
-| uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + kids/FieldRivaisDashboard (tabs Scores/Scorecards/Campo/Previsão) |
+| uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | agregador + kids/FieldRivaisDashboard, HistoricScorecardsTab, USKIDSPage, PastEditionsTable (tabs Scores/Scorecards/Campo/Previsão) |
 | uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
 | uskids-rich-flight-cache.json.gz | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — cache (tcode → flights/players) para a pipeline rica; **gzipada** (em claro passava o limite de 100 MB do GitHub) |
 | uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
-| uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
+| uskids-field-sizes.json | USKids | fetch-uskids-field-sizes.js (manual, sem workflow) | ✗ | agregador (`sources/uskids.js`) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-field.js (Fase 1) | ✗ | fetch-uskids-results.js |
-| t_de_tournaments_do_uskids.json | USKids | (automação, 6448 entries) | ✗ | KIDSdataLoader (uskTournNames fallback) |
-| bjgt_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js (⛔ descontinuado) | ✓ | MajorPage (via módulo BJGTPage), KIDSdataLoader |
-| eowagr25_*.json | EOWAGR | scrape-eowagr25*.js | ✓ | KIDSdataLoader |
-| ftm_doral_2024/2025.json | Doral | scrape-golfgenius.js | r1/r2Gross | KIDSdataLoader |
+| t_de_tournaments_do_uskids.json | USKids | (automação, 6448 entries) | ✗ | agregador (lookup de nomes por t=) |
+| brjgt*_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js (⛔ descontinuado) | ✓ | MajorPage (via módulo BJGTPage), FieldRivaisDashboard, agregador |
+| eowagr25_*.json | EOWAGR | scrape-eowagr25*.js (⛔ BlueGolf descontinuado) | ✓ | MajorPage (via módulo BJGTPage), agregador |
+| ftm_doral_{2018..2025}.json | Doral | scrape-golfgenius.js | r1/r2Gross | MajorPage (via módulo DORALPage), agregador |
 | coc_{2023..2026}.json | Champion of Champions | scrape-golfgenius-node.js (`--scope`) | ✓ (9 e 18 buracos) | MajorPage (source `coc`), aggregator (`sources/coc.js`) |
-| france-players.json | FFG | build-france-players.js | ✗ | FFGPage (`/ffg/info/joueurs`), KIDSdataLoader (france-enrich), aggregator |
+| france-players.json | FFG | build-france-players.js | ✗ | FFGPage (`/ffg/info/joueurs`), aggregator |
 | ffgolf-player-tournaments.json | FFG | build-france-players.js | ✗ | FFGPage — torneios+resultados de cada jogador (painel expansível) |
-| spain-players.json | RFEG | build-spain-players-export.js | ✗ | RFEGPage (`/rfeg/info/jugadores`), KIDSdataLoader, aggregator |
+| spain-players.json | RFEG | build-spain-players-export.js | ✗ | RFEGPage (`/rfeg/info/jugadores`, `rfeg/PlayersView`), aggregator |
 | spain-player-tournaments.json | RFEG | build-spain-player-tournaments.js | ✗ | RFEGPage — torneios+resultados de cada jogador (painel expansível) |
 | england_{slug}.json | England Golf | scrape-england-golf.js | ✓ (com teeColour/metersPlayed[18] por ronda) | EnglandGolfPage |
 | england-golf-catalog.json | England Golf | manual | ✗ | EnglandGolfPage (sidebar) |
-| torneio-greatgolf.json | Greatgolf | scrape-drive-aquapor-v7.js | ✓ | KIDSdataLoader |
-| rivals-intl.json | — | — | ✗ | (registado em dataRegistry) |
+| torneio-greatgolf.json | Greatgolf | — | — | ⚠ ficheiro inexistente — só registado em dataRegistry |
+| rivals-intl.json | — | — | ✗ | ⚠ ficheiro inexistente — só registado em dataRegistry |
 | tournament-links.json | — | — | ✗ | (registado em dataRegistry) |
 
 ---
@@ -3068,7 +3043,7 @@ em `docs/melhorias-campos-simulador.md`.
 
 | Ficheiro | Exporta | Papel |
 |---|---|---|
-| `src/utils/teeGroups.ts` | `physicalTeeGroups(tees)`, `physicalTeeKey(tee)`, `sexesIn(groups, pick)`, tipos `SexKey`/`TeeRating`/`PhysTeeGroup` | Agrupa tees por **tee FÍSICO** (cor + distância total). O mesmo tee aparece como entradas M e F separadas (CR/Slope diferentes) — aqui junta-se tudo: `h18`/`f9`/`b9` (ratings por sexo) + `teeBySex` (objecto Tee por sexo, para selecção). Chave = `teeGroupHex(name, scorecardMeta.teeColor)|round(distances.total)`. |
+| `src/utils/teeGroups.ts` | `physicalTeeGroups(tees)`, `physicalTeeKey(tee)`, `sexesIn(groups, pick)`, tipos `SexKey`/`TeeRating`/`PhysTeeGroup` | Agrupa tees por **tee FÍSICO** (cor + distância total). O mesmo tee aparece como entradas M e F separadas (CR/Slope diferentes) — aqui junta-se tudo: `h18`/`f9`/`b9` (ratings por sexo) + `teeBySex` (objecto Tee por sexo, para selecção). Chave = `teeGroupHex(name, scorecardMeta.teeColor)|round(distances.total)|teeNameBase(teeName)`. |
 | `src/ui/TeeBars.tsx` | `TeeBars` (default) | Barras de tees partilhadas entre Campos e Simulador. Uma barra por tee físico: **só a bolinha colorida** (`.tee-dot`, sem nome) + distância (bold, tamanho normal) + CR/Slope por sexo. Dois modos: **display** (Campos, M/F como texto), **selector por sexo** (`onSelectTee`+`selectedTeeId`, Simulador — M/F viram botões), **selector de grupo** (`onSelectGroup`+`selectedGroupKey`, Campos — barra inteira clicável). |
 
 ⚠ **Regra do tee físico:** um campo tem N tees físicos (cor/distância); o CR e o
@@ -3132,7 +3107,7 @@ Slope é que diferem entre M e F — é o MESMO tee. Nunca listar "Amarelas M" e
 
 ### CamposPage
 
-- **Hero KPI cards** (`.kpi-card*`): Par, Tees (FÍSICOS), Jogadores. Distância
+- **Hero KPI cards** (`<KpiCard>` em `.kpi-row`): Par, Tees (FÍSICOS), Jogadores. Distância
   e CR/Slope NÃO vão aqui (são por tee → vivem nas barras/tabela).
 - **Header legível**: deixou de expor a `courseKey` crua; mostra tipo de campo
   (PT/Internacional/Torneio).
@@ -3291,7 +3266,7 @@ por fed (além de `names`); o loader expõe-os via `useCoursePlayerMeta()`
 
 ## Tab "Vantagem de Tee" (`/comparar`) — conselho de tee para júnior (2026-06-14)
 
-`src/pages/comparar/TeeAdvisorView.tsx`, 3ª tab da `ComparePage`. Compara dois tees
+`src/pages/comparar/TeeAdvisorView.tsx`, 2ª tab (de 4: Campos · Vantagem de Tee · Jogadores · Simulador) da `ComparePage`. Compara dois tees
 de um campo e dá um **conselho fundamentado** sobre se o Manuel deve subir de tee.
 Sessão grande de 2026-06-14 transformou-o de heurística mecânica em conselho
 ancorado em **evidência real** e em **literacia WHS**. Sem gráficos.
@@ -3413,7 +3388,7 @@ Estas URLs são úteis para scrapar dados **pré-jogo** (quem está inscrito, te
 
 #### ⚠ `linkpage.aspx` é o gateway canónico — NÃO ir directo às páginas alvo
 
-**Descoberta 2026-04-22 via `scripts/probe-admissions-sources.js`.** Ir directamente às páginas alvo (`tournAdmissions.aspx`, `classifications.aspx`, etc.) com os cookies certos funciona *às vezes*, mas é frágil — devolve `Param Error` (HTTP 200 com título "Param Error") se a sessão do servidor não estiver "aquecida" pelo `linkpage.aspx` logo antes. Depois do `linkpage.aspx` rodar, o directo passa a funcionar na mesma sessão (estado server-side).
+**Descoberta 2026-04-22 via `scripts/_archive/testes-diagnostico/probe-admissions-sources.js`.** Ir directamente às páginas alvo (`tournAdmissions.aspx`, `classifications.aspx`, etc.) com os cookies certos funciona *às vezes*, mas é frágil — devolve `Param Error` (HTTP 200 com título "Param Error") se a sessão do servidor não estiver "aquecida" pelo `linkpage.aspx` logo antes. Depois do `linkpage.aspx` rodar, o directo passa a funcionar na mesma sessão (estado server-side).
 
 **Consequência prática:** sempre usar `linkpage.aspx?page=...` como ponto de entrada. O servidor FPG faz automaticamente o redirect 302 para a página alvo (`tournAdmissions.aspx`, etc.). ⚠ Sem cookies, o `fetch` com `redirect: 'follow'` perde a sessão emitida no caminho — seguir os redirects à mão (`Sessao.get` de `scripts/lib/fpg-session.js`). Nunca saltar o linkpage em clientes server-side em que o warmup não está garantido.
 
@@ -4494,8 +4469,8 @@ funcionar directamente no `my.fpg.pt`, ir lá primeiro corta latência de 30s
   com HTTP 500** ("There was an error processing the request")
 - Proxy pagina em batches de 100 (`jtStartIndex` 0, 100, 200, …) até
   atingir `TotalRecordCount` ou o `limit` pedido
-- Paginação é sequencial — poderia ser paralela se total fosse conhecido
-  à partida
+- O 1.º pedido lê o `TotalRecordCount`; as páginas em falta são pedidas em
+  paralelo (`Promise.all`)
 
 **Normalização FPG → WhsRound (`normalizeFpgWhsRecord`):**
 
@@ -4537,16 +4512,16 @@ Depois das correcções 2026-04-14/15:
   como o erro do segundo backend)
 - Mensagem auxiliar sugere consultar o site da FPG directamente quando
   ambos falham
-- Tabela renderiza 100 primeiras rondas com data, torneio, campo, buracos,
+- A `FederadoRoundsTable` renderiza as 200 primeiras rondas (ordenáveis) com data, torneio, campo, buracos,
   HCP, stableford, score differential, origem
 
-### Sidebar de JogadoresPage — limite aumentado
+### Sidebar de JogadoresPage — sem tecto fixo
 
-`MAX_SIDEBAR_ITEMS = 2000` (era 500, 2026-04-15). Razão: com 15.646
-federados activos (hoje ~17,9k), 500 não chega para encontrar jogadores com nomes
-comuns (ex: "Joana Sousa" aparecia depois da 500ª posição). O filtro
-`filtered` já corre sobre todos os federados, só o render é limitado.
-Para uma lista maior, considerar virtualização real (react-window).
+Rendering progressivo (2026-08-15): `SIDEBAR_CHUNK = 300` + sentinel
+IntersectionObserver que carrega mais ao chegar ao fim — todos os federados
+(~17,9k) ficam alcançáveis. Substituiu o tecto fixo `MAX_SIDEBAR_ITEMS`
+(500 → 2000 a 2026-04-15, porque "Joana Sousa" aparecia depois da 500ª posição).
+Sem react-window, de propósito.
 
 ### Pitfall histórico: não copiar o cookie do `x-cookie-session-id`
 
@@ -4726,10 +4701,10 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 ### Ficheiros de dados relacionados
 
 - `public/data/federados.json` (~18 MB, ~17,9k activos em 2026-09 — `FedStat=9`)
-- `public/data/federados-inativos.json` (41 MB, 43.054 inactivos — `FedStat=7`)
+- `data-archive/federados-inativos.json` (~42 MB, 43.054 inactivos — `FedStat=7`; fora do deploy)
 - `public/data/federados-inativos-stats.json` (~25 KB, agregados)
 - `public/data/federados-inativos-jovens.json` (~2.7 MB, Sub-10 a Sub-21)
-- `public/data/fpg-whs.json` (gerado pelo console script — usar como cache)
+- `public/data/fpg-whs.json` — cache OPCIONAL (hoje não existe em disco); o `datagolfClient.ts` usa-a se existir
 - `api/.datagolf-cookies.json` (cookies capturadas no browser / pelo `run-cookie-refresh.bat`; ⚠ está no git, é committado com os refrescos)
 
 ---
@@ -4856,8 +4831,8 @@ do Amendoeira ↔ Clube de Belas).
 - **Todas as cores passam por `tokens.css`** — nunca hardcodar hex nos componentes.
 - `colors.ts` espelha os tokens para uso em JS/TS (recharts, arrays de dados). Alterar primeiro em `tokens.css`, depois actualizar `colors.ts`.
 - **Excepção intencional:** `OverlayExport.tsx` usa cores hardcoded porque `html-to-image` não suporta CSS custom properties — documentado com comentário no cabeçalho.
-- `.p-intl { background: #00FF00 }` (verde néon) é **intencional** — não "corrigir".
-- `design-system.html` na raiz documenta visualmente todas as classes CSS.
+- `--pill-intl-bg: #00FF00` (verde néon, usado por `.p-intl`) é **intencional** — não "corrigir".
+- `src/design-system.html` documenta visualmente todas as classes CSS.
 
 ### Scorecard — semântica de cores
 
@@ -4886,8 +4861,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 - `mathUtils.ts`: `zTier()`, `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
 - `format.ts`: `fmtToPar()` (usar em vez de `fmtTp2`/`fmtTP2` locais), `sortArrow()`, `MONTHS_PT` (abrev.), `MONTHS_PT_FULL` (lowercase), `MONTHS_PT_LONG` (Title Case), `MONTH_MAP`.
 - `constants/manuel.ts`: `MANUEL_FED`, `MANUEL_BIRTH_YEAR`, `isManuel()`, `escalaoManuelParaData()`, `MANUEL_KNOWN_TIDS`.
-- `constants/tournaments.ts`: `TORNEIOS_CONFIG` (10 torneios FPG).
-- `constants/tierDisplay.ts`: `TIER_L`, `TR_I` (labels e ícones de tier).
+- `constants/config.ts`: `TORNEIOS_CONFIG` (10 torneios FPG), `TIER_L`, `TR_I` (labels e ícones de tier).
 - CSS `.tab-under` + `.active`: tabs com underline (substitui `tabStyle()` inline).
 
 ### Features novas em JogadoresPage (2026-04-15)
@@ -4896,13 +4870,11 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
   tabela abre modal com grelha hole-by-hole estilo oficial: `sc-score` +
   `scClass(gross, par)` + halftotal F9/B9 + `fmtToPar()`. Fetch via
   `getScorecard(round.id)` de `datagolfClient.ts`.
-- **Botão "🧒 Jovens"** na toolbar (modo Todos) — activa filtro com todos os
-  Sub-* (Sub-10 a Sub-21) de uma vez. Quando activo, levanta o cap de
-  `MAX_SIDEBAR_ITEMS` e mostra KPI grid por escalão (total + distribuição
-  por sexo com `SexBadge`).
-- **`MAX_SIDEBAR_ITEMS = 2000`** (era 500) — para jogadores com nomes comuns
-  aparecerem sem refinar filtros. Para virtualização real usar react-window
-  no futuro.
+- **Preset 🧒 Jovens** (pill rotulada na `JogadoresToolbar`) — filtra todos os
+  Sub-* (Sub-10 a Sub-21) de uma vez e mostra KPI grid por escalão (total +
+  distribuição por sexo com `SexBadge`).
+- **Sidebar sem tecto** — rendering progressivo (`SIDEBAR_CHUNK = 300`), ver
+  "Sidebar de JogadoresPage — sem tecto fixo".
 - **Erro expansível** no `FederadoOnlyDetail` com `<details>` — mostra
   mensagem COMPLETA (antes truncava a 80 chars e escondia parte crítica do
   fallback).
@@ -4982,7 +4954,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 - **Consistência de deduplicação** — hero cards e tabelas de detalhe devem usar a mesma fonte de dados deduplicada (e.g. `confrontosH2H`).
 - **Sem dead code** — nenhum código comentado, funções mortas ou variáveis não usadas nos outputs.
 - **Reescrita completa vs patches** — quando a implementação diverge do design acordado, preferir reescrita limpa de raiz.
-- **Cache de fetches** — `fetchCache.ts` exporta `cachedFetchJson()` (cache global entre páginas para URLs sem query string), `invalidateCache()`, `clearFetchCache()`.
+- **Cache de fetches** — `src/data/fetchCache.ts` exporta `cachedFetchJson()` (cache global entre páginas para URLs sem query string) e `invalidateCache()`.
 
 ### Dados
 
@@ -5004,7 +4976,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 ### Classificação de jogadores
 
 - Pills de tipo (Elite, Top Contender, etc.) aplicam-se apenas a rivais dentro de ±2 escalões de Manuel.
-- Filtro de idade: `processMemberHistory` filtra apenas Boys 9-13 (foco do tracker).
+- Filtro de idade (histórico): o `processMemberHistory` do loader antigo filtrava Boys 9-13; hoje é stub — a identidade e os filtros vêm do agregador canónico.
 - `MANUEL_BIRTH_YEAR = 2014` — usado para calcular o escalão do Manuel em cada torneio histórico.
 
 ---
@@ -5021,22 +4993,21 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 **Referências estáticas a dados fora de componentes React ficam stale** — `const manuel = D_BASE.find(x => x.isM)` fora de um componente referencia dados pré-merge. Fazer lookup dentro do componente via state.
 
-**FPGPage — torneio resolvido pela URL, não por displayList[selected]** — o render do detalhe usa `tShow = displayList.find(t.ccode/tcode === params.tkey)`, não `cur = displayList[selected]`. Razão: durante load async, `tournaments`/`jovensTournaments`/`clubesTournaments` chegam em batches e cada um re-calcula o `displayList` useMemo (sort por data desc). Sem tie-breaker estável entre items com a mesma data, `displayList[selected]` aponta a torneios diferentes entre re-renders → user vê "A carregar..." preso ou outro torneio. Adicionalmente, o `handleClick` da sidebar precisa de chamar `navigate()` directamente; sem isso, o guard anti-loop do `state→URL` skipa quando `params.tkey != novo cur.tcode/ccode`, deixando o user preso na URL antiga. **Source of truth = URL**. Não tentar fixar via useState/useEffect/selectedKey complexos — leva a regressões em cascata. Resolvido 2026-04-27.
+**FPGPage — torneio resolvido pela URL, não por displayList[selected]** — o detalhe usa `cur = displayList[selected]`, mas o `selected` é sincronizado a partir do URL (`urlTkey` → `displayList.findIndex(matchesT)`, num `useEffect`). Razão: durante load async, `tournaments`/`jovensTournaments`/`clubesTournaments` chegam em batches e cada um re-calcula o `displayList` useMemo (sort por data desc). Sem tie-breaker estável entre items com a mesma data, `displayList[selected]` aponta a torneios diferentes entre re-renders → user vê "A carregar..." preso ou outro torneio. Adicionalmente, o `handleClick` da sidebar precisa de chamar `navigate()` directamente; sem isso, o guard anti-loop do `state→URL` skipa quando `params.tkey != novo cur.tcode/ccode`, deixando o user preso na URL antiga. **Source of truth = URL**. Não tentar fixar via useState/useEffect/selectedKey complexos — leva a regressões em cascata. Resolvido 2026-04-27.
 
 ### Dados
 
 - **`TabelaGlobal.TG_D`** — array manual de rivais curado independentemente (o gémeo `KIDSPage.D` desapareceu com o sunset da KIDSPage em 2026-08-06). Continua a ter homónimos distintos de propósito ("Maxime Vervaet" Spain/B12-13 vs Belgium/B10-11) — não "corrigir" contra outras fontes sem curadoria manual.
-- **Epochs `/Date(ms)/` da FPG = meia-noite em hora de LISBOA** (corrigido no pipeline 2026-07-02) — no horário de verão (UTC+1) o epoch é 23:00 UTC do dia anterior. Formatar com getters locais numa máquina UTC (GitHub Actions) ou com `toISOString()` em qualquer máquina dá **−1 dia** para datas de fim-Março a fim-Outubro. Fix em `lib/helpers.js`: `getPlayedAt` prefere as strings (`hcp_dateStr`/`score_dateStr`) e os fallbacks de epoch passam por `lisbonCivilDay()` (Intl em `Europe/Lisbon` → meia-noite UTC); `fmtDate` usa getters UTC. ✅ Scripts em `scripts/` corrigidos 2026-07-07 — usam agora `lisbonCivilDayStr()` (variante string do `lisbonCivilDay`, exportada de `lib/helpers.js`) sobre os epochs `started_at`: `scrape-classif-node`, `scrape-drive-node`, `scrape-jovens-node`, `scrape-crj-madeira-historico`. Os `pairings-build` (`normIsoDate`), `scrape-federados-node` (`parseNetDate` p/ birthdates) e `scrape-fpg-admissions-draws-node` (`dotNetToIsoDate`) já tinham sido corrigidos antes. `enrich-players.js:197` é seguro (o `dateSort` já vem de `getPlayedAt`→`lisbonCivilDay` = meia-noite UTC do dia civil). Os `new Date().toISOString().slice(0,10)` restantes são marcadores "hoje"/"lastUpdated" (não epochs FPG) — inofensivos.
+- **Epochs `/Date(ms)/` da FPG = meia-noite em hora de LISBOA** (corrigido no pipeline 2026-07-02) — no horário de verão (UTC+1) o epoch é 23:00 UTC do dia anterior. Formatar com getters locais numa máquina UTC (GitHub Actions) ou com `toISOString()` em qualquer máquina dá **−1 dia** para datas de fim-Março a fim-Outubro. Fix em `lib/helpers.js`: `getPlayedAt` prefere as strings (`hcp_dateStr`/`score_dateStr`) e os fallbacks de epoch passam por `lisbonCivilDay()` (Intl em `Europe/Lisbon` → meia-noite UTC); `fmtDate` usa getters UTC. ✅ Scripts em `scripts/` corrigidos 2026-07-07 — usam agora `lisbonCivilDayStr()` (variante string do `lisbonCivilDay`, exportada de `lib/helpers.js`) sobre os epochs `started_at`: `scrape-classif-node`, `scrape-drive-node`, `scrape-jovens-node`, `scrape-crj-madeira-historico`. Os `pairings-build` (`normIsoDate`), `scrape-federados-node` (`parseNetDate` p/ birthdates) e `scrape-fpg-admissions-draws-node` (`dotNetToIsoDate`) já tinham sido corrigidos antes. `enrich-players.js` (~l.190, `dateSort`) é seguro (o `dateSort` já vem de `getPlayedAt`→`lisbonCivilDay` = meia-noite UTC do dia civil). Os `new Date().toISOString().slice(0,10)` restantes são marcadores "hoje"/"lastUpdated" (não epochs FPG) — inofensivos.
 - **scrape-drive-aquapor-v6 bug R1=R2** — v6 usava API que ignora `classifround`. v7 usa `classifAgregate.aspx/ScoreCard` — corrigido.
-- **ScorecardLeaderboard par vazio** — se `par[]` chegar vazio, `nh=0`, slice→[], soma=0. Fix: `const nhRef = par.length || (is9 ? 9 : 18)`.
-- **KIDSdataLoader filtro 18H bloqueava 9H** — El Prat 2023 (9H) não aparecia. Fix: usar `expectedHoles = par.length` dinâmico. El Prat também precisou de `USKIDS_PAR["15573-2151"]` manual.
-- **Irmãos com mesmo apelido** — falsos positivos no matching de rivais. Fix: first-name prefix penalty no `scoreMatch()`.
+- **ScorecardLeaderboard par vazio** — se `par[]` chegar vazio, `nh=0`, slice→[], soma=0. ⚠ Hoje o `ScorecardLeaderboard` usa `const nh = par.length` (o fix `nhRef` com fallback 9/18 já não está no código) — um `par[]` vazio volta a dar `nh=0`.
+- **(histórico, loader antigo)** KIDSdataLoader filtro 18H bloqueava 9H (El Prat 2023) e irmãos com o mesmo apelido davam falsos positivos no matching — hoje tudo isso vive no agregador canónico e no identity-matcher de `scripts/aggregator/`.
 - **lengths[] nos completos são jardas** — converter ×0.9144 para metros.
 - **strokes[] tem sempre 18 posições** — em torneios 9H, posições não jogadas = 0. Filtrar zeros.
-- **MANUEL_OVERRIDES / applyResultOverrides Marco Simone 2026 Boys 11** — Manuel foi marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (avisou depois → penalidade aplicada). O site mostra o score **oficial com penalidade** (R1=91 com hole 5=10, R2=79), não o score jogado (R1=86 com hole 5=5, R2=79). Detalhe completo no comentário do override em `src/pages/USKIDSPage.tsx::applyResultOverrides`.
+- **applyResultOverrides (Marco Simone 2026 Boys 11)** — Manuel foi marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (avisou depois → penalidade aplicada). O site mostra o score **oficial com penalidade** (R1=91 com hole 5=10, R2=79), não o score jogado (R1=86 com hole 5=5, R2=79). Detalhe completo no comentário do override em `src/pages/USKIDSPage.tsx::applyResultOverrides`.
 - **applyResultOverrides()** — em USKIDSPage.tsx, injeta resultados do Manuel quando marcado como WD/IE nos dados.
 - **Dados de 9 buracos** — torneios USKids local tour de 9 buracos geravam scores negativos impossíveis. Resolvido validando completude do scorecard (`grossStrokes >= holes`).
-- **Duplicados normCountry** — duplicados em `normCountry` (USKIDSPage) + `TW:"Taiwan"` duplicado no KIDSdataLoader causavam warnings Vite.
+- **Duplicados normCountry** (histórico, resolvido) — duplicados em `normCountry` (hoje em `utils/flagUtils.ts`) + `TW:"Taiwan"` duplicado no KIDSdataLoader causavam warnings Vite.
 
 ### Ambiente
 
@@ -5050,7 +5021,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 | Ficheiro | Papel |
 |----------|-------|
 | `kids/FieldRivaisDashboard.tsx` | Dashboard de field/rivais USKids (tabs Jogadores/Scores/Scorecards/Campo/Previsão/Scout) — renderizado em `/kids2/next-t`; a KIDSPage legacy foi removida 2026-08-06 |
-| `KIDSdataLoader.ts` | Loader central: 3 fases, todos os JSON internacionais (1144 linhas) |
+| `KIDSdataLoader.ts` | Loader que consome os 3 ficheiros canónicos do agregador (juniors / juniors-tournaments / tournament-catalog), ~580 linhas; `buildAutoRivals` para o kids2 |
 | `USKIDSPage.tsx` | Resultados USKids com links cruzados para Kids |
 | `FPGPage.tsx` | Dados da federação portuguesa |
 | `rivalData.ts` | Dados estáticos: pars/SI/metros de campos, FIELD_2025, FIELD_CARDS, TIER |
@@ -5058,7 +5029,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 | `tokens.css` | Design tokens (fonte única de verdade para cores) |
 | `colors.ts` | Espelho JS dos tokens |
 | `App.css` | Todas as classes de componentes |
-| `design-system.html` | Referência visual de todos os componentes |
+| `src/design-system.html` | Referência visual de todos os componentes |
 | `extraCourses.ts` | Campos manuais (override do pipeline) |
 | `players.json` | Base de dados de jogadores portugueses |
 | `OverlayExport.tsx` | Exportação de imagens (cores hardcoded — excepção documentada) |
@@ -5082,16 +5053,12 @@ npx vitest            # watch mode
 
 ### Ficheiro de testes: `src/pages/__tests__/KIDSdataLoader.test.ts`
 
-Testes das funções core do loader de rivais (contagem da altura em que a tabela foi feita; o número actual sai do `npm test`):
-
-| Grupo | Testes | Cobre |
-|-------|--------|-------|
-| `normName` | 5 | Diacríticos, whitespace, case, strings vazias |
-| `co` | 5 | Código ISO → nome, case-insensitive, variantes (UK=GB), null |
-| `shortenTournName` | 7 | WC, EC, Venice, Marco, Rome, El Prat, RWB |
-| `mergeInto` | 5 | Dedup por normName, forceTids override, memberId propagation |
-| `processUskidsCompleto` | 4 | 18H válido, 9H com tp correcto, zeros rejeitados, filtro ±1 escalão |
-| `processMemberHistory` | 7 | tp com scorecard completo, tp=null sem strokes, tp=null com zeros, Boys 9-13, nome "?", 9H El Prat |
+Activos (2026-09-15): `normName` (7 testes — diacríticos, whitespace, case, strings
+vazias) e `co` (10 — código ISO → nome, variantes UK=GB, null). Os grupos do
+loader antigo (`shortenTournName`, `mergeInto`, `processUskidsCompleto`,
+`processMemberHistory`, `processFpgJuniorTourns`, `processWjgc`,
+`processManuelOverrides`) estão em `describe.skip` desde a migração para o
+kids2 — as funções são stubs.
 
 ---
 
@@ -5118,8 +5085,8 @@ ficheiro. Solução: dividir em chunks de ~500 KB e fazer merge offline.
 - 1-4: 160 Nacionais "principais" (118 Jovens + 42 Clubes, ccode=000)
 - 5 (opcional): 46 extras — Drive Tour Finals 2018/19/21/22/23/24 + ccode=988 2025 Sub-10/12
 
-**Drive Tour Finals como Nacional de facto:** o `classifyTournament` da
-`JovensAnaliseView` já trata `Final/Grande Final Drive Tour` como tipo
+**Drive Tour Finals como Nacional de facto:** o `classifyTournament` de
+`jovensAnaliseData.ts` já trata `Final/Grande Final Drive Tour` como tipo
 "Nacional". Em anos onde o Campeonato Nacional individual de Sub-12+ não
 correu (2018, 2021-2024), a Final Drive Tour é o equivalente.
 
@@ -5143,13 +5110,14 @@ utilizado.
 
 **Consequência:** dados scrapados via ClassifLST não permitem ativar a regra
 "só portugueses podem ser campeões Nacional" (`isEligibleForTitle` em
-`jovensAnaliseData.ts`), pois essa regra usa `playersDB[fedCode].sex` para
-identificar nacionalidade.
+`jovensAnaliseData.ts`), pois essa regra usa o `fedCode` para ir buscar a
+nacionalidade ao `players-nationality.json`; sem fed_code o jogador é
+considerado elegível.
 
 **Workaround actual (hoje na tab `/titulos/nacional` da `TitulosPage`; a `NacionaisJovensPage` foi removida):** capturamos `player_gender` no
 scrape e populamos `player.sex` directamente no registo (não no playersDB
 sintético — abandonámos essa abordagem porque deixava `synth-XXXX` visíveis na
-UI). A `JovensAnaliseView.playerSex` foi modificada para preferir `p.sex`
+UI). O `playerSex` (em `jovensAnaliseData.ts`) prefere `p.sex`
 sobre o lookup `playersDB[fedCode]`.
 
 **Endpoints alternativos testados (2026-05-04, NÃO funcionaram):**
