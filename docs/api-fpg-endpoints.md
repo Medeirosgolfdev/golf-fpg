@@ -1161,3 +1161,33 @@ Duas diferenças de forma, normalizadas para o output ficar igual ao do login:
 
 Uma sessão aberta para um federado serve o WHS e os cartões de **qualquer**
 outro — o `fedno` só escolhe a página de entrada.
+
+### 15.2 Ordens de Mérito de clube — públicas, decifradas (2026-09-15)
+
+O mesmo portão (`page=ranklist` / `page=rankclassif`) dá as Ordens de Mérito de
+qualquer clube sem login. Corpos apanhados num browser e replicados em Node com
+o `Sessao`:
+
+```
+GET  scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T        (aquecer)
+GET  scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page=ranklist&ccode={cc}&year=&pagelang=PT
+POST scoring.datagolf.pt/pt/rankings.aspx/RankingsLST?jtStartIndex=0&jtPageSize=100&jtSorting=initial_date%20DESC
+     {club:"{cc}", ano:"0", jtStartIndex, jtPageSize, jtSorting:"initial_date DESC"}      ← ano "0" = todos
+GET  …/1PreparePage.aspx?user=fpguser&page=rankclassif&ccode={cc}&ranking={rk}&pagelang=PT
+POST scoring.datagolf.pt/pt/rankings_classif.aspx/RankingsClassifLST?Club={cc}&Rk_Code={rk}&jtStartIndex=0&jtPageSize=100
+     {Club, Rk_Code, jtStartIndex, jtPageSize}
+POST …/rankings_classif.aspx/RankingsPlayersLST?Club=&Rk_Code=&fed_code=              (detalhe por jogador)
+```
+
+- `RankingsLST` devolve `rk_code` (com espaços à direita), `rk_desc`,
+  `rk_stat` Open/Finished, datas `/Date()/`, `eclectic`. Medido: Santo da Serra
+  15, Palheiro 13, Miramar 79.
+- `RankingsClassifLST` devolve `rk_pos`, `federated_code`, nome, clube,
+  `points_total`/`points_real`, `numtourn`, `hcpexact_avg/ini/final`,
+  `hcpplay_*`. OMCGSSH26: 37 jogadores.
+- ⚠ **A OM Juniores do CGSS É publicada**: `OMCGSSJr24` e `OMCGSSJr25` têm
+  classificação (15 juniores em 2025, Mateus Penucho 1.º). A `OMCGSSJr26` está
+  criada mas ainda sem dados — daí o `build-om-cgss-junior.js` continuar a fazer
+  falta para 2026.
+- `page=drawsnext`/`drawlist` e `page=singlescores` também abrem sem login, mas
+  a tabela vem montada no servidor (sem PageMethod) e a 15 Set estava vazia.
