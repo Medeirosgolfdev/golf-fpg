@@ -42,29 +42,26 @@ export function AllRoundsScorecardLB({
   const startHole = options?.startHole ?? 1;
   const nameDecorator = options?.nameDecorator;
 
-  // SD calculation via computeSD (FPG style)
+  // SD de cada ronda: o oficial da FPG ou, sem ele, o calculado com o HCP da
+  // inscrição (ver computeSD).
   const fpgComputeSD: ComputeRoundSD = useMemo(() => {
-    return (player, capped, rs, _ref, gross) => {
-      const sdP: Player = {
-        ...player,
-        scores: capped,
-        par: rs.pars,
-        si: rs.si,
-        courseRating: rs.courseRating,
-        slope: rs.slope,
-        // ⚠ PCC é POR RONDA (por dia de jogo) — nunca cair no do jogador, que
-        // vem da R1 via normalizePlayer: aplicava o PCC do dia 1 aos dias
-        // seguintes ainda sem PCC publicado (visto no Amendoeira 2026 R2).
-        pcc: rs.pcc,
-        nholes: rs.pars?.length,
-        grossTotal: gross,
-      };
-      const { sd } = computeSD(sdP);
-      // Sem CR/Slope não há cálculo local — usar o SD oficial da ronda quando
-      // a fonte já o traz (ex.: recent-tournaments.json, vindo do WHS).
-      return sd ?? (typeof rs.sd === "number" ? rs.sd : null);
-    };
-  }, []);
+    return (player, capped, rs, _ref, gross) => computeSD({
+      ...player,
+      sd: undefined,
+      roundScores: [rs],
+      scores: capped,
+      par: rs.pars,
+      si: rs.si,
+      courseRating: rs.courseRating,
+      slope: rs.slope,
+      // ⚠ PCC é POR RONDA (por dia de jogo) — nunca cair no do jogador, que
+      // vem da R1 via normalizePlayer: aplicava o PCC do dia 1 aos dias
+      // seguintes ainda sem PCC publicado (visto no Amendoeira 2026 R2).
+      pcc: rs.pcc,
+      nholes: rs.pars?.length,
+      grossTotal: gross,
+    }, tournament.date).sd;
+  }, [tournament.date]);
 
   const fedBirthdates = useFedBirthdates();
   const resolveEscFn = useMemo(
@@ -487,7 +484,7 @@ export function AllRoundsScorecardLB({
                             {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                             {!hideSD && (
                               <td className="lb-sd" style={{ borderTop: bTop }}>
-                                {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
+                                {rd.sd != null ? <SDPill sd={rd.sd} hcp={row.hcp} /> : <span className="muted">–</span>}
                               </td>
                             )}
                             <td className="lb-eag" style={{ borderTop: bTop }}>{rd.eags || ""}</td>
@@ -531,7 +528,7 @@ export function AllRoundsScorecardLB({
                       {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                       {!hideSD && (
                         <td className="lb-sd">
-                          {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
+                          {rd.sd != null ? <SDPill sd={rd.sd} hcp={row.hcp} /> : <span className="muted">–</span>}
                         </td>
                       )}
                       <td className="lb-eag">{rd.eags || ""}</td>

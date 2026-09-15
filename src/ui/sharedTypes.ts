@@ -15,8 +15,8 @@ export interface BaseRoundScore {
   meters: number[];
   courseRating?: number;
   slope?: number;
-  /** SD oficial da ronda (fonte WHS). Usado como fallback quando não há
-   *  CR/Slope para o cálculo local — ex.: recent-tournaments.json. */
+  /** SD OFICIAL da FPG nesta volta — o `sgd` do WHS do jogador, escrito pelo
+   *  scripts/backfill-sd.js. É o único SD que o site mostra: nunca se calcula. */
   sd?: number | null;
   /** PCC oficial da FPG nesta volta (campo `cba` do ScoreCard; −1..+3).
    *  Entra no SD: (113/slope)×(AGS − CR − PCC). Ausente = 0. */
@@ -38,6 +38,8 @@ export interface BasePlayer {
   slope?: number;
   /** PCC oficial da FPG (ver BaseRoundScore.pcc). */
   pcc?: number;
+  /** SD oficial da volta nos jogadores em formato flat (ver BaseRoundScore.sd). */
+  sd?: number | null;
   teeName?: string;
   nholes?: number;
   /** Buraco de saída (1 ou 10 em saídas a dois tees). */

@@ -207,8 +207,6 @@ interface RFEGDetail {
       holeScores?: Record<string, number[]>; // round → strokes[18]
       startHole?: number | null;             // saída R1 (1 ou 10)
       region?: string | null;
-      sd?: Array<number | null>;
-      bestSd?: number | null;
     }>;
   }>;
 }
@@ -2085,7 +2083,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
             <IntlTournView
               tournament={fpgTournament!}
               // mitarjeta traz CR+Slope → mostrar a coluna SD (WHS) no scorecard
-              scOptions={{ ...lgsScorecardOptions(), hideSD: !data.mitarjetaTorneo }}
+              scOptions={{ ...lgsScorecardOptions(), hideSD: true }}
               siLabel={entry.source === "livegolfscoring" ? "m" : "SI"}
               // Para Espanha: ESC visível (Sub-N pill), HCP visível, CLUBE escondido
               accShowCols={{ esc: true, fed: false, tee: false, club: false, hcp: true, age: true, birthYear: false }}
@@ -3199,10 +3197,6 @@ async function rfegLoadDivisions(
       return Array.isArray(hor) && hor.some((r) => (r.groups || []).some((g) => (g.players || []).length));
     })();
   const hasDrawSection = hasNcDraw || hasMitarjetaDraw || hasLgsDraw;
-  // CR+Slope reais → mostrar a coluna SD (WHS) no scorecard. Antes só o mitarjeta
-  // a mostrava; o livegolfscoring agora também traz CR/Slope (re-scrape), por isso
-  // basta o campo ter courseRating+slope (qualquer fonte).
-  const hasRating = !!results?.players?.some((p) => p.courseRating != null && p.slope != null);
 
   // Draws POR RONDA → abas "Draw R{n}" intercaladas com os resultados na barra
   // principal (Inscrições · Draw R1 · R1 · Draw R2 · R2 · Draw R3 · Resumo · …),
@@ -3232,8 +3226,8 @@ async function rfegLoadDivisions(
     // Draw por ronda intercalado (ver roundDraws acima) — sem aba "Draw" agregada.
     roundDraws: roundDraws.length ? roundDraws : undefined,
     links: links.length ? links : undefined,
-    // SD (WHS) visível quando o campo tem CR+Slope reais (mitarjeta OU livegolfscoring).
-    scOptions: { ...lgsScorecardOptions(), hideSD: !(data.mitarjetaTorneo || hasRating) },
+    // Sem SD: a RFEG não publica o SD dos jogadores e o site só mostra SD oficiais.
+    scOptions: { ...lgsScorecardOptions(), hideSD: true },
   };
 
   // NextCaddy junta rapazes e raparigas no MESMO tour (o leaderboard vem em

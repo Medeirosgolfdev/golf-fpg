@@ -84,7 +84,6 @@ export function ScorecardLB({
 }) {
   const hideHCP_ = options?.hideHCP ?? false;
   const hideSD_ = options?.hideSD ?? false;
-  const hideRawSDTip_ = options?.hideRawSDTip ?? false;
   const hideEsc = options?.hideEsc ?? false;
   const hideFed = options?.hideFed ?? false;
   const hideTee = options?.hideTee ?? false;
@@ -177,17 +176,11 @@ export function ScorecardLB({
   }
   const teeCrSlopes = Array.from(teeCrSlopeMap.entries());
 
-  // SD desta ronda: o CR/Slope/SI podem viver na ronda (ex: GolfBox — ebtc2/egtc/
-  // elg/avtrophy — trazem-nos na divisão → roundScores[]) e não no topo do jogador.
-  // Sem CR/Slope o computeSD devolve "–" (mesmo com a metaLine a mostrar CR·Slope);
-  // sem SI cai no ramo raw ("≈") em vez do AGS ("~") quando há HCP. Overlay dos
-  // campos da 1ª ronda (a mostrada) → SD idêntico ao AllRoundsScorecardLB/AccumulatedLB.
+  // SD desta volta: o oficial da FPG ou, sem ele, o calculado com o HCP da
+  // inscrição (ver computeSD). O CR/Slope/SI podem viver na ronda (GolfBox —
+  // ebtc2/egtc/elg/avtrophy — trazem-nos em roundScores[]) e não no jogador.
   const sdOf = (p: Player): SDResult => {
     const rs0 = p.roundScores?.[0];
-    // Fonte sem CR/Slope mas com o SD oficial na ronda (ex: recent-tournaments.json,
-    // reconstruído das voltas WHS) → usar esse valor em vez de "–".
-    if (rs0 && typeof rs0.sd === "number" && (p.courseRating ?? rs0.courseRating) == null)
-      return { sd: rs0.sd, source: "fpg" };
     if (rs0 && (p.courseRating == null || p.slope == null || !p.si?.length)) {
       return computeSD({
         ...p,
@@ -197,9 +190,9 @@ export function ScorecardLB({
         slope: p.slope ?? rs0.slope,
         pcc: p.pcc ?? rs0.pcc,
         nholes: p.nholes ?? rs0.pars?.length,
-      });
+      }, tournament.date);
     }
-    return computeSD(p);
+    return computeSD(p, tournament.date);
   };
 
   const nonWD = rawPlayers.filter((p) => !p._wd);
@@ -380,7 +373,7 @@ export function ScorecardLB({
     const posDisplay =
       isWDPlayer ? "WD" : sortKey === "pos" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
     const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
-    const { sd, source } = sdOf(p);
+    const { sd } = sdOf(p);
     const rowManuel = isManuel(p);
     // Conterrâneo (FFG, etc.) — adaptador de página marca via _isPortuguese.
     const rowPortuguese = !rowManuel && !!(p as any)._isPortuguese;
@@ -631,7 +624,7 @@ export function ScorecardLB({
           {!hideSD_ && (
             <td className="lb-sd">
               {sd != null ? (
-                <SDPill sd={sd} source={source} hcp={p.hcpExact ?? null} hideRawTip={hideRawSDTip_} />
+                <SDPill sd={sd} hcp={p.hcpExact ?? null} />
               ) : (
                 <span className="muted">–</span>
               )}

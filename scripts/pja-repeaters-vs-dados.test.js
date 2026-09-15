@@ -16,6 +16,7 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { calcScore } from "../src/utils/whsCalc";
 
 const REPO = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const json = (p) => JSON.parse(fs.readFileSync(path.join(REPO, p), "utf8"));
@@ -76,7 +77,7 @@ describe("PJA Torre — o painel na véspera da prova", () => {
       if (!x.forecast || x.form?.avgSD8 == null) continue;
       const rat = masterRatings.get(`${(x.teeNow || "").toLowerCase()}|${x.sex}`);
       if (!rat) continue;
-      const bomDia = Math.round(rat.cr + (x.form.avgSD8 * rat.slope) / 113) * 2;
+      const bomDia = Math.round(calcScore(x.form.avgSD8, rat.cr, rat.slope)) * 2;
       expect(x.forecast.total, `${x.name}: previsão abaixo do bom dia dele`).toBeGreaterThanOrEqual(bomDia);
     }
   });

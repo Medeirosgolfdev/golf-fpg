@@ -19,7 +19,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { FpgDraw } from "./nacional2026Loader";
 import { normalizePlayer } from "../utils/playerUtils";
-import { calcAGS, expectedSD9 } from "../utils/whsCalc";
+import { ndbCapsForRound, roundDifferential } from "../utils/whsCalc";
 import { escalaoAtDate } from "../utils/format";
 import { isManuel } from "../constants/manuel";
 
@@ -343,21 +343,6 @@ export interface FilledScores {
   hasInferred: boolean;
 }
 
-/** Cap Net Double Bogey por buraco = par + 2 + pancadas de handicap recebidas.
- *  Distribui as pancadas pelo SI (handicaps mais baixos primeiro). */
-function ndbCaps(
-  parArr: number[], si: number[], cr: number, slope: number, hcp: number, nh: number,
-): number[] | null {
-  if (parArr.length < nh || si.length < nh) return null;
-  const parT = parArr.slice(0, nh).reduce((a, b) => a + b, 0);
-  const ch = Math.round(hcp * (slope / 113) + (cr - parT));
-  const order = Array.from({ length: nh }, (_, i) => i).sort((a, b) => si[a] - si[b]);
-  const strokes = new Array(nh).fill(0);
-  let rem = Math.max(0, ch);
-  while (rem > 0) { for (const idx of order) { if (rem <= 0) break; strokes[idx]++; rem--; } }
-  return parArr.slice(0, nh).map((pp, i) => pp + 2 + strokes[i]);
-}
-
 /** Preenche buracos vazios (score 0) de um cartão devolvido mas incompleto.
  *
  *  Em torneios sociais, um buraco vazio significa que o jogador não terminou
@@ -400,7 +385,7 @@ export function fillBlankHoles(p: Player): FilledScores {
   if (remaining <= 0) return { scores, inferred, hasInferred: false };
 
   const caps = (cr != null && slope != null && hcp != null)
-    ? ndbCaps(parArr, si, cr, slope, hcp, nh) : null;
+    ? ndbCapsForRound(parArr, si, cr, slope, hcp, nh) : null;
 
   // Caso comum — um único buraco vazio: o valor é exacto (gross − jogados).
   if (blanks.length === 1) {
@@ -439,58 +424,51 @@ export function fillBlankHoles(p: Player): FilledScores {
   return { scores, inferred, hasInferred: true };
 }
 
-export function computeSD(p: Player): SDResult {
-  const scores = fillBlankHoles(p).scores;
-  const parArr = p.par || [];
-  const si = p.si || [];
-  const nh = p.nholes || scores.length || (parArr.length > 0 ? parArr.length : 18);
-  const is9 = nh <= 9;
-  const cr = p.courseRating;
-  const slope = p.slope;
-  const hcp = p.hcpExact;
-  const gross = numGross(p);
-  // PCC oficial da FPG (−1..+3): SD = (113/slope)×(AGS − CR − PCC). Sem ele
-  // a tabela divergia do SD oficial exactamente por (113/slope)×PCC — caso
-  // Amendoeira 2026 (PCC −1): tabela 6.3 vs oficial 7.3.
-  const pcc = typeof p.pcc === "number" ? p.pcc : 0;
-  if (!cr || !slope || gross == null || isNaN(gross)) return { sd: null, source: null };
-  // ⚠ Sentinelas de "sem cartão": a FPG põe 998 (ND/NR — não devolveu) e 999
-  // (NS/WD) no lugar do gross, e o numGross() converte um grossTotal null no
-  // mesmo 999. Sem esta guarda o cartão a zeros era "reparado" pelo Net Double
-  // Bogey e saía um SD absurdo (−58.8 no 8º Torneio CGSS OM NOS 2026) que,
-  // sendo ≤ HCP, pintava o badge de VERDE: 9 desistências apareciam como as
-  // melhores voltas do dia. Mesma convenção do ranking Drive (gross ≥ 900 =
-  // sem cartão, não pontua).
-  if (gross >= 900) return { sd: null, source: null };
-  // ⚠ Volta A DECORRER: cartão hole-by-hole com buracos por jogar (a zero ou
-  // array curto) e gross igual à soma dos jogados → um SD sobre 5 buracos não
-  // significa nada (dava −22.2 — caso Alexander Eikner, EJO 2026 R1). Se o
-  // gross é MAIOR que a soma, o cartão é que está truncado na fonte (volta
-  // completa) e o SD mantém-se — mesma convenção do isFullRound
-  // (PastEditionsTable). Sem cartão nenhum (0 buracos visíveis) também se
-  // mantém: o gross oficial de uma volta fechada continua a valer.
-  const playedHoles = scores.filter((v) => v > 0).length;
-  const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
-  if (playedHoles > 0 && playedHoles < nh && gross <= playedSum) return { sd: null, source: null };
-  // ⚠ O score differential WHS PODE ser negativo (volta abaixo do Course Rating).
-  // Antes havia `Math.max(0, …)` que achatava tudo o que fosse < CR a 0.0 — um
-  // gross −5 vs CR e um gross =CR davam ambos "0.0", indistinguíveis. Removido.
-  if (hcp != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
-    const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nh);
-    const raw = (113 / slope) * (ags - cr - pcc);
-    const sd = is9 ? raw + expectedSD9(hcp) : raw;
-    return { sd: Math.round(sd * 10) / 10, source: "ags" };
-  }
-  if (!is9) {
-    const sd = Math.round((113 / slope) * (gross - cr - pcc) * 10) / 10;
-    return { sd, source: "raw" };
-  }
-  if (hcp != null) {
-    const raw = (113 / slope) * (gross - cr - pcc);
-    const sd = Math.round((raw + expectedSD9(hcp)) * 10) / 10;
-    return { sd, source: "raw" };
-  }
-  return { sd: null, source: null };
+/** O que o computeSD lê de um jogador (ou de uma volta isolada dele). */
+export interface SDPlayer {
+  grossTotal?: number | string | null;
+  sd?: number | null;
+  roundScores?: ReadonlyArray<object>;
+  scores?: number[];
+  par?: number[];
+  si?: number[];
+  courseRating?: number | null;
+  slope?: number | null;
+  hcpExact?: number | null;
+  pcc?: number | null;
+  nholes?: number | null;
+}
+
+/** SD de uma volta de torneio (decisão 2026-09-15):
+ *  1. o OFICIAL da FPG — o `sgd` do WHS do jogador, gravado na volta pelo
+ *     scripts/backfill-sd.js;
+ *  2. sem ele, o calculado pela fórmula WHS (utils/whsCalc → roundDifferential)
+ *     com o HCP da inscrição (`hcpExact`) — em 18 buracos bate com o oficial em
+ *     99,4% das voltas, em 9 buracos em 85–91%.
+ *  `date` (ISO) escolhe o método das voltas de 9 buracos anteriores a 2024.
+ *  ⚠ O SD pode ser negativo (volta abaixo do Course Rating) — não achatar a 0. */
+export function computeSD(p: SDPlayer, date?: string | null): SDResult {
+  const none: SDResult = { sd: null, source: null };
+  const asPlayer = p as unknown as Player;
+  const gross = numGross(asPlayer);
+  if (gross >= 900) return none;
+  if (typeof p.sd === "number") return { sd: p.sd, source: "fpg" };
+  // Com várias voltas o jogador é o acumulado, que não tem SD.
+  if ((p.roundScores?.length ?? 0) > 1) return none;
+  const rs = (p.roundScores?.length === 1 ? p.roundScores[0] : null) as { sd?: unknown } | null;
+  if (rs && typeof rs.sd === "number") return { sd: rs.sd, source: "fpg" };
+  return roundDifferential({
+    scores: fillBlankHoles(asPlayer).scores,
+    par: p.par || [],
+    si: p.si || [],
+    cr: p.courseRating,
+    slope: p.slope,
+    hi: p.hcpExact,
+    pcc: typeof p.pcc === "number" ? p.pcc : 0,
+    gross,
+    nholes: p.nholes,
+    date: date ?? null,
+  });
 }
 
 export function filterPlayers(

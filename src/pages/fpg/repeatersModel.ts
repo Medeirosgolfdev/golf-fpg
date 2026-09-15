@@ -16,6 +16,7 @@
  */
 import type { Tournament, Player } from "../../data/fpgTypes";
 import { computeSD } from "../../data/fpgUtils";
+import { calcScore } from "../../utils/whsCalc";
 
 /** Uma volta jogada por um repetente numa edição anterior. */
 export interface RepeaterRound {
@@ -177,10 +178,12 @@ export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   return out;
 }
 
-/** SD de uma volta, reaproveitando o computeSD oficial (trata PCC e sentinelas). */
+/** SD de uma volta: o oficial da FPG ou, sem ele, o calculado (ver computeSD). */
 function roundSD(p: Player, r: NonNullable<Player["roundScores"]>[number]): number | null {
-  const asPlayer = {
+  return computeSD({
     ...p,
+    sd: undefined,
+    roundScores: [r],
     scores: r.scores || [],
     par: r.pars || p.par,
     si: r.si || p.si,
@@ -188,9 +191,8 @@ function roundSD(p: Player, r: NonNullable<Player["roundScores"]>[number]): numb
     grossTotal: r.gross ?? null,
     courseRating: r.courseRating ?? p.courseRating,
     slope: r.slope ?? p.slope,
-    pcc: (r as { pcc?: number }).pcc ?? (p as { pcc?: number }).pcc,
-  } as unknown as Player;
-  return computeSD(asPlayer).sd;
+    pcc: r.pcc ?? p.pcc,
+  }).sd;
 }
 
 /**
@@ -425,7 +427,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
         const oscila = sdBom != null && sdNormal != null ? Math.abs(sdNormal - sdBom) : null;
         const spread = Math.max(SPREAD_MIN,
           oscila ?? (sds.length >= 2 ? (Math.max(...sds) - Math.min(...sds)) / 2 : SD_MEDIA_ACIMA_DO_INDICE));
-        const toGross = (sd: number) => rat.cr + (sd * rat.slope) / 113;
+        const toGross = (sd: number) => calcScore(sd, rat.cr, rat.slope);
         const perRound = Math.round(toGross(sdEsp));
         forecast = {
           perRound,

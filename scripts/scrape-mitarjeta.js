@@ -11,9 +11,8 @@
  *   - Cartão do campo: Par, Hándicap (SI) e METROS por buraco
  *   - Valor del campo (Course Rating) + Slope
  *
- * Com CR + Slope + gross por ronda, calcula o SCORE DIFFERENTIAL (SD) WHS de
- * cada jogador em cada ronda:  SD = (113 / Slope) × (Gross − CR − PCC).
- * (PCC não é publicado pelo mitarjeta → assumido 0; anotado em `sdAssumesPcc0`.)
+ * Não calcula SD: a RFEG não publica o SD dos jogadores e o site só mostra
+ * SD oficiais (decisão 2026-09-15).
  *
  * USO (PowerShell, na raiz C:\golf-fpg):
  *   node scripts/scrape-mitarjeta.js --cee2026                 # os 6 Campeonatos de España 2026
@@ -273,13 +272,6 @@ async function fetchHbh(torneo, round) {
   } catch (e) { return {}; }
 }
 
-function round1(x) { return Math.round(x * 10) / 10; }
-/** SD WHS = (113/slope) × (gross − CR − PCC). PCC=0. null se faltar CR/Slope/gross. */
-function scoreDifferential(gross, cr, slope) {
-  if (gross == null || gross <= 0 || cr == null || !slope) return null;
-  return round1((113 / slope) * (gross - cr));
-}
-
 function deriveSexo(name) {
   if (/Femenino/i.test(name || "")) return "F";
   if (/Masculino/i.test(name || "")) return "M";
@@ -315,16 +307,15 @@ async function scrapeTorneo(torneo) {
     if (!Number.isNaN(sh)) for (const pn of grp.players) startHoleByName[normName(pn)] = sh;
   }
 
-  // SD + scorecard por jogador/ronda
+  // Scorecard por jogador/ronda
   const players = p.leaderboard.map((pl) => {
     const rounds = pl.rounds
       .map((g, i) => {
         const rn = i + 1;
         const scores = (pl.fichaId && hbhByRound[rn] && hbhByRound[rn][pl.fichaId]) || null;
-        return { round: rn, gross: g, sd: scoreDifferential(g, p.courseRating, p.slope), scores };
+        return { round: rn, gross: g, scores };
       })
       .filter((x) => x.gross != null);
-    const validSd = rounds.map((x) => x.sd).filter((x) => x != null);
     // startHole: tee times (fiável) com fallback ao "*" (= buraco 10).
     const startHole = startHoleByName[normName(pl.name)] ?? (pl.hadStar ? 10 : null);
     return {
@@ -332,7 +323,6 @@ async function scrapeTorneo(torneo) {
       name: pl.name, region: pl.region, startHole,
       toPar: pl.toPar, thru: pl.thru, today: pl.today,
       rounds, total: pl.total,
-      bestSd: validSd.length ? Math.min(...validSd) : null,
     };
   });
 
@@ -343,8 +333,6 @@ async function scrapeTorneo(torneo) {
     name: p.name,
     scrapedAt: new Date().toISOString(),
     declaredRounds,
-    sdFormula: "SD = (113 / Slope) × (Gross − CR − PCC)",
-    sdAssumesPcc0: true,
     course: {
       name: p.course,
       courseRating: p.courseRating,
@@ -421,12 +409,10 @@ function injectIntoRfeg(rich, pretty) {
         club: a ? a.club : null,
         catEdad: a ? a.catEdad : null,
         sexo: a ? a.sexo : null,
-        // scorecard + SD:
+        // scorecard:
         holeScores,
         startHole: p.startHole, // saída R1 (1 ou 10) — para colorir a célula
         region: p.region,
-        sd: p.rounds.map((r) => r.sd),
-        bestSd: p.bestSd,
       };
     }),
   };
@@ -480,7 +466,6 @@ async function main() {
       if (!noInject) injected = injectIntoRfeg(rich, pretty);
       ok++;
       const c = rich.course;
-      const withSd = rich.players.filter((p) => p.bestSd != null).length;
       const ttRounds = Array.isArray(rich.teeTimesAll) ? rich.teeTimesAll.length : (rich.teeTimes ? 1 : 0);
       const ttGroups = Array.isArray(rich.teeTimesAll)
         ? rich.teeTimesAll.reduce((a, r) => a + (r.groups ? r.groups.length : 0), 0)
@@ -491,7 +476,7 @@ async function main() {
       console.log(
         "     campo=" + (c.name || "?") + " | par=" + c.parTotal + " | metros=" + c.metersTotal +
         " | CR=" + c.courseRating + " | Slope=" + c.slope +
-        " | jogadores=" + rich.players.length + " | c/SD=" + withSd +
+        " | jogadores=" + rich.players.length +
         " | tee-times=" + ttRounds + " ronda(s)/" + ttGroups + " grupos" +
         (injected ? " | injectado em rfegolf-resultats/" + rich.compId + ".json" : "")
       );

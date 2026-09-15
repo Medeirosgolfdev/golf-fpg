@@ -18,10 +18,11 @@ name: Atualizar Dados Golf FPG (cookies-based)
 # Os outros (drive, jovens, admissions-draws, classif) não têm esse constraint
 # porque scrapam dados públicos dos torneios, não handicap index.
 #
-# Requer GitHub Secret:
+# Desde 2026-09-15 o fpg-scrape-node.js vai PRIMEIRO pelo caminho público (a
+# ficha do federado, gate page=fedhcp — mesmos dados, sem login). O Secret fica
+# de fallback:
 #   FPG_COOKIES — cookie header completo capturado do Firefox/Chrome 90
 #                 formato: "_ga=...; ASP.NET_SessionId=...; .AspNet.ApplicationCookie=...; ..."
-#                 Refrescar ~1×/semana
 
 on:
   workflow_dispatch:
@@ -55,7 +56,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -106,6 +107,21 @@ jobs:
           set -e
           if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
           if [ "$EXIT" = "1" ]; then echo "⚠  backfill-pcc falhou — segue sem preencher."; fi
+          exit 0
+
+      # SD OFICIAL em cada volta dos torneios, lido do WHS acabado de descarregar
+      # (os nossos) e do data-archive/whs-sd.json — o backfill-sd.js escreve-o em
+      # roundScores[].sd. Sem ele o site calcula o SD com o HCP da inscrição.
+      # Não se pede nada à FPG aqui. Exit 2 = nada a preencher (não é erro).
+      - name: SD oficial das voltas dos torneios
+        id: sd
+        run: |
+          set +e
+          node scripts/backfill-sd.js --apply
+          EXIT=$?
+          set -e
+          if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
+          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-sd falhou — segue sem preencher."; fi
           exit 0
 
       # Reconstruir os índices que dependem das rondas dos jogadores:
@@ -167,7 +183,7 @@ jobs:
       - name: Commit e push (se houve novidades)
         # Também committa quando NÃO houve scorecards novos mas o backfill-pcc
         # preencheu PCC em falta — senão o PCC ficava no runner e perdia-se.
-        if: steps.scrape.outputs.exit_code == '0' || steps.pcc.outputs.filled == '1'
+        if: steps.scrape.outputs.exit_code == '0' || steps.pcc.outputs.filled == '1' || steps.sd.outputs.filled == '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -212,6 +228,7 @@ jobs:
                   public/data/pull-torneios*.json \
                   public/data/drive-data-*.json \
                   public/data/aquapor-data-*.json \
+                  public/data/jovens_*.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

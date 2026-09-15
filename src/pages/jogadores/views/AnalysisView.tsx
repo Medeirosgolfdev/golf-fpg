@@ -15,6 +15,7 @@ import EmptyState from "../../../ui/EmptyState";
 import { RoundSimulator } from "../../../ui/RoundSimulator";
 import { Last20Table } from "../../../ui/Last20Table";
 import { CrossAnalysis } from "../../../ui/CrossAnalysis";
+import { historicExceptionalAdj, topRanks } from "../../../utils/whsCalc";
 
 export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -38,9 +39,10 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const kpiGross5 = meanArr(last5.map(r => r.gross));
   const kpiGross20 = meanArr(last20.map(r => r.gross));
 
-  // whs20 = last 20 rounds WITH a valid SD (real WHS window — treino rounds count too)
+  // whs20 = last 20 rounds WITH a valid SD (real WHS window — treino rounds count too).
+  // ⚠ parseFloat e não Number: o data.json tem voltas com SD "" e Number("") é 0.
   const whs20 = useMemo(() =>
-    allRoundsDesc.filter(r => numSafe(r.sd) != null).slice(0, 20),
+    allRoundsDesc.filter(r => Number.isFinite(parseFloat(String(r.sd ?? "").replace(",", ".")))).slice(0, 20),
     [allRoundsDesc]
   );
 
@@ -63,13 +65,13 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
     return nonTraining.slice(0, showUntil);
   }, [allRoundsDesc, whs20]);
 
-  // Best 8 SD in WHS window — Map<scoreId, rank (1-8)>
+  // As melhores da janela que contam para o HI — Map<scoreId, posição>. Quantas
+  // contam segue a tabela 5.2a e entram os resultados extraordinários que a FPG
+  // já aplicou (mesmo cálculo do simulador; valida com o HI oficial).
   const best8 = useMemo(() => {
-    const indexed = whs20.map(r => ({ id: r.scoreId, sd: numSafe(r.sd)! }))
-      .sort((a, b) => a.sd - b.sd);
-    const map = new Map<string, number>();
-    indexed.slice(0, 8).forEach((x, rank) => map.set(x.id, rank + 1));
-    return map;
+    const base = whs20.map(r => ({ eid: r.scoreId, sd: numSafe(r.sd)!, hi: numSafe(r.hi) }));
+    const adj = historicExceptionalAdj(base);
+    return topRanks(base.map((b, i) => ({ eid: b.eid, sd: b.sd, adj: adj[i] })));
   }, [whs20]);
 
   // Period filter for analysis — only 18-hole rounds with valid gross (consistent with KPI cards)

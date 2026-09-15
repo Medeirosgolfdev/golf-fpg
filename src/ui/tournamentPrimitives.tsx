@@ -69,38 +69,13 @@ export function TeeDot({ teeName }: { teeName?: string }) {
 }
 
 /* ─── SD pill inline (sem <td>) ─── */
-export function SDPill({
-  sd, source, hcp, hideRawTip,
-}: {
-  sd: number | null;
-  source?: string | null;
-  hcp?: number | null;
-  /** Quando true, esconde o símbolo "≈" para source="raw" (útil em USKids onde
-   *  todos os SDs raw são equivalentes — o símbolo passa a redundante). */
-  hideRawTip?: boolean;
-}) {
+export function SDPill({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
+  // O SD oficial da FPG ou, sem ele, o calculado com o HCP da inscrição (computeSD).
   if (sd == null) {
-    return (
-      <span
-        className="muted"
-        title="SD não calculável — falta Course Rating e/ou Slope deste tee. Adicionar os campos cr/slope no TEES_LOOKUP (src/ui/uskidsData.ts) para o torneio/escalão."
-      >–</span>
-    );
+    return <span className="muted" title="Sem SD para esta volta">–</span>;
   }
   const cls = sdClassByHcp(sd, hcp ?? null);
-  const tip = source === "fpg" ? "" : source === "ags" ? "~" : "≈";
-  const showTip = tip && !(hideRawTip && source !== "ags" && source !== "fpg");
-  const title = source === "ags"
-    ? `SD exacto (AGS — usa HCP ${hcp ?? "?"})`
-    : source === "fpg"
-      ? "SD oficial FPG"
-      : "SD aproximado (sem HCP — Net Double Bogey não aplicado)";
-  return (
-    <span className={"p p-sm p-" + cls} title={title}>
-      {sd.toFixed(1)}
-      {showTip && <span className="fs-10 op-6"> {tip}</span>}
-    </span>
-  );
+  return <span className={"p p-sm p-" + cls} title="Score Differential">{sd.toFixed(1)}</span>;
 }
 
 /* ─── Nome do jogador ───────────────────────────────────────── */

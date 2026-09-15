@@ -11,6 +11,7 @@
  */
 import type { PlayerPageData } from "../../data/playerDataLoader";
 import type { Tee } from "../../data/types";
+import { strokesOnHole } from "../../utils/whsCalc";
 
 // ── 1. Perfil do Manuel por (par, distancia) ─────────────────────────────
 export interface HoleProfile {
@@ -159,7 +160,8 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     const si = h.si;
     const expVsPar = profile.expectedVsPar(par, dist);
     const expStrokes = (par != null && expVsPar != null) ? par + expVsPar : null;
-    const getsStroke = si != null && chRounded > 0 && si <= chRounded;
+    // Pancada de handicap neste buraco — conta da biblioteca (dá a 2.ª com CH > 18)
+    const getsStroke = si != null && strokesOnHole(si, chRounded) > 0;
 
     let reach: "reg" | "stretch" | "out" = "reg";
     let remainingAfterDrive: number | null = null;

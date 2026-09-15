@@ -15,6 +15,7 @@
  */
 import React, { useState, useMemo, useRef, useCallback } from "react";
 import { MONTHS_PT } from "../utils/format";
+import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
 import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, defaultVis } from "./overlay/registry";
@@ -64,7 +65,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   );
   const manualTotal  = noHoleData ? parseInt(manualScore) || null : null;
   const manualPar    = data.is9h ? 36 : 72;
-  const manualSD     = manualTotal !== null && data.slope > 0 ? (113/data.slope)*(manualTotal - data.cr) : null;
+  const manualSD     = manualTotal !== null
+    ? scoreDifferential({ score: manualTotal, cr: data.cr, slope: data.slope, is9: data.is9h, hi: data.hi })?.sd ?? null
+    : null;
 
   const dd: DD = useMemo(() => ({
     player, event, round, date, position,

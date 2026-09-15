@@ -6,7 +6,7 @@
  * Renders via ScorecardLeaderboard (composition pattern).
  */
 import { useMemo } from "react";
-import { calcAGS, expectedSD9 } from "../utils/whsCalc";
+import { roundDifferential } from "../utils/whsCalc";
 import { fmtHcp, medal } from "../utils/format";
 import PlayerLink from "./PlayerLink";
 import FilterChip from "./FilterChip";
@@ -14,7 +14,7 @@ import { SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { RoundPill, ESC_STYLE } from "./PillBadge";
 import { getTeeHex } from "../utils/teeColors";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
-import type { Tournament, Player, SDLookup } from "./driveTypes";
+import type { Tournament, Player } from "./driveTypes";
 import { isDNS } from "./driveUtils";
 import {
   useAllRoundsData,
@@ -29,7 +29,6 @@ function DriveAllRoundsScorecardLB({
 }: {
   totalTournament: Tournament;
   playersDB: PlayersDB;
-  sdLookup: SDLookup;
 }) {
   const nRounds = totalTournament._totalRounds || 2;
 
@@ -48,31 +47,24 @@ function DriveAllRoundsScorecardLB({
     [totalTournament, nRounds],
   );
 
-  // Drive SD calculation via calcAGS + expectedSD9
+  // SD por ronda: o oficial da FPG (gravado na ronda pelo backfill-sd.js) ou,
+  // sem ele, o calculado com o HCP da inscrição (utils/whsCalc).
   const driveComputeSD: ComputeRoundSD = useMemo(() => {
-    return (player, capped, rs, ref, gross) => {
-      const cr = rs.courseRating ?? ref.cr;
-      const slope = rs.slope ?? ref.slope;
-      const rdNh = capped.length || (ref.pars.length || 18);
-      const rdIs9 = rdNh <= 9;
-      const hcp = player.hcpExact;
-      const rdPars = rs.pars?.length ? rs.pars : ref.pars;
-      const rdSi = rs.si?.length ? rs.si : ref.si;
-
-      // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
-      const pcc = rs.pcc ?? 0;
-      if (cr && slope && hcp != null && rdSi.length >= rdNh && capped.length >= rdNh && rdPars.length >= rdNh) {
-        const ags = calcAGS(capped, rdPars, rdSi, cr, slope, hcp, rdNh);
-        const rawSD = (113 / slope) * (ags - cr - pcc);
-        return Math.round((rdIs9 ? rawSD + expectedSD9(hcp) : rawSD) * 10) / 10;
-      } else if (cr && slope) {
-        const rawSD = (113 / slope) * (gross - cr - pcc);
-        if (rdIs9 && hcp != null) return Math.round((rawSD + expectedSD9(hcp)) * 10) / 10;
-        if (!rdIs9) return Math.round(rawSD * 10) / 10;
-      }
-      return null;
-    };
-  }, []);
+    return (player, capped, rs, ref, gross) =>
+      typeof rs.sd === "number" ? rs.sd : roundDifferential({
+        scores: capped,
+        par: rs.pars?.length ? rs.pars : ref.pars,
+        si: rs.si?.length ? rs.si : ref.si,
+        cr: rs.courseRating ?? ref.cr,
+        slope: rs.slope ?? ref.slope,
+        hi: player.hcpExact,
+        // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
+        pcc: rs.pcc ?? 0,
+        gross,
+        nholes: capped.length || (ref.pars.length || 18),
+        date: totalTournament.date,
+      }).sd;
+  }, [totalTournament.date]);
 
   // isDNS filter (stable reference)
   const dnsFilter = useMemo(() => (p: Player) => !isDNS(p), []);
@@ -155,7 +147,7 @@ function DriveAllRoundsScorecardLB({
             <>
               <td className="lb-sd">
                 {rd.sd != null ? (
-                  <SDPill sd={rd.sd} source={null} hcp={row.hcp} />
+                  <SDPill sd={rd.sd} hcp={row.hcp} />
                 ) : (
                   <span className="muted">–</span>
                 )}
@@ -201,7 +193,7 @@ function DriveAllRoundsScorecardLB({
           <>
             <td className="lb-sd">
               {row.rd.sd != null ? (
-                <SDPill sd={row.rd.sd} source={null} hcp={row.hcp} />
+                <SDPill sd={row.rd.sd} hcp={row.hcp} />
               ) : (
                 <span className="muted">–</span>
               )}

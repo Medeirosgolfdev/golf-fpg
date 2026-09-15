@@ -18,8 +18,6 @@ export interface DriveData {
   tournaments: Tournament[];
 }
 
-export type SDLookup = Record<string, number>;
-
 export type EscLookup = Map<string, string>; // fedCode -> normalized escalao ("Sub 12")
 
 export interface TStats {
@@ -27,7 +25,6 @@ export interface TStats {
   gross: number;
   toPar: number;
   sd18: number | null;
-  sdSource: "fpg" | "ags" | "raw" | null;
   nholes: number;
   birdies: number;
   pars: number;
@@ -59,7 +56,6 @@ interface TournResult {
   gross: number;
   toPar: number;
   sd: number | null;
-  sdSource: "fpg" | "ags" | "raw" | null;
   nholes: number;
   birdies: number;
   pars: number;

@@ -10,33 +10,26 @@
  * (Paredes) a 2013 m / Slope 123 (Porto Santo). Dar 25 pontos ao par nos dois
  * premiava quem calhou no campo fácil.
  *
- * ── Porque não usamos o SD oficial do WHS ──
- * Em voltas de 9 buracos o SD do WHS soma um termo esperado para os 9 não
- * jogados que DEPENDE DO HANDICAP do jogador. Nestes escalões o HCP vai de ~6
- * a 54, e esse termo passa a dominar: dois cartões iguais dariam SDs muito
- * diferentes só por causa do handicap.
+ * ── A métrica: o SD REAL de cada miúdo (decisão 2026-09-15) ──
+ * O Score Differential que a FPG atribuiu a cada volta — o do WHS dele, com o
+ * handicap dele, o AGS, o PCC e, em 9 buracos, o Expected SD. Vem gravado em
+ * cada volta dos ficheiros de torneios (`roundScores[].sd`) pelo
+ * scripts/backfill-sd.js. Sem ele, calcula-se pela biblioteca do site
+ * (src/utils/whsCalc.ts → roundDifferential) com o HCP da inscrição.
  *
- * ── A métrica ──
- *   SD = (113 / Slope) × (Gross − CR)          … 18 buracos
- *   SD = (113 / Slope) × (Gross − CR) × 2      … 9 buracos, posto na escala de 18
- *
- * Desconta o campo, o tee e o rating M/F do mesmo tee (o mesmo tee tem CR/Slope
- * diferentes para masculino e feminino). É independente do handicap, portanto
- * comparável entre regiões que nunca se cruzam — que é para isso que um course
- * rating serve.
- *
- * ⚠ Usa GROSS, não AGS: o Adjusted Gross Score precisa do course handicap para
- * aplicar o net double bogey, o que reintroduziria o HCP. Em troca, um buraco
- * catastrófico pesa a sério — daí o cap opcional por buraco (--cap-over-par).
+ * Até 15 Set 2026 usava-se um differential "de campo", sem handicap (9 buracos
+ * × 2), para dois cartões iguais darem o mesmo número. A Mariana preferiu o SD
+ * real que cada miúdo obteve — o que conta para o handicap dele.
  *
  * CLI:
  *   node scripts/build-sub12-ranking.js                 # ano corrente
  *   node scripts/build-sub12-ranking.js --year 2025
- *   node scripts/build-sub12-ranking.js --cap-over-par 5   # limita cada buraco a par+5
  */
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+// Contas: o MESMO ficheiro do site (src/utils/whsCalc.ts → roundDifferential)
+const whs = require("./lib/whs.cjs");
 
 const ROOT = path.join(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "public", "data");
@@ -76,9 +69,6 @@ const argOf = (flag, def) => {
   return i >= 0 && argv[i + 1] ? argv[i + 1] : def;
 };
 const YEAR = argOf("--year", String(new Date().getFullYear()));
-const CAP_OVER_PAR = argv.includes("--cap-over-par")
-  ? parseInt(argOf("--cap-over-par", "5"), 10)
-  : null;
 
 function readJsonSafe(p) {
   try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch { return null; }
@@ -166,20 +156,6 @@ function loadTournaments() {
   return [...byKey.values()];
 }
 
-/** Gross com cada buraco limitado a par+N (independente de handicap). */
-function cappedGross(rs, fallbackGross) {
-  if (CAP_OVER_PAR == null) return fallbackGross;
-  const scores = rs.scores || [], pars = rs.pars || [];
-  if (!scores.length || scores.length !== pars.length) return fallbackGross;
-  let g = 0, jogados = 0;
-  for (let i = 0; i < scores.length; i++) {
-    const s = scores[i], par = pars[i];
-    if (!s || !par) continue;
-    g += Math.min(s, par + CAP_OVER_PAR);
-    jogados++;
-  }
-  return jogados ? g : fallbackGross;
-}
 
 /* ── Agrupar os escalões do mesmo evento ─────────────────────────── */
 
@@ -533,14 +509,14 @@ function mergeRegionalEditions(tournaments) {
 
 /* ── main ────────────────────────────────────────────────────────── */
 function main() {
-  console.log(`\n🏅 RANKING SUB-12 ${YEAR}${CAP_OVER_PAR != null ? ` (cap par+${CAP_OVER_PAR})` : ""}\n`);
+  console.log(`\n🏅 RANKING SUB-12 ${YEAR}\n`);
 
   const { dob, sex, club } = buildPlayerIndex();
   const tournaments = loadTournaments();
   const ano = parseInt(YEAR, 10);
 
   const out = [];
-  let semRating = 0, voltasOk = 0;
+  let semRating = 0, voltasOk = 0, semSD = 0, nOficial = 0;
 
   for (const t of tournaments) {
     const players = [];
@@ -554,7 +530,7 @@ function main() {
       const rondas = [];
       const rsList = (p.roundScores || []).length
         ? p.roundScores
-        : [{ round: 1, gross: p.grossTotal, pars: p.par, scores: p.scores, courseRating: p.courseRating, slope: p.slope, teeName: p.teeName }];
+        : [{ round: 1, gross: p.grossTotal, pars: p.par, si: p.si, scores: p.scores, courseRating: p.courseRating, slope: p.slope, teeName: p.teeName, pcc: p.pcc, sd: p.sd }];
 
       for (const rs of rsList) {
         const cr = rs.courseRating ?? p.courseRating;
@@ -564,11 +540,17 @@ function main() {
         const nh = (rs.pars || []).filter((x) => x > 0).length || p.nholes || 18;
         if (!cr || !sl) { semRating++; continue; }
 
-        const gross = cappedGross(rs, grossRaw);
-        // Differential sem componente de handicap; 9 buracos → escala de 18.
-        let sd = (113 / sl) * (gross - cr);
-        if (nh <= 9) sd *= 2;
-        sd = Math.round(sd * 10) / 10;
+        const gross = grossRaw;
+        // SD do miúdo: o oficial da FPG (backfill-sd.js) ou, sem ele, o
+        // calculado com o HCP da inscrição.
+        const n = rs.round || 1;
+        const dRonda = t.date ? new Date(Date.parse(`${t.date}T12:00:00Z`) + (n - 1) * 864e5).toISOString().slice(0, 10) : null;
+        const sd = typeof rs.sd === "number" ? rs.sd : whs.roundDifferential({
+          scores: rs.scores, par: rs.pars, si: rs.si, cr, slope: sl,
+          hi: p.hcpExact, pcc: rs.pcc ?? 0, gross, nholes: nh, date: dRonda,
+        }).sd;
+        if (sd == null) { semSD++; continue; }
+        if (typeof rs.sd === "number") nOficial++;
 
         const parTotal = (rs.pars || []).reduce((a, b) => a + (b || 0), 0) || p.parTotal || null;
         // Formato "fpg-pull" (roundScores) para a vista de ranking poder
@@ -651,8 +633,7 @@ function main() {
     generated: new Date().toISOString(),
     year: YEAR,
     source: "build-sub12-ranking.js",
-    metric: "differential sem componente de HCP: (113/Slope)×(Gross−CR), ×2 em 9 buracos",
-    capOverPar: CAP_OVER_PAR,
+    metric: "SD real de cada volta: o oficial da FPG (WHS) ou, sem ficha, o calculado por src/utils/whsCalc.ts",
     tournaments: merged,
   });
 
@@ -663,6 +644,7 @@ function main() {
   console.log(`   ↳ cortadas: ${cortadasSerie} de séries excluídas (${[...SERIES_EXCLUIDAS].join(", ")}) · ${cortadasPoucos} com < ${MIN_JUNIORES_COLUNA} juniores`);
   console.log(`   ↳ ${Object.entries(porSerie).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(" · ")}`);
   console.log(`  Voltas com CR+Slope: ${voltasOk}${semRating ? ` (${semRating} saltadas por falta de rating)` : ""}`);
+  console.log(`  SD: ${nOficial} oficiais da FPG · ${voltasOk - nOficial} calculados com o HCP da inscrição${semSD ? ` · ${semSD} voltas sem SD` : ""}`);
   console.log(`  Miúdos: ${jogadores.size} (${com4} com ≥4 voltas)`);
   console.log(`\n  ✔ ${path.relative(ROOT, OUT_FILE)} (${(fs.statSync(OUT_FILE).size / 1024).toFixed(0)} KB)\n`);
 }

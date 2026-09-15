@@ -28,9 +28,20 @@ export function courseKeyName(name: string): string {
     .trim();
 }
 
+/** Chave que ignora a ordem das palavras e as repetições. As voltas da FPG e os
+ *  campos escrevem as combinações de percursos de maneiras diferentes: "Santo da
+ *  Serra - Desertas+Machico" (volta) é o campo "Santo da Serra - Machico-Desertas",
+ *  e "Santo da Serra - Serras" é "Serras-Serras". */
+export function courseMatchKey(name: string): string {
+  return [...new Set(courseKeyName(name).split(" ").filter(Boolean))].sort().join(" ");
+}
+
 function findCourse(simCourses: Course[], courseName: string): Course | null {
   const key = courseKeyName(courseName);
-  return simCourses.find((c) => courseKeyName(c.master.name) === key) ?? null;
+  const exact = simCourses.find((c) => courseKeyName(c.master.name) === key);
+  if (exact) return exact;
+  const mk = courseMatchKey(courseName);
+  return simCourses.find((c) => courseMatchKey(c.master.name) === mk) ?? null;
 }
 
 /**

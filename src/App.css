@@ -1815,6 +1815,80 @@ tr.cross-current { background: var(--bg-success); }
  color: var(--color-danger);
 }
 
+/* Scorecard do simulador em ecrãs de toque: caixas maiores; 16px evita o zoom do iOS */
+@media (max-width: 700px), (pointer: coarse) {
+  .sim-input {
+    min-width: 34px;
+    min-height: 34px;
+    font-size: var(--fs-16);
+  }
+  .sim-input-accent,
+  .sim-input-sm {
+    min-width: 30px;
+    min-height: 30px;
+  }
+}
+
+/* Simulador — score-alvo e impacto da volta do scorecard no HI */
+.sim-target {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+}
+
+.sim-target-title {
+  font-size: var(--fs-13);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sim-target-title .muted {
+  font-weight: 400;
+}
+
+.sim-target-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sim-target-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 12px;
+  min-width: 130px;
+  border-radius: var(--radius);
+  background: var(--bg-detail);
+}
+
+.sim-target-cell-good .sim-strip-num {
+  color: var(--color-good);
+}
+
+.sim-target-cell-bad .sim-strip-num {
+  color: var(--color-danger);
+}
+
+.sim-target-cell-warn .sim-strip-num {
+  color: var(--color-warn-dark);
+}
+
+.sim-target-note {
+  margin-top: 8px;
+  font-size: var(--fs-11);
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.sim-target-actions {
+  margin-top: 8px;
+}
+
 /* sim-info-box → .notice .notice-info (unified) */
 /* sim-info-warn → .notice-warn-text (unified) */
 

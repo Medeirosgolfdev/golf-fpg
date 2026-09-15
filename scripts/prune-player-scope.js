@@ -56,7 +56,9 @@ const COORTE_PERCURSO = [
   "39701", "45340", "42845", "40115", "35404", "36638", "37152", "42908", "35849",
 ];
 const MANUEL = "52884";
-const TAGS_FIXAS = ["PJA", "inscrito-nacional"];
+/* `simulador` = escolhidos à mão para o selector do /simulador (a família e
+ * amigos — adultos que as outras regras cortariam). Ver src/constants/simuladorPlayers.ts. */
+const TAGS_FIXAS = ["PJA", "inscrito-nacional", "simulador"];
 
 const args  = process.argv.slice(2);
 const APPLY = args.includes("--apply");

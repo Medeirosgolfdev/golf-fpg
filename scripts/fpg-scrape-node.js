@@ -2,10 +2,15 @@
 /**
  * fpg-scrape-node.js — Scraper Node puro para my.fpg.pt (breakthrough 2026-04-14)
  *
- * Descarrega WHS + scorecards de um ou mais federados usando os cookies
- * capturados do Chrome 90/Firefox. Zero Playwright, zero login — só fetch.
+ * Descarrega WHS + scorecards de um ou mais federados. Zero Playwright — só fetch.
  *
- * Fonte dos cookies (por ordem):
+ * ⚡ PÚBLICO PRIMEIRO (2026-09-15). O histórico WHS e os cartões são servidos
+ * sem login pela ficha pública do federado (gate `page=fedhcp`, ver
+ * `lib/fpg-session.js` → `criarSessaoWhs`), com os mesmos dados do my.fpg.pt —
+ * medido: 172/172 voltas do Manuel iguais. As cookies passam a fallback, como
+ * no scrape-classif/drive/jovens. `FPG_AUTH_MODE=cookies|publico` força um lado.
+ *
+ * Fonte dos cookies (fallback, opcional):
  *   1. env FPG_COOKIES ou DATAGOLF_COOKIES (produção/Actions)
  *   2. api/.datagolf-cookies.json (dev local)
  *
@@ -76,10 +81,12 @@ const warn = m => console.log(`${Y}[fpg-scrape] ⚠${X} ${m}`);
 
 // ─── Cookies ──────────────────────────────────────────────
 const { loadCookieHeader } = require("./lib/cookies");
+// Opcionais: sem cookies corre só pelo caminho público.
 const COOKIE = loadCookieHeader({
   envVars: ["FPG_COOKIES", "DATAGOLF_COOKIES"],
   file: path.join(REPO_ROOT, "api", ".datagolf-cookies.json"),
   label: "[fpg]",
+  exitOnFail: false,
 });
 
 // ─── FPG fetch helpers ────────────────────────────────────
@@ -105,12 +112,18 @@ async function fpgPost(pathname, bodyObj, queryString = "") {
     },
     body: JSON.stringify(bodyObj),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} em ${pathname}`);
+  if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status} em ${pathname}`), { status: res.status });
   const json = await res.json();
   const d = json.d || json;
-  if (d.Result === "ERROR") throw new Error(`FPG: ${d.Message || "unknown"}`);
+  // Cookies mortas no my.fpg.pt dão Result:ERROR (Param_Errors) com HTTP 200.
+  // Marca-se como 500 para o roteador, em FPG_AUTH_MODE=cookies, ainda tentar
+  // o caminho público — é o mesmo "não autentica" que um 500.
+  if (d.Result === "ERROR") throw Object.assign(new Error(`FPG: ${d.Message || "unknown"}`), { status: 500 });
   return d;
 }
+
+const { criarRoteador } = require("./lib/fpg-session");
+const ROUTER = criarRoteador({ dgPost: COOKIE ? fpgPost : null, info: m => warn(m) });
 
 async function fetchWhsAll(fed) {
   const PAGE = 100;
@@ -119,7 +132,7 @@ async function fetchWhsAll(fed) {
   while (all.length < total && start < (total === Infinity ? 1 : total)) {
     const qs = `fed_code=${fed}&pp=N&jtStartIndex=${start}&jtPageSize=${PAGE}`;
     const body = { fed_code: String(fed), pp: "N", jtStartIndex: String(start), jtPageSize: String(PAGE) };
-    const d = await fpgPost("PlayerWHS.aspx/HCPWhsFederLST", body, qs);
+    const d = await ROUTER.post("PlayerWHS.aspx/HCPWhsFederLST", body, qs, { fed });
     const recs = d.Records || [];
     if (total === Infinity) total = Number(d.TotalRecordCount || recs.length);
     all.push(...recs);
@@ -129,7 +142,7 @@ async function fetchWhsAll(fed) {
   return all;
 }
 
-async function fetchScorecard(round) {
+async function fetchScorecard(round, fed) {
   // CRÍTICO: o endpoint ScoreCard quer o campo `score_id` (~4244840),
   // NÃO o campo `id` (~2875259, que é o ID interno da entry WHS).
   // Usar o errado retorna "An error occurred while processing this request"
@@ -151,7 +164,7 @@ async function fetchScorecard(round) {
       competitiontype: String(competitionType),
       pp: "N",
     };
-    const d = await fpgPost("PlayerWHS.aspx/ScoreCard", body, qs);
+    const d = await ROUTER.post("PlayerWHS.aspx/ScoreCard", body, qs, { fed });
     return (d.Records && d.Records[0]) || null;
   } catch (e) {
     console.error(`  ⚠ scorecard ${scoreId} (scoringType=${scoringType}, competitionType=${competitionType}) falhou: ${e.message}`);
@@ -216,7 +229,7 @@ async function processPlayer(fed) {
   let newScorecards = 0;
   for (const round of roundsToFetch) {
     if (!round.score_id) continue;
-    const sc = await fetchScorecard(round);
+    const sc = await fetchScorecard(round, fed);
     if (sc) { scorecards[String(round.score_id)] = sc; newScorecards++; }
     await new Promise(r => setTimeout(r, 80)); // throttle
   }
@@ -281,7 +294,8 @@ async function main() {
   }
   if (feds.length === 0) { console.error("Uso: node scripts/fpg-scrape-node.js <fed>... | --all"); process.exit(1); }
 
-  log(`${feds.length} jogador(es) a processar — concurrency=${CONCURRENCY}, mode=${FULL_REBUILD ? "full-rebuild" : "missing-only"}`);
+  log(`${feds.length} jogador(es) a processar — concurrency=${CONCURRENCY}, mode=${FULL_REBUILD ? "full-rebuild" : "missing-only"}, ` +
+      `auth=${ROUTER.modo}${COOKIE ? "" : " (sem cookies — só público)"}`);
 
   let totals = { rounds: 0, newRounds: 0, newScorecards: 0, ok: 0, failed: 0, needsRender: 0 };
   const fedsToProcess = new Set(); // feds que precisam de render: scorecards novos OU data.json em falta
@@ -345,6 +359,12 @@ async function main() {
       process.exit(1);
     }
     process.exit(0);
+  }
+  // Todos a falhar não é "nada de novo": é a FPG em baixo (ou os dois caminhos
+  // fechados). Antes saía 2 e o cron ficava verde sem ter descarregado nada.
+  if (totals.ok === 0 && totals.failed > 0) {
+    console.error(`${R}Nenhum jogador descarregado (${totals.failed} falhas) — nem o caminho público nem as cookies responderam${X}`);
+    process.exit(1);
   }
   console.log(`${Y}Nada de novo — sem commit${X}`);
   process.exit(2);

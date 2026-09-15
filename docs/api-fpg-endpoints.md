@@ -23,6 +23,10 @@
 12. [Lições aprendidas](#12-li%C3%A7%C3%B5es-aprendidas)
 13. [O backoffice clubarea (`1Page.aspx` + HMAC)](#13-o-backoffice-clubarea-1pageaspx--hmac)
 14. [Estatísticas de Clubes (`stat_*.asp`)](#14-estat%C3%ADsticas-de-clubes-stat_asp--p%C3%BAblico-sem-cookies)
+15. [Lista de Sócios por clube (`members.asp`) + WHS público pelo gate `fedhcp`](#15-lista-de-s%C3%B3cios-por-clube-membersasp--p%C3%BAblico-sem-cookies)
+
+> Mapa de TODOS os links conhecidos (FPG e restantes fontes), com exemplos para
+> abrir: `docs/links-conhecidos.html`.
 
 ---
 
@@ -1054,3 +1058,106 @@ https://scoring-pt.datagolf.pt/scripts/numresults.asp?club=ALL&ack=XH256YF45T&se
 
 As restantes 24 seguem o mesmo molde: `{pagina}.asp?club=ALL&ack=XH256YF45T`
 (+ `&origin=1` no grupo TORNEIOS).
+
+---
+
+## 15. Lista de Sócios por clube (`members.asp`) — público, sem cookies
+
+Medido a 2026-09-15. Mesmo ASP clássico da §14, `fetch` puro:
+
+```
+https://scoring-pt.datagolf.pt/scripts/members.asp?club={ccode}&ack={ack}&order={col}
+```
+
+`order` ∈ `memberno` · `name` · `nfed` · `club` · `hcp` · `hcpstatus`
+(`oldorder` é só o estado anterior do link de ordenação — dispensável). Sem
+paginação: vem o clube inteiro numa página (ACP Golfe = 860 KB).
+
+Colunas: **nº de sócio · nome · nº federado · clube de FEDERAÇÃO (`Nome-ccode`)
+· HCP exacto · estado HCP** (`Válido` / `Sem HCP`). O nome linka para
+`federated.asp?nfed=…`, que devolve 302 para o gate
+`datalinkpt.html?page=federated&fedno=…` (ver abaixo).
+
+### O que isto dá que o `federados.json` não dá
+
+1. **Um sócio não é necessariamente federado pelo clube.** A coluna "Clube" é
+   o clube por onde a pessoa é federada. ACP Golfe (103): 2680 sócios, dos
+   quais só 1922 são federados pelo 103 — os outros vêm do Lisbon SC-002 (41),
+   Quinta do Peru-038 (29), Oitavos-083 (26)… Santo da Serra (007): 451
+   sócios, 380 federados pelo 007, 18 pelo Palheiro-059. O `federados.json` só
+   conhece o clube de federação; isto dá **pertença a vários clubes**.
+2. **Sócios que não são federados** — linha sem nº federado e clube `-`
+   (ACP: 305 dos 2680). Não existem em mais lado nenhum.
+3. O nº de sócio interno do clube.
+
+### O `ack`
+
+| ack | `club=103` | `club=007` | `club=ALL` |
+|---|---|---|---|
+| `GG2TRU5VQ1` (do link do ACP) | ✅ 2680 | ❌ `Club not authorized` (106 B) | — |
+| `XH256YF45T` (master) | ✅ 2680 | ✅ 451 | ❌ tabela vazia (717 B) |
+| `8428ACK987` (draw/classif) | ✅ | ✅ 451 | — |
+| `XH256YF450` (admissions) | — | ❌ 106 B | — |
+
+Como na §14: um ack **de clube** prende a página a esse clube; o master abre
+qualquer um. **Não há `club=ALL`** — para a federação inteira é um pedido por
+clube (a lista dos 286 ccodes sai do `<select name="club">` do `stat_all`).
+Testar a resposta pelo conteúdo (`Sócios  = N`), nunca por `res.ok`.
+
+```
+https://scoring-pt.datagolf.pt/scripts/members.asp?club=007&ack=XH256YF45T&order=name
+```
+
+### 15.1 Ficha do federado — o WHS é PÚBLICO pelo gate `fedhcp`
+
+O nome de cada sócio linka para `federated.asp` → 302 para
+`datalinkpt.html?page=federated&fedno=…`, o gate em JavaScript da §14/§8. O
+`DataGolfeRedirect` dessa página só constrói uma URL:
+
+```
+https://scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page={federated|fedhcp}&fedno={fed}&loggedfed=&pagelang=PT
+```
+
+O `1PreparePage` emite a sessão e faz 302 para `federated.aspx?fedno=` ou
+`fed_hcp.aspx?fedno=`. Os dois gates **não dão o mesmo**:
+
+| Gate | PageMethod | Sem cookies |
+|---|---|---|
+| `federated` | `Federated.aspx/ViewFedDET` | ✅ — mas é o cadastro do `federados.json` (sem `permit`/`encryptedfedcode`) |
+| `federated` | `Federated.aspx/HCPWhsFederLST` · `ResultsLST` · `HCPFederLST` | ❌ `Acesso negado. Por favor faça login` |
+| `federated` | `Federated.aspx/ScoreCard` | ✅ |
+| **`fedhcp`** | **`PlayerWHS.aspx/HCPWhsFederLST`** `{fed_code, jtStartIndex, jtPageSize}` | ✅ **o histórico WHS completo** |
+| `fedhcp` | `fed_hcp.aspx/ScoreCard` `{score_id, scoringtype, competitiontype}` | ✅ cartão buraco a buraco |
+| `fedhcp` | `fed_hcp.aspx/HCPFederLST` | ✅ mas vazio (é o histórico EGA antigo) |
+
+**Validado a 2026-09-15 contra o que temos do my.fpg.pt (login):**
+
+- Manuel (52884): **172 de 172 voltas iguais por `id`** — `score_id`, `sgd`,
+  `cba`, `hcp_dateStr`, `exact_handicap`, campo, `score_origin`, tipos. Os
+  campos são os mesmos 38, mais `confirm_status`.
+- Cartão de 12-09-2026 (score 4385632): gross/par/metros/SI **iguais** ao
+  `output/52884/scorecards.json`, com CR 65.9 / Slope 125 / tee VERMELHAS.
+- 60382 (2 voltas, uma de 9 buracos): iguais.
+- 2871 (não é dos nossos): **478 voltas**, paginação para lá das 100 a
+  funcionar.
+
+⚠ **Testar com o `Sessao` de `scripts/lib/fpg-session.js`, nunca com
+`curl -L`.** O curl dá HTTP 500 no `1PreparePage` — até no `fedlist_v2`, que
+em produção funciona — no mesmo minuto em que o `Sessao` passa. É a mesma
+armadilha do `redirect:"follow"` que já custou três scrapers.
+
+⚠ Uma sessão por federado: o `DG_Lists_URL` guarda o contexto da página (o
+`fedno`), como na descoberta de torneios.
+
+**Em produção desde 2026-09-15:** o `fpg-scrape-node.js` (WHS + scorecards
+dos nossos) usa este caminho primeiro e as cookies do my.fpg.pt como fallback,
+via `criarRoteador`/`criarSessaoWhs`/`normalizarRegistosWhs` em
+`scripts/lib/fpg-session.js` (testes em `fpg-session-whs.test.js`).
+
+Duas diferenças de forma, normalizadas para o output ficar igual ao do login:
+- as voltas trazem a mais `confirm_status`;
+- o `scdisplay` (HTML do cartão) vem com o cabeçalho da coluna do tee vazio e
+  `src="Content/Images/…"` sem a `/` inicial.
+
+Uma sessão aberta para um federado serve o WHS e os cartões de **qualquer**
+outro — o `fedno` só escolhe a página de entrada.

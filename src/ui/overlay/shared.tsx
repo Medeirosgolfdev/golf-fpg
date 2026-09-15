@@ -6,6 +6,7 @@
  * html-to-image converte DOM→SVG→Canvas→PNG e perde CSS custom properties.
  */
 import { fmtSD } from "../../utils/format";
+import { scoreDifferential } from "../../utils/whsCalc";
 import type { DD, Vis, Stats, StT } from "./types";
 
 /* ═══════ FONT STACKS ═══════ */
@@ -140,6 +141,7 @@ export function calcStats(d: DD): Stats {
     else if (x === 2) st.doubles++;
     else st.triples++;
   });
-  const sd = d.slope > 0 ? (113/d.slope)*(sT-d.cr) : 0;
+  // SD pela biblioteca (utils/whsCalc) — em 9 buracos soma o Expected SD do HI
+  const sd = scoreDifferential({ score: sT, cr: d.cr, slope: d.slope, is9: !is18, hi: d.hi })?.sd ?? 0;
   return { pF, pB, pT, sF, sB, sT, vpT: sT-pT, vpF: sF-pF, vpB: is18 ? sB-pB : 0, sd, st };
 }

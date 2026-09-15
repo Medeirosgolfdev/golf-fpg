@@ -25,7 +25,6 @@
  *      3.5  pull-torneios NNN.json
  *      3.6  drive-data.json
  *      3.7  aquapor-data.json
- *      3.8  drive-sd-lookup.json
  *      3.9  melhorias.json
  *      3.10 BJGT / WJGC (bluegolf-wjgc)
  *      3.11 EOWAGR contests (bluegolf-contest)
@@ -65,7 +64,6 @@ export const FILE_PULL_TORNEIOS = (idx: number) =>
 // DRIVE e AQUAPOR
 export const FILE_DRIVE_DATA      = `${BASE}drive-data.json`;
 export const FILE_AQUAPOR_DATA    = `${BASE}aquapor-data.json`;
-export const FILE_DRIVE_SD_LOOKUP = `${BASE}drive-sd-lookup.json`;
 
 // BJGT / WJGC / EOWAGR (BluGolf scrapeados)
 // (bjgt_vp_field_2025.json foi movido para data-archive/ — fora do deploy)
@@ -532,27 +530,6 @@ RoundScore = idêntico a pull-torneios`,
     },
     usedBy: ["DrivePage"],
     structure: `Mesmo schema de DriveData. DrivePage injeta series="aquapor" no merge.`,
-  },
-
-  // ─────────────────────────────────────────────────────────────
-  // 3.8  drive-sd-lookup.json
-  // ─────────────────────────────────────────────────────────────
-  {
-    id: "drive-sd-lookup",
-    label: "Tabela SD — DRIVE",
-    files: FILE_DRIVE_SD_LOOKUP,
-    origin: "pipeline-local",
-    generatedBy: "scrape-drive-aquapor-v7.js (gerado junto com drive-data)",
-    loader: "src/pages/DrivePage.tsx (retorna {} se ausente)",
-    format: "sd-lookup",
-    dates: { fields: [], format: "N/A" },
-    leaderboard: null,
-    scorecard: { available: false },
-    usedBy: ["DrivePage"],
-    structure: `
-Record<nfed: string, sd: number>
-Exemplo: { "52884": 2.1, "12345": 5.4 }
-→ SD pré-calculado para coluna SD na tabela DRIVE.`,
   },
 
   // ─────────────────────────────────────────────────────────────

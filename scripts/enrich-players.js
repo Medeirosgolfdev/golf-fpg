@@ -14,6 +14,8 @@ const fs = require("fs");
 const path = require("path");
 const { extractPlayerStats } = require("../lib/cross-stats");
 const { writeJsonAtomic } = require("../lib/atomic-write");
+// Contas de handicap: o MESMO ficheiro do site (src/utils/whsCalc.ts)
+const whs = require("./lib/whs.cjs");
 
 const args = process.argv.slice(2);
 const fedFilter = args.filter(a => /^\d+$/.test(a));
@@ -201,15 +203,24 @@ for (const fed of targetFeds) {
   const lastRoundDate = lastDate > 0 ? new Date(lastDate).toISOString().slice(0, 10) : null;
 
   /* ── SD stats from 18H rounds ── */
-  const sds = allRounds.filter(r => r.sd != null).map(r => r.sd);
+  // ⚠ parseFloat e não `!= null`: há voltas com SD "" e Number("") é 0
+  const comSD = allRounds.filter(r => Number.isFinite(parseFloat(r.sd)));
+  const sds = comSD.map(r => parseFloat(r.sd));
   const sds5 = sds.slice(0, 5);
   const sds20 = sds.slice(0, 20);
   const avg = arr => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
   const avgSD5 = avg(sds5);
-  const best8 = sds20.length > 0
-    ? [...sds20].sort((a, b) => a - b).slice(0, Math.min(8, sds20.length))
-    : [];
-  const avgSD8 = avg(best8);
+  // "SD Best 8/20" = média das voltas que contam: as melhores N das últimas 20
+  // (tabela 5.2a) com os extraordinários já aplicados — o cálculo do site
+  // (src/utils/whsCalc.ts), e não "sempre as 8" à parte. Só voltas de 18.
+  const janela = comSD.slice(0, 20).map(r => ({
+    sd: parseFloat(r.sd),
+    hi: Number.isFinite(parseFloat(r.hi)) ? parseFloat(r.hi) : null,
+  }));
+  const adjJ = whs.historicExceptionalAdj(janela);
+  const avgSD8 = janela.length
+    ? whs.windowAverage(janela.map((x, i) => ({ eid: String(i), sd: x.sd, adj: adjJ[i] })))
+    : null;
 
   /* ── Gross stats ── */
   const grosses = allRounds.filter(r => r.gross != null).map(r => r.gross);

@@ -819,8 +819,8 @@ function Content() {
   const classifFetchStarted = useRef(false);
   // ── Estado Ranking Sub-12 ────────────────────────────────────────────────
   // Ficheiro pré-construído por scripts/build-sub12-ranking.js — mesma vista do
-  // Ranking PJA, mas com metric="sd" (differential sem componente de handicap,
-  // porque o escalão joga sobretudo 9 buracos em campos muito diferentes).
+  // Ranking PJA, mas com metric="sd": o SD oficial que a FPG deu a cada miúdo
+  // em cada volta (média das 8 melhores).
   const [sub12Tournaments, setSub12Tournaments] = useState<Tournament[]>([]);
   const [sub12Loading, setSub12Loading] = useState(false);
   const sub12FetchStarted = useRef(false);
@@ -2935,9 +2935,8 @@ function Content() {
         </div>
       )}
 
-      {/* Ranking Sub-12 (e abaixo) — métrica de differential sem componente de
-          HCP, porque as voltas são quase todas de 9 buracos e os campos variam
-          muito. Ver scripts/build-sub12-ranking.js. */}
+      {/* Ranking Sub-12 (e abaixo) — média dos 8 melhores SD oficiais de cada
+          miúdo. Ver scripts/build-sub12-ranking.js. */}
       {navMode === "ranking-sub12" && (
         <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
           <PJARankingView

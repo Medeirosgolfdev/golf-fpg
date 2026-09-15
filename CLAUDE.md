@@ -736,7 +736,7 @@ O gate `datalinkpt.html` lista as páginas públicas do portal — é o mapa do 
 | `scrape-drive-rankings.js` | update-drive (Dom) | RankingsClassifLST (gate `rankingresult`) | ✅ 62 jog. no RDTN26 |
 | `update-cgss-draw-results.js` | update-cgss-draw | ClassifLST + ScoreCard + TournamentsLST | ✅ **60 jog. / 54 scorecards** no 192/10023 |
 | `scrape-fpg-admissions-draws-node.js` | update-fpg-admissions-draws | admissions | ❌ **fica com cookies** |
-| `fpg-scrape-node.js` | update-data | my.fpg.pt (WHS) | ❌ exige login a sério |
+| `fpg-scrape-node.js` | update-data | `PlayerWHS.aspx/HCPWhsFederLST` + `fed_hcp.aspx/ScoreCard` (gate `fedhcp`) | ✅ desde 2026-09-15 — 172/172 voltas do Manuel byte a byte; cookies do my.fpg.pt ficam de fallback |
 
 ⚠ **As admissions NÃO são fiavelmente públicas.** O mesmo gate serve
 `000/10941` (página real de inscritos) e devolve `Param Error — Link address
@@ -1267,6 +1267,46 @@ cópias da mesma lógica (`ResumoTable.tsx`, `DrivePage.tsx`). Mesma convenção
 ranking Drive. Testes em `src/data/__tests__/computeSD.test.ts`.
 
 ---
+
+## SD oficial nas voltas dos torneios (2026-09-15)
+
+O site mostra o SD que a FPG atribuiu sempre que o tem; sem ele, calcula-o com
+o HCP da inscrição (ver a regra "⛔ Contas de handicap" nos Princípios de
+arquitectura). O cartão público do
+torneio (`ScoreCard` do classif) **não traz o SD** — medido: traz `cba` (PCC),
+`exact_hcp`, `federated_code`, mas nenhum differential. Só o WHS de cada jogador
+o tem. Daí o circuito:
+
+| Passo | Script | O quê |
+|---|---|---|
+| 1 | `fpg-scrape-node.js` | WHS completo dos ~180 que acompanhamos (`output/{fed}/whs.json`) |
+| 2 | `data-archive/whs-sd.json` | SD oficial de ~1.000 juniores (fora do deploy), descarregado **uma vez** a 2026-09-15. Não se volta a pedir — ver abaixo |
+| 3 | **`backfill-sd.js`** | escreve o SD em `roundScores[].sd` (ou `sd` no jogador flat) de `pull-torneios*`, `drive-data-*`, `aquapor-data-*`, `jovens_*` |
+
+A lógica partilhada (ficheiros, datas das rondas, casamento) está em
+`scripts/lib/official-sd.js`.
+
+- **Casamento (`matchPlayer`, todas as voltas do jogador de uma vez):** se o WHS
+  tem tantas voltas desse tcode na semana do torneio como o jogador tem cartões,
+  casa-se pela ORDEM das datas e, dentro do mesmo dia, pela proximidade ao SD
+  calculado de cada volta. Senão, volta a volta por fed + DATA da ronda
+  (`t.date + ronda − 1`), desempatado pelo tcode e pelo gross, sem repetir
+  linhas. ⚠ Nunca só por tcode (a FPG reutiliza-os).
+  ⚠ **Duas voltas no mesmo dia** — caso real: Taça João Salazar de Sousa 2026
+  (038/10758), R1 a 12-09 e R2+R3 a 13-09. O my.fpg.pt não dá o gross, as duas
+  linhas do dia 13 eram indistinguíveis e a 1ª versão (volta a volta, R3 → dia
+  14 → "pela ordem") deu à R3 de todos o SD da R2 (Sardo 70 com 0.1 em vez de
+  −1.5). Teste em `scripts/lib/official-sd.test.js`.
+- ⛔ **Não se descarrega WHS de ninguém só para ter o SD oficial** (decisão
+  2026-09-15). Existiu um `fetch-whs-sd.js` que o fazia todas as noites e foi
+  apagado: em 18 buracos o SD calculado com o HCP da inscrição bate com o
+  oficial em 99,4% (os adultos "em vão"), e em 9 buracos a Mariana também o
+  achou desnecessário. O que ele trouxe (1.000 juniores, 28.502 SD) ficou no
+  `whs-sd.json` e continua a ser usado.
+- O `backfill-sd.js` corre no `update-data.yml` (Dom/Seg 00:05 UTC), a seguir ao
+  `backfill-pcc.js`, sem pedidos à FPG. Cobertura das voltas dos torneios com SD
+  oficial: 64% (2026-09-15).
+- Uma volta sem SD oficial usa o calculado com o HCP da inscrição (`computeSD`).
 
 ## Scripts — USKids (Playwright)
 
@@ -2978,6 +3018,7 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
 | course-players.json | FPG | build-course-players.js | ✓ | CamposPage (`_players` dos campos PT — quem jogou + scores por volta) |
 | course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome + `dob`/`sex` p/ os jogadores dos campos) |
 | recent-tournaments.json | FPG | build-recent-tournaments.js | ✓ | RecentTournamentsPage (`/torneios-recentes`) — torneios reconstruídos das voltas dos nossos |
+| simulador-players.json | FPG | build-simulador-players.js (update-drive + update-federados) | ✗ | SimuladorPage — selector: Drive da Madeira dos últimos 12 meses (Drive Tour + Drive Challenge só Sub-12/Sub-14) + escolhidos à mão, com HI/sexo do cadastro (a página não carrega o federados.json de 18 MB) |
 | drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | aquapor-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | melhorias.json | FPG | manual | ✓ | JogadoresPage, CamposPage |
@@ -3048,6 +3089,41 @@ Slope é que diferem entre M e F — é o MESMO tee. Nunca listar "Amarelas M" e
   persiste em páginas sem `:fedId` no URL).
 - Selector de tees passou a usar o `TeeBars` partilhado (modo selector por
   sexo) — clicar num botão M/F continua a fixar o tee+rating do cálculo.
+
+### SimuladorPage — janela WHS, score-alvo e selector (2026-09-15)
+
+- **Cálculo único em `src/utils/whsCalc.ts`** (ver "Contas de handicap — um só
+  sítio"): tabela 5.2a (quantas contam — **12 resultados → 4**, não 3
+  — e o ajuste −2/−1/−1 para 3/4/6), resultados extraordinários, soft/hard cap
+  com o `HCP_INFO.lowHcp` e máximo de 54. Validado contra o HI oficial: **178 de
+  207 jogadores iguais à décima** (eram 133). Dos que falham, cerca de metade têm
+  no site menos voltas do que a FPG conta; os outros são miúdos com muitas voltas
+  de 9 buracos.
+- ⚠ **`Number("")` é 0**: o `data.json` tem voltas com SD vazio. Filtrar a janela
+  com `!isNaN(Number(r.sd))` deixava-as ocupar lugares nas 20, e o "E se?"
+  tratava-as como SD 0. Usar sempre `parseFloat` (SimuladorPage, AnalysisView e
+  RoundSimulator já o fazem). A ficha do jogador (`AnalysisView`) marca as
+  melhores com o mesmo cálculo (`topRanks` + `historicExceptionalAdj`).
+- ⚠ **A janela tem de levar os extraordinários JÁ aplicados pela FPG**
+  (`historicExceptionalAdj`): cada volta extraordinária baixa-se a si e às 19
+  anteriores. Sem isto o HI do pai (54907) saía 24,9 em vez de 23,3 e o
+  score-alvo dele dizia "desce com ≤ 109". O `hi` de cada volta do site é o
+  índice ANTES da volta — é contra ele que se mede o extraordinário. Teste com as
+  20 voltas reais do pai em `whsCalc.test.ts`.
+- **Score-alvo** (desce / entra nas N melhores / sobe / extraordinário, com o SD
+  de cada limite e a posição nas melhores da volta que sai) e **"Esta volta no
+  handicap"** (projecção do scorecard preenchido, com botão para o "E se?").
+- **HI e sexo seguem o jogador escolhido**; só em "Jogador (HI manual)" (ou ao
+  escrever no campo do HI) se usa o HI escrito. Abre sempre no Manuel.
+- **Selector por grupos**: Manuel · Absolutos (`SIM_NAMED_PLAYERS`) · Madeira ·
+  PJA · Percurso dos juniores. A Madeira junta a região do `players.json`, os
+  escolhidos e o Drive da Madeira dos últimos 12 meses (Drive Tour + Challenge
+  Sub-12/14) de `simulador-players.json`. Os escolhidos e os do Drive entraram no
+  `players.json` com a tag `simulador` (o prune não os corta).
+- **Lista de campos**: os mais jogados pelo jogador primeiro; o tee abre no
+  habitual dele nesse campo. O casamento volta↔campo usa `courseMatchKey`
+  (`playedDistance.ts`), que ignora a ordem das palavras — "Desertas+Machico" é o
+  campo "Machico-Desertas" e "Serras" é "Serras-Serras".
 
 ### CamposPage
 
@@ -3279,6 +3355,12 @@ Montecchia não apareciam).
 
 ## Sites e links de dados
 
+> **Mapa completo de links (2026-09-15):** `docs/links-conhecidos.html` — todos
+> os endereços conhecidos (FPG, USKids, GolfGenius, GolfBox, Espanha, França,
+> WAGR/EGR, outros), com o tipo de acesso (público / sessão pública / só browser /
+> login / limite / efémero / parado), exemplos reais e o script que usa cada um.
+> Publicado também como artifact. **Quando se descobrir um link novo, acrescentá-lo lá.**
+
 | Site | URL | Para quê | Auth |
 |------|-----|----------|------|
 | scoring.datagolf.pt | `scoring.datagolf.pt/pt/tournaments.aspx` | Torneios DRIVE+AQUAPOR+pull | Público |
@@ -3462,6 +3544,75 @@ dia/torneio. Não substitui o `backfill-pcc.js`.
 
 ⚠ Tudo o que sai daqui é **agregado**; as vistas por jogador (`numresults`,
 `stat_tourns_*`, `stat_highscores_players`) dão contagens, nunca resultados.
+
+---
+
+#### 👥 Lista de Sócios — `scripts/members.asp` (público) — 2026-09-15
+
+```
+https://scoring-pt.datagolf.pt/scripts/members.asp?club={ccode}&ack=XH256YF45T&order=name
+```
+Um clube inteiro numa página: **nº de sócio · nome · fed · clube de FEDERAÇÃO
+· HCP · estado**. `order` ∈ memberno/name/nfed/club/hcp/hcpstatus. Detalhe em
+`docs/api-fpg-endpoints.md` §15.
+
+- **Sócio ≠ federado pelo clube.** ACP Golfe (103): 2680 sócios, só 1922
+  federados pelo 103. Santo da Serra (007): 451, 380 pelo 007 e 18 pelo
+  Palheiro. O `federados.json` só sabe o clube de federação — isto dá a
+  pertença a vários clubes.
+- Traz **sócios não federados** (sem fed, clube `-`): 305 no ACP.
+- ⚠ Como no `stat_*`, o `ack` de clube (o do link publicado, `GG2TRU5VQ1` =
+  103) prende a página a esse clube (`Club not authorized`, 106 B noutro); o
+  master `XH256YF45T` e o `8428ACK987` abrem qualquer um. **Não há
+  `club=ALL`** (tabela vazia) — é um pedido por clube.
+
+#### ✅ O WHS também é público — gate `page=fedhcp` (2026-09-15)
+
+O nome de cada sócio linka para a ficha do federado, e o gate dessa ficha
+(`datalinkpt.html?page=…&fedno=…` → `1PreparePage.aspx`) tem uma variante que
+**serve o histórico WHS inteiro sem login**:
+
+```
+GET  scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T       (aquecer)
+GET  scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page=fedhcp&fedno={fed}&pagelang=PT
+POST scoring.datagolf.pt/pt/PlayerWHS.aspx/HCPWhsFederLST   {fed_code, jtStartIndex, jtPageSize:"100"}
+POST scoring.datagolf.pt/pt/fed_hcp.aspx/ScoreCard          {score_id, scoringtype, competitiontype}
+```
+
+Medido contra o que o `fpg-scrape-node.js` traz com login do my.fpg.pt:
+**172 de 172 voltas do Manuel iguais por `id`** (`score_id`, `sgd`, `cba`,
+datas, campo, tipos — só aparece a mais `confirm_status`) e o cartão de
+12-09 igual buraco a buraco, com CR/Slope/tee. Funciona com qualquer
+federado (2871, que não é dos nossos: 478 voltas, a paginar).
+
+⚠ O gate irmão **`page=federated`** (`Federated.aspx`) NÃO serve para isto:
+lá o `HCPWhsFederLST`/`ResultsLST` respondem *"Acesso negado. Por favor faça
+login"*; só o `ViewFedDET` (= o cadastro que já temos) e o `ScoreCard` são
+públicos.
+
+⚠ Testar com o `Sessao` (`scripts/lib/fpg-session.js`), nunca com `curl -L`:
+o curl dá 500 no `1PreparePage` no mesmo minuto em que o `Sessao` passa.
+
+**Ligado ao `fpg-scrape-node.js` a 2026-09-15** — público primeiro, cookies
+como fallback, pelo mesmo `criarRoteador` do `fpg-session.js` (entrada
+`PlayerWHS.aspx/*` → `criarSessaoWhs`; o `ScoreCard` é reencaminhado para
+`fed_hcp.aspx/ScoreCard`). Corre sem cookies nenhumas; `FPG_AUTH_MODE` força um
+lado. Verificado com `FPG_AUTH_MODE=publico --full` no 52884 e no 60382: os
+`whs.json` saem **byte a byte iguais** aos do login.
+
+- `normalizarRegistosWhs` tira o `confirm_status` das voltas e repõe o HTML do
+  `scdisplay` como o my.fpg.pt o dá (cabeçalho `Tee`, `/Content/Images/`). Sem
+  isto, cada troca entre os dois caminhos reescrevia os ~200 `whs.json` — o
+  scraper compara por `JSON.stringify`.
+- ⚠ Um `--full` mostra 158 de 292 cartões do Manuel "diferentes" — é só o
+  `scdisplay` dos cartões antigos, que a FPG passou entretanto a gerar com
+  `Volta : 1` em vez de `Round : 1` (e a imagem sem foto noutra pasta). Não é
+  do caminho público: o login devolve hoje o mesmo. Nenhum consumidor lê o
+  `scdisplay`, e o modo normal nunca volta a pedir cartões que já temos.
+- Uma sessão pública serve todos os federados (o `fedno` do gate só escolhe a
+  página de entrada) — abre-se uma por corrida e reabre-se se um pedido falhar.
+- Todos os jogadores a falhar passou a ser **exit 1** (antes era 2, "nada de
+  novo", e o cron ficava verde sem ter descarregado nada).
 
 ---
 
@@ -3719,7 +3870,7 @@ validado server-side. **Não replicável de Node puro.**
 | `uskids-results.yml` | ✅ | idem | — | idem |
 | `uskids-member-history.yml` | ✅ | idem | — | idem |
 | **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
-| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** Corre também `backfill-pcc.js --apply` — ver "PCC — o ajuste que chega SEMPRE depois do scrape". |
+| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Dom/Seg 00:05 UTC (depois do cut SD) | Default: incremental (só rondas novas). Override `full_rebuild=true`. **Público primeiro desde 2026-09-15** (gate `fedhcp`, sem cookies); o Secret `FPG_COOKIES` fica de fallback. **Timing tardio intencional: o SD e WHS Index são atribuídos pela FPG depois da meia-noite Lisboa.** Corre também `backfill-pcc.js --apply` — ver "PCC — o ajuste que chega SEMPRE depois do scrape" — e `backfill-sd.js` — ver "SD oficial nas voltas dos torneios". |
 | **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | Sex/Sáb/Dom 21:20 UTC | Scrape inscrições dos Nacionais de Jovens. Secret: `DATAGOLF_SCORING_COOKIES`. |
 | **`update-fpg-admissions-draws.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-fpg-admissions-draws-node.js` | Sex/Sáb/Dom 20:00 UTC | **Cron aplica `--auto-extend --since 4d`**: scope manual (333) + Fonte 2 (JSONs locais: drive-data, jovens, pull-torneios, SdS) + Fonte 3 (TournamentsLST com warmup entry-gate, filtros INCLUDE=junior/PJA/jovens/sub-XX/ccode=007, EXCLUDE=Flintstones/Quarta Feira Europeia). Janela: futuros + em curso + torneios ≤3 rondas até dia seguinte ao fim. Para scope histórico completo: workflow_dispatch sem filtros. Secrets: `FPG_ADMISSIONS_COOKIES` + `DATAGOLF_SCORING_COOKIES`. |
 | **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Dom/Seg 01:00 UTC | Scope dinâmico via `--auto-from-tracking` (lê `fpg-tournaments-tracking.json`, filtra `status in [missing_classif, missing_scorecards]`). Fallback manual via `--scope` ou `--tclub/--tcode`. Secret: `DATAGOLF_SCORING_COOKIES`. Corre também `backfill-pcc.js --apply` (o WHS das 00:05 já traz o `cba` do próprio fim-de-semana). |
@@ -4715,6 +4866,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 | `hidden` | **Escondido da sidebar** (filtro em JogadoresPage) | Removido pelo cleanup |
 | `no-scrape` | Visível normalmente | **Scraper salta** (não actualizado) |
 | `inscrito-nacional` | Marcador, visível | Prioridade máxima, nunca no-scrape |
+| `simulador` | Visível | Scraped; o `prune-player-scope.js` nunca o corta — família e amigos escolhidos para o selector do `/simulador` (lista em `src/constants/simuladorPlayers.ts`, 2026-09-15) |
 
 **Regra de ouro:** `hidden` vs `no-scrape` distinguem-se por visibilidade.
 - `hidden` = invisível na UI + removido do players.json via cleanup
@@ -4724,6 +4876,52 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Princípios de arquitectura
 
+- ⛔ **Contas de handicap — um só sítio: `src/utils/whsCalc.ts`** (decisão
+  2026-09-15: "vários sítios a calcular dão informações diferentes"). SD, Course/
+  Playing Handicap (com `is9`), pancadas por buraco, Net Double Bogey/AGS,
+  Expected SD de 9 buracos, janela 20/8, extraordinários, caps e projecção do HI.
+  Nenhuma página reescreve estas fórmulas — `113 / slope` fora do whsCalc é erro.
+  - ⛔ **SD de uma volta JOGADA (decisão 2026-09-15):** (1) o **oficial da FPG**
+    — o `sgd` do WHS de cada jogador, gravado em cada volta dos ficheiros de
+    torneios (`roundScores[].sd`, ou `sd` no jogador flat) pelo
+    `scripts/backfill-sd.js` (ver "SD oficial nas voltas dos torneios"); (2) sem
+    ele, o **calculado** pelo `roundDifferential` com o **HCP da inscrição**
+    (`hcpExact`), em 18 e em 9 buracos. Tudo passa pelo `computeSD` (fpgUtils).
+    Porquê esta ordem: em 18 buracos o cálculo bate com o oficial em 99,4% (o HCP
+    só entra no NDB); em 9 buracos só em 85–91% (o Expected SD depende do HI
+    exacto do dia) — daí o oficial ir buscar-se só aos juniores. Nunca se
+    **estima** sem CR/Slope (as voltas de treino deixaram de ter o SD "CR = par");
+    espanhóis (RFEG/mitarjeta) e histórico USKids não mostram SD. O
+    `drive-sd-lookup` (nunca existiu em disco) e os símbolos "~"/"≈" do `SDPill`
+    saíram.
+  - **Métodos validados** contra o `sgd` oficial (3253 voltas, 2026-09-15):
+    18 buracos `(113/Slope)×(AGS−CR−PCC)` → **99,4%**; 9 buracos **desde 2024**
+    `(113/Slope)×(AGS−CR−½PCC) + (0,52×HI+1,2)` → 91% (85% com o HI do torneio);
+    9 buracos **antes de 2024** (net par + 1 nos 9 não jogados, SD sobre 18) → 77%.
+    ⚠ O Expected SD é a FÓRMULA com as décimas do HI — a tabela por HI inteiro só
+    batia em 63%. ⚠ O NDB de 9 buracos usa o Course Handicap de 9 (metade do HI).
+    ⚠ O PCC em 9 buracos conta metade. ⚠ AGS só com o cartão completo.
+  - Antes da consolidação havia a fórmula em 7+ sítios, com diferenças: a
+    DrivePage ignorava o PCC, os overlays não somavam o Expected SD, o simulador
+    arredondava à sua maneira e a previsão dava no máximo 1 pancada por buraco.
+  - **Os scripts Node usam o MESMO ficheiro, não uma cópia**: `require("./lib/whs.cjs")`
+    (`scripts/lib/whs.cjs`) carrega o `src/utils/whsCalc.ts` — o Node ≥ 22.18 corre
+    TypeScript directamente, e **todos os workflows passaram a Node 24**
+    (2026-09-15; o Node 20 já não tinha suporte). ⚠ Por isso o whsCalc.ts só pode
+    ter sintaxe que o Node sabe apagar (tipos e interfaces — nada de `enum` nem
+    `namespace`) e não pode importar outros ficheiros do `src`.
+    `scripts/whs-loader.test.js` corre um Node a sério e parte se isto deixar de
+    funcionar. Usam-no: `lib/process-data.js` (HI derivado com `indexFromWindow`;
+    Low HI = mínimo dos 365 dias antes da última volta), `enrich-players.js`
+    ("SD Best 8/20" = média das voltas que contam — a ±0,1 da média oficial em 90
+    de 184 jogadores, eram 84).
+  - **Ranking Sub-12 = o SD REAL de cada miúdo** (decisão 2026-09-15): o
+    `roundScores[].sd` oficial das voltas ou, sem ele, o calculado com o HCP da
+    inscrição.
+    Antes era um differential "de campo" sem handicap (9 buracos × 2); a Mariana
+    preferiu o SD que cada um obteve de facto. O `--cap-over-par` saiu. O
+    `build-analise-percurso.js` faz uma média descritiva dos 8 melhores SD
+    oficiais por idade — não é conta de handicap e fica lá.
 - **Máxima globalização** — definições partilhadas (constantes, formatação, CSS) devem viver em módulos globais (`constants/`, `utils/`, `App.css`), nunca duplicadas por página. Se duas páginas usam o mesmo valor, extrair para um módulo partilhado.
 - **Escalões são definidos por torneio** — cada organizador define os age groups conforme o número de inscritos (9-10, 10-11, etc.). Não existe uma lista global de escalões. Filtros de UI como `ESCALOES_DESTAQUE_USKIDS` são específicos da página onde são usados.
 - **Cores de tees são da FPG** — `teeColors.ts` define cores específicas das marcações de tees (Vermelhas, Amarelas, etc.) conforme a federação. Não alterar nem "corrigir" esses hex — são intencionais.

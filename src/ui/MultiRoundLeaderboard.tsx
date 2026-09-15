@@ -696,7 +696,7 @@ export function MultiRoundLeaderboard({
                             {showRoundStats && <>
                               <td className="lb-rnd-sd">
                                 {rd.sd != null
-                                  ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
+                                  ? <SDPill sd={rd.sd} hcp={row.hcp} />
                                   : <span className="muted">–</span>}
                               </td>
                               <td className="lb-rnd-eag">{rd.eagles || ""}</td>
@@ -713,7 +713,7 @@ export function MultiRoundLeaderboard({
                           <>
                             <td className="lb-sd">
                               {rd?.sd != null
-                                ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
+                                ? <SDPill sd={rd.sd} hcp={row.hcp} />
                                 : <span className="muted">–</span>}
                             </td>
                             <td className="lb-eag">{rd?.eagles || ""}</td>

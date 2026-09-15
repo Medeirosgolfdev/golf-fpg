@@ -10,22 +10,43 @@ import type { Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { sortTees, filterTees } from "../utils/teeUtils";
 import { SDTable, MultiTeeSDTable, type HolesMode } from "../ui/ScoreTable";
-import { fmtCR, fmtSD, norm, titleCase } from "../utils/format";
-import { calcSD, calcScore, calcCourseHcp , expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
+import { fmtCR, fmtToPar, norm, titleCase } from "../utils/format";
+import {
+  calcSD, calcScore, calcCourseHcp, calcPlayingHcp, expectedSD9, calcStrokesPerHole, get9hRatings,
+  scoreDifferential, scoreForDifferential,
+} from "../utils/whsCalc";
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
 import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
-import { RoundSimulator } from "../ui/RoundSimulator";
+import { RoundSimulator, type IncomingRound } from "../ui/RoundSimulator";
+import {
+  whsQtyCalc, hiAdjustment, addRoundToPool, grossTargets, topRanks, historicExceptionalAdj,
+  type GrossTargets, type PoolStep,
+} from "../utils/whsCalc";
 import TeeBars from "../ui/TeeBars";
 import { physicalTeeKey } from "../utils/teeGroups";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
+import { SIM_NAMED_PLAYERS, SIM_REGION, PERCURSO_COHORT_FEDS } from "../constants/simuladorPlayers";
+import { cachedFetchJson } from "../data/fetchCache";
+import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
+
+/* Jogadores do selector que não estão no players.json (Drive da Madeira e
+ * escolhidos à mão) — gerado por scripts/build-simulador-players.js com o HI
+ * e o sexo do cadastro FPG, para não ter de descarregar o federados.json. */
+type SimExtraPlayer = { name: string; sex: "M" | "F" | null; hcp: number | null; club: string | null };
+type SimPlayersFile = { months: number; players: Record<string, SimExtraPlayer>; driveMadeira: string[] };
 
 
+
+/* Decimais à portuguesa em toda a página (a toolbar e o CR já usavam vírgula) */
+const dec1 = (v: number): string => v.toFixed(1).replace(".", ",");
+const sdPt = (v: number | null | undefined): string =>
+  v == null || !Number.isFinite(v) ? "—" : (v >= 0 ? "+" : "") + dec1(v);
 
 const MANUAL_KEY = "__manual__";
 
@@ -118,20 +139,19 @@ function HcpStrip({
     const v = parseFloat(calcInput.replace(",", "."));
     if (isNaN(v)) return null;
     if (calcMode === "score-to-sd") {
-      const sd = calcSD(v, cr, slope, pcc);
-      if (is9h && hi !== null) {
-        const exp9 = expectedSD9(hi);
-        return { value: fmtSD(sd + exp9), detail: `9h: ${sd.toFixed(1)} + ${exp9.toFixed(1)}` };
+      const d = scoreDifferential({ score: v, cr, slope, pcc, is9: is9h, hi });
+      if (d) {
+        return {
+          value: sdPt(d.sd),
+          detail: d.sd9 != null && d.exp9 != null ? `9h: ${dec1(d.sd9)} + ${dec1(d.exp9)}` : null,
+        };
       }
-      return { value: fmtSD(sd), detail: null };
+      // 9 buracos sem HI: só há o SD dos 9 jogados
+      return { value: sdPt(calcSD(v, cr, slope, pcc / 2)), detail: "SD 9h (sem HI)" };
     } else {
-      if (is9h && hi !== null) {
-        const exp9 = expectedSD9(hi);
-        const score = calcScore(v - exp9, cr, slope, pcc);
-        return { value: String(Math.floor(score)), detail: `SD 9h: ${(v - exp9).toFixed(1)}` };
-      }
-      const score = calcScore(v, cr, slope, pcc);
-      return { value: String(Math.floor(score)), detail: null };
+      const score = scoreForDifferential(v, { cr, slope, pcc, is9: is9h, hi }) ?? calcScore(v, cr, slope, pcc / 2);
+      const detail = is9h && hi !== null ? `SD 9h: ${dec1(v - expectedSD9(hi))}` : null;
+      return { value: String(Math.floor(score)), detail };
     }
   }, [calcInput, calcMode, cr, slope, pcc, hi, is9h]);
 
@@ -142,17 +162,17 @@ function HcpStrip({
         <>
           <div className="sim-strip-cell">
             <span className="sim-strip-label">Handicap Index</span>
-            <span className="sim-strip-num">{hi.toFixed(1)}</span>
+            <span className="sim-strip-num">{dec1(hi)}</span>
           </div>
           <div className="sim-strip-cell sim-strip-cell-accent">
             <span className="sim-strip-label">Course HCP{is9h ? " (9h)" : ""}</span>
             <span className="sim-strip-num">{courseHcp !== null ? Math.round(courseHcp) : "–"}</span>
-            {courseHcp !== null && <span className="sim-strip-sub">({courseHcp.toFixed(1)})</span>}
+            {courseHcp !== null && <span className="sim-strip-sub">({dec1(courseHcp)})</span>}
           </div>
           <div className="sim-strip-cell sim-strip-cell-accent">
             <span className="sim-strip-label">Playing HCP{allowance !== 100 ? ` (${allowance}%)` : ""}</span>
             <span className="sim-strip-num">{playingHcp !== null ? Math.round(playingHcp) : "–"}</span>
-            {playingHcp !== null && <span className="sim-strip-sub">({playingHcp.toFixed(1)})</span>}
+            {playingHcp !== null && <span className="sim-strip-sub">({dec1(playingHcp)})</span>}
           </div>
         </>
       )}
@@ -179,7 +199,7 @@ function HcpStrip({
       {exp9hSD !== null && (
         <div className="sim-strip-cell sim-strip-cell-9h">
           <span className="sim-strip-label">Expected SD 9h</span>
-          <span className="sim-strip-num">{exp9hSD.toFixed(1)}</span>
+          <span className="sim-strip-num">{dec1(exp9hSD)}</span>
         </div>
       )}
 
@@ -228,6 +248,9 @@ type OverlayHoleData = {
   par: number[];
   scores: (number | null)[];
   si: number[];
+  /** Totais só com o scorecard todo preenchido; `ags` só quando há HI. */
+  gross: number | null;
+  ags: number | null;
 };
 
 /* Tipo de cada buraco computado no scorecard */
@@ -277,7 +300,7 @@ function AgsSection({
   const isSynthetic = !holes?.length;
 
   const courseHcp = useMemo(
-    () => hi !== null ? Math.round(calcCourseHcp(is9h ? hi / 2 : hi, slope, cr, par)) : null,
+    () => hi !== null ? Math.round(calcCourseHcp(hi, slope, cr, par, is9h)) : null,
     [hi, is9h, slope, cr, par],
   );
   const hasAgs = courseHcp !== null;
@@ -331,17 +354,24 @@ function AgsSection({
     const allFilled = filled.length === computed.length && filled.length > 0;
     const grossTotal = allFilled ? filled.reduce((s, h) => s + h.actual!, 0) : null;
     const agsTotal = allFilled && hasAgs ? filled.reduce((s, h) => s + h.adjusted!, 0) : null;
-    const sd9Gross = grossTotal !== null ? calcSD(grossTotal, cr, slope, pcc) : null;
-    const sd9Ags   = agsTotal  !== null ? calcSD(agsTotal,  cr, slope, pcc) : null;
-    // WHS 2024: para 9 buracos, SD_18h = SD_9h + Expected_9h(HI)
+    // SD pela biblioteca (utils/whsCalc): em 9 buracos o SD dos 9 jogados e o SD
+    // a 18 com o Expected SD do HI; sem HI em 9 buracos só há o dos 9.
+    const sdOf = (score: number | null): { sd9: number | null; sd18: number | null } => {
+      if (score === null) return { sd9: null, sd18: null };
+      const d = scoreDifferential({ score, cr, slope, pcc, is9: is9h, hi });
+      if (!is9h) return { sd9: d?.sd ?? null, sd18: d?.sd ?? null };
+      return { sd9: d?.sd9 ?? calcSD(score, cr, slope, pcc / 2), sd18: d?.sd ?? null };
+    };
+    const g = sdOf(grossTotal);
+    const a = sdOf(agsTotal);
     const exp9 = is9h && hi !== null ? expectedSD9(hi) : null;
     return {
       grossTotal,
       agsTotal,
-      sdGross:  sd9Gross,
-      sdAgs:    sd9Ags,
-      sd18Gross: exp9 !== null && sd9Gross !== null ? sd9Gross + exp9 : sd9Gross,
-      sd18Ags:   exp9 !== null && sd9Ags   !== null ? sd9Ags   + exp9 : sd9Ags,
+      sdGross:  g.sd9,
+      sdAgs:    a.sd9,
+      sd18Gross: g.sd18,
+      sd18Ags:   a.sd18,
       exp9,
       filled: filled.length,
       total: computed.length,
@@ -349,6 +379,17 @@ function AgsSection({
   }, [computed, cr, slope, pcc, hasAgs, is9h, hi]);
 
   const setScore = useCallback((hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val })), []);
+  /* Ao preencher um buraco salta para o seguinte, como num cartão: logo com um
+   * dígito de 2 a 9, e com o segundo dígito quando começa por 1 (10 ou mais). */
+  const onScoreInput = useCallback((hole: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value.replace(/\D/g, "").slice(0, 2);
+    setScore(hole, v);
+    if ((v.length === 1 && v !== "1") || v.length === 2) {
+      const all = [...document.querySelectorAll<HTMLInputElement>("input[data-sim-score]")];
+      const next = all[all.indexOf(e.target) + 1];
+      if (next) { next.focus(); next.select(); }
+    }
+  }, [setScore]);
   const setCustomPar = useCallback((hole: number, val: string) => setCustomPars(prev => ({ ...prev, [hole]: val })), []);
   const setCustomSI = useCallback((hole: number, val: string) => setCustomSIs(prev => ({ ...prev, [hole]: val })), []);
   const clearAll = useCallback(() => { setScores({}); if (isSynthetic) { setCustomPars({}); setCustomSIs({}); } }, [isSynthetic]);
@@ -357,12 +398,15 @@ function AgsSection({
   React.useEffect(() => {
     if (!onOverlayData) return;
     if (!computed) { onOverlayData(null); return; }
+    const complete = computed.length > 0 && computed.every(h => h.actual !== null);
     onOverlayData({
       par: computed.map(h => h.par),
       scores: computed.map(h => h.actual),
       si: computed.map(h => h.si),
+      gross: complete ? computed.reduce((s, h) => s + h.actual!, 0) : null,
+      ags: complete && hasAgs ? computed.reduce((s, h) => s + h.adjusted!, 0) : null,
     });
-  }, [computed, onOverlayData]);
+  }, [computed, hasAgs, onOverlayData]);
 
   /* Limpar apenas no unmount — onOverlayData é estável (useCallback com []) */
   React.useEffect(() => {
@@ -415,13 +459,13 @@ function AgsSection({
             <span className="sim-strip-num">{totals.grossTotal}</span>
             {is9h ? (
               <>
-                <span className="sim-strip-sub">SD 9h {fmtSD(totals.sdGross!)}</span>
+                <span className="sim-strip-sub">SD 9h {sdPt(totals.sdGross!)}</span>
                 {totals.exp9 !== null && (
-                  <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {fmtSD(totals.sd18Gross!)}</span>
+                  <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {sdPt(totals.sd18Gross!)}</span>
                 )}
               </>
             ) : (
-              <span className="sim-strip-sub">SD {fmtSD(totals.sdGross!)}</span>
+              <span className="sim-strip-sub">SD {sdPt(totals.sdGross!)}</span>
             )}
           </div>
           {hasAgs && totals.agsTotal !== null && (
@@ -430,13 +474,13 @@ function AgsSection({
               <span className="sim-strip-num">{totals.agsTotal}</span>
               {is9h ? (
                 <>
-                  <span className="sim-strip-sub">SD 9h {fmtSD(totals.sdAgs!)}</span>
+                  <span className="sim-strip-sub">SD 9h {sdPt(totals.sdAgs!)}</span>
                   {totals.exp9 !== null && (
-                    <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {fmtSD(totals.sd18Ags!)}</span>
+                    <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {sdPt(totals.sd18Ags!)}</span>
                   )}
                 </>
               ) : (
-                <span className="sim-strip-sub">SD {fmtSD(totals.sdAgs!)}</span>
+                <span className="sim-strip-sub">SD {sdPt(totals.sdAgs!)}</span>
               )}
             </div>
           )}
@@ -444,14 +488,14 @@ function AgsSection({
             <div className="sim-strip-cell sim-strip-cell-cut">
               <span className="sim-strip-label">Cortadas</span>
               <span className="sim-strip-num">−{totals.grossTotal - totals.agsTotal}</span>
-              <span className="sim-strip-sub">SD melhora {(totals.sdGross! - totals.sdAgs!).toFixed(1)}</span>
+              <span className="sim-strip-sub">SD melhora {dec1(totals.sdGross! - totals.sdAgs!)}</span>
             </div>
           )}
           {is9h && totals.exp9 !== null && (
             <div className="sim-strip-cell sim-strip-cell-9h">
               <span className="sim-strip-label">Expected SD 9h</span>
-              <span className="sim-strip-num">{totals.exp9.toFixed(1)}</span>
-              <span className="sim-strip-sub">HI {hi?.toFixed(1)}</span>
+              <span className="sim-strip-num">{dec1(totals.exp9)}</span>
+              <span className="sim-strip-sub">HI {hi != null ? dec1(hi) : ""}</span>
             </div>
           )}
         </div>
@@ -541,7 +585,8 @@ function AgsSection({
                   <td className="sim-cell-micro">
                     <input type="text" inputMode="numeric"
                       value={scores[h.hole] || ""}
-                      onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
+                      onChange={e => onScoreInput(h.hole, e)}
+                      data-sim-score="1" enterKeyHint="next"
                       className="sim-input"
                       placeholder="·" />
                   </td>
@@ -554,7 +599,8 @@ function AgsSection({
                 <td key={h.hole} className="sim-cell-micro">
                   <input type="text" inputMode="numeric"
                     value={scores[h.hole] || ""}
-                    onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
+                    onChange={e => onScoreInput(h.hole, e)}
+                      data-sim-score="1" enterKeyHint="next"
                     className="sim-input"
                     placeholder="·" />
                 </td>
@@ -685,7 +731,7 @@ function AgsSection({
             </div>
             {courseHcp !== null && (
               <div className="mt-6">
-                HI <strong>{hi!.toFixed(1)}</strong> → CH = <strong>{courseHcp}</strong>.
+                HI <strong>{dec1(hi!)}</strong> → CH = <strong>{courseHcp}</strong>.
                 Recebes {courseHcp} pancada{courseHcp !== 1 ? "s" : ""} (SI 1–{Math.min(courseHcp, 18)}
                 {courseHcp > 18 && (<>, 2ª SI 1–{courseHcp - 18}</>)}).
               </div>
@@ -711,6 +757,147 @@ function AgsSection({
         </details>
       )}
 
+    </div>
+  );
+}
+
+/* ─── Score-alvo e impacto da volta no HI ───
+ * Usam a janela WHS real do jogador (as últimas 20 voltas com SD) e o mesmo
+ * cálculo do simulador "E se?" (utils/whsCalc). */
+type PoolE = { eid: string; sd: number; adj: number; date: string; course: string };
+
+function TargetCard({ name, hi, t, par, teeLabel, holesLabel }: {
+  name: string;
+  hi: number;
+  t: GrossTargets<PoolE>;
+  par: number;
+  teeLabel: string;
+  holesLabel: string;
+}) {
+  return (
+    <div className="sim-target">
+      <div className="sim-target-title">
+        🎯 Score-alvo de {name}{" "}
+        <span className="muted">· {teeLabel} · {holesLabel} · HI {dec1(hi)}</span>
+      </div>
+      <div className="sim-target-cells">
+        <div className="sim-target-cell sim-target-cell-good">
+          <span className="sim-strip-label">O HI desce com</span>
+          <span className="sim-strip-num">{t.lower ? `≤ ${t.lower.gross}` : "—"}</span>
+          <span className="sim-strip-sub">
+            {t.lower
+              ? `${fmtToPar(t.lower.gross - par)} · SD ${sdPt(t.lower.sd)} · fica ${dec1(t.lower.hi)}`
+              : "não desce numa só volta"}
+          </span>
+        </div>
+        <div className="sim-target-cell">
+          <span className="sim-strip-label">Entra nas {t.qty} melhores com</span>
+          <span className="sim-strip-num">{t.enterTop ? `≤ ${t.enterTop.gross}` : "—"}</span>
+          <span className="sim-strip-sub">
+            {t.enterTop ? `${fmtToPar(t.enterTop.gross - par)} · SD ${sdPt(t.enterTop.sd)}` : "—"}
+          </span>
+        </div>
+        <div className="sim-target-cell sim-target-cell-bad">
+          <span className="sim-strip-label">O HI sobe com</span>
+          <span className="sim-strip-num">{t.rise ? `≥ ${t.rise.gross}` : "—"}</span>
+          <span className="sim-strip-sub">
+            {t.rise
+              ? `${fmtToPar(t.rise.gross - par)} · SD ${sdPt(t.rise.sd)} · fica ${dec1(t.rise.hi)}`
+              : "não sobe"}
+          </span>
+        </div>
+        {t.exceptional.length > 0 && (
+          <div className="sim-target-cell sim-target-cell-warn">
+            <span className="sim-strip-label">Resultado extraordinário</span>
+            <span className="sim-strip-num">≤ {t.exceptional[0].gross}</span>
+            <span className="sim-strip-sub">
+              {t.exceptional.map((e) => `≤ ${e.gross} (SD ${sdPt(e.sd)}): ${e.adj} à janela`).join(" · ")}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="sim-target-note">
+        Pancadas em Adjusted Gross: um buraco acima do <strong>Máx</strong> do scorecard conta como o Máx.
+        {t.leaving && (
+          <>
+            {" "}A próxima volta tira da janela a de {t.leaving.entry.date} ({t.leaving.entry.course},
+            SD {sdPt(t.leaving.entry.sd)}) — {t.leaving.topRank != null
+              ? `é a ${t.leaving.topRank}.ª das ${t.qtyNow} melhores, por isso o HI pode subir mesmo com um resultado razoável`
+              : `não está nas ${t.qtyNow} melhores`}.
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+type RoundImpact = {
+  sd: number;
+  sd9: number | null;
+  exp9: number | null;
+  /** Posição nas melhores, antes da volta, do resultado que sai da janela. */
+  displacedRank: number | null;
+  qtyNow: number;
+} & PoolStep<PoolE>;
+
+function RoundImpactCard({ name, hi, score, isAgs, r, onSend }: {
+  name: string;
+  hi: number;
+  score: number;
+  isAgs: boolean;
+  r: RoundImpact;
+  onSend: () => void;
+}) {
+  const delta = r.newHI - hi;
+  const tone = delta < -0.05 ? " sim-target-cell-good" : delta > 0.05 ? " sim-target-cell-bad" : "";
+  const qty = whsQtyCalc(r.pool.length);
+  return (
+    <div className="sim-target">
+      <div className="sim-target-title">📈 Esta volta no handicap de {name}</div>
+      <div className="sim-target-cells">
+        <div className="sim-target-cell">
+          <span className="sim-strip-label">{isAgs ? "Adjusted Gross" : "Gross"}</span>
+          <span className="sim-strip-num">{score}</span>
+          <span className="sim-strip-sub">
+            {r.sd9 != null && r.exp9 != null ? `SD 9h ${dec1(r.sd9)} + esperado ${dec1(r.exp9)}` : " "}
+          </span>
+        </div>
+        <div className="sim-target-cell">
+          <span className="sim-strip-label">{r.sd9 != null ? "SD 18h" : "Score Differential"}</span>
+          <span className="sim-strip-num">{sdPt(r.sd)}</span>
+          <span className="sim-strip-sub">
+            {r.exceptionalAdj !== 0 ? `⚡ extraordinário ${r.exceptionalAdj}` : " "}
+          </span>
+        </div>
+        <div className={`sim-target-cell${tone}`}>
+          <span className="sim-strip-label">Handicap Index</span>
+          <span className="sim-strip-num">{dec1(hi)} → {dec1(r.newHI)}</span>
+          <span className="sim-strip-sub">{delta > 0 ? "+" : ""}{dec1(delta)}</span>
+        </div>
+        <div className="sim-target-cell">
+          <span className="sim-strip-label">Nas {qty} melhores</span>
+          <span className="sim-strip-num">{r.entersTop ? `★ #${r.topRank}` : "não"}</span>
+          <span className="sim-strip-sub">{r.entersTop ? "conta para o HI" : "não conta para o HI"}</span>
+        </div>
+      </div>
+      {r.displaced && (
+        <div className="sim-target-note">
+          Sai da janela a volta de {r.displaced.date} ({r.displaced.course}, SD {sdPt(r.displaced.sd)}) —{" "}
+          {r.displacedRank != null
+            ? `era a ${r.displacedRank}.ª das ${r.qtyNow} melhores`
+            : `não estava nas ${r.qtyNow} melhores`}.
+        </div>
+      )}
+      {!isAgs && (
+        <div className="sim-target-note">
+          Sem HI na toolbar não há máximos por buraco: foi usado o gross tal como está.
+        </div>
+      )}
+      <div className="sim-target-actions">
+        <button className="select pointer fs-12" onClick={onSend}>
+          ＋ Juntar ao simulador "E se?"
+        </button>
+      </div>
     </div>
   );
 }
@@ -759,7 +946,13 @@ function readInitialSimState(): SimPersistState {
     hi: pick("hi") ?? def.hi,
     pcc: pick("pcc") ?? def.pcc,
     allow: pick("allow") ?? def.allow,
-    player: pick("player") ?? def.player,
+    // Jogador: o do URL (link partilhado) ou o Manuel — nunca o da última visita.
+    // "manual" = sem jogador, HI escrito à mão.
+    player: (() => {
+      const p = sp.get("player");
+      if (p === "manual") return "";
+      return p || def.player;
+    })(),
   };
 }
 
@@ -782,22 +975,77 @@ export default function SimuladorPage() {
   /* Jogador seleccionado — preenche o HI e alimenta o simulador "E se?" */
   const [playerFed, setPlayerFed] = useState<string>(init.player || "");
   const [playerData, setPlayerData] = useState<PlayerPageData | null>(null);
+  /* Volta do scorecard enviada para o simulador "E se?" */
+  const [incomingRound, setIncomingRound] = useState<IncomingRound | null>(null);
 
-  /* Lista de jogadores com handicap, ordenada (Manuel primeiro) */
-  const playerOptions = useMemo(() => {
-    const list = Object.values(players)
-      .filter((p) => p.nfed && p.hcp != null)
-      .sort((a, b) => {
-        if (a.nfed === MANUEL_FED) return -1;
-        if (b.nfed === MANUEL_FED) return 1;
-        return a.name.localeCompare(b.name, "pt");
-      });
-    return list;
-  }, [players]);
+  const [simExtra, setSimExtra] = useState<SimPlayersFile | null>(null);
+  useEffect(() => {
+    let alive = true;
+    cachedFetchJson<SimPlayersFile>("/data/simulador-players.json")
+      .then((d) => { if (alive && d) setSimExtra(d); })
+      .catch(() => { /* sem o ficheiro: ficam só os do players.json */ });
+    return () => { alive = false; };
+  }, []);
+
+  const nameOf = useCallback(
+    (fed: string) => SIM_NAMED_PLAYERS.find((p) => p.fed === fed)?.label
+      ?? players[fed]?.name
+      ?? simExtra?.players[fed]?.name
+      ?? fed,
+    [players, simExtra],
+  );
+  const sexOf = useCallback((fed: string): "M" | "F" | null => {
+    const s = players[fed]?.sex ?? SIM_NAMED_PLAYERS.find((p) => p.fed === fed)?.sex ?? simExtra?.players[fed]?.sex;
+    return s === "M" || s === "F" ? s : null;
+  }, [players, simExtra]);
+  const hcpOf = useCallback(
+    (fed: string): number | null => players[fed]?.hcp ?? simExtra?.players[fed]?.hcp ?? null,
+    [players, simExtra],
+  );
+
+  /* Selector de jogador, por grupos; cada pessoa só no primeiro grupo em que cabe */
+  const playerGroups = useMemo(() => {
+    const seen = new Set<string>();
+    const named = new Set(SIM_NAMED_PLAYERS.map((p) => p.fed));
+    // Um ciclo, não filter+map: o mesmo federado pode vir repetido dentro da
+    // própria lista (ex: da Madeira no players.json E do Drive da Madeira).
+    const take = (feds: string[]) => {
+      const items: { fed: string; name: string; hcp: number | null }[] = [];
+      for (const f of feds) {
+        if (seen.has(f) || !(players[f] || named.has(f) || simExtra?.players[f])) continue;
+        seen.add(f);
+        items.push({ fed: f, name: nameOf(f), hcp: hcpOf(f) });
+      }
+      return items;
+    };
+    const byName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name, "pt");
+    const namedIn = (g: string) => SIM_NAMED_PLAYERS.filter((p) => p.group === g).map((p) => p.fed);
+    const all = Object.values(players);
+    const groups = [
+      { label: "Manuel", items: take([MANUEL_FED]) },
+      { label: "Absolutos", items: take(namedIn("Absolutos")) },
+      {
+        label: "Madeira",
+        items: take([
+          ...namedIn("Madeira"),
+          ...all.filter((p) => p.region === SIM_REGION).map((p) => p.nfed),
+          ...(simExtra?.driveMadeira ?? []),
+        ]).sort(byName),
+      },
+      { label: "PJA", items: take(all.filter((p) => p.tags?.includes("PJA")).map((p) => p.nfed)).sort(byName) },
+      { label: "Percurso dos juniores", items: take(PERCURSO_COHORT_FEDS).sort(byName) },
+    ];
+    // Um link antigo pode apontar para alguém fora da lista — mostra-se à parte
+    if (playerFed && players[playerFed] && !seen.has(playerFed)) {
+      groups.push({ label: "Outro", items: take([playerFed]) });
+    }
+    return groups.filter((g) => g.items.length > 0);
+  }, [players, simExtra, nameOf, hcpOf, playerFed]);
 
   /* Carregar dados do jogador seleccionado (para o simulador de rondas) */
   useEffect(() => {
-    if (!playerFed) { setPlayerData(null); return; }
+    setPlayerData(null);
+    if (!playerFed) return;
     let alive = true;
     loadPlayerData(playerFed)
       .then((d) => { if (alive) setPlayerData(d); })
@@ -805,22 +1053,28 @@ export default function SimuladorPage() {
     return () => { alive = false; };
   }, [playerFed]);
 
-  /* Quando muda o jogador, pré-preencher o HI com o HI real (se o utilizador
-   * não tiver escrito um valor manual diferente). */
-  const selectPlayer = useCallback((fed: string) => {
-    setPlayerFed(fed);
-    const p = players[fed];
-    if (p?.hcp != null) setHiInput(String(p.hcp).replace(".", ","));
-  }, [players]);
+  /* HI do jogador escolhido: o oficial (HCP_INFO) quando a ficha já carregou,
+   * senão o do players.json. Com jogador, é SEMPRE este o HI da página. */
+  const playerHI: number | null = playerFed
+    ? playerData?.HCP_INFO?.current ?? hcpOf(playerFed)
+    : null;
 
-  /* Pré-preencher o HI da toolbar com o HI do jogador por defeito quando o
-   * campo está vazio (não sobrepõe um valor escrito manualmente). */
+  /* Mudar de jogador. Ao passar para "HI manual" o campo começa com o HI que
+   * estava a ser usado, para se poder ajustar a partir daí. */
+  const selectPlayer = useCallback((fed: string) => {
+    if (!fed && playerHI != null) setHiInput(String(playerHI).replace(".", ","));
+    // Mudar de sexo muda a lista de tees — o índice do tee deixa de valer
+    const s = fed ? sexOf(fed) : null;
+    if (s && s !== sexFilter) setSelectedTeeIdx(null);
+    setPlayerFed(fed);
+    setIncomingRound(null);
+  }, [playerHI, sexOf, sexFilter]);
+
+  /* O sexo acompanha o jogador escolhido (continua a poder mudar-se à mão) */
+  const playerSex = playerFed ? sexOf(playerFed) : null;
   useEffect(() => {
-    if (!playerFed || hiInput.trim() !== "") return;
-    const p = players[playerFed];
-    if (p?.hcp != null) setHiInput(String(p.hcp).replace(".", ","));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerFed, players]);
+    if (playerSex) setSexFilter(playerSex);
+  }, [playerSex, playerFed]);
 
   /* whs20 do jogador — últimas 20 rondas com SD válido (janela WHS real) */
   const whs20 = useMemo(() => {
@@ -828,7 +1082,9 @@ export default function SimuladorPage() {
     const arr: (RoundData & { course: string })[] = [];
     playerData.DATA.forEach((c) => c.rounds.forEach((r) => arr.push({ ...r, course: c.course })));
     arr.sort((a, b) => (b.dateSort || 0) - (a.dateSort || 0));
-    return arr.filter((r) => r.sd != null && !isNaN(Number(r.sd))).slice(0, 20);
+    // ⚠ Number("") é 0: sem o parseFloat, as voltas com SD vazio (há-as no
+    // data.json) ocupavam lugares na janela e o "E se?" tratava-as como SD 0.
+    return arr.filter((r) => Number.isFinite(parseFloat(String(r.sd ?? "").replace(",", ".")))).slice(0, 20);
   }, [playerData]);
 
   /* Manual ratings state */
@@ -844,10 +1100,12 @@ export default function SimuladorPage() {
 
   const isManual = selectedKey === MANUAL_KEY;
 
+  /* HI usado nos cálculos: o do jogador escolhido, ou o escrito à mão em modo manual */
   const hi = useMemo(() => {
+    if (playerFed) return playerHI;
     const v = parseFloat(hiInput.replace(",", "."));
     return isNaN(v) ? null : v;
-  }, [hiInput]);
+  }, [playerFed, playerHI, hiInput]);
 
   const is9h = holesMode === "front9" || holesMode === "back9";
 
@@ -870,15 +1128,35 @@ export default function SimuladorPage() {
     if (state.tee) next.set("tee", state.tee);
     if (state.holes !== "18") next.set("holes", state.holes);
     if (state.sex !== "ALL") next.set("sex", state.sex);
-    if (state.hi) next.set("hi", state.hi);
+    // Com jogador o HI é o dele — só vai para o URL em modo manual.
+    if (!state.player) {
+      next.set("player", "manual");
+      if (state.hi) next.set("hi", state.hi);
+    } else if (state.player !== MANUEL_FED) {
+      next.set("player", state.player);
+    }
     if (state.pcc !== "0") next.set("pcc", state.pcc);
     if (state.allow !== "100") next.set("allow", state.allow);
-    if (state.player && state.player !== MANUEL_FED) next.set("player", state.player);
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKey, selectedTeeIdx, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
 
-  /* Filtrar campos — excluir entradas que são torneios/organizações (não campos) */
+  /* Voltas do jogador escolhido em cada campo — os que ele joga vão para o topo */
+  const playedRounds = useMemo(() => {
+    const m = new Map<string, number>();
+    playerData?.DATA.forEach((c) => {
+      const k = courseMatchKey(c.course);
+      m.set(k, (m.get(k) ?? 0) + c.rounds.length);
+    });
+    return m;
+  }, [playerData]);
+  const roundsAt = useCallback(
+    (c: { master: { name: string } }) => playedRounds.get(courseMatchKey(c.master.name)) ?? 0,
+    [playedRounds],
+  );
+
+  /* Filtrar campos — excluir entradas que são torneios/organizações (não campos).
+   * Ordem: os mais jogados pelo jogador escolhido primeiro, depois alfabética. */
   const filtered = useMemo(() => {
     const qq = norm(q);
     let list = courses.filter((c) => !isTournamentCourse(c.courseKey));
@@ -889,8 +1167,9 @@ export default function SimuladorPage() {
         return name.includes(qq) || key.includes(qq);
       });
     }
-    return list;
-  }, [courses, q]);
+    return [...list].sort((a, b) =>
+      roundsAt(b) - roundsAt(a) || a.master.name.localeCompare(b.master.name, "pt"));
+  }, [courses, q, roundsAt]);
 
   /* Campo selecionado */
   const selected = useMemo(() => {
@@ -912,14 +1191,39 @@ export default function SimuladorPage() {
     }));
   }, [selected, sexFilter, holesMode, is9h]);
 
+  /* Tee habitual do jogador neste campo (o mais usado nas últimas 10 voltas lá) —
+   * é o que abre enquanto não se escolhe outro. */
+  const usualTeeIdx = useMemo(() => {
+    if (!selected || !playerData || !availableTees.length) return null;
+    const key = courseMatchKey(selected.master.name);
+    const rs: { tee: string; d: number; course: string }[] = [];
+    playerData.DATA.forEach((c) => {
+      if (courseMatchKey(c.course) !== key) return;
+      c.rounds.forEach((r) => rs.push({ tee: r.tee, d: r.dateSort, course: c.course }));
+    });
+    rs.sort((a, b) => b.d - a.d);
+    const count = new Map<number, number>();
+    for (const r of rs.slice(0, 10)) {
+      const t = resolvePlayedTee(r.course, r.tee, courses, playerFed);
+      if (!t) continue;
+      let idx = availableTees.findIndex((x) => x.teeId === t.teeId);
+      if (idx < 0) idx = availableTees.findIndex((x) => physicalTeeKey(x) === physicalTeeKey(t));
+      if (idx >= 0) count.set(idx, (count.get(idx) ?? 0) + 1);
+    }
+    let best: number | null = null;
+    let bestN = 0;
+    for (const [i, n] of count) if (n > bestN) { best = i; bestN = n; }
+    return best;
+  }, [selected, playerData, availableTees, courses, playerFed]);
+
   /* Tee selecionado */
   const selectedTee = useMemo(() => {
     if (!availableTees.length) return null;
     if (selectedTeeIdx !== null && selectedTeeIdx < availableTees.length) {
       return availableTees[selectedTeeIdx];
     }
-    return availableTees[0];
-  }, [availableTees, selectedTeeIdx]);
+    return availableTees[usualTeeIdx ?? 0];
+  }, [availableTees, selectedTeeIdx, usualTeeIdx]);
 
 
   /* Dados do tee para cálculos (18h ou 9h) — campo selecionado OU manual */
@@ -951,15 +1255,14 @@ export default function SimuladorPage() {
    * WHS: para 9 buracos usa HI/2 na fórmula */
   const courseHcp = useMemo(() => {
     if (!teeData || hi === null) return null;
-    const effectiveHI = is9h ? hi / 2 : hi;
-    return calcCourseHcp(effectiveHI, teeData.slope, teeData.cr, teeData.par);
+    return calcCourseHcp(hi, teeData.slope, teeData.cr, teeData.par, is9h);
   }, [teeData, hi, is9h]);
 
   /* Playing Handicap = CH × allowance% — usado para Net Score em competição */
   const playingHcp = useMemo(() => {
-    if (courseHcp === null) return null;
-    return courseHcp * (allowance / 100);
-  }, [courseHcp, allowance]);
+    if (!teeData || hi === null) return null;
+    return calcPlayingHcp(hi, teeData.slope, teeData.cr, teeData.par, allowance / 100, is9h);
+  }, [teeData, hi, is9h, allowance]);
 
   /* Expected 9h SD */
   const exp9hSD = useMemo(() => {
@@ -968,6 +1271,75 @@ export default function SimuladorPage() {
   }, [is9h, hi]);
 
   const holesLabel = holesMode === "front9" ? "Front 9" : holesMode === "back9" ? "Back 9" : "18 buracos";
+
+  /* ── Janela WHS real do jogador → score-alvo e impacto da volta ──
+   * O HI da janela é o oficial (HCP_INFO), não o da toolbar: a projecção só
+   * faz sentido com os 20 resultados reais e o índice que deles resulta. */
+  const playerName = playerFed ? nameOf(playerFed) : null;
+  const poolHI = playerData?.HCP_INFO?.current ?? null;
+  const lowHI = playerData?.HCP_INFO?.lowHcp ?? null;
+  /* Janela com os ajustes de resultados extraordinários que a FPG já aplicou */
+  const whsPool = useMemo<PoolE[]>(() => {
+    const base = whs20
+      .map((r) => ({
+        eid: String(r.scoreId),
+        sd: parseFloat(String(r.sd).replace(",", ".")),
+        hi: r.hi,
+        date: r.date,
+        course: r.course,
+      }))
+      .filter((e) => !isNaN(e.sd));
+    const adj = historicExceptionalAdj(base);
+    return base.map((b, i) => ({ eid: b.eid, sd: b.sd, adj: adj[i], date: b.date, course: b.course }));
+  }, [whs20]);
+  const hiAdj = useMemo(
+    () => (poolHI == null ? 0 : hiAdjustment(whsPool, poolHI, lowHI)),
+    [whsPool, poolHI, lowHI],
+  );
+  const targets = useMemo(() => {
+    if (!teeData || poolHI == null || !whsPool.length) return null;
+    return grossTargets(whsPool, poolHI, hiAdj, {
+      cr: teeData.cr, slope: teeData.slope, par: teeData.par, pcc, is9: is9h,
+    }, lowHI);
+  }, [teeData, poolHI, whsPool, hiAdj, pcc, is9h, lowHI]);
+
+  const roundScore = overlayHoleData ? (overlayHoleData.ags ?? overlayHoleData.gross) : null;
+  const roundImpact = useMemo((): RoundImpact | null => {
+    if (!teeData || poolHI == null || !whsPool.length || roundScore == null) return null;
+    const s = scoreDifferential({ score: roundScore, cr: teeData.cr, slope: teeData.slope, pcc, is9: is9h, hi: poolHI });
+    if (!s) return null;
+    const step = addRoundToPool(
+      whsPool, { eid: "__scorecard__", sd: s.sd, adj: 0, date: "", course: "" }, poolHI, hiAdj, lowHI,
+    );
+    const displacedRank = step.displaced ? topRanks(whsPool).get(step.displaced.eid) ?? null : null;
+    return { ...s, ...step, displacedRank, qtyNow: whsQtyCalc(whsPool.length) };
+  }, [teeData, poolHI, whsPool, roundScore, pcc, is9h, hiAdj, lowHI]);
+
+  const sendRoundToSimulator = useCallback(() => {
+    if (!teeData || !roundImpact || roundScore == null) return;
+    setIncomingRound({
+      key: Date.now(),
+      holesMode,
+      courseKey: isManual ? undefined : selected?.courseKey,
+      teeId: isManual ? undefined : selectedTee?.teeId,
+      cr: teeData.cr,
+      slope: teeData.slope,
+      par: teeData.par,
+      gross: roundScore,
+      pcc,
+    });
+    document.getElementById("sim-ese")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [teeData, roundImpact, roundScore, holesMode, isManual, selected, selectedTee, pcc]);
+
+  const teeLabel = isManual ? "CR/Slope manual" : selectedTee ? titleCase(selectedTee.teeName) : "";
+  const targetCard = playerName && poolHI != null && targets && teeData ? (
+    <TargetCard name={playerName} hi={poolHI} t={targets} par={teeData.par}
+      teeLabel={teeLabel} holesLabel={holesLabel} />
+  ) : null;
+  const roundCard = playerName && poolHI != null && roundImpact && roundScore != null ? (
+    <RoundImpactCard name={playerName} hi={poolHI} score={roundScore}
+      isAgs={overlayHoleData?.ags != null} r={roundImpact} onSend={sendRoundToSimulator} />
+  ) : null;
 
   /* Próximo evento do calendário — para pré-preencher o campo "Torneio" */
   const nextEventName = useMemo(() => {
@@ -991,7 +1363,10 @@ export default function SimuladorPage() {
     const holeScores = overlayHoleData?.scores ?? null;
     const allFilled = holeScores ? holeScores.every(s => s !== null) : false;
     const grossTotal = allFilled ? (holeScores as number[]).reduce((a, b) => a + b, 0) : null;
-    const sd = grossTotal !== null && slope > 0 ? calcSD(grossTotal, cr, slope, pcc) : null;
+    // SD da volta como em todo o site: AGS (quando há HI) e 9 buracos pela biblioteca
+    const sd = grossTotal !== null
+      ? scoreDifferential({ score: overlayHoleData?.ags ?? grossTotal, cr, slope, pcc, is9: is9h, hi })?.sd ?? null
+      : null;
 
     /* metros por buraco (do tee seleccionado) */
     const meters = !isManual && selectedTee?.holes
@@ -1038,17 +1413,26 @@ export default function SimuladorPage() {
           title="Escolhe um jogador para usar o HI real e simular o impacto de uma volta no handicap"
         >
           <option value="">Jogador (HI manual)</option>
-          {playerOptions.map((p) => (
-            <option key={p.nfed} value={p.nfed}>
-              {p.name}{p.hcp != null ? ` (${String(p.hcp).replace(".", ",")})` : ""}
-            </option>
+          {playerGroups.map((g) => (
+            <optgroup key={g.label} label={g.label}>
+              {g.items.map((p) => (
+                <option key={p.fed} value={p.fed}>
+                  {p.name}{p.hcp != null ? ` (${String(p.hcp).replace(".", ",")})` : ""}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
         <input
           className="input col-w100"
-          value={hiInput}
-          onChange={(e) => setHiInput(e.target.value)}
+          value={playerFed ? (playerHI != null ? String(playerHI).replace(".", ",") : "") : hiInput}
+          onChange={(e) => {
+            // Escrever um HI passa para o modo manual
+            if (playerFed) { setPlayerFed(""); setIncomingRound(null); }
+            setHiInput(e.target.value);
+          }}
           placeholder="HI (ex: 15,4)"
+          title={playerFed ? "HI do jogador escolhido — escrever aqui passa para HI manual" : "HI escrito à mão"}
         />
         <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
           {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
@@ -1114,6 +1498,7 @@ export default function SimuladorPage() {
                 <div className="course-item-name">{c.master.name}</div>
                 <div className="course-item-meta">
                   {nTees} tee{nTees !== 1 ? "s" : ""} c/ ratings
+                  {roundsAt(c) > 0 && <> · ★ {roundsAt(c)} volta{roundsAt(c) !== 1 ? "s" : ""}</>}
                 </div>
               </button>
             );
@@ -1160,7 +1545,11 @@ export default function SimuladorPage() {
                     </div>
                   )}
 
+                  {targetCard}
+
                   <AgsSection hi={hi} holes={null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} onOverlayData={handleOverlayData} />
+
+                  {roundCard}
 
                   <details className="mt-14">
                     <summary className="sim-section-toggle">
@@ -1201,6 +1590,7 @@ export default function SimuladorPage() {
               {/* Seletor de Tee — barras partilhadas (M/F por tee, clicável) */}
               <TeeBars
                 tees={availableTees}
+                nine={is9h ? (holesMode as "front9" | "back9") : undefined}
                 selectedTeeId={selectedTee?.teeId ?? null}
                 onSelectTee={(tee) => {
                   const idx = availableTees.findIndex((t) => t.teeId === tee.teeId);
@@ -1227,7 +1617,11 @@ export default function SimuladorPage() {
                 </div>
               )}
 
+              {targetCard}
+
               <AgsSection hi={hi} holes={selectedTee?.holes ?? null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} onOverlayData={handleOverlayData} />
+
+              {roundCard}
 
               {/* Partilhar Scorecard — colapsável */}
               {overlayData && (
@@ -1288,13 +1682,13 @@ export default function SimuladorPage() {
            * 5.2a + regra Exceptional Score) para projectar o HI após uma volta
            * simulada. Visível quando há jogador seleccionado com janela WHS. */}
           {playerData && playerData.HCP_INFO?.current != null && whs20.length > 0 && (
-            <details className="mt-14" open>
+            <details className="mt-14" open id="sim-ese">
               <summary className="sim-section-toggle">
                 Simulador "E se?" — impacto no Handicap Index de {players[playerFed]?.name ?? "jogador"}
               </summary>
               <div className="mt-8">
                 <div className="muted fs-12 mb-8">
-                  HI actual <strong>{playerData.HCP_INFO.current.toFixed(1)}</strong> ·
+                  HI actual <strong>{dec1(playerData.HCP_INFO.current)}</strong> ·
                   janela WHS de {whs20.length} resultado{whs20.length !== 1 ? "s" : ""}.
                   Simula uma volta (SD directo ou Campo+Tee+Gross) e vê o HI projectado,
                   se entra nos melhores e que resultado sai da janela.
@@ -1306,6 +1700,7 @@ export default function SimuladorPage() {
                   bare
                   storageKey={`sim_rounds_simpage_${playerFed}`}
                   manualDefaults={{ "18": manual18, front9: manualF9, back9: manualB9 }}
+                  incomingRound={incomingRound ?? undefined}
                 />
               </div>
             </details>

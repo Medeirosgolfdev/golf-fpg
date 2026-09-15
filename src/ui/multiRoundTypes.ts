@@ -15,7 +15,6 @@ export interface MRRound {
   parPerRound?: number;
   /** Scoring Differential */
   sd?: number | null;
-  sdSource?: string | null;
   /** Contadores de score */
   eagles?: number;
   birdies?: number;

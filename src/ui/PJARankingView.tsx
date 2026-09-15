@@ -80,7 +80,7 @@ interface PJATournCol {
 interface PJARoundResult {
   toPar: number;
   pts: number;
-  /** Só no modo metric="sd": differential da volta (sem componente de HCP). */
+  /** Só no modo metric="sd": o SD oficial da FPG nesta volta. */
   sd?: number | null;
   /** Metros jogados nessa volta (o tee/campo varia entre jogadores quando a
    *  coluna agrega várias provas — ex: "3º Drive Challenge" junta as regiões). */
@@ -260,11 +260,10 @@ export function PJARankingView({
   emptyLabel?: string;
   /** Métrica das células e do total:
    *   "pts" (default) — pontos por ±par (25 − pancadas acima), total = soma do top-14.
-   *   "sd"            — score differential SEM componente de handicap,
-   *                     total = média das 8 melhores (MENOR é melhor).
+   *   "sd"            — o SD oficial da FPG de cada volta (o do WHS de cada
+   *                     jogador), total = média das 8 melhores (MENOR é melhor).
    * O modo "sd" existe para escalões que jogam sobretudo 9 buracos em campos
-   * muito diferentes, onde os pontos por ±par não são comparáveis e o SD
-   * oficial do WHS traria o handicap para dentro da conta. Ver
+   * muito diferentes, onde os pontos por ±par não são comparáveis. Ver
    * scripts/build-sub12-ranking.js. */
   metric?: "pts" | "sd";
   /** Acrescenta uma coluna "m" (metros jogados) a cada ronda. Útil quando a
@@ -557,8 +556,8 @@ export function PJARankingView({
           if (ggMainExcluded) excludedReason = "Greatgolf Main: R1 não conta para o ranking PJA (só R2+R3)";
           else if (aquaporSkipped) excludedReason = "Aquapor: jogador também fez Drive Tour, Aquapor não conta";
 
-          // Modo "sd": o differential vem pré-calculado na ronda pelo builder
-          // (não é recalculado aqui — depende de CR/Slope e do nº de buracos).
+          // Modo "sd": o SD oficial da FPG vem na ronda (build-sub12-ranking.js);
+          // aqui nunca se calcula.
           const sd = metric === "sd" && rs && typeof rs.sd === "number" ? rs.sd : null;
           const meters = rs && typeof rs.meters === "number" ? rs.meters : null;
           const prova = rs && rs._prova ? String(rs._prova) : null;
@@ -958,7 +957,7 @@ export function PJARankingView({
       <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{sortedRows.length} de {allRows.length}</span>
       <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title={metric === "sd" ? `SD = (113/Slope) × (Gross − CR), ×2 nas voltas de 9 buracos · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor · não depende do handicap` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+    <span className="muted fs-10 ml-auto" title={metric === "sd" ? `SD oficial da FPG de cada volta (o do WHS de cada miúdo) · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
       ℹ Regras
     </span>
     <span className="chip" title={`${allRows.length} ${specialRules ? "jogadores PJA" : "juniores"} · ${visibleTournCols.length} torneios`}>

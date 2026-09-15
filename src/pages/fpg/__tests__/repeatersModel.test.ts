@@ -2,12 +2,14 @@ import { describe, it, expect } from "vitest";
 import { buildRepeaters, currentField, masterTeeRatings, nameKey, teeRatings } from "../repeatersModel";
 import type { Tournament } from "../../../data/fpgTypes";
 
+// `sd` = o SD oficial da FPG gravado em cada volta (o site nunca o calcula):
+// (113/130)×(75−71) = 3,5.
 const jogador = (over: Record<string, unknown>) => ({
   name: "X", fedCode: null, pos: 1, grossTotal: 150, toPar: 6, hcpExact: 10,
   parTotal: 72, nholes: 18, courseRating: 71, slope: 130, teeName: "AMARELAS",
   roundScores: [
-    { round: 1, gross: 75, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) },
-    { round: 2, gross: 75, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) },
+    { round: 1, gross: 75, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4), sd: 3.5 },
+    { round: 2, gross: 75, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4), sd: 3.5 },
   ],
   ...over,
 });
@@ -126,7 +128,7 @@ describe("buildRepeaters", () => {
 describe("teeKnown — não fingir que se conhece o rating de um tee novo", () => {
   const prev = torneio([jogador({ name: "GAO,Angelina", fedCode: "51523", teeName: "AMARELAS",
     courseRating: 71.1, slope: 126,
-    roundScores: [{ round: 1, gross: 73, courseRating: 71.1, slope: 126, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) }] })]);
+    roundScores: [{ round: 1, gross: 73, courseRating: 71.1, slope: 126, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4), sd: 1.7 }] })]);
   const fedInfo = () => ({ hcp: 4, club: null, escalao: "Sub-16", sex: "F" });
   const comTee = (tee: string) => ({
     ccode: "192", tcode: "90101", players: [], rounds: 1,
@@ -170,7 +172,7 @@ describe("masterTeeRatings — a ficha do campo é a fonte autoritativa dos tees
   it("ganha ao rating inferido das edições anteriores", () => {
     const prev = torneio([jogador({ name: "GAO,Angelina", fedCode: "51523", teeName: "AMARELAS",
       courseRating: 71.1, slope: 126,
-      roundScores: [{ round: 1, gross: 73, courseRating: 71.1, slope: 126, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) }] })]);
+      roundScores: [{ round: 1, gross: 73, courseRating: 71.1, slope: 126, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4), sd: 1.7 }] })]);
     const current = {
       ccode: "192", tcode: "90101", players: [], rounds: 1, campo: "Terras da Comporta - Torre",
       _draws: { "1": { groups: [{ tee: "Laranjas", players: [{ nome: "Angelina Gao", fed: "51523" }] }] } },
@@ -194,7 +196,8 @@ describe("previsão pela FORMA (player-stats)", () => {
     // field com dispersão, para haver mediana (precisa de ≥5 differentials)
     ...Array.from({ length: 6 }, (_, i) => jogador({
       name: `OUTRO${i},X`, fedCode: `9000${i}`, hcpExact: 10,
-      roundScores: [{ round: 1, gross: 80 + i, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4) }],
+      roundScores: [{ round: 1, gross: 80 + i, courseRating: 71, slope: 130, teeName: "AMARELAS", scores: Array(18).fill(4), pars: Array(18).fill(4),
+        sd: Math.round(((9 + i) * 113 / 130) * 10) / 10 }],
     })),
   ]);
   const hoje = {

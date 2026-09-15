@@ -199,6 +199,61 @@ async function criarSessaoLista(opts = {}) {
 }
 
 /**
+ * Sessão para o HISTÓRICO WHS de um federado, sem login (medido 2026-09-15).
+ *
+ * É o gate da ficha do federado (`datalinkpt.html?page=fedhcp&fedno=…`), cujo
+ * `DataGolfeRedirect` monta o `1PreparePage.aspx?page=fedhcp`. Com a sessão que
+ * ele emite, `PlayerWHS.aspx/HCPWhsFederLST` e `fed_hcp.aspx/ScoreCard`
+ * respondem `Result:OK` com os MESMOS dados que o my.fpg.pt dá com login.
+ *
+ * ⚠ O gate irmão `page=federated` NÃO serve: lá o WHS responde "Acesso negado.
+ * Por favor faça login".
+ * ⚠ Uma sessão aberta para um federado serve o WHS e os cartões de qualquer
+ * outro — o `fedno` do gate só escolhe a página de entrada.
+ */
+const prepareWhs = fed => `${BASE_PT}/1PreparePage.aspx?user=fpguser&page=fedhcp&fedno=${fed}&pagelang=PT`;
+
+async function criarSessaoWhs(fed, opts = {}) {
+  const s = new Sessao({ base: BASE_PT, ...opts });
+  await s.get(ENTRADA_LISTA);
+  const r = await s.get(prepareWhs(fed));
+  const ok = r.status === 200 && /fed_hcp\.aspx/i.test(r.url) &&
+             !/Runtime Error|Server Error in|Param_Errors|Err=999/i.test(r.html);
+  if (!ok) return null;
+  s.referer = r.url;
+  return s;
+}
+
+/** PageMethod do my.fpg.pt → o equivalente na ficha pública. */
+const PATH_WHS_PUBLICO = {
+  'PlayerWHS.aspx/HCPWhsFederLST': 'PlayerWHS.aspx/HCPWhsFederLST',
+  'PlayerWHS.aspx/ScoreCard': 'fed_hcp.aspx/ScoreCard',
+};
+
+/**
+ * Deixa os registos públicos iguais, byte a byte, aos do my.fpg.pt — senão
+ * cada troca entre os dois caminhos reescrevia todos os whs.json/scorecards.json
+ * (o fpg-scrape-node.js compara por JSON.stringify).
+ *   - WHS: a ficha pública acrescenta `confirm_status` (sempre 0 no medido).
+ *   - ScoreCard: só o HTML do `scdisplay` difere — o cabeçalho da coluna do tee
+ *     vem vazio e o caminho da imagem do tee sem a `/` inicial.
+ */
+function normalizarRegistosWhs(pathname, records) {
+  if (pathname.endsWith('/HCPWhsFederLST')) {
+    return records.map(r => { const { confirm_status, ...resto } = r; return resto; });
+  }
+  if (pathname.endsWith('/ScoreCard')) {
+    return records.map(r => typeof r.scdisplay !== 'string' ? r : {
+      ...r,
+      scdisplay: r.scdisplay
+        .replace('<th></th><th>HCP Exacto</th>', '<th>Tee</th><th>HCP Exacto</th>')
+        .replace(/src="Content\/Images\//g, 'src="/Content/Images/'),
+    });
+  }
+  return records;
+}
+
+/**
  * Roteador partilhado: mesma assinatura do `dgPost` dos scrapers, mas capaz de
  * cair no caminho público quando o autenticado falha com 500.
  *
@@ -211,6 +266,8 @@ async function criarSessaoLista(opts = {}) {
  *   classif*.aspx/*           → linkpage?page=classif&club&tourn   (por torneio)
  *   FederatedsList_V2.aspx/*  → 1PreparePage (fedlist_v2)
  *   rankings_classif.aspx/*   → linkpage?page=rankingresult&club&ranking
+ *   PlayerWHS.aspx/*          → 1PreparePage (fedhcp) — o WHS do my.fpg.pt; o
+ *                               ScoreCard vai para fed_hcp.aspx/ScoreCard
  *
  * ⚠ NÃO cobre as admissions: medido 2026-08-30, o gate público serve umas
  * (000/10941) e devolve "Link address inválido" (Err=400) noutras (987/10245).
@@ -235,12 +292,19 @@ function criarRoteador({ dgPost, info = () => {}, preferirPublico }) {
     : modo === 'publico' ? true
     : (preferirPublico !== undefined ? preferirPublico : true);
   let publico = !dgPost || modo === 'publico';
-  let sLista, sFed;
+  let sLista, sFed, sWhs;
   const sClassif = new Map();
   const sRank = new Map();
   let avisouCookies = false;
 
-  const abrirPor = async (pathname, body) => {
+  const abrirPor = async (pathname, body, ctx = {}) => {
+    if (pathname.startsWith('PlayerWHS.aspx')) {
+      // Uma sessão chega para todos os federados (ver criarSessaoWhs). Se o
+      // gate falhar, fica null e tenta-se de novo no pedido seguinte — uma
+      // falha passageira não pode condenar o resto da corrida às cookies.
+      if (!sWhs) sWhs = await criarSessaoWhs(body.fed_code || ctx.fed || '52884').catch(() => null);
+      return sWhs;
+    }
     if (pathname.startsWith('tournaments.aspx')) {
       if (sLista === undefined) sLista = await criarSessaoLista().catch(() => null);
       return sLista;
@@ -274,23 +338,30 @@ function criarRoteador({ dgPost, info = () => {}, preferirPublico }) {
     return sClassif.get(k);
   };
 
-  const postPublico = async (pathname, body, qs) => {
-    const sess = await abrirPor(pathname, body);
+  const postPublico = async (pathname, body, qs, ctx) => {
+    const sess = await abrirPor(pathname, body, ctx);
     if (!sess) throw new Error(`sem sessão pública para ${pathname}`);
-    const r = await sess.postPageMethod(pathname, body, { queryString: qs });
-    if (!r.ok) throw new Error(`${pathname}: Result=${r.result || '?'} (público)`);
-    return { Records: r.records, TotalRecordCount: r.total ?? 0, Result: 'OK' };
+    const whs = pathname.startsWith('PlayerWHS.aspx');
+    const alvo = (whs && PATH_WHS_PUBLICO[pathname]) || pathname;
+    const r = await sess.postPageMethod(alvo, body, { queryString: qs, referer: sess.referer });
+    if (!r.ok) {
+      if (whs) sWhs = null; // sessão possivelmente morta — reabrir no próximo pedido
+      throw new Error(`${pathname}: Result=${r.result || '?'} (público)`);
+    }
+    const records = whs ? normalizarRegistosWhs(pathname, r.records) : r.records;
+    return { Records: records, TotalRecordCount: r.total ?? 0, Result: 'OK' };
   };
 
   return {
     get publico() { return publico; },
     get modo() { return modo; },
-    async post(pathname, body, qs) {
-      if (publico || !dgPost) return postPublico(pathname, body, qs);
+    /** @param {object} [ctx] — `{fed}` para o ScoreCard do WHS, cujo body não traz o federado */
+    async post(pathname, body, qs, ctx) {
+      if (publico || !dgPost) return postPublico(pathname, body, qs, ctx);
 
       if (publicoPrimeiro) {
         try {
-          return await postPublico(pathname, body, qs);
+          return await postPublico(pathname, body, qs, ctx);
         } catch (e) {
           // O gate público falhou (FPG em baixo, gate mudado, torneio que só
           // abre autenticado). Só desistimos depois de perguntar com cookies.
@@ -310,7 +381,7 @@ function criarRoteador({ dgPost, info = () => {}, preferirPublico }) {
         // 500 não distingue "cookies mortas" de "FPG em baixo" — vale a pena
         // perguntar sem credenciais antes de desistir.
         if (!e || e.status !== 500) throw e;
-        const r = await postPublico(pathname, body, qs).catch(() => null);
+        const r = await postPublico(pathname, body, qs, ctx).catch(() => null);
         if (!r) throw e;
         publico = true;
         info('cookies não autenticam — a seguir pelo caminho público (sem credenciais)');
@@ -320,4 +391,7 @@ function criarRoteador({ dgPost, info = () => {}, preferirPublico }) {
   };
 }
 
-module.exports = { Sessao, BASE_LISTS, BASE_PT, ACK, UA, parseMetaClassif, criarSessaoLista, criarRoteador };
+module.exports = {
+  Sessao, BASE_LISTS, BASE_PT, ACK, UA, parseMetaClassif, criarSessaoLista, criarRoteador,
+  criarSessaoWhs, normalizarRegistosWhs, PATH_WHS_PUBLICO,
+};

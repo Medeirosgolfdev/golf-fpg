@@ -1,0 +1,441 @@
+<title>Mapa de Fontes do Golf-FPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f7f8f6; --card:#ffffff; --band:#eef2e8; --text:#1c2617; --text-2:#4a5940; --text-3:#7a8a6e;
+  --accent:#2d6a30; --accent-light:#e0efdb; --border:#bcc5ad; --border-light:#d5dac9; --topbar:#1a2e1a; --topbar-text:#e8eddf;
+  --ph:#8a5a00; --ph-bg:#fdf3dc;
+  --ok:#1f6b34; --ok-bg:#dcf2e2; --sess:#0d6470; --sess-bg:#dcf1f3; --brw:#3d4f8a; --brw-bg:#e3e8f7;
+  --login:#8a5200; --login-bg:#fcecd2; --lim:#9a4a12; --lim-bg:#fbe3d3; --stop:#a1262a; --stop-bg:#f9dcdc; --eph:#6a3d8f; --eph-bg:#eee3f6;
+  --font-sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111711; --card:#182018; --band:#1d271c; --text:#e2e8da; --text-2:#b3bfa7; --text-3:#8a9a7e;
+    --accent:#86c47b; --accent-light:#223321; --border:#3a4834; --border-light:#2c3829; --topbar:#0b120b; --topbar-text:#e2e8da;
+    --ph:#f0c46a; --ph-bg:#3a2e12;
+    --ok:#8fd79f; --ok-bg:#1b3322; --sess:#7fd3dd; --sess-bg:#123135; --brw:#a9b8ee; --brw-bg:#232b48;
+    --login:#f2c177; --login-bg:#3a2a12; --lim:#f3a877; --lim-bg:#3d2415; --stop:#f19a9c; --stop-bg:#3d1b1c; --eph:#cfa6ef; --eph-bg:#2f2140;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111711; --card:#182018; --band:#1d271c; --text:#e2e8da; --text-2:#b3bfa7; --text-3:#8a9a7e;
+  --accent:#86c47b; --accent-light:#223321; --border:#3a4834; --border-light:#2c3829; --topbar:#0b120b; --topbar-text:#e2e8da;
+  --ph:#f0c46a; --ph-bg:#3a2e12;
+  --ok:#8fd79f; --ok-bg:#1b3322; --sess:#7fd3dd; --sess-bg:#123135; --brw:#a9b8ee; --brw-bg:#232b48;
+  --login:#f2c177; --login-bg:#3a2a12; --lim:#f3a877; --lim-bg:#3d2415; --stop:#f19a9c; --stop-bg:#3d1b1c; --eph:#cfa6ef; --eph-bg:#2f2140;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.5;margin:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{background:var(--topbar);color:var(--topbar-text);padding-inline:16px;padding-block:22px 18px}
+.top-in{max-width:1180px;margin:0 auto;display:grid;gap:10px}
+.top h1{font-size:26px;font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.top p{margin:0;max-width:68ch;color:color-mix(in srgb,var(--topbar-text) 78%,transparent)}
+.top .meta{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--topbar-text) 60%,transparent)}
+.bar{position:sticky;top:0;z-index:5;background:var(--band);border-bottom:1px solid var(--border);padding-inline:16px;padding-block:10px}
+.bar-in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar input{flex:1 1 260px;min-width:0;font:inherit;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text-2);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.count{font-size:12.5px;color:var(--text-3);font-variant-numeric:tabular-nums;margin-left:auto}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:22px 60px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px}
+nav.toc{position:sticky;top:64px;align-self:start;display:grid;gap:2px;font-size:13.5px}
+nav.toc a{color:var(--text-2);text-decoration:none;padding:4px 8px;border-radius:5px;display:flex;justify-content:space-between;gap:8px}
+nav.toc a:hover{background:var(--accent-light);color:var(--text)}
+nav.toc .n{color:var(--text-3);font-variant-numeric:tabular-nums}
+nav.toc .grp{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin:12px 8px 2px}
+main{display:grid;gap:30px;min-width:0}
+.legend{background:var(--card);border:1px solid var(--border-light);border-radius:8px;padding:14px 16px;display:grid;gap:12px}
+.legend h2{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);margin:0;font-weight:600}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 18px;font-size:13.5px;color:var(--text-2)}
+.legend-grid div{display:flex;gap:8px;align-items:baseline}
+.acks{overflow-x:auto}
+.acks table{border-collapse:collapse;font-size:13.5px;width:100%}
+.acks th,.acks td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--border-light);vertical-align:top}
+.acks th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+.acks code{font-family:var(--font-mono);font-size:12.5px}
+section h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
+section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch}
+.list{border-top:1px solid var(--border)}
+.item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:14px 2px;border-bottom:1px solid var(--border-light)}
+.head{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.head .name{font-weight:600;font-size:15.5px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.t-ok{color:var(--ok);background:var(--ok-bg)} .t-sess{color:var(--sess);background:var(--sess-bg)} .t-brw{color:var(--brw);background:var(--brw-bg)}
+.t-login{color:var(--login);background:var(--login-bg)} .t-lim{color:var(--lim);background:var(--lim-bg)} .t-stop{color:var(--stop);background:var(--stop-bg)} .t-eph{color:var(--eph);background:var(--eph-bg)}
+.method{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--text-2);border:1px solid var(--border);padding:1px 6px;border-radius:4px}
+.url{display:flex;gap:8px;align-items:flex-start;background:var(--band);border-radius:6px;padding:7px 10px}
+.url code{flex:1;min-width:0;font-family:var(--font-mono);font-size:12.5px;color:var(--text);overflow-wrap:anywhere}
+.url .ph{color:var(--ph);background:var(--ph-bg);border-radius:3px;padding:0 2px}
+.copy{flex:none;font:inherit;font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px;cursor:pointer}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.desc{margin:0;color:var(--text-2);max-width:82ch}
+.ex{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px}
+.ex span{color:var(--text-3)}
+.warn{margin:0;font-size:13.5px;color:var(--text-2);border-left:3px solid var(--login);padding-left:10px;max-width:82ch}
+.warn b{color:var(--text)}
+.where{font-size:12.5px;color:var(--text-3)}
+.where code{font-family:var(--font-mono);font-size:12px}
+.empty{color:var(--text-3);padding:30px 0}
+@media (max-width:820px){
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  nav.toc{position:static;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:4px}
+  nav.toc .grp{display:none}
+  nav.toc a{white-space:nowrap;border:1px solid var(--border-light)}
+  .count{margin-left:0}
+}
+@media (prefers-reduced-motion:no-preference){ .copy,.chip{transition:background .15s,color .15s} }
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="meta">Golf-FPG · referência interna · actualizado a 15 Set 2026</div>
+    <h1>Mapa de Fontes do Golf-FPG</h1>
+    <p>Todos os endereços que o site conhece, da FPG aos circuitos lá fora: o que cada um devolve, se precisa de login e um exemplo real para abrir. As partes a amarelo (<code>{tcode}</code>, <code>{fed}</code>…) são para substituir.</p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="bar-in">
+    <label for="q" class="sr" style="position:absolute;left:-9999px">Procurar</label>
+    <input id="q" type="search" placeholder="Procurar por nome, domínio ou o que devolve — ex.: sócios, WHS, draw, GolfBox" autocomplete="off">
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por acesso"></div>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<div class="wrap">
+  <nav class="toc" id="toc" aria-label="Secções"></nav>
+  <main id="main">
+    <div class="legend">
+      <h2>Acesso</h2>
+      <div class="legend-grid" id="legend"></div>
+      <h2>Os <code>ack</code> da FPG</h2>
+      <div class="acks">
+        <table>
+          <thead><tr><th>ack</th><th>Serve para</th><th>Âmbito</th></tr></thead>
+          <tbody>
+            <tr><td><code>XH256YF45T</code></td><td>lista de torneios, draw.asp, estatísticas, sócios</td><td>master: todos os clubes, aceita <code>club=ALL</code> nas estatísticas</td></tr>
+            <tr><td><code>8428ACK987</code></td><td>linkpage draw / classif / rankingresult; sócios</td><td>universal</td></tr>
+            <tr><td><code>XH256YF450</code></td><td>linkpage admissions, admissions.asp</td><td>universal; recusado nas estatísticas e nos sócios</td></tr>
+            <tr><td><code>OT342GH16T</code></td><td>classif.asp</td><td>universal; recusado nas estatísticas</td></tr>
+            <tr><td><code>64K06NJFI7</code> · <code>GG2TRU5VQ1</code></td><td>links publicados pelos clubes</td><td>de clube: Palheiro (059) · ACP Golfe (103) — só abrem esse clube</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="where" style="margin:0">Um <code>ack</code> errado responde HTTP 200 com ~106 bytes (<code>Key not authorized</code> / <code>Club not authorized</code>) — confirmar sempre pelo conteúdo.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+const ACCESS = {
+  ok:    { label: "Público",        cls: "t-ok",    help: "abre com um pedido simples, sem nada" },
+  sess:  { label: "Sessão pública", cls: "t-sess",  help: "passa primeiro por um portão que dá sessão a qualquer um" },
+  brw:   { label: "Só no browser",  cls: "t-brw",   help: "funciona num browser com sessão; fora dele dá erro" },
+  login: { label: "Login",          cls: "t-login", help: "precisa das cookies de uma conta FPG" },
+  lim:   { label: "Limite",         cls: "t-lim",   help: "público, mas corta quem pede de mais" },
+  eph:   { label: "Efémero",        cls: "t-eph",   help: "só existe enquanto a prova decorre" },
+  stop:  { label: "Parado",         cls: "t-stop",  help: "não se usa (pedido da fonte ou dados maus)" },
+};
+
+const X = "XH256YF45T";
+const S = [
+ { grp: "FPG", id: "fpg-torneios", title: "FPG — torneios", sub: "Inscrições, draws e resultados de qualquer torneio federado. O portão linkpage emite a sessão sozinho; os PageMethods (POST) só respondem dentro dela.", items: [
+  { n: "Inscrições (linkpage)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club={ccode}&tourn={tcode}&ack=XH256YF450",
+    d: "Lista de inscritos com posição, data de inscrição, HCP e reservas.",
+    ex: [["Nacional Sub-12 2026", "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=10941&ack=XH256YF450"]],
+    w: "Público nos torneios da FPG (000); em torneios de clube (ex. 988/10306) só com cookies.", where: "scrape-fpg-admissions-draws-node.js" },
+  { n: "Inscrições (ASP clássico)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/admissions.asp?club={ccode}&tourn={tcode}&LANG_TXT=PT&ack=XH256YF450",
+    d: "Os mesmos inscritos, por ordem alfabética, sem data nem reservas. É o plano B quando as cookies morrem.",
+    ex: [["Nacional Sub-12 2026", "https://scoring-pt.datagolf.pt/scripts/admissions.asp?club=000&tourn=10941&LANG_TXT=PT&ack=XH256YF450"]] },
+  { n: "Draw (linkpage)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club={ccode}&tourn={tcode}&round={n}&ack=8428ACK987",
+    d: "Horários de saída por volta, com tee e buraco de partida.",
+    ex: [["Nacional Sub-12 2026 · R1", "https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=000&tourn=10941&round=1&ack=8428ACK987"]] },
+  { n: "Draw (ASP clássico)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/draw.asp?club={ccode}&tourn={tcode}&round_number={n}&LANG_TXT=PT&ack=XH256YF45T",
+    d: "O mesmo draw, com as colunas lidas pelo cabeçalho (clubes e FPG publicam colunas diferentes).",
+    ex: [["Nacional Sub-12 2026 · R1", "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=000&tourn=10941&round_number=1&LANG_TXT=PT&ack=XH256YF45T"]] },
+  { n: "Classificação (linkpage)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club={ccode}&tourn={tcode}&ack=8428ACK987",
+    d: "Página de resultados. Traz nome, campo, data e PCC no HTML; a tabela vem pelo PageMethod abaixo.",
+    ex: [["Drive Tour Norte – Amarante", "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=987&tourn=10207&ack=8428ACK987"]], where: "scrape-classif-node.js · scrape-drive-node.js" },
+  { n: "ClassifLST", a: "sess", m: "POST", u: "https://scoring.fpg.pt/lists/classif.aspx/ClassifLST?jtStartIndex=0&jtPageSize=100",
+    d: "Classificação completa, paginada. classifroundtype \"D\" + round = uma volta; \"A\" + round vazio = agregada.",
+    w: "Não traz fed_code nem nacionalidade. Os parâmetros extra vão na query E no corpo." },
+  { n: "ScoreCard de torneio", a: "sess", m: "POST", u: "https://scoring.fpg.pt/lists/classifAgregate.aspx/ScoreCard",
+    d: "Cartão buraco a buraco de cada jogador (um registo por volta), com par, SI, metros, CR/Slope e o campo cba (PCC).",
+    w: "Não traz o SD — esse só existe no WHS de cada jogador." },
+  { n: "Classificação (ASP clássico)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/classif.asp?club={ccode}&tourn={tcode}&ack=OT342GH16T",
+    d: "Versão ASP da classificação." },
+  { n: "Lista de torneios", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T",
+    d: "Entrada da pesquisa de torneios (84 993). O browser é levado a 1PreparePage.aspx?page=tournlist; os dados vêm por POST a tournaments.aspx/TournamentsLST.",
+    ex: [["Abrir a lista", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T"]],
+    w: "Não devolve torneios futuros — esses descobrem-se a sondar tcodes seguintes.", where: "criarSessaoLista (lib/fpg-session.js)" },
+  { n: "Inscrições (versão autenticada)", a: "login", u: "https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode={ccode}&tcode={tcode}",
+    d: "A página rica de inscritos. Ir directo sem passar pelo linkpage dá Param Error." },
+  { n: "Live scoring", a: "eph", u: "https://scoring.fpg.pt/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0",
+    d: "A única fonte com o jogo a decorrer: posição, buraco em que cada um vai e cartões ao vivo.",
+    w: "<b>Só existe durante a prova</b> e os dados só se lêem navegando a página num browser; pedidos directos dão 500." },
+ ]},
+ { grp: "FPG", id: "fpg-jogador", title: "FPG — jogador e cadastro", sub: "Histórico WHS, cartões e a lista de federados.", items: [
+  { n: "Ficha do federado — WHS (gate fedhcp)", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page=fedhcp&fedno={fed}",
+    d: "Histórico WHS completo e cartões buraco a buraco de qualquer federado, sem login. Por baixo: 1PreparePage?page=fedhcp → POST PlayerWHS.aspx/HCPWhsFederLST e fed_hcp.aspx/ScoreCard.",
+    ex: [["Manuel (52884)", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedhcp&fedno=52884"]],
+    w: "<b>Descoberto a 15 Set 2026</b> e já usado pelo fpg-scrape-node.js (público primeiro, cookies de reserva). Igual ao my.fpg.pt: 172 de 172 voltas.", where: "criarSessaoWhs (lib/fpg-session.js)" },
+  { n: "Ficha do federado — cadastro (gate federated)", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page=federated&fedno={fed}",
+    d: "Cadastro (ViewFedDET: nascimento, admissão, índice, escalão) e cartões.",
+    ex: [["Federado 60382", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=103&pagelang=PT&page=federated&fedno=60382"]],
+    w: "Aqui o WHS responde <b>\"Acesso negado. Por favor faça login\"</b> — para o WHS usar o gate fedhcp." },
+  { n: "PlayerWHS (link da ficha no site)", a: "brw", u: "https://scoring.fpg.pt/lists/PlayerWHS.aspx?no={fed}",
+    d: "É o link das páginas de jogador do site. Abre num browser que já tenha sessão da FPG.",
+    ex: [["Manuel", "https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884"]],
+    w: "Fora do browser, sem sessão, dá HTTP 500 — por isso nunca serviu ao scraper." },
+  { n: "PlayerWHS (my.fpg.pt)", a: "login", u: "https://my.fpg.pt/Home/PlayerWHS.aspx?no={fed}",
+    d: "O gémeo autenticado: HCPWhsFederLST, ScoreCard, View20Scores, ViewWHSCalc.",
+    ex: [["Manuel", "https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884"]],
+    w: "Cookies de login (duram ~9 h). Continua como reserva do fpg-scrape-node.js e primário do fetch-whs-sd.js." },
+  { n: "Lista de federados", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=ALL&pagelang=PT&page=fedlist_v2",
+    d: "Os ~17 800 federados activos (32 campos). Dados por POST a FederatedsList_V2.aspx/HandicapsLST, 100 de cada vez.",
+    ex: [["Abrir a lista", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=ALL&pagelang=PT&page=fedlist_v2"]], where: "scrape-federados-node.js" },
+  { n: "Pitch & Putt", a: "brw", u: "https://scoring.fpg.pt/listspp/PlayerWHS.aspx?no={fed}",
+    d: "Sistema paralelo (~3 450 activos). Lista por POST a /listspp/FederatedSearch.aspx/HandicapsLST.",
+    ex: [["Federado 49085", "https://scoring.fpg.pt/listspp/PlayerWHS.aspx?no=49085"]] },
+  { n: "Fotos dos federados", a: "ok", u: "https://hcp-portugal.datagolf.pt/photos/{n}/{uuid}.jpeg",
+    d: "O caminho vem no campo photo do cadastro; fotos antigas passam a 404 quando mudam." },
+  { n: "golf-portugal.pt (proxy)", a: "ok", u: "https://golf-portugal.pt/api/clubs/{qualquer}/players/{fed}/results?startIndex=0&limit={n}",
+    d: "Proxy externo com resultados, perfil (/players/{fed}), handicaps e /api/scorecards/{score_id}. Reserva do fetch-whs-sd.js.",
+    w: "Não traz tcode nem gross; falha de vez em quando com 500." },
+ ]},
+ { grp: "FPG", id: "fpg-rankings", title: "FPG — rankings e calendário", sub: "Rankings Drive/Aquapor, Ordens de Mérito de clube e o calendário oficial.", items: [
+  { n: "Ranking (página)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club={ccode}&ranking={código}&ack=8428ACK987&minpoints=1",
+    d: "Quatro famílias: DC_… (Challenge regular, 988), RDT… (Drive Tour, 988), RFDC_… (Challenge final, 988), RCAH/RCAS (Aquapor, 000). Dados por POST a rankings_classif.aspx/RankingsClassifLST e RankingsPlayersLST.",
+    ex: [["Drive Tour Norte 2026", "https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club=988&ranking=RDTN26&ack=8428ACK987&minpoints=1"]], where: "scrape-drive-rankings.js" },
+  { n: "Ordens de Mérito de clube", a: "brw", u: "https://scoring.datagolf.pt/pt/rankings_classif.aspx?ccode={ccode}&ranking={código}",
+    d: "Rankings internos dos clubes. CGSS: OMCGSSH26, OMCGSSL26, OMCGSSsen26, OMCGSSspsn26 (a Júnior não é publicada; construímo-la).",
+    ex: [["CGSS Homens 2026", "https://scoring.datagolf.pt/pt/rankings_classif.aspx?ccode=007&ranking=OMCGSSH26"]],
+    w: "A lista de códigos de cada clube só existe no backoffice fechado (1Page.aspx?page=ranklist)." },
+  { n: "Rankings oficiais (site FPG)", a: "ok", u: "https://competicoes.fpg.pt/ranking/",
+    d: "A página humana dos rankings, ligada no botão da página Drive.", ex: [["Abrir", "https://competicoes.fpg.pt/ranking/"]] },
+  { n: "Calendário FPG (API)", a: "ok", u: "https://competicoes.fpg.pt/wp-json/tribe/events/v1/events",
+    d: "Calendário oficial em JSON (WordPress + The Events Calendar).",
+    ex: [["Ver JSON", "https://competicoes.fpg.pt/wp-json/tribe/events/v1/events"]], where: "fpg-calendario.js" },
+ ]},
+ { grp: "FPG", id: "fpg-clubes", title: "FPG — clubes", sub: "Sócios e estatísticas agregadas de cada clube, no ASP clássico.", items: [
+  { n: "Lista de sócios", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/members.asp?club={ccode}&ack=XH256YF45T&order={memberno|name|nfed|club|hcp|hcpstatus}",
+    d: "Clube inteiro numa página: nº de sócio, nome, federado, clube por onde é federado, HCP e estado. Inclui sócios que não são federados.",
+    ex: [["Santo da Serra (451)", "https://scoring-pt.datagolf.pt/scripts/members.asp?club=007&ack=XH256YF45T&order=name"], ["ACP Golfe (2680)", "https://scoring-pt.datagolf.pt/scripts/members.asp?club=103&ack=XH256YF45T&order=name"]],
+    w: "Não há <b>club=ALL</b> — é um pedido por clube. Ser sócio ≠ ser federado pelo clube (ACP: 1922 de 2680)." },
+  { n: "Estatísticas de clubes (painel)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack=XH256YF45T",
+    d: "30 vistas agregadas (idades, HCP, voltas, torneios…). Cada vista abre sozinha em {vista}.asp. O &lt;select&gt; de clubes é o mapa oficial clube→ccode (286).",
+    ex: [["Painel (todos)", "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club=ALL&ack=XH256YF45T"], ["Demografia júnior", "https://scoring-pt.datagolf.pt/scripts/stat_ages.asp?club=ALL&ack=XH256YF45T"], ["Torneios por federado", "https://scoring-pt.datagolf.pt/scripts/stat_tourns_players.asp?club=ALL&ack=XH256YF45T"]],
+    w: "O grupo TORNEIOS (stat_scores_*) exige <b>&amp;origin=1</b>. O stat_cba não é o PCC." },
+  { n: "Ranking de actividade", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/numresults.asp?club={ccode|ALL}&ack=XH256YF45T&selyear1={ano}&selyear2={ano}&counttype=all&order=nresults&ordertype=DESC&pagesize={n}",
+    d: "Nome, nº de voltas, federado, clube e HCP de quem mais jogou.",
+    ex: [["2026 · top 500", "https://scoring-pt.datagolf.pt/scripts/numresults.asp?club=ALL&ack=XH256YF45T&selyear1=2026&selyear2=2026&counttype=all&order=nresults&ordertype=DESC&pagesize=500"]],
+    w: "Tecto de 2000 registos — para mais, pedir por clube." },
+  { n: "Backoffice de clube", a: "login", u: "https://scoring.fpg.pt/lists/1Page.aspx?page={página}",
+    d: "38 páginas de gestão (perfis completos, quotas, draws). Precisa de conta de administrador de clube — nunca usado." },
+ ]},
+ { grp: "Circuitos", id: "uskids", title: "USKids (signupanytime)", sub: "API pública da conta internacional (ax=1129). Cortou-nos a 12 Set 2026 por excesso de pedidos: hoje fazemos ~150–300 por dia, um de cada vez.", items: [
+  { n: "GetMeta", a: "lim", u: "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t={tcode}",
+    d: "Torneio, escalões, flights, par e jardas por buraco (flight_courses indexado por flight_round_id). tcode inexistente = 200 com corpo vazio.",
+    ex: [["Venice Open 2026", "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t=22243"]], where: "fetch-uskids-field.js" },
+  { n: "GetTournamentPlayers", a: "lim", u: "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetTournamentPlayers&t={tcode}&f={flight}",
+    d: "memberIDs globais de um flight." },
+  { n: "GetPlayerTeeTimes", a: "lim", m: "POST", u: "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetPlayerTeeTimes&f={flight}&r={volta}&p={página}&t=1&pt=undefined&jbgr={timestamp}&c=1",
+    d: "Cartões buraco a buraco, nomes, país, tee e horário, 20 por página.",
+    w: "Tem de ser POST com t=1. O pid é local ao flight e o \"place\" é a cidade, não a posição." },
+  { n: "GetMemberTournamentResults", a: "lim", u: "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetMemberTournamentResults&m={memberID}",
+    d: "Carreira USKids completa de um jogador.",
+    ex: [["Manuel (630106)", "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetMemberTournamentResults&m=630106"]] },
+  { n: "Resultados (vista pública)", a: "ok", u: "https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t={tcode}",
+    d: "A página de resultados que o site da USKids embebe.",
+    ex: [["Venice Open 2026", "https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=22243"]] },
+  { n: "Calendário internacional", a: "ok", u: "https://tournaments.uskidsgolf.com/tournaments/international",
+    d: "Calendário humano dos torneios internacionais.", ex: [["Abrir", "https://tournaments.uskidsgolf.com/tournaments/international"]] },
+ ]},
+ { grp: "Circuitos", id: "golfgenius", title: "GolfGenius", sub: "UA, FSGA, México, Champion of Champions, Optimist, Doral, Orange Bowl, England Golf e os Championnats de France. Responde a fetch; a browsers automatizados dá 403.", items: [
+  { n: "Página de resultados", a: "ok", u: "https://www.golfgenius.com/pages/{pageId}",
+    d: "Ponto de partida: o HTML traz o leagueId. Também em subdomínios (coc26., tndm-…, eg-…).",
+    ex: [["Under Armour 2026", "https://www.golfgenius.com/pages/12770450567004716088"], ["Champion of Champions 2026", "https://coc26.golfgenius.com/pages/12114827382448210411"], ["Optimist 2026 · Fase 1", "https://tndm-2026optimistphase11.golfgenius.com/pages/12869575553459456796"], ["Doral 2024", "https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994"]], where: "scrape-golfgenius-node.js" },
+  { n: "Widget de resultados", a: "ok", u: "https://www.golfgenius.com/leagues/{leagueId}/widgets/tournament_results?page_id={pageId}&round={opção}",
+    d: "O &lt;select name=round&gt; lista divisão × volta; cada opção dá o v2tid da divisão." },
+  { n: "Leaderboard (v2tournaments)", a: "ok", u: "https://www.golfgenius.com/v2tournaments/{v2tid}",
+    d: "Leaderboard multi-volta de uma divisão.", ex: [["FSGA Boys' Junior", "https://www.golfgenius.com/v2tournaments/4708880"]] },
+  { n: "Cartão de um jogador", a: "ok", u: "https://www.golfgenius.com/tournaments2/details/{id}",
+    d: "Cartão buraco a buraco; o par sai das marcas (birdie-hole, par-hole…). Em subdomínios usar o caminho relativo (CORS)." },
+  { n: "Tee sheets (draws)", a: "ok", u: "https://www.golfgenius.com/leagues/{leagueId}/widgets/next_round?page_id={pageId}&round_id={volta}",
+    d: "Draws reais por volta, com a divisão de cada jogador.", w: "O widget chama-se <b>next_round</b> — tee_times e pairings dão 404." },
+  { n: "Ficha do jogador", a: "ok", u: "https://www.golfgenius.com/profiles/{id}",
+    d: "No México traz data de nascimento, clube e ano de graduação." },
+  { n: "Directório England Golf", a: "brw", u: "https://www.golfgenius.com/leagues/36129/customer_directories/10291/directory_iframe",
+    d: "Os ~41 eventos da época, cada um com /ggid/{ggid} (ex. carris26). É uma app React — precisa de browser.",
+    ex: [["Abrir", "https://www.golfgenius.com/leagues/36129/customer_directories/10291/directory_iframe"]], where: "discover-england-golf-events.js" },
+  { n: "Atalho por ggid", a: "ok", u: "https://www.golfgenius.com/ggid/{ggid}",
+    d: "Redirecciona para a página de aterragem do evento (que nem sempre é a de resultados).", ex: [["Carris Trophy 2026", "https://www.golfgenius.com/ggid/carris26"]] },
+ ]},
+ { grp: "Circuitos", id: "golfbox", title: "GolfBox", sub: "Estonian Junior Open/Tour, EGA Team Championships e o Albert Vermeiren Trophy. JSONP público, sem cookies.", items: [
+  { n: "Leaderboard", a: "ok", u: "https://scores.golfbox.dk/api/js/leaderboard/competitionid/{id}/template/ega",
+    d: "Leaderboard individual com CR/Slope, HCP e ano de nascimento.",
+    ex: [["Estonian Junior Open 2026", "https://scores.golfbox.dk/api/js/leaderboard/competitionid/5417057/template/ega"]], where: "scrape-golfbox.js" },
+  { n: "Inscritos (PlayersHandler)", a: "ok", u: "https://scores.golfbox.dk/Handlers/PlayersHandler/GetPlayers/CompetitionId/{id}",
+    d: "Data de nascimento completa, clube e HCP (×10000). Responde também para provas futuras." },
+  { n: "Order of Merit", a: "ok", u: "https://scores.golfbox.dk/Handlers/OrderOfMeritsHandler/GetOrderOfMerit/OrderOfMeritId/{id}",
+    d: "Lista as provas de uma época — foi assim que se descobriu o histórico do Estonian Junior Tour." },
+  { n: "Páginas dos organizadores", a: "ok", u: "https://golf.ee/voistlused/{prova}",
+    d: "Onde vivem os IDs das competições estónias (e ega-golf.ch para as EGA).",
+    ex: [["Estonian Junior Open", "https://golf.ee/voistlused/estonian-junior-open"], ["Estonian Junior Tour", "https://golf.ee/voistlused/estonian-junior-tour"]] },
+ ]},
+ { grp: "Circuitos", id: "espanha", title: "Espanha", sub: "RFEG (microsite + LiveGolfScoring + mitarjeta), NextCaddy (Andaluzia, Madrid) e Catalunha.", items: [
+  { n: "RFEG — competições", a: "ok", u: "https://rfegolf.es/CompetenciaPaginas/AllCompetitions.aspx",
+    d: "Índice de competições; cada uma tem o seu CompetitionMicrosite.aspx e ListaResultados.aspx.", ex: [["Abrir", "https://rfegolf.es/CompetenciaPaginas/AllCompetitions.aspx"]], where: "scrape-rfegolf-node.js" },
+  { n: "LiveGolfScoring", a: "ok", u: "https://rfegolf.livegolfscoring.es/torneos/{clasificacion|hoyoahoyo|horarios|estadisticas|imprimir}/{id}",
+    d: "Classificação, cartões por volta (/hoyoahoyo/{id}/{volta}), horários e estatísticas dos Campeonatos de España.", where: "scrape-livegolfscoring.js" },
+  { n: "mitarjeta.golf", a: "ok", u: "https://mitarjeta.golf/torneos/{clasificacion|hoyoahoyo|horarios|estadisticas}/{id}",
+    d: "Live scoring dos juvenis com metros, CR, Slope e SD.", where: "scrape-mitarjeta.js" },
+  { n: "NextCaddy — tour", a: "ok", u: "https://www.nextcaddy.com/tour/{id}",
+    d: "Provas das federações regionais. Dados por getListadoClasificaciones, getListadoHorarios, getListadoInscritos e /tarjeta-aux/{id}/-1 (cartão).",
+    w: "Classificações por handicap trazem LÍQUIDOS nos campos de gross — preferir a scratch.", where: "scrape-nextcaddy.js" },
+  { n: "Catalunha — calendário", a: "ok", u: "https://www.catgolf.com/ca/campionats/{slug}",
+    d: "Página de cada campeonato da Federació Catalana.",
+    ex: [["Infantil, Aleví i Benjamí 2026", "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-infantil-alevi-i-benjami-2026-2026-05-16"]],
+    w: "O catgolf serve às vezes um certificado inválido e uma página sem torneios — o scope tem guarda.", where: "discover-fcg-scope.js" },
+  { n: "Catalunha — resultados", a: "ok", u: "https://www.golfdirecto.com/micro/game/{gameId}/summary",
+    d: "Resultados por jornada (game.name é a jornada; a prova está em game.tournament.name). Live em open.imaster.golf/{lang}/catgolf/torneos/livescoring/{IMID}.", where: "scrape-fcg.js" },
+ ]},
+ { grp: "Circuitos", id: "franca", title: "França", sub: "Portal de resultados da FFG (público) e os torneios em GolfGenius.", items: [
+  { n: "Resultados FFG", a: "ok", u: "https://pages.ffgolf.org/resultats/resultats-details/{partKey}/{trnId}",
+    d: "Resultados de qualquer prova; a lista está em /resultats/liste-competitions. O pos é a classificação do torneio inteiro, não da série.",
+    ex: [["Lista de competições", "https://pages.ffgolf.org/resultats/liste-competitions"]], where: "scrape-ffgolf-all-jeunes.js" },
+  { n: "Tee sheet / live", a: "ok", u: "https://pages.ffgolf.org/live-recording/{partKey}/{trnId}",
+    d: "Lista de partida e marcação ao vivo." },
+  { n: "Calendário jovens", a: "ok", u: "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/{secção}/{ano}/{slug}/page-scores-tournoi",
+    d: "Calendário e páginas de resultados dos Championnats de France e Internationaux.", ex: [["Abrir calendário", "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats"]], where: "scrape-ffgolf-calendar-jeunes.js" },
+ ]},
+ { grp: "Circuitos", id: "rankings", title: "Rankings mundiais e europeus", sub: "WAGR (R&A + USGA) e European Golf Rankings.", items: [
+  { n: "WAGR — API", a: "ok", u: "https://worldgolfranking2021api.wagr.com/api/wagr/{rankings/getRankings|events/getEvents|playerprofile/getPlayerEvents|search/getSearchResults}",
+    d: "Ranking (rankingsType 0 = homens, 1 = senhoras), todos os eventos do ano, histórico de um jogador e pesquisa.",
+    ex: [["Portugueses no ranking masculino", "https://worldgolfranking2021api.wagr.com/api/wagr/rankings/getRankings?rankingsType=0&pageSize=100&countries=33"], ["Eventos de 2026", "https://worldgolfranking2021api.wagr.com/api/wagr/events/getEvents?year=2026&pageSize=50"]],
+    w: "O filtro de país usa o countryId (Portugal = 33), não o nome.", where: "scrape-wagr.js" },
+  { n: "WAGR — leaderboard", a: "ok", u: "https://www.wagr.com/events/x-{id}",
+    d: "Leaderboard no __NEXT_DATA__ da página. O slug é decorativo — só o id conta.",
+    ex: [["Nacional de Jovens 2026", "https://www.wagr.com/events/x-272939"]], w: "Só traz quem pontuou no WAGR, não o campo todo." },
+  { n: "EGR", a: "ok", u: "https://www.europeangolfrankings.com/{ranking?gender=M|ranking_women|events/{id}|players/{id}}",
+    d: "Rankings masculino e feminino, eventos (pesquisa por ano em /events/search) e fichas de jogador.",
+    ex: [["Ranking masculino", "https://www.europeangolfrankings.com/ranking?gender=M"], ["Ranking feminino", "https://www.europeangolfrankings.com/ranking_women"]], where: "scrape-egr.js" },
+ ]},
+ { grp: "Circuitos", id: "outros", title: "Outros circuitos", sub: "", items: [
+  { n: "Global Junior Golf Live", a: "ok", u: "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid={id}",
+    d: "Live scoring; inscritos em /gjgdb/2021entryList.php?tournamentid={id}, página do torneio em /tournament/{slug}/.",
+    w: "Eventos futuros reaproveitam o id do ano anterior — guarda start_date &gt; hoje.", where: "scrape-gjgl.js" },
+  { n: "Future Masters", a: "ok", u: "https://www.futuremastersgolf.com/{Scoring|Tee-Times}/Age-Group/{slug}",
+    d: "Resultados e horários por escalão (UK).", ex: [["Abrir", "https://www.futuremastersgolf.com"]] },
+  { n: "BlueGolf (BJGT, WJGC, EOWAGR, FCG, JWGC)", a: "stop", u: "https://brjgt.bluegolf.com/bluegolf/{série}/event/{slug}/contest/{n}/leaderboard.htm",
+    d: "Leaderboards por escalão.", w: "<b>Descontinuado a 9 Jul 2026</b> a pedido da BlueGolf. Só consulta manual." },
+  { n: "Junior Tour Scotland", a: "stop", u: "https://www.juniortourscotland.com",
+    d: "Página pronta no site mas desligada: os dados não são fiáveis." },
+  { n: "Federação Mexicana (GHIN)", a: "stop", u: "https://www.fmg.org.mx/ghin",
+    d: "Índices dos jovens mexicanos.", w: "Bloqueado para consultas de fora do México." },
+ ]},
+ { grp: "Serviços", id: "servicos", title: "Serviços de apoio", sub: "", items: [
+  { n: "Vercel Web Analytics", a: "login", u: "https://api.vercel.com/v1/query/web-analytics/visits",
+    d: "Visitas dos dois sites, guardadas diariamente em data-archive/analytics/ (o plano gratuito só guarda 30 dias).", where: "snapshot-web-analytics.js (secret VERCEL_TOKEN)" },
+  { n: "Meteorologia histórica", a: "ok", u: "https://archive-api.open-meteo.com/v1/archive",
+    d: "Tempo nos dias dos torneios; geocodificação em geocoding-api.open-meteo.com/v1/search." },
+ ]},
+];
+
+const $ = s => document.querySelector(s);
+const main = $("#main"), toc = $("#toc"), chips = $("#chips"), q = $("#q"), count = $("#count");
+let activeAccess = null;
+
+// legenda + chips
+for (const [k, v] of Object.entries(ACCESS)) {
+  const row = document.createElement("div");
+  row.innerHTML = `<span class="tag ${v.cls}">${v.label}</span><span>${v.help}</span>`;
+  $("#legend").appendChild(row);
+  const b = document.createElement("button");
+  b.className = "chip"; b.type = "button"; b.id = "chip-" + k;
+  b.textContent = v.label; b.setAttribute("aria-pressed", "false");
+  b.onclick = () => { activeAccess = activeAccess === k ? null : k; render(); };
+  chips.appendChild(b);
+}
+
+function urlNode(u) {
+  const code = document.createElement("code");
+  for (const part of u.split(/(\{[^}]+\})/)) {
+    if (!part) continue;
+    if (/^\{.*\}$/.test(part)) { const s = document.createElement("span"); s.className = "ph"; s.textContent = part; code.appendChild(s); }
+    else code.appendChild(document.createTextNode(part));
+  }
+  return code;
+}
+
+function itemNode(it) {
+  const el = document.createElement("div"); el.className = "item";
+  const acc = ACCESS[it.a];
+  const head = document.createElement("div"); head.className = "head";
+  head.innerHTML = `<span class="name"></span><span class="tag ${acc.cls}" title="${acc.help}">${acc.label}</span>` + (it.m ? `<span class="method">${it.m}</span>` : "");
+  head.querySelector(".name").textContent = it.n;
+  el.appendChild(head);
+  const url = document.createElement("div"); url.className = "url";
+  url.appendChild(urlNode(it.u));
+  const cp = document.createElement("button"); cp.type = "button"; cp.className = "copy"; cp.textContent = "Copiar";
+  cp.onclick = async () => {
+    try { await navigator.clipboard.writeText(it.u); cp.textContent = "Copiado"; cp.classList.add("done"); }
+    catch { cp.textContent = "Seleccione e copie"; }
+    setTimeout(() => { cp.textContent = "Copiar"; cp.classList.remove("done"); }, 1600);
+  };
+  url.appendChild(cp); el.appendChild(url);
+  const d = document.createElement("p"); d.className = "desc"; d.innerHTML = it.d; el.appendChild(d);
+  if (it.ex && it.ex.length) {
+    const ex = document.createElement("div"); ex.className = "ex";
+    ex.innerHTML = `<span>Exemplo${it.ex.length > 1 ? "s" : ""}:</span>`;
+    for (const [label, href] of it.ex) {
+      const a = document.createElement("a"); a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = label + " ↗";
+      ex.appendChild(a);
+    }
+    el.appendChild(ex);
+  }
+  if (it.w) { const w = document.createElement("p"); w.className = "warn"; w.innerHTML = it.w; el.appendChild(w); }
+  if (it.where) { const wh = document.createElement("div"); wh.className = "where"; wh.innerHTML = "Usado por <code></code>"; wh.querySelector("code").textContent = it.where; el.appendChild(wh); }
+  return el;
+}
+
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+function render() {
+  main.querySelectorAll("section, .empty").forEach(n => n.remove());
+  toc.innerHTML = "";
+  for (const b of chips.children) b.setAttribute("aria-pressed", String(b.id === "chip-" + activeAccess));
+  const terms = norm(q.value).split(/\s+/).filter(Boolean);
+  let total = 0, lastGrp = null;
+  for (const sec of S) {
+    const items = sec.items.filter(it => {
+      if (activeAccess && it.a !== activeAccess) return false;
+      if (!terms.length) return true;
+      const hay = norm([sec.title, it.n, it.u, it.d, it.w || "", it.where || "", ACCESS[it.a].label].join(" "));
+      return terms.every(t => hay.includes(t));
+    });
+    if (!items.length) continue;
+    total += items.length;
+    if (sec.grp !== lastGrp) { const g = document.createElement("div"); g.className = "grp"; g.textContent = sec.grp; toc.appendChild(g); lastGrp = sec.grp; }
+    const a = document.createElement("a"); a.href = "#" + sec.id; a.innerHTML = `<span></span><span class="n">${items.length}</span>`; a.firstChild.textContent = sec.title.replace(/^FPG — /, ""); toc.appendChild(a);
+    const s = document.createElement("section"); s.id = sec.id;
+    const h = document.createElement("h2"); h.textContent = sec.title; s.appendChild(h);
+    if (sec.sub) { const p = document.createElement("p"); p.className = "sub"; p.textContent = sec.sub; s.appendChild(p); }
+    const list = document.createElement("div"); list.className = "list";
+    items.forEach(it => list.appendChild(itemNode(it)));
+    s.appendChild(list); main.appendChild(s);
+  }
+  if (!total) { const e = document.createElement("p"); e.className = "empty"; e.textContent = "Nenhum link corresponde à pesquisa. Experimente outro termo ou limpe o filtro de acesso."; main.appendChild(e); }
+  count.textContent = `${total} link${total === 1 ? "" : "s"}`;
+}
+q.addEventListener("input", render);
+render();
+</script>

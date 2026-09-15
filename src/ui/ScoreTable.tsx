@@ -18,6 +18,7 @@ import {
   calcPlayingHcp,
   expectedSD9,
   get9hRatings,
+  scoreDifferential,
 } from "../utils/whsCalc";
 import { textOnColor } from "../utils/teeColors";
 
@@ -64,7 +65,7 @@ export function SDTable({
 
     const playingHcp =
       hi !== null
-        ? Math.round(calcPlayingHcp(is9h ? hi / 2 : hi, slope, cr, par))
+        ? Math.round(calcPlayingHcp(hi, slope, cr, par, 1, is9h))
         : null;
     const exp9 = hi !== null && is9h ? expectedSD9(hi) : null;
 
@@ -75,8 +76,10 @@ export function SDTable({
     for (let delta = minDelta; delta <= maxDelta; delta++) {
       const score = par + delta;
       if (score < minScore) continue;
-      const sd = calcSD(score, cr, slope, pcc);
-      const sd18 = is9h && exp9 !== null ? sd + exp9 : sd;
+      // SD pela biblioteca (utils/whsCalc); em 9 buracos sem HI só há o SD dos 9
+      const d = scoreDifferential({ score, cr, slope, pcc, is9: is9h, hi });
+      const sd = is9h ? (d?.sd9 ?? calcSD(score, cr, slope, pcc / 2)) : (d?.sd ?? calcSD(score, cr, slope, pcc));
+      const sd18 = d?.sd ?? sd;
       const net = playingHcp !== null ? score - playingHcp : null;
       result.push({ score, vsPar: delta, sd9: sd, sd18, expected9: exp9, netScore: net });
     }
@@ -108,7 +111,7 @@ export function SDTable({
               r.vsPar ===
               Math.round(
                 hi !== null
-                  ? calcPlayingHcp(is9h ? hi / 2 : hi, slope, cr, par)
+                  ? calcPlayingHcp(hi, slope, cr, par, 1, is9h)
                   : 999,
               );
             return (
@@ -194,13 +197,7 @@ export function MultiTeeSDTable({
       const phcp =
         hi !== null
           ? Math.round(
-              calcPlayingHcp(
-                is9h ? hi / 2 : hi,
-                slope,
-                cr,
-                par,
-                allowance / 100,
-              ),
+              calcPlayingHcp(hi, slope, cr, par, allowance / 100, is9h),
             )
           : null;
       const dist = is9h
@@ -237,8 +234,11 @@ export function MultiTeeSDTable({
     for (let delta = minDelta; delta <= maxDelta; delta++) {
       const cells = cols.map((c) => {
         const score = c.par + delta;
-        const sd = calcSD(score, c.cr, c.slope, pcc);
-        const sd18 = is9h && exp9 !== null ? sd + exp9 : sd;
+        const d = scoreDifferential({ score, cr: c.cr, slope: c.slope, pcc, is9: is9h, hi });
+        const sd = is9h
+          ? (d?.sd9 ?? calcSD(score, c.cr, c.slope, pcc / 2))
+          : (d?.sd ?? calcSD(score, c.cr, c.slope, pcc));
+        const sd18 = d?.sd ?? sd;
         const net = c.playingHcp !== null ? score - c.playingHcp : null;
         return { score, sd, sd18, net };
       });
@@ -246,7 +246,7 @@ export function MultiTeeSDTable({
       result.push({ delta, cells });
     }
     return result;
-  }, [cols, pcc, is9h, exp9]);
+  }, [cols, pcc, is9h, hi]);
 
   if (cols.length === 0)
     return (

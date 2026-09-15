@@ -51,8 +51,11 @@ export function AccumulatedLB({
         const rdNum = i + 1;
         const rs = roundScores.find((r) => r.round === rdNum);
         if (!rs) return undefined;
-        const sdP = {
+        // SD: o oficial da FPG ou, sem ele, o calculado com o HCP da inscrição.
+        const { sd } = computeSD({
           ...p,
+          sd: undefined,
+          roundScores: [rs],
           scores: rs.scores,
           par: rs.pars,
           si: rs.si,
@@ -62,8 +65,7 @@ export function AccumulatedLB({
           pcc: rs.pcc,
           nholes: rs.pars?.length,
           grossTotal: rs.gross,
-        };
-        const { sd } = computeSD(sdP);
+        }, tournament.date);
         let eagles = 0,
           birdies = 0,
           pars = 0,
@@ -83,7 +85,6 @@ export function AccumulatedLB({
           // a zero e comparar 9 buracos com o par de 18 dava "36 (−36)".
           parPerRound: playedParTotal(rs, parPerRound) || parPerRound,
           sd,
-          sdSource: null as string | null,
           eagles,
           birdies,
           pars,

@@ -10,7 +10,6 @@ import { useSort } from "../hooks/useSort";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { sdClassByHcp, medalColor } from "../utils/scoreDisplay";
-import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtToPar, fmtDateShort, fmtHcp, medal, shortDateSlash, tournamentUrl, parseTournKey, fpgAdmissionsUrl } from "../utils/format";
 import TournExtLinks from "../ui/TournExtLinks";
 import TabRow from "../ui/TabRow";
@@ -19,7 +18,7 @@ import { useParams, useNavigate, useLocation, useSearchParams } from "react-rout
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import { resolveFedsInTournaments , buildEscLookup, normalizePlayer } from "../utils/playerUtils";
-import { resolveEsc, buildTemporalEscLookup, type TemporalEscLookup } from "../data/fpgUtils";
+import { resolveEsc, buildTemporalEscLookup, computeSD, type TemporalEscLookup } from "../data/fpgUtils";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill, NineHPill } from "../ui/PillBadge";
@@ -65,7 +64,6 @@ import type {
   Tournament,
   Player,
   DriveData,
-  SDLookup,
   TStats,
 } from "../ui/driveTypes";
 
@@ -119,13 +117,11 @@ function fpgRankingUrl(series: string, region: string, escalao: string | null, y
   return `https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club=${FPG_RANKING_CLUB}&ranking=${code}&ack=${FPG_RANKING_ACK}&minpoints=1`;
 }
 
-/* ── WHS Expected 9h SD table ── */
-
 /* ── Helpers ── */
 
 /** URL público do torneio em scoring.datagolf.pt */
 
-function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
+function computeStats(p: Player, date?: string | null): TStats | null {
   if (isDNS(p)) return null;
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (gross == null || isNaN(gross as number)) return null;
@@ -136,46 +132,19 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   const rs0 = p.roundScores?.[0];
   const parArr = p.par?.length ? p.par : rs0?.pars || [];
   const scores = p.scores?.length ? p.scores : rs0?.scores || [];
-  const si = p.si?.length ? p.si : rs0?.si || [];
-  const cr = p.courseRating ?? rs0?.courseRating;
-  const slope = p.slope ?? rs0?.slope;
 
   const parT = p.parTotal || parArr.reduce((a, b) => a + b, 0);
   const tp = g - parT;
   const nh = p.nholes || scores.length || parArr.length || 18;
-  const is9 = nh <= 9;
-
-  let sd18: number | null = null;
-  let sdSource: "fpg" | "ags" | "raw" | null = null;
-
-  // Skip SD calculation for multi-round combined entries (nholes > 18).
-  // g >= 900 é sentinela de "sem cartão" (998 ND/NR, 999 NS/WD) — ver a mesma
-  // guarda no computeSD() de fpgUtils.ts.
-  if (nh <= 18 && g < 900) {
-    // 1) FPG lookup by scoreId
-    const sid = String(p.scoreId);
-    if (sdLookup[sid] != null) {
-      sd18 = sdLookup[sid];
-      sdSource = "fpg";
-    }
-    // 2) AGS calculation (needs SI data)
-    else if (cr && slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
-      const adjGross = calcAGS(scores, parArr, si, cr, slope, p.hcpExact, nh);
-      const rawSD = (113 / slope) * (adjGross - cr);
-      sd18 = is9 ? rawSD + expectedSD9(p.hcpExact) : rawSD;
-      sdSource = "ags";
-    }
-    // 3) Raw fallback (no SI)
-    else if (cr && slope) {
-      const rawSD = (113 / slope) * (g - cr);
-      if (is9 && p.hcpExact != null) {
-        sd18 = rawSD + expectedSD9(p.hcpExact);
-      } else if (!is9) {
-        sd18 = rawSD;
-      }
-      sdSource = sd18 != null ? "raw" : null;
-    }
-  }
+  // SD: o oficial da FPG, ou o calculado com o HCP da inscrição (ver computeSD).
+  // Entradas multi-ronda combinadas (nholes > 18) não têm SD.
+  const sd18 = nh <= 18
+    ? computeSD({
+        ...p, scores, par: parArr, si: p.si?.length ? p.si : rs0?.si || [],
+        courseRating: p.courseRating ?? rs0?.courseRating, slope: p.slope ?? rs0?.slope,
+        pcc: p.pcc ?? rs0?.pcc, nholes: nh,
+      }, date).sd
+    : null;
 
   let birdies = 0, pars = 0, bogeys = 0;
   // If player has multiple roundScores, count across all rounds
@@ -198,7 +167,7 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
       else bogeys++;
     }
   }
-  return { pos: p.pos, gross: g, toPar: tp, sd18, sdSource, nholes: nh, birdies, pars, bogeys };
+  return { pos: p.pos, gross: g, toPar: tp, sd18, nholes: nh, birdies, pars, bogeys };
 }
 
 function uniquePC(ts: Tournament[]): number {
@@ -386,8 +355,8 @@ function DrivePointsTable() {
    SCORECARD LEADERBOARD
    Colunas idênticas ao Diversos: ESC · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ═══════════════════════════════════════════════════════ */
-function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup; fedBirthdates?: Map<string, string> }) {
-  const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup, fedBirthdates } = props;
+function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; temporalEscLookup?: TemporalEscLookup; fedBirthdates?: Map<string, string> }) {
+  const { tournament, playersDB, escLookup, temporalEscLookup, fedBirthdates } = props;
   const [showScorecard, setShowScorecard] = React.useState(true);
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
 
@@ -433,7 +402,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
 
   // Resolver escalão e stats por jogador antes de ordenar
   const escOf = (p: Player) => resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
-  const sdOf = (p: Player) => computeStats(p, sdLookup)?.sd18 ?? null;
+  const sdOf = (p: Player) => computeStats(p, tournament.date)?.sd18 ?? null;
 
   const mult = sortDir === "asc" ? 1 : -1;
   const INF = 9999;
@@ -473,7 +442,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     const showP = idx === 0 || dp !== (sorted[idx - 1] as Player)._dp;
     const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
     const esc = resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
-    const stats = computeStats(p, sdLookup);
+    const stats = computeStats(p, tournament.date);
     return {
       key: p.scoreId || idx,
       pos: showP ? dp : "",
@@ -492,7 +461,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       postScorecardCells: <>
         <td className="lb-sd">
           {stats?.sd18 != null
-            ? <SDPill sd={stats.sd18} source={stats.sdSource} hcp={p.hcpExact ?? null} />
+            ? <SDPill sd={stats.sd18} hcp={p.hcpExact ?? null} />
             : <span className="muted">–</span>}
         </td>
         <td className="lb-bird">{stats?.birdies || ""}</td>
@@ -541,8 +510,8 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
    ACUMULADO MULTI-RONDA — usa MultiRoundLeaderboard
    (local, sem importar FPGPage — evita loop HMR)
    ═══════════════════════════════════════════════════════ */
-function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLookup, temporalEscLookup, fedBirthdates }: {
-  tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup;
+function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, temporalEscLookup, fedBirthdates }: {
+  tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; temporalEscLookup?: TemporalEscLookup;
   fedBirthdates?: Map<string, string>;
 }) {
   const rawPlayers = tournament.players;
@@ -561,7 +530,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
       const sdP: Player = { ...p, scores: rs.scores, par: rs.pars, si: rs.si,
         courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length,
         grossTotal: rs.gross, roundScores: [rs] };
-      const stats = computeStats(sdP, sdLookup);
+      const stats = computeStats(sdP, tournament.date);
       let birdies = 0, pars = 0, bogeys = 0;
       for (let j = 0; j < (rs.scores?.length ?? 0); j++) {
         const d = (rs.scores[j] || 0) - (rs.pars[j] || 0);
@@ -570,7 +539,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
       return {
         gross: rs.gross,
         parPerRound: rs.pars?.reduce((a: number, b: number) => a + b, 0) || parPerRound,
-        sd: stats?.sd18 ?? null, sdSource: stats?.sdSource ?? null,
+        sd: stats?.sd18 ?? null,
         birdies, pars, bogeys,
       };
     });
@@ -595,7 +564,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
       isHighlighted: isManuel(p),
       rounds: mappedRounds,
     };
-  }), [rawPlayers, escLookup, nRounds, parPerRound, sdLookup, tournament, playersDB, temporalEscLookup, fedBirthdates]);
+  }), [rawPlayers, escLookup, nRounds, parPerRound, tournament, playersDB, temporalEscLookup, fedBirthdates]);
 
   if (!rawPlayers.length) return <EmptyState size="sm" message="Sem resultados." />;
 
@@ -793,7 +762,7 @@ interface TournResult {
   tournKey: string; tournName: string; tournShort: string;
   date: string; dateSort: number; campo: string; region: string;
   series: "tour" | "challenge" | "aquapor";
-  gross: number; toPar: number; sd: number | null; sdSource: "fpg" | "ags" | "raw" | null;
+  gross: number; toPar: number; sd: number | null;
   pos: number | string | null; totalPlayers: number;
   /** Pontos oficiais desta prova (já com empates partilhados; nas Finais é o
    *  valor SIMPLES — o ×1.5 é aplicado pelo rankingTotal). */
@@ -855,7 +824,6 @@ function dateToSort(d: string): number {
 function buildSub12Data(
   tournaments: Tournament[],
   playersDB: PlayersDB,
-  sdLookup: SDLookup,
   escLookup: EscLookup,
   temporalEscLookup?: TemporalEscLookup,
   fedBirthdates?: Map<string, string>,
@@ -896,9 +864,9 @@ function buildSub12Data(
       if (targetEsc !== "all" && !escMatches(esc, targetEsc)) continue;
       const fed = p.fed || p.fedCode || "";
       if (!fed) continue;
-      const stats = computeStats(p, sdLookup);
+      const stats = computeStats(p, t.date);
       if (!stats) continue;
-      const { gross: g, toPar: tp, sd18, sdSource, nholes, birdies, pars: parsCount, bogeys } = stats;
+      const { gross: g, toPar: tp, sd18, nholes, birdies, pars: parsCount, bogeys } = stats;
       const tournKey = t.tcode + "_" + t.date;
       if (!playerMap.has(fed)) {
         const dbInfo = playersDB[fed];
@@ -918,7 +886,7 @@ function buildSub12Data(
         date: t.date, dateSort: dateToSort(t.date),
         campo: t.campo || "", region: t.region || "", series: (t.series || "tour") as "tour" | "challenge" | "aquapor",
         gross: g, toPar: tp,
-        sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null, sdSource,
+        sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null,
         pos: p.pos, totalPlayers: t.playerCount, pts: ptsByFed.get(fed) ?? 0,
         nholes, birdies, pars: parsCount, bogeys,
       });
@@ -1205,7 +1173,6 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
 function DriveContent() {
   const [data, setData]           = useState<DriveData | null>(null);
   const [pdb, setPdb]             = useState<PlayersDB>({});
-  const [sdLookup, setSdLookup]   = useState<SDLookup>({});
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState<string | null>(null);
   // Fallback DOB p/ federados fora de players.json curado.
@@ -1352,8 +1319,7 @@ function DriveContent() {
       loadAllFiles("drive-data", false, 2021),
       loadAllFiles("aquapor-data", true, 2024),
       loadPlayers().catch(() => ({})),
-      fetch("/data/drive-sd-lookup.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
-    ]).then(([driveR, aqR, pp, sd]) => {
+    ]).then(([driveR, aqR, pp]) => {
       const driveTourns = driveR.tournaments;
       const aqTourns = aqR.tournaments;
       setMonthlyMeta([...driveR.meta, ...aqR.meta]);
@@ -1368,7 +1334,7 @@ function DriveContent() {
         totalScorecards: 0,
         tournaments: allTourns,
       };
-      setData(driveData); setPdb(pp as PlayersDB); setSdLookup(sd as SDLookup); setLoading(false);
+      setData(driveData); setPdb(pp as PlayersDB); setLoading(false);
       setTimeout(() => {
         resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
         setData({ ...driveData });
@@ -1581,8 +1547,8 @@ function DriveContent() {
     const tourns = activeYear
       ? data.tournaments.filter(t => t.date?.startsWith(activeYear))
       : data.tournaments;
-    return buildSub12Data(tourns, pdb, sdLookup, escLookup, temporalEscLookup, fedBirthdates, sub12Esc);
-  }, [sub12Ready, data, pdb, sdLookup, escLookup, temporalEscLookup, activeYear, fedBirthdates, sub12Esc]);
+    return buildSub12Data(tourns, pdb, escLookup, temporalEscLookup, fedBirthdates, sub12Esc);
+  }, [sub12Ready, data, pdb, escLookup, temporalEscLookup, activeYear, fedBirthdates, sub12Esc]);
 
   const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
 
@@ -1901,7 +1867,6 @@ function DriveContent() {
   if (error)   return <div className="jogadores-page"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
   if (!data)   return null;
 
-  const sdCount = Object.keys(sdLookup).length;
   const allSources: DataSource[] = [...monthlyMeta, ...admissionsMeta];
   const providerTournaments = (data?.tournaments ?? []).map(t => ({
     _sourceFile: (t as any)._sourceFile,
@@ -2184,7 +2149,7 @@ function DriveContent() {
               <EmptyState size="sm" message="Sem torneios" />
             )}
             <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)" }}>
-              scoring.datagolf.pt{sdCount > 0 && ` · SD: ${sdCount}`}
+              scoring.datagolf.pt
             </div>
           </div>
 
@@ -2221,7 +2186,7 @@ function DriveContent() {
                       </div>
                     ) : null;
                   })()}
-                  <ResumoTable tournaments={filteredT as any /* tipo local diferente do playerUtils */} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
+                  <ResumoTable tournaments={filteredT as any /* tipo local diferente do playerUtils */} playersDB={pdb} escLookup={escLookup} mergeByEvent={series === "challenge"} />
                 </div>
 
                 {/* Tabela de pontos */}
@@ -2419,12 +2384,12 @@ function DriveContent() {
                           ? (() => {
                               const totalT = sg.entries.find(e => e._roundLabel === "Resumo");
                               return totalT
-                                ? <DriveAllRoundsScorecardLB totalTournament={totalT!} playersDB={pdb} sdLookup={sdLookup} />
+                                ? <DriveAllRoundsScorecardLB totalTournament={totalT!} playersDB={pdb} />
                                 : <EmptyState size="sm" message="Dados insuficientes" />;
                             })()
                           : ct._roundLabel === "Resumo"
-                            ? <DriveAccumulatedLB tournament={ct} nRounds={ct._totalRounds || sg.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
-                            : <ScorecardLB tournament={ct} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
+                            ? <DriveAccumulatedLB tournament={ct} nRounds={ct._totalRounds || sg.totalRounds || 2} escLookup={escLookup} playersDB={pdb} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
+                            : <ScorecardLB tournament={ct} playersDB={pdb} escLookup={escLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
                   </div>
                 )}
               </div>

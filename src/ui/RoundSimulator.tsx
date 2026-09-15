@@ -4,31 +4,16 @@ import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoade
 import type {} from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { norm } from "../utils/format";
-import { meanArr } from "../utils/mathUtils";
+import {
+  whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
+  scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
+} from "../utils/whsCalc";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { GrossCell } from "./tableCells";
-import { calcSD, expectedSD9, get9hRatings } from "../utils/whsCalc";
 import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
 import { CourseLink } from "./jogadoresHelpers";
-
-/* ─── WHS quantity calculation ─── */
-function whsQtyCalc(nSds: number): number {
-  if (nSds <= 2) return 1;
-  if (nSds <= 3) return 1;
-  if (nSds <= 4) return 1;
-  if (nSds <= 5) return 1;
-  if (nSds <= 6) return 2;
-  if (nSds <= 8) return 2;
-  if (nSds <= 10) return 3;
-  if (nSds <= 12) return 3;
-  if (nSds <= 14) return 4;
-  if (nSds <= 16) return 5;
-  if (nSds <= 18) return 6;
-  if (nSds === 19) return 7;
-  return 8;
-}
 
 /** CR/Slope/Par introduzidos à mão (strings — vêm dos inputs).
  *  Usado para pré-preencher o modo "Manual" do simulador a partir de outra
@@ -38,6 +23,24 @@ export interface ManualDefaults {
   "18"?: ManualTee;
   front9?: ManualTee;
   back9?: ManualTee;
+}
+
+/** Volta enviada de fora para o simulador (ex: o scorecard do /simulador). */
+export interface IncomingRound {
+  /** Muda a cada pedido — é o que faz a volta entrar. */
+  key: number;
+  holesMode: "18" | "front9" | "back9";
+  courseKey?: string;
+  teeId?: string;
+  cr: number;
+  slope: number;
+  par: number;
+  /** Adjusted Gross. */
+  gross?: number;
+  /** SD já calculado (9 buracos: o SD9) — entra como ronda de SD directo. */
+  sd?: number;
+  /** PCC do dia (−1 a +3). */
+  pcc?: number;
 }
 
 export interface RoundSimulatorProps {
@@ -53,6 +56,8 @@ export interface RoundSimulatorProps {
    *  No /simulador liga aos inputs de Modo Manual do topo — preencher em cima
    *  preenche automaticamente a ronda em baixo. */
   manualDefaults?: ManualDefaults;
+  /** Volta a acrescentar (ex: a do scorecard da mesma página). */
+  incomingRound?: IncomingRound;
 }
 
 export function RoundSimulator({
@@ -63,6 +68,7 @@ export function RoundSimulator({
   courseLookupFn: _courseLookupFn,
   storageKey: storageKeyProp,
   manualDefaults,
+  incomingRound,
 }: RoundSimulatorProps) {
   type HolesMode = "18" | "front9" | "back9";
   type SimRound = {
@@ -78,6 +84,8 @@ export function RoundSimulator({
     crInput?: string;
     slopeInput?: string;
     parInput?: string;
+    /** PCC do dia (−1 a +3) — só nas rondas de Campo e Manual. */
+    pccInput?: string;
   };
   const is9hMode = (hm: HolesMode): hm is "front9" | "back9" =>
     hm === "front9" || hm === "back9";
@@ -125,7 +133,8 @@ export function RoundSimulator({
   const { fedId: urlFedId } = useParams<{ fedId?: string }>();
   const currentHI = hcp.current;
   const nextIdRef = useRef(1);
-  const newId = () => `sr_${nextIdRef.current++}`;
+  // Com o timestamp, um id novo nunca repete o de uma ronda carregada do localStorage.
+  const newId = () => `sr_${Date.now().toString(36)}_${nextIdRef.current++}`;
   const storageKey = storageKeyProp ?? (urlFedId ? `sim_rounds_v2_${urlFedId}` : null);
   const [savedTs, setSavedTs] = useState<number | null>(null);
   // Tabela de impacto: por defeito mostra um intervalo focado à volta do par;
@@ -189,6 +198,7 @@ export function RoundSimulator({
         crInput: typeof rr.crInput === "string" ? rr.crInput : "",
         slopeInput: typeof rr.slopeInput === "string" ? rr.slopeInput : "",
         parInput: typeof rr.parInput === "string" ? rr.parInput : "",
+        pccInput: typeof rr.pccInput === "string" ? rr.pccInput : "",
       });
     }
     return out.length > 0 ? out : null;
@@ -231,39 +241,30 @@ export function RoundSimulator({
   }, [defaultCourseKey]);
 
   // ── Ajuste sistema ──
-  const currentRawAvg = useMemo(() => {
-    const qty = whsQtyCalc(whs20.length);
-    if (qty === 0 || currentHI == null) return null;
-    const sorted = whs20
-      .map((r) => {
-        const v = parseFloat(String(r.sd).replace(",", "."));
-        return isNaN(v) ? null : v;
-      })
-      .filter((v): v is number => v != null)
-      .sort((a, b) => a - b);
-    return meanArr(sorted.slice(0, qty)) ?? null;
-  }, [whs20, currentHI]);
-  const totalAdjustment =
-    currentHI != null && currentRawAvg != null
-      ? currentHI - currentRawAvg
-      : 0;
+  const lowHI = hcp.lowHcp ?? null;
 
   // ── Pool inicial ──
-  const initialPool = useMemo((): PoolEntry[] =>
-    whs20
-      .map((r) => {
-        const sdVal = parseFloat(String(r.sd).replace(",", "."));
-        return {
-          eid: r.scoreId,
-          sd: isNaN(sdVal) ? 0 : sdVal,
-          adj: 0,
-          isSimulated: false,
-          roundIdx: -1,
-          origRound: r,
-        };
-      })
-      .filter((e) => !isNaN(e.sd)),
-    [whs20]
+  // Com os ajustes de resultados extraordinários que a FPG já aplicou à janela
+  // (sem eles o HI calculado não bate com o oficial — ex: 24,9 vs 23,3).
+  const initialPool = useMemo((): PoolEntry[] => {
+    // Uma volta sem SD não conta — nunca entra como SD 0
+    const base = whs20
+      .map((r) => ({ r, sd: parseFloat(String(r.sd ?? "").replace(",", ".")), hi: r.hi != null ? Number(r.hi) : null }))
+      .filter((b) => Number.isFinite(b.sd));
+    const adj = historicExceptionalAdj(base);
+    return base.map((b, i) => ({
+      eid: b.r.scoreId,
+      sd: b.sd,
+      adj: adj[i],
+      isSimulated: false,
+      roundIdx: -1,
+      origRound: b.r,
+    }));
+  }, [whs20]);
+
+  const totalAdjustment = useMemo(
+    () => (currentHI == null ? 0 : hiAdjustment(initialPool, currentHI, lowHI)),
+    [initialPool, currentHI, lowHI]
   );
 
   // ── Helpers campos/tees ──
@@ -338,6 +339,11 @@ export function RoundSimulator({
     return manualDefaults?.[r.holesMode]?.[field] ?? "";
   }
 
+  function roundPcc(r: SimRound | undefined): number {
+    const v = parseInt(r?.pccInput ?? "", 10);
+    return isNaN(v) ? 0 : v;
+  }
+
   function getManualRatings(r: SimRound): {
     cr: number | null;
     slope: number | null;
@@ -404,6 +410,49 @@ export function RoundSimulator({
     );
   }
 
+  // ── Volta vinda de fora (ex: o scorecard do /simulador) ──
+  // Cada pedido traz uma `key` nova. Entra como ronda de Campo quando o tee
+  // existe para o sexo do jogador; senão como Manual com o CR/Slope/Par. Com
+  // PCC ≠ 0 entra como SD directo (as rondas de Campo/Manual não levam PCC).
+  const lastIncomingKey = useRef<number | null>(null);
+  useEffect(() => {
+    const ir = incomingRound;
+    if (!ir || ir.key === lastIncomingKey.current) return;
+    lastIncomingKey.current = ir.key;
+    const base: SimRound = {
+      id: newId(),
+      mode: "sd",
+      holesMode: ir.holesMode,
+      sdInput: "",
+      courseKey: ir.courseKey || defaultCourseKey,
+      teeId: "",
+      grossInput: "",
+      pccInput: ir.pcc ? String(ir.pcc) : "",
+    };
+    const teeOk =
+      !!ir.courseKey && !!ir.teeId &&
+      getValidTees(ir.courseKey, ir.holesMode).some((t) => t.teeId === ir.teeId);
+    const gross = ir.gross != null ? String(ir.gross) : "";
+    const r: SimRound =
+      ir.sd != null
+        ? { ...base, sdInput: String(ir.sd) }
+        : teeOk
+          ? { ...base, mode: "course", teeId: ir.teeId!, grossInput: gross }
+          : {
+              ...base,
+              mode: "manual",
+              crInput: String(ir.cr),
+              slopeInput: String(ir.slope),
+              parInput: String(ir.par),
+              grossInput: gross,
+            };
+    setRounds((prev) => {
+      const blank = (x: SimRound) => x.sdInput.trim() === "" && x.grossInput.trim() === "";
+      return prev.length === 1 && blank(prev[0]) ? [r] : [...prev, r];
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incomingRound]);
+
   function clearAll() {
     setRounds([
       {
@@ -453,13 +502,11 @@ export function RoundSimulator({
   // ── Simulação sequencial ──
   const simResults = useMemo(() => {
     if (currentHI == null || initialPool.length === 0) return null;
-    const initSorted = [...initialPool].sort(
-      (a, b) => a.sd + a.adj - (b.sd + b.adj)
-    );
-    const initQty = whsQtyCalc(initialPool.length);
-    const oldTopIds = new Set(initSorted.slice(0, initQty).map((e) => e.eid));
+    const oldTopIds = topIds(initialPool);
     let pool: PoolEntry[] = [...initialPool];
     let curHI = currentHI;
+    // O Low HI desce quando uma ronda simulada baixa o índice abaixo dele
+    let curLow = lowHI;
     const results: RoundResult[] = [];
 
     for (let i = 0; i < rounds.length; i++) {
@@ -479,10 +526,10 @@ export function RoundSimulator({
         const v = parseFloat(round.sdInput.replace(",", "."));
         if (!isNaN(v)) {
           if (is9) {
-            // Input é SD9; converte-se para SD18 equivalente somando exp9(HI actual)
-            sd9Raw = Math.round(v * 10) / 10;
-            exp9 = Math.round(expectedSD9(curHI) * 10) / 10;
-            sd = Math.round((sd9Raw + exp9) * 10) / 10;
+            // Input é SD9; converte-se para SD18 com o Expected SD do HI actual
+            sd9Raw = round1(v);
+            exp9 = round1(expectedSD9(curHI));
+            sd = sd18FromSd9(sd9Raw, curHI);
           } else {
             sd = v;
           }
@@ -503,14 +550,8 @@ export function RoundSimulator({
         const g = parseInt(round.grossInput);
         if (!isNaN(g) && cr != null && slope != null) {
           gross = g;
-          const sdRaw = Math.round(calcSD(g, cr, slope) * 10) / 10;
-          if (is9) {
-            sd9Raw = sdRaw;
-            exp9 = Math.round(expectedSD9(curHI) * 10) / 10;
-            sd = Math.round((sd9Raw + exp9) * 10) / 10;
-          } else {
-            sd = sdRaw;
-          }
+          const d = scoreDifferential({ score: g, cr, slope, pcc: roundPcc(round), is9, hi: curHI });
+          if (d) { sd = d.sd; sd9Raw = d.sd9; exp9 = d.exp9; }
         }
       }
 
@@ -546,39 +587,15 @@ export function RoundSimulator({
       }
 
       const exceptionalDiff = curHI - sd;
-      const exceptionalAdj =
-        exceptionalDiff >= 10 ? -2 : exceptionalDiff >= 7 ? -1 : 0;
-      const newEntry: PoolEntry = {
-        eid: round.id,
-        sd,
-        adj: exceptionalAdj,
-        isSimulated: true,
-        roundIdx: i,
-      };
-      const kept = pool
-        .slice(0, 19)
-        .map((e) => ({ ...e, adj: e.adj + exceptionalAdj }));
-      const displaced =
-        pool.length >= 20
-          ? { ...pool[19], adj: pool[19].adj + exceptionalAdj }
-          : null;
-      const newPool: PoolEntry[] = [newEntry, ...kept];
-
-      const adjEntries = newPool
-        .map((e) => ({ eid: e.eid, adjSd: e.sd + e.adj }))
-        .filter((x) => !isNaN(x.adjSd))
-        .sort((a, b) => a.adjSd - b.adjSd);
-      const qty = whsQtyCalc(newPool.length);
-      const topSlice = adjEntries.slice(0, qty);
-      const entersTop = topSlice.some((x) => x.eid === round.id);
-      const topRank = entersTop
-        ? topSlice.findIndex((x) => x.eid === round.id) + 1
-        : null;
-      const avg = meanArr(topSlice.map((x) => x.adjSd));
-      const newHI =
-        avg != null
-          ? Math.round((avg + totalAdjustment) * 10) / 10
-          : curHI;
+      const step = addRoundToPool<PoolEntry>(
+        pool,
+        { eid: round.id, sd, adj: 0, isSimulated: true, roundIdx: i },
+        curHI,
+        totalAdjustment,
+        curLow
+      );
+      const { exceptionalAdj, displaced, entersTop, topRank, newHI } = step;
+      const newPool = step.pool;
 
       results.push({
         roundId: round.id,
@@ -608,39 +625,18 @@ export function RoundSimulator({
       });
       pool = newPool;
       curHI = newHI;
+      if (curLow != null && curLow > 0 && newHI < curLow) curLow = newHI;
     }
     return { results, finalPool: pool, finalHI: curHI, oldTopIds };
-  }, [rounds, initialPool, currentHI, totalAdjustment, allRatedCourses]);
+  }, [rounds, initialPool, currentHI, totalAdjustment, allRatedCourses, lowHI]);
 
-  // ── Top-N do pool final ──
-  const { finalTopIds, finalTopRanks } = useMemo(() => {
-    if (!simResults)
-      return {
-        finalTopIds: new Set<string>(),
-        finalTopRanks: new Map<string, number>(),
-      };
-    const sorted = [...simResults.finalPool]
-      .map((e) => ({ eid: e.eid, adjSd: e.sd + e.adj }))
-      .sort((a, b) => a.adjSd - b.adjSd);
-    const qty = whsQtyCalc(simResults.finalPool.length);
-    const topIds = new Set(
-      sorted.slice(0, qty).map((x) => x.eid)
-    );
-    const topRanks = new Map<string, number>();
-    sorted.slice(0, qty).forEach((x, i) => topRanks.set(x.eid, i + 1));
-    return { finalTopIds: topIds, finalTopRanks: topRanks };
-  }, [simResults]);
-
-  // ── Top-N ANTES da simulação (para mostrar #antiga → #nova na janela) ──
-  const oldTopRanks = useMemo(() => {
-    const sorted = [...initialPool]
-      .map((e) => ({ eid: e.eid, adjSd: e.sd + e.adj }))
-      .sort((a, b) => a.adjSd - b.adjSd);
-    const qty = whsQtyCalc(initialPool.length);
-    const m = new Map<string, number>();
-    sorted.slice(0, qty).forEach((x, i) => m.set(x.eid, i + 1));
-    return m;
-  }, [initialPool]);
+  // ── Melhores N da janela final e de antes da simulação (#antiga → #nova) ──
+  const finalTopRanks = useMemo(
+    () => (simResults ? topRanks(simResults.finalPool) : new Map<string, number>()),
+    [simResults]
+  );
+  const finalTopIds = useMemo(() => new Set(finalTopRanks.keys()), [finalTopRanks]);
+  const oldTopRanks = useMemo(() => topRanks(initialPool), [initialPool]);
 
   // ── Tabela gross→HCP (última ronda em modo Campo válida) ──
   const grossTable = useMemo(() => {
@@ -660,7 +656,8 @@ export function RoundSimulator({
       roundIdx,
       gross: enteredGross,
     } = last;
-    const exp9 = is9 ? Math.round(expectedSD9(hiBeforeRound) * 10) / 10 : 0;
+    const lastPcc = roundPcc(rounds[roundIdx]);
+    const exp9 = is9 ? round1(expectedSD9(hiBeforeRound)) : 0;
     const rows: {
       gross: number;
       sd: number;
@@ -680,45 +677,31 @@ export function RoundSimulator({
     for (let delta = minDelta; delta <= maxDelta; delta++) {
       const g = (par as number) + delta;
       if (g < minScore) continue;
-      const sdRaw = Math.round(calcSD(g, cr!, slope!) * 10) / 10;
-      const sd = is9 ? Math.round((sdRaw + exp9) * 10) / 10 : sdRaw;
-      const excDiff = hiBeforeRound - sd;
-      const excAdj =
-        excDiff >= 10 ? -2 : excDiff >= 7 ? -1 : 0;
-      const newEntry = {
-        eid: "__gt__",
-        sd,
-        adj: excAdj,
-        isSimulated: true,
-        roundIdx: -1,
-      };
-      const kept = poolBefore
-        .slice(0, 19)
-        .map((e) => ({ ...e, adj: e.adj + excAdj }));
-      const newPool = [newEntry, ...kept];
-      const adjE = newPool
-        .map((e) => ({ eid: e.eid, adjSd: e.sd + e.adj }))
-        .filter((x) => !isNaN(x.adjSd))
-        .sort((a, b) => a.adjSd - b.adjSd);
-      const qty = whsQtyCalc(newPool.length);
-      const entersTop = adjE.slice(0, qty).some((x) => x.eid === "__gt__");
-      const avg = meanArr(adjE.slice(0, qty).map((x) => x.adjSd));
-      if (avg == null) continue;
-      const newHI = Math.round((avg + totalAdjustment) * 10) / 10;
+      const d = scoreDifferential({ score: g, cr: cr!, slope: slope!, pcc: lastPcc, is9, hi: hiBeforeRound });
+      if (!d) continue;
+      const { sd, sd9 } = d;
+      const step = addRoundToPool<PoolEntry>(
+        poolBefore,
+        { eid: "__gt__", sd, adj: 0, isSimulated: true, roundIdx: -1 },
+        hiBeforeRound,
+        totalAdjustment,
+        lowHI
+      );
+      const newHI = step.newHI;
       rows.push({
         gross: g,
         sd,
-        sd9: is9 ? sdRaw : null,
+        sd9,
         newHI,
         delta: newHI - hiBeforeRound,
-        entersTop,
+        entersTop: step.entersTop,
         toPar: g - (par as number),
-        exceptionalAdj: excAdj,
+        exceptionalAdj: step.exceptionalAdj,
         isEntered: g === enteredGross,
       });
     }
     return { rows, par: par as number, cr, slope, roundIdx, is9, holesMode: last.holesMode, exp9: is9 ? exp9 : null };
-  }, [simResults, totalAdjustment]);
+  }, [simResults, totalAdjustment, rounds, lowHI]);
 
   // ── Rondas deslocadas ──
   // Cada ronda simulada expulsa a mais antiga da janela; a 1ª simulada expulsa
@@ -1204,25 +1187,21 @@ export function RoundSimulator({
                 ?.master.tees.some((t) => get9hRatings(t, "front9") !== null || get9hRatings(t, "back9") !== null) ?? false
             : true;
           const grossNum = parseInt(round.grossInput);
-          // SD "cru" calculado a partir do gross com os ratings actuais (9H ou 18H)
-          const computedSdRaw =
-            (round.mode === "course" || round.mode === "manual") &&
-            !isNaN(grossNum) &&
-            ratings.cr != null &&
-            ratings.slope != null
-              ? Math.round(calcSD(grossNum, ratings.cr!, ratings.slope!) * 10) /
-                10
-              : null;
           const result = simResults?.results[idx];
           const hiRef = result?.hiBeforeRound ?? currentHI;
-          // Para 9H: computedSd18 = SD9 + expectedSD9(HI antes da ronda)
-          const exp9Preview = is9
-            ? Math.round(expectedSD9(hiRef) * 10) / 10
-            : null;
-          const computedSd18 =
-            computedSdRaw != null && is9 && exp9Preview != null
-              ? Math.round((computedSdRaw + exp9Preview) * 10) / 10
-              : computedSdRaw;
+          // SD da ronda com os ratings actuais — em 9H o SD9 e o SD18 (com o
+          // Expected SD do HI antes da ronda). Conta da biblioteca (whsCalc).
+          const preview =
+            (round.mode === "course" || round.mode === "manual") &&
+            !isNaN(grossNum) && ratings.cr != null && ratings.slope != null
+              ? scoreDifferential({
+                  score: grossNum, cr: ratings.cr, slope: ratings.slope,
+                  pcc: roundPcc(round), is9, hi: hiRef,
+                })
+              : null;
+          const computedSdRaw = preview ? (is9 ? preview.sd9 : preview.sd) : null;
+          const exp9Preview = preview?.exp9 ?? null;
+          const computedSd18 = preview?.sd ?? null;
           const borderClr = roundBorderColor(result);
 
           return (
@@ -1291,6 +1270,22 @@ export function RoundSimulator({
                     );
                   })}
                 </div>
+
+                {/* PCC do dia — só quando o SD sai de um gross */}
+                {round.mode !== "sd" && (
+                  <select
+                    className="select fs-12"
+                    value={round.pccInput || "0"}
+                    onChange={(e) => updateRound(round.id, { pccInput: e.target.value })}
+                    title="PCC (Playing Conditions Calculation) do dia"
+                  >
+                    {[-1, 0, 1, 2, 3].map((v) => (
+                      <option key={v} value={String(v)}>
+                        {v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}
+                      </option>
+                    ))}
+                  </select>
+                )}
 
                 {/* Resultado inline */}
                 {result?.valid && (
@@ -1436,8 +1431,8 @@ export function RoundSimulator({
                     {is9 && (() => {
                       const v = parseFloat(round.sdInput.replace(",", "."));
                       if (isNaN(v)) return null;
-                      const e9 = Math.round(expectedSD9(hiRef) * 10) / 10;
-                      const sd18 = Math.round((v + e9) * 10) / 10;
+                      const e9 = round1(expectedSD9(hiRef));
+                      const sd18 = sd18FromSd9(v, hiRef);
                       return (
                         <span className="muted fs-11">
                           + exp9({hiRef.toFixed(1)}) = {e9.toFixed(1)} →{" "}

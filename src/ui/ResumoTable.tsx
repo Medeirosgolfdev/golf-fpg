@@ -3,12 +3,11 @@ import { useSort } from "../hooks/useSort";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { fmtDateShort, fmtHcp, escalaoAtDate } from "../utils/format";
 import { escPillCls } from "../utils/playerUtils";
-import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { useCompareSelection } from "./useCompareSelection";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
-import { playerDob } from "../data/fpgUtils";
+import { playerDob, computeSD } from "../data/fpgUtils";
 import { isDNS } from "./driveUtils";
 import { tournamentPoints, rankingTotal } from "../constants/drivePoints";
 
@@ -23,7 +22,6 @@ interface TStats {
   gross: number;
   toPar: number;
   sd18: number | null;
-  sdSource: "fpg" | "ags" | "raw" | null;
   nholes: number;
   birdies: number;
   pars: number;
@@ -93,13 +91,12 @@ interface Tournament {
   _isIncomplete?: boolean;
 }
 
-type SDLookup = Record<string, number>;
 type EscLookup = Map<string, string>;
 type SortKey = string;
 
 /* ── Helper Functions ── */
 
-function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
+function computeStats(p: Player, date?: string | null): TStats | null {
   if (isDNS(p as any)) return null;
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (gross == null || isNaN(gross as number)) return null;
@@ -110,46 +107,19 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   const rs0 = p.roundScores?.[0];
   const parArr = p.par?.length ? p.par : rs0?.pars || [];
   const scores = p.scores?.length ? p.scores : rs0?.scores || [];
-  const si = p.si?.length ? p.si : rs0?.si || [];
-  const cr = p.courseRating ?? rs0?.courseRating;
-  const slope = p.slope ?? rs0?.slope;
 
   const parT = p.parTotal || parArr.reduce((a, b) => a + b, 0);
   const tp = g - parT;
   const nh = p.nholes || scores.length || parArr.length || 18;
-  const is9 = nh <= 9;
-
-  let sd18: number | null = null;
-  let sdSource: "fpg" | "ags" | "raw" | null = null;
-
-  // Skip SD calculation for multi-round combined entries (nholes > 18).
-  // g >= 900 é sentinela de "sem cartão" (998 ND/NR, 999 NS/WD) — ver a mesma
-  // guarda no computeSD() de fpgUtils.ts.
-  if (nh <= 18 && g < 900) {
-    // 1) FPG lookup by scoreId
-    const sid = String(p.scoreId);
-    if (sdLookup[sid] != null) {
-      sd18 = sdLookup[sid];
-      sdSource = "fpg";
-    }
-    // 2) AGS calculation (needs SI data)
-    else if (cr && slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
-      const adjGross = calcAGS(scores, parArr, si, cr, slope, p.hcpExact, nh);
-      const rawSD = (113 / slope) * (adjGross - cr - (p.pcc ?? 0));
-      sd18 = is9 ? rawSD + expectedSD9(p.hcpExact) : rawSD;
-      sdSource = "ags";
-    }
-    // 3) Raw fallback (no SI)
-    else if (cr && slope) {
-      const rawSD = (113 / slope) * (g - cr - (p.pcc ?? 0));
-      if (is9 && p.hcpExact != null) {
-        sd18 = rawSD + expectedSD9(p.hcpExact);
-      } else if (!is9) {
-        sd18 = rawSD;
-      }
-      sdSource = sd18 != null ? "raw" : null;
-    }
-  }
+  // SD: o oficial da FPG, ou o calculado com o HCP da inscrição (ver computeSD).
+  // Entradas multi-ronda combinadas (nholes > 18) não têm SD.
+  const sd18 = nh <= 18
+    ? computeSD({
+        ...p, scores, par: parArr, si: p.si?.length ? p.si : rs0?.si || [],
+        courseRating: p.courseRating ?? rs0?.courseRating, slope: p.slope ?? rs0?.slope,
+        pcc: p.pcc, nholes: nh,
+      }, date).sd
+    : null;
 
   let birdies = 0,
     pars = 0,
@@ -174,7 +144,7 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
       else bogeys++;
     }
   }
-  return { pos: p.pos, gross: g, toPar: tp, sd18, sdSource, nholes: nh, birdies, pars, bogeys };
+  return { pos: p.pos, gross: g, toPar: tp, sd18, nholes: nh, birdies, pars, bogeys };
 }
 
 const shortCampo = (c: string) =>
@@ -198,7 +168,6 @@ const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highl
 /* ── SD cell ── */
 function SDCell(props: {
   sd: number | null;
-  sdSource: string | null;
   hcp: number | null;
   nholes: number;
   style?: React.CSSProperties;
@@ -206,15 +175,11 @@ function SDCell(props: {
   if (props.sd == null) return <td className="r" style={props.style}>–</td>;
   const cls = sdClassByHcp(props.sd, props.hcp);
   const is9 = props.nholes <= 9;
-  const tip = props.sdSource === "fpg" ? "" : props.sdSource === "ags" ? "~" : "≈";
   return (
-    <td className="r" style={props.style}>
+    <td className="r" style={props.style} title="Score Differential">
       <span className={"p p-sm p-" + cls}>{props.sd.toFixed(1)}</span>
-      {(is9 || tip) && (
-        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", marginLeft: 1 }}>
-          {is9 && "*"}
-          {tip}
-        </span>
+      {is9 && (
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", marginLeft: 1 }}>*</span>
       )}
     </td>
   );
@@ -226,11 +191,10 @@ function SDCell(props: {
 export function ResumoTable(props: {
   tournaments: Tournament[];
   playersDB: PlayersDB;
-  sdLookup: SDLookup;
   escLookup?: EscLookup;
   mergeByEvent?: boolean;
 }) {
-  const { playersDB, sdLookup } = props;
+  const { playersDB } = props;
   const globalEscLookup = props.escLookup;
   const mergeByEvent = !!props.mergeByEvent;
   // Fallback DOB: federados.json para novos registados ou não curados em players.json.
@@ -395,7 +359,7 @@ export function ResumoTable(props: {
         if (isDNS(p as any)) {
           row.results.set(tKey, "dns");
         } else {
-          const st = computeStats(p, sdLookup);
+          const st = computeStats(p, t.date);
           if (st) {
             row.results.set(tKey, st);
             if (!isTotal) {
@@ -431,7 +395,7 @@ export function ResumoTable(props: {
       row.totalPts = rankingTotal(provasPorJogador.get(row.pKey) || []);
     }
     return [...map.values()];
-  }, [sorted, playersDB, sdLookup, challEscLookup, globalEscLookup, fedBirthdates]);
+  }, [sorted, playersDB, challEscLookup, globalEscLookup, fedBirthdates]);
 
   const sortedRows = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
@@ -881,7 +845,6 @@ export function ResumoTable(props: {
                   </td>
                   <SDCell
                     sd={rv.sd18}
-                    sdSource={rv.sdSource}
                     hcp={row.hcp}
                     nholes={rv.nholes}
                     style={{

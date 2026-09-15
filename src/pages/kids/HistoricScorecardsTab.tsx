@@ -22,11 +22,7 @@ import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
 import { fmtToPar } from "../../utils/format";
 import SortableHdr from "../../ui/SortableHdr";
-import { SDPill } from "../../ui/tournamentPrimitives";
 import LoadingState from "../../ui/LoadingState";
-import { useAppContext } from "../../context/AppContext";
-import { resolveCourseTee } from "./CourseTab";
-import { calcSD } from "../../utils/whsCalc";
 import { kidsUrl } from "../../ui/KidsLink";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
@@ -59,7 +55,6 @@ interface PlayerRound {
   worse: number;     // double bogey ou pior (qualquer +2 ou mais)
   out: number;       // soma front 9
   inn: number;       // soma back 9 (0 se torneio 9H)
-  sd: number | null; // Score Differential (so 18h, quando ha CR/Slope do tee)
 }
 interface PlayerCard {
   memberId: string;
@@ -84,11 +79,6 @@ interface Edition {
   is9: boolean;
   nRoundsMax: number;
   fieldSize: number;
-  /** CR/Slope do tee do escalao (resolveCourseTee). null se sem match. */
-  cr: number | null;
-  slope: number | null;
-  /** true se o CR/Slope foi estimado por interpolacao (tee sem rating oficial). */
-  crApprox: boolean;
   /** Total em metros (somatório de metersPerHole). */
   meters?: number;
   players: PlayerCard[];
@@ -98,7 +88,7 @@ const MIN_FIELD_SIZE = 3;
 const MIN_GROSS_18H = 55;
 const MIN_GROSS_9H = 28;
 
-type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "sd" | "birds" | "pars" | "bogeys" | `h${number}`;
+type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 
 /** Conta birdies/pars/bogeys/worse num scorecard. */
 function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
@@ -122,7 +112,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   torneio: FieldTorneio | null;
   escalaoNome: string;
 }) {
-  const ctx = useAppContext();
   const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
   const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
   // Sort state — default por posição oficial (pos) ASC. Em modo Agrupado,
@@ -135,7 +124,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     else {
       setSortKey(k);
       // Defaults sensatos: jogador/país/ano DESC para anos primeiro, gross/topar ASC
-      const ascByDefault = new Set(["topar", "gross", "sd", "name", "country", "rnd"]);
+      const ascByDefault = new Set(["topar", "gross", "name", "country", "rnd"]);
       if (k.startsWith("h")) { setSortDir("asc"); return; }
       setSortDir(ascByDefault.has(k) ? "asc" : "desc");
     }
@@ -207,16 +196,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         ? yards.slice(0, hpr).map((y: number) => y > 0 ? Math.round(y * 0.9144) : 0)
         : null;
 
-      // CR/Slope do tee do escalao (reutiliza o resolver da tab "O Campo").
-      // So aplicavel a 18h (a tabela WHS de 9h depende do HI de cada jogador).
-      const resolvedTee = resolveCourseTee(
-        { t: parseInt(tcode, 10), name: meta.name, date_inicio: (meta as any).startDate || "", escaloes: [] },
-        escalaoNome, mh as never, ctx.simCourses,
-      );
-      const edCR = !is9 ? (resolvedTee?.tee.ratings.holes18?.courseRating ?? null) : null;
-      const edSlope = !is9 ? (resolvedTee?.tee.ratings.holes18?.slopeRating ?? null) : null;
-      const edApprox = !is9 ? !!resolvedTee?.ratingApprox : false;
-
       const players: PlayerCard[] = [];
       let nRoundsMax = 0;
       for (const [mid, p] of Object.entries(mh.jogadores)) {
@@ -244,7 +223,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
             worse: t.worse,
             out: out9,
             inn: in9,
-            sd: (edCR != null && edSlope != null && edSlope > 0) ? calcSD(r.gross, edCR, edSlope) : null,
           });
           total += r.gross;
         }
@@ -287,16 +265,13 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         is9,
         nRoundsMax,
         fieldSize: completed.length,
-        cr: edCR,
-        slope: edSlope,
-        crApprox: edApprox,
         meters,
         players: completed,
       });
     }
     out.sort((a, b) => b.year.localeCompare(a.year));
     return out;
-  }, [mh, torneio, escalaoNome, ctx.simCourses]);
+  }, [mh, torneio, escalaoNome]);
 
   if (!torneio) {
     return <div className="muted p-16">Sem torneio selecionado.</div>;
@@ -417,7 +392,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <th className="lb-halftot">In</th>
                 </>
               )}
-              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-sd" title="Score Differential = (113/Slope)(gross - CR)">SD</SortableHdr>
               <SortableHdr k="birds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bird">🐦</SortableHdr>
               <SortableHdr k="pars" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-par-stat">Par</SortableHdr>
               <SortableHdr k="bogeys" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bog">■</SortableHdr>
@@ -448,7 +422,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     <HoleCell key={i} n={i + 10} first={i === 0}>{v || ""}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{b9 || ""}</td>}
-                  <td className="lb-sd" /><td /><td /><td />
+                  <td /><td /><td />
                 </tr>
               );
             })()}
@@ -471,7 +445,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     <HoleCell key={i} n={i + 10} first={i === 0}>{v}</HoleCell>
                   ))}
                   {!is9 && <td className="lb-halftot">{ref.parB9}</td>}
-                  <td className="lb-sd" /><td /><td /><td />
+                  <td /><td /><td />
                 </tr>
               );
             })()}
@@ -500,10 +474,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     case "country": return pl.country || "";
                     case "topar":   return Math.min(...pl.rounds.map(r => r.toPar));
                     case "gross":   return Math.min(...pl.rounds.map(r => r.gross));
-                    case "sd": {
-                      const vs = pl.rounds.map(r => r.sd).filter((x): x is number => x != null);
-                      return vs.length ? Math.min(...vs) : Number.POSITIVE_INFINITY;
-                    }
                     case "birds":   return pl.rounds.reduce((a, r) => a + r.birds, 0);
                     case "pars":    return pl.rounds.reduce((a, r) => a + r.pars,  0);
                     case "bogeys":  return pl.rounds.reduce((a, r) => a + r.bogeys,0);
@@ -580,7 +550,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                     case "rnd":     return (a.r.rn - b.r.rn) * dir;
                     case "topar":   return (a.r.toPar - b.r.toPar) * dir;
                     case "gross":   return (a.r.gross - b.r.gross) * dir;
-                    case "sd":      return ((a.r.sd ?? 999) - (b.r.sd ?? 999)) * dir;
                     case "birds":   return (a.r.birds - b.r.birds) * dir;
                     case "pars":    return (a.r.pars  - b.r.pars)  * dir;
                     case "bogeys":  return (a.r.bogeys - b.r.bogeys) * dir;
@@ -711,9 +680,6 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
             </td>
             <td className="lb-gross" style={{ borderTop: bTop }}>{r.gross}</td>
             <ScorecardCells r={r} ed={ed} hpr={hpr} is9={is9} />
-            <td className="lb-sd" style={{ borderTop: bTop }} title={ed.crApprox ? "CR/Slope estimados por interpolacao" : (ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}` : undefined)}>
-              {r.sd != null ? <SDPill sd={r.sd} source={null} hcp={null} /> : <span className="muted">–</span>}
-            </td>
             <td className="lb-bird" style={{ borderTop: bTop }}>{r.birds || ""}</td>
             <td className="lb-par-stat" style={{ borderTop: bTop }}>{r.pars || ""}</td>
             <td className="lb-bog" style={{ borderTop: bTop }}>{r.bogeys || ""}</td>
@@ -758,9 +724,6 @@ function IndependentRow({ f, pos, hpr, is9 }: {
       </td>
       <td className="lb-gross">{f.r.gross}</td>
       <ScorecardCells r={f.r} ed={ed} hpr={hpr} is9={is9} />
-      <td className="lb-sd" title={ed.crApprox ? "CR/Slope estimados por interpolacao" : (ed.cr != null ? `CR ${ed.cr} / Slope ${ed.slope}` : undefined)}>
-        {f.r.sd != null ? <SDPill sd={f.r.sd} source={null} hcp={null} /> : <span className="muted">–</span>}
-      </td>
       <td className="lb-bird">{f.r.birds || ""}</td>
       <td className="lb-par-stat">{f.r.pars || ""}</td>
       <td className="lb-bog">{f.r.bogeys || ""}</td>
