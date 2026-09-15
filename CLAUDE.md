@@ -12,6 +12,23 @@ Este ficheiro tem só o essencial. O detalhe de cada tema está em `docs/claude/
 (tabela "Onde está o detalhe"). **Quando uma regra nova for importante para
 qualquer trabalho, entra aqui; o resto vai para o ficheiro do tema.**
 
+## Arquivo de conversas — ler antes de começar
+
+Todas as conversas anteriores com o Claude estão arquivadas na pasta
+`_CLAUDE_HISTORICO` da OneDrive da BetaSol: `HISTORICO.md` (resumo de tudo, por
+assunto — **ler primeiro**), `assuntos/*.md` (detalhe de cada assunto) e
+`sessoes/` (cada conversa completa). **Antes de um assunto novo, ver se já lá
+está** — não repetir trabalho nem contrariar decisões já tomadas.
+
+- **Neste PC:** `C:\Users\Mariana\OneDrive - BetaSol SGPS\_CLAUDE_HISTORICO\`
+  (noutro PC, a mesma pasta dentro da OneDrive da BetaSol).
+- **Numa sessão na nuvem, sem o disco:** pelo conector Microsoft 365 —
+  `sharepoint_search` com `folderName: "_CLAUDE_HISTORICO"` para encontrar os
+  ficheiros e `read_resource` para os ler (testado a 2026-09-15).
+- As transcrições actualizam-se sozinhas (hooks de início e fim de sessão); os
+  resumos em `assuntos/` e no `HISTORICO.md` são escritos à mão, a partir das
+  sessões listadas em `_motor/por-resumir.md`.
+
 ## Regra fundamental
 
 **Nunca declarar uma tarefa como concluída sem correr os testes.** Antes de afirmar que algo está pronto:
