@@ -80,29 +80,25 @@ describe('catálogo — enche-se para trás aos poucos', () => {
 });
 
 describe('inscritos — quem se pede hoje', () => {
-  const diasAte = (d) => Number(d);   // nos testes a "data" é já o nº de dias
-  const base = { diaSemana: 0, diarios: new Set([14]), doManuel: new Set([21]), diasAte };
+  const base = { diaSemana: 0, diarios: new Set([14]), doManuel: new Set([21]) };
   const prev = (over = {}) => ({ escaloes: [{ age_group: 12 }], ...over });
 
   it('torneio novo ou com registo falhado: completo', () => {
-    const p = planearFase2([{ t: 1, date_inicio: 200 }, { t: 2, date_inicio: 200 }],
-      new Map([[2, prev({ stale: true })]]), base);
+    const p = planearFase2([{ t: 1 }, { t: 2 }], new Map([[2, prev({ stale: true })]]), base);
     expect(p.get(1)).toBe('completo');
     expect(p.get(2)).toBe('completo');
   });
 
-  it('do Manuel, marcado, ou a menos de 30 dias: contagens todos os dias', () => {
-    const tt = [{ t: 21, date_inicio: 200 }, { t: 15, date_inicio: 200 }, { t: 22, date_inicio: 10 }];
-    const m = new Map(tt.map(x => [x.t, prev()]));
-    // diaSemana 6: nenhum dos três (21%7=0, 15%7=1, 22%7=1) está no seu dia semanal
-    const p = planearFase2(tt, m, { ...base, diarios: new Set([15]), diaSemana: 6 });
-    expect([p.get(21), p.get(15), p.get(22)]).toEqual(['contagens', 'contagens', 'contagens']);
+  it('15/09: TODOS os torneios são vistos todos os dias — nenhum fica sem pedido', () => {
+    const tt = Array.from({ length: 30 }, (_, i) => ({ t: 23000 + i }));
+    const p = planearFase2(tt, new Map(tt.map(x => [x.t, prev()])), base);
+    expect([...p.values()].every(v => v === 'contagens' || v === 'completo')).toBe(true);
   });
 
-  it('os restantes: nada, excepto no seu dia da semana (t % 7), em que vão por inteiro', () => {
-    const tt = [{ t: 8, date_inicio: 200 }, { t: 7, date_inicio: 200 }];
+  it('no seu dia da semana (t % 7) cada torneio refaz os nomes por inteiro', () => {
+    const tt = [{ t: 8 }, { t: 7 }];
     const p = planearFase2(tt, new Map(tt.map(x => [x.t, prev()])), base);   // diaSemana 0
-    expect(p.get(8)).toBe('manter');
+    expect(p.get(8)).toBe('contagens');
     expect(p.get(7)).toBe('completo');
   });
 

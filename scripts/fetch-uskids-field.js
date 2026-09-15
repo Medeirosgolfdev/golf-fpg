@@ -38,7 +38,9 @@ const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase()
 // ⚠ `USKIDS_DELAY_MS` existe só para os testes (0); em produção nunca se define.
 const DELAY_SERIE     = Number(process.env.USKIDS_DELAY_MS ?? 1200);  // Fase 1, entre pedidos
 const DELAY_FETCH     = 400;                                           // Fase 2, entre pedidos
-const ORCAMENTO_FASE2 = 450;   // tecto de pedidos de inscritos por corrida
+// Tecto de pedidos de inscritos por corrida. Todos os torneios são vistos todos
+// os dias (~1 pedido cada + nomes onde a contagem mudou): ~250–400 por dia.
+const ORCAMENTO_FASE2 = 800;
 
 // ⚠ `USKIDS_DATA_DIR`, como o `USKIDS_API_BASE` abaixo, existe para os testes
 // correrem a descoberta sem escrever por cima da cache real. Em produção
@@ -680,16 +682,15 @@ async function main() {
       .map(p => p.t));
     const plano2 = only
       ? new Map(aFazer.map(t => [t.t, 'completo']))
-      : planearFase2(aFazer, prevMap.prevTorneios, { diaSemana: new Date().getUTCDay(), diarios, doManuel, diasAte });
-    const conta = { completo: 0, contagens: 0, manter: 0 };
+      : planearFase2(aFazer, prevMap.prevTorneios, { diaSemana: new Date().getUTCDay() });
+    const conta = { completo: 0, contagens: 0 };
     for (const v of plano2.values()) conta[v]++;
     console.log(`\n📋 FASE 2 — Inscritos (${aFazer.length} torneios: ${conta.completo} por inteiro · ` +
-                `${conta.contagens} só contagens · ${conta.manter} sem pedidos hoje)`);
+                `${conta.contagens} só contagens)`);
     const resultados = [];
     for (const torneio of ordemFase2(aFazer, plano2, { doManuel, diarios, dataISO: parsearDataISO })) {
       const prev = prevMap.prevTorneios.get(torneio.t);
       const modo = plano2.get(torneio.t);
-      if (modo === 'manter' && prev) { resultados.push(prev); continue; }
       // À primeira recusa da fonte, ou esgotado o orçamento do dia, não se pede
       // mais nada: os restantes ficam com o registo anterior (um torneio novo
       // sem registo espera pela corrida seguinte).

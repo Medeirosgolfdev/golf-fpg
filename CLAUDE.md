@@ -1345,7 +1345,7 @@ O que faz agora, por corrida:
 | Fronteira | ~6 + 40 | do último número que existe para a frente, 1 de cada vez (1,2 s), até **40 seguidos inexistentes**. Sem resposta → **pára** e recomeça no mesmo número na corrida seguinte (nunca passa à frente de um número por confirmar) |
 | Buracos | poucos | inexistentes deixados para trás revistos durante 7 dias |
 | Catálogo | 150 | `uskids-tcode-catalog.json` guarda **todos** os números vistos, incluindo os excluídos (tipo, tour, datas, estado); enche-se para trás até `PISO_BACKFILL` (22240). Uma mudança de regras **reclassifica em casa, 0 pedidos** |
-| Inscritos | ~100–450 | `planearFase2`: todos os dias os do Manuel, os de `scripts/uskids-seguir-diario.json` e os que começam em ≤30 dias; os outros **1×/semana** (`t % 7`). Escalão com a mesma contagem reaproveita os nomes. Página aberta **uma vez**; tecto `ORCAMENTO_FASE2 = 450` |
+| Inscritos | ~250–400 | `planearFase2`: **todos os torneios todos os dias** (decisão dela, 15/09 — *"a qualquer momento quero ver se é vantajoso me inscrever"*): contagens e vagas a 1 pedido por torneio; escalão com a contagem mudada volta a pedir os nomes; 1×/semana (`t % 7`) os nomes refazem-se por inteiro. O Manuel e `scripts/uskids-seguir-diario.json` vão primeiro. Página aberta **uma vez**; tecto `ORCAMENTO_FASE2 = 800` |
 
 À **primeira recusa** pára tudo (Fase 1 e Fase 2); os torneios que faltam ficam
 com o registo anterior. Total típico: **~150–300 pedidos/dia**, contra ~6.000.

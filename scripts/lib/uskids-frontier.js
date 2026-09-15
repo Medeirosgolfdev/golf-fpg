@@ -112,47 +112,43 @@ function planoBackfill({ cursor, piso = PISO_BACKFILL, orcamento = BACKFILL_POR_
 
 // ── Inscritos (Fase 2): quem se pede hoje ────────────────────────────────
 
-const DIAS_PERTO = 30;   // começa dentro de 30 dias → todos os dias
-
 /**
  * Decide, torneio a torneio, o que fazer hoje:
  *   'completo'  — metadados + lista de nomes de todos os escalões;
- *   'contagens' — metadados; os nomes só onde o nº de inscritos mudou;
- *   'manter'    — nada: fica o registo anterior (0 pedidos).
+ *   'contagens' — metadados; os nomes só onde o nº de inscritos mudou.
  *
- * Todos os dias: os do Manuel, os marcados para seguir de perto e os que
- * começam dentro de DIAS_PERTO dias. Os restantes, uma vez por semana, cada um
- * no seu dia (t % 7), para o trabalho se espalhar. Um torneio novo, ou cujo
- * registo anterior falhou, pede-se já e por inteiro. No dia da semana de cada
- * torneio a lista de nomes é refeita por inteiro — é isso que apanha uma troca
- * (sai um, entra outro) que deixa a contagem igual.
+ * TODOS os torneios todos os dias (decisão dela, 15/09/2026: "a qualquer
+ * momento quero ver se é vantajoso me inscrever lá") — as contagens e as vagas
+ * custam 1 pedido por torneio, e um escalão cuja contagem mudou volta a pedir
+ * os nomes. Uma vez por semana, no dia de cada torneio (t % 7), a lista de
+ * nomes é refeita por inteiro: é isso que apanha uma troca (sai um, entra
+ * outro) que deixa a contagem igual. Um torneio novo, ou cujo registo anterior
+ * falhou, pede-se já e por inteiro.
  *
- * @param {object[]} torneios  {t, date_inicio} (datas ISO ou M/D/YYYY já convertidas p/ `diasAte`)
+ * @param {object[]} torneios  {t}
  * @param {Map} prev           t → registo anterior no field.json
- * @param {object} o           {diaSemana, diarios:Set<t>, doManuel:Set<t>, diasAte:fn}
+ * @param {object} o           {diaSemana}
  */
-function planearFase2(torneios, prev, { diaSemana, diarios, doManuel, diasAte }) {
+function planearFase2(torneios, prev, { diaSemana }) {
   const plano = new Map();
   for (const tr of torneios) {
     const p = prev.get(tr.t);
-    const slot = tr.t % 7 === diaSemana;
-    if (!p || p.erro || p.stale || !(p.escaloes || []).length) { plano.set(tr.t, 'completo'); continue; }
-    const diario = doManuel.has(tr.t) || diarios.has(tr.t) || diasAte(tr.date_inicio) <= DIAS_PERTO;
-    if (slot) plano.set(tr.t, 'completo');
-    else plano.set(tr.t, diario ? 'contagens' : 'manter');
+    const falta = !p || p.erro || p.stale || !(p.escaloes || []).length;
+    plano.set(tr.t, falta || tr.t % 7 === diaSemana ? 'completo' : 'contagens');
   }
   return plano;
 }
 
-/** Ordem de trabalho: primeiro o que é diário, depois por data. */
+/** Ordem de trabalho: o Manuel e os marcados primeiro (nunca ficam de fora se
+ *  o orçamento do dia se esgotar), depois por data. */
 function ordemFase2(torneios, plano, { doManuel, diarios, dataISO }) {
-  const peso = (t) => doManuel.has(t.t) ? 0 : diarios.has(t.t) ? 1 : plano.get(t.t) === 'manter' ? 3 : 2;
+  const peso = (t) => doManuel.has(t.t) ? 0 : diarios.has(t.t) ? 1 : 2;
   return [...torneios].sort((a, b) =>
     peso(a) - peso(b) || (dataISO(a.date_inicio) || '').localeCompare(dataISO(b.date_inicio) || ''));
 }
 
 module.exports = {
-  MARGEM, MAX_PEDIDOS_FRONTEIRA, DIAS_BURACO, BACKFILL_POR_CORRIDA, PISO_BACKFILL, DIAS_PERTO,
+  MARGEM, MAX_PEDIDOS_FRONTEIRA, DIAS_BURACO, BACKFILL_POR_CORRIDA, PISO_BACKFILL,
   criarFronteira, proximoNumero, aplicarResultado,
   buracosARever, planoBackfill, planearFase2, ordemFase2,
 };
