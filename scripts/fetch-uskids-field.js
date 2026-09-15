@@ -368,10 +368,15 @@ async function descobrirTorneios() {
     }
     guardar(t, e);
   };
-  /** Um pedido, e a pausa a seguir. */
+  /** Um pedido, e a pausa a seguir. O catálogo grava-se de GRAVAR_CADA em
+   *  GRAVAR_CADA pedidos: a 14/09 uma corrida interrompida a meio do backfill
+   *  perdeu ~350 números já vistos, porque só se gravava no fim da Fase 1.
+   *  O progresso tem de ser durável antes de o tempo acabar. */
+  const GRAVAR_CADA = 50;
   const pedir = async (t) => {
     pedidos++;
     const x = await consultar(t);
+    if (pedidos % GRAVAR_CADA === 0) gravarCatalogo(cat);
     await sleep(DELAY_SERIE);
     return x;
   };
