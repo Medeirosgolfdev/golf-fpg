@@ -1,50 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22619,
-      "name": "Club de Golf Valle Alto (Tour Championship)",
-      "date_inicio": "8/16/2026",
-      "date_fim": "8/16/2026",
-      "rondas": 1,
-      "campo": "Club de Golf Valle Alto",
-      "fee_18": "45.00",
-      "tour": "Monterrey (MX) Tour",
-      "type": 6
-    },
-    {
-      "t": 22671,
-      "name": "Locust Hill Country Club (Tour Championship)",
-      "date_inicio": "8/16/2026",
-      "date_fim": "8/16/2026",
-      "rondas": 1,
-      "campo": "Locust Hill Country Club",
-      "fee_18": "55.00",
-      "tour": "Rochester Tour",
-      "type": 6
-    },
-    {
-      "t": 22507,
-      "name": "Fall Creek Falls Golf Course (Tour Championship)",
-      "date_inicio": "8/16/2026",
-      "date_fim": "8/16/2026",
-      "rondas": 1,
-      "campo": "Fall Creek Falls Golf Course",
-      "fee_18": "57.00",
-      "tour": "Chattanooga Tour",
-      "type": 6
-    },
-    {
-      "t": 22500,
-      "name": "Beau Chene Country Club (Tour Championship)",
-      "date_inicio": "8/16/2026",
-      "date_fim": "8/16/2026",
-      "rondas": 1,
-      "campo": "Beau Chene Country Club",
-      "fee_18": "59.00",
-      "tour": "Gulf Coast Tour",
-      "type": 6
-    },
-    {
       "t": 22649,
       "name": "Robert T Lynch Municipal Golf Course (Tour Championship)",
       "date_inicio": "8/18/2026",
@@ -2386,21 +2342,43 @@
       "fee_18": "395.00",
       "tour": "International Championships Tour",
       "type": 8
+    },
+    {
+      "t": 23715,
+      "name": "The Big 5 South African Open 2027",
+      "date_inicio": "3/23/2027",
+      "date_fim": "3/25/2027",
+      "rondas": 3,
+      "campo": "Magalies Park Golf Resort",
+      "fee_18": "285.00",
+      "tour": "International Championships Tour",
+      "type": 8
+    },
+    {
+      "t": 23716,
+      "name": "Australian Masters 2027",
+      "date_inicio": "4/15/2027",
+      "date_fim": "4/16/2027",
+      "rondas": 2,
+      "campo": "Hunter Valley Golf Club",
+      "fee_18": "195.00",
+      "tour": "International Championships Tour",
+      "type": 8
     }
   ],
-  "gerado_em": "2026-09-15T12:36:34.701Z",
-  "varredura_max_t": 23714,
+  "gerado_em": "2026-09-16T12:34:03.992Z",
+  "varredura_max_t": 23716,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 40,
-    "novos": 0,
+    "pedidos": 42,
+    "novos": 2,
     "buracos_revistos": 0,
-    "catalogo": 1410,
+    "catalogo": 1412,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23714,
-  "fronteira_avancou_em": "2026-09-14",
+  "fronteira_max_t_visto": 23716,
+  "fronteira_avancou_em": "2026-09-16",
   "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 1,
-  "ultima_descoberta": "2026-09-15"
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-09-16"
 }
