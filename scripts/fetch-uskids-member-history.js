@@ -15,9 +15,10 @@
  *   (escritos directamente, sem monolítico — ver writeSharded(); o monolítico
  *    passava o limite de string do V8 com 11k+ jogadores).
  *
- * Filtros de volume (ver constantes MAX_AGE_TODAY e TOP_N_PER_FLIGHT):
- *   - Ignora flights de torneios antigos cujas crianças hoje teriam ≥ 18 anos.
- *   - Só guarda o histórico de quem ficou no top-N de cada escalão.
+ * Quem entra: regra podeEntrar (scripts/lib/uskids-geracao.js) — gerações
+ *   2012-2015 em qualquer torneio seguido; Boys 10-13 nos torneios do Manuel e
+ *   da lista FULL_FIELD. Sem top-5 (acabou a 2026-09-18). O escalão de cada
+ *   inscrito sabe-se pela ordem, por isso quem não entra nem é pedido.
  *   Afecta apenas o seguimento da carreira dos rivais — os resultados dos
  *   torneios vêm de pipelines separados e ficam intactos.
  *
@@ -34,7 +35,7 @@ const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const { mergeTournamentMaps } = require('./lib/uskids-merge-guard');
-const { escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem } = require('./lib/uskids-geracao');
+const { anoDaData, associarPorOrdem, escaloesPelaOrdem, podeEntrar } = require('./lib/uskids-geracao');
 
 // ── Config ───────────────────────────────────
 const DIR    = path.join(__dirname, '..', 'data-archive');
@@ -138,8 +139,7 @@ const escalaoValido = (nome) =>
 //  1. MAX_AGE_TODAY — ignora flights cujas crianças hoje teriam ≥ N anos,
 //     estimando o ano de nascimento a partir do ano do torneio e do escalão.
 //     Corta flights inteiros ANTES de puxar a carreira (poupa fetches).
-//  2. TOP_N_PER_FLIGHT — só guarda o histórico de quem ficou no top-N de
-//     pelo menos um dos torneios onde foi descoberto. 0 = sem limite.
+//  2. REGRA DE ENTRADA — podeEntrar (ver cabeçalho). Substituiu o top-5.
 //
 // NOTA: estes filtros só afectam o seguimento da CARREIRA individual dos
 // rivais (tab Rivais / H2H / DOB na KIDSPage). Os resultados/leaderboards
@@ -147,13 +147,11 @@ const escalaoValido = (nome) =>
 // uskids_torneios_completos*) e NÃO são afectados.
 const CURRENT_YEAR       = new Date().getFullYear();
 const MAX_AGE_TODAY      = 18; // ignorar flights com crianças hoje ≥ 18 anos
-const TOP_N_PER_FLIGHT   = 5; // guardar só top-5 de cada escalão (0 = sem limite)
 
-// Torneios "FULL FIELD" — guardar a carreira de TODOS os jogadores, não só o
-// top-5. Para os torneios onde o Manuel jogou, queremos a ficha completa de
-// todos os adversários (não apenas o pódio). Quando um membro novo é
-// descoberto num destes tcodes, o filtro TOP_N é ignorado para ele.
-// Adicionar aqui o tcode de cada torneio relevante (ver tabela no CLAUDE.md).
+// Torneios "FULL FIELD" — carreira completa de todos os Boys 10-13 (e das
+// gerações 2012-2015, como em qualquer torneio). Até 18/09 eram todos os
+// escalões, incluindo Boys 7 — não servia para nada. Os torneios do Manuel já
+// entram sozinhos (regra A); esta lista fica para outros que se queiram assim.
 const FULL_FIELD_TCODES = new Set([
   21080, // Marco Simone Invitational 2026
   18438, // Marco Simone Invitational 2025
@@ -183,11 +181,12 @@ const FULL_FIELD_TCODES = new Set([
 //    (passados e futuros) entram sozinhos: lêem-se do próprio histórico dele
 //    (o GetMemberTournamentResults devolve também as inscrições futuras) no
 //    início de cada corrida. Nesses guarda-se a carreira de TODOS os rapazes
-//    10-13, sem top-5. Já não é preciso acrescentar tcodes à mão para isto.
+//    10-13. Já não é preciso acrescentar tcodes à mão para isto.
 // B. GERAÇÕES 2012-2015 — em todos os torneios processados (ALL_TCODES = os
 //    grandes e importantes), os escalões com rapazes nascidos entre 2012 e
-//    2015 entram completos (escalaoDaGeracao, scripts/lib/uskids-geracao.js).
-//    Os outros continuam com o top-5.
+//    2015 entram completos (podeEntrar, scripts/lib/uskids-geracao.js). Os
+//    outros ficam de fora — o top-5 acabou a 18/09 (só puxava miúdos de
+//    escalões e anos que não se cruzam com o Manuel).
 // C. NOMES — inscritos que ainda não jogaram nada que tenhamos (ex.: Tripp
 //    West, só Local Tours americanos) não têm impressão digital de pancadas;
 //    o nome vem da associação pela ordem (associarPorOrdem), feita nos
@@ -222,7 +221,7 @@ const ehRecusa = (err) => /HTTP 429|Too many requests/i.test(String(err?.message
 // que foi visto; só volta a ser pedido se aparecer num torneio novo.
 // ⚠ Mudar a VERSAO sempre que as regras de entrada mudarem (reavalia todos).
 const SKIPPED_PATH   = path.join(__dirname, '..', 'data-archive', 'uskids-member-skipped.json');
-const SKIPPED_VERSAO = 2; // 2026-09-18: regras A/B/C + place 0 ≠ top-5; v2: gerações 2012-2015
+const SKIPPED_VERSAO = 2; // v2 (18/09): gerações 2012-2015. O fim do top-5 só estreita — não obriga a subir.
 function loadSkipped() {
   try {
     const j = JSON.parse(fs.readFileSync(SKIPPED_PATH, 'utf8'));
@@ -281,12 +280,6 @@ function parseAgeNum(ag) {
   return nums ? Math.min(...nums.map(Number)) : null;
 }
 
-// Posição numérica a partir de p_place ("T5" → 5, "1" → 1, 3 → 3).
-function parsePlace(p) {
-  if (p == null) return null;
-  const m = String(p).match(/\d+/);
-  return m ? parseInt(m[0], 10) : null;
-}
 
 async function pageJSON(page, url, method = 'GET') {
   return page.evaluate(async ({ u, m }) => {
@@ -644,6 +637,7 @@ async function main() {
   // Escalão de cada inscrito, sabido SEM pedir o histórico (escaloesPelaOrdem):
   // "tcode:mid" → "Boys 12". Serve para não pedir as raparigas.
   const escalaoNoTorneio = new Map();
+  const anoTorneio = new Map(); // tcode → ano (para podeEntrar antes de pedir)
   const registarEscaloes = (tcode, mapa) => {
     for (const [mid, ag] of Object.entries(mapa || {})) escalaoNoTorneio.set(`${tcode}:${mid}`, ag);
   };
@@ -690,7 +684,7 @@ async function main() {
     cachedTorneios.set(mid, new Set(Object.keys(j.torneios || {})));
   }
 
-  let matched = 0, unmatched = 0, skipped = 0, skippedTopN = 0;
+  let matched = 0, unmatched = 0, skipped = 0, skippedForaRegras = 0;
 
   try {
     // ══════════════════════════════════════════════
@@ -737,6 +731,7 @@ async function main() {
           cache.torneios[tcode] = { name: cachedT.name || `t=${tcode}` };
         }
         const cYear = cachedT.year || anoDoTorneio({ start_date: cachedT.date });
+        anoTorneio.set(String(tcode), cYear);
         const cFlights = cachedT.flights || {};
         console.log(`\n▶ ${cachedT.name || `t=${tcode}`}${cYear ? ` (${cYear})` : ''} (${Object.keys(cFlights).length} flights) [cache]`);
         for (const [fidStr, fl] of Object.entries(cFlights)) {
@@ -832,6 +827,7 @@ async function main() {
       }
 
       const tournYear = anoDoTorneio(meta);
+      anoTorneio.set(String(tcode), tournYear);
       let flights = FLIGHTS_MANUAL[tcode];
       if (!flights || flights.length === 0) flights = parseFlights(meta);
 
@@ -874,9 +870,12 @@ async function main() {
         // Member IDs via GetTournamentPlayers
         let memberIds = [];
         try {
-          const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
-          memberIds = tp.PlayerNodeId || [];
-          if (!listaTorneio) listaTorneio = memberIds;
+          // A lista é do torneio inteiro (o &f= é ignorado): pede-se UMA vez.
+          if (!listaTorneio) {
+            const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
+            listaTorneio = tp.PlayerNodeId || [];
+          }
+          memberIds = listaTorneio;
         } catch (err) {
           if (ehRecusa(err)) { recusado = true; break; }
           console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
@@ -1018,24 +1017,41 @@ async function main() {
     // Determinar quais membros precisam de re-fetch
     const toProcess = [];
     const skippedReg = loadSkipped();
-    let jaVistos = 0, raparigasSemPedido = 0;
+    let jaVistos = 0, raparigasSemPedido = 0, foraSemPedido = 0;
     if (refreshAll) {
       // Iterar sobre TODOS os memberIDs em cache, independentemente de
       // aparecerem em ALL_TCODES neste run. Marcamos isNew=false porque
       // têm sempre entrada prévia (o name é preservado pelo fallback
       // "cached.name" em Phase 2).
+      // Só quem jogou nos últimos 2 anos (decidido a 18/09): quem deixou o
+      // USKids não gasta pedidos. O Manuel entra sempre.
+      const limite = new Date(Date.now() - 730 * 86400000).toISOString().slice(0, 10);
+      let parados = 0;
       for (const midStr of existingMembers) {
+        const ultimo = Object.values(cache.jogadores[midStr]?.torneios || {})
+          .map(t => parseDate(t.startDate)).filter(Boolean).sort().pop() || '';
+        if (!MANUEL_MIDS.has(midStr) && ultimo && ultimo < limite) { parados++; continue; }
         toProcess.push({ mid: midStr, isNew: false });
       }
+      console.log(`   Parados há >2 anos (não se pedem): ${parados}`);
     } else {
       for (const mid of allMemberIds) {
         const midStr = String(mid);
-        // Raparigas: escalão sabido pela ordem em TODOS os torneios onde aparece
-        // e todos "Girls" → nem se pede o histórico (nunca entram).
-        if (!existingMembers.has(midStr)) {
+        // Escalão sabido pela ordem em TODOS os torneios onde aparece e nenhum
+        // passa a regra de entrada → nem se pede o histórico.
+        if (!forceAll && !existingMembers.has(midStr) && !MANUEL_MIDS.has(midStr)) {
           const tcs = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
           const ags = tcs.map(tc => escalaoNoTorneio.get(`${tc}:${midStr}`));
-          if (ags.length && ags.every(ag => ag && /^girls/i.test(ag))) { raparigasSemPedido++; continue; }
+          if (ags.length && ags.every(Boolean)) {
+            const entra = tcs.some((tc, k) => podeEntrar(ags[k], anoTorneio.get(tc), {
+              torneioDoManuel: manuelTcodes.has(parseInt(tc, 10)),
+              listaTodos: FULL_FIELD_TCODES.has(parseInt(tc, 10)),
+            }));
+            if (!entra) {
+              if (ags.every(ag => /^girls/i.test(ag))) raparigasSemPedido++; else foraSemPedido++;
+              continue;
+            }
+          }
         }
         if (!forceAll && !existingMembers.has(midStr) && skippedReg[midStr]) {
           // Já visto e deixado de fora — só volta se aparecer num torneio novo.
@@ -1072,6 +1088,7 @@ async function main() {
       console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length - jaVistos}`);
       console.log(`   Já vistos, fora: ${jaVistos} (não se voltam a pedir)`);
       console.log(`   Raparigas:       ${raparigasSemPedido} (escalão pela ordem — não se pedem)`);
+      console.log(`   Rapazes fora:    ${foraSemPedido} (fora das regras pelo escalão — não se pedem)`);
     }
     console.log(`══════════════════════════════════════\n`);
 
@@ -1091,7 +1108,7 @@ async function main() {
 
         // ── Matching de nome (3 estratégias) — RESOLVIDO ANTES dos filtros
         // para podermos escrever o nome de TODOS os jogadores descobertos,
-        // mesmo os que vão ser ignorados (Girls / fora do top-N). ──
+        // mesmo os que vão ser ignorados (Girls / fora das regras). ──
 
         // 1. Mapa directo por node_id (funciona mesmo sem scores)
         let playerMatch = memberNameMap.get(midStr) || null;
@@ -1124,34 +1141,20 @@ async function main() {
           skipped++; continue;
         }
 
-        // ── Filtro TOP-N: só guardar quem ficou no top-N de pelo menos um
-        // dos torneios onde foi descoberto. Aplica-se apenas a membros NOVOS
-        // em modo default (cache existente e --refresh-all já são curados).
-        // Manuel nunca é filtrado.
-        if (!refreshAll && isNew && TOP_N_PER_FLIGHT > 0 && !MANUEL_MIDS.has(midStr)) {
+        // ── Regra de entrada (podeEntrar) com o escalão que o histórico traz.
+        // Só para membros NOVOS em modo normal; o Manuel nunca é filtrado.
+        if (!refreshAll && isNew && !MANUEL_MIDS.has(midStr)) {
           const discoverTcodes = new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)));
-          // Guardar sempre (sem top-N) se foi descoberto num torneio FULL FIELD,
-          // num torneio do Manuel (regra A) ou no escalão da geração dele (regra B).
-          const isFullField = [...discoverTcodes].some(tc => {
+          const entra = [...discoverTcodes].some(tc => {
             const n = parseInt(tc, 10);
-            if (FULL_FIELD_TCODES.has(n)) return true;
-            const agT = data[tc]?.p_age_group || '';
-            if (manuelTcodes.has(n) && escalaoValido(agT)) return true;
-            return escalaoDaGeracao(agT, anoDaData(data[tc]?.t_start_date));
+            return podeEntrar(data[tc]?.p_age_group || '', anoDaData(data[tc]?.t_start_date), {
+              torneioDoManuel: manuelTcodes.has(n), listaTodos: FULL_FIELD_TCODES.has(n),
+            });
           });
-          if (!isFullField) {
-            let bestPlace = Infinity;
-            for (const tid of tids) {
-              if (!discoverTcodes.has(String(tid))) continue;
-              const pl = parsePlace(data[tid]?.p_place);
-              // place 0 = ainda não jogou (inscrição futura) — não é top-5.
-              if (pl != null && pl > 0 && pl < bestPlace) bestPlace = pl;
-            }
-            if (bestPlace > TOP_N_PER_FLIGHT) {
-              console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora do top-${TOP_N_PER_FLIGHT} (melhor: ${bestPlace})`);
-              skippedReg[midStr] = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
-              skippedTopN++; continue;
-            }
+          if (!entra) {
+            console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora das regras`);
+            skippedReg[midStr] = [...discoverTcodes];
+            skippedForaRegras++; continue;
           }
         }
 
@@ -1235,7 +1238,7 @@ async function main() {
     }
 
     if (skipped) console.log(`\n  🚫 ${skipped} Girls/outros ignorados`);
-    if (skippedTopN) console.log(`  🚫 ${skippedTopN} fora do top-${TOP_N_PER_FLIGHT} ignorados`);
+    if (skippedForaRegras) console.log(`  🚫 ${skippedForaRegras} fora das regras ignorados`);
     saveSkipped(skippedReg);
 
   } finally {
@@ -1281,7 +1284,7 @@ async function main() {
   console.log(`    ${total} jogadores (${named} com nome, ${total - named} sem nome)`);
   console.log(`    ${totalEntries} entradas de torneio`);
   console.log(`    Matched: ${matched} | Unmatched: ${unmatched} | AgeGroups fixed: ${agFixed}`);
-  console.log(`    Filtros: idade <${MAX_AGE_TODAY} anos hoje | top-${TOP_N_PER_FLIGHT} por escalão (${skippedTopN} cortados)`);
+  console.log(`    Filtros: idade <${MAX_AGE_TODAY} anos hoje | regra de entrada (${skippedForaRegras} cortados)`);
   console.log('══════════════════════════════════════');
 }
 

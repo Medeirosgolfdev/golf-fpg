@@ -51,6 +51,22 @@ function escalaoDaGeracao(ag, ano, ger = GERACOES) {
   return lo <= idadeMax && hi >= idadeMin;
 }
 
+/**
+ * REGRA DE ENTRADA (18/09, decidida com a Mariana — substitui o top-5): um
+ * rapaz fica com a carreira completa se, num torneio seguido, o escalão dele
+ *   • tem miúdos das gerações 2012-2015 (escalaoDaGeracao), ou
+ *   • é Boys 10-13 e o torneio é do Manuel ou da lista "todos os jogadores".
+ * Tudo o resto (raparigas, mais velhos, mais novos, edições antigas) fica de
+ * fora — e, como o escalão se sabe pela ordem, fica de fora SEM pedido.
+ */
+function podeEntrar(ag, ano, { torneioDoManuel = false, listaTodos = false } = {}) {
+  if (!/^boys/i.test(String(ag || '').trim())) return false;
+  if (escalaoDaGeracao(ag, ano)) return true;
+  if (!torneioDoManuel && !listaTodos) return false;
+  const faixa = idadesDoEscalao(ag);
+  return !!faixa && faixa[0] <= 13 && faixa[1] >= 10;
+}
+
 /** Ano de uma data USKids ("12/21/2026" ou "2026-12-21"). */
 function anoDaData(s) {
   const m = String(s || '').match(/(\d{4})/);
@@ -149,7 +165,7 @@ function escaloesPelaOrdem(meta, memberIds, conhecido = () => null) {
 }
 
 module.exports = {
-  escaloesPelaOrdem,
+  escaloesPelaOrdem, podeEntrar,
   ANO_NASC_MANUEL, GERACOES, idadesDoEscalao, escalaoDaGeracao, anoDaData,
   compararPorApelido, associarPorOrdem, mesmoNome,
 };

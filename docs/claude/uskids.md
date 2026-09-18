@@ -494,19 +494,28 @@ Os torneios a processar estão em `ALL_TCODES`; os flights Boys 9-13 de cada
 tcode são auto-descobertos via `GetMeta` (o `FLIGHTS_MANUAL` ficou vazio a
 2026-06-12). Para adicionar um torneio basta acrescentar o tcode a `ALL_TCODES`.
 
-**Quem fica com a carreira completa (2026-09-18)** — por defeito só o top-5 de
-cada escalão; entram SEMPRE, sem top-5:
-- **A. Torneios do Manuel, passados e futuros** — lidos no início de cada
-  corrida do histórico dele (`GetMemberTournamentResults` de `630106`/`605933`
-  devolve também as inscrições futuras, com `p_place` 0). Entram sozinhos no
-  processamento; rapazes 10-13 todos. Não se acrescentam à mão.
-- **B. Gerações 2012-2015** em qualquer torneio processado (pedido da Mariana:
-  "o top-5 é muito redutor"): entram completos os escalões com rapazes nascidos
-  entre 2012 e 2015 — a do Manuel, as duas acima (vai cruzar-se com elas nos
-  Boys 13-14) e a de baixo. Um nascido em N está em `Boys (ano−N)` ou, com a
-  data de corte (que varia: Marco Simone 2026 = B11, European 2026 = B12), em
-  `Boys (ano−N−1)`. `escalaoDaGeracao`/`GERACOES` em `scripts/lib/uskids-geracao.js`.
-- `FULL_FIELD_TCODES` continua a valer (lista antiga, à mão).
+**Quem fica com a carreira completa (2026-09-18, decidido com a Mariana)** —
+regra `podeEntrar` em `scripts/lib/uskids-geracao.js`. **Acabou o top-5.** Entra:
+- **Gerações 2012-2015** em qualquer torneio seguido: um nascido em N está em
+  `Boys (ano−N)` ou, com a data de corte (varia: Marco Simone 2026 = B11,
+  European 2026 = B12), em `Boys (ano−N−1)`.
+- **Boys 10-13 nos torneios do Manuel** (passados e inscrições futuras, lidos do
+  histórico dele em cada corrida — não se acrescentam à mão) **e nos de
+  `FULL_FIELD_TCODES`** (até 18/09 esta lista puxava todos os escalões, Boys 7
+  incluídos).
+- Fica de fora tudo o resto: raparigas, mais velhos, mais novos, edições
+  antigas (as de 2013-2017 deixam de gerar pedidos sozinhas).
+
+**Escalão antes de pedir.** O `GetMeta` dá `registered` por flight e a lista do
+`GetTournamentPlayers` vem flight a flight nessa ordem → cortada em blocos dá o
+escalão de cada inscrito (`escaloesPelaOrdem`; Venice 2026: 268/268, 188
+confirmados). Quem não passa `podeEntrar` nem é pedido. Guardado em
+`escaloes` na flight-cache (1 GetMeta por torneio, uma vez); se a lista guardada
+não bater com os inscritos, pede-se a actual (1 pedido). Primeira corrida
+(18/09): 3.211 raparigas não pedidas, 5.030 → 1.850 históricos.
+
+**`--refresh-all` (segundas 09:00 UTC)** só pede quem jogou nos últimos 2 anos.
+O `GetTournamentPlayers` pede-se uma vez por torneio (era uma por flight).
 
 **Nomes dos inscritos sem cartões (regra C).** O `GetTournamentPlayers` devolve
 os memberIDs do **torneio inteiro** (o `&f=` é ignorado), flight a flight pela

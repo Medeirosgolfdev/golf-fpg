@@ -3,7 +3,7 @@
  */
 import { describe, it, expect } from "vitest";
 import {
-  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem,
+  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem, podeEntrar,
 } from "./uskids-geracao.js";
 
 describe('idadesDoEscalao', () => {
@@ -128,5 +128,29 @@ describe('escaloesPelaOrdem', () => {
     const r = escaloesPelaOrdem(meta, [11, 12]);
     expect(r.mapa).toEqual({});
     expect(r.motivo).toMatch(/contagens/);
+  });
+});
+
+describe('podeEntrar (regra de entrada, substitui o top-5)', () => {
+  it('gerações 2012-2015 entram em qualquer torneio seguido', () => {
+    expect(podeEntrar('Boys 12', 2026)).toBe(true);
+    expect(podeEntrar('Boys 13-14', 2026)).toBe(true);
+    expect(podeEntrar('Boys 9', 2023)).toBe(true);
+  });
+  it('mais velhos, mais novos e edições antigas ficam de fora', () => {
+    expect(podeEntrar('Boys 15-18', 2026)).toBe(false);
+    expect(podeEntrar('Boys 7 & Under', 2026)).toBe(false);
+    expect(podeEntrar('Boys 12', 2016)).toBe(false);   // nascidos em 2004
+    expect(podeEntrar('Boys 8', 2025)).toBe(false);
+  });
+  it('torneios do Manuel e lista "todos": Boys 10-13 entram, os outros não', () => {
+    expect(podeEntrar('Boys 10', 2025, { torneioDoManuel: true })).toBe(true);  // n. 2015, já pela geração
+    expect(podeEntrar('Boys 13', 2024, { listaTodos: true })).toBe(true);        // n. 2011
+    expect(podeEntrar('Boys 13', 2024)).toBe(false);
+    expect(podeEntrar('Boys 7', 2026, { listaTodos: true })).toBe(false);
+    expect(podeEntrar('Boys 15-18', 2026, { torneioDoManuel: true })).toBe(false);
+  });
+  it('raparigas nunca', () => {
+    expect(podeEntrar('Girls 12', 2026, { torneioDoManuel: true })).toBe(false);
   });
 });
