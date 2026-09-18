@@ -3,7 +3,7 @@
  */
 import { describe, it, expect } from "vitest";
 import {
-  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem,
+  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem,
 } from "./uskids-geracao.js";
 
 describe('idadesDoEscalao', () => {
@@ -96,6 +96,36 @@ describe('associarPorOrdem', () => {
 
   it('contagens diferentes → nada (não adivinha)', () => {
     const r = associarPorOrdem([101, 102, 201], [b10, b12]);
+    expect(r.mapa).toEqual({});
+    expect(r.motivo).toMatch(/contagens/);
+  });
+});
+
+describe('escaloesPelaOrdem', () => {
+  // Forma real do GetMeta (Venice 2026 abreviado): flights pela ordem, com `registered`.
+  const meta = {
+    flights: {
+      '1': { age_group: 12, registered: '2' },
+      '2': { age_group: 20, registered: '1' },
+    },
+    age_groups: { 12: { name: 'Boys 12' }, 20: { name: 'Girls 12' } },
+  };
+
+  it('corta a lista em blocos pelo número de inscritos de cada flight', () => {
+    const { mapa, motivo } = escaloesPelaOrdem(meta, [11, 12, 21]);
+    expect(motivo).toBeNull();
+    expect(mapa).toEqual({ '11': 'Boys 12', '12': 'Boys 12', '21': 'Girls 12' });
+  });
+
+  it('confirma contra escalões já sabidos; uma discordância anula tudo', () => {
+    expect(escaloesPelaOrdem(meta, [11, 12, 21], (m) => (m === '21' ? 'Girls 12' : null)).motivo).toBeNull();
+    const r = escaloesPelaOrdem(meta, [11, 12, 21], (m) => (m === '12' ? 'Girls 12' : null));
+    expect(r.mapa).toEqual({});
+    expect(r.motivo).toMatch(/discordância/);
+  });
+
+  it('soma diferente da lista → nada (não adivinha)', () => {
+    const r = escaloesPelaOrdem(meta, [11, 12]);
     expect(r.mapa).toEqual({});
     expect(r.motivo).toMatch(/contagens/);
   });

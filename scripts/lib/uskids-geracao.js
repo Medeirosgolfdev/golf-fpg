@@ -115,7 +115,41 @@ function associarPorOrdem(memberIds, blocos, conhecido = () => null) {
   return { mapa, confirmados, motivo: null };
 }
 
+/**
+ * Escalão de cada memberID pela ordem (mesma descoberta que associarPorOrdem):
+ * a lista do GetTournamentPlayers vem flight a flight pela ordem do GetMeta, e
+ * o GetMeta diz quantos inscritos tem cada flight (`registered`). Cortando a
+ * lista em blocos desses tamanhos sabe-se o escalão de cada um SEM pedir o
+ * histórico — é o que permite não pedir as raparigas. Validado no Venice 2026:
+ * 16 flights, `registered` = jogadores em todas, soma 268 = lista 268.
+ * @param conhecido (mid) → escalão já sabido (cache), ou null — serve de prova
+ * @returns { mapa: {mid: escalão}, motivo }  mapa vazio + motivo se não for seguro
+ */
+function escaloesPelaOrdem(meta, memberIds, conhecido = () => null) {
+  const flights = Object.values(meta?.flights || {});
+  const ags = meta?.age_groups || {};
+  if (!flights.length || !memberIds?.length) return { mapa: {}, motivo: 'sem flights/memberIDs' };
+  const soma = flights.reduce((s, fl) => s + (parseInt(fl.registered, 10) || 0), 0);
+  if (soma !== memberIds.length) {
+    return { mapa: {}, motivo: `contagens diferentes (${memberIds.length} memberIDs vs ${soma} inscritos)` };
+  }
+  const mapa = {};
+  let i = 0;
+  for (const fl of flights) {
+    const ag = ags[fl.age_group]?.name || fl.name || '';
+    const n = parseInt(fl.registered, 10) || 0;
+    for (let k = 0; k < n; k++, i++) {
+      const mid = String(memberIds[i]);
+      const antes = conhecido(mid);
+      if (antes && antes !== ag) return { mapa: {}, motivo: `discordância em m=${mid}: "${antes}" vs "${ag}"` };
+      mapa[mid] = ag;
+    }
+  }
+  return { mapa, motivo: null };
+}
+
 module.exports = {
+  escaloesPelaOrdem,
   ANO_NASC_MANUEL, GERACOES, idadesDoEscalao, escalaoDaGeracao, anoDaData,
   compararPorApelido, associarPorOrdem, mesmoNome,
 };

@@ -34,7 +34,7 @@ const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const { mergeTournamentMaps } = require('./lib/uskids-merge-guard');
-const { escalaoDaGeracao, anoDaData, associarPorOrdem } = require('./lib/uskids-geracao');
+const { escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem } = require('./lib/uskids-geracao');
 
 // ── Config ───────────────────────────────────
 const DIR    = path.join(__dirname, '..', 'data-archive');
@@ -641,6 +641,12 @@ async function main() {
   const tcodes = refreshAll ? [] : (onlyTcodes || [...ALL_TCODES]);
   // Torneios do Manuel (regra A) — preenchidos na Fase 0, já com a página aberta.
   const manuelTcodes = new Set();
+  // Escalão de cada inscrito, sabido SEM pedir o histórico (escaloesPelaOrdem):
+  // "tcode:mid" → "Boys 12". Serve para não pedir as raparigas.
+  const escalaoNoTorneio = new Map();
+  const registarEscaloes = (tcode, mapa) => {
+    for (const [mid, ag] of Object.entries(mapa || {})) escalaoNoTorneio.set(`${tcode}:${mid}`, ag);
+  };
 
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Member History');
@@ -764,6 +770,24 @@ async function main() {
         for (const [mid, info] of Object.entries(cachedT.ordemNomes || {})) {
           if (info && !memberNameMap.has(mid)) memberNameMap.set(mid, info);
         }
+        // Escalões pela ordem: 1 GetMeta por torneio, uma única vez (fica na cache).
+        if (!cachedT.escaloes && !refreshAll) {
+          const lista = Object.values(cFlights).find(fl => fl.memberIds?.length)?.memberIds || [];
+          if (lista.length) {
+            try {
+              const metaC = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
+              await sleep(DELAY_MS);
+              const conhecidoAg = (mid) => cache.jogadores[mid]?.torneios?.[String(tcode)]?.ageGroup || null;
+              const { mapa, motivo } = escaloesPelaOrdem(metaC, lista, conhecidoAg);
+              if (motivo) console.log(`  ⚠️ escalões pela ordem recusados: ${motivo}`);
+              else cachedT.escaloes = mapa;
+            } catch (err) {
+              if (ehRecusa(err)) recusado = true;
+              console.warn(`  ⚠️ GetMeta (escalões) falhou para t=${tcode}: ${err.message}`);
+            }
+          }
+        }
+        registarEscaloes(tcode, cachedT.escaloes);
         cacheHits++;
         continue; // próximo torneio — não tocou na rede
       }
@@ -917,6 +941,14 @@ async function main() {
         console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints | ${directNames} nomes directos`);
       }
 
+      // ── Escalões pela ordem (para não pedir as raparigas) ──
+      if (listaTorneio && listaTorneio.length && meta) {
+        const conhecidoAg = (mid) => cache.jogadores[mid]?.torneios?.[String(tcode)]?.ageGroup || null;
+        const { mapa, motivo } = escaloesPelaOrdem(meta, listaTorneio, conhecidoAg);
+        if (motivo) console.log(`  ⚠️ escalões pela ordem recusados: ${motivo}`);
+        else { fcEntry.escaloes = mapa; registarEscaloes(tcode, mapa); }
+      }
+
       // ── Regra C: nomes pela ordem (só nos torneios que foram à net) ──
       if (listaTorneio && listaTorneio.length) {
         try {
@@ -965,7 +997,7 @@ async function main() {
     // Determinar quais membros precisam de re-fetch
     const toProcess = [];
     const skippedReg = loadSkipped();
-    let jaVistos = 0;
+    let jaVistos = 0, raparigasSemPedido = 0;
     if (refreshAll) {
       // Iterar sobre TODOS os memberIDs em cache, independentemente de
       // aparecerem em ALL_TCODES neste run. Marcamos isNew=false porque
@@ -977,6 +1009,13 @@ async function main() {
     } else {
       for (const mid of allMemberIds) {
         const midStr = String(mid);
+        // Raparigas: escalão sabido pela ordem em TODOS os torneios onde aparece
+        // e todos "Girls" → nem se pede o histórico (nunca entram).
+        if (!existingMembers.has(midStr)) {
+          const tcs = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
+          const ags = tcs.map(tc => escalaoNoTorneio.get(`${tc}:${midStr}`));
+          if (ags.length && ags.every(ag => ag && /^girls/i.test(ag))) { raparigasSemPedido++; continue; }
+        }
         if (!forceAll && !existingMembers.has(midStr) && skippedReg[midStr]) {
           // Já visto e deixado de fora — só volta se aparecer num torneio novo.
           const vistos = new Set(skippedReg[midStr].map(String));
@@ -1011,6 +1050,7 @@ async function main() {
       console.log(`   A actualizar:    ${nActualizar} (já em cache mas torneio novo)`);
       console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length - jaVistos}`);
       console.log(`   Já vistos, fora: ${jaVistos} (não se voltam a pedir)`);
+      console.log(`   Raparigas:       ${raparigasSemPedido} (escalão pela ordem — não se pedem)`);
     }
     console.log(`══════════════════════════════════════\n`);
 
