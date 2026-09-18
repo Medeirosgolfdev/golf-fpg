@@ -34,6 +34,7 @@ const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const { mergeTournamentMaps } = require('./lib/uskids-merge-guard');
+const { escalaoDaGeracao, anoDaData, associarPorOrdem } = require('./lib/uskids-geracao');
 
 // ── Config ───────────────────────────────────
 const DIR    = path.join(__dirname, '..', 'data-archive');
@@ -95,8 +96,9 @@ const ALL_TCODES = [
   // ── Red White & Blue Invitational (2016-2026) ──
   2508, 3772, 4967, 7170, 8192, 10118, 12093, 14218, 16705, 18719, 22187,
 
-  // ── Holiday Classic (2013-2025) ──
+  // ── Holiday Classic (2013-2026) ──
   115, 509, 1964, 3235, 3777, 5047, 7644, 8510, 10306, 13273, 15480, 18000, 20878,
+  23670, // 2026 (21-22 Dez, PGA National)
 
   // ── El Prat 2023 (USKids Open Spain) ──
   15573,
@@ -175,6 +177,21 @@ const FULL_FIELD_TCODES = new Set([
   21610, // World Championship 2026 (Set 2026)
   22243, // Venice Open 2026 (Ago 2026)
 ]);
+
+// ── Regras de carreira completa (2026-09-18, pedido da Mariana) ──
+// A. TORNEIOS DO MANUEL — todos aqueles em que ele jogou ou está inscrito
+//    (passados e futuros) entram sozinhos: lêem-se do próprio histórico dele
+//    (o GetMemberTournamentResults devolve também as inscrições futuras) no
+//    início de cada corrida. Nesses guarda-se a carreira de TODOS os rapazes
+//    10-13, sem top-5. Já não é preciso acrescentar tcodes à mão para isto.
+// B. GERAÇÃO DO MANUEL — em todos os torneios processados (ALL_TCODES = os
+//    grandes e importantes), o escalão em que o Manuel estava na altura
+//    (escalaoDaGeracao, scripts/lib/uskids-geracao.js) entra completo. Os
+//    outros escalões continuam com o top-5.
+// C. NOMES — inscritos que ainda não jogaram nada que tenhamos (ex.: Tripp
+//    West, só Local Tours americanos) não têm impressão digital de pancadas;
+//    o nome vem da associação pela ordem (associarPorOrdem), feita nos
+//    torneios que vão à net nesta corrida (futuros e recentes).
 
 // Restrição de escalões por torneio: quando um tcode está aqui, só os
 // escalões listados são processados (em vez de todos os Boys 9-13 da
@@ -273,6 +290,33 @@ async function getPlayerTeeTimes(page, fid, round, pageNum) {
     );
   } catch {}
   return d;
+}
+
+// Nomes do torneio inteiro pela ordem (ver associarPorOrdem). Pede as
+// flight_players de TODAS as flights (raparigas incluídas: a lista de
+// memberIDs é do torneio inteiro e a ordem só bate com todas).
+async function nomesPelaOrdem(page, meta, memberIds, conhecido) {
+  const fids = Object.keys(meta?.flights || {});
+  if (!fids.length || !memberIds.length) return { mapa: {}, confirmados: 0, motivo: 'sem flights/memberIDs' };
+  const blocos = [];
+  for (const fid of fids) {
+    const bloco = [];
+    for (let p = 1; p <= 20; p++) {
+      const d = await pageJSON(
+        page,
+        `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0&pt=undefined&jbgr=${Date.now()}&c=1`,
+        'POST'
+      );
+      await sleep(DELAY_MS);
+      const e = Object.values(d?.flight_players || {});
+      for (const pl of e) {
+        bloco.push({ first: pl.first || '', last: pl.last || '', country: pl.country || '', place: pl.place || '' });
+      }
+      if (e.length < 20) break;
+    }
+    blocos.push(bloco);
+  }
+  return associarPorOrdem(memberIds, blocos, conhecido);
 }
 
 // Constrói uma chave de "impressão digital" a partir dos strokes de uma ronda.
@@ -566,6 +610,8 @@ async function main() {
   // Em modo --refresh-all não precisamos de descobrir memberIDs novos —
   // iteramos sobre todos os já em cache. Saltamos completamente a Fase 1.
   const tcodes = refreshAll ? [] : (onlyTcodes || [...ALL_TCODES]);
+  // Torneios do Manuel (regra A) — preenchidos na Fase 0, já com a página aberta.
+  const manuelTcodes = new Set();
 
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Member History');
@@ -613,6 +659,31 @@ async function main() {
 
   try {
     // ══════════════════════════════════════════════
+    // FASE 0: torneios do Manuel (passados e inscrições futuras) — regra A
+    // ══════════════════════════════════════════════
+    for (const mid of MANUEL_MIDS) {
+      for (const tc of Object.keys(cache.jogadores[mid]?.torneios || {})) manuelTcodes.add(parseInt(tc, 10));
+    }
+    if (!refreshAll) {
+      await initPage(page, ALL_TCODES[0]);
+      for (const mid of MANUEL_MIDS) {
+        try {
+          const h = await pageJSON(page, `${API}?op=GetMemberTournamentResults&m=${mid}`);
+          for (const tc of Object.keys(h || {})) manuelTcodes.add(parseInt(tc, 10));
+        } catch (err) {
+          console.warn(`  ⚠️ histórico do Manuel (m=${mid}) falhou: ${err.message} — fica o da cache`);
+        }
+        await sleep(DELAY_HIST);
+      }
+      manuelTcodes.delete(NaN);
+      if (!onlyTcodes) {
+        const antes = tcodes.length;
+        for (const tc of manuelTcodes) if (!tcodes.includes(tc)) tcodes.push(tc);
+        console.log(`\n🏌️ Torneios do Manuel: ${manuelTcodes.size} (${tcodes.length - antes} fora do ALL_TCODES, acrescentados)`);
+      }
+    }
+
+    // ══════════════════════════════════════════════
     // FASE 1: Nomes directos + Fingerprints + member IDs
     // ══════════════════════════════════════════════
 
@@ -659,6 +730,9 @@ async function main() {
           }
           console.log(`  ⛳ ${ag} (flight ${fid}) — ${(fl.memberIds || []).length} membros | ${fpMap.size} fingerprints [cache]`);
         }
+        for (const [mid, info] of Object.entries(cachedT.ordemNomes || {})) {
+          if (info && !memberNameMap.has(mid)) memberNameMap.set(mid, info);
+        }
         cacheHits++;
         continue; // próximo torneio — não tocou na rede
       }
@@ -696,6 +770,7 @@ async function main() {
       const tournLabel = cache.torneios[tcode].name;
       console.log(`\n▶ ${tournLabel}${tournYear ? ` (${tournYear})` : ''} (${flights.length} flights)`);
 
+      let listaTorneio = null; // memberIDs do torneio inteiro (GetTournamentPlayers)
       for (const { fid, ag } of flights) {
         // ── Filtro de idade: ignorar flights de crianças hoje ≥ MAX_AGE_TODAY ──
         if (tournYear) {
@@ -724,6 +799,7 @@ async function main() {
         try {
           const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
           memberIds = tp.PlayerNodeId || [];
+          if (!listaTorneio) listaTorneio = memberIds;
         } catch (err) {
           console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
           continue;
@@ -805,6 +881,26 @@ async function main() {
         fcEntry.flights[fid] = { ag, memberIds, fp: fpObj, direct: directMap };
 
         console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints | ${directNames} nomes directos`);
+      }
+
+      // ── Regra C: nomes pela ordem (só nos torneios que foram à net) ──
+      if (listaTorneio && listaTorneio.length) {
+        try {
+          const conhecido = (mid) => memberNameMap.get(mid)?.name || cache.jogadores[mid]?.name || null;
+          const { mapa, confirmados, motivo } = await nomesPelaOrdem(page, meta, listaTorneio, conhecido);
+          if (motivo) {
+            console.log(`  ⚠️ nomes pela ordem recusados: ${motivo}`);
+          } else {
+            let novos = 0;
+            for (const [mid, info] of Object.entries(mapa)) {
+              if (!memberNameMap.has(mid)) { memberNameMap.set(mid, info); novos++; }
+            }
+            fcEntry.ordemNomes = mapa;
+            console.log(`  🔤 nomes pela ordem: ${Object.keys(mapa).length} (${confirmados} confirmados, ${novos} novos)`);
+          }
+        } catch (err) {
+          console.warn(`  ⚠️ nomes pela ordem falharam: ${err.message}`);
+        }
       }
     }
 
@@ -926,14 +1022,22 @@ async function main() {
         // Manuel nunca é filtrado.
         if (!refreshAll && isNew && TOP_N_PER_FLIGHT > 0 && !MANUEL_MIDS.has(midStr)) {
           const discoverTcodes = new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)));
-          // Se foi descoberto num torneio FULL FIELD, guardar sempre (sem top-N).
-          const isFullField = [...discoverTcodes].some(tc => FULL_FIELD_TCODES.has(parseInt(tc, 10)));
+          // Guardar sempre (sem top-N) se foi descoberto num torneio FULL FIELD,
+          // num torneio do Manuel (regra A) ou no escalão da geração dele (regra B).
+          const isFullField = [...discoverTcodes].some(tc => {
+            const n = parseInt(tc, 10);
+            if (FULL_FIELD_TCODES.has(n)) return true;
+            const agT = data[tc]?.p_age_group || '';
+            if (manuelTcodes.has(n) && escalaoValido(agT)) return true;
+            return escalaoDaGeracao(agT, anoDaData(data[tc]?.t_start_date));
+          });
           if (!isFullField) {
             let bestPlace = Infinity;
             for (const tid of tids) {
               if (!discoverTcodes.has(String(tid))) continue;
               const pl = parsePlace(data[tid]?.p_place);
-              if (pl != null && pl < bestPlace) bestPlace = pl;
+              // place 0 = ainda não jogou (inscrição futura) — não é top-5.
+              if (pl != null && pl > 0 && pl < bestPlace) bestPlace = pl;
             }
             if (bestPlace > TOP_N_PER_FLIGHT) {
               console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora do top-${TOP_N_PER_FLIGHT} (melhor: ${bestPlace})`);
@@ -1022,6 +1126,19 @@ async function main() {
   } finally {
     await browser.close();
   }
+
+  // ── Nomes que chegaram depois (regra C): jogadores guardados como "?" numa
+  // corrida anterior e que agora têm nome pela ordem ou por impressão digital.
+  let nomesPreenchidos = 0;
+  for (const [mid, j] of Object.entries(cache.jogadores)) {
+    if (j.name && j.name !== '?') continue;
+    const info = memberNameMap.get(mid);
+    if (!info?.name) continue;
+    j.name = info.name;
+    if (!j.country && info.country) j.country = info.country;
+    nomesPreenchidos++;
+  }
+  if (nomesPreenchidos) console.log(`  🔤 ${nomesPreenchidos} jogadores sem nome passaram a ter nome`);
 
   // ── Fix ageGroups (most recent) ──
   let agFixed = 0;

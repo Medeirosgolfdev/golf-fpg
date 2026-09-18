@@ -494,6 +494,32 @@ Os torneios a processar estão em `ALL_TCODES`; os flights Boys 9-13 de cada
 tcode são auto-descobertos via `GetMeta` (o `FLIGHTS_MANUAL` ficou vazio a
 2026-06-12). Para adicionar um torneio basta acrescentar o tcode a `ALL_TCODES`.
 
+**Quem fica com a carreira completa (2026-09-18)** — por defeito só o top-5 de
+cada escalão; entram SEMPRE, sem top-5:
+- **A. Torneios do Manuel, passados e futuros** — lidos no início de cada
+  corrida do histórico dele (`GetMemberTournamentResults` de `630106`/`605933`
+  devolve também as inscrições futuras, com `p_place` 0). Entram sozinhos no
+  processamento; rapazes 10-13 todos. Não se acrescentam à mão.
+- **B. Geração do Manuel** em qualquer torneio processado: o escalão
+  `Boys (ano−2014)` ou `Boys (ano−2015)` (a data de corte varia entre torneios:
+  Marco Simone 2026 = B11, European 2026 = B12). `escalaoDaGeracao` em
+  `scripts/lib/uskids-geracao.js`.
+- `FULL_FIELD_TCODES` continua a valer (lista antiga, à mão).
+
+**Nomes dos inscritos sem cartões (regra C).** O `GetTournamentPlayers` devolve
+os memberIDs do **torneio inteiro** (o `&f=` é ignorado), flight a flight pela
+ordem do `GetMeta` e, dentro de cada flight, por apelido+nome. As
+`flight_players` têm o nome mas a chave é o id da inscrição (`pid`), não o
+memberID. `associarPorOrdem` reproduz a ordenação e emparelha por posição;
+validado no Venice 2026 (187/187) e no Holiday Classic 2026 (160 confirmados,
+0 falhas). Contagens diferentes ou uma única discordância com um nome já
+conhecido → recusa tudo (compara só letras/dígitos: a USKids escreve
+`"Tres"` e `(Tres)` para o mesmo miúdo). Guardado em `ordemNomes` na
+flight-cache; quem ficou "?" numa corrida anterior ganha o nome depois.
+
+⚠ `p_place` 0 = inscrição futura, não 1.º lugar — o filtro do top-5 contava-o
+como top-5 até 2026-09-18.
+
 ---
 
 ## API Signupanytime
