@@ -778,7 +778,28 @@ async function main() {
               const metaC = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
               await sleep(DELAY_MS);
               const conhecidoAg = (mid) => cache.jogadores[mid]?.torneios?.[String(tcode)]?.ageGroup || null;
-              const { mapa, motivo } = escaloesPelaOrdem(metaC, lista, conhecidoAg);
+              let { mapa, motivo } = escaloesPelaOrdem(metaC, lista, conhecidoAg);
+              // A lista guardada pode ser anterior ao fecho das inscrições
+              // (Venice 2026: 200 guardados vs 268 inscritos) → lista actual, 1 pedido.
+              if (motivo && /contagens/.test(motivo)) {
+                const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${Object.keys(cFlights)[0]}`);
+                await sleep(DELAY_MS);
+                const actual = tp?.PlayerNodeId || [];
+                ({ mapa, motivo } = escaloesPelaOrdem(metaC, actual, conhecidoAg));
+                if (!motivo) {
+                  // Inscritos que a lista guardada não tinha também passam a ser vistos.
+                  for (const fl of Object.values(cFlights)) fl.memberIds = actual;
+                  for (const mid of actual) {
+                    if (allMemberIds.has(mid)) continue;
+                    allMemberIds.add(mid);
+                    if (!memberFlights.has(mid)) memberFlights.set(mid, []);
+                    for (const [fidStr, fl] of Object.entries(cFlights)) {
+                      memberFlights.get(mid).push({ tcode, fid: parseInt(fidStr, 10), ageGroup: fl.ag || '' });
+                    }
+                  }
+                  console.log(`  🔄 lista actualizada: ${lista.length} → ${actual.length} memberIDs`);
+                }
+              }
               if (motivo) console.log(`  ⚠️ escalões pela ordem recusados: ${motivo}`);
               else cachedT.escaloes = mapa;
             } catch (err) {
