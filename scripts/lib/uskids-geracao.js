@@ -3,9 +3,9 @@
 /**
  * uskids-geracao.js — regras do seguimento da carreira dos rivais USKids.
  *
- * 1. GERAÇÃO DO MANUEL — nos torneios importantes (ALL_TCODES) guarda-se a
- *    carreira de TODOS os jogadores do escalão em que o Manuel estava na
- *    altura, não só o top-5. O escalão USKids depende de uma data de corte
+ * 1. GERAÇÕES 2012-2015 — nos torneios importantes (ALL_TCODES) guarda-se a
+ *    carreira de TODOS os rapazes nascidos entre 2012 e 2015 (a do Manuel, as
+ *    duas acima e a de baixo), não só o top-5. O escalão USKids depende de uma data de corte
  *    que varia entre torneios (Marco Simone 2026 → Boys 11; European 2026 →
  *    Boys 12, os dois em 2026), por isso a geração de 2014 num torneio do ano
  *    Y está em "Boys (Y-2014)" ou "Boys (Y-2015)": aceitam-se os dois.
@@ -33,13 +33,22 @@ function idadesDoEscalao(ag) {
   return [Math.min(...nums), Math.max(...nums)];
 }
 
-/** true se o escalão `ag` de um torneio do ano `ano` é o da geração do Manuel. */
-function escalaoDaGeracao(ag, ano, anoNasc = ANO_NASC_MANUEL) {
+// Gerações seguidas por inteiro (18/09, Mariana: "o top-5 é muito redutor").
+// 2012-2013: os que o Manuel vai apanhar nos Boys 13-14; 2015: os que jogam com
+// ele quando a data de corte o põe um escalão abaixo.
+const GERACOES = { de: ANO_NASC_MANUEL - 2, ate: ANO_NASC_MANUEL + 1 }; // 2012-2015
+
+/** true se o escalão `ag` de um torneio do ano `ano` tem miúdos nascidos entre
+ *  `ger.de` e `ger.ate`. Um nascido em N está em "Boys (ano−N)" ou, com a data
+ *  de corte, em "Boys (ano−N−1)". */
+function escalaoDaGeracao(ag, ano, ger = GERACOES) {
   if (!ano || !/^boys/i.test(String(ag || '').trim())) return false;
   const faixa = idadesDoEscalao(ag);
   if (!faixa) return false;
   const [lo, hi] = faixa;
-  return [ano - anoNasc, ano - anoNasc - 1].some(i => i >= lo && i <= hi);
+  const idadeMin = ano - ger.ate - 1;
+  const idadeMax = ano - ger.de;
+  return lo <= idadeMax && hi >= idadeMin;
 }
 
 /** Ano de uma data USKids ("12/21/2026" ou "2026-12-21"). */
@@ -107,6 +116,6 @@ function associarPorOrdem(memberIds, blocos, conhecido = () => null) {
 }
 
 module.exports = {
-  ANO_NASC_MANUEL, idadesDoEscalao, escalaoDaGeracao, anoDaData,
+  ANO_NASC_MANUEL, GERACOES, idadesDoEscalao, escalaoDaGeracao, anoDaData,
   compararPorApelido, associarPorOrdem, mesmoNome,
 };

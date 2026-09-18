@@ -500,10 +500,12 @@ cada escalão; entram SEMPRE, sem top-5:
   corrida do histórico dele (`GetMemberTournamentResults` de `630106`/`605933`
   devolve também as inscrições futuras, com `p_place` 0). Entram sozinhos no
   processamento; rapazes 10-13 todos. Não se acrescentam à mão.
-- **B. Geração do Manuel** em qualquer torneio processado: o escalão
-  `Boys (ano−2014)` ou `Boys (ano−2015)` (a data de corte varia entre torneios:
-  Marco Simone 2026 = B11, European 2026 = B12). `escalaoDaGeracao` em
-  `scripts/lib/uskids-geracao.js`.
+- **B. Gerações 2012-2015** em qualquer torneio processado (pedido da Mariana:
+  "o top-5 é muito redutor"): entram completos os escalões com rapazes nascidos
+  entre 2012 e 2015 — a do Manuel, as duas acima (vai cruzar-se com elas nos
+  Boys 13-14) e a de baixo. Um nascido em N está em `Boys (ano−N)` ou, com a
+  data de corte (que varia: Marco Simone 2026 = B11, European 2026 = B12), em
+  `Boys (ano−N−1)`. `escalaoDaGeracao`/`GERACOES` em `scripts/lib/uskids-geracao.js`.
 - `FULL_FIELD_TCODES` continua a valer (lista antiga, à mão).
 
 **Nomes dos inscritos sem cartões (regra C).** O `GetTournamentPlayers` devolve

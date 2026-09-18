@@ -16,24 +16,26 @@ describe('idadesDoEscalao', () => {
   });
 });
 
-describe('escalaoDaGeracao (Manuel, n. 2014)', () => {
-  it('2026: Boys 11 e Boys 12 (a data de corte varia entre torneios)', () => {
-    expect(escalaoDaGeracao('Boys 11', 2026)).toBe(true);   // Marco Simone 2026
-    expect(escalaoDaGeracao('Boys 12', 2026)).toBe(true);   // European/Venice 2026
-    expect(escalaoDaGeracao('Boys 10', 2026)).toBe(false);
-    expect(escalaoDaGeracao('Boys 13', 2026)).toBe(false);
+describe('escalaoDaGeracao (gerações 2012-2015)', () => {
+  it('2026: Boys 10 a 14 (2015 com a data de corte cai nos Boys 10)', () => {
+    expect(escalaoDaGeracao('Boys 11', 2026)).toBe(true);   // Marco Simone 2026 (Manuel)
+    expect(escalaoDaGeracao('Boys 12', 2026)).toBe(true);   // European/Venice 2026 (Manuel)
+    expect(escalaoDaGeracao('Boys 13-14', 2026)).toBe(true); // 2012-2013, vai cruzar-se com ele
+    expect(escalaoDaGeracao('Boys 10', 2026)).toBe(true);
+    expect(escalaoDaGeracao('Boys 9', 2026)).toBe(false);
+    expect(escalaoDaGeracao('Boys 15-18', 2026)).toBe(false);
   });
-  it('2025: Boys 10 e Boys 11', () => {
-    expect(escalaoDaGeracao('Boys 11', 2025)).toBe(true);   // Venice/Rome 2025
-    expect(escalaoDaGeracao('Boys 12', 2025)).toBe(false);
+  it('2025: Boys 9 a 13', () => {
+    expect(escalaoDaGeracao('Boys 11', 2025)).toBe(true);   // Venice/Rome 2025 (Manuel)
+    expect(escalaoDaGeracao('Boys 13', 2025)).toBe(true);
+    expect(escalaoDaGeracao('Boys 14', 2025)).toBe(false);
+    expect(escalaoDaGeracao('Boys 8', 2025)).toBe(false);
   });
-  it('2023: Boys 8 e Boys 9 (El Prat)', () => {
+  it('2023: Boys 7 a 11 (El Prat)', () => {
     expect(escalaoDaGeracao('Boys 9', 2023)).toBe(true);
-    expect(escalaoDaGeracao('Boys 8', 2023)).toBe(true);
-  });
-  it('intervalos de idades contam', () => {
-    expect(escalaoDaGeracao('Boys 13-14', 2027)).toBe(true); // 13 ou 12
-    expect(escalaoDaGeracao('Boys 7 & Under', 2021)).toBe(true);
+    expect(escalaoDaGeracao('Boys 7 & Under', 2023)).toBe(true);
+    expect(escalaoDaGeracao('Boys 6 & Under', 2023)).toBe(false);
+    expect(escalaoDaGeracao('Boys 12', 2023)).toBe(false);
   });
   it('raparigas e anos desconhecidos nunca', () => {
     expect(escalaoDaGeracao('Girls 12', 2026)).toBe(false);

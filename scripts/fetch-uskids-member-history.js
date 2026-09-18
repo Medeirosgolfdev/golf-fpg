@@ -184,10 +184,10 @@ const FULL_FIELD_TCODES = new Set([
 //    (o GetMemberTournamentResults devolve também as inscrições futuras) no
 //    início de cada corrida. Nesses guarda-se a carreira de TODOS os rapazes
 //    10-13, sem top-5. Já não é preciso acrescentar tcodes à mão para isto.
-// B. GERAÇÃO DO MANUEL — em todos os torneios processados (ALL_TCODES = os
-//    grandes e importantes), o escalão em que o Manuel estava na altura
-//    (escalaoDaGeracao, scripts/lib/uskids-geracao.js) entra completo. Os
-//    outros escalões continuam com o top-5.
+// B. GERAÇÕES 2012-2015 — em todos os torneios processados (ALL_TCODES = os
+//    grandes e importantes), os escalões com rapazes nascidos entre 2012 e
+//    2015 entram completos (escalaoDaGeracao, scripts/lib/uskids-geracao.js).
+//    Os outros continuam com o top-5.
 // C. NOMES — inscritos que ainda não jogaram nada que tenhamos (ex.: Tripp
 //    West, só Local Tours americanos) não têm impressão digital de pancadas;
 //    o nome vem da associação pela ordem (associarPorOrdem), feita nos
@@ -222,7 +222,7 @@ const ehRecusa = (err) => /HTTP 429|Too many requests/i.test(String(err?.message
 // que foi visto; só volta a ser pedido se aparecer num torneio novo.
 // ⚠ Mudar a VERSAO sempre que as regras de entrada mudarem (reavalia todos).
 const SKIPPED_PATH   = path.join(__dirname, '..', 'data-archive', 'uskids-member-skipped.json');
-const SKIPPED_VERSAO = 1; // 2026-09-18: regras A/B/C + place 0 ≠ top-5
+const SKIPPED_VERSAO = 2; // 2026-09-18: regras A/B/C + place 0 ≠ top-5; v2: gerações 2012-2015
 function loadSkipped() {
   try {
     const j = JSON.parse(fs.readFileSync(SKIPPED_PATH, 'utf8'));
