@@ -206,7 +206,34 @@ const ESCALOES_POR_TORNEIO = {
 const MANUEL_MIDS = new Set(['630106', '605933']);
 
 const DELAY_MS   = 200;
-const DELAY_HIST = 150;
+// 150 ms deu HTTP 429 a 2026-09-18 com ~5.000 históricos seguidos.
+const DELAY_HIST = 400;
+
+// ── Recusa da USKids (HTTP 429) → PARAR, gravar o que já veio, sair ──
+// Regra do projecto: um pedido de cada vez e parar à primeira recusa. Antes
+// o script continuava a pedir depois do 429 (5.000 erros seguidos).
+let recusado = false;
+const ehRecusa = (err) => /HTTP 429|Too many requests/i.test(String(err?.message || err));
+
+// ── Jogadores já vistos e deixados de fora (raparigas / fora das regras) ──
+// Sem isto, cada corrida voltava a pedir o histórico de TODOS os que ficaram
+// de fora (≈5.000) — foi isso que levou ao 429. Guarda-se memberID → tcodes em
+// que foi visto; só volta a ser pedido se aparecer num torneio novo.
+// ⚠ Mudar a VERSAO sempre que as regras de entrada mudarem (reavalia todos).
+const SKIPPED_PATH   = path.join(__dirname, '..', 'data-archive', 'uskids-member-skipped.json');
+const SKIPPED_VERSAO = 1; // 2026-09-18: regras A/B/C + place 0 ≠ top-5
+function loadSkipped() {
+  try {
+    const j = JSON.parse(fs.readFileSync(SKIPPED_PATH, 'utf8'));
+    if (j.versao === SKIPPED_VERSAO && j.jogadores) return j.jogadores;
+  } catch {}
+  return {};
+}
+function saveSkipped(jogadores) {
+  const tmp = SKIPPED_PATH + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify({ versao: SKIPPED_VERSAO, gerado_em: new Date().toISOString(), jogadores }));
+  fs.renameSync(tmp, SKIPPED_PATH);
+}
 
 const IFRAME_URL = (t) =>
   `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`;
@@ -671,6 +698,7 @@ async function main() {
           const h = await pageJSON(page, `${API}?op=GetMemberTournamentResults&m=${mid}`);
           for (const tc of Object.keys(h || {})) manuelTcodes.add(parseInt(tc, 10));
         } catch (err) {
+          if (ehRecusa(err)) recusado = true;
           console.warn(`  ⚠️ histórico do Manuel (m=${mid}) falhou: ${err.message} — fica o da cache`);
         }
         await sleep(DELAY_HIST);
@@ -691,6 +719,7 @@ async function main() {
     let cacheHits = 0, cacheMiss = 0;
 
     for (const tcode of tcodes) {
+      if (recusado) { console.warn('  ⛔ USKids recusou pedidos (HTTP 429) — Fase 1 interrompida'); break; }
       // ── Reaproveitar da flight-cache (sem rede) se o torneio já fechou ──
       // Excepção: em modo --tcode forçamos re-descoberta (ignora cache) para
       // a política de escalões actual (10-13) ser aplicada de imediato.
@@ -747,6 +776,7 @@ async function main() {
         meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
         await sleep(DELAY_MS);
       } catch (err) {
+        if (ehRecusa(err)) recusado = true;
         console.warn(`    ⚠️ GetMeta falhou para t=${tcode}: ${err.message}`);
       }
 
@@ -801,6 +831,7 @@ async function main() {
           memberIds = tp.PlayerNodeId || [];
           if (!listaTorneio) listaTorneio = memberIds;
         } catch (err) {
+          if (ehRecusa(err)) { recusado = true; break; }
           console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
           continue;
         }
@@ -864,6 +895,7 @@ async function main() {
             await sleep(DELAY_MS);
           }
         } catch (err) {
+          if (ehRecusa(err)) recusado = true;
           console.warn(`    ⚠️ GetPlayerTeeTimes falhou: ${err.message}`);
         }
 
@@ -899,6 +931,7 @@ async function main() {
             console.log(`  🔤 nomes pela ordem: ${Object.keys(mapa).length} (${confirmados} confirmados, ${novos} novos)`);
           }
         } catch (err) {
+          if (ehRecusa(err)) recusado = true;
           console.warn(`  ⚠️ nomes pela ordem falharam: ${err.message}`);
         }
       }
@@ -929,6 +962,8 @@ async function main() {
 
     // Determinar quais membros precisam de re-fetch
     const toProcess = [];
+    const skippedReg = loadSkipped();
+    let jaVistos = 0;
     if (refreshAll) {
       // Iterar sobre TODOS os memberIDs em cache, independentemente de
       // aparecerem em ALL_TCODES neste run. Marcamos isNew=false porque
@@ -940,6 +975,12 @@ async function main() {
     } else {
       for (const mid of allMemberIds) {
         const midStr = String(mid);
+        if (!forceAll && !existingMembers.has(midStr) && skippedReg[midStr]) {
+          // Já visto e deixado de fora — só volta se aparecer num torneio novo.
+          const vistos = new Set(skippedReg[midStr].map(String));
+          const mFlights = memberFlights.get(mid) || [];
+          if (mFlights.every(({ tcode }) => vistos.has(String(tcode)))) { jaVistos++; continue; }
+        }
         if (forceAll || !existingMembers.has(midStr)) {
           // Novo ou --force
           toProcess.push({ mid, isNew: true });
@@ -966,13 +1007,16 @@ async function main() {
       console.log(`   Total inscritos: ${allMemberIds.size}`);
       console.log(`   Novos:           ${nNovos}`);
       console.log(`   A actualizar:    ${nActualizar} (já em cache mas torneio novo)`);
-      console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length}`);
+      console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length - jaVistos}`);
+      console.log(`   Já vistos, fora: ${jaVistos} (não se voltam a pedir)`);
     }
     console.log(`══════════════════════════════════════\n`);
 
     let processed = 0;
 
+    if (recusado) console.warn('  ⛔ Fase 2 não arranca: a USKids está a recusar pedidos (HTTP 429)');
     for (const { mid, isNew } of toProcess) {
+      if (recusado) break;
       processed++;
       const midStr = String(mid);
 
@@ -1013,6 +1057,7 @@ async function main() {
         const ag = latestT?.p_age_group || '';
         if (ag.startsWith('Girls') || ag.includes('Girl')) {
           console.log(`  🚺 [${processed}/${toProcess.length}] ${playerName} | ${ag} — Girls, ignorado`);
+          skippedReg[midStr] = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
           skipped++; continue;
         }
 
@@ -1041,6 +1086,7 @@ async function main() {
             }
             if (bestPlace > TOP_N_PER_FLIGHT) {
               console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora do top-${TOP_N_PER_FLIGHT} (melhor: ${bestPlace})`);
+              skippedReg[midStr] = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
               skippedTopN++; continue;
             }
           }
@@ -1108,6 +1154,11 @@ async function main() {
         console.log(`  ${label} [${processed}/${toProcess.length}][${tag}] ${playerName} | ${ag} | ${nTorns} torneios`);
 
       } catch (err) {
+        if (ehRecusa(err)) {
+          recusado = true;
+          console.warn(`  ⛔ [${processed}/${toProcess.length}] USKids recusou (HTTP 429) — paro aqui e gravo o que já veio. Voltar a correr daqui a umas horas.`);
+          break;
+        }
         console.warn(`  ❌ [${processed}/${toProcess.length}] m=${mid}: ${err.message}`);
       }
 
@@ -1122,6 +1173,7 @@ async function main() {
 
     if (skipped) console.log(`\n  🚫 ${skipped} Girls/outros ignorados`);
     if (skippedTopN) console.log(`  🚫 ${skippedTopN} fora do top-${TOP_N_PER_FLIGHT} ignorados`);
+    saveSkipped(skippedReg);
 
   } finally {
     await browser.close();
