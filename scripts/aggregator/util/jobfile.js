@@ -146,6 +146,7 @@ function collectLinks(divisions, seriesLabel) {
  * @param {RegExp} opts.pattern           padrão do ficheiro (ex: /^uajt_\d{4}\.json$/)
  * @param {string} opts.seriesId          id da série (kids2)
  * @param {string} opts.seriesLabel       label da série
+ * @param {boolean} [opts.countryFromLocation]  país = 1.º segmento de `location` (UA Worlds: "Denmark, 2032")
  * @param {string} [opts.defaultCountry]  país por defeito (ISO2) quando o jogador não tem
  * @param {(divKey:string)=>{ageMin:?number,ageMax:?number,sex:?string}} opts.parseDiv
  * @param {(data:object)=>string} [opts.nameFn]  nome do torneio (default: data.tournament + ano)
@@ -154,7 +155,7 @@ function collectLinks(divisions, seriesLabel) {
  *   adultos em torneios "open"/seniores; jogadores sem birthYear passam sempre).
  */
 function buildJobfileSource(opts) {
-  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false } = opts;
+  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false, countryFromLocation = false } = opts;
 
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
@@ -176,7 +177,10 @@ function buildJobfileSource(opts) {
         // (ex: European Ladies' Team). Sem birthYear → passa (não fabricar corte).
         if (maxAgeInYear && year && Number.isInteger(pl.birthYear) && pl.birthYear > 1900
             && (year - pl.birthYear) > maxAgeInYear) continue;
-        const iso = countryToIso2(pl.country || "") || defaultCountry || null;
+        // countryFromLocation: fontes em que o campo `country` vem sempre igual e o
+        // país verdadeiro está na localização ("Denmark, 2032" — UA Worlds).
+        const isoLoc = countryFromLocation ? countryToIso2(String(pl.location || "").split(",")[0].trim()) : null;
+        const iso = isoLoc || countryToIso2(pl.country || "") || defaultCountry || null;
         const dob = dobToIso(pl.dob) || null;
         // ANO de nascimento sem data completa (ex: GolfBox) → dobRange anual, a
         // mesma evidência média que o USKids/GJGL usam: permite fundir variantes

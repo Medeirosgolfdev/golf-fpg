@@ -50,6 +50,21 @@ export function useKidsLinkMap() {
         if (!m.has(ak)) m.set(ak, entry);
       }
     }
+    // Variantes sem UM nome do meio: a inscrição USKids diz "Niko Alvarez van
+    // der Walt" e a ficha "Niko Eduardo Alvarez Van Der Walt". Só entram se não
+    // colidirem com um nome real nem com a variante de outro jogador.
+    const variantes = new Map<string, KidsLinkEntry | null>();
+    for (const j of roster) {
+      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.sources?.uskids?.memberId, id: j.id };
+      const toks = normName(j.canonicalName).split(" ").filter(Boolean);
+      for (let i = 1; i < toks.length - 1; i++) {
+        const vk = [...toks.slice(0, i), ...toks.slice(i + 1)].join(" ");
+        if (m.has(vk)) continue;
+        const antes = variantes.get(vk);
+        variantes.set(vk, antes === undefined || antes?.id === entry.id ? entry : null);
+      }
+    }
+    for (const [vk, entry] of variantes) if (entry) m.set(vk, entry);
     return m;
   }, [roster]);
 

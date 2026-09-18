@@ -228,7 +228,13 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
 
   const arMap = useMemo(() => {
     const m = new Map<string, AutoRivalPlayer>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), r);
+    // Homónimos (ex.: Noah Birk Andersen USKids × UA Worlds antes de fundidos):
+    // fica a ficha com mais torneios, não a última lida.
+    for (const r of autoRivals) {
+      const k = normNameAuto(r.n);
+      const antes = m.get(k);
+      if (!antes || Object.keys(r.r).length > Object.keys(antes.r).length) m.set(k, r);
+    }
     return m;
   }, [autoRivals]);
 
@@ -722,7 +728,13 @@ export default function USKidsFieldPage() {
   // useMemo ANTES dos early returns — obrigatório pelas Rules of Hooks
   const arMapCtxValue = useMemo(() => {
     const m = new Map<string, AutoRivalPlayer>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), r);
+    // Homónimos (ex.: Noah Birk Andersen USKids × UA Worlds antes de fundidos):
+    // fica a ficha com mais torneios, não a última lida.
+    for (const r of autoRivals) {
+      const k = normNameAuto(r.n);
+      const antes = m.get(k);
+      if (!antes || Object.keys(r.r).length > Object.keys(antes.r).length) m.set(k, r);
+    }
     return m;
   }, [autoRivals]);
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
@@ -102,6 +102,16 @@ export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: st
 // ─────────────────────────────────────────────
 export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   const arMap = useContext(ArMapCtx);
+  // Torneios USKids do Manuel (crachá "NT" na linha dele). Tem 2 contas e várias
+  // grafias do nome → juntar todas as entradas dele, sem contar duas vezes.
+  const nTornManuel = useMemo(() => {
+    const tids = new Set<string>();
+    for (const p of arMap.values()) {
+      if (!isManuel(p.n)) continue;
+      for (const [tid, r] of Object.entries(p.r)) if (r.tp != null || (r.rd?.length ?? 0) > 0) tids.add(tid);
+    }
+    return tids.size;
+  }, [arMap]);
   const escalaoM = escalaoManuelParaData(t.date_inicio);
   const sBase = seriesBase(t.name);
   const currentYear = parseInt((isoDate(t.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
@@ -265,7 +275,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                       {e.jogadores.map((j, i) => {
                         const isM = isManuel(j.nome);
                         const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
-                        const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
+                        const nTorn = isM ? nTornManuel
+                          : arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
                         const daysSinceReg = diasDesdeInscricao(j);
                         const showDaysPill = daysSinceReg != null && daysSinceReg <= 25;
                         // Resultados nos 2 anos anteriores neste mesmo torneio
