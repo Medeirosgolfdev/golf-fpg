@@ -533,6 +533,8 @@ como top-5 até 2026-09-18.
 
 **Nomes em falta (`scripts/fill-uskids-names-by-order.js`, 2026-09-18).** Para os "?" das gerações seguidas: pede só as `flight_players` do escalão onde está cada um (o bloco é contíguo na lista, sabido pelos `escaloes` guardados), ordena por apelido e emparelha. `--simular` mostra o plano sem pedidos. 1.ª corrida: 65 escalões, ~224 pedidos, 253 nomes, ~2.000 confirmações, 0 falhas. `mesmoNome` tolera gralhas no 1.º nome com o mesmo apelido (Alexaner/Alexander); nomes diferentes (Benji/Harley Botham) recusam o bloco. Depois: `split-member-history.js --from-chunks` + `build-member-history-slim.js`.
 
+2.ª versão (mesmo dia): **irmãos com o mesmo apelido** ligam-se pelo nome, não pela posição (a USKids não os ordena pelo 1.º nome — World 2019 "Jaxon"/"Clarkson Johnson"); sobrando um nome e um miúdo liga-se, sobrando mais não se adivinha. `mesmoNome` aceita diminutivos (Sam/Samuel). **Escalão recusado → re-plano** com os outros torneios do miúdo (voltas até não haver progresso). Escalões **partidos em várias flights** com o mesmo nome juntam-se, um bloco por flight. Torneios sem `escaloes` (edições 2013-2018) ganham-nos com 2 pedidos (`lista` + `escaloes` na flight-cache). O miúdo tem de ser das gerações seguidas; o escalão que dá o nome pode ser qualquer um. Resultado: sem nome 427 → 239 (das gerações 2012-2015: 137 → 15).
+
 **Recusa (HTTP 429) e já vistos (2026-09-18).** O script continuava a pedir
 depois de um 429 e voltava a pedir, em cada corrida, o histórico dos ~5.000
 jogadores que já tinham ficado de fora — foi o que levou ao bloqueio. Agora:
