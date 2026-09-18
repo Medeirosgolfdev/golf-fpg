@@ -1,39 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22649,
-      "name": "Robert T Lynch Municipal Golf Course (Tour Championship)",
-      "date_inicio": "8/18/2026",
-      "date_fim": "8/18/2026",
-      "rondas": 1,
-      "campo": "Robert T Lynch Municipal Golf Course",
-      "fee_18": "65.00",
-      "tour": "Boston Tour",
-      "type": 6
-    },
-    {
-      "t": 22563,
-      "name": "Teen Series at The Black Swan (MA)",
-      "date_inicio": "8/18/2026",
-      "date_fim": "8/19/2026",
-      "rondas": 2,
-      "campo": "The Black Swan Country Club",
-      "fee_18": "275.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
-      "t": 22523,
-      "name": "Teen Series at Wine Valley (WA)",
-      "date_inicio": "8/18/2026",
-      "date_fim": "8/19/2026",
-      "rondas": 2,
-      "campo": "Wine Valley Golf Course",
-      "fee_18": "295.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
       "t": 22612,
       "name": "Eagle Ridge Golf (Tour Championship)",
       "date_inicio": "8/20/2026",
@@ -1376,6 +1343,17 @@
       "type": 6
     },
     {
+      "t": 23744,
+      "name": "Linfield National Golf Club (Tour Championship)",
+      "date_inicio": "10/31/2026",
+      "date_fim": "10/31/2026",
+      "rondas": 1,
+      "campo": "Linfield National Golf Club",
+      "fee_18": "79.00",
+      "tour": "Philadelphia Tour",
+      "type": 6
+    },
+    {
       "t": 23008,
       "name": "Golf Bluegreen Grand Lyon Chassieu (Tour Championship)",
       "date_inicio": "11/1/2026",
@@ -1981,6 +1959,17 @@
       "type": 6
     },
     {
+      "t": 23730,
+      "name": "Ocean Club Golf Course (Tour Championship)",
+      "date_inicio": "11/22/2026",
+      "date_fim": "11/22/2026",
+      "rondas": 1,
+      "campo": "Ocean Club Golf Course",
+      "fee_18": "99.00",
+      "tour": "Nassau (BS) Tour",
+      "type": 6
+    },
+    {
       "t": 23254,
       "name": "Reunion Golf & Country Club (Tour Championship)",
       "date_inicio": "11/23/2026",
@@ -2245,6 +2234,17 @@
       "type": 6
     },
     {
+      "t": 23736,
+      "name": "Lagunita Country Club (Tour Championship)",
+      "date_inicio": "12/13/2026",
+      "date_fim": "12/13/2026",
+      "rondas": 1,
+      "campo": "Lagunita Country Club",
+      "fee_18": "45.00",
+      "tour": "Caracas (VE) Tour",
+      "type": 6
+    },
+    {
       "t": 22780,
       "name": "Chapman Golf Club (Tour Championship)",
       "date_inicio": "12/14/2026",
@@ -2377,19 +2377,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-17T12:34:14.050Z",
-  "varredura_max_t": 23724,
+  "gerado_em": "2026-09-18T12:11:50.215Z",
+  "varredura_max_t": 23744,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 48,
-    "novos": 1,
+    "pedidos": 60,
+    "novos": 3,
     "buracos_revistos": 0,
-    "catalogo": 1420,
+    "catalogo": 1439,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23724,
-  "fronteira_avancou_em": "2026-09-17",
+  "fronteira_max_t_visto": 23744,
+  "fronteira_avancou_em": "2026-09-18",
   "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-09-17"
+  "ultima_descoberta": "2026-09-18"
 }

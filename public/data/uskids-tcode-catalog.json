@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-09-17T12:34:14.050Z",
+  "gerado_em": "2026-09-18T12:11:50.215Z",
   "backfill": {"cursor":22239,"piso":22240},
-  "buracos": {},
+  "buracos": {"23738":"2026-09-18"},
   "entradas": {
     "21080": {"n":"Marco Simone Invitational 2026","ty":8,"tour":"International Championships Tour","s":"3/14/2026","e":"3/15/2026","st":9,"r":2,"c":"Marco Simone Golf & Country Club","f":"375.00"},
     "21133": {"n":"Jekyll Island Cup 2026","ty":1,"tour":"Domestic Championships Tour","s":"3/28/2026","e":"3/29/2026","st":9,"r":2,"c":"Jekyll Island Club - Pine Lakes, Jekyll Island Club - Indian Mound, Jekyll Island Club - Great Dunes","f":"425.00"},
@@ -1422,6 +1422,25 @@
     "23721": {"n":"Puerto Aventuras Golf Club","ty":5,"tour":"Riviera Maya (MX) Tour","s":"11/21/2026","e":"11/21/2026","st":1,"r":1,"c":"Puerto Aventuras Golf Club","f":"45.00"},
     "23722": {"n":"Iberostar Cancun Golf Club","ty":5,"tour":"Riviera Maya (MX) Tour","s":"11/22/2026","e":"11/22/2026","st":1,"r":1,"c":"Iberostar Cancun Golf Club","f":"45.00"},
     "23723": {"n":"Gran Coyote Golf","ty":5,"tour":"Riviera Maya (MX) Tour","s":"12/5/2026","e":"12/5/2026","st":1,"r":1,"c":"Gran Coyote Golf","f":"45.00"},
-    "23724": {"n":"El Camaleón Golf Course at Mayakoba (Tour Championship)","ty":6,"tour":"Riviera Maya (MX) Tour","s":"12/6/2026","e":"12/6/2026","st":1,"r":1,"c":"El Camaleón Golf Course at Mayakoba","f":"45.00"}
+    "23724": {"n":"El Camaleón Golf Course at Mayakoba (Tour Championship)","ty":6,"tour":"Riviera Maya (MX) Tour","s":"12/6/2026","e":"12/6/2026","st":1,"r":1,"c":"El Camaleón Golf Course at Mayakoba","f":"45.00"},
+    "23725": {"n":"Lyford Cay Golf","ty":5,"tour":"Nassau (BS) Tour","s":"10/11/2026","e":"10/11/2026","st":1,"r":1,"c":"Lyford Cay Golf","f":"99.00"},
+    "23726": {"n":"Royal Blue Golf Club at Baha Mar","ty":5,"tour":"Nassau (BS) Tour","s":"10/25/2026","e":"10/25/2026","st":1,"r":1,"c":"Royal Blue Golf Club at Baha Mar","f":"99.00"},
+    "23727": {"n":"Royal Blue Golf Club at Baha Mar","ty":5,"tour":"Nassau (BS) Tour","s":"10/31/2026","e":"10/31/2026","st":1,"r":1,"c":"Royal Blue Golf Club at Baha Mar","f":"99.00"},
+    "23728": {"n":"Royal Blue Golf Club at Baha Mar","ty":5,"tour":"Nassau (BS) Tour","s":"11/8/2026","e":"11/8/2026","st":1,"r":1,"c":"Royal Blue Golf Club at Baha Mar","f":"99.00"},
+    "23729": {"n":"Ocean Club Golf Course","ty":5,"tour":"Nassau (BS) Tour","s":"11/21/2026","e":"11/21/2026","st":1,"r":1,"c":"Ocean Club Golf Course","f":"99.00"},
+    "23730": {"n":"Ocean Club Golf Course (Tour Championship)","ty":6,"tour":"Nassau (BS) Tour","s":"11/22/2026","e":"11/22/2026","st":1,"r":1,"c":"Ocean Club Golf Course","f":"99.00"},
+    "23731": {"n":"Guataparo Country Club","ty":5,"tour":"Caracas (VE) Tour","s":"10/31/2026","e":"10/31/2026","st":1,"r":1,"c":"Guataparo Country Club","f":"45.00"},
+    "23732": {"n":"Guataparo Country Club","ty":5,"tour":"Caracas (VE) Tour","s":"11/1/2026","e":"11/1/2026","st":1,"r":1,"c":"Guataparo Country Club","f":"45.00"},
+    "23733": {"n":"Marriott Maracay Golf Resort","ty":5,"tour":"Caracas (VE) Tour","s":"11/14/2026","e":"11/14/2026","st":1,"r":1,"c":"Marriott Maracay Golf Resort","f":"45.00"},
+    "23734": {"n":"Marriott Maracay Golf Resort","ty":5,"tour":"Caracas (VE) Tour","s":"11/15/2026","e":"11/15/2026","st":1,"r":1,"c":"Marriott Maracay Golf Resort","f":"45.00"},
+    "23735": {"n":"Lagunita Country Club","ty":5,"tour":"Caracas (VE) Tour","s":"12/12/2026","e":"12/12/2026","st":1,"r":1,"c":"Lagunita Country Club","f":"45.00"},
+    "23736": {"n":"Lagunita Country Club (Tour Championship)","ty":6,"tour":"Caracas (VE) Tour","s":"12/13/2026","e":"12/13/2026","st":1,"r":1,"c":"Lagunita Country Club","f":"45.00"},
+    "23737": {"n":"Old Kinderhook Golf Course 2026","ty":5,"tour":"Futures Junior Golf Tour","s":"11/7/2026","e":"11/8/2026","st":1,"r":2,"c":"Old Kinderhook Golf Course","f":"0.00"},
+    "23739": {"n":"Berkleigh Country Club","ty":5,"tour":"Philadelphia Tour","s":"9/27/2026","e":"9/27/2026","st":1,"r":1,"c":"Berkleigh Country Club","f":"79.00"},
+    "23740": {"n":"Manor Golf Club","ty":5,"tour":"Philadelphia Tour","s":"10/12/2026","e":"10/12/2026","st":1,"r":1,"c":"Manor Golf Club","f":"79.00"},
+    "23741": {"n":"The Club at Twin Lakes","ty":5,"tour":"Philadelphia Tour","s":"10/17/2026","e":"10/17/2026","st":1,"r":1,"c":"The Club at Twin Lakes ","f":"79.00"},
+    "23742": {"n":"Kimberton Golf Club","ty":5,"tour":"Philadelphia Tour","s":"10/18/2026","e":"10/18/2026","st":1,"r":1,"c":"Kimberton Golf Club","f":"79.00"},
+    "23743": {"n":"Golden Oaks Golf Club","ty":5,"tour":"Philadelphia Tour","s":"10/25/2026","e":"10/25/2026","st":1,"r":1,"c":"Golden Oaks Golf Club","f":"79.00"},
+    "23744": {"n":"Linfield National Golf Club (Tour Championship)","ty":6,"tour":"Philadelphia Tour","s":"10/31/2026","e":"10/31/2026","st":1,"r":1,"c":"Linfield National Golf Club","f":"79.00"}
   }
 }
