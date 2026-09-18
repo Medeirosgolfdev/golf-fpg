@@ -141,3 +141,6 @@ claude-memory/
 # inbox local dos draws CGSS (PDFs processados pelo process-draw-inbox.js)
 /draws-inbox/
 /draw-mail-result.json
+
+# Diário do fetch-uskids-member-history (temporário; apagado no fim de cada corrida completa)
+data-archive/uskids-member-diario.jsonl

@@ -11,7 +11,7 @@ node scripts/fetch-uskids-results.js
 ```
 Output: `public/data/uskids-results.json`
 
-**fetch-uskids-member-history.js** — Histórico completo de carreira USKids de cada jogador nos flights configurados. Matching memberID→nome por strokes fingerprinting. Checkpoint a cada 250 jogadores (grava os chunks) — seguro interromper.
+**fetch-uskids-member-history.js** — Histórico completo de carreira USKids de cada jogador nos flights configurados. Matching memberID→nome por strokes fingerprinting. Grava em adição: cada jogador guardado e cada "já visto" vai logo para `data-archive/uskids-member-diario.jsonl` (reposto no início da corrida seguinte, apagado no fim de uma corrida completa) — seguro interromper em qualquer ponto. Torneios vivos com a mesma assinatura (inscritos por escalão + acabou/aberto) usam o guardado: 1 GetMeta em vez de ~30-40 pedidos. Uma corrida sem novidades leva ~7 s.
 ```bash
 node scripts/fetch-uskids-member-history.js         # scrape (só novos)
 node scripts/fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)

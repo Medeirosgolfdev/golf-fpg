@@ -73,17 +73,17 @@ const ALL_TCODES = [
   // ── Flights manuais já configurados ──
   18242, 19418, 20175, 21080, 21131,
 
-  // ── European Championship (2014-2026) ──
-  144, 1084, 2079, 3361, 5095, 6713, 8300, 13568, 15704,
+  // ⚠ Edições até 2018 tiradas a 18/09: os Boys 10-13 desses anos têm hoje
+  // ≥18 anos (0 flights) e não davam ninguém. 2019 fica: tem miúdos de 2012.
+  // ── European Championship (2019-2026) ──
+  6713, 8300, 13568, 15704,
   // 18242 já listado, 21131 já listado
 
-  // ── World Championship (2013-2026) ──
-  35, 205, 1189, 2250, 3669, 5375, 6901, 8194, 9793,
-  11604, 14029, 15807, 18124, 21610,
+  // ── World Championship (2019-2026) ──
+  6901, 8194, 9793, 11604, 14029, 15807, 18124, 21610,
 
-  // ── Venice Open (2015-2026) ──
-  1076, 2585, 4010, 5663, 7315, 9086, 10240,
-  12229, 14302, 16428, 22243,
+  // ── Venice Open (2019-2026) ──
+  7315, 9086, 10240, 12229, 14302, 16428, 22243,
   // 19418 já listado
 
   // ── Rome Classic (2021-2025) ──
@@ -94,11 +94,11 @@ const ALL_TCODES = [
   18438,
   // 21080 já listado
 
-  // ── Red White & Blue Invitational (2016-2026) ──
-  2508, 3772, 4967, 7170, 8192, 10118, 12093, 14218, 16705, 18719, 22187,
+  // ── Red White & Blue Invitational (2019-2026) ──
+  7170, 8192, 10118, 12093, 14218, 16705, 18719, 22187,
 
-  // ── Holiday Classic (2013-2026) ──
-  115, 509, 1964, 3235, 3777, 5047, 7644, 8510, 10306, 13273, 15480, 18000, 20878,
+  // ── Holiday Classic (2019-2026) ──
+  7644, 8510, 10306, 13273, 15480, 18000, 20878,
   23670, // 2026 (21-22 Dez, PGA National)
 
   // ── El Prat 2023 (USKids Open Spain) ──
@@ -222,6 +222,31 @@ const ehRecusa = (err) => /HTTP 429|Too many requests/i.test(String(err?.message
 // ⚠ Mudar a VERSAO sempre que as regras de entrada mudarem (reavalia todos).
 const SKIPPED_PATH   = path.join(__dirname, '..', 'data-archive', 'uskids-member-skipped.json');
 const SKIPPED_VERSAO = 2; // v2 (18/09): gerações 2012-2015. O fim do top-5 só estreita — não obriga a subir.
+// ── Diário: gravação em adição (18/09, ideia da Mariana) ──
+// O arquivo é um JSON grande que só se reescreve inteiro. Para uma paragem a
+// meio (recusa, Ctrl+C, falta de luz) não deitar trabalho fora, cada jogador
+// guardado e cada "já visto" é ACRESCENTADO como uma linha a este ficheiro. No
+// início da corrida seguinte as linhas são repostas; no fim de uma corrida
+// completa o arquivo é gravado e o diário apagado.
+const DIARIO_PATH = path.join(__dirname, '..', 'data-archive', 'uskids-member-diario.jsonl');
+function anotarDiario(reg) {
+  fs.appendFileSync(DIARIO_PATH, JSON.stringify(reg) + '\n');
+}
+function lerDiario() {
+  const jog = {}, vistos = {};
+  let linhas = [];
+  try { linhas = fs.readFileSync(DIARIO_PATH, 'utf8').split('\n'); } catch { return { jog, vistos }; }
+  for (const l of linhas) {
+    if (!l.trim()) continue;
+    try {
+      const r = JSON.parse(l);
+      if (r.t === 'j' && r.e) jog[r.mid] = r.e;
+      else if (r.t === 's') vistos[r.mid] = r.tc;
+    } catch { /* última linha cortada a meio — ignora-se */ }
+  }
+  return { jog, vistos };
+}
+
 function loadSkipped() {
   try {
     const j = JSON.parse(fs.readFileSync(SKIPPED_PATH, 'utf8'));
@@ -392,6 +417,18 @@ function saveFlightCache(fc) {
     console.warn(`  ⚠️ falha ao gravar flight-cache: ${e.message}`);
   }
 }
+// Assinatura de um torneio vivo: inscritos por escalão + se já acabou. Igual à
+// da última corrida → nada mudou (nem inscrições, nem resultados finais) e usa-se
+// o guardado: 1 pedido (GetMeta) em vez de ~30-40 (lista, cartões de cada
+// escalão, nomes de todos os escalões). Mudar o "aberto"→"fim" obriga a UMA ida
+// à net depois de o torneio acabar, para os resultados. (18/09)
+function assinaturaDoTorneio(meta) {
+  const fl = Object.values(meta?.flights || {}).map(f => `${f.age_group}:${f.registered}`).join(',');
+  const fim = parseDate(meta?.tournament?.end_date || meta?.tournament?.start_date || '');
+  const hoje = new Date().toISOString().slice(0, 10);
+  return `${fl}|${fim && fim < hoje ? 'fim' : 'aberto'}`;
+}
+
 // true = TEM de ir à net (torneio terminou há ≤ N dias, está no futuro, ou data desconhecida).
 function flightNeedsRefetch(dateStr) {
   const iso = parseDate(dateStr);
@@ -656,6 +693,13 @@ async function main() {
 
   // Carregar cache existente (monolítico ou chunks — ver loadCache())
   let cache = loadCache();
+  // Repor o que uma corrida anterior deixou a meio (ver DIARIO_PATH).
+  const diario = lerDiario();
+  const nDiario = Object.keys(diario.jog).length;
+  for (const [mid, e] of Object.entries(diario.jog)) cache.jogadores[mid] = e;
+  if (nDiario || Object.keys(diario.vistos).length) {
+    console.log(`\n♻️  Diário: ${nDiario} jogadores e ${Object.keys(diario.vistos).length} já vistos repostos de uma corrida interrompida`);
+  }
   const existingMembers = new Set(Object.keys(cache.jogadores));
   console.log(`\n📂 Cache: ${existingMembers.size} jogadores`);
 
@@ -726,7 +770,19 @@ async function main() {
       // Excepção: em modo --tcode forçamos re-descoberta (ignora cache) para
       // a política de escalões actual (10-13) ser aplicada de imediato.
       const cachedT = flightCache.torneios[String(tcode)];
-      if (cachedT && !flightNeedsRefetch(cachedT.date) && !onlyTcodes) {
+      // Torneio vivo já visto: se a assinatura não mudou, usa o guardado.
+      let semMudancas = false;
+      if (cachedT?.assinatura && flightNeedsRefetch(cachedT.date) && !onlyTcodes) {
+        try {
+          const m = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
+          await sleep(DELAY_MS);
+          semMudancas = assinaturaDoTorneio(m) === cachedT.assinatura;
+          if (semMudancas) console.log(`\n  = ${cachedT.name || `t=${tcode}`}: nada mudou desde a última corrida — usa o guardado`);
+        } catch (err) {
+          if (ehRecusa(err)) recusado = true;
+        }
+      }
+      if (cachedT && (semMudancas || !flightNeedsRefetch(cachedT.date)) && !onlyTcodes) {
         if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
           cache.torneios[tcode] = { name: cachedT.name || `t=${tcode}` };
         }
@@ -836,6 +892,7 @@ async function main() {
         name: cache.torneios[tcode].name,
         date: meta?.tournament?.start_date || meta?.start_date || '',
         year: tournYear || null,
+        assinatura: meta ? assinaturaDoTorneio(meta) : null,
         flights: {},
       };
       flightCache.torneios[String(tcode)] = fcEntry;
@@ -1016,7 +1073,7 @@ async function main() {
 
     // Determinar quais membros precisam de re-fetch
     const toProcess = [];
-    const skippedReg = loadSkipped();
+    const skippedReg = { ...loadSkipped(), ...diario.vistos };
     let jaVistos = 0, raparigasSemPedido = 0, foraSemPedido = 0;
     if (refreshAll) {
       // Iterar sobre TODOS os memberIDs em cache, independentemente de
@@ -1138,6 +1195,7 @@ async function main() {
         if (ag.startsWith('Girls') || ag.includes('Girl')) {
           console.log(`  🚺 [${processed}/${toProcess.length}] ${playerName} | ${ag} — Girls, ignorado`);
           skippedReg[midStr] = [...new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)))];
+          anotarDiario({ t: 's', mid: midStr, tc: skippedReg[midStr] });
           skipped++; continue;
         }
 
@@ -1154,6 +1212,7 @@ async function main() {
           if (!entra) {
             console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora das regras`);
             skippedReg[midStr] = [...discoverTcodes];
+            anotarDiario({ t: 's', mid: midStr, tc: skippedReg[midStr] });
             skippedForaRegras++; continue;
           }
         }
@@ -1213,6 +1272,7 @@ async function main() {
           totalTorneios: Object.keys(torneiosMerged).length,
           torneios: torneiosMerged,
         };
+        anotarDiario({ t: 'j', mid: midStr, e: cache.jogadores[midStr] });
 
         const label  = playerName !== '?' ? '✅' : '❓';
         const tag    = isNew ? 'NOVO' : 'UPD';
@@ -1230,11 +1290,6 @@ async function main() {
 
       await sleep(DELAY_HIST);
 
-      if (processed % 250 === 0) {
-        cache.gerado_em = new Date().toISOString();
-        const chunks = writeSharded(cache);
-        console.log(`  💾 Checkpoint: ${Object.keys(cache.jogadores).length} jogadores em ${chunks.length} chunks`);
-      }
     }
 
     if (skipped) console.log(`\n  🚫 ${skipped} Girls/outros ignorados`);
@@ -1272,6 +1327,8 @@ async function main() {
   // ── Salvar ──
   cache.gerado_em = new Date().toISOString();
   const chunksFinais = writeSharded(cache);
+  // Arquivo gravado por inteiro → o diário já não é preciso.
+  try { fs.unlinkSync(DIARIO_PATH); } catch {}
 
   const total      = Object.keys(cache.jogadores).length;
   const named      = Object.values(cache.jogadores).filter(j => j.name && j.name !== '?').length;
