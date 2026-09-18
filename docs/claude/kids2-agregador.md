@@ -174,3 +174,21 @@ há 3 miúdos DE com este nome no mesmo escalão). Ciclo:
 Pares já cobertos por `forceMerge`/`notDuplicates` nunca são re-sugeridos.
 Testes: `scripts/find-junior-duplicates.test.js` (vitest apanha
 `scripts/**/*.test.js`).
+
+## Órfãs e cauda de duplicados (`find-orphan-duplicates.js`, 2026-09-18)
+
+O `find-junior-duplicates.js` exige idade (quase nunca há DOB) e desconfia de países diferentes (cada fonte regista coisas diferentes: residência, licença, nacionalidade) — por isso não apanhava a cauda. O `scripts/find-orphan-duplicates.js` usa:
+- **idade pelos escalões** (Boys 9 em 2023 → nasceu 2013-2014; intersecção de todas as participações) e **sexo pelos escalões**;
+- vetos: **jogaram juntos** no mesmo torneio, ou **torneios diferentes no mesmo dia** (Michael Egan GB ≠ US);
+- nome tolerante com regras aprendidas em amostras reais: contido só com o mesmo 1.º nome; variante só com todos os apelidos do curto no longo e 1.º nome = diminutivo ou 1 letra (só se um dos dois for raro); variantes com países diferentes ou nomes do leste asiático não; nome curto a acabar num nome próprio comum ("Juan Pablo") não serve de dono; nomes muito comuns exigem mesmo país E idade;
+- **candidato único** (fichas com historial: recíproco).
+
+```bash
+node scripts/find-orphan-duplicates.js            # só órfãs (1 torneio), relatório
+node scripts/find-orphan-duplicates.js --todos    # todas as fichas
+node scripts/find-orphan-duplicates.js --todos --apply   # forte + média → forceMerge (auto)
+```
+
+1.ª aplicação (18/09): 413 junções + 10 reposições; 30.354 → 29.932 fichas; 0 junções perdidas (verificado contra o juniors.json da manhã; só o Michael Egan, errado, foi separado). **Tecto medido:** pares com nome compatível + idade/sexo compatíveis + nunca juntos = 736 em 30 mil fichas; 10.547 das 10.981 órfãs têm um nome que não se parece com nenhum outro — são miúdos de quem só temos 1 torneio, não duplicados. Cruzar pelos resultados (mesmas pancadas na mesma semana) foi testado e **descartado**: sem cartões buraco a buraco dos dois lados, coincidências ao acaso (Doral 2022 ≡ Mexico City 2022).
+
+Correcções na fonte do mesmo dia: UA Worlds com país da `location`; FFG com licenças `E…` juntas por estrangeiro e sem FR assumido; `normName` trata `’ ‘ ´ ʼ` como `'`.
