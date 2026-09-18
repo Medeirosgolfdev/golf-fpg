@@ -192,3 +192,8 @@ node scripts/find-orphan-duplicates.js --todos --apply   # forte + média → fo
 1.ª aplicação (18/09): 413 junções + 10 reposições; 30.354 → 29.932 fichas; 0 junções perdidas (verificado contra o juniors.json da manhã; só o Michael Egan, errado, foi separado). **Tecto medido:** pares com nome compatível + idade/sexo compatíveis + nunca juntos = 736 em 30 mil fichas; 10.547 das 10.981 órfãs têm um nome que não se parece com nenhum outro — são miúdos de quem só temos 1 torneio, não duplicados. Cruzar pelos resultados (mesmas pancadas na mesma semana) foi testado e **descartado**: sem cartões buraco a buraco dos dois lados, coincidências ao acaso (Doral 2022 ≡ Mexico City 2022).
 
 Correcções na fonte do mesmo dia: UA Worlds com país da `location`; FFG com licenças `E…` juntas por estrangeiro e sem FR assumido; `normName` trata `’ ‘ ´ ʼ` como `'`.
+
+## EGR — fichas de jogador (2026-09-18)
+
+`node scripts/scrape-egr.js --players --skip-existing --concurrency 3 --id <ids>` → `public/data/egr/players/egr_{id}.json`. A ficha traz os eventos da **janela do ranking (~2 anos)**, não a carreira toda (Felix Dietz: 8 na ficha, 13 nos nossos eventos). O `sources/egr.js` junta-os: evento que não scrapámos entra como **torneio parcial** (`extra.parcial`, só os jogadores com ficha; posição + voltas). Chave do jogador = nome+país, igual às classificações (confirmado).
+1.ª corrida: U12+U14 do ranking (gerações 2012-2015; o `birthYear` só existe em ~10%) — 2.985 fichas, ~40 min; 1.098 fichas existentes ganharam 2.389 participações, 181 órfãs deixaram de o ser, +441 miúdos que não tínhamos, 591 torneios parciais; 0 junções perdidas.

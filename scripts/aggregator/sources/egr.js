@@ -82,6 +82,17 @@ function seriesFor(tournament) {
   return { id, label: n };
 }
 
+/** "24. Jun 26" (ficha EGR) → "2026-06-24"; null se não der. */
+const MESES = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+function dataDaFicha(s) {
+  const m = String(s || "").match(/(\d{1,2})\.?\s*([A-Za-z]{3})[a-z]*\.?\s*(\d{2,4})/);
+  if (!m) return null;
+  const mes = MESES[m[2].toLowerCase()];
+  if (!mes) return null;
+  const ano = m[3].length === 2 ? 2000 + +m[3] : +m[3];
+  return `${ano}-${String(mes).padStart(2, "0")}-${String(+m[1]).padStart(2, "0")}`;
+}
+
 function load() {
   // ── Roster com ano de nascimento (name|iso → birthYear/hcp) ──
   const roster = readJsonSafe(path.join(EGR_DIR, "egr-dob-roster.json"), null);
@@ -204,6 +215,69 @@ function load() {
       links: (ev.sourceUrl || meta.sourceUrl) ? [{ label: "European Golf Rankings", url: ev.sourceUrl || meta.sourceUrl }] : [],
     });
   }
+
+  // ── Fichas de jogador (/players/{id}, scrape-egr.js --players) ──
+  // Trazem os eventos da janela do ranking (~2 anos) de cada jogador, incluindo
+  // eventos que não scrapámos. Esses entram como torneio PARCIAL (só os
+  // jogadores com ficha), com posição e voltas. É isto que dá historial às
+  // fichas que só tinham 1 torneio (18/09, pedido da Mariana).
+  const conhecidos = new Set(events.map((m) => String(m.id)));
+  const parciais = new Map(); // eventId → torneio parcial
+  let fichas = 0, eventosNovos = 0;
+  let pfiles = [];
+  try { pfiles = fs.readdirSync(path.join(EGR_DIR, "players")).filter((f) => /^egr_\d+\.json$/.test(f)); } catch { /* sem fichas */ }
+  for (const f of pfiles) {
+    const prof = readJsonSafe(path.join(EGR_DIR, "players", f), null);
+    if (!prof || !Array.isArray(prof.events)) continue;
+    const playerName = displayName(prof.name || "");
+    if (!playerName) continue;
+    const iso = countryToIso2(prof.country) || null;
+    const key = normKey(playerName, iso);
+    let novos = 0;
+    for (const e of prof.events) {
+      if (!e.eventId || conhecidos.has(String(e.eventId))) continue;
+      const date = dataDaFicha(e.startDateRaw);
+      const year = date ? +date.slice(0, 4) : null;
+      const name = e.event || `EGR ${e.eventId}`;
+      if (coveredElsewhere(name, year) || (WJGC_WORLD_RE.test(name) && year && wjgcYears.has(year))) continue;
+      const rounds = [e.r1, e.r2, e.r3, e.r4]
+        .map((g, i) => ({ round: i + 1, gross: typeof g === "number" && g > 0 ? g : null }))
+        .filter((r) => r.gross != null);
+      if (!rounds.length) continue;
+      let t = parciais.get(e.eventId);
+      if (!t) {
+        const series = seriesFor(name);
+        t = {
+          sourceKey: `egr${e.eventId}`, name, date, startDate: date, year,
+          seriesId: series.id, seriesLabel: series.label,
+          course: e.venue || null, holesPerRound: 18,
+          flights: [{ flightKey: "geral", label: "Geral", ageMin: null, ageMax: null, sex: null, fieldSize: null, results: [] }],
+          links: [{ label: "European Golf Rankings", url: `https://www.europeangolfrankings.com/events/${e.eventId}` }],
+          extra: { parcial: true, nota: "só os jogadores com ficha EGR descarregada" },
+        };
+        parciais.set(e.eventId, t);
+        eventosNovos++;
+      }
+      const flight = t.flights[0];
+      if (flight.results.some((r) => r.playerSourceKey === key)) continue;
+      const pos = parseInt(String(e.pos || "").replace(/\D/g, ""), 10);
+      flight.results.push({
+        playerSourceKey: key, playerName,
+        pos: Number.isFinite(pos) ? pos : null, status: "OK",
+        totalGross: rounds.reduce((s, r) => s + r.gross, 0), toPar: null, rounds,
+      });
+      novos++;
+    }
+    if (!playerMap.has(key)) {
+      playerMap.set(key, { sourceKey: key, name: playerName, country: iso, sex: null, club: prof.club || null,
+        extra: { countryName: prof.country || null, egrId: prof.id } });
+    } else if (!playerMap.get(key).extra?.egrId) {
+      playerMap.get(key).extra = { ...(playerMap.get(key).extra || {}), egrId: prof.id };
+    }
+    if (novos) fichas++;
+  }
+  for (const t of parciais.values()) tournaments.push(t);
+  if (pfiles.length) console.log(`  · [egr] ${pfiles.length} fichas de jogador: ${fichas} trouxeram eventos novos (${eventosNovos} torneios parciais)`);
 
   for (const p of playerMap.values()) players.push(p);
 
