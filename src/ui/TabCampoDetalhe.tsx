@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from "react";
 import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
-import { kidsUrl } from "./KidsLink";
+import { kidsUrl, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
@@ -41,13 +41,20 @@ function erroLegivel(erro: string): string {
 }
 
 /** Devolve o elemento ↗ com link para a página Kids do jogador.
- *  Usa memberId quando disponível (resolve antes dos 45 ficheiros carregarem). */
+ *  1.º o roster canónico (juniors.json, via KidsLinkCtx): conhece aliases e
+ *  nomes sem um nome do meio — a inscrição diz "Daniel Alejandro Rodríguez
+ *  Stepanischev" e a ficha "Daniel Rodriguez Stepanischev". Depois os rivais
+ *  (memberId; resolve antes de o roster chegar). */
 export function KidsLink({ nome }: { nome: string }) {
   const arMap = useContext(ArMapCtx);
-  const arEntry = arMap.get(normNameAuto(nome));
-  if (!arEntry) return null;
-  const memberId = (arEntry as any).memberId as string | undefined;
-  const to = kidsUrl({ memberId, name: arEntry.n });
+  const kidsMap = useContext(KidsLinkCtx);
+  const k = normNameAuto(nome);
+  const kid = kidsMap.get(k);
+  const arEntry = arMap.get(k);
+  if (!kid && !arEntry) return null;
+  const to = kid
+    ? kidsUrl({ id: kid.id, memberId: kid.memberId, name: kid.n })
+    : kidsUrl({ memberId: (arEntry as any).memberId as string | undefined, name: arEntry!.n });
   return (
     <a
       href={to}
@@ -102,6 +109,14 @@ export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: st
 // ─────────────────────────────────────────────
 export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   const arMap = useContext(ArMapCtx);
+  const kidsMap = useContext(KidsLinkCtx);
+  // Rival pelo nome da inscrição; se não houver, pelo nome canónico da ficha
+  // kids2 (a inscrição diz "Daniel Alejandro Rodríguez Stepanischev", a ficha
+  // "Daniel Rodriguez Stepanischev" — o mesmo caminho que a seta ↗ usa).
+  const rivalDe = (nome: string) => {
+    const k = normNameAuto(nome);
+    return arMap.get(k) ?? (kidsMap.get(k) ? arMap.get(normNameAuto(kidsMap.get(k)!.n)) : undefined);
+  };
   // Torneios USKids do Manuel (crachá "NT" na linha dele). Tem 2 contas e várias
   // grafias do nome → juntar todas as entradas dele, sem contar duas vezes.
   const nTornManuel = useMemo(() => {
@@ -274,7 +289,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     <div style={{ borderTop:"1px solid var(--border-light)", paddingTop:6, display:"flex", flexDirection:"column", gap:2 }}>
                       {e.jogadores.map((j, i) => {
                         const isM = isManuel(j.nome);
-                        const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
+                        const arEntry = !isM ? rivalDe(j.nome) : undefined;
                         const nTorn = isM ? nTornManuel
                           : arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
                         const daysSinceReg = diasDesdeInscricao(j);

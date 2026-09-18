@@ -13,6 +13,8 @@ import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebar
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabResultados from "../ui/TabResultados";
 import TabCampoDetalhe, { KidsLink } from "../ui/TabCampoDetalhe";
+import { KidsLinkCtx } from "../ui/KidsLink";
+import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import TorneioRivaisDetalhe from "../ui/TorneioRivaisDetalhe";
 import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
 import {
@@ -726,6 +728,8 @@ export default function USKidsFieldPage() {
   const nRivais = torneiosComManuel.length || null;
 
   // useMemo ANTES dos early returns — obrigatório pelas Rules of Hooks
+  // Roster canónico para a seta ↗ (aliases e nomes do meio) — ver KidsLink.
+  const { kidsMap } = useKidsLinkMap();
   const arMapCtxValue = useMemo(() => {
     const m = new Map<string, AutoRivalPlayer>();
     // Homónimos (ex.: Noah Birk Andersen USKids × UA Worlds antes de fundidos):
@@ -1075,6 +1079,7 @@ export default function USKidsFieldPage() {
 
   return (
     <ArMapCtx.Provider value={arMapCtxValue}>
+    <KidsLinkCtx.Provider value={kidsMap}>
     <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
@@ -1234,6 +1239,7 @@ export default function USKidsFieldPage() {
     {/* ← fecha tourn-layout */}
     </div>
     </DataSourcesProvider>
+    </KidsLinkCtx.Provider>
     </ArMapCtx.Provider>
   );
 }
