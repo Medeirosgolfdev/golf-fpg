@@ -1,14 +1,14 @@
 {
-  "lastUpdated": "2026-09-14T06:04:27.665Z",
+  "lastUpdated": "2026-09-18T22:04:49.180Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-09-14",
+  "today": "2026-09-18",
   "summary": {
-    "total": 1769,
-    "complete": 810,
-    "in_progress": 1,
+    "total": 1770,
+    "complete": 811,
+    "in_progress": 0,
     "future": 7,
     "stale": 10,
-    "excluded": 941,
+    "excluded": 942,
     "missing_admissions": 0,
     "missing_classif": 0,
     "missing_scorecards": 0,
@@ -57,6 +57,28 @@
       "full_scorecards_ratio": 0,
       "has_manuel": false,
       "status": "future"
+    },
+    {
+      "ccode": "988",
+      "tcode": "90800",
+      "name": "Final Drive Tour",
+      "date": "2026-11-07",
+      "rounds": 1,
+      "has_admissions": true,
+      "admissions_count": 67,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "has_manuel": true,
+      "status": "excluded",
+      "excluded_reason": "tcode placeholder (torneio só-draw) — sem classificação na FPG"
     },
     {
       "ccode": "000",
@@ -356,7 +378,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 0.875,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "001",
