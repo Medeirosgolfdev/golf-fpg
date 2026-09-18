@@ -208,6 +208,7 @@ const MANUEL_MIDS = new Set(['630106', '605933']);
 const DELAY_MS   = 200;
 // 150 ms deu HTTP 429 a 2026-09-18 com ~5.000 históricos seguidos.
 const DELAY_HIST = 400;
+const DELAY_ORDEM = 1200; // nomesPelaOrdem: páginas de flight_players de todas as flights
 
 // ── Recusa da USKids (HTTP 429) → PARAR, gravar o que já veio, sair ──
 // Regra do projecto: um pedido de cada vez e parar à primeira recusa. Antes
@@ -334,7 +335,8 @@ async function nomesPelaOrdem(page, meta, memberIds, conhecido) {
         `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0&pt=undefined&jbgr=${Date.now()}&c=1`,
         'POST'
       );
-      await sleep(DELAY_MS);
+      // Um torneio tem ~15-20 flights: a 200 ms a USKids recusou (429).
+      await sleep(DELAY_ORDEM);
       const e = Object.values(d?.flight_players || {});
       for (const pl of e) {
         bloco.push({ first: pl.first || '', last: pl.last || '', country: pl.country || '', place: pl.place || '' });

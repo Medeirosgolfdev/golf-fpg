@@ -53,6 +53,20 @@ function anoDaData(s) {
 const normNome = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
+// A mesma criança aparece com versões do nome diferentes (cadastro vs
+// inscrição): "Martín Andrés Troccoli Vivas" ≡ "Martín Troccoli-Vivas". Conta
+// como o mesmo se o primeiro nome e o último apelido coincidem (ou um nome
+// contém todas as palavras do outro).
+function mesmoNome(a, b) {
+  const A = normNome(a).split(' ').filter(Boolean);
+  const B = normNome(b).split(' ').filter(Boolean);
+  if (!A.length || !B.length) return false;
+  if (A.join(' ') === B.join(' ')) return true;
+  const [curto, longo] = A.length <= B.length ? [A, B] : [B, A];
+  if (curto.every(t => longo.includes(t))) return true;
+  return A[0] === B[0] && A[A.length - 1] === B[B.length - 1];
+}
+
 /** Ordenação usada pela USKids dentro de cada flight (apelido, depois nome). */
 function compararPorApelido(a, b) {
   return (a.last || '').localeCompare(b.last || '') || (a.first || '').localeCompare(b.first || '');
@@ -82,7 +96,7 @@ function associarPorOrdem(memberIds, blocos, conhecido = () => null) {
     const antes = conhecido(mid);
     if (antes && antes !== '?') {
       // Uma única discordância prova que a ordem não é a esperada → nada.
-      if (normNome(antes) !== normNome(name)) {
+      if (!mesmoNome(antes, name)) {
         return { mapa: {}, confirmados, motivo: `discordância em m=${mid}: "${antes}" vs "${name}"` };
       }
       confirmados++;
@@ -94,5 +108,5 @@ function associarPorOrdem(memberIds, blocos, conhecido = () => null) {
 
 module.exports = {
   ANO_NASC_MANUEL, idadesDoEscalao, escalaoDaGeracao, anoDaData,
-  compararPorApelido, associarPorOrdem,
+  compararPorApelido, associarPorOrdem, mesmoNome,
 };

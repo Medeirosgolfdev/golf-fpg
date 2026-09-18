@@ -79,6 +79,13 @@ describe('associarPorOrdem', () => {
     expect(r.confirmados).toBe(2);
   });
 
+  it('versões do mesmo nome contam como iguais (caso real do Spanish Open 2026)', () => {
+    const b = [[{ first: 'Martín', last: 'Troccoli-Vivas' }]];
+    const r = associarPorOrdem([7], b, () => 'Martín Andrés  Troccoli Vivas');
+    expect(r.motivo).toBeNull();
+    expect(r.confirmados).toBe(1);
+  });
+
   it('uma discordância anula tudo', () => {
     const r = associarPorOrdem(mids, [b10, b12], (m) => (m === '202' ? 'Tom Wells' : null));
     expect(r.mapa).toEqual({});
