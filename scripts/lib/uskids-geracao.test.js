@@ -3,7 +3,7 @@
  */
 import { describe, it, expect } from "vitest";
 import {
-  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem, podeEntrar,
+  idadesDoEscalao, escalaoDaGeracao, anoDaData, associarPorOrdem, escaloesPelaOrdem, podeEntrar, mesmoNome,
 } from "./uskids-geracao.js";
 
 describe('idadesDoEscalao', () => {
@@ -86,6 +86,14 @@ describe('associarPorOrdem', () => {
     const r = associarPorOrdem([7], b, () => 'Martín Andrés  Troccoli Vivas');
     expect(r.motivo).toBeNull();
     expect(r.confirmados).toBe(1);
+  });
+
+  it('gralhas no primeiro nome passam, nomes diferentes não (casos reais, World 2019)', () => {
+    expect(mesmoNome('Alexander Dunmall', 'Alexaner Dunmall')).toBe(true);
+    expect(mesmoNome('Samuel Perrodin', 'Sameul Perrodin')).toBe(true);
+    expect(mesmoNome('Benji Botham', 'Harley Botham')).toBe(false);
+    expect(mesmoNome('Thomas Wu', 'Siyang Wu')).toBe(false);
+    expect(mesmoNome('Ivan Smith', 'Ivy Smith')).toBe(false); // curtos: sem tolerância
   });
 
   it('uma discordância anula tudo', () => {

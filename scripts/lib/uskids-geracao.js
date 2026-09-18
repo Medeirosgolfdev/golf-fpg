@@ -89,7 +89,25 @@ function mesmoNome(a, b) {
   if (A.join(' ') === B.join(' ')) return true;
   const [curto, longo] = A.length <= B.length ? [A, B] : [B, A];
   if (curto.every(t => longo.includes(t))) return true;
-  return A[0] === B[0] && A[A.length - 1] === B[B.length - 1];
+  if (A[A.length - 1] !== B[B.length - 1]) return false;
+  // Mesmo apelido e o primeiro nome igual ou com uma gralha da USKids
+  // ("Alexaner"/"Alexander", "Sameul"/"Samuel"): até 2 letras de diferença em
+  // nomes de 5+ letras. "Benji"/"Harley" ou "Thomas"/"Siyang" continuam diferentes.
+  return A[0] === B[0] || (Math.min(A[0].length, B[0].length) >= 5 && distancia(A[0], B[0]) <= 2);
+}
+
+/** Distância de edição (Levenshtein), com trocas de letras vizinhas a contar 1. */
+function distancia(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const c = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[a.length][b.length];
 }
 
 /** Ordenação usada pela USKids dentro de cada flight (apelido, depois nome). */

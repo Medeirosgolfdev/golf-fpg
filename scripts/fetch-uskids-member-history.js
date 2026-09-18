@@ -1345,4 +1345,10 @@ async function main() {
   console.log('══════════════════════════════════════');
 }
 
-main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+// Reutilizado por scripts/fill-uskids-names-by-order.js (mesmo arquivo, mesma
+// escrita). Só corre o main quando é chamado directamente.
+module.exports = { loadCache, writeSharded, initPage, pageJSON, API, FLIGHT_CACHE, ehRecusa };
+
+if (require.main === module) {
+  main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+}
