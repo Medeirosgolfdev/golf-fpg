@@ -520,6 +520,17 @@ flight-cache; quem ficou "?" numa corrida anterior ganha o nome depois.
 ⚠ `p_place` 0 = inscrição futura, não 1.º lugar — o filtro do top-5 contava-o
 como top-5 até 2026-09-18.
 
+**Recusa (HTTP 429) e já vistos (2026-09-18).** O script continuava a pedir
+depois de um 429 e voltava a pedir, em cada corrida, o histórico dos ~5.000
+jogadores que já tinham ficado de fora — foi o que levou ao bloqueio. Agora:
+pára à primeira recusa em qualquer fase e grava o que já veio; quem foi pedido
+e ficou de fora vai para `data-archive/uskids-member-skipped.json` (memberID →
+tcodes em que foi visto) e só volta a ser pedido se aparecer num torneio novo.
+**Mudar `SKIPPED_VERSAO` sempre que as regras de entrada mudarem** (senão os
+já vistos nunca são reavaliados). Pausas: `DELAY_HIST` 400 ms, `DELAY_ORDEM`
+1,2 s. Nomes pela ordem aceitam versões do mesmo nome (`mesmoNome`: primeiro
+nome + último apelido, ou um contém o outro).
+
 ---
 
 ## API Signupanytime
