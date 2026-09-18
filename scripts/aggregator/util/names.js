@@ -22,7 +22,9 @@ function normName(s) {
     .replace(/\([^)]*\)/g, " ")
     .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .toLowerCase()
-    .replace(/[.,\-\/'`]/g, " ")
+    // Todos os apóstrofos contam igual: o USKids escreve O'Rear e o Doral
+    // O’Rear (tipográfico) — até 18/09 davam duas fichas do mesmo miúdo.
+    .replace(/[.,\-\/'`’‘´ʼ]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
   // remover sufixos honoríficos do FIM (Jr, Sr, II, III...)

@@ -33,9 +33,27 @@ function load(opts) {
     else if (isBetterName(p.name, existing.name)) byLic.set(lic, p);
   }
 
+  // 1b) Licenças temporárias de estrangeiros ("E…"). A FFG dá uma licença E
+  // NOVA ao mesmo estrangeiro em cada torneio, muitas sem país. Até 18/09 cada
+  // uma era uma ficha "FR" à parte (Amaury Ternet, belga: 6 fichas francesas
+  // de 1 torneio além da USKids). Agora as licenças E com o mesmo nome são UMA
+  // ficha — a canónica é a que tem país — e nunca se assume FR para uma E.
+  const licEPorNome = new Map();
+  for (const [lic, p] of byLic) {
+    if (!/^E\d/.test(lic)) continue;
+    const k = normName(p.name || "");
+    const atual = licEPorNome.get(k);
+    if (!atual || (!countryToIso2(byLic.get(atual).country) && countryToIso2(p.country))) licEPorNome.set(k, lic);
+  }
+  const licCanonica = (lic, nome) => {
+    if (!lic || !/^E\d/.test(lic)) return lic;
+    return licEPorNome.get(normName((byLic.get(lic) || {}).name || nome || "")) || lic;
+  };
+
   const players = [];
   for (const [lic, p] of byLic) {
-    const country = countryToIso2(p.country) || "FR";
+    if (licCanonica(lic, p.name) !== lic) continue; // outra licença E do mesmo estrangeiro
+    const country = countryToIso2(p.country) || (/^E\d/.test(lic) ? null : "FR");
     const cleanName = displayName(p.name || "");
     if (!cleanName) continue;
     players.push({
@@ -60,7 +78,7 @@ function load(opts) {
   const byTrn = new Map(); // trnId → tournament normalizado (flights acumulados)
   const playersByLic = new Map(players.map((p) => [p.sourceKey, p]));
   for (const t of slim.tournaments || []) {
-    const tt = normalizeFfgTournament(t);
+    const tt = normalizeFfgTournament(t, licCanonica);
     if (tt) {
       const prev = byTrn.get(tt.sourceKey);
       if (!prev) {
@@ -83,14 +101,16 @@ function load(opts) {
       const label = t.name || ("FFG " + tid);
       for (const pl of t.players) {
         if (!pl || typeof pl.hcp !== "number") continue;
-        const lic = pl.license ? String(pl.license) : null;
+        const lic = pl.license ? licCanonica(String(pl.license), pl.name) : null;
         if (!lic) continue;
         let player = playersByLic.get(lic);
         if (!player) {
           const cleanName = displayName(pl.name || "");
           if (!cleanName) continue;
           player = {
-            sourceKey: lic, name: cleanName, country: "FR",
+            // Licença E sem par no roster: é estrangeiro, o país é desconhecido
+            // (nunca "FR" — era isso que impedia a fusão com a ficha USKids).
+            sourceKey: lic, name: cleanName, country: /^E\d/.test(lic) ? null : "FR",
             club: pl.club || null, hcp: pl.hcp, extra: {},
           };
           players.push(player);
@@ -124,7 +144,7 @@ function isBetterName(candidate, current) {
   return candRatio < curRatio;
 }
 
-function normalizeFfgTournament(t) {
+function normalizeFfgTournament(t, licCanonica = (lic) => lic) {
   if (!t || !t.trnId) return null;
   const series = ffgSeries(t);
   const flightLabel = t.serieLabel || t.ageGroup || "Geral";
@@ -136,7 +156,7 @@ function normalizeFfgTournament(t) {
 
   const flightPlayers = Array.isArray(t.players) ? t.players : [];
   const results = flightPlayers.map((pl) => ({
-    playerSourceKey: pl.license ? String(pl.license) : null,
+    playerSourceKey: pl.license ? licCanonica(String(pl.license), pl.name) : null,
     playerName: displayName(pl.name || ""),
     pos: typeof pl.pos === "number" ? pl.pos : null,
     status: "OK",
