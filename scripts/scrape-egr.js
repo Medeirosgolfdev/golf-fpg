@@ -33,6 +33,7 @@
  *   node scripts/scrape-egr.js --skip-existing       # não re-fetch eventos já guardados
  *   node scripts/scrape-egr.js --players --country Portugal
  *   node scripts/scrape-egr.js --players --id 45760,1414
+ *   node scripts/scrape-egr.js --players --ids-file ids.txt --skip-existing   # listas grandes
  *   node scripts/scrape-egr.js --concurrency 6
  *
  * Exit codes: 0 = ok (há output), 2 = sem novidades, 1 = erro.
@@ -72,6 +73,9 @@ function parseArgs(argv) {
     else if (a === "--concurrency") o.concurrency = Math.max(1, parseInt(argv[++i], 10) || 5);
     else if (a === "--country") o.country = argv[++i];
     else if (a === "--id" || a === "--ids") o.ids.push(...String(argv[++i]).split(",").map((s) => s.trim()).filter(Boolean));
+    // Listas grandes não cabem na linha de comando do Windows (~32 mil caracteres):
+    // ficheiro com ids separados por vírgula, espaço ou linha.
+    else if (a === "--ids-file") o.ids.push(...fs.readFileSync(argv[++i], "utf8").split(/[\s,]+/).map((s) => s.trim()).filter(Boolean));
     else if (a === "--limit") o.limit = parseInt(argv[++i], 10);
     else if (a === "--help" || a === "-h") { o.help = true; }
   }
