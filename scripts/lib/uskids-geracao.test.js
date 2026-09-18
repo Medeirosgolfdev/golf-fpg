@@ -94,6 +94,25 @@ describe('associarPorOrdem', () => {
     expect(mesmoNome('Benji Botham', 'Harley Botham')).toBe(false);
     expect(mesmoNome('Thomas Wu', 'Siyang Wu')).toBe(false);
     expect(mesmoNome('Ivan Smith', 'Ivy Smith')).toBe(false); // curtos: sem tolerância
+    expect(mesmoNome('Samuel Rogers', 'Sam Rogers')).toBe(true); // diminutivo
+    expect(mesmoNome('Carson Ayuso', 'Cruz Ayuso')).toBe(false);
+  });
+
+  it('irmãos com o mesmo apelido: liga pelo nome, não pela posição (World 2019)', () => {
+    const b = [[{ first: 'Clarkson', last: 'Johnson' }, { first: 'Jaxon', last: 'Johnson' }, { first: 'Zed', last: 'Young' }]];
+    // A USKids pôs o Jaxon primeiro; nós ordenamos Clarkson primeiro.
+    const r = associarPorOrdem([1, 2, 3], b, (m) => (m === '1' ? 'Jaxon Johnson' : null));
+    expect(r.motivo).toBeNull();
+    expect(r.mapa['1'].name).toBe('Jaxon Johnson');
+    expect(r.mapa['2'].name).toBe('Clarkson Johnson'); // sobrou um nome e um miúdo
+    expect(r.mapa['3'].name).toBe('Zed Young');
+  });
+
+  it('irmãos sem nenhum conhecido: ficam sem nome (não se adivinha)', () => {
+    const b = [[{ first: 'Clarkson', last: 'Johnson' }, { first: 'Jaxon', last: 'Johnson' }]];
+    const r = associarPorOrdem([1, 2], b);
+    expect(r.motivo).toBeNull();
+    expect(r.mapa).toEqual({});
   });
 
   it('uma discordância anula tudo', () => {

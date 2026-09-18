@@ -93,7 +93,11 @@ function mesmoNome(a, b) {
   // Mesmo apelido e o primeiro nome igual ou com uma gralha da USKids
   // ("Alexaner"/"Alexander", "Sameul"/"Samuel"): até 2 letras de diferença em
   // nomes de 5+ letras. "Benji"/"Harley" ou "Thomas"/"Siyang" continuam diferentes.
-  return A[0] === B[0] || (Math.min(A[0].length, B[0].length) >= 5 && distancia(A[0], B[0]) <= 2);
+  if (A[0] === B[0]) return true;
+  // Diminutivo: um primeiro nome é o início do outro ("Sam"/"Samuel", 3+ letras).
+  const [c, l] = A[0].length <= B[0].length ? [A[0], B[0]] : [B[0], A[0]];
+  if (c.length >= 3 && l.startsWith(c)) return true;
+  return Math.min(A[0].length, B[0].length) >= 5 && distancia(A[0], B[0]) <= 2;
 }
 
 /** Distância de edição (Levenshtein), com trocas de letras vizinhas a contar 1. */
@@ -125,26 +129,40 @@ function compararPorApelido(a, b) {
  *          mapa vazio + motivo quando a associação não é segura.
  */
 function associarPorOrdem(memberIds, blocos, conhecido = () => null) {
-  const ordenados = blocos.flatMap(b => [...b].sort(compararPorApelido));
+  const ordenados = blocos.flatMap((b, bi) => [...b].sort(compararPorApelido).map(pl => ({ ...pl, bi })));
   if (!memberIds.length) return { mapa: {}, confirmados: 0, motivo: 'sem memberIDs' };
   if (ordenados.length !== memberIds.length) {
     return { mapa: {}, confirmados: 0, motivo: `contagens diferentes (${memberIds.length} memberIDs vs ${ordenados.length} jogadores)` };
   }
+  const nomeDe = (pl) => `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
+  const infoDe = (pl) => ({ name: nomeDe(pl), country: (pl.country || '').toUpperCase(), place: pl.place || '' });
   const mapa = {};
   let confirmados = 0;
-  for (let i = 0; i < memberIds.length; i++) {
-    const pl = ordenados[i];
-    const name = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
-    const mid = String(memberIds[i]);
-    const antes = conhecido(mid);
-    if (antes && antes !== '?') {
-      // Uma única discordância prova que a ordem não é a esperada → nada.
-      if (!mesmoNome(antes, name)) {
-        return { mapa: {}, confirmados, motivo: `discordância em m=${mid}: "${antes}" vs "${name}"` };
-      }
+  // Grupos com o mesmo apelido no mesmo bloco: a USKids NÃO os ordena pelo
+  // primeiro nome (World 2019: "Jaxon"/"Clarkson Johnson" trocados). Dentro do
+  // grupo a posição não vale — liga-se pelos nomes conhecidos; sobrando um só
+  // nome e um só miúdo, liga-se; sobrando mais, fica sem nome (não se adivinha).
+  for (let a = 0; a < ordenados.length; ) {
+    let b = a + 1;
+    const ap = normNome(ordenados[a].last);
+    while (b < ordenados.length && ordenados[b].bi === ordenados[a].bi && normNome(ordenados[b].last) === ap) b++;
+    const livres = ordenados.slice(a, b);
+    const semNome = [];
+    for (let k = a; k < b; k++) {
+      const mid = String(memberIds[k]);
+      const antes = conhecido(mid);
+      if (!antes || antes === '?') { semNome.push(mid); continue; }
+      const idx = livres.findIndex(pl => mesmoNome(antes, nomeDe(pl)));
+      // Um nome conhecido sem par no grupo prova que a ordem não é a esperada.
+      if (idx < 0) return { mapa: {}, confirmados, motivo: `discordância em m=${mid}: "${antes}" vs "${livres.map(nomeDe).join('" / "')}"` };
+      mapa[mid] = infoDe(livres[idx]);
+      livres.splice(idx, 1);
       confirmados++;
     }
-    mapa[mid] = { name, country: (pl.country || '').toUpperCase(), place: pl.place || '' };
+    if (semNome.length === livres.length && (semNome.length === 1 || b - a === 1)) {
+      semNome.forEach((mid, k) => { mapa[mid] = infoDe(livres[k]); });
+    }
+    a = b;
   }
   return { mapa, confirmados, motivo: null };
 }
