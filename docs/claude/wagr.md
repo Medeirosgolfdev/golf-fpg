@@ -122,3 +122,8 @@ Medido com 2025+2026 do mundo inteiro (**8.084 eventos**), ~38 MB no total:
 duplicada (`shardOf` no scraper, `wagrShardOf` na WAGRPage); se divergirem, o
 detalhe mostra "sem eventos" **em silêncio** → espelho fixado em
 `scripts/wagr-shard-mirror.test.js`.
+
+
+### Eventos antigos (2026-09-19)
+
+Os eventos WAGR continuam a mostrar quem pontuou depois dos 2 anos (Junior Orange Bowl 2023: 35 linhas). Buscados os Junior de 2022-2024 (`--events --type Junior --year 2022 --year 2023 --year 2024 --skip-existing`): 2.918 eventos, ~6 min a 6 em paralelo; via `wagr-enrich.js` deram +8.502 participações a 1.302 juniores, 152 órfãs resolvidas, 0 junções perdidas. Gravação aditiva (`scripts/lib/merge-aditivo.js`).
