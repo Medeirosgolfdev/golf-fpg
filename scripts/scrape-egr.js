@@ -362,7 +362,10 @@ async function scrapeEvents(opts) {
   for (const year of opts.years) {
     // ⚠ O filtro de ano só funciona via /events/search (o /events ignora-o).
     const url = `${BASE}/events/search?utf8=%E2%9C%93&date%5Byear%5D=${year}&date%5Bmonth%5D=&country=&federation=&gender=&per_page=100000`;
-    const html = await httpGet(url);
+    // Um ano com erro (o calendário de 2018 dá HTTP 500) não pode deitar abaixo os outros.
+    let html;
+    try { html = await httpGet(url); }
+    catch (err) { console.warn(`  ⚠ Archive ${year}: ${err.message} — salto este ano`); continue; }
     const list = parseEventsArchive(html, year);
     console.log(`• Archive ${year}: ${list.length} eventos`);
     archive.push(...list);
