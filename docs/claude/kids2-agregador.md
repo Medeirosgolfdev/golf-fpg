@@ -197,3 +197,7 @@ Correcções na fonte do mesmo dia: UA Worlds com país da `location`; FFG com l
 
 `node scripts/scrape-egr.js --players --skip-existing --concurrency 3 --id <ids>` → `public/data/egr/players/egr_{id}.json`. A ficha traz os eventos da **janela do ranking (~2 anos)**, não a carreira toda (Felix Dietz: 8 na ficha, 13 nos nossos eventos). O `sources/egr.js` junta-os: evento que não scrapámos entra como **torneio parcial** (`extra.parcial`, só os jogadores com ficha; posição + voltas). Chave do jogador = nome+país, igual às classificações (confirmado).
 1.ª corrida: U12+U14 do ranking (gerações 2012-2015; o `birthYear` só existe em ~10%) — 2.985 fichas, ~40 min; 1.098 fichas existentes ganharam 2.389 participações, 181 órfãs deixaram de o ser, +441 miúdos que não tínhamos, 591 torneios parciais; 0 junções perdidas. 2.ª corrida: todos os 9.696 jogadores dos nossos eventos EGR (`--ids-file ids.txt` — a linha de comando do Windows não aguenta ~7 mil ids): 10.282 fichas, 4.547 fichas ganharam 18.150 participações, 606 órfãs resolvidas, 0 junções perdidas; ~6 min a 3 em paralelo.
+
+## EGR — eventos antigos (2026-09-19)
+
+As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só os pontos caducam). Calendário por ano: `/events/search?date[year]=Y` (o de 2018 dá HTTP 500 — o `scrape-egr.js` agora salta o ano e continua). `--events --year 2019 … --year 2024 --skip-existing`: +1.864 eventos juvenis (934 → 2.798); 37.859 fichas; 5.759 fichas existentes ganharam 27.857 participações; 892 órfãs resolvidas; 0 junções perdidas.
