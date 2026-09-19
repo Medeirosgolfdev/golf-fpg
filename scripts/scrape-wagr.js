@@ -56,6 +56,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+const { lerAnterior, juntarPorChave, chaveJogador } = require("./lib/merge-aditivo");
 
 const API = "https://worldgolfranking2021api.wagr.com/api/wagr";
 const SITE = "https://www.wagr.com";
@@ -347,6 +348,10 @@ async function scrapeEvents(opts) {
       ev.winner = e.winner;
       ev.url = url;
       ev.scrapedAt = new Date().toISOString();
+      // Aditivo: no WAGR os pontos caducam ao fim de 2 anos e o jogador SOME da
+      // classificação do evento — quem já tínhamos fica.
+      const prev = lerAnterior(outFile);
+      if (prev) ev.players = juntarPorChave(prev.players, ev.players, chaveJogador);
       writeJsonAtomic(outFile, ev, { spaces: 0 });
       scraped++;
       return { players: ev.players.length };

@@ -4,6 +4,7 @@ name: Actualizar EGR
 # secrets (HTML server-side + APIs públicas). Pipeline:
 #   1. scrape-egr.js --ranking            → egr-ranking.json (M+F)
 #   2. scrape-egr.js --events --skip-existing → egr/events/egr_{id}.json (novos)
+#   2b. scrape-egr.js --players --ids-file → egr/players/egr_{id}.json (novas; todas na 1.ª segunda do mês)
 #   3. scrape-egr-sources.js              → egr-dob-roster.json (ano nasc./HCP via
 #                                           GolfBox, público) + carimba birthYear
 #   4. build-egr-events-list.js           → egr/egr-events-list.json (índice sidebar)
@@ -28,7 +29,7 @@ permissions:
 jobs:
   update-egr:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     concurrency:
       group: update-egr
       cancel-in-progress: false
@@ -54,8 +55,17 @@ jobs:
           SKIP="--skip-existing"
           if [ "${{ github.event.inputs.full_rebuild }}" = "true" ]; then SKIP=""; fi
 
+          # Anos automáticos (o actual e o anterior) — estavam fixos em 2025/2026.
+          Y=$(date -u +%Y); P=$((Y - 1))
           echo "▸ ranking";        node scripts/scrape-egr.js --ranking
-          echo "▸ eventos";        node scripts/scrape-egr.js --events --year 2025 --year 2026 $SKIP
+          echo "▸ eventos";        node scripts/scrape-egr.js --events --year $P --year $Y $SKIP
+          # Fichas de jogador (a ficha só mostra ~2 anos; a gravação é ADITIVA —
+          # scripts/lib/merge-aditivo.js — por isso o que já temos nunca se perde).
+          # Todas as semanas: fichas novas. 1.ª segunda do mês: refrescar todas,
+          # para nenhum torneio chegar aos 2 anos sem ter sido guardado.
+          node -e 'const fs=require("fs");fs.writeFileSync("/tmp/egr-ids.txt",Object.keys(JSON.parse(fs.readFileSync("public/data/egr/egr-player-events.json")).players).join(","))'
+          if [ "$(date -u +%d)" -le 7 ]; then PSKIP=""; else PSKIP="--skip-existing"; fi
+          echo "▸ fichas de jogador ${PSKIP:-(todas)}"; node scripts/scrape-egr.js --players --ids-file /tmp/egr-ids.txt --concurrency 3 $PSKIP
           echo "▸ roster GolfBox"; node scripts/scrape-egr-sources.js
           echo "▸ índice eventos"; node scripts/build-egr-events-list.js
           echo "▸ rank slim";      node scripts/build-egr-rank-slim.js

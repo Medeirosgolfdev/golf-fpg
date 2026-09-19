@@ -44,6 +44,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+const { lerAnterior, juntarPorChave, chaveJogador, chaveEvento } = require("./lib/merge-aditivo");
 
 const BASE = "https://www.europeangolfrankings.com";
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) golf-fpg-egr-scraper";
@@ -389,6 +390,9 @@ async function scrapeEvents(opts) {
     parsed.archiveAgeGroup = ev.ageGroup;
     parsed.scrapedAt = new Date().toISOString();
     parsed.url = `${BASE}/events/${ev.id}`;
+    // Aditivo: jogadores que já não aparecem na página (o EGR apaga ao fim de ~2 anos) ficam.
+    const prev = lerAnterior(outFile);
+    if (prev) parsed.players = juntarPorChave(prev.players, parsed.players, chaveJogador);
     writeJsonAtomic(outFile, parsed);
     scraped++;
     return { id: ev.id, players: parsed.players.length };
@@ -532,6 +536,10 @@ async function scrapePlayers(opts, rankingPlayers) {
     const prof = parsePlayerPage(html, id);
     prof.scrapedAt = new Date().toISOString();
     prof.url = `${BASE}/players/${id}`;
+    // Aditivo: a ficha só lista a janela do ranking (~2 anos) — os eventos que
+    // já tínhamos e saíram da janela ficam.
+    const prev = lerAnterior(outFile);
+    if (prev) prof.events = juntarPorChave(prev.events, prof.events, chaveEvento);
     writeJsonAtomic(outFile, prof);
     return { id, events: prof.events.length };
   });

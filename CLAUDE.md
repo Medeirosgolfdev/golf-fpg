@@ -198,6 +198,7 @@ GolfBox) · `/england` · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/w
   `lisbonCivilDay`/`lisbonCivilDayStr` (`lib/helpers.js`), nunca com `toISOString()`.
 - **Voltas internacionais:** enriquecer sempre com `scripts/enrich-intl-round.js`,
   nunca à mão (o `melhorias.json` da raiz é CRLF e editado por splice).
+- **EGR e WAGR são ADITIVOS, nunca subtractivos** (Mariana, 19/09): as duas fontes apagam o que tem mais de ~2 anos (pontos caducam, a ficha EGR só mostra a janela do ranking). Ao regravar eventos ou fichas usar `scripts/lib/merge-aditivo.js` (o que vem actualiza, o que só existia no ficheiro fica, marcado `_mantido`). As fichas EGR refrescam-se todas uma vez por mês (`update-egr.yml`) para nada chegar aos 2 anos sem estar guardado.
 - **Escrever JSON com `writeJsonAtomic`** (`scripts/lib/atomic-write.js`) e usar a
   lib partilhada em scripts novos.
 - **Jogadores seguidos:** o `players.json` é cortado pelo `prune-player-scope.js`
