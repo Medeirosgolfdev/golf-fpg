@@ -52,6 +52,10 @@ on:
       - 'public/data/egr/egr-events-list.json'
       - 'public/data/egr/egr-dob-roster.json'
       - 'public/data/egr/events/**'
+      - 'public/data/egr/players/**'
+      # WAGR só enriquece (util/wagr-enrich.js) — sai à quarta.
+      - 'public/data/wagr/wagr-events-list.json'
+      - 'public/data/wagr/events/**'
       - 'public/data/juniors-overrides.json'
       - 'scripts/aggregator/**'
       - '.github/workflows/build-juniors.yml'

@@ -180,6 +180,19 @@ async function main() {
   // 3b. Enrichment — calcula campos derivados a partir do estado pós-matcher.
   //     Hoje: `extra.nationsCount` por torneio (precisa de junior.country/nationality).
   //     Mantém-se separado do matcher porque depende de cruzar juniors↔tournaments.
+  // WAGR: só ACRESCENTA participações a juniores que já existem (nunca cria
+  // fichas) — confirmação por torneio comum com as mesmas pancadas. Ver
+  // util/wagr-enrich.js e docs/claude/wagr.md.
+  {
+    const { enrichWithWagr } = require("./util/wagr-enrich");
+    const r = enrichWithWagr(matchResult);
+    if (r.disponivel) {
+      step("WAGR (só enriquecer)");
+      sub(`${r.ligadas} participações em ${r.torneios} torneios para ${r.juniores} juniores · ${r.confirmados} confirmados por torneio comum · ${r.porRegras} por regras · ${r.vetados} vetados · ${r.homonimos} homónimos`);
+      console.log("");
+    }
+  }
+
   step("Enrichment");
   try {
     const beforeNations = matchResult.tournaments.filter((t) => t.extra && typeof t.extra.nationsCount === "number").length;

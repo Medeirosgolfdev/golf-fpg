@@ -46,6 +46,14 @@ o scraper não guarda slugs.
    (`eventType`: Junior / All Ages / Collegiate / MidAm / Senior / Pro / Other).
    👉 Por isso o WAGR **não alimenta o agregador kids2** — o matching seria ainda
    mais fraco que o do EGR (nome + país, sem clube).
+   ✅ **Desde 2026-09-18 ENRIQUECE sem criar fichas** — `scripts/aggregator/util/wagr-enrich.js`,
+   passo depois do identity-matcher: por jogador WAGR (id), só eventos Junior;
+   **confirmação por torneio comum** (±1 dia, mesmas pancadas — uma fonte com menos
+   voltas conta, 73-73 ⊂ 73-73-72) permite ligar mesmo com homónimos/país diferente;
+   sem confirmação: candidato único, país/sexo, apelido comum exige país igual, nome
+   de um só jogador WAGR; veto só se as discordâncias pesarem mais que as confirmações.
+   Nunca duplica o torneio que o junior já tem nesse dia. 1.ª corrida: 6.065
+   participações, 1.095 juniores, 822 confirmados, 258 órfãs resolvidas, 0 junções perdidas.
 3. **O Manuel NÃO está no WAGR** (pesquisa "Medeiros" = 0 — joga USKids/FPG, não
    provas com pontos WAGR). É base de **rivais e de contexto**. A diferença face
    ao EGR: o WAGR **inclui as provas da FPG** (Nacionais, Internacional Amateur)
