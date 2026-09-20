@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-09-19T18:29:57.971Z",
+  "gerado_em": "2026-09-20T18:35:47.800Z",
   "manuel_focus": true,
   "janela_dias_antes": 3,
   "torneios": [
@@ -26777,6 +26777,76 @@
         }
       ],
       "ultima_atualizacao": "2026-09-19T18:29:57.548Z"
+    },
+    {
+      "t": 23089,
+      "name": "Australian Challenge 2026",
+      "date_inicio": "9/21/2026",
+      "date_fim": "9/22/2026",
+      "campo": "Heritage Golf and Country Club - St John",
+      "rondas_total": 2,
+      "escaloes": [
+        {
+          "age_group": 2105,
+          "nome": "Boys 12",
+          "flight_id": 299626,
+          "is_manuel": true,
+          "adjacent": false,
+          "rondas": [
+            {
+              "ronda": 1,
+              "grupos": [
+                {
+                  "group_number": 1,
+                  "tee_time": "11:38",
+                  "start_hole": 10,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "David  Pham",
+                      "pais": "AU",
+                      "cidade": "HAWTHORN, VIC"
+                    },
+                    {
+                      "nome": "Ian Chunyu",
+                      "pais": "AU",
+                      "cidade": "Melbourne, VIC"
+                    }
+                  ]
+                },
+                {
+                  "group_number": 2,
+                  "tee_time": "11:46",
+                  "start_hole": 10,
+                  "course": "",
+                  "jogadores": [
+                    {
+                      "nome": "Chace Mcphee",
+                      "pais": "AU",
+                      "cidade": "Melbourne , VIC"
+                    },
+                    {
+                      "nome": "Mikhail Manhire",
+                      "pais": "NZ",
+                      "cidade": "Auckland, AUK"
+                    },
+                    {
+                      "nome": "Nate Jenkins",
+                      "pais": "AU",
+                      "cidade": "Essendon, VIC"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ronda": 2,
+              "grupos": []
+            }
+          ]
+        }
+      ],
+      "ultima_atualizacao": "2026-09-20T18:35:47.374Z"
     }
   ]
 }
