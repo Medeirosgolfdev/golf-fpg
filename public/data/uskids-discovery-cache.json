@@ -1,17 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22612,
-      "name": "Eagle Ridge Golf (Tour Championship)",
-      "date_inicio": "8/20/2026",
-      "date_fim": "8/20/2026",
-      "rondas": 1,
-      "campo": "Eagle Ridge Golf ",
-      "fee_18": "61.00",
-      "tour": "Raleigh Tour",
-      "type": 6
-    },
-    {
       "t": 22522,
       "name": "Teen Series at Pearl at Kalauao (HI)",
       "date_inicio": "8/22/2026",
@@ -1132,6 +1121,17 @@
       "fee_18": "65.00",
       "tour": "Central Willamette Valley Tour",
       "type": 6
+    },
+    {
+      "t": 23746,
+      "name": "Teen Series at Liberty Lake (WA)",
+      "date_inicio": "10/24/2026",
+      "date_fim": "10/25/2026",
+      "rondas": 2,
+      "campo": "Liberty Lake Golf Course",
+      "fee_18": "255.00",
+      "tour": "Teen Series Tour",
+      "type": 2
     },
     {
       "t": 23099,
@@ -2377,19 +2377,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-19T11:55:15.258Z",
-  "varredura_max_t": 23745,
+  "gerado_em": "2026-09-20T12:09:58.898Z",
+  "varredura_max_t": 23746,
   "varredura": {
     "fim": "fronteira",
     "pedidos": 42,
-    "novos": 0,
+    "novos": 1,
     "buracos_revistos": 1,
-    "catalogo": 1440,
+    "catalogo": 1441,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23745,
-  "fronteira_avancou_em": "2026-09-19",
-  "dias_sem_descoberta": 1,
+  "fronteira_max_t_visto": 23746,
+  "fronteira_avancou_em": "2026-09-20",
+  "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-09-18"
+  "ultima_descoberta": "2026-09-20"
 }
