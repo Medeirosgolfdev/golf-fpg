@@ -12595,9 +12595,166 @@
               "holesCount": 18,
               "complete18": true
             }
+          },
+          {
+            "teeId": "away-el-saler-valencia-1",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 72.7,
+                "slopeRating": 133
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 36.4,
+                "slopeRating": 133
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 36.4,
+                "slopeRating": 133
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 5,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 3,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 5,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 2,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 4,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 5,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 5,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 4,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 3,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": 1,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
           }
         ],
         "_players": {
+          "6437": [
+            {
+              "date": "2025-05-31",
+              "gross": 83,
+              "toPar": 11,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2025 - Tiger Trip - Valencia D2",
+              "sd": 8.8
+            },
+            {
+              "date": "2025-05-29",
+              "gross": 89,
+              "toPar": 17,
+              "tee": "AMARELAS",
+              "event": "Convivio Tiger Trip 2025 - Valencia",
+              "sd": 13.8
+            }
+          ],
           "38233": [
             {
               "date": "2025-10-26",
@@ -23874,6 +24031,171 @@
       }
     },
     {
+      "courseKey": "away-la-galiana",
+      "master": {
+        "courseId": "away-la-galiana",
+        "name": "La Galiana",
+        "country": "Espanha",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-la-galiana-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 72.3,
+                "slopeRating": 143
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 36.1,
+                "slopeRating": 143
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 36.1,
+                "slopeRating": 143
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 3,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 5,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 3,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 5,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 4,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 4,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 5,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 4,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 4,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 3,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 5,
+                "si": 2,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2025-05-30",
+              "gross": 83,
+              "toPar": 11,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2025 - Tiger Trip - Valencia",
+              "sd": 8.5
+            }
+          ]
+        }
+      }
+    },
+    {
       "courseKey": "away-la-monacilla",
       "master": {
         "courseId": "away-la-monacilla",
@@ -24399,6 +24721,170 @@
               "tee": "AZUIS",
               "event": "Copa de S.M. La Reina 2026",
               "sd": -1.1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "courseKey": "away-la-valmuza-golf",
+      "master": {
+        "courseId": "away-la-valmuza-golf",
+        "name": "La Valmuza Golf",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-la-valmuza-golf-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 69.8,
+                "slopeRating": 124
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 34.9,
+                "slopeRating": 124
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 34.9,
+                "slopeRating": 124
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 5,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 3,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 5,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 3,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 5,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 3,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 5,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 5,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 2,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 3,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 4,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 3,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 5,
+                "si": 12,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2026-05-30",
+              "gross": 75,
+              "toPar": 3,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2026 - Tiger Trip - Salamanca D2",
+              "sd": 4.7
             }
           ]
         }
@@ -30081,6 +30567,145 @@
           {
             "teeId": "away-oitavos-dunes-natural-links-0",
             "sex": "U",
+            "teeName": "VERMELHAS",
+            "ratings": {
+              "holes18": {
+                "par": 71,
+                "courseRating": 69.1,
+                "slopeRating": 115
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 34.5,
+                "slopeRating": 115
+              },
+              "holes9Back": {
+                "par": 35,
+                "courseRating": 34.5,
+                "slopeRating": 115
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 5,
+                "distance": 276
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 15,
+                "distance": 234
+              },
+              {
+                "hole": 3,
+                "par": 3,
+                "si": 11,
+                "distance": 109
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": 13,
+                "distance": 234
+              },
+              {
+                "hole": 5,
+                "par": 4,
+                "si": 1,
+                "distance": 296
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 9,
+                "distance": 301
+              },
+              {
+                "hole": 7,
+                "par": 5,
+                "si": 7,
+                "distance": 361
+              },
+              {
+                "hole": 8,
+                "par": 5,
+                "si": 3,
+                "distance": 397
+              },
+              {
+                "hole": 9,
+                "par": 3,
+                "si": 17,
+                "distance": 96
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": 4,
+                "distance": 290
+              },
+              {
+                "hole": 11,
+                "par": 4,
+                "si": 14,
+                "distance": 194
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": 10,
+                "distance": 133
+              },
+              {
+                "hole": 13,
+                "par": 5,
+                "si": 6,
+                "distance": 343
+              },
+              {
+                "hole": 14,
+                "par": 3,
+                "si": 12,
+                "distance": 112
+              },
+              {
+                "hole": 15,
+                "par": 3,
+                "si": 18,
+                "distance": 73
+              },
+              {
+                "hole": 16,
+                "par": 5,
+                "si": 16,
+                "distance": 395
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 8,
+                "distance": 336
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": 2,
+                "distance": 308
+              }
+            ],
+            "distances": {
+              "total": 4488,
+              "front9": 2304,
+              "back9": 2184,
+              "holesCount": 18,
+              "complete18": true
+            }
+          },
+          {
+            "teeId": "away-oitavos-dunes-natural-links-1",
+            "sex": "U",
             "teeName": "AMARELAS",
             "ratings": {
               "holes18": {
@@ -30218,7 +30843,7 @@
             }
           },
           {
-            "teeId": "away-oitavos-dunes-natural-links-1",
+            "teeId": "away-oitavos-dunes-natural-links-2",
             "sex": "U",
             "teeName": "BRANCAS",
             "ratings": {
@@ -30357,7 +30982,7 @@
             }
           },
           {
-            "teeId": "away-oitavos-dunes-natural-links-2",
+            "teeId": "away-oitavos-dunes-natural-links-3",
             "sex": "U",
             "teeName": "AMARELAS",
             "ratings": {
@@ -30497,6 +31122,26 @@
           }
         ],
         "_players": {
+          "2217": [
+            {
+              "date": "2025-01-27",
+              "gross": 94,
+              "toPar": 23,
+              "tee": "VERMELHAS",
+              "event": "Circuito Semana ACP Golfe/BPI (1) Dia 2",
+              "sd": 21.5
+            }
+          ],
+          "6437": [
+            {
+              "date": "2023-07-19",
+              "gross": 82,
+              "toPar": 11,
+              "tee": "AMARELAS",
+              "event": "Oitavos com JOC",
+              "sd": 11
+            }
+          ],
           "47552": [
             {
               "date": "2024-12-12",
@@ -39773,7 +40418,7 @@
               "toPar": 8,
               "tee": "Boys 9",
               "event": "USKids Catalunya Local Tour D1",
-              "sd": 8
+              "sd": null
             }
           ]
         }
@@ -40128,6 +40773,179 @@
               "tee": "PRETAS",
               "event": "Copa R.C.G. Sotogrande - E.N.C. 2024",
               "sd": -2.6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "courseKey": "away-real-golf-de-pedrena",
+      "master": {
+        "courseId": "away-real-golf-de-pedrena",
+        "name": "Real Golf de Pedreña",
+        "country": "Espanha",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-real-golf-de-pedrena-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 70,
+                "courseRating": 69.5,
+                "slopeRating": 130
+              },
+              "holes9Front": {
+                "par": 35,
+                "courseRating": 34.8,
+                "slopeRating": 130
+              },
+              "holes9Back": {
+                "par": 35,
+                "courseRating": 34.8,
+                "slopeRating": 130
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 3,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 4,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 3,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 4,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 5,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 3,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 5,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 2,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 3,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 5,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2024-06-01",
+              "gross": 81,
+              "toPar": 11,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2024 - Tiger Trip - Santander D2",
+              "sd": 10
+            },
+            {
+              "date": "2024-05-30",
+              "gross": 84,
+              "toPar": 14,
+              "tee": "AMARELAS",
+              "event": "Convivio Tiger Trip 2024 - Santander",
+              "sd": 12.6
             }
           ]
         }
@@ -43603,6 +44421,48 @@
           }
         ],
         "_players": {
+          "6437": [
+            {
+              "date": "2018-04-28",
+              "gross": 87,
+              "toPar": 15,
+              "tee": "BRANCAS",
+              "event": "85º Campeonato Nacional Absoluto - Audi Dia 3",
+              "sd": 10.9
+            },
+            {
+              "date": "2018-04-27",
+              "gross": 88,
+              "toPar": 16,
+              "tee": "BRANCAS",
+              "event": "85º Campeonato Nacional Absoluto - Audi Dia 2",
+              "sd": 11.7
+            },
+            {
+              "date": "2018-04-26",
+              "gross": 81,
+              "toPar": 9,
+              "tee": "BRANCAS",
+              "event": "85º Campeonato Nacional Absoluto - Audi",
+              "sd": 5.7
+            },
+            {
+              "date": "2018-04-08",
+              "gross": 87,
+              "toPar": 15,
+              "tee": "AMARELAS",
+              "event": "Campeonato Nacional de Mid-Amateur – BPI - H Dia 2",
+              "sd": 14.4
+            },
+            {
+              "date": "2018-04-07",
+              "gross": 78,
+              "toPar": 6,
+              "tee": "AMARELAS",
+              "event": "Campeonato Nacional de Mid-Amateur – BPI - H",
+              "sd": 6.2
+            }
+          ],
           "28845": [
             {
               "date": "2019-10-20",
@@ -48311,6 +49171,171 @@
       }
     },
     {
+      "courseKey": "away-santa-marina-golf",
+      "master": {
+        "courseId": "away-santa-marina-golf",
+        "name": "Santa Marina Golf",
+        "country": "Espanha",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-santa-marina-golf-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 71,
+                "courseRating": 70.5,
+                "slopeRating": 129
+              },
+              "holes9Front": {
+                "par": 35,
+                "courseRating": 35.3,
+                "slopeRating": 129
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 35.3,
+                "slopeRating": 129
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 5,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 4,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 3,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 3,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 4,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 3,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 5,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 5,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 5,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 3,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 5,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 2,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 3,
+                "si": 16,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2024-05-31",
+              "gross": 75,
+              "toPar": 4,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2024 - Tiger Trip - Santander",
+              "sd": 3.9
+            }
+          ]
+        }
+      }
+    },
+    {
       "courseKey": "away-santo-estevao",
       "master": {
         "courseId": "away-santo-estevao",
@@ -49800,7 +50825,7 @@
               "toPar": 5,
               "tee": "Boys 11",
               "event": "USKIDS Rome Classic 2025 D2",
-              "sd": 5
+              "sd": null
             },
             {
               "date": "2025-10-18",
@@ -49808,7 +50833,7 @@
               "toPar": 17,
               "tee": "Boys 11",
               "event": "USKIDS Rome Classic 2025 D1",
-              "sd": 17
+              "sd": null
             }
           ]
         }
@@ -54695,6 +55720,170 @@
       }
     },
     {
+      "courseKey": "away-villamayor-golf-country-club",
+      "master": {
+        "courseId": "away-villamayor-golf-country-club",
+        "name": "Villamayor Golf & Country Club",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-villamayor-golf-country-club-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 70,
+                "courseRating": 68.8,
+                "slopeRating": 128
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 34.4,
+                "slopeRating": 128
+              },
+              "holes9Back": {
+                "par": 34,
+                "courseRating": 34.4,
+                "slopeRating": 128
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 5,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 3,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 4,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 5,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 3,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 4,
+                "si": 2,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 3,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 5,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": 4,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2026-05-28",
+              "gross": 76,
+              "toPar": 6,
+              "tee": "AMARELAS",
+              "event": "Convivio Tiger Trip 2026 - Salamanca",
+              "sd": 6.4
+            }
+          ]
+        }
+      }
+    },
+    {
       "courseKey": "away-golf-club-welten",
       "master": {
         "courseId": "away-golf-club-welten",
@@ -55095,6 +56284,170 @@
               "tee": "PRETAS",
               "event": "McGregor Trophy 2024",
               "sd": 7.2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "courseKey": "away-zarapicos-golf-country-club",
+      "master": {
+        "courseId": "away-zarapicos-golf-country-club",
+        "name": "Zarapicos Golf & Country Club",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-zarapicos-golf-country-club-0",
+            "sex": "U",
+            "teeName": "AMARELAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 69.1,
+                "slopeRating": 136
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 34.5,
+                "slopeRating": 136
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 34.5,
+                "slopeRating": 136
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 5,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 3,
+                "par": 4,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 4,
+                "par": 3,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 5,
+                "par": 5,
+                "si": 15,
+                "distance": 0
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 9,
+                "distance": 0
+              },
+              {
+                "hole": 7,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 8,
+                "par": 3,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": 10,
+                "distance": 0
+              },
+              {
+                "hole": 11,
+                "par": 5,
+                "si": 6,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 4,
+                "si": 8,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 3,
+                "si": 4,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 14,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 4,
+                "si": 12,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 4,
+                "si": 16,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 3,
+                "si": 18,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 5,
+                "si": 2,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "6437": [
+            {
+              "date": "2026-05-29",
+              "gross": 83,
+              "toPar": 11,
+              "tee": "AMARELAS",
+              "event": "V OM CTB 2026 - Tiger Trip - Salamanca",
+              "sd": 11.5
             }
           ]
         }

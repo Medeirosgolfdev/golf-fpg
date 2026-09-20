@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-14T04:55:06.288Z",
+  "generated": "2026-09-20T04:56:42.155Z",
   "year": "2026",
   "source": "build-classificacoes.js",
   "anchors": [
@@ -34,107 +34,11 @@
       "playerCount": 24,
       "players": [
         {
-          "scoreId": "32218",
-          "pos": 1,
-          "name": "Luis António Silva",
-          "grossTotal": 70,
-          "toPar": -2,
-          "parTotal": 72,
-          "nholes": 18,
-          "hcpExact": -3.6,
-          "teeName": "BRANCAS",
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 70,
-              "parTotal": 72,
-              "teeName": "BRANCAS"
-            }
-          ],
-          "fedCode": "42845",
-          "escalao": "Sub 18",
-          "sex": "M",
-          "club": "Oporto",
-          "_dob": "2008-05-31"
-        },
-        {
-          "scoreId": "32219",
-          "pos": 2,
-          "name": "Guilherme Grabner Moreira",
-          "grossTotal": 70,
-          "toPar": -2,
-          "parTotal": 72,
-          "nholes": 18,
-          "hcpExact": -2.2,
-          "teeName": "BRANCAS",
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 70,
-              "parTotal": 72,
-              "teeName": "BRANCAS"
-            }
-          ],
-          "fedCode": "42205",
-          "escalao": "Sub 18",
-          "sex": "M",
-          "club": "Oporto",
-          "_dob": "2009-04-11"
-        },
-        {
-          "scoreId": "32226",
-          "pos": 3,
-          "name": "Pedro Costa Alemão",
-          "grossTotal": 72,
-          "toPar": 0,
-          "parTotal": 72,
-          "nholes": 18,
-          "hcpExact": 1.5,
-          "teeName": "BRANCAS",
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 72,
-              "parTotal": 72,
-              "teeName": "BRANCAS"
-            }
-          ],
-          "fedCode": "46706",
-          "escalao": "Sub 16",
-          "sex": "M",
-          "club": "Estoril",
-          "_dob": "2011-01-15"
-        },
-        {
-          "scoreId": "32221",
-          "pos": 4,
-          "name": "João Setúbal",
-          "grossTotal": 75,
-          "toPar": 3,
-          "parTotal": 72,
-          "nholes": 18,
-          "hcpExact": -2.1,
-          "teeName": "BRANCAS",
-          "roundScores": [
-            {
-              "round": 1,
-              "gross": 75,
-              "parTotal": 72,
-              "teeName": "BRANCAS"
-            }
-          ],
-          "fedCode": "43732",
-          "escalao": "Sub 16",
-          "sex": "M",
-          "club": "Quinta do Peru",
-          "_dob": "2011-09-13"
-        },
-        {
           "scoreId": "32220",
-          "pos": 6,
+          "pos": 1,
           "name": "Gabriel Sardo",
-          "grossTotal": 76,
-          "toPar": 4,
+          "grossTotal": 218,
+          "toPar": 2,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": -2.2,
@@ -143,6 +47,18 @@
             {
               "round": 1,
               "gross": 76,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 70,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
@@ -154,11 +70,119 @@
           "_dob": "2008-06-08"
         },
         {
+          "scoreId": "32219",
+          "pos": 2,
+          "name": "Guilherme Grabner Moreira",
+          "grossTotal": 218,
+          "toPar": 2,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 70,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 76,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42205",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2009-04-11"
+        },
+        {
+          "scoreId": "32221",
+          "pos": 3,
+          "name": "João Setúbal",
+          "grossTotal": 220,
+          "toPar": 4,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -2.1,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 71,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "43732",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Quinta do Peru",
+          "_dob": "2011-09-13"
+        },
+        {
+          "scoreId": "32218",
+          "pos": 4,
+          "name": "Luis António Silva",
+          "grossTotal": 220,
+          "toPar": 4,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -3.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 70,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 75,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42845",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2008-05-31"
+        },
+        {
           "scoreId": "32223",
-          "pos": 7,
+          "pos": 5,
           "name": "Francisco Reis",
-          "grossTotal": 77,
-          "toPar": 5,
+          "grossTotal": 222,
+          "toPar": 6,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": -0.3,
@@ -167,6 +191,18 @@
             {
               "round": 1,
               "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 74,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 71,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
@@ -178,35 +214,83 @@
           "_dob": "2010-06-16"
         },
         {
-          "scoreId": "32227",
-          "pos": 8,
-          "name": "António Mendes",
-          "grossTotal": 77,
-          "toPar": 5,
+          "scoreId": "32226",
+          "pos": 7,
+          "name": "Pedro Costa Alemão",
+          "grossTotal": 227,
+          "toPar": 11,
           "parTotal": 72,
           "nholes": 18,
-          "hcpExact": 1.6,
+          "hcpExact": 1.5,
           "teeName": "BRANCAS",
           "roundScores": [
             {
               "round": 1,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
               "gross": 77,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
           ],
-          "fedCode": "36148",
-          "escalao": "Sub 21",
+          "fedCode": "46706",
+          "escalao": "Sub 16",
           "sex": "M",
-          "club": "Quinta do Peru",
-          "_dob": "2006-05-23"
+          "club": "Estoril",
+          "_dob": "2011-01-15"
+        },
+        {
+          "scoreId": "32222",
+          "pos": 8,
+          "name": "Santiago Dias",
+          "grossTotal": 229,
+          "toPar": 13,
+          "parTotal": 72,
+          "nholes": 18,
+          "hcpExact": -1.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 79,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 72,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42908",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2012-05-29"
         },
         {
           "scoreId": "32232",
           "pos": 9,
           "name": "Angelina Gao",
-          "grossTotal": 78,
-          "toPar": 6,
+          "grossTotal": 233,
+          "toPar": 17,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": 4.1,
@@ -214,6 +298,18 @@
           "roundScores": [
             {
               "round": 1,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "AZUIS"
+            },
+            {
+              "round": 2,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "AZUIS"
+            },
+            {
+              "round": 3,
               "gross": 78,
               "parTotal": 72,
               "teeName": "AZUIS"
@@ -226,35 +322,47 @@
           "_dob": "2011-06-09"
         },
         {
-          "scoreId": "32222",
-          "pos": 11,
-          "name": "Santiago Dias",
-          "grossTotal": 79,
-          "toPar": 7,
+          "scoreId": "32227",
+          "pos": 10,
+          "name": "António Mendes",
+          "grossTotal": 233,
+          "toPar": 17,
           "parTotal": 72,
           "nholes": 18,
-          "hcpExact": -1.2,
+          "hcpExact": 1.6,
           "teeName": "BRANCAS",
           "roundScores": [
             {
               "round": 1,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 77,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
               "gross": 79,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
           ],
-          "fedCode": "42908",
-          "escalao": "Sub 14",
+          "fedCode": "36148",
+          "escalao": "Sub 21",
           "sex": "M",
-          "club": "Oporto",
-          "_dob": "2012-05-29"
+          "club": "Quinta do Peru",
+          "_dob": "2006-05-23"
         },
         {
           "scoreId": "32231",
-          "pos": 12,
+          "pos": 14,
           "name": "William Gao",
-          "grossTotal": 80,
-          "toPar": 8,
+          "grossTotal": 241,
+          "toPar": 25,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": 3.8,
@@ -262,6 +370,18 @@
           "roundScores": [
             {
               "round": 1,
+              "gross": 80,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 81,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
               "gross": 80,
               "parTotal": 72,
               "teeName": "BRANCAS"
@@ -275,10 +395,10 @@
         },
         {
           "scoreId": "32235",
-          "pos": 17,
+          "pos": 15,
           "name": "Tiago Abrantes",
-          "grossTotal": 82,
-          "toPar": 10,
+          "grossTotal": 244,
+          "toPar": 28,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": 4.8,
@@ -287,6 +407,18 @@
             {
               "round": 1,
               "gross": 82,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 85,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 77,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
@@ -299,10 +431,10 @@
         },
         {
           "scoreId": "32234",
-          "pos": 18,
+          "pos": 17,
           "name": "Duarte Soares Franco",
-          "grossTotal": 82,
-          "toPar": 10,
+          "grossTotal": 250,
+          "toPar": 34,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": 4.3,
@@ -310,6 +442,18 @@
           "roundScores": [
             {
               "round": 1,
+              "gross": 82,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 86,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
               "gross": 82,
               "parTotal": 72,
               "teeName": "BRANCAS"
@@ -323,10 +467,10 @@
         },
         {
           "scoreId": "32236",
-          "pos": 24,
+          "pos": 18,
           "name": "Diogo Sequeira",
-          "grossTotal": 91,
-          "toPar": 19,
+          "grossTotal": 254,
+          "toPar": 38,
           "parTotal": 72,
           "nholes": 18,
           "hcpExact": 4.9,
@@ -335,6 +479,18 @@
             {
               "round": 1,
               "gross": 91,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 2,
+              "gross": 78,
+              "parTotal": 72,
+              "teeName": "BRANCAS"
+            },
+            {
+              "round": 3,
+              "gross": 85,
               "parTotal": 72,
               "teeName": "BRANCAS"
             }
@@ -350,7 +506,7 @@
         "42908",
         "43732"
       ],
-      "_sourceFile": "pull-torneios006.json"
+      "_sourceFile": "pull-torneios002.json"
     },
     {
       "name": "PJA Torre 2026",
