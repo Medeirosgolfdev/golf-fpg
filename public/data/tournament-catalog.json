@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-19T16:23:29.199Z",
+  "generatedAt": "2026-09-21T11:04:47.269Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -548,6 +548,8 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601405350",
+        "ffgolf-2601409009",
         "ffgolf-2501365354",
         "ffgolf-2501380055",
         "ffgolf-2601459964",
@@ -859,8 +861,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-09-05",
-      "editionsCount": 309
+      "lastDate": "2026-09-19",
+      "editionsCount": 311
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -11177,6 +11179,27 @@
       "editionsCount": 11
     },
     {
+      "id": "uskids-azata-golf",
+      "label": "Azata Golf",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22767",
+        "uskids-22768",
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21087",
+        "uskids-21088",
+        "uskids-21091",
+        "uskids-21092",
+        "uskids-21093",
+        "uskids-22769"
+      ],
+      "firstDate": "2026-01-24",
+      "lastDate": "2026-09-20",
+      "editionsCount": 11
+    },
+    {
       "id": "uskids-club-campestre-de-celaya",
       "label": "Club Campestre de Celaya",
       "sourceId": "uskids",
@@ -12599,26 +12622,6 @@
       ],
       "firstDate": "2023-06-13",
       "lastDate": "2024-12-16",
-      "editionsCount": 10
-    },
-    {
-      "id": "uskids-azata-golf",
-      "label": "Azata Golf",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-22767",
-        "uskids-22768",
-        "uskids-21929",
-        "uskids-21930",
-        "uskids-21931",
-        "uskids-21087",
-        "uskids-21088",
-        "uskids-21091",
-        "uskids-21092",
-        "uskids-21093"
-      ],
-      "firstDate": "2026-01-24",
-      "lastDate": "2026-09-13",
       "editionsCount": 10
     },
     {
@@ -42954,6 +42957,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-australian-challenge",
+      "label": "Australian Challenge",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-17351",
+        "uskids-19886",
+        "uskids-23089"
+      ],
+      "firstDate": "2024-12-09",
+      "lastDate": "2026-09-21",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-cleveland-local-parent-child",
       "label": "Cleveland Local Parent/Child",
       "sourceId": "uskids",
@@ -56976,18 +56992,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-australian-challenge",
-      "label": "Australian Challenge",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-17351",
-        "uskids-19886"
-      ],
-      "firstDate": "2024-12-09",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-brighton-dale-links-white-birch-course",
       "label": "Brighton Dale Links - White Birch Course",
       "sourceId": "uskids",
@@ -58356,6 +58360,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-open-9-golf-eichenried",
+      "label": "OPEN.9 Golf Eichenried",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22140",
+        "uskids-23602"
+      ],
+      "firstDate": "2026-05-17",
+      "lastDate": "2026-09-20",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-club-campestre-victoria-tour-championship",
       "label": "Club Campestre Victoria (Tour Championship)",
       "sourceId": "uskids",
@@ -59205,6 +59221,18 @@
       ],
       "firstDate": "2025-08-05",
       "lastDate": "2026-08-10",
+      "editionsCount": 2
+    },
+    {
+      "id": "gjgl-gjg-french-junior-classics",
+      "label": "GJG French Junior Classics",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-gjg-french-junior-classics-2025-france",
+        "gjgl-gjg-french-junior-classics-2026-france"
+      ],
+      "firstDate": "2025-10-02",
+      "lastDate": "2026-09-17",
       "editionsCount": 2
     },
     {
@@ -91284,17 +91312,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-open-9-golf-eichenried",
-      "label": "OPEN.9 Golf Eichenried",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-22140"
-      ],
-      "firstDate": "2026-05-17",
-      "lastDate": "2026-05-17",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-golf-valley-munchen-tour-championship",
       "label": "Golf Valley München (Tour Championship)",
       "sourceId": "uskids",
@@ -92901,6 +92918,17 @@
       "editionsCount": 1
     },
     {
+      "id": "ffgolf-gpn-national-u12-saint-jean-de-monts",
+      "label": "GPN National U12 - Saint Jean de Monts",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601476325"
+      ],
+      "firstDate": "2026-09-12",
+      "lastDate": "2026-09-12",
+      "editionsCount": 1
+    },
+    {
       "id": "ffgolf-tour-7-air-moana-polynesian-junior-tour-u12-u18",
       "label": "TOUR 7 AIR MOANA POLYNESIAN JUNIOR TOUR U12-U18",
       "sourceId": "ffgolf",
@@ -94383,17 +94411,6 @@
       ],
       "firstDate": "2025-08-29",
       "lastDate": "2025-08-29",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-gjg-french-junior-classics",
-      "label": "GJG French Junior Classics",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-gjg-french-junior-classics-2025-france"
-      ],
-      "firstDate": "2025-10-02",
-      "lastDate": "2025-10-02",
       "editionsCount": 1
     },
     {
