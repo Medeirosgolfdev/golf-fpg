@@ -684,7 +684,9 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: 
   reidtrophy: { file: (y) => `/data/reidtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "reidtrophy", series: "Reid Trophy" }) },
   // The Amundi Evian Juniors Cup (Evian Resort, França) — Sub-14 M+F, seleções
   // nacionais; o tee sheet traz o HCP de cada jogador (coluna HCP do draw).
-  evianjc: { file: (y) => `/data/evianjc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "evianjc", series: "Evian JC" }) },
+  // showRatings: todas as edições têm HCP + CR/slope por escalão (cartão de tee
+  // do GG; em 2022-24 os cartões WHS dos portugueses) → colunas HCP e SD.
+  evianjc: { file: (y) => `/data/evianjc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "evianjc", series: "Evian JC", showRatings: true }) },
   icopa: { file: (y) => `/data/icopa_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "icopa", series: "Bobby Díaz" }) },
   interzonas: { file: (y) => `/data/interzonas_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "interzonas", series: "Interzonas" }) },
   avtrophy: { file: (y) => `/data/avtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }) },

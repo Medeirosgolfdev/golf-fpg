@@ -447,6 +447,36 @@ canónico de juniores, só com candidato ÚNICO. Ficaram 40 sem país em 2023 e 
 nomes por reparar (Krist Na Kvetonova, Ol Via Grachov). Guarda anti-encolhimento
 (< 80% → `--force`). Testes: `import-ffgolf-jobfile.test.js`.
 O `GG_SOURCES` tem `preField: true` (aparece na lista logo com o draw).
+
+**Campo e tees (2026-09-22)** — o mesmo campo e o mesmo par 71 buraco a buraco
+em todas as edições; os rapazes jogam o repère 2 (**White**), as raparigas o
+repère 4 (**Blue**) — confirmado no portal FFG (`num_rep`) de 2022-2024 e no
+cartão de tee do GG em 2025:
+
+| Tee | Metros (1-18) | Total | CR / Slope |
+|---|---|---|---|
+| White (rapazes) | 365 148 325 351 172 346 479 177 462 · 369 322 361 395 178 475 138 305 437 | 5.805 | 72.4/140 (2022-24, FPG) · 72.0/140 (2025, GG) |
+| Blue (raparigas) | 346 128 295 325 146 312 443 137 410 · 334 288 326 366 145 434 114 267 417 | 5.233 | 74/150 |
+
+Fontes, por ordem de confiança: (1) **cartão de tee do GG** — `fetchTeeCards`
+lê o link "expand tee details" (`/tournaments2/nets/{id}?event_id=…`) do cartão
+do jogador; `applyTeeCards` preenche `meters`/`teeName`/`courseRating`/`slope`
+de cada divisão só se as voltas de 2 jogadores derem o mesmo tee (genérico —
+corre em todas as fontes GG com cartões; divisões multi-campo ficam intactas).
+⚠ O `course_statistics` (lib `gg-course-stats.js`) NÃO serve com vários tees:
+a coluna Meters vem como INTERVALO "346-365" e o parser ficava com o 1.º número;
+(2) **cartões WHS da FPG dos portugueses** (`import-ffgolf-jobfile.js
+--whs-course evian`): metros/SI/CR/slope por escalão, casados pelo nome; só
+com consenso entre cartões; metros a 0 e SI 1..18 seguido não contam.
+Buracos: 2022 Girls sem metros (o único cartão, da Amélia Gabin, veio a 0).
+**SI:** só 2022 tem SI real (1,17,7,3,5,4,11,16,12,6,9,2,18,14,10,13,8,15) —
+NÃO foi propagado: testado contra os 33 SD oficiais FPG de 2023-25, o SI de 2022
+acerta 22 e o 1..18 seguido acerta 23 (os oficiais foram calculados com os
+cartões de SI seguido, logo não distinguem). Sem SI, a `/major` calcula o SD
+sobre o gross cru (sem Net Double Bogey). Desvios dos oficiais por PCC: +2 a
+17/09/2024 e +1 a 21/09/2023 (todos os PT desses dias). `showRatings: true`
+na `evianjc` (colunas HCP e SD). 2026: campo recriado no GG (outro course id)
+→ os metros entram sozinhos no 1.º cron depois da R1.
 ⏳ Depois de 24/09: `disabled: true` no scope.
 
 ### Enriquecimento por DOB (ficha GG `/profiles`) — México

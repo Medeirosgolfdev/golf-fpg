@@ -418,6 +418,62 @@ function splitByTee(out, tees, teeDivisions) {
   return divs.length;
 }
 
+/**
+ * Cartão do TEE de uma volta (metros, par, CR, slope) — o link "expand tee
+ * details" do cartão do jogador (`/tournaments2/nets/{id}?event_id=…`) devolve
+ * um JS com a linha "White Tee / SLOPE®: 140 / Course Rating™: 72.0 / Campo" e
+ * as linhas Meters|Yards e Par. É a ÚNICA fonte de metros por buraco POR TEE:
+ * o course_statistics só dá o intervalo entre tees ("346-365").
+ * @returns [{ teeName, courseRating, slope, meters[18], par[18] }] (uma por volta)
+ */
+async function fetchTeeCards(detailId) {
+  const sc = await ggGet(`${GG}/tournaments2/details/${detailId}?player_stats_for_portal=true`);
+  const links = [...new Set([...sc.matchAll(/href="(\/tournaments2\/nets\/[^"]*)"/g)].map((m) => m[1].replace(/&amp;/g, '&')))];
+  const cards = [];
+  for (const u of links) {
+    const raw = await ggGet(GG + u);
+    const h = raw.split('\\n').join('\n').split("\\'").join("'").split('\\/').join('/');
+    const hdr = (h.match(/([^\n<>]*?)\s*Tee\s*\/\s*SLOPE[^:]*:\s*([\d.]+)\s*\/\s*Course Rating[^:]*:\s*([\d.]+)/i) || []);
+    const cells = (row) => [...row.matchAll(/<td[^>]*>\s*(\d+)\s*<\/td>/g)].map((x) => +x[1]);
+    const yRow = (h.match(/yardage_row[\s\S]*?<\/tr>/) || [''])[0];
+    const pRow = (h.match(/par_row[\s\S]*?<\/tr>/) || [''])[0];
+    const pick18 = (arr) => (arr.length >= 21 ? [...arr.slice(0, 9), ...arr.slice(10, 19)] : null);  // tira Out/In/Total
+    let meters = pick18(cells(yRow));
+    if (meters && /Yards/i.test(yRow) && !/Meters/i.test(yRow)) meters = meters.map((y) => Math.round(y * 0.9144));
+    if (!hdr[1] || !meters) continue;
+    cards.push({ teeName: hdr[1].trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)) });
+    await new Promise((res) => setTimeout(res, 200));
+  }
+  return cards;
+}
+
+/**
+ * Preenche metros/tee/CR/slope de cada divisão a partir dos cartões de tee de
+ * DOIS jogadores (o 1.º e o último com cartão). Só aplica se TODAS as voltas
+ * lidas derem o mesmo tee e os mesmos metros — divisões com vários campos ou
+ * tees (CoC: Faldo + Castle Hume) ficam como estão. Nunca escreve por cima de
+ * um valor já preenchido (curado à mão ou vindo de outra fonte).
+ */
+async function applyTeeCards(out) {
+  for (const dv of out.divisions) {
+    if (dv.meters && dv.courseRating != null) continue;
+    const withCard = dv.players.filter((p) => p.detailId && (p.rounds || []).some((r) => (r.scores || []).length));
+    const sample = [...new Set([withCard[0], withCard[withCard.length - 1]].filter(Boolean))];
+    if (!sample.length) continue;
+    let cards = [];
+    try { for (const p of sample) cards.push(...await fetchTeeCards(p.detailId)); } catch (e) { console.log(`   ⚠ ${dv.division}: cartão de tee indisponível (${e.message})`); continue; }
+    if (!cards.length) continue;
+    const sig = (c) => `${c.teeName}|${c.meters.join(',')}|${c.courseRating}|${c.slope}`;
+    if (new Set(cards.map(sig)).size !== 1) { console.log(`   ⚠ ${dv.division}: tees diferentes entre voltas/jogadores — metros não aplicados`); continue; }
+    const c = cards[0];
+    if (!dv.meters) dv.meters = c.meters;
+    if (!dv.teeName) dv.teeName = c.teeName;
+    if (dv.courseRating == null) dv.courseRating = c.courseRating;
+    if (dv.slope == null) dv.slope = c.slope;
+    console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope}`);
+  }
+}
+
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
 async function discoverDivisions(pageUrl, leagueOverride) {
   const pid = (pageUrl.match(/pages\/(\d+)/) || [])[1];
@@ -652,6 +708,8 @@ async function runOne(opts) {
     const c = cleanTeeName(p.name);
     if (c.name && c.name !== p.name) p.name = c.name;
   }
+  // Metros por buraco + tee + CR/slope por divisão (cartão de tee do jogador).
+  if (!preField && !skipScorecards) await applyTeeCards(out);
   // Nº de etapa/fase (eventos multi-ficheiro por ano, ex: Optimist Phase 1-3):
   // vai para o JobFile como `stop` → id `{source}:{ano}:{stop}` no catálogo e
   // na MajorPage (mesmo mecanismo do EJT golfbox).

@@ -25,7 +25,10 @@
  * USO (a partKey e o trnId vêm da listagem — ver docs/claude/major.md):
  *   node scripts/import-ffgolf-jobfile.js --trn 2401276441 --part-key 572da5febaee10b7e85bab9c6205c587 \
  *     --slug evianjc --year 2024 --name "The Amundi Evian Juniors Cup" --course "Evian Resort Golf Club"
- *   [--type 01 --ligue 01] [--force]
+ *   [--type 01 --ligue 01] [--whs-course evian] [--force]
+ *
+ *   --whs-course <regex>: metros/SI/CR/slope por escalão tirados dos cartões WHS
+ *   (FPG) dos portugueses que jogaram — o portal FFG não os publica.
  *
  * Exit: 0 gravou · 2 nada novo · 1 erro.
  */
@@ -35,6 +38,7 @@ const path = require("path");
 const R = require("./scrape-ffgolf-resultats.js");
 const { countryToIso2, normName } = require("./aggregator/util/names.js");
 const { writeJsonAtomic } = require("./lib/atomic-write.js");
+const { lisbonCivilDayStr } = require("../lib/helpers.js");
 
 const DATA = path.join(__dirname, "..", "public", "data");
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -100,6 +104,73 @@ function uniqueMatch(pool, re) {
 }
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Numeração FFG dos repères → nome do tee (em inglês, como o GolfGenius).
+const REPERE_NAMES = { 1: "Black", 2: "White", 3: "Yellow", 4: "Blue", 5: "Red" };
+
+/** Tokens sem acentos, para casar "TITO MARTINS,Bernardo" com "Bernardo Tito Martins". */
+const tokens = (s) => {
+  const t = String(s || "").trim();
+  const flipped = t.includes(",") ? `${t.slice(t.indexOf(",") + 1)} ${t.slice(0, t.indexOf(","))}` : t;
+  return stripAcc(flipped).replace(/[^a-z\s-]/g, " ").split(/[\s-]+/).filter(Boolean);
+};
+const samePerson = (a, b) => {
+  const [x, y] = [tokens(a), tokens(b)].sort((p, q) => p.length - q.length);
+  return x.length >= 2 && x.every((t) => y.includes(t));
+};
+
+/**
+ * Cartões WHS (FPG) de portugueses que jogaram o torneio → metros por buraco,
+ * SI, CR e slope, por divisão. São os cartões oficiais que o clube registou na
+ * FPG (scorecards.json de cada federado, em output/ e data-archive/). Cada
+ * cartão entra na divisão do jogador com o mesmo nome; um campo só é aplicado
+ * quando todos os cartões da divisão concordam. Metros a zero e SI 1..18
+ * seguido (preenchimento de quem registou) não contam.
+ */
+function whsCardsByDivision(divisions, courseRe, startIso, endIso) {
+  const root = path.join(__dirname, "..");
+  const found = [];
+  for (const dir of ["output", path.join("data-archive", "players")]) {
+    const base = path.join(root, dir);
+    if (!fs.existsSync(base)) continue;
+    for (const fed of fs.readdirSync(base)) {
+      const f = path.join(base, fed, "scorecards.json");
+      if (!fs.existsSync(f)) continue;
+      let j; try { j = JSON.parse(fs.readFileSync(f, "utf8")); } catch { continue; }
+      (function walk(x) {
+        if (Array.isArray(x)) return x.forEach(walk);
+        if (!x || typeof x !== "object") return;
+        if (x.course_description && courseRe.test(x.course_description) && x.played_at) {
+          const ms = +(String(x.played_at).match(/-?\d+/) || [])[0];
+          // /Date(ms)/ da FPG = meia-noite de Lisboa → dia civil de Lisboa (nunca toISOString).
+          const day = lisbonCivilDayStr(ms);
+          if (day >= startIso && day <= endIso) found.push({ fed, x });
+          return;
+        }
+        Object.values(x).forEach(walk);
+      })(j);
+    }
+  }
+  const out = new Map();
+  for (const dv of divisions) {
+    const cards = found.filter(({ x }) => dv.players.some((p) => samePerson(p.name, x.player_name)));
+    if (!cards.length) continue;
+    const h18 = (x, k) => Array.from({ length: 18 }, (_, i) => Number(x[`${k}_${i + 1}`]));
+    const meters = cards.map(({ x }) => h18(x, "meters")).filter((m) => m.every((v) => v > 0));
+    const si = cards.map(({ x }) => h18(x, "stroke_index"))
+      .filter((s) => s.every((v) => v >= 1 && v <= 18) && !s.every((v, i) => v === i + 1));
+    const one = (arr) => { const u = [...new Set(arr.map((a) => JSON.stringify(a)))]; return u.length === 1 ? JSON.parse(u[0]) : null; };
+    out.set(dv.division, {
+      n: cards.length,
+      players: [...new Set(cards.map(({ x }) => x.player_name))],
+      meters: meters.length ? one(meters) : null,
+      si: si.length ? one(si) : null,
+      courseRating: one(cards.map(({ x }) => x.course_rating).filter((v) => v != null)),
+      slope: one(cards.map(({ x }) => x.slope).filter((v) => v != null)),
+    });
+  }
+  return out;
+}
 
 /**
  * Nome "Prénom Nom". Se um dos campos tiver um espaço onde estava uma letra
@@ -184,12 +255,37 @@ async function main() {
       p.pos = `${tied ? "T" : ""}${first + 1}`;
     });
     const rest = players.filter((p) => p.total == null).sort((a, b) => b.rounds.length - a.rounds.length);
+    // Tee da série = o repère de saída, quando é o mesmo para todos.
+    const reps = [...new Set(s.players.map((p) => p.repere).filter(Boolean))];
     return {
       division: divisionLabel(s), tid: `ffg:${trnId}:${s.serieId}`,
-      par, parTotal: s.parTotal, meters: null, si: null, teeName: null,
+      par, parTotal: s.parTotal, meters: null, si: null,
+      teeName: reps.length === 1 ? (REPERE_NAMES[reps[0]] || `Repère ${reps[0]}`) : null,
+      courseRating: null, slope: null,
       players: [...ranked, ...rest],
     };
   });
+
+  // Metros/SI/CR/slope a partir dos cartões WHS dos portugueses (--whs-course <regex>).
+  const whsCourse = arg("--whs-course");
+  if (whsCourse && dates.length) {
+    const cards = whsCardsByDivision(divisions, new RegExp(whsCourse, "i"), dates[0].iso, dates[dates.length - 1].iso);
+    for (const dv of divisions) {
+      const c = cards.get(dv.division);
+      if (!c) { console.log(`   · ${dv.division}: sem cartões WHS de portugueses`); continue; }
+      if (c.meters) dv.meters = c.meters;
+      if (c.si) dv.si = c.si;
+      if (c.courseRating != null) dv.courseRating = c.courseRating;
+      if (c.slope != null) dv.slope = c.slope;
+      // Quem tem cartão WHS da FPG NESTA prova jogou-a como federado português:
+      // se a FFG não publicou a nacionalidade (2023), fica PT.
+      for (const p of dv.players) {
+        if (!p.country && c.players.some((n) => samePerson(p.name, n))) { p.country = "PT"; console.log(`   🇵🇹 ${p.name}: país PT pelo cartão WHS da FPG`); }
+      }
+      console.log(`   📐 ${dv.division} (${dv.teeName || "?"}): ${c.n} cartões WHS de ${c.players.join(", ")} → `
+        + `metros ${c.meters ? c.meters.reduce((a, b) => a + b, 0) + " m" : "—"} · SI ${c.si ? "sim" : "—"} · CR ${c.courseRating ?? "—"} / ${c.slope ?? "—"}`);
+    }
+  }
 
   const out = {
     tournament: name || d.libCpt || d.rawTitle || slug,

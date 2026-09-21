@@ -404,6 +404,8 @@ function parseFFGPlayer(p) {
     club: p.glf_lib_cou || "",
     region: p.rte_lib_cou || null,
     teeTime: p.heu_dep || null,
+    // Repère (tee) de saída: numeração FFG 1 = noir, 2 = blanc, 3 = jaune, 4 = bleu, 5 = rouge.
+    repere: p.num_rep != null && p.num_rep !== "" ? String(p.num_rep) : null,
     statusR1: p.sta_sco_1 || null,
     statusR2: p.sta_sco_2 || null,
     statusR3: p.sta_sco_3 || null,
