@@ -1,8 +1,174 @@
 {
-  "generatedAt": "2026-09-21T06:54:25.527Z",
+  "generatedAt": "2026-09-21T07:49:58.792Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1254,
+  "total": 1258,
   "tournaments": [
+    {
+      "file": "03-04-2601476426.json",
+      "trnId": "2601476426",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Grand Prix Jeunes d'Aix-Marseille",
+      "formule": "Simple",
+      "date": "26/09/2026",
+      "dateIso": "2026-09-26",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 6,
+      "totalPlayers": 120,
+      "course": "Aix Marseille",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 14
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 39
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 49
+        },
+        {
+          "serieId": "119",
+          "label": "MG",
+          "players": 9
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 7
+        },
+        {
+          "serieId": "217",
+          "label": "MF",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "04"
+      ]
+    },
+    {
+      "file": "03-06-2601405350.json",
+      "trnId": "2601405350",
+      "partKey": "957878e8bcc901290b115790945ff6ed",
+      "name": "Grand Prix Jeunes Occitanie 4 Golf d'Albi",
+      "formule": "Simple",
+      "date": "19/09/2026",
+      "dateIso": "2026-09-19",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "06",
+      "seriesCount": 6,
+      "totalPlayers": 102,
+      "course": "Albi",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "MinG",
+          "players": 16
+        },
+        {
+          "serieId": "19",
+          "label": "BenG",
+          "players": 32
+        },
+        {
+          "serieId": "27",
+          "label": "MinF",
+          "players": 2
+        },
+        {
+          "serieId": "113",
+          "label": "U12G",
+          "players": 35
+        },
+        {
+          "serieId": "211",
+          "label": "BenF",
+          "players": 9
+        },
+        {
+          "serieId": "215",
+          "label": "U12F",
+          "players": 8
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "06"
+      ]
+    },
+    {
+      "file": "03-12-2601409009.json",
+      "trnId": "2601409009",
+      "partKey": "decc0ee17f2419134ac9701a6b8303b0",
+      "name": "Grand Prix Jeunes Marcilly",
+      "formule": "Simple",
+      "date": "19/09/2026",
+      "dateIso": "2026-09-19",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "12",
+      "seriesCount": 5,
+      "totalPlayers": 56,
+      "course": "Marcilly",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12 G",
+          "players": 21
+        },
+        {
+          "serieId": "115",
+          "label": "Benj G",
+          "players": 21
+        },
+        {
+          "serieId": "119",
+          "label": "MI G",
+          "players": 3
+        },
+        {
+          "serieId": "211",
+          "label": "U12 F",
+          "players": 8
+        },
+        {
+          "serieId": "213",
+          "label": "Benj F",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "12"
+      ]
+    },
     {
       "file": "01-00-2601473541.json",
       "trnId": "2601473541",
@@ -110,6 +276,44 @@
       "ffgolfSection": null,
       "ligues": [
         "00"
+      ]
+    },
+    {
+      "file": "03-10-2601476325.json",
+      "trnId": "2601476325",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "GPN National U12 - Saint Jean de Monts",
+      "formule": "Simple",
+      "date": "12/09/2026",
+      "dateIso": "2026-09-12",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "10",
+      "seriesCount": 2,
+      "totalPlayers": 72,
+      "course": "Saint Jean de Monts",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 24
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "10",
+        "19"
       ]
     },
     {
