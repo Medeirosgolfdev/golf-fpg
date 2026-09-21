@@ -1,0 +1,795 @@
+{
+  "tourId": 73818,
+  "url": "https://www.nextcaddy.com/tour/73818",
+  "scrapedAt": "2026-09-21T09:55:30.523Z",
+  "meta": {
+    "name": "LIGA FEMENINA ULZAMA  2026 18 de septiembre.",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": "2026-09-18",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Especial",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-18",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cristina Huarte Irujo",
+          "licencia": "4401028917",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2404598
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Frauca Sagastibelza",
+          "licencia": "4401457389",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2404190
+        },
+        {
+          "pos": 3,
+          "name": "Blanca Elorz Guibert",
+          "licencia": "4401775398",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2404776
+        },
+        {
+          "pos": 4,
+          "name": "Maria Lourdes Goyena Huerta",
+          "licencia": "4401367146",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2404675
+        },
+        {
+          "pos": 5,
+          "name": "Ana Mozota Frauca",
+          "licencia": "4401983598",
+          "hcp": 20.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2404389
+        },
+        {
+          "pos": 6,
+          "name": "Maria Luisa Garces Larrea",
+          "licencia": "4401282434",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2404623
+        },
+        {
+          "pos": 7,
+          "name": "Luisa Eugui Martinicorena",
+          "licencia": "4401321441",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2404602
+        },
+        {
+          "pos": 8,
+          "name": "M.paz Frauca Sagastibelza",
+          "licencia": "4401234676",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2404387
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carmen Frauca Sagastibelza",
+      "licencia": "4401457389",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "M.paz Frauca Sagastibelza",
+      "licencia": "4401234676",
+      "hcp": 23.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ana Mozota Frauca",
+      "licencia": "4401983598",
+      "hcp": 20.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Cristina Huarte Irujo",
+      "licencia": "4401028917",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Luisa Eugui Martinicorena",
+      "licencia": "4401321441",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Maria Luisa Garces Larrea",
+      "licencia": "4401282434",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Maria Lourdes Goyena Huerta",
+      "licencia": "4401367146",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Blanca Elorz Guibert",
+      "licencia": "4401775398",
+      "hcp": 29.4,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Carmen Frauca Sagastibelza",
+          "hcp": 20.6,
+          "ins": "2404190",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Ana Mozota Frauca",
+          "hcp": 20.8,
+          "ins": "2404389",
+          "jid": "79071",
+          "nivel": "M"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "M.paz Frauca Sagastibelza",
+          "hcp": 23.5,
+          "ins": "2404387",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Maria Lourdes Goyena Huerta",
+          "hcp": 30.7,
+          "ins": "2404675",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Blanca Elorz Guibert",
+          "hcp": 29.4,
+          "ins": "2404776",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Cristina Huarte Irujo",
+          "hcp": 18.6,
+          "ins": "2404598",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Luisa Eugui Martinicorena",
+          "hcp": 20.1,
+          "ins": "2404602",
+          "jid": "79071",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Maria Luisa Garces Larrea",
+          "hcp": 15.8,
+          "ins": "2404623",
+          "jid": "79071",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79071
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia-Delgado Morente, Marta",
+          "holeNumber": 1,
+          "createdAt": "16/05/26 08:41:45"
+        },
+        {
+          "playerName": "Garcia Gonzalez, Gerardo",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 09:14:09"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 09:24:04"
+        },
+        {
+          "playerName": "Garcia Saenz De Tejada, Fernando Maria",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 09:28:39"
+        },
+        {
+          "playerName": "Bautista Jimenez, Juan",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 09:33:20"
+        },
+        {
+          "playerName": "Ybarra Fontcuberta, Antonio",
+          "holeNumber": 1,
+          "createdAt": "16/05/26 09:33:33"
+        },
+        {
+          "playerName": "Maestro Fernandez-Ruano, Javier",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 09:33:37"
+        },
+        {
+          "playerName": "Rodriguez De Pablo, Francisco Jose",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 09:35:19"
+        },
+        {
+          "playerName": "Valenzuela Etayo, Jorge",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 09:40:33"
+        },
+        {
+          "playerName": "Olle Bertrand, Carlos",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 09:42:58"
+        },
+        {
+          "playerName": "Garcia Saenz De Tejada, Fernando Maria",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 09:58:30"
+        },
+        {
+          "playerName": "Pulido Cano, Jesus",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 10:03:01"
+        },
+        {
+          "playerName": "Vilallonga Solaun, Francisco J Avier",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 10:09:35"
+        },
+        {
+          "playerName": "Valenzuela Etayo, Jorge",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 10:23:59"
+        },
+        {
+          "playerName": "Rodriguez De Pablo, Francisco Jose",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 10:27:38"
+        },
+        {
+          "playerName": "Fdez-Salvador Fdez De Heredia, Jaime",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 10:47:51"
+        },
+        {
+          "playerName": "Ybarra Osborne, Pelayo",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 10:49:59"
+        },
+        {
+          "playerName": "Alvear Garijo, Francisco",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 10:50:03"
+        },
+        {
+          "playerName": "Ybarra Osborne, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 10:58:28"
+        },
+        {
+          "playerName": "Pulido Cano, Jesus",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 11:00:59"
+        },
+        {
+          "playerName": "Montes Muguiro, Cristobal",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 11:03:08"
+        },
+        {
+          "playerName": "Garcia-Delgado Morente, Marta",
+          "holeNumber": 11,
+          "createdAt": "16/05/26 11:07:38"
+        },
+        {
+          "playerName": "Rodriguez De Pablo, Francisco Jose",
+          "holeNumber": 11,
+          "createdAt": "16/05/26 11:08:01"
+        },
+        {
+          "playerName": "Martin Aguirre, Eduardo",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 11:12:12"
+        },
+        {
+          "playerName": "Silva Romero, Benito",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 11:14:45"
+        },
+        {
+          "playerName": "Montes Muguiro, Cristobal",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 11:14:52"
+        },
+        {
+          "playerName": "Hernandez Diaz, Pepote",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 11:15:32"
+        },
+        {
+          "playerName": "Sanchez Blanco, Ignacio",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 11:26:18"
+        },
+        {
+          "playerName": "Herraiz Ramos-Paul, Luis",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 11:27:52"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos",
+          "holeNumber": 13,
+          "createdAt": "16/05/26 11:40:57"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 11:54:26"
+        },
+        {
+          "playerName": "Olle Bertrand, Carlos",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 12:11:13"
+        },
+        {
+          "playerName": "Alvear Garijo, Francisco",
+          "holeNumber": 13,
+          "createdAt": "16/05/26 12:13:30"
+        },
+        {
+          "playerName": "Cañete Corchero, Carlos",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 12:13:32"
+        },
+        {
+          "playerName": "Lopez-Cirera Benjumea, Ignacio",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 12:16:40"
+        },
+        {
+          "playerName": "Maestro Fernandez-Ruano, Javier",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 12:20:20"
+        },
+        {
+          "playerName": "Lopez-Cirera Benjumea, Ignacio",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 12:29:06"
+        },
+        {
+          "playerName": "Fernandez Caballero, Rafael",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 12:33:16"
+        },
+        {
+          "playerName": "Hernandez Gonzalez-Meneses, Juan Jose",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 12:38:17"
+        },
+        {
+          "playerName": "Martin Aguirre, Eduardo",
+          "holeNumber": 12,
+          "createdAt": "16/05/26 12:43:13"
+        },
+        {
+          "playerName": "Sanchez Blanco, Ignacio",
+          "holeNumber": 3,
+          "createdAt": "16/05/26 12:50:05"
+        },
+        {
+          "playerName": "Montes Muguiro, Cristobal",
+          "holeNumber": 12,
+          "createdAt": "16/05/26 12:50:45"
+        },
+        {
+          "playerName": "Morenes Solis, Santiago",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 12:53:17"
+        },
+        {
+          "playerName": "Navarro  Ibañez De Aldecoa, Alvaro",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 12:59:48"
+        },
+        {
+          "playerName": "Morenes Solis, Santiago",
+          "holeNumber": 16,
+          "createdAt": "16/05/26 13:07:54"
+        },
+        {
+          "playerName": "Sanchez Blanco, Ignacio",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 13:09:35"
+        },
+        {
+          "playerName": "Lopez-Cirera Benjumea, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 13:15:01"
+        },
+        {
+          "playerName": "Ybarra Osborne, Pelayo",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 13:19:30"
+        },
+        {
+          "playerName": "Martin Soldevilla, Pablo",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 13:20:32"
+        },
+        {
+          "playerName": "Lopez-Cirera Benjumea, Ignacio",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 13:25:16"
+        },
+        {
+          "playerName": "Genebat Gonzalez, Juan Antonio",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 13:33:43"
+        },
+        {
+          "playerName": "Calderon Jimenez, Francisco",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 14:00:07"
+        },
+        {
+          "playerName": "Quintanilla Perez, Miryam",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 14:00:41"
+        },
+        {
+          "playerName": "Obando Santaella, Joaquin",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 14:07:17"
+        },
+        {
+          "playerName": "Ovando Elio, Rafael",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 14:12:53"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 14:23:11"
+        },
+        {
+          "playerName": "Castrillo Lopez, Jesus",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 14:23:38"
+        },
+        {
+          "playerName": "Fedriani Gonzalez, Eduardo",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 14:26:23"
+        },
+        {
+          "playerName": "Fernandez Cuadrado, Jose Miguel",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 14:33:58"
+        },
+        {
+          "playerName": "Herraiz Garcia De Leyaristy, Eugenio",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 14:36:33"
+        },
+        {
+          "playerName": "Ruiz-Cabello Sanchez-Sarachaga, Fernando",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 14:37:33"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 16,
+          "createdAt": "16/05/26 14:44:53"
+        },
+        {
+          "playerName": "Fernandez Mensaque, Ivan",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 14:47:27"
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 14:48:31"
+        },
+        {
+          "playerName": "Garcia De Pesquera Tassara, Manuel",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 14:50:03"
+        },
+        {
+          "playerName": "Obando Santaella, Joaquin",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 14:50:08"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 15:04:07"
+        },
+        {
+          "playerName": "De La Lama Chaves, Jesus",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 15:06:16"
+        },
+        {
+          "playerName": "Iglesias Bilbao, Jose Antonio",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 15:06:25"
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 15:15:22"
+        },
+        {
+          "playerName": "Benjumea Rodriguez, Diego  Manuel",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 15:28:18"
+        },
+        {
+          "playerName": "Muro Santiago, Carlos",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 15:39:23"
+        },
+        {
+          "playerName": "Herraiz Garcia De Leyaristy, Eugenio",
+          "holeNumber": 1,
+          "createdAt": "16/05/26 15:46:24"
+        },
+        {
+          "playerName": "Ovando Elio, Rafael",
+          "holeNumber": 13,
+          "createdAt": "16/05/26 15:52:19"
+        },
+        {
+          "playerName": "Fernandez De Cordova Delgado, Juan",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 15:55:18"
+        },
+        {
+          "playerName": "Cejudo Galán, Jerónimo",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 15:58:27"
+        },
+        {
+          "playerName": "Urquijo Ruiz-Gimenez, Santiago",
+          "holeNumber": 12,
+          "createdAt": "16/05/26 16:06:22"
+        },
+        {
+          "playerName": "Murube Leon, Francisco De Asis",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 16:13:02"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 16:20:39"
+        },
+        {
+          "playerName": "Rodriguez Torrecillas, Federico Jose",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 16:23:53"
+        },
+        {
+          "playerName": "Muro Santiago, Carlos",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 16:31:57"
+        },
+        {
+          "playerName": "Maceira Taibo, Maria Dolores",
+          "holeNumber": 3,
+          "createdAt": "16/05/26 16:48:08"
+        },
+        {
+          "playerName": "Castro Del Olmo, Raul",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 16:56:10"
+        },
+        {
+          "playerName": "Gonzalez Herranz, Pedro",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 17:14:21"
+        },
+        {
+          "playerName": "Adnot, Sebastian",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 17:15:44"
+        },
+        {
+          "playerName": "Fernandez Martin, Diego",
+          "holeNumber": 4,
+          "createdAt": "16/05/26 17:25:31"
+        },
+        {
+          "playerName": "Rojas Lora, Juan Alberto",
+          "holeNumber": 13,
+          "createdAt": "16/05/26 17:28:08"
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 17:53:51"
+        },
+        {
+          "playerName": "Benjumea Rodriguez, Diego  Manuel",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 17:55:51"
+        },
+        {
+          "playerName": "Leria Couderc, Pablo",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 17:56:26"
+        },
+        {
+          "playerName": "Rojas Lora, Juan Alberto",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 18:17:19"
+        },
+        {
+          "playerName": "Fernandez Martin, Diego",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 18:19:15"
+        },
+        {
+          "playerName": "Murube Leon, Francisco De Asis",
+          "holeNumber": 6,
+          "createdAt": "16/05/26 18:21:26"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Genebat Gonzalez, Pedro Luis",
+          "holeNumber": 14,
+          "createdAt": "16/05/26 12:49:05"
+        },
+        {
+          "playerName": "Fernandez Mensaque, Ivan",
+          "holeNumber": 8,
+          "createdAt": "16/05/26 15:16:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

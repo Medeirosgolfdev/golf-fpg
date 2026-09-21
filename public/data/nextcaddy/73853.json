@@ -1,0 +1,753 @@
+{
+  "tourId": 73853,
+  "url": "https://www.nextcaddy.com/tour/73853",
+  "scrapedAt": "2026-09-21T09:55:30.802Z",
+  "meta": {
+    "name": "TORNEO DE FARMACÉUTICOS 2026",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": "2026-09-18",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-18",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Hcp Por Categorías Desde 18.9 Hcp",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Soledad Lasheras Carbajo",
+          "licencia": "4401910624",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2405468
+        },
+        {
+          "pos": 2,
+          "name": "Lydia Anoz Iribarren",
+          "licencia": "4401896690",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2405470
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Marti Del Moral",
+          "licencia": "VB10949833",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2405932
+        },
+        {
+          "pos": 4,
+          "name": "Jose Angel Lizarraga Lezaun",
+          "licencia": "4402149424",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2405462
+        },
+        {
+          "pos": 5,
+          "name": "Maria Del Mar Cardenas Duro",
+          "licencia": "4405792694",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2405479
+        },
+        {
+          "pos": 6,
+          "name": "Jose Ignacio Lopez Burgaleta",
+          "licencia": "4406442416",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2405482
+        },
+        {
+          "pos": 7,
+          "name": "Enrique Garcia-Mina De Serret",
+          "licencia": "4401646867",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2405464
+        },
+        {
+          "pos": 8,
+          "name": "Victoria Aldaz Cabases",
+          "licencia": "4402751978",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2405463
+        },
+        {
+          "pos": 9,
+          "name": "Juan Jose Hernandez Rincon",
+          "licencia": "9901820361",
+          "hcp": 36.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2405460
+        },
+        {
+          "pos": 10,
+          "name": "Nieves Fernandez De Arcaya",
+          "licencia": "4401077121",
+          "hcp": 48.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2405476
+        },
+        {
+          "pos": 11,
+          "name": "Maria Luisa Iñarra Castiella",
+          "licencia": "4401944184",
+          "hcp": 43.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2405465
+        },
+        {
+          "pos": 12,
+          "name": "Olga Carricoba Blanco",
+          "licencia": "4401950285",
+          "hcp": 34,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2405478
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Hcp Por Categorías Hasta 18.8 Hcp",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alberto Mantilla Blanco",
+          "licencia": "4406430305",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2405459
+        },
+        {
+          "pos": 2,
+          "name": "Schuyler Glidden",
+          "licencia": "4401907785",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2405472
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Presa Rio",
+          "licencia": "0201054438",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2405473
+        },
+        {
+          "pos": 4,
+          "name": "Ricardo Comin Escartin",
+          "licencia": "4406166037",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2405481
+        },
+        {
+          "pos": 5,
+          "name": "Ramon Guezuraga Gil-Rodrigo",
+          "licencia": "4402163646",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2405474
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Martinez Del Peral Mayor",
+          "licencia": "CM04637894",
+          "hcp": 8.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2405461
+        },
+        {
+          "pos": 7,
+          "name": "Julian Celaya Jimenez",
+          "licencia": "4400370665",
+          "hcp": 16.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2405480
+        },
+        {
+          "pos": 8,
+          "name": "Raquel Berzosa Galindo",
+          "licencia": "4405763308",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2405477
+        },
+        {
+          "pos": 9,
+          "name": "Javier Zulategui Eraso",
+          "licencia": "4401067048",
+          "hcp": 12.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2405471
+        },
+        {
+          "pos": 10,
+          "name": "Jorge Angel Urzaiz Agorreta",
+          "licencia": "LV78436527",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2405483
+        },
+        {
+          "pos": 11,
+          "name": "Santiago Casas Rabasa",
+          "licencia": "VB10694841",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2405467
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hcp Por Categorías Desde 18.9 Hcp",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Clasificación Hcp Por Categorías Hasta 18.8 Hcp",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alberto Mantilla Blanco",
+      "licencia": "4406430305",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Jose Hernandez Rincon",
+      "licencia": "9901820361",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Manuel Martinez Del Peral Mayor",
+      "licencia": "CM04637894",
+      "hcp": 8.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Angel Lizarraga Lezaun",
+      "licencia": "4402149424",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Enrique Garcia-Mina De Serret",
+      "licencia": "4401646867",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Santiago Casas Rabasa",
+      "licencia": "VB10694841",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Zulategui Eraso",
+      "licencia": "4401067048",
+      "hcp": 12.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Schuyler Glidden",
+      "licencia": "4401907785",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Pablo Presa Rio",
+      "licencia": "0201054438",
+      "hcp": 9.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Ramon Guezuraga Gil-Rodrigo",
+      "licencia": "4402163646",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Julian Celaya Jimenez",
+      "licencia": "4400370665",
+      "hcp": 16.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Ricardo Comin Escartin",
+      "licencia": "4406166037",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Ignacio Lopez Burgaleta",
+      "licencia": "4406442416",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jorge Angel Urzaiz Agorreta",
+      "licencia": "LV78436527",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Marti Del Moral",
+      "licencia": "VB10949833",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Victoria Aldaz Cabases",
+      "licencia": "4402751978",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Luisa Iñarra Castiella",
+      "licencia": "4401944184",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Soledad Lasheras Carbajo",
+      "licencia": "4401910624",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Lydia Anoz Iribarren",
+      "licencia": "4401896690",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Nieves Fernandez De Arcaya",
+      "licencia": "4401077121",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Raquel Berzosa Galindo",
+      "licencia": "4405763308",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Olga Carricoba Blanco",
+      "licencia": "4401950285",
+      "hcp": 34,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Del Mar Cardenas Duro",
+      "licencia": "4405792694",
+      "hcp": 24.7,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Javier Zulategui Eraso",
+          "hcp": 12.1,
+          "ins": "2405471",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Schuyler Glidden",
+          "hcp": 17.2,
+          "ins": "2405472",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Pablo Presa Rio",
+          "hcp": 9.6,
+          "ins": "2405473",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Soledad Lasheras Carbajo",
+          "hcp": 26.1,
+          "ins": "2405468",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Lydia Anoz Iribarren",
+          "hcp": 22,
+          "ins": "2405470",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Maria Luisa Iñarra Castiella",
+          "hcp": 36,
+          "ins": "2405465",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Santiago Casas Rabasa",
+          "hcp": 11.2,
+          "ins": "2405467",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Ramon Guezuraga Gil-Rodrigo",
+          "hcp": 16.5,
+          "ins": "2405474",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Pablo Marti Del Moral",
+          "hcp": 22.5,
+          "ins": "2405932",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Jose Angel Lizarraga Lezaun",
+          "hcp": 19.1,
+          "ins": "2405462",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Victoria Aldaz Cabases",
+          "hcp": 23.7,
+          "ins": "2405463",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Enrique Garcia-Mina De Serret",
+          "hcp": 26.4,
+          "ins": "2405464",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Alberto Mantilla Blanco",
+          "hcp": 17.3,
+          "ins": "2405459",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Juan Jose Hernandez Rincon",
+          "hcp": 26.4,
+          "ins": "2405460",
+          "jid": "79106",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Manuel Martinez Del Peral Mayor",
+          "hcp": 8.4,
+          "ins": "2405461",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Julian Celaya Jimenez",
+          "hcp": 16.4,
+          "ins": "2405480",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Ricardo Comin Escartin",
+          "hcp": 18.8,
+          "ins": "2405481",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Jose Ignacio Lopez Burgaleta",
+          "hcp": 24.6,
+          "ins": "2405482",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Jorge Angel Urzaiz Agorreta",
+          "hcp": 15.4,
+          "ins": "2405483",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Nieves Fernandez De Arcaya",
+          "hcp": 36,
+          "ins": "2405476",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Raquel Berzosa Galindo",
+          "hcp": 12.5,
+          "ins": "2405477",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Olga Carricoba Blanco",
+          "hcp": 34,
+          "ins": "2405478",
+          "jid": "79106",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Maria Del Mar Cardenas Duro",
+          "hcp": 24.7,
+          "ins": "2405479",
+          "jid": "79106",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79106
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3125994471_73853-torneo-de-farmaceuticos-2026.pdf"
+  ]
+}

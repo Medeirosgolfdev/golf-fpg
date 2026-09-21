@@ -1,7 +1,7 @@
 {
   "tourId": 72827,
   "url": "https://www.nextcaddy.com/tour/72827",
-  "scrapedAt": "2026-09-14T09:53:27.681Z",
+  "scrapedAt": "2026-09-21T09:55:26.766Z",
   "meta": {
     "name": "CAMPEONATO DE NAVARRA DOBLES MIXTO",
     "organizer": null,
@@ -1118,7 +1118,33 @@
       "roundId": 78038
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Herrero Carmeno, Orestes",
+          "holeNumber": 4,
+          "createdAt": "20/09/26 11:24:31"
+        },
+        {
+          "playerName": "Martinez Bayano, Nicolas",
+          "holeNumber": 5,
+          "createdAt": "20/09/26 11:30:48"
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Torroba Cervera, Alfonso",
+          "holeNumber": 5,
+          "createdAt": "20/09/26 11:55:53"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3668362171_72827-campeonato-de-navarra-dobles-mixto.pdf"
