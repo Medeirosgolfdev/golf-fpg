@@ -402,9 +402,18 @@ Entrou na véspera da R1, por isso o motor ganhou um **modo pré-torneio**:
   tee sheets, mas só mexe quando há tokens em maiúsculas à frente;
 - o HCP do tee sheet passa para os jogadores do leaderboard e aparece na coluna
   HCP do draw (`drawHideCols` só a mostra quando a divisão tem HCP).
+- **Sexo pelo tee de saída:** o GG não diz quem é rapaz ou rapariga e o
+  `tee_abbr` dos grupos vem vazio, mas a mesma página tem uma tabela "por
+  jogador" (`player_row`: Jogador | Tee Time | **Tee** | Other Players) —
+  White = rapazes, Blue = raparigas (42/41 em 2026; confirmado com os 4 PT).
+  `parsePlayerTees` lê-a e o `splitByTee` parte a divisão única nos escalões
+  do `teeDivisions` do scope (`{"White":"Boys U14","Blue":"Girls U14"}`; CLI
+  `--tee-divisions "White=Boys U14,Blue=Girls U14"`): cada jogador leva `tee`
+  e `sex`, as posições do leaderboard misto são renumeradas dentro do escalão
+  e os grupos do draw vão para o escalão de quem lá joga. Quem não tiver tee
+  fica no label original, sem sexo. Testes: `scrape-golfgenius-tee-split.test.js`.
 Edições anteriores só existem como resultado de equipa na RFEG/EGR. O `GG_SOURCES`
-tem `preField: true` (aparece na lista logo com o draw). Sexo: o tee sheet não o
-diz — o adapter do kids2 só o tira do label se o leaderboard vier partido.
+tem `preField: true` (aparece na lista logo com o draw).
 ⏳ Depois de 24/09: `disabled: true` no scope.
 
 ### Enriquecimento por DOB (ficha GG `/profiles`) — México

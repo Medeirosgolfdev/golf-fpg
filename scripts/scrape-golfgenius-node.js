@@ -199,6 +199,24 @@ function parseTeeSheet(html) {
 }
 
 /**
+ * Tabela "por jogador" do tee sheet (`player_row`: Jogador | Tee Time | Tee |
+ * Other Players) → Map<nameKey, tee>. É a ÚNICA fonte do tee de saída quando o
+ * `tee_abbr` dos grupos vem vazio (Evian Juniors Cup: White = rapazes, Blue =
+ * raparigas — daí o sexo, via `teeDivisions` no scope).
+ */
+function parsePlayerTees(html) {
+  const out = new Map();
+  for (const rm of html.matchAll(/<tr[^>]*class='player_row'[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const tds = [...rm[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((c) => c[1]);
+    if (tds.length < 3) continue;
+    const { name } = cleanTeeName(txt(tds[0].split('<span')[0]));
+    const tee = txt(tds[2]);
+    if (name && tee && !out.has(nameKey(name))) out.set(nameKey(name), tee);
+  }
+  return out;
+}
+
+/**
  * Roster de presenças — a MESMA página de "tee sheets" serve, em alguns
  * eventos, uma `attending_roster_table` em vez de horas de saída:
  *   <td class='name'><strong>Apelido, Nome</strong><br><i>País</i></td>
@@ -302,6 +320,7 @@ async function fetchTeeSheets(lid, teePageId) {
   // Campo inteiro (nome → {name, country, hcp}) tirado dos grupos — é o que
   // semeia o torneio ANTES de haver leaderboard (modo pré-torneio).
   const field = new Map();
+  const tees = new Map();   // nameKey → tee de saída (1.ª ronda em que aparece)
   // Datas de TODAS as rondas competitivas do <select> (ex: "Round 3 (Thu,
   // August  6)") — o v2tournaments só lista as rondas JÁ jogadas, por isso num
   // evento a decorrer o endDate vinha curto (a R3 só existe aqui).
@@ -319,6 +338,7 @@ async function fetchTeeSheets(lid, teePageId) {
     for (const p of parseRoster(html)) {
       if (p.country && !countries.has(nameKey(p.name))) countries.set(nameKey(p.name), p.country);
     }
+    for (const [k, t] of parsePlayerTees(html)) if (!tees.has(k)) tees.set(k, t);
     const groups = parseTeeSheet(html);
     if (!groups.length) { await new Promise((res) => setTimeout(res, 300)); continue; }
     for (const g of groups) for (const p of g.players) {
@@ -345,7 +365,56 @@ async function fetchTeeSheets(lid, teePageId) {
     }
     await new Promise((res) => setTimeout(res, 300));
   }
-  return { draws: byDiv, countries, roundDateLabels, field };
+  return { draws: byDiv, countries, roundDateLabels, field, tees };
+}
+
+/**
+ * Parte uma divisão ÚNICA em escalões pelo tee de saída (`teeDivisions`, ex:
+ * { White: 'Boys U14', Blue: 'Girls U14' }) — para provas em que rapazes e
+ * raparigas partilham leaderboard e draw e o GG não diz o sexo. Cada jogador
+ * leva `tee` e `sex` (tirado do label). As posições são renumeradas DENTRO do
+ * escalão pela ordem do leaderboard misto (empate = mesmo total). Os grupos do
+ * draw entram no escalão de quem lá joga. Quem não tem tee conhecido fica numa
+ * divisão com o label original (nunca se adivinha o sexo).
+ */
+function splitByTee(out, tees, teeDivisions) {
+  if (out.divisions.length !== 1 || !tees.size) return 0;
+  const src = out.divisions[0];
+  const labelOf = (p) => teeDivisions[tees.get(nameKey(p.name))] || null;
+  const labels = [...new Set(Object.values(teeDivisions))];
+  const sexOf = (l) => (/\b(boys|rapazes)\b/i.test(l) ? 'M' : /\b(girls|raparigas)\b/i.test(l) ? 'F' : null);
+  const posNum = (p) => { const n = parseInt(String(p.pos || '').replace(/^T/i, ''), 10); return Number.isFinite(n) ? n : Infinity; };
+  const divs = [];
+  for (const label of [...labels, null]) {
+    const players = src.players.filter((p) => labelOf(p) === label);
+    if (!players.length) continue;
+    for (const p of players) {
+      const t = tees.get(nameKey(p.name));
+      if (t) p.tee = t;
+      if (label && sexOf(label)) p.sex = sexOf(label);
+    }
+    if (players.some((p) => Number.isFinite(posNum(p)))) {
+      players.sort((a, b) => posNum(a) - posNum(b));
+      const ranked = players.filter((p) => Number.isFinite(posNum(p)));
+      ranked.forEach((p, i) => {
+        const tie = (q) => q && q.total != null && q.total === p.total;
+        let r = i;
+        while (r > 0 && tie(ranked[r - 1])) r--;
+        const tied = tie(ranked[i - 1]) || tie(ranked[i + 1]);
+        p.pos = `${tied ? 'T' : ''}${r + 1}`;
+      });
+    }
+    const names = new Set(players.map((p) => nameKey(p.name)));
+    const dv = { ...src, division: label || src.division, players };
+    if (src.draws) {
+      dv.draws = Object.fromEntries(Object.entries(src.draws).map(([rn, rd]) => [rn, {
+        ...rd, groups: rd.groups.filter((g) => g.players.some((q) => names.has(nameKey(q.name)))),
+      }]));
+    }
+    divs.push(dv);
+  }
+  out.divisions = divs;
+  return divs.length;
 }
 
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
@@ -589,9 +658,11 @@ async function runOne(opts) {
   // Draws REAIS a partir da página de tee sheets do microsite (quando existe).
   // Sem eles o TournamentDetail só mostra draws estimados do acumulado — e
   // nunca a R1, que não tem ronda anterior de onde inferir emparelhamentos.
+  let teeByName = new Map();
   if (teePageId && lid && !opts.skipTeeSheets) {
     try {
-      const { draws, countries, roundDateLabels, field } = await fetchTeeSheets(lid, teePageId);
+      const { draws, countries, roundDateLabels, field, tees } = await fetchTeeSheets(lid, teePageId);
+      teeByName = tees;
       if (!out.year && roundDateLabels.length) out.year = new Date().getUTCFullYear();
       // Pré-torneio (1 divisão): o campo é quem está nos draws.
       if (preField && out.divisions.length === 1) {
@@ -677,6 +748,12 @@ async function runOne(opts) {
     } catch (e) { console.log(`   ⚠ roster indisponível: ${e.message}`); }
   }
 
+  // Escalões pelo tee de saída (scope `teeDivisions`) — DEPOIS de draws e roster.
+  if (opts.teeDivisions && Object.keys(opts.teeDivisions).length) {
+    const n = splitByTee(out, teeByName, opts.teeDivisions);
+    if (n) console.log(`   🚻 escalões pelo tee: ${out.divisions.map((d) => `${d.division} ${d.players.length}j`).join(' · ')}`);
+  }
+
   const yearKey = out.year || 'x';
   const file = path.join(OUT, `${slug}_${yearKey}.json`);
   if (!noMerge) {
@@ -721,6 +798,7 @@ async function main() {
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
         skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null,
         stop: e.stop != null ? e.stop : null,
+        teeDivisions: e.teeDivisions || null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -729,6 +807,10 @@ async function main() {
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
       countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets,
       rosterPage: getArg('--roster-page'), stop: getArg('--stop'),
+      // --tee-divisions "White=Boys U14,Blue=Girls U14"
+      teeDivisions: getArg('--tee-divisions')
+        ? Object.fromEntries(getArg('--tee-divisions').split(',').map((kv) => kv.split('=').map((x) => x.trim())))
+        : null,
     }];
   } else {
     console.error('Uso: node scripts/scrape-golfgenius-node.js <pageUrl> [--league id] [--v2tids a,b] [--name] [--slug] [--year] [--country XX] [--skip-scorecards]');
@@ -753,4 +835,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster };
+module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName };

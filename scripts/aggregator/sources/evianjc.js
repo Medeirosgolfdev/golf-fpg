@@ -3,9 +3,9 @@
  *
  * Adapter — The Amundi Evian Juniors Cup (Evian Resort, França).
  * Lê evianjc_YYYY.json (JobFile GolfGenius, divisão única). Prova Sub-14 de
- * seleções nacionais; em 2026 rapazes e raparigas partilham o draw e o GG não
- * diz o sexo → idade fixa Sub-14 e sexo só se o label da divisão o trouxer
- * ("Boys"/"Girls", caso o leaderboard venha partido).
+ * seleções nacionais. O GG não diz o sexo; o scraper parte o campo em
+ * "Boys U14"/"Girls U14" pelo tee de saída (White/Blue, `teeDivisions` no
+ * scope) → idade fixa Sub-14, sexo tirado do label.
  * País vem da afiliação do tee sheet ("Départs"). Fonte fraca (nome + país).
  * Scraper: scrape-golfgenius-node.js (scope `evianjc`).
  */
