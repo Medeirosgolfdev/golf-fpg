@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-09-20T22:03:47.617Z",
+  "lastUpdated": "2026-09-21T06:08:21.932Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-09-20",
+  "today": "2026-09-21",
   "summary": {
-    "total": 1771,
-    "complete": 812,
+    "total": 1772,
+    "complete": 813,
     "in_progress": 0,
     "future": 7,
     "stale": 10,
@@ -206,6 +206,27 @@
       "full_scorecards_ratio": 0,
       "has_manuel": false,
       "status": "future"
+    },
+    {
+      "ccode": "001",
+      "tcode": "10582",
+      "name": "Taça Skeffington e Taça Ellen Kendall ( FINAL )",
+      "date": "2026-09-20",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": true,
+      "player_count": 104,
+      "players_with_scorecards": 101,
+      "players_with_full_scorecards": 101,
+      "scorecards_source": "pull-torneios006.json",
+      "scorecards_ratio": 0.971,
+      "full_scorecards_ratio": 0.971,
+      "has_manuel": false,
+      "status": "complete"
     },
     {
       "ccode": "001",
