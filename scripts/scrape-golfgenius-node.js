@@ -99,7 +99,8 @@ function isRoundOnlyLabel(label) {
 
 // Divisões que NÃO são o campeonato stroke-play por escalão (scrambles, side
 // events, testes) — excluídas por serem 0-rondas e sujarem a apresentação.
-function isSideEvent(label) { return /\b(adult|scramble|nassau|prueba|par\s*3)\b/i.test(label); }
+// "Nations Cup" (Evian Juniors Cup) = classificação por PAÍS, sem jogadores nem cartões.
+function isSideEvent(label) { return /\b(adult|scramble|nassau|prueba|par\s*3|nations\s*cup)\b/i.test(label); }
 // Ordena escalões: Boys antes de Girls, idade crescente ("8U"→8, "13-14"→13, WAGR→999).
 function divSortKey(label) {
   // Boys/Girls tanto no início ("Boys 13-14") como no fim ("Under 12 Girls").
@@ -489,6 +490,7 @@ async function discoverDivisions(pageUrl, leagueOverride) {
           const n = (j?.event?.name || '').replace(/\s+/g, ' ').trim();
           if (n) label = n.includes(' - ') ? n.slice(n.indexOf(' - ') + 3).trim() : n;
         } catch { /* sem nome → label genérico */ }
+        if (isSideEvent(label)) { console.log(`   ↷ ${label}: side event — saltado`); continue; }
         divisions.push({ label, v2tid: v2 });
       }
       divisions.sort((a, b) => divSortKey(a.label) - divSortKey(b.label));
@@ -643,6 +645,13 @@ async function runOne(opts) {
   if (preField) console.log('   ⏳ leaderboard ainda fechado — modo pré-torneio (campo + draws dos tee sheets)');
   out.source = source;
   if (nameOverride) out.tournament = nameOverride;
+  // Leaderboards FFG/Evian escrevem "APELIDO Nome" — o mesmo formato do tee
+  // sheet. Normalizar para "Nome Apelido" para casar draw ↔ leaderboard ↔ outras
+  // edições (o cleanTeeName só mexe quando há apelido em maiúsculas à frente).
+  for (const dv of out.divisions) for (const p of dv.players) {
+    const c = cleanTeeName(p.name);
+    if (c.name && c.name !== p.name) p.name = c.name;
+  }
   // Nº de etapa/fase (eventos multi-ficheiro por ano, ex: Optimist Phase 1-3):
   // vai para o JobFile como `stop` → id `{source}:{ano}:{stop}` no catálogo e
   // na MajorPage (mesmo mecanismo do EJT golfbox).

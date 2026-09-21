@@ -19,8 +19,8 @@
       "name": "The Amundi Evian Juniors Cup",
       "year": 2026,
       "country": "none",
-      "teeDivisions": { "White": "Boys U14", "Blue": "Girls U14" },
-      "note": "The Amundi Evian Juniors Cup 2026 — Evian Resort (França), 22-24 Set 2026, Sub-14 M+F por seleções. Microsite francês: a página de tee sheets chama-se 'Départs' (pages/13066045313830138878, auto-descoberta) e os nomes vêm 'APELIDO Nome (+HCP)' (cleanTeeName). Antes da R1 o leaderboard está fechado → modo pré-torneio (campo + draw R1 dos tee sheets). PT 2026: Santiago Dias, Nuno Palmares, Laura Santos, Margarida Silva Pinto. Edições anteriores só como resultado de equipa na RFEG/EGR. O GG não diz o sexo: sai do tee de saída da tabela 'por jogador' (White = rapazes, Blue = raparigas — confirmado com os 4 PT) → teeDivisions parte em Boys U14 / Girls U14. Pôr disabled:true depois de 24 Set."
+      "teeDivisions": { "White": "Boys", "Blue": "Girls" },
+      "note": "The Amundi Evian Juniors Cup 2026 — Evian Resort (França), 22-24 Set 2026, Sub-14 M+F por seleções. Microsite francês: a página de tee sheets chama-se 'Départs' (pages/13066045313830138878, auto-descoberta) e os nomes vêm 'APELIDO Nome (+HCP)' (cleanTeeName). Antes da R1 o leaderboard está fechado → modo pré-torneio (campo + draw R1 dos tee sheets). PT 2026: Santiago Dias, Nuno Palmares, Laura Santos, Margarida Silva Pinto. 2025 = microsite GG pages/11993002524782146538 (scrape ad-hoc, não precisa de scope); 2022-2024 importadas do portal de resultados FFG (import-ffgolf-jobfile.js). O GG não diz o sexo: sai do tee de saída da tabela 'por jogador' (White = rapazes, Blue = raparigas — confirmado com os 4 PT) → teeDivisions parte em Boys / Girls (os MESMOS labels que o leaderboard usa quando abre — em 2025 vinha Boys/Girls/Nations Cup — para a tab 'Edições anteriores' casar os anos). Pôr disabled:true depois de 24 Set."
     },
     {
       "slug": "reidtrophy",

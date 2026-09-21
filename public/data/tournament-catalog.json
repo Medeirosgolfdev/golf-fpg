@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-21T23:13:26.464Z",
+  "generatedAt": "2026-09-21T23:34:46.567Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -19938,8 +19938,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -27330,6 +27330,21 @@
       "editionsCount": 5
     },
     {
+      "id": "evianjc",
+      "label": "Evian Juniors Cup",
+      "sourceId": "evianjc",
+      "tournamentIds": [
+        "evianjc-evianjc_2022",
+        "evianjc-evianjc_2023",
+        "evianjc-evianjc_2024",
+        "evianjc-evianjc_2025",
+        "evianjc-evianjc_2026"
+      ],
+      "firstDate": "2022-09-20",
+      "lastDate": "2026-09-22",
+      "editionsCount": 5
+    },
+    {
       "id": "european-young-masters",
       "label": "European Young Masters",
       "sourceId": "eym",
@@ -28137,6 +28152,21 @@
       ],
       "firstDate": "2022-06-07",
       "lastDate": "2026-06-02",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
       "editionsCount": 5
     },
     {
@@ -34186,20 +34216,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-the-amundi-evian-juniors-cup",
-      "label": "The Amundi Evian Juniors Cup",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10700",
-        "egr-egr10701",
-        "egr-egr5333",
-        "egr-egr6004"
-      ],
-      "firstDate": "2021-09-21",
-      "lastDate": "2025-09-16",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-swiss-golf-east-final-u12-bubikon",
       "label": "Swiss Golf East Final U12 (Bubikon)",
       "sourceId": "egr",
@@ -35110,20 +35126,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-beth-daniel-junior-azalea",
       "label": "Beth Daniel Junior Azalea",
       "sourceId": "wagr",
@@ -35143,8 +35145,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-260403",
-        "wagr-235865",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -35303,20 +35305,6 @@
       ],
       "firstDate": "2022-08-08",
       "lastDate": "2026-06-23",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
       "editionsCount": 4
     },
     {
@@ -45590,19 +45578,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-pga-west-junior-championship",
-      "label": "PGA WEST Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270202",
-        "wagr-258222",
-        "wagr-233922"
-      ],
-      "firstDate": "2024-06-18",
-      "lastDate": "2026-06-16",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-rlx-ralph-lauren-junior-classic",
       "label": "RLX Ralph Lauren Junior Classic",
       "sourceId": "wagr",
@@ -45613,19 +45588,6 @@
       ],
       "firstDate": "2024-06-24",
       "lastDate": "2026-06-22",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258192",
-        "wagr-233861",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -45808,19 +45770,6 @@
       ],
       "firstDate": "2022-11-20",
       "lastDate": "2024-11-17",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
       "editionsCount": 3
     },
     {
@@ -46055,6 +46004,19 @@
       ],
       "firstDate": "2023-08-02",
       "lastDate": "2025-08-05",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-pga-west-junior-championship",
+      "label": "PGA WEST Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270202",
+        "wagr-258222",
+        "wagr-233922"
+      ],
+      "firstDate": "2024-06-18",
+      "lastDate": "2026-06-16",
       "editionsCount": 3
     },
     {
@@ -46539,16 +46501,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -47277,6 +47239,19 @@
       ],
       "firstDate": "2024-07-16",
       "lastDate": "2026-07-14",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -62283,6 +62258,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-the-amundi-evian-juniors-cup",
+      "label": "The Amundi Evian Juniors Cup",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5333",
+        "egr-egr6004"
+      ],
+      "firstDate": "2021-09-21",
+      "lastDate": "2021-09-21",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-dutch-u15-championships",
       "label": "Dutch U15 Championships",
       "sourceId": "egr",
@@ -66423,18 +66410,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261130",
-        "wagr-236605"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-hv3-foundation-junior-championship-presented-by-visit-mooresville",
       "label": "HV3 Foundation Junior Championship presented by Visit Mooresville",
       "sourceId": "wagr",
@@ -66444,6 +66419,18 @@
       ],
       "firstDate": "2025-08-18",
       "lastDate": "2026-08-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -66840,6 +66827,18 @@
       ],
       "firstDate": "2025-03-27",
       "lastDate": "2026-03-12",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -69576,6 +69575,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -95079,17 +95090,6 @@
       "editionsCount": 1
     },
     {
-      "id": "evianjc",
-      "label": "Evian Juniors Cup",
-      "sourceId": "evianjc",
-      "tournamentIds": [
-        "evianjc-evianjc_2026"
-      ],
-      "firstDate": "2026-09-22",
-      "lastDate": "2026-09-22",
-      "editionsCount": 1
-    },
-    {
       "id": "mex-copa-bobby-diaz",
       "label": "Copa Bobby Díaz (México)",
       "sourceId": "icopa",
@@ -107674,6 +107674,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -107957,6 +107968,17 @@
       ],
       "firstDate": "2025-09-06",
       "lastDate": "2025-09-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
       "editionsCount": 1
     },
     {
@@ -108430,17 +108452,6 @@
       ],
       "firstDate": "2023-07-28",
       "lastDate": "2023-07-28",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -109772,17 +109783,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -117538,17 +117538,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {

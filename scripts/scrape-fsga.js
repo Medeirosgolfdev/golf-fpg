@@ -95,7 +95,10 @@ const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-S
   'United Kingdom':'GB', 'Great Britain':'GB', 'Golf Ireland':'IE', Azerbaijan:'AZ', 'Türkiye':'TR', Turkiye:'TR',
   // Formas longas ISO que a roster do GolfGenius usa (UA Worlds).
   'Russian Federation':'RU', Russia:'RU', 'Korea, Republic of':'KR', Bolivia:'BO', Barbados:'BB',
-  India:'IN', 'Hong Kong':'HK', 'Hong Kong, China':'HK', Singapore:'SG', Malaysia:'MY', Thailand:'TH', Philippines:'PH', Indonesia:'ID', Vietnam:'VN', Taiwan:'TW', 'Chinese Taipei':'TW', 'New Zealand':'NZ', 'United Arab Emirates':'AE', Israel:'IL', Chile:'CL', Peru:'PE', Uruguay:'UY', Paraguay:'PY', Ecuador:'EC', Panama:'PA', 'Costa Rica':'CR', Guatemala:'GT', Jamaica:'JM' };
+  India:'IN', 'Hong Kong':'HK', 'Hong Kong, China':'HK', Singapore:'SG', Malaysia:'MY', Thailand:'TH', Philippines:'PH', Indonesia:'ID', Vietnam:'VN', Taiwan:'TW', 'Chinese Taipei':'TW', 'New Zealand':'NZ', 'United Arab Emirates':'AE', Israel:'IL', Chile:'CL', Peru:'PE', Uruguay:'UY', Paraguay:'PY', Ecuador:'EC', Panama:'PA', 'Costa Rica':'CR', Guatemala:'GT', Jamaica:'JM',
+  'Republic of Korea':'KR',
+  // Microsites da FFG (Evian Juniors Cup 2025) escrevem a afiliação em FRANCÊS.
+  Espagne:'ES', 'États-Unis':'US', 'Etats-Unis':'US', Finlande:'FI', Belgique:'BE', Japon:'JP', Italie:'IT', Autriche:'AT', Chine:'CN', Suisse:'CH', Slovaquie:'SK', Danemark:'DK', Mexique:'MX', Allemagne:'DE', 'Slovénie':'SI', Maroc:'MA', Turquie:'TR', 'Corée du Sud':'KR', 'République tchèque':'CZ', 'Tchéquie':'CZ', 'Suède':'SE', 'Norvège':'NO', 'Pays-Bas':'NL', Pologne:'PL', Hongrie:'HU', Irlande:'IE', Angleterre:'GB-ENG', 'Écosse':'GB-SCT', 'Pays de Galles':'GB-WLS', Estonie:'EE', 'Lettonie':'LV', Lituanie:'LT', 'Grèce':'GR', Croatie:'HR', Roumanie:'RO', Bulgarie:'BG', Islande:'IS', 'Afrique du Sud':'ZA', Australie:'AU', 'Nouvelle-Zélande':'NZ', 'Brésil':'BR', Argentine:'AR', Colombie:'CO', Inde:'IN', 'Thaïlande':'TH', 'Émirats arabes unis':'AE', Ukraine:'UA', 'Royaume-Uni':'GB' };
 // `fallback` = o que devolver quando a afiliação não identifica país nenhum.
 // Default "US" (as afiliações FSGA/UA são cidades americanas), mas eventos
 // mundiais passam `null` — no CoC 2023 o GG não publica afiliação NENHUMA e
