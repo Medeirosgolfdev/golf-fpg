@@ -277,6 +277,9 @@ const GG_SOURCES = [
   // preField: o scraper semeia o campo (roster + tee sheets) ANTES de haver
   // scores → listar o torneio logo que haja draws publicados, não só scores.
   { prefix: "reidtrophy_", source: "reidtrophy", series: "Reid Trophy", name: (f, y) => f.tournament ? `${f.tournament} ${y}` : `Reid Trophy ${y}`, course: (f) => f.course || "Porters Park", union: true, preField: true },
+  // The Amundi Evian Juniors Cup (França, Sub-14 M+F) — preField: o campo e o
+  // draw da R1 saem dos tee sheets ("Départs") antes de haver leaderboard.
+  { prefix: "evianjc_", source: "evianjc", series: "Evian JC", name: (f, y) => `${f.tournament || "The Amundi Evian Juniors Cup"} ${y}`, course: (f) => f.course || "Evian Resort Golf Club", union: true, preField: true },
   { prefix: "icopa_", source: "icopa", series: "Bobby Díaz", name: (f, y) => f.tournament || `Bobby Díaz ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "interzonas_", source: "interzonas", series: "Interzonas", name: (f, y) => f.tournament || `Interzonas ${y}`, course: (f) => f.course || undefined, union: true },
   { prefix: "avtrophy_", source: "avtrophy", series: "BEL U14", name: (f, y) => f.tournament || `BEL U14 ${y}`, course: (f) => f.course || undefined, union: true },

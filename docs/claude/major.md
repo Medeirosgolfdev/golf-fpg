@@ -75,6 +75,7 @@ formatos de output e dois caminhos de scrape:
 | **México — Nacional Interzonas Lorena Ochoa (LXV)** | GolfGenius | `pages/5897587` + v2tid `4619271` INDIVIDUAL GENERAL | `scrape-golfgenius-node.js --v2tids "Individual General=4619271"` | `interzonas_2026.json` | ✅ ligado (source `interzonas`) — tem o Andres Marcos Cantu |
 | **'Champion of Champions' World Championship** | GolfGenius (pages) | `pages/12114827382448210411` (2026) | **`scrape-golfgenius-node.js --scope`** | `coc_{2023,2024,2025,2026}.json` (JobFile, 8-10 divisões) | ✅ ligado (source `coc`) — cron `update-golfgenius.yml` |
 | **Optimist International Junior Championships** (600+/ano, 25+ países; PGA National→Trump Doral) | GolfGenius (microsites `tndm-*`) | 3 FASES/ano por escalões (P1 = Boys 10-11/12-13 + Girls 10-12 ⭐ universo do Manuel; P2 = 14-15/13-14; P3 = 16-18/15-18) — URLs por fase em `golfgenius-scope.json` | **`scrape-golfgenius-node.js --scope`** (país+gradYear do roster "Players"; `stop` = nº da fase) | `optimist{1..3}_{2023..2026}.json` (JobFile; ids `optimist:{ano}:{fase}` como o ejt) | ✅ ligado (source `optimist`, 2026-08-06) — cron `update-golfgenius.yml`. ⚠ `optimist3_2023` é vista agregada sem divisões (o GG de 2023 não tem select — fica 1 flight). ⚠ o site ShotStat (optimist.shotstat.com) só tem o Tournament of Champions, NÃO o International |
+| **The Amundi Evian Juniors Cup** (Evian Resort, França; Sub-14 M+F por seleções) | GolfGenius (microsite francês) | `pages/13066045314769662975` (Classement) + `pages/13066045313830138878` (Départs) | **`scrape-golfgenius-node.js --scope`** (slug `evianjc`) | `evianjc_2026.json` (JobFile, 1 divisão, HCP do tee sheet) | ✅ ligado (source `evianjc`, `preField`, 2026-09-21) — ver secção abaixo |
 | **Belgian International U14 — Albert Vermeiren Trophy** | GolfBox | `scores.golfbox.dk` comp `5388972` | `scrape-golfbox.js` | `avtrophy_2026.json` (JobFile, CR/Slope+HCP) | ✅ ligado (source `avtrophy`) |
 | **Estonian Junior Open** (Estonian Golf Association; o campeonato nacional EMV corre DENTRO do Open) | GolfBox | comp 2026 `5417057` (2025 `4931278`, 2024 `4393974`, … até 2013 — ver golf.ee/voistlused/estonian-junior-open) | `scrape-golfbox.js` (`classRe` no scope filtra as classes sobrepostas EMV/combinadas) | `ejo_{2019..2026}.json` (JobFile, 10 divisões Boys/Girls U12-U21 — 9 em 2019, CR/Slope+HCP+birthYear 100%) | ✅ ligado (source `ejo`, `showAges: true` → coluna IDADE) — 2026 no scope do cron |
 | **Estonian Junior Tour** (circuito EGA estónio, 5-7 etapas/ano U9-U21 + o EJO como major do circuito) | GolfBox | comps 2026: `5417113` (EGCC, 1 Jun) · `5417123` (White Beach, 29 Jun) · `5417127` (Rae, 21 Jul) · `5417128` (Saaremaa, 11 Ago) · `5417129` (Otepää, 19 Ago) · `5417080` (FINAL Pärnu Bay, 24-25 Ago). **Histórico 2021-2025 (34 provas)**: IDs descobertos via `OrderOfMeritsHandler/GetOrderOfMerit/OrderOfMeritId/{id}` (os OoMs por categoria listam as provas da época; IDs dos OoMs na página golf.ee/voistlused/estonian-junior-tour) | `scrape-golfbox.js` — **1º circuito MULTI-EVENTO/ano**: 1 ficheiro por etapa, `stop` no scope → id `ejt:{ano}:{n}` (catálogo + MajorPage, range 1-8); `classRe` filtra as vistas HCP-Stroke/Scratch (e as LAT de 2023 — jogadores letões confirmados presentes nas classes por escalão) | `ejt{1..7}_{2021..2026}.json` (JobFile, 8 divisões Boys/Girls U9-U21) | ✅ ligado (source `ejt`, showAges) — 6 etapas 2026 no scope do cron (futuras dormentes até terem scores); histórico scrapeado ad-hoc (não está no scope — nunca muda); tab "Época" (`seasonKey`) junta as etapas do ano, "Edições anteriores" compara a MESMA etapa entre anos |
@@ -382,6 +383,29 @@ mas **a edição de 2023 não publica afiliação nenhuma**. O default `US` do
 americanas) carimbava 243 miúdos de 40 países como americanos → `inferCountry`
 ganhou um `fallback` e o `--country none` passa `null`. Todas as entradas CoC
 do scope usam `country: "none"`.
+
+### The Amundi Evian Juniors Cup (`evianjc`) — 2026-09-21
+
+Sub-14 de seleções nacionais no Evian Resort (22-24 Set 2026, 83 jogadores, 21
+países; PT: Santiago Dias, Nuno Palmares, Laura Santos, Margarida Silva Pinto).
+Entrou na véspera da R1, por isso o motor ganhou um **modo pré-torneio**:
+- o widget `tournament_results` ainda não tem `<select>` nem v2tid → em vez de
+  falhar, o `discoverDivisions` devolve `preField` se houver página de tee
+  sheets, e o `runOne` semeia **uma divisão** com o campo tirado dos grupos
+  (nome, país, HCP) + os draws. O label é o título da página, o mesmo que o
+  modo normal dá a um evento de divisão única quando o leaderboard abrir;
+- a página de tee sheets deste microsite chama-se **"Départs"** (o input
+  `tee_sheet_button` vem vazio) — o fallback da nav aceita `Tee Sheets`,
+  `Tee Times` e `Départs`;
+- os nomes vêm **"APELIDO Nome (+1.3)"** → `cleanTeeName` tira o HCP (plus →
+  negativo, como no GolfBox) e passa para "Nome Apelido". Aplica-se a todos os
+  tee sheets, mas só mexe quando há tokens em maiúsculas à frente;
+- o HCP do tee sheet passa para os jogadores do leaderboard e aparece na coluna
+  HCP do draw (`drawHideCols` só a mostra quando a divisão tem HCP).
+Edições anteriores só existem como resultado de equipa na RFEG/EGR. O `GG_SOURCES`
+tem `preField: true` (aparece na lista logo com o draw). Sexo: o tee sheet não o
+diz — o adapter do kids2 só o tira do label se o leaderboard vier partido.
+⏳ Depois de 24/09: `disabled: true` no scope.
 
 ### Enriquecimento por DOB (ficha GG `/profiles`) — México
 O `scrape-fsga.js` ganhou `fetchProfile(id)`: o scorecard detail page linka

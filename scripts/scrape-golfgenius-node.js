@@ -47,6 +47,7 @@ const SLUG_OVERRIDES = [
   { re: /campeonato nacional infantil juvenil/i,       slug: 'mexnacional', name: 'Campeonato Nacional Infantil Juvenil (México)' },
   { re: /champion of champions/i,                      slug: 'coc', name: '“Champion of Champions” World Championship' },
   { re: /reid trophy/i,                                slug: 'reidtrophy', name: 'Reid Trophy (English Boys’ U14 Open Amateur)' },
+  { re: /juniors cup/i,                                slug: 'evianjc', name: 'The Amundi Evian Juniors Cup' },
 ];
 
 // O <title> do GG traz entidades HTML (&#39; nas aspas de 'Champion of Champions').
@@ -124,6 +125,36 @@ const txt = (h) => (h || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ')
   .replace(/\s+/g, ' ').trim();
 
 /**
+ * Nome tal como vem no tee sheet → { name, hcp }.
+ * A Evian Juniors Cup (microsite francês) escreve "APELIDO Nome (+1.3)": o
+ * apelido em maiúsculas À FRENTE e o handicap colado entre parênteses. Sem
+ * limpar, o nome do draw nunca casava com o do leaderboard e o miúdo ficava
+ * com "(+1.3)" no nome. O "+" é handicap plus → negativo (convenção do
+ * JobFile, igual ao GolfBox). Nomes normais ("Xavier Good") passam intactos.
+ */
+function cleanTeeName(raw) {
+  let name = String(raw || '').replace(/\s+/g, ' ').trim();
+  let hcp = null;
+  const hm = name.match(/\s*\(\s*([+-]?)\s*(\d{1,2}(?:[.,]\d)?)\s*\)\s*$/);
+  if (hm) {
+    const v = parseFloat(hm[2].replace(',', '.'));
+    hcp = hm[1] === '+' ? -v : v;
+    name = name.slice(0, hm.index).trim();
+  }
+  // "SILVA PINTO Margarida" → "Margarida Silva Pinto": só quando há tokens em
+  // MAIÚSCULAS à frente E pelo menos um token normal depois.
+  const toks = name.split(' ');
+  const isUpper = (t) => /\p{Lu}/u.test(t) && t === t.toUpperCase() && t.replace(/[^\p{L}]/gu, '').length >= 2;
+  let k = 0;
+  while (k < toks.length && isUpper(toks[k])) k++;
+  if (k > 0 && k < toks.length && !toks.slice(k).some(isUpper)) {
+    const title = (t) => t.toLowerCase().replace(/(^|[-'’\s])(\p{L})/gu, (_, a, b) => a + b.toUpperCase());
+    name = [...toks.slice(k), ...toks.slice(0, k).map(title)].join(' ');
+  }
+  return { name, hcp };
+}
+
+/**
  * Uma ronda de tee sheet → [{ time, startHole, players:[{name, country, division}] }].
  * Suporta os DOIS layouts de coluna do GG sem assumir a largura do bloco:
  *   - `[Hora, Jogadores]`            (México / CoC / UA)
@@ -150,10 +181,10 @@ function parseTeeSheet(html) {
         let startHole = null;
         for (const c of prefix) { const hm = c.match(/^\s*(\d{1,2})\s*$/); if (hm && c !== time) { startHole = +hm[1]; break; } }
         const players = cells[j].split(/players_portrait/).slice(1).map((chunk) => {
-          const name = txt(chunk.split('<span')[0]).replace(/^'>\s*/, '').trim();
+          const { name, hcp } = cleanTeeName(txt(chunk.split('<span')[0]).replace(/^'>\s*/, ''));
           const country = txt((chunk.match(/affiliation_portrait'>([\s\S]*?)<\/span>/) || [])[1] || '');
           const division = txt((chunk.match(/answer_text'>([\s\S]*?)<\/div>/) || [])[1] || '');
-          return { name, country: country || null, division: division || null };
+          return { name, hcp, country: country || null, division: division || null };
         }).filter((p) => p.name);
         if (!players.length || !time) continue;
         // A tabela repete as linhas em variantes hidden-xs/visible-xs.
@@ -268,6 +299,9 @@ async function fetchTeeSheets(lid, teePageId) {
   const rounds = opts.length ? opts : [{ url: null, label: 'Round 1' }];
   const byDiv = new Map();
   const countries = new Map();
+  // Campo inteiro (nome → {name, country, hcp}) tirado dos grupos — é o que
+  // semeia o torneio ANTES de haver leaderboard (modo pré-torneio).
+  const field = new Map();
   // Datas de TODAS as rondas competitivas do <select> (ex: "Round 3 (Thu,
   // August  6)") — o v2tournaments só lista as rondas JÁ jogadas, por isso num
   // evento a decorrer o endDate vinha curto (a R3 só existe aqui).
@@ -287,6 +321,11 @@ async function fetchTeeSheets(lid, teePageId) {
     }
     const groups = parseTeeSheet(html);
     if (!groups.length) { await new Promise((res) => setTimeout(res, 300)); continue; }
+    for (const g of groups) for (const p of g.players) {
+      const k = nameKey(p.name);
+      if (!field.has(k)) field.set(k, { name: p.name, country: p.country, hcp: p.hcp ?? null });
+      if (p.country && !countries.has(k)) countries.set(k, p.country);
+    }
     const rNum = (r.label.match(/round\s+(\d+)/i) || [, String(i + 1)])[1];
     const date = (r.label.match(/\(([^)]+)\)/) || [])[1] || undefined;
     const mkRound = (gs) => ({
@@ -306,7 +345,7 @@ async function fetchTeeSheets(lid, teePageId) {
     }
     await new Promise((res) => setTimeout(res, 300));
   }
-  return { draws: byDiv, countries, roundDateLabels };
+  return { draws: byDiv, countries, roundDateLabels, field };
 }
 
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
@@ -323,7 +362,8 @@ async function discoverDivisions(pageUrl, leagueOverride) {
   const teePageId = (pageHtml.match(/tee_sheet_button[^>]*value="\/pages\/(\d+)"/) || [])[1]
     || (() => {
       for (const m of pageHtml.matchAll(/<a[^>]+href="[^"]*\/pages\/(\d+)"[^>]*>([\s\S]{0,150}?)<\/a>/g)) {
-        if (/tee\s*sheets?/i.test(m[2].replace(/<[^>]+>/g, ' '))) return m[1];
+        // "Tee Sheets" (EN) ou "Départs" (microsites franceses — Evian Juniors Cup).
+        if (/tee\s*(sheets?|times)|d[ée]parts/i.test(m[2].replace(/<[^>]+>/g, ' '))) return m[1];
       }
       return null;
     })()
@@ -349,7 +389,12 @@ async function discoverDivisions(pageUrl, leagueOverride) {
   // Sem <select name=round> → divisão única: o v2tid está directo no widget.
   if (!opts.length) {
     const v2 = (widget.match(/v2tournaments\/(\d+)/) || [])[1];
-    if (!v2) throw new Error('sem opções de ronda nem v2tid no widget');
+    if (!v2) {
+      // Prova por começar: ainda não há leaderboard, mas os tee sheets
+      // (draws) já estão publicados → modo pré-torneio, o campo sai deles.
+      if (teePageId) return { title, lid, divisions: [], teePageId, rosterPageId, preField: true };
+      throw new Error('sem opções de ronda nem v2tid no widget');
+    }
     return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2 }], teePageId, rosterPageId };
   }
 
@@ -481,7 +526,7 @@ async function runOne(opts) {
     skipScorecards = false, profiles = false, noMerge = false,
   } = opts;
 
-  let title, divisions, source, lid = leagueOverride, teePageId = null, rosterPageId = opts.rosterPage || null;
+  let title, divisions, source, lid = leagueOverride, teePageId = null, rosterPageId = opts.rosterPage || null, preField = false;
   if (v2Arg) {
     // Aceita `id,id,...` (labels genéricos) ou `Label=id,Label=id,...` (curado,
     // ex: divisões México "Varonil 18=4582829,Femenil 18=4582833,…").
@@ -499,7 +544,8 @@ async function runOne(opts) {
     title = disc.title; divisions = disc.divisions; source = pageUrl;
     lid = disc.lid; teePageId = disc.teePageId;
     rosterPageId = rosterPageId || disc.rosterPageId;   // scope override > auto-descoberto
-    if (!divisions.length) throw new Error('nenhuma divisão descoberta');
+    preField = !!disc.preField;
+    if (!divisions.length && !preField) throw new Error('nenhuma divisão descoberta');
   } else {
     throw new Error('sem pageUrl nem --v2tids');
   }
@@ -515,11 +561,17 @@ async function runOne(opts) {
   // defeito (melhor `null` do que carimbar toda a gente como americana).
   const noDefaultCountry = String(countryDefault || '').toLowerCase() === 'none';
   const ed = { name, year: yearOverride, divisions };
-  const out = await scrapeEdition(ed, {
-    skipScorecards,
-    profiles: profiles || (!!countryDefault && !noDefaultCountry),
-    ...(noDefaultCountry ? { defaultCountry: null } : {}),
-  });
+  // Pré-torneio: não há leaderboard para o scrapeEdition ler → divisão única
+  // vazia (o label é o mesmo que o discoverDivisions dará quando o leaderboard
+  // abrir), semeada mais abaixo com o campo dos tee sheets.
+  const out = preField
+    ? { tournament: name, year: yearOverride, divisions: [{ division: title || 'Overall', tid: null, par: null, parTotal: null, players: [] }] }
+    : await scrapeEdition(ed, {
+      skipScorecards,
+      profiles: profiles || (!!countryDefault && !noDefaultCountry),
+      ...(noDefaultCountry ? { defaultCountry: null } : {}),
+    });
+  if (preField) console.log('   ⏳ leaderboard ainda fechado — modo pré-torneio (campo + draws dos tee sheets)');
   out.source = source;
   if (nameOverride) out.tournament = nameOverride;
   // Nº de etapa/fase (eventos multi-ficheiro por ano, ex: Optimist Phase 1-3):
@@ -539,7 +591,16 @@ async function runOne(opts) {
   // nunca a R1, que não tem ronda anterior de onde inferir emparelhamentos.
   if (teePageId && lid && !opts.skipTeeSheets) {
     try {
-      const { draws, countries, roundDateLabels } = await fetchTeeSheets(lid, teePageId);
+      const { draws, countries, roundDateLabels, field } = await fetchTeeSheets(lid, teePageId);
+      if (!out.year && roundDateLabels.length) out.year = new Date().getUTCFullYear();
+      // Pré-torneio (1 divisão): o campo é quem está nos draws.
+      if (preField && out.divisions.length === 1) {
+        out.divisions[0].players = [...field.values()].map((f) => ({
+          pos: '', name: f.name, country: f.country ? inferCountry(f.country, null) : null,
+          location: f.country || '', hcp: f.hcp, toPar: null, total: null, roundGross: [], rounds: [],
+        }));
+        console.log(`   👥 tee sheets: ${field.size} jogador(es) no campo pré-torneio`);
+      }
       // Datas do tee sheet FUNDIDAS com as do v2 (min/max): num evento a
       // decorrer o v2 só tem as rondas jogadas e o endDate ficava curto.
       const anchor = out.startDate || out.endDate || null;
@@ -559,6 +620,9 @@ async function runOne(opts) {
       if (countries.size) {
         let nc = 0;
         for (const dv of out.divisions) for (const p of dv.players) {
+          // Handicap do tee sheet ("APELIDO Nome (+1.3)") — o leaderboard v2 não o traz.
+          const f = field.get(nameKey(p.name));
+          if (f && f.hcp != null && p.hcp == null) p.hcp = f.hcp;
           if (p.location) continue;                 // já tinha afiliação → manda ela
           const c = countries.get(nameKey(p.name));
           if (!c) continue;
