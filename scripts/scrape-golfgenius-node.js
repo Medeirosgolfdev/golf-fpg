@@ -579,7 +579,12 @@ async function discoverDivisions(pageUrl, leagueOverride) {
       if (teePageId) return { title, lid, divisions: [], teePageId, rosterPageId, preField: true };
       throw new Error('sem opções de ronda nem v2tid no widget');
     }
-    return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2 }], teePageId, rosterPageId };
+    // Sem <select> mas com VÁRIOS leaderboards empilhados (Evian 2026, R1:
+    // Boys / Girls / Nations Cup) → segue para o caso "uma vista, várias
+    // divisões" abaixo (o `opts.every(...)` de um array vazio é true). Antes
+    // ficava-se só com o 1.º v2tid e as raparigas desapareciam.
+    const nV2 = new Set([...widget.matchAll(/v2tournaments\/(\d+)/g)].map((m) => m[1])).size;
+    if (nV2 === 1) return { title, lid, divisions: [{ label: title || 'Overall', v2tid: v2 }], teePageId, rosterPageId };
   }
 
   // Caso "uma vista, várias divisões" (Champion of Champions): o <select> só
