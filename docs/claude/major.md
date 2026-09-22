@@ -466,13 +466,17 @@ corre em todas as fontes GG com cartões; divisões multi-campo ficam intactas).
 ⚠ O `course_statistics` (lib `gg-course-stats.js`) NÃO serve com vários tees:
 a coluna Meters vem como INTERVALO "346-365" e o parser ficava com o 1.º número;
 (2) **cartões WHS da FPG dos portugueses** (`import-ffgolf-jobfile.js
---whs-course evian`): metros/SI/CR/slope por escalão, casados pelo nome; só
-com consenso entre cartões; metros a 0 e SI 1..18 seguido não contam.
+--whs-course evian`) — ⚠ RECURSO, não oficial: numa volta internacional é o
+clube do atleta que preenche o cartão (Mariana, 22/09: "preguiçosos"). Só
+metros e CR/slope, com consenso entre cartões, e a divisão fica marcada
+`cardSource: "whs-clubes-pt"` (as do GG: `"gg-tee-card"`). Os metros de
+2022-24 batem ao metro com o cartão oficial de 2025; o CR 72.4 dos rapazes
+(oficial 2025: 72.0) fica por confirmar — é o valor com que a FPG calculou o SD
+oficial desses cartões.
 Buracos: 2022 Girls sem metros (o único cartão, da Amélia Gabin, veio a 0).
-**SI:** só 2022 tem SI real (1,17,7,3,5,4,11,16,12,6,9,2,18,14,10,13,8,15) —
-NÃO foi propagado: testado contra os 33 SD oficiais FPG de 2023-25, o SI de 2022
-acerta 22 e o 1..18 seguido acerta 23 (os oficiais foram calculados com os
-cartões de SI seguido, logo não distinguem). Sem SI, a `/major` calcula o SD
+**SI: nenhum.** O único SI "real" (2022: 1,17,7,3,5,4,11,16,12,6,9,2,18,14,10,13,8,15)
+vinha de cartões de clubes e não se confirma — testado contra os 33 SD oficiais
+FPG de 2023-25 acerta 22, e o 1..18 seguido acerta 23 (não distinguem). Não se usa. Sem SI, a `/major` calcula o SD
 sobre o gross cru (sem Net Double Bogey). Desvios dos oficiais por PCC: +2 a
 17/09/2024 e +1 a 21/09/2023 (todos os PT desses dias). `showRatings: true`
 na `evianjc` (colunas HCP e SD). 2026: campo recriado no GG (outro course id)

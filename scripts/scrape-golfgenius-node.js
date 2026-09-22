@@ -470,6 +470,7 @@ async function applyTeeCards(out) {
     if (!dv.teeName) dv.teeName = c.teeName;
     if (dv.courseRating == null) dv.courseRating = c.courseRating;
     if (dv.slope == null) dv.slope = c.slope;
+    dv.cardSource = 'gg-tee-card';
     console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope}`);
   }
 }

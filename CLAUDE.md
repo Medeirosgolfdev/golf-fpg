@@ -196,6 +196,11 @@ GolfBox) · `/england` · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/w
   `grossTotal` pode vir como texto ("WD").
 - **Datas `/Date(ms)/` da FPG são meia-noite de Lisboa** — converter com
   `lisbonCivilDay`/`lisbonCivilDayStr` (`lib/helpers.js`), nunca com `toISOString()`.
+- **Cartões WHS de voltas internacionais NÃO são fonte oficial do campo:** quem os
+  preenche na FPG é o clube do atleta, muitas vezes à pressa (tee ao calhas, metros
+  a zero, SI 1..18 seguido). Metros/SI/tee/CR vêm do organizador (GolfGenius,
+  GolfBox, FFG); os cartões dos clubes só como recurso, com consenso e marcados
+  (`cardSource: "whs-clubes-pt"`). Nunca tirar SI nem nome de tee daí.
 - **Voltas internacionais:** enriquecer sempre com `scripts/enrich-intl-round.js`,
   nunca à mão (o `melhorias.json` da raiz é CRLF e editado por splice).
 - **EGR e WAGR são ADITIVOS, nunca subtractivos** (Mariana, 19/09): as duas fontes apagam o que tem mais de ~2 anos (pontos caducam, a ficha EGR só mostra a janela do ranking). Ao regravar eventos ou fichas usar `scripts/lib/merge-aditivo.js` (o que vem actualiza, o que só existia no ficheiro fica, marcado `_mantido`). As fichas EGR refrescam-se todas uma vez por mês (`update-egr.yml`) para nada chegar aos 2 anos sem estar guardado.

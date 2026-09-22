@@ -27,8 +27,9 @@
  *     --slug evianjc --year 2024 --name "The Amundi Evian Juniors Cup" --course "Evian Resort Golf Club"
  *   [--type 01 --ligue 01] [--whs-course evian] [--force]
  *
- *   --whs-course <regex>: metros/SI/CR/slope por escalão tirados dos cartões WHS
- *   (FPG) dos portugueses que jogaram — o portal FFG não os publica.
+ *   --whs-course <regex>: metros/CR/slope por escalão tirados dos cartões WHS
+ *   (FPG) dos portugueses que jogaram — o portal FFG não os publica. Fonte de
+ *   RECURSO (preenchida pelos clubes): fica marcada `cardSource`.
  *
  * Exit: 0 gravou · 2 nada novo · 1 erro.
  */
@@ -121,11 +122,13 @@ const samePerson = (a, b) => {
 
 /**
  * Cartões WHS (FPG) de portugueses que jogaram o torneio → metros por buraco,
- * SI, CR e slope, por divisão. São os cartões oficiais que o clube registou na
- * FPG (scorecards.json de cada federado, em output/ e data-archive/). Cada
- * cartão entra na divisão do jogador com o mesmo nome; um campo só é aplicado
- * quando todos os cartões da divisão concordam. Metros a zero e SI 1..18
- * seguido (preenchimento de quem registou) não contam.
+ * CR e slope, por divisão (scorecards.json de cada federado, em output/ e
+ * data-archive/). ⚠ NÃO são fonte oficial do campo: numa volta internacional
+ * é o CLUBE do atleta que preenche o cartão na FPG, muitas vezes à pressa
+ * (Mariana, 22/09) — tee com o nome que calhou, metros a zero, SI 1..18
+ * seguido. Por isso: fallback só quando não há fonte oficial, o SI NÃO se usa,
+ * um campo só entra com consenso entre cartões, e a divisão fica marcada
+ * `cardSource: "whs-clubes-pt"` para se saber de onde veio.
  */
 function whsCardsByDivision(divisions, courseRe, startIso, endIso) {
   const root = path.join(__dirname, "..");
@@ -157,14 +160,11 @@ function whsCardsByDivision(divisions, courseRe, startIso, endIso) {
     if (!cards.length) continue;
     const h18 = (x, k) => Array.from({ length: 18 }, (_, i) => Number(x[`${k}_${i + 1}`]));
     const meters = cards.map(({ x }) => h18(x, "meters")).filter((m) => m.every((v) => v > 0));
-    const si = cards.map(({ x }) => h18(x, "stroke_index"))
-      .filter((s) => s.every((v) => v >= 1 && v <= 18) && !s.every((v, i) => v === i + 1));
     const one = (arr) => { const u = [...new Set(arr.map((a) => JSON.stringify(a)))]; return u.length === 1 ? JSON.parse(u[0]) : null; };
     out.set(dv.division, {
       n: cards.length,
       players: [...new Set(cards.map(({ x }) => x.player_name))],
       meters: meters.length ? one(meters) : null,
-      si: si.length ? one(si) : null,
       courseRating: one(cards.map(({ x }) => x.course_rating).filter((v) => v != null)),
       slope: one(cards.map(({ x }) => x.slope).filter((v) => v != null)),
     });
@@ -274,16 +274,16 @@ async function main() {
       const c = cards.get(dv.division);
       if (!c) { console.log(`   · ${dv.division}: sem cartões WHS de portugueses`); continue; }
       if (c.meters) dv.meters = c.meters;
-      if (c.si) dv.si = c.si;
       if (c.courseRating != null) dv.courseRating = c.courseRating;
       if (c.slope != null) dv.slope = c.slope;
+      if (c.meters || c.courseRating != null) dv.cardSource = "whs-clubes-pt";
       // Quem tem cartão WHS da FPG NESTA prova jogou-a como federado português:
       // se a FFG não publicou a nacionalidade (2023), fica PT.
       for (const p of dv.players) {
         if (!p.country && c.players.some((n) => samePerson(p.name, n))) { p.country = "PT"; console.log(`   🇵🇹 ${p.name}: país PT pelo cartão WHS da FPG`); }
       }
       console.log(`   📐 ${dv.division} (${dv.teeName || "?"}): ${c.n} cartões WHS de ${c.players.join(", ")} → `
-        + `metros ${c.meters ? c.meters.reduce((a, b) => a + b, 0) + " m" : "—"} · SI ${c.si ? "sim" : "—"} · CR ${c.courseRating ?? "—"} / ${c.slope ?? "—"}`);
+        + `metros ${c.meters ? c.meters.reduce((a, b) => a + b, 0) + " m" : "—"} · CR ${c.courseRating ?? "—"} / ${c.slope ?? "—"}`);
     }
   }
 
