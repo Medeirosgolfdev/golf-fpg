@@ -168,7 +168,7 @@ jobs:
           # produz JSON inválido; a política do repo (CLAUDE.md, "Conflitos de git
           # nos ficheiros GERADOS") é REGENERAR. Por isso: se os ÚNICOS conflitos
           # forem estes, aceitamos qualquer lado e reconstruímos a seguir.
-          GEN_FILES="public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json"
+          GEN_FILES="public/data/juniors.json public/data/juniors-tournaments.json public/data/juniors-tournaments-00.json public/data/juniors-tournaments-01.json public/data/juniors-tournaments-02.json public/data/juniors-tournaments-03.json public/data/tournament-catalog.json"
 
           PUSH_OK=0
           for i in 1 2 3 4 5; do

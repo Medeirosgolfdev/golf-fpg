@@ -126,7 +126,10 @@ jobs:
           # Por isso: se os ÚNICOS conflitos forem estes, aceitamos qualquer lado
           # (é indiferente — regeneramos logo a seguir), continuamos o rebase e
           # reconstruímos os agregados a partir da árvore já fundida.
-          GEN_FILES="public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json"
+          # ⚠ Incluir as PARTES do juniors-tournaments (-00, -01, …) e o major-veterans.json
+          # (também gerado pelo build-major-catalog) — sem elas o run de 2026-09-22
+          # scrapou tudo e caiu no push ("conflito em ficheiros não-gerados").
+          GEN_FILES="public/data/major-catalog.json public/data/major-veterans.json public/data/juniors.json public/data/juniors-tournaments.json public/data/juniors-tournaments-00.json public/data/juniors-tournaments-01.json public/data/juniors-tournaments-02.json public/data/juniors-tournaments-03.json public/data/tournament-catalog.json"
 
           PUSH_OK=0
           for i in 1 2 3 4 5; do
