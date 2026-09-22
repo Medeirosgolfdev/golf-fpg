@@ -75,3 +75,42 @@ describe('applyTeeCards — CR/slope por omissão', () => {
     expect(out.divisions.map((d) => d.courseRating)).toEqual([73, 74]);
   });
 });
+
+describe('applyTeeCards — cartão por ronda', () => {
+  const card = (date, teeName, m, cr, sl) => ({ date, teeName, meters: Array(18).fill(m), par: Array(18).fill(4), courseRating: cr, slope: sl, si: null });
+  const player = (dates) => ({ detailId: 'x', rounds: dates.map((d) => ({ date: d, scores: [4] })) });
+
+  it('tee igual em todas as rondas → fica na divisão', async () => {
+    const out = { divisions: [{ division: 'Boys', players: [player(['Tue, September 22', 'Wed, September 23'])] }] };
+    await applyTeeCards(out, [], async () => [card('Tue, September 22', 'White', 320, 73, 149), card('Wed, September 23', 'White', 320, 73, 149)]);
+    const dv = out.divisions[0];
+    expect([dv.teeName, dv.courseRating, dv.slope, dv.cardRounds]).toEqual(['White', 73, 149, 2]);
+    expect(dv.players[0].rounds[0].meters).toBeUndefined();
+  });
+
+  it('campo/marcação diferente por ronda → cada ronda leva o seu cartão', async () => {
+    const out = { divisions: [{ division: 'Boys', players: [player(['Tue, September 22', 'Wed, September 23'])] }] };
+    await applyTeeCards(out, [], async () => [card('Tue, September 22', 'Roost', 320, 73, 149), card('Wed, September 23', 'Karoo', 300, 71, 132)]);
+    const dv = out.divisions[0];
+    expect(dv.meters).toBeUndefined();          // nada ao nível da divisão
+    expect(dv.players[0].rounds.map((r) => [r.teeName, r.meters[0], r.courseRating, r.slope]))
+      .toEqual([['Roost', 320, 73, 149], ['Karoo', 300, 71, 132]]);
+  });
+
+  it('uma ronda nova obriga a reler (senão o tee da R1 ficava para sempre)', async () => {
+    const out = { divisions: [{ division: 'Boys', cardSource: 'gg-tee-card', cardRounds: 1, meters: Array(18).fill(320), courseRating: 73, slope: 149,
+      players: [player(['Tue, September 22', 'Wed, September 23'])] }] };
+    let lido = 0;
+    await applyTeeCards(out, [], async () => { lido++; return [card('Tue, September 22', 'White', 320, 73, 149), card('Wed, September 23', 'White', 318, 73, 149)]; });
+    expect(lido).toBe(1);
+    expect(out.divisions[0].players[0].rounds.map((r) => r.meters[0])).toEqual([320, 318]);
+  });
+
+  it('cartão de outra fonte (cartões WHS) não é tocado', async () => {
+    const out = { divisions: [{ division: 'Boys', cardSource: 'whs-clubes-pt', meters: Array(18).fill(322), courseRating: 72.4, slope: 140, players: [player(['x'])] }] };
+    let lido = 0;
+    await applyTeeCards(out, [], async () => { lido++; return []; });
+    expect(lido).toBe(0);
+    expect(out.divisions[0].meters[0]).toBe(322);
+  });
+});

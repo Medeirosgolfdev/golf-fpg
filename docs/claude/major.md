@@ -486,6 +486,20 @@ cartão de tee do GG em 2025:
 | White (rapazes) | 365 148 325 351 172 346 479 177 462 · 369 322 361 395 178 475 138 305 437 | 5.805 | 72.4/140 (2022-24, FPG) · 72.0/140 (2025, GG) |
 | Blue (raparigas) | 346 128 295 325 146 312 443 137 410 · 334 288 326 366 145 434 114 267 417 | 5.233 | 74/150 |
 
+**Cartão de tee POR RONDA (2026-09-22):** o `fetchTeeCards` lê a data de cada
+bloco do cartão do jogador e devolve um cartão por ronda; o `applyTeeCards`
+guarda ao nível da divisão quando todas as rondas coincidem (o caso normal) e
+**por ronda** quando não (`rounds[].meters/si/teeName/courseRating/slope`) — é o
+caso de provas que mudam de campo a cada ronda (FSGA: R1 Roost, R2/R3 Karoo) ou
+que remarcam os tees todos os dias. A `jobDivisionToTournament` usa o valor da
+ronda à frente do da divisão. `cardRounds` guarda quantas rondas já foram lidas:
+sem isso a divisão ficava com o cartão da R1 para sempre e a mudança nas rondas
+seguintes passava despercebida. Rondas em que dois jogadores do mesmo escalão
+dão tees diferentes são saltadas (não se escolhe por eles). Um `cardSource` de
+outra fonte (cartões WHS, curado) nunca é sobreposto.
+Medido: Evian 2025 = mesmo tee nas 3 rondas; 2026 = tees remarcados face a 2025
+(White −24 m, Blue −19 m, todos os buracos ±1-16 m, par igual).
+
 Fontes, por ordem de confiança: (1) **cartão de tee do GG** — `fetchTeeCards`
 lê o link "expand tee details" (`/tournaments2/nets/{id}?event_id=…`) do cartão
 do jogador; `applyTeeCards` preenche `meters`/`teeName`/`courseRating`/`slope`

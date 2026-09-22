@@ -434,10 +434,22 @@ function splitByTee(out, tees, teeDivisions) {
  * um JS com a linha "White Tee / SLOPE®: 140 / Course Rating™: 72.0 / Campo" e
  * as linhas Meters|Yards e Par. É a ÚNICA fonte de metros por buraco POR TEE:
  * o course_statistics só dá o intervalo entre tees ("346-365").
- * @returns [{ teeName, courseRating, slope, meters[18], par[18] }] (uma por volta)
+ * Cada bloco do cartão do jogador é uma RONDA e traz a sua data — é por aí que
+ * o cartão se cola à volta certa: há provas que mudam de campo ou de marcação
+ * de tee a cada ronda (FSGA: R1 Roost, R2/R3 Karoo; Evian: tees montados de
+ * novo todos os dias).
+ * @returns [{ date, teeName, courseRating, slope, meters[18], par[18], si }] (uma por ronda)
  */
 async function fetchTeeCards(detailId) {
   const sc = await ggGet(`${GG}/tournaments2/details/${detailId}?player_stats_for_portal=true`);
+  // Data de cada bloco (header_row "<strong>Thu, September 18</strong>") → link
+  // "expand tee details" que vem a seguir, dentro do mesmo bloco.
+  const byLink = new Map();
+  for (const block of sc.split(/<tr class='header_row'/).slice(1)) {
+    const date = txt((block.match(/<strong>([\s\S]*?)<\/strong>/) || [])[1] || '');
+    const href = (block.match(/href="(\/tournaments2\/nets\/[^"]*)"/) || [])[1];
+    if (href && date && !byLink.has(href)) byLink.set(href.replace(/&amp;/g, '&'), date);
+  }
   const links = [...new Set([...sc.matchAll(/href="(\/tournaments2\/nets\/[^"]*)"/g)].map((m) => m[1].replace(/&amp;/g, '&')))];
   const cards = [];
   for (const u of links) {
@@ -459,37 +471,78 @@ async function fetchTeeCards(detailId) {
     const siCells = siRow ? cells(siRow) : [];
     const si = siCells.length >= 18 ? (siCells.length >= 21 ? pick18(siCells) : siCells.slice(0, 18)) : null;
     const siOk = si && new Set(si).size === 18 && si.every((v) => v >= 1 && v <= 18) && !si.every((v, i) => v === i + 1);
-    cards.push({ teeName: decodeEntities(hdr[1]).trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)), si: siOk ? si : null });
+    cards.push({ date: byLink.get(u) || null, teeName: decodeEntities(hdr[1]).trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)), si: siOk ? si : null });
     await new Promise((res) => setTimeout(res, 200));
   }
   return cards;
 }
 
 /**
- * Preenche metros/tee/CR/slope de cada divisão a partir dos cartões de tee de
- * DOIS jogadores (o 1.º e o último com cartão). Só aplica se TODAS as voltas
- * lidas derem o mesmo tee e os mesmos metros — divisões com vários campos ou
- * tees (CoC: Faldo + Castle Hume) ficam como estão. Nunca escreve por cima de
- * um valor já preenchido (curado à mão ou vindo de outra fonte).
+ * Preenche metros/tee/CR/slope a partir dos cartões de tee de DOIS jogadores
+ * (o 1.º e o último com cartão), POR RONDA: cada cartão traz a data da sua
+ * volta. Se todas as rondas derem o mesmo tee, fica ao nível da divisão (o
+ * caso normal); se diferirem — outro campo em cada ronda (FSGA: Roost/Karoo)
+ * ou a marcação dos tees mudada de dia para dia (Evian) — cada ronda leva o
+ * seu (`rounds[].meters/si/teeName/courseRating/slope`), que a `/major` usa à
+ * frente do valor da divisão. Nunca escreve por cima de um valor já preenchido
+ * (curado à mão ou vindo de outra fonte).
  */
-async function applyTeeCards(out, knownPlaceholders = []) {
+async function applyTeeCards(out, knownPlaceholders = [], fetcher = fetchTeeCards) {
   for (const dv of out.divisions) {
-    if (dv.meters && dv.courseRating != null) continue;
+    const dates = new Set((dv.players || []).flatMap((p) => (p.rounds || []).map((r) => r.date).filter(Boolean)));
+    // Já lido, e sem rondas novas desde então → não repetir os pedidos. ⚠ Sem
+    // o `cardRounds` a divisão ficava com o cartão da R1 para sempre e a
+    // mudança de tee/campo nas rondas seguintes passava despercebida.
+    if (dv.cardSource === 'gg-tee-card' && dv.cardRounds === dates.size) continue;
+    // Metros/CR de OUTRA fonte (curados, cartões WHS) mandam — não se tocam.
+    if (dv.cardSource && dv.cardSource !== 'gg-tee-card' && dv.meters && dv.courseRating != null) continue;
     const withCard = dv.players.filter((p) => p.detailId && (p.rounds || []).some((r) => (r.scores || []).length));
     const sample = [...new Set([withCard[0], withCard[withCard.length - 1]].filter(Boolean))];
     if (!sample.length) continue;
     let cards = [];
-    try { for (const p of sample) cards.push(...await fetchTeeCards(p.detailId)); } catch (e) { console.log(`   ⚠ ${dv.division}: cartão de tee indisponível (${e.message})`); continue; }
+    try { for (const p of sample) cards.push(...await fetcher(p.detailId)); } catch (e) { console.log(`   ⚠ ${dv.division}: cartão de tee indisponível (${e.message})`); continue; }
     if (!cards.length) continue;
-    const sig = (c) => `${c.teeName}|${c.meters.join(',')}|${c.courseRating}|${c.slope}`;
-    if (new Set(cards.map(sig)).size !== 1) { console.log(`   ⚠ ${dv.division}: tees diferentes entre voltas/jogadores — metros não aplicados`); continue; }
-    const c = cards[0];
+    const sig = (c) => `${c.teeName}|${c.meters.join(',')}|${c.courseRating}|${c.slope}|${(c.si || []).join(',')}`;
+    // Um cartão por DATA. Datas em que os dois jogadores amostrados discordam
+    // (tees diferentes dentro do mesmo escalão) ficam de fora — não se escolhe.
+    const byDate = new Map();
+    for (const c of cards.filter((c) => c.date)) {
+      if (!byDate.has(c.date)) byDate.set(c.date, []);
+      byDate.get(c.date).push(c);
+    }
+    const perDate = new Map();
+    for (const [date, cs] of byDate) {
+      if (new Set(cs.map(sig)).size === 1) perDate.set(date, cs[0]);
+      else console.log(`   ⚠ ${dv.division} (${date}): jogadores da mesma divisão com tees diferentes — ronda saltada`);
+    }
+    if (!perDate.size) { console.log(`   ⚠ ${dv.division}: sem cartão de tee utilizável`); continue; }
+    const uniform = new Set([...perDate.values()].map(sig)).size === 1;
+    if (!uniform) {
+      // Cada ronda com o seu cartão (casado pela data, como o merge aditivo).
+      let n = 0;
+      for (const p of dv.players) for (const r of p.rounds || []) {
+        const c = r.date ? perDate.get(r.date) : null;
+        if (!c) continue;
+        if (!r.meters) r.meters = c.meters;
+        if (!r.teeName) r.teeName = c.teeName;
+        if (r.courseRating == null) r.courseRating = c.courseRating;
+        if (r.slope == null) r.slope = c.slope;
+        if (!r.si && c.si) r.si = c.si;
+        n++;
+      }
+      dv.cardSource = 'gg-tee-card';
+      dv.cardRounds = dates.size;
+      console.log(`   📐 ${dv.division}: tee POR RONDA em ${n} volta(s) — ${[...perDate].map(([d, c]) => `${d}: ${c.teeName} ${c.meters.reduce((a, b) => a + b, 0)} m CR ${c.courseRating}/${c.slope}`).join(' · ')}`);
+      continue;
+    }
+    const c = [...perDate.values()][0];
     if (!dv.meters) dv.meters = c.meters;
     if (!dv.teeName) dv.teeName = c.teeName;
     if (dv.courseRating == null) dv.courseRating = c.courseRating;
     if (dv.slope == null) dv.slope = c.slope;
     if (!dv.si && c.si) dv.si = c.si;
     dv.cardSource = 'gg-tee-card';
+    dv.cardRounds = dates.size;
     console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope} · SI ${c.si ? c.si.join(',') : 'não publicado'}`);
   }
   // CR/slope POR OMISSÃO: tees com metros diferentes na mesma prova e todos com

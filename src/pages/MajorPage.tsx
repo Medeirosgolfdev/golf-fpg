@@ -139,7 +139,10 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[] }[]; }
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; birthYear?: number | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
+  // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
+  // ronda) — ganha ao da divisão quando existe.
+  date?: string; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; courseRating?: number | null; slope?: number | null }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
 export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; startDate?: string | null; endDate?: string | null; divisions: JobDivision[]; }
@@ -252,9 +255,17 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       }
       // CR/Slope da divisão (ex: GolfBox) → SD por ronda no leaderboard. Só em
       // rondas de 18 buracos (o CR publicado é para a volta completa).
-      const roundCR = !nineHole && div.courseRating != null ? div.courseRating : undefined;
-      const roundSlope = !nineHole && div.slope != null ? div.slope : undefined;
-      return { round: ri + 1, gross, scores, pars: roundPars, si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName, courseRating: roundCR, slope: roundSlope, startHole: r.startingHole };
+      // Metros/SI/tee/CR/slope da PRÓPRIA ronda quando o ficheiro os traz
+      // (campo ou marcação diferente em cada ronda); senão, os da divisão.
+      const rMeters18 = full18(r.meters);
+      const rSi18 = full18(r.si);
+      const cr = r.courseRating ?? div.courseRating;
+      const sl = r.slope ?? div.slope;
+      const roundCR = !nineHole && cr != null ? cr : undefined;
+      const roundSlope = !nineHole && sl != null ? sl : undefined;
+      const rMeters = rMeters18 ? sliceFor(rMeters18, r.startingHole) : metersForRound(r.startingHole);
+      const rTee = rMeters.length ? (r.teeName || div.teeName || "Tee") : teeName;
+      return { round: ri + 1, gross, scores, pars: roundPars, si: rSi18 ? sliceFor(rSi18, r.startingHole) : siForRound(r.startingHole), meters: rMeters, teeName: rTee, courseRating: roundCR, slope: roundSlope, startHole: r.startingHole };
     });
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
     // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
