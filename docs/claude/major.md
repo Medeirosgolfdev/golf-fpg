@@ -446,6 +446,22 @@ nacionalidade → reparação por cruzamento com as outras edições do slug + o
 canónico de juniores, só com candidato ÚNICO. Ficaram 40 sem país em 2023 e 2
 nomes por reparar (Krist Na Kvetonova, Ol Via Grachov). Guarda anti-encolhimento
 (< 80% → `--force`). Testes: `import-ffgolf-jobfile.test.js`.
+
+⚠ **Reparação por cruzamento (22/09):** o `juniors.json` é `{ juniors: [...] }`
+(não `players`) — com a chave errada o canónico não entrava e só se preenchiam 7
+países em 2023 (agora 37). Candidatos únicos pelas palavras ORDENADAS (o canónico
+tem "Amélia Gabin" e "Gabin Amélia") e cada espaço suspeito vale UMA letra
+(`[a-z]`), senão a própria versão estragada que o canónico aprendeu do nosso
+ficheiro ("Am lia Gabin") passava a ser candidata. 2023 fica com 10 sem país.
+
+**Datas de nascimento:** o GG da Evian não as tem (nem no v2tournaments, nem no
+cartão, nem fichas `/profiles`). Vêm pelo kids2: em 2026, 46 dos 83 já têm DOB
+por outras fontes (USKids, FFG, RFEG, FPG).
+
+**Países (cada seleção = 2 rapazes + 2 raparigas; França anfitriã às vezes mais):**
+14 em 2022 → 17 → 19 → 20 → 21 em 2026. Sempre: AT, BE, CH, CZ, ES, FR, IT, MX,
+PT, US (e FI/SK/TR quase sempre). Entraram: JP/MA (2023), KR/SI (2024), CN/DE
+(2025), EE/LU (2026). Saíram: DK em 2026; BR só 2024; CO só 2023.
 O `GG_SOURCES` tem `preField: true` (aparece na lista logo com o draw).
 
 **Campo e tees (2026-09-22)** — o mesmo campo e o mesmo par 71 buraco a buraco
