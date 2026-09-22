@@ -136,6 +136,12 @@ GolfBox) · `/england` · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/w
   (as rotas antigas redireccionam).
 - `ScotlandPage.tsx` está completa mas **desligada de propósito** (os dados não
   são fiáveis) — não é bug.
+- **Calendário**: os eventos vivem em `src/data/calendarEvents.ts` (fora da
+  página, porque o `scripts/build-ics.js` também os lê). O `prebuild` gera
+  `public/calendario-{golfe,andebol,viagens,familia,aniversarios}.ics`
+  (gitignored) — são estes endereços que estão subscritos no Google Calendar da
+  Mariana, que os relê sozinho. Mexer nos eventos chega aos dois sítios; mudar
+  um `calId` obriga a rever as regras em `FICHEIROS` no script.
 
 ## IDs importantes
 

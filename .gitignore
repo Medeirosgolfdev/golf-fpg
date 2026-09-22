@@ -144,3 +144,9 @@ claude-memory/
 
 # Diário do fetch-uskids-member-history (temporário; apagado no fim de cada corrida completa)
 data-archive/uskids-member-diario.jsonl
+
+# Calendários .ics — gerados pelo prebuild (scripts/build-ics.js).
+# Vão para public/c/{CAL_SECRET}/ e NUNCA se comitam: o repositório é público
+# e os ficheiros trazem aniversários, viagens e férias da família.
+/public/c/
+.cal-secret
