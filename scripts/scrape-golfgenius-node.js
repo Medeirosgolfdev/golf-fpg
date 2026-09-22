@@ -441,7 +441,15 @@ async function fetchTeeCards(detailId) {
     let meters = pick18(cells(yRow));
     if (meters && /Yards/i.test(yRow) && !/Meters/i.test(yRow)) meters = meters.map((y) => Math.round(y * 0.9144));
     if (!hdr[1] || !meters) continue;
-    cards.push({ teeName: hdr[1].trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)) });
+    // SI: só se o cartão trouxer uma linha de handicap/stroke index (o de 2025
+    // da Evian não trazia) e for uma permutação válida de 1..18 que não seja
+    // o preenchimento 1..18 seguido.
+    const siRow = [...h.matchAll(/<tr[^>]*>[\s\S]*?<\/tr>/g)].map((m) => m[0])
+      .find((r) => /tee_data/.test(r) && /(handicap|stroke\s*index|\bS\.?I\.?\b|\bHCP\b)/i.test(r) && !/yardage_row|par_row|SLOPE/i.test(r));
+    const siCells = siRow ? cells(siRow) : [];
+    const si = siCells.length >= 18 ? (siCells.length >= 21 ? pick18(siCells) : siCells.slice(0, 18)) : null;
+    const siOk = si && new Set(si).size === 18 && si.every((v) => v >= 1 && v <= 18) && !si.every((v, i) => v === i + 1);
+    cards.push({ teeName: hdr[1].trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)), si: siOk ? si : null });
     await new Promise((res) => setTimeout(res, 200));
   }
   return cards;
@@ -470,8 +478,9 @@ async function applyTeeCards(out) {
     if (!dv.teeName) dv.teeName = c.teeName;
     if (dv.courseRating == null) dv.courseRating = c.courseRating;
     if (dv.slope == null) dv.slope = c.slope;
+    if (!dv.si && c.si) dv.si = c.si;
     dv.cardSource = 'gg-tee-card';
-    console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope}`);
+    console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope} · SI ${c.si ? c.si.join(',') : 'não publicado'}`);
   }
 }
 
