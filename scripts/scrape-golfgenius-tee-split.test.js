@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { cleanTeeName, splitByTee, parsePlayerTees } = require('./scrape-golfgenius-node.js');
+const { cleanTeeName, splitByTee, parsePlayerTees, applyTeeCards } = require('./scrape-golfgenius-node.js');
 
 describe('cleanTeeName', () => {
   it('tira o HCP (plus → negativo) e passa o apelido para o fim', () => {
@@ -40,5 +40,38 @@ describe('splitByTee', () => {
     // Sem tee conhecido → fica no label original, sem sexo inventado.
     expect(rest.division).toBe('Evian');
     expect(rest.players[0].sex).toBeUndefined();
+  });
+});
+
+describe('splitByTee — casos-limite', () => {
+  it('leaderboard vazio não deixa o ficheiro sem divisões', () => {
+    const out = { divisions: [{ division: 'Evian', players: [] }] };
+    expect(splitByTee(out, new Map([['a b', 'White']]), { White: 'Boys' })).toBe(0);
+    expect(out.divisions).toHaveLength(1);
+  });
+  it('o tee lido do leaderboard misto só fica no escalão desse tee', () => {
+    const out = { divisions: [{ division: 'Evian', teeName: 'White', meters: [1], courseRating: 73, slope: 149, cardSource: 'gg-tee-card',
+      players: [{ name: 'A Boy', rounds: [] }, { name: 'B Girl', rounds: [] }] }] };
+    splitByTee(out, new Map([['a boy', 'White'], ['b girl', 'Blue']]), { White: 'Boys', Blue: 'Girls' });
+    const [boys, girls] = out.divisions;
+    expect([boys.teeName, boys.courseRating]).toEqual(['White', 73]);
+    expect([girls.teeName, girls.courseRating, girls.meters]).toEqual(['Blue', null, null]);
+  });
+});
+
+describe('applyTeeCards — CR/slope por omissão', () => {
+  it('tira o CR/slope quando tees de comprimentos diferentes têm todos a mesma avaliação', async () => {
+    const mk = (division, m) => ({ division, meters: Array(18).fill(m), courseRating: 72, slope: 144, cardSource: 'gg-tee-card', players: [] });
+    const out = { divisions: [mk('Boys 10-11', 300), mk('Girls 10-12', 270)] };
+    await applyTeeCards(out);
+    expect(out.divisions.map((d) => [d.courseRating, d.slope, d.meters[0]])).toEqual([[null, null, 300], [null, null, 270]]);
+  });
+  it('mantém avaliações diferentes por tee', async () => {
+    const out = { divisions: [
+      { division: 'Boys', meters: Array(18).fill(320), courseRating: 73, slope: 149, cardSource: 'gg-tee-card', players: [] },
+      { division: 'Girls', meters: Array(18).fill(290), courseRating: 74, slope: 150, cardSource: 'gg-tee-card', players: [] },
+    ] };
+    await applyTeeCards(out);
+    expect(out.divisions.map((d) => d.courseRating)).toEqual([73, 74]);
   });
 });

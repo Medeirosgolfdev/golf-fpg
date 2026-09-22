@@ -26524,8 +26524,8 @@
           "disposition": "WD"
         }
       ],
-      "courseRating": 72,
-      "slope": 144,
+      "courseRating": null,
+      "slope": null,
       "cardSource": "gg-tee-card"
     },
     {
@@ -29768,11 +29768,14 @@
           ]
         }
       ],
-      "courseRating": 72,
-      "slope": 144,
+      "courseRating": null,
+      "slope": null,
       "cardSource": "gg-tee-card"
     }
   ],
   "scrapedAt": "2026-09-22T11:14:05.793Z",
-  "stop": 2
+  "stop": 2,
+  "ggPlaceholderRatings": [
+    "72/144"
+  ]
 }

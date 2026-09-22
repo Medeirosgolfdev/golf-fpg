@@ -407,9 +407,15 @@ function splitByTee(out, tees, teeDivisions) {
     }
     const names = new Set(players.map((p) => nameKey(p.name)));
     const dv = { ...src, division: label || src.division, players };
-    // Tee da divisão = o tee de saída de todos (quando é um só).
+    // Tee da divisão = o tee de saída de todos (quando é um só). Metros/CR/slope
+    // lidos ANTES da separação vêm do cartão de um jogador do leaderboard misto
+    // — só ficam na divisão cujo tee é esse; nas outras limpam-se (e o
+    // applyTeeCards corre outra vez depois do split).
     const divTees = [...new Set(players.map((p) => p.tee).filter(Boolean))];
-    if (divTees.length === 1 && !dv.teeName) dv.teeName = divTees[0];
+    if (divTees.length === 1 && src.teeName && divTees[0] !== src.teeName) {
+      for (const k of ['meters', 'si', 'courseRating', 'slope', 'cardSource']) dv[k] = null;
+      dv.teeName = divTees[0];
+    } else if (divTees.length === 1 && !dv.teeName) dv.teeName = divTees[0];
     if (src.draws) {
       dv.draws = Object.fromEntries(Object.entries(src.draws).map(([rn, rd]) => [rn, {
         ...rd, groups: rd.groups.filter((g) => g.players.some((q) => names.has(nameKey(q.name)))),
@@ -417,6 +423,7 @@ function splitByTee(out, tees, teeDivisions) {
     }
     divs.push(dv);
   }
+  if (!divs.length) return 0;   // leaderboard vazio → não deixar o ficheiro sem divisões
   out.divisions = divs;
   return divs.length;
 }
@@ -452,7 +459,7 @@ async function fetchTeeCards(detailId) {
     const siCells = siRow ? cells(siRow) : [];
     const si = siCells.length >= 18 ? (siCells.length >= 21 ? pick18(siCells) : siCells.slice(0, 18)) : null;
     const siOk = si && new Set(si).size === 18 && si.every((v) => v >= 1 && v <= 18) && !si.every((v, i) => v === i + 1);
-    cards.push({ teeName: hdr[1].trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)), si: siOk ? si : null });
+    cards.push({ teeName: decodeEntities(hdr[1]).trim(), slope: +hdr[2], courseRating: +hdr[3], meters, par: pick18(cells(pRow)), si: siOk ? si : null });
     await new Promise((res) => setTimeout(res, 200));
   }
   return cards;
@@ -465,7 +472,7 @@ async function fetchTeeCards(detailId) {
  * tees (CoC: Faldo + Castle Hume) ficam como estão. Nunca escreve por cima de
  * um valor já preenchido (curado à mão ou vindo de outra fonte).
  */
-async function applyTeeCards(out) {
+async function applyTeeCards(out, knownPlaceholders = []) {
   for (const dv of out.divisions) {
     if (dv.meters && dv.courseRating != null) continue;
     const withCard = dv.players.filter((p) => p.detailId && (p.rounds || []).some((r) => (r.scores || []).length));
@@ -485,6 +492,44 @@ async function applyTeeCards(out) {
     dv.cardSource = 'gg-tee-card';
     console.log(`   📐 ${dv.division}: tee ${c.teeName} · ${c.meters.reduce((a, b) => a + b, 0)} m · CR ${c.courseRating} / ${c.slope} · SI ${c.si ? c.si.join(',') : 'não publicado'}`);
   }
+  // CR/slope POR OMISSÃO: tees com metros diferentes na mesma prova e todos com
+  // a mesma avaliação (Optimist 2026: 4.925 m a 6.338 m, todos 72/144) não são
+  // avaliações reais — ficam os metros, sai o CR/slope (senão o SD sai errado).
+  const rated = out.divisions.filter((dv) => dv.cardSource === 'gg-tee-card' && dv.meters && dv.courseRating != null);
+  const byRating = new Map();
+  for (const dv of rated) {
+    const k = `${dv.courseRating}/${dv.slope}`;
+    if (!byRating.has(k)) byRating.set(k, []);
+    byRating.get(k).push(dv);
+  }
+  const flagged = new Set(out.ggPlaceholderRatings || []);
+  for (const [k, dvs] of byRating) {
+    const lengths = new Set(dvs.map((dv) => dv.meters.reduce((a, b) => a + b, 0)));
+    const known = knownPlaceholders.includes(k);
+    if (lengths.size < 2 && !known) continue;
+    for (const dv of dvs) { dv.courseRating = null; dv.slope = null; }
+    flagged.add(k);
+    console.log(known
+      ? `   ⚠ CR/slope ${k} (${dvs.map((d) => d.division).join(', ')}) = valor por omissão já detectado numa fase irmã — não aplicado`
+      : `   ⚠ CR/slope ${k} igual em ${lengths.size} tees de comprimentos diferentes (${dvs.map((d) => d.division).join(', ')}) — valor por omissão do GG, não aplicado`);
+  }
+  // Fica registado no ficheiro para as fases irmãs (Optimist 1-3: a fase 3 só
+  // tem um tee com cartão e sozinha não o detectava).
+  if (flagged.size) out.ggPlaceholderRatings = [...flagged];
+}
+
+/** Avaliações por omissão já detectadas noutros ficheiros do mesmo slug/ano (fases irmãs). */
+function siblingPlaceholders(slug, year, selfFile) {
+  const out = new Set();
+  if (!slug || !year) return [];
+  if (!/^[a-z0-9]+$/i.test(slug)) return [];   // slugs do scope são só letras/números
+  const family = slug.replace(/\d+$/, '');     // optimist1/2/3 → optimist
+  const re = new RegExp(`^${family}\\d*_${year}\\.json$`);
+  for (const f of fs.readdirSync(OUT)) {
+    if (!re.test(f) || path.join(OUT, f) === selfFile) continue;
+    try { for (const k of JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')).ggPlaceholderRatings || []) out.add(k); } catch { /* ignora */ }
+  }
+  return [...out];
 }
 
 /** Descobre as divisões (label + v2tid) de uma página GolfGenius. */
@@ -722,7 +767,8 @@ async function runOne(opts) {
     if (c.name && c.name !== p.name) p.name = c.name;
   }
   // Metros por buraco + tee + CR/slope por divisão (cartão de tee do jogador).
-  if (!preField && !skipScorecards) await applyTeeCards(out);
+  const siblingsKnown = siblingPlaceholders(slug, out.year, path.join(OUT, `${slug}_${out.year || 'x'}.json`));
+  if (!preField && !skipScorecards) await applyTeeCards(out, siblingsKnown);
   // Nº de etapa/fase (eventos multi-ficheiro por ano, ex: Optimist Phase 1-3):
   // vai para o JobFile como `stop` → id `{source}:{ano}:{stop}` no catálogo e
   // na MajorPage (mesmo mecanismo do EJT golfbox).
@@ -739,10 +785,14 @@ async function runOne(opts) {
   // Sem eles o TournamentDetail só mostra draws estimados do acumulado — e
   // nunca a R1, que não tem ronda anterior de onde inferir emparelhamentos.
   let teeByName = new Map();
+  let teeField = new Map();
+  let teeDraws = null;   // draw completo (todas as divisões) de cada ronda
   if (teePageId && lid && !opts.skipTeeSheets) {
     try {
       const { draws, countries, roundDateLabels, field, tees } = await fetchTeeSheets(lid, teePageId);
       teeByName = tees;
+      teeField = field;
+      teeDraws = draws.get('__ALL__') || null;
       if (!out.year && roundDateLabels.length) out.year = new Date().getUTCFullYear();
       // Pré-torneio (1 divisão): o campo é quem está nos draws.
       if (preField && out.divisions.length === 1) {
@@ -828,10 +878,46 @@ async function runOne(opts) {
     } catch (e) { console.log(`   ⚠ roster indisponível: ${e.message}`); }
   }
 
+  // Prova a decorrer, divisão única: o leaderboard só lista quem JÁ tem cartão
+  // (Evian 2026, R1: 6 de 83). Quem está nos tee sheets e ainda não jogou entra
+  // no campo sem voltas — senão o ficheiro encolhia para meia dúzia.
+  // Com `teeDivisions` e o leaderboard JÁ partido (Boys/Girls, como em 2025),
+  // cada jogador sem cartão vai para o escalão do seu tee de saída.
+  const teeDiv = opts.teeDivisions && Object.keys(opts.teeDivisions).length ? opts.teeDivisions : null;
+  if (!preField && teeField.size && (out.divisions.length === 1 || teeDiv)) {
+    const have = new Set(out.divisions.flatMap((dv) => dv.players.map((p) => nameKey(p.name))));
+    let seeded = 0;
+    for (const [k, f] of teeField) {
+      if (have.has(k)) continue;
+      const label = teeDiv ? teeDiv[teeByName.get(k)] : null;
+      const dv = out.divisions.length === 1 ? out.divisions[0] : out.divisions.find((d) => d.division === label);
+      if (!dv) continue;   // tee desconhecido num leaderboard já partido → não se adivinha o escalão
+      dv.players.push({ pos: '', name: f.name, country: f.country ? inferCountry(f.country, null) : null,
+        location: f.country || '', hcp: f.hcp ?? null, tee: teeByName.get(k) || undefined,
+        toPar: null, total: null, roundGross: [], rounds: [] });
+      seeded++;
+    }
+    if (seeded) console.log(`   👥 tee sheets: +${seeded} jogador(es) ainda sem cartão → ${out.divisions.map((d) => `${d.division} ${d.players.length}`).join(' · ')}`);
+  }
+  // Leaderboard já partido + tee sheet sem escalão: o draw de cada escalão são
+  // os grupos onde joga alguém dele (o fallback __ALL__ só servia 1 divisão).
+  if (teeDiv && out.divisions.length > 1 && teeDraws) {
+    for (const dv of out.divisions) {
+      if (dv.draws && Object.keys(dv.draws).length) continue;
+      const names = new Set(dv.players.map((p) => nameKey(p.name)));
+      dv.draws = Object.fromEntries(Object.entries(teeDraws).map(([rn, rd]) => [rn, {
+        ...rd, groups: rd.groups.filter((g) => g.players.some((q) => names.has(nameKey(q.name)))),
+      }]));
+    }
+  }
+
   // Escalões pelo tee de saída (scope `teeDivisions`) — DEPOIS de draws e roster.
   if (opts.teeDivisions && Object.keys(opts.teeDivisions).length) {
     const n = splitByTee(out, teeByName, opts.teeDivisions);
     if (n) console.log(`   🚻 escalões pelo tee: ${out.divisions.map((d) => `${d.division} ${d.players.length}j`).join(' · ')}`);
+    // Cartões de tee de novo, agora por escalão (o do leaderboard misto só
+    // servia o tee de quem o jogou).
+    if (n && !preField && !skipScorecards) await applyTeeCards(out, siblingsKnown);
   }
 
   const yearKey = out.year || 'x';
@@ -839,6 +925,20 @@ async function runOne(opts) {
   if (!noMerge) {
     const m = mergeWithDisk(file, out);
     if (m.kept || m.restored) console.log(`   ↩ merge aditivo: ${m.kept} volta(s) mais completa(s) preservada(s), ${m.restored} volta(s) só em disco mantida(s)`);
+  }
+  // Guarda anti-encolhimento (regra da casa): a fonte às vezes responde com
+  // meia dúzia de jogadores (leaderboard a abrir) — nunca gravar menos de
+  // metade do que está em disco sem --force.
+  if (fs.existsSync(file) && !opts.force) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const nPrev = (prev.divisions || []).reduce((a, dv) => a + (dv.players || []).length, 0);
+      const nNew = out.divisions.reduce((a, dv) => a + (dv.players || []).length, 0);
+      if (nPrev >= 10 && nNew < nPrev / 2) {
+        console.log(`   ⛔ ${path.basename(file)}: ${nNew} jogadores contra ${nPrev} em disco — NÃO gravado (usar --force se for mesmo assim)`);
+        return { file, changed: false };
+      }
+    } catch { /* ficheiro ilegível → segue */ }
   }
   const changed = !sameAsDisk(file, out);
   if (changed) writeJsonAtomic(file, out);
@@ -856,6 +956,7 @@ async function main() {
   const skipScorecards = args.includes('--skip-scorecards');
   const noMerge = args.includes('--no-merge');
   const skipTeeSheets = args.includes('--skip-tee-sheets');
+  const force = args.includes('--force');   // grava mesmo que o ficheiro encolha
   const scopeFile = getArg('--scope');
   const pageUrl = args.find((a) => /^https?:\/\/.*\/pages\/\d+/.test(a));
   const v2Arg = getArg('--v2tids');
@@ -876,7 +977,7 @@ async function main() {
         nameOverride: e.name || null, slugOverride: e.slug || null,
         yearOverride: e.year ? parseInt(e.year, 10) : null, countryDefault: e.country || null,
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
-        skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null,
+        skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null, force,
         stop: e.stop != null ? e.stop : null,
         teeDivisions: e.teeDivisions || null,
       }));
@@ -885,7 +986,7 @@ async function main() {
     jobs = [{
       pageUrl, v2Arg, leagueOverride: getArg('--league'), nameOverride: getArg('--name'),
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
-      countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets,
+      countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets, force,
       rosterPage: getArg('--roster-page'), stop: getArg('--stop'),
       // --tee-divisions "White=Boys U14,Blue=Girls U14"
       teeDivisions: getArg('--tee-divisions')
@@ -915,4 +1016,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName };
+module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

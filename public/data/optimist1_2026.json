@@ -6697,8 +6697,8 @@
           "gradYear": 2034
         }
       ],
-      "courseRating": 72,
-      "slope": 144,
+      "courseRating": null,
+      "slope": null,
       "cardSource": "gg-tee-card"
     },
     {
@@ -20384,8 +20384,8 @@
           "gradYear": 2031
         }
       ],
-      "courseRating": 72,
-      "slope": 144,
+      "courseRating": null,
+      "slope": null,
       "cardSource": "gg-tee-card"
     },
     {
@@ -25148,11 +25148,14 @@
           "gradYear": 2032
         }
       ],
-      "courseRating": 72,
-      "slope": 144,
+      "courseRating": null,
+      "slope": null,
       "cardSource": "gg-tee-card"
     }
   ],
   "scrapedAt": "2026-09-22T11:10:38.284Z",
-  "stop": 1
+  "stop": 1,
+  "ggPlaceholderRatings": [
+    "72/144"
+  ]
 }

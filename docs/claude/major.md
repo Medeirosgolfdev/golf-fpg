@@ -502,6 +502,24 @@ metros e CR/slope, com consenso entre cartões, e a divisão fica marcada
 (oficial 2025: 72.0) fica por confirmar — é o valor com que a FPG calculou o SD
 oficial desses cartões.
 Buracos: 2022 Girls sem metros (o único cartão, da Amélia Gabin, veio a 0).
+**Durante a prova (2026-09-22, R1):** o GG abriu um leaderboard ÚNICO e
+PARCIAL — só quem já tem cartão (6 de 83); às 10:46 UTC estava vazio e o cron
+gravou um ficheiro com **0 divisões**. Correcções no `scrape-golfgenius-node.js`:
+(1) numa divisão única, ou com `teeDivisions`, quem está nos tee sheets e ainda
+não tem cartão entra no campo sem voltas (no escalão do seu tee, se o
+leaderboard já vier partido — e o draw `__ALL__` é filtrado por escalão);
+(2) `splitByTee` nunca deixa o ficheiro sem divisões; (3) **guarda
+anti-encolhimento**: não grava com menos de metade dos jogadores do disco
+(`--force` para forçar); (4) o cartão de tee lido no leaderboard misto só fica
+no escalão desse tee e o `applyTeeCards` volta a correr depois do split.
+2026: o White mudou — **5.781 m, CR 73 / 149** (cartão oficial GG).
+
+⚠ **CR/slope por omissão do GG:** Optimist 2026 — 6 tees de 4.925 a 6.338 m,
+todos "72 / 144". O `applyTeeCards` retira o CR/slope quando tees de
+comprimentos diferentes da mesma prova têm todos a mesma avaliação (os metros
+ficam) e grava `ggPlaceholderRatings` no ficheiro; as fases irmãs (mesmo slug
+sem o número final, mesmo ano) também o rejeitam — a fase 3 só tinha um tee.
+
 **SI: nenhum.** O único SI "real" (2022: 1,17,7,3,5,4,11,16,12,6,9,2,18,14,10,13,8,15)
 vinha de cartões de clubes e não se confirma — testado contra os 33 SD oficiais
 FPG de 2023-25 acerta 22, e o 1..18 seguido acerta 23 (não distinguem). Não se usa. Sem SI, a `/major` calcula o SD
