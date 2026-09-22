@@ -407,6 +407,9 @@ function splitByTee(out, tees, teeDivisions) {
     }
     const names = new Set(players.map((p) => nameKey(p.name)));
     const dv = { ...src, division: label || src.division, players };
+    // Tee da divisão = o tee de saída de todos (quando é um só).
+    const divTees = [...new Set(players.map((p) => p.tee).filter(Boolean))];
+    if (divTees.length === 1 && !dv.teeName) dv.teeName = divTees[0];
     if (src.draws) {
       dv.draws = Object.fromEntries(Object.entries(src.draws).map(([rn, rd]) => [rn, {
         ...rd, groups: rd.groups.filter((g) => g.players.some((q) => names.has(nameKey(q.name)))),

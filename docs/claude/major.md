@@ -428,6 +428,18 @@ Entrou na véspera da R1, por isso o motor ganhou um **modo pré-torneio**:
 | 2024 | portal FFG `trnId 2401276441` | `import-ffgolf-jobfile.js` |
 | 2023 | portal FFG `trnId 2301099390` | idem |
 | 2022 | portal FFG `trnId 2200909351` | idem |
+| 2021 | portal FFG `trnId 2100752182` | idem |
+| 2019 | portal FFG `trnId 1900544646` ("The Evian Juniors Cup - SP") | idem (24+23 sem nacionalidade → 37 preenchidos) |
+| 2018 | portal FFG `trnId 1800457972` ("Evian Junior's Cup - SP") | idem — **2 voltas, par 72**, tees Yellow (rep. 3) / Red (rep. 5) |
+| 2017 | portal FFG `trnId 1700381998` (⚠ `--part-key 93912b77f2639fe762bd0a1ae477b391`) | idem — 2 voltas, par 72, Yellow/Red |
+
+2020 cancelada (COVID); 2016 não está no portal FFG (procurado em todos os tipos e
+ligas); 2013-2015 existem (`1300107671`, `1400165020`, `1500228984`, mesmo
+formato de 2017) mas a Mariana quis só até 2017. "Evian Junior Event" (Out.) e
+"The Evian U18" são OUTRAS provas. Até 2018 o buraco 11 era par 5 (par 72).
+⚠ CR/slope dos clubes que contradizem o mesmo tee noutra edição NÃO entram
+(`otherEditionRatings`): 2021 — dois clubes registaram o White dos rapazes com
+74/150 (a avaliação das raparigas) e a Blue com slope 146.
 
 Todas com `--part-key 572da5febaee10b7e85bab9c6205c587` (tipo 01, liga 01 —
 a Evian aparece em qualquer liga). O `ffgtid` do iframe RMS de 2024 (2401267416)

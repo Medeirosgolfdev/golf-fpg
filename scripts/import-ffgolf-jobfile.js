@@ -112,6 +112,23 @@ const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // Numeração FFG dos repères → nome do tee (em inglês, como o GolfGenius).
 const REPERE_NAMES = { 1: "Black", 2: "White", 3: "Yellow", 4: "Blue", 5: "Red" };
 
+/** CR/slope do mesmo tee (nome) nas outras edições do slug → [{ courseRating, slope }]. */
+function otherEditionRatings(slug, year, teeName) {
+  if (!teeName) return [];
+  const out = [];
+  for (const f of fs.readdirSync(DATA)) {
+    const m = new RegExp(`^${slug}_(\\d{4})\\.json$`).exec(f);
+    if (!m || +m[1] === year) continue;
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(DATA, f), "utf8"));
+      for (const dv of j.divisions || []) {
+        if (dv.teeName === teeName && dv.courseRating != null && dv.slope != null) out.push({ courseRating: dv.courseRating, slope: dv.slope });
+      }
+    } catch { /* ignora */ }
+  }
+  return out;
+}
+
 /** Tokens sem acentos, para casar "TITO MARTINS,Bernardo" com "Bernardo Tito Martins". */
 const tokens = (s) => {
   const t = String(s || "").trim();
@@ -279,10 +296,21 @@ async function main() {
     for (const dv of divisions) {
       const c = cards.get(dv.division);
       if (!c) { console.log(`   · ${dv.division}: sem cartões WHS de portugueses`); continue; }
-      if (c.meters) dv.meters = c.meters;
-      if (c.courseRating != null) dv.courseRating = c.courseRating;
-      if (c.slope != null) dv.slope = c.slope;
-      if (c.meters || c.courseRating != null) dv.cardSource = "whs-clubes-pt";
+      let applied = false;
+      if (c.meters) { dv.meters = c.meters; applied = true; }
+      // CR/slope dos clubes só entram se não contradisserem o MESMO tee noutra
+      // edição (2021: dois clubes registaram o White dos rapazes com 74/150, a
+      // avaliação das raparigas; nas outras edições o White é 72.0-72.4/140).
+      const other = otherEditionRatings(slug, year, dv.teeName);
+      const clash = other.length && (c.courseRating != null || c.slope != null)
+        && !other.some((o) => Math.abs(o.courseRating - c.courseRating) <= 0.5 && o.slope === c.slope);
+      if (clash) {
+        console.log(`   ⚠ ${dv.division}: CR/slope dos clubes (${c.courseRating}/${c.slope}) contradiz o tee ${dv.teeName} noutras edições (${other.map((o) => `${o.courseRating}/${o.slope}`).join(", ")}) — não aplicado`);
+      } else {
+        if (c.courseRating != null) { dv.courseRating = c.courseRating; applied = true; }
+        if (c.slope != null) { dv.slope = c.slope; applied = true; }
+      }
+      if (applied) dv.cardSource = "whs-clubes-pt";
       // Quem tem cartão WHS da FPG NESTA prova jogou-a como federado português:
       // se a FFG não publicou a nacionalidade (2023), fica PT.
       for (const p of dv.players) {
