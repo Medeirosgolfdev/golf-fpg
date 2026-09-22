@@ -85,7 +85,7 @@ function buildPool(slug, year) {
   }
   try {
     const J = JSON.parse(fs.readFileSync(path.join(DATA, "juniors.json"), "utf8"));
-    const arr = Array.isArray(J) ? J : (J.players || []);
+    const arr = Array.isArray(J) ? J : (J.juniors || J.players || []);   // juniors.json = { juniors: [...] }
     for (const p of arr) for (const n of [p.canonicalName, ...(p.aliases || [])]) {
       if (n) pool.push({ name: n, key: stripAcc(n), country: p.country || p.nationality || null });
     }
@@ -97,7 +97,10 @@ function buildPool(slug, year) {
 function uniqueMatch(pool, re) {
   const hits = new Map();
   for (const c of pool) if (re.test(c.key)) {
-    const k = c.key;
+    // A mesma pessoa aparece como "Amélia Gabin" e "Gabin Amélia" (o canónico
+    // guarda as duas ordens) → chave pelas palavras ORDENADAS, senão contava
+    // como dois candidatos e a reparação falhava.
+    const k = c.key.split(/\s+/).sort().join(" ");
     if (!hits.has(k)) hits.set(k, { name: c.name, countries: new Set() });
     if (c.country) hits.get(k).countries.add(c.country);
   }
@@ -186,7 +189,10 @@ function resolveName(p, pool) {
   if (!mangled(prenom) && !mangled(nom)) return { name: shown, repaired: false };
   const field = (s, bad) => {
     const toks = stripAcc(s).split(/\s+/).filter(Boolean).map(esc);
-    return bad ? toks.join(".") : toks.join(" ");
+    // Cada espaço suspeito vale UMA LETRA ([a-z], já sem acentos) — com "."
+    // também batia na própria versão estragada ("Am lia Gabin") que o canónico
+    // de juniores entretanto aprendeu, e a reparação deixava de ser única.
+    return bad ? toks.join("[a-z]") : toks.join(" ");
   };
   const f = field(prenom, mangled(prenom));
   const l = field(nom, mangled(nom));
