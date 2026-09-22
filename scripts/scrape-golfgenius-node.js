@@ -891,9 +891,22 @@ async function runOne(opts) {
   const teeDiv = opts.teeDivisions && Object.keys(opts.teeDivisions).length ? opts.teeDivisions : null;
   if (!preField && teeField.size && (out.divisions.length === 1 || teeDiv)) {
     const have = new Set(out.divisions.flatMap((dv) => dv.players.map((p) => nameKey(p.name))));
+    // O draw e o leaderboard nem sempre escrevem o nome igual ("Ekin Sude Sur"
+    // no draw, "Ekien Sude Sur" no leaderboard) → mesma pessoa se o país for o
+    // mesmo e os nomes diferirem no máximo numa palavra (com ≥ 2 iguais).
+    // "Val Vid Vuk" vs "Brin Svit Vuk" (só o apelido igual) são pessoas diferentes.
+    const lbPlayers = out.divisions.flatMap((dv) => dv.players);
+    const toks = (s) => nameKey(s).split(' ').filter(Boolean);
+    const sameAs = (f) => lbPlayers.some((p) => {
+      const iso = f.country ? inferCountry(f.country, null) : null;
+      if (!iso || p.country !== iso) return false;
+      const a = toks(f.name), b = toks(p.name);
+      const shared = a.filter((t) => b.includes(t)).length;
+      return shared >= 2 && shared >= Math.min(a.length, b.length) - 1;
+    });
     let seeded = 0;
     for (const [k, f] of teeField) {
-      if (have.has(k)) continue;
+      if (have.has(k) || sameAs(f)) continue;
       const label = teeDiv ? teeDiv[teeByName.get(k)] : null;
       const dv = out.divisions.length === 1 ? out.divisions[0] : out.divisions.find((d) => d.division === label);
       if (!dv) continue;   // tee desconhecido num leaderboard já partido → não se adivinha o escalão
@@ -923,6 +936,17 @@ async function runOne(opts) {
     // Cartões de tee de novo, agora por escalão (o do leaderboard misto só
     // servia o tee de quem o jogou).
     if (n && !preField && !skipScorecards) await applyTeeCards(out, siblingsKnown);
+  }
+
+  // SI oficial do campo (scope `si` + `siSource`) — o GG não o publica no cartão
+  // de tee; vem do cartão oficial do clube. Só preenche divisões sem SI.
+  if (Array.isArray(opts.si) && opts.si.length === 18) {
+    for (const dv of out.divisions) {
+      if (dv.si) continue;
+      dv.si = opts.si;
+      dv.siSource = opts.siSource || null;
+    }
+    console.log(`   🔢 SI do campo (${opts.siSource || 'scope'}) aplicado a ${out.divisions.length} divisão(ões)`);
   }
 
   const yearKey = out.year || 'x';
@@ -984,6 +1008,7 @@ async function main() {
         skipScorecards: skipScorecards || !!e.skipScorecards, profiles: !!e.profiles, noMerge,
         skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null, force,
         stop: e.stop != null ? e.stop : null,
+        si: Array.isArray(e.si) ? e.si : null, siSource: e.siSource || null,
         teeDivisions: e.teeDivisions || null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
@@ -993,6 +1018,7 @@ async function main() {
       slugOverride: getArg('--slug'), yearOverride: getArg('--year') ? parseInt(getArg('--year'), 10) : null,
       countryDefault: getArg('--country'), skipScorecards, profiles: args.includes('--profiles'), noMerge, skipTeeSheets, force,
       rosterPage: getArg('--roster-page'), stop: getArg('--stop'),
+      si: getArg('--si') ? getArg('--si').split(',').map(Number) : null, siSource: getArg('--si-source'),
       // --tee-divisions "White=Boys U14,Blue=Girls U14"
       teeDivisions: getArg('--tee-divisions')
         ? Object.fromEntries(getArg('--tee-divisions').split(',').map((kv) => kv.split('=').map((x) => x.trim())))

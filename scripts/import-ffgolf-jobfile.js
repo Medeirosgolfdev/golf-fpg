@@ -289,7 +289,17 @@ async function main() {
     };
   });
 
-  // Metros/SI/CR/slope a partir dos cartões WHS dos portugueses (--whs-course <regex>).
+  // SI oficial do campo (--si "3,17,…" --si-source "…"): o portal FFG não o
+  // publica e o dos cartões WHS dos clubes não serve.
+  const siArg = arg("--si");
+  if (siArg) {
+    const si = siArg.split(",").map(Number);
+    if (si.length !== 18 || new Set(si).size !== 18 || si.some((v) => v < 1 || v > 18)) { console.error("❌ --si tem de ser uma permutação de 1..18"); process.exit(1); }
+    for (const dv of divisions) { dv.si = si; dv.siSource = arg("--si-source") || null; }
+    console.log(`   🔢 SI do campo aplicado (${arg("--si-source") || "--si"})`);
+  }
+
+  // Metros/CR/slope a partir dos cartões WHS dos portugueses (--whs-course <regex>).
   const whsCourse = arg("--whs-course");
   if (whsCourse && dates.length) {
     const cards = whsCardsByDivision(divisions, new RegExp(whsCourse, "i"), dates[0].iso, dates[dates.length - 1].iso);

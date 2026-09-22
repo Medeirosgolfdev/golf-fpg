@@ -520,9 +520,20 @@ comprimentos diferentes da mesma prova têm todos a mesma avaliação (os metros
 ficam) e grava `ggPlaceholderRatings` no ficheiro; as fases irmãs (mesmo slug
 sem o número final, mesmo ano) também o rejeitam — a fase 3 só tinha um tee.
 
-**SI: nenhum.** O único SI "real" (2022: 1,17,7,3,5,4,11,16,12,6,9,2,18,14,10,13,8,15)
-vinha de cartões de clubes e não se confirma — testado contra os 33 SD oficiais
-FPG de 2023-25 acerta 22, e o 1..18 seguido acerta 23 (não distinguem). Não se usa. Sem SI, a `/major` calcula o SD
+**SI (2026-09-22) — do cartão OFICIAL do clube**, não dos cartões WHS:
+[2024_Scorecard.pdf](https://golf-club.evianresort.com/en/content/download/516/score_file/2024_Scorecard.pdf)
+(PDF só com imagem JPEG 2000 — extraída com `pypdf` + Pillow; o `pdftotext` não
+dá nada). SI 3,17,13,7,11,1,5,15,9 · 6,10,2,18,14,8,16,4,12. Aplicado **só a
+2024-2026** (o cartão é a edição de 2024; para trás não se sabe se era o mesmo):
+scope `si`/`siSource` no GG (2025 tem entrada `disabled` no scope só para isso)
+e `--si`/`--si-source` no `import-ffgolf-jobfile.js`; `dv.siSource` guarda a fonte.
+O GG não publica SI (nem no cartão de tee, nem nos `handicap-dots` — prova gross).
+⚠ O SI dos cartões dos clubes (2022: 1,17,7,3…) estava ERRADO. E os SD oficiais
+da FPG de 2023-25 NÃO servem para validar SI: foram calculados com o SI que os
+clubes meteram (quase sempre 1..18 seguido) — por isso "acertam" mais com o SI
+errado (seguido 23/33, clube-2022 22/33, oficial 18/33).
+O cartão do clube é par 72 (13 = par 5); a Juniors Cup joga-o como par 4 (par 71)
+desde 2019, e com tees próprios (White 2026 = 5.781 m; o White do clube = 6.488 yd). Sem SI, a `/major` calcula o SD
 sobre o gross cru (sem Net Double Bogey). Desvios dos oficiais por PCC: +2 a
 17/09/2024 e +1 a 21/09/2023 (todos os PT desses dias). `showRatings: true`
 na `evianjc` (colunas HCP e SD). 2026: campo recriado no GG (outro course id)

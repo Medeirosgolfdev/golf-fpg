@@ -1,20 +1,21 @@
 {
-  "generatedAt": "2026-09-22T15:10:03.577Z",
+  "generatedAt": "2026-09-22T16:43:28.088Z",
   "source": "build-major-catalog.js",
   "tournamentsTotal": 120,
-  "count": 4210,
+  "count": 4214,
   "players": [
     {
       "name": "Kris Kuusk",
       "country": "EE",
-      "tournaments": 49,
+      "tournaments": 50,
       "years": 7,
-      "seriesCount": 5,
+      "seriesCount": 6,
       "series": [
         "bjgt",
         "ebtc2",
         "ejo",
         "ejt",
+        "evianjc",
         "eym"
       ],
       "detail": [
@@ -66,7 +67,68 @@
         "ejt:2026:4",
         "ejt:2026:5",
         "ejt:2026:6",
+        "evianjc:2026",
         "eym:2026"
+      ]
+    },
+    {
+      "name": "Lui Saat",
+      "country": "EE",
+      "tournaments": 45,
+      "years": 6,
+      "seriesCount": 4,
+      "series": [
+        "coc",
+        "ejo",
+        "ejt",
+        "evianjc"
+      ],
+      "detail": [
+        "coc:2025",
+        "ejo:2023",
+        "ejo:2024",
+        "ejo:2025",
+        "ejo:2026",
+        "ejt:2021:1",
+        "ejt:2021:2",
+        "ejt:2021:3",
+        "ejt:2021:4",
+        "ejt:2021:5",
+        "ejt:2021:6",
+        "ejt:2021:7",
+        "ejt:2022:1",
+        "ejt:2022:2",
+        "ejt:2022:3",
+        "ejt:2022:4",
+        "ejt:2022:5",
+        "ejt:2022:6",
+        "ejt:2022:7",
+        "ejt:2023:1",
+        "ejt:2023:2",
+        "ejt:2023:3",
+        "ejt:2023:4",
+        "ejt:2023:5",
+        "ejt:2023:6",
+        "ejt:2023:7",
+        "ejt:2024:1",
+        "ejt:2024:2",
+        "ejt:2024:3",
+        "ejt:2024:4",
+        "ejt:2024:5",
+        "ejt:2024:6",
+        "ejt:2025:1",
+        "ejt:2025:2",
+        "ejt:2025:3",
+        "ejt:2025:4",
+        "ejt:2025:6",
+        "ejt:2025:7",
+        "ejt:2026:1",
+        "ejt:2026:2",
+        "ejt:2026:3",
+        "ejt:2026:4",
+        "ejt:2026:5",
+        "ejt:2026:6",
+        "evianjc:2026"
       ]
     },
     {
@@ -127,18 +189,19 @@
       ]
     },
     {
-      "name": "Lui Saat",
+      "name": "Brenda Paalberg",
       "country": "EE",
       "tournaments": 44,
       "years": 6,
       "seriesCount": 3,
       "series": [
-        "coc",
         "ejo",
-        "ejt"
+        "ejt",
+        "evianjc"
       ],
       "detail": [
-        "coc:2025",
+        "ejo:2021",
+        "ejo:2022",
         "ejo:2023",
         "ejo:2024",
         "ejo:2025",
@@ -152,7 +215,6 @@
         "ejt:2021:7",
         "ejt:2022:1",
         "ejt:2022:2",
-        "ejt:2022:3",
         "ejt:2022:4",
         "ejt:2022:5",
         "ejt:2022:6",
@@ -172,16 +234,16 @@
         "ejt:2024:6",
         "ejt:2025:1",
         "ejt:2025:2",
-        "ejt:2025:3",
         "ejt:2025:4",
+        "ejt:2025:5",
         "ejt:2025:6",
         "ejt:2025:7",
-        "ejt:2026:1",
         "ejt:2026:2",
         "ejt:2026:3",
         "ejt:2026:4",
         "ejt:2026:5",
-        "ejt:2026:6"
+        "ejt:2026:6",
+        "evianjc:2026"
       ]
     },
     {
@@ -238,62 +300,6 @@
         "ejt:2026:2",
         "ejt:2026:3",
         "ejt:2026:5"
-      ]
-    },
-    {
-      "name": "Brenda Paalberg",
-      "country": "EE",
-      "tournaments": 43,
-      "years": 6,
-      "seriesCount": 2,
-      "series": [
-        "ejo",
-        "ejt"
-      ],
-      "detail": [
-        "ejo:2021",
-        "ejo:2022",
-        "ejo:2023",
-        "ejo:2024",
-        "ejo:2025",
-        "ejo:2026",
-        "ejt:2021:1",
-        "ejt:2021:2",
-        "ejt:2021:3",
-        "ejt:2021:4",
-        "ejt:2021:5",
-        "ejt:2021:6",
-        "ejt:2021:7",
-        "ejt:2022:1",
-        "ejt:2022:2",
-        "ejt:2022:4",
-        "ejt:2022:5",
-        "ejt:2022:6",
-        "ejt:2022:7",
-        "ejt:2023:1",
-        "ejt:2023:2",
-        "ejt:2023:3",
-        "ejt:2023:4",
-        "ejt:2023:5",
-        "ejt:2023:6",
-        "ejt:2023:7",
-        "ejt:2024:1",
-        "ejt:2024:2",
-        "ejt:2024:3",
-        "ejt:2024:4",
-        "ejt:2024:5",
-        "ejt:2024:6",
-        "ejt:2025:1",
-        "ejt:2025:2",
-        "ejt:2025:4",
-        "ejt:2025:5",
-        "ejt:2025:6",
-        "ejt:2025:7",
-        "ejt:2026:2",
-        "ejt:2026:3",
-        "ejt:2026:4",
-        "ejt:2026:5",
-        "ejt:2026:6"
       ]
     },
     {
@@ -2890,6 +2896,43 @@
       ]
     },
     {
+      "name": "Getrin Vahtra",
+      "country": "EE",
+      "tournaments": 23,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "ejo",
+        "ejt",
+        "evianjc"
+      ],
+      "detail": [
+        "ejo:2024",
+        "ejo:2025",
+        "ejo:2026",
+        "ejt:2024:1",
+        "ejt:2024:2",
+        "ejt:2024:3",
+        "ejt:2024:4",
+        "ejt:2024:5",
+        "ejt:2024:6",
+        "ejt:2025:1",
+        "ejt:2025:2",
+        "ejt:2025:3",
+        "ejt:2025:4",
+        "ejt:2025:5",
+        "ejt:2025:6",
+        "ejt:2025:7",
+        "ejt:2026:1",
+        "ejt:2026:2",
+        "ejt:2026:3",
+        "ejt:2026:4",
+        "ejt:2026:5",
+        "ejt:2026:6",
+        "evianjc:2026"
+      ]
+    },
+    {
       "name": "Hugo-Laur Rohtoja",
       "country": "EE",
       "tournaments": 22,
@@ -2991,41 +3034,6 @@
         "ejt:2024:4",
         "ejt:2024:5",
         "ejt:2024:6"
-      ]
-    },
-    {
-      "name": "Getrin Vahtra",
-      "country": "EE",
-      "tournaments": 22,
-      "years": 3,
-      "seriesCount": 2,
-      "series": [
-        "ejo",
-        "ejt"
-      ],
-      "detail": [
-        "ejo:2024",
-        "ejo:2025",
-        "ejo:2026",
-        "ejt:2024:1",
-        "ejt:2024:2",
-        "ejt:2024:3",
-        "ejt:2024:4",
-        "ejt:2024:5",
-        "ejt:2024:6",
-        "ejt:2025:1",
-        "ejt:2025:2",
-        "ejt:2025:3",
-        "ejt:2025:4",
-        "ejt:2025:5",
-        "ejt:2025:6",
-        "ejt:2025:7",
-        "ejt:2026:1",
-        "ejt:2026:2",
-        "ejt:2026:3",
-        "ejt:2026:4",
-        "ejt:2026:5",
-        "ejt:2026:6"
       ]
     },
     {
@@ -67026,6 +67034,21 @@
       ]
     },
     {
+      "name": "Baptiste Lebrun",
+      "country": "BE",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "avtrophy",
+        "evianjc"
+      ],
+      "detail": [
+        "avtrophy:2026",
+        "evianjc:2026"
+      ]
+    },
+    {
       "name": "Bartlett, Sam",
       "country": "United States",
       "usa": true,
@@ -67680,6 +67703,21 @@
       "detail": [
         "jwgc:2026",
         "mexnacional:2026"
+      ]
+    },
+    {
+      "name": "Daniel Morn",
+      "country": "LU",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "evianjc",
+        "eym"
+      ],
+      "detail": [
+        "evianjc:2026",
+        "eym:2026"
       ]
     },
     {
@@ -71168,6 +71206,36 @@
       "detail": [
         "bjgt:2025",
         "eowagr:2025"
+      ]
+    },
+    {
+      "name": "Victor Imbrechts",
+      "country": "BE",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "avtrophy",
+        "evianjc"
+      ],
+      "detail": [
+        "avtrophy:2026",
+        "evianjc:2026"
+      ]
+    },
+    {
+      "name": "Victoria Hoornaert",
+      "country": "BE",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "avtrophy",
+        "evianjc"
+      ],
+      "detail": [
+        "avtrophy:2026",
+        "evianjc:2026"
       ]
     },
     {
