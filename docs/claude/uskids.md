@@ -53,6 +53,31 @@ node scripts/fetch-uskids-field.js --force              # grava mesmo perdendo >
 Exit **0** = gravou · **2** = guarda anti-encolhimento recusou (ficheiro
 anterior intacto, não é erro) · **1** = erro.
 
+### Lista de espera e Priority Status (2026-09-23)
+
+- **A waitlist não existe na API.** O `GetMeta` só dá `registered`, `active` e
+  `max_entry`, e o `registered` nunca passa do tecto — quem está em lista de
+  espera é invisível nos nossos dados. As páginas públicas do evento também não
+  a mostram.
+- **A posição vê-se só na conta:** `tournaments.uskidsgolf.com` → *Tournament
+  Registrations*, onde a inscrição aparece como `#N on Waitlist`. Precisa de
+  login (o Chrome da Mariana não tem sessão guardada — pedir-lhe a ela).
+- **A fila é por ordem de chegada** — "entries into all events are subject to
+  availability on a first-come, first-served basis" (*Registration Information*
+  de cada evento). O Priority Status só decide **quando** cada nível pode
+  inscrever-se, não a ordem da fila.
+- **Calendário de convites:**
+  `tournaments.uskidsgolf.com/sites/default/files/{ano}_regional_invitation_schedule.pdf`
+  (datas M/D/YY, desbloqueio às 15:30 ET, um nível por semana). Holiday Classic
+  2026: L/14/13 11 Ago · 12-11 18 Ago · 10-9 25 Ago · 8-7 1 Set · 6-5 8 Set ·
+  nível 4 15 Set · inscrição geral 22 Set. Fecha a 18 Dez; em 2026 sem Open
+  Applications.
+- **Dá para seguir a fila sem entrar na conta:** num escalão cheio, cada nome
+  que desaparece é uma vaga que passa ao primeiro da lista. Medido no Holiday
+  Classic 2026: 3 saídas em 9 dias nos 180 inscritos dos escalões cheios (~1 por
+  escalão cada duas semanas). E o tecto não é rígido — o Boys 12 acabou com 40 a
+  47 jogadores em seis dos últimos sete anos, contra um tecto actual de 39.
+
 ### ⚡ Procura só para a frente, um pedido de cada vez (2026-09-14)
 
 A varredura das secções seguintes (Passagem A + densa +1500 + sondas +20000,
