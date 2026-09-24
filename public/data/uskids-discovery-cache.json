@@ -1,28 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22583,
-      "name": "Teen Series at Echo Falls (WA)",
-      "date_inicio": "8/24/2026",
-      "date_fim": "8/25/2026",
-      "rondas": 2,
-      "campo": "Echo Falls Golf Club",
-      "fee_18": "270.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
-      "t": 22440,
-      "name": "Cobblestone Creek Country Club (Tour Championship)",
-      "date_inicio": "8/24/2026",
-      "date_fim": "8/24/2026",
-      "rondas": 1,
-      "campo": "Cobblestone Creek Country Club ",
-      "fee_18": "57.00",
-      "tour": "New Jersey PGA Tour",
-      "type": 6
-    },
-    {
       "t": 22487,
       "name": "Zhailjau Golf Resort (Tour Championship)",
       "date_inicio": "8/25/2026",
@@ -2102,6 +2080,17 @@
       "type": 6
     },
     {
+      "t": 23756,
+      "name": "The Village Course at Waikoloa (Tour Championship)",
+      "date_inicio": "12/12/2026",
+      "date_fim": "12/12/2026",
+      "rondas": 1,
+      "campo": "The Village Course at Waikoloa",
+      "fee_18": "89.00",
+      "tour": "Hawaii Tour",
+      "type": 6
+    },
+    {
       "t": 23082,
       "name": "Peregian Springs Golf Club (Tour Championship)",
       "date_inicio": "12/13/2026",
@@ -2209,6 +2198,17 @@
       "campo": "Newgiza Golf Club",
       "fee_18": "45.00",
       "tour": "Cairo (EG) Tour",
+      "type": 6
+    },
+    {
+      "t": 23762,
+      "name": "Monterey Pines Golf Course (Tour Championship)",
+      "date_inicio": "12/19/2026",
+      "date_fim": "12/19/2026",
+      "rondas": 1,
+      "campo": "Monterey Pines Golf Course",
+      "fee_18": "99.00",
+      "tour": "Monterey Tour",
       "type": 6
     },
     {
@@ -2322,19 +2322,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-23T12:42:37.367Z",
-  "varredura_max_t": 23747,
+  "gerado_em": "2026-09-24T12:40:47.121Z",
+  "varredura_max_t": 23762,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 42,
-    "novos": 0,
+    "pedidos": 56,
+    "novos": 2,
     "buracos_revistos": 1,
-    "catalogo": 1442,
+    "catalogo": 1457,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23747,
-  "fronteira_avancou_em": "2026-09-23",
-  "dias_sem_descoberta": 3,
+  "fronteira_max_t_visto": 23762,
+  "fronteira_avancou_em": "2026-09-24",
+  "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-09-20"
+  "ultima_descoberta": "2026-09-24"
 }
