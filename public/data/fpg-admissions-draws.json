@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-09-20T22:03:42.816Z",
-  "total": 1214,
+  "scrapedAt": "2026-09-25T22:58:07.706Z",
+  "total": 1215,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -389890,6 +389890,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "90075",
+      "name": "TAÇA DO CLUBE CGSS 2026",
+      "date": "2026-09-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "000",
