@@ -1,17 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22487,
-      "name": "Zhailjau Golf Resort (Tour Championship)",
-      "date_inicio": "8/25/2026",
-      "date_fim": "8/25/2026",
-      "rondas": 1,
-      "campo": "Zhailjau Golf Resort",
-      "fee_18": "59.00",
-      "tour": "Kazakhstan (KZ) Tour",
-      "type": 6
-    },
-    {
       "t": 22585,
       "name": "Teen Series at PGA Golf Club (FL)",
       "date_inicio": "8/29/2026",
@@ -2322,19 +2311,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-24T12:40:47.121Z",
+  "gerado_em": "2026-09-25T12:42:10.977Z",
   "varredura_max_t": 23762,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 56,
-    "novos": 2,
-    "buracos_revistos": 1,
+    "pedidos": 40,
+    "novos": 0,
+    "buracos_revistos": 0,
     "catalogo": 1457,
     "backfill_falta": 0
   },
   "fronteira_max_t_visto": 23762,
   "fronteira_avancou_em": "2026-09-24",
-  "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 0,
+  "dias_sem_descoberta": 1,
+  "dias_sem_avanco": 1,
   "ultima_descoberta": "2026-09-24"
 }
