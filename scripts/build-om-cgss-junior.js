@@ -82,11 +82,16 @@ const rankingUrl = code => `https://scoring.datagolf.pt/pt/rankings_classif.aspx
  *   Mariana; jogado hoje, ainda não lançado nas OMs adultas).
  *   XIII Torneio Vinhos Barbeito Madeira (007/11064, 12-09) = Nível B (o
  *   regulamento nomeia o Barbeito como Nível B; é o mesmo padrão /barbeito/ que
- *   o OM_LEVELS da UI usa). */
+ *   o OM_LEVELS da UI usa).
+ *   Taça do Clube 2026 (007/11071, 26-09) = Nível A — os Termos da Competição
+ *   dizem-no («NÍVEL A», ponto 11), e é o nível que a UI já lhe dá em
+ *   OM_LEVELS/OM_CALENDAR. Entrada posta na véspera: enquanto não houver
+ *   classificações, a prova entra sem juniores e não soma pontos a ninguém. */
 const PENDING_EVENTS = [
   { tcode: "11050", level: "C" },
   { tcode: "11057", level: "C" },
   { tcode: "11064", level: "B" },
+  { tcode: "11071", level: "A" },
 ];
 
 /* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
