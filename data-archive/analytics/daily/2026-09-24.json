@@ -1,0 +1,228 @@
+{
+  "tipo": "day",
+  "periodo": "2026-09-24",
+  "since": "2026-09-24T00:00:00.000Z",
+  "until": "2026-09-24T23:59:59.999Z",
+  "projeto": "prj_e5dXWDKRiKaiVD8fYxOMQAnCEfpE",
+  "fonte": "Vercel Web Analytics (v1/query/web-analytics/visits)",
+  "nota": "Visitantes e páginas vistas do golf-fpg. Dados agregados — a API não expõe IPs nem identifica pessoas.",
+  "geradoEm": "2026-09-25T08:53:09.884Z",
+  "total": {
+    "visitors": 0,
+    "pageviews": 0
+  },
+  "dimensoes": {
+    "hour": [
+      {
+        "timestamp": "2026-09-24T00:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T01:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T02:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T03:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T04:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T05:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T06:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T07:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T08:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T09:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "timestamp": "2026-09-24T10:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T11:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T12:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T13:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T14:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T15:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T16:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T17:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T18:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T19:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T20:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T21:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T22:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-09-24T23:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      }
+    ],
+    "requestPath": [
+      {
+        "requestPath": "/jogadores/52884",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "route": [
+      {
+        "route": "",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "country": [
+      {
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "deviceType": [
+      {
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "browserName": [
+      {
+        "browserName": "Mobile Safari",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "osName": [
+      {
+        "osName": "iOS",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "referrerHostname": [
+      {
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "utmSource": null,
+    "utmMedium": null,
+    "utmCampaign": null,
+    "utmContent": null,
+    "utmTerm": null
+  },
+  "cruzamentos": {
+    "requestPath x country": [
+      {
+        "requestPath": "/jogadores/52884",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "requestPath x deviceType": [
+      {
+        "requestPath": "/jogadores/52884",
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "requestPath x referrerHostname": [
+      {
+        "requestPath": "/jogadores/52884",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ]
+  },
+  "avisos": [
+    "Indisponíveis no plano actual do Vercel (as dimensões UTM exigem Enterprise ou o add-on Web Analytics Plus): utmSource, utmMedium, utmCampaign, utmContent, utmTerm."
+  ],
+  "indisponiveis": [
+    "utmSource",
+    "utmMedium",
+    "utmCampaign",
+    "utmContent",
+    "utmTerm"
+  ]
+}
