@@ -149,10 +149,11 @@ console.log(`[add] coluna de clube no PDF: ${hasClubCol ? "SIM (regras de clube 
 /* ── 2) placeholder seguinte ────────────────────────────────────────────── */
 const cgss = JSON.parse(fs.readFileSync(CGSS, "utf8"));
 const pull = JSON.parse(fs.readFileSync(PULL, "utf8"));
-// 90071-90073 já foram usados (RALI, Calheta, 8º OM NOS). Depois de
-// re-chaveados deixam de aparecer nos ficheiros — não os reciclar, senão o
-// mesmo placeholder passa a nomear dois torneios no histórico do git.
-let maxPh = 90073;
+// 90071-90074 já foram usados (RALI, Calheta, 8º OM NOS, XIII Barbeito).
+// Depois de re-chaveados deixam de aparecer nos ficheiros — não os reciclar,
+// senão o mesmo placeholder passa a nomear dois torneios no histórico do git.
+// SUBIR ESTE PISO sempre que um placeholder for promovido a tcode real.
+let maxPh = 90074;
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);

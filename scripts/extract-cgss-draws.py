@@ -19,6 +19,38 @@ def norm(s):
     return re.sub(r"\s+", " ", s).strip().lower()
 
 
+def _text_split_at(region, split_x):
+    """Texto da região, linha a linha (palavras agrupadas por y, como o
+    extract_text()), com DOIS espaços antes da 1ª palavra que comece em
+    `split_x` ou à direita — a fronteira da coluna do clube."""
+    try:
+        words = region.extract_words()
+    except Exception:
+        return region.extract_text() or ""
+    rows, cur, last_top = [], [], None
+    for w in sorted(words, key=lambda w: (round(w["top"], 1), w["x0"])):
+        if last_top is not None and abs(w["top"] - last_top) > 3:
+            rows.append(cur)
+            cur = []
+        cur.append(w)
+        last_top = w["top"]
+    if cur:
+        rows.append(cur)
+    lines = []
+    for row in rows:
+        s, split_done = "", False
+        for w in sorted(row, key=lambda w: w["x0"]):
+            if not s:
+                s = w["text"]
+            elif not split_done and w["x0"] >= split_x:
+                s += "  " + w["text"]
+                split_done = True
+            else:
+                s += " " + w["text"]
+        lines.append(s)
+    return "\n".join(lines)
+
+
 def _pdfplumber_text(path):
     # Estes draws DataGolf têm DUAS colunas (metade esquerda + metade direita).
     # Recortamos a página nas duas metades e usamos extract_text() NATIVO em cada
@@ -27,20 +59,34 @@ def _pdfplumber_text(path):
     # contrário de uma reconstrução manual, que colava nomes e baralhava
     # colunas). O ponto de corte é o x da 2ª ocorrência de "Saída" (início da
     # coluna direita); se só houver uma, trata a página como coluna única.
+    # Quando o PDF traz coluna "HomeClub" (Taça do Clube 2026-09-26) o
+    # extract_text() cola o clube ao nome ("António Spínola Santo da Serra"),
+    # porque colapsa qualquer intervalo num só espaço — e o parse_player_line
+    # precisa de 2+ espaços para os separar. Nessas páginas o texto é
+    # reconstruído a partir das palavras (mesma coisa, só que com DOIS espaços
+    # antes da 1ª palavra da coluna do clube: x >= x0 do cabeçalho "HomeClub").
+    # Arruma também o cabeçalho, que vinha colado ("… Machico-Desertas Nº.Jog.:58").
     import pdfplumber
     out = []
     with pdfplumber.open(path) as pdf:
         for pg in pdf.pages:
             try:
-                saidas = sorted(w["x0"] for w in pg.extract_words() if w.get("text") == "Saída")
+                words = pg.extract_words()
             except Exception:
-                saidas = []
+                words = []
+            saidas = sorted(w["x0"] for w in words if w.get("text") == "Saída")
+            club_xs = [w["x0"] for w in words if str(w.get("text", "")).startswith("HomeClub")]
+            club_x = min(club_xs) - 2 if club_xs else None
+            def txt(region):
+                if club_x is not None:
+                    return _text_split_at(region, club_x)
+                return region.extract_text() or ""
             if len(saidas) >= 2:
                 mid = saidas[1] - 5
-                out.append(pg.crop((0, 0, mid, pg.height)).extract_text() or "")
-                out.append(pg.crop((mid, 0, pg.width, pg.height)).extract_text() or "")
+                out.append(txt(pg.crop((0, 0, mid, pg.height))))
+                out.append(txt(pg.crop((mid, 0, pg.width, pg.height))))
             else:
-                out.append(pg.extract_text() or "")
+                out.append(txt(pg))
     return "\n".join(out)
 
 

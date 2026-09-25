@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-09-20T22:03:45.995Z",
+  "geradoEm": "2026-09-25T16:02:18.158Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 153,
-  "totalCompanheirosUnicos": 185,
+  "totalRondas": 154,
+  "totalCompanheirosUnicos": 188,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 135,
-      "rondasComDraw": 121,
+      "rondasComDraw": 122,
       "torneiosJogados": 100,
-      "torneiosComDraw": 94,
+      "torneiosComDraw": 95,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11064",
@@ -651,6 +651,40 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90075",
+      "torneioNome": "TAÇA DO CLUBE CGSS 2026",
+      "data": "2026-09-26",
+      "ronda": 1,
+      "teeTime": "09:20",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Henrique Cunha",
+          "fed": "36844",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Fernando Vieira",
+          "fed": "2235",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Rui Verissimo",
+          "fed": "33814",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "007-11064",
