@@ -4,8 +4,8 @@
   "country": "CA",
   "place": "Vancouver, BC",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.205Z",
-  "totalTorneios": 40,
+  "lastUpdated": "2026-09-28T13:10:56.181Z",
+  "totalTorneios": 41,
   "torneios": {
     "15302": {
       "tcode": "15302",
@@ -3587,9 +3587,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 38,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3599,7 +3599,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Paradise Valley Golf Course"
+        }
+      }
     },
     "22927": {
       "tcode": "22927",
@@ -3653,9 +3679,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 37,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3665,7 +3691,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            2,
+            4,
+            5,
+            5,
+            5,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Monarch Bay Golf Club"
+        }
+      }
     },
     "22929": {
       "tcode": "22929",
@@ -3731,7 +3783,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Ramon Golf Club"
+        }
+      }
     },
     "23029": {
       "tcode": "23029",
@@ -4073,7 +4151,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        3,
+        4,
+        3,
+        5,
+        3,
+        4,
+        4,
+        5,
+        5,
+        3,
+        4,
+        3,
+        4,
+        5,
+        4,
+        5,
+        3
+      ],
+      "yards": [
+        400,
+        110,
+        255,
+        108,
+        425,
+        119,
+        275,
+        295,
+        403,
+        391,
+        124,
+        244,
+        117,
+        258,
+        430,
+        268,
+        349,
+        130
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Match"
+        }
+      }
     }
   }
 }

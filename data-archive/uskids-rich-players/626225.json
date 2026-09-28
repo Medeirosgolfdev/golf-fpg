@@ -4,7 +4,7 @@
   "country": "US",
   "place": "San Diego, CA",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.576Z",
+  "lastUpdated": "2026-09-28T13:10:56.661Z",
   "totalTorneios": 20,
   "torneios": {
     "18124": {
@@ -1982,8 +1982,8 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 8,
+      "totalStrokes": 78,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1994,7 +1994,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            3,
+            4,
+            5,
+            4,
+            6,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     }
   }
 }

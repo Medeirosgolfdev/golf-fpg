@@ -4,7 +4,7 @@
   "country": "TH",
   "place": "Bangkok, 10",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:48.621Z",
+  "lastUpdated": "2026-09-28T13:10:56.731Z",
   "totalTorneios": 16,
   "torneios": {
     "18676": {
@@ -1129,9 +1129,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 86,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1144,27 +1144,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            7,
+            4,
+            5,
+            7,
+            4,
+            5,
+            3,
+            3,
+            3,
+            4,
+            6,
+            10
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 86,
+          "numHoles": 18,
           "course": "Alpine Golf Resort - Chiangmai"
         }
       }
@@ -1181,12 +1181,12 @@
         4,
         4,
         3,
-        4,
         5,
         4,
+        4,
+        5,
         3,
         4,
-        5,
         5,
         4,
         4,
@@ -1221,6 +1221,98 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
+      "place": 4,
+      "totalStrokes": 82,
+      "points": 12,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            6,
+            4,
+            5,
+            6,
+            3,
+            5,
+            6,
+            5,
+            4,
+            3,
+            5,
+            2,
+            5,
+            5,
+            5
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Alpine Golf Resort - Chiangmai"
+        }
+      }
+    },
+    "22979": {
+      "tcode": "22979",
+      "name": "Black Mountain Golf Club",
+      "type": " Central Thailand (TH) Local Tour",
+      "startDate": "10/3/2026",
+      "endDate": "10/3/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        319,
+        418,
+        140,
+        270,
+        280,
+        440,
+        320,
+        120,
+        300,
+        310,
+        130,
+        270,
+        430,
+        140,
+        270,
+        320,
+        270,
+        400
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -1257,75 +1349,9 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Alpine Golf Resort - Chiangmai"
+          "course": "Black Mountain Golf Club - East/North"
         }
       }
-    },
-    "22979": {
-      "tcode": "22979",
-      "name": "Black Mountain Golf Club",
-      "type": " Central Thailand (TH) Local Tour",
-      "startDate": "10/3/2026",
-      "endDate": "10/3/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        5,
-        3,
-        4,
-        4,
-        5,
-        4,
-        3,
-        4,
-        4,
-        3,
-        4,
-        5,
-        3,
-        4,
-        4,
-        4,
-        5
-      ],
-      "yards": [
-        300,
-        418,
-        140,
-        270,
-        280,
-        440,
-        320,
-        120,
-        300,
-        310,
-        130,
-        270,
-        430,
-        140,
-        270,
-        280,
-        270,
-        420
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 11",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
     },
     "22980": {
       "tcode": "22980",
@@ -1356,7 +1382,7 @@
         5
       ],
       "yards": [
-        300,
+        319,
         418,
         140,
         270,
@@ -1371,9 +1397,9 @@
         430,
         140,
         270,
-        280,
+        320,
         270,
-        420
+        400
       ],
       "flightCourses": {},
       "ageGroup": "Boys 11",
@@ -1391,7 +1417,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     },
     "22981": {
       "tcode": "22981",
@@ -1457,7 +1509,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     },
     "22982": {
       "tcode": "22982",
@@ -1523,7 +1601,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     }
   }
 }

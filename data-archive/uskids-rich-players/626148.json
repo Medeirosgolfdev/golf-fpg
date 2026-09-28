@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Las Vegas, NV",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-08-24T14:11:48.574Z",
+  "lastUpdated": "2026-09-28T13:10:56.660Z",
   "totalTorneios": 32,
   "torneios": {
     "17415": {
@@ -2576,8 +2576,8 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 68,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2588,7 +2588,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 32,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            2,
+            4,
+            5,
+            5,
+            5,
+            2,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "22945": {
       "tcode": "22945",
@@ -2734,9 +2785,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
+      "place": 2,
       "totalStrokes": 40,
-      "points": 0,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2838,7 +2889,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "WildHorse Golf Club"
+        }
+      }
     },
     "22950": {
       "tcode": "22950",
@@ -2904,7 +2981,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Stallion Mountain Golf Club"
+        }
+      }
     },
     "23420": {
       "tcode": "23420",
@@ -2970,7 +3073,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     }
   }
 }

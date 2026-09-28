@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Sandy, UT",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:44.489Z",
+  "lastUpdated": "2026-09-28T13:10:51.543Z",
   "totalTorneios": 87,
   "torneios": {
     "5627": {
@@ -8604,14 +8604,52 @@
       "endDate": "9/5/2026",
       "totalRounds": 2,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        3,
+        5,
+        4,
+        5,
+        4,
+        4,
+        3
+      ],
+      "yards": [
+        478,
+        492,
+        176,
+        373,
+        499,
+        188,
+        373,
+        163,
+        329,
+        347,
+        325,
+        157,
+        497,
+        272,
+        488,
+        325,
+        367,
+        151
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 140,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8622,7 +8660,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            5,
+            4,
+            3,
+            5,
+            2,
+            5,
+            4,
+            5,
+            4,
+            4,
+            3,
+            4,
+            6,
+            4,
+            3
+          ],
+          "numStrokes": 72,
+          "numHoles": 18,
+          "course": "River Oaks Golf Course"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            5,
+            4,
+            3
+          ],
+          "numStrokes": 68,
+          "numHoles": 18,
+          "course": "River Oaks Golf Course"
+        }
+      }
     },
     "23445": {
       "tcode": "23445",
@@ -8688,7 +8777,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Southgate Golf Club"
+        }
+      }
     },
     "23447": {
       "tcode": "23447",
@@ -8754,7 +8869,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "St. George Golf Club"
+        }
+      }
     },
     "23449": {
       "tcode": "23449",
@@ -8820,7 +8961,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "St. George Golf Club"
+        }
+      }
     },
     "23451": {
       "tcode": "23451",
@@ -8886,7 +9053,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Green Spring Golf Course"
+        }
+      }
     }
   }
 }

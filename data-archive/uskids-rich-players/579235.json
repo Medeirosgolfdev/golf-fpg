@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Scarsdale, NY",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:47.461Z",
+  "lastUpdated": "2026-09-28T13:10:55.269Z",
   "totalTorneios": 100,
   "torneios": {
     "12281": {
@@ -55,22 +55,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            95,
+            180,
+            125,
+            60,
+            110,
+            111,
+            67,
+            111,
+            171,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "153980",
+      "pid": "937691",
       "place": 2,
       "totalStrokes": 53,
       "points": 17.5,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "**",
       "rounds": {
         "1": {
           "strokes": [
@@ -95,7 +138,53 @@
           ],
           "numStrokes": 53,
           "numHoles": 9,
-          "course": "Columbia Golf & Country Club"
+          "course": "Columbia Golf & Country Club",
+          "startHole": 1,
+          "startTime": "16:48",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "164340",
+          "pars": [
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            95,
+            180,
+            125,
+            60,
+            110,
+            111,
+            67,
+            111,
+            171,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -420,22 +509,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            110,
+            126,
+            155,
+            129,
+            180,
+            67,
+            175,
+            127,
+            77,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "154022",
+      "pid": "937702",
       "place": 2,
       "totalStrokes": 49,
       "points": 17.5,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 2,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -460,7 +592,53 @@
           ],
           "numStrokes": 49,
           "numHoles": 9,
-          "course": "Red Hook Golf Club"
+          "course": "Red Hook Golf Club",
+          "startHole": 1,
+          "startTime": "17:20",
+          "groupNumber": 2,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "164382",
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            110,
+            126,
+            155,
+            129,
+            180,
+            67,
+            175,
+            127,
+            77,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -9602,8 +9780,8 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 15,
+      "totalStrokes": 160,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -9617,27 +9795,52 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            5,
+            6,
+            4,
+            5,
+            4,
+            6,
+            4,
+            5,
+            4,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Seaview Golf Club - Bay Course"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            5,
+            5,
+            5,
+            4,
+            3,
+            4,
+            6,
+            5,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5,
+            2,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
           "course": "Seaview Golf Club - Bay Course"
         }
       }
@@ -9706,7 +9909,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Tunxis Plantation (Red-Green)"
+        }
+      }
     },
     "23269": {
       "tcode": "23269",
@@ -9852,9 +10081,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 42,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9864,7 +10093,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            6,
+            5,
+            6,
+            3,
+            5,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Hawk's Landing Country Club"
+        }
+      }
     },
     "23271": {
       "tcode": "23271",
@@ -9895,24 +10150,24 @@
         4
       ],
       "yards": [
-        350,
-        220,
-        180,
-        360,
-        280,
-        110,
-        250,
-        260,
-        110,
-        220,
-        350,
-        260,
-        250,
-        100,
-        280,
-        250,
+        400,
         240,
-        250
+        200,
+        380,
+        300,
+        120,
+        300,
+        310,
+        120,
+        250,
+        400,
+        310,
+        300,
+        100,
+        300,
+        380,
+        290,
+        280
       ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
@@ -9930,7 +10185,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Tallwood Country Club "
+        }
+      }
     },
     "23272": {
       "tcode": "23272",
@@ -9996,11 +10277,37 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Stanley Golf Course - Blue"
+        }
+      }
     },
     "23273": {
       "tcode": "23273",
-      "name": "Crestwood Park Golf Course ",
+      "name": "Crestbrook Park Golf Course ",
       "type": " Hartford Local Tour",
       "startDate": "10/24/2026",
       "endDate": "10/24/2026",
@@ -10024,7 +10331,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Crestbrook Park Golf Course"
+        }
+      }
     },
     "23274": {
       "tcode": "23274",
@@ -10090,7 +10423,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Keney Golf Course"
+        }
+      }
     }
   }
 }

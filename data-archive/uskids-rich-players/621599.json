@@ -4,8 +4,8 @@
   "country": "CA",
   "place": "Vancouver , BC",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.528Z",
-  "totalTorneios": 40,
+  "lastUpdated": "2026-09-28T13:10:56.600Z",
+  "totalTorneios": 42,
   "torneios": {
     "18002": {
       "tcode": "18002",
@@ -3461,6 +3461,98 @@
         }
       }
     },
+    "23500": {
+      "tcode": "23500",
+      "name": "Shuksan Golf Club",
+      "type": " Seattle Local Tour",
+      "startDate": "9/20/2026",
+      "endDate": "9/20/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        305,
+        138,
+        274,
+        465,
+        301,
+        144,
+        450,
+        328,
+        287,
+        358,
+        135,
+        300,
+        449,
+        127,
+        250,
+        347,
+        305,
+        463
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 5,
+      "totalStrokes": 83,
+      "points": 10,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            4,
+            5,
+            5,
+            3,
+            7,
+            4,
+            6,
+            4,
+            5,
+            5,
+            6,
+            4,
+            4,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 83,
+          "numHoles": 18,
+          "course": "Shuksan Golf Club"
+        }
+      }
+    },
     "23501": {
       "tcode": "23501",
       "name": "Avalon Golf Links",
@@ -3514,7 +3606,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 90,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3525,7 +3617,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            4,
+            5,
+            5,
+            3,
+            6,
+            5,
+            4,
+            6,
+            5,
+            5,
+            5,
+            3,
+            5,
+            6,
+            4,
+            7,
+            6
+          ],
+          "numStrokes": 90,
+          "numHoles": 18,
+          "course": "Avalon Golf Links"
+        }
+      }
     },
     "23502": {
       "tcode": "23502",
@@ -3591,7 +3709,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Loomis Trail Golf Course"
+        }
+      }
     },
     "23503": {
       "tcode": "23503",
@@ -3619,7 +3763,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Whidbey Golf Course"
+        }
+      }
+    },
+    "23505": {
+      "tcode": "23505",
+      "name": "Sudden Valley Golf Course (Tour Championship)",
+      "type": " Seattle Local Tour",
+      "startDate": "11/1/2026",
+      "endDate": "11/1/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        443,
+        335,
+        328,
+        130,
+        280,
+        262,
+        455,
+        148,
+        277,
+        446,
+        328,
+        337,
+        150,
+        316,
+        330,
+        149,
+        444,
+        348
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sudden Valley Golf Course"
+        }
+      }
     }
   }
 }

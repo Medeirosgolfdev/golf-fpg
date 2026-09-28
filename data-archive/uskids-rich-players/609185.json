@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Encinitas, CA",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.313Z",
+  "lastUpdated": "2026-09-28T13:10:56.330Z",
   "totalTorneios": 23,
   "torneios": {
     "15859": {
@@ -2022,16 +2022,16 @@
         344,
         118,
         350,
-        488,
-        320,
+        459,
+        304,
         428,
         119,
-        369,
-        354,
+        344,
+        340,
         130,
         455,
         356,
-        417,
+        401,
         362,
         125,
         352,
@@ -2041,8 +2041,8 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 145,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2053,7 +2053,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            2,
+            4,
+            5,
+            4,
+            6,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            6,
+            5,
+            3,
+            5,
+            3
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 69,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "23420": {
       "tcode": "23420",
@@ -2119,7 +2170,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     }
   }
 }

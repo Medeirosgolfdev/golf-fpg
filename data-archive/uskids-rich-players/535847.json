@@ -4,8 +4,8 @@
   "country": "BR",
   "place": "São Paulo, SP",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:45.078Z",
-  "totalTorneios": 71,
+  "lastUpdated": "2026-09-28T13:10:52.303Z",
+  "totalTorneios": 72,
   "torneios": {
     "10163": {
       "tcode": "10163",
@@ -7765,9 +7765,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 34,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7780,15 +7780,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            5,
+            4,
+            3,
+            2,
+            5,
+            3,
+            3,
             0,
             0,
             0,
@@ -7799,8 +7799,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 34,
+          "numHoles": 9,
           "course": "Clube de Campo São Paulo"
         }
       }
@@ -7961,7 +7961,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Lago Azul Golfe Clube"
+        }
+      }
     },
     "23211": {
       "tcode": "23211",
@@ -8011,6 +8037,60 @@
         0,
         0
       ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sao Paulo Golf Club"
+        }
+      }
+    },
+    "23287": {
+      "tcode": "23287",
+      "name": "South American Championship 2026",
+      "type": "International Championships",
+      "startDate": "10/31/2026",
+      "endDate": "11/2/2026",
+      "totalRounds": 3,
+      "holesPerRound": 18,
+      "par": [],
+      "yards": [],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,

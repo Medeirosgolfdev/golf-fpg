@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Pleasanton, CA",
   "ageGroup": "Girls 11-12",
-  "lastUpdated": "2026-08-24T14:11:49.158Z",
+  "lastUpdated": "2026-09-28T13:10:57.386Z",
   "totalTorneios": 59,
   "torneios": {
     "15065": {
@@ -4391,8 +4391,8 @@
       "ageGroup": "Girls 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 146,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4403,7 +4403,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            2,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            2,
+            4,
+            5,
+            4,
+            6,
+            3,
+            6,
+            5,
+            4,
+            4,
+            5,
+            4,
+            3,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "22923": {
       "tcode": "22923",
@@ -4457,9 +4508,9 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 76,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4472,27 +4523,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            5,
+            6,
+            3,
+            4,
+            4,
+            2,
+            5,
+            5,
+            5,
+            3,
+            5,
+            3,
+            6,
+            4,
+            3,
+            4,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 76,
+          "numHoles": 18,
           "course": "Napa Golf Course at Kennedy Park"
         }
       }
@@ -4505,15 +4556,53 @@
       "endDate": "9/13/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        3,
+        4,
+        5,
+        3,
+        5,
+        5,
+        4,
+        3,
+        4,
+        3,
+        5,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        230,
+        247,
+        97,
+        380,
+        112,
+        230,
+        380,
+        87,
+        350,
+        398,
+        236,
+        113,
+        230,
+        110,
+        360,
+        134,
+        240,
+        356
+      ],
       "flightCourses": {},
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 72,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4526,27 +4615,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            6,
+            4,
+            3,
+            3,
+            3,
+            5,
+            5,
+            4,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 72,
+          "numHoles": 18,
           "course": "Chardonnay Golf Club"
         }
       }
@@ -4603,9 +4692,9 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 75,
+      "points": 13.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4615,7 +4704,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            3,
+            5,
+            9,
+            3,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Monarch Bay Golf Club"
+        }
+      }
     },
     "22928": {
       "tcode": "22928",
@@ -4669,9 +4784,9 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 71,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4681,7 +4796,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            3,
+            5,
+            4,
+            4,
+            3,
+            6,
+            4,
+            2,
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Las Positas Golf Course"
+        }
+      }
     },
     "22929": {
       "tcode": "22929",
@@ -4747,7 +4888,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Ramon Golf Club"
+        }
+      }
     },
     "22930": {
       "tcode": "22930",
@@ -4813,7 +4980,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Ramon Golf Club"
+        }
+      }
     },
     "22937": {
       "tcode": "22937",
@@ -4879,7 +5072,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Micke Grove Golf Links"
+        }
+      }
     },
     "22938": {
       "tcode": "22938",
@@ -4945,7 +5164,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Reserve At Spanos Park"
+        }
+      }
     },
     "22939": {
       "tcode": "22939",
@@ -5011,7 +5256,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Dry Creek Ranch Golf Club, Inc."
+        }
+      }
     },
     "22940": {
       "tcode": "22940",
@@ -5077,7 +5348,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Paradise Valley Golf Course"
+        }
+      }
     },
     "22941": {
       "tcode": "22941",
@@ -5143,7 +5440,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Swenson Park Golf Club"
+        }
+      }
     },
     "22942": {
       "tcode": "22942",
@@ -5209,7 +5532,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Las Positas Golf Course"
+        }
+      }
     }
   }
 }

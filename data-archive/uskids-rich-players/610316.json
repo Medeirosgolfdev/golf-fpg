@@ -1,10 +1,10 @@
 {
   "memberID": "610316",
-  "name": "Liam  Lindstrom Salazar",
+  "name": "Liam Lindstrom Salazar",
   "country": "CR",
   "place": "Santa Ana, SJ",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.339Z",
+  "lastUpdated": "2026-09-28T13:10:56.363Z",
   "totalTorneios": 26,
   "torneios": {
     "17098": {
@@ -1602,22 +1602,65 @@
         62,
         151
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            220,
+            141,
+            155,
+            168,
+            74,
+            160,
+            224,
+            62,
+            151
+          ]
+        }
+      },
       "ageGroup": "Boys 6 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "237189",
+      "pid": "1459299",
       "place": 1,
       "totalStrokes": 124,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -1642,7 +1685,53 @@
           ],
           "numStrokes": 43,
           "numHoles": 9,
-          "course": "Santa Maria Golf & Country Club"
+          "course": "Santa Maria Golf & Country Club",
+          "startHole": 10,
+          "startTime": "12:00",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "251190",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            220,
+            141,
+            155,
+            168,
+            74,
+            160,
+            224,
+            62,
+            151
+          ]
         },
         "2": {
           "strokes": [
@@ -1667,7 +1756,13 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Santa Maria Golf & Country Club"
+          "course": "Santa Maria Golf & Country Club",
+          "startHole": 10,
+          "startTime": "12:00",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "251191"
         },
         "3": {
           "strokes": [
@@ -1692,7 +1787,13 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Santa Maria Golf & Country Club"
+          "course": "Santa Maria Golf & Country Club",
+          "startHole": 10,
+          "startTime": "12:00",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "251192"
         }
       }
     },

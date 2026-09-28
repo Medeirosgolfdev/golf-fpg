@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Poulsbo, WA",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:47.061Z",
-  "totalTorneios": 110,
+  "lastUpdated": "2026-09-28T13:10:54.775Z",
+  "totalTorneios": 107,
   "torneios": {
     "11064": {
       "tcode": "11064",
@@ -10369,8 +10369,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 8,
+      "totalStrokes": 147,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -10381,7 +10381,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            6,
+            4,
+            5,
+            4,
+            5,
+            2,
+            5,
+            4,
+            4,
+            3
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Lake Spanaway Golf Course"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            3,
+            4,
+            3,
+            5,
+            4,
+            5,
+            5,
+            4,
+            7,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Lake Spanaway Golf Course"
+        }
+      }
     },
     "22583": {
       "tcode": "22583",
@@ -10435,8 +10486,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 148,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -10450,27 +10501,52 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            4,
+            5,
+            4,
+            5,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            6,
+            4,
+            4,
+            2
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Echo Falls Golf Club"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            6,
+            4,
+            3,
+            6,
+            4,
+            6,
+            4
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
           "course": "Echo Falls Golf Club"
         }
       }
@@ -10527,8 +10603,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 138,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -10539,7 +10615,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            3,
+            2,
+            5,
+            4,
+            3,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            2,
+            4,
+            4,
+            2,
+            5
+          ],
+          "numStrokes": 66,
+          "numHoles": 18,
+          "course": "Port Ludlow Golf Course"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            3,
+            6,
+            5,
+            4,
+            5,
+            5,
+            5,
+            3,
+            3,
+            3,
+            3,
+            5
+          ],
+          "numStrokes": 72,
+          "numHoles": 18,
+          "course": "Port Ludlow Golf Course"
+        }
+      }
     },
     "23420": {
       "tcode": "23420",
@@ -10605,7 +10732,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     },
     "23498": {
       "tcode": "23498",
@@ -10659,9 +10812,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 79,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10674,27 +10827,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            5,
+            5,
+            5,
+            4,
+            6,
+            4,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 79,
+          "numHoles": 18,
           "course": "Sunland Golf Club"
         }
       }
@@ -10751,9 +10904,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 5,
+      "totalStrokes": 77,
+      "points": 10,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10766,96 +10919,30 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            6,
+            4,
+            5,
+            3
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 77,
+          "numHoles": 18,
           "course": "The Cedars At Dungeness Golf Club"
         }
       }
-    },
-    "23501": {
-      "tcode": "23501",
-      "name": "Avalon Golf Links",
-      "type": " Seattle Local Tour",
-      "startDate": "9/27/2026",
-      "endDate": "9/27/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        3,
-        5,
-        4,
-        3,
-        5,
-        4,
-        3,
-        5,
-        4,
-        4,
-        4,
-        3,
-        4,
-        5,
-        3,
-        5,
-        4
-      ],
-      "yards": [
-        384,
-        140,
-        436,
-        343,
-        184,
-        516,
-        350,
-        154,
-        498,
-        349,
-        360,
-        346,
-        160,
-        330,
-        478,
-        143,
-        463,
-        373
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 13-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
     },
     "23502": {
       "tcode": "23502",
@@ -10921,7 +11008,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Loomis Trail Golf Course"
+        }
+      }
     },
     "23503": {
       "tcode": "23503",
@@ -10949,73 +11062,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23505": {
-      "tcode": "23505",
-      "name": "Sudden Valley Golf Course (Tour Championship)",
-      "type": " Seattle Local Tour",
-      "startDate": "11/1/2026",
-      "endDate": "11/1/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        5,
-        4,
-        4,
-        3,
-        4,
-        4,
-        5,
-        3,
-        4,
-        5,
-        4,
-        4,
-        3,
-        4,
-        4,
-        3,
-        5,
-        4
-      ],
-      "yards": [
-        483,
-        358,
-        365,
-        155,
-        366,
-        346,
-        483,
-        161,
-        338,
-        464,
-        335,
-        348,
-        173,
-        338,
-        374,
-        160,
-        464,
-        363
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 13-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Whidbey Golf Course"
+        }
+      }
     },
     "23543": {
       "tcode": "23543",
@@ -11081,7 +11154,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Port Ludlow Golf Course"
+        }
+      }
     },
     "23544": {
       "tcode": "23544",
@@ -11109,7 +11208,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "White Horse Golf Club"
+        }
+      }
     },
     "23545": {
       "tcode": "23545",
@@ -11175,73 +11300,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23546": {
-      "tcode": "23546",
-      "name": "The Classic Golf Club",
-      "type": " Tacoma Local Tour",
-      "startDate": "10/18/2026",
-      "endDate": "10/18/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        3,
-        4,
-        4,
-        5,
-        3,
-        4,
-        4,
-        5,
-        4,
-        4,
-        4,
-        3,
-        4,
-        5,
-        5,
-        3,
-        4
-      ],
-      "yards": [
-        365,
-        158,
-        368,
-        365,
-        473,
-        135,
-        367,
-        367,
-        485,
-        366,
-        362,
-        351,
-        147,
-        379,
-        421,
-        498,
-        140,
-        300
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 13-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Home Course "
+        }
+      }
     },
     "23547": {
       "tcode": "23547",
@@ -11307,7 +11392,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gold Mountain Golf Course"
+        }
+      }
     },
     "23548": {
       "tcode": "23548",
@@ -11373,7 +11484,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "McCormick Woods Golf Course"
+        }
+      }
     }
   }
 }

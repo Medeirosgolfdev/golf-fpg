@@ -3,9 +3,9 @@
   "name": "Tom Guy",
   "country": "AU",
   "place": "Gold Coast, QLD",
-  "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:47.536Z",
-  "totalTorneios": 60,
+  "ageGroup": "Boys 10",
+  "lastUpdated": "2026-09-28T13:10:55.360Z",
+  "totalTorneios": 61,
   "torneios": {
     "11756": {
       "tcode": "11756",
@@ -6225,6 +6225,98 @@
         }
       }
     },
+    "23078": {
+      "tcode": "23078",
+      "name": "Maleny Golf Club",
+      "type": " Sunshine Coast (AU) Local Tour",
+      "startDate": "10/18/2026",
+      "endDate": "10/18/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        3,
+        5,
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        128,
+        451,
+        252,
+        348,
+        137,
+        284,
+        257,
+        131,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Maleny Golf Club"
+        }
+      }
+    },
     "23089": {
       "tcode": "23089",
       "name": "Australian Challenge 2026",
@@ -6277,8 +6369,8 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 156,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6289,7 +6381,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            7,
+            5,
+            4,
+            3,
+            4,
+            7,
+            4,
+            3,
+            4,
+            5,
+            4,
+            6,
+            3,
+            3,
+            4
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            5,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            4,
+            7,
+            3,
+            3,
+            5,
+            5,
+            4,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

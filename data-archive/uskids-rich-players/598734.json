@@ -4,8 +4,8 @@
   "country": null,
   "place": null,
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.100Z",
-  "totalTorneios": 28,
+  "lastUpdated": "2026-09-28T13:10:56.048Z",
+  "totalTorneios": 27,
   "torneios": {
     "14678": {
       "tcode": "14678",
@@ -2496,7 +2496,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Course at Pillow Springs"
+        }
+      }
     },
     "23069": {
       "tcode": "23069",
@@ -2562,72 +2588,6 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23070": {
-      "tcode": "23070",
-      "name": "Henry Horton Golf Course",
-      "type": " Nashville Local Tour",
-      "startDate": "9/13/2026",
-      "endDate": "9/13/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        4,
-        3,
-        5,
-        4,
-        4,
-        5,
-        4,
-        3,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "yards": [
-        311,
-        110,
-        436,
-        351,
-        308,
-        355,
-        300,
-        120,
-        270,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
       "rounds": {
         "1": {
           "strokes": [
@@ -2652,7 +2612,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Henry Horton Golf Course"
+          "course": "Kenny Perry's Country Creek Golf Course"
         }
       }
     }

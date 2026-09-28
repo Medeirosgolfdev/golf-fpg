@@ -4,7 +4,7 @@
   "country": null,
   "place": null,
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:48.223Z",
+  "lastUpdated": "2026-09-28T13:10:56.205Z",
   "totalTorneios": 41,
   "torneios": {
     "14955": {
@@ -3385,15 +3385,53 @@
       "endDate": "9/12/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        422,
+        490,
+        320,
+        160,
+        470,
+        150,
+        355,
+        350,
+        385,
+        464,
+        168,
+        330,
+        350,
+        363,
+        346,
+        165,
+        374,
+        418
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 10,
+      "totalStrokes": 89,
+      "points": 1,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3406,27 +3444,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            6,
+            6,
+            4,
+            4,
+            5,
+            4,
+            7,
+            5,
+            6,
+            5,
+            3,
+            4,
+            5,
+            7,
+            6,
+            3,
+            4,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 89,
+          "numHoles": 18,
           "course": "Richland Golf Club"
         }
       }
@@ -3439,15 +3477,53 @@
       "endDate": "9/13/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        3,
+        5,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4
+      ],
+      "yards": [
+        325,
+        423,
+        356,
+        166,
+        372,
+        138,
+        383,
+        260,
+        396,
+        362,
+        192,
+        440,
+        470,
+        176,
+        380,
+        398,
+        371,
+        364
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 8,
+      "totalStrokes": 84,
+      "points": 4,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3460,27 +3536,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            6,
+            4,
+            4,
+            3,
+            5,
+            4,
+            6,
+            5,
+            3,
+            5,
+            6,
+            3,
+            4,
+            6,
+            5,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 84,
+          "numHoles": 18,
           "course": "Prince William Golf Course"
         }
       }
@@ -3549,7 +3625,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Locust Hill Golf Course"
+        }
+      }
     },
     "23168": {
       "tcode": "23168",
@@ -3577,7 +3679,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Swan Point Yacht & Country Club"
+        }
+      }
     },
     "23169": {
       "tcode": "23169",
@@ -3643,7 +3771,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Forest Park Golf Course"
+        }
+      }
     },
     "23170": {
       "tcode": "23170",
@@ -3709,7 +3863,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Clustered Spires Golf Club"
+        }
+      }
     }
   }
 }

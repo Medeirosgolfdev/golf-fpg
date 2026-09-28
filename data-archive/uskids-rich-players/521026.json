@@ -4,7 +4,7 @@
   "country": "AU",
   "place": "Mona Vale, NSW",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:44.179Z",
+  "lastUpdated": "2026-09-28T13:10:51.141Z",
   "totalTorneios": 102,
   "torneios": {
     "5617": {
@@ -10570,8 +10570,8 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 151,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -10582,7 +10582,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            4,
+            6,
+            3,
+            5,
+            4,
+            4,
+            3,
+            3,
+            6,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

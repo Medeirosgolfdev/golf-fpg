@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Las Vegas, NV",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:48.196Z",
-  "totalTorneios": 41,
+  "lastUpdated": "2026-09-28T13:10:56.169Z",
+  "totalTorneios": 40,
   "torneios": {
     "15000": {
       "tcode": "15000",
@@ -3890,9 +3890,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
+      "place": 2,
       "totalStrokes": 81,
-      "points": 0,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3994,7 +3994,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Aliante Golf Club"
+        }
+      }
     },
     "22951": {
       "tcode": "22951",
@@ -4060,73 +4086,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23017": {
-      "tcode": "23017",
-      "name": "Teen Series at Las Vegas Golf Club (NV)",
-      "type": "Teen Series",
-      "startDate": "10/10/2026",
-      "endDate": "10/11/2026",
-      "totalRounds": 2,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        5,
-        3,
-        4,
-        4,
-        3,
-        4,
-        4,
-        5,
-        4,
-        4,
-        3,
-        5,
-        4,
-        5,
-        4,
-        3,
-        4
-      ],
-      "yards": [
-        331,
-        503,
-        98,
-        370,
-        351,
-        161,
-        379,
-        416,
-        458,
-        396,
-        335,
-        126,
-        461,
-        395,
-        460,
-        354,
-        187,
-        382
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 12-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Painted Desert Golf Club"
+        }
+      }
     }
   }
 }

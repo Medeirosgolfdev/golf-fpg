@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Cary, NC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.580Z",
-  "totalTorneios": 38,
+  "lastUpdated": "2026-09-28T13:10:56.669Z",
+  "totalTorneios": 39,
   "torneios": {
     "18229": {
       "tcode": "18229",
@@ -3053,9 +3053,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 7,
+      "totalStrokes": 48,
+      "points": 5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3068,15 +3068,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            7,
+            5,
+            7,
+            4,
+            8,
+            5,
+            4,
             0,
             0,
             0,
@@ -3087,8 +3087,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 48,
+          "numHoles": 9,
           "course": "Longleaf Golf & Family Club"
         }
       }
@@ -3145,9 +3145,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 41,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3157,7 +3157,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            4,
+            3,
+            7,
+            3,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     },
     "23493": {
       "tcode": "23493",
@@ -3223,7 +3249,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Beacon Ridge Golf & Country Club"
+        }
+      }
     },
     "23494": {
       "tcode": "23494",
@@ -3289,7 +3341,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Scotch Meadows Country Club"
+        }
+      }
     },
     "23495": {
       "tcode": "23495",
@@ -3355,7 +3433,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gates Four Golf & Country Club"
+        }
+      }
     },
     "23496": {
       "tcode": "23496",
@@ -3421,7 +3525,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Pinehurst Resort No. 6"
+        }
+      }
+    },
+    "23497": {
+      "tcode": "23497",
+      "name": "Longleaf Golf & Family Club (Tour Championship)",
+      "type": " Sandhills, NC Local Tour",
+      "startDate": "11/22/2026",
+      "endDate": "11/22/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        3,
+        3,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5,
+        3,
+        4
+      ],
+      "yards": [
+        343,
+        260,
+        130,
+        118,
+        345,
+        121,
+        238,
+        340,
+        220,
+        216,
+        104,
+        277,
+        257,
+        332,
+        246,
+        318,
+        110,
+        241
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     }
   }
 }

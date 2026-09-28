@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Marvin, NC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.614Z",
+  "lastUpdated": "2026-09-28T13:10:56.723Z",
   "totalTorneios": 48,
   "torneios": {
     "19144": {
@@ -1987,22 +1987,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            220,
+            200,
+            271,
+            180,
+            240,
+            89,
+            310,
+            86,
+            203,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
+      "flightId": "270779",
+      "pid": "1661200",
       "place": 2,
       "totalStrokes": 48,
       "points": 20,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
+      "driverLength": "",
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -2027,7 +2070,53 @@
           ],
           "numStrokes": 48,
           "numHoles": 9,
-          "course": "Carolina Trace Country Club"
+          "course": "Carolina Trace Country Club",
+          "startHole": 1,
+          "startTime": "09:36",
+          "groupNumber": 2,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "286012",
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            220,
+            200,
+            271,
+            180,
+            240,
+            89,
+            310,
+            86,
+            203,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -3906,9 +3995,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 36,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3921,15 +4010,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
             0,
             0,
             0,
@@ -3940,8 +4029,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
           "course": "White Plains Country Club"
         }
       }
@@ -3998,9 +4087,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 39,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4013,15 +4102,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            5,
+            5,
+            5,
+            4,
+            5,
+            4,
             0,
             0,
             0,
@@ -4032,8 +4121,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 39,
+          "numHoles": 9,
           "course": "Monroe Country Club"
         }
       }
@@ -4067,15 +4156,15 @@
         0
       ],
       "yards": [
-        275,
+        250,
         382,
-        185,
+        230,
         226,
         242,
-        124,
+        121,
         225,
-        102,
-        364,
+        99,
+        325,
         0,
         0,
         0,
@@ -4090,9 +4179,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 38,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4102,7 +4191,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Sunset Hills Public Golf Course"
+        }
+      }
     },
     "23265": {
       "tcode": "23265",
@@ -4168,7 +4283,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Charles T. Myers Golf Course"
+        }
+      }
     },
     "23266": {
       "tcode": "23266",
@@ -4234,7 +4375,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Lancaster Golf Club"
+        }
+      }
     },
     "23267": {
       "tcode": "23267",
@@ -4300,7 +4467,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Harry L. Jones Sr. Golf Course"
+        }
+      }
     },
     "23496": {
       "tcode": "23496",
@@ -4366,7 +4559,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Pinehurst Resort No. 6"
+        }
+      }
     }
   }
 }

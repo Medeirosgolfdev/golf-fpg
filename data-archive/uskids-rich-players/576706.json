@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Palm Beach Gardens, FL",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:47.353Z",
-  "totalTorneios": 24,
+  "lastUpdated": "2026-09-28T13:10:55.134Z",
+  "totalTorneios": 25,
   "torneios": {
     "14794": {
       "tcode": "14794",
@@ -2358,8 +2358,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 7,
+      "totalStrokes": 110,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2370,7 +2370,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            3,
+            5,
+            5,
+            3,
+            3,
+            5,
+            4,
+            5,
+            3,
+            3,
+            4,
+            5,
+            4,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        },
+        "2": {
+          "strokes": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            4,
+            3,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 27,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        }
+      }
     },
     "22986": {
       "tcode": "22986",
@@ -2436,7 +2487,150 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        377,
+        147,
+        347,
+        498,
+        154,
+        384,
+        345,
+        472,
+        356,
+        156,
+        357,
+        455,
+        126,
+        299,
+        343,
+        368,
+        377,
+        550
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 13-14",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Palmer"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Orlando, FL",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:47.163Z",
-  "totalTorneios": 108,
+  "lastUpdated": "2026-09-28T13:10:54.901Z",
+  "totalTorneios": 109,
   "torneios": {
     "10785": {
       "tcode": "10785",
@@ -11877,7 +11877,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
     },
     "23428": {
       "tcode": "23428",
@@ -11944,6 +11995,98 @@
       "isCaptain": null,
       "isNewPlayer": null,
       "rounds": {}
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        499,
+        328,
+        320,
+        466,
+        127,
+        306,
+        131,
+        318,
+        345,
+        322,
+        325,
+        480,
+        115,
+        312,
+        293,
+        139,
+        458,
+        349
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Fazio"
+        }
+      }
     }
   }
 }

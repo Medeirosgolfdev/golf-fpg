@@ -1,10 +1,10 @@
 {
   "memberID": "606287",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Charlie Liefer",
+  "country": "US",
+  "place": "Red Bud, IL",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.259Z",
+  "lastUpdated": "2026-09-28T13:10:56.257Z",
   "totalTorneios": 21,
   "torneios": {
     "15618": {
@@ -55,22 +55,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            245,
+            230,
+            236,
+            345,
+            75,
+            295,
+            90,
+            196,
+            185,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 9",
-      "flightId": null,
-      "pid": null,
+      "flightId": "199430",
+      "pid": "1228425",
       "place": 1,
       "totalStrokes": 38,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "**",
       "rounds": {
         "1": {
           "strokes": [
@@ -95,7 +138,53 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Mystic Oak Golf Course"
+          "course": "Mystic Oak Golf Course",
+          "startHole": 1,
+          "startTime": "13:20",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "211593",
+          "pars": [
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            245,
+            230,
+            236,
+            345,
+            75,
+            295,
+            90,
+            196,
+            185,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1673,9 +1762,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 73,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1688,27 +1777,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            4,
+            3,
+            3,
+            4,
+            4,
+            3,
+            6,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 73,
+          "numHoles": 18,
           "course": "Carlyle Lake Golf Club"
         }
       }
@@ -1765,9 +1854,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 77,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1777,7 +1866,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            5,
+            7,
+            5,
+            4,
+            4,
+            3,
+            3,
+            4,
+            5,
+            3,
+            3,
+            6,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Roland Barkau Memorial Golf Course"
+        }
+      }
     },
     "23075": {
       "tcode": "23075",
@@ -1843,7 +1958,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Legacy Golf Course "
+        }
+      }
     },
     "23076": {
       "tcode": "23076",
@@ -1909,7 +2050,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Carlyle Lake Golf Club"
+        }
+      }
     }
   }
 }

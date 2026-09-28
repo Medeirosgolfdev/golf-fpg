@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Lehi, UT",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:47.149Z",
+  "lastUpdated": "2026-09-28T13:10:54.886Z",
   "totalTorneios": 83,
   "torneios": {
     "11286": {
@@ -699,22 +699,107 @@
         275,
         240
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "lengths": [
+            195,
+            198,
+            210,
+            190,
+            285,
+            110,
+            320,
+            185,
+            109,
+            300,
+            125,
+            310,
+            180,
+            190,
+            200,
+            98,
+            275,
+            240
+          ]
+        },
+        "2": {
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "lengths": [
+            195,
+            198,
+            210,
+            190,
+            285,
+            110,
+            320,
+            185,
+            109,
+            300,
+            125,
+            310,
+            180,
+            190,
+            200,
+            98,
+            275,
+            240
+          ]
+        }
+      },
       "ageGroup": "Boys 9",
-      "flightId": null,
-      "pid": null,
+      "flightId": "140985",
+      "pid": "882575",
       "place": 9,
       "totalStrokes": 173,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -739,7 +824,53 @@
           ],
           "numStrokes": 89,
           "numHoles": 18,
-          "course": "Mount Wolseley Hotel Spa & Golf Resort"
+          "course": "Mount Wolseley Hotel Spa & Golf Resort",
+          "startHole": 1,
+          "startTime": "12:30",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "150609",
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "yards": [
+            195,
+            198,
+            210,
+            190,
+            285,
+            110,
+            320,
+            185,
+            109,
+            300,
+            125,
+            310,
+            180,
+            190,
+            200,
+            98,
+            275,
+            240
+          ]
         },
         "2": {
           "strokes": [
@@ -764,7 +895,53 @@
           ],
           "numStrokes": 84,
           "numHoles": 18,
-          "course": "Mount Wolseley Hotel Spa & Golf Resort"
+          "course": "Mount Wolseley Hotel Spa & Golf Resort",
+          "startHole": 1,
+          "startTime": "12:39",
+          "groupNumber": 3,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "150610",
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "yards": [
+            195,
+            198,
+            210,
+            190,
+            285,
+            110,
+            320,
+            185,
+            109,
+            300,
+            125,
+            310,
+            180,
+            190,
+            200,
+            98,
+            275,
+            240
+          ]
         }
       }
     },
@@ -8080,8 +8257,8 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 18,
+      "totalStrokes": 83,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8095,27 +8272,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            4,
+            6,
+            3,
+            6,
+            4,
+            4,
+            6,
+            5,
+            4,
+            3,
+            7,
+            5,
+            4,
+            5,
+            3,
+            6
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 83,
+          "numHoles": 18,
           "course": "Eagle Creek Golf Club"
         }
       }
@@ -8172,8 +8349,8 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 18,
+      "totalStrokes": 47,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8184,7 +8361,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            5,
+            5,
+            6,
+            3,
+            6,
+            4,
+            10,
+            3,
+            5
+          ],
+          "numStrokes": 38,
+          "numHoles": 18,
+          "course": "Rio Pinar Golf & Country Club"
+        }
+      }
     },
     "23024": {
       "tcode": "23024",
@@ -8250,7 +8453,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "West Orange Country Club"
+        }
+      }
     },
     "23026": {
       "tcode": "23026",
@@ -8316,7 +8545,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Royal St. Cloud Golf Links - White/Blue Courses"
+        }
+      }
     }
   }
 }

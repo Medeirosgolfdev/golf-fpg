@@ -4,7 +4,7 @@
   "country": "TR",
   "place": "Antalya, ANT",
   "ageGroup": "Boys 13-18",
-  "lastUpdated": "2026-08-24T14:11:47.879Z",
+  "lastUpdated": "2026-09-28T13:10:55.776Z",
   "totalTorneios": 43,
   "torneios": {
     "13536": {
@@ -5034,29 +5034,29 @@
       "yards": [
         402,
         591,
-        401,
+        378,
         413,
-        170,
+        146,
         299,
         376,
         180,
         499,
         457,
         420,
-        309,
+        316,
         473,
         178,
         338,
         144,
-        449,
+        421,
         369
       ],
       "flightCourses": {},
       "ageGroup": "Boys 13-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 254,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -5067,7 +5067,83 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            8,
+            5,
+            4,
+            5,
+            4,
+            4,
+            3,
+            7,
+            6,
+            5,
+            4,
+            6,
+            4,
+            4,
+            4,
+            5,
+            5
+          ],
+          "numStrokes": 88,
+          "numHoles": 18,
+          "course": "Somabay Golf"
+        },
+        "2": {
+          "strokes": [
+            4,
+            7,
+            5,
+            6,
+            4,
+            5,
+            5,
+            4,
+            6,
+            5,
+            6,
+            4,
+            4,
+            4,
+            4,
+            2,
+            5,
+            4
+          ],
+          "numStrokes": 84,
+          "numHoles": 18,
+          "course": "Somabay Golf"
+        },
+        "3": {
+          "strokes": [
+            4,
+            6,
+            5,
+            5,
+            4,
+            5,
+            4,
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            6
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Somabay Golf"
+        }
+      }
     }
   }
 }

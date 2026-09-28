@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Lewes, DE",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:47.402Z",
+  "lastUpdated": "2026-09-28T13:10:55.195Z",
   "totalTorneios": 85,
   "torneios": {
     "12100": {
@@ -1251,22 +1251,107 @@
         72,
         306
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202,
+            102,
+            214,
+            194,
+            230,
+            287,
+            205,
+            72,
+            306
+          ]
+        },
+        "2": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202,
+            102,
+            214,
+            194,
+            230,
+            287,
+            205,
+            72,
+            306
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
+      "flightId": "161499",
+      "pid": "1045533",
       "place": 15,
       "totalStrokes": 107,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -1291,7 +1376,53 @@
           ],
           "numStrokes": 53,
           "numHoles": 9,
-          "course": "Golden Horseshoe - Green Course "
+          "course": "Golden Horseshoe - Green Course ",
+          "startHole": 10,
+          "startTime": "08:43",
+          "groupNumber": 3,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "172182",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202,
+            102,
+            214,
+            194,
+            230,
+            287,
+            205,
+            72,
+            306
+          ]
         },
         "2": {
           "strokes": [
@@ -1316,7 +1447,53 @@
           ],
           "numStrokes": 54,
           "numHoles": 9,
-          "course": "Golden Horseshoe - Green Course "
+          "course": "Golden Horseshoe - Green Course ",
+          "startHole": 10,
+          "startTime": "07:25",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "172183",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202,
+            102,
+            214,
+            194,
+            230,
+            287,
+            205,
+            72,
+            306
+          ]
         }
       }
     },
@@ -8073,9 +8250,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 79,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8088,27 +8265,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            3,
+            5,
+            8,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 79,
+          "numHoles": 18,
           "course": "Garrisons Lake Golf Club"
         }
       }
@@ -8177,7 +8354,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hoopers Landing Golf Course"
+        }
+      }
     },
     "23038": {
       "tcode": "23038",
@@ -8243,7 +8446,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Wild Quail Golf & Country Club"
+        }
+      }
     },
     "23039": {
       "tcode": "23039",
@@ -8309,7 +8538,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Garrisons Lake Golf Club"
+        }
+      }
     },
     "23040": {
       "tcode": "23040",
@@ -8375,7 +8630,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Maple Dale Country Club"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Mount Vernon, KY",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-08-24T14:11:43.261Z",
+  "lastUpdated": "2026-09-28T13:10:49.887Z",
   "totalTorneios": 60,
   "torneios": {
     "1894": {
@@ -4256,9 +4256,52 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            295,
+            215,
+            210,
+            200,
+            115,
+            225,
+            215,
+            120,
+            305,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
+      "flightId": "69882",
       "pid": null,
       "place": 1,
       "totalStrokes": 40,
@@ -4296,7 +4339,47 @@
           ],
           "numStrokes": 40,
           "numHoles": 9,
-          "course": "Royal Kunia Country Club"
+          "course": "Royal Kunia Country Club",
+          "pars": [
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            295,
+            215,
+            210,
+            200,
+            115,
+            225,
+            215,
+            120,
+            305,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -9347,7 +9430,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Northville Hills Golf Club"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Northville Hills Golf Club"
+        }
+      }
     },
     "23536": {
       "tcode": "23536",
@@ -9357,8 +9491,46 @@
       "endDate": "10/18/2026",
       "totalRounds": 2,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        545,
+        375,
+        165,
+        410,
+        166,
+        405,
+        345,
+        515,
+        400,
+        555,
+        365,
+        200,
+        390,
+        385,
+        440,
+        150,
+        345,
+        545
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 15-18",
       "flightId": null,
@@ -9375,7 +9547,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Fall Creek Falls Golf Course"
+        }
+      }
     }
   }
 }

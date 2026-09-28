@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Pinehurst, NC",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-08-24T14:11:48.659Z",
+  "lastUpdated": "2026-09-28T13:10:56.783Z",
   "totalTorneios": 25,
   "torneios": {
     "19802": {
@@ -515,22 +515,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            180,
+            175,
+            230,
+            162,
+            184,
+            82,
+            241,
+            78,
+            159,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "270778",
+      "pid": "1647047",
       "place": 1,
       "totalStrokes": 41,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
+      "driverLength": "",
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -555,7 +598,53 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Carolina Trace Country Club"
+          "course": "Carolina Trace Country Club",
+          "startHole": 1,
+          "startTime": "09:18",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "286011",
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            180,
+            175,
+            230,
+            162,
+            184,
+            82,
+            241,
+            78,
+            159,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -1882,9 +1971,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 41,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1897,15 +1986,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            5,
+            5,
+            5,
+            5,
+            6,
+            3,
+            4,
             0,
             0,
             0,
@@ -1916,8 +2005,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 41,
+          "numHoles": 9,
           "course": "Longleaf Golf & Family Club"
         }
       }
@@ -1974,9 +2063,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 40,
+      "points": 13.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1986,7 +2075,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            6,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     },
     "23493": {
       "tcode": "23493",
@@ -2040,9 +2155,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 40,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2052,7 +2167,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            4,
+            5,
+            3,
+            5,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Beacon Ridge Golf & Country Club"
+        }
+      }
     },
     "23494": {
       "tcode": "23494",
@@ -2118,7 +2259,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Scotch Meadows Country Club"
+        }
+      }
     },
     "23495": {
       "tcode": "23495",
@@ -2184,7 +2351,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gates Four Golf & Country Club"
+        }
+      }
     },
     "23496": {
       "tcode": "23496",
@@ -2250,7 +2443,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Pinehurst Resort No. 6"
+        }
+      }
     }
   }
 }

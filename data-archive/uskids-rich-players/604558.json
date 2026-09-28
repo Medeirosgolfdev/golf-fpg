@@ -2,9 +2,9 @@
   "memberID": "604558",
   "name": "Caroline Deese",
   "country": "US",
-  "place": "Augusta , GA",
+  "place": "Evans, GA",
   "ageGroup": "Girls 11",
-  "lastUpdated": "2026-08-24T14:11:49.248Z",
+  "lastUpdated": "2026-09-28T13:10:57.494Z",
   "totalTorneios": 48,
   "torneios": {
     "15536": {
@@ -3818,22 +3818,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            220,
+            200,
+            271,
+            180,
+            240,
+            89,
+            310,
+            86,
+            203,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 9-10",
-      "flightId": null,
-      "pid": null,
+      "flightId": "270789",
+      "pid": "1679947",
       "place": 2,
       "totalStrokes": 41,
       "points": 17.5,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
+      "driverLength": "",
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -3858,7 +3901,53 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Carolina Trace Country Club"
+          "course": "Carolina Trace Country Club",
+          "startHole": 1,
+          "startTime": "10:12",
+          "groupNumber": 1,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "286022",
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            220,
+            200,
+            271,
+            180,
+            240,
+            89,
+            310,
+            86,
+            203,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -4695,7 +4784,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     }
   }
 }

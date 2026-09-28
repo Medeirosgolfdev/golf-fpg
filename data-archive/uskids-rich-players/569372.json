@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Fort Wayne, IN",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:46.983Z",
+  "lastUpdated": "2026-09-28T13:10:54.684Z",
   "totalTorneios": 77,
   "torneios": {
     "10846": {
@@ -7581,8 +7581,8 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 7,
+      "totalStrokes": 148,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -7593,7 +7593,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            4,
+            6,
+            3,
+            4,
+            5,
+            4,
+            2,
+            5
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Paris Landing State Park GC"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            2,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            5,
+            5,
+            3,
+            5,
+            5,
+            4,
+            3,
+            5
+          ],
+          "numStrokes": 73,
+          "numHoles": 18,
+          "course": "Paris Landing State Park GC"
+        }
+      }
     },
     "22789": {
       "tcode": "22789",
@@ -7647,9 +7698,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7662,15 +7713,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
             0,
             0,
             0,
@@ -7681,8 +7732,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 37,
+          "numHoles": 9,
           "course": "Players Club At Woodland Trails"
         }
       }
@@ -7739,9 +7790,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 39,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7754,15 +7805,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            6,
+            6,
+            2,
+            5,
+            3,
+            5,
             0,
             0,
             0,
@@ -7773,8 +7824,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 39,
+          "numHoles": 9,
           "course": "Delaware Country Club"
         }
       }
@@ -7831,6 +7882,98 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
+      "place": 3,
+      "totalStrokes": 42,
+      "points": 13.5,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            3,
+            6,
+            4,
+            5,
+            6,
+            6,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Stony Creek Golf Club"
+        }
+      }
+    },
+    "22793": {
+      "tcode": "22793",
+      "name": "Gray Eagle Golf Club & Academy",
+      "type": " Indianapolis Local Tour",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        365,
+        125,
+        270,
+        100,
+        340,
+        310,
+        350,
+        250,
+        360,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -7867,75 +8010,9 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Stony Creek Golf Club"
+          "course": "Gray Eagle Golf Club & Academy"
         }
       }
-    },
-    "22793": {
-      "tcode": "22793",
-      "name": "Coffin Golf Course",
-      "type": " Indianapolis Local Tour",
-      "startDate": "10/4/2026",
-      "endDate": "10/4/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        5,
-        4,
-        4,
-        3,
-        5,
-        4,
-        3,
-        4,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "yards": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
     },
     "22794": {
       "tcode": "22794",
@@ -8001,7 +8078,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Anderson Country Club"
+        }
+      }
     },
     "22795": {
       "tcode": "22795",
@@ -8067,7 +8170,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Plum Creek Golf Club"
+        }
+      }
     }
   }
 }

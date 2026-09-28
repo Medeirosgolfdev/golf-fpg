@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Lynnwood, WA",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.088Z",
+  "lastUpdated": "2026-09-28T13:10:56.031Z",
   "totalTorneios": 104,
   "torneios": {
     "14043": {
@@ -2027,22 +2027,65 @@
         150,
         180
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4
+          ],
+          "lengths": [
+            250,
+            190,
+            60,
+            250,
+            180,
+            145,
+            150,
+            80,
+            180,
+            250,
+            190,
+            60,
+            180,
+            145,
+            80,
+            250,
+            150,
+            180
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "201269",
+      "pid": "1245321",
       "place": 1,
       "totalStrokes": 37,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -2067,7 +2110,53 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Paradise Valley Golf Course"
+          "course": "Paradise Valley Golf Course",
+          "startHole": 1,
+          "startTime": "12:00",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "213567",
+          "pars": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4
+          ],
+          "yards": [
+            250,
+            190,
+            60,
+            250,
+            180,
+            145,
+            150,
+            80,
+            180,
+            250,
+            190,
+            60,
+            180,
+            145,
+            80,
+            250,
+            150,
+            180
+          ]
         }
       }
     },
@@ -2119,22 +2208,65 @@
         280,
         185
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4
+          ],
+          "lengths": [
+            280,
+            185,
+            145,
+            205,
+            65,
+            155,
+            255,
+            70,
+            140,
+            255,
+            140,
+            70,
+            155,
+            205,
+            65,
+            145,
+            280,
+            185
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "201283",
+      "pid": "1245322",
       "place": 1,
       "totalStrokes": 34,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -2159,7 +2291,53 @@
           ],
           "numStrokes": 34,
           "numHoles": 9,
-          "course": "Rancho Solano Golf Course"
+          "course": "Rancho Solano Golf Course",
+          "startHole": 1,
+          "startTime": "12:09",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "213581",
+          "pars": [
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4
+          ],
+          "yards": [
+            280,
+            185,
+            145,
+            205,
+            65,
+            155,
+            255,
+            70,
+            140,
+            255,
+            140,
+            70,
+            155,
+            205,
+            65,
+            145,
+            280,
+            185
+          ]
         }
       }
     },
@@ -9770,7 +9948,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     },
     "23498": {
       "tcode": "23498",
@@ -9824,9 +10028,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 42,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9839,15 +10043,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            4,
+            6,
+            5,
+            3,
+            5,
+            5,
+            4,
+            4,
             0,
             0,
             0,
@@ -9858,8 +10062,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Sunland Golf Club"
         }
       }
@@ -9916,9 +10120,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 33,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9931,15 +10135,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            5,
+            2,
+            4,
+            4,
+            4,
+            2,
+            4,
             0,
             0,
             0,
@@ -9950,8 +10154,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 33,
+          "numHoles": 9,
           "course": "The Cedars At Dungeness Golf Club"
         }
       }
@@ -10020,7 +10224,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Loomis Trail Golf Course"
+        }
+      }
     },
     "23503": {
       "tcode": "23503",
@@ -10048,7 +10278,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Whidbey Golf Course"
+        }
+      }
     },
     "23505": {
       "tcode": "23505",
@@ -10114,7 +10370,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sudden Valley Golf Course"
+        }
+      }
     },
     "23543": {
       "tcode": "23543",
@@ -10180,7 +10462,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Port Ludlow Golf Course"
+        }
+      }
     },
     "23544": {
       "tcode": "23544",
@@ -10208,7 +10516,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "White Horse Golf Club"
+        }
+      }
     },
     "23545": {
       "tcode": "23545",
@@ -10274,7 +10608,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Home Course "
+        }
+      }
     },
     "23546": {
       "tcode": "23546",
@@ -10340,7 +10700,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Classic Golf Club"
+        }
+      }
     },
     "23547": {
       "tcode": "23547",
@@ -10406,7 +10792,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gold Mountain Golf Course"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Lexington, SC",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:47.506Z",
+  "lastUpdated": "2026-09-28T13:10:55.327Z",
   "totalTorneios": 77,
   "torneios": {
     "11631": {
@@ -7014,6 +7014,72 @@
         }
       }
     },
+    "22858": {
+      "tcode": "22858",
+      "name": "German Masters 2026",
+      "type": "International Championships",
+      "startDate": "10/3/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "yards": [
+        425,
+        367,
+        311,
+        155,
+        360,
+        423,
+        152,
+        362,
+        335,
+        265,
+        461,
+        130,
+        314,
+        472,
+        346,
+        110,
+        324,
+        362
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 13-14",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
     "23475": {
       "tcode": "23475",
       "name": "Woodside Country Club - Jones Course",
@@ -7066,6 +7132,60 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
+      "place": 1,
+      "totalStrokes": 77,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            4,
+            5,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            5,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Woodside Country Club"
+        }
+      }
+    },
+    "23477": {
+      "tcode": "23477",
+      "name": "The WildeWood Club",
+      "type": " Columbia Local Tour",
+      "startDate": "10/3/2026",
+      "endDate": "10/3/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [],
+      "yards": [],
+      "flightCourses": {},
+      "ageGroup": "Boys 13-14",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -7102,103 +7222,9 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Woodside Country Club"
+          "course": "The WildeWood Club"
         }
       }
-    },
-    "23476": {
-      "tcode": "23476",
-      "name": "The Windermere Club",
-      "type": " Columbia Local Tour",
-      "startDate": "9/27/2026",
-      "endDate": "9/27/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        4,
-        5,
-        3,
-        4,
-        5,
-        4,
-        4,
-        3,
-        5,
-        4,
-        4,
-        3,
-        4,
-        4,
-        4,
-        3,
-        5
-      ],
-      "yards": [
-        348,
-        355,
-        483,
-        155,
-        337,
-        472,
-        383,
-        346,
-        123,
-        456,
-        341,
-        370,
-        173,
-        310,
-        368,
-        356,
-        160,
-        475
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 13-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23477": {
-      "tcode": "23477",
-      "name": "The WildeWood Club",
-      "type": " Columbia Local Tour",
-      "startDate": "10/3/2026",
-      "endDate": "10/3/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [],
-      "yards": [],
-      "flightCourses": {},
-      "ageGroup": "Boys 13-14",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
     },
     "23478": {
       "tcode": "23478",
@@ -7264,7 +7290,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mount Vintage Golf Club"
+        }
+      }
     },
     "23479": {
       "tcode": "23479",
@@ -7330,7 +7382,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Spring Valley Country Club"
+        }
+      }
     },
     "23480": {
       "tcode": "23480",
@@ -7396,7 +7474,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Houndslake Country Club"
+        }
+      }
     },
     "23481": {
       "tcode": "23481",
@@ -7462,7 +7566,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Eisenhower Lakes Golf Course"
+        }
+      }
     },
     "23482": {
       "tcode": "23482",
@@ -7528,7 +7658,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Woodside Country Club"
+        }
+      }
     }
   }
 }

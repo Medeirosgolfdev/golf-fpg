@@ -4,8 +4,8 @@
   "country": "ES",
   "place": "Sotogrande, CZ",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.686Z",
-  "totalTorneios": 17,
+  "lastUpdated": "2026-09-28T13:10:56.825Z",
+  "totalTorneios": 18,
   "torneios": {
     "20429": {
       "tcode": "20429",
@@ -1243,7 +1243,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
     },
     "23059": {
       "tcode": "23059",
@@ -1481,9 +1532,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1493,7 +1544,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            2,
+            4,
+            6,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "numStrokes": 28,
+          "numHoles": 18,
+          "course": "Hollybrook Golf & Tennis Club"
+        }
+      }
     },
     "23062": {
       "tcode": "23062",
@@ -1559,7 +1636,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Country Club of Coral Springs"
+        }
+      }
     },
     "23063": {
       "tcode": "23063",
@@ -1625,7 +1728,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hollybrook Golf & Tennis Club"
+        }
+      }
     },
     "23064": {
       "tcode": "23064",
@@ -1674,6 +1803,98 @@
         415,
         330,
         300
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Country Club of Coral Springs"
+        }
+      }
+    },
+    "23428": {
+      "tcode": "23428",
+      "name": "2026 Florida - Winter State Invitational",
+      "type": "State Championships",
+      "startDate": "12/5/2026",
+      "endDate": "12/6/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        3,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5,
+        3,
+        4,
+        4
+      ],
+      "yards": [
+        352,
+        128,
+        450,
+        327,
+        144,
+        343,
+        274,
+        310,
+        489,
+        493,
+        340,
+        334,
+        270,
+        119,
+        487,
+        130,
+        303,
+        330
       ],
       "flightCourses": {},
       "ageGroup": "Boys 12",

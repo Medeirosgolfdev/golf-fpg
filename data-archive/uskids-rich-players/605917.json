@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Santa Clara, CA",
   "ageGroup": "Girls 9",
-  "lastUpdated": "2026-08-24T14:11:48.879Z",
+  "lastUpdated": "2026-09-28T13:10:57.072Z",
   "totalTorneios": 40,
   "torneios": {
     "15104": {
@@ -3339,9 +3339,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
+      "place": 2,
       "totalStrokes": 40,
-      "points": 0,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3431,9 +3431,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 36,
+      "points": 40,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3446,15 +3446,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            1,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
             0,
             0,
             0,
@@ -3465,8 +3465,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
           "course": "Baylands Golf Links"
         }
       }
@@ -3995,7 +3995,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     }
   }
 }

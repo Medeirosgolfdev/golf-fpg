@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Glen Allen, VA",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.689Z",
+  "lastUpdated": "2026-09-28T13:10:56.828Z",
   "totalTorneios": 29,
   "torneios": {
     "20064": {
@@ -2096,8 +2096,8 @@
         255,
         122,
         180,
-        62,
-        181,
+        60,
+        183,
         278,
         60,
         182,
@@ -2116,9 +2116,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 32,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2131,15 +2131,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            3,
+            4,
+            3,
             0,
             0,
             0,
@@ -2150,8 +2150,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 32,
+          "numHoles": 9,
           "course": "Kiln Creek Golf Club and Resort"
         }
       }
@@ -2208,9 +2208,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 34,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2223,15 +2223,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
             0,
             0,
             0,
@@ -2242,8 +2242,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 34,
+          "numHoles": 9,
           "course": "Cypress Point Country Club"
         }
       }
@@ -2301,7 +2301,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 31,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2315,15 +2315,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            3,
+            3,
+            4,
+            2,
+            3,
+            4,
             0,
             0,
             0,
@@ -2334,8 +2334,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 31,
+          "numHoles": 9,
           "course": "Williamsburg National Golf Club - Yorktown"
         }
       }
@@ -2440,8 +2440,46 @@
       "endDate": "10/18/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        5,
+        4,
+        3,
+        3,
+        5,
+        3,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        187,
+        255,
+        247,
+        190,
+        65,
+        75,
+        225,
+        75,
+        181,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 7",
       "flightId": null,
@@ -2550,7 +2588,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Williamsburg National Golf Club - Yorktown"
+        }
+      }
     },
     "23226": {
       "tcode": "23226",
@@ -2616,7 +2680,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Kiln Creek Golf Club and Resort"
+        }
+      }
     },
     "23318": {
       "tcode": "23318",
@@ -2682,7 +2772,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Gold Course"
+        }
+      }
     }
   }
 }

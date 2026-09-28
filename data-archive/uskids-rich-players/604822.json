@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Virginia Beach, VA",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.241Z",
-  "totalTorneios": 58,
+  "lastUpdated": "2026-09-28T13:10:56.228Z",
+  "totalTorneios": 59,
   "torneios": {
     "14967": {
       "tcode": "14967",
@@ -4779,7 +4779,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        }
+      }
     },
     "23138": {
       "tcode": "23138",
@@ -4833,9 +4884,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 40,
+      "points": 17.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4848,15 +4899,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            7,
+            4,
+            3,
+            5,
+            5,
+            3,
+            4,
+            5,
             0,
             0,
             0,
@@ -4867,8 +4918,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "Kiln Creek Golf Club and Resort"
         }
       }
@@ -4925,9 +4976,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 35,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4940,15 +4991,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            3,
             0,
             0,
             0,
@@ -4959,8 +5010,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "Cypress Point Country Club"
         }
       }
@@ -5018,7 +5069,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 36,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -5032,15 +5083,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            6,
+            5,
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
             0,
             0,
             0,
@@ -5051,8 +5102,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
           "course": "Williamsburg National Golf Club - Yorktown"
         }
       }
@@ -5157,8 +5208,46 @@
       "endDate": "10/18/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        5,
+        4,
+        3,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        235,
+        365,
+        360,
+        246,
+        101,
+        85,
+        389,
+        96,
+        223,
+        293,
+        273,
+        300,
+        132,
+        240,
+        93,
+        240,
+        229,
+        300
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 9",
       "flightId": null,
@@ -5267,7 +5356,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Williamsburg National Golf Club - Yorktown"
+        }
+      }
     },
     "23226": {
       "tcode": "23226",
@@ -5333,7 +5448,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Kiln Creek Golf Club and Resort"
+        }
+      }
     },
     "23318": {
       "tcode": "23318",
@@ -5382,6 +5523,98 @@
         92,
         225,
         266
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Gold Course"
+        }
+      }
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        3,
+        4,
+        3,
+        5,
+        3,
+        4,
+        4,
+        5,
+        5,
+        3,
+        4,
+        3,
+        4,
+        5,
+        4,
+        5,
+        3
+      ],
+      "yards": [
+        365,
+        100,
+        216,
+        98,
+        383,
+        107,
+        256,
+        234,
+        344,
+        368,
+        87,
+        200,
+        112,
+        225,
+        386,
+        229,
+        320,
+        118
       ],
       "flightCourses": {},
       "ageGroup": "Boys 9",

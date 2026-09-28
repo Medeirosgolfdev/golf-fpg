@@ -4,7 +4,7 @@
   "country": "GB",
   "place": "Anstruther, FIF",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-31T13:04:44.110Z",
+  "lastUpdated": "2026-09-28T13:10:56.850Z",
   "totalTorneios": 2,
   "torneios": {
     "21131": {
@@ -462,94 +462,9 @@
         0,
         0
       ],
-      "flightCourses": {
-        "1": {
-          "pars": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "lengths": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        "2": {
-          "pars": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "lengths": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        }
-      },
+      "flightCourses": {},
       "ageGroup": "Boys 9",
-      "flightId": "296950",
+      "flightId": null,
       "pid": null,
       "place": 0,
       "totalStrokes": 0,
@@ -563,7 +478,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Vale Resort - Wales National Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Vale Resort - Wales National Course"
+        }
+      }
     }
   }
 }

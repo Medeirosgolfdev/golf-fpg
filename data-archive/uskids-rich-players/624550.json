@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Covington, WA",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.556Z",
-  "totalTorneios": 15,
+  "lastUpdated": "2026-09-28T13:10:56.638Z",
+  "totalTorneios": 16,
   "torneios": {
     "18744": {
       "tcode": "18744",
@@ -1237,7 +1237,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "White Horse Golf Club"
+        }
+      }
     },
     "23545": {
       "tcode": "23545",
@@ -1303,7 +1329,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Home Course "
+        }
+      }
     },
     "23546": {
       "tcode": "23546",
@@ -1369,7 +1421,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Classic Golf Club"
+        }
+      }
+    },
+    "23548": {
+      "tcode": "23548",
+      "name": "McCormick Woods Golf Course",
+      "type": " Tacoma Local Tour",
+      "startDate": "10/25/2026",
+      "endDate": "10/25/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        211,
+        367,
+        230,
+        90,
+        250,
+        262,
+        100,
+        195,
+        369,
+        229,
+        101,
+        288,
+        414,
+        205,
+        200,
+        221,
+        122,
+        360
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "McCormick Woods Golf Course"
+        }
+      }
     }
   }
 }

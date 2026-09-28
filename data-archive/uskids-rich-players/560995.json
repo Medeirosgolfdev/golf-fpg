@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Charlotte , NC",
   "ageGroup": "Boys 12-14",
-  "lastUpdated": "2026-08-24T14:11:46.580Z",
+  "lastUpdated": "2026-09-28T13:10:54.190Z",
   "totalTorneios": 112,
   "torneios": {
     "9793": {
@@ -12465,8 +12465,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 107,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -12477,7 +12477,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            3,
+            3,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 72,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        },
+        "2": {
+          "strokes": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            3,
+            3,
+            4,
+            4,
+            5,
+            3,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 26,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        }
+      }
     }
   }
 }

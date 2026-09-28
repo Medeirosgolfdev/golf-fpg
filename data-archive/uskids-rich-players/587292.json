@@ -4,8 +4,8 @@
   "country": "GT",
   "place": "Guatemala, GU",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:48.950Z",
-  "totalTorneios": 49,
+  "lastUpdated": "2026-09-28T13:10:57.152Z",
+  "totalTorneios": 50,
   "torneios": {
     "13122": {
       "tcode": "13122",
@@ -4261,7 +4261,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        }
+      }
     },
     "23061": {
       "tcode": "23061",
@@ -4315,9 +4366,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 22,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4330,15 +4381,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            6,
+            3,
+            3,
+            5,
+            -1,
+            -1,
+            -1,
+            -1,
             0,
             0,
             0,
@@ -4349,8 +4400,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 18,
+          "numHoles": 9,
           "course": "Hollybrook Golf & Tennis Club"
         }
       }
@@ -4444,6 +4495,98 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "Country Club of Coral Springs"
+        }
+      }
+    },
+    "23063": {
+      "tcode": "23063",
+      "name": "Hollybrook Golf & Tennis Club",
+      "type": " Miami Local Tour",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        240,
+        300,
+        80,
+        225,
+        225,
+        230,
+        300,
+        80,
+        230
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hollybrook Golf & Tennis Club"
         }
       }
     },

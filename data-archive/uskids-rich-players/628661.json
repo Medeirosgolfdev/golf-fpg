@@ -4,8 +4,8 @@
   "country": "CN",
   "place": "Binan, LAG",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:49.007Z",
-  "totalTorneios": 13,
+  "lastUpdated": "2026-09-28T13:10:57.214Z",
+  "totalTorneios": 15,
   "torneios": {
     "18677": {
       "tcode": "18677",
@@ -987,9 +987,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 78,
+      "points": 13.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -999,7 +999,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            5,
+            5,
+            5,
+            5,
+            4,
+            5,
+            4,
+            5,
+            3,
+            3
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Eagle Ridge Golf and Country Club"
+        }
+      }
     },
     "23558": {
       "tcode": "23558",
@@ -1054,7 +1080,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 73,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1065,7 +1091,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            3,
+            4,
+            3,
+            5,
+            6,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            5,
+            2,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 73,
+          "numHoles": 18,
+          "course": "Eagle Ridge Golf and Country Club"
+        }
+      }
     },
     "23559": {
       "tcode": "23559",
@@ -1131,7 +1183,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mimosa Plus Golf Course - Acacia"
+        }
+      }
     },
     "23560": {
       "tcode": "23560",
@@ -1197,7 +1275,217 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mimosa Plus Golf Course - Acacia"
+        }
+      }
+    },
+    "23561": {
+      "tcode": "23561",
+      "name": "Mimosa Plus Golf Course - Acacia",
+      "type": " Philippines (PH) Local Tour",
+      "startDate": "11/7/2026",
+      "endDate": "11/7/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5,
+        3,
+        5,
+        4,
+        4
+      ],
+      "yards": [
+        225,
+        225,
+        83,
+        220,
+        260,
+        85,
+        225,
+        220,
+        260,
+        227,
+        220,
+        235,
+        95,
+        295,
+        90,
+        275,
+        181,
+        187
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mimosa Plus Golf Course - Acacia"
+        }
+      }
+    },
+    "23562": {
+      "tcode": "23562",
+      "name": "Mimosa Plus Golf Course - Acacia (Tour Championship)",
+      "type": " Philippines (PH) Local Tour",
+      "startDate": "11/8/2026",
+      "endDate": "11/8/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5,
+        3,
+        5,
+        4,
+        4
+      ],
+      "yards": [
+        225,
+        225,
+        83,
+        220,
+        260,
+        85,
+        225,
+        220,
+        260,
+        227,
+        220,
+        235,
+        95,
+        295,
+        90,
+        275,
+        181,
+        187
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mimosa Plus Golf Course - Acacia"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Short Hills, NJ",
   "ageGroup": "Girls 7 & Under",
-  "lastUpdated": "2026-08-24T14:11:48.801Z",
-  "totalTorneios": 122,
+  "lastUpdated": "2026-09-28T13:10:56.979Z",
+  "totalTorneios": 123,
   "torneios": {
     "16733": {
       "tcode": "16733",
@@ -9922,9 +9922,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 45,
+      "points": 40,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9937,15 +9937,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            7,
+            3,
+            6,
+            4,
+            6,
+            4,
+            6,
+            5,
+            4,
             0,
             0,
             0,
@@ -9956,8 +9956,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 45,
+          "numHoles": 9,
           "course": "Cobblestone Creek Country Club "
         }
       }
@@ -10474,8 +10474,8 @@
       "ageGroup": "Girls 7 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 89,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -10489,15 +10489,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            7,
+            4,
+            5,
+            5,
+            6,
+            3,
+            5,
+            6,
+            6,
             0,
             0,
             0,
@@ -10508,88 +10508,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 47,
+          "numHoles": 9,
           "course": "Seaview Golf Club - Bay Course"
-        }
-      }
-    },
-    "22835": {
-      "tcode": "22835",
-      "name": "2026 New England State Invitational ",
-      "type": "State Championships",
-      "startDate": "10/17/2026",
-      "endDate": "10/18/2026",
-      "totalRounds": 2,
-      "holesPerRound": 9,
-      "par": [
-        4,
-        5,
-        3,
-        4,
-        5,
-        4,
-        4,
-        3,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "yards": [
-        160,
-        200,
-        60,
-        150,
-        210,
-        140,
-        150,
-        65,
-        160,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "flightCourses": {},
-      "ageGroup": "Girls 8 & Under",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {
-        "1": {
+        },
+        "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            7,
+            3,
+            4,
+            3,
+            6,
+            3,
+            4,
+            6,
+            6,
             0,
             0,
             0,
@@ -10600,9 +10533,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Tunxis Plantation GC (Red)"
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Seaview Golf Club - Bay Course"
         }
       }
     },
@@ -10698,6 +10631,98 @@
         }
       }
     },
+    "23049": {
+      "tcode": "23049",
+      "name": "2026 Girls Invitational - Longleaf (NC)",
+      "type": "Girls Invitationals",
+      "startDate": "11/14/2026",
+      "endDate": "11/15/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5,
+        3,
+        4
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        160,
+        81,
+        170,
+        177,
+        225,
+        188,
+        250,
+        75,
+        180
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 8 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
+    },
     "23318": {
       "tcode": "23318",
       "name": "Colonial Williamsburg Classic 2026",
@@ -10762,7 +10787,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Gold Course"
+        }
+      }
     },
     "23399": {
       "tcode": "23399",
@@ -10816,9 +10867,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 38,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10831,15 +10882,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            5,
+            5,
+            5,
+            2,
+            4,
+            4,
+            5,
             0,
             0,
             0,
@@ -10850,8 +10901,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "Picatinny Arsenal Golf Course"
         }
       }
@@ -10865,6 +10916,15 @@
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
         5,
         3,
         5,
@@ -10873,18 +10933,18 @@
         4,
         4,
         4,
-        3,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+        3
       ],
       "yards": [
+        110,
+        50,
+        195,
+        155,
+        160,
+        180,
+        165,
+        60,
+        180,
         210,
         80,
         180,
@@ -10893,24 +10953,15 @@
         125,
         147,
         128,
-        60,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+        60
       ],
       "flightCourses": {},
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 40,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10923,15 +10974,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            4,
+            5,
+            5,
+            4,
+            5,
+            4,
+            3,
+            5,
             0,
             0,
             0,
@@ -10942,8 +10993,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "The Shawnee Inn & Golf Resort"
         }
       }
@@ -11012,7 +11063,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hopewell Valley Golf Club"
+        }
+      }
     },
     "23402": {
       "tcode": "23402",
@@ -11078,7 +11155,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Harkers Hollow Golf Club"
+        }
+      }
     },
     "23403": {
       "tcode": "23403",
@@ -11144,7 +11247,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Farmstead Golf & Country Club"
+        }
+      }
     },
     "23414": {
       "tcode": "23414",
@@ -11198,9 +11327,9 @@
       "ageGroup": "Girls 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 39,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -11213,15 +11342,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            4,
+            4,
+            6,
+            3,
+            5,
+            4,
             0,
             0,
             0,
@@ -11232,8 +11361,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 39,
+          "numHoles": 9,
           "course": "Gambler Ridge Golf Club"
         }
       }
@@ -11242,8 +11371,8 @@
       "tcode": "23415",
       "name": "The Meadows at Middlesex Golf Course",
       "type": " Central Jersey Local Tour",
-      "startDate": "9/13/2026",
-      "endDate": "9/13/2026",
+      "startDate": "10/17/2026",
+      "endDate": "10/17/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [
@@ -11283,7 +11412,7 @@
         165,
         90,
         145,
-        59,
+        60,
         215
       ],
       "flightCourses": {},
@@ -11302,7 +11431,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Meadows at Middlesex Golf Course"
+        }
+      }
     },
     "23416": {
       "tcode": "23416",
@@ -11341,7 +11496,7 @@
         160,
         190,
         130,
-        75,
+        70,
         100,
         140,
         165,
@@ -11368,7 +11523,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hopewell Valley Golf Club"
+        }
+      }
     },
     "23417": {
       "tcode": "23417",
@@ -11434,7 +11615,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Princeton Country Club"
+        }
+      }
     },
     "23418": {
       "tcode": "23418",
@@ -11500,7 +11707,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cranbury Golf Club"
+        }
+      }
     },
     "23419": {
       "tcode": "23419",
@@ -11535,7 +11768,7 @@
         60,
         200,
         130,
-        75,
+        74,
         150,
         185,
         140,
@@ -11552,6 +11785,98 @@
       ],
       "flightCourses": {},
       "ageGroup": "Girls 8 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Forsgate Country Club"
+        }
+      }
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        212,
+        121,
+        142,
+        201,
+        63,
+        148,
+        66,
+        137,
+        141,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 7 & Under",
       "flightId": null,
       "pid": null,
       "place": 0,

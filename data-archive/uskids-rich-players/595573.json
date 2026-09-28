@@ -4,7 +4,7 @@
   "country": "IE",
   "place": "Dublin, DB",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:48.024Z",
+  "lastUpdated": "2026-09-28T13:10:55.958Z",
   "totalTorneios": 52,
   "torneios": {
     "13668": {
@@ -4433,8 +4433,8 @@
       "ageGroup": "Boys 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 35,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4445,7 +4445,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            2,
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
+          "course": "The Faldo Course at Lough Erne"
+        }
+      }
     },
     "22917": {
       "tcode": "22917",
@@ -4499,9 +4525,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 5,
+      "totalStrokes": 96,
+      "points": 9,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4514,27 +4540,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            4,
+            9,
+            5,
+            5,
+            4,
+            6,
+            6,
+            5,
+            5,
+            6,
+            7,
+            6,
+            4,
+            6,
+            5,
+            4,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 96,
+          "numHoles": 18,
           "course": "Lough Erne Resort - Castle Hume Course"
         }
       }
@@ -4591,9 +4617,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 94,
+      "points": 8,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4606,27 +4632,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            4,
+            4,
+            5,
+            3,
+            6,
+            5,
+            7,
+            7,
+            3,
+            6,
+            5,
+            6,
+            5,
+            6,
+            6,
+            6
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 94,
+          "numHoles": 18,
           "course": "Greenacres Golf Centre"
         }
       }
@@ -4683,9 +4709,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 86,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4695,7 +4721,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            8,
+            5,
+            7,
+            3,
+            6,
+            4,
+            4,
+            5,
+            4,
+            7,
+            3,
+            5,
+            3,
+            4,
+            4
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Dunmurry Golf Club"
+        }
+      }
     },
     "23132": {
       "tcode": "23132",
@@ -4723,7 +4775,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Roque Golf & Resort"
+        }
+      }
     }
   }
 }

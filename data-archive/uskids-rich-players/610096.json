@@ -1,10 +1,10 @@
 {
   "memberID": "610096",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Henry Rushton",
+  "country": "NZ",
+  "place": "Silverdale , AUK",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-08-24T14:11:48.337Z",
+  "lastUpdated": "2026-09-28T13:10:56.360Z",
   "totalTorneios": 47,
   "torneios": {
     "15741": {
@@ -4416,8 +4416,8 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 73,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4428,7 +4428,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            3,
+            4,
+            3,
+            3,
+            5,
+            5,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 34,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 39,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

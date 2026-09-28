@@ -1,10 +1,10 @@
 {
   "memberID": "628835",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Tom Gardner",
+  "country": "AU",
+  "place": "Ballarat , VIC",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.598Z",
+  "lastUpdated": "2026-09-28T13:10:56.699Z",
   "totalTorneios": 28,
   "torneios": {
     "18124": {
@@ -2618,8 +2618,8 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 79,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2630,7 +2630,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            4,
+            4,
+            6,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            3,
+            5,
+            5,
+            4,
+            4,
+            3,
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "AU",
   "place": "Melbourne , VIC",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.362Z",
+  "lastUpdated": "2026-09-28T13:10:56.393Z",
   "totalTorneios": 37,
   "torneios": {
     "15878": {
@@ -3471,8 +3471,8 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 150,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3483,7 +3483,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            4,
+            2,
+            5,
+            5,
+            4,
+            3,
+            4,
+            6,
+            6,
+            3,
+            6,
+            5,
+            4,
+            5,
+            5,
+            4,
+            3
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            4,
+            6,
+            3,
+            4,
+            5,
+            3,
+            3,
+            3,
+            4,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 73,
+          "numHoles": 18,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Miramar, FL",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:48.839Z",
+  "lastUpdated": "2026-09-28T13:10:57.024Z",
   "totalTorneios": 71,
   "torneios": {
     "18124": {
@@ -6275,6 +6275,31 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "PGA Golf Club - Ryder Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
         }
       }
     },
@@ -6423,7 +6448,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 23,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6437,15 +6462,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            5,
+            5,
+            4,
+            3,
+            -1,
+            -1,
+            -1,
+            -1,
             0,
             0,
             0,
@@ -6456,8 +6481,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 19,
+          "numHoles": 9,
           "course": "Normandy Shores Golf Course"
         }
       }
@@ -6514,9 +6539,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 24,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -6529,15 +6554,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            5,
+            4,
+            5,
+            4,
+            -1,
+            -1,
+            -1,
+            -1,
             0,
             0,
             0,
@@ -6548,8 +6573,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 20,
+          "numHoles": 9,
           "course": "Hollybrook Golf & Tennis Club"
         }
       }
@@ -6948,7 +6973,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Reunion Resort - Watson"
+        }
+      }
     }
   }
 }

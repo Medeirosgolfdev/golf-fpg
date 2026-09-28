@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Chattanooga, TN",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:47.704Z",
-  "totalTorneios": 66,
+  "lastUpdated": "2026-09-28T13:10:55.568Z",
+  "totalTorneios": 67,
   "torneios": {
     "12346": {
       "tcode": "12346",
@@ -5896,8 +5896,8 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 19,
+      "totalStrokes": 167,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -5911,53 +5911,145 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            5,
+            6,
+            4,
+            4,
+            4,
+            5,
+            6,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4,
+            3,
+            6,
+            6
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 85,
+          "numHoles": 18,
           "course": "Seaview Golf Club - Pines Course"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            6,
+            4,
+            4,
+            4,
+            4,
+            5,
+            6,
+            5,
+            6,
+            4,
+            3,
+            6,
+            5,
+            3,
+            2,
+            4,
+            6
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 82,
+          "numHoles": 18,
           "course": "Seaview Golf Club - Pines Course"
+        }
+      }
+    },
+    "23202": {
+      "tcode": "23202",
+      "name": "Spring Lakes Golf Club",
+      "type": " Chattanooga Local Tour",
+      "startDate": "9/27/2026",
+      "endDate": "9/27/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        5,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4
+      ],
+      "yards": [
+        325,
+        96,
+        326,
+        390,
+        160,
+        224,
+        327,
+        361,
+        300,
+        150,
+        286,
+        385,
+        270,
+        109,
+        265,
+        305,
+        274,
+        380
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 1,
+      "totalStrokes": 82,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            2,
+            6,
+            5,
+            4,
+            4,
+            4,
+            6,
+            5,
+            5,
+            4,
+            7,
+            4,
+            3,
+            5,
+            3,
+            6,
+            5
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Spring Lakes Golf Club"
         }
       }
     },
@@ -6025,7 +6117,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Dogwood Hills Golf Club"
+        }
+      }
     },
     "23205": {
       "tcode": "23205",
@@ -6091,7 +6209,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Fall Creek Falls Golf Course"
+        }
+      }
     },
     "23212": {
       "tcode": "23212",
@@ -6119,7 +6263,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Terrapin Hills Country Club"
+        }
+      }
     },
     "23213": {
       "tcode": "23213",
@@ -6185,7 +6355,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Flagstone Golf Club"
+        }
+      }
     }
   }
 }

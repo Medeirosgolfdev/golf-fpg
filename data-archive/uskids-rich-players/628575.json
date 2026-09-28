@@ -4,7 +4,7 @@
   "country": "US",
   "place": "San Diego, CA",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-08-24T14:11:48.595Z",
+  "lastUpdated": "2026-09-28T13:10:56.693Z",
   "totalTorneios": 29,
   "torneios": {
     "18124": {
@@ -2793,8 +2793,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 3,
+      "totalStrokes": 71,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2805,7 +2805,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "23420": {
       "tcode": "23420",
@@ -2871,7 +2922,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     }
   }
 }

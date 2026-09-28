@@ -4,7 +4,7 @@
   "country": "DE",
   "place": "Pullach, BY",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:49.388Z",
+  "lastUpdated": "2026-09-28T13:10:57.644Z",
   "totalTorneios": 27,
   "torneios": {
     "17607": {
@@ -2183,8 +2183,8 @@
       "ageGroup": "Girls 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 9,
+      "totalStrokes": 185,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2198,27 +2198,52 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            6,
+            3,
+            5,
+            5,
+            3,
+            4,
+            5,
+            6,
+            7,
+            5,
+            4,
+            7,
+            5,
+            4,
+            3,
+            7,
+            8
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 92,
+          "numHoles": 18,
+          "course": "Seaview Golf Club - Pines Course"
+        },
+        "2": {
+          "strokes": [
+            6,
+            6,
+            2,
+            5,
+            5,
+            4,
+            6,
+            5,
+            7,
+            6,
+            7,
+            3,
+            5,
+            5,
+            3,
+            4,
+            8,
+            6
+          ],
+          "numStrokes": 93,
+          "numHoles": 18,
           "course": "Seaview Golf Club - Pines Course"
         }
       }
@@ -2275,9 +2300,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 47,
+      "points": 7,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2290,15 +2315,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            4,
+            7,
+            5,
+            4,
+            4,
+            6,
+            7,
+            4,
             0,
             0,
             0,
@@ -2309,8 +2334,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 47,
+          "numHoles": 9,
           "course": "Picatinny Arsenal Golf Course"
         }
       }
@@ -2323,15 +2348,53 @@
       "endDate": "9/1/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        3,
+        5,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3
+      ],
+      "yards": [
+        200,
+        111,
+        270,
+        225,
+        220,
+        280,
+        210,
+        90,
+        230,
+        270,
+        111,
+        280,
+        90,
+        270,
+        210,
+        225,
+        220,
+        128
+      ],
       "flightCourses": {},
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 10,
+      "totalStrokes": 54,
+      "points": 1,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2344,15 +2407,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            5,
+            8,
+            5,
+            6,
+            9,
+            6,
+            4,
+            5,
             0,
             0,
             0,
@@ -2363,8 +2426,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 54,
+          "numHoles": 9,
           "course": "The Shawnee Inn & Golf Resort"
         }
       }
@@ -2395,7 +2458,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hopewell Valley Golf Club"
+        }
+      }
     },
     "23402": {
       "tcode": "23402",
@@ -2423,7 +2512,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Harkers Hollow Golf Club"
+        }
+      }
     }
   }
 }

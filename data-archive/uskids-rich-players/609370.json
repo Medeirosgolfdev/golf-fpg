@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Peoria, AZ",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.324Z",
+  "lastUpdated": "2026-09-28T13:10:56.341Z",
   "totalTorneios": 59,
   "torneios": {
     "15910": {
@@ -5060,9 +5060,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 40,
+      "points": 7,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5075,15 +5075,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            6,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -5094,8 +5094,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "Seville Golf and Country Club"
         }
       }
@@ -5116,8 +5116,8 @@
         4,
         4,
         3,
-        5,
         4,
+        5,
         4,
         5,
         3,
@@ -5125,19 +5125,10 @@
         4,
         4,
         3,
-        4,
-        5
+        5,
+        4
       ],
       "yards": [
-        266,
-        381,
-        104,
-        264,
-        243,
-        265,
-        126,
-        402,
-        257,
         331,
         466,
         91,
@@ -5146,15 +5137,24 @@
         263,
         118,
         303,
-        462
+        462,
+        266,
+        381,
+        104,
+        264,
+        243,
+        265,
+        126,
+        402,
+        257
       ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 36,
+      "points": 13.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5164,7 +5164,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            3,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Pueblo El Mirage Golf Course "
+        }
+      }
     },
     "22739": {
       "tcode": "22739",
@@ -5230,14 +5256,40 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Scottsdale Silverado Golf Club"
+        }
+      }
     },
     "22740": {
       "tcode": "22740",
       "name": "Sun City Country Club",
       "type": " Phoenix Local Tour",
-      "startDate": "11/1/2026",
-      "endDate": "11/1/2026",
+      "startDate": "12/20/2026",
+      "endDate": "12/20/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [
@@ -5296,7 +5348,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sun City Country Club"
+        }
+      }
     },
     "22741": {
       "tcode": "22741",

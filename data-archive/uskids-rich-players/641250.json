@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Beverly Hills, CA",
   "ageGroup": "Girls 8",
-  "lastUpdated": "2026-08-24T14:11:48.816Z",
+  "lastUpdated": "2026-09-28T13:10:56.999Z",
   "totalTorneios": 18,
   "torneios": {
     "20365": {
@@ -1673,8 +1673,8 @@
       "ageGroup": "Girls 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 72,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1685,7 +1685,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     }
   }
 }

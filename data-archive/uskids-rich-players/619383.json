@@ -4,7 +4,7 @@
   "country": "CA",
   "place": "Toronto, ON",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.496Z",
+  "lastUpdated": "2026-09-28T13:10:56.562Z",
   "totalTorneios": 33,
   "torneios": {
     "17235": {
@@ -3438,8 +3438,8 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 7,
+      "totalStrokes": 147,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3453,27 +3453,52 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            3,
+            6,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            3,
+            5,
+            3,
+            2,
+            4,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 70,
+          "numHoles": 18,
+          "course": "Seaview Golf Club - Pines Course"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            5,
+            4,
+            3,
+            5,
+            5,
+            5,
+            7,
+            4,
+            3,
+            4,
+            4,
+            2,
+            3,
+            5,
+            6
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
           "course": "Seaview Golf Club - Pines Course"
         }
       }
@@ -3542,7 +3567,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Ryder Course"
+        }
+      }
     }
   }
 }

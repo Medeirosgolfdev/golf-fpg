@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Salem, NH",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:45.810Z",
+  "lastUpdated": "2026-09-28T13:10:53.255Z",
   "totalTorneios": 136,
   "torneios": {
     "9080": {
@@ -7303,22 +7303,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            3,
+            3,
+            5,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            191,
+            291,
+            95,
+            247,
+            96,
+            99,
+            287,
+            200,
+            296,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
+      "flightId": "186868",
+      "pid": "1173695",
       "place": 1,
       "totalStrokes": 53,
       "points": 30,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -7343,7 +7386,53 @@
           ],
           "numStrokes": 53,
           "numHoles": 9,
-          "course": "The Country Club of Johnston County"
+          "course": "The Country Club of Johnston County",
+          "startHole": 1,
+          "startTime": "10:30",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "198596",
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            3,
+            3,
+            5,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            191,
+            291,
+            95,
+            247,
+            96,
+            99,
+            287,
+            200,
+            296,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -13027,9 +13116,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 79,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -13042,27 +13131,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            6,
+            4,
+            5,
+            4,
+            6,
+            5,
+            2,
+            4,
+            5,
+            4,
+            3,
+            5,
+            4,
+            6,
+            4,
+            5,
+            3,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 79,
+          "numHoles": 18,
           "course": "Maccripine Country Club"
         }
       }
@@ -13119,9 +13208,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 94,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -13131,7 +13220,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            9,
+            6,
+            9,
+            6,
+            4,
+            6,
+            5,
+            5,
+            4,
+            4,
+            6,
+            4,
+            3,
+            5,
+            3,
+            6,
+            5,
+            4
+          ],
+          "numStrokes": 94,
+          "numHoles": 18,
+          "course": "Washington Yacht and Country Club"
+        }
+      }
     },
     "23450": {
       "tcode": "23450",
@@ -13197,7 +13312,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Ayden Golf & Country Club"
+        }
+      }
     },
     "23452": {
       "tcode": "23452",
@@ -13263,7 +13404,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cypress Landing Golf Club"
+        }
+      }
     },
     "23454": {
       "tcode": "23454",
@@ -13329,7 +13496,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Belmont Lake Golf Club"
+        }
+      }
     },
     "23455": {
       "tcode": "23455",
@@ -13395,7 +13588,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Wedgewood Public Golf Course"
+        }
+      }
     }
   }
 }

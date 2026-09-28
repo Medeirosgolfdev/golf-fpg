@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Richmond, VA",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.150Z",
+  "lastUpdated": "2026-09-28T13:10:56.105Z",
   "totalTorneios": 31,
   "torneios": {
     "14459": {
@@ -2526,9 +2526,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2541,15 +2541,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            3,
+            4,
+            3,
+            6,
+            4,
+            4,
+            3,
             0,
             0,
             0,
@@ -2560,8 +2560,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 37,
+          "numHoles": 9,
           "course": "Cypress Point Country Club"
         }
       }
@@ -2619,7 +2619,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 39,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2630,7 +2630,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            3,
+            5,
+            5,
+            3,
+            3,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 39,
+          "numHoles": 9,
+          "course": "Williamsburg National Golf Club - Yorktown"
+        }
+      }
     },
     "23224": {
       "tcode": "23224",
@@ -2640,8 +2666,46 @@
       "endDate": "10/18/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        5,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        273,
+        365,
+        471,
+        267,
+        101,
+        308,
+        310,
+        96,
+        264,
+        293,
+        273,
+        334,
+        139,
+        301,
+        93,
+        240,
+        229,
+        443
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
@@ -2750,7 +2814,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Kiln Creek Golf Club and Resort"
+        }
+      }
     },
     "23318": {
       "tcode": "23318",
@@ -2816,7 +2906,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Gold Course"
+        }
+      }
     }
   }
 }

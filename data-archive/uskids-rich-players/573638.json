@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Charleston, SC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:47.218Z",
-  "totalTorneios": 105,
+  "lastUpdated": "2026-09-28T13:10:54.957Z",
+  "totalTorneios": 104,
   "torneios": {
     "12909": {
       "tcode": "12909",
@@ -11009,9 +11009,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 43,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -11024,15 +11024,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            3,
+            5,
+            4,
+            4,
+            6,
+            3,
+            6,
+            7,
+            5,
             0,
             0,
             0,
@@ -11043,101 +11043,9 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 43,
+          "numHoles": 9,
           "course": "The Plantation Course At Edisto"
-        }
-      }
-    },
-    "23383": {
-      "tcode": "23383",
-      "name": "Summerville Country Club",
-      "type": " Charleston, SC Local Tour",
-      "startDate": "9/13/2026",
-      "endDate": "9/13/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        4,
-        5,
-        5,
-        3,
-        4,
-        4,
-        4,
-        3,
-        4
-      ],
-      "yards": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        280,
-        355,
-        376,
-        134,
-        230,
-        175,
-        239,
-        90,
-        226
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 9",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {
-        "1": {
-          "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Summerville Country Club"
         }
       }
     },
@@ -11193,9 +11101,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 40,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -11205,7 +11113,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            4,
+            4,
+            6,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Berkeley Country Club"
+        }
+      }
     },
     "23385": {
       "tcode": "23385",
@@ -11271,7 +11205,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Crowfield Golf Club"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Yorba Linda, CA",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-08-24T14:11:48.492Z",
-  "totalTorneios": 43,
+  "lastUpdated": "2026-09-28T13:10:56.556Z",
+  "totalTorneios": 44,
   "torneios": {
     "17818": {
       "tcode": "17818",
@@ -3563,8 +3563,8 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 12,
+      "totalStrokes": 152,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3575,7 +3575,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            3,
+            5,
+            6,
+            5,
+            3,
+            4,
+            6,
+            3,
+            5,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            5,
+            3,
+            3,
+            5,
+            6,
+            4,
+            5,
+            3,
+            5,
+            3,
+            3,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "22705": {
       "tcode": "22705",
@@ -3813,9 +3864,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 35,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3828,15 +3879,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4,
+            3,
+            3,
+            5,
             0,
             0,
             0,
@@ -3847,8 +3898,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "Via Verde Country Club"
         }
       }
@@ -3905,9 +3956,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 38,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3920,15 +3971,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            3,
+            6,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            5,
             0,
             0,
             0,
@@ -3939,8 +3990,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "Diamond Bar Golf Course"
         }
       }
@@ -3997,6 +4048,98 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
+      "place": 2,
+      "totalStrokes": 42,
+      "points": 17.5,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            5,
+            4,
+            4,
+            7,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Mountain Meadows Golf Course "
+        }
+      }
+    },
+    "22720": {
+      "tcode": "22720",
+      "name": "Willowick Golf Course (Tour Championship) ",
+      "type": " Orange County, CA Local Tour",
+      "startDate": "10/11/2026",
+      "endDate": "10/11/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        3,
+        5,
+        3,
+        5,
+        5,
+        3,
+        4,
+        4,
+        5,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "yards": [
+        320,
+        120,
+        285,
+        100,
+        350,
+        310,
+        149,
+        267,
+        200,
+        310,
+        325,
+        85,
+        250,
+        280,
+        290,
+        200,
+        100,
+        261
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -4033,7 +4176,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Mountain Meadows Golf Course "
+          "course": "Willowick Municipal Golf Course"
         }
       }
     }

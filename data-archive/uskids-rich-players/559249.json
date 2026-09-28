@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Owasso, OK",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:46.472Z",
+  "lastUpdated": "2026-09-28T13:10:54.066Z",
   "totalTorneios": 101,
   "torneios": {
     "9927": {
@@ -9520,9 +9520,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
+      "place": 1,
       "totalStrokes": 71,
-      "points": 0,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9612,9 +9612,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 79,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9627,27 +9627,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            4,
+            5,
+            3,
+            6,
+            4,
+            4,
+            7,
+            3,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            6
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 79,
+          "numHoles": 18,
           "course": "Earlywine Golf Course"
         }
       }
@@ -9660,15 +9660,53 @@
       "endDate": "9/13/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        5,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        365,
+        110,
+        408,
+        120,
+        313,
+        292,
+        292,
+        394,
+        132,
+        294,
+        120,
+        413,
+        400,
+        119,
+        298,
+        280,
+        140,
+        363
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 74,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9681,27 +9719,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            3,
+            6,
+            4,
+            4,
+            4,
+            4,
+            6,
+            3,
+            3,
+            4,
+            6,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 74,
+          "numHoles": 18,
           "course": "Trosper Park Golf Course"
         }
       }
@@ -9758,9 +9796,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 81,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9770,7 +9808,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            3,
+            4,
+            3,
+            5,
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            7,
+            5,
+            5,
+            4,
+            7
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Cimarron National Golf Club"
+        }
+      }
     },
     "22831": {
       "tcode": "22831",
@@ -9836,7 +9900,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cherry Oaks Golf Course"
+        }
+      }
     },
     "22832": {
       "tcode": "22832",
@@ -9891,7 +9981,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 80,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -9902,7 +9992,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            4,
+            3,
+            5,
+            7,
+            4,
+            4,
+            3,
+            3,
+            5,
+            5,
+            4,
+            5,
+            2,
+            8,
+            4,
+            6
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Westwood Golf Course"
+        }
+      }
     },
     "22833": {
       "tcode": "22833",
@@ -9968,7 +10084,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hidden Trails Country Club"
+        }
+      }
     },
     "22834": {
       "tcode": "22834",
@@ -10034,7 +10176,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cimarron Trails Golf Club"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Miami Lakes, FL",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.568Z",
+  "lastUpdated": "2026-09-28T13:10:56.652Z",
   "totalTorneios": 35,
   "torneios": {
     "17972": {
@@ -3345,8 +3345,8 @@
       "ageGroup": "Boys 8 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 6,
+      "totalStrokes": 23,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3357,7 +3357,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            5,
+            3,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 19,
+          "numHoles": 9,
+          "course": "PGA Golf Club"
+        }
+      }
     },
     "22986": {
       "tcode": "22986",
@@ -3423,7 +3449,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
     }
   }
 }

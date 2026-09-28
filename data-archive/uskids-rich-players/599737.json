@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Pittsburgh, PA",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.131Z",
-  "totalTorneios": 89,
+  "lastUpdated": "2026-09-28T13:10:56.084Z",
+  "totalTorneios": 90,
   "torneios": {
     "14563": {
       "tcode": "14563",
@@ -9096,6 +9096,98 @@
         }
       }
     },
+    "23290": {
+      "tcode": "23290",
+      "name": "Tam O'Shanter Golf Course",
+      "type": " Pittsburgh Local Tour",
+      "startDate": "9/5/2026",
+      "endDate": "9/5/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        275,
+        110,
+        435,
+        300,
+        290,
+        230,
+        380,
+        135,
+        280,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
+      "place": 1,
+      "totalStrokes": 38,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            3,
+            5,
+            4,
+            5,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Tam O'Shanter Golf Course"
+        }
+      }
+    },
     "23291": {
       "tcode": "23291",
       "name": "Stoughton Acres Golf Course",
@@ -9148,9 +9240,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 44,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9163,15 +9255,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            7,
+            3,
+            4,
+            4,
+            4,
+            7,
+            5,
+            6,
             0,
             0,
             0,
@@ -9182,8 +9274,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 44,
+          "numHoles": 9,
           "course": "Stoughton Acres Golf Course"
         }
       }
@@ -9240,9 +9332,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 48,
+      "points": 8,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9252,7 +9344,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            6,
+            5,
+            5,
+            4,
+            4,
+            5,
+            6,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 48,
+          "numHoles": 9,
+          "course": "Slippery Rock Golf Club"
+        }
+      }
     }
   }
 }

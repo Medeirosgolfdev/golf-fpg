@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Las Vegas, NV",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.198Z",
-  "totalTorneios": 81,
+  "lastUpdated": "2026-09-28T13:10:56.173Z",
+  "totalTorneios": 80,
   "torneios": {
     "15001": {
       "tcode": "15001",
@@ -6899,8 +6899,8 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 13,
+      "totalStrokes": 151,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6911,7 +6911,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            4,
+            5,
+            4,
+            6,
+            3,
+            3,
+            6,
+            3,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        },
+        "2": {
+          "strokes": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        }
+      }
     },
     "22943": {
       "tcode": "22943",
@@ -7189,72 +7240,6 @@
         }
       }
     },
-    "22948": {
-      "tcode": "22948",
-      "name": "Aliante Golf Club",
-      "type": " Las Vegas Local Tour",
-      "startDate": "9/20/2026",
-      "endDate": "9/20/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        4,
-        5,
-        3,
-        4,
-        3,
-        4,
-        5,
-        4,
-        4,
-        5,
-        4,
-        3,
-        5,
-        3,
-        4,
-        4,
-        4
-      ],
-      "yards": [
-        291,
-        384,
-        452,
-        136,
-        263,
-        131,
-        333,
-        475,
-        296,
-        300,
-        430,
-        357,
-        144,
-        444,
-        135,
-        245,
-        329,
-        322
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 12",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
     "22949": {
       "tcode": "22949",
       "name": "Wildhorse Golf Club",
@@ -7319,7 +7304,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "WildHorse Golf Club"
+        }
+      }
     },
     "22950": {
       "tcode": "22950",
@@ -7385,7 +7396,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Stallion Mountain Golf Club"
+        }
+      }
     },
     "22951": {
       "tcode": "22951",
@@ -7451,7 +7488,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Painted Desert Golf Club"
+        }
+      }
     }
   }
 }

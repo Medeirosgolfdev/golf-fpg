@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Somerset , MA",
   "ageGroup": "Girls 11-12",
-  "lastUpdated": "2026-08-24T14:11:49.116Z",
-  "totalTorneios": 90,
+  "lastUpdated": "2026-09-28T13:10:57.341Z",
+  "totalTorneios": 91,
   "torneios": {
     "9535": {
       "tcode": "9535",
@@ -9441,7 +9441,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Tunxis Plantation (Green)"
+        }
+      }
+    },
+    "23437": {
+      "tcode": "23437",
+      "name": "Patriot Golf Course & Southborough Golf Course",
+      "type": " Boston Local Tour",
+      "startDate": "8/30/2026",
+      "endDate": "8/30/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        4
+      ],
+      "yards": [
+        250,
+        237,
+        87,
+        237,
+        160,
+        401,
+        282,
+        225,
+        324,
+        250,
+        237,
+        87,
+        237,
+        160,
+        401,
+        282,
+        225,
+        324
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 11-12",
+      "flightId": null,
+      "pid": null,
+      "place": 2,
+      "totalStrokes": 76,
+      "points": 20,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            4,
+            3,
+            6,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            3,
+            7,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Southborough Golf Course"
+        }
+      }
     }
   }
 }

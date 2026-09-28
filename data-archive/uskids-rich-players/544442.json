@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Lawrence, KS",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:45.578Z",
+  "lastUpdated": "2026-09-28T13:10:52.973Z",
   "totalTorneios": 123,
   "torneios": {
     "9299": {
@@ -3580,22 +3580,107 @@
         170,
         245
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            180,
+            175,
+            90,
+            180,
+            260,
+            60,
+            140,
+            170,
+            245
+          ]
+        },
+        "2": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            180,
+            175,
+            90,
+            180,
+            260,
+            60,
+            140,
+            170,
+            245
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "149801",
+      "pid": "908651",
       "place": 3,
       "totalStrokes": 77,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -3620,7 +3705,53 @@
           ],
           "numStrokes": 39,
           "numHoles": 9,
-          "course": "Paradise Pointe Golf Complex"
+          "course": "Paradise Pointe Golf Complex",
+          "startHole": 10,
+          "startTime": "12:27",
+          "groupNumber": 2,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "159915",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            180,
+            175,
+            90,
+            180,
+            260,
+            60,
+            140,
+            170,
+            245
+          ]
         },
         "2": {
           "strokes": [
@@ -3645,7 +3776,53 @@
           ],
           "numStrokes": 38,
           "numHoles": 9,
-          "course": "Paradise Pointe Golf Complex"
+          "course": "Paradise Pointe Golf Complex",
+          "startHole": 10,
+          "startTime": "12:45",
+          "groupNumber": 3,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "159916",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            180,
+            175,
+            90,
+            180,
+            260,
+            60,
+            140,
+            170,
+            245
+          ]
         }
       }
     },
@@ -12810,9 +12987,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 76,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -12825,27 +13002,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            3,
+            5,
+            4,
+            5,
+            3,
+            5,
+            5,
+            5,
+            4,
+            2,
+            4,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 76,
+          "numHoles": 18,
           "course": "Fred Arbanas Golf Course At Longview Lakes"
         }
       }
@@ -12902,9 +13079,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 79,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -12914,7 +13091,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            6,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            6,
+            5,
+            5,
+            4,
+            3,
+            5,
+            5
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Trails West Golf Course"
+        }
+      }
     },
     "23140": {
       "tcode": "23140",
@@ -12969,7 +13172,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 75,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -12980,7 +13183,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            2,
+            4,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Blue Springs Country Club"
+        }
+      }
     },
     "23141": {
       "tcode": "23141",
@@ -13046,7 +13275,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Winterstone Golf Course"
+        }
+      }
     },
     "23142": {
       "tcode": "23142",
@@ -13112,7 +13367,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Eagles Landing Golf Course"
+        }
+      }
     }
   }
 }

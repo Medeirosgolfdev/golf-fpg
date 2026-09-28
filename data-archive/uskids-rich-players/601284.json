@@ -4,7 +4,7 @@
   "country": "RU",
   "place": "Moscow, MOS",
   "ageGroup": "Girls 13-14",
-  "lastUpdated": "2026-08-24T14:11:49.400Z",
+  "lastUpdated": "2026-09-28T13:10:57.657Z",
   "totalTorneios": 34,
   "torneios": {
     "14689": {
@@ -883,22 +883,65 @@
         230,
         360
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5
+          ],
+          "lengths": [
+            260,
+            350,
+            100,
+            220,
+            240,
+            380,
+            260,
+            120,
+            260,
+            270,
+            105,
+            220,
+            380,
+            125,
+            230,
+            260,
+            230,
+            360
+          ]
+        }
+      },
       "ageGroup": "Girls 11-12",
-      "flightId": null,
-      "pid": null,
+      "flightId": "221686",
+      "pid": "1361378",
       "place": 9,
       "totalStrokes": 78,
       "points": 2,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 3",
+      "teeMarkerColor": "Orange",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -923,7 +966,53 @@
           ],
           "numStrokes": 78,
           "numHoles": 18,
-          "course": "Black Mountain Golf Club - East/North"
+          "course": "Black Mountain Golf Club - East/North",
+          "startHole": 10,
+          "startTime": "08:12",
+          "groupNumber": 2,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "234978",
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5
+          ],
+          "yards": [
+            260,
+            350,
+            100,
+            220,
+            240,
+            380,
+            260,
+            120,
+            260,
+            270,
+            105,
+            220,
+            380,
+            125,
+            230,
+            260,
+            230,
+            360
+          ]
         }
       }
     },
@@ -975,22 +1064,65 @@
         230,
         360
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5
+          ],
+          "lengths": [
+            260,
+            350,
+            100,
+            220,
+            240,
+            380,
+            260,
+            120,
+            260,
+            270,
+            105,
+            220,
+            380,
+            125,
+            230,
+            260,
+            230,
+            360
+          ]
+        }
+      },
       "ageGroup": "Girls 11-12",
-      "flightId": null,
-      "pid": null,
+      "flightId": "221700",
+      "pid": "1361379",
       "place": 8,
       "totalStrokes": 83,
       "points": 4.67,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 3",
+      "teeMarkerColor": "Orange",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -1015,7 +1147,53 @@
           ],
           "numStrokes": 83,
           "numHoles": 18,
-          "course": "Black Mountain Golf Club - East/North"
+          "course": "Black Mountain Golf Club - East/North",
+          "startHole": 1,
+          "startTime": "08:20",
+          "groupNumber": 2,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "234992",
+          "pars": [
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5
+          ],
+          "yards": [
+            260,
+            350,
+            100,
+            220,
+            240,
+            380,
+            260,
+            120,
+            260,
+            270,
+            105,
+            220,
+            380,
+            125,
+            230,
+            260,
+            230,
+            360
+          ]
         }
       }
     },
@@ -3676,7 +3854,7 @@
         5
       ],
       "yards": [
-        300,
+        319,
         418,
         140,
         270,
@@ -3691,9 +3869,9 @@
         430,
         140,
         270,
-        280,
+        320,
         270,
-        420
+        400
       ],
       "flightCourses": {},
       "ageGroup": "Girls 13-14",
@@ -3711,7 +3889,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     },
     "22980": {
       "tcode": "22980",
@@ -3742,7 +3946,7 @@
         5
       ],
       "yards": [
-        300,
+        319,
         418,
         140,
         270,
@@ -3757,9 +3961,9 @@
         430,
         140,
         270,
-        280,
+        320,
         270,
-        420
+        400
       ],
       "flightCourses": {},
       "ageGroup": "Girls 13-14",
@@ -3777,7 +3981,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     },
     "22981": {
       "tcode": "22981",
@@ -3843,7 +4073,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     },
     "22982": {
       "tcode": "22982",
@@ -3909,7 +4165,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Black Mountain Golf Club - East/North"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Bowling Green, KY",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:48.978Z",
+  "lastUpdated": "2026-09-28T13:10:57.183Z",
   "totalTorneios": 29,
   "torneios": {
     "15409": {
@@ -2935,8 +2935,8 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 69,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2947,7 +2947,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            3,
+            4,
+            4,
+            7,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Paris Landing State Park GC"
+        },
+        "2": {
+          "strokes": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
+            2,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 32,
+          "numHoles": 9,
+          "course": "Paris Landing State Park GC"
+        }
+      }
     }
   }
 }

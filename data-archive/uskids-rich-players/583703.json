@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Hillsborough, NJ",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:47.643Z",
-  "totalTorneios": 110,
+  "lastUpdated": "2026-09-28T13:10:55.484Z",
+  "totalTorneios": 109,
   "torneios": {
     "12485": {
       "tcode": "12485",
@@ -10569,9 +10569,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 70,
+      "points": 40,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10584,27 +10584,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            3,
+            5,
+            3,
+            4,
+            3,
+            3,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            2,
+            6,
+            4,
+            3,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 70,
+          "numHoles": 18,
           "course": "Cobblestone Creek Country Club "
         }
       }
@@ -11133,35 +11133,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23415": {
-      "tcode": "23415",
-      "name": "The Meadows at Middlesex Golf Course",
-      "type": " Central Jersey Local Tour",
-      "startDate": "9/13/2026",
-      "endDate": "9/13/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [],
-      "yards": [],
-      "flightCourses": {},
-      "ageGroup": "Boys 11",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Green Course "
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "BR",
   "place": "São Paulo, SP",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:47.213Z",
-  "totalTorneios": 68,
+  "lastUpdated": "2026-09-28T13:10:54.955Z",
+  "totalTorneios": 69,
   "torneios": {
     "10163": {
       "tcode": "10163",
@@ -6796,9 +6796,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 83,
+      "points": 8,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -6811,27 +6811,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            7,
+            4,
+            5,
+            2,
+            4,
+            4,
+            5,
+            4,
+            5,
+            6,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 83,
+          "numHoles": 18,
           "course": "Clube de Campo São Paulo"
         }
       }
@@ -6927,6 +6927,34 @@
           "course": "Clube de Campo São Paulo"
         }
       }
+    },
+    "23287": {
+      "tcode": "23287",
+      "name": "South American Championship 2026",
+      "type": "International Championships",
+      "startDate": "10/31/2026",
+      "endDate": "11/2/2026",
+      "totalRounds": 3,
+      "holesPerRound": 18,
+      "par": [],
+      "yards": [],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

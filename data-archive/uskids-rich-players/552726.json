@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Cincinnati, OH",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:46.021Z",
+  "lastUpdated": "2026-09-28T13:10:53.515Z",
   "totalTorneios": 136,
   "torneios": {
     "8950": {
@@ -13033,9 +13033,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 5,
+      "totalStrokes": 81,
+      "points": 10,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -13048,27 +13048,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            6,
+            5,
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            5,
+            4,
+            6,
+            5,
+            4,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 81,
+          "numHoles": 18,
           "course": "Players Club At Woodland Trails"
         }
       }
@@ -13125,9 +13125,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 71,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -13137,11 +13137,37 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Ironwood Golf Club"
+        }
+      }
     },
     "22793": {
       "tcode": "22793",
-      "name": "Coffin Golf Course",
+      "name": "Gray Eagle Golf Club & Academy",
       "type": " Indianapolis Local Tour",
       "startDate": "10/4/2026",
       "endDate": "10/4/2026",
@@ -13149,43 +13175,43 @@
       "holesPerRound": 18,
       "par": [
         5,
-        4,
-        4,
         3,
-        5,
         4,
         3,
         4,
         4,
         4,
-        4,
-        3,
         4,
         5,
         5,
+        4,
+        3,
+        5,
         3,
         4,
-        4
+        4,
+        3,
+        5
       ],
       "yards": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+        440,
+        130,
+        270,
+        105,
+        340,
+        355,
+        350,
+        305,
+        405,
+        420,
+        355,
+        130,
+        400,
+        140,
+        340,
+        320,
+        130,
+        470
       ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
@@ -13203,7 +13229,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gray Eagle Golf Club & Academy"
+        }
+      }
     },
     "22795": {
       "tcode": "22795",
@@ -13269,7 +13321,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Plum Creek Golf Club"
+        }
+      }
     }
   }
 }

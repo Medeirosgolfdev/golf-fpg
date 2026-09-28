@@ -4,7 +4,7 @@
   "country": "CH",
   "place": "Lucerne",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:48.250Z",
+  "lastUpdated": "2026-09-28T13:10:56.242Z",
   "totalTorneios": 19,
   "torneios": {
     "16020": {
@@ -2338,8 +2338,46 @@
       "endDate": "11/22/2026",
       "totalRounds": 3,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
@@ -2356,7 +2394,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The San Roque Club"
+        }
+      }
     }
   }
 }

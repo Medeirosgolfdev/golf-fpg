@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Kansas City, KS",
   "ageGroup": "Boys 12-14",
-  "lastUpdated": "2026-08-24T14:11:47.349Z",
-  "totalTorneios": 101,
+  "lastUpdated": "2026-09-28T13:10:55.125Z",
+  "totalTorneios": 100,
   "torneios": {
     "12112": {
       "tcode": "12112",
@@ -9541,9 +9541,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 86,
+      "points": 8,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -9553,73 +9553,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "22900": {
-      "tcode": "22900",
-      "name": "Cherry Oaks Golf Course",
-      "type": " Wichita Local Tour",
-      "startDate": "10/3/2026",
-      "endDate": "10/3/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        3,
-        4,
-        5,
-        4,
-        4,
-        3,
-        4,
-        5,
-        5,
-        3,
-        4,
-        4,
-        3,
-        4,
-        4,
-        5,
-        4
-      ],
-      "yards": [
-        382,
-        130,
-        380,
-        443,
-        240,
-        308,
-        130,
-        292,
-        460,
-        460,
-        130,
-        322,
-        290,
-        128,
-        358,
-        300,
-        455,
-        350
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 12",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            6,
+            6,
+            4,
+            4,
+            4,
+            5,
+            5,
+            6,
+            4,
+            4,
+            4,
+            2,
+            7,
+            7,
+            4
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Turkey Creek Golf Course "
+        }
+      }
     },
     "23135": {
       "tcode": "23135",
@@ -9858,7 +9818,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 76,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -9869,7 +9829,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Blue Springs Country Club"
+        }
+      }
     }
   }
 }

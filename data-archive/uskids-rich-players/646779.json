@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Frisco, TX",
   "ageGroup": "Girls 12",
-  "lastUpdated": "2026-08-24T14:11:49.298Z",
+  "lastUpdated": "2026-09-28T13:10:57.549Z",
   "totalTorneios": 11,
   "torneios": {
     "20051": {
@@ -1054,8 +1054,8 @@
       "ageGroup": "Girls 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 9,
+      "totalStrokes": 155,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1066,7 +1066,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            5,
+            3,
+            5,
+            5,
+            3,
+            5,
+            5,
+            5,
+            4,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            3,
+            4,
+            4,
+            6,
+            4,
+            6,
+            4,
+            5,
+            5,
+            3,
+            5,
+            4,
+            5,
+            5,
+            3,
+            3,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     }
   }
 }

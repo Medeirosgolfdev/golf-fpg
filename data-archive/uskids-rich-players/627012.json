@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Mount Airy, MD",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-08-24T14:11:48.582Z",
+  "lastUpdated": "2026-09-28T13:10:56.672Z",
   "totalTorneios": 25,
   "torneios": {
     "18124": {
@@ -2022,15 +2022,53 @@
       "endDate": "9/12/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        5,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        290,
+        85,
+        180,
+        210,
+        225,
+        210,
+        70,
+        225,
+        310,
+        290,
+        85,
+        180,
+        210,
+        225,
+        210,
+        70,
+        225,
+        310
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 45,
+      "points": 17.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2043,15 +2081,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            3,
+            4,
+            5,
+            6,
+            6,
+            4,
+            6,
+            5,
             0,
             0,
             0,
@@ -2062,8 +2100,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 45,
+          "numHoles": 9,
           "course": "Richland Golf Club"
         }
       }
@@ -2132,7 +2170,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Locust Hill Golf Course"
+        }
+      }
     },
     "23169": {
       "tcode": "23169",
@@ -2198,7 +2262,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Forest Park Golf Course"
+        }
+      }
     },
     "23170": {
       "tcode": "23170",
@@ -2264,7 +2354,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Clustered Spires Golf Club"
+        }
+      }
     }
   }
 }

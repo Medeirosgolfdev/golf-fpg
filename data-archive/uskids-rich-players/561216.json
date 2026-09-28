@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Tulsa, OK",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:46.588Z",
-  "totalTorneios": 97,
+  "lastUpdated": "2026-09-28T13:10:54.205Z",
+  "totalTorneios": 96,
   "torneios": {
     "9927": {
       "tcode": "9927",
@@ -8639,9 +8639,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 68,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8654,120 +8654,28 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            2,
+            4,
+            6,
+            4,
+            3,
+            3,
+            4,
+            3,
+            6,
+            3,
+            3,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 68,
+          "numHoles": 18,
           "course": "Battle Creek Golf Course"
-        }
-      }
-    },
-    "23194": {
-      "tcode": "23194",
-      "name": "Heritage Hills Golf Course",
-      "type": " Tulsa Local Tour",
-      "startDate": "9/13/2026",
-      "endDate": "9/13/2026",
-      "totalRounds": 1,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        5,
-        3,
-        4,
-        4,
-        3,
-        4,
-        5,
-        4,
-        4,
-        3,
-        5,
-        3,
-        4,
-        5,
-        4,
-        3,
-        5
-      ],
-      "yards": [
-        330,
-        450,
-        125,
-        323,
-        305,
-        135,
-        337,
-        442,
-        320,
-        350,
-        144,
-        442,
-        129,
-        330,
-        462,
-        322,
-        130,
-        385
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 12",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {
-        "1": {
-          "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "Heritage Hills Golf Course"
         }
       }
     },
@@ -8823,9 +8731,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 71,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8835,7 +8743,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            4,
+            3,
+            6,
+            4,
+            3,
+            2,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4
+          ],
+          "numStrokes": 71,
+          "numHoles": 18,
+          "course": "Pryor Creek Golf Course"
+        }
+      }
     },
     "23196": {
       "tcode": "23196",
@@ -8845,8 +8779,46 @@
       "endDate": "9/27/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "yards": [
+        287,
+        425,
+        145,
+        332,
+        342,
+        140,
+        350,
+        465,
+        350,
+        334,
+        395,
+        130,
+        308,
+        436,
+        280,
+        125,
+        315,
+        325
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
       "flightId": null,
@@ -8863,7 +8835,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Boots Hollow Golf Club"
+        }
+      }
     },
     "23197": {
       "tcode": "23197",
@@ -8929,7 +8927,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Page Belcher Golf Course"
+        }
+      }
     },
     "23198": {
       "tcode": "23198",
@@ -8995,7 +9019,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mohawk Park Golf Club"
+        }
+      }
     },
     "23199": {
       "tcode": "23199",
@@ -9023,7 +9073,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Buffalo Rock Golf & Venue "
+        }
+      }
     }
   }
 }

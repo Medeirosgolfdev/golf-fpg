@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Culleoka, TN",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-08-24T14:11:48.461Z",
+  "lastUpdated": "2026-09-28T13:10:56.515Z",
   "totalTorneios": 46,
   "torneios": {
     "17142": {
@@ -3822,8 +3822,8 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 3,
+      "totalStrokes": 81,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3834,7 +3834,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            6,
+            3,
+            5,
+            5,
+            5,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Paris Landing State Park GC"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Paris Landing State Park GC"
+        }
+      }
     },
     "23065": {
       "tcode": "23065",
@@ -4072,9 +4123,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 34,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4087,15 +4138,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            3,
+            5,
+            3,
+            3,
+            3,
+            4,
             0,
             0,
             0,
@@ -4106,8 +4157,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 34,
+          "numHoles": 9,
           "course": "Montgomery Bell State Park"
         }
       }
@@ -4176,7 +4227,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Course at Pillow Springs"
+        }
+      }
     },
     "23069": {
       "tcode": "23069",
@@ -4242,7 +4319,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Kenny Perry's Country Creek Golf Course"
+        }
+      }
     },
     "23070": {
       "tcode": "23070",
@@ -4296,9 +4399,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 38,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4311,15 +4414,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            5,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4,
             0,
             0,
             0,
@@ -4330,8 +4433,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "Henry Horton Golf Course"
         }
       }

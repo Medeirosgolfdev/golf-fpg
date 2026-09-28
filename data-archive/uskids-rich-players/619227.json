@@ -4,8 +4,8 @@
   "country": "US",
   "place": "PHOENIX, AZ",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.493Z",
-  "totalTorneios": 57,
+  "lastUpdated": "2026-09-28T13:10:56.558Z",
+  "totalTorneios": 56,
   "torneios": {
     "16807": {
       "tcode": "16807",
@@ -4717,8 +4717,8 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 8,
+      "totalStrokes": 149,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4729,7 +4729,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            5,
+            3,
+            6,
+            4,
+            4,
+            5,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Paris Landing State Park GC"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            3,
+            5,
+            4,
+            5,
+            4,
+            4,
+            4,
+            3,
+            6,
+            3,
+            4
+          ],
+          "numStrokes": 72,
+          "numHoles": 18,
+          "course": "Paris Landing State Park GC"
+        }
+      }
     },
     "22642": {
       "tcode": "22642",
@@ -4762,20 +4813,20 @@
       "yards": [
         273,
         304,
-        372,
-        274,
+        327,
+        251,
         98,
         278,
-        401,
+        393,
         80,
         303,
         254,
         426,
         113,
-        289,
+        238,
         279,
         120,
-        324,
+        270,
         440,
         258
       ],
@@ -4783,8 +4834,8 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 139,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4795,7 +4846,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            4,
+            3,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            3,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 70,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            5,
+            2,
+            4,
+            4,
+            3,
+            4,
+            3,
+            6,
+            3,
+            4,
+            4,
+            2,
+            4,
+            5,
+            3
+          ],
+          "numStrokes": 69,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        }
+      }
     },
     "22735": {
       "tcode": "22735",
@@ -4953,14 +5055,40 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Scottsdale Silverado Golf Club"
+        }
+      }
     },
     "22740": {
       "tcode": "22740",
       "name": "Sun City Country Club",
       "type": " Phoenix Local Tour",
-      "startDate": "11/1/2026",
-      "endDate": "11/1/2026",
+      "startDate": "12/20/2026",
+      "endDate": "12/20/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [
@@ -5019,73 +5147,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "22741": {
-      "tcode": "22741",
-      "name": "Junior National Golf Club",
-      "type": " Phoenix Local Tour",
-      "startDate": "12/6/2026",
-      "endDate": "12/6/2026",
-      "totalRounds": 1,
-      "holesPerRound": 9,
-      "par": [
-        5,
-        4,
-        4,
-        3,
-        5,
-        4,
-        4,
-        3,
-        4,
-        5,
-        4,
-        3,
-        4,
-        4,
-        3,
-        4,
-        4,
-        5
-      ],
-      "yards": [
-        450,
-        283,
-        270,
-        97,
-        419,
-        290,
-        326,
-        129,
-        275,
-        415,
-        311,
-        134,
-        260,
-        302,
-        90,
-        259,
-        265,
-        396
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sun City Country Club"
+        }
+      }
     },
     "22742": {
       "tcode": "22742",
@@ -5217,7 +5305,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "St. Albans, WV",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-08-24T14:11:48.683Z",
+  "lastUpdated": "2026-09-28T13:10:56.820Z",
   "totalTorneios": 23,
   "torneios": {
     "20486": {
@@ -515,22 +515,65 @@
         300,
         444
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "lengths": [
+            297,
+            286,
+            413,
+            302,
+            373,
+            125,
+            448,
+            131,
+            319,
+            309,
+            321,
+            319,
+            149,
+            432,
+            131,
+            313,
+            300,
+            444
+          ]
+        }
+      },
       "ageGroup": "Boys 12",
-      "flightId": null,
-      "pid": null,
+      "flightId": "270783",
+      "pid": "1666769",
       "place": 7,
       "totalStrokes": 102,
       "points": 6,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "status": 1,
+      "teeMarkerName": "Tee 5",
+      "teeMarkerColor": "White",
+      "handicap": "",
+      "driverLength": "",
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -555,7 +598,53 @@
           ],
           "numStrokes": 102,
           "numHoles": 18,
-          "course": "Carolina Trace Country Club"
+          "course": "Carolina Trace Country Club",
+          "startHole": 10,
+          "startTime": "09:54",
+          "groupNumber": 3,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "286016",
+          "pars": [
+            4,
+            4,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5
+          ],
+          "yards": [
+            297,
+            286,
+            413,
+            302,
+            373,
+            125,
+            448,
+            131,
+            319,
+            309,
+            321,
+            319,
+            149,
+            432,
+            131,
+            313,
+            300,
+            444
+          ]
         }
       }
     },
@@ -1556,8 +1645,8 @@
       "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 48,
+      "totalStrokes": 135,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1568,7 +1657,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            4,
+            3,
+            8,
+            4,
+            4,
+            6,
+            5,
+            6,
+            4,
+            4,
+            4,
+            6,
+            5,
+            8,
+            7,
+            5
+          ],
+          "numStrokes": 93,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        },
+        "2": {
+          "strokes": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            4,
+            4,
+            4,
+            5,
+            5,
+            6,
+            4,
+            6,
+            4
+          ],
+          "numStrokes": 33,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        }
+      }
     },
     "23367": {
       "tcode": "23367",
@@ -1622,9 +1762,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 80,
+      "points": 12,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1637,40 +1777,45 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            5,
+            5,
+            3,
+            3,
+            4,
+            5,
+            6,
+            5,
+            7,
+            3,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 80,
+          "numHoles": 18,
           "course": "Cumberland Trail Golf Club"
         }
       }
     },
-    "23369": {
-      "tcode": "23369",
-      "name": "Turnberry Golf Course ",
+    "23368": {
+      "tcode": "23368",
+      "name": "Chapel Hill Golf Course ",
       "type": " Columbus Local Tour",
-      "startDate": "9/19/2026",
-      "endDate": "9/19/2026",
+      "startDate": "9/13/2026",
+      "endDate": "9/13/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
       "par": [
+        4,
+        5,
+        3,
+        4,
+        4,
         5,
         4,
         3,
@@ -1679,44 +1824,39 @@
         4,
         3,
         4,
-        4,
-        4,
-        4,
         5,
-        3,
-        4,
         4,
         3,
         4,
-        5
+        4
       ],
       "yards": [
-        525,
-        362,
-        125,
-        337,
-        508,
-        354,
-        148,
-        321,
-        410,
-        348,
-        354,
-        510,
-        160,
-        358,
         385,
-        165,
-        351,
-        476
+        500,
+        150,
+        360,
+        336,
+        521,
+        390,
+        152,
+        310,
+        494,
+        399,
+        139,
+        332,
+        515,
+        354,
+        134,
+        310,
+        380
       ],
       "flightCourses": {},
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 78,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1726,14 +1866,40 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            2,
+            4,
+            4,
+            5,
+            6,
+            2,
+            4,
+            6,
+            5,
+            4,
+            5,
+            5,
+            5,
+            3,
+            4,
+            5
+          ],
+          "numStrokes": 78,
+          "numHoles": 18,
+          "course": "Chapel Hill Golf Course "
+        }
+      }
     },
     "23370": {
       "tcode": "23370",
       "name": "Marion Country Club",
       "type": " Columbus Local Tour",
-      "startDate": "9/20/2026",
-      "endDate": "9/20/2026",
+      "startDate": "10/18/2026",
+      "endDate": "10/18/2026",
       "totalRounds": 1,
       "holesPerRound": 18,
       "par": [
@@ -1792,7 +1958,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Marion Country Club"
+        }
+      }
     },
     "23371": {
       "tcode": "23371",
@@ -1846,9 +2038,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 79,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1858,7 +2050,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            4,
+            7,
+            4,
+            6,
+            5,
+            5,
+            2,
+            4,
+            4,
+            3,
+            3,
+            6,
+            3,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Blacklick Woods Metro Golf Course"
+        }
+      }
     },
     "23372": {
       "tcode": "23372",
@@ -1912,9 +2130,9 @@
       "ageGroup": "Boys 13-14",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 4,
+      "totalStrokes": 81,
+      "points": 11,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1924,7 +2142,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            4,
+            4,
+            5,
+            6,
+            4,
+            3,
+            5,
+            5,
+            4,
+            5,
+            6,
+            2,
+            4,
+            4,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Mill Creek Golf Club"
+        }
+      }
     },
     "23373": {
       "tcode": "23373",
@@ -1990,7 +2234,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mentel Memorial Golf Course "
+        }
+      }
     }
   }
 }

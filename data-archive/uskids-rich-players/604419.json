@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Seattle, WA",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-08-24T14:11:48.930Z",
+  "lastUpdated": "2026-09-28T13:10:57.129Z",
   "totalTorneios": 73,
   "torneios": {
     "15302": {
@@ -6732,14 +6732,14 @@
       "holesPerRound": 9,
       "par": [
         4,
-        4,
-        4,
-        3,
-        4,
-        5,
         3,
         5,
         4,
+        3,
+        5,
+        4,
+        3,
+        5,
         0,
         0,
         0,
@@ -6752,14 +6752,14 @@
       ],
       "yards": [
         210,
-        200,
-        200,
         85,
-        200,
         300,
+        220,
         85,
-        320,
-        200,
+        300,
+        230,
+        90,
+        300,
         0,
         0,
         0,
@@ -6775,7 +6775,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 42,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6786,7 +6786,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            7,
+            6,
+            3,
+            6,
+            3,
+            3,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 42,
+          "numHoles": 9,
+          "course": "Avalon Golf Links"
+        }
+      }
     },
     "23502": {
       "tcode": "23502",
@@ -6852,7 +6878,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Loomis Trail Golf Course"
+        }
+      }
     },
     "23503": {
       "tcode": "23503",
@@ -6880,7 +6932,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Whidbey Golf Course"
+        }
+      }
     }
   }
 }

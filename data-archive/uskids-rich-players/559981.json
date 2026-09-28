@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Renton, WA",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-08-24T14:11:46.511Z",
-  "totalTorneios": 96,
+  "lastUpdated": "2026-09-28T13:10:54.112Z",
+  "totalTorneios": 95,
   "torneios": {
     "10022": {
       "tcode": "10022",
@@ -4388,9 +4388,94 @@
         170,
         274
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            165,
+            78,
+            159,
+            71,
+            195,
+            178,
+            266,
+            170,
+            274
+          ]
+        },
+        "2": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            165,
+            78,
+            159,
+            71,
+            195,
+            178,
+            266,
+            170,
+            274
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
+      "flightId": "162890",
       "pid": null,
       "place": 0,
       "totalStrokes": 0,
@@ -4428,7 +4513,47 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Monterey Pines Golf Course"
+          "course": "Monterey Pines Golf Course",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            165,
+            78,
+            159,
+            71,
+            195,
+            178,
+            266,
+            170,
+            274
+          ]
         },
         "2": {
           "strokes": [
@@ -4453,7 +4578,47 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Monterey Pines Golf Course"
+          "course": "Monterey Pines Golf Course",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            165,
+            78,
+            159,
+            71,
+            195,
+            178,
+            266,
+            170,
+            274
+          ]
         }
       }
     },
@@ -10450,72 +10615,6 @@
         }
       }
     },
-    "23420": {
-      "tcode": "23420",
-      "name": "Monterey Challenge 2026",
-      "type": "Regional Championships",
-      "startDate": "11/7/2026",
-      "endDate": "11/8/2026",
-      "totalRounds": 2,
-      "holesPerRound": 18,
-      "par": [
-        5,
-        4,
-        3,
-        4,
-        5,
-        5,
-        3,
-        3,
-        4,
-        4,
-        3,
-        4,
-        3,
-        4,
-        4,
-        5,
-        4,
-        5
-      ],
-      "yards": [
-        463,
-        298,
-        124,
-        264,
-        361,
-        357,
-        129,
-        104,
-        337,
-        333,
-        112,
-        317,
-        124,
-        341,
-        330,
-        477,
-        345,
-        402
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 11",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
-    },
     "23498": {
       "tcode": "23498",
       "name": "Sunland Golf Club",
@@ -10546,13 +10645,13 @@
       ],
       "yards": [
         350,
-        120,
-        316,
+        113,
+        280,
         299,
         120,
         301,
         403,
-        332,
+        279,
         290,
         287,
         272,
@@ -10560,7 +10659,7 @@
         281,
         245,
         123,
-        293,
+        260,
         113,
         394
       ],
@@ -10568,9 +10667,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 6,
+      "totalStrokes": 81,
+      "points": 8,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10583,27 +10682,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            6,
+            3,
+            5,
+            4,
+            3,
+            4,
+            7,
+            4,
+            4,
+            4,
+            6,
+            5,
+            4,
+            4,
+            3,
+            5,
+            5,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 81,
+          "numHoles": 18,
           "course": "Sunland Golf Club"
         }
       }
@@ -10660,9 +10759,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 5,
+      "totalStrokes": 76,
+      "points": 9,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -10675,27 +10774,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            4,
+            4,
+            5,
+            2,
+            4,
+            6,
+            5,
+            3,
+            6,
+            3,
+            4,
+            4,
+            5,
+            6,
+            4,
+            4,
+            4,
+            3
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 76,
+          "numHoles": 18,
           "course": "The Cedars At Dungeness Golf Club"
         }
       }
@@ -10764,7 +10863,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Home Course "
+        }
+      }
     },
     "23546": {
       "tcode": "23546",
@@ -10830,7 +10955,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Classic Golf Club"
+        }
+      }
     },
     "23547": {
       "tcode": "23547",
@@ -10896,7 +11047,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gold Mountain Golf Course"
+        }
+      }
     },
     "23548": {
       "tcode": "23548",
@@ -10962,7 +11139,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "McCormick Woods Golf Course"
+        }
+      }
     }
   }
 }

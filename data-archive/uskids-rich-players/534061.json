@@ -4,7 +4,7 @@
   "country": "BR",
   "place": "São Paulo, SP",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:44.974Z",
+  "lastUpdated": "2026-09-28T13:10:52.149Z",
   "totalTorneios": 126,
   "torneios": {
     "6882": {
@@ -6062,22 +6062,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            275,
+            150,
+            260,
+            75,
+            160,
+            180,
+            75,
+            175,
+            170,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "127456",
+      "pid": "756920",
       "place": 2,
       "totalStrokes": 39,
       "points": 15.67,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -6102,7 +6145,53 @@
           ],
           "numStrokes": 39,
           "numHoles": 9,
-          "course": "West Orange Country Club"
+          "course": "West Orange Country Club",
+          "startHole": 1,
+          "startTime": "09:10",
+          "groupNumber": 4,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "136809",
+          "pars": [
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            275,
+            150,
+            260,
+            75,
+            160,
+            180,
+            75,
+            175,
+            170,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -15371,7 +15460,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Lago Azul Golfe Clube"
+        }
+      }
     },
     "23211": {
       "tcode": "23211",
@@ -15437,7 +15552,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sao Paulo Golf Club"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Millbrae, CA",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:47.458Z",
+  "lastUpdated": "2026-09-28T13:10:55.266Z",
   "totalTorneios": 92,
   "torneios": {
     "12304": {
@@ -9921,8 +9921,8 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 4,
+      "totalStrokes": 144,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -9936,27 +9936,52 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            6,
+            3,
+            6,
+            5,
+            3,
+            4,
+            2,
+            4,
+            5,
+            5,
+            6,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 75,
+          "numHoles": 18,
+          "course": "Hyatt Hill Country - Creek"
+        },
+        "2": {
+          "strokes": [
+            3,
+            4,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            2,
+            4,
+            3,
+            4,
+            5,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 69,
+          "numHoles": 18,
           "course": "Hyatt Hill Country - Creek"
         }
       }
@@ -10025,7 +10050,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     }
   }
 }

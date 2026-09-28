@@ -3,9 +3,9 @@
   "name": "Lucas Morgan",
   "country": "US",
   "place": "Evans, GA",
-  "ageGroup": "Boys 11-12",
-  "lastUpdated": "2026-08-24T14:11:47.725Z",
-  "totalTorneios": 74,
+  "ageGroup": "Boys 12",
+  "lastUpdated": "2026-09-28T13:10:55.594Z",
+  "totalTorneios": 75,
   "torneios": {
     "12794": {
       "tcode": "12794",
@@ -6855,7 +6855,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
     },
     "23035": {
       "tcode": "23035",
@@ -6975,9 +7026,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 80,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -6990,27 +7041,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            3,
+            3,
+            6,
+            4,
+            6,
+            3,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            3,
+            6,
+            3,
+            5
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 80,
+          "numHoles": 18,
           "course": "Woodside Country Club"
         }
       }
@@ -7079,7 +7130,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Mount Vintage Golf Club"
+        }
+      }
     },
     "23479": {
       "tcode": "23479",
@@ -7145,7 +7222,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Spring Valley Country Club"
+        }
+      }
     },
     "23481": {
       "tcode": "23481",
@@ -7211,7 +7314,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Eisenhower Lakes Golf Course"
+        }
+      }
+    },
+    "23670": {
+      "tcode": "23670",
+      "name": "Holiday Classic 2026",
+      "type": "Regional Championships",
+      "startDate": "12/21/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        499,
+        328,
+        320,
+        466,
+        127,
+        306,
+        131,
+        318,
+        345,
+        322,
+        325,
+        480,
+        115,
+        312,
+        293,
+        139,
+        458,
+        349
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Fazio"
+        }
+      }
     }
   }
 }

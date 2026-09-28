@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Brooklyn, NY",
   "ageGroup": "Girls 12",
-  "lastUpdated": "2026-08-24T14:11:49.244Z",
-  "totalTorneios": 117,
+  "lastUpdated": "2026-09-28T13:10:57.488Z",
+  "totalTorneios": 118,
   "torneios": {
     "13091": {
       "tcode": "13091",
@@ -12208,6 +12208,98 @@
         }
       }
     },
+    "22707": {
+      "tcode": "22707",
+      "name": "Via Verde Country Club",
+      "type": " Orange County, CA Local Tour",
+      "startDate": "9/5/2026",
+      "endDate": "9/5/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        3,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5
+      ],
+      "yards": [
+        275,
+        350,
+        100,
+        235,
+        255,
+        330,
+        220,
+        230,
+        125,
+        300,
+        156,
+        316,
+        120,
+        220,
+        280,
+        210,
+        230,
+        325
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 11-12",
+      "flightId": null,
+      "pid": null,
+      "place": 2,
+      "totalStrokes": 73,
+      "points": 17.5,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            6,
+            3,
+            3,
+            4,
+            5,
+            4,
+            5
+          ],
+          "numStrokes": 73,
+          "numHoles": 18,
+          "course": "Via Verde Country Club"
+        }
+      }
+    },
     "23420": {
       "tcode": "23420",
       "name": "Monterey Challenge 2026",
@@ -12272,7 +12364,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Del Monte Golf Course"
+        }
+      }
     }
   }
 }

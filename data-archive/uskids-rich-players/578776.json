@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Pasadena, CA",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:47.465Z",
+  "lastUpdated": "2026-09-28T13:10:55.273Z",
   "totalTorneios": 156,
   "torneios": {
     "13065": {
@@ -1269,22 +1269,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            250,
+            215,
+            205,
+            65,
+            130,
+            120,
+            245,
+            75,
+            180,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "171303",
+      "pid": "1056310",
       "place": 2,
       "totalStrokes": 41,
       "points": 17.5,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -1309,7 +1352,53 @@
           ],
           "numStrokes": 41,
           "numHoles": 9,
-          "course": "Marine Memorial Golf Course "
+          "course": "Marine Memorial Golf Course ",
+          "startHole": 1,
+          "startTime": "11:20",
+          "groupNumber": 1,
+          "playerNumber": 1,
+          "liveScoringId": "",
+          "flightRound": "182343",
+          "pars": [
+            5,
+            4,
+            4,
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            250,
+            215,
+            205,
+            65,
+            130,
+            120,
+            245,
+            75,
+            180,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -15462,7 +15551,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     }
   }
 }

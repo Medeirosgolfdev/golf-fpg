@@ -4,7 +4,7 @@
   "country": "US",
   "place": "San Dimas, CA",
   "ageGroup": "Girls 9",
-  "lastUpdated": "2026-08-24T14:11:48.893Z",
+  "lastUpdated": "2026-09-28T13:10:57.089Z",
   "totalTorneios": 25,
   "torneios": {
     "18317": {
@@ -2275,8 +2275,8 @@
       "ageGroup": "Girls 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 67,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2287,7 +2287,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 34,
+          "numHoles": 9,
+          "course": "Mission Hills North - Player"
+        },
+        "2": {
+          "strokes": [
+            4,
+            6,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 33,
+          "numHoles": 9,
+          "course": "Mission Hills North - Player"
+        }
+      }
     },
     "22754": {
       "tcode": "22754",
@@ -2341,9 +2392,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 36,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -2356,15 +2407,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -2375,8 +2426,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
           "course": "Mission Hills North - Gary Player Course"
         }
       }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Somers, CT",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:47.667Z",
-  "totalTorneios": 31,
+  "lastUpdated": "2026-09-28T13:10:55.529Z",
+  "totalTorneios": 30,
   "torneios": {
     "12566": {
       "tcode": "12566",
@@ -2902,73 +2902,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "22986": {
-      "tcode": "22986",
-      "name": "PGA Golf Club Invitational 2026",
-      "type": "Regional Championships",
-      "startDate": "10/10/2026",
-      "endDate": "10/11/2026",
-      "totalRounds": 2,
-      "holesPerRound": 18,
-      "par": [
-        4,
-        4,
-        4,
-        5,
-        3,
-        5,
-        3,
-        4,
-        4,
-        3,
-        4,
-        3,
-        5,
-        4,
-        5,
-        3,
-        5,
-        4
-      ],
-      "yards": [
-        261,
-        252,
-        248,
-        339,
-        111,
-        410,
-        125,
-        275,
-        265,
-        102,
-        285,
-        128,
-        429,
-        270,
-        389,
-        114,
-        428,
-        271
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Tunxis Plantation (Red-Green)"
+        }
+      }
     },
     "23274": {
       "tcode": "23274",
@@ -3034,7 +2994,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Keney Golf Course"
+        }
+      }
     },
     "23318": {
       "tcode": "23318",
@@ -3100,7 +3086,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Golden Horseshoe - Gold Course"
+        }
+      }
     }
   }
 }

@@ -3,9 +3,9 @@
   "name": "Leyton Procacci",
   "country": "US",
   "place": "Fort Lauderdale, FL",
-  "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:46.219Z",
-  "totalTorneios": 47,
+  "ageGroup": "Boys 12-14",
+  "lastUpdated": "2026-09-28T13:10:53.757Z",
+  "totalTorneios": 48,
   "torneios": {
     "8826": {
       "tcode": "8826",
@@ -4360,7 +4360,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA Golf Club - Wanamaker Course"
+        }
+      }
     },
     "23060": {
       "tcode": "23060",
@@ -4506,9 +4557,9 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 39,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4518,7 +4569,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            5,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "numStrokes": 30,
+          "numHoles": 18,
+          "course": "Hollybrook Golf & Tennis Club"
+        }
+      }
     },
     "23062": {
       "tcode": "23062",
@@ -4584,7 +4661,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Country Club of Coral Springs"
+        }
+      }
     },
     "23063": {
       "tcode": "23063",
@@ -4650,7 +4753,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Hollybrook Golf & Tennis Club"
+        }
+      }
     },
     "23064": {
       "tcode": "23064",
@@ -4702,6 +4831,98 @@
       ],
       "flightCourses": {},
       "ageGroup": "Boys 12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Country Club of Coral Springs"
+        }
+      }
+    },
+    "23616": {
+      "tcode": "23616",
+      "name": "Teen Series at Osprey Point (FL)",
+      "type": "Teen Series",
+      "startDate": "11/21/2026",
+      "endDate": "11/22/2026",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        510,
+        160,
+        365,
+        375,
+        500,
+        350,
+        165,
+        375,
+        333,
+        368,
+        380,
+        530,
+        330,
+        172,
+        360,
+        165,
+        370,
+        510
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 12-14",
       "flightId": null,
       "pid": null,
       "place": 0,

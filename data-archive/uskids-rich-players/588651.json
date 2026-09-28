@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Danville, CA",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:47.828Z",
+  "lastUpdated": "2026-09-28T13:10:55.711Z",
   "totalTorneios": 96,
   "torneios": {
     "13420": {
@@ -7979,9 +7979,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 42,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -7994,15 +7994,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            5,
+            3,
+            4,
+            6,
+            4,
+            5,
+            5,
             0,
             0,
             0,
@@ -8013,8 +8013,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Baylands Golf Links"
         }
       }
@@ -8027,15 +8027,53 @@
       "endDate": "9/13/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
-      "par": [],
-      "yards": [],
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        3,
+        4,
+        5,
+        3,
+        5,
+        5,
+        4,
+        3,
+        4,
+        3,
+        5,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        275,
+        303,
+        97,
+        433,
+        112,
+        293,
+        410,
+        87,
+        400,
+        400,
+        275,
+        113,
+        300,
+        110,
+        422,
+        134,
+        329,
+        356
+      ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 37,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8048,15 +8086,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            4,
+            3,
+            3,
+            3,
+            5,
+            3,
+            5,
+            6,
             0,
             0,
             0,
@@ -8067,67 +8105,67 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 37,
+          "numHoles": 9,
           "course": "Chardonnay Golf Club"
         }
       }
     },
-    "22927": {
-      "tcode": "22927",
-      "name": "Monarch Bay Golf Club",
+    "22928": {
+      "tcode": "22928",
+      "name": "Las Positas Golf Course",
       "type": " East Bay, CA Local Tour",
-      "startDate": "9/26/2026",
-      "endDate": "9/26/2026",
+      "startDate": "9/27/2026",
+      "endDate": "9/27/2026",
       "totalRounds": 1,
       "holesPerRound": 9,
       "par": [
         4,
-        4,
+        5,
         4,
         3,
-        5,
-        5,
-        3,
         4,
+        5,
         4,
         3,
         4,
         4,
-        5,
-        4,
-        4,
-        5,
         3,
-        4
+        4,
+        5,
+        4,
+        3,
+        4,
+        4,
+        5
       ],
       "yards": [
+        290,
+        425,
+        293,
+        142,
         288,
-        298,
-        278,
-        131,
-        401,
-        355,
-        141,
-        302,
-        349,
-        100,
-        318,
-        336,
-        389,
+        450,
+        265,
+        109,
+        280,
+        264,
+        133,
+        284,
+        451,
+        351,
+        105,
+        300,
         251,
-        248,
-        403,
-        107,
-        251
+        410
       ],
       "flightCourses": {},
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 40,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -8137,7 +8175,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            5,
+            6,
+            3,
+            4,
+            3,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Las Positas Golf Course"
+        }
+      }
     },
     "22929": {
       "tcode": "22929",
@@ -8203,7 +8267,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Ramon Golf Club"
+        }
+      }
     },
     "22930": {
       "tcode": "22930",
@@ -8269,7 +8359,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Ramon Golf Club"
+        }
+      }
     },
     "22940": {
       "tcode": "22940",
@@ -8335,7 +8451,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Paradise Valley Golf Course"
+        }
+      }
     },
     "23031": {
       "tcode": "23031",
@@ -8769,7 +8911,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     }
   }
 }

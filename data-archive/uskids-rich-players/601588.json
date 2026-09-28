@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Henderson, NV",
   "ageGroup": "Girls 11-12",
-  "lastUpdated": "2026-08-24T14:11:49.279Z",
-  "totalTorneios": 73,
+  "lastUpdated": "2026-09-28T13:10:57.529Z",
+  "totalTorneios": 75,
   "torneios": {
     "14999": {
       "tcode": "14999",
@@ -6362,16 +6362,16 @@
         304,
         114,
         314,
-        367,
+        339,
         274,
-        388,
+        341,
         103,
         275,
-        290,
+        276,
         120,
-        378,
-        281,
-        379,
+        360,
+        261,
+        352,
         292,
         112,
         305,
@@ -6381,8 +6381,8 @@
       "ageGroup": "Girls 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 8,
+      "totalStrokes": 161,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6393,7 +6393,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            3,
+            4,
+            5,
+            4,
+            4,
+            3,
+            6,
+            5,
+            4,
+            9,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5
+          ],
+          "numStrokes": 82,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            3,
+            6,
+            5,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            6,
+            4,
+            4,
+            5,
+            5,
+            5,
+            4
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Westin Rancho Mirage - Dye"
+        }
+      }
     },
     "22945": {
       "tcode": "22945",
@@ -6487,6 +6538,190 @@
         }
       }
     },
+    "22949": {
+      "tcode": "22949",
+      "name": "Wildhorse Golf Club",
+      "type": " Las Vegas Local Tour",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        3,
+        5,
+        3,
+        5,
+        3,
+        5,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        5,
+        5,
+        4
+      ],
+      "yards": [
+        245,
+        109,
+        325,
+        128,
+        343,
+        126,
+        380,
+        345,
+        123,
+        243,
+        105,
+        256,
+        248,
+        108,
+        230,
+        351,
+        362,
+        240
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 11-12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "WildHorse Golf Club"
+        }
+      }
+    },
+    "22950": {
+      "tcode": "22950",
+      "name": "Stallion Mountain Golf Club",
+      "type": " Las Vegas Local Tour",
+      "startDate": "11/1/2026",
+      "endDate": "11/1/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        5,
+        3,
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        273,
+        364,
+        95,
+        258,
+        100,
+        361,
+        227,
+        248,
+        254,
+        284,
+        107,
+        259,
+        348,
+        249,
+        251,
+        264,
+        123,
+        352
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 11-12",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Stallion Mountain Golf Club"
+        }
+      }
+    },
     "23420": {
       "tcode": "23420",
       "name": "Monterey Challenge 2026",
@@ -6551,7 +6786,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     },
     "23445": {
       "tcode": "23445",
@@ -6617,7 +6878,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Southgate Golf Club"
+        }
+      }
     },
     "23447": {
       "tcode": "23447",
@@ -6683,7 +6970,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "St. George Golf Club"
+        }
+      }
     },
     "23448": {
       "tcode": "23448",
@@ -6749,7 +7062,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cedar Ridge Golf Course"
+        }
+      }
     },
     "23453": {
       "tcode": "23453",
@@ -6815,7 +7154,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sunbrook Golf Club"
+        }
+      }
     }
   }
 }

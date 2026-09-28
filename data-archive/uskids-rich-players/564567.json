@@ -4,7 +4,7 @@
   "country": "US",
   "place": "San Antonio, TX",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-08-24T14:11:46.750Z",
+  "lastUpdated": "2026-09-28T13:10:54.411Z",
   "totalTorneios": 82,
   "torneios": {
     "10456": {
@@ -8051,8 +8051,8 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 6,
+      "totalStrokes": 172,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8063,7 +8063,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            4,
+            4,
+            5,
+            5,
+            3,
+            7,
+            4,
+            6,
+            5,
+            4,
+            5,
+            4,
+            4,
+            6,
+            5,
+            7,
+            5
+          ],
+          "numStrokes": 89,
+          "numHoles": 18,
+          "course": "Hyatt Hill Country - Creek"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            7,
+            5,
+            4,
+            7,
+            3,
+            5,
+            4,
+            3,
+            5,
+            3,
+            5,
+            5,
+            4,
+            6,
+            4
+          ],
+          "numStrokes": 83,
+          "numHoles": 18,
+          "course": "Hyatt Hill Country - Creek"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "AU",
   "place": "Keilor East, VIC",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-08-24T14:11:48.699Z",
+  "lastUpdated": "2026-09-28T13:10:56.844Z",
   "totalTorneios": 23,
   "torneios": {
     "20561": {
@@ -2183,8 +2183,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 81,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2195,7 +2195,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            4,
+            3,
+            6,
+            4,
+            4,
+            4,
+            6,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        },
+        "2": {
+          "strokes": [
+            5,
+            6,
+            4,
+            5,
+            5,
+            3,
+            4,
+            4,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Heritage Golf and Country Club - St John"
+        }
+      }
     }
   }
 }

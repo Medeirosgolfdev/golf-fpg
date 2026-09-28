@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Pinehurst , NC",
   "ageGroup": "Boys 15-18",
-  "lastUpdated": "2026-08-24T14:11:47.245Z",
+  "lastUpdated": "2026-09-28T13:10:54.992Z",
   "totalTorneios": 31,
   "torneios": {
     "14065": {
@@ -3524,8 +3524,8 @@
       "ageGroup": "Boys 15-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 25,
+      "totalStrokes": 163,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3536,7 +3536,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            5,
+            3,
+            3,
+            6,
+            3,
+            5,
+            6,
+            4,
+            5,
+            3,
+            4,
+            6,
+            5,
+            5,
+            5,
+            4,
+            4
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            8,
+            4,
+            4,
+            4,
+            7,
+            5,
+            5,
+            4,
+            5
+          ],
+          "numStrokes": 83,
+          "numHoles": 18,
+          "course": "Longleaf Golf and Family Club "
+        }
+      }
     }
   }
 }

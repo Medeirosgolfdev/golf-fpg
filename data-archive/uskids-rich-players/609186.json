@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Encinitas",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-08-24T14:11:48.316Z",
+  "lastUpdated": "2026-09-28T13:10:56.331Z",
   "totalTorneios": 26,
   "torneios": {
     "15859": {
@@ -2346,20 +2346,20 @@
       "yards": [
         273,
         304,
-        372,
-        274,
+        327,
+        251,
         98,
         278,
-        401,
+        393,
         80,
         303,
         254,
         426,
         113,
-        289,
+        238,
         279,
         120,
-        324,
+        270,
         440,
         258
       ],
@@ -2367,8 +2367,8 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 139,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2379,7 +2379,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4,
+            2,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 69,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            3,
+            3,
+            5,
+            4,
+            3,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4
+          ],
+          "numStrokes": 70,
+          "numHoles": 18,
+          "course": "Mission Hills North - Player"
+        }
+      }
     },
     "23420": {
       "tcode": "23420",
@@ -2445,7 +2496,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
     }
   }
 }

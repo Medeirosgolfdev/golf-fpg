@@ -3,9 +3,9 @@
   "name": "William  Hawkins",
   "country": "US",
   "place": "Greenville , SC",
-  "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-08-24T14:11:48.697Z",
-  "totalTorneios": 14,
+  "ageGroup": "Boys 8 & Under",
+  "lastUpdated": "2026-09-28T13:10:56.843Z",
+  "totalTorneios": 15,
   "torneios": {
     "19966": {
       "tcode": "19966",
@@ -1079,8 +1079,8 @@
       "ageGroup": "Boys 5-18",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 3,
+      "totalStrokes": 39,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1091,7 +1091,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            2,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            4,
+            2,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2
+          ],
+          "numStrokes": 39,
+          "numHoles": 18,
+          "course": "The Club At Brookstone"
+        }
+      }
     },
     "22798": {
       "tcode": "22798",
@@ -1145,9 +1171,9 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 37,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1157,7 +1183,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            5,
+            2,
+            5,
+            5,
+            4,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Brookstone Meadows Golf Course"
+        }
+      }
     },
     "22799": {
       "tcode": "22799",
@@ -1223,7 +1275,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Cross Creek Plantation Golf Club"
+        }
+      }
     },
     "22800": {
       "tcode": "22800",
@@ -1275,6 +1353,98 @@
       ],
       "flightCourses": {},
       "ageGroup": "Boys 6 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Carolina Springs Golf Club"
+        }
+      }
+    },
+    "22957": {
+      "tcode": "22957",
+      "name": "Southeast Parent/Child Championship 2027",
+      "type": "Parent Child",
+      "startDate": "1/9/2027",
+      "endDate": "1/10/2027",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        5,
+        4,
+        4,
+        3,
+        5,
+        3,
+        4
+      ],
+      "yards": [
+        190,
+        190,
+        70,
+        185,
+        289,
+        55,
+        191,
+        280,
+        188,
+        191,
+        179,
+        265,
+        184,
+        197,
+        65,
+        272,
+        55,
+        189
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8 & Under",
       "flightId": null,
       "pid": null,
       "place": 0,
