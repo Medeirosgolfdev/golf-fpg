@@ -1,8 +1,60 @@
 {
-  "generatedAt": "2026-09-28T07:27:35.918Z",
+  "generatedAt": "2026-09-28T08:23:59.478Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1258,
+  "total": 1262,
   "tournaments": [
+    {
+      "file": "03-03-2601473806.json",
+      "trnId": "2601473806",
+      "partKey": "1b3e2ed731fb37990df490aca491869a",
+      "name": "Grand Prix Jeunes du Golf de La Porcelaine 2026",
+      "formule": "Simple",
+      "date": "26/09/2026",
+      "dateIso": "2026-09-26",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "03",
+      "seriesCount": 5,
+      "totalPlayers": 92,
+      "course": "La Porcelaine",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "BF",
+          "players": 7
+        },
+        {
+          "serieId": "111",
+          "label": "BG",
+          "players": 18
+        },
+        {
+          "serieId": "115",
+          "label": "MG",
+          "players": 7
+        },
+        {
+          "serieId": "117",
+          "label": "U12 G",
+          "players": 51
+        },
+        {
+          "serieId": "219",
+          "label": "U12 F",
+          "players": 9
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "03"
+      ]
+    },
     {
       "file": "03-04-2601476426.json",
       "trnId": "2601476426",
@@ -58,6 +110,162 @@
       "ffgolfSection": null,
       "ligues": [
         "04"
+      ]
+    },
+    {
+      "file": "03-07-2601469691.json",
+      "trnId": "2601469691",
+      "partKey": "b18abc00919bcd828f9815f2d56e4185",
+      "name": "GRAND PRIX JEUNES DES HAUTS DE FRANCE",
+      "formule": "Simple",
+      "date": "26/09/2026",
+      "dateIso": "2026-09-26",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 4,
+      "totalPlayers": 120,
+      "course": "Les Bouleaux",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 39
+        },
+        {
+          "serieId": "113",
+          "label": "BENJG",
+          "players": 48
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 21
+        },
+        {
+          "serieId": "215",
+          "label": "BENJF",
+          "players": 12
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "07"
+      ]
+    },
+    {
+      "file": "03-10-2601475733.json",
+      "trnId": "2601475733",
+      "partKey": "3e31aa5a73f7eac25c39877cd5f6f009",
+      "name": "GRAND PRIX JEUNES BOURGENAY GOLF CLUB 26",
+      "formule": "Simple",
+      "date": "26/09/2026",
+      "dateIso": "2026-09-26",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "10",
+      "seriesCount": 5,
+      "totalPlayers": 62,
+      "course": "Port Bourgenay",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12 Garçons",
+          "players": 28
+        },
+        {
+          "serieId": "111",
+          "label": "U14 Garçons",
+          "players": 18
+        },
+        {
+          "serieId": "113",
+          "label": "U16 Garçons",
+          "players": 6
+        },
+        {
+          "serieId": "215",
+          "label": "U12 Filles",
+          "players": 7
+        },
+        {
+          "serieId": "217",
+          "label": "U14 Filles",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "10"
+      ]
+    },
+    {
+      "file": "03-13-2601477006.json",
+      "trnId": "2601477006",
+      "partKey": "a181b10b999b1009df5e1152f2b1845d",
+      "name": "GRAND PRIX JEUNES QUETIGNY 2026",
+      "formule": "Simple",
+      "date": "26/09/2026",
+      "dateIso": "2026-09-26",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "13",
+      "seriesCount": 6,
+      "totalPlayers": 70,
+      "course": "Quetigny",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12G",
+          "players": 28
+        },
+        {
+          "serieId": "113",
+          "label": "Benj G",
+          "players": 22
+        },
+        {
+          "serieId": "117",
+          "label": "Min G",
+          "players": 8
+        },
+        {
+          "serieId": "211",
+          "label": "U12F",
+          "players": 6
+        },
+        {
+          "serieId": "215",
+          "label": "Benj F",
+          "players": 3
+        },
+        {
+          "serieId": "219",
+          "label": "Min F",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "13"
       ]
     },
     {
