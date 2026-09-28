@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-26T14:47:39.754Z",
+  "generatedAt": "2026-09-28T11:59:36.309Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -548,6 +548,10 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601473806",
+        "ffgolf-2601469691",
+        "ffgolf-2601475733",
+        "ffgolf-2601477006",
         "ffgolf-2601405350",
         "ffgolf-2601409009",
         "ffgolf-2501365354",
@@ -861,8 +865,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-09-19",
-      "editionsCount": 311
+      "lastDate": "2026-09-26",
+      "editionsCount": 315
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -15504,6 +15508,24 @@
       "editionsCount": 8
     },
     {
+      "id": "uskids-lurgan-golf-club-tour-championship",
+      "label": "Lurgan Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-5112",
+        "uskids-6762",
+        "uskids-10839",
+        "uskids-17289",
+        "uskids-12699",
+        "uskids-14741",
+        "uskids-19993",
+        "uskids-22922"
+      ],
+      "firstDate": "2018-05-20",
+      "lastDate": "2026-09-27",
+      "editionsCount": 8
+    },
+    {
       "id": "uskids-greenacres-golf-centre",
       "label": "Greenacres Golf Centre",
       "sourceId": "uskids",
@@ -18264,23 +18286,6 @@
       "editionsCount": 7
     },
     {
-      "id": "uskids-lurgan-golf-club-tour-championship",
-      "label": "Lurgan Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-5112",
-        "uskids-6762",
-        "uskids-10839",
-        "uskids-17289",
-        "uskids-12699",
-        "uskids-14741",
-        "uskids-19993"
-      ],
-      "firstDate": "2018-05-20",
-      "lastDate": "2025-10-05",
-      "editionsCount": 7
-    },
-    {
       "id": "uskids-copperleaf-golf-club",
       "label": "Copperleaf Golf Club",
       "sourceId": "uskids",
@@ -18448,6 +18453,23 @@
       ],
       "firstDate": "2020-12-12",
       "lastDate": "2025-05-04",
+      "editionsCount": 7
+    },
+    {
+      "id": "uskids-pueblo-viejo-country-club-tour-championship",
+      "label": "Pueblo Viejo Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11216",
+        "uskids-11565",
+        "uskids-13637",
+        "uskids-15889",
+        "uskids-18421",
+        "uskids-20217",
+        "uskids-22993"
+      ],
+      "firstDate": "2021-12-03",
+      "lastDate": "2026-09-27",
       "editionsCount": 7
     },
     {
@@ -21325,22 +21347,6 @@
       ],
       "firstDate": "2020-12-05",
       "lastDate": "2025-05-24",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-pueblo-viejo-country-club-tour-championship",
-      "label": "Pueblo Viejo Country Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11216",
-        "uskids-11565",
-        "uskids-13637",
-        "uskids-15889",
-        "uskids-18421",
-        "uskids-20217"
-      ],
-      "firstDate": "2021-12-03",
-      "lastDate": "2025-09-28",
       "editionsCount": 6
     },
     {
@@ -39704,6 +39710,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-the-classic-club-tour-championship",
+      "label": "The Classic Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-9423",
+        "uskids-20294",
+        "uskids-22757"
+      ],
+      "firstDate": "2020-10-11",
+      "lastDate": "2026-09-27",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-arrowood-golf-course",
       "label": "Arrowood Golf Course",
       "sourceId": "uskids",
@@ -40926,6 +40945,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-latah-creek-golf-course-tour-championship",
+      "label": "Latah Creek Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15406",
+        "uskids-18594",
+        "uskids-22520"
+      ],
+      "firstDate": "2023-10-15",
+      "lastDate": "2026-09-27",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-teen-series-at-pronghorn-or",
       "label": "Teen Series at Pronghorn (OR)",
       "sourceId": "uskids",
@@ -41495,6 +41527,19 @@
       ],
       "firstDate": "2021-10-23",
       "lastDate": "2025-10-25",
+      "editionsCount": 3
+    },
+    {
+      "id": "uskids-country-club-culiacan-tour-championship",
+      "label": "Country Club Culiacan (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15191",
+        "uskids-21255",
+        "uskids-22627"
+      ],
+      "firstDate": "2023-11-26",
+      "lastDate": "2026-02-15",
       "editionsCount": 3
     },
     {
@@ -52052,18 +52097,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-the-classic-club-tour-championship",
-      "label": "The Classic Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-9423",
-        "uskids-20294"
-      ],
-      "firstDate": "2020-10-11",
-      "lastDate": "2025-09-21",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-wedgewood-public-golf-course",
       "label": "Wedgewood Public Golf Course",
       "sourceId": "uskids",
@@ -53000,6 +53033,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-colonial-country-club-tour-championship",
+      "label": "Colonial Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13318",
+        "uskids-22727"
+      ],
+      "firstDate": "2022-11-19",
+      "lastDate": "2026-09-27",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-efteling-golfpark",
       "label": "Efteling Golfpark",
       "sourceId": "uskids",
@@ -53792,18 +53837,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-latah-creek-golf-course-tour-championship",
-      "label": "Latah Creek Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15406",
-        "uskids-18594"
-      ],
-      "firstDate": "2023-10-15",
-      "lastDate": "2025-05-24",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-teen-series-at-liberty-lake-wa",
       "label": "Teen Series at Liberty Lake (WA)",
       "sourceId": "uskids",
@@ -54581,18 +54614,6 @@
       ],
       "firstDate": "2023-06-11",
       "lastDate": "2024-05-18",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-country-club-culiacan-tour-championship",
-      "label": "Country Club Culiacan (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15191",
-        "uskids-21255"
-      ],
-      "firstDate": "2023-11-26",
-      "lastDate": "2026-02-15",
       "editionsCount": 2
     },
     {
@@ -55457,6 +55478,18 @@
       ],
       "firstDate": "2025-03-02",
       "lastDate": "2026-07-12",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-rockway-vineyards-golf-course-tour-championship",
+      "label": "Rockway Vineyards Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19980",
+        "uskids-22864"
+      ],
+      "firstDate": "2025-09-28",
+      "lastDate": "2026-09-27",
       "editionsCount": 2
     },
     {
@@ -79064,17 +79097,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-colonial-country-club-tour-championship",
-      "label": "Colonial Country Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13318"
-      ],
-      "firstDate": "2022-11-19",
-      "lastDate": "2022-11-19",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-royal-st-augustine-golf-and-country-club-tour-championship",
       "label": "Royal St. Augustine Golf and Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -84462,17 +84484,6 @@
       ],
       "firstDate": "2018-05-12",
       "lastDate": "2018-05-12",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-rockway-vineyards-golf-course-tour-championship",
-      "label": "Rockway Vineyards Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19980"
-      ],
-      "firstDate": "2025-09-28",
-      "lastDate": "2025-09-28",
       "editionsCount": 1
     },
     {
@@ -92998,6 +93009,28 @@
       ],
       "firstDate": "2026-04-19",
       "lastDate": "2026-04-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-qingdao-huashan-international-country-club-masters-course-tour-champs",
+      "label": "Qingdao Huashan International Country Club - Masters Course (Tour Champs)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22841"
+      ],
+      "firstDate": null,
+      "lastDate": null,
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-lakewood-ranch-golf-and-country-club-the-legacy-tour-championship",
+      "label": "Lakewood Ranch Golf and Country Club - The Legacy (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22788"
+      ],
+      "firstDate": "2026-09-27",
+      "lastDate": "2026-09-27",
       "editionsCount": 1
     },
     {
