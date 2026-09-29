@@ -1,28 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22585,
-      "name": "Teen Series at PGA Golf Club (FL)",
-      "date_inicio": "8/29/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 2,
-      "campo": "PGA Golf Club - Ryder Course ",
-      "fee_18": "255.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
-      "t": 22571,
-      "name": "Teen Series at Lake Spanaway (WA)",
-      "date_inicio": "8/29/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 2,
-      "campo": "Lake Spanaway Golf Course",
-      "fee_18": "195.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
       "t": 22657,
       "name": "El Cristo Golf & Country Club (Tour Championship)",
       "date_inicio": "8/30/2026",
@@ -2322,19 +2300,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-28T15:06:53.196Z",
+  "gerado_em": "2026-09-29T13:55:01.855Z",
   "varredura_max_t": 23768,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 46,
-    "novos": 1,
+    "pedidos": 40,
+    "novos": 0,
     "buracos_revistos": 0,
     "catalogo": 1463,
     "backfill_falta": 0
   },
   "fronteira_max_t_visto": 23768,
   "fronteira_avancou_em": "2026-09-28",
-  "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 0,
+  "dias_sem_descoberta": 1,
+  "dias_sem_avanco": 1,
   "ultima_descoberta": "2026-09-28"
 }
