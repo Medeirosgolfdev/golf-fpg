@@ -1,94 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22657,
-      "name": "El Cristo Golf & Country Club (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "El Cristo Golf & Country Club",
-      "fee_18": "45.00",
-      "tour": "Puebla (MX) Tour",
-      "type": 6
-    },
-    {
-      "t": 22698,
-      "name": "Club Campestre Victoria (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Club Campestre Victoria",
-      "fee_18": "45.00",
-      "tour": "Tampico (MX) Tour",
-      "type": 6
-    },
-    {
-      "t": 22750,
-      "name": "Club de Golf la Villa Rica (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Club de Golf la Villa Rica",
-      "fee_18": "45.00",
-      "tour": "Veracruz (MX) Tour",
-      "type": 6
-    },
-    {
-      "t": 23020,
-      "name": "Teen Series at Wentworth Hills (MA)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/31/2026",
-      "rondas": 2,
-      "campo": "Wentworth Hills Golf Club",
-      "fee_18": "275.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
-      "t": 22910,
-      "name": "Baylands Golf Links (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Baylands Golf Links",
-      "fee_18": "109.00",
-      "tour": "San Francisco Tour",
-      "type": 6
-    },
-    {
-      "t": 22604,
-      "name": "Penn National Golf Club - Iron Forge Course (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Penn National Golf Club - Iron Forge Course",
-      "fee_18": "73.00",
-      "tour": "South Central Pennsylvania Tour",
-      "type": 6
-    },
-    {
-      "t": 22478,
-      "name": "Azalea City Golf Course (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Azalea City Golf Course",
-      "fee_18": "67.00",
-      "tour": "Mobile Tour",
-      "type": 6
-    },
-    {
-      "t": 22402,
-      "name": "Prince William Golf Club (Tour Championship)",
-      "date_inicio": "8/30/2026",
-      "date_fim": "8/30/2026",
-      "rondas": 1,
-      "campo": "Prince William Golf Club",
-      "fee_18": "73.00",
-      "tour": "Northern Virginia Tour",
-      "type": 6
-    },
-    {
       "t": 22677,
       "name": "Teen Series at River Oaks (UT)",
       "date_inicio": "9/4/2026",
@@ -2014,6 +1926,17 @@
       "type": 6
     },
     {
+      "t": 23782,
+      "name": "Yering Meadows Golf Club (Tour Championship)",
+      "date_inicio": "12/6/2026",
+      "date_fim": "12/6/2026",
+      "rondas": 1,
+      "campo": "Yering Meadows Golf Club",
+      "fee_18": "47.00",
+      "tour": "Melbourne (AU) Tour",
+      "type": 6
+    },
+    {
       "t": 23651,
       "name": "Golf Nazionale (Tour Championship)",
       "date_inicio": "12/12/2026",
@@ -2234,6 +2157,17 @@
       "type": 6
     },
     {
+      "t": 23769,
+      "name": "Al Hamra Golf Club",
+      "date_inicio": "1/24/2027",
+      "date_fim": "1/24/2027",
+      "rondas": 1,
+      "campo": "Al Hamra Golf Club",
+      "fee_18": "87.00",
+      "tour": "United Arab Emirates (UAE) Tour",
+      "type": 5
+    },
+    {
       "t": 23527,
       "name": "International Teen Series - Antalya Turkish Open 2027",
       "date_inicio": "1/29/2027",
@@ -2254,6 +2188,17 @@
       "fee_18": "265.00",
       "tour": "International Championships Tour",
       "type": 8
+    },
+    {
+      "t": 23772,
+      "name": "Al Hamra Golf Club",
+      "date_inicio": "2/28/2027",
+      "date_fim": "2/28/2027",
+      "rondas": 1,
+      "campo": "Al Hamra Golf Club",
+      "fee_18": "87.00",
+      "tour": "United Arab Emirates (UAE) Tour",
+      "type": 5
     },
     {
       "t": 23714,
@@ -2278,6 +2223,17 @@
       "type": 8
     },
     {
+      "t": 23775,
+      "name": "Al Hamra Golf Club (Tour Championship)",
+      "date_inicio": "3/21/2027",
+      "date_fim": "3/21/2027",
+      "rondas": 1,
+      "campo": "Al Hamra Golf Club",
+      "fee_18": "87.00",
+      "tour": "United Arab Emirates (UAE) Tour",
+      "type": 6
+    },
+    {
       "t": 23715,
       "name": "The Big 5 South African Open 2027",
       "date_inicio": "3/23/2027",
@@ -2300,19 +2256,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-09-29T13:55:01.855Z",
-  "varredura_max_t": 23768,
+  "gerado_em": "2026-09-30T13:30:31.982Z",
+  "varredura_max_t": 23782,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 40,
-    "novos": 0,
+    "pedidos": 54,
+    "novos": 4,
     "buracos_revistos": 0,
-    "catalogo": 1463,
+    "catalogo": 1477,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23768,
-  "fronteira_avancou_em": "2026-09-28",
-  "dias_sem_descoberta": 1,
-  "dias_sem_avanco": 1,
-  "ultima_descoberta": "2026-09-28"
+  "fronteira_max_t_visto": 23782,
+  "fronteira_avancou_em": "2026-09-30",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-09-30"
 }
