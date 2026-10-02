@@ -110,12 +110,22 @@ for (const pdf of pdfs) {
     log(`✓ ${base}: draw gravado.`);
     log(output.trim().split("\n").map((l) => "    " + l).join("\n"));
 
-    // sanidade antes do commit — se os testes partirem, reverter os 2 JSON
-    try {
-      run("npx", ["vitest", "run"], { shell: true, timeout: 300000 });
-    } catch (e) {
+    // sanidade antes do commit — se os testes partirem, reverter os 2 JSON.
+    // Tenta duas vezes: a 02/10/2026 um teste da USKids sem nada a ver com os
+    // draws estourou o tempo com o PC ocupado e bloqueou um draw que estava bom.
+    let testes = null;
+    for (let tentativa = 1; tentativa <= 2 && testes !== true; tentativa++) {
+      try {
+        run("npx", ["vitest", "run"], { shell: true, timeout: 300000 });
+        testes = true;
+      } catch (e) {
+        testes = e;
+        if (tentativa === 1) log(`⚠ ${base}: testes falharam — a repetir uma vez.`);
+      }
+    }
+    if (testes !== true) {
       run("git", ["checkout", "--", ...DATA_FILES]);
-      throw new Error("npm test falhou depois da inserção — entrada revertida:\n" + (e.stdout || e.message));
+      throw new Error("npm test falhou duas vezes depois da inserção — entrada revertida:\n" + (testes.stdout || testes.message));
     }
 
     run("git", ["add", ...DATA_FILES]);
