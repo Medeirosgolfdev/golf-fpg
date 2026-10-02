@@ -137,6 +137,22 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
  * PDF e, para os ligados, a ficha (id, nome, nascimento, clube, handicap
  * actual de outra fonte).
  */
+/* Edição anterior do mesmo torneio (lista.edicaoAnterior: resultados finais,
+ * por sexo e ordenados por pancadas) — liga-se pelo nome: o mais curto contido
+ * no mais comprido, com pelo menos 2 nomes. */
+const tokens = (s) => normName(s).split(" ").filter(Boolean);
+function mesmoNome(a, b) {
+  const x = tokens(a), y = tokens(b);
+  const [s, l] = x.length <= y.length ? [x, y] : [y, x];
+  return s.length >= 2 && s.every((k) => l.includes(k));
+}
+function anteriorDe(lista, nome) {
+  const e = lista.edicaoAnterior;
+  if (!e || !Array.isArray(e.players)) return null;
+  const p = e.players.find((x) => mesmoNome(x.name, nome));
+  return p ? { pos: p.pos, empate: !!p.empate, de: e.total, gross: p.gross, hcp: p.hcp } : null;
+}
+
 function ligacoesParaPagina(r, res) {
   const byId = new Map(res.juniors.map((j) => [j.id, j]));
   let ficheiros = [];
@@ -158,11 +174,17 @@ function ligacoesParaPagina(r, res) {
         junior: j ? { id: j.id, name: j.canonicalName, dob: j.dob || null, club: s.fpg?.club || s.rfeg?.club || s.ffgolf?.club || j.club || null, via: l.junior.via } : null,
         ambiguo: l.ambiguo || null,
         duplicadoDe: p.duplicadoDe || null,
+        // com ficha, compara-se com o nome completo da ficha: o «Afonso Pinto» de 2026
+        // (Afonso de Sousa Pinto, n. 2013) não é o «Afonso Silva Pinto» de 2025 (n. 2011)
+        anterior: p.duplicadoDe ? null : anteriorDe(lista, j ? j.canonicalName : p.name),
         hcpAtual,
       };
     });
     listas.push({ id: lista.id, label: lista.label || lista.id, torneio: lista.torneio || null, data: lista.data,
       sexo: lista.sexo || null, nascidosDesde: lista.nascidosDesde || null, wildcardsFpg: lista.wildcardsFpg ?? null,
+      edicaoAnterior: lista.edicaoAnterior
+        ? { label: lista.edicaoAnterior.label, torneio: lista.edicaoAnterior.torneio, total: lista.edicaoAnterior.total, vencedor: lista.edicaoAnterior.vencedor }
+        : null,
       players, candidatosPt: candidatosWildCard(lista, players, res) });
   }
   return { listas };
@@ -199,6 +221,7 @@ function candidatosWildCard(lista, players, res) {
         rank: i + 1, fed: String(f.federation_code), name: f.name, club: f.acronym || f.club_name || null,
         dob: f.birthdate || null, hcp: f.hcp_exact, juniorId: jid,
         inscrito: linha ? { lista: linha.lista, pos: linha.pos, hcp: linha.hcp } : null,
+        anterior: anteriorDe(lista, f.name),
       };
     });
 }

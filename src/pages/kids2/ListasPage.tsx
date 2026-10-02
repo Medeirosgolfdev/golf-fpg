@@ -23,17 +23,32 @@ interface Inscrito {
   ambiguo: string[] | null;
   duplicadoDe?: number | null;
   hcpAtual: { valor: number; fonte: string; data: string | null } | null;
+  anterior?: Anterior | null;
 }
+/** Resultado na edição anterior do mesmo torneio (posição no seu sexo, por pancadas). */
+interface Anterior { pos: number | null; empate: boolean; de: number; gross: number | null; hcp: number | null; }
 interface CandidatoPt {
   rank: number; fed: string; name: string; club: string | null; dob: string | null; hcp: number;
   juniorId: string | null;
   inscrito: { lista: "entry" | "waiting" | null; pos: number; hcp: number } | null;
+  anterior?: Anterior | null;
 }
 interface Lista {
   id: string; label: string; torneio: string | null; data: string; sexo?: "M" | "F" | null;
   nascidosDesde: number | null; wildcardsFpg: number | null; players: Inscrito[];
   candidatosPt?: CandidatoPt[] | null;
+  edicaoAnterior?: { label: string; torneio: string; total: number; vencedor: { name: string; gross: number } } | null;
 }
+
+/** Célula «2025»: posição (T = empatado) de N, ou «não acabou»; «—» se não jogou. */
+function CelAnterior({ a, ano }: { a: Anterior | null | undefined; ano: string }) {
+  if (!a) return <span className="p-muted">—</span>;
+  if (a.pos == null) return <span className="fs-11 p-muted" title={`Jogou em ${ano} mas não acabou`}>não acabou</span>;
+  return <span title={`${ano}: ${a.empate ? "empatado em " : ""}${a.pos}.º de ${a.de}${a.hcp != null ? ` · handicap ${fmtHcp(a.hcp)}` : ""}`}>
+    <b>{a.empate ? "T" : ""}{a.pos}.º</b> <span className="fs-11 p-muted">/{a.de}</span>
+  </span>;
+}
+const posAnt = (a: Anterior | null | undefined) => (a?.pos ?? (a ? 900 : 999));
 const nomeLista = (l: Lista) => (l.sexo === "M" ? "Rapazes" : l.sexo === "F" ? "Raparigas" : l.label);
 
 /** Handicap à maneira das listas: «+» para os de handicap positivo (guardados em negativo). */
@@ -53,6 +68,8 @@ function TabelaLista({ lista }: { lista: Lista }) {
         case "club": return dir * (a.junior?.club || "~").localeCompare(b.junior?.club || "~") || a.ordem - b.ordem;
         case "hcp": return dir * (a.hcp - b.hcp) || a.ordem - b.ordem;
         case "atual": return dir * (num(a.hcpAtual?.valor) - num(b.hcpAtual?.valor)) || a.ordem - b.ordem;
+        case "ant": return dir * (posAnt(a.anterior) - posAnt(b.anterior)) || a.ordem - b.ordem;
+        case "antg": return dir * (num(a.anterior?.gross) - num(b.anterior?.gross)) || a.ordem - b.ordem;
         default: return dir * (a.ordem - b.ordem);
       }
     });
@@ -62,6 +79,8 @@ function TabelaLista({ lista }: { lista: Lista }) {
   const nWait = lista.players.filter(p => p.lista === "waiting" && !p.duplicadoDe).length;
   const nRep = lista.players.filter(p => p.duplicadoDe).length;
   const nFicha = lista.players.filter(p => p.junior).length;
+  const ant = lista.edicaoAnterior ?? null;
+  const nRepet = lista.players.filter(p => p.anterior).length;
 
   return (
     <section style={{ marginBottom: 24 }}>
@@ -69,6 +88,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
       <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 10, lineHeight: 1.5 }}>
         {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
+        {ant ? ` · ${nRepet} já jogaram em ${ant.label} (venceu ${ant.vencedor.name}, ${ant.vencedor.gross})` : ""}
       </div>
       <div style={{ overflowX: "auto" }}>
         <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -81,6 +101,10 @@ function TabelaLista({ lista }: { lista: Lista }) {
               <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Clube</SortableHdr>
               <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Handicap na lista (${ddmmaa(lista.data)})`}>HCP lista</SortableHdr>
               <SortableHdr k="atual" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap mais recente na ficha (FPG, RFEG ou FFG)">HCP actual</SortableHdr>
+              {ant && <>
+                <SortableHdr k="ant" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Posição em ${ant.torneio}, no seu sexo, pelas pancadas`}>{ant.label}</SortableHdr>
+                <SortableHdr k="antg" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Pancadas nas 3 voltas de ${ant.label}`}>Pancadas {ant.label}</SortableHdr>
+              </>}
             </tr>
           </thead>
           <tbody>
@@ -105,6 +129,10 @@ function TabelaLista({ lista }: { lista: Lista }) {
                   <td style={{ textAlign: "center" }} title={p.hcpAtual ? `${p.hcpAtual.fonte}${p.hcpAtual.data ? " · " + p.hcpAtual.data : ""}` : undefined}>
                     {p.hcpAtual ? <>{fmtHcp(p.hcpAtual.valor)} <span className="fs-11 p-muted">{p.hcpAtual.fonte}</span></> : "—"}
                   </td>
+                  {ant && <>
+                    <td style={{ textAlign: "center", whiteSpace: "nowrap" }}><CelAnterior a={p.anterior} ano={ant.label} /></td>
+                    <td style={{ textAlign: "center" }}>{p.anterior?.gross ?? "—"}</td>
+                  </>}
                 </tr>
               );
             })}
@@ -127,6 +155,8 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
         case "dob": return dir * (a.dob || "9999").localeCompare(b.dob || "9999") || a.rank - b.rank;
         case "club": return dir * (a.club || "~").localeCompare(b.club || "~") || a.rank - b.rank;
         case "inscrito": return dir * ((a.inscrito ? 0 : 1) - (b.inscrito ? 0 : 1)) || a.rank - b.rank;
+        case "ant": return dir * (posAnt(a.anterior) - posAnt(b.anterior)) || a.rank - b.rank;
+        case "antg": return dir * ((a.anterior?.gross ?? 999) - (b.anterior?.gross ?? 999)) || a.rank - b.rank;
         default: return dir * (a.rank - b.rank);
       }
     });
@@ -134,6 +164,7 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
   if (!cands.length) return null;
   const n = lista.wildcardsFpg ?? 0;
   const porOrdem = sortKey === "rank" && sortDir === "asc";
+  const ant = lista.edicaoAnterior ?? null;
   return (
     <section style={{ marginBottom: 24 }}>
       <h2 style={{ margin: "0 0 4px", fontSize: "var(--fs-16)", fontWeight: 600, color: "var(--text)" }}>
@@ -154,6 +185,10 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
               <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Clube</SortableHdr>
               <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap de hoje (FPG)">HCP</SortableHdr>
               <SortableHdr k="inscrito" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Se já está na Entry List">Inscrito</SortableHdr>
+              {ant && <>
+                <SortableHdr k="ant" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Posição em ${ant.torneio}, no seu sexo, pelas pancadas`}>{ant.label}</SortableHdr>
+                <SortableHdr k="antg" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Pancadas nas 3 voltas de ${ant.label}`}>Pancadas {ant.label}</SortableHdr>
+              </>}
             </tr>
           </thead>
           <tbody>
@@ -177,6 +212,10 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
                         </span>
                       : <span className="fs-11 p-muted">não inscrito</span>}
                   </td>
+                  {ant && <>
+                    <td style={{ textAlign: "center", whiteSpace: "nowrap" }}><CelAnterior a={c.anterior} ano={ant.label} /></td>
+                    <td style={{ textAlign: "center" }}>{c.anterior?.gross ?? "—"}</td>
+                  </>}
                 </tr>
               );
             })}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T15:52:35.721Z",
+  "generatedAt": "2026-10-02T18:06:53.202Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -9,6 +9,15 @@
       "sexo": "F",
       "nascidosDesde": 2012,
       "wildcardsFpg": 12,
+      "edicaoAnterior": {
+        "label": "2025",
+        "torneio": "1st Castro Marim Portuguese International U14 (5-7/12/2025)",
+        "total": 33,
+        "vencedor": {
+          "name": "Ludivine Passe",
+          "gross": 213
+        }
+      },
       "players": [
         {
           "ordem": 1,
@@ -26,6 +35,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4.2,
             "fonte": "FFG",
@@ -48,6 +58,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 2,
+            "empate": true,
+            "de": 33,
+            "gross": 219,
+            "hcp": -0.4
+          },
           "hcpAtual": {
             "valor": -2.9,
             "fonte": "FFG",
@@ -70,6 +87,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 8,
+            "empate": false,
+            "de": 33,
+            "gross": 228,
+            "hcp": 2.4
+          },
           "hcpAtual": {
             "valor": -2.9,
             "fonte": "FFG",
@@ -92,6 +116,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 28,
+            "empate": false,
+            "de": 33,
+            "gross": 251,
+            "hcp": 2.4
+          },
           "hcpAtual": {
             "valor": 3.9,
             "fonte": "FFG",
@@ -114,6 +145,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 7,
+            "empate": false,
+            "de": 33,
+            "gross": 226,
+            "hcp": -0.1
+          },
           "hcpAtual": {
             "valor": -2.6,
             "fonte": "RFEG",
@@ -136,6 +174,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 25,
+            "empate": true,
+            "de": 33,
+            "gross": 249,
+            "hcp": 4.3
+          },
           "hcpAtual": {
             "valor": -1.5,
             "fonte": "FFG",
@@ -152,6 +197,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": 18,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -170,6 +216,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -1,
             "fonte": "FFG",
@@ -192,6 +239,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -1.8,
             "fonte": "FFG",
@@ -214,6 +262,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 14,
+            "empate": true,
+            "de": 33,
+            "gross": 236,
+            "hcp": -0.7
+          },
           "hcpAtual": {
             "valor": 1.6,
             "fonte": "FFG",
@@ -236,6 +291,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -0.1,
             "fonte": "FFG",
@@ -258,6 +314,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 11,
+            "empate": false,
+            "de": 33,
+            "gross": 231,
+            "hcp": 2.5
+          },
           "hcpAtual": {
             "valor": -0.7,
             "fonte": "FFG",
@@ -280,6 +343,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 0.7,
             "fonte": "FFG",
@@ -302,6 +366,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 2.3,
             "fonte": "FFG",
@@ -324,6 +389,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 2.7,
             "fonte": "FFG",
@@ -346,6 +412,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 7.1,
             "fonte": "RFEG",
@@ -362,6 +429,13 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 17,
+            "empate": true,
+            "de": 33,
+            "gross": 238,
+            "hcp": 3.8
+          },
           "hcpAtual": null
         },
         {
@@ -380,6 +454,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4.4,
             "fonte": "RFEG",
@@ -396,6 +471,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -414,6 +490,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 5.4,
             "fonte": "FFG",
@@ -430,6 +507,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": 32,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -448,6 +526,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 19,
+            "empate": false,
+            "de": 33,
+            "gross": 239,
+            "hcp": 7.3
+          },
           "hcpAtual": {
             "valor": 4.8,
             "fonte": "FPG",
@@ -470,6 +555,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 32,
+            "empate": false,
+            "de": 33,
+            "gross": 262,
+            "hcp": 11.1
+          },
           "hcpAtual": {
             "valor": 5.9,
             "fonte": "FPG",
@@ -492,6 +584,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 8.6,
             "fonte": "FPG",
@@ -514,6 +607,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 13.3,
             "fonte": "FPG",
@@ -536,6 +630,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 15.5,
             "fonte": "FPG",
@@ -552,7 +647,14 @@
           "dob": "2012-02-12",
           "hcp": 1.5,
           "juniorId": "f45393",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": 14,
+            "empate": true,
+            "de": 33,
+            "gross": 236,
+            "hcp": 4.2
+          }
         },
         {
           "rank": 2,
@@ -566,6 +668,13 @@
             "lista": "entry",
             "pos": 34,
             "hcp": 4.8
+          },
+          "anterior": {
+            "pos": 19,
+            "empate": false,
+            "de": 33,
+            "gross": 239,
+            "hcp": 7.3
           }
         },
         {
@@ -576,7 +685,14 @@
           "dob": "2013-06-14",
           "hcp": 4.9,
           "juniorId": "f46310",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": 13,
+            "empate": false,
+            "de": 33,
+            "gross": 235,
+            "hcp": 5.7
+          }
         },
         {
           "rank": 4,
@@ -590,6 +706,13 @@
             "lista": "entry",
             "pos": 35,
             "hcp": 5.1
+          },
+          "anterior": {
+            "pos": 32,
+            "empate": false,
+            "de": 33,
+            "gross": 262,
+            "hcp": 11.1
           }
         },
         {
@@ -604,7 +727,8 @@
             "lista": "entry",
             "pos": 36,
             "hcp": 8.6
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 6,
@@ -614,7 +738,8 @@
           "dob": "2012-07-18",
           "hcp": 13.2,
           "juniorId": "f47374",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 7,
@@ -628,7 +753,8 @@
             "lista": "entry",
             "pos": 37,
             "hcp": 13.3
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 8,
@@ -638,7 +764,8 @@
           "dob": "2015-09-14",
           "hcp": 14.1,
           "juniorId": "f49328",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 9,
@@ -648,7 +775,8 @@
           "dob": "2012-01-06",
           "hcp": 14.9,
           "juniorId": null,
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 10,
@@ -662,7 +790,8 @@
             "lista": "entry",
             "pos": 38,
             "hcp": 16.2
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 11,
@@ -672,7 +801,8 @@
           "dob": "2013-01-26",
           "hcp": 16.1,
           "juniorId": "f45608",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 12,
@@ -682,7 +812,8 @@
           "dob": "2012-10-04",
           "hcp": 16.5,
           "juniorId": null,
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 13,
@@ -692,7 +823,8 @@
           "dob": "2012-12-15",
           "hcp": 18.8,
           "juniorId": "f45429",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 14,
@@ -702,7 +834,8 @@
           "dob": "2014-11-11",
           "hcp": 21.1,
           "juniorId": "f46314",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 15,
@@ -712,7 +845,8 @@
           "dob": "2012-08-29",
           "hcp": 24,
           "juniorId": null,
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 16,
@@ -722,7 +856,8 @@
           "dob": "2012-08-07",
           "hcp": 24.2,
           "juniorId": "f46026",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 17,
@@ -732,7 +867,8 @@
           "dob": "2014-05-15",
           "hcp": 24.4,
           "juniorId": "f50786",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 18,
@@ -742,7 +878,8 @@
           "dob": "2014-10-21",
           "hcp": 24.9,
           "juniorId": null,
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 19,
@@ -752,7 +889,8 @@
           "dob": "2014-04-10",
           "hcp": 25.9,
           "juniorId": "f48113",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 20,
@@ -762,7 +900,8 @@
           "dob": "2014-02-25",
           "hcp": 26.3,
           "juniorId": "f48045",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         }
       ]
     },
@@ -774,6 +913,15 @@
       "sexo": "M",
       "nascidosDesde": 2012,
       "wildcardsFpg": 12,
+      "edicaoAnterior": {
+        "label": "2025",
+        "torneio": "1st Castro Marim Portuguese International U14 (5-7/12/2025)",
+        "total": 50,
+        "vencedor": {
+          "name": "Gabriel Beaudet",
+          "gross": 210
+        }
+      },
       "players": [
         {
           "ordem": 1,
@@ -791,6 +939,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 3,
+            "empate": true,
+            "de": 50,
+            "gross": 215,
+            "hcp": 1.8
+          },
           "hcpAtual": {
             "valor": -4.4,
             "fonte": "FFG",
@@ -813,6 +968,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 5,
+            "empate": true,
+            "de": 50,
+            "gross": 216,
+            "hcp": -1.3
+          },
           "hcpAtual": {
             "valor": -2.1,
             "fonte": "FFG",
@@ -835,6 +997,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 19,
+            "empate": true,
+            "de": 50,
+            "gross": 227,
+            "hcp": 0
+          },
           "hcpAtual": {
             "valor": -2.8,
             "fonte": "FFG",
@@ -857,6 +1026,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 19,
+            "empate": true,
+            "de": 50,
+            "gross": 227,
+            "hcp": 0.9
+          },
           "hcpAtual": {
             "valor": -3,
             "fonte": "FFG",
@@ -873,6 +1049,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -891,6 +1068,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -1.8,
             "fonte": "FFG",
@@ -913,6 +1091,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -0.5,
             "fonte": "FFG",
@@ -935,6 +1114,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 19,
+            "empate": true,
+            "de": 50,
+            "gross": 227,
+            "hcp": 0.6
+          },
           "hcpAtual": {
             "valor": -0.7,
             "fonte": "FFG",
@@ -957,6 +1143,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -975,6 +1162,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 25,
+            "empate": true,
+            "de": 50,
+            "gross": 229,
+            "hcp": 0.6
+          },
           "hcpAtual": {
             "valor": -1.4,
             "fonte": "FFG",
@@ -997,6 +1191,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -1.3,
             "fonte": "FFG",
@@ -1019,6 +1214,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1037,6 +1233,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 5,
+            "empate": true,
+            "de": 50,
+            "gross": 216,
+            "hcp": 1
+          },
           "hcpAtual": {
             "valor": 0.2,
             "fonte": "FFG",
@@ -1059,6 +1262,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 19,
+            "empate": true,
+            "de": 50,
+            "gross": 227,
+            "hcp": -0.1
+          },
           "hcpAtual": {
             "valor": -0.2,
             "fonte": "FFG",
@@ -1081,6 +1291,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.6,
             "fonte": "FFG",
@@ -1103,6 +1314,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 50,
+            "empate": false,
+            "de": 50,
+            "gross": 263,
+            "hcp": 1.7
+          },
           "hcpAtual": {
             "valor": 0,
             "fonte": "FFG",
@@ -1119,6 +1337,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1137,6 +1356,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1155,6 +1375,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 0.7,
             "fonte": "FFG",
@@ -1177,6 +1398,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -0.5,
             "fonte": "FFG",
@@ -1199,6 +1421,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1,
             "fonte": "FFG",
@@ -1221,6 +1444,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 0.6,
             "fonte": "FFG",
@@ -1237,6 +1461,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1255,6 +1480,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1273,6 +1499,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 33,
+            "empate": true,
+            "de": 50,
+            "gross": 234,
+            "hcp": 2.8
+          },
           "hcpAtual": {
             "valor": 0.3,
             "fonte": "FFG",
@@ -1295,6 +1528,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.3,
             "fonte": "FFG",
@@ -1317,6 +1551,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1335,6 +1570,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -0.2,
             "fonte": "FFG",
@@ -1357,6 +1593,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": -0.5,
             "fonte": "FFG",
@@ -1379,6 +1616,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 0.5,
             "fonte": "FFG",
@@ -1401,6 +1639,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 46,
+            "empate": false,
+            "de": 50,
+            "gross": 242,
+            "hcp": 2.5
+          },
           "hcpAtual": null
         },
         {
@@ -1419,6 +1664,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.3,
             "fonte": "FFG",
@@ -1441,6 +1687,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.9,
             "fonte": "FFG",
@@ -1463,6 +1710,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.1,
             "fonte": "FFG",
@@ -1485,6 +1733,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 0.2,
             "fonte": "FFG",
@@ -1507,6 +1756,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 2.3,
             "fonte": "FFG",
@@ -1529,6 +1779,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 3.1,
             "fonte": "FFG",
@@ -1545,6 +1796,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1563,6 +1815,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1581,6 +1834,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1599,6 +1853,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1617,6 +1872,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1635,6 +1891,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 1.9,
             "fonte": "FFG",
@@ -1657,6 +1914,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 2.3,
             "fonte": "FFG",
@@ -1679,6 +1937,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 44,
+            "empate": true,
+            "de": 50,
+            "gross": 241,
+            "hcp": 6
+          },
           "hcpAtual": {
             "valor": 2.7,
             "fonte": "FPG",
@@ -1701,6 +1966,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 49,
+            "empate": false,
+            "de": 50,
+            "gross": 246,
+            "hcp": 4.7
+          },
           "hcpAtual": {
             "valor": 2.9,
             "fonte": "FFG",
@@ -1717,6 +1989,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1735,6 +2008,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1753,6 +2027,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 3.1,
             "fonte": "FFG",
@@ -1775,6 +2050,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1793,6 +2069,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4,
             "fonte": "FFG",
@@ -1815,6 +2092,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 3.4,
             "fonte": "FFG",
@@ -1837,6 +2115,13 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": {
+            "pos": 40,
+            "empate": true,
+            "de": 50,
+            "gross": 238,
+            "hcp": 4.4
+          },
           "hcpAtual": {
             "valor": 3.5,
             "fonte": "FPG",
@@ -1853,6 +2138,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -1871,6 +2157,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 3.9,
             "fonte": "FFG",
@@ -1893,6 +2180,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 3.6,
             "fonte": "FPG",
@@ -1915,6 +2203,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 5.7,
             "fonte": "RFEG",
@@ -1937,6 +2226,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4,
             "fonte": "FPG",
@@ -1959,6 +2249,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4.4,
             "fonte": "FPG",
@@ -1981,6 +2272,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 4.3,
             "fonte": "FPG",
@@ -2003,6 +2295,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -2021,6 +2314,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 6.2,
             "fonte": "FPG",
@@ -2043,6 +2337,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 6.1,
             "fonte": "FPG",
@@ -2065,6 +2360,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 6.7,
             "fonte": "FFG",
@@ -2087,6 +2383,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 6.7,
             "fonte": "FPG",
@@ -2109,6 +2406,7 @@
           },
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": {
             "valor": 6.5,
             "fonte": "FPG",
@@ -2125,6 +2423,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         },
         {
@@ -2137,6 +2436,7 @@
           "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
+          "anterior": null,
           "hcpAtual": null
         }
       ],
@@ -2149,7 +2449,14 @@
           "dob": "2012-05-29",
           "hcp": -1.3,
           "juniorId": "u610461",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": 19,
+            "empate": true,
+            "de": 50,
+            "gross": 227,
+            "hcp": 1.7
+          }
         },
         {
           "rank": 2,
@@ -2159,7 +2466,14 @@
           "dob": "2012-04-28",
           "hcp": 0.9,
           "juniorId": "u591234",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
         },
         {
           "rank": 3,
@@ -2169,7 +2483,14 @@
           "dob": "2012-12-28",
           "hcp": 1.2,
           "juniorId": "f46299",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": 37,
+            "empate": true,
+            "de": 50,
+            "gross": 236,
+            "hcp": 7.4
+          }
         },
         {
           "rank": 4,
@@ -2183,6 +2504,13 @@
             "lista": "waiting",
             "pos": 23,
             "hcp": 3.5
+          },
+          "anterior": {
+            "pos": 40,
+            "empate": true,
+            "de": 50,
+            "gross": 238,
+            "hcp": 4.4
           }
         },
         {
@@ -2197,7 +2525,8 @@
             "lista": "waiting",
             "pos": 28,
             "hcp": 4
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 6,
@@ -2211,7 +2540,8 @@
             "lista": "waiting",
             "pos": 30,
             "hcp": 4.3
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 7,
@@ -2225,7 +2555,8 @@
             "lista": "waiting",
             "pos": 29,
             "hcp": 4.1
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 8,
@@ -2235,7 +2566,8 @@
           "dob": "2014-06-09",
           "hcp": 4.7,
           "juniorId": null,
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 9,
@@ -2245,7 +2577,14 @@
           "dob": "2012-10-04",
           "hcp": 5.7,
           "juniorId": "f46311",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": {
+            "pos": 44,
+            "empate": true,
+            "de": 50,
+            "gross": 241,
+            "hcp": 6.8
+          }
         },
         {
           "rank": 10,
@@ -2255,7 +2594,8 @@
           "dob": "2015-07-02",
           "hcp": 5.7,
           "juniorId": "u576306",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 11,
@@ -2269,7 +2609,8 @@
             "lista": "waiting",
             "pos": 33,
             "hcp": 6
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 12,
@@ -2283,7 +2624,8 @@
             "lista": "waiting",
             "pos": 32,
             "hcp": 5.9
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 13,
@@ -2297,7 +2639,8 @@
             "lista": "waiting",
             "pos": 36,
             "hcp": 6.8
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 14,
@@ -2311,7 +2654,8 @@
             "lista": "waiting",
             "pos": 35,
             "hcp": 6.7
-          }
+          },
+          "anterior": null
         },
         {
           "rank": 15,
@@ -2321,7 +2665,8 @@
           "dob": "2012-02-21",
           "hcp": 7,
           "juniorId": "f53646",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 16,
@@ -2331,7 +2676,8 @@
           "dob": "2012-09-25",
           "hcp": 7.3,
           "juniorId": "f49717",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 17,
@@ -2341,7 +2687,8 @@
           "dob": "2012-03-06",
           "hcp": 7.9,
           "juniorId": "f40473",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 18,
@@ -2351,7 +2698,8 @@
           "dob": "2012-02-15",
           "hcp": 8.1,
           "juniorId": "f47341",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 19,
@@ -2361,7 +2709,8 @@
           "dob": "2012-04-03",
           "hcp": 8.3,
           "juniorId": "f54845",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         },
         {
           "rank": 20,
@@ -2371,7 +2720,8 @@
           "dob": "2012-02-16",
           "hcp": 8.4,
           "juniorId": "u521022",
-          "inscrito": null
+          "inscrito": null,
+          "anterior": null
         }
       ]
     }
