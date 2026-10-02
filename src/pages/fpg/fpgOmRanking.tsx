@@ -395,8 +395,13 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                           <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{ddmm(ev.date)}</span>
+                          {/* Pill ANTES do nível = modalidade da prova (os Termos não falam de
+                              juniores); DEPOIS do nível = o que os Termos dizem para os juniores. */}
+                          {ev.juniorScoring && ev.juniorBasis !== "termos" &&
+                            <ModalidadePill nome={ev.juniorScoring} title={`Modalidade da prova (os Termos não dizem nada sobre juniores): ${ev.juniorScoring}`} />}
                           <span className="fs-11" style={{ fontWeight: 700, color: LEVEL_COLOR[ev.level] }}>Nível {ev.level}</span>
-                          {ev.juniorScoring && <ModalidadePill nome={ev.juniorScoring} title={`Juniores contados em: ${ev.juniorScoring}`} />}
+                          {ev.juniorScoring && ev.juniorBasis === "termos" &&
+                            <ModalidadePill nome={ev.juniorScoring} title={`Os Termos dizem que os juniores pontuam em: ${ev.juniorScoring}`} />}
                         </span>
                       </SortableHdr>
                     );
@@ -654,6 +659,8 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
         </table>
       </div>
       <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+        No cabeçalho da classificação: pill <strong>antes</strong> do nível = modalidade da prova (os Termos não falam de
+        juniores); pill <strong>depois</strong> do nível = o que os Termos dizem para os juniores.{" "}
         <ModalidadePill nome="Stroke Play" /> pancadas, sem handicap · <ModalidadePill nome="Medal Net" /> pancadas, com handicap ·{" "}
         <ModalidadePill nome="Stableford Net" /> pontos, com handicap. O «Medal» dos Termos (sem «Net») contou-se como pancadas
         sem handicap; falta o clube confirmar se queria dizer Medal Net (dá 93 pontos ao Manuel em vez de 101).
