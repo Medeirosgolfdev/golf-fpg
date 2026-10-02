@@ -25,6 +25,7 @@
 | `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage (dados em `src/data/calendarEvents.ts`) | players.json (aniversários) |
 | `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
+| `/kids2/listas` | kids2/ListasPage | listas de inscritos (Entry Lists) com link para as fichas · hcp-listas-ligacoes.json (gerado pelo agregador) |
 | `/om-cgss` | OmCgssPage | Ordem de Mérito Júnior CGSS de hoje (a tab `OmRankingTab` de `fpg/fpgOmRanking.tsx` sem prova aberta) · om-cgss-junior.json |
 | `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
 | `/titulos/nacional` | TitulosPage (tab Nacional) | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
