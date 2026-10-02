@@ -16,7 +16,9 @@
  *   2. sem nenhum: nome curto contido no da ficha com o mesmo 1.º e último
  *      nome («Manuel Medeiros» → «Manuel Goulartt Medeiros»);
  *   3. o país da lista tem de bater com o da ficha (GB cobre GB-ENG/SCT/…);
- *      ficha sem país não serve para o passo 2.
+ *      ficha sem país não serve para o passo 2. Com `sexo` na lista (M/F), a
+ *      ficha não pode ser do outro sexo; com `nascidosDesde`, nem mais velha.
+ *      Linhas com `duplicadoDe` (repetidas no PDF) não entram.
  *   4. homónimos: 1.º fica o único com data de nascimento dentro do escalão
  *      da lista; 2.º o único com handicap conhecido a ≤2 do da lista.
  * Só liga quando sobra UM candidato; os outros ficam no relatório.
@@ -61,6 +63,7 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
     if (!lista || !Array.isArray(lista.players) || !lista.data) continue;
     for (const p of lista.players) {
       if (typeof p.hcp !== "number" || !p.name) continue;
+      if (p.duplicadoDe) { relatorio.push({ lista: lista.id, name: p.name, country: p.country, hcp: p.hcp, estado: p.lista || null, duplicadoDe: p.duplicadoDe }); continue; }
       const iso = countryToIso2(p.country);
       const n = normName(p.name);
       const toks = n.split(" ").filter(Boolean);
@@ -68,7 +71,9 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
 
       // idade do torneio (ex.: Sub-14 → nascidos em 2012 ou depois): ficha com
       // data de nascimento fora disso não é o miúdo da lista
+      // …e do sexo da lista (rapazes/raparigas): ficha com o outro sexo não serve
       const idadeOk = (j) => {
+        if (lista.sexo && j.sex && j.sex !== lista.sexo) return false;
         if (!lista.nascidosDesde) return true;
         const ano = Number(String(j.dob || j.birthYear || "").slice(0, 4));
         return !ano || ano >= lista.nascidosDesde;
@@ -152,6 +157,7 @@ function ligacoesParaPagina(r, res) {
         ordem: i + 1, pos: p.pos, lista: p.lista || null, name: p.name, country: p.country, hcp: p.hcp,
         junior: j ? { id: j.id, name: j.canonicalName, dob: j.dob || null, club: s.fpg?.club || s.rfeg?.club || s.ffgolf?.club || j.club || null, via: l.junior.via } : null,
         ambiguo: l.ambiguo || null,
+        duplicadoDe: p.duplicadoDe || null,
         hcpAtual,
       };
     });

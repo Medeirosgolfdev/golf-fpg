@@ -21,6 +21,7 @@ interface Inscrito {
   name: string; country: string; hcp: number;
   junior: { id: string; name: string; dob: string | null; club: string | null; via: string } | null;
   ambiguo: string[] | null;
+  duplicadoDe?: number | null;
   hcpAtual: { valor: number; fonte: string; data: string | null } | null;
 }
 interface Lista {
@@ -50,15 +51,16 @@ function TabelaLista({ lista }: { lista: Lista }) {
     });
   }, [lista, sortKey, sortDir]);
 
-  const nEntry = lista.players.filter(p => p.lista === "entry").length;
-  const nWait = lista.players.filter(p => p.lista === "waiting").length;
+  const nEntry = lista.players.filter(p => p.lista === "entry" && !p.duplicadoDe).length;
+  const nWait = lista.players.filter(p => p.lista === "waiting" && !p.duplicadoDe).length;
+  const nRep = lista.players.filter(p => p.duplicadoDe).length;
   const nFicha = lista.players.filter(p => p.junior).length;
 
   return (
     <section style={{ marginBottom: 24 }}>
       <h2 style={{ margin: "0 0 4px", fontSize: "var(--fs-16)", fontWeight: 600, color: "var(--text)" }}>{lista.torneio ?? lista.label}</h2>
       <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 10, lineHeight: 1.5 }}>
-        {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""} · {nWait} em lista de espera
+        {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
       </div>
       <div style={{ overflowX: "auto" }}>
@@ -87,7 +89,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
                   <td style={{ textAlign: "left", fontWeight: eu ? 700 : undefined }}>
                     {p.junior
                       ? <Link to={`/kids2/${p.junior.id}`} title={`Abrir a ficha de ${p.junior.name}`}>{p.name}</Link>
-                      : <span>{p.name} <span className="fs-11 p-muted">{p.ambiguo ? "· ficha ambígua" : "· sem ficha"}</span></span>}
+                      : <span>{p.name} <span className="fs-11 p-muted">{p.duplicadoDe ? `· repetida no PDF (igual à ${p.duplicadoDe})` : p.ambiguo ? "· ficha ambígua" : "· sem ficha"}</span></span>}
                   </td>
                   <td style={{ textAlign: "left", whiteSpace: "nowrap" }}>{flag(p.country)} {p.country}</td>
                   <td style={{ textAlign: "center" }}>{p.junior?.dob ? p.junior.dob.slice(0, 4) : "—"}</td>
