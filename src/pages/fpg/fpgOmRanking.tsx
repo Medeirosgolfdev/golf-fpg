@@ -396,15 +396,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                           <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{ddmm(ev.date)}</span>
                           <span className="fs-11" style={{ fontWeight: 700, color: LEVEL_COLOR[ev.level] }}>Nível {ev.level}</span>
-                          {(() => {
-                            const m = juniorModoCurto(ev);
-                            return m && (
-                              <span className="fs-11" title={`Juniores contados em: ${ev.juniorScoring}`}
-                                style={{ fontWeight: 700, color: m.bruto ? "var(--color-good-dark)" : "var(--color-info)" }}>
-                                {m.label}
-                              </span>
-                            );
-                          })()}
+                          {ev.juniorScoring && <ModalidadePill nome={ev.juniorScoring} title={`Juniores contados em: ${ev.juniorScoring}`} />}
                         </span>
                       </SortableHdr>
                     );
@@ -597,15 +589,14 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
  *  verde (bruto) e o azul (líquido) da modalidade. */
 const LEVEL_COLOR: Record<Level, string> = { A: "var(--color-warn-vivid)", B: "var(--color-purple)", C: "var(--color-danger-vivid)" };
 
-/** Rótulo curto da forma como os juniores foram contados numa prova, para o
- *  cabeçalho da matriz: bruto (sem «Net») a verde, líquido a azul — as mesmas
- *  cores da cábula da Mariana. */
-function juniorModoCurto(ev: OmEvent): { label: string; bruto: boolean } | null {
-  const s = ev.juniorScoring;
-  if (!s) return null;
-  const bruto = !/\bnet\b/i.test(s);
-  const label = /stableford/i.test(s) ? (bruto ? "Stb bruto" : "Stb Net") : (bruto ? "Medal bruto" : "Medal Net");
-  return { label, bruto };
+/** Pill da modalidade de jogo, com a palavra tal como vem escrita (FPG ou
+ *  Termos): uma cor por modalidade — Stroke Play/Medal (pancadas, sem handicap)
+ *  verde · Medal Net azul · Stableford Net azul-petróleo · Stableford Gross
+ *  castanho. Quebra em 2 linhas quando a coluna é estreita. */
+function ModalidadePill({ nome, title }: { nome: string; title?: string }) {
+  const net = /\bnet\b/i.test(nome);
+  const cls = /stableford/i.test(nome) ? (net ? "p-mod-stbnet" : "p-mod-stbgross") : (net ? "p-mod-medalnet" : "p-mod-stroke");
+  return <span className={`p p-sm p-mod ${cls}`} title={title}>{nome}</span>;
 }
 
 /** Tabela «Como se pontuam os juniores em cada prova»: a modalidade da prova,
@@ -653,9 +644,9 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
                 <td style={{ whiteSpace: "nowrap" }}>{ddmm(e.date)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
                 <td style={{ textAlign: "center", fontWeight: 700, color: LEVEL_COLOR[e.level] }}>{e.level}</td>
-                <td style={{ whiteSpace: "nowrap" }}>{e.scoring ?? "—"}</td>
+                <td>{e.scoring ? <ModalidadePill nome={e.scoring} /> : "—"}</td>
                 <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
-                <td style={{ whiteSpace: "nowrap" }}><strong>{e.juniorScoring ?? "—"}</strong> {pill(e)}</td>
+                <td style={{ whiteSpace: "nowrap" }}>{e.juniorScoring ? <ModalidadePill nome={e.juniorScoring} /> : "—"} {pill(e)}</td>
                 <td className="fs-12" style={{ minWidth: 180 }}>{e.termos?.desempate ?? "—"}</td>
               </tr>
             ))}
@@ -663,7 +654,9 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
         </table>
       </div>
       <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
-        Medal = pancadas (menos ganha) · Stableford = pontos (mais ganha) · bruto (gross) = sem handicap · líquido (net) = com o handicap descontado.
+        <ModalidadePill nome="Stroke Play" /> pancadas, sem handicap · <ModalidadePill nome="Medal Net" /> pancadas, com handicap ·{" "}
+        <ModalidadePill nome="Stableford Net" /> pontos, com handicap. O «Medal» dos Termos (sem «Net») contou-se como pancadas
+        sem handicap; falta o clube confirmar se queria dizer Medal Net (dá 93 pontos ao Manuel em vez de 101).
         O clube publicou todas as provas pela modalidade da prova; aqui segue-se o que está escrito nos Termos de cada uma.
       </div>
     </div>

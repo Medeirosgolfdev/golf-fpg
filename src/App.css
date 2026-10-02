@@ -539,6 +539,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-nacional { background: var(--pill-nacional-bg); color: var(--pill-nacional-fg); }
 .p-intl { background: var(--pill-intl-bg); color: var(--pill-regional-bg); }
 .p-pja { background: var(--pill-pja-bg); color: #fff; }
+/* Modalidade de jogo (OM CGSS) — uma cor por modalidade; quebra em 2 linhas
+   quando a coluna é estreita (cabeçalho da matriz da OM) */
+.p-mod { font-weight: 700; white-space: normal; max-width: 100%; line-height: 1.15; text-align: center; }
+.p-mod-stroke { background: var(--color-good-alpha); color: var(--color-good-dark); }
+.p-mod-medalnet { background: var(--bg-info-strong); color: var(--color-info); }
+.p-mod-stbnet { background: color-mix(in srgb, var(--color-teal) 15%, transparent); color: var(--color-teal); }
+.p-mod-stbgross { background: color-mix(in srgb, var(--color-hcp) 15%, transparent); color: var(--color-hcp); }
 
 /* Origin (score_origin) — same rectangular form */
 .p-origin { border-radius: 3px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }

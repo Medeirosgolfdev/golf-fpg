@@ -109,19 +109,19 @@ const PENDING_EVENTS = [
  * Prova sem entrada aqui = Termos ainda não lidos → classificação da prova, e a
  * página assinala-o. Ao chegarem os Termos de uma prova nova, acrescentá-la. */
 const TERMOS = {
-  "10983": { prova: "Inverno", ficheiro: "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf", juniores: "medal",
+  "10983": { prova: "Inverno", ficheiro: "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf", juniores: "medal", termo: "Stroke Play",
     texto: "Na categoria JUNIOR, pontuam em STROKEPLAY com limite máximo de 10 pancadas por buraco.",
     desempate: "Não define; o Desertas conta como últimos 9." },
-  "10986": { prova: "Restauração", ficheiro: "2026-01-24_CGSS_Termos_Competicao_Torneio_Restauracao.pdf", juniores: "medal",
+  "10986": { prova: "Restauração", ficheiro: "2026-01-24_CGSS_Termos_Competicao_Torneio_Restauracao.pdf", juniores: "medal", termo: "Medal",
     texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
     desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-  "10994": { prova: "Carnaval", ficheiro: "2026-02-14_CGSS_Termos_Competicao_Torneio_Carnaval.pdf", juniores: "medal",
+  "10994": { prova: "Carnaval", ficheiro: "2026-02-14_CGSS_Termos_Competicao_Torneio_Carnaval.pdf", juniores: "medal", termo: "Medal",
     texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
     desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
   "11001": { prova: "Primavera", ficheiro: null, juniores: null,
     texto: "Não há Termos de 2026: o site do clube tem os de 2025 (que não falam de juniores).",
     desempate: "—" },
-  "11025": { prova: "NOS Empresas", ficheiro: "2026-05-23_CGSS_Termos_Competicao_Torneio_NOS_Empresas.pdf", juniores: "medal",
+  "11025": { prova: "NOS Empresas", ficheiro: "2026-05-23_CGSS_Termos_Competicao_Torneio_NOS_Empresas.pdf", juniores: "medal", termo: "Medal",
     texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
     desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
   "11050": { prova: "RALI", ficheiro: "2026-08-01_CGSS_Termos_Competicao_Torneio_RALI.pdf", juniores: null,
@@ -433,7 +433,8 @@ async function tournamentsLST(startIndex) {
     const porPancadas = !!(termos && termos.juniores === "medal");
     const stJr = porPancadas ? 1 : st;   // 1 = Stroke Play (gross)
     ev.termos = termos ? { ficheiro: termos.ficheiro, texto: termos.texto, desempate: termos.desempate } : null;
-    ev.juniorScoring = porPancadas ? "Medal (pancadas, bruto), máx. 10" : ev.scoring;
+    // a palavra tal como vem escrita nos Termos (STROKEPLAY no Inverno, MEDAL nos outros)
+    ev.juniorScoring = porPancadas ? termos.termo : ev.scoring;
     ev.juniorBasis = porPancadas ? "termos" : termos ? "prova" : "sem-termos";
     const { records, error } = await classifJuniores(ev.tcode, stJr);
     if (error) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): ${error}`); ev.juniors = []; continue; }
