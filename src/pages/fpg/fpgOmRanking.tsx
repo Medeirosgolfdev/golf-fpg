@@ -406,7 +406,16 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                           <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{ddmm(ev.date)}</span>
-                          <span className="fs-11 p-muted">Nível {ev.level}</span>
+                          <span className="fs-11" style={{ fontWeight: 700, color: LEVEL_COLOR[ev.level] }}>Nível {ev.level}</span>
+                          {(() => {
+                            const m = juniorModoCurto(ev);
+                            return m && (
+                              <span className="fs-11" title={`Juniores contados em: ${ev.juniorScoring}`}
+                                style={{ fontWeight: 700, color: m.bruto ? "var(--color-good-dark)" : "var(--color-info)" }}>
+                                {m.label}
+                              </span>
+                            );
+                          })()}
                         </span>
                       </SortableHdr>
                     );
@@ -597,6 +606,21 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
   );
 }
 
+/** Cor de cada nível da OM (A Major, B, C) — cores que não se confundem com o
+ *  verde (bruto) e o azul (líquido) da modalidade. */
+const LEVEL_COLOR: Record<Level, string> = { A: "var(--color-warn-vivid)", B: "var(--color-purple)", C: "var(--color-danger-vivid)" };
+
+/** Rótulo curto da forma como os juniores foram contados numa prova, para o
+ *  cabeçalho da matriz: bruto (sem «Net») a verde, líquido a azul — as mesmas
+ *  cores da cábula da Mariana. */
+function juniorModoCurto(ev: OmEvent): { label: string; bruto: boolean } | null {
+  const s = ev.juniorScoring;
+  if (!s) return null;
+  const bruto = !/\bnet\b/i.test(s);
+  const label = /stableford/i.test(s) ? (bruto ? "Stb bruto" : "Stb Net") : (bruto ? "Medal bruto" : "Medal Net");
+  return { label, bruto };
+}
+
 /** Tabela «Como se pontuam os juniores em cada prova»: a modalidade da prova,
  *  o que os Termos dizem sobre os juniores e a forma que a OM usou. */
 function OmModalidades({ events }: { events: OmEvent[] }) {
@@ -641,7 +665,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
               <tr key={e.tcode}>
                 <td style={{ whiteSpace: "nowrap" }}>{ddmm(e.date)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
-                <td style={{ textAlign: "center" }}>{e.level}</td>
+                <td style={{ textAlign: "center", fontWeight: 700, color: LEVEL_COLOR[e.level] }}>{e.level}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{e.scoring ?? "—"}</td>
                 <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
                 <td style={{ whiteSpace: "nowrap" }}><strong>{e.juniorScoring ?? "—"}</strong> {pill(e)}</td>
