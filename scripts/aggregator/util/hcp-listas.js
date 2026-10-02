@@ -162,9 +162,45 @@ function ligacoesParaPagina(r, res) {
       };
     });
     listas.push({ id: lista.id, label: lista.label || lista.id, torneio: lista.torneio || null, data: lista.data,
-      nascidosDesde: lista.nascidosDesde || null, wildcardsFpg: lista.wildcardsFpg ?? null, players });
+      sexo: lista.sexo || null, nascidosDesde: lista.nascidosDesde || null, wildcardsFpg: lista.wildcardsFpg ?? null,
+      players, candidatosPt: candidatosWildCard(lista, players, res) });
   }
   return { listas };
+}
+
+/**
+ * Portugueses que a FPG pode nomear (wild cards): federados de nacionalidade
+ * portuguesa, do sexo da lista, nascidos a partir de `nascidosDesde`, activos
+ * e com handicap — os 20 de handicap mais baixo, com a indicação de quem já
+ * está na lista (por fed, ou pelo nome).
+ */
+const N_CANDIDATOS = 20;
+function candidatosWildCard(lista, players, res) {
+  if (!lista.wildcardsFpg || !lista.sexo) return null;
+  const fed = readJsonSafe(path.join(DATA_DIR, "federados.json"), null);
+  const todos = (fed && fed.players) || [];
+  const fichaPorFed = new Map();
+  for (const j of res.juniors) if (j.sources?.fpg?.fed) fichaPorFed.set(String(j.sources.fpg.fed), j.id);
+  const naLista = new Map(); // juniorId / nome → linha da lista
+  for (const p of players) {
+    if (p.duplicadoDe) continue;
+    if (p.junior) naLista.set("j:" + p.junior.id, p);
+    naLista.set("n:" + normName(p.name), p);
+  }
+  return todos
+    .filter((f) => f.country === "Portugal" && f.gender === lista.sexo && /ativo/i.test(f.federated_status || "")
+      && typeof f.hcp_exact === "number" && Number(String(f.birthdate || "").slice(0, 4)) >= (lista.nascidosDesde || 0))
+    .sort((a, b) => a.hcp_exact - b.hcp_exact || String(a.birthdate).localeCompare(String(b.birthdate)))
+    .slice(0, N_CANDIDATOS)
+    .map((f, i) => {
+      const jid = fichaPorFed.get(String(f.federation_code)) || null;
+      const linha = (jid && naLista.get("j:" + jid)) || naLista.get("n:" + normName(f.name)) || null;
+      return {
+        rank: i + 1, fed: String(f.federation_code), name: f.name, club: f.acronym || f.club_name || null,
+        dob: f.birthdate || null, hcp: f.hcp_exact, juniorId: jid,
+        inscrito: linha ? { lista: linha.lista, pos: linha.pos, hcp: linha.hcp } : null,
+      };
+    });
 }
 
 module.exports = { enrichWithHcpListas, ligacoesParaPagina };
