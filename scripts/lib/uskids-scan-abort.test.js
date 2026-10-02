@@ -49,13 +49,15 @@ const ler = (f) => JSON.parse(fs.readFileSync(path.join(dirDados, f), 'utf8'));
 const limpar = () => { for (const f of fs.readdirSync(dirDados)) fs.rmSync(path.join(dirDados, f)); };
 
 describe('um pedido contra a fonte', () => {
+  // 1.º teste do ficheiro: é ele que paga o import (pesado) do fetch-uskids-field.js.
+  // Com o PC ocupado passou dos 5 s por defeito (02/10/2026) e bloqueou um draw — 30 s.
   it('uma recusa é "recusa", à primeira e sem repetir', async () => {
     const { consultar } = await import('../fetch-uskids-field.js');
     responder = () => 'Too many requests';
     pedidos = 0;
     expect((await consultar(1)).r).toBe('recusa');
     expect(pedidos).toBe(1);
-  });
+  }, 30000);
 
   it('um número inexistente (200 + corpo vazio) é "nao-existe", não recusa', async () => {
     const { consultar, metaTournament } = await import('../fetch-uskids-field.js');
