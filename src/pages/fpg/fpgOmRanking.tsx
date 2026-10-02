@@ -230,7 +230,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
 
   // Chaves de ordenação: fixas ("rank"|"name"|"played"|"total") + dinâmicas por
   // torneio ("ev:{tcode}", ordena pela posição nesse torneio, 1º primeiro).
-  const { sortKey, sortDir, toggleSort } = useSort<string>("rank", "asc", { total: "desc", played: "desc", f2: "desc" });
+  const { sortKey, sortDir, toggleSort } = useSort<string>("rank", "asc", { total: "desc", played: "desc" });
 
   // Esta prova está nos events do JSON? (tcode) → define a DATA "até à qual" se
   // mostra a classificação. Prova passada: contam só as provas com data ≤ a
@@ -241,20 +241,16 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
 
   // Standings até à data (asOf). `herePts`/`herePos` = o que cada jogador ganhou
   // NESTA prova (0/null se não pontuou aqui).
-  // Regra 7.1 — "3 torneios ou 3 pontuações não serão contabilizados". Mostra-se
-  // a leitura da Mariana (02/10/2026: tirar a outra coluna), como se a época
-  // fechasse nesta data: fechoEpoca = caem 3 das provas da ÉPOCA, contando a
-  // zero as que o jogador faltou.
-  const nEpoca = (asOf ? (data?.events ?? []).filter(e => e.date <= asOf) : (data?.events ?? [])).length;
+  // Regra 7.1 («3 torneios ou 3 pontuações não serão contabilizados»): na leitura
+  // da Mariana as provas a que se faltou contam a zero e são as primeiras a cair,
+  // e todos os juniores já faltaram a 3 ou mais — o fecho é igual aos pontos, por
+  // isso não há coluna própria (tirada a 02/10/2026).
   const standings = useMemo(() => {
     const list = (data?.ranking ?? []).map(p => {
       const evs = asOf ? p.events.filter(e => e.date <= asOf) : p.events;
       const total = asOf ? evs.reduce((s, e) => s + e.pts, 0) : p.total;
       const te = thisEvent ? evs.find(e => String(e.tcode) === String(thisEvent.tcode)) : undefined;
-      const pts = evs.map(e => e.pts);
-      const comZeros = [...pts, ...Array(Math.max(0, nEpoca - pts.length)).fill(0)].sort((a, b) => a - b);
-      const fechoEpoca = comZeros.slice(3).reduce((s, v) => s + v, 0);
-      return { ...p, events: evs, total, played: evs.length, herePts: te?.pts ?? 0, herePos: te?.pos ?? null, fechoEpoca };
+      return { ...p, events: evs, total, played: evs.length, herePts: te?.pts ?? 0, herePos: te?.pos ?? null };
     }).filter(p => p.total > 0);
     list.sort((a, b) => b.total - a.total || (a.lastResult ?? 99) - (b.lastResult ?? 99) || a.name.localeCompare(b.name));
     let rk = 0, prev: number | null = null, seen = 0;
@@ -296,7 +292,6 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
       if (sortKey === "name") return dir * a.name.localeCompare(b.name);
       if (sortKey === "played") return dir * (a.played - b.played) || a.rank - b.rank;
       if (sortKey === "total") return dir * (a.total - b.total) || a.rank - b.rank;
-      if (sortKey === "f2") return dir * (a.fechoEpoca - b.fechoEpoca) || a.rank - b.rank;
       if (sortKey.startsWith("ev:")) {
         const tc = sortKey.slice(3);
         return dir * (posInEvent(a, tc) - posInEvent(b, tc)) || a.rank - b.rank;
@@ -390,12 +385,6 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
                   <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Pontos</SortableHdr>
                   <SortableHdr k="played" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Provas jogadas">Prov.</SortableHdr>
-                  <SortableHdr k="f2" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}
-                    title="Regra 7.1: se a época fechasse agora, sem 3 das provas da ÉPOCA — as que o jogador faltou contam a zero e são as primeiras a cair.">
-                    <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15 }}>
-                      <span>Fecho</span><span className="fs-11 p-muted">sem 3 provas</span><span className="fs-11 p-muted">da época</span>
-                    </span>
-                  </SortableHdr>
                   {eventCols.map(ev => {
                     const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
                     return (
@@ -434,7 +423,6 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                       </td>
                       <td style={{ textAlign: "center", fontWeight: 700 }}>{p.total}</td>
                       <td style={{ textAlign: "center" }}>{p.played}</td>
-                      <td style={{ textAlign: "center" }}>{p.fechoEpoca}</td>
                       {eventCols.map(ev => {
                         const e = p.events.find(x => String(x.tcode) === String(ev.tcode));
                         const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
@@ -455,9 +443,8 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
             </table>
           </div>
           <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
-            <strong>Fecho</strong> — a regra 7.1 diz que «3 torneios ou 3 pontuações não serão contabilizados». Como se a
-            época fechasse nesta data: caem 3 das {nEpoca} provas realizadas, contando a zero as que o jogador faltou — por
-            isso quem faltou a 3 ou mais não perde nada.
+            <strong>Regra 7.1</strong> — no fim da época não contam 3 torneios. As provas a que o jogador faltou contam a zero
+            e são as primeiras a sair; como todos os juniores já faltaram a 3 ou mais, os pontos não mudam.
           </div>
           {/* Provas nomeadas no regulamento ainda por jogar até ao fecho (o
               Carnaval conta mas não é nomeado; os juniores de 9 buracos não contam). */}
@@ -585,7 +572,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                   Contas sobre o ranking de HOJE: «Para o 1º» é a diferença para o líder actual, e «Vitórias» conta as
                   provas mais valiosas primeiro — se o líder também pontuar, a conta sobe.
                   {semHipotese > 0 ? ` ${semHipotese} jogador(es) já não chega(m) nem ganhando tudo.` : ""}
-                  {" "}⚠ Não entra aqui a <strong>regra 7.1</strong> — ver a coluna «Fecho» da tabela acima.
+                  {" "}⚠ Não entra aqui a <strong>regra 7.1</strong> — ver a nota por baixo da tabela acima.
                 </div>
               </div>
             );
@@ -596,7 +583,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
             Posição em cada prova = os juniores (até 18 anos) classificados como mandam os <strong>Termos da Competição</strong>{" "}
             dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova, que é
             o que o clube publica como «OM JUNIORES». Sem cartão não pontua.
-            Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1; ver coluna «Fecho»); desempate no 1º pelo
+            Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1); desempate no 1º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
           </p>
