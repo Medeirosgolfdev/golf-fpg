@@ -35,7 +35,8 @@ interface OmRankingRow {
   canWin: boolean; total: number; played: number; bestDrop3: number; lastResult: number | null;
   events: OmEventRef[];
 }
-interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; scoring?: string | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; score?: string; pos: number; pts: number }[]; }
+interface OmTermos { ficheiro: string | null; texto: string; desempate: string; }
+interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; scoring?: string | null; juniorScoring?: string | null; juniorBasis?: "termos" | "prova" | "sem-termos" | null; termos?: OmTermos | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; score?: string; pos: number; pts: number }[]; }
 interface OmAdultRow { name: string; fed: string; pos: number; pts: number; }
 interface OmJuniorData {
   generated: string; season: number; title: string; subtitle: string;
@@ -441,7 +442,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         return (
                           <td key={ev.tcode} className="fs-12"
                             style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? { background: "var(--bg-info-subtle)" } : {}) }}
-                            title={e ? `${ev.name}: ${e.pos}º · ${ev.scoring ? `${ev.scoring} ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
+                            title={e ? `${ev.name}: ${e.pos}º · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
                               ? <><b>{e.pos}º</b> <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 700 }}>{e.pts}</span></>
                               : <span className="p-muted">—</span>}
@@ -591,16 +592,80 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
               </div>
             );
           })()}
+          <OmModalidades events={eventCols} />
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
-            Posição em cada prova = a classificação <strong>OM JUNIORES</strong> que o clube publica: a classificação
-            principal da prova (Stableford Net ou Medal Net) só com os jogadores até 18 anos, já desempatada; sem cartão não pontua.
+            Posição em cada prova = os juniores (até 18 anos) classificados como mandam os <strong>Termos da Competição</strong>{" "}
+            dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova, que é
+            o que o clube publica como «OM JUNIORES». Sem cartão não pontua.
             Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1; ver colunas «Fecho»); desempate no 1º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
           </p>
         </>
       )}
+    </div>
+  );
+}
+
+/** Tabela «Como se pontuam os juniores em cada prova»: a modalidade da prova,
+ *  o que os Termos dizem sobre os juniores e a forma que a OM usou. */
+function OmModalidades({ events }: { events: OmEvent[] }) {
+  const { sortKey, sortDir, toggleSort } = useSort<string>("date", "asc");
+  const rows = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const val = (e: OmEvent): string => {
+      if (sortKey === "name") return shortEv(e.name);
+      if (sortKey === "level") return e.level;
+      if (sortKey === "scoring") return e.scoring || "";
+      if (sortKey === "junior") return e.juniorScoring || "";
+      return e.date;
+    };
+    return [...events].sort((a, b) => dir * val(a).localeCompare(val(b)) || a.date.localeCompare(b.date));
+  }, [events, sortKey, sortDir]);
+  if (!events.some(e => e.juniorScoring)) return null;
+  const pill = (e: OmEvent) => e.juniorBasis === "termos"
+    ? <span className="p p-sm p-tourn" title="Os Termos da prova mandam pontuar os juniores assim">pelos Termos</span>
+    : e.juniorBasis === "prova"
+      ? <span className="p p-sm p-muted" title="Os Termos não dizem nada sobre juniores">classificação da prova</span>
+      : <span className="p p-sm p-muted" title="Ainda não lemos os Termos desta prova">Termos por ler</span>;
+  return (
+    <div style={{ marginTop: 14 }}>
+      <div className="fs-13" style={{ marginBottom: 6 }}><strong>Como se pontuam os juniores em cada prova</strong></div>
+      <div style={{ overflowX: "auto" }}>
+        <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+          <thead>
+            <tr>
+              <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Prova</SortableHdr>
+              <SortableHdr k="level" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nível</SortableHdr>
+              <SortableHdr k="scoring" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
+                title="A classificação principal da prova">Modalidade da prova</SortableHdr>
+              <th style={{ textAlign: "left" }}>O que os Termos dizem dos juniores</th>
+              <SortableHdr k="junior" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
+                title="Como a OM júnior classificou os juniores nesta prova">Juniores contados em</SortableHdr>
+              <th style={{ textAlign: "left" }}>Desempate (Termos)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(e => (
+              <tr key={e.tcode}>
+                <td style={{ whiteSpace: "nowrap" }}>{ddmm(e.date)}</td>
+                <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
+                <td style={{ textAlign: "center" }}>{e.level}</td>
+                <td style={{ whiteSpace: "nowrap" }}>{e.scoring ?? "—"}</td>
+                <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
+                <td style={{ whiteSpace: "nowrap" }}><strong>{e.juniorScoring ?? "—"}</strong> {pill(e)}</td>
+                <td className="fs-12" style={{ minWidth: 180 }}>{e.termos?.desempate ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+        Medal = pancadas (menos ganha) · Stableford = pontos (mais ganha) · bruto (gross) = sem handicap · líquido (net) = com o handicap descontado.
+        O clube publicou todas as provas pela modalidade da prova; aqui segue-se o que está escrito nos Termos de cada uma.
+      </div>
     </div>
   );
 }

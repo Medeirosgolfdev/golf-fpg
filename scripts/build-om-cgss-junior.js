@@ -20,11 +20,13 @@
  *
  * ── Cálculo (regulamento) ──
  *   · Júnior = idade ≤ 18 à data da prova (nascido ≥ ano−18).
- *   · Em cada prova, a posição é a da classificação OM JUNIORES do clube: a
- *     classificação PRINCIPAL da prova (Stableford Net, Medal Net…) filtrada a
- *     0-18 anos, pela ordem do servidor (sem cartão/ND não pontua). Até 02/10/2026
- *     isto ordenava por GROSS, o que não é a regra: as OMs adultas, a OM Júnior
- *     oficial de 2025 (OMCGSSJr25) e as páginas OM JUNIORES de 2026 são pelo net.
+ *   · Em cada prova, os juniores (0-18 anos) classificam-se como mandam os
+ *     TERMOS DA COMPETIÇÃO dessa prova (constante TERMOS): em pancadas brutas com
+ *     máximo de 10 por buraco quando os Termos o dizem (Inverno, Restauração,
+ *     Carnaval, NOS Empresas 2026); quando não dizem nada, pela classificação
+ *     principal da prova, que é o que o clube publica como «OM JUNIORES»
+ *     (Stableford Net / Medal Net). Decisão da Mariana a 02/10/2026; o clube
+ *     publica tudo pelo net (93 pts ao Manuel contra 101 pelos Termos).
  *   · Pontos pela tabela Nível×Posição (A/B/C).
  *   · Total = soma das provas. (Regra 7.1: no ranking FINAL descontam-se as 3
  *     piores pontuações — só relevante no fim da época; replicamos o site, que
@@ -96,6 +98,65 @@ const PENDING_EVENTS = [
   { tcode: "11064", level: "B" },
   { tcode: "11071", level: "A" },
 ];
+
+/* ── O que os Termos da Competição de cada prova dizem sobre os JUNIORES ──
+ * Lido dos PDFs em OneDrive\Golfe\Arquivo_GOLF\{ano}\…_CGSS_Termos_Competicao_*.pdf
+ * (Mariana, 02/10/2026: «a OM tem de seguir os Termos de cada torneio»).
+ *   juniores: "medal" → os Termos mandam pontuar os juniores em pancadas brutas
+ *             (STROKEPLAY / MEDAL, «limite máximo de 10 pancadas por buraco»);
+ *             null    → os Termos não dizem nada sobre juniores → conta a
+ *             classificação principal da prova (o que o clube publica).
+ * Prova sem entrada aqui = Termos ainda não lidos → classificação da prova, e a
+ * página assinala-o. Ao chegarem os Termos de uma prova nova, acrescentá-la. */
+const TERMOS = {
+  "10983": { prova: "Inverno", ficheiro: "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf", juniores: "medal",
+    texto: "Na categoria JUNIOR, pontuam em STROKEPLAY com limite máximo de 10 pancadas por buraco.",
+    desempate: "Não define; o Desertas conta como últimos 9." },
+  "10986": { prova: "Restauração", ficheiro: "2026-01-24_CGSS_Termos_Competicao_Torneio_Restauracao.pdf", juniores: "medal",
+    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
+    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
+  "10994": { prova: "Carnaval", ficheiro: "2026-02-14_CGSS_Termos_Competicao_Torneio_Carnaval.pdf", juniores: "medal",
+    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
+    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
+  "11001": { prova: "Primavera", ficheiro: null, juniores: null,
+    texto: "Não há Termos de 2026: o site do clube tem os de 2025 (que não falam de juniores).",
+    desempate: "—" },
+  "11025": { prova: "NOS Empresas", ficheiro: "2026-05-23_CGSS_Termos_Competicao_Torneio_NOS_Empresas.pdf", juniores: "medal",
+    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
+    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
+  "11050": { prova: "RALI", ficheiro: "2026-08-01_CGSS_Termos_Competicao_Torneio_RALI.pdf", juniores: null,
+    texto: "Não diz nada sobre como pontuam os juniores.",
+    desempate: "Não define; o Desertas conta como últimos 9." },
+  "11057": { prova: "8.º OM NOS", ficheiro: "2026-08-29_CGSS_Termos_Competicao_8_Torneio_OM_NOS.pdf", juniores: null,
+    texto: "Não diz nada sobre como pontuam os juniores.",
+    desempate: "Não define; o Machico conta como últimos 9." },
+  "11064": { prova: "Barbeito", ficheiro: "2026-09-08_CGSS_Termos_Competicao_XIII_Torneio_Barbeito_Madeira.pdf", juniores: null,
+    texto: "Não diz nada sobre como pontuam os juniores.",
+    desempate: "Não define; o Desertas conta como últimos 9." },
+  "11071": { prova: "Taça do Clube", ficheiro: "2026-09-26_CGSS_Termos_Competicao_Taca_do_Clube.pdf", juniores: null,
+    texto: "Não diz nada sobre como pontuam os juniores (a prova é Medal Net, máximo 10 pancadas por buraco).",
+    desempate: "WHS mais ALTO primeiro; depois últimos 9 do Desertas." },
+};
+
+/* Cartões da prova (pull-torneios001 = só CGSS), para o «máximo de 10 pancadas
+ * por buraco»: o gross oficial perde o excesso acima de 10 em cada buraco. */
+let _cartoes = null;
+function cartoesDe(tc) {
+  if (!_cartoes) {
+    _cartoes = new Map();
+    try {
+      const d = JSON.parse(fs.readFileSync(path.join(REPO, "public", "data", "pull-torneios001.json"), "utf8"));
+      for (const t of d.tournaments || []) _cartoes.set(String(t.tcode), t);
+    } catch { /* sem cartões → sem limite aplicado */ }
+  }
+  const t = _cartoes.get(String(tc));
+  const m = new Map();
+  for (const p of (t && t.players) || []) {
+    const sc = p.roundScores && p.roundScores[0] && p.roundScores[0].scores;
+    if (Array.isArray(sc)) m.set(String(p.scoreId), sc);
+  }
+  return m;
+}
 
 /* Tabela de pontos do regulamento (Nível × posição). 11–15 e 16–20 em faixas. */
 const PTS = {
@@ -357,17 +418,26 @@ async function tournamentsLST(startIndex) {
   }
   playable.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
 
-  // 3. Para cada prova: a classificação OM JUNIORES como o clube a publica —
-  //    classificação principal da prova (net) filtrada a 0-18 anos, pela ordem
-  //    do servidor (já desempatada) → pontos. Entram todos os juniores da
-  //    classificação, como na página oficial; só os do CGSS podem ganhar (regra 1).
+  // 3. Para cada prova: os juniores (0-18 anos) classificados como mandam os
+  //    Termos dessa prova (TERMOS): em pancadas brutas com máximo de 10 por
+  //    buraco quando os Termos o dizem; senão, pela classificação principal da
+  //    prova (o que o clube publica como OM JUNIORES). Ordem e desempates do
+  //    servidor. Entram todos os juniores da classificação; só os do CGSS
+  //    podem ganhar (regra 1).
   const players = new Map(); // fed (ou "nome:…" sem ficha) → registo
   for (const ev of playable) {
     const st = await mainScoringType(ev.tcode);
     if (!st) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): não consegui ler o tipo da classificação principal`); ev.juniors = []; continue; }
     ev.scoring = SCORING_LABEL[st] || `tipo ${st}`;
-    const { records, error } = await classifJuniores(ev.tcode, st);
+    const termos = TERMOS[String(ev.tcode)] || null;
+    const porPancadas = !!(termos && termos.juniores === "medal");
+    const stJr = porPancadas ? 1 : st;   // 1 = Stroke Play (gross)
+    ev.termos = termos ? { ficheiro: termos.ficheiro, texto: termos.texto, desempate: termos.desempate } : null;
+    ev.juniorScoring = porPancadas ? "Medal (pancadas, bruto), máx. 10" : ev.scoring;
+    ev.juniorBasis = porPancadas ? "termos" : termos ? "prova" : "sem-termos";
+    const { records, error } = await classifJuniores(ev.tcode, stJr);
     if (error) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): ${error}`); ev.juniors = []; continue; }
+    const cartoes = porPancadas ? cartoesDe(ev.tcode) : null;
     const juniors = [];
     for (const r of records) {
       const cpos = parseInt(r.classif_pos, 10);
@@ -375,10 +445,17 @@ async function tournamentsLST(startIndex) {
       if (!Number.isFinite(cpos) || !(Number.isFinite(gross) && gross > 0 && gross < 900)) continue; // ND / sem cartão
       const club = (r.player_club_description || "").trim();
       const e = matchRoster(r.player_name, club, Number(r.player_age));
+      // máximo de 10 pancadas por buraco: tira-se ao gross oficial o excesso de cada buraco
+      const sc = cartoes && cartoes.get(String(r.score_id));
+      const excesso = sc ? sc.reduce((s, v) => s + Math.max(0, v - 10), 0) : 0;
+      const valor = porPancadas ? gross - excesso : null;
       juniors.push({ fed: e ? e.fed : null, name: e ? e.name : r.player_name, club: e ? "Santo da Serra" : club,
-        gender: e ? e.gender : (r.player_gender || null), gross, score: String(r.classif_total).trim(), cpos });
+        gender: e ? e.gender : (r.player_gender || null), gross,
+        score: porPancadas ? String(valor) : String(r.classif_total).trim(),
+        cpos, ord: porPancadas ? valor : cpos });
     }
-    juniors.sort((a, b) => a.cpos - b.cpos);
+    // Pancadas: menos é melhor, empate desfeito pela ordem do servidor. Senão, a ordem do servidor.
+    juniors.sort((a, b) => a.ord - b.ord || a.cpos - b.cpos);
     let pos = 0, prev = null, seen = 0;
     for (const jp of juniors) {
       seen++; if (prev === null || jp.cpos !== prev) { pos = seen; prev = jp.cpos; }
@@ -390,7 +467,7 @@ async function tournamentsLST(startIndex) {
       rp.total += jp.pts;
     }
     ev.juniors = juniors.map(j => ({ fed: j.fed, name: j.name, club: j.club, gross: j.gross, score: j.score, pos: j.pos, pts: j.pts }));
-    console.log(`[om-junior]   ${ev.date} ${ev.desc} [${ev.level}, ${ev.scoring}] → ${juniors.map(j => `${j.pos}.${j.name.split(" ")[0]} ${j.score}`).join(" · ") || "sem juniores"}`);
+    console.log(`[om-junior]   ${ev.date} ${ev.desc} [${ev.level}, juniores: ${ev.juniorScoring}] → ${juniors.map(j => `${j.pos}.${j.name.split(" ")[0]} ${j.score}`).join(" · ") || "sem juniores"}`);
   }
 
   // 4. Ranking + desempate (rule 4). bestDrop3 para o fecho de época.
@@ -412,7 +489,7 @@ async function tournamentsLST(startIndex) {
     subtitle: `by NOS Madeira · categoria Júnior (0-${MAX_JUNIOR_AGE}, sem distinção de género)`,
     regulamento: "docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf",
     source: "scoring.datagolf.pt (derivado das OMs adultas oficiais + ClassifLST por prova)",
-    method: "Em cada prova, a classificação OM JUNIORES como o clube a publica: classificação principal da prova (Stableford Net / Medal Net) filtrada a 0-18 anos, pela ordem oficial (já desempatada); só os sócios CGSS podem ganhar; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
+    method: "Em cada prova, os juniores (0-18 anos) classificados como mandam os Termos da Competição dessa prova: em pancadas brutas com máximo de 10 por buraco quando os Termos o dizem; senão, pela classificação principal da prova (o que o clube publica como OM JUNIORES); só os sócios CGSS podem ganhar; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
     points: PTS, bands: BAND,
     officialAdultRankings: officialLinks,
     adultLabels: { homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." },
@@ -420,7 +497,7 @@ async function tournamentsLST(startIndex) {
     omMembers,     // fed → categoria OM de TODOS os sócios CGSS (dá o pill do escalão mesmo sem pontos)
     eligibleCount: roster.length,
     eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
-    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, scoring: e.scoring || null, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
+    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, scoring: e.scoring || null, juniorScoring: e.juniorScoring || null, juniorBasis: e.juniorBasis || null, termos: e.termos || null, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
     ranking,
   };
 
