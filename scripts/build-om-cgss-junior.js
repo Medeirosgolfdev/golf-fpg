@@ -25,8 +25,10 @@
  *     máximo de 10 por buraco quando os Termos o dizem (Inverno, Restauração,
  *     Carnaval, NOS Empresas 2026); quando não dizem nada, pela classificação
  *     principal da prova, que é o que o clube publica como «OM JUNIORES»
- *     (Stableford Net / Medal Net). Decisão da Mariana a 02/10/2026; o clube
- *     publica tudo pelo net (93 pts ao Manuel contra 101 pelos Termos).
+ *     (Stableford Net / Medal Net). Decisão da Mariana a 02/10/2026. O clube
+ *     só publicou a classificação «OM JUNIORES» em 3 provas (NOS Empresas,
+ *     Barbeito, Taça do Clube — campo `oficialJr`), sempre na modalidade da
+ *     prova; nas outras não há classificação oficial de juniores.
  *   · Pontos pela tabela Nível×Posição (A/B/C).
  *   · Total = soma das provas. (Regra 7.1: no ranking FINAL descontam-se as 3
  *     piores pontuações — só relevante no fim da época; replicamos o site, que
@@ -324,11 +326,24 @@ async function classifJuniores(tc, scoringType) {
  * opção 1 e o link «Outras Classificações» traz o `scoring_type`
  * (1 Stroke Play · 2 Medal Net · 3 Stableford Gross · 4 Stableford Net). */
 const SCORING_LABEL = { 1: "Stroke Play", 2: "Medal Net", 3: "Stableford Gross", 4: "Stableford Net" };
+/* Também diz se o clube publicou a classificação «OM JUNIORES» nessa prova
+ * (opção do menu da página) e em que modalidade — em 2026 só o fez na NOS
+ * Empresas, no Barbeito e na Taça do Clube. */
 async function mainScoringType(tc) {
   const s = new Sessao();
   const a = await s.abrir("classif", CLUB, String(tc)).catch(() => null);
-  const m = a && a.ok && /classifMFilter\.aspx\?[^"]*?scoring_type=(\d+)/.exec(a.html || "");
-  return m ? Number(m[1]) : null;
+  const html = (a && a.ok && a.html) || "";
+  const m = /classifMFilter\.aspx\?[^"]*?scoring_type=(\d+)/.exec(html);
+  const st = m ? Number(m[1]) : null;
+  let oficialJr = null;
+  const opt = [...html.matchAll(/<option[^>]*value="(\d+)"[^>]*>([^<]*)<\/option>/g)].find(x => /junior/i.test(x[2]));
+  if (opt) {
+    const p = await s.get(`${s.base}/Classifications.aspx?ccode=${CLUB}&tcode=${tc}&classif_order=${opt[1]}`).catch(() => null);
+    const mm = p && /classifMFilter\.aspx\?[^"]*?scoring_type=(\d+)/.exec(p.html || "");
+    const stj = mm ? Number(mm[1]) : null;
+    oficialJr = { nome: opt[2].trim(), scoring: stj ? (SCORING_LABEL[stj] || `tipo ${stj}`) : null };
+  }
+  return { st, oficialJr };
 }
 async function tournamentsLST(startIndex) {
   // pageSize ≤ 100 obrigatório (≥200 → HTTP 500)
@@ -426,7 +441,8 @@ async function tournamentsLST(startIndex) {
   //    podem ganhar (regra 1).
   const players = new Map(); // fed (ou "nome:…" sem ficha) → registo
   for (const ev of playable) {
-    const st = await mainScoringType(ev.tcode);
+    const { st, oficialJr } = await mainScoringType(ev.tcode);
+    ev.oficialJr = oficialJr;
     if (!st) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): não consegui ler o tipo da classificação principal`); ev.juniors = []; continue; }
     ev.scoring = SCORING_LABEL[st] || `tipo ${st}`;
     const termos = TERMOS[String(ev.tcode)] || null;
@@ -498,7 +514,7 @@ async function tournamentsLST(startIndex) {
     omMembers,     // fed → categoria OM de TODOS os sócios CGSS (dá o pill do escalão mesmo sem pontos)
     eligibleCount: roster.length,
     eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
-    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, scoring: e.scoring || null, juniorScoring: e.juniorScoring || null, juniorBasis: e.juniorBasis || null, termos: e.termos || null, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
+    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, scoring: e.scoring || null, juniorScoring: e.juniorScoring || null, juniorBasis: e.juniorBasis || null, termos: e.termos || null, oficialJr: e.oficialJr || null, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
     ranking,
   };
 

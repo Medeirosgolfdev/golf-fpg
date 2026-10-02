@@ -36,7 +36,7 @@ interface OmRankingRow {
   events: OmEventRef[];
 }
 interface OmTermos { ficheiro: string | null; texto: string; desempate: string; }
-interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; scoring?: string | null; juniorScoring?: string | null; juniorBasis?: "termos" | "prova" | "sem-termos" | null; termos?: OmTermos | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; score?: string; pos: number; pts: number }[]; }
+interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; scoring?: string | null; juniorScoring?: string | null; juniorBasis?: "termos" | "prova" | "sem-termos" | null; termos?: OmTermos | null; oficialJr?: { nome: string; scoring: string | null } | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; score?: string; pos: number; pts: number }[]; }
 interface OmAdultRow { name: string; fed: string; pos: number; pts: number; }
 interface OmJuniorData {
   generated: string; season: number; title: string; subtitle: string;
@@ -615,8 +615,9 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova = os juniores (até 18 anos) classificados como mandam os <strong>Termos da Competição</strong>{" "}
-            dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova, que é
-            o que o clube publica como «OM JUNIORES». Sem cartão não pontua.
+            dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova. O
+            clube só publicou a classificação «OM JUNIORES» em 3 provas (NOS Empresas, Barbeito, Taça do Clube) e ainda não
+            publicou o ranking júnior de 2026. Sem cartão não pontua.
             Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1); desempate no 1º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
@@ -681,6 +682,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
               <th style={{ textAlign: "left" }}>O que os Termos dizem dos juniores</th>
               <SortableHdr k="junior" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
                 title="Como a OM júnior classificou os juniores nesta prova">Juniores contados em</SortableHdr>
+              <th style={{ textAlign: "left" }} title="Se o clube publicou na FPG a classificação «OM JUNIORES» desta prova, e em que modalidade">O clube publicou</th>
               <th style={{ textAlign: "left" }}>Desempate (Termos)</th>
             </tr>
           </thead>
@@ -693,6 +695,11 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
                 <td>{e.scoring ? <ModalidadePill nome={e.scoring} /> : "—"}</td>
                 <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{e.juniorScoring ? <ModalidadePill nome={e.juniorScoring} /> : "—"} {pill(e)}</td>
+                <td style={{ whiteSpace: "nowrap" }}>
+                  {e.oficialJr
+                    ? (e.oficialJr.scoring ? <ModalidadePill nome={e.oficialJr.scoring} title={`Classificação «${e.oficialJr.nome}» na FPG`} /> : e.oficialJr.nome)
+                    : <span className="p-muted fs-12">não publicou</span>}
+                </td>
                 <td className="fs-12" style={{ minWidth: 180 }}>{e.termos?.desempate ?? "—"}</td>
               </tr>
             ))}
@@ -705,7 +712,8 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
         <ModalidadePill nome="Stroke Play" /> pancadas, sem handicap · <ModalidadePill nome="Medal Net" /> pancadas, com handicap ·{" "}
         <ModalidadePill nome="Stableford Net" /> pontos, com handicap. O «Medal» dos Termos (sem «Net») contou-se como pancadas
         sem handicap; falta o clube confirmar se queria dizer Medal Net (só muda a Restauração: o Manuel ficaria com 96 pontos em vez de 101).
-        O clube publicou todas as provas pela modalidade da prova; aqui segue-se o que está escrito nos Termos de cada uma.
+        O clube só publicou a classificação «OM JUNIORES» em 3 provas (coluna «O clube publicou»), sempre pela modalidade da
+        prova; aqui segue-se o que está escrito nos Termos de cada uma.
       </div>
     </div>
   );
