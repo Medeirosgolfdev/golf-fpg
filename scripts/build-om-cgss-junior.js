@@ -20,8 +20,11 @@
  *
  * ── Cálculo (regulamento) ──
  *   · Júnior = idade ≤ 18 à data da prova (nascido ≥ ano−18).
- *   · Em cada prova, ordenam-se os juniores por GROSS (empates partilham lugar;
- *     sem cartão/NR não pontua) → posição na categoria júnior.
+ *   · Em cada prova, a posição é a da classificação OM JUNIORES do clube: a
+ *     classificação PRINCIPAL da prova (Stableford Net, Medal Net…) filtrada a
+ *     0-18 anos, pela ordem do servidor (sem cartão/ND não pontua). Até 02/10/2026
+ *     isto ordenava por GROSS, o que não é a regra: as OMs adultas, a OM Júnior
+ *     oficial de 2025 (OMCGSSJr25) e as páginas OM JUNIORES de 2026 são pelo net.
  *   · Pontos pela tabela Nível×Posição (A/B/C).
  *   · Total = soma das provas. (Regra 7.1: no ranking FINAL descontam-se as 3
  *     piores pontuações — só relevante no fim da época; replicamos o site, que
@@ -44,7 +47,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
-const { criarRoteador } = require("./lib/fpg-session");
+const { criarRoteador, Sessao } = require("./lib/fpg-session");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const REPO = path.resolve(__dirname, "..");
@@ -242,13 +245,29 @@ async function pageMethod(pageAsp, method, params) {
   }
 }
 const rankLST = (method, params) => pageMethod("rankings_classif.aspx", method, { jtStartIndex: "0", jtPageSize: "500", ...params });
-async function classifLST(tc) {
+/* Classificação OM JUNIORES de uma prova, tal como o clube a publica
+ * (Classifications.aspx, opção «OM JUNIORES»): a classificação PRINCIPAL da
+ * prova (o mesmo `scoring_type` — Stableford Net, Medal Net…) filtrada a
+ * idades 0-18. O servidor devolve `classif_pos` já ordenado e desempatado.
+ * Medido a 02/10/2026 contra as páginas oficiais do Barbeito (11064) e da Taça
+ * do Clube (11071), e contra a OM Júnior oficial de 2025 (OMCGSSJr25). */
+async function classifJuniores(tc, scoringType) {
   if (COOKIE) await warmupClassif(tc);   // o caminho público abre o seu próprio gate
   const body = { Classi:"1", tclub:CLUB, tcode:String(tc), classiforder:"1", classiftype:"I", classifroundtype:"D",
-    scoringtype:"1", round:"1", members:"0", playertypes:"0", gender:"0", minagemen:"0", maxagemen:"999",
-    minageladies:"0", maxageladies:"999", minhcp:"-8", maxhcp:"99", idfilter:"-1",
-    jtStartIndex:"0", jtPageSize:"400", jtSorting:"score_id DESC" };
+    scoringtype:String(scoringType), round:"1", members:"0", playertypes:"0", gender:"0",
+    minagemen:"0", maxagemen:String(MAX_JUNIOR_AGE), minageladies:"0", maxageladies:String(MAX_JUNIOR_AGE),
+    minhcp:"-8", maxhcp:"99", idfilter:"-1", jtStartIndex:"0", jtPageSize:"400", jtSorting:"score_id DESC" };
   return pageMethod("classif.aspx", "ClassifLST", body);
+}
+/* Tipo da classificação principal da prova: a página de classificações abre na
+ * opção 1 e o link «Outras Classificações» traz o `scoring_type`
+ * (1 Stroke Play · 2 Medal Net · 3 Stableford Gross · 4 Stableford Net). */
+const SCORING_LABEL = { 1: "Stroke Play", 2: "Medal Net", 3: "Stableford Gross", 4: "Stableford Net" };
+async function mainScoringType(tc) {
+  const s = new Sessao();
+  const a = await s.abrir("classif", CLUB, String(tc)).catch(() => null);
+  const m = a && a.ok && /classifMFilter\.aspx\?[^"]*?scoring_type=(\d+)/.exec(a.html || "");
+  return m ? Number(m[1]) : null;
 }
 async function tournamentsLST(startIndex) {
   // pageSize ≤ 100 obrigatório (≥200 → HTTP 500)
@@ -338,32 +357,40 @@ async function tournamentsLST(startIndex) {
   }
   playable.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
 
-  // 3. Para cada prova: campo → juniores → posição por gross → pontos.
-  const players = new Map(); // fed → registo
+  // 3. Para cada prova: a classificação OM JUNIORES como o clube a publica —
+  //    classificação principal da prova (net) filtrada a 0-18 anos, pela ordem
+  //    do servidor (já desempatada) → pontos. Entram todos os juniores da
+  //    classificação, como na página oficial; só os do CGSS podem ganhar (regra 1).
+  const players = new Map(); // fed (ou "nome:…" sem ficha) → registo
   for (const ev of playable) {
-    const { records, error } = await classifLST(ev.tcode);
+    const st = await mainScoringType(ev.tcode);
+    if (!st) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): não consegui ler o tipo da classificação principal`); ev.juniors = []; continue; }
+    ev.scoring = SCORING_LABEL[st] || `tipo ${st}`;
+    const { records, error } = await classifJuniores(ev.tcode, st);
     if (error) { console.warn(`[om-junior]   ${ev.desc} (${ev.tcode}): ${error}`); ev.juniors = []; continue; }
     const juniors = [];
     for (const r of records) {
+      const cpos = parseInt(r.classif_pos, 10);
       const gross = Number(r.gross_total);
-      if (!(Number.isFinite(gross) && gross > 0)) continue;
-      // Só juniores do ROSTER CGSS (com o clube da prova a bater no CGSS).
-      const e = matchRoster(r.player_name, r.player_club_description, Number(r.player_age));
-      if (!e) continue;
-      juniors.push({ fed: e.fed, name: e.name, club: "Santo da Serra", gender: e.gender, gross });
+      if (!Number.isFinite(cpos) || !(Number.isFinite(gross) && gross > 0 && gross < 900)) continue; // ND / sem cartão
+      const club = (r.player_club_description || "").trim();
+      const e = matchRoster(r.player_name, club, Number(r.player_age));
+      juniors.push({ fed: e ? e.fed : null, name: e ? e.name : r.player_name, club: e ? "Santo da Serra" : club,
+        gender: e ? e.gender : (r.player_gender || null), gross, score: String(r.classif_total).trim(), cpos });
     }
-    juniors.sort((a, b) => a.gross - b.gross);
+    juniors.sort((a, b) => a.cpos - b.cpos);
     let pos = 0, prev = null, seen = 0;
     for (const jp of juniors) {
-      seen++; if (prev === null || jp.gross !== prev) { pos = seen; prev = jp.gross; }
+      seen++; if (prev === null || jp.cpos !== prev) { pos = seen; prev = jp.cpos; }
       jp.pos = pos; jp.pts = points(ev.level, pos);
-      if (!players.has(jp.fed)) players.set(jp.fed, { fed: jp.fed, name: jp.name, club: jp.club, gender: jp.gender, canWin: /santo da serra/i.test(jp.club || ""), events: [], total: 0 });
-      const rp = players.get(jp.fed);
-      rp.events.push({ tcode: ev.tcode, ccode: ev.ccode, name: ev.desc, date: ev.date, level: ev.level, pos, gross: jp.gross, pts: jp.pts });
+      const key = jp.fed || `nome:${norm(jp.name)}`;
+      if (!players.has(key)) players.set(key, { fed: jp.fed, name: jp.name, club: jp.club, gender: jp.gender, canWin: /santo da serra/i.test(jp.club || ""), events: [], total: 0 });
+      const rp = players.get(key);
+      rp.events.push({ tcode: ev.tcode, ccode: ev.ccode, name: ev.desc, date: ev.date, level: ev.level, pos, gross: jp.gross, score: jp.score, pts: jp.pts });
       rp.total += jp.pts;
     }
-    ev.juniors = juniors.map(j => ({ fed: j.fed, name: j.name, club: j.club, gross: j.gross, pos: j.pos, pts: j.pts }));
-    console.log(`[om-junior]   ${ev.date} ${ev.desc} [${ev.level}] → ${juniors.length} juniores`);
+    ev.juniors = juniors.map(j => ({ fed: j.fed, name: j.name, club: j.club, gross: j.gross, score: j.score, pos: j.pos, pts: j.pts }));
+    console.log(`[om-junior]   ${ev.date} ${ev.desc} [${ev.level}, ${ev.scoring}] → ${juniors.map(j => `${j.pos}.${j.name.split(" ")[0]} ${j.score}`).join(" · ") || "sem juniores"}`);
   }
 
   // 4. Ranking + desempate (rule 4). bestDrop3 para o fecho de época.
@@ -385,7 +412,7 @@ async function tournamentsLST(startIndex) {
     subtitle: `by NOS Madeira · categoria Júnior (0-${MAX_JUNIOR_AGE}, sem distinção de género)`,
     regulamento: "docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf",
     source: "scoring.datagolf.pt (derivado das OMs adultas oficiais + ClassifLST por prova)",
-    method: "Pool = roster CGSS Sub-18 e abaixo (federados, homeclub CGSS). Em cada prova, posição por gross entre os juniores do roster presentes; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
+    method: "Em cada prova, a classificação OM JUNIORES como o clube a publica: classificação principal da prova (Stableford Net / Medal Net) filtrada a 0-18 anos, pela ordem oficial (já desempatada); só os sócios CGSS podem ganhar; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
     points: PTS, bands: BAND,
     officialAdultRankings: officialLinks,
     adultLabels: { homens: "Homens", senhoras: "Senhoras", seniores: "Seniores", superSeniores: "Super Sen." },
@@ -393,7 +420,7 @@ async function tournamentsLST(startIndex) {
     omMembers,     // fed → categoria OM de TODOS os sócios CGSS (dá o pill do escalão mesmo sem pontos)
     eligibleCount: roster.length,
     eligible: roster.map(e => ({ fed: e.fed, name: e.name, age: e.age, escalao: e.esc, gender: e.gender })),
-    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
+    events: playable.map(e => ({ tcode: e.tcode, ccode: e.ccode, name: e.desc, date: e.date, level: e.level, course: e.course, scoring: e.scoring || null, nJuniors: (e.juniors || []).length, juniors: e.juniors || [], ...(e.pending ? { pending: true } : {}) })),
     ranking,
   };
 

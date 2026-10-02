@@ -29,13 +29,13 @@ import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjecti
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
-interface OmEventRef { tcode: string; ccode: string; name: string; date: string; level: Level; pos: number; gross: number; pts: number; }
+interface OmEventRef { tcode: string; ccode: string; name: string; date: string; level: Level; pos: number; gross: number; score?: string; pts: number; }
 interface OmRankingRow {
   rank: number; fed: string; name: string; club: string; gender?: string;
   canWin: boolean; total: number; played: number; bestDrop3: number; lastResult: number | null;
   events: OmEventRef[];
 }
-interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; pos: number; pts: number }[]; }
+interface OmEvent { tcode: string; ccode: string; name: string; date: string; level: Level; course: string | null; scoring?: string | null; nJuniors: number; juniors: { fed: string; name: string; club: string; gross: number; score?: string; pos: number; pts: number }[]; }
 interface OmAdultRow { name: string; fed: string; pos: number; pts: number; }
 interface OmJuniorData {
   generated: string; season: number; title: string; subtitle: string;
@@ -441,7 +441,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                         return (
                           <td key={ev.tcode} className="fs-12"
                             style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? { background: "var(--bg-info-subtle)" } : {}) }}
-                            title={e ? `${ev.name}: ${e.pos}º · gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
+                            title={e ? `${ev.name}: ${e.pos}º · ${ev.scoring ? `${ev.scoring} ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
                               ? <><b>{e.pos}º</b> <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 700 }}>{e.pts}</span></>
                               : <span className="p-muted">—</span>}
@@ -593,7 +593,8 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
           })()}
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
-            Posição em cada prova por <strong>gross</strong> entre os juniores (empates partilham; sem cartão não pontua).
+            Posição em cada prova = a classificação <strong>OM JUNIORES</strong> que o clube publica: a classificação
+            principal da prova (Stableford Net ou Medal Net) só com os jogadores até 18 anos, já desempatada; sem cartão não pontua.
             Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1; ver colunas «Fecho»); desempate no 1º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
