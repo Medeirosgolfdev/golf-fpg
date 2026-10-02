@@ -546,6 +546,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-mod-medalnet { background: var(--bg-info-strong); color: var(--color-info); }
 .p-mod-stbnet { background: color-mix(in srgb, var(--color-teal) 15%, transparent); color: var(--color-teal); }
 .p-mod-stbgross { background: color-mix(in srgb, var(--color-hcp) 15%, transparent); color: var(--color-hcp); }
+/* Nível da prova na OM CGSS — fundo cheio, para não se confundir com a modalidade (fundo claro) */
+.p-lvl { font-weight: 800; color: var(--pill-level-fg); letter-spacing: 0.03em; }
+.p-lvl-A { background: var(--color-rfeg-yellow); color: var(--text-1); font-size: var(--fs-11); box-shadow: 0 0 0 2px var(--color-warn-vivid); }
+.p-lvl-B { background: var(--color-navy); }
+.p-lvl-C { background: var(--color-danger-vivid); }
 
 /* Origin (score_origin) — same rectangular form */
 .p-origin { border-radius: 3px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }

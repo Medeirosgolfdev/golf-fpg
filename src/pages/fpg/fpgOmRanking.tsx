@@ -277,6 +277,13 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
     }));
   }, [data]);
   const missing = useMemo(() => calEstado.filter(c => c.estado === "por-jogar" || c.estado === "a-aguardar"), [calEstado]);
+  // Provas por jogar como colunas no fim da matriz — só quando se está a ver a
+  // classificação de hoje (esta prova é a última com resultados, ou não tem).
+  const futuras = useMemo(() => {
+    const ultima = (data?.events ?? []).reduce((m, e) => (e.date > m ? e.date : m), "");
+    if (asOf && asOf < ultima) return [];
+    return missing.filter(c => c.date).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  }, [data, asOf, missing]);
   const jaContam = calEstado.filter(c => c.estado === "jogada").length;
   const naoRealizadas = calEstado.filter(c => c.estado === "nao-realizada");
   const foraCalendario = calEstado.filter(c => c.estado === "fora-do-calendario");
@@ -391,21 +398,32 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                       <SortableHdr key={ev.tcode} k={`ev:${ev.tcode}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
                         title={`${ev.name} — ${ev.date.split("-").reverse().join("/")} — ${LEVEL_LABEL[ev.level]}${isHere ? " (esta prova)" : ""}`}
                         style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? { background: "var(--accent-light)" } : {}) }}>
-                        {/* 3 linhas: nome · data · nível */}
-                        <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
+                        {/* nome · data · pills (modalidade da prova / nível / modalidade dos juniores) */}
+                        <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                           <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{ddmm(ev.date)}</span>
                           {/* Pill ANTES do nível = modalidade da prova (os Termos não falam de
                               juniores); DEPOIS do nível = o que os Termos dizem para os juniores. */}
                           {ev.juniorScoring && ev.juniorBasis !== "termos" &&
                             <ModalidadePill nome={ev.juniorScoring} title={`Modalidade da prova (os Termos não dizem nada sobre juniores): ${ev.juniorScoring}`} />}
-                          <span className="fs-11" style={{ fontWeight: 700, color: LEVEL_COLOR[ev.level] }}>Nível {ev.level}</span>
+                          <LevelPill level={ev.level} />
                           {ev.juniorScoring && ev.juniorBasis === "termos" &&
                             <ModalidadePill nome={ev.juniorScoring} title={`Os Termos dizem que os juniores pontuam em: ${ev.juniorScoring}`} />}
                         </span>
                       </SortableHdr>
                     );
                   })}
+                  {futuras.map(c => (
+                    <th key={c.name} title={`${c.name} — ${ddmm(c.date)} — por jogar`}
+                      style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }}>
+                      <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
+                        <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(c.name)}</span>
+                        <span className="fs-11 p-muted">{ddmm(c.date)}</span>
+                        <LevelPill level={c.level} />
+                        <span className="fs-11 p-muted" style={{ fontStyle: "italic" }}>por jogar</span>
+                      </span>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -433,6 +451,9 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                           </td>
                         );
                       })}
+                      {futuras.map(c => (
+                        <td key={c.name} style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }} />
+                      ))}
                     </tr>
                   );
                 })}
@@ -590,9 +611,13 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
   );
 }
 
-/** Cor de cada nível da OM (A Major, B, C) — cores que não se confundem com o
- *  verde (bruto) e o azul (líquido) da modalidade. */
-const LEVEL_COLOR: Record<Level, string> = { A: "var(--color-warn-vivid)", B: "var(--color-purple)", C: "var(--color-danger-vivid)" };
+/** Pill do nível da OM (A Major, B, C): fundo cheio — âmbar, azul-escuro, vermelho —
+ *  para se distinguir dos pills de modalidade, que têm fundo claro. */
+function LevelPill({ level, curto }: { level: Level; curto?: boolean }) {
+  // O A (Major) é o que mais pesa: dourado vivo, contorno e estrela.
+  const txt = curto ? level : `Nível ${level}`;
+  return <span className={`p p-sm p-lvl p-lvl-${level}`}>{level === "A" ? `★ ${txt}` : txt}</span>;
+}
 
 /** Pill da modalidade de jogo, com a palavra tal como vem escrita (FPG ou
  *  Termos): uma cor por modalidade — Stroke Play/Medal (pancadas, sem handicap)
@@ -648,7 +673,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
               <tr key={e.tcode}>
                 <td style={{ whiteSpace: "nowrap" }}>{ddmm(e.date)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
-                <td style={{ textAlign: "center", fontWeight: 700, color: LEVEL_COLOR[e.level] }}>{e.level}</td>
+                <td style={{ textAlign: "center" }}><LevelPill level={e.level} curto /></td>
                 <td>{e.scoring ? <ModalidadePill nome={e.scoring} /> : "—"}</td>
                 <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{e.juniorScoring ? <ModalidadePill nome={e.juniorScoring} /> : "—"} {pill(e)}</td>
