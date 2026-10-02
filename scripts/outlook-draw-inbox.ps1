@@ -104,6 +104,8 @@ Log "$($novos.Count) PDF(s) de draw novos."
 if ($SoGravar) { exit 0 }
 
 Set-Location -LiteralPath $repo
+# a saída do node vem em UTF-8; sem isto o log fica com os acentos trocados
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $out = & node scripts\process-draw-inbox.js 2>&1
 $out | ForEach-Object { Add-Content -LiteralPath $logFile -Value "    $_" -Encoding UTF8 }
 Log "process-draw-inbox terminou (saída $LASTEXITCODE)."
