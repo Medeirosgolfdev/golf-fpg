@@ -19,6 +19,7 @@
  * de que a prova ainda não pontuou.
  */
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Tournament } from "../../data/fpgTypes";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { useSort } from "../../hooks/useSort";
@@ -225,8 +226,8 @@ const hojeISO = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
 
-/* ── A tab ── */
-function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Level }) {
+/* ── A tab (dentro de uma prova) e a página /om-cgss (sem prova: tournament e level null) ── */
+export function OmRankingTab({ tournament, level }: { tournament: Tournament | null; level: Level | null }) {
   const [data, setData] = useState<OmJuniorData | null>(null);
   const [err, setErr] = useState(false);
   useEffect(() => {
@@ -245,7 +246,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
   // mostra a classificação. Prova passada: contam só as provas com data ≤ a
   // desta (o estado da OM logo APÓS este torneio). Prova futura / ainda sem
   // resultados (não está nos events): classificação cumulativa ATUAL.
-  const thisEvent = data?.events.find(e => String(e.tcode) === String(tournament.tcode));
+  const thisEvent = tournament ? data?.events.find(e => String(e.tcode) === String(tournament.tcode)) : undefined;
   const asOf = thisEvent?.date || null;
 
   // Standings até à data (asOf). `herePts`/`herePos` = o que cada jogador ganhou
@@ -331,9 +332,15 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 10 }}>
         <strong>Ordem de Mérito CGSS {data?.season ?? 2026}</strong>
         <span className="p p-sm p-muted">by NOS Madeira</span>
-        <span className="p p-sm p-tourn" title="Esta prova conta para as Ordens de Mérito do clube.">
-          Esta prova conta · {LEVEL_LABEL[level]}
-        </span>
+        {level
+          ? <span className="p p-sm p-tourn" title="Esta prova conta para as Ordens de Mérito do clube.">
+              Esta prova conta · {LEVEL_LABEL[level]}
+            </span>
+          : <span className="p p-sm p-muted">Categoria Júnior · classificação de hoje</span>}
+        {tournament && (
+          <Link to="/om-cgss" className="p p-sm p-muted" style={{ textDecoration: "none" }}
+            title="Página só da Ordem de Mérito Júnior, com tudo">abrir página da OM ↗</Link>
+        )}
       </div>
 
       {/* Links das 5 categorias */}
@@ -363,7 +370,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
         <>
           {/* Pontos em JOGO nesta prova (a mesma escala do nível para todas as
               categorias) — o que cada posição vale para a OM neste torneio. */}
-          {(() => {
+          {level && (() => {
             const ladder = pointsLadder(data, level);
             if (!ladder.length) return null;
             return (
@@ -386,7 +393,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
             <strong>Categoria Júnior</strong> (0-18) — {asOf
               ? <>classificação <strong>logo após esta prova</strong> ({asOf.split("-").reverse().join("/")}) · {rows.length} pontuadores</>
               : <>classificação <strong>atual</strong> · {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} elegíveis (Sub-18 e abaixo)` : ""}</>}
-            {thisEvent
+            {!tournament ? null : thisEvent
               ? (thisEvent.nJuniors > 0 ? <> · nesta prova pontuaram {thisEvent.nJuniors} juniores.</> : <> · esta prova não teve juniores a pontuar.</>)
               : <> · esta prova ainda não pontuou (sem resultados).</>}
           </div>
@@ -480,6 +487,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
             <strong>Regra 7.1</strong> — no fim da época não contam 3 torneios. As provas a que o jogador faltou contam a zero
             e são as primeiras a sair; como todos os juniores já faltaram a 3 ou mais, os pontos não mudam.
           </div>
+          <OmModalidades events={eventCols} />
           {/* Provas nomeadas no regulamento ainda por jogar até ao fecho (o
               Carnaval conta mas não é nomeado; os juniores de 9 buracos não contam). */}
           {missing.length > 0 && (
@@ -502,7 +510,7 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                   <div key={lv} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6, marginBottom: 4 }}>
                     <span className="fs-11 p-muted" style={{ minWidth: 78 }} title={todos ? `Uma prova de ${LEVEL_LABEL[lv]} paga: ${todos}` : undefined}>{LEVEL_LABEL[lv]}:</span>
                     {items.map(m => {
-                      const isThis = m.rx.test(tournament.name || "");
+                      const isThis = !!tournament && m.rx.test(tournament.name || "");
                       return (
                         <span key={m.name} className="p p-sm"
                           style={isThis ? { background: "var(--accent-light)", borderColor: "var(--accent)", fontWeight: 700 } : undefined}
@@ -611,7 +619,6 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
               </div>
             );
           })()}
-          <OmModalidades events={eventCols} />
           <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova = os juniores (até 18 anos) classificados como mandam os <strong>Termos da Competição</strong>{" "}

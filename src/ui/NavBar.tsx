@@ -59,6 +59,7 @@ function tabFromPath(pathname: string): Tab {
     uskids: "uskids",
     diversos: "diversos",
     FPG: "diversos",
+    "om-cgss": "diversos",   // Ordem de Mérito Júnior CGSS — vive com as provas FPG
     doral: "major",
     ffg: "ffg",
     rfeg: "rfeg",

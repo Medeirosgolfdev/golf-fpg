@@ -25,6 +25,7 @@
 | `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage (dados em `src/data/calendarEvents.ts`) | players.json (aniversários) |
 | `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
+| `/om-cgss` | OmCgssPage | Ordem de Mérito Júnior CGSS de hoje (a tab `OmRankingTab` de `fpg/fpgOmRanking.tsx` sem prova aberta) · om-cgss-junior.json |
 | `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
 | `/titulos/nacional` | TitulosPage (tab Nacional) | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
 | `/ffg` (+ `/info/:key` — `joueurs` = lista de jogadores FR estilo /rfeg/info/jugadores, `categorias`) | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses); france-players.json (roster c/ contagens, `src/pages/ffg/PlayersView.tsx`) |

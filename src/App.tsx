@@ -67,6 +67,7 @@ const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
 const RecentTournamentsPage = lazy(() => import("./pages/RecentTournamentsPage"));
 const DrawsPage = lazy(() => import("./pages/DrawsPage"));
+const OmCgssPage = lazy(() => import("./pages/OmCgssPage"));
 
 type Status =
   | { kind: "loading" }
@@ -453,6 +454,7 @@ export default function App() {
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
                 <Route path="/draws" element={<DrawsPage />} />
+                <Route path="/om-cgss" element={<OmCgssPage />} />
                 {/* Landing — sem rota explícita, o catch-all entrava em loop com /* → / */}
                 <Route path="/" element={<Navigate to="/jogadores" replace />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}
