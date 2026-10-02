@@ -129,6 +129,11 @@ export default function HeroIdentity({ data, junior }: Props) {
   if (junior.sources.fpg?.hcpExact != null) hcps.push({ source: "FPG", value: junior.sources.fpg.hcpExact, date: junior.sources.fpg.hcpDate });
   if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp, date: junior.sources.rfeg.hcpDate });
   if (junior.sources.ffgolf?.hcp != null) hcps.push({ source: "FFG", value: junior.sources.ffgolf.hcp });
+  // Handicap tirado de uma lista de inscritos (Entry List) — o mais recente;
+  // mostra-se sempre, com o mês, mesmo quando há o da FPG/RFEG/FFG.
+  const hcpLista = junior.hcpHistory?.find(h => h.source === "entry-list") ?? null;
+  const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const mesLista = hcpLista ? `${MESES[Number(hcpLista.date.slice(5, 7)) - 1]}/${hcpLista.date.slice(2, 4)}` : "";
 
   const ajga = (junior.meta as any)?.ajgaRank ?? (junior.computed as any)?.ajgaRank;
   const wagr = (junior.meta as any)?.wagrRank ?? (junior.computed as any)?.wagrRank;
@@ -393,7 +398,7 @@ export default function HeroIdentity({ data, junior }: Props) {
         )}
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
@@ -414,6 +419,18 @@ export default function HeroIdentity({ data, junior }: Props) {
               )}
             </span>
           ))}
+          {hcpLista && (
+            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} style={{
+              background: "var(--bg-muted)",
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
+              fontWeight: 600, color: "var(--text-2)",
+              border: "1px solid var(--border-light)",
+              display: "inline-flex", alignItems: "center", gap: 4,
+            }}>
+              🎯 HCP {hcpLista.hcpExact < 0 ? `+${(-hcpLista.hcpExact).toFixed(1)}` : hcpLista.hcpExact.toFixed(1)}
+              <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {mesLista} · Entry List</span>
+            </span>
+          )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
             <span style={{
               background: "var(--bg-muted)",

@@ -194,6 +194,20 @@ async function main() {
     }
   }
 
+  // Listas de inscritos com handicap (Entry Lists): só acrescentam um ponto ao
+  // hcpHistory de quem já tem ficha. Ver util/hcp-listas.js.
+  {
+    const { enrichWithHcpListas } = require("./util/hcp-listas");
+    const r = enrichWithHcpListas(matchResult);
+    if (r.disponivel) {
+      step("Listas de inscritos com handicap (só enriquecer)");
+      sub(`${r.ligados}/${r.total} jogadores ligados a uma ficha em ${r.listas} lista(s)`);
+      const fora = r.relatorio.filter((l) => !l.junior);
+      if (fora.length) sub(`sem ficha ou ambíguos: ${fora.map((l) => l.name + (l.ambiguo ? " (ambíguo)" : "")).join(" · ")}`);
+      console.log("");
+    }
+  }
+
   step("Enrichment");
   try {
     const beforeNations = matchResult.tournaments.filter((t) => t.extra && typeof t.extra.nationsCount === "number").length;
