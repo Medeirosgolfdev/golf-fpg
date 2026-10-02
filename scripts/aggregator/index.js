@@ -21,7 +21,7 @@
 
 const path = require("path");
 const { SCHEMA_VERSION } = require("./types");
-const { DATA, writeJson, readJsonSafe } = require("./util/io");
+const { DATA, DATA_DIR, writeJson, readJsonSafe } = require("./util/io");
 const { info, ok, warn, fail, step, sub, bold, dim } = require("./util/log");
 
 const SOURCES = [
@@ -195,10 +195,14 @@ async function main() {
   }
 
   // Listas de inscritos com handicap (Entry Lists): só acrescentam um ponto ao
-  // hcpHistory de quem já tem ficha. Ver util/hcp-listas.js.
+  // hcpHistory de quem já tem ficha. Ver util/hcp-listas.js. As ligações
+  // (inscrito → ficha) gravam-se em hcp-listas-ligacoes.json para a página
+  // /kids2/listas.
+  let hcpListas = null;
   {
     const { enrichWithHcpListas } = require("./util/hcp-listas");
     const r = enrichWithHcpListas(matchResult);
+    hcpListas = r.disponivel ? r : null;
     if (r.disponivel) {
       step("Listas de inscritos com handicap (só enriquecer)");
       sub(`${r.ligados}/${r.total} jogadores ligados a uma ficha em ${r.listas} lista(s)`);
@@ -255,6 +259,12 @@ async function main() {
   } else {
     writeJson(DATA.outJuniors, juniorsOut);
     sub(`${path.relative(process.cwd(), DATA.outJuniors)}: ${juniorsOut.juniors.length} juniores`);
+    if (hcpListas) {
+      const { ligacoesParaPagina } = require("./util/hcp-listas");
+      const out = ligacoesParaPagina(hcpListas, matchResult);
+      writeJson(path.join(DATA_DIR, "hcp-listas-ligacoes.json"), { generatedAt, ...out });
+      sub(`hcp-listas-ligacoes.json: ${out.listas.length} lista(s)`);
+    }
 
     // Split juniors-tournaments em N partes para não bater no limite de 100MB
     // do GitHub. Shards escrevem-se compactos (sem indent) — são lidos só por

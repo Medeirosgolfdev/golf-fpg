@@ -127,4 +127,38 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
   return { disponivel: true, listas: ficheiros.length, total: relatorio.length, ligados, relatorio };
 }
 
-module.exports = { enrichWithHcpListas };
+/**
+ * Dados da página /kids2/listas: cada lista com os inscritos pela ordem do
+ * PDF e, para os ligados, a ficha (id, nome, nascimento, clube, handicap
+ * actual de outra fonte).
+ */
+function ligacoesParaPagina(r, res) {
+  const byId = new Map(res.juniors.map((j) => [j.id, j]));
+  let ficheiros = [];
+  try { ficheiros = fs.readdirSync(LISTAS_DIR).filter((f) => f.endsWith(".json")).sort(); } catch { /* sem pasta */ }
+  const listas = [];
+  for (const f of ficheiros) {
+    const lista = readJsonSafe(path.join(LISTAS_DIR, f), null);
+    if (!lista || !Array.isArray(lista.players)) continue;
+    const linhas = r.relatorio.filter((l) => l.lista === lista.id);
+    const players = lista.players.map((p, i) => {
+      const l = linhas.find((x) => x.name === p.name && x.hcp === p.hcp) || {};
+      const j = l.junior ? byId.get(l.junior.id) : null;
+      const s = (j && j.sources) || {};
+      const hcpAtual = s.fpg?.hcpExact != null ? { valor: s.fpg.hcpExact, fonte: "FPG", data: s.fpg.hcpDate || null }
+        : s.rfeg?.hcp != null ? { valor: s.rfeg.hcp, fonte: "RFEG", data: s.rfeg.hcpDate || null }
+          : s.ffgolf?.hcp != null ? { valor: s.ffgolf.hcp, fonte: "FFG", data: null } : null;
+      return {
+        ordem: i + 1, pos: p.pos, lista: p.lista || null, name: p.name, country: p.country, hcp: p.hcp,
+        junior: j ? { id: j.id, name: j.canonicalName, dob: j.dob || null, club: s.fpg?.club || s.rfeg?.club || s.ffgolf?.club || j.club || null, via: l.junior.via } : null,
+        ambiguo: l.ambiguo || null,
+        hcpAtual,
+      };
+    });
+    listas.push({ id: lista.id, label: lista.label || lista.id, torneio: lista.torneio || null, data: lista.data,
+      nascidosDesde: lista.nascidosDesde || null, wildcardsFpg: lista.wildcardsFpg ?? null, players });
+  }
+  return { listas };
+}
+
+module.exports = { enrichWithHcpListas, ligacoesParaPagina };
