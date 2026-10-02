@@ -195,6 +195,12 @@ function pointsLadder(
    a 14/09/2026 dizia 135 (3 A + 4 C) quando só faltavam 90 (3 A + São Martinho).
    Actualizar as datas quando o clube mexer no calendário. */
 const OM_FIM_EPOCA = "2026-11-14"; // regra 8
+/** Ausências já conhecidas nas provas da OM por jogar (nome do OM_CALENDAR →
+ *  fed → motivo). Mariana, 02/10/2026: o Manuel falha estas duas. */
+const AUSENCIAS: Record<string, Record<string, string>> = {
+  "Troféu João Sousa": { [MANUEL_FED]: "Final Nacional do Drive Challenge (Jamor, 10-11/10)" },
+  "Torneio de São Martinho": { [MANUEL_FED]: "Final do Drive Tour (Oeiras, 7-8/11)" },
+};
 const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp; date: string | null }> = [
   { name: "Troféu João Sousa", level: "A", rx: /\btrof[eé]u\s+jo[aã]o\s+sousa\b/i, date: "2026-10-10" },
   { name: "Taça do Clube", level: "A", rx: /\bta[cç]a\s+do\s+clube\b/i, date: "2026-09-26" },
@@ -451,9 +457,15 @@ function OmRankingTab({ tournament, level }: { tournament: Tournament; level: Le
                           </td>
                         );
                       })}
-                      {futuras.map(c => (
-                        <td key={c.name} style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }} />
-                      ))}
+                      {futuras.map(c => {
+                        const falta = AUSENCIAS[c.name]?.[p.fed];
+                        return (
+                          <td key={c.name} className="fs-11" title={falta ? `Não joga: ${falta}` : undefined}
+                            style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }}>
+                            {falta && <span className="p-muted" style={{ fontStyle: "italic" }}>não joga</span>}
+                          </td>
+                        );
+                      })}
                     </tr>
                   );
                 })}
