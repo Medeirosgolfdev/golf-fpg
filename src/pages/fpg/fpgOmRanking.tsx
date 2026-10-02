@@ -704,7 +704,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
         juniores); pill <strong>depois</strong> do nível = o que os Termos dizem para os juniores.{" "}
         <ModalidadePill nome="Stroke Play" /> pancadas, sem handicap · <ModalidadePill nome="Medal Net" /> pancadas, com handicap ·{" "}
         <ModalidadePill nome="Stableford Net" /> pontos, com handicap. O «Medal» dos Termos (sem «Net») contou-se como pancadas
-        sem handicap; falta o clube confirmar se queria dizer Medal Net (dá 93 pontos ao Manuel em vez de 101).
+        sem handicap; falta o clube confirmar se queria dizer Medal Net (só muda a Restauração: o Manuel ficaria com 96 pontos em vez de 101).
         O clube publicou todas as provas pela modalidade da prova; aqui segue-se o que está escrito nos Termos de cada uma.
       </div>
     </div>
