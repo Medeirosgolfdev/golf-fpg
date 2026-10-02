@@ -28,6 +28,12 @@
  *   node scripts/add-cgss-draw.js --json field.json      # transcrição manual
  *   ... [--strict-cgss]        # recusa PDFs que não sejam do Santo da Serra
  *                              # (usado pelo process-draw-inbox.js autónomo)
+ *   ... [--update]             # se o torneio já existir (mesmo nome, data
+ *                              # até +3 dias): "DRAW ATUALIZADO" substitui o
+ *                              # draw dessa volta enquanto o torneio é só-draw;
+ *                              # o draw do 2.º dia junta-se como volta 2
+ *                              # (também depois de promovido). Exit 2 = igual
+ *                              # ao que já lá está / nada a fazer.
  *   ... [--dry-run]            # mostra tudo, não grava nada
  *   ... [--tcode-real 11064]   # quando o clube já divulgou o link da
  *                              # classificação: grava `tcodeReal` na entrada e
@@ -56,6 +62,7 @@ const DRY = args.includes("--dry-run");
 const PDF = argVal("--pdf");
 const JSON_IN = argVal("--json");
 const TCODE_REAL = argVal("--tcode-real");
+const UPDATE = args.includes("--update");
 if (!PDF && !JSON_IN) {
   console.error('uso: node scripts/add-cgss-draw.js --pdf "Draw X.pdf" | --json field.json [--tcode-real N] [--dry-run]');
   process.exit(1);
@@ -157,14 +164,18 @@ let maxPh = 90075;
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);
-console.log(`[add] placeholder atribuído: 007/${TCODE}`);
 
-// entrada duplicada? (mesmo nome+data já inserido)
-const dup = cgss.tournaments.find(t => norm(t.name) === norm(draw.name) && t.date === draw.date);
-if (dup) {
-  console.error(`[add] ERRO: já existe "${dup.name}" (${dup.date}) como ${dup.ccode}/${dup.tcode} — nada feito.`);
+// entrada já existente? Mesmo nome, com a data do draw entre o 1.º dia do
+// torneio e +3 dias (o draw do 2.º dia traz a data desse dia).
+const diasDepois = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+const dup = cgss.tournaments.find(t => t.ccode === "007" && norm(t.name) === norm(draw.name) &&
+  diasDepois(t.date, draw.date) >= 0 && diasDepois(t.date, draw.date) <= 3);
+if (dup && !UPDATE) {
+  console.error(`[add] ERRO: já existe "${dup.name}" (${dup.date}) como ${dup.ccode}/${dup.tcode} — nada feito. (--update para actualizar)`);
   process.exit(1);
 }
+const RONDA = dup ? String(diasDepois(dup.date, draw.date) + 1) : "1";
+if (!dup) console.log(`[add] placeholder atribuído: 007/${TCODE}`);
 
 /* ── 3) fedCodes ────────────────────────────────────────────────────────── */
 const CLUB_KEYS = {
@@ -247,14 +258,47 @@ const stub = {
 };
 
 /* ── gravar ─────────────────────────────────────────────────────────────── */
+// Os dois ficheiros estão em disco com CRLF; o conteúdo é exactamente o
+// JSON.stringify(…, null, 2), por isso só é preciso repor as quebras de linha.
+const writeAtomic = (file, obj) => {
+  const crlf = fs.readFileSync(file, "utf8").includes("\r\n");
+  const txt = JSON.stringify(obj, null, 2);
+  fs.writeFileSync(file + ".tmp", crlf ? txt.replace(/\n/g, "\r\n") : txt);
+  fs.renameSync(file + ".tmp", file);
+};
+
+/* ── --update: torneio já inserido → substituir/juntar o draw desta volta ── */
+if (dup) {
+  const promovido = !dup.drawOnly || !/^9\d{4}$/.test(String(dup.tcode));
+  const novo = entry.draws["1"];
+  const actual = dup.draws && dup.draws[RONDA];
+  if (actual && JSON.stringify(actual.groups) === JSON.stringify(novo.groups)) {
+    console.log(`[add] draw da volta ${RONDA} de ${dup.ccode}/${dup.tcode} igual ao que já lá está — nada a fazer. (exit 2)`);
+    process.exit(2);
+  }
+  if (actual && promovido) {
+    console.log(`[add] ${dup.ccode}/${dup.tcode} já tem resultados e draw da volta ${RONDA} — não mexo. (exit 2)`);
+    process.exit(2);
+  }
+  console.log(`[add] ${actual ? "SUBSTITUI" : "JUNTA"} o draw da volta ${RONDA} de ${dup.ccode}/${dup.tcode} (${nPlayers} jogadores).`);
+  if (DRY) { console.log("[add] --dry-run: nada gravado."); process.exit(0); }
+  dup.draws = { ...(dup.draws || {}), [RONDA]: novo };
+  dup.source = draw.source;
+  const st = pull.tournaments.find(t => t.ccode === "007" && String(t.tcode) === String(dup.tcode) && t._drawOnly);
+  if (st) {
+    st.rounds = Math.max(st.rounds || 1, Number(RONDA));
+    st.playerCount = Math.max(st.playerCount || 0, nPlayers);
+    writeAtomic(PULL, pull);
+  }
+  writeAtomic(CGSS, cgss);
+  console.log(`[add] ✓ draw da volta ${RONDA} gravado em 007/${dup.tcode}${st ? " (+ stub)" : ""}.`);
+  process.exit(0);
+}
+
 if (DRY) {
   console.log(`[add] --dry-run: nada gravado. Placeholder ${TCODE} · a Action update-cgss-draw.yml apanha-o sozinha na data ${draw.date}.`);
   process.exit(0);
 }
-const writeAtomic = (file, obj) => {
-  fs.writeFileSync(file + ".tmp", typeof obj === "string" ? obj : JSON.stringify(obj, null, 2));
-  fs.renameSync(file + ".tmp", file);
-};
 cgss.tournaments.push(entry);
 cgss.total = cgss.tournaments.length;
 pull.tournaments.push(stub);

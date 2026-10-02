@@ -7,10 +7,14 @@
  * registada por scripts/setup-draw-inbox-task.ps1). Para cada *.pdf na pasta:
  *
  *   1. `git pull --rebase --autostash` (o repo auto-committa por Actions).
- *   2. `node scripts/add-cgss-draw.js --pdf <pdf> --strict-cgss` — extrai o
- *      draw, atribui o placeholder 9xxxx seguinte, resolve feds, escreve
- *      entrada + stub. (--strict-cgss: PDFs de outros organizadores, ex. PXO
- *      Porto Santo, são recusados para tratamento manual.)
+ *   2. `node scripts/add-cgss-draw.js --pdf <pdf> --strict-cgss --update` —
+ *      extrai o draw, atribui o placeholder 9xxxx seguinte, resolve feds,
+ *      escreve entrada + stub. (--strict-cgss: PDFs de outros organizadores,
+ *      ex. PXO Porto Santo, são recusados para tratamento manual. --update:
+ *      "DRAW ATUALIZADO" substitui, o draw do 2.º dia junta-se como volta 2;
+ *      exit 2 = já estava igual → processados/ sem commit.)
+ *      Os PDFs chegam aqui à mão ou pelo scripts/outlook-draw-inbox.ps1
+ *      (tarefa "GolfFPG-DrawsEmail", que os tira do Outlook).
  *   3. `npx vitest run` (sanidade) e commit+push dos 2 JSON.
  *   4. Move o PDF para draws-inbox/processados/. Em erro: move para
  *      draws-inbox/erros/ + escreve <nome>.log com o output completo.
@@ -94,8 +98,16 @@ for (const pdf of pdfs) {
   const base = path.basename(pdf);
   let output = "";
   try {
-    output = run("node", [path.join("scripts", "add-cgss-draw.js"), "--pdf", pdf, "--strict-cgss"]);
-    log(`✓ ${base}: entrada criada.`);
+    try {
+      output = run("node", [path.join("scripts", "add-cgss-draw.js"), "--pdf", pdf, "--strict-cgss", "--update"]);
+    } catch (e) {
+      if (e.status !== 2) throw e;
+      // exit 2 = esse draw já lá está tal e qual (ou o torneio já tem resultados)
+      log(`= ${base}: nada a mudar — ${String(e.stdout || "").trim().split("\n").pop()}`);
+      fs.renameSync(pdf, path.join(DONE, base));
+      continue;
+    }
+    log(`✓ ${base}: draw gravado.`);
     log(output.trim().split("\n").map((l) => "    " + l).join("\n"));
 
     // sanidade antes do commit — se os testes partirem, reverter os 2 JSON
