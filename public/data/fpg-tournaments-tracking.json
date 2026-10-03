@@ -1,14 +1,14 @@
 {
-  "lastUpdated": "2026-10-02T23:27:04.926Z",
+  "lastUpdated": "2026-10-03T22:35:24.316Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-10-02",
+  "today": "2026-10-03",
   "summary": {
     "total": 1783,
     "complete": 814,
-    "in_progress": 0,
-    "future": 7,
+    "in_progress": 3,
+    "future": 5,
     "stale": 10,
-    "excluded": 952,
+    "excluded": 951,
     "missing_admissions": 0,
     "missing_classif": 0,
     "missing_scorecards": 0,
@@ -382,7 +382,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -403,11 +403,11 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "007",
-      "tcode": "90076",
+      "tcode": "11067",
       "name": "Torneio 50 ANOS de AUTONOMIA",
       "date": "2026-10-03",
       "rounds": 1,
@@ -417,15 +417,14 @@
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
       "has_classif": true,
-      "player_count": 124,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
+      "player_count": 123,
+      "players_with_scorecards": 120,
+      "players_with_full_scorecards": 120,
       "scorecards_source": "pull-torneios001.json",
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
-      "has_manuel": false,
-      "status": "excluded",
-      "excluded_reason": "tcode placeholder (torneio só-draw) — sem classificação na FPG"
+      "scorecards_ratio": 0.976,
+      "full_scorecards_ratio": 0.976,
+      "has_manuel": true,
+      "status": "in_progress"
     },
     {
       "ccode": "007",
