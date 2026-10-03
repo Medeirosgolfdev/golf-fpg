@@ -156,11 +156,12 @@ console.log(`[add] coluna de clube no PDF: ${hasClubCol ? "SIM (regras de clube 
 /* ── 2) placeholder seguinte ────────────────────────────────────────────── */
 const cgss = JSON.parse(fs.readFileSync(CGSS, "utf8"));
 const pull = JSON.parse(fs.readFileSync(PULL, "utf8"));
-// 90071-90075 já foram usados (RALI, Calheta, 8º OM NOS, XIII Barbeito, Taça do Clube).
+// 90071-90076 já foram usados (RALI, Calheta, 8º OM NOS, XIII Barbeito, Taça do Clube,
+// 50 Anos de Autonomia → 11067).
 // Depois de re-chaveados deixam de aparecer nos ficheiros — não os reciclar,
 // senão o mesmo placeholder passa a nomear dois torneios no histórico do git.
 // SUBIR ESTE PISO sempre que um placeholder for promovido a tcode real.
-let maxPh = 90075;
+let maxPh = 90076;
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);
@@ -251,9 +252,15 @@ const entry = {
     players: g.players.map(p => ({ nome: p.nome, clube: p.clube, fed: p.fed, hcp: p.hcp, tee: p.tee || null, ...(p.noFed ? { noFed: true } : {}) })),
   })) } },
 };
+// Draw do «D1» (dia 1) = prova de 2 dias ou mais: o stub nasce com 2 voltas,
+// para o update-cgss-draw.yml (--min-rounds = voltas do stub) não promover o
+// torneio ao fim do 1.º dia e o deixar congelado com uma volta só — foi o que
+// aconteceu ao 50 Anos de Autonomia (03/10/2026, «Draw_D1_extenso_…pdf»).
+const PROVA_VARIOS_DIAS = /(^|[^a-z0-9])d1([^0-9]|$)|dia\s*1\b|1\.?\s*º\s*dia|day\s*1\b/i
+  .test(`${PDF ? path.basename(PDF) : ""} ${draw.name || ""}`);
 const stub = {
   name: draw.name, ccode: "007", tcode: TCODE, date: draw.date,
-  campo: draw.campo || "Santo da Serra", rounds: 1, playerCount: nPlayers,
+  campo: draw.campo || "Santo da Serra", rounds: PROVA_VARIOS_DIAS ? 2 : 1, playerCount: nPlayers,
   _drawOnly: true, players: [],
 };
 

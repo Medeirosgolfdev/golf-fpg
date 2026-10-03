@@ -129,19 +129,59 @@ jobs:
         env:
           INPUT_PLACEHOLDER: ${{ github.event.inputs.placeholder }}
 
+      # Torneio já promovido mas com MENOS voltas guardadas do que o draw tem
+      # (ex.: 50 Anos de Autonomia, 03/10/2026 — promovido no sábado com 1 volta
+      # porque o draw do 2.º dia ainda não tinha chegado). O auto-descobridor
+      # acima só pega em placeholders, por isso aqui volta-se a ler a
+      # classificação desse tcode real (merge aditivo no mesmo pull-torneios).
+      - name: Voltas em falta em torneios já promovidos
+        id: refresh
+        run: |
+          LIST=$(node -e '
+            const fs = require("fs");
+            const iso = (x) => x.toISOString().slice(0, 10);
+            const today = iso(new Date());
+            const cut = iso(new Date(Date.now() - 3 * 864e5));
+            // Voltas JOGADAS = com pancadas registadas (o campo `rounds` da FPG já diz 2
+            // antes de a 2.ª volta se jogar — medido a 03/10/2026).
+            const jogadas = (t) => Math.max(0, ...(t.players || []).map((p) =>
+              (p.roundScores || []).filter((r) => Number(r.gross) > 0 && Number(r.gross) < 900).length));
+            const pull = new Map(); // "cc/tc" → { idx, rounds }
+            for (const f of fs.readdirSync("public/data")) {
+              const m = /^pull-torneios(\d+)\.json$/.exec(f);
+              if (!m) continue;
+              let d; try { d = JSON.parse(fs.readFileSync("public/data/" + f, "utf8")); } catch { continue; }
+              for (const t of d.tournaments || []) pull.set(String(t.ccode) + "/" + String(t.tcode), { idx: m[1], rounds: jogadas(t) });
+            }
+            const out = [];
+            for (const file of ["public/data/cgss-draws-manual.json", "public/data/pja-draws-manual.json"]) {
+              let d; try { d = JSON.parse(fs.readFileSync(file, "utf8")); } catch { continue; }
+              for (const t of d.tournaments || []) {
+                const cc = String(t.ccode), tc = String(t.tcode);
+                if (/^9\d{4}$/.test(tc) || !t.date || t.date > today || t.date < cut) continue;
+                const voltasDraw = Object.keys(t.draws || {}).length;
+                const p = pull.get(cc + "/" + tc);
+                if (p && voltasDraw > p.rounds) out.push([cc, tc, p.idx, p.rounds, voltasDraw].join(":"));
+              }
+            }
+            console.log(out.join(" "));
+          ')
+          echo "list=$LIST" >> $GITHUB_OUTPUT
+          [ -n "$LIST" ] && echo "Com voltas em falta: $LIST" || echo "ℹ️  Nenhum torneio promovido com voltas em falta."
+
       - name: Setup Node.js
-        if: steps.pending.outputs.list != ''
+        if: steps.pending.outputs.list != '' || steps.refresh.outputs.list != ''
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: 'npm'
 
       - name: Instalar dependências
-        if: steps.pending.outputs.list != ''
+        if: steps.pending.outputs.list != '' || steps.refresh.outputs.list != ''
         run: npm ci
 
       - name: Correr update-cgss-draw-results.js (cada pendente)
-        if: steps.pending.outputs.list != ''
+        if: steps.pending.outputs.list != '' || steps.refresh.outputs.list != ''
         id: scrape
         run: |
           set +e
@@ -163,6 +203,15 @@ jobs:
               2) echo "ℹ️  $CC/$TC: ainda sem resultados completos publicados." ;;
               *) echo "❌ $CC/$TC: erro (exit $CODE)"; FAILED=1 ;;
             esac
+          done
+          # Torneios já promovidos com voltas em falta → reler a classificação.
+          for SPEC in ${{ steps.refresh.outputs.list }}; do
+            IFS=':' read -r CC TC PULL TEM QUER <<< "$SPEC"
+            echo "── $CC/$TC: $TEM volta(s) guardada(s), o draw tem $QUER — a reler ──"
+            node scripts/scrape-classif-node.js --tclub "$CC" --tcode "$TC" --out "public/data/pull-torneios$PULL.json"
+            AGORA=$(node -e "const d=JSON.parse(require('fs').readFileSync('public/data/pull-torneios$PULL.json','utf8'));const t=d.tournaments.find(x=>String(x.ccode)==='$CC'&&String(x.tcode)==='$TC');console.log(t?Math.max(0,...t.players.map(p=>(p.roundScores||[]).filter(r=>Number(r.gross)>0&&Number(r.gross)<900).length)):0)")
+            if [ "$AGORA" -gt "$TEM" ]; then echo "✓ $CC/$TC: agora com $AGORA volta(s)."; UPDATED=1
+            else echo "ℹ️  $CC/$TC: a FPG ainda não publicou a volta seguinte."; fi
           done
           echo "updated=$UPDATED" >> $GITHUB_OUTPUT
           echo "failed=$FAILED" >> $GITHUB_OUTPUT
