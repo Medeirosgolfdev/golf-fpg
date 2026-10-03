@@ -29,6 +29,7 @@ import PlayerKpiStrip from "./PlayerKpiStrip";
 import ByDateView from "./views/ByDateView";
 import ByCourseView from "./views/ByCourseView";
 import AnalysisView from "./views/AnalysisView";
+import { LoopEclecticSection } from "../../ui/LoopEclecticSection";
 import type { ViewKey, CourseSort } from "./shared";
 
 export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
@@ -364,6 +365,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
           {/* View content — Campos é sempre a versão rica (a antiga "Análise
               por campo"); o deep-link legado by_course_analysis cai aqui. */}
           <div className="pa-content">
+            <LoopEclecticSection data={data} />
             {viewBucket === "by_course" && (
               <ByCourseView data={data} search={courseSearch} sort={courseSort} />
             )}
