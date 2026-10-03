@@ -31,6 +31,7 @@ import ByCourseView from "./views/ByCourseView";
 import AnalysisView from "./views/AnalysisView";
 import { LoopEclecticSection } from "../../ui/LoopEclecticSection";
 import { eclecticos9 } from "../../data/sserraLoops";
+import { useCamposDe9 } from "../../hooks/useCamposDe9";
 import type { ViewKey, CourseSort } from "./shared";
 
 export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
@@ -193,7 +194,8 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     : view === "by_course_analysis" ? "by_course"
     : view;
   // Vista «Ecléticos» (9 buracos) — só para quem tem voltas no Santo da Serra ou em campos de 9.
-  const temEclecticoSds = useMemo(() => !!data && eclecticos9(data).length > 0, [data]);
+  const campos9 = useCamposDe9();
+  const temEclecticoSds = useMemo(() => !!data && eclecticos9(data, campos9).length > 0, [data, campos9]);
 
   // Vista "como federado": renderiza FederadoOnlyDetail com um _federadoRaw
   // sintético (Nossos não têm um real). Útil para ver a ficha base FPG +

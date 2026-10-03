@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sserraLoopEclectics, eclecticos9 } from "../sserraLoops";
+import { sserraLoopEclectics, eclecticos9, camposDe9 } from "../sserraLoops";
 import type { CourseData, HoleScores, RoundData } from "../playerDataLoader";
 
 const MACHICO = [4, 4, 5, 3, 4, 4, 5, 3, 4];
@@ -74,5 +74,45 @@ describe("eclecticos9 — campos de 9 jogados duas vezes", () => {
     expect(t.rounds).toHaveLength(3);
     expect(t.best).toEqual([4, 3, 4, 4, 2, 5, 4, 4, 5]);
     expect(t.total).toBe(35);
+  });
+
+  it("campo na lista oficial de 9 buracos: entra também a volta com um buraco jogado com outro par (Jamor 18/05/2025)", () => {
+    const outroPar = [...P]; outroPar[2] = 3;
+    const data = {
+      DATA: [curso("Jamor", [volta("a", 2, "VERMELHAS"), volta("b", 1, "VERMELHAS")])],
+      HOLES: {
+        a: comMetros([...P, ...P], [...P, ...P], [...M, ...M]),
+        b: comMetros(outroPar, [4, 3, 3, 4, 3, 5, 4, 4, 5], M.map((v, i) => (i === 2 ? 116 : v))),
+      },
+    };
+    const t = eclecticos9(data, new Set(["jamor"]))[0].linhas[0].tees[0];
+    expect(new Set(t.rounds.map(r => r.scoreId))).toEqual(new Set(["a", "b"]));
+    expect(t.best[2]).toBe(3);
+  });
+
+  it("campo fora da lista: uma volta com um par diferente não entra", () => {
+    const outroPar = [...P]; outroPar[2] = 3;
+    const data = {
+      DATA: [curso("Miramar", [volta("a", 2, "VERMELHAS"), volta("b", 1, "BRANCAS")])],
+      HOLES: {
+        a: comMetros([...P, ...P], [...P, ...P], [...M, ...M]),
+        b: comMetros(outroPar, [4, 3, 3, 4, 3, 5, 4, 4, 5], M),
+      },
+    };
+    const tees = eclecticos9(data)[0].linhas[0].tees;
+    expect(tees.map(t => t.teeName)).toEqual(["VERMELHAS"]);
+  });
+});
+
+describe("camposDe9", () => {
+  const tee = (d: number[]) => ({ holes: d.map(distance => ({ distance })) });
+  it("reconhece os campos com 10–18 iguais a 1–9 e ignora o Santo da Serra", () => {
+    const nove = [282, 176, 322, 304, 114, 254, 219, 380, 348];
+    const master = { courses: [
+      { master: { name: "Miramar", tees: [tee([...nove, ...nove])] } },
+      { master: { name: "Vilamoura - Laguna", tees: [tee([...nove, ...nove.map(v => v + 5)])] } },
+      { master: { name: "Santo da Serra - Serras-Serras", tees: [tee([...nove, ...nove])] } },
+    ] };
+    expect([...camposDe9(master)]).toEqual(["miramar"]);
   });
 });
