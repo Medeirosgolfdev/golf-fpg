@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T18:11:58.188Z",
+  "generatedAt": "2026-10-03T16:44:08.785Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -40870,6 +40870,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-german-masters",
+      "label": "German Masters",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-16749",
+        "uskids-19974",
+        "uskids-22858"
+      ],
+      "firstDate": "2024-10-04",
+      "lastDate": "2026-10-03",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-rio-pinar-golf-country-club-tour-championship",
       "label": "Rio Pinar Golf & Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -53897,18 +53910,6 @@
       ],
       "firstDate": "2023-12-16",
       "lastDate": "2026-04-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-german-masters",
-      "label": "German Masters",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-16749",
-        "uskids-19974"
-      ],
-      "firstDate": "2024-10-04",
-      "lastDate": "2025-10-04",
       "editionsCount": 2
     },
     {
@@ -93248,6 +93249,17 @@
       ],
       "firstDate": "2026-04-19",
       "lastDate": "2026-04-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-circolo-golf-venezia",
+      "label": "Circolo Golf Venezia",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23279"
+      ],
+      "firstDate": "2026-10-03",
+      "lastDate": "2026-10-03",
       "editionsCount": 1
     },
     {
