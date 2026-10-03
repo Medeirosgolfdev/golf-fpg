@@ -1101,6 +1101,17 @@
       "type": 6
     },
     {
+      "t": 23789,
+      "name": "Golfclub Schönfeld (Tour Championship)",
+      "date_inicio": "10/29/2026",
+      "date_fim": "10/29/2026",
+      "rondas": 1,
+      "campo": "Golfclub Schönfeld",
+      "fee_18": "45.00",
+      "tour": "Vienna (AT) Tour",
+      "type": 6
+    },
+    {
       "t": 23105,
       "name": "The Heaven Country Club (Tour Championship)",
       "date_inicio": "10/30/2026",
@@ -2256,19 +2267,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-02T13:45:42.625Z",
-  "varredura_max_t": 23786,
+  "gerado_em": "2026-10-03T12:23:47.771Z",
+  "varredura_max_t": 23789,
   "varredura": {
     "fim": "fronteira",
     "pedidos": 43,
-    "novos": 0,
+    "novos": 1,
     "buracos_revistos": 0,
-    "catalogo": 1481,
+    "catalogo": 1484,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23786,
-  "fronteira_avancou_em": "2026-10-02",
-  "dias_sem_descoberta": 2,
+  "fronteira_max_t_visto": 23789,
+  "fronteira_avancou_em": "2026-10-03",
+  "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-09-30"
+  "ultima_descoberta": "2026-10-03"
 }
