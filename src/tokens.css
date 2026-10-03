@@ -196,8 +196,10 @@
   --pill-nacional-bg:  #046A38;   /* verde nacional FPG */
   --pill-nacional-fg:  #FFD700;
   --pill-intl-bg:      #00FF00;   /* neon verde — INTENCIONAL, não alterar */
-  --pill-pcc-neg-bg:   #1d4ed8;   /* PCC −1 — dia fácil (SD sobe) */
-  --pill-pcc-pos-bg:   #c2410c;   /* PCC +1..+3 — dia difícil (SD desce) */
+  --pill-pcc-neg-bg:   #b91c1c;   /* PCC −1 — dia fácil, o SD sobe (mau para o jogador) */
+  --pill-pcc-pos1-bg:  #4d7c0f;   /* PCC +1 — escala de verde: quanto maior, mais escuro (bom) */
+  --pill-pcc-pos2-bg:  #15803d;   /* PCC +2 */
+  --pill-pcc-pos3-bg:  #14532d;   /* PCC +3 */
   --pill-pja-bg:       #dc2626;   /* vermelho PJA = danger */
   --pill-import-bg:    #8b5cf6;   /* violeta para rondas importadas */
   --pill-absoluto-bg:  #c8d8b4;   /* verde claro — escalão Absoluto */

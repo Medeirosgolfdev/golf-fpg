@@ -270,7 +270,8 @@ export function PccPill({ pcc, round }: { pcc: number; round?: number }) {
     : `PCC oficial da FPG: dia mais difícil do que o normal — o SD desta volta desce cerca de ${pcc}`;
   return (
     <span className="p p-sm p-tourn" title={t}
-      style={{ background: pcc < 0 ? C.pillPccNegBg : C.pillPccPosBg, color: C.white, borderColor: "transparent" }}>
+      style={{ background: pcc < 0 ? C.pillPccNegBg : pcc === 1 ? C.pillPccPos1Bg : pcc === 2 ? C.pillPccPos2Bg : C.pillPccPos3Bg,
+               color: C.white, borderColor: "transparent" }}>
       {round ? `R${round} ` : ""}{txt}
     </span>
   );
