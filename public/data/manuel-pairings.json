@@ -1,16 +1,16 @@
 {
-  "geradoEm": "2026-10-03T15:48:19.006Z",
+  "geradoEm": "2026-10-03T19:20:05.908Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 155,
+  "totalRondas": 156,
   "totalCompanheirosUnicos": 188,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 136,
-      "rondasComDraw": 123,
+      "rondasComDraw": 124,
       "torneiosJogados": 101,
       "torneiosComDraw": 96,
       "torneiosComDrawDetalhe": [
@@ -699,6 +699,42 @@
           "score": {
             "gross": 91,
             "toPar": 19
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-11067",
+      "torneioNome": "Torneio 50 ANOS de AUTONOMIA",
+      "data": "2026-10-03",
+      "ronda": 2,
+      "teeTime": "12:40",
+      "startHole": 17,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
+      "companheiros": [
+        {
+          "nome": "Ricardo Camacho",
+          "fed": "41799",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
+        },
+        {
+          "nome": "Mateus Penucho",
+          "fed": "52393",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 14
           }
         }
       ]
