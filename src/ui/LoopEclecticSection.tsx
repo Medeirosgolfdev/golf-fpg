@@ -13,7 +13,6 @@ import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { fmtToPar } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
-import TeePill from "./TeePill";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
@@ -37,23 +36,30 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
   const parTot = l.pars.reduce((a, b) => a + b, 0);
   const hx = getTeeHex(t.teeName), fg = textOnColor(hx);
   return (
-    <div className="ecPillBlock ecActive overflow-hidden br-lg" style={{ width: "fit-content", maxWidth: "100%" }}>
-      <div className="fw-600 fs-12 ecPillHeader" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+    <div className="ecPillBlock ecActive overflow-hidden br-lg" style={{ display: "inline-flex", flexDirection: "column", maxWidth: "100%" }}>
+      {/* width 0 + min-width 100%: o cabeçalho não alarga o cartão — dobra
+          dentro da largura da tabela. */}
+      <div className="fw-600 fs-12 ecPillHeader" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", width: 0, minWidth: "100%", boxSizing: "border-box" }}>
         {grupo !== l.nome && <span className="muted">{grupo} ·</span>}
         <span className="fw-700">{l.nome}</span>
-        <span className="muted">par {parTot} · Eclético</span>
+        <span className="muted">· Eclético</span>
         <span className="fw-700">{t.total ?? "–"}</span>
         {t.total != null && <span className="fw-700" style={{ color: corPar(t.total - parTot) }}>{fmtToPar(t.total - parTot)}</span>}
         <button type="button" className="fs-12" onClick={() => setAberto(v => !v)} style={{ ...semBorda, color: "var(--accent)" }}>
           {aberto ? "▾" : "▸"} {t.rounds.length} voltas
         </button>
-        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 4, flexWrap: "wrap" }}>
-          {l.tees.map(x => (
-            <button key={x.teeKey} type="button" onClick={() => setTeeKey(x.teeKey)} title={`${x.rounds.length} voltas neste tee`}
-              style={{ ...semBorda, opacity: x.teeKey === t.teeKey ? 1 : 0.4 }}>
-              <TeePill name={x.teeName} />
-            </button>
-          ))}
+        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 5, alignItems: "center" }}>
+          {l.tees.map(x => {
+            const cor = getTeeHex(x.teeName), sel = x.teeKey === t.teeKey;
+            return (
+              <button key={x.teeKey} type="button" onClick={() => setTeeKey(x.teeKey)}
+                title={`${x.teeName} · ${x.rounds.length} voltas`} aria-label={x.teeName}
+                style={{ ...semBorda, width: 14, height: 14, borderRadius: "50%", background: cor,
+                  border: "1px solid var(--border)",
+                  boxShadow: sel ? "0 0 0 2px var(--bg-card, #fff), 0 0 0 3.5px var(--text-2)" : "none",
+                  opacity: sel ? 1 : 0.55 }} />
+            );
+          })}
         </span>
       </div>
       <div className="scroll-x">
