@@ -30,6 +30,7 @@ import ByDateView from "./views/ByDateView";
 import ByCourseView from "./views/ByCourseView";
 import AnalysisView from "./views/AnalysisView";
 import { LoopEclecticSection } from "../../ui/LoopEclecticSection";
+import { eclecticos9 } from "../../data/sserraLoops";
 import type { ViewKey, CourseSort } from "./shared";
 
 export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
@@ -129,7 +130,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return () => { cancelled = true; };
   }, [fedId]);
 
-  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis"];
+  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis", "eclectic_sds"];
   const paramView = searchParams.get("view") as ViewKey | null;
 
   const [view, setViewState] = useState<ViewKey>(
@@ -187,10 +188,12 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
 
   /* Bucket do dropdown consolidado (3 opções): as vistas legadas mapeiam para
      o seu bucket — by_tournament → Rondas, by_course_analysis → Campos. */
-  const viewBucket: "by_date" | "by_course" | "analysis" =
+  const viewBucket: "by_date" | "by_course" | "analysis" | "eclectic_sds" =
     view === "by_tournament" ? "by_date"
     : view === "by_course_analysis" ? "by_course"
     : view;
+  // Vista «Ecléticos» (9 buracos) — só para quem tem voltas no Santo da Serra ou em campos de 9.
+  const temEclecticoSds = useMemo(() => !!data && eclecticos9(data).length > 0, [data]);
 
   // Vista "como federado": renderiza FederadoOnlyDetail com um _federadoRaw
   // sintético (Nossos não têm um real). Útil para ver a ficha base FPG +
@@ -324,6 +327,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   <option value="by_date">🗓 Rondas</option>
                   <option value="by_course">⛳ Campos</option>
                   <option value="analysis">📊 Análises</option>
+                  {(temEclecticoSds || view === "eclectic_sds") && <option value="eclectic_sds">🏌️ Ecléticos</option>}
                 </select>
                 {viewBucket === "by_date" && (
                   <div className="segmented-toggle" role="tablist" aria-label="Agrupamento das rondas">
@@ -365,7 +369,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
           {/* View content — Campos é sempre a versão rica (a antiga "Análise
               por campo"); o deep-link legado by_course_analysis cai aqui. */}
           <div className="pa-content">
-            <LoopEclecticSection data={data} />
+            {view === "eclectic_sds" && <LoopEclecticSection data={data} />}
             {viewBucket === "by_course" && (
               <ByCourseView data={data} search={courseSearch} sort={courseSort} />
             )}

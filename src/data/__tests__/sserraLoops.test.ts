@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sserraLoopEclectics } from "../sserraLoops";
+import { sserraLoopEclectics, eclecticos9 } from "../sserraLoops";
 import type { CourseData, HoleScores, RoundData } from "../playerDataLoader";
 
 const MACHICO = [4, 4, 5, 3, 4, 4, 5, 3, 4];
@@ -49,5 +49,30 @@ describe("sserraLoopEclectics", () => {
   it("ignora outros campos", () => {
     const data = { DATA: [curso("Palheiro", [volta("e", 1, "BRANCAS")])], HOLES: { e: card(MACHICO, MACHICO) } };
     expect(sserraLoopEclectics(data)).toEqual([]);
+  });
+});
+
+describe("eclecticos9 — campos de 9 jogados duas vezes", () => {
+  const P = [4, 3, 4, 4, 3, 5, 4, 4, 5];
+  const M = [282, 176, 322, 304, 114, 254, 219, 380, 348];
+  const comMetros = (p: number[], g: number[], m: number[]): HoleScores => ({ g, p, si: [], m, hc: p.length });
+  it("junta as duas metades das voltas de 18 e as voltas de 9; ignora campos de 18 a sério", () => {
+    const data = {
+      DATA: [
+        curso("Miramar", [volta("x", 2, "VERMELHAS"), volta("y", 1, "VERMELHAS")]),
+        curso("Vilamoura", [volta("z", 3, "AMARELAS")]),
+      ],
+      HOLES: {
+        x: comMetros([...P, ...P], [5, 3, 4, 5, 3, 6, 4, 5, 5, 4, 4, 4, 4, 4, 5, 5, 4, 6], [...M, ...M]),
+        y: comMetros(P, [4, 4, 5, 4, 2, 5, 5, 4, 5], M),
+        z: comMetros([...P, ...MACHICO], [...P, ...MACHICO], [...M, ...M.map(v => v + 10)]),
+      },
+    };
+    const gr = eclecticos9(data);
+    expect(gr.map(g => g.grupo)).toEqual(["Miramar"]);
+    const t = gr[0].linhas[0].tees[0];
+    expect(t.rounds).toHaveLength(3);
+    expect(t.best).toEqual([4, 3, 4, 4, 2, 5, 4, 4, 5]);
+    expect(t.total).toBe(35);
   });
 });

@@ -1,12 +1,13 @@
 /**
- * Eclético de um jogador em cada um dos três 9 buracos do Santo da Serra
- * (Machico, Desertas, Serras).
+ * Ecléticos de 9 buracos de um jogador:
  *
- * Os percursos de 18 buracos do clube são combinações de dois destes 9
- * (Machico-Desertas, Desertas-Serras, Serras-Machico) e as voltas de 9 buracos
- * jogam-se num só. O nome do percurso nos dados vem normalizado e perde a
- * ordem (ex. "Desertas+Machico"), por isso cada metade da volta é reconhecida
- * pela sequência de pares, que é a mesma em todos os tees.
+ *  1. Os três 9 do Santo da Serra (Machico, Desertas, Serras). Os percursos de
+ *     18 do clube são combinações de dois destes 9 e o nome nos dados vem
+ *     normalizado, sem ordem (ex. "Desertas+Machico"), por isso cada metade é
+ *     reconhecida pela sequência de pares, igual em todos os tees.
+ *  2. Os campos de 9 buracos que se jogam duas vezes para fazer 18 (Miramar,
+ *     Jamor…): reconhecidos por voltas de 18 cujas duas metades têm os mesmos
+ *     pares e os mesmos metros. Contam as duas metades e as voltas de 9.
  */
 import type { CourseData, HoleScores, RoundData } from "./playerDataLoader";
 import { normKey } from "../utils/teeColors";
@@ -17,17 +18,15 @@ export const SSERRA_LOOPS = [
   { nome: "Serras", pars: [5, 4, 4, 4, 3, 4, 4, 3, 5] },
 ] as const;
 
-export type LoopNome = (typeof SSERRA_LOOPS)[number]["nome"];
-
 export interface LoopRound {
   scoreId: string;
   date: string;
   dateSort: number;
   teeName: string;
-  /** Gross dos 9 buracos deste 9 (0/null = buraco sem resultado). */
+  /** Gross dos 9 buracos (null = buraco sem resultado). */
   g: (number | null)[];
-  /** Os dois 9 da volta, pela ordem jogada (um só nas voltas de 9 buracos). */
-  combo: LoopNome[];
+  /** Os 9 jogados na volta, pela ordem (um só nas voltas de 9 buracos). */
+  combo: string[];
 }
 
 export interface LoopTee {
@@ -42,67 +41,115 @@ export interface LoopTee {
 }
 
 export interface LoopEclectic {
-  nome: LoopNome;
+  nome: string;
   pars: readonly number[];
   /** Tees por ordem da volta mais recente. */
   tees: LoopTee[];
 }
 
-const loopDe = (p: (number | null)[] | undefined, inicio: number) =>
-  SSERRA_LOOPS.find(l => l.pars.every((v, i) => Number(p?.[inicio + i]) === v));
+export interface GrupoEclecticos {
+  /** "Santo da Serra" ou o nome do campo de 9 buracos. */
+  grupo: string;
+  linhas: LoopEclectic[];
+}
 
-export function sserraLoopEclectics(data: { DATA: CourseData[]; HOLES: Record<string, HoleScores> }): LoopEclectic[] {
-  type Acc = { teeName: string; rounds: LoopRound[]; meters: (number | null)[] };
-  const porLoop = new Map<LoopNome, Map<string, Acc>>();
+type Acc = { teeName: string; rounds: LoopRound[]; meters: (number | null)[] };
+const temG = (h: HoleScores, inicio: number) => Array.from({ length: 9 }, (_, i) => h.g?.[inicio + i]).some(v => v != null && Number(v) > 0);
+const igual9 = (a: (number | null)[] | undefined, b0: number) =>
+  !!a && Array.from({ length: 9 }, (_, i) => a[i]).every((v, i) => v != null && Number(v) === Number(a[b0 + i]));
 
-  const juntar = (nome: LoopNome, r: RoundData, h: HoleScores, inicio: number, combo: LoopNome[]) => {
-    const g = Array.from({ length: 9 }, (_, i) => {
-      const v = h.g?.[inicio + i];
-      return v != null && Number(v) > 0 ? Number(v) : null;
-    });
-    if (!g.some(v => v != null)) return;
-    const teeKey = normKey(r.tee || "");
-    const tees = porLoop.get(nome) ?? new Map<string, Acc>();
-    const acc: Acc = tees.get(teeKey) ?? { teeName: r.tee || "", rounds: [], meters: new Array(9).fill(null) };
-    acc.rounds.push({ scoreId: r.scoreId, date: r.date, dateSort: r.dateSort, teeName: r.tee || "", g, combo });
-    for (let i = 0; i < 9; i++) {
-      const m = h.m?.[inicio + i];
-      if (acc.meters[i] == null && m != null && Number(m) > 0) acc.meters[i] = Number(m);
+function acumular(map: Map<string, Acc>, r: RoundData, h: HoleScores, inicio: number, combo: string[]) {
+  const g = Array.from({ length: 9 }, (_, i) => {
+    const v = h.g?.[inicio + i];
+    return v != null && Number(v) > 0 ? Number(v) : null;
+  });
+  if (!g.some(v => v != null)) return;
+  const teeKey = normKey(r.tee || "");
+  const acc: Acc = map.get(teeKey) ?? { teeName: r.tee || "", rounds: [], meters: new Array(9).fill(null) };
+  acc.rounds.push({ scoreId: r.scoreId, date: r.date, dateSort: r.dateSort, teeName: r.tee || "", g, combo });
+  for (let i = 0; i < 9; i++) {
+    const m = h.m?.[inicio + i];
+    if (acc.meters[i] == null && m != null && Number(m) > 0) acc.meters[i] = Number(m);
+  }
+  map.set(teeKey, acc);
+}
+
+function fechar(nome: string, pars: readonly number[], tees: Map<string, Acc>): LoopEclectic {
+  const lista: LoopTee[] = [...tees.entries()].map(([teeKey, acc]) => {
+    const rounds = acc.rounds.sort((a, b) => b.dateSort - a.dateSort);
+    const best: (number | null)[] = new Array(9).fill(null);
+    const bestFrom: (string | null)[] = new Array(9).fill(null);
+    for (const r of rounds) {
+      r.g.forEach((v, i) => {
+        if (v != null && (best[i] == null || v < (best[i] as number))) { best[i] = v; bestFrom[i] = r.date; }
+      });
     }
-    tees.set(teeKey, acc);
-    porLoop.set(nome, tees);
-  };
+    const total = best.every(v => v != null) ? best.reduce<number>((s, v) => s + (v as number), 0) : null;
+    return { teeName: acc.teeName, teeKey, rounds, best, bestFrom, meters: acc.meters, total };
+  });
+  lista.sort((a, b) => (b.rounds[0]?.dateSort ?? 0) - (a.rounds[0]?.dateSort ?? 0));
+  return { nome, pars, tees: lista };
+}
 
+const ignorar = (r: RoundData) => r._isTreino || r._isExtra || r._isTeamEvent;
+
+/** Só os três 9 do Santo da Serra. */
+export function sserraLoopEclectics(data: { DATA: CourseData[]; HOLES: Record<string, HoleScores> }): LoopEclectic[] {
+  const porLoop = new Map<string, Map<string, Acc>>();
   for (const course of data.DATA) {
     if (!/santo da serra/i.test(course.course || "")) continue;
     for (const r of course.rounds) {
-      if (r._isTreino || r._isExtra || r._isTeamEvent) continue;
+      if (ignorar(r)) continue;
       const h = data.HOLES[r.scoreId];
       if (!h?.g || !h.p) continue;
-      const metades = [0, 9]
-        .map(inicio => ({ inicio, loop: loopDe(h.p, inicio) }))
-        .filter((x): x is { inicio: number; loop: (typeof SSERRA_LOOPS)[number] } => !!x.loop);
-      const combo = metades.map(x => x.loop.nome);
-      for (const x of metades) juntar(x.loop.nome, r, h, x.inicio, combo);
+      const metades = [0, 9].flatMap(inicio => {
+        const loop = SSERRA_LOOPS.find(l => l.pars.every((v, i) => Number(h.p?.[inicio + i]) === v));
+        return loop ? [{ inicio, nome: loop.nome as string }] : [];
+      });
+      const combo = metades.map(x => x.nome);
+      for (const x of metades) {
+        const m = porLoop.get(x.nome) ?? new Map<string, Acc>();
+        acumular(m, r, h, x.inicio, combo);
+        porLoop.set(x.nome, m);
+      }
     }
   }
+  return SSERRA_LOOPS.flatMap(l => (porLoop.get(l.nome)?.size ? [fechar(l.nome, l.pars, porLoop.get(l.nome)!)] : []));
+}
 
-  return SSERRA_LOOPS.flatMap(loop => {
-    const tees = porLoop.get(loop.nome);
-    if (!tees) return [];
-    const lista: LoopTee[] = [...tees.entries()].map(([teeKey, acc]) => {
-      const rounds = acc.rounds.sort((a, b) => b.dateSort - a.dateSort);
-      const best: (number | null)[] = new Array(9).fill(null);
-      const bestFrom: (string | null)[] = new Array(9).fill(null);
-      for (const r of rounds) {
-        r.g.forEach((v, i) => {
-          if (v != null && (best[i] == null || v < (best[i] as number))) { best[i] = v; bestFrom[i] = r.date; }
-        });
+/** Campos de 9 buracos jogados duas vezes (fora do Santo da Serra). */
+export function doubledNineEclectics(data: { DATA: CourseData[]; HOLES: Record<string, HoleScores> }): LoopEclectic[] {
+  const out: LoopEclectic[] = [];
+  for (const course of data.DATA) {
+    if (/santo da serra/i.test(course.course || "")) continue;
+    const voltas = course.rounds.filter(r => !ignorar(r) && data.HOLES[r.scoreId]?.g && data.HOLES[r.scoreId]?.p);
+    const dobrada = (h: HoleScores) =>
+      igual9(h.p, 9) && (!h.m?.some(v => v != null && Number(v) > 0) || igual9(h.m, 9));
+    const dobradas = voltas.filter(r => { const h = data.HOLES[r.scoreId]; return temG(h, 0) && temG(h, 9) && dobrada(h); });
+    if (!dobradas.length) continue;
+    const ref = data.HOLES[dobradas[0].scoreId];
+    const pars = Array.from({ length: 9 }, (_, i) => Number(ref.p[i]));
+    const mesmoPar = (h: HoleScores, inicio: number) => pars.every((v, i) => Number(h.p?.[inicio + i]) === v);
+    const tees = new Map<string, Acc>();
+    for (const r of voltas) {
+      const h = data.HOLES[r.scoreId];
+      const duas = temG(h, 0) && temG(h, 9);
+      if (duas && !dobrada(h)) continue; // 18 buracos a sério: não é este 9
+      for (const inicio of [0, 9]) {
+        if (!temG(h, inicio) || !mesmoPar(h, inicio)) continue;
+        acumular(tees, r, h, inicio, duas ? [course.course, course.course] : [course.course]);
       }
-      const total = best.every(v => v != null) ? best.reduce<number>((s, v) => s + (v as number), 0) : null;
-      return { teeName: acc.teeName, teeKey, rounds, best, bestFrom, meters: acc.meters, total };
-    });
-    lista.sort((a, b) => (b.rounds[0]?.dateSort ?? 0) - (a.rounds[0]?.dateSort ?? 0));
-    return [{ nome: loop.nome, pars: loop.pars, tees: lista }];
-  });
+    }
+    out.push(fechar(course.course, pars, tees));
+  }
+  return out.sort((a, b) => (b.tees[0]?.rounds[0]?.dateSort ?? 0) - (a.tees[0]?.rounds[0]?.dateSort ?? 0));
+}
+
+/** Todos os ecléticos de 9 buracos do jogador, agrupados por campo. */
+export function eclecticos9(data: { DATA: CourseData[]; HOLES: Record<string, HoleScores> }): GrupoEclecticos[] {
+  const sds = sserraLoopEclectics(data);
+  return [
+    ...(sds.length ? [{ grupo: "Santo da Serra", linhas: sds }] : []),
+    ...doubledNineEclectics(data).map(l => ({ grupo: l.nome, linhas: [l] })),
+  ];
 }
