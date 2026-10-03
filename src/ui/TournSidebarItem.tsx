@@ -9,8 +9,9 @@ import { isManuel } from "./tournamentPrimitives";
 import {
   SIDEBAR_ACCENT,
   EscPill, RoundPill, TcodePill, NineHPill, SserraPill, JuniorPill,
-  ManuelPill, ClubePill, NacionalPill, PillBadge,
+  ManuelPill, ClubePill, NacionalPill, PillBadge, PccPill,
 } from "./PillBadge";
+import { tournamentPccs } from "../data/fpgUtils";
 import { shortDateSlash } from "../utils/format";
 import { FileBadge } from "./DataSources";
 import { tournamentAces } from "../utils/aces";
@@ -170,6 +171,7 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
         {hasNacional && t.pill !== "NACIONAL" && <NacionalPill />}
         {hasJunior && <JuniorPill />}
         {extraPills}
+        {tournamentPccs(t).map(x => <PccPill key={x.round} pcc={x.pcc} round={nR > 1 ? x.round : undefined} />)}
         {manuelPlayed && <ManuelPill />}
         {!isSserra && <ClubePill clube={t.clube} ccode={t.ccode} />}
       </div>

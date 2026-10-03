@@ -38,6 +38,32 @@ export function numGross(p: Player): number {
  *  Fonte única desta lógica para garantir consistência entre filtros da sidebar,
  *  pill no cabeçalho do detail e highlight na sidebar.
  */
+/** PCC oficial de cada volta do torneio, só as diferentes de 0. Vem do cartão de
+ *  cada jogador (`roundScores[].pcc`, campo `cba` da FPG; ausente = 0); o PCC é
+ *  um por campo e por dia, por isso fica o valor da maioria dos cartões da volta. */
+export function tournamentPccs(
+  t: { players?: ReadonlyArray<{ roundScores?: ReadonlyArray<unknown> }> } | undefined | null,
+): { round: number; pcc: number }[] {
+  const porVolta = new Map<number, Map<number, number>>();
+  for (const p of t?.players || []) {
+    for (const rs of (p.roundScores || []) as ReadonlyArray<{ round?: number | string; gross?: number | string | null; pcc?: number }>) {
+      const g = Number(rs.gross);
+      if (!(g > 0 && g < 900)) continue;
+      const r = Number(rs.round) || 1;
+      const v = typeof rs.pcc === "number" ? rs.pcc : 0;
+      const m = porVolta.get(r) ?? new Map<number, number>();
+      m.set(v, (m.get(v) ?? 0) + 1);
+      porVolta.set(r, m);
+    }
+  }
+  const out: { round: number; pcc: number }[] = [];
+  for (const [round, m] of [...porVolta].sort((a, b) => a[0] - b[0])) {
+    const [pcc] = [...m].sort((a, b) => b[1] - a[1])[0];
+    if (pcc !== 0) out.push({ round, pcc });
+  }
+  return out;
+}
+
 export function tournamentHasManuel(t: Tournament | undefined | null): boolean {
   if (!t) return false;
   if ((t.players || []).some(p => isManuel(p as any))) return true;

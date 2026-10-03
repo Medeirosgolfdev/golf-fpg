@@ -85,6 +85,8 @@ export const C = {
   pillManuelBg:    "#dcfce7",   // PILL_MANUEL background
   pillManuelFg:    "#166534",   // PILL_MANUEL text
   pillManuelBd:    "#16a34a",   // PILL_MANUEL border
+  pillPccNegBg:    "#1d4ed8",   // PCC −1 (--pill-pcc-neg-bg)
+  pillPccPosBg:    "#c2410c",   // PCC +1..+3 (--pill-pcc-pos-bg)
   rivaisLinkHover: "#0d3a18",
 
   // ── Charts / data-viz ───────────────────────────────────────────────────────

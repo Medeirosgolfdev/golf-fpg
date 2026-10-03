@@ -261,6 +261,21 @@ export function OmPill({ level }: { level?: string | null }) {
   return <span className="p p-sm p-tourn" style={PILL_OM} title={t}>OM{level ? `·${level}` : ""}</span>;
 }
 
+/** PCC oficial ≠ 0 de uma volta. `round` só em torneios de várias voltas. */
+export function PccPill({ pcc, round }: { pcc: number; round?: number }) {
+  if (!pcc) return null;
+  const txt = `PCC ${pcc > 0 ? "+" : "−"}${Math.abs(pcc)}`;
+  const t = pcc < 0
+    ? "PCC oficial da FPG: dia mais fácil do que o normal — o SD desta volta sobe cerca de 1"
+    : `PCC oficial da FPG: dia mais difícil do que o normal — o SD desta volta desce cerca de ${pcc}`;
+  return (
+    <span className="p p-sm p-tourn" title={t}
+      style={{ background: pcc < 0 ? C.pillPccNegBg : C.pillPccPosBg, color: C.white, borderColor: "transparent" }}>
+      {round ? `R${round} ` : ""}{txt}
+    </span>
+  );
+}
+
 /** Clube organizador */
 export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: string | null }) {
   const short = shortClubFromField(clube, ccode);

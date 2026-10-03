@@ -16,13 +16,13 @@ import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { MultiRoundRow } from "../../ui/multiRoundTypes";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
-import { tournamentHasManuel } from "../../data/fpgUtils";
+import { tournamentHasManuel, tournamentPccs } from "../../data/fpgUtils";
 import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, norm } from "../../utils/format";
 import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
-  ClubePill, ManuelPill, OmPill,
+  ClubePill, ManuelPill, OmPill, PccPill,
 } from "../../ui/PillBadge";
 import { omLevelOf, useOmData, buildOmLookup } from "./fpgOmRanking";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
@@ -410,6 +410,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             {tournament.ccode === SSERRA_CCODE && <SserraPill />}
             {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
             {omLevelOf(tournament) && <OmPill level={omLevelOf(tournament)} />}
+            {tournamentPccs(tournament).map(x => <PccPill key={x.round} pcc={x.pcc} round={nRounds > 1 ? x.round : undefined} />)}
             {tournamentHasManuel(tournament) && <ManuelPill />}
           </span>
 
