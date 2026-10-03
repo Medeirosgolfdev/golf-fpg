@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-02T23:27:03.375Z",
+  "geradoEm": "2026-10-03T15:48:19.006Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -659,35 +659,47 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-90076",
+      "torneioId": "007-11067",
       "torneioNome": "Torneio 50 ANOS de AUTONOMIA",
       "data": "2026-10-03",
       "ronda": 1,
       "teeTime": "09:40",
       "startHole": 17,
       "campo": "Santo da Serra - Machico-Desertas",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
       "companheiros": [
         {
           "nome": "Ricardo Camacho",
           "fed": "41799",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
         },
         {
           "nome": "Mateus Penucho",
           "fed": "52393",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
         },
         {
           "nome": "Manuel Gouveia",
           "fed": "41124",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 91,
+            "toPar": 19
+          }
         }
       ]
     },
