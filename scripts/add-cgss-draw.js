@@ -161,15 +161,18 @@ const pull = JSON.parse(fs.readFileSync(PULL, "utf8"));
 // Depois de re-chaveados deixam de aparecer nos ficheiros — não os reciclar,
 // senão o mesmo placeholder passa a nomear dois torneios no histórico do git.
 // SUBIR ESTE PISO sempre que um placeholder for promovido a tcode real.
-let maxPh = 90076;
+let maxPh = 90077; // 90077 = D2 Autonomia criado por engano e desfeito (04/10)
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);
 
 // entrada já existente? Mesmo nome, com a data do draw entre o 1.º dia do
 // torneio e +3 dias (o draw do 2.º dia traz a data desse dia).
+// O nome do PDF do 2.º dia traz a marca do dia («... Dia 2», 04/10/2026) —
+// tira-se antes de comparar.
 const diasDepois = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
-const dup = cgss.tournaments.find(t => t.ccode === "007" && norm(t.name) === norm(draw.name) &&
+const semDia = (s) => norm(s).replace(/\b(dia|day|d)\s*\d\b|\b\d\s*o?\s*dia\b/g, " ").replace(/\s+/g, " ").trim();
+const dup = cgss.tournaments.find(t => t.ccode === "007" && semDia(t.name) === semDia(draw.name) &&
   diasDepois(t.date, draw.date) >= 0 && diasDepois(t.date, draw.date) <= 3);
 if (dup && !UPDATE) {
   console.error(`[add] ERRO: já existe "${dup.name}" (${dup.date}) como ${dup.ccode}/${dup.tcode} — nada feito. (--update para actualizar)`);

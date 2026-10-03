@@ -2,7 +2,7 @@
   "_doc": "Draws COMPLETOS curados CGSS (Santo da Serra) de PDFs oficiais — inclui torneios que o Manuel NAO jogou. Preenchem draws vazios ccode-007 (nome/data do PDF autoritativos). Match contra pull-torneios/drive-data/clubes/jovens. Manuel jr fed 52884; homonimo Manuel Medeiros fed 54907.",
   "gerado_em": "2026-06-14",
   "source": "manual (PDFs oficiais DataGolf CGSS) + cruzamento de feds com classificacoes (pull-torneios)",
-  "total": 52,
+  "total": 51,
   "tournaments": [
     {
       "ccode": "007",
@@ -31075,7 +31075,7 @@
       "date": "2026-10-03",
       "campo": "Santo da Serra - Machico-Desertas",
       "modal": "Stableford Net",
-      "source": "20261002-1822_Draw_D1_extenso_50Autonomia_OF.pdf (email do clube)",
+      "source": "20261003-1730_Draw_D2_extenso_50Autonomia.pdf (email do clube)",
       "drawOnly": false,
       "draws": {
         "1": {
@@ -32186,20 +32186,8 @@
               ]
             }
           ]
-        }
-      }
-    },
-    {
-      "ccode": "007",
-      "tcode": "90077",
-      "name": "Torneio 50 ANOS de AUTONOMIA Dia 2",
-      "date": "2026-10-04",
-      "campo": "Santo da Serra - Desertas-Serras",
-      "modal": "Stableford Net",
-      "source": "20261003-1730_Draw_D2_extenso_50Autonomia.pdf (email do clube)",
-      "drawOnly": true,
-      "draws": {
-        "1": {
+        },
+        "2": {
           "totalJogadores": 111,
           "groups": [
             {
