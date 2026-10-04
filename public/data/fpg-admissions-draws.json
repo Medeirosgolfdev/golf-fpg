@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-02T23:27:00.346Z",
-  "total": 1225,
+  "scrapedAt": "2026-10-04T22:38:47.083Z",
+  "total": 1227,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -389909,18 +389909,630 @@
       "name": "5º Torneio do Circuito Mid-Amateur & Senior",
       "date": "2026-10-03",
       "expectedYear": "2026",
+      "campo": "Palheiro Golf",
       "admissions": {
         "name": "5º Torneio do Circuito Mid-Amateur & Senior",
         "date": "2026-10-03",
-        "totalInscritos": 0,
+        "totalInscritos": 9,
         "reservas": 0,
-        "status": "Inscrições em curso",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10895",
         "ccode": "000",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "8188",
+            "nome": "Pedro Sampaio Sa Lima",
+            "clube": "Atlantico",
+            "hcp": 0.6,
+            "vacf": 72,
+            "registo": "2026/07/26 23:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "4749",
+            "nome": "José Pedro Patacão",
+            "clube": "Atlantico",
+            "hcp": 0.7,
+            "vacf": 72.1,
+            "registo": "2026/08/06 07:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "20292",
+            "nome": "Brandon Hobley",
+            "clube": "Santo da Serra",
+            "hcp": 0.5,
+            "vacf": 72.9,
+            "registo": "2026/08/16 11:09",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "345",
+            "nome": "José Manuel Folhadela Furtado",
+            "clube": "Oporto",
+            "hcp": 5.7,
+            "vacf": 77,
+            "registo": "2026/08/06 13:15",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "44022",
+            "nome": "Hélio Pereira",
+            "clube": "Montado",
+            "hcp": 5.9,
+            "vacf": 78.4,
+            "registo": "2026/07/23 14:49",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "35256",
+            "nome": "José Duarte Rodrigues",
+            "clube": "Palheiro",
+            "hcp": 8.3,
+            "vacf": 80.4,
+            "registo": "2026/08/14 10:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "30049",
+            "nome": "Afonso Esteves",
+            "clube": "ACP Golfe",
+            "hcp": 11.2,
+            "vacf": 87,
+            "registo": "2026/07/26 15:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "34198",
+            "nome": "João São Marcos",
+            "clube": "ACP Golfe",
+            "hcp": 13.1,
+            "vacf": 89.1,
+            "registo": "2026/08/06 13:09",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "23187",
+            "nome": "Diogo Almeida",
+            "clube": "Miramar",
+            "hcp": 7.7,
+            "vacf": null,
+            "registo": "2026/08/16 11:12",
+            "status": "confirmed"
+          }
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "5º Torneio do Circuito Mid-Amateur & Senior",
+          "date": "2026-10-03",
+          "campo": "Palheiro Golf",
+          "clube": "Federação Portuguesa de Golfe",
+          "totalJogadores": 35,
+          "groups": [
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Araújo",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Brandon Hobley",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Pedro Sampaio Sa Lima",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Pedro Patacão",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Gonçalo Costa",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Mark King",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Joen Falsner",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Sérgio Pereira",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Pedro Castro",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "David Vieira Perrolas",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "José Manuel Folhadela Furtado",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Hélio Pereira",
+                  "fed": null,
+                  "clube": "Montado"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Mota Carmo",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "José Duarte Rodrigues",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Kim Breivik",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Paulo A. Azevedo",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Pedro Nunes Pedro",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "José Nuno Braga",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Luis Oliveira da Quinta",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Vitor Manuel Brito",
+                  "fed": null,
+                  "clube": "Centro"
+                },
+                {
+                  "nome": "Jonathan Fletcher",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Esteves",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Luis Braga",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                },
+                {
+                  "nome": "Pedro Moreira",
+                  "fed": null,
+                  "clube": "RIO"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Anton Rensburg",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "João São Marcos",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Roberto Passos",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Mark Dinis",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Vitor Esteves",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Rui Alberto Sousa",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Sanchez",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Thierry Von Kanel",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Miguel Tomé",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Almeida",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Jose Leite Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "5º Torneio do Circuito Mid-Amateur & Senior D2",
+          "date": "2026-10-04",
+          "campo": "Palheiro Golf",
+          "clube": "Federação Portuguesa de Golfe",
+          "totalJogadores": 33,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vitor Esteves",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Vitor Manuel Brito",
+                  "fed": null,
+                  "clube": "Centro"
+                },
+                {
+                  "nome": "Miguel Tomé",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Esteves",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Pedro Moreira",
+                  "fed": null,
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Paulo A. Azevedo",
+                  "fed": null,
+                  "clube": "Amendoeira"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Thierry Von Kanel",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Jose Leite Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Roberto Passos",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Sanchez",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Luis Oliveira da Quinta",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Kim Breivik",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rui Alberto Sousa",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Joen Falsner",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Hélio Pereira",
+                  "fed": null,
+                  "clube": "Montado"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Anton Rensburg",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Diogo Almeida",
+                  "fed": null,
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "José Duarte Rodrigues",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Jonathan Fletcher",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Gonçalo Mota Carmo",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "João São Marcos",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Nuno Braga",
+                  "fed": null,
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Sérgio Pereira",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "David Vieira Perrolas",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Manuel Folhadela Furtado",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Pedro Castro",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Luis Braga",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Mark Dinis",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Pedro Araújo",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "José Pedro Patacão",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Mark King",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Brandon Hobley",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Gonçalo Costa",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "000",
@@ -389928,6 +390540,7 @@
       "name": "5º Torneio do Circuito Mid-Amateur & Senior S",
       "date": "2026-10-03",
       "expectedYear": "2026",
+      "campo": "Palheiro Golf",
       "admissions": {
         "name": "5º Torneio do Circuito Mid-Amateur & Senior S",
         "date": "2026-10-03",
@@ -389950,7 +390563,138 @@
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "5º Torneio do Circuito Mid-Amateur & Senior S",
+          "date": "2026-10-03",
+          "campo": "Palheiro Golf",
+          "clube": "Federação Portuguesa de Golfe",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marta Lampreia",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Arminda Von Kanel",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Élia Handa",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Betty Vanneste",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Maria Margarida Sampaio",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Ann de Jongh",
+                  "fed": null,
+                  "clube": "Floresta Parque"
+                },
+                {
+                  "nome": "Alef Volkner",
+                  "fed": null,
+                  "clube": "Palheiro"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "5º Torneio do Circuito Mid-Amateur & Senior S D2",
+          "date": "2026-10-04",
+          "campo": "Palheiro Golf",
+          "clube": "Federação Portuguesa de Golfe",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Élia Handa",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Maria Margarida Sampaio",
+                  "fed": null,
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Ann de Jongh",
+                  "fed": null,
+                  "clube": "Floresta Parque"
+                },
+                {
+                  "nome": "Betty Vanneste",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Arminda Von Kanel",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Alef Volkner",
+                  "fed": null,
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Marta Lampreia",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "007",
@@ -389963,6 +390707,2094 @@
         "players": []
       },
       "draws": {}
+    },
+    {
+      "ccode": "003",
+      "tcode": "10675",
+      "name": "Taça Nena",
+      "date": "2026-10-03",
+      "expectedYear": "2026",
+      "campo": "Miramar",
+      "admissions": {
+        "name": "Taça Nena",
+        "date": "2026-10-03",
+        "campo": "Miramar",
+        "clube": "Club de Golf de Miramar",
+        "status": null,
+        "totalInscritos": 42,
+        "reservas": 0,
+        "players": [
+          {
+            "pos": null,
+            "fed": "33056",
+            "nome": "Alberto Montoya",
+            "clube": "Viseu",
+            "hcp": 26.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "23900",
+            "nome": "António Costa",
+            "clube": "Miramar",
+            "hcp": 22.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "965",
+            "nome": "Antonio Maria Neves",
+            "clube": "Miramar",
+            "hcp": 14.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "38086",
+            "nome": "António Nunes Pinto",
+            "clube": "Miramar",
+            "hcp": 25.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "38053",
+            "nome": "António Sousa Machado",
+            "clube": "Miramar",
+            "hcp": 17.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "811",
+            "nome": "Benedita Mendes Ribeiro",
+            "clube": "Miramar",
+            "hcp": 17.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "8082",
+            "nome": "Carlos Vieira",
+            "clube": "Miramar",
+            "hcp": 18.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "53938",
+            "nome": "Cristina Jorge",
+            "clube": "Miramar",
+            "hcp": 38.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "13771",
+            "nome": "Davis Gurgel",
+            "clube": "Miramar",
+            "hcp": 24,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "19623",
+            "nome": "Eduardo Jorge Marta da Cruz",
+            "clube": "Miramar",
+            "hcp": 11.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "51182",
+            "nome": "Eduardo Rocha Ferreira",
+            "clube": "Miramar",
+            "hcp": 14.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "40981",
+            "nome": "Francisca Ferreira da Costa",
+            "clube": "Miramar",
+            "hcp": -0.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "53646",
+            "nome": "Henrique Pereira",
+            "clube": "Miramar",
+            "hcp": 7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "44586",
+            "nome": "Isabel Barbosa",
+            "clube": "Quinta do Fojo",
+            "hcp": 13.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "46038",
+            "nome": "João Balixa",
+            "clube": "Miramar",
+            "hcp": 4.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "57117",
+            "nome": "João Correia Vicente",
+            "clube": "Braga",
+            "hcp": 35.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "915",
+            "nome": "Joao Nuno Mendes Ribeiro",
+            "clube": "Miramar",
+            "hcp": 8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "53645",
+            "nome": "José Maria Pereira",
+            "clube": "Miramar",
+            "hcp": 12.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "812",
+            "nome": "Jose Miguel Mendes Ribeiro",
+            "clube": "Miramar",
+            "hcp": 10.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "33792",
+            "nome": "Luis Ferreira da Costa",
+            "clube": "Miramar",
+            "hcp": 9.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "31051",
+            "nome": "Luis Guimarães",
+            "clube": "Miramar",
+            "hcp": 18.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": null,
+            "nome": "Luiz Augusto Oliveira Junior",
+            "clube": "Internacional",
+            "hcp": 23.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "57884",
+            "nome": "Manuel Pontes Carneiro",
+            "clube": "Miramar",
+            "hcp": 17.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "19552",
+            "nome": "Manuel Pontes Ferreira",
+            "clube": "Miramar",
+            "hcp": 10.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "31337",
+            "nome": "Paula Costa",
+            "clube": "Miramar",
+            "hcp": 21,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "40268",
+            "nome": "Pedro Abreu",
+            "clube": "Miramar",
+            "hcp": 13.2,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "56077",
+            "nome": "Pedro Gomes",
+            "clube": "Braga",
+            "hcp": 36,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "44481",
+            "nome": "Raul Pazos",
+            "clube": "Miramar",
+            "hcp": 13.5,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "46296",
+            "nome": "Raul Pazos (jr)",
+            "clube": "Miramar",
+            "hcp": 6.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "41456",
+            "nome": "Ricardo Bernardo",
+            "clube": "Miramar",
+            "hcp": 29.1,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "51180",
+            "nome": "Ricardo Rocha Ferreira",
+            "clube": "Miramar",
+            "hcp": 11.8,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "25739",
+            "nome": "Rodrigo Pestana",
+            "clube": "Vale Pisão",
+            "hcp": 11.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "22325",
+            "nome": "Rodrigo Santos",
+            "clube": "Miramar",
+            "hcp": 15.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "23702",
+            "nome": "Rolf Kullmann",
+            "clube": "Miramar",
+            "hcp": 17.3,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "46315",
+            "nome": "Telmo Rente",
+            "clube": "Miramar",
+            "hcp": 28.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "55582",
+            "nome": "Tereza Gonçalves",
+            "clube": "Vale Pisão",
+            "hcp": 36.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "58549",
+            "nome": "Tom Georges",
+            "clube": "Miramar",
+            "hcp": 35.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "35849",
+            "nome": "Tomás Afonso Araujo",
+            "clube": "Miramar",
+            "hcp": 0.6,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "46311",
+            "nome": "Tomás Rente",
+            "clube": "Miramar",
+            "hcp": 5.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "24787",
+            "nome": "Vanda Maria Carvalho Urzal",
+            "clube": "Miramar",
+            "hcp": 27.4,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "47470",
+            "nome": "Vasco Balixa",
+            "clube": "Miramar",
+            "hcp": 20.7,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "32411",
+            "nome": "Vitor Neves",
+            "clube": "Miramar",
+            "hcp": 11.9,
+            "vacf": null,
+            "registo": null,
+            "status": "confirmed"
+          }
+        ],
+        "_source": "admissions.asp"
+      },
+      "draws": {
+        "1": {
+          "name": "Taça Nena",
+          "date": "2026-10-03",
+          "campo": "Miramar",
+          "clube": "Club de Golf de Miramar",
+          "totalJogadores": 42,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Tomás Afonso Araujo",
+                  "fed": "35849",
+                  "clube": "Miramar",
+                  "hcp": 0.6
+                },
+                {
+                  "nome": "Rodrigo Santos",
+                  "fed": "22325",
+                  "clube": "Miramar",
+                  "hcp": 15.6
+                },
+                {
+                  "nome": "António Sousa Machado",
+                  "fed": "38053",
+                  "clube": "Miramar",
+                  "hcp": 17.9
+                },
+                {
+                  "nome": "Carlos Vieira",
+                  "fed": "8082",
+                  "clube": "Miramar",
+                  "hcp": 18.1
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 2,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "fed": "40981",
+                  "clube": "Miramar",
+                  "hcp": -0.9
+                },
+                {
+                  "nome": "Rolf Kullmann",
+                  "fed": "23702",
+                  "clube": "Miramar",
+                  "tee": "Brancas",
+                  "hcp": 17.3
+                },
+                {
+                  "nome": "Luiz Augusto Oliveira Junior",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Brancas",
+                  "hcp": 23.6
+                },
+                {
+                  "nome": "Davis Gurgel",
+                  "fed": "13771",
+                  "clube": "Miramar",
+                  "tee": "Brancas",
+                  "hcp": 24
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 3,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Tomás Rente",
+                  "fed": "46311",
+                  "clube": "Miramar",
+                  "hcp": 5.7
+                },
+                {
+                  "nome": "Isabel Barbosa",
+                  "fed": "44586",
+                  "clube": "Quinta do Fojo",
+                  "tee": "Amarelas",
+                  "hcp": 13.3
+                },
+                {
+                  "nome": "Vasco Balixa",
+                  "fed": "47470",
+                  "clube": "Miramar",
+                  "hcp": 20.7
+                },
+                {
+                  "nome": "Benedita Mendes Ribeiro",
+                  "fed": "811",
+                  "clube": "Miramar",
+                  "tee": "Amarelas",
+                  "hcp": 17.6
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 4,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Manuel Pontes Ferreira",
+                  "fed": "19552",
+                  "clube": "Miramar",
+                  "hcp": 10.3
+                },
+                {
+                  "nome": "Pedro Abreu",
+                  "fed": "40268",
+                  "clube": "Miramar",
+                  "hcp": 13.2
+                },
+                {
+                  "nome": "Luis Guimarães",
+                  "fed": "31051",
+                  "clube": "Miramar",
+                  "hcp": 18.9
+                },
+                {
+                  "nome": "António Nunes Pinto",
+                  "fed": "38086",
+                  "clube": "Miramar",
+                  "hcp": 25.5
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 5,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Raul Pazos (jr)",
+                  "fed": "46296",
+                  "clube": "Miramar",
+                  "hcp": 6.1
+                },
+                {
+                  "nome": "Rodrigo Pestana",
+                  "fed": "25739",
+                  "clube": "Vale Pisão",
+                  "hcp": 11.6
+                },
+                {
+                  "nome": "Ricardo Bernardo",
+                  "fed": "41456",
+                  "clube": "Miramar",
+                  "hcp": 29.1
+                },
+                {
+                  "nome": "João Correia Vicente",
+                  "fed": "57117",
+                  "clube": "Braga",
+                  "hcp": 35.3
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 6,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Joao Nuno Mendes Ribeiro",
+                  "fed": "915",
+                  "clube": "Miramar",
+                  "hcp": 8
+                },
+                {
+                  "nome": "Henrique Pereira",
+                  "fed": "53646",
+                  "clube": "Miramar",
+                  "hcp": 7
+                },
+                {
+                  "nome": "Antonio Maria Neves",
+                  "fed": "965",
+                  "clube": "Miramar",
+                  "hcp": 14.1
+                },
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "fed": "57884",
+                  "clube": "Miramar",
+                  "hcp": 17.4
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 7,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Luis Ferreira da Costa",
+                  "fed": "33792",
+                  "clube": "Miramar",
+                  "hcp": 9.1
+                },
+                {
+                  "nome": "Jose Miguel Mendes Ribeiro",
+                  "fed": "812",
+                  "clube": "Miramar",
+                  "hcp": 10.9
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "fed": "51182",
+                  "clube": "Miramar",
+                  "hcp": 14.9
+                },
+                {
+                  "nome": "Raul Pazos",
+                  "fed": "44481",
+                  "clube": "Miramar",
+                  "hcp": 13.5
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 8,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Ricardo Rocha Ferreira",
+                  "fed": "51180",
+                  "clube": "Miramar",
+                  "hcp": 11.8
+                },
+                {
+                  "nome": "Paula Costa",
+                  "fed": "31337",
+                  "clube": "Miramar",
+                  "tee": "Amarelas",
+                  "hcp": 21
+                },
+                {
+                  "nome": "António Costa",
+                  "fed": "23900",
+                  "clube": "Miramar",
+                  "hcp": 22.1
+                },
+                {
+                  "nome": "Vitor Neves",
+                  "fed": "32411",
+                  "clube": "Miramar",
+                  "hcp": 11.9
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 9,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Balixa",
+                  "fed": "46038",
+                  "clube": "Miramar",
+                  "hcp": 4.3
+                },
+                {
+                  "nome": "Eduardo Jorge Marta da Cruz",
+                  "fed": "19623",
+                  "clube": "Miramar",
+                  "hcp": 11.3
+                },
+                {
+                  "nome": "Telmo Rente",
+                  "fed": "46315",
+                  "clube": "Miramar",
+                  "hcp": 28.7
+                },
+                {
+                  "nome": "Tom Georges",
+                  "fed": "58549",
+                  "clube": "Miramar",
+                  "hcp": 35.7
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "José Maria Pereira",
+                  "fed": "53645",
+                  "clube": "Miramar",
+                  "hcp": 12.3
+                },
+                {
+                  "nome": "Alberto Montoya",
+                  "fed": "33056",
+                  "clube": "Viseu",
+                  "hcp": 26.1
+                },
+                {
+                  "nome": "Pedro Gomes",
+                  "fed": "56077",
+                  "clube": "Braga",
+                  "hcp": 36
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 8,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vanda Maria Carvalho Urzal",
+                  "fed": "24787",
+                  "clube": "Miramar",
+                  "hcp": 27.4
+                },
+                {
+                  "nome": "Tereza Gonçalves",
+                  "fed": "55582",
+                  "clube": "Vale Pisão",
+                  "hcp": 36.4
+                },
+                {
+                  "nome": "Cristina Jorge",
+                  "fed": "53938",
+                  "clube": "Miramar",
+                  "hcp": 38.2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "910",
+      "tcode": "10141",
+      "name": "Norte Golfe",
+      "date": "2026-10-03",
+      "expectedYear": "2026",
+      "campo": "Amarante",
+      "admissions": {
+        "name": "Norte Golfe",
+        "date": "2026-10-03",
+        "totalInscritos": 76,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10141",
+        "ccode": "910",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "37914",
+            "nome": "Elísio Fresco",
+            "clube": "Paredes",
+            "hcp": 20.4,
+            "vacf": null,
+            "registo": "2026/09/18 11:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "45477",
+            "nome": "Orlando Silva",
+            "clube": "Citynorte",
+            "hcp": 26.1,
+            "vacf": null,
+            "registo": "2026/09/18 17:34",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "51057",
+            "nome": "Hélio Pêgo",
+            "clube": "Vidago C G",
+            "hcp": 34.9,
+            "vacf": null,
+            "registo": "2026/09/18 21:40",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "16749",
+            "nome": "Adriano Fonseca",
+            "clube": "Citynorte",
+            "hcp": 19,
+            "vacf": null,
+            "registo": "2026/09/19 19:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "36320",
+            "nome": "António Sousa Carvalho",
+            "clube": "Citynorte",
+            "hcp": 26.1,
+            "vacf": null,
+            "registo": "2026/09/20 18:16",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "52724",
+            "nome": "Guilherme Oliveira Alves",
+            "clube": "Amarante",
+            "hcp": 28.3,
+            "vacf": null,
+            "registo": "2026/09/20 18:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "47819",
+            "nome": "Afonso Paiva Gonçalves",
+            "clube": "Citynorte",
+            "hcp": 8.7,
+            "vacf": null,
+            "registo": "2026/09/20 20:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "45424",
+            "nome": "João Pedro Frade",
+            "clube": "Citynorte",
+            "hcp": 14.2,
+            "vacf": null,
+            "registo": "2026/09/20 21:35",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "47810",
+            "nome": "Gil Ribeiro",
+            "clube": "Citynorte",
+            "hcp": 19,
+            "vacf": null,
+            "registo": "2026/09/21 11:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "8002",
+            "nome": "Tiago Oliveira Ribeiro",
+            "clube": "Citynorte",
+            "hcp": 31.9,
+            "vacf": null,
+            "registo": "2026/09/21 11:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "38468",
+            "nome": "Almiro Lopes",
+            "clube": "Citynorte",
+            "hcp": 19.4,
+            "vacf": null,
+            "registo": "2026/09/21 14:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "28034",
+            "nome": "Joaquim Manuel Nunes Ribeiro",
+            "clube": "Amarante",
+            "hcp": 13.6,
+            "vacf": null,
+            "registo": "2026/09/23 14:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "47352",
+            "nome": "Sílvio Marco",
+            "clube": "Amarante",
+            "hcp": 18.6,
+            "vacf": null,
+            "registo": "2026/09/23 14:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "58248",
+            "nome": "Fábio Santos Freitas",
+            "clube": "Miramar",
+            "hcp": 20.4,
+            "vacf": null,
+            "registo": "2026/09/24 18:05",
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "35874",
+            "nome": "Diogo Marques Lopes",
+            "clube": "Citynorte",
+            "hcp": 7.9,
+            "vacf": null,
+            "registo": "2026/09/24 19:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "36702",
+            "nome": "Eusébio Dias",
+            "clube": "Paredes",
+            "hcp": 16.7,
+            "vacf": null,
+            "registo": "2026/09/25 17:51",
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "37609",
+            "nome": "Fernando Ferreira",
+            "clube": "Paredes",
+            "hcp": 12.2,
+            "vacf": null,
+            "registo": "2026/09/28 09:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "56048",
+            "nome": "Gustavo Pinto",
+            "clube": "Oporto",
+            "hcp": 10.4,
+            "vacf": null,
+            "registo": "2026/09/28 16:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "29592",
+            "nome": "Ana Gabriela de Freitas Ribeiro",
+            "clube": "Amarante",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/09/28 17:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 20,
+            "fed": "29730",
+            "nome": "Luís Miguel Magalhães Ribeiro",
+            "clube": "Amarante",
+            "hcp": 16.4,
+            "vacf": null,
+            "registo": "2026/09/28 17:43",
+            "status": "confirmed"
+          },
+          {
+            "pos": 21,
+            "fed": "33613",
+            "nome": "Leonor Barreto Guimarães Do Couto",
+            "clube": "Citynorte",
+            "hcp": 22.5,
+            "vacf": null,
+            "registo": "2026/09/28 18:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 22,
+            "fed": "39445",
+            "nome": "Manuel Pais Vieira",
+            "clube": "Citynorte",
+            "hcp": 23,
+            "vacf": null,
+            "registo": "2026/09/28 18:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 23,
+            "fed": "7953",
+            "nome": "Carlos Martins",
+            "clube": "Seniores-Norte",
+            "hcp": 21.1,
+            "vacf": null,
+            "registo": "2026/09/29 11:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 24,
+            "fed": "19600",
+            "nome": "António Alves Da Rocha Cruz",
+            "clube": "Amarante",
+            "hcp": 10.8,
+            "vacf": null,
+            "registo": "2026/09/29 12:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 25,
+            "fed": "9842",
+            "nome": "Abílio Castelo",
+            "clube": "Amarante",
+            "hcp": 20.1,
+            "vacf": null,
+            "registo": "2026/09/29 13:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 26,
+            "fed": "2439",
+            "nome": "Antonio Manuel Rodrigues",
+            "clube": "Vidago C G",
+            "hcp": 8.2,
+            "vacf": null,
+            "registo": "2026/09/29 13:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 27,
+            "fed": "44329",
+            "nome": "Patrick Sousa",
+            "clube": "Paredes",
+            "hcp": 11.2,
+            "vacf": null,
+            "registo": "2026/09/29 15:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 28,
+            "fed": "35249",
+            "nome": "António Martins",
+            "clube": "Paredes",
+            "hcp": 15.2,
+            "vacf": null,
+            "registo": "2026/09/29 18:35",
+            "status": "confirmed"
+          },
+          {
+            "pos": 29,
+            "fed": "45954",
+            "nome": "Rui Justiniano",
+            "clube": "Quinta Lágrimas",
+            "hcp": 27.5,
+            "vacf": null,
+            "registo": "2026/09/29 21:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 30,
+            "fed": "46480",
+            "nome": "Afonso de Sousa Pinto",
+            "clube": "Oporto",
+            "hcp": 6.2,
+            "vacf": null,
+            "registo": "2026/09/30 10:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 31,
+            "fed": "52887",
+            "nome": "João Coelho",
+            "clube": "Paredes",
+            "hcp": 33.7,
+            "vacf": null,
+            "registo": "2026/09/30 10:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 32,
+            "fed": "20858",
+            "nome": "Rui Barros Cerqueira",
+            "clube": "Amarante",
+            "hcp": 12.4,
+            "vacf": null,
+            "registo": "2026/09/30 11:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 33,
+            "fed": "34186",
+            "nome": "Diogo Silva Pinto Rocha",
+            "clube": "Oporto",
+            "hcp": -2.6,
+            "vacf": null,
+            "registo": "2026/09/30 12:42",
+            "status": "confirmed"
+          },
+          {
+            "pos": 34,
+            "fed": "47341",
+            "nome": "Sebastião Soares",
+            "clube": "Oporto",
+            "hcp": 8.1,
+            "vacf": null,
+            "registo": "2026/09/30 13:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 35,
+            "fed": "50193",
+            "nome": "Leonardo Ferreira",
+            "clube": "Paredes",
+            "hcp": 17.8,
+            "vacf": null,
+            "registo": "2026/09/30 15:19",
+            "status": "confirmed"
+          },
+          {
+            "pos": 36,
+            "fed": "31111",
+            "nome": "Pedro Afonso de Correia Mendes",
+            "clube": "Oporto",
+            "hcp": -2.7,
+            "vacf": null,
+            "registo": "2026/09/30 15:35",
+            "status": "confirmed"
+          },
+          {
+            "pos": 37,
+            "fed": "2531",
+            "nome": "Jose Pereira Silva",
+            "clube": "Vidago C G",
+            "hcp": 24.6,
+            "vacf": null,
+            "registo": "2026/09/30 15:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 38,
+            "fed": "2440",
+            "nome": "Antonio Manuel Fernandes",
+            "clube": "Vidago C G",
+            "hcp": 19.6,
+            "vacf": null,
+            "registo": "2026/09/30 15:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 39,
+            "fed": "36980",
+            "nome": "António Gomes",
+            "clube": "Paredes",
+            "hcp": 13.9,
+            "vacf": null,
+            "registo": "2026/09/30 16:05",
+            "status": "confirmed"
+          },
+          {
+            "pos": 40,
+            "fed": "50053",
+            "nome": "Gustavo Castro",
+            "clube": "Paredes",
+            "hcp": 14.4,
+            "vacf": null,
+            "registo": "2026/09/30 16:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 41,
+            "fed": "49012",
+            "nome": "João Araújo",
+            "clube": "Citynorte",
+            "hcp": 3.6,
+            "vacf": null,
+            "registo": "2026/09/30 16:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 42,
+            "fed": "49011",
+            "nome": "Tomás Araújo",
+            "clube": "Citynorte",
+            "hcp": 15.4,
+            "vacf": null,
+            "registo": "2026/09/30 16:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 43,
+            "fed": "50557",
+            "nome": "Nuno Nunes",
+            "clube": "ACP Golfe",
+            "hcp": 26.2,
+            "vacf": null,
+            "registo": "2026/09/30 16:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 44,
+            "fed": "31768",
+            "nome": "António Silva Nunes",
+            "clube": "Paredes",
+            "hcp": 18.3,
+            "vacf": null,
+            "registo": "2026/09/30 16:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 45,
+            "fed": "35051",
+            "nome": "José Armindo Moreira Ferraz",
+            "clube": "Amarante",
+            "hcp": 12.3,
+            "vacf": null,
+            "registo": "2026/09/30 17:10",
+            "status": "confirmed"
+          },
+          {
+            "pos": 46,
+            "fed": "40140",
+            "nome": "Miguel Paula Rocha",
+            "clube": "Miramar",
+            "hcp": 22.6,
+            "vacf": null,
+            "registo": "2026/09/30 17:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 47,
+            "fed": "28169",
+            "nome": "Rafael Martins",
+            "clube": "Vidago C G",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/09/30 18:11",
+            "status": "confirmed"
+          },
+          {
+            "pos": 48,
+            "fed": "25339",
+            "nome": "Luis Carlos Dias",
+            "clube": "Vidago C G",
+            "hcp": 5.8,
+            "vacf": null,
+            "registo": "2026/09/30 18:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 49,
+            "fed": "37798",
+            "nome": "Pedro Barbosa",
+            "clube": "Paredes",
+            "hcp": 7.2,
+            "vacf": null,
+            "registo": "2026/09/30 19:10",
+            "status": "confirmed"
+          },
+          {
+            "pos": 50,
+            "fed": "46606",
+            "nome": "Rafael Nogueira",
+            "clube": "Paredes",
+            "hcp": 13.3,
+            "vacf": null,
+            "registo": "2026/09/30 19:34",
+            "status": "confirmed"
+          },
+          {
+            "pos": 51,
+            "fed": "52937",
+            "nome": "Miguel Cardoso",
+            "clube": "Paredes",
+            "hcp": 36,
+            "vacf": null,
+            "registo": "2026/09/30 21:19",
+            "status": "confirmed"
+          },
+          {
+            "pos": 52,
+            "fed": "2505",
+            "nome": "Manuel Armando Cadete Portelinha",
+            "clube": "Vidago C G",
+            "hcp": 2.8,
+            "vacf": null,
+            "registo": "2026/09/30 21:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 53,
+            "fed": "39097",
+            "nome": "Francisco Saraiva",
+            "clube": "Oporto",
+            "hcp": 4.4,
+            "vacf": null,
+            "registo": "2026/09/30 23:19",
+            "status": "confirmed"
+          },
+          {
+            "pos": 54,
+            "fed": "52270",
+            "nome": "Marta Andrade",
+            "clube": "Citynorte",
+            "hcp": 32.1,
+            "vacf": null,
+            "registo": "2026/09/30 23:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 55,
+            "fed": "54482",
+            "nome": "Tiago Andrade",
+            "clube": "Citynorte",
+            "hcp": 36,
+            "vacf": null,
+            "registo": "2026/09/30 23:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 56,
+            "fed": "49329",
+            "nome": "João Oliveira",
+            "clube": "Paredes",
+            "hcp": 22.1,
+            "vacf": null,
+            "registo": "2026/09/30 23:25",
+            "status": "confirmed"
+          },
+          {
+            "pos": 57,
+            "fed": "59211",
+            "nome": "António Sousa",
+            "clube": "Paredes",
+            "hcp": 34.1,
+            "vacf": null,
+            "registo": "2026/10/01 00:01",
+            "status": "confirmed"
+          },
+          {
+            "pos": 58,
+            "fed": "45366",
+            "nome": "Ricardo Ferreira",
+            "clube": "Oporto",
+            "hcp": 15.6,
+            "vacf": null,
+            "registo": "2026/10/01 07:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 59,
+            "fed": "52168",
+            "nome": "Pedro Luís Fernandes",
+            "clube": "Citynorte",
+            "hcp": 9.3,
+            "vacf": null,
+            "registo": "2026/10/01 08:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 60,
+            "fed": "29346",
+            "nome": "Nuno Oliveira Campos",
+            "clube": "Citynorte",
+            "hcp": 15.3,
+            "vacf": null,
+            "registo": "2026/10/01 10:07",
+            "status": "confirmed"
+          },
+          {
+            "pos": 61,
+            "fed": "30273",
+            "nome": "Pedro Dinis Da Silva Mendes",
+            "clube": "Paredes",
+            "hcp": 13.8,
+            "vacf": null,
+            "registo": "2026/10/01 10:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 62,
+            "fed": "26150",
+            "nome": "Alfredo Lopes Moreira",
+            "clube": "Paredes",
+            "hcp": 20,
+            "vacf": null,
+            "registo": "2026/10/01 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 63,
+            "fed": "23126",
+            "nome": "Rafael Santos Coelho",
+            "clube": "Paredes",
+            "hcp": 32.5,
+            "vacf": null,
+            "registo": "2026/10/01 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 64,
+            "fed": "17258",
+            "nome": "Francisco Vilaça",
+            "clube": "Atlantico",
+            "hcp": 19.6,
+            "vacf": null,
+            "registo": "2026/10/01 10:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 65,
+            "fed": "34966",
+            "nome": "José Manuel Ferreira Pedro",
+            "clube": "Seniores-Norte",
+            "hcp": 30.3,
+            "vacf": null,
+            "registo": "2026/10/01 10:30",
+            "status": "confirmed"
+          },
+          {
+            "pos": 66,
+            "fed": "40761",
+            "nome": "Gonçalo Mendes",
+            "clube": "Paredes",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/10/01 12:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 67,
+            "fed": "33236",
+            "nome": "Fernando Couto",
+            "clube": "Citynorte",
+            "hcp": 13.6,
+            "vacf": null,
+            "registo": "2026/10/01 12:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 68,
+            "fed": "8304",
+            "nome": "Mário Rui Xavier Rijo",
+            "clube": "Oporto",
+            "hcp": 13.2,
+            "vacf": null,
+            "registo": "2026/10/01 12:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 69,
+            "fed": "59485",
+            "nome": "Symon Riedstra",
+            "clube": "Vale Pisão",
+            "hcp": 30.1,
+            "vacf": null,
+            "registo": "2026/10/01 12:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": 70,
+            "fed": "47660",
+            "nome": "Luís Carvalho",
+            "clube": "Braga",
+            "hcp": 31.1,
+            "vacf": null,
+            "registo": "2026/10/01 13:13",
+            "status": "confirmed"
+          },
+          {
+            "pos": 71,
+            "fed": "59673",
+            "nome": "João Pedro Veloso Ferraz",
+            "clube": "Braga",
+            "hcp": 31.6,
+            "vacf": null,
+            "registo": "2026/10/01 13:13",
+            "status": "confirmed"
+          },
+          {
+            "pos": 72,
+            "fed": "49385",
+            "nome": "João Pedro Araújo",
+            "clube": "Braga",
+            "hcp": 36,
+            "vacf": null,
+            "registo": "2026/10/01 13:14",
+            "status": "confirmed"
+          },
+          {
+            "pos": 73,
+            "fed": "8278",
+            "nome": "Raimundo Mariano Gonçalves Abreu",
+            "clube": "Amarante",
+            "hcp": 18,
+            "vacf": null,
+            "registo": "2026/10/01 14:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 74,
+            "fed": "37883",
+            "nome": "Tiago Dinis Mendes",
+            "clube": "Amarante",
+            "hcp": 14.5,
+            "vacf": null,
+            "registo": "2026/10/01 14:59",
+            "status": "confirmed"
+          },
+          {
+            "pos": 75,
+            "fed": "15811",
+            "nome": "Armando Miguel Nunes Ribeiro",
+            "clube": "Amarante",
+            "hcp": 7.9,
+            "vacf": null,
+            "registo": "2026/10/01 15:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 76,
+            "fed": "46395",
+            "nome": "Gonçalo Maia",
+            "clube": "Oporto",
+            "hcp": 7.8,
+            "vacf": null,
+            "registo": "2026/10/01 16:39",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Norte Golfe",
+          "date": "2026-10-03",
+          "campo": "Amarante",
+          "clube": "Associação de Golf do Norte de Portugal",
+          "totalJogadores": 75,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Marques Lopes",
+                  "fed": "35874",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Antonio Manuel Rodrigues",
+                  "fed": "2439",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "Pedro Dinis da Silva Mendes",
+                  "fed": "30273",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Luís Miguel Magalhães Ribeiro",
+                  "fed": "29730",
+                  "clube": "Amarante"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 2,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Barbosa",
+                  "fed": "37798",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Rui Barros Cerqueira",
+                  "fed": "20858",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Tiago Andrade",
+                  "fed": "54482",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Marta Andrade",
+                  "fed": "52270",
+                  "clube": "Citynorte",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 3,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Mendes",
+                  "fed": "40761",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "fed": "39097",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Tomás Araújo",
+                  "fed": "49011",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Hélio Pêgo",
+                  "fed": "51057",
+                  "clube": "Vidago C G"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 4,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Silva Pinto Rocha",
+                  "fed": "34186",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Patrick Sousa",
+                  "fed": "44329",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Antonio Manuel Fernandes",
+                  "fed": "2440",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "Orlando Silva",
+                  "fed": "45477",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 5,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Fernando Ferreira",
+                  "fed": "37609",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Raimundo Mariano Gonçalves Abreu",
+                  "fed": "8278",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "fed": "47810",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Luís Carvalho",
+                  "fed": "47660",
+                  "clube": "Braga"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 6,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Armindo Moreira Ferraz",
+                  "fed": "35051",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "fed": "45424",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gustavo Castro",
+                  "fed": "50053",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "José Manuel Ferreira Pedro",
+                  "fed": "34966",
+                  "clube": "Seniores-Norte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 7,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Joaquim Manuel Nunes Ribeiro",
+                  "fed": "28034",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "António Gomes",
+                  "fed": "36980",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "fed": "45366",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "João Pedro Araújo",
+                  "fed": "49385",
+                  "clube": "Braga"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 8,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rafael Martins",
+                  "fed": "28169",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "Alfredo Lopes Moreira",
+                  "fed": "26150",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Fábio Santos Freitas",
+                  "fed": "58248",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Manuel Pais Vieira",
+                  "fed": "39445",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 9,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Armando Cadete Portelinha",
+                  "fed": "2505",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "fed": "47341",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "António Sousa Carvalho",
+                  "fed": "36320",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Rafael Santos Coelho",
+                  "fed": "23126",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "fed": "46480",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel Paula Rocha",
+                  "fed": "40140",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Miguel Cardoso",
+                  "fed": "52937",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Leonor Barreto Guimarães Do Couto",
+                  "fed": "33613",
+                  "clube": "Citynorte",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 11,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": "52168",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gonçalo Maia",
+                  "fed": "46395",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Elísio Fresco",
+                  "fed": "37914",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tiago Daniel Sousa Lopes",
+                  "fed": "20859",
+                  "clube": "Amarante"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 12,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Afonso de Correia Mendes",
+                  "fed": "31111",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Rafael Nogueira",
+                  "fed": "46606",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Abílio Castelo",
+                  "fed": "9842",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Carlos Martins",
+                  "fed": "7953",
+                  "clube": "Seniores-Norte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 13,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Araújo",
+                  "fed": "49012",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Sílvio Marco",
+                  "fed": "47352",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Rui Justiniano",
+                  "fed": "45954",
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "António Sousa",
+                  "fed": "59211",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 14,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Leonardo Ferreira",
+                  "fed": "50193",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Adriano Fonseca",
+                  "fed": "16749",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Jose Pereira Silva",
+                  "fed": "2531",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "João Pedro Veloso Ferraz",
+                  "fed": "59673",
+                  "clube": "Braga"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 15,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "António Alves da Rocha Cruz",
+                  "fed": "19600",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Luis Carlos Dias",
+                  "fed": "25339",
+                  "clube": "Vidago C G"
+                },
+                {
+                  "nome": "Tiago Oliveira Ribeiro",
+                  "fed": "8002",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gustavo Pinto",
+                  "fed": "56048",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 16,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Armando Miguel Nunes Ribeiro",
+                  "fed": "15811",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Fernando Couto",
+                  "fed": "33236",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "António Silva Nunes",
+                  "fed": "31768",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Nuno Nunes",
+                  "fed": "50557",
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 17,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tiago Dinis Mendes",
+                  "fed": "37883",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "Almiro Lopes",
+                  "fed": "38468",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Mário Rui Xavier Rijo",
+                  "fed": "8304",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "António Martins",
+                  "fed": "35249",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 18,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Oliveira Campos",
+                  "fed": "29346",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Eusébio Dias",
+                  "fed": "36702",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Symon Riedstra",
+                  "fed": "59485",
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Ana Gabriela de Freitas Ribeiro",
+                  "fed": "29592",
+                  "clube": "Amarante",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "fed": "47819",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Guilherme Oliveira Alves",
+                  "fed": "52724",
+                  "clube": "Amarante"
+                },
+                {
+                  "nome": "João Coelho",
+                  "fed": "52887",
+                  "clube": "Paredes"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
