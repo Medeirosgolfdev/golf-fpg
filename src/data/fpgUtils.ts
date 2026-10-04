@@ -550,12 +550,17 @@ function detectRoundNumber(name: string): number | null {
  *   - `pars` já vem do tamanho da ronda (9) → soma direita;
  *   - cartão de 18 com zeros nos buracos por jogar → só conta onde há score;
  *   - menos scores do que pares (sem zeros) → conta os primeiros N.
+ * Volta TERMINADA com buracos riscados (gross publicado MAIOR que a soma dos
+ * buracos visíveis — a FPG já põe pancadas nesses buracos) → par completo; se
+ * não, o ±par fica inflacionado no par dos riscados (Márcio Gouveia, 50 Anos de
+ * Autonomia 2026: 158 dava +19 em vez de +14).
  */
-export function playedParTotal(rs: { scores?: number[]; pars?: number[] }, fallback = 0): number {
+export function playedParTotal(rs: { scores?: number[]; pars?: number[]; gross?: number | null }, fallback = 0): number {
   const pars = rs.pars || [];
   const sc = rs.scores || [];
   if (!pars.length) return fallback;
   const sum = (a: number[]) => a.reduce((x, y) => x + (y || 0), 0);
+  if ((rs.gross || 0) > sum(sc.map((s) => (s > 0 ? s : 0)))) return sum(pars);
   if (sc.length === pars.length) {
     return sc.some((s) => !s) ? sum(pars.filter((_, i) => !!sc[i])) : sum(pars);
   }
