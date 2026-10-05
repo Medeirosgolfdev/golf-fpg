@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T19:23:11.314Z",
+  "generatedAt": "2026-10-05T12:37:33.664Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -66,7 +66,7 @@
             "hcp": -0.4
           },
           "hcpAtual": {
-            "valor": -2.9,
+            "valor": -3.5,
             "fonte": "FFG",
             "data": null
           }
@@ -95,7 +95,7 @@
             "hcp": 2.4
           },
           "hcpAtual": {
-            "valor": -2.9,
+            "valor": -2.7,
             "fonte": "FFG",
             "data": null
           }
@@ -683,7 +683,7 @@
           "name": "Margarida Silva Pinto",
           "club": "Miramar",
           "dob": "2013-06-14",
-          "hcp": 4.9,
+          "hcp": 5,
           "juniorId": "f46310",
           "inscrito": null,
           "anterior": {
@@ -947,7 +947,7 @@
             "hcp": 1.8
           },
           "hcpAtual": {
-            "valor": -4.4,
+            "valor": -4.2,
             "fonte": "FFG",
             "data": null
           }
@@ -1135,7 +1135,7 @@
           "country": "Czech Republic",
           "hcp": -1.6,
           "junior": {
-            "id": "x60b5c98287",
+            "id": "gE90895677",
             "name": "Matyas Jirasek",
             "dob": "2012-05-22",
             "club": "Albatross",
@@ -1144,7 +1144,11 @@
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": -1.8,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 10,
@@ -1357,7 +1361,11 @@
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": -0.2,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 19,
@@ -1873,7 +1881,11 @@
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 1.6,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 43,
@@ -1916,7 +1928,7 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 2.3,
+            "valor": 2.5,
             "fonte": "FFG",
             "data": null
           }
@@ -2251,9 +2263,9 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 4.4,
+            "valor": 4.8,
             "fonte": "FPG",
-            "data": "2026-09-13"
+            "data": "2026-10-04"
           }
         },
         {
@@ -2274,9 +2286,9 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 4.3,
+            "valor": 3.5,
             "fonte": "FPG",
-            "data": "2026-08-27"
+            "data": "2026-10-03"
           }
         },
         {
@@ -2316,9 +2328,9 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 6.2,
+            "valor": 6,
             "fonte": "FPG",
-            "data": "2026-09-20"
+            "data": "2026-10-04"
           }
         },
         {
@@ -2339,9 +2351,9 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 6.1,
+            "valor": 5.2,
             "fonte": "FPG",
-            "data": "2026-09-19"
+            "data": "2026-10-04"
           }
         },
         {
@@ -2408,9 +2420,9 @@
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": {
-            "valor": 6.5,
+            "valor": 6.4,
             "fonte": "FPG",
-            "data": "2026-09-26"
+            "data": "2026-10-04"
           }
         },
         {
@@ -2447,7 +2459,7 @@
           "name": "Santiago Dias",
           "club": "Oporto",
           "dob": "2012-05-29",
-          "hcp": -1.3,
+          "hcp": -2.1,
           "juniorId": "u610461",
           "inscrito": null,
           "anterior": {
@@ -2464,7 +2476,7 @@
           "name": "Nuno Palmares Jr.",
           "club": "Estoril",
           "dob": "2012-04-28",
-          "hcp": 0.9,
+          "hcp": 1,
           "juniorId": "u591234",
           "inscrito": null,
           "anterior": {
@@ -2494,6 +2506,21 @@
         },
         {
           "rank": 4,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.5,
+          "juniorId": "f46038",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 30,
+            "hcp": 4.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 5,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
@@ -2514,7 +2541,7 @@
           }
         },
         {
-          "rank": 5,
+          "rank": 6,
           "fed": "43968",
           "name": "Salvador Ivo de Carvalho",
           "club": "Estoril",
@@ -2529,37 +2556,7 @@
           "anterior": null
         },
         {
-          "rank": 6,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 4.3,
-          "juniorId": "f46038",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 30,
-            "hcp": 4.3
-          },
-          "anterior": null
-        },
-        {
           "rank": 7,
-          "fed": "39097",
-          "name": "Francisco Saraiva",
-          "club": "Oporto",
-          "dob": "2012-04-20",
-          "hcp": 4.4,
-          "juniorId": "f39097",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 29,
-            "hcp": 4.1
-          },
-          "anterior": null
-        },
-        {
-          "rank": 8,
           "fed": "60382",
           "name": "Vicente Tavares de Almeida",
           "club": "ACP Golfe",
@@ -2570,12 +2567,27 @@
           "anterior": null
         },
         {
+          "rank": 8,
+          "fed": "39097",
+          "name": "Francisco Saraiva",
+          "club": "Oporto",
+          "dob": "2012-04-20",
+          "hcp": 4.8,
+          "juniorId": "f39097",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 29,
+            "hcp": 4.1
+          },
+          "anterior": null
+        },
+        {
           "rank": 9,
           "fed": "46311",
           "name": "Tomás Rente",
           "club": "Miramar",
           "dob": "2012-10-04",
-          "hcp": 5.7,
+          "hcp": 5.2,
           "juniorId": "f46311",
           "inscrito": null,
           "anterior": {
@@ -2588,6 +2600,21 @@
         },
         {
           "rank": 10,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.2,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 33,
+            "hcp": 6
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
           "fed": "49085",
           "name": "Ricardo Castro Ferreira",
           "club": "Estoril",
@@ -2598,27 +2625,12 @@
           "anterior": null
         },
         {
-          "rank": 11,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 6.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 33,
-            "hcp": 6
-          },
-          "anterior": null
-        },
-        {
           "rank": 12,
           "fed": "46480",
           "name": "Afonso de Sousa Pinto",
           "club": "Oporto",
           "dob": "2013-04-16",
-          "hcp": 6.2,
+          "hcp": 6,
           "juniorId": "f46480",
           "inscrito": {
             "lista": "waiting",
@@ -2633,7 +2645,7 @@
           "name": "Manuel Goulartt Medeiros",
           "club": "Santo da Serra",
           "dob": "2014-04-29",
-          "hcp": 6.5,
+          "hcp": 6.4,
           "juniorId": "u630106",
           "inscrito": {
             "lista": "waiting",
@@ -2663,7 +2675,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 7,
+          "hcp": 6.8,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null

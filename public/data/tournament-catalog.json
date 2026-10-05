@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T19:23:11.331Z",
+  "generatedAt": "2026-10-05T12:37:33.686Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -548,6 +548,7 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601454326",
         "ffgolf-2601473806",
         "ffgolf-2601469691",
         "ffgolf-2601475733",
@@ -865,8 +866,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-09-26",
-      "editionsCount": 315
+      "lastDate": "2026-10-03",
+      "editionsCount": 316
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -1043,6 +1044,7 @@
       "label": "Championnats de France",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601481214",
         "ffgolf-2601444238",
         "ffgolf-2601441226",
         "ffgolf-2601405353",
@@ -1102,8 +1104,8 @@
         "ffgolf-2200805209"
       ],
       "firstDate": "2022-03-04",
-      "lastDate": "2026-06-21",
-      "editionsCount": 57
+      "lastDate": "2026-10-04",
+      "editionsCount": 58
     },
     {
       "id": "uskids-laurel-island-links",
@@ -31736,6 +31738,20 @@
       "editionsCount": 4
     },
     {
+      "id": "uskids-loomis-trail-golf-course",
+      "label": "Loomis Trail Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-16239",
+        "uskids-18768",
+        "uskids-21670",
+        "uskids-23502"
+      ],
+      "firstDate": "2024-03-02",
+      "lastDate": "2026-10-03",
+      "editionsCount": 4
+    },
+    {
       "id": "uskids-shuksan-golf-club",
       "label": "Shuksan Golf Club",
       "sourceId": "uskids",
@@ -34043,6 +34059,20 @@
       ],
       "firstDate": "2026-05-02",
       "lastDate": "2026-05-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "ffgolf-the-amundi-evian-juniors-cup",
+      "label": "The Amundi Evian Juniors Cup",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601480823",
+        "ffgolf-2401276441",
+        "ffgolf-2301099390",
+        "ffgolf-2200909351"
+      ],
+      "firstDate": "2022-09-20",
+      "lastDate": "2026-09-22",
       "editionsCount": 4
     },
     {
@@ -40418,19 +40448,6 @@
       "editionsCount": 3
     },
     {
-      "id": "uskids-loomis-trail-golf-course",
-      "label": "Loomis Trail Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-16239",
-        "uskids-18768",
-        "uskids-21670"
-      ],
-      "firstDate": "2024-03-02",
-      "lastDate": "2026-04-25",
-      "editionsCount": 3
-    },
-    {
       "id": "uskids-teen-series-at-lake-spanaway-wa",
       "label": "Teen Series at Lake Spanaway (WA)",
       "sourceId": "uskids",
@@ -44185,19 +44202,6 @@
       ],
       "firstDate": "2023-06-10",
       "lastDate": "2025-05-17",
-      "editionsCount": 3
-    },
-    {
-      "id": "ffgolf-the-amundi-evian-juniors-cup",
-      "label": "The Amundi Evian Juniors Cup",
-      "sourceId": "ffgolf",
-      "tournamentIds": [
-        "ffgolf-2401276441",
-        "ffgolf-2301099390",
-        "ffgolf-2200909351"
-      ],
-      "firstDate": "2022-09-20",
-      "lastDate": "2024-09-17",
       "editionsCount": 3
     },
     {
@@ -93476,6 +93480,17 @@
       ],
       "firstDate": "2024-06-24",
       "lastDate": "2024-06-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-gpj-avoise",
+      "label": "GPJ Avoise",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601477428"
+      ],
+      "firstDate": "2026-10-03",
+      "lastDate": "2026-10-03",
       "editionsCount": 1
     },
     {
